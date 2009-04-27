@@ -1,0 +1,50 @@
+2008.01.25        SIEDLER II.5 - RETURN TO THE ROOTS                0.6
+------------------------------------------------------------------------
+Globale Tastaturbelegung:
+
+Eingeklammerte Belegungen funktionieren noch nicht.
+
+P:.................... Pause
+
+H:.................... Zum Hauptquartier springen
+B:.................... Zur Ausgangsposition zurückspringen
+
+N:.................... (Öffnet das Nachrichtenfenster)
+L:.................... Zeigt die Landkarte
+M:.................... Hauptauswahl
+
+SPACE:............ Schaltet Haus-Bau-Hilfe an/aus
+C:.................... Zeigt die Bezeichnungen der Häuser
+S:.................... Zeigt Status der Häuser
+
+Z:.................... (Zoomt das aktuelle Fenster)
+V:.................... (Spielgeschwindigkeit verstellen)
+
+Alt-W, Esc:...... Schließt aktives Fenster
+Alt-Q:.............. Spiel verlassen
+
+F1:................... (Spiel laden)
+F2:................... Spiel speichern
+F8:................... Zeigt die Tastaturbelegung
+F9:................... Zeigt die ReadMe-Datei
+F10:.................. (Music-Player)
+F11:.................. (Siedler-Juke-Box)
+F12:.................. Options-Fenster
+
+Cursor Tasten: Kartenausschnitt scrollen
+
+Im Replay Modus zusätzlich:
+
+D:.................... Karte auf- und zudecken
+J:.................... Zu einem bestimmten GF springen
+
+Im Nachrichten Fenster:
+
+DEL:................ (Nachricht löschen)
+G:.................... (Zum Ort der Nachricht gehen)
++/-:.................. (Nächste/Vorherige Nachricht)
+
+------------------------------------------------------------------------
+http://www.siedler25.org    Copyright (C) 2005-2009 Settlers Freaks
+------------------------------------------------------------------------
+

@@ -1,0 +1,30 @@
+#################################################################################
+### $Id$
+#################################################################################
+
+FIND_LIBRARY(GDI32_LIBRARY    gdi32)
+FIND_LIBRARY(OPENGL32_LIBRARY opengl32)
+FIND_LIBRARY(USER32_LIBRARY   user32)
+
+# bug: cmake cross detection's not implemented, so he never finds anything!
+
+#IF (GDI32_LIBRARY AND OPENGL_LIBRARY AND USER32_LIBRARY)
+	INCLUDE_DIRECTORIES(../../../src)
+
+	ADD_LIBRARY(videoWinAPI SHARED WinAPI.cpp WinAPI.h main.h ../../../../version.cpp ../../../src/DriverInterface.cpp)
+
+	IF ( "${COMPILEFOR}" STREQUAL "win32")
+		ADD_DEFINITIONS(-DBUILD_DLL)
+		ADD_CUSTOM_COMMAND(TARGET videoWinAPI POST_BUILD COMMAND if [ -f libvideoWinAPI.so ] \; then cp -v libvideoWinAPI.so videoWinAPI.dll \; else cp -v libvideoWinAPI.dll videoWinAPI.dll \; fi )
+		ADD_CUSTOM_COMMAND(TARGET videoWinAPI POST_BUILD COMMAND ln -fvs WinAPI/src/videoWinAPI.dll ../../videoWinAPI.dll)
+	ELSE ( "${COMPILEFOR}" STREQUAL "win32")
+		ADD_CUSTOM_COMMAND(TARGET videoWinAPI POST_BUILD COMMAND ln -fvs SDL/src/libvideoWinAPI.so ../../WinAPI.so)
+	ENDIF ( "${COMPILEFOR}" STREQUAL "win32")
+
+	INSTALL(TARGETS videoWinAPI DESTINATION lib)
+
+	TARGET_LINK_LIBRARIES(videoWinAPI videodrv gdi32 opengl32 user32) 
+	# ${GDI32_LIBRARY} ${OPENGL32_LIBRARY} ${USER32_LIBRARY})
+#ENDIF (GDI32_LIBRARY AND OPENGL_LIBRARY AND USER32_LIBRARY)
+
+#################################################################################

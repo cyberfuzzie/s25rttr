@@ -1,0 +1,49 @@
+2009.01.25        SIEDLER II.5 - RETURN TO THE ROOTS                0.6
+------------------------------------------------------------------------
+Global keyboard layout:
+
+Bracketed configurations do not work yet.
+
+P:.................... Pause
+
+H:.................... Go to headquarters
+B:.................... Go back to start position
+
+N:.................... (Opens messages window)
+L:.................... Shows map
+M:.................... Main selection
+
+SPACE:............ Switches contruction aid function
+C:.................... Check information about houses
+S:.................... Shows status of houses
+
+Z:.................... (Zoom current window)
+V:.................... (Game acceleration)
+
+Alt-W, Esc:...... Close active window
+Alt-Q:.............. Exit from game
+
+F1:................... (Load game)
+F2:................... Save game
+F8:................... Readme "Keyboard layout"
+F9:................... Readme
+F10:.................. (Music-Player)
+F11:.................. (Siedler-Juke-Box)
+F12:.................. Option windows
+
+Cursor Tasten: Scroll the main map
+
+Additional in Replay-mode:
+
+D:.................... Discover/cover up map
+J:.................... Go to specific GF
+
+Post office:
+
+DEL:................ (Delete message)
+G:.................... (Go to site of event)
++/-:.................. (Next/previous message)
+
+------------------------------------------------------------------------
+http://www.siedler25.org    Copyright (C) 2005-2009 Settlers Freaks
+------------------------------------------------------------------------

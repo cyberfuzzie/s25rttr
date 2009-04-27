@@ -1,0 +1,27 @@
+#################################################################################
+### $Id: CMakeLists.txt 4310 2008-12-28 11:00:31Z OLiver $
+#################################################################################
+
+INCLUDE(FindSDL)
+INCLUDE(FindSDL_mixer)
+
+IF (SDL_FOUND)
+	IF (SDLMIXER_FOUND)
+		INCLUDE_DIRECTORIES(../../../src ../libendian/src)
+		
+		ADD_LIBRARY(audioSDL SHARED SDL.cpp SDL.h main.h SoundSDL_Music.cpp SoundSDL_Music.h SoundSDL_Effect.cpp SoundSDL_Effect.h ../../../../version.cpp ../../../src/DriverInterface.cpp ../../../src/tempname.cpp ../../../src/tempname.h)
+	
+		TARGET_LINK_LIBRARIES(audioSDL audiodrv endian ${SDL_LIBRARY} ${SDLMIXER_LIBRARY})
+		
+		IF ( "${COMPILEFOR}" STREQUAL "win32")
+			ADD_DEFINITIONS(-DBUILD_DLL)
+			ADD_CUSTOM_COMMAND(TARGET audioSDL POST_BUILD COMMAND if [ -f libaudioSDL.so ] \; then cp -v libaudioSDL.so audioSDL.dll \; else cp -v libaudioSDL.dll audioSDL.dll \; fi)
+			ADD_CUSTOM_COMMAND(TARGET audioSDL POST_BUILD COMMAND ln -fvs SDL/src/audioSDL.dll ../../audioSDL.dll)
+		ELSE ( "${COMPILEFOR}" STREQUAL "win32")
+			ADD_CUSTOM_COMMAND(TARGET audioSDL POST_BUILD COMMAND ln -fvs SDL/src/libaudioSDL.so ../../SDL.so)
+		ENDIF ( "${COMPILEFOR}" STREQUAL "win32")
+			
+		INSTALL(TARGETS audioSDL DESTINATION lib)
+	
+	ENDIF (SDLMIXER_FOUND)
+ENDIF (SDL_FOUND)

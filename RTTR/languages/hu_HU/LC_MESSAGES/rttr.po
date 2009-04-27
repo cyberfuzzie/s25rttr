@@ -1,0 +1,2077 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Siedler II.5 RttR\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-01-04 18:23+0100\n"
+"PO-Revision-Date: 2009-01-10 15:00+0100\n"
+"Last-Translator: Patrick Haak <demophobie@siedler25.org>\n"
+"Language-Team: Siedler II.5 RttR <sf-team@siedler25.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Hungarian\n"
+"X-Poedit-Country: Hungary\n"
+"X-Poedit-SourceCharset: iso-8859-15\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: /storage/RTTR/svn/trunk/src\n"
+
+#: C:\svn\s25client\trunk\src/GameClient.cpp:745
+msgid " (AI)"
+msgstr " (MI)"
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:239
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:266
+#, c-format
+msgid "%d"
+msgstr "%d"
+
+#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:324
+#, c-format
+msgid "%d Player"
+msgstr "%d Játékos"
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:247
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:256
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#: C:\svn\s25client\trunk\src/iwHQ.cpp:65
+#, c-format
+msgid "%u/%u"
+msgstr "%u/%u"
+
+#: C:\svn\s25client\trunk\src/iwDirectIPCreate.cpp:73
+msgid "'s Game"
+msgstr " Játéka"
+
+#: C:\svn\s25client\trunk\src/GameWorldViewer.cpp:220
+#, c-format
+msgid "(%d soldiers)"
+msgstr "%d katonák"
+
+#: C:\svn\s25client\trunk\src/GameWorldViewer.cpp:218
+msgid "(1 soldier)"
+msgstr "1 katona"
+
+#: C:\svn\s25client\trunk\src/GameWorldViewer.cpp:187
+msgid "(House unoccupied)"
+msgstr "Üres ház"
+
+#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:183
+#, c-format
+msgid ""
+"(Replay-Mode) Current GF: %u (End at: %u) / GF length: %u ms / NWF length: %"
+"u gf (%u ms)"
+msgstr ""
+"(Visszajátszás-Mód) Eppen GF: %u (Vége: %u) / GF hossz: %u ms / NWF hossz: %"
+"u gf (%u ms)"
+
+#: C:\svn\s25client\trunk\src/GameWorldViewer.cpp:189
+msgid "(stopped)"
+msgstr "megállítva"
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:249
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:258
+msgid "-"
+msgstr "-"
+
+#: C:\svn\s25client\trunk\src/iwAction.cpp:118
+msgid "-> Build castle"
+msgstr "-> Erödépítés"
+
+#: C:\svn\s25client\trunk\src/iwAction.cpp:98
+#: C:\svn\s25client\trunk\src/iwAction.cpp:112
+#: C:\svn\s25client\trunk\src/iwAction.cpp:117
+msgid "-> Build house"
+msgstr "-> Házépítés"
+
+#: C:\svn\s25client\trunk\src/iwAction.cpp:107
+#: C:\svn\s25client\trunk\src/iwAction.cpp:111
+#: C:\svn\s25client\trunk\src/iwAction.cpp:116
+msgid "-> Build hut"
+msgstr "-> Házikóépítés"
+
+#: C:\svn\s25client\trunk\src/iwAction.cpp:122
+msgid "-> Dig mines"
+msgstr "-> Bányaásás"
+
+#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:797
+#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:823
+#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:846
+#, c-format
+msgid "<%s> "
+msgstr "<%s> "
+
+#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:806
+msgid "A auto-savegame is created..."
+msgstr "Auto-Mentés létrehozva..."
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:116
+msgid "A lot"
+msgstr "Sok"
+
+#: C:\svn\s25client\trunk\src/BuildingConsts.h:468
+msgid ""
+"A well supplies water to the bakery, brewery, donkey breeder and pig farm."
+msgstr ""
+"A kút ellátja vízzel a péket, sörfözdét, szamárneveldét, és a disznófarmot."
+
+#: C:\svn\s25client\trunk\src/BuildingConsts.h:340
+msgid ""
+"A woodcutter provides the sawmill with logs. A forester is able to replant "
+"the depleted forest."
+msgstr ""
+"A favágó fával látja el a fürészetet. A faültetö pótolja a kivágott fákat."
+
+#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:24
+msgid "Abort"
+msgstr "Megszakít"
+
+#: C:\svn\s25client\trunk\src/iwAction.cpp:65
+msgid "Activity window"
+msgstr "Tevékenység ablak"
+
+#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:55
+msgid "Add"
+msgstr "Hozzáad"
+
+#: C:\svn\s25client\trunk\src/dskLobby.cpp:71
+msgid "Add Server"
+msgstr "Szerver hozzáadása"
+
+#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:61
+#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:178
+msgid "Add track"
+msgstr "Szám hozzáadása"
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:245
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:254
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:566
+msgid "Africans"
+msgstr "Afrikaiak"
+
+#: C:\svn\s25client\trunk\src/iwBuildOrder.cpp:66
+msgid "After the following order"
+msgstr "A következö parancs alapján"
+
+#: C:\svn\s25client\trunk\src/iwChat.cpp:51
+msgid "All"
+msgstr "Minden"
+
+#: C:\svn\s25client\trunk\src/iwChat.cpp:53
+msgid "Allies"
+msgstr "Szövetségesek"
+
+#: C:\svn\s25client\trunk\src/SerializedGameData.cpp:221
+msgid "An error occured while saving which was suppressed!"
+msgstr "Hiba lépett fel a mentésnél!"
+
+#: C:\svn\s25client\trunk\src/dskGameLoader.cpp:165
+msgid "And let's go!"
+msgstr "Es gyerünk!"
+
+#: C:\svn\s25client\trunk\src/iwPlayReplay.cpp:108
+msgid "Are you sure to remove all replays?"
+msgstr "Biztos eltávolitod az összes viszajátszást?"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:303
+msgid "Armorer"
+msgstr "Kovács"
+
+#: C:\svn\s25client\trunk\src/iwDistribution.cpp:98
+#: C:\svn\s25client\trunk\src/iwDistribution.cpp:110
+msgid "Armory"
+msgstr "Kovács"
+
+#: C:\svn\s25client\trunk\src/iwAction.cpp:221
+msgid "Attack not possible."
+msgstr "Támadás nem lehetséges."
+
+#: C:\svn\s25client\trunk\src/iwAction.cpp:213
+msgid "Attack options"
+msgstr "Támadási beállítások"
+
+#: C:\svn\s25client\trunk\src/iwAction.cpp:246
+msgid "Attack!"
+msgstr "Támadás!"
+
+#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:111
+msgid "Author"
+msgstr "Szerzö"
+
+#: C:\svn\s25client\trunk\src/GameClient.cpp:1607
+msgid "Auto-Save"
+msgstr "Auto-Mentés"
+
+#: C:\svn\s25client\trunk\src/iwSave.cpp:201
+msgid "Auto-Save every:"
+msgstr "Autó-Mentés minden:"
+
+#: C:\svn\s25client\trunk\src/iwTools.cpp:47
+msgid "Axe"
+msgstr "Balta"
+
+#: C:\svn\s25client\trunk\src/dskAboutRTTR.cpp:53
+#: C:\svn\s25client\trunk\src/dskCredits.cpp:54
+#: C:\svn\s25client\trunk\src/dskDirectIP.cpp:61
+#: C:\svn\s25client\trunk\src/dskIntro.cpp:53
+#: C:\svn\s25client\trunk\src/dskLobby.cpp:65
+#: C:\svn\s25client\trunk\src/dskMultiPlayer.cpp:69
+#: C:\svn\s25client\trunk\src/dskOptions.cpp:65
+#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:117
+#: C:\svn\s25client\trunk\src/dskSinglePlayer.cpp:76
+msgid "Back"
+msgstr "Vissza"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:294
+msgid "Baker"
+msgstr "Pék"
+
+#: C:\svn\s25client\trunk\src/iwDistribution.cpp:142
+msgid "Bakery"
+msgstr "Pék"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:204
+msgid "Barracks"
+msgstr "Örbódé"
+
+#: C:\svn\s25client\trunk\src/iwTransport.cpp:57
+msgid "Beer"
+msgstr "Sör"
+
+#: C:\svn\s25client\trunk\src/iwDistribution.cpp:123
+msgid "Boards"
+msgstr "Deszka"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:132
+msgid "Boat"
+msgstr "Hajó"
+
+#: C:\svn\s25client\trunk\src/iwTransport.cpp:68
+msgid "Boats"
+msgstr "Hajó"
+
+#: C:\svn\s25client\trunk\src/iwMilitary.cpp:52
+msgid "Border areas"
+msgstr "Határterület"
+
+#: C:\svn\s25client\trunk\src/iwBuildOrder.cpp:59
+msgid "Bottom"
+msgstr "Közepe"
+
+#: C:\svn\s25client\trunk\src/iwTools.cpp:57
+msgid "Bow"
+msgstr "Ij"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:137
+msgid "Bread"
+msgstr "Kenyér"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:297
+msgid "Brewer"
+msgstr "Sörfözö"
+
+#: C:\svn\s25client\trunk\src/iwDistribution.cpp:90
+#: C:\svn\s25client\trunk\src/iwDistribution.cpp:146
+msgid "Brewery"
+msgstr "Sörfözde"
+
+#: C:\svn\s25client\trunk\src/iwAction.cpp:166
+#: C:\svn\s25client\trunk\src/iwAction.cpp:173
+#: C:\svn\s25client\trunk\src/iwAction.cpp:181
+#: C:\svn\s25client\trunk\src/iwAction.cpp:185
+msgid "Build road"
+msgstr "Útépítés"
+
+#: C:\svn\s25client\trunk\src/iwAction.cpp:174
+msgid "Build waterway"
+msgstr "Vizi út építése"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:304
+msgid "Builder"
+msgstr "Epítö"
+
+#: C:\svn\s25client\trunk\src/iwBuildings.cpp:55
+#: C:\svn\s25client\trunk\src/iwMainMenu.cpp:63
+msgid "Buildings"
+msgstr "Epületek"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:295
+msgid "Butcher"
+msgstr "Hentes"
+
+#: C:\svn\s25client\trunk\src/iwAction.cpp:168
+#: C:\svn\s25client\trunk\src/iwAction.cpp:176
+msgid "Call in geologist"
+msgstr "Geológusok hívása"
+
+#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:133
+msgid "Campaign"
+msgstr "Küldetés"
+
+#: C:\svn\s25client\trunk\src/iwMsgbox.cpp:70
+#: C:\svn\s25client\trunk\src/iwMsgbox.cpp:85
+msgid "Cancel"
+msgstr "Megszakit"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:289
+msgid "Carpenter"
+msgstr "Fürészelö"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:219
+msgid "Catapult"
+msgstr "Katapult"
+
+#: C:\svn\s25client\trunk\src/iwMilitary.cpp:51
+msgid "Center of country"
+msgstr "Az ország közepe"
+
+#: C:\svn\s25client\trunk\src/iwChat.cpp:44
+msgid "Chat Window"
+msgstr "Chat Ablak"
+
+#: C:\svn\s25client\trunk\src/iwDirectIPConnect.cpp:226
+msgid "Checking Map..."
+msgstr "Térképellenörzés..."
+
+#: C:\svn\s25client\trunk\src/iwDirectIPConnect.cpp:225
+msgid "Checking Password..."
+msgstr "Jelszóellenörzés..."
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:107
+msgid "Classic (Settlers 2)"
+msgstr "Klasszikus (Settlers 2)"
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:60
+msgid "Classification"
+msgstr "Besorolás"
+
+#: C:\svn\s25client\trunk\src/iwPlayReplay.cpp:66
+#: C:\svn\s25client\trunk\src/iwPlayReplay.cpp:108
+msgid "Clear"
+msgstr "Töröl"
+
+#: C:\svn\s25client\trunk\src/iwTools.cpp:55
+msgid "Cleaver"
+msgstr "Húsvágó"
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:199
+msgid "Closed"
+msgstr "Zárt"
+
+#: C:\svn\s25client\trunk\src/iwDistribution.cpp:107
+msgid "Coal"
+msgstr "Szén"
+
+#: C:\svn\s25client\trunk\src/iwDistribution.cpp:62
+msgid "Coal mine"
+msgstr "Szénbánya"
+
+#: C:\svn\s25client\trunk\src/iwTransport.cpp:55
+msgid "Coins"
+msgstr "Ermék"
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:64
+msgid "Color"
+msgstr "Szín"
+
+#: C:\svn\s25client\trunk\src/dskOptions.cpp:73
+msgid "Common"
+msgstr "Általános"
+
+#: C:\svn\s25client\trunk\src/GameClient.cpp:743
+#, c-format
+msgid "Computer %u"
+msgstr "Számitógép %u"
+
+#: C:\svn\s25client\trunk\src/dskLobby.cpp:67
+msgid "Connect"
+msgstr "Csatlakozás"
+
+#: C:\svn\s25client\trunk\src/iwLobbyConnect.cpp:47
+msgid "Connecting to Lobby"
+msgstr "Csatlakozás a Lobbyhoz"
+
+#: C:\svn\s25client\trunk\src/iwDirectIPConnect.cpp:141
+#: C:\svn\s25client\trunk\src/iwLobbyConnect.cpp:195
+#: C:\svn\s25client\trunk\src/iwLobbyConnect.cpp:211
+msgid "Connecting with Host..."
+msgstr "Csatlakozás a Hosttal..."
+
+#: C:\svn\s25client\trunk\src/iwDirectIPConnect.cpp:147
+#: C:\svn\s25client\trunk\src/iwLobbyConnect.cpp:204
+#: C:\svn\s25client\trunk\src/iwLobbyConnect.cpp:226
+msgid "Connection failed!"
+msgstr "Csatlakozás sikertelen!"
+
+#: C:\svn\s25client\trunk\src/iwDirectIPConnect.cpp:212
+msgid "Connection to Host closed!"
+msgstr "Megszakadt a kapcsolat a Hostal!"
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:122
+msgid "Conquer 3/4 of map"
+msgstr "A térkép 3/4 ének felderitése"
+
+#: C:\svn\s25client\trunk\src/iwDistribution.cpp:126
+msgid "Construction"
+msgstr "Epítés"
+
+#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:103
+msgid "Construction aid mode"
+msgstr "Epitkezés segitö mód"
+
+#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:131
+msgid "Continents"
+msgstr "Kontinens"
+
+#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:121
+msgid "Continue"
+msgstr "Folytatás"
+
+#: C:\svn\s25client\trunk\src/dskDirectIP.cpp:57
+msgid "Create Game"
+msgstr "Új Játék"
+
+#: C:\svn\s25client\trunk\src/dskCredits.cpp:60
+#: C:\svn\s25client\trunk\src/dskMainMenu.cpp:78
+msgid "Credits"
+msgstr "Credits"
+
+#: C:\svn\s25client\trunk\src/iwTools.cpp:52
+msgid "Crucible"
+msgstr "Olvasztótégely"
+
+#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:185
+#, c-format
+msgid ""
+"Current GF: %u / GF length: %u ms / NWF length: %u gf (%u ms) /  Ping: %u ms"
+msgstr ""
+"Jelenlegi GF: %u / GF hossz: %u ms / NWF hossz: %u gf (%u ms) /  Ping: %u ms"
+
+#: C:\svn\s25client\trunk\src/iwBuildOrder.cpp:72
+#: C:\svn\s25client\trunk\src/iwDistribution.cpp:171
+msgid "Default"
+msgstr "Alapbeállitás"
+
+#: C:\svn\s25client\trunk\src/iwAction.cpp:186
+#: C:\svn\s25client\trunk\src/iwBaseWarehouse.cpp:103
+#: C:\svn\s25client\trunk\src/iwBuilding.cpp:72
+msgid "Demolish house"
+msgstr "Ház lerombolása"
+
+#: C:\svn\s25client\trunk\src/iwDemolishBuilding.cpp:41
+msgid "Demolish?"
+msgstr "Lerombol?"
+
+#: C:\svn\s25client\trunk\src/iwMilitaryBuilding.cpp:170
+msgid ""
+"Demolition ist not allowed because the building is located in border area!"
+msgstr "Rombolás nem engedélyezett mert az épület a határvidéken van!"
+
+#: C:\svn\s25client\trunk\src/iwMilitaryBuilding.cpp:169
+msgid "Demolition ist not allowed because the building is under attack!"
+msgstr "Rombolás nem engedélyezett mert az épület támadás alatt van!"
+
+#: C:\svn\s25client\trunk\src/iwMilitaryBuilding.cpp:173
+msgid "Demolition not possible"
+msgstr "A rombolás nem lehetséges"
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:97
+msgid "Demolition prohibition:"
+msgstr "Rombolás lehetséges"
+
+#: C:\svn\s25client\trunk\src/iwAction.cpp:206
+#: C:\svn\s25client\trunk\src/iwAction.cpp:208
+msgid "Dig up road"
+msgstr "Út felásása"
+
+#: C:\svn\s25client\trunk\src/dskMultiPlayer.cpp:67
+msgid "Direct IP"
+msgstr "Direct IP"
+
+#: C:\svn\s25client\trunk\src/iwSave.cpp:205
+msgid "Disabled"
+msgstr "Kikapcsolva"
+
+#: C:\svn\s25client\trunk\src/iwAction.cpp:253
+msgid "Display options"
+msgstr "Beállítások kijelzése"
+
+#: C:\svn\s25client\trunk\src/iwDistribution.cpp:43
+#: C:\svn\s25client\trunk\src/iwMainMenu.cpp:54
+msgid "Distribution of goods"
+msgstr "Az árucikkek elosztása  "
+
+#: C:\svn\s25client\trunk\src/dskCredits.cpp:101
+msgid "Donators"
+msgstr "Támogatók"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:299
+msgid "Donkey breeder"
+msgstr "Szamártenyészö"
+
+#: C:\svn\s25client\trunk\src/iwDistribution.cpp:86
+#: C:\svn\s25client\trunk\src/iwDistribution.cpp:154
+msgid "Donkey breeding"
+msgstr "Szamártenyészö"
+
+#: C:\svn\s25client\trunk\src/iwBuildOrder.cpp:57
+msgid "Down"
+msgstr "Le"
+
+#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:64
+msgid "Downwards"
+msgstr "Lejebb"
+
+#: C:\svn\s25client\trunk\src/dskOptions.cpp:170
+msgid "Effects"
+msgstr "Effektek"
+
+#: C:\svn\s25client\trunk\src/iwLobbyConnect.cpp:61
+msgid "Email Address:"
+msgstr "Email cím:"
+
+#: C:\svn\s25client\trunk\src/iwOptionsWindow.cpp:58
+msgid "End game"
+msgstr "Játék vége"
+
+#: C:\svn\s25client\trunk\src/iwEndgame.cpp:46
+msgid "End game?"
+msgstr "Játék vége?"
+
+#: C:\svn\s25client\trunk\src/iwChat.cpp:55
+msgid "Enemies"
+msgstr "Ellenségek"
+
+#: C:\svn\s25client\trunk\src/iwAction.cpp:160
+#: C:\svn\s25client\trunk\src/iwAction.cpp:194
+#: C:\svn\s25client\trunk\src/iwAction.cpp:200
+msgid "Erect flag"
+msgstr "Zászló"
+
+#: C:\svn\s25client\trunk\src/dskGameLoader.cpp:189
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:460
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:772
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:786
+#: C:\svn\s25client\trunk\src/dskLobby.cpp:313
+#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:269
+#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:283
+msgid "Error"
+msgstr "Hiba"
+
+#: C:\svn\s25client\trunk\src/iwPlayReplay.cpp:91
+msgid "Error while opening file!"
+msgstr "Hiba a filemegnyitáskor!"
+
+#: C:\svn\s25client\trunk\src/iwPlayReplay.cpp:90
+#: C:\svn\s25client\trunk\src/iwPlayReplay.cpp:100
+msgid "Error while playing replay!"
+msgstr "Hiba a visszajátszásban!"
+
+#: C:\svn\s25client\trunk\src/iwPlayReplay.cpp:93
+msgid "Error: Replay is too old!"
+msgstr "Hiba: A visszajátszás túl régi!"
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:104
+msgid "Exploration:"
+msgstr "Felderítés:"
+
+#: C:\svn\s25client\trunk\src/dskGameLoader.cpp:141
+msgid "Failed to load map objects."
+msgstr "Nem sikerült betölteni a térkép tárgyait."
+
+#: C:\svn\s25client\trunk\src/dskGameLoader.cpp:153
+msgid "Failed to load terrain data."
+msgstr "Nem sikerült betölteni a terepadatot."
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:240
+msgid "Farm"
+msgstr "Tanya"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:292
+msgid "Farmer"
+msgstr "Farmer"
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:131
+msgid "Fast"
+msgstr "Gyors"
+
+#: C:\svn\s25client\trunk\src/iwMilitary.cpp:48
+msgid "Fewer defenders"
+msgstr "Kevesebb védök"
+
+#: C:\svn\s25client\trunk\src/iwMilitary.cpp:46
+msgid "Fewer recruits"
+msgstr "Kevesebb ujjonc"
+
+#: C:\svn\s25client\trunk\src/iwTextfile.cpp:69
+msgid "File was not found!"
+msgstr "File nem található!"
+
+#: C:\svn\s25client\trunk\src/iwPlayReplay.cpp:61
+#: C:\svn\s25client\trunk\src/iwSave.cpp:65
+msgid "Filename"
+msgstr "Filenév"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:136
+msgid "Fish"
+msgstr "Hal"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:287
+msgid "Fisher"
+msgstr "Halász"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:221
+msgid "Fishery"
+msgstr "Halászat"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:135
+msgid "Flour"
+msgstr "Liszt"
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:109
+msgid "FoW - all explored"
+msgstr "FoW - minden felderítve"
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:108
+msgid "Fog of War"
+msgstr "Köd"
+
+#: C:\svn\s25client\trunk\src/iwTransport.cpp:66
+msgid "Food"
+msgstr "Etel"
+
+#: C:\svn\s25client\trunk\src/iwDistribution.cpp:56
+msgid "Foodstuff"
+msgstr "Etelek"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:223
+msgid "Forester"
+msgstr "Faültetö"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:212
+msgid "Fortress"
+msgstr "Eröd"
+
+#: C:\svn\s25client\trunk\src/BuildingConsts.h:324
+msgid ""
+"From the lookout tower you can see far into previously unexplored lands."
+msgstr "A kilátótoronyból láthatod a felderítetlen területet."
+
+#: C:\svn\s25client\trunk\src/dskOptions.cpp:109
+msgid "Fullscreen"
+msgstr "Teljes Képernyö"
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:460
+msgid ""
+"Game can only be started as soon as everybody has a unique color,everyone is "
+"ready and all free slots are closed."
+msgstr ""
+"A játékot akkor lehet elindítani ha mindenkinek van egyedi szine,mindenki "
+"kész,és az üres helyen zárva vannak."
+
+#: C:\svn\s25client\trunk\src/dskGameLoader.cpp:145
+msgid "Game crate was picked and spread out..."
+msgstr "Játékláda felvéve és szétterjesztve..."
+
+#: C:\svn\s25client\trunk\src/iwOptionsWindow.cpp:55
+msgid "Game menu"
+msgstr "Játék menü"
+
+#: C:\svn\s25client\trunk\src/dskCredits.cpp:72
+msgid "Game testers"
+msgstr "Játéktesztelök"
+
+#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:824
+msgid "Game was paused."
+msgstr "Játék szüneteltetve"
+
+#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:847
+msgid "Game was resumed."
+msgstr "Játék folytatása"
+
+#: C:\svn\s25client\trunk\src/iwDirectIPCreate.cpp:53
+msgid "Game's Name:"
+msgstr "Játék Neve:"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:310
+msgid "General"
+msgstr "Tábornok  "
+
+#: C:\svn\s25client\trunk\src/iwMainMenu.cpp:61
+msgid "General statistics"
+msgstr "Általános statisztika"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:311
+msgid "Geologist"
+msgstr "Geológus"
+
+#: C:\svn\s25client\trunk\src/iwAction.cpp:257
+msgid "Go to headquarters"
+msgstr "Menj a föhadiszállásra"
+
+#: C:\svn\s25client\trunk\src/iwBaseWarehouse.cpp:70
+#: C:\svn\s25client\trunk\src/iwBuilding.cpp:78
+msgid "Go to place"
+msgstr "Menj a helyre"
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:119
+msgid "Goals:"
+msgstr "Cél:"
+
+#: C:\svn\s25client\trunk\src/iwTransport.cpp:59
+msgid "Gold"
+msgstr "Arany"
+
+#: C:\svn\s25client\trunk\src/iwDistribution.cpp:70
+msgid "Gold mine"
+msgstr "Aranybánya"
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:112
+msgid "Goods at start:"
+msgstr "Nyersanyagmennyiség induláskor"
+
+#: C:\svn\s25client\trunk\src/iwDistribution.cpp:75
+msgid "Grain"
+msgstr "Búza"
+
+#: C:\svn\s25client\trunk\src/BuildingConsts.h:412
+msgid ""
+"Grain and water are needed for rearing pigs. The meat thus obtained can then "
+"be processed by a butcher."
+msgstr "Disznóneveléshez kell búza és víz. A húst a hentes használja fel."
+
+#: C:\svn\s25client\trunk\src/iwDistribution.cpp:58
+msgid "Granite mine"
+msgstr "Köbánya"
+
+#: C:\svn\s25client\trunk\src/dskOptions.cpp:75
+msgid "Graphics"
+msgstr "Grafika"
+
+#: C:\svn\s25client\trunk\src/dskOptions.cpp:133
+msgid "Graphics Driver"
+msgstr "Grafikai Vezérlö"
+
+#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:329
+msgid "Greenland"
+msgstr "Zöld vidék"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:205
+msgid "Guardhouse"
+msgstr "Örház"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:150
+msgid "Ham"
+msgstr "Disznó"
+
+#: C:\svn\s25client\trunk\src/iwTools.cpp:50
+msgid "Hammer"
+msgstr "Kalapács"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:242
+msgid "Harbor building"
+msgstr "Kikötöépület"
+
+#: C:\svn\s25client\trunk\src/iwHQ.cpp:43
+msgid "Headquarters"
+msgstr "Föhadiszállás"
+
+#: C:\svn\s25client\trunk\src/iwBuilding.cpp:70
+#: C:\svn\s25client\trunk\src/iwBuildingProductivities.cpp:82
+msgid "Help"
+msgstr "Segítség"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:285
+msgid "Helper"
+msgstr "Lakos"
+
+#: C:\svn\s25client\trunk\src/iwLobbyServerInfo.cpp:77
+msgid "Host:"
+msgstr "Host:"
+
+#: C:\svn\s25client\trunk\src/iwAction.cpp:256
+msgid "House names"
+msgstr "Házak neve"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:225
+msgid "Hunter"
+msgstr "Vadász"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:291
+msgid "Huntsman"
+msgstr "Vadász"
+
+#: C:\svn\s25client\trunk\src/dskLobby.cpp:74
+msgid "ID"
+msgstr "ID"
+
+#: C:\svn\s25client\trunk\src/iwDirectIPConnect.cpp:52
+msgid "IP Address of Host:"
+msgstr "A Host IP címe"
+
+#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:263
+msgid "Incomplete message was received!"
+msgstr "Befelyezetlen levél érkezett!"
+
+#: C:\svn\s25client\trunk\src/iwMilitary.cpp:50
+msgid "Interior"
+msgstr "Belsö "
+
+#: C:\svn\s25client\trunk\src/dskMultiPlayer.cpp:63
+msgid "Internet Lobby"
+msgstr "Internet Lobby"
+
+#: C:\svn\s25client\trunk\src/dskLobby.cpp:69
+msgid "Internet Ranking"
+msgstr "Internetes Helyezés"
+
+#: C:\svn\s25client\trunk\src/iwRoadWindow.cpp:49
+msgid "Interrupt road building"
+msgstr "Útépítés megszakitása"
+
+#: C:\svn\s25client\trunk\src/dskMainMenu.cpp:76
+msgid "Intro"
+msgstr "Intro"
+
+#: C:\svn\s25client\trunk\src/iwPlayReplay.cpp:92
+msgid "Invalid Replay!"
+msgstr "Ervénytelen Visszajátszás"
+
+#: C:\svn\s25client\trunk\src/iwDirectIPConnect.cpp:133
+#: C:\svn\s25client\trunk\src/iwDirectIPCreate.cpp:150
+msgid "Invalid port. The valid port-range is 1 to 65535!"
+msgstr "Rossz port. A jó port 1 és 65535 között van!"
+
+#: C:\svn\s25client\trunk\src/iwDistribution.cpp:95
+msgid "Iron"
+msgstr "Vas"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:300
+msgid "Iron founder"
+msgstr "Kohász"
+
+#: C:\svn\s25client\trunk\src/iwDistribution.cpp:66
+msgid "Iron mine"
+msgstr "Vasércbánya"
+
+#: C:\svn\s25client\trunk\src/iwTransport.cpp:60
+msgid "Iron ore"
+msgstr "Vasérc"
+
+#: C:\svn\s25client\trunk\src/iwDistribution.cpp:114
+msgid "Iron smelter"
+msgstr "Kohászat"
+
+#: C:\svn\s25client\trunk\src/BuildingConsts.h:474
+msgid ""
+"It is possible to build small rowing boats as well as huge cargo ships in a "
+"shipyard. The boards required for this are skillfully worked by shipwrights."
+msgstr ""
+"Lehet kis csónakokat és nagy hajókat építeni a hajógyárban. Deszkák kellenek "
+"a munkához."
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:566
+msgid "Japaneses"
+msgstr "Japánok"
+
+#: C:\svn\s25client\trunk\src/dskDirectIP.cpp:58
+msgid "Join Game"
+msgstr "Csatlakozás"
+
+#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:471
+msgid "Keyboard layout"
+msgstr "Billentyüzetkiosztás"
+
+#: C:\svn\s25client\trunk\src/dskOptions.cpp:89
+msgid "Language:"
+msgstr "Nyelv:"
+
+#: C:\svn\s25client\trunk\src/iwPlayReplay.cpp:61
+msgid "Length"
+msgstr "Hossz"
+
+#: C:\svn\s25client\trunk\src/ctrlProgress.cpp:59
+msgid "Less"
+msgstr "Kevesebb"
+
+#: C:\svn\s25client\trunk\src/iwAction.cpp:228
+msgid "Less attackers"
+msgstr "Kevesebb támadó"
+
+#: C:\svn\s25client\trunk\src/iwTools.cpp:46
+#: C:\svn\s25client\trunk\src/iwTools.cpp:47
+#: C:\svn\s25client\trunk\src/iwTools.cpp:48
+#: C:\svn\s25client\trunk\src/iwTools.cpp:49
+#: C:\svn\s25client\trunk\src/iwTools.cpp:50
+#: C:\svn\s25client\trunk\src/iwTools.cpp:51
+#: C:\svn\s25client\trunk\src/iwTools.cpp:52
+#: C:\svn\s25client\trunk\src/iwTools.cpp:53
+#: C:\svn\s25client\trunk\src/iwTools.cpp:54
+#: C:\svn\s25client\trunk\src/iwTools.cpp:55
+#: C:\svn\s25client\trunk\src/iwTools.cpp:56
+#: C:\svn\s25client\trunk\src/iwTools.cpp:57
+msgid "Less often"
+msgstr "Kevésbé"
+
+#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:66
+msgid "Less repeats"
+msgstr "Kevesebb ujrajátszás"
+
+#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:58
+msgid "Load"
+msgstr "Betöltés"
+
+#: C:\svn\s25client\trunk\src/iwOptionsWindow.cpp:74
+msgid "Load 'ReadMe' file"
+msgstr "'ReadMe' file betöltése"
+
+#: C:\svn\s25client\trunk\src/dskSinglePlayer.cpp:73
+msgid "Load game"
+msgstr "Játék betöltése"
+
+#: C:\svn\s25client\trunk\src/iwOptionsWindow.cpp:78
+#: C:\svn\s25client\trunk\src/iwSave.cpp:256
+msgid "Load game!"
+msgstr "Játék betöltése!"
+
+#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:119
+msgid "Load game..."
+msgstr "Játék betöltése..."
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:89
+msgid "Lock teams:"
+msgstr "Zárt Csapatok"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:217
+msgid "Lookout tower"
+msgstr "Felderítötorony"
+
+#: C:\svn\s25client\trunk\src/iwLobbyRanking.cpp:78
+msgid "Lost"
+msgstr "Vereség"
+
+#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:875
+#: C:\svn\s25client\trunk\src/dskLobby.cpp:313
+msgid "Lost connection to lobby!"
+msgstr "Elveszett a kapcsolat a lobbyval"
+
+#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:861
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:772
+#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:266
+msgid "Lost connection to server!"
+msgstr "Elveszett a kapcsolat a szerverrel!"
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:114
+msgid "Low"
+msgstr "Alacsony"
+
+#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:101
+msgid "Main selection"
+msgstr "Fö kiválasztás"
+
+#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:99
+#: C:\svn\s25client\trunk\src/dskLobby.cpp:74
+msgid "Map"
+msgstr "Térkép"
+
+#: C:\svn\s25client\trunk\src/iwLobbyServerInfo.cpp:73
+msgid "Map Name:"
+msgstr "Térkép:"
+
+#: C:\svn\s25client\trunk\src/dskGameLoader.cpp:123
+msgid "Map was loaded and pinned at the wall..."
+msgstr "Térkép betöltve és kiszögelve a falra..."
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:147
+msgid "Map: "
+msgstr "Térkép:"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:149
+msgid "Meat"
+msgstr "Hús"
+
+#: C:\svn\s25client\trunk\src/BuildingConsts.h:375
+msgid "Meat the hunter acquires is used to feed the miners."
+msgstr "A vadász által szerzett hús a bányászoknak kell."
+
+#: C:\svn\s25client\trunk\src/iwMainMenu.cpp:62
+msgid "Merchandise statistics"
+msgstr "Árustatisztika"
+
+#: C:\svn\s25client\trunk\src/iwDistribution.cpp:102
+#: C:\svn\s25client\trunk\src/iwDistribution.cpp:130
+msgid "Metalworker"
+msgstr "Szerszámkészitö"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:228
+msgid "Metalworks"
+msgstr "Szerszámkészitö"
+
+#: C:\svn\s25client\trunk\src/iwMainMenu.cpp:71
+msgid "Military"
+msgstr "Katonaság"
+
+#: C:\svn\s25client\trunk\src/iwDistribution.cpp:78
+msgid "Mill"
+msgstr "Malom"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:293
+msgid "Miller"
+msgstr "Malomkezelö"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:296
+msgid "Miner"
+msgstr "Bányász"
+
+#: C:\svn\s25client\trunk\src/iwDistribution.cpp:118
+msgid "Mint"
+msgstr "Aranyolvasztó"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:301
+msgid "Minter"
+msgstr "Aranyolvasztó"
+
+#: C:\svn\s25client\trunk\src/dskOptions.cpp:107
+msgid "Mode:"
+msgstr "Mód:"
+
+#: C:\svn\s25client\trunk\src/ctrlProgress.cpp:60
+msgid "More"
+msgstr "Több"
+
+#: C:\svn\s25client\trunk\src/iwAction.cpp:229
+msgid "More attackers"
+msgstr "Több támadó"
+
+#: C:\svn\s25client\trunk\src/iwMilitary.cpp:48
+msgid "More defenders"
+msgstr "Több védelmezök"
+
+#: C:\svn\s25client\trunk\src/iwTools.cpp:46
+#: C:\svn\s25client\trunk\src/iwTools.cpp:47
+#: C:\svn\s25client\trunk\src/iwTools.cpp:48
+#: C:\svn\s25client\trunk\src/iwTools.cpp:49
+#: C:\svn\s25client\trunk\src/iwTools.cpp:50
+#: C:\svn\s25client\trunk\src/iwTools.cpp:51
+#: C:\svn\s25client\trunk\src/iwTools.cpp:52
+#: C:\svn\s25client\trunk\src/iwTools.cpp:53
+#: C:\svn\s25client\trunk\src/iwTools.cpp:54
+#: C:\svn\s25client\trunk\src/iwTools.cpp:55
+#: C:\svn\s25client\trunk\src/iwTools.cpp:56
+#: C:\svn\s25client\trunk\src/iwTools.cpp:57
+msgid "More often"
+msgstr "Gyakrabban"
+
+#: C:\svn\s25client\trunk\src/iwMilitary.cpp:46
+msgid "More recruits"
+msgstr "Több ujjonc"
+
+#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:67
+msgid "More repeats"
+msgstr "Több ujrajátszás"
+
+#: C:\svn\s25client\trunk\src/dskMainMenu.cpp:72
+msgid "Multiplayer"
+msgstr "Többjátékos"
+
+#: C:\svn\s25client\trunk\src/dskOptions.cpp:161
+msgid "Music"
+msgstr "Zene"
+
+#: C:\svn\s25client\trunk\src/dskOptions.cpp:179
+msgid "Music player"
+msgstr "Zenelejátszó"
+
+#: C:\svn\s25client\trunk\src/dskLobby.cpp:76
+#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:111
+msgid "Name"
+msgstr "Név"
+
+#: C:\svn\s25client\trunk\src/dskOptions.cpp:85
+msgid "Name in Game:"
+msgstr "Név a Játékban:"
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:101
+msgid "Near frontiers"
+msgstr "Közel a határhoz"
+
+#: C:\svn\s25client\trunk\src/dskMultiPlayer.cpp:65
+msgid "Network/LAN"
+msgstr "Hálózat/LAN"
+
+#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:127
+msgid "New maps"
+msgstr "Új Térképek"
+
+#: C:\svn\s25client\trunk\src/iwWares.cpp:165
+msgid "Next page"
+msgstr "Következö oldal"
+
+#: C:\svn\s25client\trunk\src/iwLobbyConnect.cpp:69
+msgid "No"
+msgstr "Nem"
+
+#: C:\svn\s25client\trunk\src/iwPostWindow.cpp:53
+msgid "No letters!"
+msgstr "Nincs levél!"
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:121
+msgid "None"
+msgstr "Nincs"
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:115
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:130
+msgid "Normal"
+msgstr "Normális"
+
+#: C:\svn\s25client\trunk\src/dskSinglePlayer.cpp:95
+msgid "Not available"
+msgstr "Nem elérhetö"
+
+#: C:\svn\s25client\trunk\src/GameClientGF_Replay.cpp:118
+#, c-format
+msgid "Notice: The played replay has ended. (GF: %u)"
+msgstr "A visszajátszás végetért. (GF: %u)"
+
+#: C:\svn\s25client\trunk\src/iwAction.cpp:243
+msgid "Number of attackers"
+msgstr "Támadók száma"
+
+#: C:\svn\s25client\trunk\src/iwMsgbox.cpp:63
+#: C:\svn\s25client\trunk\src/iwMsgbox.cpp:69
+#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:23
+#: C:\svn\s25client\trunk\src/iwSkipGFs.cpp:52
+msgid "OK"
+msgstr "OK"
+
+#: C:\svn\s25client\trunk\src/iwAction.cpp:255
+msgid "Observation window"
+msgstr "Megfigyelési ablak"
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:99
+#: C:\svn\s25client\trunk\src/dskOptions.cpp:120
+#: C:\svn\s25client\trunk\src/dskOptions.cpp:130
+#: C:\svn\s25client\trunk\src/dskOptions.cpp:164
+#: C:\svn\s25client\trunk\src/dskOptions.cpp:173
+msgid "Off"
+msgstr "Ki"
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:106
+msgid "Off (all visible)"
+msgstr "Ki (minden látható)"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:309
+msgid "Officer"
+msgstr "Tiszt"
+
+#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:125
+msgid "Old maps"
+msgstr "Régi Térképek"
+
+#: C:\svn\s25client\trunk\src/dskOptions.cpp:119
+#: C:\svn\s25client\trunk\src/dskOptions.cpp:129
+#: C:\svn\s25client\trunk\src/dskOptions.cpp:163
+#: C:\svn\s25client\trunk\src/dskOptions.cpp:172
+msgid "On"
+msgstr "Be"
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:194
+msgid "Open"
+msgstr "Nyitott"
+
+#: C:\svn\s25client\trunk\src/dskMainMenu.cpp:74
+#: C:\svn\s25client\trunk\src/dskOptions.cpp:68
+msgid "Options"
+msgstr "Beállitások"
+
+#: C:\svn\s25client\trunk\src/iwBuildingSite.cpp:55
+msgid "Order of building site"
+msgstr "Epités alatt"
+
+#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:137
+#, fuzzy
+msgid "Other"
+msgstr "Hentes"
+
+#: C:\svn\s25client\trunk\src/dskCredits.cpp:80
+msgid "Other Support"
+msgstr "Egyéb Támogatás"
+
+#: C:\svn\s25client\trunk\src/iwMinimap.cpp:51
+msgid "Outline map"
+msgstr "Vázlatos térkép"
+
+#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:129
+msgid "Own maps"
+msgstr "Saját Térképek"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:314
+msgid "Pack donkey"
+msgstr "Szamár"
+
+#: C:\svn\s25client\trunk\src/iwDirectIPConnect.cpp:60
+msgid "Password (if needed):"
+msgstr "Jelszó (ha szükséges)"
+
+#: C:\svn\s25client\trunk\src/iwDirectIPCreate.cpp:61
+#: C:\svn\s25client\trunk\src/iwLobbyConnect.cpp:56
+msgid "Password:"
+msgstr "Jelszó:"
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:73
+msgid "Past player"
+msgstr "Elözö Játékos"
+
+#: C:\svn\s25client\trunk\src/iwTools.cpp:49
+msgid "Pick-axe"
+msgstr "Csákány"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:298
+msgid "Pig breeder"
+msgstr "Disznó nevelö"
+
+#: C:\svn\s25client\trunk\src/iwDistribution.cpp:82
+#: C:\svn\s25client\trunk\src/iwDistribution.cpp:150
+msgid "Pig farm"
+msgstr "Disznófarm"
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:70
+#: C:\svn\s25client\trunk\src/dskLobby.cpp:74
+msgid "Ping"
+msgstr "Ping"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:305
+msgid "Planer"
+msgstr "Ásó"
+
+#: C:\svn\s25client\trunk\src/dskSinglePlayer.cpp:67
+msgid "Play Replay"
+msgstr "Visszajátszás inditása"
+
+#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:68
+#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:236
+msgid "Playback in this order"
+msgstr "Lejátszás ebben a sorrendben"
+
+#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:137
+msgid "Played"
+msgstr "Játszott"
+
+#: C:\svn\s25client\trunk\src/dskLobby.cpp:74
+#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:111
+msgid "Player"
+msgstr "Játékos"
+
+#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:790
+#, c-format
+msgid "Player '%s' joined the game!"
+msgstr "'%s' csatlakozott a játékhoz!"
+
+#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:787
+#, c-format
+msgid "Player '%s' left the game!"
+msgstr "'%s' elhagyta a játékot!"
+
+#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:893
+#, c-format
+msgid "Player '%s' switched to player '%s'"
+msgstr " '%s' átváltott '%s'"
+
+#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:911
+#, c-format
+msgid "Player '%s' was defeated!"
+msgstr "'%s' Vesztett!"
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:58
+msgid "Player Name"
+msgstr "Játékos Neve"
+
+#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:49
+msgid "Playlist:"
+msgstr "Lejátszási lista:"
+
+#: C:\svn\s25client\trunk\src/iwDirectIPCreate.cpp:142
+msgid "Please enter a name for the game"
+msgstr "Írd be a játék nevét!"
+
+#: C:\svn\s25client\trunk\src/iwLobbyConnect.cpp:220
+msgid "Please fill out all fields!"
+msgstr "Minden mezöt töltsön ki!"
+
+#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:89
+#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:91
+msgid "Please wait..."
+msgstr "Kérem várjon..."
+
+#: C:\svn\s25client\trunk\src/dskLobby.cpp:76
+msgid "Points"
+msgstr "Pontok"
+
+#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:105
+msgid "Post office"
+msgstr "Pósta"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:306
+msgid "Private"
+msgstr "Közlegény"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:307
+msgid "Private first class"
+msgstr "Felszerelt Közlegény"
+
+#: C:\svn\s25client\trunk\src/iwBuildingProductivities.cpp:61
+msgid "Productivity"
+msgstr "Termelékenység"
+
+#: C:\svn\s25client\trunk\src/iwPlayReplay.cpp:94
+msgid "Program version is too old to play that replay!"
+msgstr "A program túl régi hogy lejátsza azt a visszajátszást!"
+
+#: C:\svn\s25client\trunk\src/dskCredits.cpp:65
+msgid "Programming"
+msgstr "Programozás"
+
+#: C:\svn\s25client\trunk\src/iwAction.cpp:167
+#: C:\svn\s25client\trunk\src/iwAction.cpp:175
+msgid "Pull down flag"
+msgstr "Zászló leszúrása"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:222
+msgid "Quarry"
+msgstr "Köfejtö"
+
+#: C:\svn\s25client\trunk\src/dskMainMenu.cpp:80
+msgid "Quit program"
+msgstr "Kilépés"
+
+#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:135
+msgid "RTTR"
+msgstr "RTTR"
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:62
+msgid "Race"
+msgstr "Faj"
+
+#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:236
+msgid "Random playback"
+msgstr "Véletlenszerü Lejátszás"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:288
+msgid "Ranger"
+msgstr "Faültetö"
+
+#: C:\svn\s25client\trunk\src/BuildingConsts.h:400
+msgid ""
+"Raw iron ore is smelted in the iron smelters with the help of coal and raw "
+"iron. The processed iron is then used to making weapons (in the Armory) and "
+"tools (in the metalworks)."
+msgstr ""
+"Vasércböl és szénböl a kohász vasat csinál. Ebböl fegyverek és eszközök "
+"készülnek."
+
+#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:475
+msgid "Readme!"
+msgstr "Readme!"
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:68
+msgid "Ready?"
+msgstr "Kész?"
+
+#: C:\svn\s25client\trunk\src/iwLobbyConnect.cpp:77
+msgid "Register"
+msgstr "Regisztráció"
+
+#: C:\svn\s25client\trunk\src/iwLobbyConnect.cpp:300
+msgid "Registration successful!"
+msgstr "Sikeres Regisztráció!"
+
+#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:56
+msgid "Remove"
+msgstr "Eltávolitás"
+
+#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:62
+msgid "Remove track"
+msgstr "Szám Eltávolitása"
+
+#: C:\svn\s25client\trunk\src/iwHQ.cpp:49
+msgid "Reserve"
+msgstr "Lefoglalt"
+
+#: C:\svn\s25client\trunk\src/dskOptions.cpp:103
+msgid "Resolution:"
+msgstr "Felbontás:"
+
+#: C:\svn\s25client\trunk\src/dskSinglePlayer.cpp:64
+msgid "Resume last game"
+msgstr "Visszatérés a legutóbbi játékhoz"
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:86
+msgid "Return"
+msgstr "Vissza"
+
+#: C:\svn\s25client\trunk\src/iwTools.cpp:53
+msgid "Rod and line"
+msgstr "Horgászfelszerelés"
+
+#: C:\svn\s25client\trunk\src/iwTools.cpp:56
+msgid "Rolling pin"
+msgstr "Sodrófa"
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:566
+msgid "Romans"
+msgstr "Rómaiak"
+
+#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:823
+#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:846
+msgid "SYSTEM"
+msgstr "RENDSZER"
+
+#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:57
+msgid "Save"
+msgstr "Mentés"
+
+#: C:\svn\s25client\trunk\src/iwLobbyConnect.cpp:66
+msgid "Save Password?"
+msgstr "Jelszó mentése?"
+
+#: C:\svn\s25client\trunk\src/iwOptionsWindow.cpp:82
+#: C:\svn\s25client\trunk\src/iwSave.cpp:195
+msgid "Save game!"
+msgstr "Játék mentése!"
+
+#: C:\svn\s25client\trunk\src/iwTools.cpp:48
+msgid "Saw"
+msgstr "Fürész"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:236
+msgid "Sawmill"
+msgstr "Fürészet"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:313
+msgid "Scout"
+msgstr "Felderitö"
+
+#: C:\svn\s25client\trunk\src/iwTools.cpp:54
+msgid "Scythe"
+msgstr "Kasza"
+
+#: C:\svn\s25client\trunk\src/iwBaseWarehouse.cpp:68
+msgid "Select all"
+msgstr "Mindet kijelöl"
+
+#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:114
+msgid "Selection of maps"
+msgstr "Térkép kiválasztása"
+
+#: C:\svn\s25client\trunk\src/iwAction.cpp:169
+#: C:\svn\s25client\trunk\src/iwAction.cpp:177
+msgid "Send out scout"
+msgstr "Felderítö kiküldése"
+
+#: C:\svn\s25client\trunk\src/iwBuildOrder.cpp:65
+msgid "Sequence of given order"
+msgstr "Kiadott parancsok sorrendja"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:308
+msgid "Sergeant"
+msgstr "Örmester "
+
+#: C:\svn\s25client\trunk\src/iwBuildOrder.cpp:42
+#: C:\svn\s25client\trunk\src/iwMainMenu.cpp:76
+msgid "Series sequence"
+msgstr "Sorrendek"
+
+#: C:\svn\s25client\trunk\src/dskLobby.cpp:74
+msgid "Server"
+msgstr "Szerver"
+
+#: C:\svn\s25client\trunk\src/iwLobbyServerInfo.cpp:71
+msgid "Server Information"
+msgstr "Szerverinformáció"
+
+#: C:\svn\s25client\trunk\src/iwLobbyServerInfo.cpp:75
+msgid "Server Name:"
+msgstr "Szervernév:"
+
+#: C:\svn\s25client\trunk\src/iwDirectIPConnect.cpp:56
+#: C:\svn\s25client\trunk\src/iwDirectIPCreate.cpp:57
+msgid "Server-Port:"
+msgstr "Szerver-Port:"
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:91
+msgid "Shared team view"
+msgstr "Osztott csapatnézet"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:138
+msgid "Shield"
+msgstr "Pajzs"
+
+#: C:\svn\s25client\trunk\src/iwMainMenu.cpp:73
+msgid "Ship register"
+msgstr "Hajónevek"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:312
+msgid "Shipwright"
+msgstr "Hajóépítö"
+
+#: C:\svn\s25client\trunk\src/iwDistribution.cpp:134
+msgid "Shipyard"
+msgstr "Hajógyár"
+
+#: C:\svn\s25client\trunk\src/iwTools.cpp:51
+msgid "Shovel"
+msgstr "Ásó"
+
+#: C:\svn\s25client\trunk\src/dskMainMenu.cpp:70
+msgid "Singleplayer"
+msgstr "Egyjátékos"
+
+#: C:\svn\s25client\trunk\src/dskSinglePlayer.cpp:95
+msgid ""
+"Singleplayer mode and AI are not yet implemented. Please use the Multiplayer "
+"mode and 'Direct IP' to create a Singleplayer game."
+msgstr ""
+"A Singleplayer és az MI nincs kész. Használd a Multiplayert és a Direct "
+"IPben csinálhatsz Singleplayert."
+
+#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:111
+msgid "Size"
+msgstr "Méret"
+
+#: C:\svn\s25client\trunk\src/iwSkipGFs.cpp:42
+msgid "Skip GameFrames"
+msgstr "GameFrames kihagyása"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:224
+msgid "Slaughterhouse"
+msgstr "Hentes"
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:129
+msgid "Slow"
+msgstr "Lassú"
+
+#: C:\svn\s25client\trunk\src/dskOptions.cpp:77
+msgid "Sound/Music"
+msgstr "Zene"
+
+#: C:\svn\s25client\trunk\src/dskOptions.cpp:147
+msgid "Sounddriver"
+msgstr "Hangvezérlö"
+
+#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:105
+msgid "Specify the playlist name"
+msgstr "Ird be a lejátszási lista nevét"
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:126
+msgid "Speed:"
+msgstr "Sebesség:"
+
+#: C:\svn\s25client\trunk\src/iwDirectIPCreate.cpp:68
+msgid "Start"
+msgstr "Kezdés"
+
+#: C:\svn\s25client\trunk\src/iwSave.cpp:65
+msgid "Start GF"
+msgstr "GF indítása"
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:81
+#: C:\svn\s25client\trunk\src/dskSinglePlayer.cpp:70
+msgid "Start game"
+msgstr "Új Játék"
+
+#: C:\svn\s25client\trunk\src/iwInventory.cpp:44
+#: C:\svn\s25client\trunk\src/iwMainMenu.cpp:66
+msgid "Stock"
+msgstr "Készlet"
+
+#: C:\svn\s25client\trunk\src/iwPlayReplay.cpp:61
+msgid "Stocktaking date"
+msgstr "Leltározás dátum"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:290
+msgid "Stonemason"
+msgstr "Köfejtö"
+
+#: C:\svn\s25client\trunk\src/iwTransport.cpp:63
+msgid "Stones"
+msgstr "Kö"
+
+#: C:\svn\s25client\trunk\src/iwBaseWarehouse.cpp:63
+msgid "Stop storage"
+msgstr "Nem tárol tovább"
+
+#: C:\svn\s25client\trunk\src/iwStorehouse.cpp:41
+msgid "Storehouse"
+msgstr "Raktár"
+
+#: C:\svn\s25client\trunk\src/iwAction.cpp:234
+msgid "Strong attackers"
+msgstr "Erös támadok"
+
+#: C:\svn\s25client\trunk\src/iwMilitary.cpp:47
+msgid "Strong defense"
+msgstr "Erös védelem"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:133
+msgid "Sword"
+msgstr "Kard"
+
+#: C:\svn\s25client\trunk\src/languages.cpp:69
+msgid "System language"
+msgstr "Rendszer nyelv"
+
+#: C:\svn\s25client\trunk\src/iwBaseWarehouse.cpp:61
+msgid "Take out of store"
+msgstr "Kivitel"
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:66
+msgid "Team"
+msgstr "Csapat"
+
+#: C:\svn\s25client\trunk\src/iwPlayReplay.cpp:96
+msgid "Temporary map file was not found!"
+msgstr "Ideiglenes térképfile nem található!"
+
+#: C:\svn\s25client\trunk\src/dskCredits.cpp:110
+msgid "Thank you for your donations!"
+msgstr "Köszönet a támagatásokért!"
+
+#: C:\svn\s25client\trunk\src/BuildingConsts.h:333
+msgid ""
+"Thanks to its immense strength, the catapults represents an effective weapon "
+"against enemy military buildings."
+msgstr "A catapultok az ellenséges katonai épületek ellen erösek."
+
+#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:804
+msgid "The Game is not in sync. Checksums of some players don't match."
+msgstr "A Játék nincs szinkronban. A játékosok ellenörzöszámai nem egyeznek. "
+
+#: C:\svn\s25client\trunk\src/dskCredits.cpp:57
+msgid "The Settlers II.5 RTTR"
+msgstr "The Settlers II.5 RTTR"
+
+#: C:\svn\s25client\trunk\src/dskDirectIP.cpp:49
+#: C:\svn\s25client\trunk\src/dskLobby.cpp:58
+#: C:\svn\s25client\trunk\src/dskMainMenu.cpp:63
+#: C:\svn\s25client\trunk\src/dskMultiPlayer.cpp:56
+#: C:\svn\s25client\trunk\src/dskSinglePlayer.cpp:57
+#, c-format
+msgid "The Settlers II.5 RTTR, v%s-%s"
+msgstr "The Settlers II.5 RTTR, v%s-%s"
+
+#: C:\svn\s25client\trunk\src/BuildingConsts.h:387
+msgid ""
+"The armory produces swords and strong shields. This equipment is vital for "
+"your soldiers."
+msgstr "A kovács késziti a kardot és a pajzsot. Ezek kellenek a katonáknak."
+
+#: C:\svn\s25client\trunk\src/BuildingConsts.h:253
+msgid ""
+"The barracks is a very small hut which can be used by your soldiers as "
+"quarters. Using the gold coin button you can stop the delivery of gold coins "
+"to the soldiers stationed here. However, without gold coins the soldiers "
+"here can not train and improve their skills."
+msgstr ""
+"Az örbódé egy nagyon kicsi ház, amiben katonák szállásolhatóak. Az aranyérme "
+"gombot használva megállithatod a szállitását. Erme nélkül azonban a katonák "
+"nem tudják fejleszteni képességeiket."
+
+#: C:\svn\s25client\trunk\src/BuildingConsts.h:380
+msgid ""
+"The brewer produces fine beer from grain and water. This drink is needed to "
+"fill the soldiers with courage."
+msgstr "A sörfözö vizböl és gabonából sört készít, ez a katonagyártáshoz kell."
+
+#: C:\svn\s25client\trunk\src/BuildingConsts.h:368
+msgid ""
+"The butcher processes the livestock delivered into nutritious ham on which "
+"you miners are fed."
+msgstr "A hentes a disznóból húst készít a bényészoknak."
+
+#: C:\svn\s25client\trunk\src/BuildingConsts.h:453
+msgid ""
+"The carpenter turns the woodcutter's logs into made-to-measure planks. There "
+"form the basic for building houses and ships."
+msgstr ""
+"A fürész csinál deszkákat a kivágott fákból. Ezek epítkezéshez és "
+"hajógyártáshoz kellenek."
+
+#: C:\svn\s25client\trunk\src/BuildingConsts.h:393
+msgid ""
+"The countless tools which your workers need are made in the metalworks. This "
+"requires boards and iron."
+msgstr ""
+"A szerszámkészitö készit felszerelést mindenkinek. Deszka és vas kell hozzá."
+
+#: C:\svn\s25client\trunk\src/BuildingConsts.h:297
+msgid ""
+"The defensive capabilities and size of the fortress are unsurpassed. This "
+"stronghold ensures that other valuable buildings and commodities are "
+"protected. Using the gold coin button you can stop the delivery of gold "
+"coins to the soldiers stationed here. However, without gold coins the "
+"soldiers here can not train and improve their skills."
+msgstr ""
+"Az eröd a legerösebb katonai épület. Megvédi a környezö épületeket. Az "
+"aranyérme gombot használva megállithatod a szállitását. Erme nélkül azonban "
+"a katonák nem tudják fejleszteni képességeiket."
+
+#: C:\svn\s25client\trunk\src/BuildingConsts.h:483
+msgid ""
+"The farmer plants and harvests grain in the surrounding fields. A windmill "
+"then processes the harvested grain into flour or can be used to feed the "
+"pigs."
+msgstr ""
+"A farmer búzát ültet és arat a környezö földeken. A malomban lisztet "
+"csinálnak belöle amiböl a disznókat etetik."
+
+#: C:\svn\s25client\trunk\src/BuildingConsts.h:347
+msgid ""
+"The fish man is responsible for finding water rich in fish. His fish feed a "
+"great many miners."
+msgstr "A halász halat fog a bányászoknak."
+
+#: C:\svn\s25client\trunk\src/BuildingConsts.h:445
+msgid ""
+"The flour produced at the windmill can be combined with water in the bakery "
+"to make oven-fresh bread. It's your miners' favorite!"
+msgstr ""
+"A liszt a malomban készül és ez a péknek kell és még vizböl kenyeret süt. A "
+"bányászok kedvence!"
+
+#: C:\svn\s25client\trunk\src/BuildingConsts.h:438
+msgid ""
+"The grain is ground in the windmill. The flour from the windmill is later "
+"used at the bakery to bake bread."
+msgstr "A búzát megörlik a malomban. A lisztböl a pék kenyeret süt."
+
+#: C:\svn\s25client\trunk\src/BuildingConsts.h:265
+msgid ""
+"The guardhouse is a comfortable place for the military which is also "
+"protected by solid stone walls. Using the gold coin button you can stop the "
+"delivery of gold coins to the soldiers stationed here. However, without gold "
+"coins the soldiers here can not train and improve their skills."
+msgstr ""
+"Az örház kényelmes hely a katonáknak, és erös köfallal van védve. Az "
+"aranyérme gombot használva megállithatod a szállitását. Erme nélkül azonban "
+"a katonák nem tudják fejleszteni képességeiket."
+
+#: C:\svn\s25client\trunk\src/BuildingConsts.h:461
+msgid ""
+"The mint is responsible for producing valuable gold coins. These precious "
+"objects are produced using coal and gold."
+msgstr ""
+"Az aranyolvasztó késziti az érmét az aranyból. Ezek az értékes tárgyak arany "
+"és szén felhasználásával készülnek."
+
+#: C:\svn\s25client\trunk\src/BuildingConsts.h:491
+msgid ""
+"The pack donkeys bred here are used to transport your merchandise more "
+"efficiently. They are reared on water and grain."
+msgstr ""
+"Szamarak születnek itt amik az áruszállításban segitenek. Gabonán és vizen "
+"élnek."
+
+#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:170
+msgid "The specified file couldn't be loaded!"
+msgstr "A filet nem lehet betölteni!"
+
+#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:284
+msgid "The specified file couldn't be opened!"
+msgstr "A file nem nyitható meg!"
+
+#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:150
+#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:299
+msgid "The specified file couldn't be saved!"
+msgstr "A filet nem lehet menteni!"
+
+#: C:\svn\s25client\trunk\src/BuildingConsts.h:353
+msgid ""
+"The stonemason works the stone near his quarry into bricks. These are needed "
+"mainly for building houses and as ammunition for catapults."
+msgstr ""
+"A köfejtö a sziklából kőtömböt készit. Ezek építkezésekhez és a "
+"katapultokhoz kellenek."
+
+#: C:\svn\s25client\trunk\src/BuildingConsts.h:419
+msgid ""
+"The storehouse can help reduce long transportation journeys and is suited to "
+"the temporary storage of merchandise and inhabitants. You can release "
+"certain merchandise from the storehouse, as and when required. "
+"Alternatively, the storage function can be disabled. To do this, first "
+"choose the relevant icon followed by the desired merchandise or job symbol."
+msgstr ""
+"A raktárban tárolhatod az árukat és a munkásokat. Kitilthatsz árut inen."
+
+#: C:\svn\s25client\trunk\src/BuildingConsts.h:281
+msgid ""
+"The watchtower with its large amount of space is best suited for stationing "
+"a large number of your troops. Using the gold coin button you can stop the "
+"delivery of gold coins to the soldiers stationed here. However, without gold "
+"coins the soldiers here can not train and improve their skills."
+msgstr ""
+"Az örtorony sok helyet biztosít a katonáknak. Az aranyérme gombot használva "
+"megállithatod a szállitását. Erme nélkül azonban a katonák nem tudják "
+"fejleszteni képességeiket."
+
+#: C:\svn\s25client\trunk\src/iwDirectIPConnect.cpp:209
+msgid "This Server is full!"
+msgstr "Szerver tele!"
+
+#: C:\svn\s25client\trunk\src/iwSave.cpp:65
+msgid "Time"
+msgstr "Idö"
+
+#: C:\svn\s25client\trunk\src/iwTools.cpp:46
+msgid "Tongs"
+msgstr "Fogó"
+
+#: C:\svn\s25client\trunk\src/iwDirectIPConnect.cpp:213
+msgid "Too short Message received!"
+msgstr "Túl rövid üzenet érkezett!"
+
+#: C:\svn\s25client\trunk\src/iwMainMenu.cpp:58
+msgid "Tools"
+msgstr "Eszközök"
+
+#: C:\svn\s25client\trunk\src/iwBuildOrder.cpp:53
+msgid "Top"
+msgstr "Teteje"
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:123
+msgid "Total domination"
+msgstr "Teljes uralom"
+
+#: C:\svn\s25client\trunk\src/iwMainMenu.cpp:56
+msgid "Transport"
+msgstr "Szállító"
+
+#: C:\svn\s25client\trunk\src/dskGameLoader.cpp:133
+msgid "Tribal chiefs assembled around the table..."
+msgstr "Törzsfök gyültek ösze az asztal körül..."
+
+#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:111
+msgid "Type"
+msgstr "Típus"
+
+#: C:\svn\s25client\trunk\src/iwBuildOrder.cpp:55
+msgid "Up"
+msgstr "Fel"
+
+#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:63
+msgid "Upwards"
+msgstr "Fejjebb"
+
+#: C:\svn\s25client\trunk\src/iwLobbyConnect.cpp:50
+msgid "Username:"
+msgstr "Felhasználónév:"
+
+#: C:\svn\s25client\trunk\src/dskOptions.cpp:113
+msgid "VSync:"
+msgstr "VSync:"
+
+#: C:\svn\s25client\trunk\src/dskLobby.cpp:74
+#: C:\svn\s25client\trunk\src/dskLobby.cpp:76
+msgid "Version"
+msgstr "Verzió"
+
+#: C:\svn\s25client\trunk\src/iwLobbyServerInfo.cpp:79
+msgid "Version:"
+msgstr "Verzió:"
+
+#: C:\svn\s25client\trunk\src/dskOptions.cpp:123
+msgid "Vertex Buffer Objects:"
+msgstr "Vertex Buffer Objektumok:"
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:132
+msgid "Very fast"
+msgstr "Nagyon Gyors"
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:128
+msgid "Very slow"
+msgstr "Nagyon Lassú"
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:566
+msgid "Vikings"
+msgstr "Vikingek"
+
+#: C:\svn\s25client\trunk\src/iwDirectIPConnect.cpp:227
+msgid "Waiting for Playerinfo..."
+msgstr "Játékosra Várakozás..."
+
+#: C:\svn\s25client\trunk\src/iwDirectIPConnect.cpp:224
+#: C:\svn\s25client\trunk\src/iwLobbyConnect.cpp:313
+msgid "Waiting for Reply..."
+msgstr "Válaszra vár..."
+
+#: C:\svn\s25client\trunk\src/GameClientGF_Replay.cpp:76
+#, c-format
+msgid ""
+"Warning: The played replay is not in sync with the original match. (GF: %u)"
+msgstr ""
+"Figyelem: A lejátszott visszajátszás nincs szinkronban az eredeti matchal. "
+"(GF: %u)"
+
+#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:330
+msgid "Wasteland"
+msgstr "Sivatag"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:207
+msgid "Watchtower"
+msgstr "Örtorony"
+
+#: C:\svn\s25client\trunk\src/iwDistribution.cpp:139
+msgid "Water"
+msgstr "Víz"
+
+#: C:\svn\s25client\trunk\src/iwAction.cpp:233
+msgid "Weak attackers"
+msgstr "Gyenge támadók"
+
+#: C:\svn\s25client\trunk\src/iwMilitary.cpp:47
+msgid "Weak defense"
+msgstr "Gyenge védelem"
+
+#: C:\svn\s25client\trunk\src/iwTransport.cpp:56
+msgid "Weapons"
+msgstr "Fegyverek"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:238
+msgid "Well"
+msgstr "Kút"
+
+#: C:\svn\s25client\trunk\src/dskHostGame.cpp:100
+msgid "When attack"
+msgstr "Támadáskor"
+
+#: C:\svn\s25client\trunk\src/dskOptions.cpp:110
+msgid "Windowed"
+msgstr "Ablakban"
+
+#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:331
+msgid "Winter world"
+msgstr "Havas világ"
+
+#: C:\svn\s25client\trunk\src/BuildingConsts.h:361
+msgid ""
+"Within his area, the forester ensures the survival of the forest. He plants "
+"all types of trees."
+msgstr "A feültetö pótolja a favágó által kivágott fát."
+
+#: C:\svn\s25client\trunk\src/iwLobbyRanking.cpp:78
+msgid "Won"
+msgstr "Gyözelem"
+
+#: C:\svn\s25client\trunk\src/iwTransport.cpp:64
+msgid "Wood"
+msgstr "Fa"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:286
+msgid "Woodchopper"
+msgstr "Favágó"
+
+#: C:\svn\s25client\trunk\src/GameConsts.h:220
+msgid "Woodcutter"
+msgstr "Favágó"
+
+#: C:\svn\s25client\trunk\src/dskGameLoader.cpp:159
+msgid "World was put together and glued..."
+msgstr "A világot öszerakták és ragasztották..."
+
+#: C:\svn\s25client\trunk\src/iwDirectIPConnect.cpp:210
+msgid "Wrong Password!"
+msgstr "Rosz Jelszó!"
+
+#: C:\svn\s25client\trunk\src/iwDirectIPConnect.cpp:214
+msgid "Wrong Server Type!"
+msgstr "Rossz Szervertípus!"
+
+#: C:\svn\s25client\trunk\src/iwDirectIPConnect.cpp:211
+msgid "Wrong client version"
+msgstr "Rosz kliens verzió!"
+
+#: C:\svn\s25client\trunk\src/iwLobbyConnect.cpp:70
+msgid "Yes"
+msgstr "Igen"
+
+#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:144
+msgid "You are not allowed to change the standard playlist!"
+msgstr "Nem változtathatod meg az alap listát!"
+
+#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:120
+msgid "You are not allowed to delete the standard playlist!"
+msgstr "Nem törölheted az alap listát!"
+
+#: C:\svn\s25client\trunk\src/iwBaseWarehouse.cpp:59
+msgid "do nothing"
+msgstr "semmit se csinál"
+
+#: C:\svn\s25client\trunk\src/dskDirectIP.cpp:52
+#: C:\svn\s25client\trunk\src/dskMultiPlayer.cpp:58
+msgid "http://www.siedler25.org"
+msgstr "http://www.siedler25.org"
+
+#: C:\svn\s25client\trunk\src/dskOptions.cpp:117
+#: C:\svn\s25client\trunk\src/dskOptions.cpp:127
+msgid "not supported"
+msgstr "nem támogatott"
+
+#: C:\svn\s25client\trunk\src/iwSkipGFs.cpp:45
+msgid "to GameFrame:"
+msgstr "GameFramehez:"
+
+#: C:\svn\s25client\trunk\src/dskCredits.cpp:103
+msgid "various anonymous donators"
+msgstr "számos névtelen támogatók"
+
+#~ msgid "About"
+#~ msgstr "Névjegy"
+
+#~ msgid "Airhardt"
+#~ msgstr "Airhardt"
+
+#~ msgid "Cat666"
+#~ msgstr "Cat666"
+
+#~ msgid "Devil"
+#~ msgstr "Devil"
+
+#~ msgid "Divan"
+#~ msgstr "Divan"
+
+#~ msgid "Fenan"
+#~ msgstr "Fenan"
+
+#~ msgid "Florian Doersch (FloSoft)"
+#~ msgstr "Florian Doersch (FloSoft)"
+
+#~ msgid "Jan Montag"
+#~ msgstr "Jan Montag"
+
+#~ msgid "Jonas Trampe (NastX)"
+#~ msgstr "Jonas Trampe (NastX)"
+
+#~ msgid "Oliver Siebert (OLiver)"
+#~ msgstr "Oliver Siebert (OLiver)"
+
+#~ msgid "Patrick Haak (Demophobie)"
+#~ msgstr "Patrick Haak (Demophobie)"
+
+#~ msgid "Sotham"
+#~ msgstr "Sotham"
+
+#~ msgid "Zwoks-Stef"
+#~ msgstr "Zwoks-Stef"
+
+#~ msgid "liwo"
+#~ msgstr "liwo"
+
+#~ msgid "morlock"
+#~ msgstr "morlock"
+
+#~ msgid "muhahahaha"
+#~ msgstr "muhahahaha"
+
+#~ msgid "° 2005 - 2008 Settlers Freaks"
+#~ msgstr "° 2005 - 2008 Settlers Freaks"

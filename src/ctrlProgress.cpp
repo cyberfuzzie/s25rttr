@@ -1,0 +1,188 @@
+// $Id: ctrlProgress.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+//
+// Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
+//
+// This file is part of Siedler II.5 RTTR.
+//
+// Siedler II.5 RTTR is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+//
+// Siedler II.5 RTTR is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Siedler II.5 RTTR. If not, see <http://www.gnu.org/licenses/>.
+
+///////////////////////////////////////////////////////////////////////////////
+// Header
+#include "main.h"
+#include "ctrlProgress.h"
+
+#include "WindowManager.h"
+
+///////////////////////////////////////////////////////////////////////////////
+// Makros / Defines
+#if defined _WIN32 && defined _DEBUG && defined _MSC_VER
+	#define new new(_NORMAL_BLOCK, THIS_FILE, __LINE__)
+	#undef THIS_FILE
+	static char THIS_FILE[] = __FILE__;
+#endif
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Konstruktor von @p ctrlProgress.
+ *
+ *  @author Devil
+ *  @author FloSoft
+ */
+ctrlProgress::ctrlProgress(Window *parent, 
+						   const unsigned int id,
+						   const unsigned short x, 
+						   const unsigned short y, 
+						   const unsigned short width,
+						   const unsigned short height,
+						   const TextureColor tc, 
+						   const unsigned short button_minus, 
+						   const unsigned short button_plus,  
+						   const unsigned short maximum,
+						   const unsigned short x_padding,
+						   const unsigned short y_padding,
+						   const unsigned int force_color,
+						   const std::string& tooltip,
+						   const std::string& button_minus_tooltip,
+						   const std::string& button_plus_tooltip)
+	: Window(x, y, id, parent, tooltip),
+	width(width), height(height), tc(tc), position(0), maximum(maximum), x_padding(x_padding), y_padding(y_padding), force_color(force_color)
+{
+	AddImageButton(0, 0,              0, height, height, tc, GetImage(io_dat, button_minus), (button_minus_tooltip.length() ? button_minus_tooltip : _("Less")) );
+	AddImageButton(1, width - height, 0, height, height, tc, GetImage(io_dat, button_plus),  (button_plus_tooltip.length( ) ? button_plus_tooltip  : _("More")) );
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  setzt die Position an den angegebenen Wert.
+ *
+ *  @author Devil
+ *  @author FloSoft
+ */
+void ctrlProgress::SetPosition(unsigned short position)
+{
+	this->position = (position > maximum ? maximum : position);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Zeichenmethode.
+ *
+ *  @return @p true bei Erfolg, @p false bei Fehler
+ *
+ *  @author Devil
+ */
+bool ctrlProgress::Draw_(void)
+{
+	Draw3D(GetX() + height - 2 + x_padding, GetY() + y_padding, width - (height*2) + 4 - 2*x_padding, height - 2*y_padding, tc, 2);
+
+	// Buttons
+	DrawControls();
+
+	unsigned int percentage = position*100/maximum;
+	unsigned int progress = (width - (height*2) - 4 - 2*x_padding)* percentage / 100;
+
+	// Farbe herausfinden
+	unsigned int color = 0xFFFF0000;
+
+	// Feste Farbe?
+	if(force_color)
+		color = force_color;
+	else
+	{
+		// Farbe wählen je nachdem wie viel Prozent
+		if(percentage >= 60)
+			color = 0xFF00E000;
+		else if(percentage >= 30)
+			color = 0xFFFFFF00;
+		else if(percentage >= 20)
+			color = 0xFFFF8000;
+	}
+
+	// Leiste
+	DrawRectangle(GetX() + height + 2 + x_padding, GetY() + 4 + y_padding, progress, height-8-2*y_padding, color);
+
+	return true;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
+void ctrlProgress::Msg_ButtonClick(const unsigned int ctrl_id)
+{
+	switch(ctrl_id)
+    {
+	case 0: // Minus
+		{
+			if(position)
+				--position;
+			if(parent)
+				parent->Msg_ProgressChange(GetID(), position);
+		} break;
+	case 1: // Plus
+		{
+			if(position < maximum)
+				++position;
+			if(parent)
+				parent->Msg_ProgressChange(GetID(), position);
+		} break;
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
+bool ctrlProgress::Msg_LeftDown(const MouseCoords& mc)
+{
+	return RelayMouseMessage(&Window::Msg_LeftDown, mc);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
+bool ctrlProgress::Msg_LeftUp(const MouseCoords& mc)
+{
+	return RelayMouseMessage(&Window::Msg_LeftUp, mc);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
+bool ctrlProgress::Msg_MouseMove(const MouseCoords& mc)
+{
+	// an Buttons weiterleiten
+	RelayMouseMessage(&Window::Msg_MouseMove, mc);
+
+	if(Coll(mc.x, mc.y, GetX() + height + x_padding, GetY(), width - height*2 - x_padding*2, height))
+	{
+		WindowManager::inst().SetToolTip(this, tooltip);
+		return true;
+	}
+	else
+	{
+		WindowManager::inst().SetToolTip(this, "");
+		return false;
+	}
+}

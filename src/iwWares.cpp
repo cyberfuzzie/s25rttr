@@ -1,0 +1,228 @@
+// $Id: iwWares.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+//
+// Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
+//
+// This file is part of Siedler II.5 RTTR.
+//
+// Siedler II.5 RTTR is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+//
+// Siedler II.5 RTTR is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Siedler II.5 RTTR. If not, see <http://www.gnu.org/licenses/>.
+
+///////////////////////////////////////////////////////////////////////////////
+// Header
+#include "main.h"
+#include "iwWares.h"
+
+#include "Loader.h"
+#include "controls.h"
+#include "WindowManager.h"
+
+#include "GameClient.h"
+
+///////////////////////////////////////////////////////////////////////////////
+// Makros / Defines
+#if defined _WIN32 && defined _DEBUG && defined _MSC_VER
+	#define new new(_NORMAL_BLOCK, THIS_FILE, __LINE__)
+	#undef THIS_FILE
+	static char THIS_FILE[] = __FILE__;
+#endif
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Konstruktor von @p iwWares.
+ *
+ *  @author FloSoft
+ */
+	//167, 416
+iwWares::iwWares(unsigned int id, unsigned short x , unsigned short y, 
+				 const unsigned short width, const unsigned short height,
+				 const std::string& title, unsigned char page_count,
+		bool allow_outhousing, glArchivItem_Font *font, const Goods *inventory)
+	: IngameWindow(id, x, y, width, height, title, GetImage(io_dat, 5)),
+	inventory(inventory), page(0), page_count(page_count)
+{
+	if(!font)
+		font = SmallFont;
+
+	// Zuordnungs-IDs
+	const unsigned short INVENTORY_IDS[2][31] =
+	{
+		{ // Waren
+			22, 23, 24, 33,
+			27, 18, 19, 32, 20,
+			11,  0, 31, 30,
+			29, 17, 28,  1,  3,
+			 4,  5,  2,  6,
+			 7,  8,  9, 12, 13,
+			14, 16, GD_SHIELDROMANS, 15
+		}, // GD_SHIELDROMANS = Völkerspezifisches Schild
+
+		{ // Figuren
+			 0, 19, 20,  1,
+			 3,  5,  2,  6,  4,
+			 7, 13, 14,  8,
+			 9, 10, 12, 11, 15,
+			18, 16, 17, 27,
+			26, 28, 29, 21, 22,
+			23, 24, 25, 0xFFFF
+		}, // 0xFFFF = unused
+	};
+
+	static const unsigned short shield_INVENTORY_IDS[4] = {GD_SHIELDAFRICANS, GD_SHIELDJAPANESE, GD_SHIELDROMANS, GD_SHIELDVIKINGS };
+
+	// Warenseite hinzufügen
+	ctrlGroup *wares = AddGroup(100);
+	// Figurenseite hinzufügen
+	ctrlGroup *figures = AddGroup(101);
+
+	GameClientPlayer *player = GAMECLIENT.GetLocalPlayer();
+	bool four = true;
+	unsigned short ware_id = 0;
+	for(int x = 0, y = 0; y < 7; ++x, ++ware_id)
+	{
+		// 4er und 5er Block abwechselnd
+		if(x >= (four ? 4 : 5))
+		{
+			x = 0;
+			++y;
+			if(y == 7)
+				continue;
+
+			four = !four;
+		}
+
+
+		// Hintergrundbutton oder -bild hinter Ware, nur beim Auslagern ein Button
+		if(allow_outhousing)
+		{
+			ctrlButton * b =wares->AddImageButton(100+INVENTORY_IDS[0][ware_id], (four ? 27 : 13)+x*28, 21+y*42, 26, 26, TC_GREY, GetImage(map_lst,  2298), _(WARE_NAMES[INVENTORY_IDS[0][ware_id]]));
+			b->SetBorder(false);
+		}
+		else
+			wares->AddImage(100+INVENTORY_IDS[0][ware_id], (four ? 27 : 13)+x*28+13, 21+y*42+13, GetImage(map_lst,  2298), _(WARE_NAMES[INVENTORY_IDS[0][ware_id]]));
+
+		if(INVENTORY_IDS[1][ware_id] != 0xFFFF)
+		{
+			if(allow_outhousing)
+			{
+				ctrlButton * b = figures->AddImageButton(100+INVENTORY_IDS[1][ware_id], (four ? 27 : 13)+x*28, 21+y*42, 26, 26, TC_GREY, GetImage(map_lst,  2298), _(JOB_NAMES[INVENTORY_IDS[1][ware_id]]));
+				b->SetBorder(false);
+			}
+			else
+				figures->AddImage(100+INVENTORY_IDS[1][ware_id], (four ? 27 : 13)+x*28+13, 21+y*42+13, GetImage(map_lst,  2298),_(JOB_NAMES[INVENTORY_IDS[1][ware_id]]));
+		}
+
+		// Hintergrundbild hinter Anzahl
+		wares->AddImage(200+INVENTORY_IDS[0][ware_id], (four ? 40 : 26)+x*28, 53+y*42, GetImage(map_lst,  2299));
+		if(INVENTORY_IDS[1][ware_id] != 0xFFFF)
+			figures->AddImage(200+INVENTORY_IDS[1][ware_id], (four ? 40 : 26)+x*28, 53+y*42, GetImage(map_lst,  2299));
+
+		// die jeweilige Ware
+		wares->AddImage(300+INVENTORY_IDS[0][ware_id], (four ? 40 : 26)+x*28, 34+y*42, GetImage(map_lst, 2250 + (INVENTORY_IDS[0][ware_id] == GD_SHIELDROMANS ? shield_INVENTORY_IDS[player->nation] : INVENTORY_IDS[0][ware_id])));
+		if(INVENTORY_IDS[1][ware_id] != 0xFFFF)
+			figures->AddImage(300+INVENTORY_IDS[1][ware_id], (four ? 40 : 26)+x*28, 34+y*42, GetImage(map_lst,  2300 + INVENTORY_IDS[1][ware_id]));
+
+		// Overlay für "Nicht Einlagern"
+		
+		ctrlImage *image = wares->AddImage(400+INVENTORY_IDS[0][ware_id], (four ? 40 : 26)+x*28, 30+y*42, GetImage(io_dat, 222));
+		image->SetVisible(false);
+		if(INVENTORY_IDS[1][ware_id] != 0xFFFF)
+		{
+			image = figures->AddImage(400+INVENTORY_IDS[1][ware_id], (four ? 40 : 26)+x*28, 30+y*42, GetImage(io_dat, 222));
+			image->SetVisible(false);
+		}
+
+		// Overlay für "Auslagern"
+		image = wares->AddImage(500+INVENTORY_IDS[0][ware_id], (four ? 40 : 26)+x*28, 44+y*42, GetImage(io_dat, 221));
+		image->SetVisible(false);
+		if(INVENTORY_IDS[1][ware_id] != 0xFFFF)
+		{
+			image = figures->AddImage(500+INVENTORY_IDS[1][ware_id], (four ? 40 : 26)+x*28, 44+y*42, GetImage(io_dat, 221));
+			image->SetVisible(false);
+		}
+
+		// die jeweilige Anzahl (Texte)
+		wares->AddVarText(600+INVENTORY_IDS[0][ware_id], (four ? 53 : 39)+x*28, 61+y*42, _("%d"), COLOR_YELLOW,
+			glArchivItem_Font::DF_BOTTOM | glArchivItem_Font::DF_RIGHT, font, 1,
+			&inventory->goods[INVENTORY_IDS[0][ware_id]]);
+		if(INVENTORY_IDS[1][ware_id] != 0xFFFF)
+			figures->AddVarText(600+INVENTORY_IDS[1][ware_id], (four ? 53 : 39)+x*28, 61+y*42, _("%d"), COLOR_YELLOW, 
+			glArchivItem_Font::DF_BOTTOM | glArchivItem_Font::DF_RIGHT, font, 1,
+			&inventory->people[INVENTORY_IDS[1][ware_id]]);
+	}
+
+	wares->SetVisible(true);
+	figures->SetVisible(false);
+
+	// "Blättern"
+	AddImageButton(0, 52, height-47, 66, 32, TC_GREY, GetImage(io_dat, 84), _("Next page"));
+	// Hilfe
+	AddImageButton(12,  16, height-47, 32, 32,TC_GREY, GetImage(io_dat, 21), _("Help"));
+}
+
+void iwWares::Msg_ButtonClick(const unsigned int ctrl_id)
+{
+	switch(ctrl_id)
+	{
+	case 0: // "Blättern"
+		{
+			SetPage( (page + 1) );
+		} break;
+	}
+} 
+
+void iwWares::Msg_PaintBefore()
+{
+	// Farben ggf. aktualisieren
+
+	// nur Seite 1 und 2 hat sowas.
+	if(this->page >= 2)
+		return;
+
+	ctrlGroup *group = GetCtrl<ctrlGroup>(100+page);
+	if(group)
+	{
+		unsigned count = (page == 0)?36:31;
+
+		for(unsigned int i = 0; i < count; ++i)
+		{
+			ctrlVarText *text = group->GetCtrl<ctrlVarText>(600+i);
+			if(text)
+				text->SetColor( ((((page == 0)?inventory->goods[i]:inventory->people[i]) == 0) ? COLOR_RED : COLOR_YELLOW) );
+
+		}
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  bestimmte Inventurseite zeigen.
+ *
+ *  @param[in] page Die neue Seite
+ *
+ *  @author FloSoft
+ */
+void iwWares::SetPage(unsigned char page)
+{
+	// alte Page verstecken
+	ctrlGroup *group = GetCtrl<ctrlGroup>(100+this->page);
+	if(group)
+		group->SetVisible(false);
+
+	// neue Page setzen
+	this->page = page % page_count;
+
+	// neue Page anzeigen
+	group = GetCtrl<ctrlGroup>(100+this->page);
+	if(group)
+		group->SetVisible(true);
+}

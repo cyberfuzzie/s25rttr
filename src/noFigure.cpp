@@ -1,0 +1,1000 @@
+// $Id: noFigure.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+//
+// Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
+//
+// This file is part of Siedler II.5 RTTR.
+//
+// Siedler II.5 RTTR is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+//
+// Siedler II.5 RTTR is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Siedler II.5 RTTR. If not, see <http://www.gnu.org/licenses/>.
+
+///////////////////////////////////////////////////////////////////////////////
+// Header
+#include "main.h"
+#include "noFigure.h"
+
+#include "GameWorld.h"
+#include "Loader.h"
+#include "noRoadNode.h"
+#include "EventManager.h"
+#include "MapGeometry.h"
+
+#include "nobBaseWarehouse.h"
+#include "DoorConsts.h"
+#include "macros.h"
+#include "GameClient.h"
+#include "GameClientPlayer.h"
+#include "noBuildingSite.h"
+
+#include "nobUsual.h"
+#include "nofBuilder.h"
+#include "nofCarpenter.h"
+#include "nofArmorer.h"
+#include "nofStonemason.h"
+#include "nofBrewer.h"
+#include "nofMinter.h"
+#include "nofButcher.h"
+#include "nofIronfounder.h"
+#include "nofMiller.h"
+#include "nofMetalworker.h"
+#include "nofBaker.h"
+#include "nofWellguy.h"
+#include "nofGeologist.h"
+#include "nofMiner.h"
+#include "nofFarmer.h"
+#include "nofForester.h"
+#include "nofWoodcutter.h"
+#include "nofPigbreeder.h"
+#include "nofDonkeybreeder.h"
+#include "nofHunter.h"
+#include "nofFisher.h"
+#include "noSkeleton.h"
+#include "nofPassiveSoldier.h"
+#include "nofCarrier.h"
+#include "nofShipWright.h"
+#include "nofCatapultMan.h"
+#include "nofPlaner.h"
+#include "nofScout_LookoutTower.h"
+#include "nofScout_Free.h"
+
+#include "Swap.h"
+#include "Random.h"
+
+#include "SerializedGameData.h"
+
+///////////////////////////////////////////////////////////////////////////////
+// Makros / Defines
+#if defined _WIN32 && defined _DEBUG && defined _MSC_VER
+	#define new new(_NORMAL_BLOCK, THIS_FILE, __LINE__)
+	#undef THIS_FILE
+	static char THIS_FILE[] = __FILE__;
+#endif
+
+
+	const RoadSegment noFigure::emulated_wanderroad(RoadSegment::RT_NORMAL,0,0,0,0);
+/// Welche Strecke soll minimal und maximal zurückgelegt werden beim Rumirren, bevor eine Flagge gesucht wird
+const unsigned short WANDER_WAY_MIN = 20;
+const unsigned short WANDER_WAY_MAX = 40;
+/// Versuche, eine Flagge zu finden, bis er stirbt beim Rumirren
+const unsigned short WANDER_TRYINGS = 3;
+// Größe des Rechtecks um den Punkt, wo er die Flaggen sucht beim Rumirren
+const unsigned short WANDER_RADIUS = 10;
+
+
+
+
+noFigure::noFigure(const Job job,const unsigned short x, const unsigned short y,const unsigned char player, noRoadNode * const goal)
+:	noMovable(NOP_FIGURE,x,y), fs(FS_GOTOGOAL), job(job), player(player), cur_rs(0),
+	rs_pos(0),rs_dir(0), goal(goal), waiting_for_free_node(false), last_id(0xFFFFFFFF)
+
+{
+}
+
+noFigure::noFigure(const Job job,const unsigned short x, const unsigned short y,const unsigned char player)
+:	noMovable(NOP_FIGURE,x,y), fs(FS_JOB), job(job), player(player), cur_rs(0),
+	rs_pos(0),rs_dir(0), goal(0), waiting_for_free_node(false), last_id(0xFFFFFFFF)
+{
+}
+
+void noFigure::Destroy_noFigure()
+{
+	Destroy_noMovable(); 
+}
+
+void noFigure::Serialize_noFigure(SerializedGameData * sgd) const
+{
+	Serialize_noMovable(sgd);
+
+	sgd->PushUnsignedChar(static_cast<unsigned char>(fs));
+	sgd->PushUnsignedChar(static_cast<unsigned char>(job));
+	sgd->PushUnsignedChar(player);
+	sgd->PushObject(cur_rs,true);
+	sgd->PushUnsignedShort(rs_pos);
+	sgd->PushBool(rs_dir);
+
+	if(fs == FS_GOTOGOAL || fs == FS_GOHOME)
+		sgd->PushObject(goal,false);
+
+	sgd->PushBool(waiting_for_free_node);
+
+	if(fs == FS_WANDER)
+	{
+		sgd->PushUnsignedShort(wander_way);
+		sgd->PushUnsignedShort(wander_tryings);
+		sgd->PushUnsignedShort(flag_x);
+		sgd->PushUnsignedShort(flag_y);
+		sgd->PushUnsignedInt(flag_obj_id);
+		sgd->PushUnsignedInt(burned_wh_id);
+	}
+}
+
+noFigure::noFigure(SerializedGameData * sgd, const unsigned obj_id) : noMovable(sgd,obj_id),
+fs(FigureState(sgd->PopUnsignedChar())),
+job(Job(sgd->PopUnsignedChar())),
+player(sgd->PopUnsignedChar()),
+cur_rs(sgd->PopObject<RoadSegment>(GOT_ROADSEGMENT)),
+rs_pos(sgd->PopUnsignedShort()),
+rs_dir(sgd->PopBool()),
+last_id(0xFFFFFFFF)
+{
+	if(fs == FS_GOTOGOAL || fs == FS_GOHOME)
+		goal = sgd->PopObject<noRoadNode>(GOT_UNKNOWN);
+	else
+		goal = 0;
+
+	waiting_for_free_node = sgd->PopBool();
+
+	if(fs == FS_WANDER)
+	{
+		wander_way = sgd->PopUnsignedShort();
+		wander_tryings = sgd->PopUnsignedShort();
+		flag_x = sgd->PopUnsignedShort();
+		flag_y = sgd->PopUnsignedShort();
+		flag_obj_id = sgd->PopUnsignedInt();
+		burned_wh_id = sgd->PopUnsignedInt();
+	}
+}
+
+
+void noFigure::ActAtFirst()
+{
+	// Je nach unserem Status bestimmte Dinge tun
+	switch(fs)
+	{
+	default: break;
+	case FS_GOTOGOAL: WalkToGoal(); break;
+	case FS_JOB: StartWalking(4); break; // erstmal rauslaufen, darum kümmern sich dann die abgeleiteten Klassen
+	case FS_GOHOME:
+		{
+			// Wenn ich gleich wieder nach Hause geschickt wurde und aus einem Lagerhaus rauskomme, gar nicht erst rausgehen!
+			if(goal->GetX() == x && goal->GetY() == y)
+			{
+				gwg->RemoveFigure(this,x,y);
+				static_cast<nobBaseWarehouse*>(goal)->AddFigure(this);
+			}
+			else
+				// ansonsten ganz normal rausgehen
+				WalkToGoal();
+		} break;
+	case FS_WANDER: StartWalking(4); break; // erstmal rauslaufen, darum kümmern sich dann die Wander-Funktionen
+	}
+}
+
+
+/// Legt die Anfangsdaten für das Laufen auf Wegen fest
+void noFigure::InitializeRoadWalking(const RoadSegment * const road, const unsigned short rs_pos, const bool rs_dir)
+{
+	this->cur_rs = road;
+	this->rs_pos = rs_pos;
+	this->rs_dir = rs_dir;
+}
+
+bool noFigure::CalcFigurRelative(int &x, int &y)
+{
+	int x1 = static_cast<int>(gwg->GetTerrainX(this->x,this->y));
+	int y1 = static_cast<int>(gwg->GetTerrainY(this->x,this->y));
+	int x2 = static_cast<int>(gwg->GetTerrainX(gwg->GetXA(this->x,this->y,dir),gwg->GetYA(this->x,this->y,dir)));
+	int y2 = static_cast<int>(gwg->GetTerrainY(gwg->GetXA(this->x,this->y,dir),gwg->GetYA(this->x,this->y,dir)));
+
+
+	if(dir == 1 && (gwg->GetNO(this->x-!(this->y&1),this->y-1)->GetType() == NOP_BUILDINGSITE || gwg->GetNO(this->x-!(this->y&1),this->y-1)->GetType() == NOP_BUILDING))
+	{
+		x2 += gwg->GetSpecObj<noBaseBuilding>(this->x-!(this->y&1),this->y-1)->GetDoorPointX();
+		y2 += gwg->GetSpecObj<noBaseBuilding>(this->x-!(this->y&1),this->y-1)->GetDoorPointY();
+		x += gwg->GetSpecObj<noBaseBuilding>(this->x-!(this->y&1),this->y-1)->GetDoorPointX();
+		y += gwg->GetSpecObj<noBaseBuilding>(this->x-!(this->y&1),this->y-1)->GetDoorPointY();
+	}
+	else if(gwg->GetNO(this->x,this->y)->GetType() == NOP_BUILDINGSITE || gwg->GetNO(this->x,this->y)->GetType() == NOP_BUILDING)
+	{
+		x1 += gwg->GetSpecObj<noBaseBuilding>(this->x,this->y)->GetDoorPointX();
+		y1 += gwg->GetSpecObj<noBaseBuilding>(this->x,this->y)->GetDoorPointY();
+		x += gwg->GetSpecObj<noBaseBuilding>(this->x,this->y)->GetDoorPointX();
+		y += gwg->GetSpecObj<noBaseBuilding>(this->x,this->y)->GetDoorPointY();
+	}
+
+	// Wenn die Träger runterlaufne, muss es andersrum sein, da die Träger dann immer vom OBEREN Punkt aus gezeichnet werden
+	if(dir == 1 || dir == 2)
+	{
+		Swap(x1,x2);
+		Swap(y1,y2);
+	}
+
+	CalcRelative(x,y,x1,y1,x2,y2);
+
+	return 1;
+}
+
+void noFigure::StartWalking(const unsigned char dir)
+{
+	assert(!(GetGOT() == GOT_NOF_PASSIVESOLDIER && fs == FS_JOB));
+
+	assert(dir <= 5);
+	if(dir > 5)
+	{
+		LOG.lprintf("Achtung: Bug im Spiel entdeckt! noFigure::StartWalking: dir = %d\n", unsigned(dir));
+		return;
+	}
+
+	// Gehen wir in ein Gebäude?
+	if(dir == 1 && gwg->GetNO(x-!(y&1),y-1)->GetType() == NOP_BUILDING)
+		gwg->GetSpecObj<noBuilding>(x-!(y&1),y-1)->OpenDoor(); // Dann die Tür aufmachen
+	// oder aus einem raus?
+	if(dir == 4 && gwg->GetNO(x,y)->GetType() == NOP_BUILDING)
+		gwg->GetSpecObj<noBuilding>(x,y)->OpenDoor(); // Dann die Tür aufmachen
+
+	// Ist der Platz schon besetzt, wo wir hinlaufen wollen und laufen wir auf Straßen?
+	if(!gwg->IsRoadNodeForFigures(gwg->GetXA(x,y,dir),gwg->GetYA(x,y,dir),dir) &&
+		cur_rs)
+	{
+		// Dann stehen bleiben!
+		this->dir = dir;
+		waiting_for_free_node = true;
+		// Andere Figuren stoppen
+		gwg->StopOnRoads(x,y,dir);
+	}
+	else
+	{
+		// Normal hinlaufen
+		StartMoving(dir,20);
+	}
+}
+
+
+
+void noFigure::DrawShadow(const int x, const int y,const unsigned char anistep,unsigned char dir)
+{
+	glArchivItem_Bitmap *bitmap = GetImage(map_lst, 900 + ( (dir + 3) % 6 ) * 8 + anistep);
+	if(bitmap)
+		bitmap->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
+}
+
+void noFigure::WalkFigure()
+{
+	// Tür hinter sich zumachen, wenn wir aus einem Gebäude kommen
+	if(dir == 4 && gwg->GetNO(x,y)->GetType() == NOP_BUILDING)
+		gwg->GetSpecObj<noBuilding>(x,y)->CloseDoor();
+
+	Walk();
+
+	if(cur_rs)
+		++rs_pos;
+
+	
+	// oder in eins reingegangen sind
+	if(dir == 1 && gwg->GetNO(x,y)->GetType() == NOP_BUILDING)
+		gwg->GetSpecObj<noBuilding>(x,y)->CloseDoor();
+
+}
+
+
+void noFigure::WalkToGoal()
+{
+	// Kein Ziel mehr --> Rumirren
+	if(!goal)
+	{
+		StartWandering();
+		Wander();
+		return;
+	}
+
+	// Straße abgelaufen oder noch gar keine Straße vorhanden?
+	if(((cur_rs)?(rs_pos == cur_rs->length):true))
+	{
+		// Ziel erreicht?
+		// Bei dem Träger können das beide Flaggen sein!
+		unsigned short goal_x1, goal_y1, goal_x2=0xFFFF, goal_y2=0xFFFF;
+		if(GetGOT() == GOT_NOF_CARRIER && fs == FS_GOTOGOAL)
+		{
+			goal_x1 = static_cast<nofCarrier*>(this)->GetFirstFlag() ?
+				static_cast<nofCarrier*>(this)->GetFirstFlag()->GetX() : 0xFFFF;
+			goal_y1 = static_cast<nofCarrier*>(this)->GetFirstFlag() ?
+				static_cast<nofCarrier*>(this)->GetFirstFlag()->GetY() : 0xFFFF;
+			goal_x2 = static_cast<nofCarrier*>(this)->GetSecondFlag() ?
+				static_cast<nofCarrier*>(this)->GetSecondFlag()->GetX() : 0xFFFF;
+			goal_y2 = static_cast<nofCarrier*>(this)->GetSecondFlag() ?
+				static_cast<nofCarrier*>(this)->GetSecondFlag()->GetY() : 0xFFFF;
+		}
+		else
+		{
+			goal_x1 = goal->GetX();
+			goal_y1 = goal->GetY();
+		}
+
+		if((goal_x1 == x && goal_y1 == y) || (goal_x2 == x && goal_y2 == y))
+		{
+			if(fs == FS_GOHOME)
+			{
+				// Mann im Lagerhaus angekommen
+				gwg->RemoveFigure(this,x,y);
+				static_cast<nobBaseWarehouse*>(goal)->AddFigure(this);
+			}
+			else
+			{
+				// Zeug nullen
+				cur_rs = 0;
+				rs_dir = 0;
+				rs_pos = 0;
+				goal = 0;
+
+				// abgeleiteter Klasse sagen, dass das Ziel erreicht wurde
+				fs = FS_JOB;
+				GoalReached();
+			}
+
+		}
+		else
+		{
+			// Neuen Weg berechnen
+			unsigned char route = gwg->FindPath(gwg->GetSpecObj<noRoadNode>(x,y),goal,0);
+			// Kein Weg zum Ziel... nächstes Lagerhaus suchen
+			if(route == 0xFF)
+			{
+				// Arbeisplatz oder Laghaus Bescheid sagen
+				Abrogate();
+				// Wir gehen jetzt nach Hause
+				GoHome();
+				// Evtl wurde kein Lagerhaus gefunden und wir sollen rumirren, dann tun wir das gleich
+				if(fs == FS_WANDER)
+				{
+					Wander();
+					return;
+				}
+				
+				// Nach Hause laufen...
+				WalkToGoal();
+				return;
+			}
+			// Nächste Straße wollen, auf der man geht
+			cur_rs = gwg->GetSpecObj<noRoadNode>(x,y)->routes[route];
+			StartWalking(route);
+			rs_pos = 0;
+			rs_dir = (gwg->GetSpecObj<noRoadNode>(x,y) == cur_rs->f1) ? false : true;
+		}
+
+	}
+	else
+	{
+		StartWalking(cur_rs->GetDir(rs_dir,rs_pos));
+	}
+}
+
+
+
+void noFigure::HandleEvent(const unsigned int id)
+{
+	// Bei ID = 0 ists ein Laufevent, bei allen anderen an abgeleitete Klassen weiterleiten
+	if(id)
+	{
+		HandleDerivedEvent(id);
+	}
+	else
+	{
+		current_ev = 0;
+		WalkFigure();
+
+		CalcVisibilities(gwg->GetXA(x,y,(dir+3)%6),gwg->GetYA(x,y,(dir+3)%6));
+
+		switch(fs)
+		{
+		case FS_GOHOME:
+		case FS_GOTOGOAL:
+			{
+				WalkToGoal();
+			} break;
+
+		case FS_JOB:
+			{
+				Walked();
+				break;
+			}
+		case FS_WANDER:
+			{
+				Wander();
+				break;
+			}
+		}
+
+		CalcVisibilities(x,y);
+	}
+}
+
+void noFigure::GoHome(noRoadNode *goal)
+{
+	// Nächstes Lagerhaus suchen
+	if(goal == NULL)
+	{
+		// Wenn wir cur_rs == 0, dann hängen wir wahrscheinlich noch im Lagerhaus in der Warteschlange
+		if(cur_rs == 0)
+		{
+			assert(gwg->GetNO(x,y)->GetGOT() == GOT_NOB_HQ ||
+				gwg->GetNO(x,y)->GetGOT() == GOT_NOB_STOREHOUSE);
+
+			gwg->GetSpecObj<nobBaseWarehouse>(x,y)->CancelFigure(this);
+			em->AddToKillList(this);
+			return;
+		}
+		else
+			this->goal = GAMECLIENT.GetPlayer(player)->FindWarehouse((rs_dir)?cur_rs->f1:cur_rs->f2,FW::Condition_StoreFigure,0,true,&job,false);
+	}
+	else
+		this->goal = goal;
+
+	if(this->goal)
+	{
+		fs = FS_GOHOME;
+		// Lagerhaus Bescheid sagen
+		static_cast<nobBaseWarehouse*>(this->goal)->AddDependentFigure(this);
+
+		// Wenn wir stehen, zusätzlich noch loslaufen!
+		if(waiting_for_free_node)
+		{
+			waiting_for_free_node = false;
+			WalkToGoal();
+		}
+	}
+	else
+	{
+		// Kein Lagerhaus gefunden --> Rumirren
+		StartWandering();
+		cur_rs = 0;
+	}
+}
+
+
+
+void noFigure::StartWandering(const unsigned burned_wh_id)
+{
+	fs = FS_WANDER;
+	cur_rs = 0;
+	goal = 0;
+	rs_pos = 0;
+	this->burned_wh_id = burned_wh_id;
+	// eine bestimmte Strecke rumirren und dann eine Flagge suchen
+	// 3x rumirren und eine Flagge suchen, wenn dann keine gefunden wurde, stirbt die Figur
+	wander_way = WANDER_WAY_MIN + RANDOM.Rand(__FILE__,__LINE__,obj_id,WANDER_WAY_MAX-WANDER_WAY_MIN);
+	wander_tryings = 3;
+
+	// Wenn wir stehen, zusätzlich noch loslaufen!
+	if(waiting_for_free_node)
+	{
+		waiting_for_free_node = false;
+		Wander();
+	}
+}
+
+void noFigure::Wander()
+{
+	// Sind wir noch auf der Suche nach einer Flagge?
+	if(wander_way != 0xFFFF)
+	{
+		// Ist es mal wieder an der Zeit, eine Flagge zu suchen?
+		if(!wander_way)
+		{
+			// Umgebung abscannen, nicht über den Rand gehen
+			unsigned short x1 = (x > WANDER_RADIUS) ? (x-WANDER_RADIUS) : 0;
+			unsigned short y1 = (y > WANDER_RADIUS) ? (y-WANDER_RADIUS) : 0;
+			unsigned short x2 = (x+WANDER_RADIUS < gwg->GetWidth()) ? (x+WANDER_RADIUS) : (gwg->GetWidth()-1);
+			unsigned short y2 = (y+WANDER_RADIUS < gwg->GetHeight()) ? (y+WANDER_RADIUS) : (gwg->GetHeight()-1);
+
+			// Flaggen sammeln und dann zufällig eine auswählen
+			list<noFlag*> flags;
+
+			for(unsigned short py = y1;py<=y2;++py)
+			{
+				for(unsigned short px = x1;px<=x2;++px)
+				{
+					if(gwg->GetNO(px,py)->GetType() == NOP_FLAG)
+					{
+						if(gwg->GetSpecObj<noFlag>(px,py)->GetPlayer() == player)
+							flags.push_back(gwg->GetSpecObj<noFlag>(px,py));
+					}
+				}
+			}
+
+
+			unsigned best_way = 0xFFFFFFFF;
+			noFlag * best_flag = 0;
+
+			for(list<noFlag*>::iterator it = flags.begin();it.valid();++it)
+			{
+				// Ist das ein Flüchtling aus einem abgebrannten Lagerhaus?
+				if(burned_wh_id != 0xFFFFFFFF)
+				{
+					// Dann evtl gucken, ob anderen Mitglieder schon gesagt haben, dass die Flagge nicht zugänglich ist
+					if((*it)->IsImpossibleForBWU(burned_wh_id))
+					{
+						//printf("flagge gesiebt\n");
+						// Dann können wir die Flagge überspringen
+						continue;
+					}
+				}
+
+				// würde die die bisher beste an Weg unterbieten?
+				unsigned way = CalcDistance(x,y,(*it)->GetX(),(*it)->GetY());
+				if(way < best_way)
+				{
+					// Gibts nen Weg zu dieser Flagge?
+					if((dir = gwg->FindFreePath(x,y,(*it)->GetX(),(*it)->GetY(),10,false)) != 0xFF)
+					{
+						// gucken, ob ein Weg zu einem Warenhaus führt
+						if(GAMECLIENT.GetPlayer(player)->FindWarehouse(*it,FW::Condition_StoreFigure,0,true,&job,false))
+						{
+							// dann nehmen wir die doch glatt
+							best_way = way;
+							best_flag = *it;
+						}
+					}
+					else if(burned_wh_id != 0xFFFFFFFF)
+					{
+						// Flagge nicht möglich zugänglich bei einem Flüchting aus einem abgebrannten Lagerhaus?
+						// --> der ganzen Gruppe Bescheid sagen, damit die nicht auch alle sinnlos einen Weg zu
+						// dieser Flagge suchen
+						(*it)->ImpossibleForBWU(burned_wh_id);
+					}
+				}
+			}
+
+			if(best_flag)
+			{
+				// bestmögliche schließlich nehmen
+				wander_way = 0xFFFF;
+				flag_x = best_flag->GetX();
+				flag_y = best_flag->GetY();
+				flag_obj_id = best_flag->GetObjId();
+				WanderToFlag();
+				return;
+			}
+
+
+
+			// Wurde keine Flagge gefunden?
+
+			// Haben wir noch Versuche?
+			if(--wander_tryings > 0)
+			{
+				// von vorne beginnen wieder mit Rumirren
+				wander_way = WANDER_WAY_MIN + RANDOM.Rand(__FILE__,__LINE__,obj_id,WANDER_WAY_MAX-WANDER_WAY_MIN);
+			}
+			else
+			{
+				// Genug rumgeirrt, wir finden halt einfach nichts --> Sterben
+				Die();
+				return;
+			}
+		}
+
+		// weiter umherirren, einfach in eine zufällige Richtung
+		// Müssen dabei natürlich aufpassen, dass wir nur dorthin gehen wo es auch für Figuren möglich ist
+		unsigned char doffset = RANDOM.Rand(__FILE__,__LINE__,obj_id,6);
+		for(unsigned char d = 0;d<6;++d)
+		{
+			unsigned char dir = (d+doffset)%6;
+
+			// Nicht über den Rand gehen!
+			if(x == 0 && (dir == 0 || dir == 1 || dir == 5)) continue;
+			if(y == 0 && (dir == 1 || dir == 2)) continue;
+			if(x == gwg->GetWidth()-1 && (dir == 2 || dir == 3 || dir == 4)) continue;
+			if(y == gwg->GetHeight()-1 && (dir == 4 || dir == 5)) continue;
+
+			if(gwg->IsNodeForFigures(gwg->GetXA(x,y,dir),gwg->GetYA(x,y,dir))
+				&& gwg->IsNodeToNodeForFigure(x,y,dir))
+			{
+				StartWalking(dir);
+				--wander_way;
+				return;
+			}
+		}
+
+		// Wir sind eingesperrt! Kein Weg mehr gefunden --> Sterben
+		Die();
+	}
+	// Wir laufen schon zur Flagge
+	else
+	{
+		WanderToFlag();
+	}
+}
+
+void noFigure::WanderToFlag()
+{
+	// Existiert die Flagge überhaupt noch? 
+	noBase * no = gwg->GetNO(flag_x,flag_y);
+	if(no->GetObjId() != flag_obj_id)
+	{
+		// Wenn nicht, wieder normal weiter rumirren
+		StartWandering();
+		Wander();
+		return;
+	}
+
+	// Sind wir schon da?
+	if(x == flag_x && y == flag_y)
+	{
+		// Gibts noch nen Weg zu einem Lagerhaus?
+
+		if(nobBaseWarehouse * wh = GAMECLIENT.GetPlayer(player)->FindWarehouse(
+			gwg->GetSpecObj<noRoadNode>(x,y),FW::Condition_StoreFigure,0,true,&job,false))
+		{
+			// ja, dann können wir ja hingehen
+			fs = FS_GOTOGOAL;
+			goal = wh;
+			cur_rs = 0;
+			rs_pos = 0;
+			fs = FS_GOHOME;
+			wh->AddDependentFigure(this);
+			WalkToGoal();
+			return;
+		}
+		else
+		{
+			// Wenn nicht, wieder normal weiter rumirren
+			StartWandering();
+			Wander();
+			return;
+		}
+	}
+
+	// Weiter zur Flagge gehen
+	// Gibts noch nen Weg dahin bzw. existiert die Flagge noch?
+	if((dir = gwg->FindFreePath(x,y,flag_x,flag_y,60,false)) != 0xFF)
+	{
+		// weiter hinlaufen
+		StartWalking(dir);
+	}
+	else
+	{
+		// Wenn nicht, wieder normal weiter rumirren
+		StartWandering();
+		Wander();
+	}
+}
+
+//void noFigure::Wander()
+//{
+//	// Durch die Gegend irren und eine Flagge suchen
+//
+//	// Sind wir grad an einer Flagge?
+//	if(gwg->GetNO(x,y)->GetType() == NOP_FLAG)
+//	{
+//		// Geht ein Weg zu einem Lagerhaus?
+//		unsigned length;
+//		if(nobBaseWarehouse * wh = GAMECLIENT.GetPlayer(player)->FindWarehouse(gwg->GetSpecObj<noRoadNode>(x,y),GD_NOTHING,JOB_NOTHING,0,1,&length))
+//		{
+//			// ja, dann können wir ja hingehen
+//			fs = FS_GOTOGOAL;
+//			goal = wh;
+//			// Vorgaukeln, dass wir ein Stück Straße bereits geschafft haben
+//			// damit wir mit WalkToGoal weiter bis zum Ziel laufen können
+//			cur_rs = &emulated_wanderroad;
+//			rs_pos = 0;
+//			fs = FS_GOHOME;
+//			WalkToGoal();
+//			return;
+//		}
+//
+//	}
+//
+//	// Flagge in der Nähe? (Betonung liegt auf "Nähe" :D )
+//	for(unsigned i = 0;i<6;++i)
+//	{
+//		if(gwg->GetNO(gwg->GetXA(x,y,i),gwg->GetYA(x,y,i))->GetType() == NOP_FLAG)
+//		{
+//			// ja, eine Flagge in der Nähe, gucken, ob ein Weg zu einem Warenhaus führt
+//			unsigned length;
+//			if(GAMECLIENT.GetPlayer(player)->FindWarehouse(gwg->GetSpecObj<noRoadNode>(gwg->GetXA(x,y,i),gwg->GetYA(x,y,i)),GD_NOTHING,JOB_NOTHING,0,1,&length))
+//			{
+//				// ja, dann gehen wir mal zu der Flagge
+//				StartWalking(i);
+//				return;
+//			}
+//
+//			// Pech gehabt, weitersuchen...
+//		}
+//	}
+//
+//	// Nix gefunden, dann müssen wir halt weiter umherirren, einfach in eine zufälige Richtung
+//	// Müssen dabei natrlich aufpassen, dass wir nur dorthin gehen wo es auch für Figuren möglich ist
+//	unsigned char doffset = Random(6);
+//	for(unsigned char d = 0;d<6;++d)
+//	{
+//		dir = (d+doffset)%6;
+//		if(gwg->IsNodeForFigures(gwg->GetXA(x,y,dir),gwg->GetYA(x,y,dir)))
+//		{
+//			StartWalking(dir);
+//			return;
+//		}
+//	}
+//
+//	// Wir sind eingesperrt! Kein Weg mehr gefunden --> Sterben
+//	Die();
+//}
+
+
+
+
+void noFigure::CorrectSplitData(const RoadSegment * const rs2)
+{
+	// cur_rs entspricht Teilstück 1 !
+
+	// Wenn man sich auf den ersten Teilstück befindet...
+	if((rs_pos < cur_rs->length && !rs_dir) || (rs_pos > rs2->length && rs_dir))
+	{
+		// Nur Position berichtigen
+		if(rs_dir)
+			rs_pos -= rs2->length;
+	}
+
+	// Wenn man auf dem 2. steht, ...
+	else if((rs_pos > cur_rs->length && !rs_dir) || (rs_pos < rs2->length && rs_dir))
+	{
+		// Position berichtigen (wenn man in umgekehrter Richtung läuft, beibehalten!)
+		if(!rs_dir)
+			rs_pos -= cur_rs->length;
+
+		// wir laufen auf dem 2. Teilstück
+		cur_rs = rs2;
+	}
+	else if((rs_pos == cur_rs->length && !rs_dir) || (rs_pos == rs2->length && rs_dir))
+	{
+		// wir stehen genau in der Mitte
+		// abhängig von der Richtung machen, in die man gerade läuft
+		if(dir == rs2->route[0])
+		{
+			// wir laufen auf dem 2. Teilstück
+			cur_rs = rs2;
+			// und wir sind da noch am Anfang
+			rs_pos = 0;
+		}
+		else if(dir == (cur_rs->route[cur_rs->length-1]+3)%6)
+		{
+			// wir laufen auf dem 1. Teilstück
+
+			// und wir sind da noch am Anfang
+			rs_pos = 0;
+		}
+		else
+		{
+			// Wahrscheinlich stehen wir
+			// dann einfach auf das 2. gehen
+			cur_rs = rs2;
+			rs_pos = 0;
+			rs_dir = 0;
+		}
+	}
+}
+
+
+noFigure * CreateJob(const Job job_id,const unsigned short x, const unsigned short y,const unsigned char player,noRoadNode * const goal)
+{
+	switch(job_id)
+	{
+	case JOB_BUILDER: return new nofBuilder(x,y,player,goal);
+	case JOB_PLANER: return new nofPlaner(x,y,player,static_cast<noBuildingSite*>(goal));
+	case JOB_CARPENTER: return new nofCarpenter(x,y,player,static_cast<nobUsual*>(goal));
+	case JOB_ARMORER: return new nofArmorer(x,y,player,static_cast<nobUsual*>(goal));
+	case JOB_STONEMASON: return new nofStonemason(x,y,player,static_cast<nobUsual*>(goal));
+	case JOB_BREWER: return new nofBrewer(x,y,player,static_cast<nobUsual*>(goal));
+	case JOB_MINTER: return new nofMinter(x,y,player,static_cast<nobUsual*>(goal));
+	case JOB_BUTCHER: return new nofButcher(x,y,player,static_cast<nobUsual*>(goal));
+	case JOB_IRONFOUNDER: return new nofIronfounder(x,y,player,static_cast<nobUsual*>(goal));
+	case JOB_MILLER: return new nofMiller(x,y,player,static_cast<nobUsual*>(goal));
+	case JOB_METALWORKER: return new nofMetalworker(x,y,player,static_cast<nobUsual*>(goal));
+	case JOB_BAKER: return new nofBaker(x,y,player,static_cast<nobUsual*>(goal));
+	case JOB_HELPER:
+		{
+			// Wenn goal = 0 oder Lagerhaus, dann Auslagern anscheinend und mann kann irgendeinen Typ nehmen
+			if(!goal)
+				return new nofWellguy(x,y,player,static_cast<nobUsual*>(goal));
+			else if(static_cast<nobUsual*>(goal)->GetBuildingType() == BLD_WELL)
+				return new nofWellguy(x,y,player,static_cast<nobUsual*>(goal));
+			else if(static_cast<nobUsual*>(goal)->GetBuildingType() == BLD_CATAPULT)
+				return new nofCatapultMan(x,y,player,static_cast<nobUsual*>(goal));
+			else
+			{
+				assert(false);
+				return 0;
+			}
+
+		}
+	case JOB_GEOLOGIST: return new nofGeologist(x,y,player,static_cast<noFlag*>(goal));
+	case JOB_SCOUT:
+		{
+			// Im Spähturm arbeitet ein anderer Spähter-Typ
+			// Wenn goal = 0 oder Lagerhaus, dann Auslagern anscheinend und mann kann irgendeinen Typ nehmen
+			if(!goal)
+				return new nofScout_LookoutTower(x,y,player,static_cast<nobUsual*>(goal));
+			// Spähturm / Lagerhaus?
+			else if(goal->GetGOT() == GOT_NOB_USUAL)
+				return new nofScout_LookoutTower(x,y,player,static_cast<nobUsual*>(goal));
+			else if(goal->GetGOT() == GOT_FLAG)
+				return new nofScout_Free(x,y,player,goal);
+			else
+			{
+				assert(false);
+				return 0;
+			}
+		} break;
+	case JOB_MINER: return new nofMiner(x,y,player,static_cast<nobUsual*>(goal));
+	case JOB_FARMER: return new nofFarmer(x,y,player,static_cast<nobUsual*>(goal));
+	case JOB_FORESTER: return new nofForester(x,y,player,static_cast<nobUsual*>(goal));
+	case JOB_WOODCUTTER: return new nofWoodcutter(x,y,player,static_cast<nobUsual*>(goal));
+	case JOB_PIGBREEDER: return new nofPigbreeder(x,y,player,static_cast<nobUsual*>(goal));
+	case JOB_DONKEYBREEDER: return new nofDonkeybreeder(x, y, player, static_cast<nobUsual*>(goal) );
+	case JOB_HUNTER: return new nofHunter(x,y,player,static_cast<nobUsual*>(goal));
+	case JOB_FISHER: return new nofFisher(x,y,player,static_cast<nobUsual*>(goal));
+	case JOB_PRIVATE: case JOB_PRIVATEFIRSTCLASS: case JOB_SERGEANT: case JOB_OFFICER: case JOB_GENERAL: 
+		return new nofPassiveSoldier(x,y,player,static_cast<nobBaseMilitary*>(goal),static_cast<nobBaseMilitary*>(goal),job_id-JOB_PRIVATE);
+	case JOB_PACKDONKEY: return new nofCarrier(nofCarrier::CT_DONKEY,x,y,player,0,goal); 
+	case JOB_SHIPWRIGHT: return new nofShipWright(x,y,player,static_cast<nobUsual*>(goal));
+	default: return 0;
+	}
+}
+
+void noFigure::DrawWalking(int x, int y, glArchivItem_Bob *file, unsigned int id, bool fat)
+{
+	// Wenn wir warten auf ein freies Plätzchen, müssen wir den stehend zeichnen!
+	unsigned ani_step = waiting_for_free_node?2:GAMECLIENT.Interpolate(ASCENT_ANIMATION_STEPS[ascent],current_ev)%8;
+	
+	// Wenn man wartet, stehend zeichnen, es sei denn man wartet mittem auf dem Weg!
+	if(!waiting_for_free_node || pause_walked_gf)
+		CalcFigurRelative(x,y);
+	if(file)
+		file->Draw(id, dir, fat, ani_step, x, y, COLORS[GAMECLIENT.GetPlayer(player)->color]);
+	DrawShadow(x,y,ani_step,dir);
+
+
+	//char number[256];
+	//sprintf(number,"%u",obj_id);
+	//NormalFont->Draw(x,y,number,0,0xFFFF0000);
+}
+
+void noFigure::DrawWalking(int x, int y)
+{
+	// Esel?
+	if(job == JOB_PACKDONKEY)
+	{
+		unsigned ani_step = GAMECLIENT.Interpolate(ASCENT_ANIMATION_STEPS[ascent],current_ev)%8;
+		CalcFigurRelative(x,y);
+
+		// Esel
+		GetImage(map_lst,2000+((dir+3)%6)*8+ani_step)->Draw(x,y);
+		// Schatten des Esels
+		GetImage(map_lst,2048+dir%3)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
+		
+		return;
+	}
+	
+	// Jobs-Bob-ID ermitteln
+	unsigned jobs_bob_id = JOB_CONSTS[job].jobs_bob_id;
+	// Späher völkerspezifisch zeichnen
+	if(job == JOB_SCOUT)
+		jobs_bob_id = 35+NATION_RTTR_TO_S2[GameClient::inst().GetPlayer(player)->nation]*6;
+	else if(job >= JOB_PRIVATE && job <= JOB_GENERAL)
+		jobs_bob_id = 30+NATION_RTTR_TO_S2[GAMECLIENT.GetPlayer(player)->nation]*6+job-JOB_PRIVATE;
+
+	DrawWalking(x,y,GetBobFile(jobs_bob),jobs_bob_id,JOB_CONSTS[job].fat);
+}
+
+void noFigure::Die()
+{
+	// Weg mit mir
+	gwg->RemoveFigure(this,x,y);
+	em->AddToKillList(this);
+	// ggf. Leiche hinlegen, falls da nix ist
+	if(!gwg->GetSpecObj<noBase>(x,y))
+		gwg->SetNO(new noSkeleton(x,y),x,y);
+
+	// Wars ein Bootmann? Dann Boot und Träger abziehen
+	if(job == JOB_BOATCARRIER)
+	{
+		GAMECLIENT.GetPlayer(player)->DecreaseInventoryJob(JOB_HELPER,1);
+		GAMECLIENT.GetPlayer(player)->DecreaseInventoryWare(GD_BOAT,1);
+	}
+	else
+		GAMECLIENT.GetPlayer(player)->DecreaseInventoryJob(job,1);
+
+	// Sichtbarkeiten neu berechnen für Erkunder und Soldaten
+	CalcVisibilities(x,y);
+}
+
+void noFigure::NodeFreed(const unsigned short x, const unsigned short y)
+{
+	// Stehen wir gerade aus diesem Grund?
+	if(waiting_for_free_node)
+	{
+		// Ist das der Punkt, zu dem wir hin wollen?
+		if(x == gwg->GetXA(this->x,this->y,dir) && y == gwg->GetYA(this->x,this->y,dir))
+		{
+			
+
+			// Gehen wir in ein Gebäude? Dann wieder ausgleichen, weil wir die Türen sonst doppelt aufmachen!
+			if(dir == 1 && gwg->GetNO(this->x-!(this->y&1),this->y-1)->GetType() == NOP_BUILDING)
+				gwg->GetSpecObj<noBuilding>(this->x-!(this->y&1),this->y-1)->CloseDoor(); 
+			// oder aus einem raus?
+			if(dir == 4 && gwg->GetNO(this->x,this->y)->GetType() == NOP_BUILDING)
+				gwg->GetSpecObj<noBuilding>(this->x,this->y)->CloseDoor();
+
+			// Wir stehen nun nicht mehr
+			waiting_for_free_node = false;
+
+			// Dann loslaufen
+			StartWalking(dir);
+
+			// anderen Leuten noch ggf Bescheid sagen
+			gwg->RoadNodeAvailable(this->x,this->y);
+
+			
+		}
+	}
+}
+
+void noFigure::Abrogate()
+{
+	// Arbeisplatz oder Laghaus Bescheid sagen
+	if(fs == FS_GOHOME)
+		static_cast<nobBaseWarehouse*>(goal)->RemoveDependentFigure(this);
+	else
+		AbrogateWorkplace();
+}
+
+
+void noFigure::StopIfNecessary(const unsigned short x, const unsigned short y)
+{
+	// Lauf ich auf Wegen --> wenn man zum Ziel oder Weg läuft oder die Träger, die natürlich auch auf Wegen arbeiten
+	if(fs == FS_GOHOME || fs == FS_GOTOGOAL || (fs == FS_JOB && GetGOT() == GOT_NOF_CARRIER))
+	{
+		// Laufe ich zu diesem Punkt?
+		if(current_ev)
+		{
+			if(!waiting_for_free_node && gwg->GetXA(this->x,this->y,dir) == x && 
+				gwg->GetYA(this->x,this->y,dir) == y)
+			{
+				// Dann stehenbleiben
+				PauseWalking();
+				waiting_for_free_node = true;
+				gwg->StopOnRoads(this->x,this->y,dir);
+			}
+		}
+	}
+}
+
+
+/// Sichtbarkeiten berechnen für Figuren mit Sichtradius (Soldaten, Erkunder) vor dem Laufen
+void noFigure::CalcVisibilities(const MapCoord x, const MapCoord y)
+{
+	// Sichtbarkeiten neu berechnen für Erkunder und Soldaten
+	if(GetGOT() == GOT_NOF_SCOUT_FREE || GetGOT() == GOT_NOF_ATTACKER ||
+		GetGOT() == GOT_NOF_AGGRESSIVEDEFENDER)
+		// An alter Position neu berechnen
+		gwg->RecalcVisibilitiesAroundPoint(x,y,
+		(GetGOT() == GOT_NOF_SCOUT_FREE) ? VISUALRANGE_SCOUT : VISUALRANGE_SOLDIER,player,NULL);
+}

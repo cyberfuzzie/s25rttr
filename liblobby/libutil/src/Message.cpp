@@ -1,0 +1,268 @@
+// $Id: Message.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+//
+// Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
+//
+// This file is part of Siedler II.5 RTTR.
+//
+// Siedler II.5 RTTR is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+//
+// Siedler II.5 RTTR is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Siedler II.5 RTTR. If not, see <http://www.gnu.org/licenses/>.
+
+///////////////////////////////////////////////////////////////////////////////
+// Header
+#include "main.h"
+#include "Message.h"
+
+#include "Messages.h"
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Destruktor von @p Message.
+ *
+ *  @author FloSoft
+ */
+Message::~Message(void) 
+{
+	delete[] data;
+	data    = NULL;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *
+ *
+ *  @author FloSoft
+ */
+bool Message::send(Socket *sock)
+{
+	static char buffer[1024001];
+		
+	if(NULL == sock)
+		return false;
+
+	// WTF? so große Nachricht darfs nicht geben
+	if(this->length > 1024000 - 6)
+	{
+		LOG.lprintf("BIG OOPS! Message with length %u exceeds maximum of %d!\n", this->length, 1024000 - 6);
+		return false;
+	}
+
+	unsigned short *id = (unsigned short*)&buffer[0];
+	unsigned int *length = (unsigned int*)&buffer[2];
+	unsigned char *data = (unsigned char*)&buffer[6];
+
+	*id = this->id;
+	*length = this->length;
+	memcpy(data, this->data, this->length);
+
+	if(6 + this->length != (unsigned int)sock->Send(buffer, 6 + this->length))
+		return false;
+
+	return true;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Erzeugt Speicher mit der Länge @p length
+ *
+ *  @param[in] length Länge des gewünschten Nachrichtenblocks.
+ *
+ *  @author FloSoft
+ */
+void Message::alloc(unsigned int length)
+{
+	delete[] data;
+
+	this->length = length;
+
+	data = new char[length];
+	memset(data, 0, sizeof(char)*length);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *
+ *
+ *  @author FloSoft
+ */
+int Message::recv(Socket *sock, unsigned int length)
+{
+	if(length > 0)
+	{
+		// Daten empfangen
+		alloc(length);
+
+		int read = sock->Recv(data, length);
+		if(length != (unsigned int)read )
+		{
+			LOG.lprintf("recv: data: only got %d bytes instead of %d\n", read, length);
+
+			return -1;
+		}
+	}
+	return 0;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *
+ *
+ *  @author FloSoft
+ */
+Message *Message::create_base(unsigned short id)
+{
+	Message *msg = NULL;
+	switch(id)
+	{
+	default: break;
+
+	case NMS_NULL_MSG:	{ msg = new Message_Null(); } break;
+	case NMS_DEAD_MSG:	{ msg = new Message_Dead(); } break;
+	}
+
+	return msg;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *
+ *
+ *  @author FloSoft
+ */
+Message *Message::recv(Socket *sock, int &error, bool wait, Message *(*createfunction)(unsigned short))
+{
+	error = -1;
+
+	if(sock == NULL)
+		return NULL;
+
+	unser_time_t time = TIME.CurrentTick();
+
+	unser_time_t timeout = time;
+	unsigned int received;
+	SocketSet set;
+ 
+	while(true)
+	{
+		// Warten wir schon 5s auf Antwort?
+		if(time - timeout > 5000)
+			wait = false;
+
+		time = TIME.CurrentTick();
+
+		// SocketSet "saubermachen"
+		set.Clear();
+
+		// Socket hinzufgen
+		set.Add(*sock);
+
+		// liegen Daten an?
+		int retval = set.Select(0, 0);
+
+		if(retval <= 0)
+		{
+			if(wait)
+				continue;
+
+			if(retval != -1)
+				error = 2;
+			
+			return NULL;
+		}
+
+		// liegen diese Daten an unserem Socket, bzw wieviele Bytes liegen an?
+		if(!set.InSet(*sock) || sock->BytesWaiting(&received) != 0)
+		{
+			if(wait)
+				continue;
+
+			error = 2;
+			return NULL;
+		}
+
+		// socket ist geschlossen worden
+		if(received == 0)
+			return NULL;
+
+		// haben wir schon eine vollständige nachricht? (kleinste nachricht: 6 bytes)
+		if(received < 6)
+		{
+			if(wait)
+				continue;
+
+			error = 2;
+			return NULL;
+		}
+		break;
+	}
+
+	int read = -1;
+
+	char block[6];
+	unsigned short *id = (unsigned short*)&block[0];
+	unsigned int *length = (unsigned int*)&block[2];
+
+	// block empfangen
+	read = sock->Recv(block, 6, false);
+	if(read != 6)
+	{
+		LOG.write("recv: block: only got %d bytes instead of %d, waiting for next try\n", read, 6);
+		if(read != -1)
+			error = 2;
+		
+		return NULL;
+	}
+	
+	read = sock->BytesWaiting();
+
+	if(read < (signed)((*length) + 6) )
+	{
+		LOG.write("recv: block-waiting: not enough input (%d/%d) for message (0x%04X), waiting for next try\n", read, (*length)+6, *id);
+		if(read != -1)
+			error = 2;
+		
+		return NULL;
+	}
+
+	// Block nochmals abrufen (um ihn aus dem Cache zu entfernen)
+	read = sock->Recv(block, 6);
+	if(read != 6)
+	{
+		LOG.lprintf("recv: id,length: only got %d bytes instead of %d\n", read, 2);
+		return NULL;
+	}
+
+	Message *msg = createfunction(*id);
+	if(!msg)
+		return NULL;
+
+	// Daten abrufen
+	msg->recv(sock, *length);
+
+	return msg;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  dupliziert eine Nachricht.
+ *
+ *  @author FloSoft
+ */
+Message *Message::duplicate(void) const
+{
+	Message *msg = create(id);
+
+	msg->alloc(length);
+	memcpy(msg->data, data, length);
+
+	return msg;
+}

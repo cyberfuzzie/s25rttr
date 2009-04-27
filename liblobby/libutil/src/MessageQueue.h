@@ -1,0 +1,66 @@
+// $Id: MessageQueue.h 4652 2009-03-29 10:10:02Z FloSoft $
+//
+// Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
+//
+// This file is part of Siedler II.5 RTTR.
+//
+// Siedler II.5 RTTR is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+//
+// Siedler II.5 RTTR is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Siedler II.5 RTTR. If not, see <http://www.gnu.org/licenses/>.
+#ifndef MESSAGEQUEUE_H_INCLUDED
+#define MESSAGEQUEUE_H_INCLUDED
+
+#pragma once
+
+#include "Message.h"
+
+#include <vector>
+
+class Socket;
+
+class MessageQueue
+{
+public:
+	MessageQueue(Message *(*createfunction)(unsigned short)) : createfunction(createfunction) {}
+	~MessageQueue(void);
+
+private:
+	typedef std::vector<Message *> Queue;
+	typedef std::vector<Message *>::iterator QueueIt;
+	Queue messages;
+
+public:
+	void clear(void);
+
+	/// flusht die Queue, verschickt alle Elemente.
+	bool flush(Socket *sock) { return send(sock, messages.size(), 0xFFFFFFFF); }
+
+	/// liefert die Größe der Queue
+	unsigned int count() { return messages.size(); }
+
+	/// verschickt Pakete der Queue, maximal @p max, mit einem maximal @p sizelimit groß (aber beliebig viele kleine)
+	bool send(Socket *sock, int max, unsigned int sizelimit = 512);
+	int recv(Socket *sock, bool wait = false);
+
+public:
+	/// hängt ein Element hinten an.
+	void push(Message *message) { messages.push_back(message); }
+	/// liefert das vorderste Element der Queue.
+	Message *front() { return (messages.size() > 0 ? (*messages.begin()) : NULL); }
+	/// entfernt das vorderste Element aus der Queue.
+	void pop(void);
+
+private:
+	Message *(*createfunction)(unsigned short);
+};
+
+#endif // LOBBYMESSAGEQUEUE_H_INCLUDED

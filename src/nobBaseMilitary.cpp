@@ -1,0 +1,477 @@
+// $Id: nobBaseMilitary.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+//
+// Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
+//
+// This file is part of Siedler II.5 RTTR.
+//
+// Siedler II.5 RTTR is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+//
+// Siedler II.5 RTTR is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Siedler II.5 RTTR. If not, see <http://www.gnu.org/licenses/>.
+
+///////////////////////////////////////////////////////////////////////////////
+// Header
+
+#include "main.h"
+#include "nobBaseMilitary.h"
+#include "GameWorld.h"
+#include "Loader.h"
+#include "noFire.h"
+#include "EventManager.h"
+#include "nofSoldier.h"
+#include "Random.h"
+#include "nobMilitary.h"
+#include "nofAttacker.h"
+#include "nofAggressiveDefender.h"
+#include "nofDefender.h"
+#include "SerializedGameData.h"
+#include "MapGeometry.h"
+
+///////////////////////////////////////////////////////////////////////////////
+// Makros / Defines
+#if defined _WIN32 && defined _DEBUG && defined _MSC_VER
+	#define new new(_NORMAL_BLOCK, THIS_FILE, __LINE__)
+	#undef THIS_FILE
+	static char THIS_FILE[] = __FILE__;
+#endif
+
+unsigned nobBaseMilitary::age_counter = 0;
+
+nobBaseMilitary::nobBaseMilitary(const BuildingType type,const unsigned short x, const unsigned short y,
+								 const unsigned char player,const Nation nation)
+								 : noBuilding(type,x,y,player,nation),leaving_event(0), go_out(false), age(age_counter++),defender(0)
+{
+
+}
+
+nobBaseMilitary::~nobBaseMilitary()
+{
+	for(list<noFigure*>::iterator it = leave_house.begin();it.valid();++it)
+		delete (*it);
+}
+
+void nobBaseMilitary::Destroy_nobBaseMilitary()
+{
+	list<nofActiveSoldier*>::iterator next_it;
+
+	// Soldaten Bescheid sagen, die evtl auf Mission sind
+	// Achtung: Hier können Iteratoren gelöscht werden in HomeDestroyed, daher Sicherheitsschleife!
+	for(list<nofActiveSoldier*>::iterator it = troops_on_mission.begin();it.valid();it = next_it)
+	{
+		next_it = it.GetNext();
+		(*it)->HomeDestroyed();
+	}
+
+	list<nofAttacker*>::iterator next_it2;
+
+	// Und die, die das Gebäude evtl gerade angreifen
+	// Achtung: Hier können Iteratoren gelöscht werden in AttackedGoalDestroyed, daher Sicherheitsschleife!
+	for(list<nofAttacker*>::iterator it = aggressors.begin();it.valid();it = next_it2)
+	{
+		next_it2 = it.GetNext();
+		(*it)->AttackedGoalDestroyed();
+	}
+
+	// Aggressiv-Verteidigenden Soldaten Bescheid sagen, dass sie nach Hause gehen können
+	for(list<nofAggressiveDefender*>::iterator it = aggressive_defenders.begin();it.valid();++it)
+		(*it)->AttackedGoalDestroyed();
+
+	// Verteidiger Bescheid sagen
+	if(defender)
+		defender->HomeDestroyed();
+
+	// Warteschlangenevent vernichten
+	em->RemoveEvent(leaving_event);
+
+	// Soldaten, die noch in der Warteschlange hängen, rausschicken
+	for(list<noFigure*>::iterator it = leave_house.begin();it.valid();++it)
+	{
+		gwg->AddFigure((*it),x,y);
+
+		if((*it)->DoJobWorks())
+			// Wenn er Job-Arbeiten verrichtet, ists ein ActiveSoldier --> dem muss extra noch Bescheid gesagt werden!
+			static_cast<nofActiveSoldier*>(*it)->HomeDestroyedAtBegin();
+		else
+		{
+			(*it)->Abrogate();
+			(*it)->StartWandering();
+			(*it)->StartWalking(RANDOM.Rand(__FILE__,__LINE__,obj_id,6));
+		}
+	}
+
+	leave_house.clear();
+
+	// Umgebung nach feindlichen Militärgebäuden absuchen und die ihre Grenzflaggen neu berechnen lassen
+	// da, wir ja nicht mehr existieren
+	list<nobBaseMilitary*> buildings;
+	gwg->LookForMilitaryBuildings(buildings,x,y,4);
+
+	for(list<nobBaseMilitary*>::iterator it = buildings.begin();it.valid();++it)
+	{
+		if((*it)->GetPlayer() != player
+			&& (*it)->GetBuildingType() >= BLD_BARRACKS  && (*it)->GetBuildingType() <= BLD_FORTRESS)
+			static_cast<nobMilitary*>(*it)->LookForEnemyBuildings();
+	}
+
+
+	Destroy_noBuilding();
+}
+
+void nobBaseMilitary::Serialize_nobBaseMilitary(SerializedGameData * sgd) const
+{
+	Serialize_noBuilding(sgd);
+
+	sgd->PushObjectList(leave_house,false);
+	sgd->PushObject(leaving_event,true);
+	sgd->PushBool(go_out);
+	sgd->PushUnsignedInt(age);
+	sgd->PushObjectList(troops_on_mission,false);
+	sgd->PushObjectList(aggressors,true);
+	sgd->PushObjectList(aggressive_defenders,true);
+	sgd->PushObject(defender,true);
+}
+
+nobBaseMilitary::nobBaseMilitary(SerializedGameData * sgd, const unsigned obj_id) : noBuilding(sgd,obj_id)
+{
+	sgd->PopObjectList(leave_house,GOT_UNKNOWN);
+	leaving_event = sgd->PopObject<EventManager::Event>(GOT_EVENT);
+	go_out = sgd->PopBool();
+	age = sgd->PopUnsignedInt();
+	sgd->PopObjectList(troops_on_mission,GOT_UNKNOWN);
+	sgd->PopObjectList(aggressors,GOT_NOF_ATTACKER);
+	sgd->PopObjectList(aggressive_defenders,GOT_NOF_AGGRESSIVEDEFENDER);
+	defender = sgd->PopObject<nofDefender>(GOT_NOF_DEFENDER);
+}
+
+void nobBaseMilitary::AddLeavingEvent()
+{
+	// Wenn gerade keiner rausgeht, muss neues Event angemeldet werden
+	if(!go_out)
+	{
+		leaving_event = em->AddEvent(this,20+RANDOM.Rand(__FILE__,__LINE__,obj_id,10));
+		go_out = true;
+	}
+}
+
+
+void nobBaseMilitary::AddLeavingFigure(noFigure * fig)
+{
+	AddLeavingEvent();
+	leave_house.push_back(fig);
+}
+
+nofAttacker * nobBaseMilitary::FindAggressor(nofAggressiveDefender * defender)
+{
+	// Nach weiteren Angreifern auf dieses Gebäude suchen, die in der Nähe und kampfbereit sind
+	for(list<nofAttacker*>::iterator it = aggressors.begin();it.valid();++it)
+	{
+		// Überhaupt Lust zum Kämpfen?
+		if((*it)->WannaFight())
+		{
+			// Mal sehen, ob er auch nicht so weit entfernt ist (erstmal grob)
+			if(CalcDistance((*it)->GetX(),(*it)->GetY(),defender->GetX(),defender->GetY()) < 5)
+			{
+				// Er darf auch per Fuß nicht zu weit entfernt sein (nicht dass er an der anderen Seite
+				// von nem Fluss steht (genau)
+				if(gwg->FindFreePath((*it)->GetX(),(*it)->GetY(),defender->GetX(),defender->GetY(),5) != 0xFF)
+				{
+					// Ja, mit dem kann sich der Soldat duellieren
+					(*it)->LetsFight(defender);
+					// zurückgeben
+					return (*it);
+				}
+			}
+		}
+	}
+
+	return 0;
+}
+
+
+struct Node { unsigned short x,y; };
+
+unsigned char nobBaseMilitary::FindAnAttackerPlace(unsigned short &ret_x,unsigned short &ret_y, unsigned short &retRedadius,nofAttacker * soldier)
+{
+	// Wenn Platz an der Flagge noch frei ist, soll er da hin gehen
+	list<Node> nodes[6];
+
+	const unsigned short flag_x = x+(y&1);
+	const unsigned short flag_y = y+1;
+
+	unsigned short d;
+
+	// Diesen Flaggenplatz nur nehmen, wenn es auch nich gerade eingenommen wird, sonst gibts Deserteure!
+	// Eigenommen werden können natürlich nur richtige Militärgebäude
+	bool capturing = (type >= BLD_BARRACKS && type <= BLD_FORTRESS)?(static_cast<nobMilitary*>(this)->IsCaptured()):false;
+
+	if(gwg->ValidPointForFighting(flag_x,flag_y) && !capturing)
+	{
+		ret_x = flag_x;
+		ret_y = flag_y;
+		retRedadius = 0;
+		return 3;
+	}
+	else
+	{
+		// Ansonsten immer die Runde rum gehen und ein freies Plätzchen suchen (max. 3 Runden rum)
+		for(d = 1;d<=3;++d)
+		{
+			// links anfangen und im Uhrzeigersinn vorgehen
+			ret_x = flag_x-d;
+			ret_y = this->y +1;
+
+
+			for(unsigned short i = 0;i<d;++i,ret_x+=(ret_y&1),--ret_y)
+			{
+				if(gwg->ValidWaitingAroundBuildingPoint(ret_x,ret_y,soldier))
+				{
+					Node n = {ret_x,ret_y};
+					nodes[0].push_back(n);
+				}
+			}
+			for(unsigned short i = 0;i<d;++i,++ret_x)
+			{
+				if(gwg->ValidWaitingAroundBuildingPoint(ret_x,ret_y,soldier))
+				{
+					Node n = {ret_x,ret_y};
+					nodes[1].push_back(n);
+				}
+			}
+			for(unsigned short i = 0;i<d;++i,ret_x+=(ret_y&1),++ret_y)
+			{
+				if(gwg->ValidWaitingAroundBuildingPoint(ret_x,ret_y,soldier))
+				{
+					Node n = {ret_x,ret_y};
+					nodes[2].push_back(n);
+				}
+			}
+			for(unsigned short i = 0;i<d;++i,ret_x-=!(ret_y&1),++ret_y)
+			{
+				if(gwg->ValidWaitingAroundBuildingPoint(ret_x,ret_y,soldier))
+				{
+					Node n = {ret_x,ret_y};
+					nodes[3].push_back(n);
+				}
+			}
+			for(unsigned short i = 0;i<d;++i,--ret_x)
+			{
+				if(gwg->ValidWaitingAroundBuildingPoint(ret_x,ret_y,soldier))
+				{
+					Node n = {ret_x,ret_y};
+					nodes[4].push_back(n);
+				}
+			}
+			for(unsigned short i = 0;i<d;++i,ret_x-=!(ret_y&1),--ret_y)
+			{
+				if(gwg->ValidWaitingAroundBuildingPoint(ret_x,ret_y,soldier))
+				{
+					Node n = {ret_x,ret_y};
+					nodes[5].push_back(n);
+				}
+			}
+
+			// Wurde was gefunden? Dann erstmal rausgehen
+			if(nodes[0].size()||nodes[1].size()||nodes[2].size()||nodes[3].size()||nodes[4].size()||nodes[5].size())
+				break;
+		}
+	}
+
+	// Nichts gefunden, dann raus
+	if(!(nodes[0].size()||nodes[1].size()||nodes[2].size()||nodes[3].size()||nodes[4].size()||nodes[5].size()))
+	{
+		// Nix gefunden, x = Nirvana
+		ret_x = 0xFFFF;
+
+		return 0xFF;
+	}
+	else
+	{
+		// Bevorzugte Richtung ermitteln
+		unsigned char dir = 255;
+
+
+
+		if(soldier->GetY() == flag_y && soldier->GetX() <= flag_x) dir = 0;
+		else if(soldier->GetY() == flag_y && soldier->GetX() > flag_x) dir = 3;
+		else if(soldier->GetY() < flag_y && soldier->GetX() < flag_x) dir = 1;
+		else if(soldier->GetY() < flag_y && soldier->GetX() >  flag_x) dir = 2;
+		else if(soldier->GetY() > flag_y && soldier->GetX() < flag_x) dir = 5;
+		else if(soldier->GetY() > flag_y && soldier->GetX() >  flag_x) dir = 4;
+		else if(soldier->GetX() ==  flag_x)
+		{
+			if(soldier->GetY() < flag_y && !(SafeDiff(soldier->GetY(),flag_y)&1)) dir = 1;
+			else if(soldier->GetY() < flag_y && (SafeDiff(soldier->GetY(),flag_y)&1))
+			{
+				if(soldier->GetY()&1) dir = 1; else dir = 2;
+			}
+			else if(soldier->GetY() > flag_y && !(SafeDiff(soldier->GetY(),flag_y)&1)) dir = 5;
+			else if(soldier->GetY() > flag_y && (SafeDiff(soldier->GetY(),flag_y)&1))
+			{
+				if(soldier->GetY()&1) dir = 4; else dir = 5;
+			}
+		}
+
+		assert(dir < 6);
+
+		// Runde jeweils von der einen und der anderen Seite rumgehen, mit bevorzugter Richtung anfangen
+		if(nodes[dir].size())
+		{
+			ret_x = nodes[dir].begin()->x;
+			ret_y = nodes[dir].begin()->y;
+			retRedadius = d;
+			return (dir+3)%6;
+		}
+
+		for(unsigned i = 1;i<4;++i)
+		{
+			// im Uhrzeigersinn die eine Hälfte
+			unsigned char tmp_dir = (dir+i)%6;
+
+			if(nodes[tmp_dir].size())
+			{
+				ret_x = nodes[tmp_dir].begin()->x;
+				ret_y = nodes[tmp_dir].begin()->y;
+				retRedadius = d;
+				return (tmp_dir+3)%6;
+			}
+
+			// entgegen dem Uhrzeigersinn die andere Hälfte
+			tmp_dir = ((i <= dir)?(dir-i):(6-i+dir));
+
+			if(nodes[tmp_dir].size())
+			{
+				ret_x = nodes[tmp_dir].begin()->x;
+				ret_y = nodes[tmp_dir].begin()->y;
+				retRedadius = d;
+				return (tmp_dir+3)%6;
+			}
+		}
+
+		return 0xFF;
+
+	}
+}
+
+bool nobBaseMilitary::CallDefender(nofAttacker * attacker)
+{
+	// Ist noch ein Verteidiger draußen (der z.B. grad wieder reingeht?
+	if(defender)
+	{
+		// Dann nehmen wir den, müssen ihm nur den neuen Angreifer mitteilen
+		defender->NewAttacker(attacker);
+
+		return true;
+	}
+	// ansonsten einen neuen aus dem Gebäude holen
+	else if((defender = ProvideDefender(attacker)))
+	{
+		// Soldat muss noch rauskommen
+		AddLeavingFigure(defender);
+
+		return true;
+	}
+	else
+	{
+		// Gebäude ist leer, dann kann es erobert werden
+		return false;
+	}
+}
+
+nofAttacker * nobBaseMilitary::FindAttackerNearBuilding()
+{
+	// Alle angreifenden Soldaten durchgehen
+	// Den Soldaten, der am nächsten dran steht, nehmen
+	nofAttacker * best_attacker = 0;
+	unsigned best_radius = 0xFFFFFFFF;
+
+	
+	for(list<nofAttacker*>::iterator it = aggressors.begin();it.valid();++it)
+	{
+		// Ist der Soldat überhaupt bereit zum Kämpfen (also wartet er um die Flagge herum oder rückt er nach)?
+		if((*it)->IsAttackerReady())
+		{
+			// Besser als bisher bester?
+			if((*it)->GetRadius() < best_radius || !best_attacker)
+			{
+				best_attacker = *it;
+				best_radius = best_attacker->GetRadius();
+			}
+		}
+	}
+
+	if(best_attacker)
+		// Den schließlich zur Flagge schicken
+		best_attacker->AttackFlag(defender);
+
+	// und ihn zurückgeben, wenns keine gibt, natürlich 0
+	return best_attacker;
+}
+
+void nobBaseMilitary::CheckArrestedAttackers()
+{
+	for(list<nofAttacker*>::iterator it = aggressors.begin();it.valid();++it)
+	{
+		// Ist der Soldat überhaupt bereit zum Kämpfen (also wartet er um die Flagge herum)?
+		if((*it)->IsAttackerReady())
+		{
+			// Und kommt er überhaupt zur Flagge (könnte ja in der 2. Reihe stehen, sodass die
+			// vor ihm ihn den Weg versperren)?
+			if(gwg->FindFreePath((*it)->GetX(),(*it)->GetY(),x+(y&1),y+1,5,false) != 0xFF)
+			{
+				// dann kann der zur Flagge gehen
+				(*it)->AttackFlag();
+				return;
+			}
+		}
+	}
+}
+
+bool nobBaseMilitary::SendSuccessor(const unsigned short x, const unsigned short y, const unsigned short radius, const unsigned char dir)
+{
+	for(list<nofAttacker*>::iterator it = aggressors.begin();it.valid();++it)
+	{
+		// Wartet der Soldat überhaupt um die Flagge?
+		if((*it)->IsAttackerReady())
+		{
+			// Und steht er auch weiter außen?, sonst machts natürlich keinen Sinn..
+			if((*it)->GetRadius() > radius)
+			{
+				// Und findet er einen zu diesem Punkt?
+				if(gwg->FindFreePath((*it)->GetX(),(*it)->GetY(),x,y,50,false) != 0xFF)
+				{
+					// dann soll er dorthin gehen
+					(*it)->StartSucceeding(x,y,radius,dir);
+
+					return true;
+				}
+			}
+		}
+	}
+
+	return false;
+}
+
+
+bool nobBaseMilitary::Test(nofAttacker * attacker)
+{
+	if(aggressors.search(attacker).valid())
+		return true;
+	else
+		return false;
+}
+
+bool nobBaseMilitary::TestOnMission(nofActiveSoldier * soldier)
+{
+	if(troops_on_mission.search(soldier).valid())
+		return true;
+	else
+		return false;
+}

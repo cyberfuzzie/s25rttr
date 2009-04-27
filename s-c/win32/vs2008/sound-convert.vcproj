@@ -25,7 +25,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="$(OutDir)\prebuild-mutex.exe $(SolutionName) $(SolutionDir)..\prebuild.bat $(SolutionDir)..\..\ $(OutDir)"
+				CommandLine="&quot;$(OutDir)\prebuild-mutex.exe&quot; &quot;$(SolutionName) $(SolutionDir)..\prebuild.bat&quot; &quot;$(SolutionDir)..\..\ $(OutDir)&quot;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -62,6 +62,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="libsndfile.lib libsamplerate.lib"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -89,7 +90,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="$(OutDir)\prebuild-mutex.exe $(SolutionName) $(SolutionDir)..\postbuild.bat $(SolutionDir)..\..\ $(OutDir)"
+				CommandLine="&quot;$(OutDir)\prebuild-mutex.exe&quot; &quot;$(SolutionName)&quot; &quot;$(SolutionDir)..\postbuild.bat&quot; &quot;$(SolutionDir)..\..\ $(OutDir)&quot;"
 			/>
 		</Configuration>
 		<Configuration

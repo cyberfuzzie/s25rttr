@@ -1,4 +1,4 @@
-// $Id: TerrainRenderer.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: TerrainRenderer.cpp 4739 2009-04-28 18:58:13Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1100,24 +1100,8 @@ void TerrainRenderer::AltitudeChanged(const MapCoord x, const MapCoord y, const 
 
 	// Auch im zweiten Kreis drumherum die Dreiecke neu berechnen, da die durch die Schattenänderung der umliegenden
 	// Punkte auch geändert werden könnten
-	unsigned short coords[24] =
-	{
-		x-2,y,
-		x-2+(y&1),y-1,
-		x-1,y-2,
-		x	,y-2,
-		x+1,y-2,
-		x+2-!(y&1),y-1,
-		x+2,y,
-		x-2+(y&1),y+1,
-		x-1,y+2,
-		x	,y+2,
-		x+1,y+2,
-		x+2-!(y&1),y+1,
-	};
-
 	for(unsigned i = 0;i<12;++i)
-		UpdateTriangleColor(coords[i*2],coords[i*2+1],gwv,true);
+		UpdateTriangleColor(gwv->GetXA2(x,y,i),gwv->GetYA2(x,y,i),gwv,true);
 	
 
 	// und für die Ränder
@@ -1131,7 +1115,7 @@ void TerrainRenderer::AltitudeChanged(const MapCoord x, const MapCoord y, const 
 	}
 
 	for(unsigned i = 0;i<12;++i)
-		UpdateBorderTriangleColor(coords[i*2],coords[i*2+1],gwv,true);
+		UpdateBorderTriangleColor(gwv->GetXA2(x,y,i),gwv->GetYA2(x,y,i),gwv,true);
 }
 
 void TerrainRenderer::VisibilityChanged(const MapCoord x, const MapCoord y, const GameWorldViewer * gwv)

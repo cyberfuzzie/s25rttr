@@ -1,4 +1,4 @@
-// $Id: Pathfinding.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: Pathfinding.cpp 4739 2009-04-28 18:58:13Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -368,7 +368,7 @@ unsigned char GameWorldBase::FindFreePath(const int x_start,const int y_start, c
 	// Anfangsknoten einfgen
 	Node start(x_start,y_start,0,0,0);
 	todo.push_back(&start);
-
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
 
 	while(1)
 	{

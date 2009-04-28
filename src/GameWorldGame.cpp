@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: GameWorldGame.cpp 4739 2009-04-28 18:58:13Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -67,24 +67,8 @@ void GameWorldGame::RecalcBQAroundPointBig(const MapCoord x, const MapCoord y)
 	RecalcBQAroundPoint(x,y);
 
 	// 2. Auﬂenschale
-	unsigned short coords[24] =
-		{
-			x-2,y,
-			x-2+(y&1),y-1,
-			x-1,y-2,
-			x	,y-2,
-			x+1,y-2,
-			x+2-!(y&1),y-1,
-			x+2,y,
-			x-2+(y&1),y+1,
-			x-1,y+2,
-			x	,y+2,
-			x+1,y+2,
-			x+2-!(y&1),y+1,
-		};
-
 	for(unsigned i = 0;i<12;++i)
-		GetNode(coords[i*2],coords[i*2+1]).bq = CalcBQ(coords[i*2],coords[i*2+1],GAMECLIENT.GetPlayerID());
+		GetNode(GetXA2(x,y,i),GetYA2(x,y,i)).bq = CalcBQ(GetXA2(x,y,i),GetYA2(x,y,i),GAMECLIENT.GetPlayerID());
 }
 
 void GameWorldGame::SetFlag(const MapCoord x, const MapCoord y, const unsigned char player,const unsigned char dis_dir)
@@ -995,7 +979,7 @@ void GameWorldGame::GetDynamicObjectsFrom(const MapCoord x, const MapCoord y,lis
 
 	for(unsigned i = 0;i<3;++i)
 	{
-		for(list<noBase*>::iterator it = GetFigures(coords[i*2],coords[i*2+1]).begin();
+		for(list<noBase*>::iterator it = GetFigures(GetXA2(x,y,i),GetYA2(x,y,i)).begin();
 			it.valid();++it)
 		{
 			// Ist es auch ein Figur und befindet sie sich an diesem Punkt?

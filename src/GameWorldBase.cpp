@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: GameWorldBase.cpp 4739 2009-04-28 18:58:13Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -570,22 +570,6 @@ BuildingQuality GameWorldBase::CalcBQ(const MapCoord x, const MapCoord y,const u
 	//////////////////////////////////////
 	// 2. nach Terrain
 
-	int coords[24] =
-		{
-			x-2,y,
-			x-2+(y&1),y-1,
-			x-1,y-2,
-			x	,y-2,
-			x+1,y-2,
-			x+2-!(y&1),y-1,
-			x+2,y,
-			x-2+(y&1),y+1,
-			x-1,y+2,
-			x	,y+2,
-			x+1,y+2,
-			x+2-!(y&1),y+1,
-		};
-
 	unsigned char ph = GetNode(x,y).altitude, th;
 
 	// Bergwerke anders handhaben
@@ -601,7 +585,7 @@ BuildingQuality GameWorldBase::CalcBQ(const MapCoord x, const MapCoord y,const u
 		// 2. Außenschale prüfen ( keine Hütten werden ab Steigung 3 )
 		for(unsigned i = 0;i<12;++i)
 		{
-			if( (th = GetNode(coords[i*2+0],coords[i*2+1]).altitude ) > ph)
+			if( (th = GetNode(GetXA2(x,y,i),GetYA2(x,y,i)).altitude ) > ph)
 			{
 				if(th - ph > 2)
 				{
@@ -610,7 +594,7 @@ BuildingQuality GameWorldBase::CalcBQ(const MapCoord x, const MapCoord y,const u
 				}
 			}
 
-			if( (th = GetNode(coords[i*2+0], coords[i*2+1]).altitude ) < ph)
+			if( (th = GetNode(GetXA2(x,y,i), GetYA2(x,y,i)).altitude ) < ph)
 			{
 				if(ph - th > 2)
 				{
@@ -735,7 +719,7 @@ BuildingQuality GameWorldBase::CalcBQ(const MapCoord x, const MapCoord y,const u
 	{
 		for(unsigned i = 0;i<12;++i)
 		{
-			if(GetNO(coords[i*2],coords[i*2+1])->GetType() == NOP_BUILDING || GetNO(coords[i*2],coords[i*2+1])->GetType() == NOP_BUILDINGSITE)
+			if(GetNO(GetXA2(x,y,i),GetYA2(x,y,i))->GetType() == NOP_BUILDING || GetNO(GetXA2(x,y,i),GetYA2(x,y,i))->GetType() == NOP_BUILDINGSITE)
 				val = BQ_HOUSE;
 		}
 	}

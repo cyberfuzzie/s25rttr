@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 4739 2009-04-28 18:58:13Z OLiver $
+// $Id: GameWorldGame.cpp 4740 2009-04-28 19:05:10Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -979,7 +979,7 @@ void GameWorldGame::GetDynamicObjectsFrom(const MapCoord x, const MapCoord y,lis
 
 	for(unsigned i = 0;i<3;++i)
 	{
-		for(list<noBase*>::iterator it = GetFigures(GetXA2(x,y,i),GetYA2(x,y,i)).begin();
+		for(list<noBase*>::iterator it = GetFigures(coords[i*2],coords[i*2+1]).begin();
 			it.valid();++it)
 		{
 			// Ist es auch ein Figur und befindet sie sich an diesem Punkt?

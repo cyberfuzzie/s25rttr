@@ -1,4 +1,4 @@
-// $Id: SerializedGameData.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: SerializedGameData.cpp 4741 2009-04-28 20:05:10Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -63,6 +63,7 @@
 #include "nofScout_Free.h"
 #include "nofScout_LookoutTower.h"
 #include "nofWarehouseWorker.h"
+#include "nofPassiveWorker.h"
 #include "nofCatapultMan.h"
 #include "noExtension.h"
 #include "noBuildingSite.h"
@@ -105,6 +106,7 @@ GameObject * SerializedGameData::Create_GameObject(const GO_Type got, const unsi
 	case GOT_NOF_ATTACKER: return new nofAttacker(this,obj_id);
 	case GOT_NOF_DEFENDER: return new nofDefender(this,obj_id);
 	case GOT_NOF_PASSIVESOLDIER: return new nofPassiveSoldier(this,obj_id);
+	case GOT_NOF_PASSIVEWORKER: return new nofPassiveWorker(this,obj_id);
 	case GOT_NOF_WELLGUY: return new nofWellguy(this,obj_id);
 	case GOT_NOF_CARRIER: return new nofCarrier(this,obj_id);
 	case GOT_NOF_WOODCUTTER: return new nofWoodcutter(this,obj_id);

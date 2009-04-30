@@ -1,4 +1,4 @@
-// $Id: nobHQ.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: nobHQ.cpp 4746 2009-04-30 20:10:46Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -91,7 +91,6 @@ nobHQ::nobHQ(const unsigned short x, const unsigned short y,const unsigned char 
 		goods.goods[GD_MEAT] = 3;
 		goods.goods[GD_HAM] = 0;	
 		goods.goods[GD_SHIELDJAPANESE] = 0;
-		goods.goods[GD_NOTHING] = 100;
 
 		goods.people[JOB_HELPER] = 26;
 		goods.people[JOB_WOODCUTTER] = 4;
@@ -123,7 +122,6 @@ nobHQ::nobHQ(const unsigned short x, const unsigned short y,const unsigned char 
 		goods.people[JOB_SHIPWRIGHT] = 0;
 		goods.people[JOB_SCOUT] = 1;
 		goods.people[JOB_PACKDONKEY] = 4;
-		goods.people[JOB_NOTHING] = 100;
 		break;
 
 	// Mittel
@@ -164,7 +162,6 @@ nobHQ::nobHQ(const unsigned short x, const unsigned short y,const unsigned char 
 		goods.goods[GD_MEAT] = 6;
 		goods.goods[GD_HAM] = 0;	
 		goods.goods[GD_SHIELDJAPANESE] = 0;
-		goods.goods[GD_NOTHING] = 100;
 
 		goods.people[JOB_HELPER] = 52;
 		goods.people[JOB_WOODCUTTER] = 8;
@@ -196,7 +193,6 @@ nobHQ::nobHQ(const unsigned short x, const unsigned short y,const unsigned char 
 		goods.people[JOB_SHIPWRIGHT] = 0;
 		goods.people[JOB_SCOUT] = 2;
 		goods.people[JOB_PACKDONKEY] = 8;
-		goods.people[JOB_NOTHING] = 100;
 		break;
 
 	// Viel
@@ -236,7 +232,6 @@ nobHQ::nobHQ(const unsigned short x, const unsigned short y,const unsigned char 
 		goods.goods[GD_MEAT] = 12;
 		goods.goods[GD_HAM] = 0;	
 		goods.goods[GD_SHIELDJAPANESE] = 0;
-		goods.goods[GD_NOTHING] = 100;
 
 		goods.people[JOB_HELPER] = 104;
 		goods.people[JOB_WOODCUTTER] = 16;
@@ -268,7 +263,6 @@ nobHQ::nobHQ(const unsigned short x, const unsigned short y,const unsigned char 
 		goods.people[JOB_SHIPWRIGHT] = 0;
 		goods.people[JOB_SCOUT] = 4;
 		goods.people[JOB_PACKDONKEY] = 16;
-		goods.people[JOB_NOTHING] = 100;
 		break;
 	}
 

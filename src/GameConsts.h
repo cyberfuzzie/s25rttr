@@ -1,4 +1,4 @@
-// $Id: GameConsts.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: GameConsts.h 4746 2009-04-30 20:10:46Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -74,6 +74,7 @@ struct RoadWindowInfo
 	int mx,my;
 };
 
+// Warentypen
 enum GoodType
 {
 	/*	0 */GD_BEER = 0,	// Bier
@@ -113,6 +114,8 @@ enum GoodType
 	/* 34 */GD_SHIELDJAPANESE,	// Schild
 	/* 35 */GD_NOTHING		// Nichts
 };
+// Anzahl an unterschiedlichen Warentypen
+const unsigned WARE_TYPES_COUNT = GD_NOTHING;
 
 const std::string WARE_NAMES[36] = 
 {
@@ -197,8 +200,12 @@ enum BuildingType
 	BLD_SHIPYARD       = 36, //
 	BLD_FARM           = 37, // NJR
 	BLD_DONKEYBREEDER  = 38, //
-	BLD_HARBORBUILDING = 39  //
+	BLD_HARBORBUILDING = 39,  //
+	BLD_NOTHING
 };
+
+// Anzahl an unterschiedlichen Gebäudetypen
+const unsigned BUILDING_TYPES_COUNT = BLD_NOTHING;
 
 const std::string BUILDING_NAMES[40] = 
 {
@@ -282,6 +289,9 @@ enum Job
 	JOB_NOTHING           = 31
 };
 
+// Anzahl an unterschiedlichen Berufstypen
+const unsigned JOB_TYPES_COUNT = JOB_NOTHING;
+
 const std::string JOB_NAMES[32] = 
 {
 	gettext_noop("Helper"),
@@ -323,8 +333,10 @@ const std::string JOB_NAMES[32] =
 /// Waren- und Berufsstruktur ( für HQs, Lagerhäüser usw )
 struct Goods
 {
-	unsigned goods[36];
-	unsigned people[31];
+	unsigned goods[WARE_TYPES_COUNT];
+	unsigned people[JOB_TYPES_COUNT];
+
+	Goods() { memset(goods,0,sizeof(goods)); memset(people,0,sizeof(people)); }
 };
 
 

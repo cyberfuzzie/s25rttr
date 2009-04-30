@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: GameClientPlayer.cpp 4746 2009-04-30 20:10:46Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -79,7 +79,7 @@ GameClientPlayer::GameClientPlayer(const unsigned playerid) : GamePlayerInfo(pla
 
 
 	// Waren mit mehreren möglichen Zielen erstmal nullen, kann dann im Fenster eingestellt werden
-	for(unsigned char i = 0; i < 36; ++i)
+	for(unsigned char i = 0; i < WARE_TYPES_COUNT; ++i)
 	{
 		memset(distribution[i].percent_buildings, 0, 40*sizeof(unsigned char));
 		distribution[i].selected_goal = 0;
@@ -210,7 +210,7 @@ void GameClientPlayer::Serialize(SerializedGameData * sgd)
 	sgd->PushUnsignedShort(hqx);
 	sgd->PushUnsignedShort(hqy);
 
-	for(unsigned i = 0;i<36;++i)
+	for(unsigned i = 0;i<WARE_TYPES_COUNT;++i)
 	{
 		sgd->PushRawData(distribution[i].percent_buildings,40);
 		sgd->PushUnsignedInt(distribution[i].client_buildings.size());
@@ -226,15 +226,15 @@ void GameClientPlayer::Serialize(SerializedGameData * sgd)
 
 	sgd->PushRawData(build_order,31);
 
-	sgd->PushRawData(transport,36);
+	sgd->PushRawData(transport,WARE_TYPES_COUNT);
 
 	sgd->PushRawData(military_settings,7);
 
 	sgd->PushRawData(tools_settings,12);
 
-	for(unsigned i = 0;i<36;++i)
+	for(unsigned i = 0;i<WARE_TYPES_COUNT;++i)
 		sgd->PushUnsignedInt(global_inventory.goods[i]);
-	for(unsigned i = 0;i<31;++i)
+	for(unsigned i = 0;i<JOB_TYPES_COUNT;++i)
 		sgd->PushUnsignedInt(global_inventory.people[i]);
 }
 
@@ -280,7 +280,7 @@ void GameClientPlayer::Deserialize(SerializedGameData * sgd)
 	hqx = sgd->PopUnsignedShort();
 	hqy = sgd->PopUnsignedShort();
 
-	for(unsigned i = 0;i<36;++i)
+	for(unsigned i = 0;i<WARE_TYPES_COUNT;++i)
 	{
 		sgd->PopRawData(distribution[i].percent_buildings,40);
 		list_size = sgd->PopUnsignedInt();
@@ -307,15 +307,15 @@ void GameClientPlayer::Deserialize(SerializedGameData * sgd)
 	strcat(str,"\n");
 	puts(str);
 
-	sgd->PopRawData(transport,36);
+	sgd->PopRawData(transport,WARE_TYPES_COUNT);
 
 	sgd->PopRawData(military_settings,7);
 
 	sgd->PopRawData(tools_settings,12);
 
-	for(unsigned i = 0;i<36;++i)
+	for(unsigned i = 0;i<WARE_TYPES_COUNT;++i)
 		global_inventory.goods[i] = sgd->PopUnsignedInt();
-	for(unsigned i = 0;i<31;++i)
+	for(unsigned i = 0;i<JOB_TYPES_COUNT;++i)
 		global_inventory.people[i] = sgd->PopUnsignedInt();
 
 	// Visuelle Einstellungen festlegen

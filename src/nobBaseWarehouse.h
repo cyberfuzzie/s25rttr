@@ -1,4 +1,4 @@
-// $Id: nobBaseWarehouse.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: nobBaseWarehouse.h 4746 2009-04-30 20:10:46Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -34,10 +34,15 @@ class nobMilitary;
 /// Ein/Auslagereinstellungsstruktur
 struct InventorySettings
 {
-	unsigned char wares[34];
-	unsigned char figures[30];
+	unsigned char wares[WARE_TYPES_COUNT];
+	unsigned char figures[JOB_TYPES_COUNT];
+
+	InventorySettings() 
+	{ memset(wares,0,sizeof(wares)); memset(figures,0,sizeof(figures)); }
 };
 
+/// Grundlegende Warenhausklasse, die alle Funktionen vereint, die für Warenhäuser (HQ, Lagerhaus, Häfen)
+/// wichtig sind. 
 class nobBaseWarehouse : public nobBaseMilitary
 {
 protected:
@@ -214,8 +219,6 @@ public: void Serialize(SerializedGameData *sgd) const { Serialize_nobBaseWarehou
 	/// Gibt Zeiger auf dir Reserve zurück für das GUI
 	const unsigned * GetReservePointerAvailable(unsigned rank) const { return &reserve_soldiers_available[rank]; }
 	const unsigned * GetReservePointerClaimed(unsigned rank) const { return &reserve_soldiers_claimed_visual[rank]; }
-
-
 };	
 
 

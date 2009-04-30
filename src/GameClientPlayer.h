@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: GameClientPlayer.h 4746 2009-04-30 20:10:46Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -110,14 +110,14 @@ public:
 		list<BuildingType> client_buildings; // alle Gebäude, die diese Ware bekommen, zusammengefasst
 		std::vector<unsigned char> goals;
 		unsigned selected_goal;
-	} distribution[36];
+	} distribution[WARE_TYPES_COUNT];
 
 	/// Art der Reihenfolge (0 = nach Auftraggebung, ansonsten nach build_order)
 	unsigned char order_type;
 	/// Baureihenfolge
 	unsigned char build_order[31];
 	/// Prioritäten der Waren im Transport
-	unsigned char transport[36];
+	unsigned char transport[WARE_TYPES_COUNT];
 	/// Militäreinstellungen (die vom Militärmenü)
 	unsigned char military_settings[7];
 	/// Werkzeugeinstellungen (in der Reihenfolge wie im Fenster!)

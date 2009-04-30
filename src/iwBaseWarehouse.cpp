@@ -1,4 +1,4 @@
-// $Id: iwBaseWarehouse.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: iwBaseWarehouse.cpp 4746 2009-04-30 20:10:46Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -170,7 +170,7 @@ void iwBaseWarehouse::Msg_ButtonClick(const unsigned int ctrl_id)
 					if(!GAMECLIENT.IsReplayModeOn())
 					{
 						// optisch setzen
-						unsigned short count = ((page == 0)?36:31);
+						unsigned short count = ((page == 0)?WARE_TYPES_COUNT:JOB_TYPES_COUNT);
 						for(unsigned char i = 0; i < count; ++i)
 							ChangeOverlay(i, data);
 

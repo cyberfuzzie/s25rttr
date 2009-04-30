@@ -1,4 +1,4 @@
-// $Id: nobBaseWarehouse.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: nobBaseWarehouse.cpp 4746 2009-04-30 20:10:46Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -51,7 +51,7 @@
 /// Intervall für Ausleerung (in gf)
 const unsigned EMPTY_INTERVAL = 100;
 /// Dauer für das Erstellen von Trägern
-const unsigned short PRODUCE_HELPERS_GF = 290;
+const unsigned short PRODUCE_HELPERS_GF = 390;
 const unsigned short PRODUCE_HELPERS_RANDOM_GF = 20;
 /// Dauer für das Rekrutierung von Soldaten
 const unsigned short RECRUITE_GF = 400;
@@ -61,9 +61,6 @@ nobBaseWarehouse::nobBaseWarehouse(const BuildingType type,const unsigned short 
 : nobBaseMilitary(type,x,y,player,nation), fetch_double_protection(false), producinghelpers_event(em->AddEvent(this,PRODUCE_HELPERS_GF+RANDOM.Rand(__FILE__,__LINE__,obj_id,PRODUCE_HELPERS_RANDOM_GF),1)), recruiting_event(0),
 empty_event(0)
 {
-	memset(&inventory_settings_visual, 0,sizeof(InventorySettings));
-	memset(&inventory_settings_real, 0, sizeof(InventorySettings));
-
 	// Evtl gabs verlorene Waren, die jetzt in das HQ wieder reinkönnen
 	GAMECLIENT.GetPlayer(player)->FindClientForLostWares();
 
@@ -106,7 +103,7 @@ void nobBaseWarehouse::Destroy_nobBaseWarehouse()
 	waiting_wares.clear();
 
 	// restliche Warenbestände von der Inventur wieder abziehen
-	for(unsigned int i = 0; i < 34; ++i)
+	for(unsigned int i = 0; i < WARE_TYPES_COUNT; ++i)
 		GAMECLIENT.GetPlayer(player)->DecreaseInventoryWare(GoodType(i),real_goods.goods[i]);
 
 	//for(unsigned int i = 0; i < 30; ++i)
@@ -138,14 +135,14 @@ void nobBaseWarehouse::Serialize_nobBaseWarehouse(SerializedGameData * sgd) cons
 		sgd->PushUnsignedInt(reserve_soldiers_claimed_real[i]);
 	}
 
-	for(unsigned i = 0;i<34;++i)
+	for(unsigned i = 0;i<WARE_TYPES_COUNT;++i)
 	{
 		sgd->PushUnsignedInt(goods.goods[i]);
 		sgd->PushUnsignedInt(real_goods.goods[i]);
 		sgd->PushUnsignedChar(inventory_settings_visual.wares[i]);
 		sgd->PushUnsignedChar(inventory_settings_real.wares[i]);
 	}
-	for(unsigned i = 0;i<30;++i)
+	for(unsigned i = 0;i<JOB_TYPES_COUNT;++i)
 	{
 		sgd->PushUnsignedInt(goods.people[i]);
 		sgd->PushUnsignedInt(real_goods.people[i]);
@@ -170,14 +167,14 @@ nobBaseWarehouse::nobBaseWarehouse(SerializedGameData * sgd, const unsigned obj_
 		reserve_soldiers_claimed_visual[i] = reserve_soldiers_claimed_real[i] = sgd->PopUnsignedInt();
 	}
 
-	for(unsigned i = 0;i<34;++i)
+	for(unsigned i = 0;i<WARE_TYPES_COUNT;++i)
 	{
 		goods.goods[i] = sgd->PopUnsignedInt();
 		real_goods.goods[i] = sgd->PopUnsignedInt();
 		inventory_settings_visual.wares[i] = sgd->PopUnsignedChar();
 		inventory_settings_real.wares[i] = sgd->PopUnsignedChar();
 	}
-	for(unsigned i = 0;i<30;++i)
+	for(unsigned i = 0;i<JOB_TYPES_COUNT;++i)
 	{
 		goods.people[i] = sgd->PopUnsignedInt();
 		real_goods.people[i] = sgd->PopUnsignedInt();
@@ -417,18 +414,18 @@ void nobBaseWarehouse::HandleBaseEvent(const unsigned int id)
 			// Wenn keine Platz an Flagge, dann keine Waren raus
 			if(GetFlag()->IsSpaceForWare())
 			{
-				for(unsigned i = 0;i<34;++i)
+				for(unsigned i = 0;i<WARE_TYPES_COUNT;++i)
 				{
 					if(CheckRealInventorySettings(0,4,i) && real_goods.goods[i])
 						type_list.push_back(i);
 				}
 			}
 
-			for(unsigned i = 0;i<30;++i)
+			for(unsigned i = 0;i<JOB_TYPES_COUNT;++i)
 			{
 				// Figuren, die noch nicht implementiert sind, nicht nehmen!
 				if(CheckRealInventorySettings(1,4,i) && real_goods.people[i])
-					type_list.push_back(34+i);
+					type_list.push_back(WARE_TYPES_COUNT+i);
 			}
 
 			// Gibts überhaupt welche?
@@ -439,7 +436,7 @@ void nobBaseWarehouse::HandleBaseEvent(const unsigned int id)
 			// Eine ID zufällig auswählen
 			unsigned type = *type_list[RANDOM.Rand(__FILE__,__LINE__,obj_id,type_list.size())];
 
-			if(type < 34)
+			if(type < WARE_TYPES_COUNT)
 			{
 				// Ware
 
@@ -460,7 +457,7 @@ void nobBaseWarehouse::HandleBaseEvent(const unsigned int id)
 			else
 			{
 				// Figur
-				type-=34;
+				type-=WARE_TYPES_COUNT;
 
 				nobBaseWarehouse * wh = GAMECLIENT.GetPlayer(player)->FindWarehouse(this,FW::Condition_StoreFigure,0,true,&type,false);
 				nofPassiveWorker * fig = new nofPassiveWorker(Job(type),x,y,player,NULL);
@@ -965,10 +962,10 @@ const Goods *nobBaseWarehouse::GetInventory() const
 
 void nobBaseWarehouse::AddToInventory()
 {
-	for(unsigned int i = 0; i < 34; ++i)
+	for(unsigned int i = 0; i < WARE_TYPES_COUNT; ++i)
 		GAMECLIENT.GetPlayer(player)->IncreaseInventoryWare(GoodType(i),real_goods.goods[i]);
 
-	for(unsigned int i = 0; i < 30; ++i)
+	for(unsigned int i = 0; i < JOB_TYPES_COUNT; ++i)
 		GAMECLIENT.GetPlayer(player)->IncreaseInventoryJob(Job(i),real_goods.people[i]);
 
 }
@@ -1013,13 +1010,13 @@ void nobBaseWarehouse::ChangeAllRealInventorySettings(unsigned char category,uns
 	if(category == 0)
 	{
 		// Waren ändern
-		for(unsigned i = 0;i<34;++i)
+		for(unsigned i = 0;i<WARE_TYPES_COUNT;++i)
 			inventory_settings_real.wares[i] ^= state;
 	}
 	else
 	{
 		// Figuren ändern
-		for(unsigned i = 0;i<30;++i)
+		for(unsigned i = 0;i<JOB_TYPES_COUNT;++i)
 			inventory_settings_real.figures[i] ^= state;
 	}
 
@@ -1037,14 +1034,14 @@ bool nobBaseWarehouse::AreWaresToEmpty() const
 {
 	// Prüfen, ob Warentyp ausgelagert werden soll und ob noch Waren davon vorhanden sind
 	// Waren überprüfen
-	for(unsigned i = 0;i<34;++i)
+	for(unsigned i = 0;i<WARE_TYPES_COUNT;++i)
 	{
 		if(CheckRealInventorySettings(0,4,i) && real_goods.goods[i])
 			return true;
 	}
 
 	// Figuren überprüfen
-	for(unsigned i = 0;i<30;++i)
+	for(unsigned i = 0;i<JOB_TYPES_COUNT;++i)
 	{
 		if(CheckRealInventorySettings(1,4,i) && real_goods.people[i])
 			return true;

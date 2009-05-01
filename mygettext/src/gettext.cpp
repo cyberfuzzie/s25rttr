@@ -1,4 +1,4 @@
-// $Id: gettext.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: gettext.cpp 4758 2009-05-01 18:56:33Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -95,7 +95,9 @@ const char *GetText::setLocale(const char *locale)
 	else if(lang == "United States")
 		region = "EN";
 
-	this->locale = lang + "_" + region;
+	this->locale = lang;
+	if(region.length())
+		this->locale += ( "_" + region);
 
 	return this->locale.c_str();
 }

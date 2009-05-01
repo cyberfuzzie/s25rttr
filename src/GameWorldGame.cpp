@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 4740 2009-04-28 19:05:10Z OLiver $
+// $Id: GameWorldGame.cpp 4751 2009-05-01 13:55:16Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1054,7 +1054,7 @@ bool GameWorldGame::ValidPointForFighting(const MapCoord x, const MapCoord y)
 }
 
 bool GameWorldGame::IsPointCompletelyVisible(const MapCoord x, const MapCoord y, const unsigned char player, const noBuilding * const exception) const
-{
+{ 
 	list<nobBaseMilitary*> buildings;
 	LookForMilitaryBuildings(buildings,x,y,3);
 
@@ -1080,8 +1080,16 @@ bool GameWorldGame::IsPointCompletelyVisible(const MapCoord x, const MapCoord y,
 	for(list<nobUsual*>::const_iterator it = GameClient::inst().GetPlayer(player)->GetBuildings(BLD_LOOKOUTTOWER).begin();
 		it.valid(); ++it)
 	{
-		if(*it != exception)
-			if(CalcDistance(x,y,(*it)->GetX(),(*it)->GetY()) <= VISUALRANGE_LOOKOUTTOWER)
+		// Ist Späturm überhaupt besetzt?
+		if(!(*it)->HasWorker())
+			continue;
+
+		// Nicht die Ausnahme wählen
+		if(*it == exception)
+			continue;
+
+		// Liegt Spähturm innerhalb des Sichtradius?
+		if(CalcDistance(x,y,(*it)->GetX(),(*it)->GetY()) <= VISUALRANGE_LOOKOUTTOWER)
 				return true;
 	}
 

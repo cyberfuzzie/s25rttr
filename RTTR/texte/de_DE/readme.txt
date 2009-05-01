@@ -1,4 +1,4 @@
-2008.03.27                 SETTLERS II.5 - RETURN TO THE ROOTS                 0.7-dev
+2008.05.01                 SETTLERS II.5 - RETURN TO THE ROOTS                0.7-dev
 ------------------------------------------------------------------------------------
 
 A. Allgemeine Hinweise
@@ -32,7 +32,7 @@ B. Installation
       Windows 95/98/ME/Vista ist nicht offiziell unterstützt. Vista sollte
       aber eigentlich funktionieren.
 
-      a) Zip-Archiv
+      a) Zip-Archive
          Zum Spielen muss man nur das Zip-Archiv mit z.B. WinZip in die
          installierte "Siedler 2 Gold-Edition" entpacken
          (so dass s25client.exe sich auf der selben Ebene wie S2.EXE 
@@ -211,9 +211,18 @@ D. Abstürze und Fehler
    Bitte stellt sicher, dass ihr den Async nicht absichtlich durch Spielen mit
    verschiedenen Versionen oder Cheaten herbeigeführt habt!
 
-   Wenn ihr Fehler findet, schickt diese bitte an: 
+   Wenn ihr Fehler findet, bitte diese im Launchpad posten:
 
+               http://bugs.siedler25.org/
+
+   Das Launchpad erhöht die Übersichtlichkeit für Bugs und ermöglicht euch
+   zudem selber einsehen zu können, wann der Bug gefixt wurde.
+
+   Bei weiteren Fragen bitte an
+	
                bugs@siedler25.org
+
+   wenden.
 
    Alternativ könnt ihr euch auch im Forum oder im IRC-Channel unter
    irc.freenode.net:6667/#siedler2.5 melden. Ihr könnt dem Chat auch über
@@ -222,15 +231,17 @@ D. Abstürze und Fehler
    Vielen Dank!
 
    Settlers Freaks
-   27. März 2009
+   01. Mai 2009
 
 ------------------------------------------------------------------------------------
 
 E. Übersicht: Updates und Änderungen
 
- * 0.7-dev - Siebte Version - 27.03.2009 *
+ * 0.7-dev - Siebte Version - 01.05.2009 *
    -------------------------------------------------------------------------
+   - OpenSource!
    - Übersetzung: Niederländisch
+   - Übersetzung: Russisch (Zeichensatz fehlt)
 
  * 0.6 - Sechste Version - 25.01.2009 *
    -------------------------------------------------------------------------

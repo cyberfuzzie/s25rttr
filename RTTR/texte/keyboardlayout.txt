@@ -1,4 +1,4 @@
-2009.01.25        SIEDLER II.5 - RETURN TO THE ROOTS                0.6
+2009.05.01        SIEDLER II.5 - RETURN TO THE ROOTS           0.7-dev
 ------------------------------------------------------------------------
 Global keyboard layout:
 

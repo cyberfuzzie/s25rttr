@@ -1,4 +1,4 @@
-2008.03.27                 SETTLERS II.5 - RETURN TO THE ROOTS                 0.7-dev
+2008.05.01                 SETTLERS II.5 - RETURN TO THE ROOTS                0.7-dev
 ------------------------------------------------------------------------------------
 
 A. Reference Note
@@ -32,7 +32,7 @@ B. Installation
       We don't support Windows 95/98/ME/Vista officially. Vista seems to
       work.
 
-      a) Zip-archiv
+      a) Zip-archiv's
          To play the game you have to extract the archive with WinZip (for 
          example) into the "The Settlers 2 Gold-Edition"-folder. (so that
          s25client.exe is in the same folder as S2.exe)
@@ -48,8 +48,8 @@ B. Installation
          installation-folder of RTTR. Afterwards the game can be launched 
          by clicking the shortcut on the desktop.
 
-         Note: RTTR does not change any files from the original game. 
-         It acts like a game-mod. 
+      Note: RTTR does not change any files from the original game. 
+      It acts like a game-mod. 
          
    -------------------------------------------------------------------------
 
@@ -184,8 +184,15 @@ D. Crash and bugs
    Also make sure you did not make the async on purpose by cheating or
    using different versions.
 
-   Send all information you have about the bug to: 
+   If you find bugs, please report them on:
 
+               http://bugs.siedler25.org/
+
+   Launchpad increases the facility of inspection and makes it easy for
+   you to see if your bug is already fixed.
+
+   If you have further questions, please contact:
+	
                bugs@siedler25.org
 
    Alternatively you can post the bug in the forum or visit us on IRC
@@ -196,15 +203,17 @@ D. Crash and bugs
    Thanks a lot
 
    Settlers Freaks
-   March 27th 2009
+   May 01st 2009
 
 ------------------------------------------------------------------------------------
 
 E. Summary: Updates and changelog
 
- * 0.7-dev - Seventh version - 27.03.2009 *
+ * 0.7-dev - Seventh version - 01.05.2009 *
    -------------------------------------------------------------------------
+   - OpenSource!
    - Translation: Dutch
+   - Translation: Russian (Font is missing)
  
  * 0.6 - Sixth version - 25.01.2009 *
    -------------------------------------------------------------------------

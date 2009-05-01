@@ -1,6 +1,6 @@
 2008.05.01        SIEDLER II.5 - RETURN TO THE ROOTS           0.7-dev
 ------------------------------------------------------------------------
-Globale Tastaturbelegung:
+Globale Tastaturbelegung im Spiel:
 
 Eingeklammerte Belegungen funktionieren noch nicht.
 

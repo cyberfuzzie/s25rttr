@@ -1,4 +1,4 @@
-// $Id: gettext.cpp 4758 2009-05-01 18:56:33Z OLiver $
+// $Id: gettext.cpp 4765 2009-05-01 20:54:26Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -131,7 +131,7 @@ const char *GetText::get(const char *text)
 
 void GetText::loadCatalog()
 {
-	std::string catalogfile = directory + "/" + locale + "/LC_MESSAGES/" + catalog + ".mo";
+	std::string catalogfile = directory + "/" + locale + "/LC_MESSAGES/" + locale + ".mo";
 
 	if(catalogfile == lastcatalog)
 		return;

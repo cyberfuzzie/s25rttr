@@ -68,14 +68,14 @@ tar --exclude=.svn -cvjf ../../../../s25rttr_music.tar.bz2 RTTR/MUSIC
 
 cd ../..
 
-cp -rv ../../../RTTR/languages/de_DE/LC_MESSAGES/*.mo share/s25rttr/RTTR/languages/de_DE/LC_MESSAGES/
-cp -rv ../../../RTTR/languages/es_ES/LC_MESSAGES/*.mo share/s25rttr/RTTR/languages/es_ES/LC_MESSAGES/
-cp -rv ../../../RTTR/languages/fr_FR/LC_MESSAGES/*.mo share/s25rttr/RTTR/languages/fr_FR/LC_MESSAGES/
-cp -rv ../../../RTTR/languages/sv_SE/LC_MESSAGES/*.mo share/s25rttr/RTTR/languages/sv_SE/LC_MESSAGES/
-cp -rv ../../../RTTR/languages/fi_FI/LC_MESSAGES/*.mo share/s25rttr/RTTR/languages/fi_FI/LC_MESSAGES/
-cp -rv ../../../RTTR/languages/hu_HU/LC_MESSAGES/*.mo share/s25rttr/RTTR/languages/hu_HU/LC_MESSAGES/
-cp -rv ../../../RTTR/languages/ru_RU/LC_MESSAGES/*.mo share/s25rttr/RTTR/languages/ru_RU/LC_MESSAGES/
-cp -rv ../../../RTTR/languages/nl_NL/LC_MESSAGES/*.mo share/s25rttr/RTTR/languages/nl_NL/LC_MESSAGES/
+cp -rv ../../../RTTR/languages/de/LC_MESSAGES/*.mo share/s25rttr/RTTR/languages/de/LC_MESSAGES/
+cp -rv ../../../RTTR/languages/es/LC_MESSAGES/*.mo share/s25rttr/RTTR/languages/es/LC_MESSAGES/
+cp -rv ../../../RTTR/languages/fr/LC_MESSAGES/*.mo share/s25rttr/RTTR/languages/fr/LC_MESSAGES/
+cp -rv ../../../RTTR/languages/sv/LC_MESSAGES/*.mo share/s25rttr/RTTR/languages/sv/LC_MESSAGES/
+cp -rv ../../../RTTR/languages/fi/LC_MESSAGES/*.mo share/s25rttr/RTTR/languages/fi/LC_MESSAGES/
+cp -rv ../../../RTTR/languages/hu/LC_MESSAGES/*.mo share/s25rttr/RTTR/languages/hu/LC_MESSAGES/
+cp -rv ../../../RTTR/languages/ru/LC_MESSAGES/*.mo share/s25rttr/RTTR/languages/ru/LC_MESSAGES/
+cp -rv ../../../RTTR/languages/nl/LC_MESSAGES/*.mo share/s25rttr/RTTR/languages/nl/LC_MESSAGES/
 
 rm -vf share/s25rttr/RTTR/REPLAYS/*.rpl
 rm -vf share/s25rttr/RTTR/sound.lst

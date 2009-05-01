@@ -46,6 +46,10 @@ msgstr ""
 msgid "Programming"
 msgstr ""
 
+#: src/dskOptions.cpp:105
+msgid "Keyboard layout:"
+msgstr ""
+
 #: src/dskCredits.cpp:74
 msgid "Game testers"
 msgstr ""

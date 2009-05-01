@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Siedler II.5 RttR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-04 18:23+0100\n"
+"POT-Creation-Date: 2009-04-26 12:13+0100\n"
 "PO-Revision-Date: 2009-01-04 18:25+0100\n"
 "Last-Translator: \n"
 "Language-Team: Siedler II.5 RttR <sf-team@siedler25.org>\n"
@@ -15,50 +15,48 @@ msgstr ""
 "X-Poedit-Basepath: /storage/RTTR/svn/trunk/src\n"
 "X-Poedit-SearchPath-0: /storage/RTTR/svn/trunk/src\n"
 
-#: C:\svn\s25client\trunk\src/GameClient.cpp:745
+#: src/GameClient.cpp:740
 msgid " (AI)"
 msgstr " (AI)"
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:239
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:266
+#: src/dskHostGame.cpp:241 src/dskHostGame.cpp:268
 #, c-format
 msgid "%d"
 msgstr "%d"
 
-#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:324
+#: src/dskSelectMap.cpp:401
 #, c-format
 msgid "%d Player"
 msgstr "%d jugador"
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:247
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:256
+#: src/dskHostGame.cpp:249 src/dskHostGame.cpp:258
 #, c-format
 msgid "%s"
 msgstr "%s"
 
-#: C:\svn\s25client\trunk\src/iwHQ.cpp:65
+#: src/iwHQ.cpp:67
 #, c-format
 msgid "%u/%u"
 msgstr "%u/%u"
 
-#: C:\svn\s25client\trunk\src/iwDirectIPCreate.cpp:73
+#: src/iwDirectIPCreate.cpp:75
 msgid "'s Game"
 msgstr " - Juego"
 
-#: C:\svn\s25client\trunk\src/GameWorldViewer.cpp:220
+#: src/GameWorldViewer.cpp:222
 #, c-format
 msgid "(%d soldiers)"
 msgstr "(%d soldados)"
 
-#: C:\svn\s25client\trunk\src/GameWorldViewer.cpp:218
+#: src/GameWorldViewer.cpp:220
 msgid "(1 soldier)"
 msgstr "(1 soldado)"
 
-#: C:\svn\s25client\trunk\src/GameWorldViewer.cpp:187
+#: src/GameWorldViewer.cpp:189
 msgid "(House unoccupied)"
 msgstr "(Casa desocupada)"
 
-#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:183
+#: src/dskGameInterface.cpp:185
 #, c-format
 msgid ""
 "(Replay-Mode) Current GF: %u (End at: %u) / GF length: %u ms / NWF length: %"
@@ -67,58 +65,52 @@ msgstr ""
 "(Modo de repetición) GF actual: %u (Final en: %u) / longitud de GF: %u ms / "
 "longitud de NWF: %u gf (%u ms)"
 
-#: C:\svn\s25client\trunk\src/GameWorldViewer.cpp:189
+#: src/GameWorldViewer.cpp:191
 msgid "(stopped)"
 msgstr "(detenido)"
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:249
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:258
+#: src/dskHostGame.cpp:251 src/dskHostGame.cpp:260
 msgid "-"
 msgstr "-"
 
-#: C:\svn\s25client\trunk\src/iwAction.cpp:118
+#: src/iwAction.cpp:120
 msgid "-> Build castle"
 msgstr "-> Construir castillo"
 
-#: C:\svn\s25client\trunk\src/iwAction.cpp:98
-#: C:\svn\s25client\trunk\src/iwAction.cpp:112
-#: C:\svn\s25client\trunk\src/iwAction.cpp:117
+#: src/iwAction.cpp:100 src/iwAction.cpp:114 src/iwAction.cpp:119
 msgid "-> Build house"
 msgstr "-> Construir casa"
 
-#: C:\svn\s25client\trunk\src/iwAction.cpp:107
-#: C:\svn\s25client\trunk\src/iwAction.cpp:111
-#: C:\svn\s25client\trunk\src/iwAction.cpp:116
+#: src/iwAction.cpp:109 src/iwAction.cpp:113 src/iwAction.cpp:118
 msgid "-> Build hut"
 msgstr "-> Construir cabaña"
 
-#: C:\svn\s25client\trunk\src/iwAction.cpp:122
+#: src/iwAction.cpp:124
 msgid "-> Dig mines"
 msgstr "-> Excavar minas"
 
-#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:797
-#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:823
-#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:846
+#: src/dskGameInterface.cpp:799 src/dskGameInterface.cpp:825
+#: src/dskGameInterface.cpp:848
 #, c-format
 msgid "<%s> "
 msgstr "<%s> "
 
-#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:806
+#: src/dskGameInterface.cpp:808
 msgid "A auto-savegame is created..."
 msgstr ""
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:116
+#: src/dskHostGame.cpp:118
 msgid "A lot"
 msgstr "Mucho"
 
-#: C:\svn\s25client\trunk\src/BuildingConsts.h:468
+#: src/BuildingConsts.h:470
 msgid ""
 "A well supplies water to the bakery, brewery, donkey breeder and pig farm."
 msgstr ""
 "El pozo suministra agua a la panadería, cervecería, criadero de burros y la "
 "granja de puercos."
 
-#: C:\svn\s25client\trunk\src/BuildingConsts.h:340
+#: src/BuildingConsts.h:342
 msgid ""
 "A woodcutter provides the sawmill with logs. A forester is able to replant "
 "the depleted forest."
@@ -126,327 +118,307 @@ msgstr ""
 "El leñador abastece el aserradero con troncos. El guardia forestal es capaz "
 "de reforestar el bosque."
 
-#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:24
+#: src/iwMusicPlayer.cpp:45
 #, fuzzy
 msgid "Abort"
 msgstr "Acerca de The Settlers"
 
-#: C:\svn\s25client\trunk\src/iwAction.cpp:65
+#: src/iwAction.cpp:67
 msgid "Activity window"
 msgstr "Pantalla de acciones"
 
-#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:55
+#: src/iwMusicPlayer.cpp:76
 msgid "Add"
 msgstr ""
 
-#: C:\svn\s25client\trunk\src/dskLobby.cpp:71
+#: src/dskLobby.cpp:73
 msgid "Add Server"
 msgstr "Agregar Servidor"
 
-#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:61
-#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:178
+#: src/iwMusicPlayer.cpp:82 src/iwMusicPlayer.cpp:199
 #, fuzzy
 msgid "Add track"
 msgstr "Atacar!"
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:245
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:254
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:566
+#: src/dskHostGame.cpp:247 src/dskHostGame.cpp:256 src/dskHostGame.cpp:568
 msgid "Africans"
 msgstr "Africanos"
 
-#: C:\svn\s25client\trunk\src/iwBuildOrder.cpp:66
+#: src/iwBuildOrder.cpp:68
 msgid "After the following order"
 msgstr "Después de la siguiente orden"
 
-#: C:\svn\s25client\trunk\src/iwChat.cpp:51
+#: src/iwChat.cpp:53
 msgid "All"
 msgstr "Todos"
 
-#: C:\svn\s25client\trunk\src/iwChat.cpp:53
+#: src/iwChat.cpp:55
 msgid "Allies"
 msgstr "Aliados"
 
-#: C:\svn\s25client\trunk\src/SerializedGameData.cpp:221
+#: src/SerializedGameData.cpp:232
 msgid "An error occured while saving which was suppressed!"
 msgstr "Ha ocurrido en error al momento de guardar y fue suprimido."
 
-#: C:\svn\s25client\trunk\src/dskGameLoader.cpp:165
+#: src/dskGameLoader.cpp:167
 msgid "And let's go!"
 msgstr "Vamonos.."
 
-#: C:\svn\s25client\trunk\src/iwPlayReplay.cpp:108
+#: src/iwPlayReplay.cpp:110
 msgid "Are you sure to remove all replays?"
 msgstr "Está seguro de eliminar todas las repeticiones?"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:303
+#: src/GameConsts.h:305
 msgid "Armorer"
 msgstr "Herrero"
 
-#: C:\svn\s25client\trunk\src/iwDistribution.cpp:98
-#: C:\svn\s25client\trunk\src/iwDistribution.cpp:110
+#: src/iwDistribution.cpp:100 src/iwDistribution.cpp:112
 msgid "Armory"
 msgstr "Armería"
 
-#: C:\svn\s25client\trunk\src/iwAction.cpp:221
+#: src/iwAction.cpp:223
 msgid "Attack not possible."
 msgstr "El ataque no es posible."
 
-#: C:\svn\s25client\trunk\src/iwAction.cpp:213
+#: src/iwAction.cpp:215
 msgid "Attack options"
 msgstr "Opciones de Ataque"
 
-#: C:\svn\s25client\trunk\src/iwAction.cpp:246
+#: src/iwAction.cpp:248
 msgid "Attack!"
 msgstr "Atacar!"
 
-#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:111
+#: src/dskSelectMap.cpp:113
 msgid "Author"
 msgstr "Autor"
 
-#: C:\svn\s25client\trunk\src/GameClient.cpp:1607
+#: src/GameClient.cpp:1602
 msgid "Auto-Save"
 msgstr "Auto-Guardar"
 
-#: C:\svn\s25client\trunk\src/iwSave.cpp:201
+#: src/iwSave.cpp:203
 msgid "Auto-Save every:"
 msgstr "Auto-Guardar todo:"
 
-#: C:\svn\s25client\trunk\src/iwTools.cpp:47
+#: src/iwTools.cpp:49
 msgid "Axe"
 msgstr "Hacha"
 
-#: C:\svn\s25client\trunk\src/dskAboutRTTR.cpp:53
-#: C:\svn\s25client\trunk\src/dskCredits.cpp:54
-#: C:\svn\s25client\trunk\src/dskDirectIP.cpp:61
-#: C:\svn\s25client\trunk\src/dskIntro.cpp:53
-#: C:\svn\s25client\trunk\src/dskLobby.cpp:65
-#: C:\svn\s25client\trunk\src/dskMultiPlayer.cpp:69
-#: C:\svn\s25client\trunk\src/dskOptions.cpp:65
-#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:117
-#: C:\svn\s25client\trunk\src/dskSinglePlayer.cpp:76
+#: src/dskAboutRTTR.cpp:55 src/dskCredits.cpp:56 src/dskDirectIP.cpp:63
+#: src/dskIntro.cpp:55 src/dskLobby.cpp:67 src/dskMultiPlayer.cpp:71
+#: src/dskOptions.cpp:67 src/dskSelectMap.cpp:119 src/dskSinglePlayer.cpp:78
 msgid "Back"
 msgstr "Atrás"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:294
+#: src/GameConsts.h:296
 msgid "Baker"
 msgstr "Panadero"
 
-#: C:\svn\s25client\trunk\src/iwDistribution.cpp:142
+#: src/iwDistribution.cpp:144
 msgid "Bakery"
 msgstr "Panadería"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:204
+#: src/GameConsts.h:206
 msgid "Barracks"
 msgstr "Cuartel"
 
-#: C:\svn\s25client\trunk\src/iwTransport.cpp:57
+#: src/iwTransport.cpp:59
 msgid "Beer"
 msgstr "Cerveza"
 
-#: C:\svn\s25client\trunk\src/iwDistribution.cpp:123
+#: src/iwDistribution.cpp:125
 msgid "Boards"
 msgstr "Tableros"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:132
+#: src/GameConsts.h:134
 msgid "Boat"
 msgstr "Barco"
 
-#: C:\svn\s25client\trunk\src/iwTransport.cpp:68
+#: src/iwTransport.cpp:70
 msgid "Boats"
 msgstr "Barcos"
 
-#: C:\svn\s25client\trunk\src/iwMilitary.cpp:52
+#: src/iwMilitary.cpp:54
 msgid "Border areas"
 msgstr "Frontera"
 
-#: C:\svn\s25client\trunk\src/iwBuildOrder.cpp:59
+#: src/iwBuildOrder.cpp:61
 msgid "Bottom"
 msgstr "Barco"
 
-#: C:\svn\s25client\trunk\src/iwTools.cpp:57
+#: src/iwTools.cpp:59
 msgid "Bow"
 msgstr "Arco"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:137
+#: src/GameConsts.h:139
 msgid "Bread"
 msgstr "Pan"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:297
+#: src/GameConsts.h:299
 msgid "Brewer"
 msgstr "Cervecero"
 
-#: C:\svn\s25client\trunk\src/iwDistribution.cpp:90
-#: C:\svn\s25client\trunk\src/iwDistribution.cpp:146
+#: src/iwDistribution.cpp:92 src/iwDistribution.cpp:148
 msgid "Brewery"
 msgstr "Cervecería"
 
-#: C:\svn\s25client\trunk\src/iwAction.cpp:166
-#: C:\svn\s25client\trunk\src/iwAction.cpp:173
-#: C:\svn\s25client\trunk\src/iwAction.cpp:181
-#: C:\svn\s25client\trunk\src/iwAction.cpp:185
+#: src/iwAction.cpp:168 src/iwAction.cpp:175 src/iwAction.cpp:183
+#: src/iwAction.cpp:187
 msgid "Build road"
 msgstr "Construir camino"
 
-#: C:\svn\s25client\trunk\src/iwAction.cpp:174
+#: src/iwAction.cpp:176
 msgid "Build waterway"
 msgstr "Construir vía fluvial"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:304
+#: src/GameConsts.h:306
 msgid "Builder"
 msgstr "Constructor"
 
-#: C:\svn\s25client\trunk\src/iwBuildings.cpp:55
-#: C:\svn\s25client\trunk\src/iwMainMenu.cpp:63
+#: src/iwBuildings.cpp:76
 msgid "Buildings"
 msgstr "Edificios"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:295
+#: src/GameConsts.h:297
 msgid "Butcher"
 msgstr "Carnicero"
 
-#: C:\svn\s25client\trunk\src/iwAction.cpp:168
-#: C:\svn\s25client\trunk\src/iwAction.cpp:176
+#: src/iwAction.cpp:170 src/iwAction.cpp:178
 msgid "Call in geologist"
 msgstr "Llamar al Geólogo"
 
-#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:133
+#: src/dskSelectMap.cpp:135
 msgid "Campaign"
 msgstr "Campaña"
 
-#: C:\svn\s25client\trunk\src/iwMsgbox.cpp:70
-#: C:\svn\s25client\trunk\src/iwMsgbox.cpp:85
+#: src/iwMsgbox.cpp:72 src/iwMsgbox.cpp:87
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:289
+#: src/GameConsts.h:291
 msgid "Carpenter"
 msgstr "Carpintero"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:219
+#: src/GameConsts.h:221
 msgid "Catapult"
 msgstr "Catapulta"
 
-#: C:\svn\s25client\trunk\src/iwMilitary.cpp:51
+#: src/iwMilitary.cpp:53
 msgid "Center of country"
 msgstr "Centro del País"
 
-#: C:\svn\s25client\trunk\src/iwChat.cpp:44
+#: src/iwChat.cpp:46
 msgid "Chat Window"
 msgstr "Pantalla de Chat"
 
-#: C:\svn\s25client\trunk\src/iwDirectIPConnect.cpp:226
+#: src/iwDirectIPConnect.cpp:228
 msgid "Checking Map..."
 msgstr "Comprobando Mapa..."
 
-#: C:\svn\s25client\trunk\src/iwDirectIPConnect.cpp:225
+#: src/iwDirectIPConnect.cpp:227
 msgid "Checking Password..."
 msgstr "Comprobando Contraseña..."
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:107
+#: src/dskHostGame.cpp:109
 msgid "Classic (Settlers 2)"
 msgstr "Clásico"
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:60
+#: src/dskHostGame.cpp:62
 msgid "Classification"
 msgstr "Clasificación"
 
-#: C:\svn\s25client\trunk\src/iwPlayReplay.cpp:66
-#: C:\svn\s25client\trunk\src/iwPlayReplay.cpp:108
+#: src/iwPlayReplay.cpp:68 src/iwPlayReplay.cpp:110
 msgid "Clear"
 msgstr "Limpiar"
 
-#: C:\svn\s25client\trunk\src/iwTools.cpp:55
+#: src/iwTools.cpp:57
 msgid "Cleaver"
 msgstr "Cuchillo"
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:199
+#: src/dskHostGame.cpp:201
 msgid "Closed"
 msgstr "Cerrado"
 
-#: C:\svn\s25client\trunk\src/iwDistribution.cpp:107
+#: src/iwDistribution.cpp:109
 msgid "Coal"
 msgstr "Carbón"
 
-#: C:\svn\s25client\trunk\src/iwDistribution.cpp:62
+#: src/iwDistribution.cpp:64
 msgid "Coal mine"
 msgstr "Mina de carbón"
 
-#: C:\svn\s25client\trunk\src/iwTransport.cpp:55
+#: src/iwTransport.cpp:57
 msgid "Coins"
 msgstr "Monedas"
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:64
+#: src/dskHostGame.cpp:66
 msgid "Color"
 msgstr "Color"
 
-#: C:\svn\s25client\trunk\src/dskOptions.cpp:73
+#: src/dskOptions.cpp:75
 msgid "Common"
 msgstr "Común"
 
-#: C:\svn\s25client\trunk\src/GameClient.cpp:743
+#: src/GameClient.cpp:738
 #, c-format
 msgid "Computer %u"
 msgstr "Computadora %u"
 
-#: C:\svn\s25client\trunk\src/dskLobby.cpp:67
+#: src/dskLobby.cpp:69
 msgid "Connect"
 msgstr "Conectar"
 
-#: C:\svn\s25client\trunk\src/iwLobbyConnect.cpp:47
+#: src/iwLobbyConnect.cpp:49
 msgid "Connecting to Lobby"
 msgstr "Conectando al lobby de Internet"
 
-#: C:\svn\s25client\trunk\src/iwDirectIPConnect.cpp:141
-#: C:\svn\s25client\trunk\src/iwLobbyConnect.cpp:195
-#: C:\svn\s25client\trunk\src/iwLobbyConnect.cpp:211
+#: src/iwDirectIPConnect.cpp:143 src/iwLobbyConnect.cpp:197
+#: src/iwLobbyConnect.cpp:213
 msgid "Connecting with Host..."
 msgstr "Conectando con Host..."
 
-#: C:\svn\s25client\trunk\src/iwDirectIPConnect.cpp:147
-#: C:\svn\s25client\trunk\src/iwLobbyConnect.cpp:204
-#: C:\svn\s25client\trunk\src/iwLobbyConnect.cpp:226
+#: src/iwDirectIPConnect.cpp:149 src/iwLobbyConnect.cpp:206
+#: src/iwLobbyConnect.cpp:228
 msgid "Connection failed!"
 msgstr "Conexión fallida!"
 
-#: C:\svn\s25client\trunk\src/iwDirectIPConnect.cpp:212
+#: src/iwDirectIPConnect.cpp:214
 msgid "Connection to Host closed!"
 msgstr "Conexión a Host interrumpido!"
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:122
+#: src/dskHostGame.cpp:124
 msgid "Conquer 3/4 of map"
 msgstr "Conquistar 3/4 de mapa"
 
-#: C:\svn\s25client\trunk\src/iwDistribution.cpp:126
+#: src/iwDistribution.cpp:128
 msgid "Construction"
 msgstr "Construyendo sitios"
 
-#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:103
+#: src/dskGameInterface.cpp:105
 msgid "Construction aid mode"
 msgstr "Modo de ayuda de construcción"
 
-#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:131
+#: src/dskSelectMap.cpp:133
 msgid "Continents"
 msgstr "Continentes"
 
-#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:121
+#: src/dskSelectMap.cpp:123
 msgid "Continue"
 msgstr "Continuar"
 
-#: C:\svn\s25client\trunk\src/dskDirectIP.cpp:57
+#: src/dskDirectIP.cpp:59
 msgid "Create Game"
 msgstr "Crear juego"
 
-#: C:\svn\s25client\trunk\src/dskCredits.cpp:60
-#: C:\svn\s25client\trunk\src/dskMainMenu.cpp:78
+#: src/dskCredits.cpp:62 src/dskMainMenu.cpp:80
 msgid "Credits"
 msgstr "Créditos"
 
-#: C:\svn\s25client\trunk\src/iwTools.cpp:52
+#: src/iwTools.cpp:54
 msgid "Crucible"
 msgstr "Crisol"
 
-#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:185
+#: src/dskGameInterface.cpp:187
 #, c-format
 msgid ""
 "Current GF: %u / GF length: %u ms / NWF length: %u gf (%u ms) /  Ping: %u ms"
@@ -454,226 +426,212 @@ msgstr ""
 "GF actual: %u / longitud de GF: %u ms / longitud de NWF: %u gf (%u ms) / "
 "Ping: %u ms"
 
-#: C:\svn\s25client\trunk\src/iwBuildOrder.cpp:72
-#: C:\svn\s25client\trunk\src/iwDistribution.cpp:171
+#: src/iwBuildOrder.cpp:74
 msgid "Default"
 msgstr "Configuración por defecto"
 
-#: C:\svn\s25client\trunk\src/iwAction.cpp:186
-#: C:\svn\s25client\trunk\src/iwBaseWarehouse.cpp:103
-#: C:\svn\s25client\trunk\src/iwBuilding.cpp:72
+#: src/iwAction.cpp:188 src/iwBaseWarehouse.cpp:105 src/iwBuilding.cpp:74
 msgid "Demolish house"
 msgstr "Demoler casa"
 
-#: C:\svn\s25client\trunk\src/iwDemolishBuilding.cpp:41
+#: src/iwDemolishBuilding.cpp:43
 msgid "Demolish?"
 msgstr "Demoler?"
 
-#: C:\svn\s25client\trunk\src/iwMilitaryBuilding.cpp:170
+#: src/iwMilitaryBuilding.cpp:172
 msgid ""
 "Demolition ist not allowed because the building is located in border area!"
 msgstr ""
 "La demolición no es posible porque el edificio esta localizado en el área "
 "fronteriza!"
 
-#: C:\svn\s25client\trunk\src/iwMilitaryBuilding.cpp:169
+#: src/iwMilitaryBuilding.cpp:171
 msgid "Demolition ist not allowed because the building is under attack!"
 msgstr "La demolición no es posible porque el edificio está siendo atacado!"
 
-#: C:\svn\s25client\trunk\src/iwMilitaryBuilding.cpp:173
+#: src/iwMilitaryBuilding.cpp:175
 msgid "Demolition not possible"
 msgstr "El ataque no es posible."
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:97
+#: src/dskHostGame.cpp:99
 msgid "Demolition prohibition:"
 msgstr "Prohibición de demolición"
 
-#: C:\svn\s25client\trunk\src/iwAction.cpp:206
-#: C:\svn\s25client\trunk\src/iwAction.cpp:208
+#: src/iwAction.cpp:208 src/iwAction.cpp:210
 msgid "Dig up road"
 msgstr "Desenterrar camino"
 
-#: C:\svn\s25client\trunk\src/dskMultiPlayer.cpp:67
+#: src/dskMultiPlayer.cpp:69
 msgid "Direct IP"
 msgstr "IP directo"
 
-#: C:\svn\s25client\trunk\src/iwSave.cpp:205
+#: src/iwSave.cpp:207
 msgid "Disabled"
 msgstr "Desactivado"
 
-#: C:\svn\s25client\trunk\src/iwAction.cpp:253
+#: src/iwAction.cpp:255
 msgid "Display options"
 msgstr "Opciones de visualización"
 
-#: C:\svn\s25client\trunk\src/iwDistribution.cpp:43
-#: C:\svn\s25client\trunk\src/iwMainMenu.cpp:54
+#: src/iwDistribution.cpp:45 src/iwMainMenu.cpp:56
 msgid "Distribution of goods"
 msgstr "Distribución de bienes"
 
-#: C:\svn\s25client\trunk\src/dskCredits.cpp:101
+#: src/dskCredits.cpp:103
 msgid "Donators"
 msgstr "Donadores"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:299
+#: src/GameConsts.h:301
 msgid "Donkey breeder"
 msgstr "Criador de burros"
 
-#: C:\svn\s25client\trunk\src/iwDistribution.cpp:86
-#: C:\svn\s25client\trunk\src/iwDistribution.cpp:154
+#: src/iwDistribution.cpp:88 src/iwDistribution.cpp:156
 msgid "Donkey breeding"
 msgstr "Criadero de burros"
 
-#: C:\svn\s25client\trunk\src/iwBuildOrder.cpp:57
+#: src/iwBuildOrder.cpp:59
 msgid "Down"
 msgstr "Abajo"
 
-#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:64
+#: src/iwMusicPlayer.cpp:85
 #, fuzzy
 msgid "Downwards"
 msgstr "Donadores"
 
-#: C:\svn\s25client\trunk\src/dskOptions.cpp:170
+#: src/dskOptions.cpp:172
 msgid "Effects"
 msgstr "Efectos"
 
-#: C:\svn\s25client\trunk\src/iwLobbyConnect.cpp:61
+#: src/iwLobbyConnect.cpp:63
 msgid "Email Address:"
 msgstr "Dirección de correo electrónico:"
 
-#: C:\svn\s25client\trunk\src/iwOptionsWindow.cpp:58
+#: src/iwOptionsWindow.cpp:60
 msgid "End game"
 msgstr "Finalizar juego"
 
-#: C:\svn\s25client\trunk\src/iwEndgame.cpp:46
+#: src/iwEndgame.cpp:48
 msgid "End game?"
 msgstr "Finalizar juego?"
 
-#: C:\svn\s25client\trunk\src/iwChat.cpp:55
+#: src/iwChat.cpp:57
 msgid "Enemies"
 msgstr "Enemigos"
 
-#: C:\svn\s25client\trunk\src/iwAction.cpp:160
-#: C:\svn\s25client\trunk\src/iwAction.cpp:194
-#: C:\svn\s25client\trunk\src/iwAction.cpp:200
+#: src/iwAction.cpp:162 src/iwAction.cpp:196 src/iwAction.cpp:202
 msgid "Erect flag"
 msgstr "Erigir bandera"
 
-#: C:\svn\s25client\trunk\src/dskGameLoader.cpp:189
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:460
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:772
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:786
-#: C:\svn\s25client\trunk\src/dskLobby.cpp:313
-#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:269
-#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:283
+#: src/dskGameLoader.cpp:191 src/dskHostGame.cpp:462 src/dskHostGame.cpp:774
+#: src/dskHostGame.cpp:788 src/dskLobby.cpp:315 src/dskSelectMap.cpp:346
+#: src/dskSelectMap.cpp:360
 msgid "Error"
 msgstr "Error"
 
-#: C:\svn\s25client\trunk\src/iwPlayReplay.cpp:91
+#: src/iwPlayReplay.cpp:93
 msgid "Error while opening file!"
 msgstr "Error al abrir el archivo!"
 
-#: C:\svn\s25client\trunk\src/iwPlayReplay.cpp:90
-#: C:\svn\s25client\trunk\src/iwPlayReplay.cpp:100
+#: src/iwPlayReplay.cpp:92 src/iwPlayReplay.cpp:102
 msgid "Error while playing replay!"
 msgstr "Error durante la repetición"
 
-#: C:\svn\s25client\trunk\src/iwPlayReplay.cpp:93
+#: src/iwPlayReplay.cpp:95
 msgid "Error: Replay is too old!"
 msgstr "Error: Formato de repetición anticuado!"
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:104
+#: src/dskHostGame.cpp:106
 msgid "Exploration:"
 msgstr "Exploración:"
 
-#: C:\svn\s25client\trunk\src/dskGameLoader.cpp:141
+#: src/dskGameLoader.cpp:143
 msgid "Failed to load map objects."
 msgstr "Error al cargar los objetos del mapa."
 
-#: C:\svn\s25client\trunk\src/dskGameLoader.cpp:153
+#: src/dskGameLoader.cpp:155
 msgid "Failed to load terrain data."
 msgstr "Error al cargar los datos del terreno."
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:240
+#: src/GameConsts.h:242
 msgid "Farm"
 msgstr "Granja"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:292
+#: src/GameConsts.h:294
 msgid "Farmer"
 msgstr "Granjero"
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:131
+#: src/dskHostGame.cpp:133
 msgid "Fast"
 msgstr "Rápido"
 
-#: C:\svn\s25client\trunk\src/iwMilitary.cpp:48
+#: src/iwMilitary.cpp:50
 msgid "Fewer defenders"
 msgstr "Menos defensores"
 
-#: C:\svn\s25client\trunk\src/iwMilitary.cpp:46
+#: src/iwMilitary.cpp:48
 msgid "Fewer recruits"
 msgstr "Menos reclutas"
 
-#: C:\svn\s25client\trunk\src/iwTextfile.cpp:69
+#: src/iwTextfile.cpp:71
 msgid "File was not found!"
 msgstr "Archivo temporal de map no fue encontrado!"
 
-#: C:\svn\s25client\trunk\src/iwPlayReplay.cpp:61
-#: C:\svn\s25client\trunk\src/iwSave.cpp:65
+#: src/iwPlayReplay.cpp:63 src/iwSave.cpp:67
 msgid "Filename"
 msgstr "Nombre del archivo"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:136
+#: src/GameConsts.h:138
 msgid "Fish"
 msgstr "Pescado"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:287
+#: src/GameConsts.h:289
 msgid "Fisher"
 msgstr "Pescador"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:221
+#: src/GameConsts.h:223
 msgid "Fishery"
 msgstr "Pesquería"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:135
+#: src/GameConsts.h:137
 msgid "Flour"
 msgstr "Harina"
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:109
+#: src/dskHostGame.cpp:111
 msgid "FoW - all explored"
 msgstr "FoW – todo explorado"
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:108
+#: src/dskHostGame.cpp:110
 msgid "Fog of War"
 msgstr "Fog of War"
 
-#: C:\svn\s25client\trunk\src/iwTransport.cpp:66
+#: src/iwTransport.cpp:68
 msgid "Food"
 msgstr "Comida"
 
-#: C:\svn\s25client\trunk\src/iwDistribution.cpp:56
+#: src/iwDistribution.cpp:58
 msgid "Foodstuff"
 msgstr "Alimento"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:223
+#: src/GameConsts.h:225
 msgid "Forester"
 msgstr "Casa forestal"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:212
+#: src/GameConsts.h:214
 msgid "Fortress"
 msgstr "Fortaleza"
 
-#: C:\svn\s25client\trunk\src/BuildingConsts.h:324
+#: src/BuildingConsts.h:326
 msgid ""
 "From the lookout tower you can see far into previously unexplored lands."
 msgstr ""
 "Desde la torre de observación se puede observar lejos a las tierras "
 "inexploradas previamente."
 
-#: C:\svn\s25client\trunk\src/dskOptions.cpp:109
+#: src/dskOptions.cpp:111
 msgid "Fullscreen"
 msgstr "Pantalla completa"
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:460
+#: src/dskHostGame.cpp:462
 msgid ""
 "Game can only be started as soon as everybody has a unique color,everyone is "
 "ready and all free slots are closed."
@@ -681,72 +639,71 @@ msgstr ""
 "El juego solo puede empezar cuando todos los jugadores tengan colores "
 "distintos todos estén listos y todos los campos libres estén cerrados."
 
-#: C:\svn\s25client\trunk\src/dskGameLoader.cpp:145
+#: src/dskGameLoader.cpp:147
 msgid "Game crate was picked and spread out..."
 msgstr "El juego creado fue elegido y compartido..."
 
-#: C:\svn\s25client\trunk\src/iwOptionsWindow.cpp:55
+#: src/iwOptionsWindow.cpp:57
 msgid "Game menu"
 msgstr "Menú del juego"
 
-#: C:\svn\s25client\trunk\src/dskCredits.cpp:72
+#: src/dskCredits.cpp:74
 msgid "Game testers"
 msgstr "Probadores del juego"
 
-#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:824
+#: src/dskGameInterface.cpp:826
 msgid "Game was paused."
 msgstr "Juego pausado"
 
-#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:847
+#: src/dskGameInterface.cpp:849
 msgid "Game was resumed."
 msgstr ""
 
-#: C:\svn\s25client\trunk\src/iwDirectIPCreate.cpp:53
+#: src/iwDirectIPCreate.cpp:55
 msgid "Game's Name:"
 msgstr "Nombre del juego:"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:310
+#: src/GameConsts.h:312
 msgid "General"
 msgstr "General"
 
-#: C:\svn\s25client\trunk\src/iwMainMenu.cpp:61
+#: src/iwMainMenu.cpp:63
 msgid "General statistics"
 msgstr "Estadísticas generales"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:311
+#: src/GameConsts.h:313
 msgid "Geologist"
 msgstr "Geólogo"
 
-#: C:\svn\s25client\trunk\src/iwAction.cpp:257
+#: src/iwAction.cpp:259
 msgid "Go to headquarters"
 msgstr "Ir al cuartel general"
 
-#: C:\svn\s25client\trunk\src/iwBaseWarehouse.cpp:70
-#: C:\svn\s25client\trunk\src/iwBuilding.cpp:78
+#: src/iwBaseWarehouse.cpp:72 src/iwBuilding.cpp:80 src/iwBuildingSite.cpp:65
 msgid "Go to place"
 msgstr "Ir al lugar"
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:119
+#: src/dskHostGame.cpp:121
 msgid "Goals:"
 msgstr "Metas:"
 
-#: C:\svn\s25client\trunk\src/iwTransport.cpp:59
+#: src/iwTransport.cpp:61
 msgid "Gold"
 msgstr "Oro"
 
-#: C:\svn\s25client\trunk\src/iwDistribution.cpp:70
+#: src/iwDistribution.cpp:72
 msgid "Gold mine"
 msgstr "Mina de oro"
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:112
+#: src/dskHostGame.cpp:114
 msgid "Goods at start:"
 msgstr "Bienes al inicio:"
 
-#: C:\svn\s25client\trunk\src/iwDistribution.cpp:75
+#: src/iwDistribution.cpp:77
 msgid "Grain"
 msgstr "Grano"
 
-#: C:\svn\s25client\trunk\src/BuildingConsts.h:412
+#: src/BuildingConsts.h:414
 msgid ""
 "Grain and water are needed for rearing pigs. The meat thus obtained can then "
 "be processed by a butcher."
@@ -754,130 +711,129 @@ msgstr ""
 "Granos y agua son necesarios para criar puercos. La carne obtenida puede "
 "entonces ser procesada por un carnicero. "
 
-#: C:\svn\s25client\trunk\src/iwDistribution.cpp:58
+#: src/iwDistribution.cpp:60
 msgid "Granite mine"
 msgstr "Mina de granito"
 
-#: C:\svn\s25client\trunk\src/dskOptions.cpp:75
+#: src/dskOptions.cpp:77
 msgid "Graphics"
 msgstr "Gráficos"
 
-#: C:\svn\s25client\trunk\src/dskOptions.cpp:133
+#: src/dskOptions.cpp:135
 msgid "Graphics Driver"
 msgstr "Controlador de gráficos"
 
-#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:329
+#: src/dskSelectMap.cpp:406
 msgid "Greenland"
 msgstr "Prado"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:205
+#: src/GameConsts.h:207
 msgid "Guardhouse"
 msgstr "Casa de guardia"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:150
+#: src/GameConsts.h:152
 msgid "Ham"
 msgstr "Jamón"
 
-#: C:\svn\s25client\trunk\src/iwTools.cpp:50
+#: src/iwTools.cpp:52
 msgid "Hammer"
 msgstr "Martillo"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:242
+#: src/GameConsts.h:244
 msgid "Harbor building"
 msgstr "Puerto"
 
-#: C:\svn\s25client\trunk\src/iwHQ.cpp:43
+#: src/iwHQ.cpp:45
 msgid "Headquarters"
 msgstr "Cuartel general"
 
-#: C:\svn\s25client\trunk\src/iwBuilding.cpp:70
-#: C:\svn\s25client\trunk\src/iwBuildingProductivities.cpp:82
+#: src/iwBuilding.cpp:72 src/iwBuildingProductivities.cpp:103
+#: src/iwBuildings.cpp:89
 msgid "Help"
 msgstr "Ayuda"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:285
+#: src/GameConsts.h:287
 msgid "Helper"
 msgstr "Ayudante"
 
-#: C:\svn\s25client\trunk\src/iwLobbyServerInfo.cpp:77
+#: src/iwLobbyServerInfo.cpp:79
 msgid "Host:"
 msgstr "Host:"
 
-#: C:\svn\s25client\trunk\src/iwAction.cpp:256
+#: src/iwAction.cpp:258
 msgid "House names"
 msgstr "Nombres de casas"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:225
+#: src/GameConsts.h:227
 msgid "Hunter"
 msgstr "Pabellón de caza"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:291
+#: src/GameConsts.h:293
 msgid "Huntsman"
 msgstr "Cazador"
 
-#: C:\svn\s25client\trunk\src/dskLobby.cpp:74
+#: src/dskLobby.cpp:76
 msgid "ID"
 msgstr "ID"
 
-#: C:\svn\s25client\trunk\src/iwDirectIPConnect.cpp:52
+#: src/iwDirectIPConnect.cpp:54
 msgid "IP Address of Host:"
 msgstr "Dirección IP del Host:"
 
-#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:263
+#: src/dskSelectMap.cpp:340
 msgid "Incomplete message was received!"
 msgstr "Mensaje incompleto recibido!"
 
-#: C:\svn\s25client\trunk\src/iwMilitary.cpp:50
+#: src/iwMilitary.cpp:52
 msgid "Interior"
 msgstr "Interior del país"
 
-#: C:\svn\s25client\trunk\src/dskMultiPlayer.cpp:63
+#: src/dskMultiPlayer.cpp:65
 msgid "Internet Lobby"
 msgstr "Lobby de internet"
 
-#: C:\svn\s25client\trunk\src/dskLobby.cpp:69
+#: src/dskLobby.cpp:71
 msgid "Internet Ranking"
 msgstr "Ranking de Internet"
 
-#: C:\svn\s25client\trunk\src/iwRoadWindow.cpp:49
+#: src/iwRoadWindow.cpp:51
 msgid "Interrupt road building"
 msgstr "Interrumpir la construcción del camino"
 
-#: C:\svn\s25client\trunk\src/dskMainMenu.cpp:76
+#: src/dskMainMenu.cpp:78
 msgid "Intro"
 msgstr "Intro"
 
-#: C:\svn\s25client\trunk\src/iwPlayReplay.cpp:92
+#: src/iwPlayReplay.cpp:94
 msgid "Invalid Replay!"
 msgstr "Repetición inválida"
 
-#: C:\svn\s25client\trunk\src/iwDirectIPConnect.cpp:133
-#: C:\svn\s25client\trunk\src/iwDirectIPCreate.cpp:150
+#: src/iwDirectIPConnect.cpp:135 src/iwDirectIPCreate.cpp:152
 msgid "Invalid port. The valid port-range is 1 to 65535!"
 msgstr ""
 "Puerto inválido!. El rango de puerto válido debe estar entre 1 a 65535!"
 
-#: C:\svn\s25client\trunk\src/iwDistribution.cpp:95
+#: src/iwDistribution.cpp:97
 msgid "Iron"
 msgstr "Hierro"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:300
+#: src/GameConsts.h:302
 msgid "Iron founder"
 msgstr "Vertedor de hierro"
 
-#: C:\svn\s25client\trunk\src/iwDistribution.cpp:66
+#: src/iwDistribution.cpp:68
 msgid "Iron mine"
 msgstr "Mina de hierro"
 
-#: C:\svn\s25client\trunk\src/iwTransport.cpp:60
+#: src/iwTransport.cpp:62
 msgid "Iron ore"
 msgstr "Mineral de hierro"
 
-#: C:\svn\s25client\trunk\src/iwDistribution.cpp:114
+#: src/iwDistribution.cpp:116
 msgid "Iron smelter"
 msgstr "Fundidor de hierro"
 
-#: C:\svn\s25client\trunk\src/BuildingConsts.h:474
+#: src/BuildingConsts.h:476
 msgid ""
 "It is possible to build small rowing boats as well as huge cargo ships in a "
 "shipyard. The boards required for this are skillfully worked by shipwrights."
@@ -886,502 +842,467 @@ msgstr ""
 "barcos de carga en el astillero. Las tablas que son requeridas para esto son "
 "hábilmente trabajadas por los constructores de barcos."
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:566
+#: src/dskHostGame.cpp:568
 msgid "Japaneses"
 msgstr "Japoneses"
 
-#: C:\svn\s25client\trunk\src/dskDirectIP.cpp:58
+#: src/dskDirectIP.cpp:60
 msgid "Join Game"
 msgstr "Unirse al juego"
 
-#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:471
+#: src/dskGameInterface.cpp:473
 msgid "Keyboard layout"
 msgstr "Configuración del teclado"
 
-#: C:\svn\s25client\trunk\src/dskOptions.cpp:89
+#: src/dskOptions.cpp:105
+#, fuzzy
+msgid "Keyboard layout:"
+msgstr "Configuración del teclado"
+
+#: src/dskOptions.cpp:91
 msgid "Language:"
 msgstr "Idioma:"
 
-#: C:\svn\s25client\trunk\src/iwPlayReplay.cpp:61
+#: src/iwPlayReplay.cpp:63
 msgid "Length"
 msgstr "Longitud"
 
-#: C:\svn\s25client\trunk\src/ctrlProgress.cpp:59
+#: src/ctrlProgress.cpp:61
 msgid "Less"
 msgstr "Menos"
 
-#: C:\svn\s25client\trunk\src/iwAction.cpp:228
+#: src/iwAction.cpp:230
 msgid "Less attackers"
 msgstr "Menos atacantes"
 
-#: C:\svn\s25client\trunk\src/iwTools.cpp:46
-#: C:\svn\s25client\trunk\src/iwTools.cpp:47
-#: C:\svn\s25client\trunk\src/iwTools.cpp:48
-#: C:\svn\s25client\trunk\src/iwTools.cpp:49
-#: C:\svn\s25client\trunk\src/iwTools.cpp:50
-#: C:\svn\s25client\trunk\src/iwTools.cpp:51
-#: C:\svn\s25client\trunk\src/iwTools.cpp:52
-#: C:\svn\s25client\trunk\src/iwTools.cpp:53
-#: C:\svn\s25client\trunk\src/iwTools.cpp:54
-#: C:\svn\s25client\trunk\src/iwTools.cpp:55
-#: C:\svn\s25client\trunk\src/iwTools.cpp:56
-#: C:\svn\s25client\trunk\src/iwTools.cpp:57
+#: src/iwTools.cpp:48 src/iwTools.cpp:49 src/iwTools.cpp:50 src/iwTools.cpp:51
+#: src/iwTools.cpp:52 src/iwTools.cpp:53 src/iwTools.cpp:54 src/iwTools.cpp:55
+#: src/iwTools.cpp:56 src/iwTools.cpp:57 src/iwTools.cpp:58 src/iwTools.cpp:59
 msgid "Less often"
 msgstr "Menos frecuente"
 
-#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:66
+#: src/iwMusicPlayer.cpp:87
 #, fuzzy
 msgid "Less repeats"
 msgstr "Menos atacantes"
 
-#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:58
+#: src/iwMusicPlayer.cpp:79
 #, fuzzy
 msgid "Load"
 msgstr "Cargar juego"
 
-#: C:\svn\s25client\trunk\src/iwOptionsWindow.cpp:74
+#: src/iwOptionsWindow.cpp:76
 msgid "Load 'ReadMe' file"
 msgstr "Cargar el archivo 'ReadMe'"
 
-#: C:\svn\s25client\trunk\src/dskSinglePlayer.cpp:73
+#: src/dskSinglePlayer.cpp:75
 msgid "Load game"
 msgstr "Cargar juego"
 
-#: C:\svn\s25client\trunk\src/iwOptionsWindow.cpp:78
-#: C:\svn\s25client\trunk\src/iwSave.cpp:256
+#: src/iwOptionsWindow.cpp:80 src/iwSave.cpp:258
 msgid "Load game!"
 msgstr "Cargar juego!"
 
-#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:119
+#: src/dskSelectMap.cpp:121
 msgid "Load game..."
 msgstr "Cargando juego..."
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:89
+#: src/dskHostGame.cpp:91
 msgid "Lock teams:"
 msgstr "Bloquear equipos:"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:217
+#: src/GameConsts.h:219
 msgid "Lookout tower"
 msgstr "Torre de observación"
 
-#: C:\svn\s25client\trunk\src/iwLobbyRanking.cpp:78
+#: src/iwLobbyRanking.cpp:80
 msgid "Lost"
 msgstr "Perdido"
 
-#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:875
-#: C:\svn\s25client\trunk\src/dskLobby.cpp:313
+#: src/dskGameInterface.cpp:877 src/dskLobby.cpp:315
 msgid "Lost connection to lobby!"
 msgstr "Se perdió la conexión con el lobby!"
 
-#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:861
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:772
-#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:266
+#: src/dskGameInterface.cpp:863 src/dskHostGame.cpp:774
+#: src/dskSelectMap.cpp:343
 msgid "Lost connection to server!"
 msgstr "Se perdió la conexión al servidor!"
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:114
+#: src/dskHostGame.cpp:116
 msgid "Low"
 msgstr "Bajo"
 
-#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:101
+#: src/dskGameInterface.cpp:103
 msgid "Main selection"
 msgstr "Selección principal"
 
-#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:99
-#: C:\svn\s25client\trunk\src/dskLobby.cpp:74
+#: src/dskGameInterface.cpp:101 src/dskLobby.cpp:76
 msgid "Map"
 msgstr "Mapa"
 
-#: C:\svn\s25client\trunk\src/iwLobbyServerInfo.cpp:73
+#: src/iwLobbyServerInfo.cpp:75
 msgid "Map Name:"
 msgstr "Nombre del Mapa:"
 
-#: C:\svn\s25client\trunk\src/dskGameLoader.cpp:123
+#: src/dskGameLoader.cpp:125
 msgid "Map was loaded and pinned at the wall..."
 msgstr "Mapa cargado y sujetado a la pared..."
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:147
+#: src/dskHostGame.cpp:149 src/dskSelectMap.cpp:144
 msgid "Map: "
 msgstr "Mapa:"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:149
+#: src/GameConsts.h:151
 msgid "Meat"
 msgstr "Carne"
 
-#: C:\svn\s25client\trunk\src/BuildingConsts.h:375
+#: src/BuildingConsts.h:377
 msgid "Meat the hunter acquires is used to feed the miners."
 msgstr ""
 "La carne que el cazador obtiene es utilizada para alimentar a los mineros."
 
-#: C:\svn\s25client\trunk\src/iwMainMenu.cpp:62
+#: src/iwMainMenu.cpp:64
 msgid "Merchandise statistics"
 msgstr "Estadísticas de producción"
 
-#: C:\svn\s25client\trunk\src/iwDistribution.cpp:102
-#: C:\svn\s25client\trunk\src/iwDistribution.cpp:130
+#: src/iwDistribution.cpp:104 src/iwDistribution.cpp:132
 msgid "Metalworker"
 msgstr "Cerrajero"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:228
+#: src/GameConsts.h:230
 msgid "Metalworks"
 msgstr "Cerrajería"
 
-#: C:\svn\s25client\trunk\src/iwMainMenu.cpp:71
+#: src/iwMainMenu.cpp:73 src/iwMilitary.cpp:44
 msgid "Military"
 msgstr "Militar"
 
-#: C:\svn\s25client\trunk\src/iwDistribution.cpp:78
+#: src/iwDistribution.cpp:80
 msgid "Mill"
 msgstr "Molino"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:293
+#: src/GameConsts.h:295
 msgid "Miller"
 msgstr "Molinero"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:296
+#: src/GameConsts.h:298
 msgid "Miner"
 msgstr "Minero"
 
-#: C:\svn\s25client\trunk\src/iwDistribution.cpp:118
+#: src/iwDistribution.cpp:120
 msgid "Mint"
 msgstr "Acuñaria"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:301
+#: src/GameConsts.h:303
 msgid "Minter"
 msgstr "Acuñador"
 
-#: C:\svn\s25client\trunk\src/dskOptions.cpp:107
+#: src/dskOptions.cpp:109
 msgid "Mode:"
 msgstr "Modo:"
 
-#: C:\svn\s25client\trunk\src/ctrlProgress.cpp:60
+#: src/ctrlProgress.cpp:62
 msgid "More"
 msgstr "Más"
 
-#: C:\svn\s25client\trunk\src/iwAction.cpp:229
+#: src/iwAction.cpp:231
 msgid "More attackers"
 msgstr "Más atacantes"
 
-#: C:\svn\s25client\trunk\src/iwMilitary.cpp:48
+#: src/iwMilitary.cpp:50
 msgid "More defenders"
 msgstr "Más defensores"
 
-#: C:\svn\s25client\trunk\src/iwTools.cpp:46
-#: C:\svn\s25client\trunk\src/iwTools.cpp:47
-#: C:\svn\s25client\trunk\src/iwTools.cpp:48
-#: C:\svn\s25client\trunk\src/iwTools.cpp:49
-#: C:\svn\s25client\trunk\src/iwTools.cpp:50
-#: C:\svn\s25client\trunk\src/iwTools.cpp:51
-#: C:\svn\s25client\trunk\src/iwTools.cpp:52
-#: C:\svn\s25client\trunk\src/iwTools.cpp:53
-#: C:\svn\s25client\trunk\src/iwTools.cpp:54
-#: C:\svn\s25client\trunk\src/iwTools.cpp:55
-#: C:\svn\s25client\trunk\src/iwTools.cpp:56
-#: C:\svn\s25client\trunk\src/iwTools.cpp:57
+#: src/iwTools.cpp:48 src/iwTools.cpp:49 src/iwTools.cpp:50 src/iwTools.cpp:51
+#: src/iwTools.cpp:52 src/iwTools.cpp:53 src/iwTools.cpp:54 src/iwTools.cpp:55
+#: src/iwTools.cpp:56 src/iwTools.cpp:57 src/iwTools.cpp:58 src/iwTools.cpp:59
 msgid "More often"
 msgstr "Más frecuente"
 
-#: C:\svn\s25client\trunk\src/iwMilitary.cpp:46
+#: src/iwMilitary.cpp:48
 msgid "More recruits"
 msgstr "Más reclutas"
 
-#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:67
+#: src/iwMusicPlayer.cpp:88
 #, fuzzy
 msgid "More repeats"
 msgstr "Más reclutas"
 
-#: C:\svn\s25client\trunk\src/dskMainMenu.cpp:72
+#: src/dskMainMenu.cpp:74
 msgid "Multiplayer"
 msgstr "Multijugador"
 
-#: C:\svn\s25client\trunk\src/dskOptions.cpp:161
+#: src/dskOptions.cpp:163
 msgid "Music"
 msgstr "Música"
 
-#: C:\svn\s25client\trunk\src/dskOptions.cpp:179
+#: src/dskOptions.cpp:181
 #, fuzzy
 msgid "Music player"
 msgstr "Multijugador"
 
-#: C:\svn\s25client\trunk\src/dskLobby.cpp:76
-#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:111
+#: src/dskLobby.cpp:78 src/dskSelectMap.cpp:113
 msgid "Name"
 msgstr "Nombre"
 
-#: C:\svn\s25client\trunk\src/dskOptions.cpp:85
+#: src/dskOptions.cpp:87
 msgid "Name in Game:"
 msgstr "Nombre en el juego:"
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:101
+#: src/dskHostGame.cpp:103
 msgid "Near frontiers"
 msgstr "Área  fronteriza"
 
-#: C:\svn\s25client\trunk\src/dskMultiPlayer.cpp:65
+#: src/dskMultiPlayer.cpp:67
 msgid "Network/LAN"
 msgstr "Red/LAN"
 
-#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:127
+#: src/dskSelectMap.cpp:129
 msgid "New maps"
 msgstr "Nuevo mapa"
 
-#: C:\svn\s25client\trunk\src/iwWares.cpp:165
+#: src/iwWares.cpp:167
 msgid "Next page"
 msgstr "Próxima página"
 
-#: C:\svn\s25client\trunk\src/iwLobbyConnect.cpp:69
+#: src/iwLobbyConnect.cpp:71
 msgid "No"
 msgstr "No"
 
-#: C:\svn\s25client\trunk\src/iwPostWindow.cpp:53
+#: src/iwPostWindow.cpp:55
 msgid "No letters!"
 msgstr "No cartas!"
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:121
+#: src/dskHostGame.cpp:123
 msgid "None"
 msgstr "No habrá final del juego"
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:115
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:130
+#: src/dskHostGame.cpp:117 src/dskHostGame.cpp:132
 msgid "Normal"
 msgstr "Normal"
 
-#: C:\svn\s25client\trunk\src/dskSinglePlayer.cpp:95
+#: src/dskSinglePlayer.cpp:97
 msgid "Not available"
 msgstr ""
 
-#: C:\svn\s25client\trunk\src/GameClientGF_Replay.cpp:118
+#: src/GameClientGF_Replay.cpp:120
 #, c-format
 msgid "Notice: The played replay has ended. (GF: %u)"
 msgstr "Nota: Los datos de repetición terminan aquí. (GF: %u)"
 
-#: C:\svn\s25client\trunk\src/iwAction.cpp:243
+#: src/iwAction.cpp:245
 msgid "Number of attackers"
 msgstr "Número de atacantes"
 
-#: C:\svn\s25client\trunk\src/iwMsgbox.cpp:63
-#: C:\svn\s25client\trunk\src/iwMsgbox.cpp:69
-#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:23
-#: C:\svn\s25client\trunk\src/iwSkipGFs.cpp:52
+#: src/iwMsgbox.cpp:65 src/iwMsgbox.cpp:71 src/iwMusicPlayer.cpp:44
+#: src/iwSkipGFs.cpp:54
 msgid "OK"
 msgstr "OK"
 
-#: C:\svn\s25client\trunk\src/iwAction.cpp:255
+#: src/iwAction.cpp:257
 msgid "Observation window"
 msgstr "Pantalla de observación"
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:99
-#: C:\svn\s25client\trunk\src/dskOptions.cpp:120
-#: C:\svn\s25client\trunk\src/dskOptions.cpp:130
-#: C:\svn\s25client\trunk\src/dskOptions.cpp:164
-#: C:\svn\s25client\trunk\src/dskOptions.cpp:173
+#: src/dskHostGame.cpp:101 src/dskOptions.cpp:122 src/dskOptions.cpp:132
+#: src/dskOptions.cpp:166 src/dskOptions.cpp:175
 msgid "Off"
 msgstr "Desactivado"
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:106
+#: src/dskHostGame.cpp:108
 msgid "Off (all visible)"
 msgstr "Desactivado (todo visible)"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:309
+#: src/GameConsts.h:311
 msgid "Officer"
 msgstr "Oficial"
 
-#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:125
+#: src/dskSelectMap.cpp:127
 msgid "Old maps"
 msgstr "Mapas viejos"
 
-#: C:\svn\s25client\trunk\src/dskOptions.cpp:119
-#: C:\svn\s25client\trunk\src/dskOptions.cpp:129
-#: C:\svn\s25client\trunk\src/dskOptions.cpp:163
-#: C:\svn\s25client\trunk\src/dskOptions.cpp:172
+#: src/dskOptions.cpp:121 src/dskOptions.cpp:131 src/dskOptions.cpp:165
+#: src/dskOptions.cpp:174
 msgid "On"
 msgstr "Activado"
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:194
+#: src/dskHostGame.cpp:196
 msgid "Open"
 msgstr "Abierto"
 
-#: C:\svn\s25client\trunk\src/dskMainMenu.cpp:74
-#: C:\svn\s25client\trunk\src/dskOptions.cpp:68
+#: src/dskMainMenu.cpp:76 src/dskOptions.cpp:70
 msgid "Options"
 msgstr "Opciones"
 
-#: C:\svn\s25client\trunk\src/iwBuildingSite.cpp:55
+#: src/iwBuildingSite.cpp:57
 msgid "Order of building site"
 msgstr "Petición de la obra"
 
-#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:137
+#: src/dskSelectMap.cpp:139
 #, fuzzy
 msgid "Other"
 msgstr "Carnicero"
 
-#: C:\svn\s25client\trunk\src/dskCredits.cpp:80
+#: src/dskCredits.cpp:82
 msgid "Other Support"
 msgstr "Otro apoyo"
 
-#: C:\svn\s25client\trunk\src/iwMinimap.cpp:51
+#: src/iwMinimap.cpp:53
 msgid "Outline map"
 msgstr "Mapas viejos"
 
-#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:129
+#: src/dskSelectMap.cpp:131
 msgid "Own maps"
 msgstr "Mapas propios"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:314
+#: src/GameConsts.h:316
 msgid "Pack donkey"
 msgstr "Burro de carga"
 
-#: C:\svn\s25client\trunk\src/iwDirectIPConnect.cpp:60
+#: src/iwDirectIPConnect.cpp:62
 msgid "Password (if needed):"
 msgstr "Contraseña (si se requiere):"
 
-#: C:\svn\s25client\trunk\src/iwDirectIPCreate.cpp:61
-#: C:\svn\s25client\trunk\src/iwLobbyConnect.cpp:56
+#: src/iwDirectIPCreate.cpp:63 src/iwLobbyConnect.cpp:58
 msgid "Password:"
 msgstr "Contraseña:"
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:73
+#: src/dskHostGame.cpp:75
 msgid "Past player"
 msgstr "Jugador pasado"
 
-#: C:\svn\s25client\trunk\src/iwTools.cpp:49
+#: src/iwTools.cpp:51
 msgid "Pick-axe"
 msgstr "Pico"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:298
+#: src/GameConsts.h:300
 msgid "Pig breeder"
 msgstr "porquero"
 
-#: C:\svn\s25client\trunk\src/iwDistribution.cpp:82
-#: C:\svn\s25client\trunk\src/iwDistribution.cpp:150
+#: src/iwDistribution.cpp:84 src/iwDistribution.cpp:152
 msgid "Pig farm"
 msgstr "Criadero de puerco"
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:70
-#: C:\svn\s25client\trunk\src/dskLobby.cpp:74
+#: src/dskHostGame.cpp:72 src/dskLobby.cpp:76
 msgid "Ping"
 msgstr "Ping"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:305
+#: src/GameConsts.h:307
 msgid "Planer"
 msgstr "Planificador"
 
-#: C:\svn\s25client\trunk\src/dskSinglePlayer.cpp:67
+#: src/dskSinglePlayer.cpp:69
 msgid "Play Replay"
 msgstr "Pasar la repetición"
 
-#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:68
-#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:236
+#: src/iwMusicPlayer.cpp:89 src/iwMusicPlayer.cpp:257
 msgid "Playback in this order"
 msgstr ""
 
-#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:137
+#: src/dskSelectMap.cpp:141
 msgid "Played"
 msgstr "Jugados"
 
-#: C:\svn\s25client\trunk\src/dskLobby.cpp:74
-#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:111
+#: src/dskLobby.cpp:76 src/dskSelectMap.cpp:113
 msgid "Player"
 msgstr "Jugador"
 
-#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:790
+#: src/dskGameInterface.cpp:792
 #, c-format
 msgid "Player '%s' joined the game!"
 msgstr "Jugador ‘%s‘ se ha unido al juego!"
 
-#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:787
+#: src/dskGameInterface.cpp:789
 #, c-format
 msgid "Player '%s' left the game!"
 msgstr "Jugador ‘%s‘ ha abandonado el juego!"
 
-#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:893
+#: src/dskGameInterface.cpp:895
 #, c-format
 msgid "Player '%s' switched to player '%s'"
 msgstr "Jugador ‘%s‘ ha cambiar a jugador '%s'"
 
-#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:911
+#: src/dskGameInterface.cpp:913
 #, c-format
 msgid "Player '%s' was defeated!"
 msgstr "Jugador '%s' fue derrotado!"
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:58
+#: src/dskHostGame.cpp:60
 msgid "Player Name"
 msgstr "Nombre del jugador"
 
-#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:49
+#: src/iwMusicPlayer.cpp:70
 msgid "Playlist:"
 msgstr ""
 
-#: C:\svn\s25client\trunk\src/iwDirectIPCreate.cpp:142
+#: src/iwDirectIPCreate.cpp:144
 msgid "Please enter a name for the game"
 msgstr "Por favor ingrese un nombre para el juego!"
 
-#: C:\svn\s25client\trunk\src/iwLobbyConnect.cpp:220
+#: src/iwLobbyConnect.cpp:222
 msgid "Please fill out all fields!"
 msgstr "Por favor llene todos los campos!"
 
-#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:89
-#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:91
+#: src/dskSelectMap.cpp:91 src/dskSelectMap.cpp:93
 msgid "Please wait..."
 msgstr "Por favor espere…"
 
-#: C:\svn\s25client\trunk\src/dskLobby.cpp:76
+#: src/dskLobby.cpp:78
 msgid "Points"
 msgstr "Puntos"
 
-#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:105
+#: src/dskGameInterface.cpp:107
 msgid "Post office"
 msgstr "Oficina de correos"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:306
+#: src/GameConsts.h:308
 msgid "Private"
 msgstr "Privado"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:307
+#: src/GameConsts.h:309
 msgid "Private first class"
 msgstr "Cadete"
 
-#: C:\svn\s25client\trunk\src/iwBuildingProductivities.cpp:61
+#: src/iwBuildingProductivities.cpp:82
 msgid "Productivity"
 msgstr "Productividad"
 
-#: C:\svn\s25client\trunk\src/iwPlayReplay.cpp:94
+#: src/iwPlayReplay.cpp:96
 msgid "Program version is too old to play that replay!"
 msgstr "La versión del programa es muy antigüa para pasar la repetición!"
 
-#: C:\svn\s25client\trunk\src/dskCredits.cpp:65
+#: src/dskCredits.cpp:67
 msgid "Programming"
 msgstr "Programando"
 
-#: C:\svn\s25client\trunk\src/iwAction.cpp:167
-#: C:\svn\s25client\trunk\src/iwAction.cpp:175
+#: src/iwAction.cpp:169 src/iwAction.cpp:177
 msgid "Pull down flag"
 msgstr "Derribar bandera"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:222
+#: src/GameConsts.h:224
 msgid "Quarry"
 msgstr "Cantera"
 
-#: C:\svn\s25client\trunk\src/dskMainMenu.cpp:80
+#: src/dskMainMenu.cpp:82
 msgid "Quit program"
 msgstr "Quitar programa"
 
-#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:135
+#: src/dskSelectMap.cpp:137
 msgid "RTTR"
 msgstr "RTTR"
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:62
+#: src/dskHostGame.cpp:64
 msgid "Race"
 msgstr "Gente"
 
-#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:236
+#: src/iwMusicPlayer.cpp:257
 msgid "Random playback"
 msgstr ""
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:288
+#: src/GameConsts.h:290
 msgid "Ranger"
 msgstr "Guardie forestal"
 
-#: C:\svn\s25client\trunk\src/BuildingConsts.h:400
+#: src/BuildingConsts.h:402
 msgid ""
 "Raw iron ore is smelted in the iron smelters with the help of coal and raw "
 "iron. The processed iron is then used to making weapons (in the Armory) and "
@@ -1392,274 +1313,267 @@ msgstr ""
 "procesado es posteriormente utilizado para hacer armas (en la Armería) y "
 "herramientas (en la Metalistería)."
 
-#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:475
+#: src/dskGameInterface.cpp:477
 msgid "Readme!"
 msgstr "Readme!"
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:68
+#: src/dskHostGame.cpp:70
 msgid "Ready?"
 msgstr "Listo?"
 
-#: C:\svn\s25client\trunk\src/iwLobbyConnect.cpp:77
+#: src/iwLobbyConnect.cpp:79
 msgid "Register"
 msgstr "Registrar"
 
-#: C:\svn\s25client\trunk\src/iwLobbyConnect.cpp:300
+#: src/iwLobbyConnect.cpp:302
 msgid "Registration successful!"
 msgstr ""
 
-#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:56
+#: src/iwMusicPlayer.cpp:77
 #, fuzzy
 msgid "Remove"
 msgstr "Readme!"
 
-#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:62
+#: src/iwMusicPlayer.cpp:83
 msgid "Remove track"
 msgstr ""
 
-#: C:\svn\s25client\trunk\src/iwHQ.cpp:49
+#: src/iwHQ.cpp:51
 msgid "Reserve"
 msgstr "Reservar"
 
-#: C:\svn\s25client\trunk\src/dskOptions.cpp:103
+#: src/dskOptions.cpp:105
 msgid "Resolution:"
 msgstr "Resolución del juego:"
 
-#: C:\svn\s25client\trunk\src/dskSinglePlayer.cpp:64
+#: src/dskSinglePlayer.cpp:66
 msgid "Resume last game"
 msgstr "Reanudar último juego"
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:86
+#: src/dskHostGame.cpp:88
 msgid "Return"
 msgstr "Regresar"
 
-#: C:\svn\s25client\trunk\src/iwTools.cpp:53
+#: src/iwTools.cpp:55
 msgid "Rod and line"
 msgstr "Caña de pescar"
 
-#: C:\svn\s25client\trunk\src/iwTools.cpp:56
+#: src/iwTools.cpp:58
 msgid "Rolling pin"
 msgstr "Rodillo"
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:566
+#: src/dskHostGame.cpp:568
 msgid "Romans"
 msgstr "Romanos"
 
-#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:823
-#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:846
+#: src/dskGameInterface.cpp:825 src/dskGameInterface.cpp:848
 msgid "SYSTEM"
 msgstr "SYSTEM"
 
-#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:57
+#: src/iwMusicPlayer.cpp:78
 #, fuzzy
 msgid "Save"
 msgstr "Auto-Guardar"
 
-#: C:\svn\s25client\trunk\src/iwLobbyConnect.cpp:66
+#: src/iwLobbyConnect.cpp:68
 msgid "Save Password?"
 msgstr "\"Guardar contraseña?\""
 
-#: C:\svn\s25client\trunk\src/iwOptionsWindow.cpp:82
-#: C:\svn\s25client\trunk\src/iwSave.cpp:195
+#: src/iwOptionsWindow.cpp:84 src/iwSave.cpp:197
 msgid "Save game!"
 msgstr "Guardar juego!"
 
-#: C:\svn\s25client\trunk\src/iwTools.cpp:48
+#: src/iwTools.cpp:50
 msgid "Saw"
 msgstr "Sierra"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:236
+#: src/GameConsts.h:238
 msgid "Sawmill"
 msgstr "Aserradero"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:313
+#: src/GameConsts.h:315
 msgid "Scout"
 msgstr "Explorador"
 
-#: C:\svn\s25client\trunk\src/iwTools.cpp:54
+#: src/iwTools.cpp:56
 msgid "Scythe"
 msgstr "Guadaña"
 
-#: C:\svn\s25client\trunk\src/iwBaseWarehouse.cpp:68
+#: src/iwBaseWarehouse.cpp:70
 msgid "Select all"
 msgstr "Seleccionar todo"
 
-#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:114
+#: src/dskSelectMap.cpp:116
 msgid "Selection of maps"
 msgstr "Selección de mapas"
 
-#: C:\svn\s25client\trunk\src/iwAction.cpp:169
-#: C:\svn\s25client\trunk\src/iwAction.cpp:177
+#: src/iwAction.cpp:171 src/iwAction.cpp:179
 msgid "Send out scout"
 msgstr "Mandar un explorador"
 
-#: C:\svn\s25client\trunk\src/iwBuildOrder.cpp:65
+#: src/iwBuildOrder.cpp:67
 msgid "Sequence of given order"
 msgstr "Secuencia de una orden dada"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:308
+#: src/GameConsts.h:310
 msgid "Sergeant"
 msgstr "Sargento"
 
-#: C:\svn\s25client\trunk\src/iwBuildOrder.cpp:42
-#: C:\svn\s25client\trunk\src/iwMainMenu.cpp:76
+#: src/iwBuildOrder.cpp:44
 msgid "Series sequence"
 msgstr "Secuencia en serie"
 
-#: C:\svn\s25client\trunk\src/dskLobby.cpp:74
+#: src/dskLobby.cpp:76
 msgid "Server"
 msgstr "Servidor"
 
-#: C:\svn\s25client\trunk\src/iwLobbyServerInfo.cpp:71
+#: src/iwLobbyServerInfo.cpp:73
 msgid "Server Information"
 msgstr "Información del servidor"
 
-#: C:\svn\s25client\trunk\src/iwLobbyServerInfo.cpp:75
+#: src/iwLobbyServerInfo.cpp:77
 msgid "Server Name:"
 msgstr "Nombre del Servidor:"
 
-#: C:\svn\s25client\trunk\src/iwDirectIPConnect.cpp:56
-#: C:\svn\s25client\trunk\src/iwDirectIPCreate.cpp:57
+#: src/iwDirectIPConnect.cpp:58 src/iwDirectIPCreate.cpp:59
 msgid "Server-Port:"
 msgstr "Puerto del Servidor:"
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:91
+#: src/dskHostGame.cpp:93
 msgid "Shared team view"
 msgstr "Vista de equipo"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:138
+#: src/GameConsts.h:140
 msgid "Shield"
 msgstr "Escudo"
 
-#: C:\svn\s25client\trunk\src/iwMainMenu.cpp:73
+#: src/iwMainMenu.cpp:75
 msgid "Ship register"
 msgstr "Registro de barco"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:312
+#: src/GameConsts.h:314
 msgid "Shipwright"
 msgstr "Constructor naval"
 
-#: C:\svn\s25client\trunk\src/iwDistribution.cpp:134
+#: src/iwDistribution.cpp:136
 msgid "Shipyard"
 msgstr "Astillero"
 
-#: C:\svn\s25client\trunk\src/iwTools.cpp:51
+#: src/iwTools.cpp:53
 msgid "Shovel"
 msgstr "Pala"
 
-#: C:\svn\s25client\trunk\src/dskMainMenu.cpp:70
+#: src/dskMainMenu.cpp:72
 msgid "Singleplayer"
 msgstr "Un jugador"
 
-#: C:\svn\s25client\trunk\src/dskSinglePlayer.cpp:95
+#: src/dskSinglePlayer.cpp:97
 msgid ""
 "Singleplayer mode and AI are not yet implemented. Please use the Multiplayer "
 "mode and 'Direct IP' to create a Singleplayer game."
 msgstr ""
 
-#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:111
+#: src/dskSelectMap.cpp:113
 msgid "Size"
 msgstr "Tamaño"
 
-#: C:\svn\s25client\trunk\src/iwSkipGFs.cpp:42
+#: src/iwSkipGFs.cpp:44
 msgid "Skip GameFrames"
 msgstr "Saltar GameFrames"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:224
+#: src/GameConsts.h:226
 msgid "Slaughterhouse"
 msgstr "Matadero"
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:129
+#: src/dskHostGame.cpp:131
 msgid "Slow"
 msgstr "Lento"
 
-#: C:\svn\s25client\trunk\src/dskOptions.cpp:77
+#: src/dskOptions.cpp:79
 msgid "Sound/Music"
 msgstr "Sonido/Música"
 
-#: C:\svn\s25client\trunk\src/dskOptions.cpp:147
+#: src/dskOptions.cpp:149
 msgid "Sounddriver"
 msgstr "Controlador de Sonido"
 
-#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:105
+#: src/iwMusicPlayer.cpp:126
 msgid "Specify the playlist name"
 msgstr ""
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:126
+#: src/dskHostGame.cpp:128
 msgid "Speed:"
 msgstr "Velocidad:"
 
-#: C:\svn\s25client\trunk\src/iwDirectIPCreate.cpp:68
+#: src/iwDirectIPCreate.cpp:70
 msgid "Start"
 msgstr "Empezar"
 
-#: C:\svn\s25client\trunk\src/iwSave.cpp:65
+#: src/iwSave.cpp:67
 msgid "Start GF"
 msgstr "Empezar-GF"
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:81
-#: C:\svn\s25client\trunk\src/dskSinglePlayer.cpp:70
+#: src/dskHostGame.cpp:83 src/dskSinglePlayer.cpp:72
 msgid "Start game"
 msgstr "Empezar juego"
 
-#: C:\svn\s25client\trunk\src/iwInventory.cpp:44
-#: C:\svn\s25client\trunk\src/iwMainMenu.cpp:66
+#: src/iwInventory.cpp:46 src/iwMainMenu.cpp:68
 msgid "Stock"
 msgstr "Inventario"
 
-#: C:\svn\s25client\trunk\src/iwPlayReplay.cpp:61
+#: src/iwPlayReplay.cpp:63
 msgid "Stocktaking date"
 msgstr "Fecha de inventario"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:290
+#: src/GameConsts.h:292
 msgid "Stonemason"
 msgstr "Albañil"
 
-#: C:\svn\s25client\trunk\src/iwTransport.cpp:63
+#: src/iwTransport.cpp:65
 msgid "Stones"
 msgstr "Piedras"
 
-#: C:\svn\s25client\trunk\src/iwBaseWarehouse.cpp:63
+#: src/iwBaseWarehouse.cpp:65
 msgid "Stop storage"
 msgstr "Detener almacenaje"
 
-#: C:\svn\s25client\trunk\src/iwStorehouse.cpp:41
+#: src/iwStorehouse.cpp:43
 msgid "Storehouse"
 msgstr "Almacén"
 
-#: C:\svn\s25client\trunk\src/iwAction.cpp:234
+#: src/iwAction.cpp:236
 msgid "Strong attackers"
 msgstr "Atacantes Fuertes"
 
-#: C:\svn\s25client\trunk\src/iwMilitary.cpp:47
+#: src/iwMilitary.cpp:49
 msgid "Strong defense"
 msgstr "Defensa fuerte"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:133
+#: src/GameConsts.h:135
 msgid "Sword"
 msgstr "Espada"
 
-#: C:\svn\s25client\trunk\src/languages.cpp:69
+#: src/languages.cpp:71
 msgid "System language"
 msgstr "Lenguaje del Sistema"
 
-#: C:\svn\s25client\trunk\src/iwBaseWarehouse.cpp:61
+#: src/iwBaseWarehouse.cpp:63
 msgid "Take out of store"
 msgstr "Sacar de la tienda"
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:66
+#: src/dskHostGame.cpp:68
 msgid "Team"
 msgstr "Equipo"
 
-#: C:\svn\s25client\trunk\src/iwPlayReplay.cpp:96
+#: src/iwPlayReplay.cpp:98
 msgid "Temporary map file was not found!"
 msgstr "Archivo temporal de map no fue encontrado!"
 
-#: C:\svn\s25client\trunk\src/dskCredits.cpp:110
+#: src/dskCredits.cpp:112
 msgid "Thank you for your donations!"
 msgstr "Gracias por tus donaciones!"
 
-#: C:\svn\s25client\trunk\src/BuildingConsts.h:333
+#: src/BuildingConsts.h:335
 msgid ""
 "Thanks to its immense strength, the catapults represents an effective weapon "
 "against enemy military buildings."
@@ -1667,25 +1581,22 @@ msgstr ""
 "Gracias a su gran fuerza, las catapultas representan una arma efectiva "
 "contra los edificios militares enemigos."
 
-#: C:\svn\s25client\trunk\src/dskGameInterface.cpp:804
+#: src/dskGameInterface.cpp:806
 msgid "The Game is not in sync. Checksums of some players don't match."
 msgstr ""
 "El juego no está en sincronía. Checksums de algunos jugadores no concuerdan."
 
-#: C:\svn\s25client\trunk\src/dskCredits.cpp:57
+#: src/dskCredits.cpp:59
 msgid "The Settlers II.5 RTTR"
 msgstr "The Settlers II.5 RTTR"
 
-#: C:\svn\s25client\trunk\src/dskDirectIP.cpp:49
-#: C:\svn\s25client\trunk\src/dskLobby.cpp:58
-#: C:\svn\s25client\trunk\src/dskMainMenu.cpp:63
-#: C:\svn\s25client\trunk\src/dskMultiPlayer.cpp:56
-#: C:\svn\s25client\trunk\src/dskSinglePlayer.cpp:57
+#: src/dskDirectIP.cpp:51 src/dskLobby.cpp:60 src/dskMainMenu.cpp:65
+#: src/dskMultiPlayer.cpp:58 src/dskSinglePlayer.cpp:59
 #, c-format
 msgid "The Settlers II.5 RTTR, v%s-%s"
 msgstr "The Settlers II.5 RTTR, v%s-%s"
 
-#: C:\svn\s25client\trunk\src/BuildingConsts.h:387
+#: src/BuildingConsts.h:389
 msgid ""
 "The armory produces swords and strong shields. This equipment is vital for "
 "your soldiers."
@@ -1693,7 +1604,7 @@ msgstr ""
 "La armería produce espadas y escudos Fuertes. Este equipo es vital para tus "
 "soldados."
 
-#: C:\svn\s25client\trunk\src/BuildingConsts.h:253
+#: src/BuildingConsts.h:255
 msgid ""
 "The barracks is a very small hut which can be used by your soldiers as "
 "quarters. Using the gold coin button you can stop the delivery of gold coins "
@@ -1705,7 +1616,7 @@ msgstr ""
 "la entrega de monedas de oro a los soldados situados aquí. Sin embargo, sin "
 "monedas de oro los soldados no pueden entrenar ni mejorar sus habilidades."
 
-#: C:\svn\s25client\trunk\src/BuildingConsts.h:380
+#: src/BuildingConsts.h:382
 msgid ""
 "The brewer produces fine beer from grain and water. This drink is needed to "
 "fill the soldiers with courage."
@@ -1713,7 +1624,7 @@ msgstr ""
 "El cervecero produce cerveza fina de grano y agua. Esta bebida es necesaria "
 "para llenar a los soldados de coraje."
 
-#: C:\svn\s25client\trunk\src/BuildingConsts.h:368
+#: src/BuildingConsts.h:370
 msgid ""
 "The butcher processes the livestock delivered into nutritious ham on which "
 "you miners are fed."
@@ -1721,7 +1632,7 @@ msgstr ""
 "El carnicero procesa el ganado entregado en jamón nutritivo, con el cual tus "
 "mineros pueden ser alimentados."
 
-#: C:\svn\s25client\trunk\src/BuildingConsts.h:453
+#: src/BuildingConsts.h:455
 msgid ""
 "The carpenter turns the woodcutter's logs into made-to-measure planks. There "
 "form the basic for building houses and ships."
@@ -1729,7 +1640,7 @@ msgstr ""
 "El carpintero convierte los troncos del leñador en tablas hechas a la "
 "medida. Estas forman la material prima para construir casas y barcos."
 
-#: C:\svn\s25client\trunk\src/BuildingConsts.h:393
+#: src/BuildingConsts.h:395
 msgid ""
 "The countless tools which your workers need are made in the metalworks. This "
 "requires boards and iron."
@@ -1737,7 +1648,7 @@ msgstr ""
 "Las innumerables herramientas que tus trabajadores necesitan son fabricadas "
 "en la metalistería. Estas requieren tablas y hierro."
 
-#: C:\svn\s25client\trunk\src/BuildingConsts.h:297
+#: src/BuildingConsts.h:299
 msgid ""
 "The defensive capabilities and size of the fortress are unsurpassed. This "
 "stronghold ensures that other valuable buildings and commodities are "
@@ -1751,7 +1662,7 @@ msgstr ""
 "de oro a los soldados situados aquí. Sin embargo, sin monedas de oro los "
 "soldados no podrán entrenar ni mejorar sus habilidades. "
 
-#: C:\svn\s25client\trunk\src/BuildingConsts.h:483
+#: src/BuildingConsts.h:485
 msgid ""
 "The farmer plants and harvests grain in the surrounding fields. A windmill "
 "then processes the harvested grain into flour or can be used to feed the "
@@ -1761,7 +1672,7 @@ msgstr ""
 "viento procesa el grano cosechado en harina o también puede ser utilizado "
 "para alimentar los puercos."
 
-#: C:\svn\s25client\trunk\src/BuildingConsts.h:347
+#: src/BuildingConsts.h:349
 msgid ""
 "The fish man is responsible for finding water rich in fish. His fish feed a "
 "great many miners."
@@ -1769,7 +1680,7 @@ msgstr ""
 "El pescador es responsible de encontrar agua abundante en pescados. Sus "
 "pescados alimentan a muchos mineros."
 
-#: C:\svn\s25client\trunk\src/BuildingConsts.h:445
+#: src/BuildingConsts.h:447
 msgid ""
 "The flour produced at the windmill can be combined with water in the bakery "
 "to make oven-fresh bread. It's your miners' favorite!"
@@ -1777,7 +1688,7 @@ msgstr ""
 "La harina producida en el Molino de viento puede ser combinada con agua en "
 "la panadería para hacer pan recién horneado. Es el favorito de tus mineros!"
 
-#: C:\svn\s25client\trunk\src/BuildingConsts.h:438
+#: src/BuildingConsts.h:440
 msgid ""
 "The grain is ground in the windmill. The flour from the windmill is later "
 "used at the bakery to bake bread."
@@ -1785,7 +1696,7 @@ msgstr ""
 "Los granos son molidos en el Molino de viento. La harina proveniente del "
 "Molino de viento es usada posteriormente en la panadería para hornear pan."
 
-#: C:\svn\s25client\trunk\src/BuildingConsts.h:265
+#: src/BuildingConsts.h:267
 msgid ""
 "The guardhouse is a comfortable place for the military which is also "
 "protected by solid stone walls. Using the gold coin button you can stop the "
@@ -1798,7 +1709,7 @@ msgstr ""
 "situados aquí. Sin embargo, sin monedas de oro los soldados no pueden "
 "entrenar ni mejorar sus habilidades."
 
-#: C:\svn\s25client\trunk\src/BuildingConsts.h:461
+#: src/BuildingConsts.h:463
 msgid ""
 "The mint is responsible for producing valuable gold coins. These precious "
 "objects are produced using coal and gold."
@@ -1806,7 +1717,7 @@ msgstr ""
 "La casa de moneda es responsable de producir valiosas monedas de oro. Estos "
 "preciados objetos son producidos utilizando carbón y oro."
 
-#: C:\svn\s25client\trunk\src/BuildingConsts.h:491
+#: src/BuildingConsts.h:493
 msgid ""
 "The pack donkeys bred here are used to transport your merchandise more "
 "efficiently. They are reared on water and grain."
@@ -1814,20 +1725,19 @@ msgstr ""
 "La manada de burros criados aquí son utilizados para transportar tu "
 "mercancía mas eficientemente. Ellos son criados de agua y granos."
 
-#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:170
+#: src/iwMusicPlayer.cpp:191
 msgid "The specified file couldn't be loaded!"
 msgstr ""
 
-#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:284
+#: src/iwMusicPlayer.cpp:305
 msgid "The specified file couldn't be opened!"
 msgstr ""
 
-#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:150
-#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:299
+#: src/iwMusicPlayer.cpp:171 src/iwMusicPlayer.cpp:320
 msgid "The specified file couldn't be saved!"
 msgstr ""
 
-#: C:\svn\s25client\trunk\src/BuildingConsts.h:353
+#: src/BuildingConsts.h:355
 msgid ""
 "The stonemason works the stone near his quarry into bricks. These are needed "
 "mainly for building houses and as ammunition for catapults."
@@ -1836,7 +1746,7 @@ msgstr ""
 "ladrillos son necesarios principalmente para la construcción de casas y como "
 "munición para las catapultas."
 
-#: C:\svn\s25client\trunk\src/BuildingConsts.h:419
+#: src/BuildingConsts.h:421
 msgid ""
 "The storehouse can help reduce long transportation journeys and is suited to "
 "the temporary storage of merchandise and inhabitants. You can release "
@@ -1851,7 +1761,7 @@ msgstr ""
 "deshabilitada. Para realizar esto, primero se debe escoger el icono "
 "relevante seguido de la mercancía deseada o símbolo de trabajo."
 
-#: C:\svn\s25client\trunk\src/BuildingConsts.h:281
+#: src/BuildingConsts.h:283
 msgid ""
 "The watchtower with its large amount of space is best suited for stationing "
 "a large number of your troops. Using the gold coin button you can stop the "
@@ -1864,98 +1774,96 @@ msgstr ""
 "aquí. Sin embargo, sin monedas de oro los soldados no pueden entrenar ni "
 "mejorar sus habilidades."
 
-#: C:\svn\s25client\trunk\src/iwDirectIPConnect.cpp:209
+#: src/iwDirectIPConnect.cpp:211
 msgid "This Server is full!"
 msgstr "Este Servidor se encuentra lleno!"
 
-#: C:\svn\s25client\trunk\src/iwSave.cpp:65
+#: src/iwSave.cpp:67
 msgid "Time"
 msgstr "Tiempo"
 
-#: C:\svn\s25client\trunk\src/iwTools.cpp:46
+#: src/iwTools.cpp:48
 msgid "Tongs"
 msgstr "Alicates"
 
-#: C:\svn\s25client\trunk\src/iwDirectIPConnect.cpp:213
+#: src/iwDirectIPConnect.cpp:215
 msgid "Too short Message received!"
 msgstr "Mensaje demasiado corto recibido!"
 
-#: C:\svn\s25client\trunk\src/iwMainMenu.cpp:58
+#: src/iwMainMenu.cpp:60
 msgid "Tools"
 msgstr "Herramientas"
 
-#: C:\svn\s25client\trunk\src/iwBuildOrder.cpp:53
+#: src/iwBuildOrder.cpp:55
 msgid "Top"
 msgstr "Comienzo"
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:123
+#: src/dskHostGame.cpp:125
 msgid "Total domination"
 msgstr "Dominación Total"
 
-#: C:\svn\s25client\trunk\src/iwMainMenu.cpp:56
+#: src/iwMainMenu.cpp:58
 msgid "Transport"
 msgstr "Transporte"
 
-#: C:\svn\s25client\trunk\src/dskGameLoader.cpp:133
+#: src/dskGameLoader.cpp:135
 msgid "Tribal chiefs assembled around the table..."
 msgstr "Los líderes se reunen en la mesa..."
 
-#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:111
+#: src/dskSelectMap.cpp:113
 msgid "Type"
 msgstr "Tipo"
 
-#: C:\svn\s25client\trunk\src/iwBuildOrder.cpp:55
+#: src/iwBuildOrder.cpp:57
 msgid "Up"
 msgstr "Arriba"
 
-#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:63
+#: src/iwMusicPlayer.cpp:84
 #, fuzzy
 msgid "Upwards"
 msgstr "Tableros"
 
-#: C:\svn\s25client\trunk\src/iwLobbyConnect.cpp:50
+#: src/iwLobbyConnect.cpp:52
 msgid "Username:"
 msgstr "Nombre de Usuario:"
 
-#: C:\svn\s25client\trunk\src/dskOptions.cpp:113
+#: src/dskOptions.cpp:115
 msgid "VSync:"
 msgstr "VSync:"
 
-#: C:\svn\s25client\trunk\src/dskLobby.cpp:74
-#: C:\svn\s25client\trunk\src/dskLobby.cpp:76
+#: src/dskLobby.cpp:76 src/dskLobby.cpp:78
 msgid "Version"
 msgstr "Versión"
 
-#: C:\svn\s25client\trunk\src/iwLobbyServerInfo.cpp:79
+#: src/iwLobbyServerInfo.cpp:81
 msgid "Version:"
 msgstr "Versión:"
 
-#: C:\svn\s25client\trunk\src/dskOptions.cpp:123
+#: src/dskOptions.cpp:125
 msgid "Vertex Buffer Objects:"
 msgstr "Objetos de buffer vertex:"
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:132
+#: src/dskHostGame.cpp:134
 msgid "Very fast"
 msgstr "Muy rápido"
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:128
+#: src/dskHostGame.cpp:130
 msgid "Very slow"
 msgstr "Muy lento"
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:566
+#: src/dskHostGame.cpp:568
 msgid "Vikings"
 msgstr "Vikingos"
 
-#: C:\svn\s25client\trunk\src/iwDirectIPConnect.cpp:227
+#: src/iwDirectIPConnect.cpp:229
 msgid "Waiting for Playerinfo..."
 msgstr "Esperando Información del Jugador..."
 
-#: C:\svn\s25client\trunk\src/iwDirectIPConnect.cpp:224
-#: C:\svn\s25client\trunk\src/iwLobbyConnect.cpp:313
+#: src/iwDirectIPConnect.cpp:226 src/iwLobbyConnect.cpp:315
 msgid "Waiting for Reply..."
 msgstr "Esperando Repetición..."
 
-#: C:\svn\s25client\trunk\src/GameClientGF_Replay.cpp:76
+#: src/GameClientGF_Replay.cpp:78
 #, c-format
 msgid ""
 "Warning: The played replay is not in sync with the original match. (GF: %u)"
@@ -1963,47 +1871,47 @@ msgstr ""
 "Aviso: La repetición de la jugada no esta en sincronía con la partida "
 "original. (GF: %u)"
 
-#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:330
+#: src/dskSelectMap.cpp:407
 msgid "Wasteland"
 msgstr "Baldío"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:207
+#: src/GameConsts.h:209
 msgid "Watchtower"
 msgstr "Torre de vigilancia"
 
-#: C:\svn\s25client\trunk\src/iwDistribution.cpp:139
+#: src/iwDistribution.cpp:141
 msgid "Water"
 msgstr "Agua"
 
-#: C:\svn\s25client\trunk\src/iwAction.cpp:233
+#: src/iwAction.cpp:235
 msgid "Weak attackers"
 msgstr "Atacantes débiles"
 
-#: C:\svn\s25client\trunk\src/iwMilitary.cpp:47
+#: src/iwMilitary.cpp:49
 msgid "Weak defense"
 msgstr "Defensa débil"
 
-#: C:\svn\s25client\trunk\src/iwTransport.cpp:56
+#: src/iwTransport.cpp:58
 msgid "Weapons"
 msgstr "Armas"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:238
+#: src/GameConsts.h:240
 msgid "Well"
 msgstr "Pozo"
 
-#: C:\svn\s25client\trunk\src/dskHostGame.cpp:100
+#: src/dskHostGame.cpp:102
 msgid "When attack"
 msgstr "Atacantes débiles"
 
-#: C:\svn\s25client\trunk\src/dskOptions.cpp:110
+#: src/dskOptions.cpp:112
 msgid "Windowed"
 msgstr "Modo de pantalla"
 
-#: C:\svn\s25client\trunk\src/dskSelectMap.cpp:331
+#: src/dskSelectMap.cpp:408
 msgid "Winter world"
 msgstr "Mundo "
 
-#: C:\svn\s25client\trunk\src/BuildingConsts.h:361
+#: src/BuildingConsts.h:363
 msgid ""
 "Within his area, the forester ensures the survival of the forest. He plants "
 "all types of trees."
@@ -2011,69 +1919,68 @@ msgstr ""
 "Dentro de su área, el guardia forestal asegura la supervivencia del bosque. "
 "El planta todo tipo de árboles."
 
-#: C:\svn\s25client\trunk\src/iwLobbyRanking.cpp:78
+#: src/iwLobbyRanking.cpp:80
 msgid "Won"
 msgstr "Ganar"
 
-#: C:\svn\s25client\trunk\src/iwTransport.cpp:64
+#: src/iwTransport.cpp:66
 msgid "Wood"
 msgstr "Madera"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:286
+#: src/GameConsts.h:288
 msgid "Woodchopper"
 msgstr "Leñador"
 
-#: C:\svn\s25client\trunk\src/GameConsts.h:220
+#: src/GameConsts.h:222
 msgid "Woodcutter"
 msgstr "Leñador"
 
-#: C:\svn\s25client\trunk\src/dskGameLoader.cpp:159
+#: src/dskGameLoader.cpp:161
 msgid "World was put together and glued..."
 msgstr "El mundo ha sido unido y pegado..."
 
-#: C:\svn\s25client\trunk\src/iwDirectIPConnect.cpp:210
+#: src/iwDirectIPConnect.cpp:212
 msgid "Wrong Password!"
 msgstr "Contraseña Incorrecta!"
 
-#: C:\svn\s25client\trunk\src/iwDirectIPConnect.cpp:214
+#: src/iwDirectIPConnect.cpp:216
 msgid "Wrong Server Type!"
 msgstr "Tipo de Servidor Incorrecto!"
 
-#: C:\svn\s25client\trunk\src/iwDirectIPConnect.cpp:211
+#: src/iwDirectIPConnect.cpp:213
 msgid "Wrong client version"
 msgstr "Versión de Cliente Incorrecta"
 
-#: C:\svn\s25client\trunk\src/iwLobbyConnect.cpp:70
+#: src/iwLobbyConnect.cpp:72
 msgid "Yes"
 msgstr "Si"
 
-#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:144
+#: src/iwMusicPlayer.cpp:165
 msgid "You are not allowed to change the standard playlist!"
 msgstr ""
 
-#: C:\svn\s25client\trunk\src/iwMusicPlayer.cpp:120
+#: src/iwMusicPlayer.cpp:141
 msgid "You are not allowed to delete the standard playlist!"
 msgstr ""
 
-#: C:\svn\s25client\trunk\src/iwBaseWarehouse.cpp:59
+#: src/iwBaseWarehouse.cpp:61
 msgid "do nothing"
 msgstr "hacer nada"
 
-#: C:\svn\s25client\trunk\src/dskDirectIP.cpp:52
-#: C:\svn\s25client\trunk\src/dskMultiPlayer.cpp:58
+#: src/dskDirectIP.cpp:54 src/dskLobby.cpp:62 src/dskMultiPlayer.cpp:60
+#: src/dskSinglePlayer.cpp:61
 msgid "http://www.siedler25.org"
 msgstr "http://www.siedler25.org"
 
-#: C:\svn\s25client\trunk\src/dskOptions.cpp:117
-#: C:\svn\s25client\trunk\src/dskOptions.cpp:127
+#: src/dskOptions.cpp:119 src/dskOptions.cpp:129
 msgid "not supported"
 msgstr "no soportado"
 
-#: C:\svn\s25client\trunk\src/iwSkipGFs.cpp:45
+#: src/iwSkipGFs.cpp:47
 msgid "to GameFrame:"
 msgstr "a GF:"
 
-#: C:\svn\s25client\trunk\src/dskCredits.cpp:103
+#: src/dskCredits.cpp:105
 msgid "various anonymous donators"
 msgstr "diversos donadores anónimos"
 

@@ -1,4 +1,4 @@
-// $Id: dskOptions.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: dskOptions.cpp 4754 2009-05-01 16:35:54Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -37,6 +37,7 @@
 #include "VideoDriverWrapper.h"
 #include "AudioDriverWrapper.h"
 #include "MusicPlayer.h"
+#include "iwTextfile.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -100,6 +101,9 @@ dskOptions::dskOptions(void) : Desktop(GetImage(backgrounds, 1))
 		if(SETTINGS.language == l.code )
 			combo->SetSelection(static_cast<unsigned short>(i));
 	}
+
+	groupAllgemein->AddText(34, 80, 180, _("Keyboard layout:"), COLOR_YELLOW, 0, NormalFont);
+	groupAllgemein->AddTextButton(35, 280, 175, 120, 22, TC_GREY, _("Readme"), NormalFont);
 
 	// "Auflösung"
 	groupGrafik->AddText(  40,  80, 80, _("Resolution:"),COLOR_YELLOW,0,NormalFont);
@@ -431,7 +435,15 @@ void dskOptions::Msg_Group_ButtonClick(const unsigned int group_id, const unsign
 		{
 			WindowManager::inst().Show(new iwMusicPlayer);
 		} break;
-	}
+	
+	case 35: // "Keyboard Readme"
+               {
+                        WindowManager::inst().Show(new iwTextfile("keyboardlayout.txt",_("Keyboard layout")));
+                } break;
+
+        }
+
+
 }
 
 

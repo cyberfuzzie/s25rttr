@@ -1,4 +1,4 @@
-// $Id: dskMainMenu.cpp 4753 2009-05-01 15:47:14Z Demophobie $
+// $Id: dskMainMenu.cpp 4754 2009-05-01 16:35:54Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -35,7 +35,6 @@
 #include "dskCredits.h"
 
 #include "ListDir.h"
-
 #include "iwTextfile.h"
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -78,7 +77,7 @@ dskMainMenu::dskMainMenu(void) : Desktop(GetImage(backgrounds, 0))
 	// "Intro"
 	AddTextButton(7, 115, 280, 220, 22, TC_GREEN2, _("Intro"), NormalFont);
 	// "ReadMe"
-	AddTextButton(10, 115, 310, 220, 22, TC_GREEN2, _("ReadMe"), NormalFont);
+	AddTextButton(10, 115, 310, 220, 22, TC_GREEN2, _("Readme"), NormalFont);
 	// "Credits"
 	AddTextButton(8, 115, 340, 220, 22, TC_GREEN2, _("Credits"), NormalFont);
 	// "Programm verlassen"

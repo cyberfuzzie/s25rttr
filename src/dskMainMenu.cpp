@@ -1,4 +1,4 @@
-// $Id: dskMainMenu.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: dskMainMenu.cpp 4753 2009-05-01 15:47:14Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -36,6 +36,7 @@
 
 #include "ListDir.h"
 
+#include "iwTextfile.h"
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
 #if defined _WIN32 && defined _DEBUG && defined _MSC_VER
@@ -76,10 +77,12 @@ dskMainMenu::dskMainMenu(void) : Desktop(GetImage(backgrounds, 0))
 	AddTextButton(6, 115, 250, 220, 22, TC_GREEN2, _("Options"), NormalFont);
 	// "Intro"
 	AddTextButton(7, 115, 280, 220, 22, TC_GREEN2, _("Intro"), NormalFont);
+	// "ReadMe"
+	AddTextButton(10, 115, 310, 220, 22, TC_GREEN2, _("ReadMe"), NormalFont);
 	// "Credits"
-	AddTextButton(8, 115, 310, 220, 22, TC_GREEN2, _("Credits"), NormalFont);
+	AddTextButton(8, 115, 340, 220, 22, TC_GREEN2, _("Credits"), NormalFont);
 	// "Programm verlassen"
-	AddTextButton(9, 115, 350, 220, 22, TC_RED1, _("Quit program"), NormalFont);
+	AddTextButton(9, 115, 390, 220, 22, TC_RED1, _("Quit program"), NormalFont);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -117,5 +120,10 @@ void dskMainMenu::Msg_ButtonClick(const unsigned int ctrl_id)
 		{
 			GLOBALVARS.notdone = false;
 		} break;
+        case 10: // "Readme"
+                {
+			WindowManager::inst().Show(new iwTextfile("readme.txt",_("Readme!")));
+                } break;
+
 	}
 }

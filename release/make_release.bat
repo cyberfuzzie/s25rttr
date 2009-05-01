@@ -33,28 +33,28 @@ DEL RTTR\settings.bin
 DEL RTTR\languages\rttr.pot
 
 DEL RTTR\languages\de\LC_MESSAGES\rttr.po
-COPY /Y ..\..\RTTR\languages\de\LC_MESSAGES\rttr.mo RTTR\languages\de\LC_MESSAGES\rttr.mo
+COPY /Y ..\..\RTTR\languages\de\LC_MESSAGES\de.mo RTTR\languages\de\LC_MESSAGES\de.mo
 
 DEL RTTR\languages\es\LC_MESSAGES\rttr.po
-COPY /Y ..\..\RTTR\languages\es\LC_MESSAGES\rttr.mo RTTR\languages\es\LC_MESSAGES\rttr.mo
+COPY /Y ..\..\RTTR\languages\es\LC_MESSAGES\es.mo RTTR\languages\es\LC_MESSAGES\es.mo
 
 DEL RTTR\languages\fi\LC_MESSAGES\rttr.po
-COPY /Y ..\..\RTTR\languages\fi\LC_MESSAGES\rttr.mo RTTR\languages\fi\LC_MESSAGES\rttr.mo
+COPY /Y ..\..\RTTR\languages\fi\LC_MESSAGES\fi.mo RTTR\languages\fi\LC_MESSAGES\fi.mo
 
 DEL RTTR\languages\fr\LC_MESSAGES\rttr.po
-COPY /Y ..\..\RTTR\languages\fr\LC_MESSAGES\rttr.mo RTTR\languages\fr\LC_MESSAGES\rttr.mo
+COPY /Y ..\..\RTTR\languages\fr\LC_MESSAGES\fr.mo RTTR\languages\fr\LC_MESSAGES\fr.mo
 
 DEL RTTR\languages\hu\LC_MESSAGES\rttr.po
-COPY /Y ..\..\RTTR\languages\hu\LC_MESSAGES\rttr.mo RTTR\languages\hu\LC_MESSAGES\rttr.mo
+COPY /Y ..\..\RTTR\languages\hu\LC_MESSAGES\hu.mo RTTR\languages\hu\LC_MESSAGES\hu.mo
 
 DEL RTTR\languages\sv\LC_MESSAGES\rttr.po
-COPY /Y ..\..\RTTR\languages\sv\LC_MESSAGES\rttr.mo RTTR\languages\sv\LC_MESSAGES\rttr.mo
+COPY /Y ..\..\RTTR\languages\sv\LC_MESSAGES\sv.mo RTTR\languages\sv\LC_MESSAGES\sv.mo
 
 DEL RTTR\languages\ru\LC_MESSAGES\rttr.po
-COPY /Y ..\..\RTTR\languages\ru\LC_MESSAGES\rttr.mo RTTR\languages\ru\LC_MESSAGES\rttr.mo
+COPY /Y ..\..\RTTR\languages\ru\LC_MESSAGES\ru.mo RTTR\languages\ru\LC_MESSAGES\ru.mo
 
 DEL RTTR\languages\nl\LC_MESSAGES\rttr.po
-COPY /Y ..\..\RTTR\languages\nl\LC_MESSAGES\rttr.mo RTTR\languages\nl\LC_MESSAGES\rttr.mo
+COPY /Y ..\..\RTTR\languages\nl\LC_MESSAGES\nl.mo RTTR\languages\nl\LC_MESSAGES\nl.mo
 
 MKDIR driver\audio
 COPY /Y ..\..\driver\audio\*.dll driver\audio

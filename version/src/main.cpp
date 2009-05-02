@@ -1,4 +1,4 @@
-// $Id: main.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: main.cpp 4783 2009-05-02 18:33:23Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -50,76 +50,94 @@
 int main(int argc, char *argv[])
 {
 	if(argc >= 2)
-		chdir(argv[1]);
+	chdir(argv[1]);
+
+	// We only need one of those two files, whatever is present:
+	FILE *lastrevision = fopen(".bzr/branch/last-revision", "r");
+	const int errno1 = errno;
 
 	FILE *entries = fopen(".svn/entries", "r");
-	if(!entries)
+	if((!entries) && (!lastrevision))
 	{
-		fprintf(stderr, "Failed to read source %s: %s\n", ".svn/entries", strerror(errno));
+		fprintf(stderr, "Failed to read any of:\n");
+		fprintf(stderr, "%s : %s\n", ".bzr/branch/last-revision", strerror(errno1));
+		fprintf(stderr, "%s : %s\n", ".svn/entries", strerror(errno));
 		return 1;
 	}
-	
-	bool use_xml = false;
+
 	char buffer[4096], *revision = NULL;
-	fgets(buffer, 4096, entries);
-
-	if(atoi(buffer) < 6)
+	if(lastrevision)
 	{
-		use_xml = true;
-	}
-	else
-	{
-		fgets(buffer, 4096, entries);
-		fgets(buffer, 4096, entries);
-		fgets(buffer, 4096, entries);
-
+		fgets(buffer, 4096, lastrevision);
 		revision = buffer;
+		fclose(lastrevision);
 		for(size_t i = 0; i < strlen(revision) && i < 4096; ++i)
 			if(!isdigit(revision[i]))
 				revision[i] = '\0';
 	}
+	else // (entries) is true, because we didn't exit before
+	{		
+		bool use_xml = false;
+		fgets(buffer, 4096, entries);
 
-	fclose(entries);
-
-	if(use_xml)
-	{
-		LIBXML_TEST_VERSION;
-		
-		xmlKeepBlanksDefault(0);
-
-		xmlDocPtr doc;
-
-		doc = xmlParseFile(".svn/entries");
-		if(doc == NULL)
+		if(atoi(buffer) < 6)
 		{
-			fprintf(stderr, "Failed to parse source %s: %s\n", ".svn/entries", strerror(errno));
-			return 1;
+			use_xml = true;
+		}
+		else
+		{
+			fgets(buffer, 4096, entries);
+			fgets(buffer, 4096, entries);
+			fgets(buffer, 4096, entries);
+
+			revision = buffer;
+			for(size_t i = 0; i < strlen(revision) && i < 4096; ++i)
+				if(!isdigit(revision[i]))
+					revision[i] = '\0';
 		}
 
-		xmlNodePtr root_file, cur;
+		if (entries) fclose(entries);
 
-		root_file = xmlDocGetRootElement(doc);
-		if (root_file == NULL) 
+		if(use_xml)
 		{
-			fprintf(stderr, "Failed to get root-element: Empty Document?\n");
+			LIBXML_TEST_VERSION;
+			
+			xmlKeepBlanksDefault(0);
+
+			xmlDocPtr doc;
+
+			doc = xmlParseFile(".svn/entries");
+			if(doc == NULL)
+			{
+				fprintf(stderr, "Failed to parse source %s: %s\n", ".svn/entries", strerror(errno));
+				return 1;
+			}
+
+			xmlNodePtr root_file, cur;
+
+			root_file = xmlDocGetRootElement(doc);
+			if (root_file == NULL) 
+			{
+				fprintf(stderr, "Failed to get root-element: Empty Document?\n");
+				xmlFreeDoc(doc);
+				return 1;
+			}
+
+			printf("%s\n", root_file->name);
+
+			cur = root_file->xmlChildrenNode;
+			if(cur == NULL)
+			{
+				fprintf(stderr, "Failed to get child-element: Empty Document?\n");
+				xmlFreeDoc(doc);
+				return 1;
+			}
+
+			revision = (char*)xmlGetProp(cur, (const xmlChar*)"revision");
+
 			xmlFreeDoc(doc);
-			return 1;
+			xmlCleanupParser();
 		}
-
-		printf("%s\n", root_file->name);
-
-		cur = root_file->xmlChildrenNode;
-		if(cur == NULL)
-		{
-			fprintf(stderr, "Failed to get child-element: Empty Document?\n");
-			xmlFreeDoc(doc);
-			return 1;
-		}
-
-		revision = (char*)xmlGetProp(cur, (const xmlChar*)"revision");
-
-		xmlFreeDoc(doc);
-		xmlCleanupParser();
 	}
 
 	if(revision)

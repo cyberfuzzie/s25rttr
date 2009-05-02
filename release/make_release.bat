@@ -56,6 +56,12 @@ COPY /Y ..\..\RTTR\languages\ru.mo RTTR\languages\ru.mo
 DEL RTTR\languages\nl.po
 COPY /Y ..\..\RTTR\languages\nl.mo RTTR\languages\nl.mo
 
+DEL RTTR\languages\et.po
+COPY /Y ..\..\RTTR\languages\et.mo RTTR\languages\et.mo
+
+DEL RTTR\languages\en_GB.po
+COPY /Y ..\..\RTTR\languages\en_GB.mo RTTR\languages\en_GB.mo
+
 MKDIR driver\audio
 COPY /Y ..\..\driver\audio\*.dll driver\audio
 DEL driver\audio\dbg_*.dll

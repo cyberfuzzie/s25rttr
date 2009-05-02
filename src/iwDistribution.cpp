@@ -1,4 +1,4 @@
-// $Id: iwDistribution.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: iwDistribution.cpp 4784 2009-05-02 20:43:44Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -35,6 +35,14 @@
 	static char THIS_FILE[] = __FILE__;
 #endif
 
+
+/// Anzahl der einzelnen Einstellungen in den Gruppen
+// Nahrungsgruppe
+const unsigned GROUP_SIZES[6] =
+{
+	4, 4, 2, 3, 3, 4
+};
+
 ///////////////////////////////////////////////////////////////////////////////
 /**
  *  Konstruktor von @p iwDistribution.
@@ -59,19 +67,15 @@ iwDistribution::iwDistribution(void)
 	// Granitbergwerk
 	group->AddText(11, 120,  60, _("Granite mine"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
 	progress = group->AddProgress(12, 20,  60, 200, 20, TC_GREY, 139, 138, 10);
-	progress->SetPosition(GAMECLIENT.visual_settings.distribution[0]);
 	// Kohlebergwerk
 	group->AddText(13, 120, 100, _("Coal mine"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
 	progress = group->AddProgress(14, 20, 100, 200, 20, TC_GREY, 139, 138, 10);
-	progress->SetPosition(GAMECLIENT.visual_settings.distribution[1]);
 	// Eisenbergwerk	
 	group->AddText(15, 120, 140, _("Iron mine"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
 	progress = group->AddProgress(16, 20, 140, 200, 20, TC_GREY, 139, 138, 10);
-	progress->SetPosition(GAMECLIENT.visual_settings.distribution[2]);
 	// Goldbergwerk	
 	group->AddText(17, 120, 180, _("Gold mine"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
 	progress = group->AddProgress(18, 20, 180, 200, 20, TC_GREY, 139, 138, 10);
-	progress->SetPosition(GAMECLIENT.visual_settings.distribution[3]);
 
 	// Getreidegruppe
 	group = tab->AddTab(GetImage(io_dat, 90), _("Grain"), TAB_CORN);
@@ -79,19 +83,15 @@ iwDistribution::iwDistribution(void)
 	// Mühle
 	group->AddText(21, 120,  60, _("Mill"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
 	progress = group->AddProgress(22, 20,  60, 200, 20, TC_GREY, 139, 138, 10);
-	progress->SetPosition(GAMECLIENT.visual_settings.distribution[4]);
 	// Schweinezucht
 	group->AddText(23, 120, 100, _("Pig farm"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
 	progress = group->AddProgress(24, 20, 100, 200, 20, TC_GREY, 139, 138, 10);
-	progress->SetPosition(GAMECLIENT.visual_settings.distribution[5]);
 	// Eselzucht
 	group->AddText(25, 120, 140, _("Donkey breeding"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
 	progress = group->AddProgress(26, 20, 140, 200, 20, TC_GREY, 139, 138, 10);
-	progress->SetPosition(GAMECLIENT.visual_settings.distribution[6]);
 	// Brauerei
 	group->AddText(27, 120, 180, _("Brewery"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
 	progress = group->AddProgress(28, 20, 180, 200, 20, TC_GREY, 139, 138, 10);
-	progress->SetPosition(GAMECLIENT.visual_settings.distribution[7]);
 
 	// Eisengruppe
 	group = tab->AddTab(GetImage(io_dat, 81), _("Iron"), TAB_IRON);
@@ -99,11 +99,9 @@ iwDistribution::iwDistribution(void)
 	// Schmiede
 	group->AddText(31, 120,  60, _("Armory"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
 	progress = group->AddProgress(32, 20,  60, 200, 20, TC_GREY, 139, 138, 10);
-	progress->SetPosition(GAMECLIENT.visual_settings.distribution[8]);
 	// Schlosserei
 	group->AddText(33, 120, 100, _("Metalworker"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
 	progress = group->AddProgress(34, 20, 100, 200, 20, TC_GREY, 139, 138, 10);
-	progress->SetPosition(GAMECLIENT.visual_settings.distribution[9]);
 
 	// Kohlegruppe
 	group = tab->AddTab(GetImage(io_dat, 91), _("Coal"), TAB_COAL);
@@ -111,15 +109,12 @@ iwDistribution::iwDistribution(void)
 	// Schmiede
 	group->AddText(41, 120,  60, _("Armory"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
 	progress = group->AddProgress(42, 20,  60, 200, 20, TC_GREY, 139, 138, 10);
-	progress->SetPosition(GAMECLIENT.visual_settings.distribution[10]);
 	// Eisenschmelze
 	group->AddText(43, 120, 100, _("Iron smelter"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
 	progress = group->AddProgress(44, 20, 100, 200, 20, TC_GREY, 139, 138, 10);
-	progress->SetPosition(GAMECLIENT.visual_settings.distribution[11]);
 	// Münzprägerei
 	group->AddText(45, 120, 140, _("Mint"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
 	progress = group->AddProgress(46, 20, 140, 200, 20, TC_GREY, 139, 138, 10);
-	progress->SetPosition(GAMECLIENT.visual_settings.distribution[12]);
 
 	// Brettergruppe
 	group = tab->AddTab(GetImage(io_dat, 82), _("Boards"), TAB_BOARD);
@@ -127,38 +122,29 @@ iwDistribution::iwDistribution(void)
 	// Baustellen
 	group->AddText(51, 120,  60, _("Construction"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
 	progress = group->AddProgress(52, 20,  60, 200, 20, TC_GREY, 139, 138, 10);
-	progress->SetPosition(GAMECLIENT.visual_settings.distribution[13]);
 	// Schlosserei
 	group->AddText(53, 120, 100, _("Metalworker"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
 	progress = group->AddProgress(54, 20, 100, 200, 20, TC_GREY, 139, 138, 10);
-	progress->SetPosition(GAMECLIENT.visual_settings.distribution[14]);
 	// Werft
 	group->AddText(55, 120, 140, _("Shipyard"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
 	progress = group->AddProgress(56, 20, 140, 200, 20, TC_GREY, 139, 138, 10);
-	progress->SetPosition(GAMECLIENT.visual_settings.distribution[15]);
-
 	// Wasserbüffel äh -gruppe ;-)
 	group = tab->AddTab(GetImage(io_dat, 92), _("Water"), TAB_WATER);
 
 	// Bäckerei
 	group->AddText(61, 120,  60, _("Bakery"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
 	progress = group->AddProgress(62, 20,  60, 200, 20, TC_GREY, 139, 138, 10);
-	progress->SetPosition(GAMECLIENT.visual_settings.distribution[16]);
 	// Brauerei
 	group->AddText(63, 120, 100, _("Brewery"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
 	progress = group->AddProgress(64, 20, 100, 200, 20, TC_GREY, 139, 138, 10);
-	progress->SetPosition(GAMECLIENT.visual_settings.distribution[17]);
 	// Schweinezucht
 	group->AddText(65, 120, 140, _("Pig farm"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
 	progress = group->AddProgress(66, 20, 140, 200, 20, TC_GREY, 139, 138, 10);
-	progress->SetPosition(GAMECLIENT.visual_settings.distribution[18]);
 	// Eselzucht
 	group->AddText(67, 120, 180, _("Donkey breeding"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
 	progress = group->AddProgress(68, 20, 180, 200, 20, TC_GREY, 139, 138, 10);
-	progress->SetPosition(GAMECLIENT.visual_settings.distribution[19]);
 
-	
-
+	UpdateSettings();
 
 	// Gruppe auswählen
 	tab->SetSelection(0);
@@ -203,10 +189,6 @@ void iwDistribution::TransmitSettings()
 	}
 }
 
-
-
-
-
 void iwDistribution::Msg_Group_ProgressChange(const unsigned int group_id, const unsigned int ctrl_id, const unsigned short position)
 {
 	settings_changed = true;
@@ -214,6 +196,23 @@ void iwDistribution::Msg_Group_ProgressChange(const unsigned int group_id, const
 
 void iwDistribution::Msg_Timer(const unsigned int ctrl_id)
 {
-	TransmitSettings();
+	if(GAMECLIENT.IsReplayModeOn())
+		// Im Replay aktualisieren wir die Werte 
+		UpdateSettings();
+	else
+		// Im normalen Spielmodus schicken wir den ganzen Spaß ab
+		TransmitSettings();
 }
 
+void iwDistribution::UpdateSettings()
+{
+	// Globale Id für alle Gruppen für die visual_settings
+	unsigned vsi = 0;
+	// Alle Gruppen durchgehen und Einstellungen festlegen
+	for(unsigned g = 0;g<6;++g)
+	{
+		ctrlGroup * group = GetCtrl<ctrlTab>(0)->GetGroup(TAB_FOOD+g);
+		for(unsigned i = 0;i<GROUP_SIZES[g];++i,++vsi)
+			group->GetCtrl<ctrlProgress>(10*(g+1)+2*(i+1))->SetPosition(GAMECLIENT.visual_settings.distribution[vsi]);
+	}
+}

@@ -1,4 +1,4 @@
-// $Id: ctrlProgress.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: ctrlProgress.h 4784 2009-05-02 20:43:44Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -41,7 +41,8 @@ public:
 				 const unsigned int force_color,
 				 const std::string& tooltip,
 				 const std::string& button_minus_tooltip = NULL,
-				 const std::string& button_plus_tooltip = NULL);
+				 const std::string& button_plus_tooltip = NULL,
+				 unsigned short * const write_val = NULL);
 
 	void SetPosition(unsigned short position);
 	const unsigned short &GetPosition(void) const { return position; }
@@ -68,6 +69,8 @@ private:
 
 	/// Falls der Balken immer eine bestimmte Farben haben soll, ansonsten 0 setzen!
 	unsigned int force_color;
+
+	/// Optionaler Pointer auf eine Variable, 
 };
 
 #endif // !CTRLPROGRESS_H_INCLUDED

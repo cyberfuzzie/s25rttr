@@ -1,4 +1,4 @@
-// $Id: iwTransport.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: iwTransport.cpp 4784 2009-05-02 20:43:44Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -250,6 +250,22 @@ void iwTransport::Msg_ButtonClick(const unsigned int ctrl_id)
 
 void iwTransport::Msg_Timer(const unsigned int ctrl_id)
 {
-	TransmitSettings();
-	
+	if(GAMECLIENT.IsReplayModeOn())
+		// Im Replay aktualisieren wir die Werte 
+		UpdateSettings();
+	else
+		// Im normalen Spielmodus schicken wir den ganzen Spaﬂ ab
+		TransmitSettings();
+}
+
+void iwTransport::UpdateSettings()
+{
+	ctrlOptionGroup *group = GetCtrl<ctrlOptionGroup>(6);
+
+	// Einstellungen festlegen
+	for(unsigned char i = 0; i < 14; ++i)
+	{
+		group->GetCtrl<ctrlImageButton>(i)->SetImage(TRANSPORT_SPRITES[GAMECLIENT.visual_settings.transport_order[i]]);
+		group->GetCtrl<ctrlImageButton>(i)->SetTooltip(_(TOOLTIPS[GAMECLIENT.visual_settings.transport_order[i]]));
+	}
 }

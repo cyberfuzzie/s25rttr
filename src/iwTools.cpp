@@ -1,4 +1,4 @@
-// $Id: iwTools.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: iwTools.cpp 4784 2009-05-02 20:43:44Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -112,6 +112,17 @@ void iwTools::Msg_ProgressChange(const unsigned int ctrl_id, const unsigned shor
 
 void iwTools::Msg_Timer(const unsigned int ctrl_id)
 {
-	TransmitSettings();
+	if(GAMECLIENT.IsReplayModeOn())
+		// Im Replay aktualisieren wir die Werte 
+		UpdateSettings();
+	else
+		// Im normalen Spielmodus schicken wir den ganzen Spaﬂ ab
+		TransmitSettings();
 }
 
+void iwTools::UpdateSettings()
+{
+	// Einstellungen festlegen
+	for(unsigned i = 0;i<12;++i)
+		GetCtrl<ctrlProgress>(i)->SetPosition(GAMECLIENT.visual_settings.military_settings[i]);
+}

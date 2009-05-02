@@ -1,4 +1,4 @@
-// $Id: ctrlList.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: ctrlList.cpp 4784 2009-05-02 20:43:44Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -181,6 +181,12 @@ void ctrlList::AddString(const std::string& text)
 	lines.push_back(text);
 
 	GetCtrl<ctrlScrollBar>(0)->SetRange(static_cast<unsigned short>(lines.size()));
+}
+
+/// Verändert einen String
+void ctrlList::SetString(const std::string& text, const unsigned id)
+{
+	lines[id] = text;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -1,4 +1,4 @@
-// $Id: ctrlProgress.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: ctrlProgress.cpp 4784 2009-05-02 20:43:44Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -54,7 +54,8 @@ ctrlProgress::ctrlProgress(Window *parent,
 						   const unsigned int force_color,
 						   const std::string& tooltip,
 						   const std::string& button_minus_tooltip,
-						   const std::string& button_plus_tooltip)
+						   const std::string& button_plus_tooltip,
+						   unsigned short * const write_val)
 	: Window(x, y, id, parent, tooltip),
 	width(width), height(height), tc(tc), position(0), maximum(maximum), x_padding(x_padding), y_padding(y_padding), force_color(force_color)
 {

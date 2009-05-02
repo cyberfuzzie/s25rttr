@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.h 4746 2009-04-30 20:10:46Z OLiver $
+// $Id: GameClientPlayer.h 4784 2009-05-02 20:43:44Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -243,6 +243,13 @@ public:
 
 	/// Setzt neue Militäreinstellungen
 	void ChangeMilitarySettings(const unsigned char * military_settings);
+	/// Setzt neue Werkzeugeinstellungen
+	void ChangeToolsSettings(const unsigned char * tools_settings);
+	/// Setzt neue Verteilungseinstellungen
+	void ChangeDistribution(const unsigned char * distribution_settings);
+	/// Setzt neue Baureihenfolge-Einstellungen
+	void ChangeBuildOrder(const unsigned char order_type, const unsigned char * const oder_data);
+
 	/// Ist ein anderer Spieler ein Verbündeter von uns?
 	bool IsAlly(const unsigned char player) const;
 	/// Truppen bestellen

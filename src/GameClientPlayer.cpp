@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 4746 2009-04-30 20:10:46Z OLiver $
+// $Id: GameClientPlayer.cpp 4784 2009-05-02 20:43:44Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -712,7 +712,14 @@ noBaseBuilding * GameClientPlayer::FindClientForWare(Ware * ware)
 	noBaseBuilding * bb = 0;
 	unsigned best_points = 0;
 
-	for(list<BuildingType>::iterator it = distribution[ware->type].client_buildings.begin(); it.valid(); ++it)
+	// Warentyp herausfinden
+	GoodType gt = ware->type;
+	// Andere Nahrung als Fisch ansehen, da nur dieser als Nahrung für Bergwerke und in der Verteilung
+	// akzeptiert wird
+	if(gt == GD_BREAD || gt == GD_MEAT)
+		gt = GD_FISH;
+
+	for(list<BuildingType>::iterator it = distribution[gt].client_buildings.begin(); it.valid(); ++it)
 	{
 		unsigned way_points,points;
 
@@ -725,17 +732,17 @@ noBaseBuilding * GameClientPlayer::FindClientForWare(Ware * ware)
 				// Weg dorthin berechnen
 				if(gwg->FindPath(ware->GetLocation(),*i,false,&way_points) != 0xFF)
 				{
-					points = (*i)->CalcDistributionPoints(ware->GetLocation(),ware->type);
+					points = (*i)->CalcDistributionPoints(ware->GetLocation(),gt);
 
 					if(points)
 					{
 						// Die Wegpunkte noch davon abziehen, Verteilung draufaddieren
 						points -= way_points;
-						points += distribution[ware->type].percent_buildings[BLD_HEADQUARTERS]*30;
+						points += distribution[gt].percent_buildings[BLD_HEADQUARTERS]*30;
 
 							/*char str[256];
 							sprintf(str,"gf = %u, points = %u, way_points = %u, distribution = %u  \n", 
-							GameClient::inst().GetGFNumber(), points, way_points, distribution[ware->type].percent_buildings[BLD_HEADQUARTERS]);
+							GameClient::inst().GetGFNumber(), points, way_points, distribution[gt].percent_buildings[BLD_HEADQUARTERS]);
 							GameClient::inst().AddToGameLog(str);*/
 
 
@@ -753,9 +760,9 @@ noBaseBuilding * GameClientPlayer::FindClientForWare(Ware * ware)
 			//for(list<noBuildingSite*>::iterator i = building_sites.begin(); i.valid(); ++i)
 			//{
 			//	// Zusätzliche Distribution-Punkte draufaddieren, welcher Gebäudetyp bekommt zuerst die Waren?
-			//	if(unsigned short distri_points = (*i)->CalcDistributionPoints(ware->GetLocation(),ware->type))
+			//	if(unsigned short distri_points = (*i)->CalcDistributionPoints(ware->GetLocation(),gt))
 			//	{
-			//		points = distri_points + distribution[ware->type].percent_buildings[BLD_HEADQUARTERS]*25;
+			//		points = distri_points + distribution[gt].percent_buildings[BLD_HEADQUARTERS]*25;
 			//		if((points < best_points || !bb) && points)
 			//		{
 			//			bb = *i;
@@ -772,27 +779,27 @@ noBaseBuilding * GameClientPlayer::FindClientForWare(Ware * ware)
 				// Weg dorthin berechnen
 				if(gwg->FindPath(ware->GetLocation(),*i,false,&way_points) != 0xFF)
 				{
-					points = (*i)->CalcDistributionPoints(ware->GetLocation(),ware->type);
+					points = (*i)->CalcDistributionPoints(ware->GetLocation(),gt);
 					// Wenn 0, dann braucht er die Ware nicht
 					if(points)
 					{
 						// Die Wegpunkte noch davon abziehen, Verteilung draufaddieren
 						//points -= way_points;
 						points -= (unsigned int) (0.5 * way_points);
-						//points += distribution[ware->type].percent_buildings[*it]*30;
+						//points += distribution[gt].percent_buildings[*it]*30;
 
 						//// Verteilung überprüfen ob Gebäudetyp an der Reihe ist
-						//if(distribution[ware->type].goals.size())
+						//if(distribution[gt].goals.size())
 						//{
 						//	char str[256];
 						//	sprintf(str,"gf = %u, obj_id = %u, selected_goal = %u,  rest = %u\n", 
-						//	GameClient::inst().GetGFNumber(), ware->GetObjId(), distribution[ware->type].selected_goal, distribution[ware->type].goals[distribution[ware->type].selected_goal]);
+						//	GameClient::inst().GetGFNumber(), ware->GetObjId(), distribution[gt].selected_goal, distribution[gt].goals[distribution[gt].selected_goal]);
 						//	GameClient::inst().AddToGameLog(str);
 						//}
 
-						if(distribution[ware->type].goals.size()) {
+						if(distribution[gt].goals.size()) {
 							if ((*i)->GetBuildingType() == 
-								static_cast<BuildingType>(distribution[ware->type].goals[distribution[ware->type].selected_goal])) {
+								static_cast<BuildingType>(distribution[gt].goals[distribution[gt].selected_goal])) {
 								points += 300;
 							} else {
 								points -= 300;
@@ -812,12 +819,12 @@ noBaseBuilding * GameClientPlayer::FindClientForWare(Ware * ware)
 		}
 	}
 
-	if(bb && distribution[ware->type].goals.size())
-		distribution[ware->type].selected_goal = (distribution[ware->type].selected_goal + 1) % unsigned(distribution[ware->type].goals.size());
+	if(bb && distribution[gt].goals.size())
+		distribution[gt].selected_goal = (distribution[gt].selected_goal + 1) % unsigned(distribution[gt].goals.size());
 
 	// Wenn kein Abnehmer gefunden wurde, muss es halt in ein Lagerhaus
 	if(!bb)
-		bb = FindWarehouse(ware->GetLocation(),FW::Condition_StoreWare,0,true,&ware->type,true);
+		bb = FindWarehouse(ware->GetLocation(),FW::Condition_StoreWare,0,true,&gt,true);
 
 	// Abnehmer Bescheid sagen
 	if(bb)
@@ -993,6 +1000,10 @@ unsigned GameClientPlayer::GetBuidingSitePriority(const noBuildingSite * buildin
 
 void GameClientPlayer::ConvertTransportData(const unsigned char * const transport_data)
 {
+	// Im Replay visulle Einstellungen auf die wirklichen setzen
+	if(GameClient::inst().IsReplayModeOn())
+		memcpy(GameClient::inst().visual_settings.transport_order,transport_data,14*sizeof(unsigned char));
+
 	// Mit Hilfe der Standardbelegung lässt sich das recht einfach konvertieren:
 	for(unsigned i = 0;i<35;++i)
 	{
@@ -1109,11 +1120,77 @@ void GameClientPlayer::RefreshDefenderList()
 
 void GameClientPlayer::ChangeMilitarySettings(const unsigned char* military_settings)
 {
-	memcpy(this->military_settings,military_settings,7);
+	// Im Replay visulle Einstellungen auf die wirklichen setzen
+	if(GameClient::inst().IsReplayModeOn())
+		memcpy(GameClient::inst().visual_settings.military_settings,military_settings,sizeof(this->military_settings));
+
+	memcpy(this->military_settings,military_settings,sizeof(this->military_settings));
 	/// Truppen müssen neu kalkuliert werden
 	RegulateAllTroops();
 	/// Die Verteidigungsliste muss erneuert werden
 	RefreshDefenderList();
+}
+
+/// Setzt neue Werkzeugeinstellungen
+void GameClientPlayer::ChangeToolsSettings(const unsigned char * tools_settings)
+{
+	// Im Replay visulle Einstellungen auf die wirklichen setzen
+	if(GameClient::inst().IsReplayModeOn())
+		memcpy(GameClient::inst().visual_settings.tools_settings,tools_settings,sizeof(this->tools_settings));
+
+	memcpy(this->tools_settings,tools_settings,12);
+}
+
+/// Setzt neue Verteilungseinstellungen
+void GameClientPlayer::ChangeDistribution(const unsigned char * distribution_settings)
+{
+	// Im Replay visulle Einstellungen auf die wirklichen setzen
+	if(GameClient::inst().IsReplayModeOn())
+		memcpy(GameClient::inst().visual_settings.distribution,distribution_settings,
+		sizeof(GameClient::inst().visual_settings.distribution));
+
+	distribution[GD_FISH].percent_buildings[BLD_GRANITEMINE] = distribution_settings[0];
+	distribution[GD_FISH].percent_buildings[BLD_COALMINE] = distribution_settings[1];
+	distribution[GD_FISH].percent_buildings[BLD_IRONMINE] = distribution_settings[2];
+	distribution[GD_FISH].percent_buildings[BLD_GOLDMINE] = distribution_settings[3];
+
+	distribution[GD_GRAIN].percent_buildings[BLD_MILL] = distribution_settings[4];
+	distribution[GD_GRAIN].percent_buildings[BLD_PIGFARM] = distribution_settings[5];
+	distribution[GD_GRAIN].percent_buildings[BLD_DONKEYBREEDER] = distribution_settings[6];
+	distribution[GD_GRAIN].percent_buildings[BLD_BREWERY] = distribution_settings[7];
+
+	distribution[GD_IRON].percent_buildings[BLD_ARMORY] = distribution_settings[8];
+	distribution[GD_IRON].percent_buildings[BLD_METALWORKS] = distribution_settings[9];
+
+	distribution[GD_COAL].percent_buildings[BLD_ARMORY] = distribution_settings[10];
+	distribution[GD_COAL].percent_buildings[BLD_IRONSMELTER] = distribution_settings[11];
+	distribution[GD_COAL].percent_buildings[BLD_MINT] = distribution_settings[12];
+
+	distribution[GD_BOARDS].percent_buildings[BLD_HEADQUARTERS] = distribution_settings[13];
+	distribution[GD_BOARDS].percent_buildings[BLD_METALWORKS] = distribution_settings[14];
+	distribution[GD_BOARDS].percent_buildings[BLD_SHIPYARD] = distribution_settings[15];
+
+	distribution[GD_WATER].percent_buildings[BLD_MILL] = distribution_settings[16];
+	distribution[GD_WATER].percent_buildings[BLD_BREWERY] = distribution_settings[17];
+	distribution[GD_WATER].percent_buildings[BLD_PIGFARM] = distribution_settings[18];
+	distribution[GD_WATER].percent_buildings[BLD_DONKEYBREEDER] = distribution_settings[19];
+	
+	RecalcDistribution();
+}
+
+/// Setzt neue Baureihenfolge-Einstellungen
+void GameClientPlayer::ChangeBuildOrder(const unsigned char order_type, const unsigned char * const oder_data)
+{
+	// Im Replay visulle Einstellungen auf die wirklichen setzen
+	if(GameClient::inst().IsReplayModeOn())
+	{
+		GameClient::inst().visual_settings.order_type = order_type;
+		memcpy(GameClient::inst().visual_settings.build_order, oder_data, sizeof(this->build_order));
+	}
+
+	this->order_type = order_type;
+	memcpy(this->build_order, oder_data, sizeof(this->build_order));
+	
 }
 
 bool GameClientPlayer::ShouldSendDefender()

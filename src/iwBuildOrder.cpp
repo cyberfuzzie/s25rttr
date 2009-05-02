@@ -1,4 +1,4 @@
-// $Id: iwBuildOrder.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: iwBuildOrder.cpp 4784 2009-05-02 20:43:44Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -98,7 +98,12 @@ void iwBuildOrder::TransmitSettings()
 
 void iwBuildOrder::Msg_Timer(const unsigned int ctrl_id)
 {
-	TransmitSettings();
+	if(GAMECLIENT.IsReplayModeOn())
+		// Im Replay aktualisieren wir die Werte 
+		UpdateSettings();
+	else
+		// Im normalen Spielmodus schicken wir den ganzen Spaß ab
+		TransmitSettings();
 }
 
 
@@ -191,4 +196,11 @@ void iwBuildOrder::Msg_ButtonClick(const unsigned int ctrl_id)
 			settings_changed = true;
 		} break;
 	}
+}
+
+void iwBuildOrder::UpdateSettings()
+{
+	// Liste füllen
+	for(unsigned char i = 0; i < 31; ++i)
+		GetCtrl<ctrlList>(0)->SetString(_(BUILDING_NAMES[GAMECLIENT.visual_settings.build_order[i]]),i);
 }

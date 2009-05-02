@@ -1,4 +1,4 @@
-// $Id: GameClientCommands.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: GameClientCommands.cpp 4784 2009-05-02 20:43:44Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -71,41 +71,12 @@ void GameClient::ExecuteNC(const unsigned short nfc_type,const unsigned char pla
 		} break;
 	case NC_CHANGEDISTRIBUTION:
 		{
-			GameClientPlayer * const p = players[player];
-
-			p->distribution[GD_FISH].percent_buildings[BLD_GRANITEMINE] = static_cast<const unsigned char*>(data)[0];
-			p->distribution[GD_FISH].percent_buildings[BLD_COALMINE] = static_cast<const unsigned char*>(data)[1];
-			p->distribution[GD_FISH].percent_buildings[BLD_IRONMINE] = static_cast<const unsigned char*>(data)[2];
-			p->distribution[GD_FISH].percent_buildings[BLD_GOLDMINE] = static_cast<const unsigned char*>(data)[3];
-
-			p->distribution[GD_GRAIN].percent_buildings[BLD_MILL] = static_cast<const unsigned char*>(data)[4];
-			p->distribution[GD_GRAIN].percent_buildings[BLD_PIGFARM] = static_cast<const unsigned char*>(data)[5];
-			p->distribution[GD_GRAIN].percent_buildings[BLD_DONKEYBREEDER] = static_cast<const unsigned char*>(data)[6];
-			p->distribution[GD_GRAIN].percent_buildings[BLD_BREWERY] = static_cast<const unsigned char*>(data)[7];
-
-			p->distribution[GD_IRON].percent_buildings[BLD_ARMORY] = static_cast<const unsigned char*>(data)[8];
-			p->distribution[GD_IRON].percent_buildings[BLD_METALWORKS] = static_cast<const unsigned char*>(data)[9];
-
-			p->distribution[GD_COAL].percent_buildings[BLD_ARMORY] = static_cast<const unsigned char*>(data)[10];
-			p->distribution[GD_COAL].percent_buildings[BLD_IRONSMELTER] = static_cast<const unsigned char*>(data)[11];
-			p->distribution[GD_COAL].percent_buildings[BLD_MINT] = static_cast<const unsigned char*>(data)[12];
-
-			p->distribution[GD_BOARDS].percent_buildings[BLD_HEADQUARTERS] = static_cast<const unsigned char*>(data)[13];
-			p->distribution[GD_BOARDS].percent_buildings[BLD_METALWORKS] = static_cast<const unsigned char*>(data)[14];
-			p->distribution[GD_BOARDS].percent_buildings[BLD_SHIPYARD] = static_cast<const unsigned char*>(data)[15];
-
-			p->distribution[GD_WATER].percent_buildings[BLD_MILL] = static_cast<const unsigned char*>(data)[16];
-			p->distribution[GD_WATER].percent_buildings[BLD_BREWERY] = static_cast<const unsigned char*>(data)[17];
-			p->distribution[GD_WATER].percent_buildings[BLD_PIGFARM] = static_cast<const unsigned char*>(data)[18];
-			p->distribution[GD_WATER].percent_buildings[BLD_DONKEYBREEDER] = static_cast<const unsigned char*>(data)[19];
-			
-
-			p->RecalcDistribution();
+			GAMECLIENT.GetPlayer(player)->ChangeDistribution(static_cast<const unsigned char*>(data));
 		} break;
 	case NC_CHANGEBUILDORDER:
 		{
-			GAMECLIENT.GetPlayer(player)->order_type = static_cast<const unsigned char*>(data)[0];
-			memcpy(GAMECLIENT.GetPlayer(player)->build_order,&static_cast<const unsigned char*>(data)[1],31);
+			GAMECLIENT.GetPlayer(player)->ChangeBuildOrder(static_cast<const unsigned char*>(data)[0],
+				&static_cast<const unsigned char*>(data)[1]);
 		} break;
 	case NC_SETBUILDINGSITE:
 		{
@@ -125,7 +96,7 @@ void GameClient::ExecuteNC(const unsigned short nfc_type,const unsigned char pla
 		} break;
 	case NC_CHANGETOOLS:
 		{
-			memcpy(GAMECLIENT.GetPlayer(player)->tools_settings,data,12);
+			GAMECLIENT.GetPlayer(player)->ChangeToolsSettings(static_cast<const unsigned char *>(data));
 		} break;
 	case NC_CALLGEOLOGIST:
 		{

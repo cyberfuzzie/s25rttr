@@ -1,4 +1,4 @@
-// $Id: main.h 4653 2009-03-29 10:17:28Z FloSoft $
+// $Id: main.h 4777 2009-05-02 13:07:26Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -32,7 +32,7 @@
 #	define BIG_ENDIAN    4321
 #	define BYTE_ORDER    LITTLE_ENDIAN
 #else
-#	include <endian.h>
+#	include <sys/param.h>
 #endif // !_WIN32
 
 #if BYTE_ORDER != LITTLE_ENDIAN && BYTE_ORDER != BIG_ENDIAN

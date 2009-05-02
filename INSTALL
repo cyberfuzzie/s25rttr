@@ -1,26 +1,31 @@
 -------------------------------------------------------------------------------
-$Id: INSTALL 4735 2009-04-27 14:38:56Z FloSoft $
+$Id: INSTALL 4781 2009-05-02 18:22:51Z Demophobie $
 -------------------------------------------------------------------------------
+
+Conditions:
+
+You have to install at least libsdl1.2-dev and libsdl_mixer1.2-dev to
+be able to build the SDL video and SDL audio driver module. On not 
+debian-based systems this dev-packages will be named different.
 
 Installation:
 
 cd build
 ./cmake.sh $optionen
 make
-make install            bzw ./start.sh
+make install            or rather ./start.sh
 
 
 -------------------------------------------------------------------------------
 
-Optionen:
+Options:
 
---enable-debug           Aktiviert Debug-Build
---prefix                 normalerweise /usr/local, kann aber auch "." sein,
-                         relative Pfade werden akzeptiert
-
--------------------------------------------------------------------------------
-
-./cleanup.sh             entfernt alle durch cmake.sh und make erzeugten daten
+--enable-debug           Enables Debug-Build
+--prefix                 Usually /usr/local, alternativly you can use 
+			 "." - relative paths work
 
 -------------------------------------------------------------------------------
 
+./cleanup.sh             Cleans all files created by cmake.sh and make
+
+-------------------------------------------------------------------------------

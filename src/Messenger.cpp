@@ -1,4 +1,4 @@
-// $Id: Messenger.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: Messenger.cpp 4776 2009-05-02 11:57:52Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -87,9 +87,44 @@ void Messenger::Draw()
 	}
 }
 
+/// colored author string for terminal output
+std::string Messenger::TermColorString(const std::string& text, const unsigned color_text)
+{
+	std::string tmp;
+	#ifndef _WIN32
+		// A switch statement doesn't work here because we compare against the array COLORS[] (although it's constant, it can't be dereferenced at compile time)
+		if (color_text == COLOR_BLUE)
+		  tmp += "\033[40m\033[1;34m";
+		else if (color_text == COLOR_RED)
+		  tmp += "\033[40m\033[1;31m";
+		else if (color_text == COLOR_YELLOW)
+		  tmp += "\033[40m\033[1;33m";
+		else if (color_text == COLOR_GREEN)
+		  tmp += "\033[40m\033[1;32m";
+		else if (color_text == COLOR_MAGENTA)
+		  tmp += "\033[40m\033[1;35m";
+		else if (color_text == COLOR_CYAN)
+		  tmp += "\033[40m\033[1;36m";
+		else if (color_text == COLOR_BLACK)
+		  tmp += "\033[47m\033[1;30m";
+		else if (color_text == COLOR_WHITE)
+		  tmp += "\033[40m\033[1;37m";
+		else if (color_text == COLOR_ORANGE)
+		  tmp += "\033[43m\033[1;30m";
+		else if (color_text == COLOR_BROWN)
+		  tmp += "\033[40m\033[33m";
+		else tmp += "\033[0m";
+	#endif 
+	tmp += text; 
+	#ifndef _WIN32
+		tmp += "\033[0m";
+	#endif
+	return tmp;
+}
+
 void Messenger::AddMessage(const std::string& author, const unsigned color_author, const ChatDestination cd, const std::string& msg,const unsigned color_msg)
 {
-	LOG.lprintf("%s: %s\n", author.c_str(), msg.c_str());
+	LOG.lprintf("%s: %s\n", TermColorString(author,color_author).c_str(), msg.c_str());
 
 	glArchivItem_Font::WrapInfo wi;
 

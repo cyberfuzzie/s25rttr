@@ -1,4 +1,4 @@
-// $Id: Messenger.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: Messenger.h 4776 2009-05-02 11:57:52Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -38,6 +38,9 @@ class Messenger
 		unsigned short width;
 	};
 	list<Msg> messages;
+
+private:
+	std::string TermColorString(const std::string& text, const unsigned color_text);
 
 public:
 

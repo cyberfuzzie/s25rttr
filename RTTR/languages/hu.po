@@ -3,17 +3,19 @@ msgstr ""
 "Project-Id-Version: Siedler II.5 RttR\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-04-26 12:13+0100\n"
-"PO-Revision-Date: 2009-01-10 15:00+0100\n"
-"Last-Translator: Patrick Haak <demophobie@siedler25.org>\n"
+"PO-Revision-Date: 2009-05-02 08:37+0000\n"
+"Last-Translator: Demophobie <bugs@siedler25.org>\n"
 "Language-Team: Siedler II.5 RttR <sf-team@siedler25.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Hungarian\n"
+"X-Launchpad-Export-Date: 2009-05-02 09:12+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: Hungary\n"
+"X-Poedit-Language: Hungarian\n"
 "X-Poedit-SourceCharset: iso-8859-15\n"
-"X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: /storage/RTTR/svn/trunk/src\n"
+"X-Poedit-Basepath: .\n"
 
 #: src/GameClient.cpp:740
 msgid " (AI)"
@@ -41,7 +43,7 @@ msgstr "%u/%u"
 
 #: src/iwDirectIPCreate.cpp:75
 msgid "'s Game"
-msgstr " Játéka"
+msgstr "Játéka"
 
 #: src/GameWorldViewer.cpp:222
 #, c-format
@@ -468,7 +470,7 @@ msgstr "Beállítások kijelzése"
 
 #: src/iwDistribution.cpp:45 src/iwMainMenu.cpp:56
 msgid "Distribution of goods"
-msgstr "Az árucikkek elosztása  "
+msgstr "Az árucikkek elosztása"
 
 #: src/dskCredits.cpp:103
 msgid "Donators"
@@ -655,7 +657,7 @@ msgstr "Játék Neve:"
 
 #: src/GameConsts.h:312
 msgid "General"
-msgstr "Tábornok  "
+msgstr "Tábornok"
 
 #: src/iwMainMenu.cpp:63
 msgid "General statistics"
@@ -774,7 +776,7 @@ msgstr "Befelyezetlen levél érkezett!"
 
 #: src/iwMilitary.cpp:52
 msgid "Interior"
-msgstr "Belsö "
+msgstr "Belsö"
 
 #: src/dskMultiPlayer.cpp:65
 msgid "Internet Lobby"
@@ -841,9 +843,8 @@ msgid "Keyboard layout"
 msgstr "Billentyüzetkiosztás"
 
 #: src/dskOptions.cpp:105
-#, fuzzy
 msgid "Keyboard layout:"
-msgstr "Billentyüzetkiosztás"
+msgstr "Billentyüzetkiosztás:"
 
 #: src/dskOptions.cpp:91
 msgid "Language:"
@@ -934,7 +935,7 @@ msgstr "Térkép betöltve és kiszögelve a falra..."
 
 #: src/dskHostGame.cpp:149 src/dskSelectMap.cpp:144
 msgid "Map: "
-msgstr "Térkép:"
+msgstr "Térkép: "
 
 #: src/GameConsts.h:151
 msgid "Meat"
@@ -1119,9 +1120,8 @@ msgid "Order of building site"
 msgstr "Epités alatt"
 
 #: src/dskSelectMap.cpp:139
-#, fuzzy
 msgid "Other"
-msgstr "Hentes"
+msgstr "Egyéb"
 
 #: src/dskCredits.cpp:82
 msgid "Other Support"
@@ -1200,7 +1200,7 @@ msgstr "'%s' elhagyta a játékot!"
 #: src/dskGameInterface.cpp:895
 #, c-format
 msgid "Player '%s' switched to player '%s'"
-msgstr " '%s' átváltott '%s'"
+msgstr "'%s' átváltott '%s'"
 
 #: src/dskGameInterface.cpp:913
 #, c-format
@@ -1394,7 +1394,7 @@ msgstr "Kiadott parancsok sorrendja"
 
 #: src/GameConsts.h:310
 msgid "Sergeant"
-msgstr "Örmester "
+msgstr "Örmester"
 
 #: src/iwBuildOrder.cpp:44
 msgid "Series sequence"
@@ -1560,7 +1560,7 @@ msgstr "A catapultok az ellenséges katonai épületek ellen erösek."
 
 #: src/dskGameInterface.cpp:806
 msgid "The Game is not in sync. Checksums of some players don't match."
-msgstr "A Játék nincs szinkronban. A játékosok ellenörzöszámai nem egyeznek. "
+msgstr "A Játék nincs szinkronban. A játékosok ellenörzöszámai nem egyeznek."
 
 #: src/dskCredits.cpp:59
 msgid "The Settlers II.5 RTTR"

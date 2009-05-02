@@ -3,19 +3,21 @@ msgstr ""
 "Project-Id-Version: Siedler II.5 RttR\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-04-26 12:13+0100\n"
-"PO-Revision-Date: 2009-01-25 15:39+0100\n"
-"Last-Translator: Patrick Haak <bugs@siedler25.de>\n"
+"PO-Revision-Date: 2009-05-02 08:37+0000\n"
+"Last-Translator: Demophobie <bugs@siedler25.org>\n"
 "Language-Team: Siedler II.5 RttR <sf-team@siedler25.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Russian\n"
+"X-Launchpad-Export-Date: 2009-05-02 09:12+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: RUSSIAN FEDERATION\n"
+"X-Poedit-Language: Russian\n"
 "X-Poedit-SourceCharset: iso-8859-15\n"
 
 #: src/GameClient.cpp:740
 msgid " (AI)"
-msgstr "(ИИ)"
+msgstr " (ИИ)"
 
 #: src/dskHostGame.cpp:241 src/dskHostGame.cpp:268
 #, c-format
@@ -39,7 +41,7 @@ msgstr "%u/%u"
 
 #: src/iwDirectIPCreate.cpp:75
 msgid "'s Game"
-msgstr " Игра"
+msgstr "Игра"
 
 #: src/GameWorldViewer.cpp:222
 #, c-format
@@ -842,9 +844,8 @@ msgid "Keyboard layout"
 msgstr "Горячие клавиши"
 
 #: src/dskOptions.cpp:105
-#, fuzzy
 msgid "Keyboard layout:"
-msgstr "Горячие клавиши"
+msgstr "Горячие клавиши:"
 
 #: src/dskOptions.cpp:91
 msgid "Language:"
@@ -935,7 +936,7 @@ msgstr "Карта загружена и приколота к стене..."
 
 #: src/dskHostGame.cpp:149 src/dskSelectMap.cpp:144
 msgid "Map: "
-msgstr "Карта:"
+msgstr "Карта: "
 
 #: src/GameConsts.h:151
 msgid "Meat"
@@ -1120,9 +1121,8 @@ msgid "Order of building site"
 msgstr "Order of building site"
 
 #: src/dskSelectMap.cpp:139
-#, fuzzy
 msgid "Other"
-msgstr "Мясник"
+msgstr ""
 
 #: src/dskCredits.cpp:82
 msgid "Other Support"

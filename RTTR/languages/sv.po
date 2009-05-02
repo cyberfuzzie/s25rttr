@@ -3,17 +3,19 @@ msgstr ""
 "Project-Id-Version: Siedler II.5 RttR\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-04-26 12:13+0100\n"
-"PO-Revision-Date: 2009-01-04 18:26+0100\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2009-05-02 08:41+0000\n"
+"Last-Translator: Demophobie <bugs@siedler25.org>\n"
 "Language-Team: Siedler II.5 RttR <sf-team@siedler25.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: German\n"
+"X-Launchpad-Export-Date: 2009-05-02 09:12+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: GERMANY\n"
+"X-Poedit-Language: German\n"
 "X-Poedit-SourceCharset: iso-8859-15\n"
-"X-Poedit-Basepath: /storage/RTTR/svn/trunk/src\n"
 "X-Poedit-SearchPath-0: /storage/RTTR/svn/trunk/src\n"
+"X-Poedit-Basepath: /storage/RTTR/svn/trunk/src\n"
 
 #: src/GameClient.cpp:740
 msgid " (AI)"
@@ -118,9 +120,8 @@ msgstr ""
 "skog på."
 
 #: src/iwMusicPlayer.cpp:45
-#, fuzzy
 msgid "Abort"
-msgstr "Om Settlers RTTR"
+msgstr ""
 
 #: src/iwAction.cpp:67
 msgid "Activity window"
@@ -135,9 +136,8 @@ msgid "Add Server"
 msgstr "Starta server"
 
 #: src/iwMusicPlayer.cpp:82 src/iwMusicPlayer.cpp:199
-#, fuzzy
 msgid "Add track"
-msgstr "Angrepp!"
+msgstr ""
 
 #: src/dskHostGame.cpp:247 src/dskHostGame.cpp:256 src/dskHostGame.cpp:568
 msgid "Africans"
@@ -490,9 +490,8 @@ msgid "Down"
 msgstr "Ner"
 
 #: src/iwMusicPlayer.cpp:85
-#, fuzzy
 msgid "Downwards"
-msgstr "Givare"
+msgstr ""
 
 #: src/dskOptions.cpp:172
 msgid "Effects"
@@ -530,7 +529,7 @@ msgstr "Fel vid öppning av filen!"
 
 #: src/iwPlayReplay.cpp:92 src/iwPlayReplay.cpp:102
 msgid "Error while playing replay!"
-msgstr "Fel vid "
+msgstr "Fel vid"
 
 #: src/iwPlayReplay.cpp:95
 msgid "Error: Replay is too old!"
@@ -847,9 +846,8 @@ msgid "Keyboard layout"
 msgstr "Tangentbordslayout"
 
 #: src/dskOptions.cpp:105
-#, fuzzy
 msgid "Keyboard layout:"
-msgstr "Tangentbordslayout"
+msgstr "Tangentbordslayout:"
 
 #: src/dskOptions.cpp:91
 msgid "Language:"
@@ -874,14 +872,12 @@ msgid "Less often"
 msgstr "mindre ofta"
 
 #: src/iwMusicPlayer.cpp:87
-#, fuzzy
 msgid "Less repeats"
-msgstr "Färre angripare"
+msgstr ""
 
 #: src/iwMusicPlayer.cpp:79
-#, fuzzy
 msgid "Load"
-msgstr "Ladda spel"
+msgstr ""
 
 #: src/iwOptionsWindow.cpp:76
 msgid "Load 'ReadMe' file"
@@ -942,7 +938,7 @@ msgstr "Kartan laddad och upprollad..."
 
 #: src/dskHostGame.cpp:149 src/dskSelectMap.cpp:144
 msgid "Map: "
-msgstr "Karta:"
+msgstr "Karta: "
 
 #: src/GameConsts.h:151
 msgid "Meat"
@@ -1015,9 +1011,8 @@ msgid "More recruits"
 msgstr "Fler rekryter"
 
 #: src/iwMusicPlayer.cpp:88
-#, fuzzy
 msgid "More repeats"
-msgstr "Fler rekryter"
+msgstr ""
 
 #: src/dskMainMenu.cpp:74
 msgid "Multiplayer"
@@ -1028,9 +1023,8 @@ msgid "Music"
 msgstr "Musik:"
 
 #: src/dskOptions.cpp:181
-#, fuzzy
 msgid "Music player"
-msgstr "Flera spelare"
+msgstr ""
 
 #: src/dskLobby.cpp:78 src/dskSelectMap.cpp:113
 msgid "Name"
@@ -1129,9 +1123,8 @@ msgid "Order of building site"
 msgstr "Uppdrag för byggning"
 
 #: src/dskSelectMap.cpp:139
-#, fuzzy
 msgid "Other"
-msgstr "Slaktare"
+msgstr ""
 
 #: src/dskCredits.cpp:82
 msgid "Other Support"
@@ -1320,9 +1313,8 @@ msgid "Registration successful!"
 msgstr "Registrering lyckades!"
 
 #: src/iwMusicPlayer.cpp:77
-#, fuzzy
 msgid "Remove"
-msgstr "Läs mig!"
+msgstr ""
 
 #: src/iwMusicPlayer.cpp:83
 msgid "Remove track"
@@ -1361,9 +1353,8 @@ msgid "SYSTEM"
 msgstr "SYSTEM"
 
 #: src/iwMusicPlayer.cpp:78
-#, fuzzy
 msgid "Save"
-msgstr "Autosparning"
+msgstr ""
 
 #: src/iwLobbyConnect.cpp:68
 msgid "Save Password?"
@@ -1799,9 +1790,8 @@ msgid "Up"
 msgstr "Upp"
 
 #: src/iwMusicPlayer.cpp:84
-#, fuzzy
 msgid "Upwards"
-msgstr "Brädor"
+msgstr ""
 
 #: src/iwLobbyConnect.cpp:52
 msgid "Username:"

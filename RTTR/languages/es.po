@@ -3,17 +3,19 @@ msgstr ""
 "Project-Id-Version: Siedler II.5 RttR\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-04-26 12:13+0100\n"
-"PO-Revision-Date: 2009-01-04 18:25+0100\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2009-05-02 08:37+0000\n"
+"Last-Translator: Demophobie <bugs@siedler25.org>\n"
 "Language-Team: Siedler II.5 RttR <sf-team@siedler25.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Spanish\n"
+"X-Launchpad-Export-Date: 2009-05-02 09:12+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: SPAIN\n"
+"X-Poedit-Language: Spanish\n"
 "X-Poedit-SourceCharset: iso-8859-15\n"
-"X-Poedit-Basepath: /storage/RTTR/svn/trunk/src\n"
 "X-Poedit-SearchPath-0: /storage/RTTR/svn/trunk/src\n"
+"X-Poedit-Basepath: /storage/RTTR/svn/trunk/src\n"
 
 #: src/GameClient.cpp:740
 msgid " (AI)"
@@ -41,7 +43,7 @@ msgstr "%u/%u"
 
 #: src/iwDirectIPCreate.cpp:75
 msgid "'s Game"
-msgstr " - Juego"
+msgstr "- Juego"
 
 #: src/GameWorldViewer.cpp:222
 #, c-format
@@ -119,9 +121,8 @@ msgstr ""
 "de reforestar el bosque."
 
 #: src/iwMusicPlayer.cpp:45
-#, fuzzy
 msgid "Abort"
-msgstr "Acerca de The Settlers"
+msgstr ""
 
 #: src/iwAction.cpp:67
 msgid "Activity window"
@@ -136,9 +137,8 @@ msgid "Add Server"
 msgstr "Agregar Servidor"
 
 #: src/iwMusicPlayer.cpp:82 src/iwMusicPlayer.cpp:199
-#, fuzzy
 msgid "Add track"
-msgstr "Atacar!"
+msgstr ""
 
 #: src/dskHostGame.cpp:247 src/dskHostGame.cpp:256 src/dskHostGame.cpp:568
 msgid "Africans"
@@ -494,9 +494,8 @@ msgid "Down"
 msgstr "Abajo"
 
 #: src/iwMusicPlayer.cpp:85
-#, fuzzy
 msgid "Downwards"
-msgstr "Donadores"
+msgstr ""
 
 #: src/dskOptions.cpp:172
 msgid "Effects"
@@ -709,7 +708,7 @@ msgid ""
 "be processed by a butcher."
 msgstr ""
 "Granos y agua son necesarios para criar puercos. La carne obtenida puede "
-"entonces ser procesada por un carnicero. "
+"entonces ser procesada por un carnicero."
 
 #: src/iwDistribution.cpp:60
 msgid "Granite mine"
@@ -855,9 +854,8 @@ msgid "Keyboard layout"
 msgstr "Configuración del teclado"
 
 #: src/dskOptions.cpp:105
-#, fuzzy
 msgid "Keyboard layout:"
-msgstr "Configuración del teclado"
+msgstr "Configuración del teclado:"
 
 #: src/dskOptions.cpp:91
 msgid "Language:"
@@ -882,14 +880,12 @@ msgid "Less often"
 msgstr "Menos frecuente"
 
 #: src/iwMusicPlayer.cpp:87
-#, fuzzy
 msgid "Less repeats"
-msgstr "Menos atacantes"
+msgstr ""
 
 #: src/iwMusicPlayer.cpp:79
-#, fuzzy
 msgid "Load"
-msgstr "Cargar juego"
+msgstr ""
 
 #: src/iwOptionsWindow.cpp:76
 msgid "Load 'ReadMe' file"
@@ -950,7 +946,7 @@ msgstr "Mapa cargado y sujetado a la pared..."
 
 #: src/dskHostGame.cpp:149 src/dskSelectMap.cpp:144
 msgid "Map: "
-msgstr "Mapa:"
+msgstr "Mapa: "
 
 #: src/GameConsts.h:151
 msgid "Meat"
@@ -1024,9 +1020,8 @@ msgid "More recruits"
 msgstr "Más reclutas"
 
 #: src/iwMusicPlayer.cpp:88
-#, fuzzy
 msgid "More repeats"
-msgstr "Más reclutas"
+msgstr ""
 
 #: src/dskMainMenu.cpp:74
 msgid "Multiplayer"
@@ -1037,9 +1032,8 @@ msgid "Music"
 msgstr "Música"
 
 #: src/dskOptions.cpp:181
-#, fuzzy
 msgid "Music player"
-msgstr "Multijugador"
+msgstr ""
 
 #: src/dskLobby.cpp:78 src/dskSelectMap.cpp:113
 msgid "Name"
@@ -1138,9 +1132,8 @@ msgid "Order of building site"
 msgstr "Petición de la obra"
 
 #: src/dskSelectMap.cpp:139
-#, fuzzy
 msgid "Other"
-msgstr "Carnicero"
+msgstr ""
 
 #: src/dskCredits.cpp:82
 msgid "Other Support"
@@ -1330,9 +1323,8 @@ msgid "Registration successful!"
 msgstr ""
 
 #: src/iwMusicPlayer.cpp:77
-#, fuzzy
 msgid "Remove"
-msgstr "Readme!"
+msgstr ""
 
 #: src/iwMusicPlayer.cpp:83
 msgid "Remove track"
@@ -1371,9 +1363,8 @@ msgid "SYSTEM"
 msgstr "SYSTEM"
 
 #: src/iwMusicPlayer.cpp:78
-#, fuzzy
 msgid "Save"
-msgstr "Auto-Guardar"
+msgstr ""
 
 #: src/iwLobbyConnect.cpp:68
 msgid "Save Password?"
@@ -1660,7 +1651,7 @@ msgstr ""
 "fortaleza asegura que otros edificios y mercancías valiosos sean protegidos. "
 "Utilizando el botón de moneda de oro se puede detener la entrega de monedas "
 "de oro a los soldados situados aquí. Sin embargo, sin monedas de oro los "
-"soldados no podrán entrenar ni mejorar sus habilidades. "
+"soldados no podrán entrenar ni mejorar sus habilidades."
 
 #: src/BuildingConsts.h:485
 msgid ""
@@ -1819,9 +1810,8 @@ msgid "Up"
 msgstr "Arriba"
 
 #: src/iwMusicPlayer.cpp:84
-#, fuzzy
 msgid "Upwards"
-msgstr "Tableros"
+msgstr ""
 
 #: src/iwLobbyConnect.cpp:52
 msgid "Username:"
@@ -1909,7 +1899,7 @@ msgstr "Modo de pantalla"
 
 #: src/dskSelectMap.cpp:408
 msgid "Winter world"
-msgstr "Mundo "
+msgstr "Mundo"
 
 #: src/BuildingConsts.h:363
 msgid ""

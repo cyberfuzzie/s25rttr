@@ -1,17 +1,21 @@
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Siedler II.5 RttR\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-04-26 12:13+0100\n"
-"PO-Revision-Date: \n"
-"Last-Translator: FloSoft <sf-team@siedler25.org>\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Demophobie <bugs@siedler25.org>\n"
 "Language-Team: Siedler II.5 RttR <sf-team@siedler25.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-SourceCharset: iso-8859-15\n"
-"X-Poedit-Basepath: F:\\programmierung\\Projekte\\siedler15\\s25client\\trunk\n"
+"X-Launchpad-Export-Date: 2009-05-02 09:12+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-SearchPath-0: src\n"
+"X-Poedit-SourceCharset: iso-8859-15\n"
+"X-Poedit-Basepath: F:\\programmierung\\Projekte\\siedler15\\s25client\\"
+"trunk\n"
 
 #: src/ctrlProgress.cpp:61
 msgid "Less"
@@ -113,12 +117,15 @@ msgstr ""
 
 #: src/dskGameInterface.cpp:185
 #, c-format
-msgid "(Replay-Mode) Current GF: %u (End at: %u) / GF length: %u ms / NWF length: %u gf (%u ms)"
+msgid ""
+"(Replay-Mode) Current GF: %u (End at: %u) / GF length: %u ms / NWF length: "
+"%u gf (%u ms)"
 msgstr ""
 
 #: src/dskGameInterface.cpp:187
 #, c-format
-msgid "Current GF: %u / GF length: %u ms / NWF length: %u gf (%u ms) /  Ping: %u ms"
+msgid ""
+"Current GF: %u / GF length: %u ms / NWF length: %u gf (%u ms) /  Ping: %u ms"
 msgstr ""
 
 #: src/dskGameInterface.cpp:473
@@ -406,7 +413,9 @@ msgid "-"
 msgstr ""
 
 #: src/dskHostGame.cpp:462
-msgid "Game can only be started as soon as everybody has a unique color,everyone is ready and all free slots are closed."
+msgid ""
+"Game can only be started as soon as everybody has a unique color,everyone is "
+"ready and all free slots are closed."
 msgstr ""
 
 #: src/dskHostGame.cpp:568
@@ -668,7 +677,9 @@ msgid "Not available"
 msgstr ""
 
 #: src/dskSinglePlayer.cpp:97
-msgid "Singleplayer mode and AI are not yet implemented. Please use the Multiplayer mode and 'Direct IP' to create a Singleplayer game."
+msgid ""
+"Singleplayer mode and AI are not yet implemented. Please use the Multiplayer "
+"mode and 'Direct IP' to create a Singleplayer game."
 msgstr ""
 
 #: src/GameClient.cpp:738
@@ -686,7 +697,8 @@ msgstr ""
 
 #: src/GameClientGF_Replay.cpp:78
 #, c-format
-msgid "Warning: The played replay is not in sync with the original match. (GF: %u)"
+msgid ""
+"Warning: The played replay is not in sync with the original match. (GF: %u)"
 msgstr ""
 
 #: src/GameClientGF_Replay.cpp:120
@@ -1256,7 +1268,8 @@ msgid "Demolition ist not allowed because the building is under attack!"
 msgstr ""
 
 #: src/iwMilitaryBuilding.cpp:172
-msgid "Demolition ist not allowed because the building is located in border area!"
+msgid ""
+"Demolition ist not allowed because the building is located in border area!"
 msgstr ""
 
 #: src/iwMilitaryBuilding.cpp:175
@@ -1598,47 +1611,77 @@ msgid "An error occured while saving which was suppressed!"
 msgstr ""
 
 #: src/BuildingConsts.h:255
-msgid "The barracks is a very small hut which can be used by your soldiers as quarters. Using the gold coin button you can stop the delivery of gold coins to the soldiers stationed here. However, without gold coins the soldiers here can not train and improve their skills."
+msgid ""
+"The barracks is a very small hut which can be used by your soldiers as "
+"quarters. Using the gold coin button you can stop the delivery of gold coins "
+"to the soldiers stationed here. However, without gold coins the soldiers "
+"here can not train and improve their skills."
 msgstr ""
 
 #: src/BuildingConsts.h:267
-msgid "The guardhouse is a comfortable place for the military which is also protected by solid stone walls. Using the gold coin button you can stop the delivery of gold coins to the soldiers stationed here. However, without gold coins the soldiers here can not train and improve their skills."
+msgid ""
+"The guardhouse is a comfortable place for the military which is also "
+"protected by solid stone walls. Using the gold coin button you can stop the "
+"delivery of gold coins to the soldiers stationed here. However, without gold "
+"coins the soldiers here can not train and improve their skills."
 msgstr ""
 
 #: src/BuildingConsts.h:283
-msgid "The watchtower with its large amount of space is best suited for stationing a large number of your troops. Using the gold coin button you can stop the delivery of gold coins to the soldiers stationed here. However, without gold coins the soldiers here can not train and improve their skills."
+msgid ""
+"The watchtower with its large amount of space is best suited for stationing "
+"a large number of your troops. Using the gold coin button you can stop the "
+"delivery of gold coins to the soldiers stationed here. However, without gold "
+"coins the soldiers here can not train and improve their skills."
 msgstr ""
 
 #: src/BuildingConsts.h:299
-msgid "The defensive capabilities and size of the fortress are unsurpassed. This stronghold ensures that other valuable buildings and commodities are protected. Using the gold coin button you can stop the delivery of gold coins to the soldiers stationed here. However, without gold coins the soldiers here can not train and improve their skills."
+msgid ""
+"The defensive capabilities and size of the fortress are unsurpassed. This "
+"stronghold ensures that other valuable buildings and commodities are "
+"protected. Using the gold coin button you can stop the delivery of gold "
+"coins to the soldiers stationed here. However, without gold coins the "
+"soldiers here can not train and improve their skills."
 msgstr ""
 
 #: src/BuildingConsts.h:326
-msgid "From the lookout tower you can see far into previously unexplored lands."
+msgid ""
+"From the lookout tower you can see far into previously unexplored lands."
 msgstr ""
 
 #: src/BuildingConsts.h:335
-msgid "Thanks to its immense strength, the catapults represents an effective weapon against enemy military buildings."
+msgid ""
+"Thanks to its immense strength, the catapults represents an effective weapon "
+"against enemy military buildings."
 msgstr ""
 
 #: src/BuildingConsts.h:342
-msgid "A woodcutter provides the sawmill with logs. A forester is able to replant the depleted forest."
+msgid ""
+"A woodcutter provides the sawmill with logs. A forester is able to replant "
+"the depleted forest."
 msgstr ""
 
 #: src/BuildingConsts.h:349
-msgid "The fish man is responsible for finding water rich in fish. His fish feed a great many miners."
+msgid ""
+"The fish man is responsible for finding water rich in fish. His fish feed a "
+"great many miners."
 msgstr ""
 
 #: src/BuildingConsts.h:355
-msgid "The stonemason works the stone near his quarry into bricks. These are needed mainly for building houses and as ammunition for catapults."
+msgid ""
+"The stonemason works the stone near his quarry into bricks. These are needed "
+"mainly for building houses and as ammunition for catapults."
 msgstr ""
 
 #: src/BuildingConsts.h:363
-msgid "Within his area, the forester ensures the survival of the forest. He plants all types of trees."
+msgid ""
+"Within his area, the forester ensures the survival of the forest. He plants "
+"all types of trees."
 msgstr ""
 
 #: src/BuildingConsts.h:370
-msgid "The butcher processes the livestock delivered into nutritious ham on which you miners are fed."
+msgid ""
+"The butcher processes the livestock delivered into nutritious ham on which "
+"you miners are fed."
 msgstr ""
 
 #: src/BuildingConsts.h:377
@@ -1646,59 +1689,91 @@ msgid "Meat the hunter acquires is used to feed the miners."
 msgstr ""
 
 #: src/BuildingConsts.h:382
-msgid "The brewer produces fine beer from grain and water. This drink is needed to fill the soldiers with courage."
+msgid ""
+"The brewer produces fine beer from grain and water. This drink is needed to "
+"fill the soldiers with courage."
 msgstr ""
 
 #: src/BuildingConsts.h:389
-msgid "The armory produces swords and strong shields. This equipment is vital for your soldiers."
+msgid ""
+"The armory produces swords and strong shields. This equipment is vital for "
+"your soldiers."
 msgstr ""
 
 #: src/BuildingConsts.h:395
-msgid "The countless tools which your workers need are made in the metalworks. This requires boards and iron."
+msgid ""
+"The countless tools which your workers need are made in the metalworks. This "
+"requires boards and iron."
 msgstr ""
 
 #: src/BuildingConsts.h:402
-msgid "Raw iron ore is smelted in the iron smelters with the help of coal and raw iron. The processed iron is then used to making weapons (in the Armory) and tools (in the metalworks)."
+msgid ""
+"Raw iron ore is smelted in the iron smelters with the help of coal and raw "
+"iron. The processed iron is then used to making weapons (in the Armory) and "
+"tools (in the metalworks)."
 msgstr ""
 
 #: src/BuildingConsts.h:414
-msgid "Grain and water are needed for rearing pigs. The meat thus obtained can then be processed by a butcher."
+msgid ""
+"Grain and water are needed for rearing pigs. The meat thus obtained can then "
+"be processed by a butcher."
 msgstr ""
 
 #: src/BuildingConsts.h:421
-msgid "The storehouse can help reduce long transportation journeys and is suited to the temporary storage of merchandise and inhabitants. You can release certain merchandise from the storehouse, as and when required. Alternatively, the storage function can be disabled. To do this, first choose the relevant icon followed by the desired merchandise or job symbol."
+msgid ""
+"The storehouse can help reduce long transportation journeys and is suited to "
+"the temporary storage of merchandise and inhabitants. You can release "
+"certain merchandise from the storehouse, as and when required. "
+"Alternatively, the storage function can be disabled. To do this, first "
+"choose the relevant icon followed by the desired merchandise or job symbol."
 msgstr ""
 
 #: src/BuildingConsts.h:440
-msgid "The grain is ground in the windmill. The flour from the windmill is later used at the bakery to bake bread."
+msgid ""
+"The grain is ground in the windmill. The flour from the windmill is later "
+"used at the bakery to bake bread."
 msgstr ""
 
 #: src/BuildingConsts.h:447
-msgid "The flour produced at the windmill can be combined with water in the bakery to make oven-fresh bread. It's your miners' favorite!"
+msgid ""
+"The flour produced at the windmill can be combined with water in the bakery "
+"to make oven-fresh bread. It's your miners' favorite!"
 msgstr ""
 
 #: src/BuildingConsts.h:455
-msgid "The carpenter turns the woodcutter's logs into made-to-measure planks. There form the basic for building houses and ships."
+msgid ""
+"The carpenter turns the woodcutter's logs into made-to-measure planks. There "
+"form the basic for building houses and ships."
 msgstr ""
 
 #: src/BuildingConsts.h:463
-msgid "The mint is responsible for producing valuable gold coins. These precious objects are produced using coal and gold."
+msgid ""
+"The mint is responsible for producing valuable gold coins. These precious "
+"objects are produced using coal and gold."
 msgstr ""
 
 #: src/BuildingConsts.h:470
-msgid "A well supplies water to the bakery, brewery, donkey breeder and pig farm."
+msgid ""
+"A well supplies water to the bakery, brewery, donkey breeder and pig farm."
 msgstr ""
 
 #: src/BuildingConsts.h:476
-msgid "It is possible to build small rowing boats as well as huge cargo ships in a shipyard. The boards required for this are skillfully worked by shipwrights."
+msgid ""
+"It is possible to build small rowing boats as well as huge cargo ships in a "
+"shipyard. The boards required for this are skillfully worked by shipwrights."
 msgstr ""
 
 #: src/BuildingConsts.h:485
-msgid "The farmer plants and harvests grain in the surrounding fields. A windmill then processes the harvested grain into flour or can be used to feed the pigs."
+msgid ""
+"The farmer plants and harvests grain in the surrounding fields. A windmill "
+"then processes the harvested grain into flour or can be used to feed the "
+"pigs."
 msgstr ""
 
 #: src/BuildingConsts.h:493
-msgid "The pack donkeys bred here are used to transport your merchandise more efficiently. They are reared on water and grain."
+msgid ""
+"The pack donkeys bred here are used to transport your merchandise more "
+"efficiently. They are reared on water and grain."
 msgstr ""
 
 #: src/GameConsts.h:134
@@ -1916,4 +1991,3 @@ msgstr ""
 #: src/GameConsts.h:316
 msgid "Pack donkey"
 msgstr ""
-

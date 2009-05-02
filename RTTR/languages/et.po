@@ -1,25 +1,25 @@
+# Estonian translation for s25rttr
+# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
+# This file is distributed under the same license as the s25rttr package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: Siedler II.5 RttR\n"
+"Project-Id-Version: s25rttr\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-04-26 12:13+0100\n"
-"PO-Revision-Date: 2009-05-02 09:06+0000\n"
+"PO-Revision-Date: 2009-04-29 19:06+0000\n"
 "Last-Translator: Demophobie <bugs@siedler25.org>\n"
-"Language-Team: Siedler II.5 RttR <sf-team@siedler25.org>\n"
+"Language-Team: Estonian <et@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2009-05-02 09:12+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
-"X-Poedit-Country: FRANCE\n"
-"X-Poedit-Language: French\n"
-"X-Poedit-SourceCharset: iso-8859-15\n"
-"X-Poedit-SearchPath-0: /storage/RTTR/svn/trunk/src\n"
-"X-Poedit-Basepath: /storage/RTTR/svn/trunk/src\n"
 
 #: src/GameClient.cpp:740
 msgid " (AI)"
-msgstr ""
+msgstr " (TI)"
 
 #: src/dskHostGame.cpp:241 src/dskHostGame.cpp:268
 #, c-format
@@ -48,15 +48,15 @@ msgstr ""
 #: src/GameWorldViewer.cpp:222
 #, c-format
 msgid "(%d soldiers)"
-msgstr "(%d soldats)"
+msgstr "(%d sõdutit)"
 
 #: src/GameWorldViewer.cpp:220
 msgid "(1 soldier)"
-msgstr "(1 soldat)"
+msgstr "(1 sõdur)"
 
 #: src/GameWorldViewer.cpp:189
 msgid "(House unoccupied)"
-msgstr ""
+msgstr "(Maja on asustamata)"
 
 #: src/dskGameInterface.cpp:185
 #, c-format
@@ -67,23 +67,23 @@ msgstr ""
 
 #: src/GameWorldViewer.cpp:191
 msgid "(stopped)"
-msgstr ""
+msgstr "(seisatud)"
 
 #: src/dskHostGame.cpp:251 src/dskHostGame.cpp:260
 msgid "-"
-msgstr ""
+msgstr "-"
 
 #: src/iwAction.cpp:120
 msgid "-> Build castle"
-msgstr "-> Construire de grands bâtiments"
+msgstr ""
 
 #: src/iwAction.cpp:100 src/iwAction.cpp:114 src/iwAction.cpp:119
 msgid "-> Build house"
-msgstr "-> Construire une maison"
+msgstr "-> Ehita maja"
 
 #: src/iwAction.cpp:109 src/iwAction.cpp:113 src/iwAction.cpp:118
 msgid "-> Build hut"
-msgstr "-> Construire une cabane"
+msgstr "-> Ehita hütt"
 
 #: src/iwAction.cpp:124
 msgid "-> Dig mines"
@@ -97,11 +97,11 @@ msgstr ""
 
 #: src/dskGameInterface.cpp:808
 msgid "A auto-savegame is created..."
-msgstr ""
+msgstr "Automaatse mängusalvestuse tegemine..."
 
 #: src/dskHostGame.cpp:118
 msgid "A lot"
-msgstr ""
+msgstr "Palju"
 
 #: src/BuildingConsts.h:470
 msgid ""
@@ -120,7 +120,7 @@ msgstr ""
 
 #: src/iwAction.cpp:67
 msgid "Activity window"
-msgstr "La fenêtre d'activité"
+msgstr ""
 
 #: src/iwMusicPlayer.cpp:76
 msgid "Add"
@@ -128,7 +128,7 @@ msgstr ""
 
 #: src/dskLobby.cpp:73
 msgid "Add Server"
-msgstr ""
+msgstr "Lisa server"
 
 #: src/iwMusicPlayer.cpp:82 src/iwMusicPlayer.cpp:199
 msgid "Add track"
@@ -136,7 +136,7 @@ msgstr ""
 
 #: src/dskHostGame.cpp:247 src/dskHostGame.cpp:256 src/dskHostGame.cpp:568
 msgid "Africans"
-msgstr ""
+msgstr "Aafriklased"
 
 #: src/iwBuildOrder.cpp:68
 msgid "After the following order"
@@ -164,11 +164,11 @@ msgstr ""
 
 #: src/GameConsts.h:305
 msgid "Armorer"
-msgstr "Forgeron"
+msgstr ""
 
 #: src/iwDistribution.cpp:100 src/iwDistribution.cpp:112
 msgid "Armory"
-msgstr "Forge"
+msgstr ""
 
 #: src/iwAction.cpp:223
 msgid "Attack not possible."
@@ -184,11 +184,11 @@ msgstr ""
 
 #: src/dskSelectMap.cpp:113
 msgid "Author"
-msgstr ""
+msgstr "Autor"
 
 #: src/GameClient.cpp:1602
 msgid "Auto-Save"
-msgstr ""
+msgstr "Automaatne Salvestus"
 
 #: src/iwSave.cpp:203
 msgid "Auto-Save every:"
@@ -196,41 +196,41 @@ msgstr ""
 
 #: src/iwTools.cpp:49
 msgid "Axe"
-msgstr "Hache"
+msgstr ""
 
 #: src/dskAboutRTTR.cpp:55 src/dskCredits.cpp:56 src/dskDirectIP.cpp:63
 #: src/dskIntro.cpp:55 src/dskLobby.cpp:67 src/dskMultiPlayer.cpp:71
 #: src/dskOptions.cpp:67 src/dskSelectMap.cpp:119 src/dskSinglePlayer.cpp:78
 msgid "Back"
-msgstr "Retour"
+msgstr "Tagasi"
 
 #: src/GameConsts.h:296
 msgid "Baker"
-msgstr "Boulanger"
+msgstr "Pagar"
 
 #: src/iwDistribution.cpp:144
 msgid "Bakery"
-msgstr "Fournil"
+msgstr ""
 
 #: src/GameConsts.h:206
 msgid "Barracks"
-msgstr "Baraquemente"
+msgstr ""
 
 #: src/iwTransport.cpp:59
 msgid "Beer"
-msgstr "Bière"
+msgstr ""
 
 #: src/iwDistribution.cpp:125
 msgid "Boards"
-msgstr "Planche"
+msgstr ""
 
 #: src/GameConsts.h:134
 msgid "Boat"
-msgstr "Bateau"
+msgstr ""
 
 #: src/iwTransport.cpp:70
 msgid "Boats"
-msgstr "Bateaux"
+msgstr ""
 
 #: src/iwMilitary.cpp:54
 msgid "Border areas"
@@ -242,24 +242,24 @@ msgstr ""
 
 #: src/iwTools.cpp:59
 msgid "Bow"
-msgstr "Arc"
+msgstr ""
 
 #: src/GameConsts.h:139
 msgid "Bread"
-msgstr "Pain"
+msgstr ""
 
 #: src/GameConsts.h:299
 msgid "Brewer"
-msgstr "Brasseur"
+msgstr ""
 
 #: src/iwDistribution.cpp:92 src/iwDistribution.cpp:148
 msgid "Brewery"
-msgstr "Brasserie"
+msgstr ""
 
 #: src/iwAction.cpp:168 src/iwAction.cpp:175 src/iwAction.cpp:183
 #: src/iwAction.cpp:187
 msgid "Build road"
-msgstr "Bâtir une route"
+msgstr "Ehita tee"
 
 #: src/iwAction.cpp:176
 msgid "Build waterway"
@@ -267,7 +267,7 @@ msgstr ""
 
 #: src/GameConsts.h:306
 msgid "Builder"
-msgstr "Ouvrier du bâtiment"
+msgstr "Ehitaja"
 
 #: src/iwBuildings.cpp:76
 msgid "Buildings"
@@ -275,11 +275,11 @@ msgstr ""
 
 #: src/GameConsts.h:297
 msgid "Butcher"
-msgstr "Boucher"
+msgstr "Lihunik"
 
 #: src/iwAction.cpp:170 src/iwAction.cpp:178
 msgid "Call in geologist"
-msgstr "Envoyer un géologue"
+msgstr ""
 
 #: src/dskSelectMap.cpp:135
 msgid "Campaign"
@@ -291,11 +291,11 @@ msgstr ""
 
 #: src/GameConsts.h:291
 msgid "Carpenter"
-msgstr "Menuisier"
+msgstr ""
 
 #: src/GameConsts.h:221
 msgid "Catapult"
-msgstr "Catapulte"
+msgstr ""
 
 #: src/iwMilitary.cpp:53
 msgid "Center of country"
@@ -315,7 +315,7 @@ msgstr ""
 
 #: src/dskHostGame.cpp:109
 msgid "Classic (Settlers 2)"
-msgstr ""
+msgstr "Klassikaline (Settlers 2)"
 
 #: src/dskHostGame.cpp:62
 msgid "Classification"
@@ -327,40 +327,40 @@ msgstr ""
 
 #: src/iwTools.cpp:57
 msgid "Cleaver"
-msgstr "Hachette"
+msgstr ""
 
 #: src/dskHostGame.cpp:201
 msgid "Closed"
-msgstr ""
+msgstr "Suletud"
 
 #: src/iwDistribution.cpp:109
 msgid "Coal"
-msgstr "Charbon"
+msgstr ""
 
 #: src/iwDistribution.cpp:64
 msgid "Coal mine"
-msgstr "Mine charbon"
+msgstr ""
 
 #: src/iwTransport.cpp:57
 msgid "Coins"
-msgstr "Pièces d'or"
+msgstr ""
 
 #: src/dskHostGame.cpp:66
 msgid "Color"
-msgstr ""
+msgstr "Värv"
 
 #: src/dskOptions.cpp:75
 msgid "Common"
-msgstr ""
+msgstr "Üldine"
 
 #: src/GameClient.cpp:738
 #, c-format
 msgid "Computer %u"
-msgstr ""
+msgstr "Arvuti %u"
 
 #: src/dskLobby.cpp:69
 msgid "Connect"
-msgstr ""
+msgstr "Ühenda"
 
 #: src/iwLobbyConnect.cpp:49
 msgid "Connecting to Lobby"
@@ -382,7 +382,7 @@ msgstr ""
 
 #: src/dskHostGame.cpp:124
 msgid "Conquer 3/4 of map"
-msgstr ""
+msgstr "Valluta 3/4 kaardist"
 
 #: src/iwDistribution.cpp:128
 msgid "Construction"
@@ -390,7 +390,7 @@ msgstr ""
 
 #: src/dskGameInterface.cpp:105
 msgid "Construction aid mode"
-msgstr "L'aide à la construction"
+msgstr "Arvuti assisteeritud ehitamine"
 
 #: src/dskSelectMap.cpp:133
 msgid "Continents"
@@ -402,15 +402,15 @@ msgstr ""
 
 #: src/dskDirectIP.cpp:59
 msgid "Create Game"
-msgstr ""
+msgstr "Loo mäng"
 
 #: src/dskCredits.cpp:62 src/dskMainMenu.cpp:80
 msgid "Credits"
-msgstr "Contributeurs"
+msgstr "Tiitelinfo"
 
 #: src/iwTools.cpp:54
 msgid "Crucible"
-msgstr "Creuset"
+msgstr ""
 
 #: src/dskGameInterface.cpp:187
 #, c-format
@@ -445,7 +445,7 @@ msgstr ""
 
 #: src/dskHostGame.cpp:99
 msgid "Demolition prohibition:"
-msgstr ""
+msgstr "Lammutamise keeld:"
 
 #: src/iwAction.cpp:208 src/iwAction.cpp:210
 msgid "Dig up road"
@@ -469,15 +469,15 @@ msgstr ""
 
 #: src/dskCredits.cpp:103
 msgid "Donators"
-msgstr "Donateurs"
+msgstr "Annetajad"
 
 #: src/GameConsts.h:301
 msgid "Donkey breeder"
-msgstr "Muletier"
+msgstr ""
 
 #: src/iwDistribution.cpp:88 src/iwDistribution.cpp:156
 msgid "Donkey breeding"
-msgstr "Elavage mule"
+msgstr ""
 
 #: src/iwBuildOrder.cpp:59
 msgid "Down"
@@ -489,7 +489,7 @@ msgstr ""
 
 #: src/dskOptions.cpp:172
 msgid "Effects"
-msgstr ""
+msgstr "Efektid"
 
 #: src/iwLobbyConnect.cpp:63
 msgid "Email Address:"
@@ -509,13 +509,13 @@ msgstr ""
 
 #: src/iwAction.cpp:162 src/iwAction.cpp:196 src/iwAction.cpp:202
 msgid "Erect flag"
-msgstr ""
+msgstr "Püstita lipp"
 
 #: src/dskGameLoader.cpp:191 src/dskHostGame.cpp:462 src/dskHostGame.cpp:774
 #: src/dskHostGame.cpp:788 src/dskLobby.cpp:315 src/dskSelectMap.cpp:346
 #: src/dskSelectMap.cpp:360
 msgid "Error"
-msgstr ""
+msgstr "Viga"
 
 #: src/iwPlayReplay.cpp:93
 msgid "Error while opening file!"
@@ -531,27 +531,27 @@ msgstr ""
 
 #: src/dskHostGame.cpp:106
 msgid "Exploration:"
-msgstr ""
+msgstr "Avastamine:"
 
 #: src/dskGameLoader.cpp:143
 msgid "Failed to load map objects."
-msgstr ""
+msgstr "Kaardi objektide laadimine ebaõnnestus."
 
 #: src/dskGameLoader.cpp:155
 msgid "Failed to load terrain data."
-msgstr ""
+msgstr "Maastiku andmete laadimine ebaõnnestus."
 
 #: src/GameConsts.h:242
 msgid "Farm"
-msgstr "Ferme"
+msgstr ""
 
 #: src/GameConsts.h:294
 msgid "Farmer"
-msgstr "Paysan"
+msgstr ""
 
 #: src/dskHostGame.cpp:133
 msgid "Fast"
-msgstr ""
+msgstr "Kiire"
 
 #: src/iwMilitary.cpp:50
 msgid "Fewer defenders"
@@ -571,27 +571,27 @@ msgstr ""
 
 #: src/GameConsts.h:138
 msgid "Fish"
-msgstr "Poisson"
+msgstr ""
 
 #: src/GameConsts.h:289
 msgid "Fisher"
-msgstr "Pêcheur"
+msgstr "Kalur"
 
 #: src/GameConsts.h:223
 msgid "Fishery"
-msgstr "Cabane de pêcheur"
+msgstr ""
 
 #: src/GameConsts.h:137
 msgid "Flour"
-msgstr "Farine"
+msgstr ""
 
 #: src/dskHostGame.cpp:111
 msgid "FoW - all explored"
-msgstr ""
+msgstr "Sõjaudu - Kõik avastatud"
 
 #: src/dskHostGame.cpp:110
 msgid "Fog of War"
-msgstr ""
+msgstr "Sõjaudu"
 
 #: src/iwTransport.cpp:68
 msgid "Food"
@@ -603,11 +603,11 @@ msgstr ""
 
 #: src/GameConsts.h:225
 msgid "Forester"
-msgstr "Maison forestière"
+msgstr ""
 
 #: src/GameConsts.h:214
 msgid "Fortress"
-msgstr "Forteresse"
+msgstr ""
 
 #: src/BuildingConsts.h:326
 msgid ""
@@ -623,6 +623,8 @@ msgid ""
 "Game can only be started as soon as everybody has a unique color,everyone is "
 "ready and all free slots are closed."
 msgstr ""
+"Mängu saab alustada alles siis kui kõigil on valitud unikaalne värv, "
+"mängijad on valmis ja kõik vabad kohad on täidetud."
 
 #: src/dskGameLoader.cpp:147
 msgid "Game crate was picked and spread out..."
@@ -634,15 +636,15 @@ msgstr ""
 
 #: src/dskCredits.cpp:74
 msgid "Game testers"
-msgstr "jeu \ttesteur"
+msgstr "Testijad"
 
 #: src/dskGameInterface.cpp:826
 msgid "Game was paused."
-msgstr ""
+msgstr "Mäng peatati."
 
 #: src/dskGameInterface.cpp:849
 msgid "Game was resumed."
-msgstr ""
+msgstr "Mängu jätkati."
 
 #: src/iwDirectIPCreate.cpp:55
 msgid "Game's Name:"
@@ -650,7 +652,7 @@ msgstr ""
 
 #: src/GameConsts.h:312
 msgid "General"
-msgstr "Général"
+msgstr ""
 
 #: src/iwMainMenu.cpp:63
 msgid "General statistics"
@@ -658,7 +660,7 @@ msgstr ""
 
 #: src/GameConsts.h:313
 msgid "Geologist"
-msgstr "Géologue"
+msgstr "Geoloog"
 
 #: src/iwAction.cpp:259
 msgid "Go to headquarters"
@@ -670,23 +672,23 @@ msgstr ""
 
 #: src/dskHostGame.cpp:121
 msgid "Goals:"
-msgstr ""
+msgstr "Eesmärgid:"
 
 #: src/iwTransport.cpp:61
 msgid "Gold"
-msgstr "Minerai ou"
+msgstr ""
 
 #: src/iwDistribution.cpp:72
 msgid "Gold mine"
-msgstr "Mine d'or"
+msgstr ""
 
 #: src/dskHostGame.cpp:114
 msgid "Goods at start:"
-msgstr ""
+msgstr "Kaupasid alustades:"
 
 #: src/iwDistribution.cpp:77
 msgid "Grain"
-msgstr "Blé"
+msgstr ""
 
 #: src/BuildingConsts.h:414
 msgid ""
@@ -696,11 +698,11 @@ msgstr ""
 
 #: src/iwDistribution.cpp:60
 msgid "Granite mine"
-msgstr "Mine granit"
+msgstr ""
 
 #: src/dskOptions.cpp:77
 msgid "Graphics"
-msgstr ""
+msgstr "Graafika"
 
 #: src/dskOptions.cpp:135
 msgid "Graphics Driver"
@@ -712,15 +714,15 @@ msgstr ""
 
 #: src/GameConsts.h:207
 msgid "Guardhouse"
-msgstr "Salle des gardes"
+msgstr ""
 
 #: src/GameConsts.h:152
 msgid "Ham"
-msgstr "Porcs"
+msgstr ""
 
 #: src/iwTools.cpp:52
 msgid "Hammer"
-msgstr "Marteau"
+msgstr ""
 
 #: src/GameConsts.h:244
 msgid "Harbor building"
@@ -737,7 +739,7 @@ msgstr ""
 
 #: src/GameConsts.h:287
 msgid "Helper"
-msgstr "Assistant"
+msgstr ""
 
 #: src/iwLobbyServerInfo.cpp:79
 msgid "Host:"
@@ -749,11 +751,11 @@ msgstr ""
 
 #: src/GameConsts.h:227
 msgid "Hunter"
-msgstr "Pavillon de chasse"
+msgstr "Jahimees"
 
 #: src/GameConsts.h:293
 msgid "Huntsman"
-msgstr "Chasseur"
+msgstr ""
 
 #: src/dskLobby.cpp:76
 msgid "ID"
@@ -765,7 +767,7 @@ msgstr ""
 
 #: src/dskSelectMap.cpp:340
 msgid "Incomplete message was received!"
-msgstr ""
+msgstr "Poolik sõnum võeti vastu!"
 
 #: src/iwMilitary.cpp:52
 msgid "Interior"
@@ -797,23 +799,23 @@ msgstr ""
 
 #: src/iwDistribution.cpp:97
 msgid "Iron"
-msgstr "Fer"
+msgstr ""
 
 #: src/GameConsts.h:302
 msgid "Iron founder"
-msgstr "Fondeur"
+msgstr ""
 
 #: src/iwDistribution.cpp:68
 msgid "Iron mine"
-msgstr "Mine de fer"
+msgstr ""
 
 #: src/iwTransport.cpp:62
 msgid "Iron ore"
-msgstr "Minerai fer"
+msgstr ""
 
 #: src/iwDistribution.cpp:116
 msgid "Iron smelter"
-msgstr "Fonderie"
+msgstr ""
 
 #: src/BuildingConsts.h:476
 msgid ""
@@ -823,15 +825,15 @@ msgstr ""
 
 #: src/dskHostGame.cpp:568
 msgid "Japaneses"
-msgstr ""
+msgstr "Jaapanlased"
 
 #: src/dskDirectIP.cpp:60
 msgid "Join Game"
-msgstr ""
+msgstr "Ühine mänguga"
 
 #: src/dskGameInterface.cpp:473
 msgid "Keyboard layout"
-msgstr ""
+msgstr "Klaviatuuri paigutus"
 
 #: src/dskOptions.cpp:105
 msgid "Keyboard layout:"
@@ -839,7 +841,7 @@ msgstr ""
 
 #: src/dskOptions.cpp:91
 msgid "Language:"
-msgstr ""
+msgstr "Keel:"
 
 #: src/iwPlayReplay.cpp:63
 msgid "Length"
@@ -847,7 +849,7 @@ msgstr ""
 
 #: src/ctrlProgress.cpp:61
 msgid "Less"
-msgstr "Moins"
+msgstr "Vähem"
 
 #: src/iwAction.cpp:230
 msgid "Less attackers"
@@ -873,7 +875,7 @@ msgstr ""
 
 #: src/dskSinglePlayer.cpp:75
 msgid "Load game"
-msgstr ""
+msgstr "Laadi mäng"
 
 #: src/iwOptionsWindow.cpp:80 src/iwSave.cpp:258
 msgid "Load game!"
@@ -881,15 +883,15 @@ msgstr ""
 
 #: src/dskSelectMap.cpp:121
 msgid "Load game..."
-msgstr ""
+msgstr "Laadi mäng ..."
 
 #: src/dskHostGame.cpp:91
 msgid "Lock teams:"
-msgstr ""
+msgstr "Lukusta meeskonnad:"
 
 #: src/GameConsts.h:219
 msgid "Lookout tower"
-msgstr "Tour de guet"
+msgstr ""
 
 #: src/iwLobbyRanking.cpp:80
 msgid "Lost"
@@ -902,19 +904,19 @@ msgstr ""
 #: src/dskGameInterface.cpp:863 src/dskHostGame.cpp:774
 #: src/dskSelectMap.cpp:343
 msgid "Lost connection to server!"
-msgstr ""
+msgstr "Ühendus serveriga on katkenud!"
 
 #: src/dskHostGame.cpp:116
 msgid "Low"
-msgstr ""
+msgstr "Vähe"
 
 #: src/dskGameInterface.cpp:103
 msgid "Main selection"
-msgstr "Le menu principal"
+msgstr "Põhi valikud"
 
 #: src/dskGameInterface.cpp:101 src/dskLobby.cpp:76
 msgid "Map"
-msgstr "Carte"
+msgstr "Kaart"
 
 #: src/iwLobbyServerInfo.cpp:75
 msgid "Map Name:"
@@ -926,11 +928,11 @@ msgstr ""
 
 #: src/dskHostGame.cpp:149 src/dskSelectMap.cpp:144
 msgid "Map: "
-msgstr ""
+msgstr "Kaart: "
 
 #: src/GameConsts.h:151
 msgid "Meat"
-msgstr "Jambon"
+msgstr ""
 
 #: src/BuildingConsts.h:377
 msgid "Meat the hunter acquires is used to feed the miners."
@@ -942,11 +944,11 @@ msgstr ""
 
 #: src/iwDistribution.cpp:104 src/iwDistribution.cpp:132
 msgid "Metalworker"
-msgstr "Ouvrier"
+msgstr ""
 
 #: src/GameConsts.h:230
 msgid "Metalworks"
-msgstr "Atelier"
+msgstr ""
 
 #: src/iwMainMenu.cpp:73 src/iwMilitary.cpp:44
 msgid "Military"
@@ -954,11 +956,11 @@ msgstr ""
 
 #: src/iwDistribution.cpp:80
 msgid "Mill"
-msgstr "Moulin"
+msgstr ""
 
 #: src/GameConsts.h:295
 msgid "Miller"
-msgstr "Menier"
+msgstr "Veskimees"
 
 #: src/GameConsts.h:298
 msgid "Miner"
@@ -966,11 +968,11 @@ msgstr ""
 
 #: src/iwDistribution.cpp:120
 msgid "Mint"
-msgstr "Hôtel monnaie"
+msgstr ""
 
 #: src/GameConsts.h:303
 msgid "Minter"
-msgstr "Batteur"
+msgstr ""
 
 #: src/dskOptions.cpp:109
 msgid "Mode:"
@@ -978,7 +980,7 @@ msgstr ""
 
 #: src/ctrlProgress.cpp:62
 msgid "More"
-msgstr "Plus"
+msgstr "Rohkem"
 
 #: src/iwAction.cpp:231
 msgid "More attackers"
@@ -1004,27 +1006,27 @@ msgstr ""
 
 #: src/dskMainMenu.cpp:74
 msgid "Multiplayer"
-msgstr ""
+msgstr "mitmemäng"
 
 #: src/dskOptions.cpp:163
 msgid "Music"
-msgstr ""
+msgstr "Muusika"
 
 #: src/dskOptions.cpp:181
 msgid "Music player"
-msgstr ""
+msgstr "Muusika mängija"
 
 #: src/dskLobby.cpp:78 src/dskSelectMap.cpp:113
 msgid "Name"
-msgstr ""
+msgstr "Nimi"
 
 #: src/dskOptions.cpp:87
 msgid "Name in Game:"
-msgstr ""
+msgstr "Nimi mängus:"
 
 #: src/dskHostGame.cpp:103
 msgid "Near frontiers"
-msgstr ""
+msgstr "Piiride lähedal"
 
 #: src/dskMultiPlayer.cpp:67
 msgid "Network/LAN"
@@ -1032,7 +1034,7 @@ msgstr ""
 
 #: src/dskSelectMap.cpp:129
 msgid "New maps"
-msgstr ""
+msgstr "Uued kaardid"
 
 #: src/iwWares.cpp:167
 msgid "Next page"
@@ -1048,11 +1050,11 @@ msgstr ""
 
 #: src/dskHostGame.cpp:123
 msgid "None"
-msgstr ""
+msgstr "Puuduvad"
 
 #: src/dskHostGame.cpp:117 src/dskHostGame.cpp:132
 msgid "Normal"
-msgstr ""
+msgstr "Normaalselt"
 
 #: src/dskSinglePlayer.cpp:97
 msgid "Not available"
@@ -1079,19 +1081,19 @@ msgstr ""
 #: src/dskHostGame.cpp:101 src/dskOptions.cpp:122 src/dskOptions.cpp:132
 #: src/dskOptions.cpp:166 src/dskOptions.cpp:175
 msgid "Off"
-msgstr ""
+msgstr "Väljas"
 
 #: src/dskHostGame.cpp:108
 msgid "Off (all visible)"
-msgstr ""
+msgstr "Väljas (kõik nähtav)"
 
 #: src/GameConsts.h:311
 msgid "Officer"
-msgstr "Officier"
+msgstr ""
 
 #: src/dskSelectMap.cpp:127
 msgid "Old maps"
-msgstr ""
+msgstr "Vanad kaardid"
 
 #: src/dskOptions.cpp:121 src/dskOptions.cpp:131 src/dskOptions.cpp:165
 #: src/dskOptions.cpp:174
@@ -1100,7 +1102,7 @@ msgstr ""
 
 #: src/dskHostGame.cpp:196
 msgid "Open"
-msgstr ""
+msgstr "Vaba"
 
 #: src/dskMainMenu.cpp:76 src/dskOptions.cpp:70
 msgid "Options"
@@ -1116,7 +1118,7 @@ msgstr ""
 
 #: src/dskCredits.cpp:82
 msgid "Other Support"
-msgstr "autre support"
+msgstr "Lisa aitamine"
 
 #: src/iwMinimap.cpp:53
 msgid "Outline map"
@@ -1124,11 +1126,11 @@ msgstr ""
 
 #: src/dskSelectMap.cpp:131
 msgid "Own maps"
-msgstr ""
+msgstr "Enda kaardid"
 
 #: src/GameConsts.h:316
 msgid "Pack donkey"
-msgstr "Mule"
+msgstr ""
 
 #: src/iwDirectIPConnect.cpp:62
 msgid "Password (if needed):"
@@ -1144,19 +1146,19 @@ msgstr ""
 
 #: src/iwTools.cpp:51
 msgid "Pick-axe"
-msgstr "Pioche"
+msgstr ""
 
 #: src/GameConsts.h:300
 msgid "Pig breeder"
-msgstr "Eleveur"
+msgstr ""
 
 #: src/iwDistribution.cpp:84 src/iwDistribution.cpp:152
 msgid "Pig farm"
-msgstr "Porcherie"
+msgstr ""
 
 #: src/dskHostGame.cpp:72 src/dskLobby.cpp:76
 msgid "Ping"
-msgstr ""
+msgstr "Ping"
 
 #: src/GameConsts.h:307
 msgid "Planer"
@@ -1176,17 +1178,17 @@ msgstr ""
 
 #: src/dskLobby.cpp:76 src/dskSelectMap.cpp:113
 msgid "Player"
-msgstr ""
+msgstr "Mängija"
 
 #: src/dskGameInterface.cpp:792
 #, c-format
 msgid "Player '%s' joined the game!"
-msgstr ""
+msgstr "Mängija '%s' liitus mänguga!"
 
 #: src/dskGameInterface.cpp:789
 #, c-format
 msgid "Player '%s' left the game!"
-msgstr ""
+msgstr "Mängija '%s' lahkus mängust!"
 
 #: src/dskGameInterface.cpp:895
 #, c-format
@@ -1200,7 +1202,7 @@ msgstr ""
 
 #: src/dskHostGame.cpp:60
 msgid "Player Name"
-msgstr ""
+msgstr "Mängija nimi"
 
 #: src/iwMusicPlayer.cpp:70
 msgid "Playlist:"
@@ -1216,23 +1218,23 @@ msgstr ""
 
 #: src/dskSelectMap.cpp:91 src/dskSelectMap.cpp:93
 msgid "Please wait..."
-msgstr "Attendez s'il vous plait..."
+msgstr "Palun oota..."
 
 #: src/dskLobby.cpp:78
 msgid "Points"
-msgstr ""
+msgstr "Punkte"
 
 #: src/dskGameInterface.cpp:107
 msgid "Post office"
-msgstr "Le courrier"
+msgstr "Postimaja"
 
 #: src/GameConsts.h:308
 msgid "Private"
-msgstr "Soldat"
+msgstr ""
 
 #: src/GameConsts.h:309
 msgid "Private first class"
-msgstr "Soldat de première classe"
+msgstr ""
 
 #: src/iwBuildingProductivities.cpp:82
 msgid "Productivity"
@@ -1244,19 +1246,19 @@ msgstr ""
 
 #: src/dskCredits.cpp:67
 msgid "Programming"
-msgstr "Programmation"
+msgstr "Programmeerimine"
 
 #: src/iwAction.cpp:169 src/iwAction.cpp:177
 msgid "Pull down flag"
-msgstr "Enlever le drapeau"
+msgstr ""
 
 #: src/GameConsts.h:224
 msgid "Quarry"
-msgstr "Carrière"
+msgstr ""
 
 #: src/dskMainMenu.cpp:82
 msgid "Quit program"
-msgstr ""
+msgstr "Välju programmist"
 
 #: src/dskSelectMap.cpp:137
 msgid "RTTR"
@@ -1272,7 +1274,7 @@ msgstr ""
 
 #: src/GameConsts.h:290
 msgid "Ranger"
-msgstr "Sylviculteur"
+msgstr ""
 
 #: src/BuildingConsts.h:402
 msgid ""
@@ -1287,7 +1289,7 @@ msgstr ""
 
 #: src/dskHostGame.cpp:70
 msgid "Ready?"
-msgstr ""
+msgstr "Valmis?"
 
 #: src/iwLobbyConnect.cpp:79
 msgid "Register"
@@ -1315,27 +1317,27 @@ msgstr ""
 
 #: src/dskSinglePlayer.cpp:66
 msgid "Resume last game"
-msgstr ""
+msgstr "Taasta eelmine mäng"
 
 #: src/dskHostGame.cpp:88
 msgid "Return"
-msgstr ""
+msgstr "Tagasi"
 
 #: src/iwTools.cpp:55
 msgid "Rod and line"
-msgstr "Canne"
+msgstr ""
 
 #: src/iwTools.cpp:58
 msgid "Rolling pin"
-msgstr "Rouleau"
+msgstr ""
 
 #: src/dskHostGame.cpp:568
 msgid "Romans"
-msgstr ""
+msgstr "Roomlased"
 
 #: src/dskGameInterface.cpp:825 src/dskGameInterface.cpp:848
 msgid "SYSTEM"
-msgstr ""
+msgstr "SÜSTEEM"
 
 #: src/iwMusicPlayer.cpp:78
 msgid "Save"
@@ -1351,19 +1353,19 @@ msgstr ""
 
 #: src/iwTools.cpp:50
 msgid "Saw"
-msgstr "Scie"
+msgstr ""
 
 #: src/GameConsts.h:238
 msgid "Sawmill"
-msgstr "Scierie"
+msgstr "Saeveski"
 
 #: src/GameConsts.h:315
 msgid "Scout"
-msgstr "Eclaireur"
+msgstr "Skaut"
 
 #: src/iwTools.cpp:56
 msgid "Scythe"
-msgstr "Faux"
+msgstr ""
 
 #: src/iwBaseWarehouse.cpp:70
 msgid "Select all"
@@ -1371,11 +1373,11 @@ msgstr ""
 
 #: src/dskSelectMap.cpp:116
 msgid "Selection of maps"
-msgstr ""
+msgstr "Kaartide valik"
 
 #: src/iwAction.cpp:171 src/iwAction.cpp:179
 msgid "Send out scout"
-msgstr "Envoyer un éclaireur"
+msgstr ""
 
 #: src/iwBuildOrder.cpp:67
 msgid "Sequence of given order"
@@ -1383,7 +1385,7 @@ msgstr ""
 
 #: src/GameConsts.h:310
 msgid "Sergeant"
-msgstr "Sergent"
+msgstr ""
 
 #: src/iwBuildOrder.cpp:44
 msgid "Series sequence"
@@ -1391,7 +1393,7 @@ msgstr ""
 
 #: src/dskLobby.cpp:76
 msgid "Server"
-msgstr ""
+msgstr "Server"
 
 #: src/iwLobbyServerInfo.cpp:73
 msgid "Server Information"
@@ -1407,7 +1409,7 @@ msgstr ""
 
 #: src/dskHostGame.cpp:93
 msgid "Shared team view"
-msgstr ""
+msgstr "Jagatud meeskonna vaateväli"
 
 #: src/GameConsts.h:140
 msgid "Shield"
@@ -1419,19 +1421,19 @@ msgstr ""
 
 #: src/GameConsts.h:314
 msgid "Shipwright"
-msgstr "Constructeur de bateaux"
+msgstr ""
 
 #: src/iwDistribution.cpp:136
 msgid "Shipyard"
-msgstr "Chantier naval"
+msgstr ""
 
 #: src/iwTools.cpp:53
 msgid "Shovel"
-msgstr "Pelle"
+msgstr ""
 
 #: src/dskMainMenu.cpp:72
 msgid "Singleplayer"
-msgstr ""
+msgstr "üksimäng"
 
 #: src/dskSinglePlayer.cpp:97
 msgid ""
@@ -1441,7 +1443,7 @@ msgstr ""
 
 #: src/dskSelectMap.cpp:113
 msgid "Size"
-msgstr ""
+msgstr "Mõõtmed"
 
 #: src/iwSkipGFs.cpp:44
 msgid "Skip GameFrames"
@@ -1449,15 +1451,15 @@ msgstr ""
 
 #: src/GameConsts.h:226
 msgid "Slaughterhouse"
-msgstr "Boucherie"
+msgstr "Tapamaja"
 
 #: src/dskHostGame.cpp:131
 msgid "Slow"
-msgstr ""
+msgstr "Aeglane"
 
 #: src/dskOptions.cpp:79
 msgid "Sound/Music"
-msgstr ""
+msgstr "Heli/Muusika"
 
 #: src/dskOptions.cpp:149
 msgid "Sounddriver"
@@ -1469,7 +1471,7 @@ msgstr ""
 
 #: src/dskHostGame.cpp:128
 msgid "Speed:"
-msgstr ""
+msgstr "Kiirus:"
 
 #: src/iwDirectIPCreate.cpp:70
 msgid "Start"
@@ -1481,7 +1483,7 @@ msgstr ""
 
 #: src/dskHostGame.cpp:83 src/dskSinglePlayer.cpp:72
 msgid "Start game"
-msgstr ""
+msgstr "Alusta mänguga"
 
 #: src/iwInventory.cpp:46 src/iwMainMenu.cpp:68
 msgid "Stock"
@@ -1493,11 +1495,11 @@ msgstr ""
 
 #: src/GameConsts.h:292
 msgid "Stonemason"
-msgstr "Tailleur de pierre"
+msgstr ""
 
 #: src/iwTransport.cpp:65
 msgid "Stones"
-msgstr "Pierre"
+msgstr ""
 
 #: src/iwBaseWarehouse.cpp:65
 msgid "Stop storage"
@@ -1505,7 +1507,7 @@ msgstr ""
 
 #: src/iwStorehouse.cpp:43
 msgid "Storehouse"
-msgstr "Grand magasin"
+msgstr ""
 
 #: src/iwAction.cpp:236
 msgid "Strong attackers"
@@ -1521,7 +1523,7 @@ msgstr ""
 
 #: src/languages.cpp:71
 msgid "System language"
-msgstr "Langage de système"
+msgstr ""
 
 #: src/iwBaseWarehouse.cpp:63
 msgid "Take out of store"
@@ -1529,7 +1531,7 @@ msgstr ""
 
 #: src/dskHostGame.cpp:68
 msgid "Team"
-msgstr ""
+msgstr "Meeskond"
 
 #: src/iwPlayReplay.cpp:98
 msgid "Temporary map file was not found!"
@@ -1537,7 +1539,7 @@ msgstr ""
 
 #: src/dskCredits.cpp:112
 msgid "Thank you for your donations!"
-msgstr ""
+msgstr "Täname teid annetuste eest!"
 
 #: src/BuildingConsts.h:335
 msgid ""
@@ -1547,11 +1549,11 @@ msgstr ""
 
 #: src/dskGameInterface.cpp:806
 msgid "The Game is not in sync. Checksums of some players don't match."
-msgstr ""
+msgstr "Mäng ei ole sünkroonis. Mõnede mängijate kontrollsumma ei sobi."
 
 #: src/dskCredits.cpp:59
 msgid "The Settlers II.5 RTTR"
-msgstr "Les Coloneurs II.5 RTTR"
+msgstr ""
 
 #: src/dskDirectIP.cpp:51 src/dskLobby.cpp:60 src/dskMainMenu.cpp:65
 #: src/dskMultiPlayer.cpp:58 src/dskSinglePlayer.cpp:59
@@ -1696,7 +1698,7 @@ msgstr ""
 
 #: src/iwTools.cpp:48
 msgid "Tongs"
-msgstr "Tenaille"
+msgstr ""
 
 #: src/iwDirectIPConnect.cpp:215
 msgid "Too short Message received!"
@@ -1704,7 +1706,7 @@ msgstr ""
 
 #: src/iwMainMenu.cpp:60
 msgid "Tools"
-msgstr "Outil"
+msgstr ""
 
 #: src/iwBuildOrder.cpp:55
 msgid "Top"
@@ -1724,7 +1726,7 @@ msgstr ""
 
 #: src/dskSelectMap.cpp:113
 msgid "Type"
-msgstr ""
+msgstr "Tüüp"
 
 #: src/iwBuildOrder.cpp:57
 msgid "Up"
@@ -1744,7 +1746,7 @@ msgstr ""
 
 #: src/dskLobby.cpp:76 src/dskLobby.cpp:78
 msgid "Version"
-msgstr ""
+msgstr "Versioon"
 
 #: src/iwLobbyServerInfo.cpp:81
 msgid "Version:"
@@ -1756,15 +1758,15 @@ msgstr ""
 
 #: src/dskHostGame.cpp:134
 msgid "Very fast"
-msgstr ""
+msgstr "Väga kiire"
 
 #: src/dskHostGame.cpp:130
 msgid "Very slow"
-msgstr ""
+msgstr "Väga aeglane"
 
 #: src/dskHostGame.cpp:568
 msgid "Vikings"
-msgstr ""
+msgstr "Vikingid"
 
 #: src/iwDirectIPConnect.cpp:229
 msgid "Waiting for Playerinfo..."
@@ -1782,15 +1784,15 @@ msgstr ""
 
 #: src/dskSelectMap.cpp:407
 msgid "Wasteland"
-msgstr ""
+msgstr "Tühermaa"
 
 #: src/GameConsts.h:209
 msgid "Watchtower"
-msgstr "Tour de gardes"
+msgstr ""
 
 #: src/iwDistribution.cpp:141
 msgid "Water"
-msgstr "Eau"
+msgstr ""
 
 #: src/iwAction.cpp:235
 msgid "Weak attackers"
@@ -1806,11 +1808,11 @@ msgstr ""
 
 #: src/GameConsts.h:240
 msgid "Well"
-msgstr "Puit"
+msgstr "Kaev"
 
 #: src/dskHostGame.cpp:102
 msgid "When attack"
-msgstr ""
+msgstr "Kui rünnatakse"
 
 #: src/dskOptions.cpp:112
 msgid "Windowed"
@@ -1818,7 +1820,7 @@ msgstr ""
 
 #: src/dskSelectMap.cpp:408
 msgid "Winter world"
-msgstr ""
+msgstr "Talvemaa"
 
 #: src/BuildingConsts.h:363
 msgid ""
@@ -1832,15 +1834,15 @@ msgstr ""
 
 #: src/iwTransport.cpp:66
 msgid "Wood"
-msgstr "Rondin"
+msgstr ""
 
 #: src/GameConsts.h:288
 msgid "Woodchopper"
-msgstr "Bûcheron"
+msgstr "Metsalangetaja"
 
 #: src/GameConsts.h:222
 msgid "Woodcutter"
-msgstr "Cabane de bûcheron"
+msgstr ""
 
 #: src/dskGameLoader.cpp:161
 msgid "World was put together and glued..."
@@ -1889,10 +1891,4 @@ msgstr ""
 
 #: src/dskCredits.cpp:105
 msgid "various anonymous donators"
-msgstr "different anonyme donateurs"
-
-#~ msgid "Divan"
-#~ msgstr "Divan"
-
-#~ msgid "Fenan"
-#~ msgstr "Fenan"
+msgstr "mitmed anonüümsed annetajad"

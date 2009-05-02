@@ -1,4 +1,4 @@
-// $Id: Messenger.cpp 4776 2009-05-02 11:57:52Z OLiver $
+// $Id: Messenger.cpp 4782 2009-05-02 18:27:11Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -124,7 +124,8 @@ std::string Messenger::TermColorString(const std::string& text, const unsigned c
 
 void Messenger::AddMessage(const std::string& author, const unsigned color_author, const ChatDestination cd, const std::string& msg,const unsigned color_msg)
 {
-	LOG.lprintf("%s: %s\n", TermColorString(author,color_author).c_str(), msg.c_str());
+	LOG.lprintf("%s%s %s\n", TermColorString(author,color_author).c_str(), TermColorString(CD_STRINGS[cd], CD_COLORS[cd]).c_str(), msg.c_str());
+
 
 	glArchivItem_Font::WrapInfo wi;
 

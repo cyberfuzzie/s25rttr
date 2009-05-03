@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 4739 2009-04-28 18:58:13Z OLiver $
+// $Id: GameWorldBase.cpp 4787 2009-05-03 15:52:43Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -865,7 +865,7 @@ unsigned short GameWorldBase::GetXA(const MapCoord x, const MapCoord y, unsigned
 {
 	assert(dir < 6);
 
-	int tx;
+	int tx = x;
 
 	switch(dir)
 	{

@@ -1,4 +1,4 @@
-// $Id: TerrainRenderer.cpp 4739 2009-04-28 18:58:13Z OLiver $
+// $Id: TerrainRenderer.cpp 4788 2009-05-03 15:57:32Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -987,10 +987,8 @@ void TerrainRenderer::DrawWays(const GameWorldViewer * gwv)
 
 			// Wegtypen für die drei Richtungen
 			unsigned char type;
-			// Ein gültiger Wegtyp für das Zeichnen der Knotenpunkte
-			unsigned char first_type;
-			// Wurde ein Weg von einem Punkt gezeichnet?
-			bool was_road = false;
+			// Ein gültiger Wegtyp für das Zeichnen der Knotenpunkte (0xFF = kein Weg)
+			unsigned char first_type = 0xFF;
 
 			Visibility visibility = gwv->GetVisibility(tx,ty);
 
@@ -998,8 +996,6 @@ void TerrainRenderer::DrawWays(const GameWorldViewer * gwv)
 			{
 				if( (type = gwv->GetVisibleRoad(tx,ty, dir+3, visibility)) )
 				{
-					was_road = true;
-
 					float xpos2 = GetTerrainX(coords[dir*2],coords[dir*2+1])-gwv->GetXOffset()+xo;
 					float ypos2 = GetTerrainY(coords[dir*2],coords[dir*2+1])-gwv->GetYOffset()+yo;
 
@@ -1051,7 +1047,7 @@ void TerrainRenderer::DrawWays(const GameWorldViewer * gwv)
 
 			// Wegknotenpunkt zeichnen
 			// irgendeine Straße, die man als erstes findet, von der den Knotenpunkt zeichnen
-			if(was_road)	{
+			if(first_type != 0xFF)	{
 				glColor3f(GetColor(tx,ty),GetColor(tx,ty),GetColor(tx,ty));
 				glBindTexture(GL_TEXTURE_2D, GetImage(roads_points, first_type)->GetTexture());
 				glBegin(GL_QUADS);

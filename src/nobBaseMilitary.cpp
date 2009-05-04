@@ -1,4 +1,4 @@
-// $Id: nobBaseMilitary.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: nobBaseMilitary.cpp 4796 2009-05-04 16:15:47Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -367,7 +367,10 @@ bool nobBaseMilitary::CallDefender(nofAttacker * attacker)
 	{
 		// Dann nehmen wir den, müssen ihm nur den neuen Angreifer mitteilen
 		defender->NewAttacker(attacker);
-
+		// Leute, die aus diesem Gebäude zum Angriff/aggressiver Verteidigung rauskommen wollen,
+		// blocken
+		CancelJobs();
+		
 		return true;
 	}
 	// ansonsten einen neuen aus dem Gebäude holen
@@ -375,6 +378,9 @@ bool nobBaseMilitary::CallDefender(nofAttacker * attacker)
 	{
 		// Soldat muss noch rauskommen
 		AddLeavingFigure(defender);
+		// Leute, die aus diesem Gebäude zum Angriff/aggressiver Verteidigung rauskommen wollen,
+		// blocken
+		CancelJobs();
 
 		return true;
 	}
@@ -474,4 +480,21 @@ bool nobBaseMilitary::TestOnMission(nofActiveSoldier * soldier)
 		return true;
 	else
 		return false;
+}
+
+/// Bricht einen aktuell von diesem Haus gestarteten Angriff/aggressive Verteidigung ab, d.h. setzt die Soldaten
+/// aus der Warteschleife wieder in das Haus --> wenn Angreifer an der Fahne ist und Verteidiger rauskommen soll
+void nobBaseMilitary::CancelJobs()
+{
+	// Soldaten, die noch in der Warteschlange hängen, rausschicken
+	for(list<noFigure*>::iterator it = leave_house.begin();it.valid();++it)
+	{
+		if((*it)->DoJobWorks())
+		{
+			// Wenn er Job-Arbeiten verrichtet, ists ein ActiveSoldier --> dem muss extra noch Bescheid gesagt werden!
+			dynamic_cast<nofActiveSoldier*>(*it)->HomeDestroyedAtBegin();
+			// Wieder in das Haus verfrachten
+			this->AddActiveSoldier(dynamic_cast<nofActiveSoldier*>(*it));
+		}
+	}
 }

@@ -1,4 +1,4 @@
-// $Id: nobBaseMilitary.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: nobBaseMilitary.h 4796 2009-05-04 16:15:47Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -141,13 +141,20 @@ public: void Serialize(SerializedGameData *sgd) const { Serialize_nobBaseMilitar
 	void CheckArrestedAttackers();
 	/// Der Verteidiger ist entweder tot oder wieder reingegegangen
 	void NoDefender() { defender = 0; }
+	/// Bricht einen aktuell von diesem Haus gestarteten Angriff/aggressive Verteidigung ab, d.h. setzt die Soldaten
+	/// aus der Warteschleife wieder in das Haus --> wenn Angreifer an der Fahne ist und Verteidiger rauskommen soll
+	void CancelJobs();
 
 	/// Sind noch Truppen drinne, die dieses Gebäude verteidigen können
 	virtual bool DefendersAvailable() const = 0;
 
+	
+
 	/// Debugging
 	bool Test(nofAttacker * attacker); 
 	bool TestOnMission(nofActiveSoldier * soldier);
+
+	
 
 
 };

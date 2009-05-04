@@ -1,4 +1,4 @@
-// $Id: prebuild-mutex.cpp 4799 2009-05-04 17:35:18Z FloSoft $
+// $Id: prebuild-mutex.cpp 4802 2009-05-04 18:00:34Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -26,6 +26,12 @@
 
 using namespace std;
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  prüft ob die angegebene Datei existiert.
+ *
+ *  @author FloSoft
+ */
 bool existfile(std::string file)
 {
 	FILE *f = fopen(file.c_str(), "r");
@@ -36,12 +42,24 @@ bool existfile(std::string file)
 	return true;
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  führt einen angegebenen (shell)befehl aus
+ *
+ *  @author FloSoft
+ */
 void exec(std::string cmd)
 {
-	std::cout << "executing \"" << cmd << "\"" << std::endl;
+	//std::cout << "executing \"" << cmd << "\"" << std::endl;
 	system(cmd.c_str());
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  kopiert eine Datei von A nach B.
+ *
+ *  @author FloSoft
+ */
 void copyfile(std::string file, std::string from, std::string to, std::string tofile = "")
 {
 	if(tofile.empty())
@@ -77,7 +95,7 @@ int main(int argc, char *argv[])
 	if(args.at(1) == "prebuild")
 		prebuild = true;
 
-	string mutexname = args.at(2);
+	string mutexname = (prebuild ? "prebuild" : "postbuild") + args.at(2);
 	string working = args.at(3);
 	string binary = args.at(4);
 
@@ -86,9 +104,9 @@ int main(int argc, char *argv[])
 	if(binary.at(binary.length()-1) != '\\')
 		binary += "\\";
 
-	std::cout << (prebuild ? "Prebuild" : "Postbuild") << "-Mutex started" << std::endl;
-	std::cout << "working in " << working << std::endl;
-	std::cout << "binary dir is " << binary << std::endl;
+	std::cout << (prebuild ? "prebuild" : "postbuild") << "-mutex started" << std::endl;
+	//std::cout << "working in " << working << std::endl;
+	//std::cout << "binary dir is " << binary << std::endl;
 
 	SetCurrentDirectory(working.c_str());
 

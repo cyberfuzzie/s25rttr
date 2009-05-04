@@ -1,4 +1,4 @@
-// $Id: main.cpp 4783 2009-05-02 18:33:23Z Demophobie $
+// $Id: main.cpp 4802 2009-05-04 18:00:34Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -50,7 +50,7 @@
 int main(int argc, char *argv[])
 {
 	if(argc >= 2)
-	chdir(argv[1]);
+		chdir(argv[1]);
 
 	// We only need one of those two files, whatever is present:
 	FILE *lastrevision = fopen(".bzr/branch/last-revision", "r");

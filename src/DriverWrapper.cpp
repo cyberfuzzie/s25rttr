@@ -1,4 +1,4 @@
-// $Id: DriverWrapper.cpp 4789 2009-05-03 16:09:15Z OLiver $
+// $Id: DriverWrapper.cpp 4795 2009-05-04 16:04:16Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -174,8 +174,8 @@ void DriverWrapper::LoadDriverList(const DriverType dt, list<DriverItem>& driver
 			PDRIVER_CREATEAUDIOINSTANCE CreateAudioInstance = NULL;
 			PDRIVER_CREATEVIDEOINSTANCE CreateVideoInstance = NULL;
 
-			GetDriverAPIVersion = (PDRIVER_GETDRIVERAPIVERSION)GetProcAddress(dll, "GetDriverAPIVersion");
-			GetDriverName = (PDRIVER_GETDRIVERNAME)GetProcAddress(dll, "GetDriverName");
+			*(void**)(&GetDriverAPIVersion) = (void*)GetProcAddress(dll, "GetDriverAPIVersion");
+			*(void**)(&GetDriverName) = (void*)GetProcAddress(dll, "GetDriverName");
 
 			if(GetDriverAPIVersion)
 			{
@@ -184,8 +184,8 @@ void DriverWrapper::LoadDriverList(const DriverType dt, list<DriverItem>& driver
 					if(GetDriverName)
 					{
 
-						CreateVideoInstance = (PDRIVER_CREATEVIDEOINSTANCE)GetProcAddress(dll, "CreateVideoInstance");
-						CreateAudioInstance = (PDRIVER_CREATEAUDIOINSTANCE)GetProcAddress(dll, "CreateAudioInstance");
+						*(void**)(&CreateVideoInstance) = (void*)GetProcAddress(dll, "CreateVideoInstance");
+						*(void**)(&CreateAudioInstance) = (void*)GetProcAddress(dll, "CreateAudioInstance");
 
 						if((dt == DT_VIDEO && CreateVideoInstance) || (dt == DT_AUDIO && CreateAudioInstance))
 						{

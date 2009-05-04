@@ -1,4 +1,4 @@
-// $Id: Pathfinding.cpp 4739 2009-04-28 18:58:13Z OLiver $
+// $Id: Pathfinding.cpp 4807 2009-05-04 19:48:53Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -357,7 +357,7 @@ unsigned char GameWorldGame::FindPathForWare(const noRoadNode * const startflag,
 	}
 }
 
-unsigned char GameWorldBase::FindFreePath(const int x_start,const int y_start, const int x_dest, const int y_dest,unsigned max_route,const bool random_route)
+unsigned char GameWorldBase::FindFreePath(const int x_start,const int y_start, const int x_dest, const int y_dest,unsigned max_route,const bool random_route,unsigned * length)
 {
 	unsigned nodes_count = 0;
 	//unsigned pathtime = VideoDriverWrapper::inst().GetTickCount();
@@ -434,6 +434,10 @@ unsigned char GameWorldBase::FindFreePath(const int x_start,const int y_start, c
 				Node * start = (*best_it)->next[i];
 
 				while(start->prev->prev) start = start->prev;
+
+				// Ggf. Länge setzen, wenn kein Nullpointer übergeben wurde
+				if(length)
+					*length = (*best_it)->way+1;
 
 				return start->dir;
 			}

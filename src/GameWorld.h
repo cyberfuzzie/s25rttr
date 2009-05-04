@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: GameWorld.h 4807 2009-05-04 19:48:53Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -230,7 +230,7 @@ public:
 	/// Prüft, ob von einem bestimmten Punkt aus der Untergrund für Figuren zugänglich ist (kein Wasser,Lava,Sumpf)
 	bool IsNodeToNodeForFigure(const MapCoord x, const MapCoord y, const unsigned dir);
 	/// Wegfinden ( A*) --> in freien Terrain, Ziel muss nicht begehbar sein, durch Bäume, für frei herumlaufende Berufe mit begrenztem Weg !
-	unsigned char FindFreePath(const int x_start,const int y_start, const int x_dest, const int y_dest,unsigned max_route,const bool random_route = true);
+	unsigned char FindFreePath(const int x_start,const int y_start, const int x_dest, const int y_dest,unsigned max_route,const bool random_route = true, unsigned * length = NULL);
 
 	/// Baut eine (bisher noch visuell gebaute) Straße wieder zurück
 	void RemoveVisualRoad(unsigned short start_x, unsigned short start_y, const unsigned char * const route, const unsigned length);

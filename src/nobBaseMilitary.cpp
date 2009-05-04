@@ -1,4 +1,4 @@
-// $Id: nobBaseMilitary.cpp 4796 2009-05-04 16:15:47Z OLiver $
+// $Id: nobBaseMilitary.cpp 4807 2009-05-04 19:48:53Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -198,10 +198,9 @@ nofAttacker * nobBaseMilitary::FindAggressor(nofAggressiveDefender * defender)
 
 struct Node { unsigned short x,y; };
 
-unsigned char nobBaseMilitary::FindAnAttackerPlace(unsigned short &ret_x,unsigned short &ret_y, unsigned short &retRedadius,nofAttacker * soldier)
+void nobBaseMilitary::FindAnAttackerPlace(unsigned short &ret_x,unsigned short &ret_y, unsigned short &retRedadius,nofAttacker * soldier)
 {
-	// Wenn Platz an der Flagge noch frei ist, soll er da hin gehen
-	list<Node> nodes[6];
+	
 
 	const unsigned short flag_x = x+(y&1);
 	const unsigned short flag_y = y+1;
@@ -217,146 +216,102 @@ unsigned char nobBaseMilitary::FindAnAttackerPlace(unsigned short &ret_x,unsigne
 		ret_x = flag_x;
 		ret_y = flag_y;
 		retRedadius = 0;
-		return 3;
+		return;
 	}
-	else
+
+	// Wenn Platz an der Flagge noch frei ist, soll er da hin gehen
+	list<Node> nodes;
+
+	// Ansonsten immer die Runde rum gehen und ein freies Plätzchen suchen (max. 3 Runden rum)
+	for(d = 1;d<=3&&!nodes.size();++d)
 	{
-		// Ansonsten immer die Runde rum gehen und ein freies Plätzchen suchen (max. 3 Runden rum)
-		for(d = 1;d<=3;++d)
+		// links anfangen und im Uhrzeigersinn vorgehen
+		ret_x = flag_x-d;
+		ret_y = this->y +1;
+
+		for(unsigned short i = 0;i<d;++i,ret_x+=(ret_y&1),--ret_y)
 		{
-			// links anfangen und im Uhrzeigersinn vorgehen
-			ret_x = flag_x-d;
-			ret_y = this->y +1;
-
-
-			for(unsigned short i = 0;i<d;++i,ret_x+=(ret_y&1),--ret_y)
+			if(gwg->ValidWaitingAroundBuildingPoint(ret_x,ret_y,soldier))
 			{
-				if(gwg->ValidWaitingAroundBuildingPoint(ret_x,ret_y,soldier))
-				{
-					Node n = {ret_x,ret_y};
-					nodes[0].push_back(n);
-				}
+				Node n = {ret_x,ret_y};
+				nodes.push_back(n);
 			}
-			for(unsigned short i = 0;i<d;++i,++ret_x)
+		}
+		for(unsigned short i = 0;i<d;++i,++ret_x)
+		{
+			if(gwg->ValidWaitingAroundBuildingPoint(ret_x,ret_y,soldier))
 			{
-				if(gwg->ValidWaitingAroundBuildingPoint(ret_x,ret_y,soldier))
-				{
-					Node n = {ret_x,ret_y};
-					nodes[1].push_back(n);
-				}
+				Node n = {ret_x,ret_y};
+				nodes.push_back(n);
 			}
-			for(unsigned short i = 0;i<d;++i,ret_x+=(ret_y&1),++ret_y)
+		}
+		for(unsigned short i = 0;i<d;++i,ret_x+=(ret_y&1),++ret_y)
+		{
+			if(gwg->ValidWaitingAroundBuildingPoint(ret_x,ret_y,soldier))
 			{
-				if(gwg->ValidWaitingAroundBuildingPoint(ret_x,ret_y,soldier))
-				{
-					Node n = {ret_x,ret_y};
-					nodes[2].push_back(n);
-				}
+				Node n = {ret_x,ret_y};
+				nodes.push_back(n);
 			}
-			for(unsigned short i = 0;i<d;++i,ret_x-=!(ret_y&1),++ret_y)
+		}
+		for(unsigned short i = 0;i<d;++i,ret_x-=!(ret_y&1),++ret_y)
+		{
+			if(gwg->ValidWaitingAroundBuildingPoint(ret_x,ret_y,soldier))
 			{
-				if(gwg->ValidWaitingAroundBuildingPoint(ret_x,ret_y,soldier))
-				{
-					Node n = {ret_x,ret_y};
-					nodes[3].push_back(n);
-				}
+				Node n = {ret_x,ret_y};
+				nodes.push_back(n);
 			}
-			for(unsigned short i = 0;i<d;++i,--ret_x)
+		}
+		for(unsigned short i = 0;i<d;++i,--ret_x)
+		{
+			if(gwg->ValidWaitingAroundBuildingPoint(ret_x,ret_y,soldier))
 			{
-				if(gwg->ValidWaitingAroundBuildingPoint(ret_x,ret_y,soldier))
-				{
-					Node n = {ret_x,ret_y};
-					nodes[4].push_back(n);
-				}
+				Node n = {ret_x,ret_y};
+				nodes.push_back(n);
 			}
-			for(unsigned short i = 0;i<d;++i,ret_x-=!(ret_y&1),--ret_y)
+		}
+		for(unsigned short i = 0;i<d;++i,ret_x-=!(ret_y&1),--ret_y)
+		{
+			if(gwg->ValidWaitingAroundBuildingPoint(ret_x,ret_y,soldier))
 			{
-				if(gwg->ValidWaitingAroundBuildingPoint(ret_x,ret_y,soldier))
-				{
-					Node n = {ret_x,ret_y};
-					nodes[5].push_back(n);
-				}
+				Node n = {ret_x,ret_y};
+				nodes.push_back(n);
 			}
-
-			// Wurde was gefunden? Dann erstmal rausgehen
-			if(nodes[0].size()||nodes[1].size()||nodes[2].size()||nodes[3].size()||nodes[4].size()||nodes[5].size())
-				break;
 		}
 	}
+
+	// Bisher noch nichts gefunden, x = Nirvana
+	ret_x = 0xFFFF;
 
 	// Nichts gefunden, dann raus
-	if(!(nodes[0].size()||nodes[1].size()||nodes[2].size()||nodes[3].size()||nodes[4].size()||nodes[5].size()))
+	if(!nodes.size())
+		return;
+		
+
+	// Weg zu allen gefundenen Punkten berechnen und den mit den kürzesten Weg nehmen
+	// Die bisher kürzeste gefundene Länge
+	unsigned min_length = 0xFFFFFFFF;
+	for(list<Node>::iterator it = nodes.begin();it.valid();++it)
 	{
-		// Nix gefunden, x = Nirvana
-		ret_x = 0xFFFF;
-
-		return 0xFF;
-	}
-	else
-	{
-		// Bevorzugte Richtung ermitteln
-		unsigned char dir = 255;
-
-
-
-		if(soldier->GetY() == flag_y && soldier->GetX() <= flag_x) dir = 0;
-		else if(soldier->GetY() == flag_y && soldier->GetX() > flag_x) dir = 3;
-		else if(soldier->GetY() < flag_y && soldier->GetX() < flag_x) dir = 1;
-		else if(soldier->GetY() < flag_y && soldier->GetX() >  flag_x) dir = 2;
-		else if(soldier->GetY() > flag_y && soldier->GetX() < flag_x) dir = 5;
-		else if(soldier->GetY() > flag_y && soldier->GetX() >  flag_x) dir = 4;
-		else if(soldier->GetX() ==  flag_x)
+		// Derselbe Punkt? Dann können wir gleich abbrechen, finden ja sowieso keinen kürzeren Weg mehr
+		if(soldier->GetX() == it->x && soldier->GetY() == it->y)
 		{
-			if(soldier->GetY() < flag_y && !(SafeDiff(soldier->GetY(),flag_y)&1)) dir = 1;
-			else if(soldier->GetY() < flag_y && (SafeDiff(soldier->GetY(),flag_y)&1))
-			{
-				if(soldier->GetY()&1) dir = 1; else dir = 2;
-			}
-			else if(soldier->GetY() > flag_y && !(SafeDiff(soldier->GetY(),flag_y)&1)) dir = 5;
-			else if(soldier->GetY() > flag_y && (SafeDiff(soldier->GetY(),flag_y)&1))
-			{
-				if(soldier->GetY()&1) dir = 4; else dir = 5;
-			}
+			ret_x = it->x;
+			ret_y = it->y;
+			return;
 		}
 
-		assert(dir < 6);
-
-		// Runde jeweils von der einen und der anderen Seite rumgehen, mit bevorzugter Richtung anfangen
-		if(nodes[dir].size())
+		unsigned length = 0;
+		// Gültiger Weg gefunden
+		if(gwg->FindFreePath(soldier->GetX(),soldier->GetY(),it->x,it->y,100,false,&length) != 0xFF)
 		{
-			ret_x = nodes[dir].begin()->x;
-			ret_y = nodes[dir].begin()->y;
-			retRedadius = d;
-			return (dir+3)%6;
-		}
-
-		for(unsigned i = 1;i<4;++i)
-		{
-			// im Uhrzeigersinn die eine Hälfte
-			unsigned char tmp_dir = (dir+i)%6;
-
-			if(nodes[tmp_dir].size())
+			// Kürzer als bisher kürzester Weg? --> Dann nehmen wir diesen Punkt (vorerst)
+			if(length < min_length)
 			{
-				ret_x = nodes[tmp_dir].begin()->x;
-				ret_y = nodes[tmp_dir].begin()->y;
-				retRedadius = d;
-				return (tmp_dir+3)%6;
-			}
-
-			// entgegen dem Uhrzeigersinn die andere Hälfte
-			tmp_dir = ((i <= dir)?(dir-i):(6-i+dir));
-
-			if(nodes[tmp_dir].size())
-			{
-				ret_x = nodes[tmp_dir].begin()->x;
-				ret_y = nodes[tmp_dir].begin()->y;
-				retRedadius = d;
-				return (tmp_dir+3)%6;
+				ret_x = it->x;
+				ret_y = it->y;
+				min_length = length;
 			}
 		}
-
-		return 0xFF;
-
 	}
 }
 

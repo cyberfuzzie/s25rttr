@@ -438,7 +438,7 @@ void nofAttacker::MissAttackingWalk()
 	{
 		// Eine Position rund um das Militärgebäude suchen
 		unsigned short goal_x,goal_y;
-		unsigned char goal_dir = attacked_goal->FindAnAttackerPlace(goal_x,goal_y,radius,this);
+		attacked_goal->FindAnAttackerPlace(goal_x,goal_y,radius,this);
 
 		// Keinen Platz mehr gefunden?
 		if(goal_x == 0xFFFF)
@@ -447,8 +447,6 @@ void nofAttacker::MissAttackingWalk()
 			ReturnHomeMissionAttacking();
 			return;
 		}
-
-
 
 		// Sind wir evtl schon da?
 		if(x == goal_x && y == goal_y)
@@ -487,8 +485,27 @@ void nofAttacker::MissAttackingWalk()
 				// reservieren, damit sich kein anderer noch hier hinstellt
 				state = STATE_ATTACKING_WAITINGAROUNDBUILDING;
 				// zur Flagge hin ausrichten
-				dir = goal_dir;
-
+				MapCoord flag_x = attacked_goal->GetFlag()->GetX();
+				MapCoord flag_y = attacked_goal->GetFlag()->GetY();
+				if(y == flag_y && x <= flag_x) dir = 3;
+				else if(y == flag_y && x > flag_x) dir = 0;
+				else if(y < flag_y && x < flag_x) dir = 4;
+				else if(y < flag_y && x >  flag_x) dir = 5;
+				else if(y > flag_y && x < flag_x) dir = 2;
+				else if(y > flag_y && x >  flag_x) dir = 1;
+				else if(x ==  flag_x)
+				{
+					if(y < flag_y && !(SafeDiff(y,flag_y)&1)) dir = 4;
+					else if(y < flag_y && (SafeDiff(y,flag_y)&1))
+					{
+						if(y&1) dir = 4; else dir = 5;
+					}
+					else if(y > flag_y && !(SafeDiff(y,flag_y)&1)) dir = 2;
+					else if(y > flag_y && (SafeDiff(y,flag_y)&1))
+					{
+						if(y&1) dir = 1; else dir = 2;
+					}
+				}
 
 				// Wenn unser aggressiv-verteidigender Kollege auf uns wartet, muss ihm Bescheid gesagt werden, damit
 				// er weiterläuft sonst warten ja beide ewig aufeinander

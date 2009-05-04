@@ -1,4 +1,4 @@
-// $Id: WindowManager.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: WindowManager.h 4793 2009-05-04 15:37:10Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -70,6 +70,14 @@ public:
 	void Msg_RightUp(const MouseCoords& mc);
 	/// Verarbeitung des Loslassens der Rechten Maustaste.
 	void Msg_RightDown(const MouseCoords& mc);
+	/// Verarbeitung des Drückens des Rad hoch.
+	void Msg_WheelUpDown(const MouseCoords& mc);
+	/// Verarbeitung des Loslassens des Rad hoch.
+	void Msg_WheelUpUp(const MouseCoords& mc);
+	/// Verarbeitung des Drückens des Rad runter.
+	void Msg_WheelDownDown(const MouseCoords& mc);
+	/// Verarbeitung des Loslassens des Rad runter.
+	void Msg_WheelDownUp(const MouseCoords& mc);
 	/// Verarbeitung des Verschiebens der Maus.
 	void Msg_MouseMove(const MouseCoords& mc);
 	/// Verarbeitung Keyboard-Event

@@ -1,4 +1,4 @@
-// $Id: ctrlTab.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: ctrlTab.h 4793 2009-05-04 15:37:10Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -63,6 +63,10 @@ public:
 	virtual void Msg_ButtonClick(const unsigned int ctrl_id);
 	virtual bool Msg_LeftDown(const MouseCoords& mc);
 	virtual bool Msg_LeftUp(const MouseCoords& mc);
+	virtual bool Msg_WheelUpDown(const MouseCoords& mc);
+	virtual bool Msg_WheelUpUp(const MouseCoords& mc);
+	virtual bool Msg_WheelDownDown(const MouseCoords& mc);
+	virtual bool Msg_WheelDownUp(const MouseCoords& mc);
 	virtual bool Msg_MouseMove(const MouseCoords& mc);
 
 protected:

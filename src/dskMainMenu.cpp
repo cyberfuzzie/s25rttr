@@ -1,4 +1,4 @@
-// $Id: dskMainMenu.cpp 4754 2009-05-01 16:35:54Z Demophobie $
+// $Id: dskMainMenu.cpp 4793 2009-05-04 15:37:10Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -125,4 +125,20 @@ void dskMainMenu::Msg_ButtonClick(const unsigned int ctrl_id)
                 } break;
 
 	}
+}
+
+void dskMainMenu::Msg_PaintAfter()
+{
+	
+	/*for(unsigned i = 0;i<100;++i)
+	{
+		glDisable(GL_TEXTURE_2D);
+		glColor4f(1.0f,0.0f,0.0f,1.0f);
+		glBegin(GL_QUADS);
+		glVertex3f(0.0f, 0.0f,float(i));
+		glVertex3f(0.0f, 600.0f,float(i));
+		glVertex3f(700.0f, 600.0f,float(i));
+		glVertex3f(700.0f, 0.0f,float(i));
+		glEnd();
+	}*/
 }

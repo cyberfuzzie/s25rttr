@@ -1,4 +1,4 @@
-// $Id: ctrlProgress.cpp 4784 2009-05-02 20:43:44Z OLiver $
+// $Id: ctrlProgress.cpp 4793 2009-05-04 15:37:10Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -163,6 +163,40 @@ bool ctrlProgress::Msg_LeftDown(const MouseCoords& mc)
 bool ctrlProgress::Msg_LeftUp(const MouseCoords& mc)
 {
 	return RelayMouseMessage(&Window::Msg_LeftUp, mc);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author Divan
+ */
+bool ctrlProgress::Msg_WheelUpUp(const MouseCoords& mc)
+{
+	// If mouse is over the controls, simulate button click
+	if(Coll(mc.x,mc.y,GetX(),GetY(), width, height))
+	{
+		Msg_ButtonClick(1);
+		return true;
+	}
+	return false;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author Divan
+ */
+bool ctrlProgress::Msg_WheelDownUp(const MouseCoords& mc)
+{
+	// If mouse is over the controls, simulate button click
+	if(Coll(mc.x,mc.y,GetX(),GetY(), width, height))
+	{
+		Msg_ButtonClick(0);
+		return true;
+	}
+	return false;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

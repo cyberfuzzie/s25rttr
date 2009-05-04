@@ -1,4 +1,4 @@
-// $Id: ctrlComboBox.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: ctrlComboBox.cpp 4793 2009-05-04 15:37:10Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -120,6 +120,81 @@ bool ctrlComboBox::Msg_LeftUp(const MouseCoords& mc)
 	// Für Button und Liste weiterleiten
 	return RelayMouseMessage(&Window::Msg_LeftUp, mc);
 } 
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author Divan
+ */
+bool ctrlComboBox::Msg_RightDown(const MouseCoords& mc)
+{
+	ctrlList *list = GetCtrl<ctrlList>(0);
+
+	// Clicked on list -> close it
+	if(!readonly && Coll(mc.x, mc.y, GetX(), GetY() + height, width, height + list->GetHeight()))
+	{
+		// Liste wieder ausblenden
+		ShowList(false);
+	}
+	return false;
+} 
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author Divan
+ */
+bool ctrlComboBox::Msg_WheelUpUp(const MouseCoords& mc)
+{
+	ctrlList *list = GetCtrl<ctrlList>(0);
+
+	if(!readonly && Coll(mc.x, mc.y, GetX(), GetY() + height, width, height + list->GetHeight()) && list->GetVisible())
+	{
+		// Scrolled in opened list ->
+		return RelayMouseMessage(&Window::Msg_WheelUpUp, mc);
+	}
+	else if(!readonly && Coll(mc.x, mc.y, GetX(), GetY(), width, height))
+	{
+		// Scrolled without list opened
+		if (list->GetSelection() > 0)
+			list->SetSelection(list->GetSelection() - 1);
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author Divan
+ */
+bool ctrlComboBox::Msg_WheelDownUp(const MouseCoords& mc)
+{
+	ctrlList *list = GetCtrl<ctrlList>(0);
+
+	if(!readonly && Coll(mc.x, mc.y, GetX(), GetY() + height, width, height + list->GetHeight()) && list->GetVisible())
+	{
+		// Scrolled in opened list ->
+		return RelayMouseMessage(&Window::Msg_WheelUpUp, mc);
+	}
+	else if(!readonly && Coll(mc.x, mc.y, GetX(), GetY(), width, height))
+	{
+		// Scrolled without list opened
+		if (list->GetSelection() < list->GetLineCount() - 1)
+			list->SetSelection(list->GetSelection() + 1);
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 /**

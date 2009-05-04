@@ -1,4 +1,4 @@
-// $Id: ctrlTable.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: ctrlTable.cpp 4793 2009-05-04 15:37:10Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -318,6 +318,44 @@ bool ctrlTable::Msg_RightDown(const MouseCoords& mc)
 	}
 	else
 		return RelayMouseMessage(&Window::Msg_RightDown, mc);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author Divan
+ */
+bool ctrlTable::Msg_WheelUpUp(const MouseCoords& mc)
+{
+	// Forward to ScrollBar
+	ctrlScrollBar *scrollbar = GetCtrl<ctrlScrollBar>(0);
+
+	// If mouse in list or scrollbar
+	if(Coll(mc.x, mc.y, GetX() + 2, GetY() + 2, width - /*2*/2, height - 4))
+	{
+		// Simulate Button Click
+		scrollbar->Msg_ButtonClick(0);
+		return true;
+	}
+	else
+		return false;
+}
+
+bool ctrlTable::Msg_WheelDownUp(const MouseCoords& mc)
+{
+	// Forward to ScrollBar
+	ctrlScrollBar *scrollbar = GetCtrl<ctrlScrollBar>(0);
+
+	// If mouse in list
+	if(Coll(mc.x, mc.y, GetX() + 2, GetY() + 2, width - /*2*/2, height - 4))
+	{
+		// Simulate Button Click
+		scrollbar->Msg_ButtonClick(1);
+		return true;
+	}
+	else
+		return false;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

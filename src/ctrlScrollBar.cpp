@@ -1,4 +1,4 @@
-// $Id: ctrlScrollBar.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: ctrlScrollBar.cpp 4793 2009-05-04 15:37:10Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -146,12 +146,12 @@ void ctrlScrollBar::Msg_ButtonClick(const unsigned int ctrl_id)
 {
 	switch(ctrl_id)
 	{
-	case 0: // Nach unten
+	case 0: // Upwards. Oliver, you mixed it up ;)
 		{
 			if(scroll_pos > 0)
 				--scroll_pos;
 		} break;
-	case 1: // Nach oben
+	case 1: // Downwards
 		{
 			if(scroll_pos < scroll_range - pagesize)
 				++scroll_pos;

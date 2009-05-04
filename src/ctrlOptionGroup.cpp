@@ -1,4 +1,4 @@
-// $Id: ctrlOptionGroup.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: ctrlOptionGroup.cpp 4793 2009-05-04 15:37:10Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -127,6 +127,50 @@ bool ctrlOptionGroup::Msg_LeftDown(const MouseCoords& mc)
 bool ctrlOptionGroup::Msg_LeftUp(const MouseCoords& mc)
 {
 	return RelayMouseMessage(&Window::Msg_LeftUp, mc);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author Divan
+ */
+bool ctrlOptionGroup::Msg_WheelUpDown(const MouseCoords& mc)
+{
+	return RelayMouseMessage(&Window::Msg_WheelUpDown,mc);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author Divan
+ */
+bool ctrlOptionGroup::Msg_WheelUpUp(const MouseCoords& mc)
+{
+	return RelayMouseMessage(&Window::Msg_WheelUpUp,mc);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author Divan
+ */
+bool ctrlOptionGroup::Msg_WheelDownDown(const MouseCoords& mc)
+{
+	return RelayMouseMessage(&Window::Msg_WheelDownDown,mc);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author Divan
+ */
+bool ctrlOptionGroup::Msg_WheelDownUp(const MouseCoords& mc)
+{
+	return RelayMouseMessage(&Window::Msg_WheelDownUp,mc);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

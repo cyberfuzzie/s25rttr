@@ -1,4 +1,4 @@
-// $Id: WindowManager.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: WindowManager.cpp 4793 2009-05-04 15:37:10Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -620,6 +620,136 @@ void WindowManager::Msg_RightUp(const MouseCoords& mc)
 	RelayMouseMessage(&Window::Msg_RightUp,mc);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Verarbeitung des Drückens Mausrads hoch.
+ *
+ *  @param[in] mc Mauskoordinaten Struktur
+ *
+ *  @author Divan
+ */
+void WindowManager::Msg_WheelUpDown(const MouseCoords& mc)
+{
+	// ist unser Desktop gültig?
+	if(!desktop)
+		return;
+
+	// haben wir überhaupt fenster?
+	if(!windows.size())
+	{
+		// nein, Msg_LeftDown aufrufen
+		desktop->Msg_WheelUpDown(mc);
+		// und allen unten drunter auch Bescheid sagen
+		desktop->RelayMouseMessage(&Window::Msg_WheelUpDown, mc);
+
+	}
+	else
+	{
+		// Msg_LeftDownaufrufen
+		(*windows.end())->Msg_WheelUpDown(mc);
+
+		// und allen unten drunter auch Bescheid sagen
+		(*windows.end())->RelayMouseMessage(&Window::Msg_WheelUpDown, mc);
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Verarbeitung des Loslassens Mausrads hoch.
+ *
+ *  @param[in] mc Mauskoordinaten Struktur
+ *
+ *  @author Divan
+ */
+void WindowManager::Msg_WheelUpUp(const MouseCoords& mc)
+{
+	// ist unser Desktop gültig?
+	if(!desktop)
+		return;
+
+	// haben wir überhaupt fenster?
+	if(!windows.size())
+	{
+		// nein, Msg_LeftDown aufrufen
+		desktop->Msg_WheelUpUp(mc);
+		// und allen unten drunter auch Bescheid sagen
+		desktop->RelayMouseMessage(&Window::Msg_WheelUpUp, mc);
+
+	}
+	else
+	{
+		// Msg_LeftDownaufrufen
+		(*windows.end())->Msg_WheelUpUp(mc);
+
+		// und allen unten drunter auch Bescheid sagen
+		(*windows.end())->RelayMouseMessage(&Window::Msg_WheelUpUp, mc);
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Verarbeitung des Drückens Mausrads runter.
+ *
+ *  @param[in] mc Mauskoordinaten Struktur
+ *
+ *  @author Divan
+ */
+void WindowManager::Msg_WheelDownUp(const MouseCoords& mc)
+{
+	// ist unser Desktop gültig?
+	if(!desktop)
+		return;
+
+	// haben wir überhaupt fenster?
+	if(!windows.size())
+	{
+		// nein, Msg_LeftDown aufrufen
+		desktop->Msg_WheelDownUp(mc);
+		// und allen unten drunter auch Bescheid sagen
+		desktop->RelayMouseMessage(&Window::Msg_WheelDownUp, mc);
+
+	}
+	else
+	{
+		// Msg_LeftDownaufrufen
+		(*windows.end())->Msg_WheelDownUp(mc);
+
+		// und allen unten drunter auch Bescheid sagen
+		(*windows.end())->RelayMouseMessage(&Window::Msg_WheelDownUp, mc);
+	}
+}
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Verarbeitung des Loslassen Mausrad runter.
+ *
+ *  @param[in] mc Mauskoordinaten Struktur
+ *
+ *  @author Divan
+ */
+void WindowManager::Msg_WheelDownDown(const MouseCoords& mc)
+{
+	// ist unser Desktop gültig?
+	if(!desktop)
+		return;
+
+	// haben wir überhaupt fenster?
+	if(!windows.size())
+	{
+		// nein, Msg_LeftDown aufrufen
+		desktop->Msg_WheelDownDown(mc);
+		// und allen unten drunter auch Bescheid sagen
+		desktop->RelayMouseMessage(&Window::Msg_WheelDownDown, mc);
+
+	}
+	else
+	{
+		// Msg_LeftDownaufrufen
+		(*windows.end())->Msg_WheelDownDown(mc);
+
+		// und allen unten drunter auch Bescheid sagen
+		(*windows.end())->RelayMouseMessage(&Window::Msg_WheelDownDown, mc);
+	}
+}
 ///////////////////////////////////////////////////////////////////////////////
 /**
  *  Verarbeitung des Verschiebens der Maus.

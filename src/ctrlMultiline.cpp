@@ -1,4 +1,4 @@
-// $Id: ctrlMultiline.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: ctrlMultiline.cpp 4793 2009-05-04 15:37:10Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -145,6 +145,54 @@ bool ctrlMultiline::Msg_LeftDown(const MouseCoords& mc)
 bool ctrlMultiline::Msg_LeftUp(const MouseCoords& mc)
 {
 	return GetCtrl<Window>(0)->Msg_LeftUp(mc);
+}
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author Divan
+ */
+bool ctrlMultiline::Msg_WheelUpUp(const MouseCoords& mc)
+{
+	// Forward to ScrollBar
+	ctrlScrollBar *scrollbar = GetCtrl<ctrlScrollBar>(0);
+
+	//If mouse in list
+	if(Coll(mc.x, mc.y, GetX() + 2, GetY() + 2, width - /*2*/2, height - 4))
+	{
+		// Simulate three Button Clicks
+		scrollbar->Msg_ButtonClick(0);
+		scrollbar->Msg_ButtonClick(0);
+		scrollbar->Msg_ButtonClick(0);
+		return true;
+	}
+	else
+		return false;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author Divan
+ */
+bool ctrlMultiline::Msg_WheelDownUp(const MouseCoords& mc)
+{
+	// Forward to ScrollBar
+	ctrlScrollBar *scrollbar = GetCtrl<ctrlScrollBar>(0);
+
+	// If mouse in list
+	if(Coll(mc.x, mc.y, GetX() + 2, GetY() + 2, width - /*2*/2, height - 4))
+	{
+		// Simulate three Button Clicks
+		scrollbar->Msg_ButtonClick(1);
+		scrollbar->Msg_ButtonClick(1);
+		scrollbar->Msg_ButtonClick(1);
+		return true;
+	}
+	else
+		return false;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

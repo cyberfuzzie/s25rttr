@@ -1,4 +1,4 @@
-// $Id: ctrlList.cpp 4784 2009-05-02 20:43:44Z OLiver $
+// $Id: ctrlList.cpp 4793 2009-05-04 15:37:10Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -133,6 +133,44 @@ bool ctrlList::Msg_LeftUp(const MouseCoords& mc)
 	// Für die Scrollbar weiterleiten
 	return scrollbar->Msg_LeftUp(mc);
 } 
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author Divan
+ */
+bool ctrlList::Msg_WheelUpUp(const MouseCoords& mc)
+{
+	// Forward to ScrollBar
+	ctrlScrollBar *scrollbar = GetCtrl<ctrlScrollBar>(0);
+
+	// If mouse in list or scrollbar
+	if(Coll(mc.x, mc.y, GetX() + 2, GetY() + 2, width - /*2*/2, height - 4))
+	{
+		// Simulate Button Click
+		scrollbar->Msg_ButtonClick(0);
+		return true;
+	}
+	else
+		return false;
+}
+
+bool ctrlList::Msg_WheelDownUp(const MouseCoords& mc)
+{
+	// Forward to ScrollBar
+	ctrlScrollBar *scrollbar = GetCtrl<ctrlScrollBar>(0);
+
+	// If mouse in list
+	if(Coll(mc.x, mc.y, GetX() + 2, GetY() + 2, width - /*2*/2, height - 4))
+	{
+		// Simulate Button Click
+		scrollbar->Msg_ButtonClick(1);
+		return true;
+	}
+	else
+		return false;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 /**

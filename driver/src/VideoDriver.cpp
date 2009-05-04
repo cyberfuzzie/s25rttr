@@ -1,4 +1,4 @@
-// $Id: VideoDriver.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: VideoDriver.cpp 4793 2009-05-04 15:37:10Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -350,4 +350,29 @@ bool VideoDriver::GetMouseStateL(void) const
 bool VideoDriver::GetMouseStateR(void) const
 {
 	return mouse_xy.rdown;
+}
+///////////////////////////////////////////////////////////////////////////////
+/** 
+ *  Funktion zum Auslesen ob Rad hoch gedrückt ist.
+ *
+ *  @return @p true bei Gedrückt, @p false bei Losgelassen
+ *
+ *  @author Divan
+ */
+bool VideoDriver::GetMouseStateU(void) const
+{
+	return mouse_xy.wudown;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/** 
+ *  Funktion zum Auslesen ob Rad runter gedrückt ist.
+ *
+ *  @return @p true bei Gedrückt, @p false bei Losgelassen
+ *
+ *  @author Divan
+ */
+bool VideoDriver::GetMouseStateD(void) const
+{
+	return mouse_xy.wddown;
 }

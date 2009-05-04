@@ -1,4 +1,4 @@
-// $Id: Window.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: Window.cpp 4793 2009-05-04 15:37:10Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1161,6 +1161,50 @@ bool Window::Msg_LeftDown_After(const MouseCoords& mc)
  *  @author OLiver
  */
 bool Window::Msg_RightUp(const MouseCoords& mc)
+{
+	return false;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *
+ *
+ *  @author Divan
+ */
+bool Window::Msg_WheelUpDown(const MouseCoords& mc)
+{
+	return false;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *
+ *
+ *  @author Divan
+ */
+bool Window::Msg_WheelUpUp(const MouseCoords& mc)
+{
+	return false;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *
+ *
+ *  @author Divan
+ */
+bool Window::Msg_WheelDownDown(const MouseCoords& mc)
+{
+	return false;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *
+ *
+ *  @author Divan
+ */
+bool Window::Msg_WheelDownUp(const MouseCoords& mc)
 {
 	return false;
 }

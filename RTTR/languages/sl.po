@@ -1,0 +1,1945 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Siedler II.5 RttR\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-04-26 12:13+0100\n"
+"PO-Revision-Date: 2009-05-04 17:45+0100\n"
+"Last-Translator: \n"
+"Language-Team: Siedler II.5 RttR <sf-team@siedler25.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2009-05-02 11:36+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
+"X-Poedit-Language: Slovak\n"
+"X-Poedit-Country: SLOVAKIA\n"
+"X-Poedit-SourceCharset: iso-8859-15\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: /storage/RTTR/svn/trunk/src\n"
+
+#: src/GameClient.cpp:740
+msgid " (AI)"
+msgstr " (AI)"
+
+#: src/dskHostGame.cpp:241
+#: src/dskHostGame.cpp:268
+#, c-format
+msgid "%d"
+msgstr "%d"
+
+#: src/dskSelectMap.cpp:401
+#, c-format
+msgid "%d Player"
+msgstr "%d Hráč"
+
+#: src/dskHostGame.cpp:249
+#: src/dskHostGame.cpp:258
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#: src/iwHQ.cpp:67
+#, c-format
+msgid "%u/%u"
+msgstr "%u/%u"
+
+#: src/iwDirectIPCreate.cpp:75
+msgid "'s Game"
+msgstr "'s hra"
+
+#: src/GameWorldViewer.cpp:222
+#, c-format
+msgid "(%d soldiers)"
+msgstr "(%d vojakov)"
+
+#: src/GameWorldViewer.cpp:220
+msgid "(1 soldier)"
+msgstr "(1 vojak)"
+
+#: src/GameWorldViewer.cpp:189
+msgid "(House unoccupied)"
+msgstr "(Neobsadená budova)"
+
+#: src/dskGameInterface.cpp:185
+#, c-format
+msgid "(Replay-Mode) Current GF: %u (End at: %u) / GF length: %u ms / NWF length: %u gf (%u ms)"
+msgstr "(Replay-Mode) Current GF: %u (End at: %u) / GF length: %u ms / NWF length: %u gf (%u ms)"
+
+#: src/GameWorldViewer.cpp:191
+msgid "(stopped)"
+msgstr "(zastavené)"
+
+#: src/dskHostGame.cpp:251
+#: src/dskHostGame.cpp:260
+msgid "-"
+msgstr "-"
+
+#: src/iwAction.cpp:120
+msgid "-> Build castle"
+msgstr "-> Postaviť hrad"
+
+#: src/iwAction.cpp:100
+#: src/iwAction.cpp:114
+#: src/iwAction.cpp:119
+msgid "-> Build house"
+msgstr "-> Postaviť dom"
+
+#: src/iwAction.cpp:109
+#: src/iwAction.cpp:113
+#: src/iwAction.cpp:118
+msgid "-> Build hut"
+msgstr "-> Postavit chatrč"
+
+#: src/iwAction.cpp:124
+msgid "-> Dig mines"
+msgstr "-> Postaviť baňu"
+
+#: src/dskGameInterface.cpp:799
+#: src/dskGameInterface.cpp:825
+#: src/dskGameInterface.cpp:848
+#, c-format
+msgid "<%s> "
+msgstr "<%s> "
+
+#: src/dskGameInterface.cpp:808
+msgid "A auto-savegame is created..."
+msgstr " auto-save je vytvorená..."
+
+#: src/dskHostGame.cpp:118
+msgid "A lot"
+msgstr "Veľa"
+
+#: src/BuildingConsts.h:470
+msgid "A well supplies water to the bakery, brewery, donkey breeder and pig farm."
+msgstr "Studňa poskytuje vodu pre pekáreň, pivovar, chov somárov a pre prasačiu farmu."
+
+#: src/BuildingConsts.h:342
+msgid "A woodcutter provides the sawmill with logs. A forester is able to replant the depleted forest."
+msgstr "Drevorubač poskytuje polená píle. Lesník vysádza vyrúbaní les novými stromčekami."
+
+#: src/iwMusicPlayer.cpp:45
+msgid "Abort"
+msgstr "Ukončiť"
+
+#: src/iwAction.cpp:67
+msgid "Activity window"
+msgstr "Okno úloh"
+
+#: src/iwMusicPlayer.cpp:76
+msgid "Add"
+msgstr "Vložiť"
+
+#: src/dskLobby.cpp:73
+msgid "Add Server"
+msgstr "Pridať server"
+
+#: src/iwMusicPlayer.cpp:82
+#: src/iwMusicPlayer.cpp:199
+msgid "Add track"
+msgstr "Vložiť záznam"
+
+#: src/dskHostGame.cpp:247
+#: src/dskHostGame.cpp:256
+#: src/dskHostGame.cpp:568
+msgid "Africans"
+msgstr "Afričania"
+
+#: src/iwBuildOrder.cpp:68
+msgid "After the following order"
+msgstr "After the following order"
+
+#: src/iwChat.cpp:53
+msgid "All"
+msgstr "Všetci"
+
+#: src/iwChat.cpp:55
+msgid "Allies"
+msgstr "Spojenci"
+
+#: src/SerializedGameData.cpp:232
+msgid "An error occured while saving which was suppressed!"
+msgstr "An error occured while saving which was suppressed!Vyskytla sa chyba pri ukladaní!"
+
+#: src/dskGameLoader.cpp:167
+msgid "And let's go!"
+msgstr "Do toho!"
+
+#: src/iwPlayReplay.cpp:110
+msgid "Are you sure to remove all replays?"
+msgstr "Vážne chceš odstrániť všetky záznamy?"
+
+#: src/GameConsts.h:305
+msgid "Armorer"
+msgstr "Zbrojmajster"
+
+#: src/iwDistribution.cpp:100
+#: src/iwDistribution.cpp:112
+msgid "Armory"
+msgstr "Zbrojnica"
+
+#: src/iwAction.cpp:223
+msgid "Attack not possible."
+msgstr "Útok nie je možný"
+
+#: src/iwAction.cpp:215
+msgid "Attack options"
+msgstr "Nastavenie útoku"
+
+#: src/iwAction.cpp:248
+msgid "Attack!"
+msgstr "Útok!"
+
+#: src/dskSelectMap.cpp:113
+msgid "Author"
+msgstr "Autor"
+
+#: src/GameClient.cpp:1602
+msgid "Auto-Save"
+msgstr "Automatické ukladanie"
+
+#: src/iwSave.cpp:203
+msgid "Auto-Save every:"
+msgstr "Automaticky uložiť každých:"
+
+#: src/iwTools.cpp:49
+msgid "Axe"
+msgstr "Sekera"
+
+#: src/dskAboutRTTR.cpp:55
+#: src/dskCredits.cpp:56
+#: src/dskDirectIP.cpp:63
+#: src/dskIntro.cpp:55
+#: src/dskLobby.cpp:67
+#: src/dskMultiPlayer.cpp:71
+#: src/dskOptions.cpp:67
+#: src/dskSelectMap.cpp:119
+#: src/dskSinglePlayer.cpp:78
+msgid "Back"
+msgstr "Späť"
+
+#: src/GameConsts.h:296
+msgid "Baker"
+msgstr "Pekár"
+
+#: src/iwDistribution.cpp:144
+msgid "Bakery"
+msgstr "Pekáreň"
+
+#: src/GameConsts.h:206
+msgid "Barracks"
+msgstr "Barracks"
+
+#: src/iwTransport.cpp:59
+msgid "Beer"
+msgstr "Pivo"
+
+#: src/iwDistribution.cpp:125
+msgid "Boards"
+msgstr "Dosky"
+
+#: src/GameConsts.h:134
+msgid "Boat"
+msgstr "Čln"
+
+#: src/iwTransport.cpp:70
+msgid "Boats"
+msgstr "Člny"
+
+#: src/iwMilitary.cpp:54
+msgid "Border areas"
+msgstr "Hranice"
+
+#: src/iwBuildOrder.cpp:61
+msgid "Bottom"
+msgstr "Naspodok"
+
+#: src/iwTools.cpp:59
+msgid "Bow"
+msgstr "Luk"
+
+#: src/GameConsts.h:139
+msgid "Bread"
+msgstr "Chlieb"
+
+#: src/GameConsts.h:299
+msgid "Brewer"
+msgstr "Pivovarník"
+
+#: src/iwDistribution.cpp:92
+#: src/iwDistribution.cpp:148
+msgid "Brewery"
+msgstr "Pivovar"
+
+#: src/iwAction.cpp:168
+#: src/iwAction.cpp:175
+#: src/iwAction.cpp:183
+#: src/iwAction.cpp:187
+msgid "Build road"
+msgstr "Postaviť cestu"
+
+#: src/iwAction.cpp:176
+msgid "Build waterway"
+msgstr "Postaviť plavebnú cestu"
+
+#: src/GameConsts.h:306
+msgid "Builder"
+msgstr "Staviteľ"
+
+#: src/iwBuildings.cpp:76
+msgid "Buildings"
+msgstr "Budovy"
+
+#: src/GameConsts.h:297
+msgid "Butcher"
+msgstr "Mäsiar"
+
+#: src/iwAction.cpp:170
+#: src/iwAction.cpp:178
+msgid "Call in geologist"
+msgstr "Zavolať geológa"
+
+#: src/dskSelectMap.cpp:135
+msgid "Campaign"
+msgstr "Kampaň"
+
+#: src/iwMsgbox.cpp:72
+#: src/iwMsgbox.cpp:87
+msgid "Cancel"
+msgstr "Zrušiť"
+
+#: src/GameConsts.h:291
+msgid "Carpenter"
+msgstr "Tesár"
+
+#: src/GameConsts.h:221
+msgid "Catapult"
+msgstr "Katapult"
+
+#: src/iwMilitary.cpp:53
+msgid "Center of country"
+msgstr "Centrum krajiny"
+
+#: src/iwChat.cpp:46
+msgid "Chat Window"
+msgstr "Chat okno"
+
+#: src/iwDirectIPConnect.cpp:228
+msgid "Checking Map..."
+msgstr "Overujem mapu..."
+
+#: src/iwDirectIPConnect.cpp:227
+msgid "Checking Password..."
+msgstr "Overujem heslo..."
+
+#: src/dskHostGame.cpp:109
+msgid "Classic (Settlers 2)"
+msgstr "Klasické (Settlers 2)"
+
+#: src/dskHostGame.cpp:62
+msgid "Classification"
+msgstr "Klasifikácia"
+
+#: src/iwPlayReplay.cpp:68
+#: src/iwPlayReplay.cpp:110
+msgid "Clear"
+msgstr "Čistý"
+
+#: src/iwTools.cpp:57
+msgid "Cleaver"
+msgstr "Cleaver"
+
+#: src/dskHostGame.cpp:201
+msgid "Closed"
+msgstr "Zatvorené"
+
+#: src/iwDistribution.cpp:109
+msgid "Coal"
+msgstr "Uhlie"
+
+#: src/iwDistribution.cpp:64
+msgid "Coal mine"
+msgstr "Uhoľná baňa"
+
+#: src/iwTransport.cpp:57
+msgid "Coins"
+msgstr "Mince"
+
+#: src/dskHostGame.cpp:66
+msgid "Color"
+msgstr "Farba"
+
+#: src/dskOptions.cpp:75
+msgid "Common"
+msgstr "Spoločný"
+
+#: src/GameClient.cpp:738
+#, c-format
+msgid "Computer %u"
+msgstr "Počítač %u"
+
+#: src/dskLobby.cpp:69
+msgid "Connect"
+msgstr "Pripojiť"
+
+#: src/iwLobbyConnect.cpp:49
+msgid "Connecting to Lobby"
+msgstr "Connecting to lobby"
+
+#: src/iwDirectIPConnect.cpp:143
+#: src/iwLobbyConnect.cpp:197
+#: src/iwLobbyConnect.cpp:213
+msgid "Connecting with Host..."
+msgstr "Connecting with host..."
+
+#: src/iwDirectIPConnect.cpp:149
+#: src/iwLobbyConnect.cpp:206
+#: src/iwLobbyConnect.cpp:228
+msgid "Connection failed!"
+msgstr "Spojenie zlyhalo!"
+
+#: src/iwDirectIPConnect.cpp:214
+msgid "Connection to Host closed!"
+msgstr "Spojenie s hostiteľom zrušené!"
+
+#: src/dskHostGame.cpp:124
+msgid "Conquer 3/4 of map"
+msgstr "Dobyť 3/4 mapy"
+
+#: src/iwDistribution.cpp:128
+msgid "Construction"
+msgstr "Postaviť"
+
+#: src/dskGameInterface.cpp:105
+msgid "Construction aid mode"
+msgstr "Construction aid mode"
+
+#: src/dskSelectMap.cpp:133
+msgid "Continents"
+msgstr "Kontinenty"
+
+#: src/dskSelectMap.cpp:123
+msgid "Continue"
+msgstr "Pokračovať"
+
+#: src/dskDirectIP.cpp:59
+msgid "Create Game"
+msgstr "Vytvoriť hru"
+
+#: src/dskCredits.cpp:62
+#: src/dskMainMenu.cpp:80
+msgid "Credits"
+msgstr "Credits"
+
+#: src/iwTools.cpp:54
+msgid "Crucible"
+msgstr "Kelímok"
+
+#: src/dskGameInterface.cpp:187
+#, c-format
+msgid "Current GF: %u / GF length: %u ms / NWF length: %u gf (%u ms) /  Ping: %u ms"
+msgstr "Current GF: %u / GF length: %u ms / NWF length: %u gf (%u ms) / Ping: %u ms"
+
+#: src/iwBuildOrder.cpp:74
+msgid "Default"
+msgstr "Základné"
+
+#: src/iwAction.cpp:188
+#: src/iwBaseWarehouse.cpp:105
+#: src/iwBuilding.cpp:74
+msgid "Demolish house"
+msgstr "Zničiť budovu"
+
+#: src/iwDemolishBuilding.cpp:43
+msgid "Demolish?"
+msgstr "Zničiť?"
+
+#: src/iwMilitaryBuilding.cpp:172
+msgid "Demolition ist not allowed because the building is located in border area!"
+msgstr "Zničenie nie je možné, budova sa nachádza neďaleko hraníc!"
+
+#: src/iwMilitaryBuilding.cpp:171
+msgid "Demolition ist not allowed because the building is under attack!"
+msgstr "Zničenie nie je možné, budova je pod útokom!"
+
+#: src/iwMilitaryBuilding.cpp:175
+msgid "Demolition not possible"
+msgstr "Zničenie nie je možné"
+
+#: src/dskHostGame.cpp:99
+msgid "Demolition prohibition:"
+msgstr "Zabránenie zničeniu:"
+
+#: src/iwAction.cpp:208
+#: src/iwAction.cpp:210
+msgid "Dig up road"
+msgstr "Odstrániť cestu"
+
+#: src/dskMultiPlayer.cpp:69
+msgid "Direct IP"
+msgstr "Direct IP"
+
+#: src/iwSave.cpp:207
+msgid "Disabled"
+msgstr "Zablokované"
+
+#: src/iwAction.cpp:255
+msgid "Display options"
+msgstr "Zobraziť nastavenia"
+
+#: src/iwDistribution.cpp:45
+#: src/iwMainMenu.cpp:56
+msgid "Distribution of goods"
+msgstr "Preprava tovaru"
+
+#: src/dskCredits.cpp:103
+msgid "Donators"
+msgstr "Sponzori"
+
+#: src/GameConsts.h:301
+msgid "Donkey breeder"
+msgstr "Chovateľ somárov"
+
+#: src/iwDistribution.cpp:88
+#: src/iwDistribution.cpp:156
+msgid "Donkey breeding"
+msgstr "Chov somárov"
+
+#: src/iwBuildOrder.cpp:59
+msgid "Down"
+msgstr "Nižšie"
+
+#: src/iwMusicPlayer.cpp:85
+msgid "Downwards"
+msgstr "Nadol"
+
+#: src/dskOptions.cpp:172
+msgid "Effects"
+msgstr "Efekty"
+
+#: src/iwLobbyConnect.cpp:63
+msgid "Email Address:"
+msgstr "E-mail adresa:"
+
+#: src/iwOptionsWindow.cpp:60
+msgid "End game"
+msgstr "Koniec hry"
+
+#: src/iwEndgame.cpp:48
+msgid "End game?"
+msgstr "Koniec hry?"
+
+#: src/iwChat.cpp:57
+msgid "Enemies"
+msgstr "Nepriatelia"
+
+#: src/iwAction.cpp:162
+#: src/iwAction.cpp:196
+#: src/iwAction.cpp:202
+msgid "Erect flag"
+msgstr "Vztýčiť vlajku"
+
+#: src/dskGameLoader.cpp:191
+#: src/dskHostGame.cpp:462
+#: src/dskHostGame.cpp:774
+#: src/dskHostGame.cpp:788
+#: src/dskLobby.cpp:315
+#: src/dskSelectMap.cpp:346
+#: src/dskSelectMap.cpp:360
+msgid "Error"
+msgstr "Chyba"
+
+#: src/iwPlayReplay.cpp:93
+msgid "Error while opening file!"
+msgstr "Chyba pri ováraní súboru!"
+
+#: src/iwPlayReplay.cpp:92
+#: src/iwPlayReplay.cpp:102
+msgid "Error while playing replay!"
+msgstr "Chyba pri prehrávaní záznamu!"
+
+#: src/iwPlayReplay.cpp:95
+msgid "Error: Replay is too old!"
+msgstr "Chyba: Záznam je pristarý"
+
+#: src/dskHostGame.cpp:106
+msgid "Exploration:"
+msgstr "Skúmať:"
+
+#: src/dskGameLoader.cpp:143
+msgid "Failed to load map objects."
+msgstr "Chyba pri nahrávaní objektov."
+
+#: src/dskGameLoader.cpp:155
+msgid "Failed to load terrain data."
+msgstr "Chyba pri nahrávaní terénu."
+
+#: src/GameConsts.h:242
+msgid "Farm"
+msgstr "Farma"
+
+#: src/GameConsts.h:294
+msgid "Farmer"
+msgstr "Farmár"
+
+#: src/dskHostGame.cpp:133
+msgid "Fast"
+msgstr "Rýchlo"
+
+#: src/iwMilitary.cpp:50
+msgid "Fewer defenders"
+msgstr "Menej obrancov"
+
+#: src/iwMilitary.cpp:48
+msgid "Fewer recruits"
+msgstr "Menej nováčikov"
+
+#: src/iwTextfile.cpp:71
+msgid "File was not found!"
+msgstr "Súbor nenájdený"
+
+#: src/iwPlayReplay.cpp:63
+#: src/iwSave.cpp:67
+msgid "Filename"
+msgstr "Názov súboru"
+
+#: src/GameConsts.h:138
+msgid "Fish"
+msgstr "Ryba"
+
+#: src/GameConsts.h:289
+msgid "Fisher"
+msgstr "Rybár"
+
+#: src/GameConsts.h:223
+msgid "Fishery"
+msgstr "Rybárska chatrč"
+
+#: src/GameConsts.h:137
+msgid "Flour"
+msgstr "Múka"
+
+#: src/dskHostGame.cpp:111
+msgid "FoW - all explored"
+msgstr "FoW - všetko preskúmané"
+
+#: src/dskHostGame.cpp:110
+msgid "Fog of War"
+msgstr "Nejasná situácia"
+
+#: src/iwTransport.cpp:68
+msgid "Food"
+msgstr "Jedlo"
+
+#: src/iwDistribution.cpp:58
+msgid "Foodstuff"
+msgstr "Potraviny"
+
+#: src/GameConsts.h:225
+msgid "Forester"
+msgstr "Lesnícka búda"
+
+#: src/GameConsts.h:214
+msgid "Fortress"
+msgstr "Pevnosť"
+
+#: src/BuildingConsts.h:326
+msgid "From the lookout tower you can see far into previously unexplored lands."
+msgstr "Z pozorovateľne dovidíš na miesta ktoré ešte neboli preskúmané."
+
+#: src/dskOptions.cpp:111
+msgid "Fullscreen"
+msgstr "Celá obrazovka"
+
+#: src/dskHostGame.cpp:462
+msgid "Game can only be started as soon as everybody has a unique color,everyone is ready and all free slots are closed."
+msgstr "Hra može byť spustená iba v prípade že, každý hráč bude mať jedinečú farbu, každý bude pripravený a všetky voľné sloty budú uzatvorené."
+
+#: src/dskGameLoader.cpp:147
+msgid "Game crate was picked and spread out..."
+msgstr "The Game crate was picked and spread out..."
+
+#: src/iwOptionsWindow.cpp:57
+msgid "Game menu"
+msgstr "Game menu"
+
+#: src/dskCredits.cpp:74
+msgid "Game testers"
+msgstr "Hru testovali"
+
+#: src/dskGameInterface.cpp:826
+msgid "Game was paused."
+msgstr "Hra bola pozastavená."
+
+#: src/dskGameInterface.cpp:849
+msgid "Game was resumed."
+msgstr "Hra bola obnovená."
+
+#: src/iwDirectIPCreate.cpp:55
+msgid "Game's Name:"
+msgstr "Názov hry:"
+
+#: src/GameConsts.h:312
+msgid "General"
+msgstr "General"
+
+#: src/iwMainMenu.cpp:63
+msgid "General statistics"
+msgstr "Základné štatistiky"
+
+#: src/GameConsts.h:313
+msgid "Geologist"
+msgstr "Geológ"
+
+#: src/iwAction.cpp:259
+msgid "Go to headquarters"
+msgstr "Choď do základne"
+
+#: src/iwBaseWarehouse.cpp:72
+#: src/iwBuilding.cpp:80
+#: src/iwBuildingSite.cpp:65
+msgid "Go to place"
+msgstr "Choď"
+
+#: src/dskHostGame.cpp:121
+msgid "Goals:"
+msgstr "Úlohy:"
+
+#: src/iwTransport.cpp:61
+msgid "Gold"
+msgstr "Zlato"
+
+#: src/iwDistribution.cpp:72
+msgid "Gold mine"
+msgstr "Zlatá baňa"
+
+#: src/dskHostGame.cpp:114
+msgid "Goods at start:"
+msgstr "Počiatočné suroviny:"
+
+#: src/iwDistribution.cpp:77
+msgid "Grain"
+msgstr "Obilie"
+
+#: src/BuildingConsts.h:414
+msgid "Grain and water are needed for rearing pigs. The meat thus obtained can then be processed by a butcher."
+msgstr "Voda a obilie sú potrebné pre chov prasiat. Prastá z farmy sa spracúvajú u mäsiara."
+
+#: src/iwDistribution.cpp:60
+msgid "Granite mine"
+msgstr "Granitová baňa"
+
+#: src/dskOptions.cpp:77
+msgid "Graphics"
+msgstr "Grafika"
+
+#: src/dskOptions.cpp:135
+msgid "Graphics Driver"
+msgstr "Grafický ovládač"
+
+#: src/dskSelectMap.cpp:406
+msgid "Greenland"
+msgstr "Greenland"
+
+#: src/GameConsts.h:207
+msgid "Guardhouse"
+msgstr "Strážnica"
+
+#: src/GameConsts.h:152
+msgid "Ham"
+msgstr "Prasatá"
+
+#: src/iwTools.cpp:52
+msgid "Hammer"
+msgstr "Kladivo"
+
+#: src/GameConsts.h:244
+msgid "Harbor building"
+msgstr "Harbour Building"
+
+#: src/iwHQ.cpp:45
+msgid "Headquarters"
+msgstr "Hlavný stan"
+
+#: src/iwBuilding.cpp:72
+#: src/iwBuildingProductivities.cpp:103
+#: src/iwBuildings.cpp:89
+msgid "Help"
+msgstr "Pomoc"
+
+#: src/GameConsts.h:287
+msgid "Helper"
+msgstr "Pomocník"
+
+#: src/iwLobbyServerInfo.cpp:79
+msgid "Host:"
+msgstr "Host:"
+
+#: src/iwAction.cpp:258
+msgid "House names"
+msgstr "Názov budovy"
+
+#: src/GameConsts.h:227
+msgid "Hunter"
+msgstr "Polovník"
+
+#: src/GameConsts.h:293
+msgid "Huntsman"
+msgstr "Huntsman"
+
+#: src/dskLobby.cpp:76
+msgid "ID"
+msgstr "ID"
+
+#: src/iwDirectIPConnect.cpp:54
+msgid "IP Address of Host:"
+msgstr "IP address of host:"
+
+#: src/dskSelectMap.cpp:340
+msgid "Incomplete message was received!"
+msgstr "Incomplete message was received!Bola prijatá neúplná správa!"
+
+#: src/iwMilitary.cpp:52
+msgid "Interior"
+msgstr "Vnútrozemie"
+
+#: src/dskMultiPlayer.cpp:65
+msgid "Internet Lobby"
+msgstr "Internetová miestnosť"
+
+#: src/dskLobby.cpp:71
+msgid "Internet Ranking"
+msgstr "Hodnotenie"
+
+#: src/iwRoadWindow.cpp:51
+#, fuzzy
+msgid "Interrupt road building"
+msgstr "Interrupt road building"
+
+#: src/dskMainMenu.cpp:78
+msgid "Intro"
+msgstr "Intro"
+
+#: src/iwPlayReplay.cpp:94
+msgid "Invalid Replay!"
+msgstr "Neplatný Záznam!"
+
+#: src/iwDirectIPConnect.cpp:135
+#: src/iwDirectIPCreate.cpp:152
+msgid "Invalid port. The valid port-range is 1 to 65535!"
+msgstr "Neplatný port. Port musí byť v rozsahu 1 až 65535!"
+
+#: src/iwDistribution.cpp:97
+msgid "Iron"
+msgstr "Železo"
+
+#: src/GameConsts.h:302
+msgid "Iron founder"
+msgstr "Hútnik"
+
+#: src/iwDistribution.cpp:68
+msgid "Iron mine"
+msgstr "Železorudná baňa"
+
+#: src/iwTransport.cpp:62
+msgid "Iron ore"
+msgstr "Železná ruda"
+
+#: src/iwDistribution.cpp:116
+msgid "Iron smelter"
+msgstr "Zlievareň"
+
+#: src/BuildingConsts.h:476
+msgid "It is possible to build small rowing boats as well as huge cargo ships in a shipyard. The boards required for this are skillfully worked by shipwrights."
+msgstr "V lodenici sa vyrábajú člnky a veľké prepravné lode.Pre výrobu člnov a lodí sú potrebne dosky."
+
+#: src/dskHostGame.cpp:568
+msgid "Japaneses"
+msgstr "Japonec"
+
+#: src/dskDirectIP.cpp:60
+msgid "Join Game"
+msgstr "Pripojiť sa"
+
+#: src/dskGameInterface.cpp:473
+msgid "Keyboard layout"
+msgstr "Klávesové skratky"
+
+#: src/dskOptions.cpp:105
+msgid "Keyboard layout:"
+msgstr "Klávesové skratky:"
+
+#: src/dskOptions.cpp:91
+msgid "Language:"
+msgstr "Jazyk:"
+
+#: src/iwPlayReplay.cpp:63
+msgid "Length"
+msgstr "Dľžka"
+
+#: src/ctrlProgress.cpp:61
+msgid "Less"
+msgstr "Menej"
+
+#: src/iwAction.cpp:230
+msgid "Less attackers"
+msgstr "Menej útočníkov"
+
+#: src/iwTools.cpp:48
+#: src/iwTools.cpp:49
+#: src/iwTools.cpp:50
+#: src/iwTools.cpp:51
+#: src/iwTools.cpp:52
+#: src/iwTools.cpp:53
+#: src/iwTools.cpp:54
+#: src/iwTools.cpp:55
+#: src/iwTools.cpp:56
+#: src/iwTools.cpp:57
+#: src/iwTools.cpp:58
+#: src/iwTools.cpp:59
+msgid "Less often"
+msgstr "Menej často"
+
+#: src/iwMusicPlayer.cpp:87
+msgid "Less repeats"
+msgstr "Zriedkavejšie"
+
+#: src/iwMusicPlayer.cpp:79
+msgid "Load"
+msgstr "Načítať"
+
+#: src/iwOptionsWindow.cpp:76
+msgid "Load 'ReadMe' file"
+msgstr "Načitať 'ReadMe' súbor"
+
+#: src/dskSinglePlayer.cpp:75
+msgid "Load game"
+msgstr "Načitať hru"
+
+#: src/iwOptionsWindow.cpp:80
+#: src/iwSave.cpp:258
+msgid "Load game!"
+msgstr "Načitať hru!"
+
+#: src/dskSelectMap.cpp:121
+msgid "Load game..."
+msgstr "Načítavam hru..."
+
+#: src/dskHostGame.cpp:91
+msgid "Lock teams:"
+msgstr "Uzamknúť tímy:"
+
+#: src/GameConsts.h:219
+msgid "Lookout tower"
+msgstr "Pozorovateľňa"
+
+#: src/iwLobbyRanking.cpp:80
+msgid "Lost"
+msgstr "Stratený"
+
+#: src/dskGameInterface.cpp:877
+#: src/dskLobby.cpp:315
+msgid "Lost connection to lobby!"
+msgstr "Zlyhalo spojenie s miestnostou!"
+
+#: src/dskGameInterface.cpp:863
+#: src/dskHostGame.cpp:774
+#: src/dskSelectMap.cpp:343
+msgid "Lost connection to server!"
+msgstr "Zlyhalo spojenie so serverom!"
+
+#: src/dskHostGame.cpp:116
+msgid "Low"
+msgstr "Málo"
+
+#: src/dskGameInterface.cpp:103
+msgid "Main selection"
+msgstr "Hlavné úlohy"
+
+#: src/dskGameInterface.cpp:101
+#: src/dskLobby.cpp:76
+msgid "Map"
+msgstr "Mapa"
+
+#: src/iwLobbyServerInfo.cpp:75
+msgid "Map Name:"
+msgstr "Názov mapy:"
+
+#: src/dskGameLoader.cpp:125
+msgid "Map was loaded and pinned at the wall..."
+msgstr "Map has been loaded and pinned at the wall...Mapa bola načítaná a pripnutá na stenu..."
+
+#: src/dskHostGame.cpp:149
+#: src/dskSelectMap.cpp:144
+msgid "Map: "
+msgstr "Mapa: "
+
+#: src/GameConsts.h:151
+msgid "Meat"
+msgstr "Mäso"
+
+#: src/BuildingConsts.h:377
+msgid "Meat the hunter acquires is used to feed the miners."
+msgstr "Poľovník loví divú zver z ktoréj získava mäso."
+
+#: src/iwMainMenu.cpp:64
+msgid "Merchandise statistics"
+msgstr "Štatistika výrobkov"
+
+#: src/iwDistribution.cpp:104
+#: src/iwDistribution.cpp:132
+msgid "Metalworker"
+msgstr "Kováč"
+
+#: src/GameConsts.h:230
+msgid "Metalworks"
+msgstr "Kovodieľňa"
+
+#: src/iwMainMenu.cpp:73
+#: src/iwMilitary.cpp:44
+msgid "Military"
+msgstr "Armáda"
+
+#: src/iwDistribution.cpp:80
+msgid "Mill"
+msgstr "Mlyn"
+
+#: src/GameConsts.h:295
+msgid "Miller"
+msgstr "Mlynár"
+
+#: src/GameConsts.h:298
+msgid "Miner"
+msgstr "Baník"
+
+#: src/iwDistribution.cpp:120
+msgid "Mint"
+msgstr "Mincovňa"
+
+#: src/GameConsts.h:303
+msgid "Minter"
+msgstr "Zlatník"
+
+#: src/dskOptions.cpp:109
+msgid "Mode:"
+msgstr "Mód"
+
+#: src/ctrlProgress.cpp:62
+msgid "More"
+msgstr "Viac"
+
+#: src/iwAction.cpp:231
+msgid "More attackers"
+msgstr "Viac útočníkov"
+
+#: src/iwMilitary.cpp:50
+msgid "More defenders"
+msgstr "Viac obrancov"
+
+#: src/iwTools.cpp:48
+#: src/iwTools.cpp:49
+#: src/iwTools.cpp:50
+#: src/iwTools.cpp:51
+#: src/iwTools.cpp:52
+#: src/iwTools.cpp:53
+#: src/iwTools.cpp:54
+#: src/iwTools.cpp:55
+#: src/iwTools.cpp:56
+#: src/iwTools.cpp:57
+#: src/iwTools.cpp:58
+#: src/iwTools.cpp:59
+msgid "More often"
+msgstr "Častejšie"
+
+#: src/iwMilitary.cpp:48
+msgid "More recruits"
+msgstr "Viac nováčikov"
+
+#: src/iwMusicPlayer.cpp:88
+msgid "More repeats"
+msgstr "Častejšie"
+
+#: src/dskMainMenu.cpp:74
+msgid "Multiplayer"
+msgstr "Viac hráčov"
+
+#: src/dskOptions.cpp:163
+msgid "Music"
+msgstr "Hudba"
+
+#: src/dskOptions.cpp:181
+msgid "Music player"
+msgstr "Hudobný prehrávač"
+
+#: src/dskLobby.cpp:78
+#: src/dskSelectMap.cpp:113
+msgid "Name"
+msgstr "Názov"
+
+#: src/dskOptions.cpp:87
+msgid "Name in Game:"
+msgstr "Meno v hre:"
+
+#: src/dskHostGame.cpp:103
+msgid "Near frontiers"
+msgstr "Blízko hraníc"
+
+#: src/dskMultiPlayer.cpp:67
+msgid "Network/LAN"
+msgstr "Internet/LAN"
+
+#: src/dskSelectMap.cpp:129
+msgid "New maps"
+msgstr "Nové mapy"
+
+#: src/iwWares.cpp:167
+msgid "Next page"
+msgstr "Ďalšia strana"
+
+#: src/iwLobbyConnect.cpp:71
+msgid "No"
+msgstr "Nie"
+
+#: src/iwPostWindow.cpp:55
+msgid "No letters!"
+msgstr "Ždiadne správy!"
+
+#: src/dskHostGame.cpp:123
+msgid "None"
+msgstr "Nič"
+
+#: src/dskHostGame.cpp:117
+#: src/dskHostGame.cpp:132
+msgid "Normal"
+msgstr "Normal"
+
+#: src/dskSinglePlayer.cpp:97
+msgid "Not available"
+msgstr "nie je k dispozícii"
+
+#: src/GameClientGF_Replay.cpp:120
+#, c-format
+msgid "Notice: The played replay has ended. (GF: %u)"
+msgstr "Poznámka: záznam skončil. (GF: %u)"
+
+#: src/iwAction.cpp:245
+msgid "Number of attackers"
+msgstr "Počet útočníkov"
+
+#: src/iwMsgbox.cpp:65
+#: src/iwMsgbox.cpp:71
+#: src/iwMusicPlayer.cpp:44
+#: src/iwSkipGFs.cpp:54
+msgid "OK"
+msgstr "Ok"
+
+#: src/iwAction.cpp:257
+msgid "Observation window"
+msgstr "Okno sledovania"
+
+#: src/dskHostGame.cpp:101
+#: src/dskOptions.cpp:122
+#: src/dskOptions.cpp:132
+#: src/dskOptions.cpp:166
+#: src/dskOptions.cpp:175
+msgid "Off"
+msgstr "Vypnuté"
+
+#: src/dskHostGame.cpp:108
+msgid "Off (all visible)"
+msgstr "Vypnuté (všetko viditeľné)"
+
+#: src/GameConsts.h:311
+msgid "Officer"
+msgstr "Dôstojník"
+
+#: src/dskSelectMap.cpp:127
+msgid "Old maps"
+msgstr "Staré mapy"
+
+#: src/dskOptions.cpp:121
+#: src/dskOptions.cpp:131
+#: src/dskOptions.cpp:165
+#: src/dskOptions.cpp:174
+msgid "On"
+msgstr "Zapnuté"
+
+#: src/dskHostGame.cpp:196
+msgid "Open"
+msgstr "Otvoriť"
+
+#: src/dskMainMenu.cpp:76
+#: src/dskOptions.cpp:70
+msgid "Options"
+msgstr "Nastavenia"
+
+#: src/iwBuildingSite.cpp:57
+#, fuzzy
+msgid "Order of building site"
+msgstr "Order of building site"
+
+#: src/dskSelectMap.cpp:139
+msgid "Other"
+msgstr "Ostatné"
+
+#: src/dskCredits.cpp:82
+msgid "Other Support"
+msgstr "Podpora"
+
+#: src/iwMinimap.cpp:53
+#, fuzzy
+msgid "Outline map"
+msgstr "Outline map"
+
+#: src/dskSelectMap.cpp:131
+msgid "Own maps"
+msgstr "Vlastné mapy"
+
+#: src/GameConsts.h:316
+msgid "Pack donkey"
+msgstr "Somáre"
+
+#: src/iwDirectIPConnect.cpp:62
+msgid "Password (if needed):"
+msgstr "Heslo (ak je potrebné):"
+
+#: src/iwDirectIPCreate.cpp:63
+#: src/iwLobbyConnect.cpp:58
+msgid "Password:"
+msgstr "Heslo:"
+
+#: src/dskHostGame.cpp:75
+#, fuzzy
+msgid "Past player"
+msgstr "Past player"
+
+#: src/iwTools.cpp:51
+msgid "Pick-axe"
+msgstr "Sekera"
+
+#: src/GameConsts.h:300
+msgid "Pig breeder"
+msgstr "Chovateľ prasiat"
+
+#: src/iwDistribution.cpp:84
+#: src/iwDistribution.cpp:152
+msgid "Pig farm"
+msgstr "Prasačia farma"
+
+#: src/dskHostGame.cpp:72
+#: src/dskLobby.cpp:76
+#, fuzzy
+msgid "Ping"
+msgstr "Ping"
+
+#: src/GameConsts.h:307
+#, fuzzy
+msgid "Planer"
+msgstr "Planer"
+
+#: src/dskSinglePlayer.cpp:69
+msgid "Play Replay"
+msgstr "Prehrať záznam"
+
+#: src/iwMusicPlayer.cpp:89
+#: src/iwMusicPlayer.cpp:257
+msgid "Playback in this order"
+msgstr "Playback in this order"
+
+#: src/dskSelectMap.cpp:141
+msgid "Played"
+msgstr "Posledná hra"
+
+#: src/dskLobby.cpp:76
+#: src/dskSelectMap.cpp:113
+msgid "Player"
+msgstr "Hráč"
+
+#: src/dskGameInterface.cpp:792
+#, c-format
+msgid "Player '%s' joined the game!"
+msgstr "Hráč '%s' sa pripojil do hry!"
+
+#: src/dskGameInterface.cpp:789
+#, c-format
+msgid "Player '%s' left the game!"
+msgstr "Hráč '%s' opustil hru!"
+
+#: src/dskGameInterface.cpp:895
+#, c-format
+msgid "Player '%s' switched to player '%s'"
+msgstr "Hráč '%s' sa premenoval na '%s'"
+
+#: src/dskGameInterface.cpp:913
+#, c-format
+msgid "Player '%s' was defeated!"
+msgstr "Hráč '%s' bol porazený!"
+
+#: src/dskHostGame.cpp:60
+msgid "Player Name"
+msgstr "Názov hráča"
+
+#: src/iwMusicPlayer.cpp:70
+msgid "Playlist:"
+msgstr "Playlist:"
+
+#: src/iwDirectIPCreate.cpp:144
+msgid "Please enter a name for the game"
+msgstr "Prosím vložte názov hry."
+
+#: src/iwLobbyConnect.cpp:222
+#, fuzzy
+msgid "Please fill out all fields!"
+msgstr "Please fill out all fields!"
+
+#: src/dskSelectMap.cpp:91
+#: src/dskSelectMap.cpp:93
+msgid "Please wait..."
+msgstr "Prosim počkajte..."
+
+#: src/dskLobby.cpp:78
+msgid "Points"
+msgstr "Body"
+
+#: src/dskGameInterface.cpp:107
+msgid "Post office"
+msgstr "Poštová schránka"
+
+#: src/GameConsts.h:308
+msgid "Private"
+msgstr "Vojak"
+
+#: src/GameConsts.h:309
+msgid "Private first class"
+msgstr "Slobodník"
+
+#: src/iwBuildingProductivities.cpp:82
+msgid "Productivity"
+msgstr "Produktivita"
+
+#: src/iwPlayReplay.cpp:96
+#, fuzzy
+msgid "Program version is too old to play that replay!"
+msgstr "Program version is too old to play that replay!"
+
+#: src/dskCredits.cpp:67
+#, fuzzy
+msgid "Programming"
+msgstr "Programming"
+
+#: src/iwAction.cpp:169
+#: src/iwAction.cpp:177
+msgid "Pull down flag"
+msgstr "Odstrániť vlajku"
+
+#: src/GameConsts.h:224
+msgid "Quarry"
+msgstr "Kameňolom"
+
+#: src/dskMainMenu.cpp:82
+msgid "Quit program"
+msgstr "Skončiť program"
+
+#: src/dskSelectMap.cpp:137
+msgid "RTTR"
+msgstr "RTTR"
+
+#: src/dskHostGame.cpp:64
+msgid "Race"
+msgstr "Rasa"
+
+#: src/iwMusicPlayer.cpp:257
+msgid "Random playback"
+msgstr "Náhodný záznam"
+
+#: src/GameConsts.h:290
+msgid "Ranger"
+msgstr "Lesník"
+
+#: src/BuildingConsts.h:402
+msgid "Raw iron ore is smelted in the iron smelters with the help of coal and raw iron. The processed iron is then used to making weapons (in the Armory) and tools (in the metalworks)."
+msgstr "Raw iron ore is smelted in the iron smelters with the help of coal and raw iron. The processed iron is then used to making weapons (in the Armoury) and tools (in the metalworks).Surová železná ruda a uhlie sú potrebné na výrobu železa. Vyrobené železo sa použiva na výrobu zbraní (v Zbrojnici) a na výrobu nástrojov (v Kovodielni)."
+
+#: src/dskGameInterface.cpp:477
+msgid "Readme!"
+msgstr "Čítaj ma!"
+
+#: src/dskHostGame.cpp:70
+msgid "Ready?"
+msgstr "Pripravený?"
+
+#: src/iwLobbyConnect.cpp:79
+msgid "Register"
+msgstr "Registrovať"
+
+#: src/iwLobbyConnect.cpp:302
+msgid "Registration successful!"
+msgstr "Registrácia prebehla v poriadku!"
+
+#: src/iwMusicPlayer.cpp:77
+msgid "Remove"
+msgstr "Odstrániť"
+
+#: src/iwMusicPlayer.cpp:83
+msgid "Remove track"
+msgstr "Odstrániť záznam"
+
+#: src/iwHQ.cpp:51
+msgid "Reserve"
+msgstr "Rezervovať"
+
+#: src/dskOptions.cpp:105
+msgid "Resolution:"
+msgstr "Rozlíšenie:"
+
+#: src/dskSinglePlayer.cpp:66
+msgid "Resume last game"
+msgstr "Obnoviť poslednú hru"
+
+#: src/dskHostGame.cpp:88
+msgid "Return"
+msgstr "Návrat"
+
+#: src/iwTools.cpp:55
+msgid "Rod and line"
+msgstr "Udica"
+
+#: src/iwTools.cpp:58
+#, fuzzy
+msgid "Rolling pin"
+msgstr "Rolling pin"
+
+#: src/dskHostGame.cpp:568
+msgid "Romans"
+msgstr "Rimania"
+
+#: src/dskGameInterface.cpp:825
+#: src/dskGameInterface.cpp:848
+msgid "SYSTEM"
+msgstr "SYSTEM"
+
+#: src/iwMusicPlayer.cpp:78
+msgid "Save"
+msgstr "Uložiť"
+
+#: src/iwLobbyConnect.cpp:68
+msgid "Save Password?"
+msgstr "Uložiť heslo?"
+
+#: src/iwOptionsWindow.cpp:84
+#: src/iwSave.cpp:197
+msgid "Save game!"
+msgstr "Uložiť hru!"
+
+#: src/iwTools.cpp:50
+msgid "Saw"
+msgstr "Pílka"
+
+#: src/GameConsts.h:238
+msgid "Sawmill"
+msgstr "Píla"
+
+#: src/GameConsts.h:315
+msgid "Scout"
+msgstr "Skaut"
+
+#: src/iwTools.cpp:56
+msgid "Scythe"
+msgstr "Kosa"
+
+#: src/iwBaseWarehouse.cpp:70
+msgid "Select all"
+msgstr "Vybrať všetko"
+
+#: src/dskSelectMap.cpp:116
+msgid "Selection of maps"
+msgstr "Výber mapy"
+
+#: src/iwAction.cpp:171
+#: src/iwAction.cpp:179
+msgid "Send out scout"
+msgstr "Vyslať skauta"
+
+#: src/iwBuildOrder.cpp:67
+#, fuzzy
+msgid "Sequence of given order"
+msgstr "Sequence of given order"
+
+#: src/GameConsts.h:310
+msgid "Sergeant"
+msgstr "Seržant"
+
+#: src/iwBuildOrder.cpp:44
+#, fuzzy
+msgid "Series sequence"
+msgstr "Series sequence"
+
+#: src/dskLobby.cpp:76
+msgid "Server"
+msgstr "Server"
+
+#: src/iwLobbyServerInfo.cpp:73
+msgid "Server Information"
+msgstr "Inforácie o serveri"
+
+#: src/iwLobbyServerInfo.cpp:77
+msgid "Server Name:"
+msgstr "Názov serveru:"
+
+#: src/iwDirectIPConnect.cpp:58
+#: src/iwDirectIPCreate.cpp:59
+msgid "Server-Port:"
+msgstr "port Serveru:"
+
+#: src/dskHostGame.cpp:93
+msgid "Shared team view"
+msgstr "Tímové odhalenie:"
+
+#: src/GameConsts.h:140
+msgid "Shield"
+msgstr "Štít"
+
+#: src/iwMainMenu.cpp:75
+msgid "Ship register"
+msgstr "Zoznam lodí"
+
+#: src/GameConsts.h:314
+msgid "Shipwright"
+msgstr "Staviteľ lodí"
+
+#: src/iwDistribution.cpp:136
+msgid "Shipyard"
+msgstr "Lodenica"
+
+#: src/iwTools.cpp:53
+msgid "Shovel"
+msgstr "Lopata"
+
+#: src/dskMainMenu.cpp:72
+msgid "Singleplayer"
+msgstr "Hra jedného hráča"
+
+#: src/dskSinglePlayer.cpp:97
+msgid "Singleplayer mode and AI are not yet implemented. Please use the Multiplayer mode and 'Direct IP' to create a Singleplayer game."
+msgstr "Singleplayer mode and AI are not yet implemented. Please use the Multiplayer mode and 'Direct IP' to create a Singleplayer game.Hra jedného hráča a hra proti počítači momentálne nefungujú. Prosím použite hru viacerých hráčou a \"Direct IP\" pre vytvorenie hry jedného hráča."
+
+#: src/dskSelectMap.cpp:113
+msgid "Size"
+msgstr "Rozmer"
+
+#: src/iwSkipGFs.cpp:44
+#, fuzzy
+msgid "Skip GameFrames"
+msgstr "Skip GameFrames"
+
+#: src/GameConsts.h:226
+msgid "Slaughterhouse"
+msgstr "Mäsiareň"
+
+#: src/dskHostGame.cpp:131
+msgid "Slow"
+msgstr "Pomaly"
+
+#: src/dskOptions.cpp:79
+msgid "Sound/Music"
+msgstr "Zvuky/Hudba"
+
+#: src/dskOptions.cpp:149
+msgid "Sounddriver"
+msgstr "Zvukový ovládač"
+
+#: src/iwMusicPlayer.cpp:126
+#, fuzzy
+msgid "Specify the playlist name"
+msgstr "Specify the playlist name"
+
+#: src/dskHostGame.cpp:128
+msgid "Speed:"
+msgstr "Rýchlosť:"
+
+#: src/iwDirectIPCreate.cpp:70
+msgid "Start"
+msgstr "Štart"
+
+#: src/iwSave.cpp:67
+msgid "Start GF"
+msgstr "Start GF"
+
+#: src/dskHostGame.cpp:83
+#: src/dskSinglePlayer.cpp:72
+msgid "Start game"
+msgstr "Spustiť hru"
+
+#: src/iwInventory.cpp:46
+#: src/iwMainMenu.cpp:68
+msgid "Stock"
+msgstr "Sklad"
+
+#: src/iwPlayReplay.cpp:63
+#, fuzzy
+msgid "Stocktaking date"
+msgstr "Stocktaking date"
+
+#: src/GameConsts.h:292
+msgid "Stonemason"
+msgstr "Kamenár"
+
+#: src/iwTransport.cpp:65
+msgid "Stones"
+msgstr "Kamene"
+
+#: src/iwBaseWarehouse.cpp:65
+msgid "Stop storage"
+msgstr "Pozastaviť skladovanie"
+
+#: src/iwStorehouse.cpp:43
+msgid "Storehouse"
+msgstr "Sklad"
+
+#: src/iwAction.cpp:236
+msgid "Strong attackers"
+msgstr "Silní útočníci"
+
+#: src/iwMilitary.cpp:49
+msgid "Strong defense"
+msgstr "Silná obrana"
+
+#: src/GameConsts.h:135
+msgid "Sword"
+msgstr "Meč"
+
+#: src/languages.cpp:71
+msgid "System language"
+msgstr "Systémový jazyk"
+
+#: src/iwBaseWarehouse.cpp:63
+msgid "Take out of store"
+msgstr "Von zo skladu"
+
+#: src/dskHostGame.cpp:68
+msgid "Team"
+msgstr "Tím"
+
+#: src/iwPlayReplay.cpp:98
+#, fuzzy
+msgid "Temporary map file was not found!"
+msgstr "Temporary map file was not found!"
+
+#: src/dskCredits.cpp:112
+msgid "Thank you for your donations!"
+msgstr "Dakujeme za Vaše príspevky!"
+
+#: src/BuildingConsts.h:335
+msgid "Thanks to its immense strength, the catapults represents an effective weapon against enemy military buildings."
+msgstr "Sila katapultu je nesporná. Katapult je efektívna zbran proti nepriateľským budovám."
+
+#: src/dskGameInterface.cpp:806
+msgid "The Game is not in sync. Checksums of some players don't match."
+msgstr "Kontrolný súčet jedného z hráčov je neplatný, hra je nesynchronizovaná."
+
+#: src/dskCredits.cpp:59
+msgid "The Settlers II.5 RTTR"
+msgstr "The Settlers II.5 RTTR"
+
+#: src/dskDirectIP.cpp:51
+#: src/dskLobby.cpp:60
+#: src/dskMainMenu.cpp:65
+#: src/dskMultiPlayer.cpp:58
+#: src/dskSinglePlayer.cpp:59
+#, c-format
+msgid "The Settlers II.5 RTTR, v%s-%s"
+msgstr "The Settlers II.5 RTTR, v%s-%s"
+
+#: src/BuildingConsts.h:389
+msgid "The armory produces swords and strong shields. This equipment is vital for your soldiers."
+msgstr "Skúsený zbrojmajster kuje meče a štíty. Tie potrebujú Vaši nováčikovia aby sa stali plnohodnotnými vojakmi."
+
+#: src/BuildingConsts.h:255
+msgid "The barracks is a very small hut which can be used by your soldiers as quarters. Using the gold coin button you can stop the delivery of gold coins to the soldiers stationed here. However, without gold coins the soldiers here can not train and improve their skills."
+msgstr "Kasárne su veľmi malé, pojmú len dvoch vojakov. Ich výhodou je, že na stavbu stačia iba dosky. Použitím tlačitka mince sa zastaví alebo povolí prísun mincí do strážnice, prísunom mincí zvyšuje úroveň vaších vojakov."
+
+#: src/BuildingConsts.h:382
+msgid "The brewer produces fine beer from grain and water. This drink is needed to fill the soldiers with courage."
+msgstr "Pivovárník vo svojom pivovare vyrába výborné pivo z obilia a vody. Pivo, meč a štít  sú potrebné na vytrénovanie nového vojaka."
+
+#: src/BuildingConsts.h:370
+msgid "The butcher processes the livestock delivered into nutritious ham on which you miners are fed."
+msgstr "Mäsiar v mäsiarni spracuváva prasatá na výborné mäso ktoré putuje hladným baníkom."
+
+#: src/BuildingConsts.h:455
+msgid "The carpenter turns the woodcutter's logs into made-to-measure planks. There form the basic for building houses and ships."
+msgstr "Tesár reže polená na dosky, ktoré su základom na stavbu budov a lodí."
+
+#: src/BuildingConsts.h:395
+msgid "The countless tools which your workers need are made in the metalworks. This requires boards and iron."
+msgstr "Nástroje potrebné v daľších pracovných odvetviach vyrábá kováč v kovodieľni. Na výrobu nástrojov potrebuje dosky a železo."
+
+#: src/BuildingConsts.h:299
+#, fuzzy
+msgid "The defensive capabilities and size of the fortress are unsurpassed. This stronghold ensures that other valuable buildings and commodities are protected. Using the gold coin button you can stop the delivery of gold coins to the soldiers stationed here. However, without gold coins the soldiers here can not train and improve their skills."
+msgstr ". Použitím tlačitka mince sa zastaví alebo povolí prísun mincí do strážnice, prísunom mincí zvyšuje úroveň vaších vojakov."
+
+#: src/BuildingConsts.h:485
+msgid "The farmer plants and harvests grain in the surrounding fields. A windmill then processes the harvested grain into flour or can be used to feed the pigs."
+msgstr "Farmár vysadí v okoli svojej farmy políčka obilia, ktoré po čase skosí. Oblie sa používa buď ako potrava pre prasatá a somáre, na výrobu piva v pivovare alebo sa pomelie v mlyne na múku."
+
+#: src/BuildingConsts.h:349
+msgid "The fish man is responsible for finding water rich in fish. His fish feed a great many miners."
+msgstr "Rybár loví čerstvé ryby z riek a morí. Ryby su vynikajúca potrava pre baníkov."
+
+#: src/BuildingConsts.h:447
+msgid "The flour produced at the windmill can be combined with water in the bakery to make oven-fresh bread. It's your miners' favorite!"
+msgstr "Pekár z múky ktorá sa pomelie v mlyne a z vody ktorú dodá studňa dokáže upiecť čerstvý chlieb. Chlieb slúži ako potrava pre baníkov."
+
+#: src/BuildingConsts.h:440
+msgid "The grain is ground in the windmill. The flour from the windmill is later used at the bakery to bake bread."
+msgstr "Obilie sa melie na múku v mlyne. Múka sa následne uskladní alebo putuje do pekárne kde sa z nej upečie chlieb."
+
+#: src/BuildingConsts.h:267
+msgid "The guardhouse is a comfortable place for the military which is also protected by solid stone walls. Using the gold coin button you can stop the delivery of gold coins to the soldiers stationed here. However, without gold coins the soldiers here can not train and improve their skills."
+msgstr "Strážnica obsahuje 3 miest pre vašich vojakov. Použitím tlačitka mince sa zastaví alebo povolí prísun mincí do strážnice, prísunom mincí sa zvyšuje úroveň vaších vojakov."
+
+#: src/BuildingConsts.h:463
+msgid "The mint is responsible for producing valuable gold coins. These precious objects are produced using coal and gold."
+msgstr "Mincovňa vyrába zlaté mince ktoré slúžia na zvyšovanie úrovne vojakov. Na výrobu zlatej mince dreba zlatú rudu a uhlie."
+
+#: src/BuildingConsts.h:493
+msgid "The pack donkeys bred here are used to transport your merchandise more efficiently. They are reared on water and grain."
+msgstr "Somáre sa používajú pre efektívnešiu prepravu tovaru. Somáre pre svoj rast potrebujú vodu a obilie."
+
+#: src/iwMusicPlayer.cpp:191
+msgid "The specified file couldn't be loaded!"
+msgstr "Určený súbor nemôže byť načítaný!"
+
+#: src/iwMusicPlayer.cpp:305
+msgid "The specified file couldn't be opened!"
+msgstr "Určený súbor nemôže byť otvorený!"
+
+#: src/iwMusicPlayer.cpp:171
+#: src/iwMusicPlayer.cpp:320
+msgid "The specified file couldn't be saved!"
+msgstr "Určený súbor nemôže byť uložený!"
+
+#: src/BuildingConsts.h:355
+msgid "The stonemason works the stone near his quarry into bricks. These are needed mainly for building houses and as ammunition for catapults."
+msgstr "Kamenár získava kamene z priľahlého lomu. Kamene sú potrebné pre vačšinu budov a slúžia ako munícia pre katapulty."
+
+#: src/BuildingConsts.h:421
+#, fuzzy
+msgid "The storehouse can help reduce long transportation journeys and is suited to the temporary storage of merchandise and inhabitants. You can release certain merchandise from the storehouse, as and when required. Alternatively, the storage function can be disabled. To do this, first choose the relevant icon followed by the desired merchandise or job symbol."
+msgstr "Skladisko slúži na uskladnenie tovaru a obyvateľstva. Taktiež može znížiť čas potrebný na prepravu tovaru."
+
+#: src/BuildingConsts.h:283
+msgid "The watchtower with its large amount of space is best suited for stationing a large number of your troops. Using the gold coin button you can stop the delivery of gold coins to the soldiers stationed here. However, without gold coins the soldiers here can not train and improve their skills."
+msgstr "Strážna veža obsahuje 6 miest pre vašich vojakov. Použitím tlačitka mince sa zastaví alebo povolí prísun mincí do strážnice, prísunom mincí zvyšuje úroveň vaších vojakov."
+
+#: src/iwDirectIPConnect.cpp:211
+msgid "This Server is full!"
+msgstr "Server je plný!"
+
+#: src/iwSave.cpp:67
+msgid "Time"
+msgstr "Čas"
+
+#: src/iwTools.cpp:48
+msgid "Tongs"
+msgstr "Kliešte"
+
+#: src/iwDirectIPConnect.cpp:215
+msgid "Too short Message received!"
+msgstr "Prikrátka správa prijatá!"
+
+#: src/iwMainMenu.cpp:60
+msgid "Tools"
+msgstr "Nástroje"
+
+#: src/iwBuildOrder.cpp:55
+msgid "Top"
+msgstr "Navrch"
+
+#: src/dskHostGame.cpp:125
+msgid "Total domination"
+msgstr "Totálne ovládnutie"
+
+#: src/iwMainMenu.cpp:58
+msgid "Transport"
+msgstr "Preprava"
+
+#: src/dskGameLoader.cpp:135
+#, fuzzy
+msgid "Tribal chiefs assembled around the table..."
+msgstr "Tribal chiefs assembled around the table..."
+
+#: src/dskSelectMap.cpp:113
+msgid "Type"
+msgstr "Typ"
+
+#: src/iwBuildOrder.cpp:57
+msgid "Up"
+msgstr "Hore"
+
+#: src/iwMusicPlayer.cpp:84
+msgid "Upwards"
+msgstr "Vyžšie"
+
+#: src/iwLobbyConnect.cpp:52
+msgid "Username:"
+msgstr "Meno uživateľa:"
+
+#: src/dskOptions.cpp:115
+msgid "VSync:"
+msgstr "VSync:"
+
+#: src/dskLobby.cpp:76
+#: src/dskLobby.cpp:78
+msgid "Version"
+msgstr "Verzia"
+
+#: src/iwLobbyServerInfo.cpp:81
+msgid "Version:"
+msgstr "Verzia:"
+
+#: src/dskOptions.cpp:125
+#, fuzzy
+msgid "Vertex Buffer Objects:"
+msgstr "Vertex Buffer Objects:"
+
+#: src/dskHostGame.cpp:134
+msgid "Very fast"
+msgstr "Veľmi rýchlo"
+
+#: src/dskHostGame.cpp:130
+msgid "Very slow"
+msgstr "Veľmi pomaly"
+
+#: src/dskHostGame.cpp:568
+msgid "Vikings"
+msgstr "Vikingovia"
+
+#: src/iwDirectIPConnect.cpp:229
+msgid "Waiting for Playerinfo..."
+msgstr "Čakám na info o hráčovi..."
+
+#: src/iwDirectIPConnect.cpp:226
+#: src/iwLobbyConnect.cpp:315
+msgid "Waiting for Reply..."
+msgstr "Čakám na odpoveď..."
+
+#: src/GameClientGF_Replay.cpp:78
+#, fuzzy, c-format
+msgid "Warning: The played replay is not in sync with the original match. (GF: %u)"
+msgstr "Warning: The played replay is not in sync with the original match. (GF: %u)"
+
+#: src/dskSelectMap.cpp:407
+msgid "Wasteland"
+msgstr "Pustatina"
+
+#: src/GameConsts.h:209
+msgid "Watchtower"
+msgstr "Strážna veža"
+
+#: src/iwDistribution.cpp:141
+msgid "Water"
+msgstr "Voda"
+
+#: src/iwAction.cpp:235
+msgid "Weak attackers"
+msgstr "Slabí útočníci"
+
+#: src/iwMilitary.cpp:49
+msgid "Weak defense"
+msgstr "Slabá obrana"
+
+#: src/iwTransport.cpp:58
+msgid "Weapons"
+msgstr "Zbraňe"
+
+#: src/GameConsts.h:240
+msgid "Well"
+msgstr "Studňa"
+
+#: src/dskHostGame.cpp:102
+msgid "When attack"
+msgstr "Keď zaútočia"
+
+#: src/dskOptions.cpp:112
+#, fuzzy
+msgid "Windowed"
+msgstr "Windowed"
+
+#: src/dskSelectMap.cpp:408
+msgid "Winter world"
+msgstr "Zimný svet"
+
+#: src/BuildingConsts.h:363
+msgid "Within his area, the forester ensures the survival of the forest. He plants all types of trees."
+msgstr "Lesník vysádza nové stromčeky v okolí lesníckej búdy."
+
+#: src/iwLobbyRanking.cpp:80
+msgid "Won"
+msgstr "Vyhral"
+
+#: src/iwTransport.cpp:66
+msgid "Wood"
+msgstr "Drevo"
+
+#: src/GameConsts.h:288
+msgid "Woodchopper"
+msgstr "Drevorubač"
+
+#: src/GameConsts.h:222
+msgid "Woodcutter"
+msgstr "Horáreň"
+
+#: src/dskGameLoader.cpp:161
+#, fuzzy
+msgid "World was put together and glued..."
+msgstr "The world was put together and glued..."
+
+#: src/iwDirectIPConnect.cpp:212
+msgid "Wrong Password!"
+msgstr "Zlé heslo!"
+
+#: src/iwDirectIPConnect.cpp:216
+msgid "Wrong Server Type!"
+msgstr "Zlý typ serveru!"
+
+#: src/iwDirectIPConnect.cpp:213
+msgid "Wrong client version"
+msgstr "Zlá verzia klienta!"
+
+#: src/iwLobbyConnect.cpp:72
+msgid "Yes"
+msgstr "Áno"
+
+#: src/iwMusicPlayer.cpp:165
+msgid "You are not allowed to change the standard playlist!"
+msgstr "Nemáte oprávnenie na zmenu základného playlistu!"
+
+#: src/iwMusicPlayer.cpp:141
+msgid "You are not allowed to delete the standard playlist!"
+msgstr "Nemáte oprávnenie na odstránenie základného playlistu!"
+
+#: src/iwBaseWarehouse.cpp:61
+msgid "do nothing"
+msgstr "nerob nič"
+
+#: src/dskDirectIP.cpp:54
+#: src/dskLobby.cpp:62
+#: src/dskMultiPlayer.cpp:60
+#: src/dskSinglePlayer.cpp:61
+msgid "http://www.siedler25.org"
+msgstr "http://www.siedler25.org"
+
+#: src/dskOptions.cpp:119
+#: src/dskOptions.cpp:129
+msgid "not supported"
+msgstr "nepodporované"
+
+#: src/iwSkipGFs.cpp:47
+msgid "to GameFrame:"
+msgstr "to GameFrame:"
+
+#: src/dskCredits.cpp:105
+msgid "various anonymous donators"
+msgstr "iní anonymní darcovia"
+

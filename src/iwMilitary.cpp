@@ -1,4 +1,4 @@
-// $Id: iwMilitary.cpp 4784 2009-05-02 20:43:44Z OLiver $
+// $Id: iwMilitary.cpp 4792 2009-05-04 15:26:33Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -106,3 +106,4 @@ void iwMilitary::UpdateSettings()
 	for(unsigned i = 0;i<7;++i)
 		GetCtrl<ctrlProgress>(i)->SetPosition(GAMECLIENT.visual_settings.military_settings[i]);
 }
+

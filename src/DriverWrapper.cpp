@@ -1,4 +1,4 @@
-// $Id: DriverWrapper.cpp 4795 2009-05-04 16:04:16Z FloSoft $
+// $Id: DriverWrapper.cpp 4797 2009-05-04 16:32:17Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -174,8 +174,24 @@ void DriverWrapper::LoadDriverList(const DriverType dt, list<DriverItem>& driver
 			PDRIVER_CREATEAUDIOINSTANCE CreateAudioInstance = NULL;
 			PDRIVER_CREATEVIDEOINSTANCE CreateVideoInstance = NULL;
 
-			*(void**)(&GetDriverAPIVersion) = (void*)GetProcAddress(dll, "GetDriverAPIVersion");
-			*(void**)(&GetDriverName) = (void*)GetProcAddress(dll, "GetDriverName");
+			// unions wegen "type punned pointer" bzw "iso c++ forbids casting from pointer-to-object to function-pointer"
+			// anscheinend ist das so die einzige möglichkeit den gcc-mist zu umgehen *grrr*
+			union {
+				PDRIVER_GETDRIVERAPIVERSION ptf;
+				void *pto;
+			} A;
+			union {
+				PDRIVER_GETDRIVERNAME ptf;
+				void *pto;
+			} B;
+
+			A.pto = GetProcAddress(dll, "GetDriverAPIVersion");
+			GetDriverAPIVersion = A.ptf;
+			B.pto = GetProcAddress(dll, "GetDriverName");
+			GetDriverName = B.ptf;
+
+			//*(void**)(&GetDriverAPIVersion) = (void*)GetProcAddress(dll, "GetDriverAPIVersion");
+			//*(void**)(&GetDriverName) = (void*)GetProcAddress(dll, "GetDriverName");
 
 			if(GetDriverAPIVersion)
 			{
@@ -183,9 +199,22 @@ void DriverWrapper::LoadDriverList(const DriverType dt, list<DriverItem>& driver
 				{
 					if(GetDriverName)
 					{
+						union {
+							PDRIVER_CREATEAUDIOINSTANCE ptf;
+							void *pto;
+						} C;
+						union {
+							PDRIVER_CREATEVIDEOINSTANCE ptf;
+							void *pto;
+						} D;
 
-						*(void**)(&CreateVideoInstance) = (void*)GetProcAddress(dll, "CreateVideoInstance");
-						*(void**)(&CreateAudioInstance) = (void*)GetProcAddress(dll, "CreateAudioInstance");
+						C.pto = GetProcAddress(dll, "CreateAudioInstance");
+						CreateAudioInstance = C.ptf;
+						D.pto = GetProcAddress(dll, "CreateVideoInstance");
+						CreateVideoInstance = D.ptf;
+						
+						//*(void**)(&CreateVideoInstance) = (void*)GetProcAddress(dll, "CreateVideoInstance");
+						//*(void**)(&CreateAudioInstance) = (void*)GetProcAddress(dll, "CreateAudioInstance");
 
 						if((dt == DT_VIDEO && CreateVideoInstance) || (dt == DT_AUDIO && CreateAudioInstance))
 						{

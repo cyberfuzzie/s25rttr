@@ -1,4 +1,4 @@
-// $Id: VideoDriverWrapper.cpp 4693 2009-04-16 11:40:29Z FloSoft $
+// $Id: VideoDriverWrapper.cpp 4797 2009-05-04 16:32:17Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -83,7 +83,16 @@ bool VideoDriverWrapper::LoadDriver(void)
 		return false;
 
 	PDRIVER_CREATEVIDEOINSTANCE CreateVideoInstance;
-	*(void**)(&CreateVideoInstance) = (void*)driver_wrapper.GetDLLFunction("CreateVideoInstance");
+
+	union {
+		PDRIVER_CREATEVIDEOINSTANCE ptf;
+		void *pto;
+	} D;
+
+	D.pto = driver_wrapper.GetDLLFunction("CreateVideoInstance");
+	CreateVideoInstance = D.ptf;
+	
+	//*(void**)(&CreateVideoInstance) = (void*)driver_wrapper.GetDLLFunction("CreateVideoInstance");
 
 	// Instanz erzeugen
 	if(!(videodriver = CreateVideoInstance(&WindowManager::inst())))

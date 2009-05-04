@@ -1,4 +1,4 @@
-/// $Id: prebuild-mutex.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: prebuild-mutex.cpp 4799 2009-05-04 17:35:18Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -22,8 +22,36 @@
 #include <windows.h>
 #include <string>
 #include <vector>
+#include <iostream>
 
 using namespace std;
+
+bool existfile(std::string file)
+{
+	FILE *f = fopen(file.c_str(), "r");
+	if(!f)
+		return false;
+
+	fclose(f);
+	return true;
+}
+
+void exec(std::string cmd)
+{
+	std::cout << "executing \"" << cmd << "\"" << std::endl;
+	system(cmd.c_str());
+}
+
+void copyfile(std::string file, std::string from, std::string to, std::string tofile = "")
+{
+	if(tofile.empty())
+		tofile = file;
+
+	std::cout << "copying file \"" << file << "\" from \"" << from << "\" to file \"" << tofile << "\" in \"" << to << "\": ";
+	from += file;
+	to += tofile;
+	std::cout << (CopyFile(from.c_str(), to.c_str(), FALSE) ? "ok" : "failed") << std::endl;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
@@ -34,17 +62,37 @@ using namespace std;
  */
 int main(int argc, char *argv[])
 {
-	if(argc < 3)
+	if(argc < 4)
+	{
+		std::cout << "Usage: " << argv[0] << " pre-/postbuild $workingdir $binarydir" << std::endl;
 		return 1;
+	}
 
 	vector<string> args;
-
 	for(int i = 0; i < argc; ++i)
 		args.push_back(argv[i]);
 
-	HANDLE mHandle; 
+	bool prebuild = false;
 
-	string mutexname = args[1];
+	if(args.at(1) == "prebuild")
+		prebuild = true;
+
+	string mutexname = args.at(2);
+	string working = args.at(3);
+	string binary = args.at(4);
+
+	if(working.at(working.length()-1) != '\\')
+		working += "\\";
+	if(binary.at(binary.length()-1) != '\\')
+		binary += "\\";
+
+	std::cout << (prebuild ? "Prebuild" : "Postbuild") << "-Mutex started" << std::endl;
+	std::cout << "working in " << working << std::endl;
+	std::cout << "binary dir is " << binary << std::endl;
+
+	SetCurrentDirectory(working.c_str());
+
+	HANDLE mHandle; 
 
 	bool exist = false;
 	int timeout = 0;
@@ -58,23 +106,68 @@ int main(int argc, char *argv[])
 
 			if(!exist)
 			{
-				// Prebuild-Ereignis mit Parametern starten
+				// Pre/Postbuild-Ereignis mit Parametern starten
 
-				string prebuild = args[2];
-				for(size_t i = 3; i < args.size(); i++)
-					prebuild += " " + args[i];
+				if(prebuild)
+				{
+					if(!existfile(working + "version.h"))
+						copyfile("version.h.in", working, working, "version.h");
+					if(!existfile(working + "local.h"))
+						copyfile("local.h.in", working, working, "local.h");
 
-				system(prebuild.c_str());
+					std::string cmd;
+
+					// todo: das hier auch ersetzen
+					cmd = "sh dailyversion.sh";
+					exec(cmd);
+
+					cmd = "\"" + binary + "version.exe\" --no-dots";
+					exec(cmd);
+
+					std::cout << "creating language files" << std::endl;
+
+					std::vector<std::string> langs;
+
+					HANDLE hFile;
+					WIN32_FIND_DATA wfd;
+
+					hFile = FindFirstFile("RTTR\\languages\\*.po", &wfd);
+					if(hFile != INVALID_HANDLE_VALUE)
+					{
+						do
+						{
+							std::string lang = wfd.cFileName;
+							lang = lang.substr(0, lang.find_last_of('.'));
+							langs.push_back(lang);
+						} while(FindNextFile(hFile, &wfd));
+
+						FindClose(hFile);
+					}
+
+					for(std::vector<std::string>::iterator it = langs.begin(); it != langs.end(); ++it)
+					{
+						std::cout << "creating language " << (*it) << std::endl;
+
+						cmd = "msgmerge --quiet --update --backup=none -s RTTR/languages/" + (*it) + ".po RTTR/languages/rttr.pot";
+						exec(cmd);
+						cmd = "msgfmt -o RTTR/languages/" + (*it) + ".mo RTTR/languages/" + (*it) + ".po";
+						exec(cmd);
+					}
+				}
+				else
+				{
+					copyfile("sound-convert.exe", binary, working + "RTTR\\");
+					copyfile("libsiedler2.dll", binary, working + "RTTR\\");
+				}
 
 				ReleaseMutex(mHandle);
-
 				return 0;
 			}
 		}
 		Sleep(250);
 		++timeout;
 	}
-	while(exist && timeout < 4);
+	while(exist && timeout < 8);
 
 	return 0;
 }

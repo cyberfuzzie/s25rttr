@@ -25,7 +25,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="&quot;$(OutDir)\prebuild-mutex.exe&quot; &quot;$(SolutionName) $(SolutionDir)..\prebuild.bat&quot; &quot;$(SolutionDir)..\..\ $(OutDir)&quot;"
+				CommandLine="&quot;$(OutDir)\prebuild-mutex.exe&quot; &quot;prebuild&quot; &quot;$(SolutionName)&quot; &quot;$(SolutionDir)..\..&quot; &quot;$(OutDir)&quot;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -94,7 +94,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="&quot;$(OutDir)\prebuild-mutex.exe&quot; &quot;$(SolutionName)&quot; &quot;$(SolutionDir)..\postbuild.bat&quot; &quot;$(SolutionDir)..\..\ $(OutDir)&quot;"
+				CommandLine="&quot;$(OutDir)\prebuild-mutex.exe&quot; &quot;postbuild&quot; &quot;$(SolutionName)&quot; &quot;$(SolutionDir)..\..&quot; &quot;$(OutDir)&quot;"
 			/>
 		</Configuration>
 		<Configuration

@@ -1,4 +1,4 @@
-// $Id: gettext.cpp 4769 2009-05-01 21:31:50Z Demophobie $
+// $Id: gettext.cpp 4799 2009-05-04 17:35:18Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -136,9 +136,26 @@ void GetText::loadCatalog()
 	if(catalogfile == lastcatalog)
 		return;
 
-	//std::cout << "mygettext: loading " << catalogfile << std::endl;
-
 	FILE *file = fopen(catalogfile.c_str(), "rb");
+	if(!file)
+	{
+		std::string lang = "", region = "";
+
+		std::string::size_type pos = locale.find("_");
+		if(pos != std::string::npos)
+		{
+			lang = locale.substr(0, pos);
+			region = locale.substr(pos+1);
+		}
+
+		catalogfile = directory + "/" + lang + ".mo";
+
+		if(catalogfile == lastcatalog)
+			return;
+
+		file = fopen(catalogfile.c_str(), "rb");
+	}
+
 	if(!file)
 	{
 		lastcatalog = catalogfile;

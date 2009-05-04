@@ -1,4 +1,4 @@
-// $Id: BuildingConsts.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: BuildingConsts.h 4800 2009-05-04 17:52:33Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -248,7 +248,27 @@ const int NUBIAN_MINE_FIRE[4][2] =
 const char * const BUILDING_HELP_STRINGS[40] =
 {
 	// Headquarters
-	"Todo",
+	gettext_noop(
+	"The headquarters represents the "
+	"center of your realm. The large "
+	"amount of storage space "
+	"available means a great many "
+	"things can be safely stored "
+	"here. You can release certain "
+	"merchandise from the "
+	"headquarters, as and when "
+	"required or stop its storage. To "
+	"do this, first choose the "
+	"corresponding icon followed by "
+	"the desired merchandise or job "
+	"symbol. On the third page, you "
+	"can adjust the number of reserve "
+	"soldiers who are responsible for "
+	"guarding the headquarters. There "
+	"are two values given: the first "
+	"value indicates the current "	
+	"number of men, the second value "
+	"indicates the desired number. "),
 
 	// Barracks
 	gettext_noop(

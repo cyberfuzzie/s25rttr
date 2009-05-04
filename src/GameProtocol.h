@@ -1,4 +1,4 @@
-// $Id: GameProtocol.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: GameProtocol.h 4809 2009-05-04 20:10:11Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -224,7 +224,8 @@ enum
 	 NC_INCREASERESERVE,
 	 NC_DECREASERESERVE,
 	 NC_SURRENDER,
-	 NC_CHEAT_ARMAGEDDON
+	 NC_CHEAT_ARMAGEDDON,
+   NC_DESTROYALL
 };
 
 // Netzwerkframelängen

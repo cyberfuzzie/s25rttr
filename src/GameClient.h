@@ -1,4 +1,4 @@
-// $Id: GameClient.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: GameClient.h 4809 2009-05-04 20:10:11Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -122,6 +122,7 @@ public:
 	void NC_IncreaseReserve(const unsigned short x, const unsigned short y, const unsigned char rank);
 	void NC_DecreaseReserve(const unsigned short x, const unsigned short y, const unsigned char rank);
 	void NC_CheatArmageddon();
+  void NC_DestroyAll();
 	void NC_Surrender();
 
 	void Command_SetFlag2(int x, int y, unsigned char player);

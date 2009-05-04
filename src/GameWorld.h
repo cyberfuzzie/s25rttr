@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 4807 2009-05-04 19:48:53Z OLiver $
+// $Id: GameWorld.h 4809 2009-05-04 20:10:11Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -477,6 +477,9 @@ public:
 
 	/// Lässt alles spielerische abbrennen, indem es alle Flaggen der Spieler zerstört
 	void Armageddon();
+
+  /// Lässt alles spielerische eines Spielers abbrennen, indem es alle Flaggen eines Spieler zerstört
+	void Armageddon(const unsigned char player);
 
 	/// Sagt der GW Bescheid, dass ein Objekt von Bedeutung an x,y vernichtet wurde, damit dieser
 	/// dass ggf. an den WindowManager weiterleiten kann, damit auch ein Fenster wieder geschlossen wird

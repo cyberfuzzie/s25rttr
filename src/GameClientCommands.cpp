@@ -1,4 +1,4 @@
-// $Id: GameClientCommands.cpp 4784 2009-05-02 20:43:44Z OLiver $
+// $Id: GameClientCommands.cpp 4809 2009-05-04 20:10:11Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -172,6 +172,11 @@ void GameClient::ExecuteNC(const unsigned short nfc_type,const unsigned char pla
 	case NC_SURRENDER:
 		{
 			GameClient::inst().GetPlayer(player)->Surrender();
+		} break;
+	case NC_DESTROYALL:
+		{
+      gw->Armageddon(player);
+			//GameClient::inst().GetPlayer(player)->Surrender();
 		} break;
 	default: return;
 	}
@@ -550,6 +555,16 @@ void GameClient::NC_Surrender()
 	nfc_queue.push_back(nfc);
 }
 
+void GameClient::NC_DestroyAll()
+{
+	// Nicht in der Pause
+	if(framesinfo.pause || GetLocalPlayer()->IsDefeated())
+		return;
+
+	GameMessage * nfc = new GameMessage(NMS_NFC_COMMANDS,2);
+	static_cast<unsigned short*>(nfc->m_pData)[0] = NC_DESTROYALL;
+	nfc_queue.push_back(nfc);
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////

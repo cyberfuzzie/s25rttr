@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 4751 2009-05-01 13:55:16Z OLiver $
+// $Id: GameWorldGame.cpp 4809 2009-05-04 20:10:11Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -946,7 +946,6 @@ void GameWorldGame::StopOnRoads(const MapCoord x, const MapCoord y, const unsign
 	}
 }
 
-
 void GameWorldGame::Armageddon()
 {
 	for(unsigned i = 0;i < map_size; ++i)
@@ -960,6 +959,27 @@ void GameWorldGame::Armageddon()
 				flag->DestroyAttachedBuilding();
 				flag->Destroy();
 				delete flag;
+			}
+		}
+	}
+}
+
+void GameWorldGame::Armageddon(const unsigned char player)
+{
+	for(unsigned i = 0;i < map_size; ++i)
+	{
+		if(nodes[i].obj)
+		{
+			if(nodes[i].obj->GetGOT() == GOT_FLAG)
+			{
+				noFlag * flag = static_cast<noFlag*>(nodes[i].obj);
+        if (flag->GetPlayer() == player)
+        {
+				  nodes[i].obj = 0;
+				  flag->DestroyAttachedBuilding();
+				  flag->Destroy();
+				  delete flag;
+        }
 			}
 		}
 	}

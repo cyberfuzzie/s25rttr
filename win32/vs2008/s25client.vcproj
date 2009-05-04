@@ -900,6 +900,14 @@
 							>
 						</File>
 						<File
+							RelativePath="..\..\src\iwSurrender.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\iwSurrender.h"
+							>
+						</File>
+						<File
 							RelativePath="..\..\src\iwTextfile.cpp"
 							>
 						</File>

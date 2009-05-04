@@ -1,4 +1,4 @@
-// $Id: iwOptionsWindow.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: iwOptionsWindow.cpp 4809 2009-05-04 20:10:11Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -30,6 +30,7 @@
 #include "controls.h"
 
 #include "iwEndgame.h"
+#include "iwSurrender.h"
 #include "iwTextfile.h"
 #include "iwSave.h"
 
@@ -54,10 +55,9 @@
  *  @author OLiver
  */
 iwOptionsWindow::iwOptionsWindow()
-	: IngameWindow(CGI_OPTIONSWINDOW, 0xFFFF, 0xFFFF, 300, 474, _("Game menu"), GetImage(resource_dat, 41))
+	: IngameWindow(CGI_OPTIONSWINDOW, 0xFFFF, 0xFFFF, 300, 505, _("Game menu"), GetImage(resource_dat, 41))
 {
-	// "Spiel beenden"
-	AddTextButton(0, 67, 425, 168, 24, TC_RED1, _("End game"),NormalFont);
+	
 
 	// Der Soldat oben
 	AddImage(1, 150, 36, GetImage(io_dat, 30));
@@ -100,6 +100,10 @@ iwOptionsWindow::iwOptionsWindow()
 	//// Music Player
 	AddTextButton(16,100,380,160,22,TC_GREEN2,_("Music player"),NormalFont);
 
+	// "Spiel aufgeben"
+	AddTextButton(17, 67, 425, 168, 24, TC_RED1, _("Surrender"),NormalFont);
+	// "Spiel beenden"
+	AddTextButton(0, 67, 460, 168, 24, TC_RED1, _("End game"),NormalFont);
 	
 }
 
@@ -147,6 +151,11 @@ void iwOptionsWindow::Msg_ButtonClick(const unsigned int ctrl_id)
 	case 16: // Music player
 		{
 			WindowManager::inst().Show(new iwMusicPlayer);
+		} break;
+	case 17: // Aufgeben
+		{
+			WindowManager::inst().Show(new iwSurrender);
+			Close();
 		} break;
 	}
 }

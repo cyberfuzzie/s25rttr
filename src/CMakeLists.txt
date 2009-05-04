@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 4806 2009-05-04 18:51:03Z Demophobie $
+### $Id: CMakeLists.txt 4808 2009-05-04 19:59:33Z Demophobie $
 ################################################################################
 
 INCLUDE(FindBZip2)
@@ -284,6 +284,7 @@ GETTEXT_CREATE_TRANSLATIONS( ../RTTR/languages/rttr.pot ALL ../RTTR/languages/de
 				../RTTR/languages/et.po
 				../RTTR/languages/en_GB.po
 				../RTTR/languages/sk.po
+				../RTTR/languages/nds.po
                                 ../RTTR/languages/hu.po)
 
 ################################################################################

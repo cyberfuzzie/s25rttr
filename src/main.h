@@ -1,4 +1,4 @@
-// $Id: main.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: main.h 4798 2009-05-04 17:30:57Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -121,6 +121,26 @@ typedef struct Rect {
 	#define GetProcAddress(x, y) dlsym(x, y)
 	#define FreeLibrary(x) dlclose(x)
 #endif // _WIN32
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  konvertiert einen void*-Pointer zu einem function-Pointer mithilfe einer 
+ *  Union. GCC meckert da sonst wegen "type punned pointer" bzw 
+ *  "iso c++ forbids conversion".
+ *
+ *  @author FloSoft
+ */
+template <typename F>
+inline F pto2ptf(void *o)
+{
+	union {
+		F f;
+		void *o;
+	} U;
+	U.o = o;
+
+	return U.f;
+}
 
 #undef min
 template <typename T>

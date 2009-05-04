@@ -1,4 +1,4 @@
-// $Id: DriverWrapper.cpp 4797 2009-05-04 16:32:17Z FloSoft $
+// $Id: DriverWrapper.cpp 4798 2009-05-04 17:30:57Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -169,63 +169,24 @@ void DriverWrapper::LoadDriverList(const DriverType dt, list<DriverItem>& driver
 		std::string test(*it);
 		if( (dll = LoadLibrary(it->c_str())) )
 		{
-			PDRIVER_GETDRIVERAPIVERSION GetDriverAPIVersion = NULL;
-			PDRIVER_GETDRIVERNAME GetDriverName = NULL;
-			PDRIVER_CREATEAUDIOINSTANCE CreateAudioInstance = NULL;
-			PDRIVER_CREATEVIDEOINSTANCE CreateVideoInstance = NULL;
+			PDRIVER_GETDRIVERAPIVERSION GetDriverAPIVersion = pto2ptf<PDRIVER_GETDRIVERAPIVERSION>(GetProcAddress(dll, "GetDriverAPIVersion"));
 
-			// unions wegen "type punned pointer" bzw "iso c++ forbids casting from pointer-to-object to function-pointer"
-			// anscheinend ist das so die einzige möglichkeit den gcc-mist zu umgehen *grrr*
-			union {
-				PDRIVER_GETDRIVERAPIVERSION ptf;
-				void *pto;
-			} A;
-			union {
-				PDRIVER_GETDRIVERNAME ptf;
-				void *pto;
-			} B;
-
-			A.pto = GetProcAddress(dll, "GetDriverAPIVersion");
-			GetDriverAPIVersion = A.ptf;
-			B.pto = GetProcAddress(dll, "GetDriverName");
-			GetDriverName = B.ptf;
-
-			//*(void**)(&GetDriverAPIVersion) = (void*)GetProcAddress(dll, "GetDriverAPIVersion");
-			//*(void**)(&GetDriverName) = (void*)GetProcAddress(dll, "GetDriverName");
-
-			if(GetDriverAPIVersion)
+			if(GetDriverAPIVersion && GetDriverAPIVersion() == DRIVERAPIVERSION)
 			{
-				if(GetDriverAPIVersion() == DRIVERAPIVERSION)
+				PDRIVER_GETDRIVERNAME GetDriverName = pto2ptf<PDRIVER_GETDRIVERNAME>(GetProcAddress(dll, "GetDriverName"));
+
+				if(GetDriverName)
 				{
-					if(GetDriverName)
+					PDRIVER_CREATEAUDIOINSTANCE CreateAudioInstance = pto2ptf<PDRIVER_CREATEAUDIOINSTANCE>(GetProcAddress(dll, "CreateAudioInstance"));
+					PDRIVER_CREATEVIDEOINSTANCE CreateVideoInstance = pto2ptf<PDRIVER_CREATEVIDEOINSTANCE>(GetProcAddress(dll, "CreateVideoInstance"));
+
+					if((dt == DT_VIDEO && CreateVideoInstance) || (dt == DT_AUDIO && CreateAudioInstance))
 					{
-						union {
-							PDRIVER_CREATEAUDIOINSTANCE ptf;
-							void *pto;
-						} C;
-						union {
-							PDRIVER_CREATEVIDEOINSTANCE ptf;
-							void *pto;
-						} D;
-
-						C.pto = GetProcAddress(dll, "CreateAudioInstance");
-						CreateAudioInstance = C.ptf;
-						D.pto = GetProcAddress(dll, "CreateVideoInstance");
-						CreateVideoInstance = D.ptf;
-						
-						//*(void**)(&CreateVideoInstance) = (void*)GetProcAddress(dll, "CreateVideoInstance");
-						//*(void**)(&CreateAudioInstance) = (void*)GetProcAddress(dll, "CreateAudioInstance");
-
-						if((dt == DT_VIDEO && CreateVideoInstance) || (dt == DT_AUDIO && CreateAudioInstance))
-						{
-							DriverItem di(*it, GetDriverName());
-							driver_list.push_back(di);
-						}
+						DriverItem di(*it, GetDriverName());
+						driver_list.push_back(di);
 					}
 				}
 			}
-			
-			
 
 			FreeLibrary(dll);
 			dll = 0;

@@ -1,4 +1,4 @@
-// $Id: VideoDriverWrapper.cpp 4797 2009-05-04 16:32:17Z FloSoft $
+// $Id: VideoDriverWrapper.cpp 4798 2009-05-04 17:30:57Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -84,15 +84,7 @@ bool VideoDriverWrapper::LoadDriver(void)
 
 	PDRIVER_CREATEVIDEOINSTANCE CreateVideoInstance;
 
-	union {
-		PDRIVER_CREATEVIDEOINSTANCE ptf;
-		void *pto;
-	} D;
-
-	D.pto = driver_wrapper.GetDLLFunction("CreateVideoInstance");
-	CreateVideoInstance = D.ptf;
-	
-	//*(void**)(&CreateVideoInstance) = (void*)driver_wrapper.GetDLLFunction("CreateVideoInstance");
+	CreateVideoInstance = pto2ptf<PDRIVER_CREATEVIDEOINSTANCE>(driver_wrapper.GetDLLFunction("CreateVideoInstance"));
 
 	// Instanz erzeugen
 	if(!(videodriver = CreateVideoInstance(&WindowManager::inst())))
@@ -382,7 +374,7 @@ void VideoDriverWrapper::LoadAllExtensions()
 #ifdef _WIN32
 	if((GLOBALVARS.ext_swapcontrol = hasExtension("WGL_EXT_swap_control")))
 	{
-		if( (*(void**)(&wglSwapIntervalEXT) = loadExtension("wglSwapIntervalEXT")) == NULL)
+		if( (wglSwapIntervalEXT = pto2ptf<PFNWGLSWAPINTERVALFARPROC>(loadExtension("wglSwapIntervalEXT"))) == NULL)
 			GLOBALVARS.ext_swapcontrol = false;
 	}
 #else
@@ -390,7 +382,7 @@ void VideoDriverWrapper::LoadAllExtensions()
 	{*/
 		// fix for buggy video driver...
 		GLOBALVARS.ext_swapcontrol = true;
-		if( (*(void**)(&wglSwapIntervalEXT) = loadExtension("glXSwapIntervalSGI")) == NULL)
+		if( (wglSwapIntervalEXT = pto2ptf<PFNWGLSWAPINTERVALFARPROC>(loadExtension("glXSwapIntervalSGI"))) == NULL)
 			GLOBALVARS.ext_swapcontrol = false;
 	//}
 #endif
@@ -398,15 +390,15 @@ void VideoDriverWrapper::LoadAllExtensions()
 	// auf VertexBufferObject-Extension testen
 	if((GLOBALVARS.ext_vbo = hasExtension("GL_ARB_vertex_buffer_object")))
 	{
-		if ((*(void**)(&glBindBufferARB) = loadExtension("glBindBufferARB")) == NULL)
+		if ( (glBindBufferARB = pto2ptf<PFNGLBINDBUFFERARBPROC>(loadExtension("glBindBufferARB"))) == NULL)
 			GLOBALVARS.ext_vbo = false;
-		else if ((*(void**)(&glDeleteBuffersARB) = loadExtension("glDeleteBuffersARB")) == NULL)
+		else if ( (glDeleteBuffersARB = pto2ptf<PFNGLDELETEBUFFERSARBPROC>(loadExtension("glDeleteBuffersARB"))) == NULL)
 			GLOBALVARS.ext_vbo = false;
-		else if ((*(void**)(&glGenBuffersARB) = loadExtension("glGenBuffersARB")) == NULL)
+		else if ( (glGenBuffersARB = pto2ptf<PFNGLGENBUFFERSARBPROC>(loadExtension("glGenBuffersARB"))) == NULL)
 			GLOBALVARS.ext_vbo = false;
-		else if ((*(void**)(&glBufferDataARB) = loadExtension("glBufferDataARB")) == NULL)
+		else if ( (glBufferDataARB = pto2ptf<PFNGLBUFFERDATAARBPROC>(loadExtension("glBufferDataARB"))) == NULL)
 			GLOBALVARS.ext_vbo = false;
-		else if ((*(void**)(&glBufferSubDataARB) = loadExtension("glBufferSubDataARB")) == NULL)
+		else if ( (glBufferSubDataARB = pto2ptf<PFNGLBUFFERSUBDATAARBPROC>(loadExtension("glBufferSubDataARB"))) == NULL)
 			GLOBALVARS.ext_vbo = false;
 	}
 }

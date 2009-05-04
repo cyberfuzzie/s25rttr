@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 4808 2009-05-04 19:59:33Z Demophobie $
+### $Id: CMakeLists.txt 4810 2009-05-04 20:14:42Z Demophobie $
 ################################################################################
 
 INCLUDE(FindBZip2)
@@ -105,6 +105,7 @@ SET(SOURCES_INGAMEWINDOWS
     iwTools.cpp            iwTools.h
     iwTransport.cpp        iwTransport.h
     iwWares.cpp            iwWares.h
+    iwSurrender.cpp	   iwSurrender.h
     )
 
 SET(SOURCES_OTHER

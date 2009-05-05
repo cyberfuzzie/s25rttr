@@ -1,4 +1,4 @@
-// $Id: DriverWrapper.cpp 4798 2009-05-04 17:30:57Z FloSoft $
+// $Id: DriverWrapper.cpp 4816 2009-05-05 17:42:19Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -169,16 +169,16 @@ void DriverWrapper::LoadDriverList(const DriverType dt, list<DriverItem>& driver
 		std::string test(*it);
 		if( (dll = LoadLibrary(it->c_str())) )
 		{
-			PDRIVER_GETDRIVERAPIVERSION GetDriverAPIVersion = pto2ptf<PDRIVER_GETDRIVERAPIVERSION>(GetProcAddress(dll, "GetDriverAPIVersion"));
+			PDRIVER_GETDRIVERAPIVERSION GetDriverAPIVersion = pto2ptf<PDRIVER_GETDRIVERAPIVERSION>((void*)GetProcAddress(dll, "GetDriverAPIVersion"));
 
 			if(GetDriverAPIVersion && GetDriverAPIVersion() == DRIVERAPIVERSION)
 			{
-				PDRIVER_GETDRIVERNAME GetDriverName = pto2ptf<PDRIVER_GETDRIVERNAME>(GetProcAddress(dll, "GetDriverName"));
+				PDRIVER_GETDRIVERNAME GetDriverName = pto2ptf<PDRIVER_GETDRIVERNAME>((void*)GetProcAddress(dll, "GetDriverName"));
 
 				if(GetDriverName)
 				{
-					PDRIVER_CREATEAUDIOINSTANCE CreateAudioInstance = pto2ptf<PDRIVER_CREATEAUDIOINSTANCE>(GetProcAddress(dll, "CreateAudioInstance"));
-					PDRIVER_CREATEVIDEOINSTANCE CreateVideoInstance = pto2ptf<PDRIVER_CREATEVIDEOINSTANCE>(GetProcAddress(dll, "CreateVideoInstance"));
+					PDRIVER_CREATEAUDIOINSTANCE CreateAudioInstance = pto2ptf<PDRIVER_CREATEAUDIOINSTANCE>((void*)GetProcAddress(dll, "CreateAudioInstance"));
+					PDRIVER_CREATEVIDEOINSTANCE CreateVideoInstance = pto2ptf<PDRIVER_CREATEVIDEOINSTANCE>((void*)GetProcAddress(dll, "CreateVideoInstance"));
 
 					if((dt == DT_VIDEO && CreateVideoInstance) || (dt == DT_AUDIO && CreateAudioInstance))
 					{

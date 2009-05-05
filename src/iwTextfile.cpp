@@ -1,4 +1,4 @@
-// $Id: iwTextfile.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: iwTextfile.cpp 4815 2009-05-05 15:51:01Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -60,15 +60,20 @@ iwTextfile::iwTextfile(const std::string& filename, const std::string& title)
 	std::string path = FILE_PATHS[88] + Settings::inst().language + "/" + filename;
 
 	std::ifstream file(path.c_str());
-	
-	if(!file.is_open())
+
+	ctrlMultiline *text = AddMultiline(2, 10, 20, width - 20, 450, TC_GREEN1, NormalFont, glArchivItem_Font::DF_LEFT | glArchivItem_Font::DF_TOP);
+
+	if(!file.good())
 	{
 		// lokalisierte Vresion nicht gefunden, Standard öffnen
 		path = FILE_PATHS[88] + filename;
+		file.clear();
 		file.open(path.c_str());
-		if(!file.is_open())
+		if(!file.good())
 		{
-			WindowManager::inst().Show(new iwMsgbox(_("File was not found!"), _("Error"), this, MSB_OK, MSB_EXCLAMATIONRED));
+			// immer noch nichts gefunden? --> Dann Fehlermeldung
+			text->AddString(_("The readme file was not found!"), COLOR_RED, false);
+			// und raus
 			return;
 		}	
 	}
@@ -78,8 +83,7 @@ iwTextfile::iwTextfile(const std::string& filename, const std::string& title)
 	file.seekg(0);
 	unsigned short first_line_width = NormalFont->getWidth(line);
 	SetWidth(first_line_width + 20 + 30);
-
-	ctrlMultiline *text = AddMultiline(2, 10, 20, first_line_width + 30, 450, TC_GREEN1, NormalFont, glArchivItem_Font::DF_LEFT | glArchivItem_Font::DF_TOP);
+	text->SetWidth(first_line_width + 30);
 
 	while(!file.eof())
 	{

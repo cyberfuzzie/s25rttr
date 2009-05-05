@@ -1,4 +1,4 @@
-// $Id: ctrlComboBox.cpp 4793 2009-05-04 15:37:10Z OLiver $
+// $Id: ctrlComboBox.cpp 4815 2009-05-05 15:51:01Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -181,7 +181,7 @@ bool ctrlComboBox::Msg_WheelDownUp(const MouseCoords& mc)
 	if(!readonly && Coll(mc.x, mc.y, GetX(), GetY() + height, width, height + list->GetHeight()) && list->GetVisible())
 	{
 		// Scrolled in opened list ->
-		return RelayMouseMessage(&Window::Msg_WheelUpUp, mc);
+		return RelayMouseMessage(&Window::Msg_WheelDownUp, mc);
 	}
 	else if(!readonly && Coll(mc.x, mc.y, GetX(), GetY(), width, height))
 	{

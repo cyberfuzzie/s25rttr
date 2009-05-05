@@ -1,4 +1,4 @@
-// $Id: GameManager.cpp 4712 2009-04-25 14:05:08Z OLiver $
+// $Id: GameManager.cpp 4817 2009-05-05 19:23:05Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -212,7 +212,17 @@ bool GameManager::StartMenu()
 {
 	// generelle Daten laden
 	if(!LOADER.LoadFiles())
+	{
+		error("Einige Dateien konnten nicht geladen werden.\n"
+			"Stellen Sie sicher, dass die Siedler 2 Gold-Edition im gleichen \n"
+			"Verzeichnis wie Return to the Roots installiert ist.");
+
+		error("Einige Dateien konnten nicht geladen werden.\n"
+			"Please ensure that the Settlers 2 Gold-Edition is installed \n"
+			"in the same directory as Return to the Roots.");
+
 		return false;
+	}
 
 	// Menüdaten laden
 	if(!LOADER.LoadMenu())

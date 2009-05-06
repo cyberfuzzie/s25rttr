@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Siedler II.5 RttR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-04 19:54+0100\n"
-"PO-Revision-Date: 2009-05-04 19:54+0100\n"
+"POT-Creation-Date: 2009-05-06 18:14+0100\n"
+"PO-Revision-Date: 2009-05-06 18:16+0100\n"
 "Last-Translator: \n"
 "Language-Team: Siedler II.5 RttR <sf-team@siedler25.org>\n"
 "MIME-Version: 1.0\n"
@@ -656,6 +656,23 @@ msgstr ""
 msgid "Demolish house"
 msgstr ""
 
+#: /storage/RTTR/svn/trunk/src/iwSurrender.cpp:48
+msgid "Surrender game?"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/iwSurrender.cpp:51
+#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:104
+msgid "Surrender"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/iwSurrender.cpp:53
+msgid "Don't surrender"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/iwSurrender.cpp:55
+msgid "Destroy all buildings and surrender"
+msgstr ""
+
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:91
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:93
 msgid "Please wait..."
@@ -738,12 +755,8 @@ msgstr ""
 msgid "Winter world"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:57
+#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:58
 msgid "Game menu"
-msgstr ""
-
-#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:60
-msgid "End game"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:76
@@ -758,7 +771,11 @@ msgstr ""
 msgid "Save game!"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:122
+#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:106
+msgid "End game"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:126
 msgid "Readme!"
 msgstr ""
 
@@ -816,8 +833,8 @@ msgstr ""
 msgid "Are you sure to remove all replays?"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwTextfile.cpp:71
-msgid "File was not found!"
+#: /storage/RTTR/svn/trunk/src/iwTextfile.cpp:75
+msgid "The readme file was not found!"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwStorehouse.cpp:43

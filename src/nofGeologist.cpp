@@ -1,4 +1,4 @@
-// $Id: nofGeologist.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: nofGeologist.cpp 4827 2009-05-07 18:28:45Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -288,13 +288,6 @@ bool nofGeologist::IsNodeGood(const unsigned short x, const unsigned short y)
 	if(!gwg->IsNodeForFigures(x,y) || gwg->GetNO(x,y)->GetGOT() == GOT_SIGN
 		|| gwg->GetNO(x,y)->GetType() == NOP_FLAG || gwg->GetNO(x,y)->GetType() == NOP_TREE)
 		return false;
-
-	// Und es darf auch kein Weg an diesem Punkt liegen
-	for(unsigned char i = 0;i<6;++i)
-	{
-		if(gwg->GetPointRoad(x,y,i))
-			return false;
-	}
 
 	return true;
 }

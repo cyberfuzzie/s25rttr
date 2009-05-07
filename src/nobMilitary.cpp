@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: nobMilitary.cpp 4829 2009-05-07 18:52:37Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -887,8 +887,8 @@ void nobMilitary::HitOfCatapultStone()
 	// Ein Soldat weniger, falls es noch welche gibt
 	if(troops.size())
 	{
-		(*troops.end())->Die();
-		troops.pop_back();
+		(*troops.begin())->Die();
+		troops.pop_front();
 	}
 
 	// Kein Soldat mehr da? Haus abfackeln

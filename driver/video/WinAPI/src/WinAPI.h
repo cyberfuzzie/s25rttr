@@ -1,4 +1,4 @@
-// $Id: WinAPI.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: WinAPI.h 4828 2009-05-07 18:40:37Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -89,6 +89,7 @@ private:
 private:
 	bool mouse_l;    ///< Status der Linken Maustaste.
 	bool mouse_r;    ///< Status der Rechten Maustaste.
+	int mouse_z;     ///< Scrolling position for mousewheel. 
 	DEVMODE dm_prev; ///< Bildschirmmodus.
 	HWND  screen;    ///< Fensterhandle.
 	HDC   screen_dc; ///< Zeichenkontext des Fensters.

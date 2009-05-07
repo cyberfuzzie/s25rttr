@@ -1,4 +1,4 @@
-// $Id: WinAPI.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: WinAPI.cpp 4828 2009-05-07 18:40:37Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -110,7 +110,7 @@ static VideoWinAPI *pVideoWinAPI = NULL;
  *
  *  @author FloSoft
  */
-VideoWinAPI::VideoWinAPI(VideoDriverLoaderInterface * CallBack) : VideoDriver(CallBack), mouse_l(false), mouse_r(false)
+VideoWinAPI::VideoWinAPI(VideoDriverLoaderInterface * CallBack) : VideoDriver(CallBack), mouse_l(false), mouse_r(false), mouse_z(0)
 {
 	pVideoWinAPI = this;
 
@@ -753,6 +753,33 @@ LRESULT CALLBACK VideoWinAPI::WindowProc(HWND window, UINT msg, WPARAM wParam, L
 			pVideoWinAPI->mouse_r = false;
 			pVideoWinAPI->mouse_xy.rdown = false;
 			pVideoWinAPI->CallBack->Msg_RightUp(pVideoWinAPI->mouse_xy);
+		} break;
+	case WM_MOUSEWHEEL:
+		{
+			// Obtain scrolling distance. For every multiple of WHEEL_DELTA, we have to fire an event, because we treat the wheel like two buttons. 
+			// One wheel "step" usually produces a mouse_z  of +/- WHEEL_DELTA. But there may exist wheels without "steps" that result in lower values we have to cumulate.
+			pVideoWinAPI->mouse_z += GET_WHEEL_DELTA_WPARAM(wParam);
+
+			// We don't want to crash if there were even wheels that produce higher values...
+			while (abs(pVideoWinAPI->mouse_z) >= WHEEL_DELTA)
+			{
+				if (pVideoWinAPI->mouse_z > 0) // Scrolled to top
+				{
+					pVideoWinAPI->mouse_z -= WHEEL_DELTA;
+					pVideoWinAPI->mouse_xy.wudown = true;
+					pVideoWinAPI->CallBack->Msg_WheelUpDown(pVideoWinAPI->mouse_xy);
+					pVideoWinAPI->mouse_xy.wudown = false;
+					pVideoWinAPI->CallBack->Msg_WheelUpUp(pVideoWinAPI->mouse_xy);
+				}
+				else // Scrolled to bottom
+				{
+					pVideoWinAPI->mouse_z += WHEEL_DELTA;
+					pVideoWinAPI->mouse_xy.wddown = true;
+					pVideoWinAPI->CallBack->Msg_WheelDownDown(pVideoWinAPI->mouse_xy);
+					pVideoWinAPI->mouse_xy.wddown = false;
+					pVideoWinAPI->CallBack->Msg_WheelDownUp(pVideoWinAPI->mouse_xy);
+				}
+			}
 		} break;
 	case WM_KEYDOWN:
 		{

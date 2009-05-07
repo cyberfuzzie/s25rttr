@@ -1,4 +1,4 @@
-// $Id: VideoDriver.h 4793 2009-05-04 15:37:10Z OLiver $
+// $Id: VideoDriver.h 4830 2009-05-07 18:59:21Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -95,12 +95,6 @@ public:
 	/// Funktion zum Auslesen ob die Rechte Maustaste gedrückt ist.
 	virtual bool GetMouseStateR(void) const;
 	
-	/// Funktion zum Auslesen ob Rad hoch gedrückt ist.
-	virtual bool GetMouseStateU(void) const;
-
-	/// Funktion zum Auslesen ob Rad runter gedrückt ist.
-	virtual bool GetMouseStateD(void) const;
-
 	/// Gibt Pointer auf ein Fenster zurück (device-dependent!), HWND unter Windows
 	virtual void * GetWindowPointer() const = 0;
 

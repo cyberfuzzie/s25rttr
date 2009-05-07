@@ -1,4 +1,4 @@
-// $Id: Messages.h 4793 2009-05-04 15:37:10Z OLiver $
+// $Id: Messages.h 4830 2009-05-07 18:59:21Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -73,16 +73,14 @@ enum Msg
 class MouseCoords
 { 
 public:
-	MouseCoords() : x(0), y(0), ldown(false), rdown(false), wudown(false), wddown(false) {}
-	MouseCoords(int x, int y, bool ldown, bool rdown, bool wudown, bool wddown) : x(x), y(y), ldown(ldown), rdown(rdown), wudown(wudown), wddown(wddown) {}
+	MouseCoords() : x(0), y(0), ldown(false), rdown(false) {}
+	MouseCoords(int x, int y, bool ldown, bool rdown) : x(x), y(y), ldown(ldown), rdown(rdown) {}
 
 public:
 	int x;      /// x-Koordinate
 	int y;      /// y-Koordinate
 	bool ldown; /// Linke Maustaste gedrückt
 	bool rdown; /// Rechte Maustaste gedrückt
-	bool wudown;/// Rad nach oben gedrückt
-	bool wddown;/// Rad nach unten gedrückt
 };
 
 ///////////////////////////////////////////////////////////////////////////////

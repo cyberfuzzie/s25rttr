@@ -1,4 +1,4 @@
-// $Id: Window.h 4793 2009-05-04 15:37:10Z OLiver $
+// $Id: Window.h 4830 2009-05-07 18:59:21Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -204,10 +204,8 @@ public:
 	virtual bool Msg_RightDown(const MouseCoords& mc);
 	virtual bool Msg_LeftUp(const MouseCoords& mc);
 	virtual bool Msg_RightUp(const MouseCoords& mc);
-	virtual bool Msg_WheelUpDown(const MouseCoords& mc);
-	virtual bool Msg_WheelUpUp(const MouseCoords& mc);
-	virtual bool Msg_WheelDownDown(const MouseCoords& mc);
-	virtual bool Msg_WheelDownUp(const MouseCoords& mc);
+	virtual bool Msg_WheelUp(const MouseCoords& mc);
+	virtual bool Msg_WheelDown(const MouseCoords& mc);
 	virtual bool Msg_MouseMove(const MouseCoords& mc);
 	virtual bool Msg_KeyDown(const KeyEvent& ke);
 	// Wird aufgerufen, nachdem schon ein Mausklick behandelt wurde

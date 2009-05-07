@@ -1,4 +1,4 @@
-// $Id: ctrlComboBox.cpp 4815 2009-05-05 15:51:01Z OLiver $
+// $Id: ctrlComboBox.cpp 4830 2009-05-07 18:59:21Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -146,20 +146,20 @@ bool ctrlComboBox::Msg_RightDown(const MouseCoords& mc)
  *
  *  @author Divan
  */
-bool ctrlComboBox::Msg_WheelUpUp(const MouseCoords& mc)
+bool ctrlComboBox::Msg_WheelUp(const MouseCoords& mc)
 {
 	ctrlList *list = GetCtrl<ctrlList>(0);
 
 	if(!readonly && Coll(mc.x, mc.y, GetX(), GetY() + height, width, height + list->GetHeight()) && list->GetVisible())
 	{
 		// Scrolled in opened list ->
-		return RelayMouseMessage(&Window::Msg_WheelUpUp, mc);
+		return RelayMouseMessage(&Window::Msg_WheelUp, mc);
 	}
 	else if(!readonly && Coll(mc.x, mc.y, GetX(), GetY(), width, height))
 	{
 		// Scrolled without list opened
 		if (list->GetSelection() > 0)
-			list->SetSelection(list->GetSelection() - 1);
+			Msg_ListSelectItem(GetID(),list->GetSelection() - 1);
 		return true;
 	}
 	else
@@ -174,20 +174,20 @@ bool ctrlComboBox::Msg_WheelUpUp(const MouseCoords& mc)
  *
  *  @author Divan
  */
-bool ctrlComboBox::Msg_WheelDownUp(const MouseCoords& mc)
+bool ctrlComboBox::Msg_WheelDown(const MouseCoords& mc)
 {
 	ctrlList *list = GetCtrl<ctrlList>(0);
 
 	if(!readonly && Coll(mc.x, mc.y, GetX(), GetY() + height, width, height + list->GetHeight()) && list->GetVisible())
 	{
 		// Scrolled in opened list ->
-		return RelayMouseMessage(&Window::Msg_WheelDownUp, mc);
+		return RelayMouseMessage(&Window::Msg_WheelDown, mc);
 	}
 	else if(!readonly && Coll(mc.x, mc.y, GetX(), GetY(), width, height))
 	{
 		// Scrolled without list opened
 		if (list->GetSelection() < list->GetLineCount() - 1)
-			list->SetSelection(list->GetSelection() + 1);
+			Msg_ListSelectItem(GetID(),list->GetSelection() + 1);
 		return true;
 	}
 	else

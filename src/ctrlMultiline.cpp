@@ -1,4 +1,4 @@
-// $Id: ctrlMultiline.cpp 4793 2009-05-04 15:37:10Z OLiver $
+// $Id: ctrlMultiline.cpp 4830 2009-05-07 18:59:21Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -152,7 +152,7 @@ bool ctrlMultiline::Msg_LeftUp(const MouseCoords& mc)
  *
  *  @author Divan
  */
-bool ctrlMultiline::Msg_WheelUpUp(const MouseCoords& mc)
+bool ctrlMultiline::Msg_WheelUp(const MouseCoords& mc)
 {
 	// Forward to ScrollBar
 	ctrlScrollBar *scrollbar = GetCtrl<ctrlScrollBar>(0);
@@ -177,7 +177,7 @@ bool ctrlMultiline::Msg_WheelUpUp(const MouseCoords& mc)
  *
  *  @author Divan
  */
-bool ctrlMultiline::Msg_WheelDownUp(const MouseCoords& mc)
+bool ctrlMultiline::Msg_WheelDown(const MouseCoords& mc)
 {
 	// Forward to ScrollBar
 	ctrlScrollBar *scrollbar = GetCtrl<ctrlScrollBar>(0);

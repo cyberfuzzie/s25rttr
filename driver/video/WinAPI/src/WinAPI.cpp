@@ -1,4 +1,4 @@
-// $Id: WinAPI.cpp 4828 2009-05-07 18:40:37Z FloSoft $
+// $Id: WinAPI.cpp 4830 2009-05-07 18:59:21Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -766,18 +766,12 @@ LRESULT CALLBACK VideoWinAPI::WindowProc(HWND window, UINT msg, WPARAM wParam, L
 				if (pVideoWinAPI->mouse_z > 0) // Scrolled to top
 				{
 					pVideoWinAPI->mouse_z -= WHEEL_DELTA;
-					pVideoWinAPI->mouse_xy.wudown = true;
-					pVideoWinAPI->CallBack->Msg_WheelUpDown(pVideoWinAPI->mouse_xy);
-					pVideoWinAPI->mouse_xy.wudown = false;
-					pVideoWinAPI->CallBack->Msg_WheelUpUp(pVideoWinAPI->mouse_xy);
+					pVideoWinAPI->CallBack->Msg_WheelUp(pVideoWinAPI->mouse_xy);
 				}
 				else // Scrolled to bottom
 				{
 					pVideoWinAPI->mouse_z += WHEEL_DELTA;
-					pVideoWinAPI->mouse_xy.wddown = true;
-					pVideoWinAPI->CallBack->Msg_WheelDownDown(pVideoWinAPI->mouse_xy);
-					pVideoWinAPI->mouse_xy.wddown = false;
-					pVideoWinAPI->CallBack->Msg_WheelDownUp(pVideoWinAPI->mouse_xy);
+					pVideoWinAPI->CallBack->Msg_WheelDown(pVideoWinAPI->mouse_xy);
 				}
 			}
 		} break;

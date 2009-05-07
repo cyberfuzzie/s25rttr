@@ -1,4 +1,4 @@
-// $Id: SDL.cpp 4793 2009-05-04 15:37:10Z OLiver $
+// $Id: SDL.cpp 4830 2009-05-07 18:59:21Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -351,17 +351,6 @@ bool VideoSDL::MessageLoop(void)
 					mouse_xy.rdown = true;
 					CallBack->Msg_RightDown(mouse_xy);
 				}
-				if(ev.button.button == SDL_BUTTON_WHEELUP)
-				{
-					mouse_xy.wudown = true;
-					CallBack->Msg_WheelUpDown(mouse_xy);
-				}
-				if(ev.button.button == SDL_BUTTON_WHEELDOWN)
-				{
-					mouse_xy.wddown = true;
-					CallBack->Msg_WheelDownDown(mouse_xy);
-				}
-
 			} break;
 		case SDL_MOUSEBUTTONUP:
 			{
@@ -380,13 +369,11 @@ bool VideoSDL::MessageLoop(void)
 				}
 				if(ev.button.button == SDL_BUTTON_WHEELUP)
 				{
-					mouse_xy.wudown = false;
-					CallBack->Msg_WheelUpUp(mouse_xy);
+					CallBack->Msg_WheelUp(mouse_xy);
 				}
 				if(ev.button.button == SDL_BUTTON_WHEELDOWN)
 				{
-					mouse_xy.wddown = false;
-					CallBack->Msg_WheelDownUp(mouse_xy);
+					CallBack->Msg_WheelDown(mouse_xy);
 				}
 
 			} break;

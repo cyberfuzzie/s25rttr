@@ -1,4 +1,4 @@
-// $Id: prebuild-mutex.cpp 4802 2009-05-04 18:00:34Z FloSoft $
+// $Id: prebuild-mutex.cpp 4830 2009-05-07 18:59:21Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -113,6 +113,7 @@ int main(int argc, char *argv[])
 	HANDLE mHandle; 
 
 	bool exist = false;
+	bool hadtowait = false;
 	int timeout = 0;
 	do
 	{
@@ -124,58 +125,61 @@ int main(int argc, char *argv[])
 
 			if(!exist)
 			{
-				// Pre/Postbuild-Ereignis mit Parametern starten
-
-				if(prebuild)
+				// do it only if we havent run yet
+				if(!hadtowait)
 				{
-					if(!existfile(working + "version.h"))
-						copyfile("version.h.in", working, working, "version.h");
-					if(!existfile(working + "local.h"))
-						copyfile("local.h.in", working, working, "local.h");
-
-					std::string cmd;
-
-					// todo: das hier auch ersetzen
-					cmd = "sh dailyversion.sh";
-					exec(cmd);
-
-					cmd = "\"" + binary + "version.exe\" --no-dots";
-					exec(cmd);
-
-					std::cout << "creating language files" << std::endl;
-
-					std::vector<std::string> langs;
-
-					HANDLE hFile;
-					WIN32_FIND_DATA wfd;
-
-					hFile = FindFirstFile("RTTR\\languages\\*.po", &wfd);
-					if(hFile != INVALID_HANDLE_VALUE)
+					// Pre/Postbuild-Ereignis mit Parametern starten
+					if(prebuild)
 					{
-						do
+						if(!existfile(working + "version.h"))
+							copyfile("version.h.in", working, working, "version.h");
+						if(!existfile(working + "local.h"))
+							copyfile("local.h.in", working, working, "local.h");
+
+						std::string cmd;
+
+						// todo: das hier auch ersetzen
+						cmd = "sh dailyversion.sh";
+						exec(cmd);
+
+						cmd = "\"" + binary + "version.exe\" --no-dots";
+						exec(cmd);
+
+						std::cout << "creating language files" << std::endl;
+
+						std::vector<std::string> langs;
+
+						HANDLE hFile;
+						WIN32_FIND_DATA wfd;
+
+						hFile = FindFirstFile("RTTR\\languages\\*.po", &wfd);
+						if(hFile != INVALID_HANDLE_VALUE)
 						{
-							std::string lang = wfd.cFileName;
-							lang = lang.substr(0, lang.find_last_of('.'));
-							langs.push_back(lang);
-						} while(FindNextFile(hFile, &wfd));
+							do
+							{
+								std::string lang = wfd.cFileName;
+								lang = lang.substr(0, lang.find_last_of('.'));
+								langs.push_back(lang);
+							} while(FindNextFile(hFile, &wfd));
 
-						FindClose(hFile);
+							FindClose(hFile);
+						}
+
+						for(std::vector<std::string>::iterator it = langs.begin(); it != langs.end(); ++it)
+						{
+							std::cout << "creating language " << (*it) << std::endl;
+
+							cmd = "msgmerge --quiet --update --backup=none -s RTTR/languages/" + (*it) + ".po RTTR/languages/rttr.pot";
+							exec(cmd);
+							cmd = "msgfmt -o RTTR/languages/" + (*it) + ".mo RTTR/languages/" + (*it) + ".po";
+							exec(cmd);
+						}
 					}
-
-					for(std::vector<std::string>::iterator it = langs.begin(); it != langs.end(); ++it)
+					else
 					{
-						std::cout << "creating language " << (*it) << std::endl;
-
-						cmd = "msgmerge --quiet --update --backup=none -s RTTR/languages/" + (*it) + ".po RTTR/languages/rttr.pot";
-						exec(cmd);
-						cmd = "msgfmt -o RTTR/languages/" + (*it) + ".mo RTTR/languages/" + (*it) + ".po";
-						exec(cmd);
+						copyfile("sound-convert.exe", binary, working + "RTTR\\");
+						copyfile("libsiedler2.dll", binary, working + "RTTR\\");
 					}
-				}
-				else
-				{
-					copyfile("sound-convert.exe", binary, working + "RTTR\\");
-					copyfile("libsiedler2.dll", binary, working + "RTTR\\");
 				}
 
 				ReleaseMutex(mHandle);
@@ -184,8 +188,11 @@ int main(int argc, char *argv[])
 		}
 		Sleep(250);
 		++timeout;
-	}
-	while(exist && timeout < 8);
 
+		hadtowait = true;
+	}
+	while(exist && timeout < 30);
+
+	ReleaseMutex(mHandle);
 	return 0;
 }

@@ -1,4 +1,4 @@
-// $Id: WindowManager.cpp 4793 2009-05-04 15:37:10Z OLiver $
+// $Id: WindowManager.cpp 4830 2009-05-07 18:59:21Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -620,15 +620,15 @@ void WindowManager::Msg_RightUp(const MouseCoords& mc)
 	RelayMouseMessage(&Window::Msg_RightUp,mc);
 }
 
-///////////////////////////////////////////////////////////////////////////////
-/**
- *  Verarbeitung des Drückens Mausrads hoch.
+///////////////////////////////////////////////////////////////////////
+/*
+ *  Verarbeitung Mausrad hoch.
  *
  *  @param[in] mc Mauskoordinaten Struktur
  *
  *  @author Divan
  */
-void WindowManager::Msg_WheelUpDown(const MouseCoords& mc)
+void WindowManager::Msg_WheelUp(const MouseCoords& mc)
 {
 	// ist unser Desktop gültig?
 	if(!desktop)
@@ -637,119 +637,176 @@ void WindowManager::Msg_WheelUpDown(const MouseCoords& mc)
 	// haben wir überhaupt fenster?
 	if(!windows.size())
 	{
+		// nein, dann Desktop aktivieren
+		desktop->SetActive(true);
+
 		// nein, Msg_LeftDown aufrufen
-		desktop->Msg_WheelUpDown(mc);
-		// und allen unten drunter auch Bescheid sagen
-		desktop->RelayMouseMessage(&Window::Msg_WheelUpDown, mc);
+		desktop->Msg_WheelUp(mc);
 
+		// und allen unten drunter auch Bescheid sagen
+		desktop->RelayMouseMessage(&Window::Msg_WheelUp, mc);
+
+		// und raus
+		return;
 	}
-	else
+
+	// haben wir ein zuletzt aktives Fenster? (sollten wir ja eigentlich, aber sicher ist sicher)
+	if( (*windows.end()) != NULL)
 	{
-		// Msg_LeftDownaufrufen
-		(*windows.end())->Msg_WheelUpDown(mc);
+		// ist das zuletzt aktiv gewesene Fenster Modal?
+		if( (*windows.end())->GetModal())
+		{
+			// Msg_LeftDownaufrufen
+			(*windows.end())->Msg_WheelUp(mc);
+
+			// und allen unten drunter auch Bescheid sagen
+			(*windows.end())->RelayMouseMessage(&Window::Msg_WheelUp, mc);
+
+			// und raus
+			return;
+		}
+	}
+
+	bool found_window = false;
+
+	// Fenster durchgehen ( von hinten nach vorn, da die vordersten ja zuerst geprüft werden müssen !! )
+	for(IngameWindowListIterator it = windows.end(); it.valid(); --it)
+	{
+		// ist das Fenster gültig?
+		if( (*it) == NULL)
+			continue;
+
+		// FensterRect für Kollisionsabfrage
+		Rect window_rect = {
+			(*it)->x,
+			(*it)->y,
+			(*it)->x + (*it)->GetWidth(),
+			(*it)->y + (*it)->GetHeight()
+		};
+
+		// trifft die Maus auf ein Fenster?
+		if(Coll(mc.x, mc.y, window_rect))
+		{
+			// ja, also aktives Fenster deaktivieren (falls ok)
+			if( (*windows.end()) != NULL)
+				(*windows.end())->SetActive(false);
+
+			// Fenster aus der Liste holen und vorne wieder anhängen
+			IngameWindow *tmp = *it;
+			windows.erase(it); // ACHTUNG!!!!
+			windows.push_back(tmp);
+			
+			// ist das neue Fenster ok?
+			if( (*windows.end()) != NULL)
+			{
+				// ja, dann aktivieren
+				(*windows.end())->SetActive(true);
+			
+				// dann Msg_WheelUp aufrufen
+				(*windows.end())->Msg_WheelUp(mc);
+
+				// und allen unten drunter auch Bescheid sagen
+				(*windows.end())->RelayMouseMessage(&Window::Msg_WheelUp, mc);
+			}
+
+
+			// wir haben eins gefunden --> der Desktop muss nicht aktiv werden
+			found_window = true;
+			
+			// Desktop deaktivieren, falls aktiviert
+			desktop->SetActive(false);
+					
+			// wir können mit der Schleife abbrechen
+			break;
+		}
+	}
+
+	// Haben wir ein Fenster gefunden gehabt?
+	if(!found_window)
+	{
+		// letztes Fenster deaktivieren (falls ok), da ja nun der Desktop aktiv werden soll
+		if( (*windows.end()) != NULL)
+			(*windows.end())->SetActive(false);
+
+		// Desktop aktivieren
+		desktop->SetActive(true);
+		
+		// nein, dann Msg_WheelUpDown aufrufen
+		desktop->Msg_WheelUp(mc);
 
 		// und allen unten drunter auch Bescheid sagen
-		(*windows.end())->RelayMouseMessage(&Window::Msg_WheelUpDown, mc);
+		desktop->RelayMouseMessage(&Window::Msg_WheelUp, mc);;
 	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  Verarbeitung des Loslassens Mausrads hoch.
+ *  Verarbeitung Mausrad runter
  *
  *  @param[in] mc Mauskoordinaten Struktur
  *
  *  @author Divan
  */
-void WindowManager::Msg_WheelUpUp(const MouseCoords& mc)
+void WindowManager::Msg_WheelDown(const MouseCoords& mc)
 {
-	// ist unser Desktop gültig?
 	if(!desktop)
 		return;
-
-	// haben wir überhaupt fenster?
 	if(!windows.size())
 	{
-		// nein, Msg_LeftDown aufrufen
-		desktop->Msg_WheelUpUp(mc);
-		// und allen unten drunter auch Bescheid sagen
-		desktop->RelayMouseMessage(&Window::Msg_WheelUpUp, mc);
-
+		desktop->SetActive(true);
+		desktop->Msg_WheelDown(mc);
+		desktop->RelayMouseMessage(&Window::Msg_WheelDown, mc);
+		// und raus
+		return;
 	}
-	else
+	if( (*windows.end()) != NULL)
 	{
-		// Msg_LeftDownaufrufen
-		(*windows.end())->Msg_WheelUpUp(mc);
-
-		// und allen unten drunter auch Bescheid sagen
-		(*windows.end())->RelayMouseMessage(&Window::Msg_WheelUpUp, mc);
+		if( (*windows.end())->GetModal())
+		{
+			(*windows.end())->Msg_WheelDown(mc);
+			(*windows.end())->RelayMouseMessage(&Window::Msg_WheelDown, mc);
+			return;
+		}
+	}
+	bool found_window = false;
+	for(IngameWindowListIterator it = windows.end(); it.valid(); --it)
+	{
+		if( (*it) == NULL)
+			continue;
+		Rect window_rect = {
+			(*it)->x,
+			(*it)->y,
+			(*it)->x + (*it)->GetWidth(),
+			(*it)->y + (*it)->GetHeight()
+		};
+		if(Coll(mc.x, mc.y, window_rect))
+		{
+			if( (*windows.end()) != NULL)
+				(*windows.end())->SetActive(false);
+			IngameWindow *tmp = *it;
+			windows.erase(it); // ACHTUNG!!!!
+			windows.push_back(tmp);
+			if( (*windows.end()) != NULL)
+			{
+				(*windows.end())->SetActive(true);
+				(*windows.end())->Msg_WheelDown(mc);
+				(*windows.end())->RelayMouseMessage(&Window::Msg_WheelDown, mc);
+			}
+			found_window = true;
+			desktop->SetActive(false);
+			break;
+		}
+	}
+	if(!found_window)
+	{
+		if( (*windows.end()) != NULL)
+			(*windows.end())->SetActive(false);
+		desktop->SetActive(true);
+		desktop->Msg_WheelDown(mc);
+		desktop->RelayMouseMessage(&Window::Msg_WheelDown, mc);;
 	}
 }
 
-///////////////////////////////////////////////////////////////////////////////
-/**
- *  Verarbeitung des Drückens Mausrads runter.
- *
- *  @param[in] mc Mauskoordinaten Struktur
- *
- *  @author Divan
- */
-void WindowManager::Msg_WheelDownUp(const MouseCoords& mc)
-{
-	// ist unser Desktop gültig?
-	if(!desktop)
-		return;
-
-	// haben wir überhaupt fenster?
-	if(!windows.size())
-	{
-		// nein, Msg_LeftDown aufrufen
-		desktop->Msg_WheelDownUp(mc);
-		// und allen unten drunter auch Bescheid sagen
-		desktop->RelayMouseMessage(&Window::Msg_WheelDownUp, mc);
-
-	}
-	else
-	{
-		// Msg_LeftDownaufrufen
-		(*windows.end())->Msg_WheelDownUp(mc);
-
-		// und allen unten drunter auch Bescheid sagen
-		(*windows.end())->RelayMouseMessage(&Window::Msg_WheelDownUp, mc);
-	}
-}
-///////////////////////////////////////////////////////////////////////////////
-/**
- *  Verarbeitung des Loslassen Mausrad runter.
- *
- *  @param[in] mc Mauskoordinaten Struktur
- *
- *  @author Divan
- */
-void WindowManager::Msg_WheelDownDown(const MouseCoords& mc)
-{
-	// ist unser Desktop gültig?
-	if(!desktop)
-		return;
-
-	// haben wir überhaupt fenster?
-	if(!windows.size())
-	{
-		// nein, Msg_LeftDown aufrufen
-		desktop->Msg_WheelDownDown(mc);
-		// und allen unten drunter auch Bescheid sagen
-		desktop->RelayMouseMessage(&Window::Msg_WheelDownDown, mc);
-
-	}
-	else
-	{
-		// Msg_LeftDownaufrufen
-		(*windows.end())->Msg_WheelDownDown(mc);
-
-		// und allen unten drunter auch Bescheid sagen
-		(*windows.end())->RelayMouseMessage(&Window::Msg_WheelDownDown, mc);
-	}
-}
 ///////////////////////////////////////////////////////////////////////////////
 /**
  *  Verarbeitung des Verschiebens der Maus.

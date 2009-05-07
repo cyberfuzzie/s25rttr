@@ -1,4 +1,4 @@
-// $Id: ctrlProgress.cpp 4793 2009-05-04 15:37:10Z OLiver $
+// $Id: ctrlProgress.cpp 4830 2009-05-07 18:59:21Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -171,7 +171,7 @@ bool ctrlProgress::Msg_LeftUp(const MouseCoords& mc)
  *
  *  @author Divan
  */
-bool ctrlProgress::Msg_WheelUpUp(const MouseCoords& mc)
+bool ctrlProgress::Msg_WheelUp(const MouseCoords& mc)
 {
 	// If mouse is over the controls, simulate button click
 	if(Coll(mc.x,mc.y,GetX(),GetY(), width, height))
@@ -188,7 +188,7 @@ bool ctrlProgress::Msg_WheelUpUp(const MouseCoords& mc)
  *
  *  @author Divan
  */
-bool ctrlProgress::Msg_WheelDownUp(const MouseCoords& mc)
+bool ctrlProgress::Msg_WheelDown(const MouseCoords& mc)
 {
 	// If mouse is over the controls, simulate button click
 	if(Coll(mc.x,mc.y,GetX(),GetY(), width, height))

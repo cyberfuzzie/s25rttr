@@ -1,4 +1,4 @@
-// $Id: ctrlTable.cpp 4793 2009-05-04 15:37:10Z OLiver $
+// $Id: ctrlTable.cpp 4830 2009-05-07 18:59:21Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -326,7 +326,7 @@ bool ctrlTable::Msg_RightDown(const MouseCoords& mc)
  *
  *  @author Divan
  */
-bool ctrlTable::Msg_WheelUpUp(const MouseCoords& mc)
+bool ctrlTable::Msg_WheelUp(const MouseCoords& mc)
 {
 	// Forward to ScrollBar
 	ctrlScrollBar *scrollbar = GetCtrl<ctrlScrollBar>(0);
@@ -342,7 +342,7 @@ bool ctrlTable::Msg_WheelUpUp(const MouseCoords& mc)
 		return false;
 }
 
-bool ctrlTable::Msg_WheelDownUp(const MouseCoords& mc)
+bool ctrlTable::Msg_WheelDown(const MouseCoords& mc)
 {
 	// Forward to ScrollBar
 	ctrlScrollBar *scrollbar = GetCtrl<ctrlScrollBar>(0);

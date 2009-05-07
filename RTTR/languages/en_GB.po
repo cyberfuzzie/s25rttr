@@ -2,8 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Siedler II.5 RttR\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Siedler II.5 - Return To The Roots Team <sf-team@siedler25."
-"de>\n"
+"POT-Creation-Date: 2009-05-07 08:00+0100\n"
+"PO-Revision-Date: 2009-05-07 09:05+0000\n"
+"Last-Translator: Demophobie <bugs@siedler25.org>\n"
 "Language-Team: Siedler II.5 RttR <sf-team@siedler25.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -13,8 +14,10 @@ msgstr ""
 "X-Poedit-Country: UNITED KINGDOM\n"
 "X-Poedit-Language: English\n"
 "X-Poedit-SourceCharset: iso-8859-15\n"
-"X-Poedit-SearchPath-0: /storage/RTTR/svn/trunk/src\n"
 "X-Poedit-Basepath: .\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"X-Poedit-SearchPath-0: /storage/RTTR/svn/trunk/src\n"
 
 #: /storage/RTTR/svn/trunk/src/GameClient.cpp:740
 msgid " (AI)"
@@ -61,12 +64,8 @@ msgstr "(House unoccupied)"
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:185
 #, c-format
-msgid ""
-"(Replay-Mode) Current GF: %u (End at: %u) / GF length: %u ms / NWF length: %"
-"u gf (%u ms)"
-msgstr ""
-"(Replay-Mode) Current GF: %u (End at: %u) / GF length: %u ms / NWF length: %"
-"u gf (%u ms)"
+msgid "(Replay-Mode) Current GF: %u (End at: %u) / GF length: %u ms / NWF length: %u gf (%u ms)"
+msgstr "(Replay-Mode) Current GF: %u (End at: %u) / GF length: %u ms / NWF length: %u gf (%u ms)"
 
 #: /storage/RTTR/svn/trunk/src/GameWorldViewer.cpp:191
 msgid "(stopped)"
@@ -113,18 +112,12 @@ msgid "A lot"
 msgstr "A lot"
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:490
-msgid ""
-"A well supplies water to the bakery, brewery, donkey breeder and pig farm."
-msgstr ""
-"A well supplies water to the bakery, brewery, donkey breeder and pig farm."
+msgid "A well supplies water to the bakery, brewery, donkey breeder and pig farm."
+msgstr "A well supplies water to the bakery, brewery, donkey breeder and pig farm."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:362
-msgid ""
-"A woodcutter provides the sawmill with logs. A forester is able to replant "
-"the depleted forest."
-msgstr ""
-"A woodcutter provides the sawmill with logs. A forester is able to replant "
-"the depleted forest."
+msgid "A woodcutter provides the sawmill with logs. A forester is able to replant the depleted forest."
+msgstr "A woodcutter provides the sawmill with logs. A forester is able to replant the depleted forest."
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:45
 msgid "Abort"
@@ -434,10 +427,8 @@ msgstr "Crucible"
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:187
 #, c-format
-msgid ""
-"Current GF: %u / GF length: %u ms / NWF length: %u gf (%u ms) /  Ping: %u ms"
-msgstr ""
-"Current GF: %u / GF length: %u ms / NWF length: %u gf (%u ms) / Ping: %u ms"
+msgid "Current GF: %u / GF length: %u ms / NWF length: %u gf (%u ms) /  Ping: %u ms"
+msgstr "Current GF: %u / GF length: %u ms / NWF length: %u gf (%u ms) / Ping: %u ms"
 
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:64
 msgid "Default"
@@ -452,10 +443,8 @@ msgid "Demolish?"
 msgstr "Demolish?"
 
 #: /storage/RTTR/svn/trunk/src/iwMilitaryBuilding.cpp:172
-msgid ""
-"Demolition ist not allowed because the building is located in border area!"
-msgstr ""
-"Demolition is not allowed because the building is located in border area!"
+msgid "Demolition ist not allowed because the building is located in border area!"
+msgstr "Demolition is not allowed because the building is located in border area!"
 
 #: /storage/RTTR/svn/trunk/src/iwMilitaryBuilding.cpp:171
 msgid "Demolition ist not allowed because the building is under attack!"
@@ -645,22 +634,16 @@ msgid "Fortress"
 msgstr "Fortress"
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:346
-msgid ""
-"From the lookout tower you can see far into previously unexplored lands."
-msgstr ""
-"From the lookout tower you can see far into previously unexplored lands."
+msgid "From the lookout tower you can see far into previously unexplored lands."
+msgstr "From the lookout tower you can see far into previously unexplored lands."
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:115
 msgid "Fullscreen"
 msgstr "Fullscreen"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:462
-msgid ""
-"Game can only be started as soon as everybody has a unique color,everyone is "
-"ready and all free slots are closed."
-msgstr ""
-"Game can only be started as soon as everybody has a unique colour, everyone "
-"is ready and all free slots are closed."
+msgid "Game can only be started as soon as everybody has a unique color,everyone is ready and all free slots are closed."
+msgstr "Game can only be started as soon as everybody has a unique colour, everyone is ready and all free slots are closed."
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:147
 msgid "Game crate was picked and spread out..."
@@ -727,12 +710,8 @@ msgid "Grain"
 msgstr "Grain"
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:434
-msgid ""
-"Grain and water are needed for rearing pigs. The meat thus obtained can then "
-"be processed by a butcher."
-msgstr ""
-"Grain and water are needed for rearing pigs. The meat thus obtained can then "
-"be processed by a butcher."
+msgid "Grain and water are needed for rearing pigs. The meat thus obtained can then be processed by a butcher."
+msgstr "Grain and water are needed for rearing pigs. The meat thus obtained can then be processed by a butcher."
 
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:68
 msgid "Granite mine"
@@ -856,12 +835,8 @@ msgid "Iron smelter"
 msgstr "Iron smelter"
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:496
-msgid ""
-"It is possible to build small rowing boats as well as huge cargo ships in a "
-"shipyard. The boards required for this are skillfully worked by shipwrights."
-msgstr ""
-"It is possible to build small rowing boats as well as huge cargo ships in a "
-"shipyard. The boards required for this are skilfully worked by shipwrights."
+msgid "It is possible to build small rowing boats as well as huge cargo ships in a shipyard. The boards required for this are skillfully worked by shipwrights."
+msgstr "It is possible to build small rowing boats as well as huge cargo ships in a shipyard. The boards required for this are skilfully worked by shipwrights."
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:568
 msgid "Japaneses"
@@ -1346,18 +1321,12 @@ msgid "Ranger"
 msgstr "Ranger"
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:422
-msgid ""
-"Raw iron ore is smelted in the iron smelters with the help of coal and raw "
-"iron. The processed iron is then used to making weapons (in the Armory) and "
-"tools (in the metalworks)."
-msgstr ""
-"Raw iron ore is smelted in the iron smelters with the help of coal and raw "
-"iron. The processed iron is then used to making weapons (in the Armoury) and "
-"tools (in the metalworks)."
+msgid "Raw iron ore is smelted in the iron smelters with the help of coal and raw iron. The processed iron is then used to making weapons (in the Armory) and tools (in the metalworks)."
+msgstr "Raw iron ore is smelted in the iron smelters with the help of coal and raw iron. The processed iron is then used to making weapons (in the Armoury) and tools (in the metalworks)."
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:106
 msgid "Readme"
-msgstr ""
+msgstr "Readme"
 
 #: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:122
 msgid "Readme!"
@@ -1514,12 +1483,8 @@ msgid "Singleplayer"
 msgstr "Singleplayer"
 
 #: /storage/RTTR/svn/trunk/src/dskSinglePlayer.cpp:97
-msgid ""
-"Singleplayer mode and AI are not yet implemented. Please use the Multiplayer "
-"mode and 'Direct IP' to create a Singleplayer game."
-msgstr ""
-"Singleplayer mode and AI are not yet implemented. Please use the Multiplayer "
-"mode and 'Direct IP' to create a Singleplayer game."
+msgid "Singleplayer mode and AI are not yet implemented. Please use the Multiplayer mode and 'Direct IP' to create a Singleplayer game."
+msgstr "Singleplayer mode and AI are not yet implemented. Please use the Multiplayer mode and 'Direct IP' to create a Singleplayer game."
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:113
 msgid "Size"
@@ -1622,12 +1587,8 @@ msgid "Thank you for your donations!"
 msgstr "Thank you for your donations!"
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:355
-msgid ""
-"Thanks to its immense strength, the catapults represents an effective weapon "
-"against enemy military buildings."
-msgstr ""
-"Thanks to its immense strength, the catapults represents an effective weapon "
-"against enemy military buildings."
+msgid "Thanks to its immense strength, the catapults represents an effective weapon against enemy military buildings."
+msgstr "Thanks to its immense strength, the catapults represents an effective weapon against enemy military buildings."
 
 #: /storage/RTTR/svn/trunk/src/GameClient.cpp:1153
 msgid "The Game is not in sync. Checksums of some players don't match."
@@ -1643,145 +1604,64 @@ msgid "The Settlers II.5 RTTR, v%s-%s"
 msgstr "The Settlers II.5 RTTR, v%s-%s"
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:409
-msgid ""
-"The armory produces swords and strong shields. This equipment is vital for "
-"your soldiers."
-msgstr ""
-"The armoury produces swords and strong shields. This equipment is vital for "
-"your soldiers."
+msgid "The armory produces swords and strong shields. This equipment is vital for your soldiers."
+msgstr "The armoury produces swords and strong shields. This equipment is vital for your soldiers."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:275
-msgid ""
-"The barracks is a very small hut which can be used by your soldiers as "
-"quarters. Using the gold coin button you can stop the delivery of gold coins "
-"to the soldiers stationed here. However, without gold coins the soldiers "
-"here can not train and improve their skills."
-msgstr ""
-"The barracks is a very small hut which can be used by your soldiers as "
-"quarters. Using the gold coin button you can stop the delivery of gold coins "
-"to the soldiers stationed here. However, without gold coins the soldiers "
-"here can not train and improve their skills."
+msgid "The barracks is a very small hut which can be used by your soldiers as quarters. Using the gold coin button you can stop the delivery of gold coins to the soldiers stationed here. However, without gold coins the soldiers here can not train and improve their skills."
+msgstr "The barracks is a very small hut which can be used by your soldiers as quarters. Using the gold coin button you can stop the delivery of gold coins to the soldiers stationed here. However, without gold coins the soldiers here can not train and improve their skills."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:402
-msgid ""
-"The brewer produces fine beer from grain and water. This drink is needed to "
-"fill the soldiers with courage."
-msgstr ""
-"The brewer produces fine beer from grain and water. This is needed to fill "
-"the soldiers with courage."
+msgid "The brewer produces fine beer from grain and water. This drink is needed to fill the soldiers with courage."
+msgstr "The brewer produces fine beer from grain and water. This is needed to fill the soldiers with courage."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:390
-msgid ""
-"The butcher processes the livestock delivered into nutritious ham on which "
-"you miners are fed."
-msgstr ""
-"The butcher processes the livestock delivered into nutritious ham on which "
-"you miners are fed."
+msgid "The butcher processes the livestock delivered into nutritious ham on which you miners are fed."
+msgstr "The butcher processes the livestock delivered into nutritious ham on which you miners are fed."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:475
-msgid ""
-"The carpenter turns the woodcutter's logs into made-to-measure planks. There "
-"form the basic for building houses and ships."
-msgstr ""
-"The carpenter turns the woodcutter's logs into made-to-measure planks. There "
-"form the basic for building houses and ships."
+msgid "The carpenter turns the woodcutter's logs into made-to-measure planks. There form the basic for building houses and ships."
+msgstr "The carpenter turns the woodcutter's logs into made-to-measure planks. There form the basic for building houses and ships."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:415
-msgid ""
-"The countless tools which your workers need are made in the metalworks. This "
-"requires boards and iron."
-msgstr ""
-"The countless tools which your workers need are made in the metalworks. This "
-"requires boards and iron."
+msgid "The countless tools which your workers need are made in the metalworks. This requires boards and iron."
+msgstr "The countless tools which your workers need are made in the metalworks. This requires boards and iron."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:319
-msgid ""
-"The defensive capabilities and size of the fortress are unsurpassed. This "
-"stronghold ensures that other valuable buildings and commodities are "
-"protected. Using the gold coin button you can stop the delivery of gold "
-"coins to the soldiers stationed here. However, without gold coins the "
-"soldiers here can not train and improve their skills."
-msgstr ""
-"The defensive capabilities and size of the fortress are unsurpassed. This "
-"stronghold ensures that other valuable buildings and commodities are "
-"protected. Using the gold coin button you can stop the delivery of gold "
-"coins to the soldiers stationed here. However, without gold coins the "
-"soldiers here can not train and improve their skills."
+msgid "The defensive capabilities and size of the fortress are unsurpassed. This stronghold ensures that other valuable buildings and commodities are protected. Using the gold coin button you can stop the delivery of gold coins to the soldiers stationed here. However, without gold coins the soldiers here can not train and improve their skills."
+msgstr "The defensive capabilities and size of the fortress are unsurpassed. This stronghold ensures that other valuable buildings and commodities are protected. Using the gold coin button you can stop the delivery of gold coins to the soldiers stationed here. However, without gold coins the soldiers here can not train and improve their skills."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:505
-msgid ""
-"The farmer plants and harvests grain in the surrounding fields. A windmill "
-"then processes the harvested grain into flour or can be used to feed the "
-"pigs."
-msgstr ""
-"The farmer plants and harvests grain in the surrounding fields. A windmill "
-"then processes the harvested grain into flour or can be used to feed the "
-"pigs."
+msgid "The farmer plants and harvests grain in the surrounding fields. A windmill then processes the harvested grain into flour or can be used to feed the pigs."
+msgstr "The farmer plants and harvests grain in the surrounding fields. A windmill then processes the harvested grain into flour or can be used to feed the pigs."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:369
-msgid ""
-"The fish man is responsible for finding water rich in fish. His fish feed a "
-"great many miners."
-msgstr ""
-"The fish man is responsible for finding water rich in fish. His fish feed a "
-"great many miners."
+msgid "The fish man is responsible for finding water rich in fish. His fish feed a great many miners."
+msgstr "The fish man is responsible for finding water rich in fish. His fish feed a great many miners."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:467
-msgid ""
-"The flour produced at the windmill can be combined with water in the bakery "
-"to make oven-fresh bread. It's your miners' favorite!"
-msgstr ""
-"The flour produced at the windmill can be combined with water in the bakery "
-"to make oven-fresh bread. It's your miners' favourite!"
+msgid "The flour produced at the windmill can be combined with water in the bakery to make oven-fresh bread. It's your miners' favorite!"
+msgstr "The flour produced at the windmill can be combined with water in the bakery to make oven-fresh bread. It's your miners' favourite!"
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:460
-msgid ""
-"The grain is ground in the windmill. The flour from the windmill is later "
-"used at the bakery to bake bread."
-msgstr ""
-"The grain is ground in the windmill. The flour from the windmill is later "
-"used at the bakery to bake bread."
+msgid "The grain is ground in the windmill. The flour from the windmill is later used at the bakery to bake bread."
+msgstr "The grain is ground in the windmill. The flour from the windmill is later used at the bakery to bake bread."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:287
-msgid ""
-"The guardhouse is a comfortable place for the military which is also "
-"protected by solid stone walls. Using the gold coin button you can stop the "
-"delivery of gold coins to the soldiers stationed here. However, without gold "
-"coins the soldiers here can not train and improve their skills."
-msgstr ""
-"The guardhouse is a comfortable place for the military which is also "
-"protected by solid stone walls. Using the gold coin button you can stop the "
-"delivery of gold coins to the soldiers stationed here. However, without gold "
-"coins the soldiers here can not train and improve their skills."
+msgid "The guardhouse is a comfortable place for the military which is also protected by solid stone walls. Using the gold coin button you can stop the delivery of gold coins to the soldiers stationed here. However, without gold coins the soldiers here can not train and improve their skills."
+msgstr "The guardhouse is a comfortable place for the military which is also protected by solid stone walls. Using the gold coin button you can stop the delivery of gold coins to the soldiers stationed here. However, without gold coins the soldiers here can not train and improve their skills."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:252
-msgid ""
-"The headquarters represents the center of your realm. The large amount of "
-"storage space available means a great many things can be safely stored here. "
-"You can release certain merchandise from the headquarters, as and when "
-"required or stop its storage. To do this, first choose the corresponding "
-"icon followed by the desired merchandise or job symbol. On the third page, "
-"you can adjust the number of reserve soldiers who are responsible for "
-"guarding the headquarters. There are two values given: the first value "
-"indicates the current number of men, the second value indicates the desired "
-"number. "
+msgid "The headquarters represents the center of your realm. The large amount of storage space available means a great many things can be safely stored here. You can release certain merchandise from the headquarters, as and when required or stop its storage. To do this, first choose the corresponding icon followed by the desired merchandise or job symbol. On the third page, you can adjust the number of reserve soldiers who are responsible for guarding the headquarters. There are two values given: the first value indicates the current number of men, the second value indicates the desired number. "
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:483
-msgid ""
-"The mint is responsible for producing valuable gold coins. These precious "
-"objects are produced using coal and gold."
-msgstr ""
-"The mint is responsible for producing valuable gold coins. These precious "
-"objects are produced using coal and gold."
+msgid "The mint is responsible for producing valuable gold coins. These precious objects are produced using coal and gold."
+msgstr "The mint is responsible for producing valuable gold coins. These precious objects are produced using coal and gold."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:513
-msgid ""
-"The pack donkeys bred here are used to transport your merchandise more "
-"efficiently. They are reared on water and grain."
-msgstr ""
-"The pack donkeys bred here are used to transport your merchandise more "
-"efficiently. They are reared on water and grain."
+msgid "The pack donkeys bred here are used to transport your merchandise more efficiently. They are reared on water and grain."
+msgstr "The pack donkeys bred here are used to transport your merchandise more efficiently. They are reared on water and grain."
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:191
 msgid "The specified file couldn't be loaded!"
@@ -1797,38 +1677,16 @@ msgid "The specified file couldn't be saved!"
 msgstr "The specified file couldn't be saved!"
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:375
-msgid ""
-"The stonemason works the stone near his quarry into bricks. These are needed "
-"mainly for building houses and as ammunition for catapults."
-msgstr ""
-"The stonemason works the stone near his quarry into bricks. These are needed "
-"mainly for building houses and as ammunition for catapults."
+msgid "The stonemason works the stone near his quarry into bricks. These are needed mainly for building houses and as ammunition for catapults."
+msgstr "The stonemason works the stone near his quarry into bricks. These are needed mainly for building houses and as ammunition for catapults."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:441
-msgid ""
-"The storehouse can help reduce long transportation journeys and is suited to "
-"the temporary storage of merchandise and inhabitants. You can release "
-"certain merchandise from the storehouse, as and when required. "
-"Alternatively, the storage function can be disabled. To do this, first "
-"choose the relevant icon followed by the desired merchandise or job symbol."
-msgstr ""
-"The storehouse can help reduce long transportation journeys and is suited to "
-"the temporary storage of merchandise and inhabitants. You can release "
-"certain merchandise from the storehouse, as and when required. "
-"Alternatively, the storage function can be disabled. To do this, first "
-"choose the relevant icon followed by the desired merchandise or job symbol."
+msgid "The storehouse can help reduce long transportation journeys and is suited to the temporary storage of merchandise and inhabitants. You can release certain merchandise from the storehouse, as and when required. Alternatively, the storage function can be disabled. To do this, first choose the relevant icon followed by the desired merchandise or job symbol."
+msgstr "The storehouse can help reduce long transportation journeys and is suited to the temporary storage of merchandise and inhabitants. You can release certain merchandise from the storehouse, as and when required. Alternatively, the storage function can be disabled. To do this, first choose the relevant icon followed by the desired merchandise or job symbol."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:303
-msgid ""
-"The watchtower with its large amount of space is best suited for stationing "
-"a large number of your troops. Using the gold coin button you can stop the "
-"delivery of gold coins to the soldiers stationed here. However, without gold "
-"coins the soldiers here can not train and improve their skills."
-msgstr ""
-"The watchtower with its large amount of space is best suited for stationing "
-"a large number of your troops. Using the gold coin button you can stop the "
-"delivery of gold coins to the soldiers stationed here. However, without gold "
-"coins the soldiers here can not train and improve their skills."
+msgid "The watchtower with its large amount of space is best suited for stationing a large number of your troops. Using the gold coin button you can stop the delivery of gold coins to the soldiers stationed here. However, without gold coins the soldiers here can not train and improve their skills."
+msgstr "The watchtower with its large amount of space is best suited for stationing a large number of your troops. Using the gold coin button you can stop the delivery of gold coins to the soldiers stationed here. However, without gold coins the soldiers here can not train and improve their skills."
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:211
 msgid "This Server is full!"
@@ -1923,10 +1781,8 @@ msgstr "Waiting for reply..."
 
 #: /storage/RTTR/svn/trunk/src/GameClientGF_Replay.cpp:78
 #, c-format
-msgid ""
-"Warning: The played replay is not in sync with the original match. (GF: %u)"
-msgstr ""
-"Warning: The played replay is not in sync with the original match. (GF: %u)"
+msgid "Warning: The played replay is not in sync with the original match. (GF: %u)"
+msgstr "Warning: The played replay is not in sync with the original match. (GF: %u)"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:407
 msgid "Wasteland"
@@ -1969,12 +1825,8 @@ msgid "Winter world"
 msgstr "Winter world"
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:383
-msgid ""
-"Within his area, the forester ensures the survival of the forest. He plants "
-"all types of trees."
-msgstr ""
-"Within his area, the forester ensures the survival of the forest. He plants "
-"all types of trees."
+msgid "Within his area, the forester ensures the survival of the forest. He plants all types of trees."
+msgstr "Within his area, the forester ensures the survival of the forest. He plants all types of trees."
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyRanking.cpp:80
 msgid "Won"
@@ -2041,3 +1893,4 @@ msgstr "to GameFrame:"
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:105
 msgid "various anonymous donators"
 msgstr "Various anonymous donators"
+

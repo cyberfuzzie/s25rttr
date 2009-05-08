@@ -1,4 +1,4 @@
-// $Id: Window.cpp 4830 2009-05-07 18:59:21Z FloSoft $
+// $Id: Window.cpp 4836 2009-05-08 20:31:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -163,6 +163,11 @@ unsigned short Window::GetY(bool absolute) const
  */
 bool Window::RelayKeyboardMessage(bool (Window::*msg)(const KeyEvent&),const KeyEvent& ke)
 {
+	// Abgeleitete Klassen fragen, ob das Weiterleiten von Nachrichten erlaubt ist
+	// (IngameFenster könnten ja z.B. minimiert sein)
+	if(!IsMessageRelayAllowed())
+		return false;
+
 	// Alle Controls durchgehen
 	// Falls das Fenster dann plötzlich nich mehr aktiv ist (z.b. neues Fenster geöffnet, sofort abbrechen!)
 	for(std::map<unsigned int,Window*>::iterator it = idmap.begin(); it != idmap.end() && active; ++it)
@@ -177,6 +182,11 @@ bool Window::RelayKeyboardMessage(bool (Window::*msg)(const KeyEvent&),const Key
 
 bool Window::RelayMouseMessage(bool (Window::*msg)(const MouseCoords&),const MouseCoords& mc)
 {
+	// Abgeleitete Klassen fragen, ob das Weiterleiten von Mausnachrichten erlaubt ist
+	// (IngameFenster könnten ja z.B. minimiert sein)
+	if(!IsMessageRelayAllowed())
+		return false;
+
 	bool processed = false;
 
 	// Alle Controls durchgehen
@@ -276,6 +286,12 @@ void Window::FreeRegion(Window *window)
 			return;
 		}
 	}
+}
+
+/// Weiterleitung von Nachrichten von abgeleiteten Klassen erlaubt oder nicht?
+bool Window::IsMessageRelayAllowed() const
+{
+	return true;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

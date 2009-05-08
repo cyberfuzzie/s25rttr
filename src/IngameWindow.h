@@ -1,4 +1,4 @@
-// $Id: IngameWindow.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: IngameWindow.h 4836 2009-05-08 20:31:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -55,7 +55,7 @@ public:
 	/// setzt die Höhe des Fensters.
 	void SetHeight(unsigned short height) { this->height = height; }
 	/// liefert die Höhe des Fensters.
-	unsigned short GetHeight(void) const { return height; }
+	unsigned short GetHeight(void) const { return (minimized?31:height); }
 
 	/// merkt das Fenster zum Schließen vor.
 	void Close(bool closeme = true) { this->closeme = closeme; }
@@ -83,6 +83,9 @@ protected:
 	void MoveToCenter();
 	/// Verschiebt Fenster neben die Maus
 	void MoveNextToMouse();
+
+	/// Weiterleitung von Nachrichten erlaubt oder nicht?
+	bool IsMessageRelayAllowed() const;
 
 protected:
 	unsigned short width;

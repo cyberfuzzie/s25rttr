@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 4784 2009-05-02 20:43:44Z OLiver $
+// $Id: GameClientPlayer.cpp 4836 2009-05-08 20:31:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1204,8 +1204,9 @@ bool GameClientPlayer::ShouldSendDefender()
 
 void GameClientPlayer::TestDefeat()
 {
-	/// Keine Militärgebäude, keine Lagerhäuser (HQ,Häfen) -> kein Land --> verloren
-	if(!military_buildings.size() && !warehouses.size())
+	// Nicht schon besiegt?
+	// Keine Militärgebäude, keine Lagerhäuser (HQ,Häfen) -> kein Land --> verloren
+	if(!defeated && !military_buildings.size() && !warehouses.size())
 	{
 		defeated = true;
 

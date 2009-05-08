@@ -1,4 +1,4 @@
-// $Id: IngameWindow.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: IngameWindow.cpp 4836 2009-05-08 20:31:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -139,8 +139,8 @@ void IngameWindow::MouseMove(const MouseCoords& mc)
 			ny = 0;
 		if(nx > VideoDriverWrapper::inst().GetScreenWidth() - width)
 			nx = VideoDriverWrapper::inst().GetScreenWidth() - width;
-		if(ny > VideoDriverWrapper::inst().GetScreenHeight() - (minimized?31:height))
-			ny = VideoDriverWrapper::inst().GetScreenHeight() - (minimized?31:height);
+		if(ny > VideoDriverWrapper::inst().GetScreenHeight() - GetHeight())
+			ny = VideoDriverWrapper::inst().GetScreenHeight() - GetHeight();
 
 		x = (unsigned short)nx;
 		y = (unsigned short)ny;
@@ -327,3 +327,9 @@ void IngameWindow::MoveNextToMouse()
 		this->y = VideoDriverWrapper::inst().GetMouseY() - height/2;
 }
 
+/// Weiterleitung von Nachrichten erlaubt oder nicht?
+bool IngameWindow::IsMessageRelayAllowed() const
+{
+	// Wenn es minimiert wurde, sollen keine Nachrichten weitergeleitet werden
+	return !minimized;
+}

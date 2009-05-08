@@ -1,4 +1,4 @@
-// $Id: Window.h 4830 2009-05-07 18:59:21Z FloSoft $
+// $Id: Window.h 4836 2009-05-08 20:31:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -261,6 +261,8 @@ protected:
 	bool TestWindowInRegion(Window *window, const MouseCoords& mc);
 	/// zeichnet das Fenster. (virtuelle Memberfunktion)
 	virtual bool Draw_() = 0;
+	/// Weiterleitung von Nachrichten von abgeleiteten Klassen erlaubt oder nicht?
+	virtual bool IsMessageRelayAllowed() const;
 
 	template <typename T>
 	T *AddCtrl(unsigned int id, T *ctrl)

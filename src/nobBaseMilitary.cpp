@@ -1,4 +1,4 @@
-// $Id: nobBaseMilitary.cpp 4807 2009-05-04 19:48:53Z OLiver $
+// $Id: nobBaseMilitary.cpp 4833 2009-05-08 15:53:36Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -331,12 +331,12 @@ bool nobBaseMilitary::CallDefender(nofAttacker * attacker)
 	// ansonsten einen neuen aus dem Gebäude holen
 	else if((defender = ProvideDefender(attacker)))
 	{
-		// Soldat muss noch rauskommen
-		AddLeavingFigure(defender);
 		// Leute, die aus diesem Gebäude zum Angriff/aggressiver Verteidigung rauskommen wollen,
 		// blocken
 		CancelJobs();
-
+		// Soldat muss noch rauskommen
+		AddLeavingFigure(defender);
+		
 		return true;
 	}
 	else
@@ -444,7 +444,9 @@ void nobBaseMilitary::CancelJobs()
 	// Soldaten, die noch in der Warteschlange hängen, rausschicken
 	for(list<noFigure*>::iterator it = leave_house.begin();it.valid();++it)
 	{
-		if((*it)->DoJobWorks())
+		// Nur Soldaten nehmen (Job-Arbeiten) und keine (normalen) Verteidiger, da diese ja rauskommen
+		// sollen zum Kampf
+		if((*it)->DoJobWorks() && (*it)->GetGOT() != GOT_NOF_DEFENDER)
 		{
 			// Wenn er Job-Arbeiten verrichtet, ists ein ActiveSoldier --> dem muss extra noch Bescheid gesagt werden!
 			dynamic_cast<nofActiveSoldier*>(*it)->HomeDestroyedAtBegin();
@@ -452,4 +454,7 @@ void nobBaseMilitary::CancelJobs()
 			this->AddActiveSoldier(dynamic_cast<nofActiveSoldier*>(*it));
 		}
 	}
+
+	em->RemoveEvent(leaving_event);
+	leave_house.clear();
 }

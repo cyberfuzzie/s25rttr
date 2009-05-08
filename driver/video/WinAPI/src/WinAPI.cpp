@@ -1,4 +1,4 @@
-// $Id: WinAPI.cpp 4830 2009-05-07 18:59:21Z FloSoft $
+// $Id: WinAPI.cpp 4834 2009-05-08 19:45:33Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -227,7 +227,7 @@ bool VideoWinAPI::CreateScreen(unsigned short width, unsigned short height, cons
 
 
 	// Fenster erstellen
-	screen = CreateWindowExA(dwExStyle, GetWindowTitle(), GetWindowTitle(), dwStyle,CW_USEDEFAULT, CW_USEDEFAULT, width, height, NULL, NULL, GetModuleHandle(NULL), NULL);
+	screen = CreateWindowExA(dwExStyle, GetWindowTitle(), GetWindowTitle(), dwStyle, CW_USEDEFAULT, CW_USEDEFAULT, width, height, NULL, NULL, GetModuleHandle(NULL), NULL);
 
 	if(screen == NULL)
 		return false;

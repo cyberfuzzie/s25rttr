@@ -1,4 +1,4 @@
-// $Id: prebuild-mutex.cpp 4830 2009-05-07 18:59:21Z FloSoft $
+// $Id: prebuild-mutex.cpp 4834 2009-05-08 19:45:33Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -190,6 +190,7 @@ int main(int argc, char *argv[])
 		++timeout;
 
 		hadtowait = true;
+		return 0;
 	}
 	while(exist && timeout < 30);
 

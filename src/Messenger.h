@@ -1,4 +1,4 @@
-// $Id: Messenger.h 4776 2009-05-02 11:57:52Z OLiver $
+// $Id: Messenger.h 4834 2009-05-08 19:45:33Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -24,7 +24,6 @@
 #include "colors.h"
 #include "GameProtocol.h"
 
-
 class Messenger
 {
 	struct Msg
@@ -40,7 +39,7 @@ class Messenger
 	list<Msg> messages;
 
 private:
-	std::string TermColorString(const std::string& text, const unsigned color_text);
+	void PrintTermColor(const std::string& text, const unsigned color_text);
 
 public:
 
@@ -49,6 +48,5 @@ public:
 	void Draw();
 	void AddMessage(const std::string& author, const unsigned color_author, const ChatDestination cd, const std::string& msg,const unsigned color_msg = COLOR_YELLOW);
 };
-
 
 #endif

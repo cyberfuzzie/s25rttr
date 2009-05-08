@@ -1,4 +1,4 @@
-// $Id: WinAPI.cpp 4834 2009-05-08 19:45:33Z FloSoft $
+// $Id: WinAPI.cpp 4835 2009-05-08 20:02:19Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -640,8 +640,8 @@ void VideoWinAPI::OnWMKeyDown(unsigned char c)
 	default:
 		{
 			// Die 12 F-Tasten
-			if(c >= VK_F1 && c <= VK_F12)
-				ke.kt = static_cast<KeyType>(KT_F1 + c-VK_F1);
+		//	if(c >= VK_F1 && c <= VK_F12)
+		//		ke.kt = static_cast<KeyType>(KT_F1 + int(c)-VK_F1);
 		} break;
 	}
 
@@ -721,6 +721,8 @@ LRESULT CALLBACK VideoWinAPI::WindowProc(HWND window, UINT msg, WPARAM wParam, L
 			{
 			case SC_SCREENSAVE:
 			case SC_MONITORPOWER:
+			case SC_KEYMENU: // F10-Fehler beheben -> will sonst Fenster verschieben, was das
+				// das Zeichnen unterbindet
 				return 0;
 			}
 		} break;
@@ -766,12 +768,12 @@ LRESULT CALLBACK VideoWinAPI::WindowProc(HWND window, UINT msg, WPARAM wParam, L
 				if (pVideoWinAPI->mouse_z > 0) // Scrolled to top
 				{
 					pVideoWinAPI->mouse_z -= WHEEL_DELTA;
-					pVideoWinAPI->CallBack->Msg_WheelUp(pVideoWinAPI->mouse_xy);
+					//pVideoWinAPI->CallBack->Msg_WheelUp(pVideoWinAPI->mouse_xy);
 				}
 				else // Scrolled to bottom
 				{
 					pVideoWinAPI->mouse_z += WHEEL_DELTA;
-					pVideoWinAPI->CallBack->Msg_WheelDown(pVideoWinAPI->mouse_xy);
+					//pVideoWinAPI->CallBack->Msg_WheelDown(pVideoWinAPI->mouse_xy);
 				}
 			}
 		} break;

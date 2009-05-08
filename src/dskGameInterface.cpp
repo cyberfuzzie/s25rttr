@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: dskGameInterface.cpp 4835 2009-05-08 20:02:19Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -531,7 +531,9 @@ bool dskGameInterface::Msg_KeyDown(const KeyEvent& ke)
 	case 'h': // Zum HQ springen
 		{
 			GameClientPlayer *player = GAMECLIENT.GetLocalPlayer();
-			gwv->MoveToMapObject(player->hqx,player->hqy);
+			// Prüfen, ob dieses überhaupt noch existiert
+			if(player->hqx != 0xFFFF)
+				gwv->MoveToMapObject(player->hqx,player->hqy);
 		} return true;
 
 	case 'c': // Gebäudenamen anzeigen

@@ -1,4 +1,4 @@
-// $Id: SDL.cpp 4830 2009-05-07 18:59:21Z FloSoft $
+// $Id: SDL.cpp 4835 2009-05-08 20:02:19Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -369,11 +369,11 @@ bool VideoSDL::MessageLoop(void)
 				}
 				if(ev.button.button == SDL_BUTTON_WHEELUP)
 				{
-					CallBack->Msg_WheelUp(mouse_xy);
+					//CallBack->Msg_WheelUp(mouse_xy);
 				}
 				if(ev.button.button == SDL_BUTTON_WHEELDOWN)
 				{
-					CallBack->Msg_WheelDown(mouse_xy);
+					//CallBack->Msg_WheelDown(mouse_xy);
 				}
 
 			} break;

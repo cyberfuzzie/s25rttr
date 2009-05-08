@@ -1,4 +1,4 @@
-// $Id: GameWorld.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: GameWorld.cpp 4835 2009-05-08 20:02:19Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -588,8 +588,10 @@ void GameWorld::Deserialize(SerializedGameData *sgd)
 
 	tr.GenerateOpenGL(this);
 
-	this->MoveToMapObject(GameClient::inst().GetPlayer(GameClient::inst().GetPlayerID())->hqx,
-		GameClient::inst().GetPlayer(GameClient::inst().GetPlayerID())->hqy);
+	// Zum HQ am Anfang springen, falls dieses existiert
+	if(GameClient::inst().GetPlayer(GameClient::inst().GetPlayerID())->hqx != 0xFFFF)
+		this->MoveToMapObject(GameClient::inst().GetPlayer(GameClient::inst().GetPlayerID())->hqx,
+			GameClient::inst().GetPlayer(GameClient::inst().GetPlayerID())->hqy);
 }
 
 

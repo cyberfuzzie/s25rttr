@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 4809 2009-05-04 20:10:11Z OLiver $
+// $Id: GameWorldGame.cpp 4835 2009-05-08 20:02:19Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -475,7 +475,7 @@ void GameWorldGame::RecalcTerritory(const nobBaseMilitary * const building,const
 
 	// Radius der noch draufaddiert wird auf den eigentlich ausreichenden Bereich, für das Eliminieren von
 	// herausragenden Landesteilen und damit Grenzsteinen
-	const unsigned ADD_RADIUS = 1;
+	const unsigned ADD_RADIUS = 2;
 
 	// Koordinaten erzeugen für TerritoryRegion (nicht bis ganz an den Rand gehen, da unten noch die Punkte herum geprüft werden!)
 	MapCoord x1 = (building->GetX()>radius+ADD_RADIUS) ? (building->GetX()-(radius+ADD_RADIUS)) : 1;
@@ -808,7 +808,8 @@ void GameWorldGame::Attack(const unsigned char player_attacker, const MapCoord x
 			if(distance < MAX_ATTACKING_DISTANCE && soldiers_count)
 			{
 				// und auch der Weg zu Fuß darf dann nicht so weit sein, wenn das alles bestanden ist, können wir ihn nehmen..
-				if(FindFreePath(x,y,(*it)->GetX(),(*it)->GetY(),70) != 0xFF)
+				// Bei dem freien Pfad noch ein bisschen Toleranz mit einberechnen
+				if(FindFreePath(x,y,(*it)->GetX(),(*it)->GetY(),MAX_ATTACKING_DISTANCE+10) != 0xFF)
 				{
 					// Soldaten davon nehmen
 					unsigned i = 0;

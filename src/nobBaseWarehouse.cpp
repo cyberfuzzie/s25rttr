@@ -1,4 +1,4 @@
-// $Id: nobBaseWarehouse.cpp 4746 2009-04-30 20:10:46Z OLiver $
+// $Id: nobBaseWarehouse.cpp 4841 2009-05-09 10:28:42Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -344,7 +344,7 @@ void nobBaseWarehouse::HandleBaseEvent(const unsigned int id)
 	case 1:
 		{
 			// Nur bei unter 100 Träcern, weitere "produzieren"
-			if(goods.people[JOB_HELPER] < 100)
+			if(real_goods.people[JOB_HELPER] < 100)
 			{
 				++real_goods.people[JOB_HELPER];
 				++goods.people[JOB_HELPER];
@@ -360,6 +360,15 @@ void nobBaseWarehouse::HandleBaseEvent(const unsigned int id)
 					GAMECLIENT.GetPlayer(player)->FindWarehouseForAllJobs(JOB_NOTHING);
 				}
 			}
+			else if(real_goods.people[JOB_HELPER] > 100)
+			{
+				// Bei Überbevölkerung Träger vernichten
+				--real_goods.people[JOB_HELPER];
+				--goods.people[JOB_HELPER];
+
+				GAMECLIENT.GetPlayer(player)->DecreaseInventoryJob(JOB_HELPER,1);
+			}
+
 			producinghelpers_event = em->AddEvent(this,PRODUCE_HELPERS_GF+RANDOM.Rand(__FILE__,__LINE__,obj_id,PRODUCE_HELPERS_RANDOM_GF),1);
 
 

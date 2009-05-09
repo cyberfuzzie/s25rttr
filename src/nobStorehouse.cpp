@@ -1,4 +1,4 @@
-// $Id: nobStorehouse.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: nobStorehouse.cpp 4841 2009-05-09 10:28:42Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -43,8 +43,6 @@ nobStorehouse::nobStorehouse(const unsigned short x, const unsigned short y,cons
 	// Alle Waren 0, außer 100 Träger
 	memset(&goods,0,sizeof(goods));
 	memset(&real_goods,0,sizeof(real_goods));
-
-	goods.people[JOB_HELPER] = real_goods.people[JOB_HELPER] = 100;
 
 	// Der Wirtschaftsverwaltung Bescheid sagen
 	GAMECLIENT.GetPlayer(player)->AddWarehouse(this);

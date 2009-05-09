@@ -1,4 +1,4 @@
-// $Id: nofHunter.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: nofHunter.cpp 4841 2009-05-09 10:28:42Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -41,6 +41,9 @@
 	#undef THIS_FILE
 	static char THIS_FILE[] = __FILE__;
 #endif
+
+/// Maximale Distanz, die ein Jäger läuft, um ein Tier zu jagen
+const MapCoord MAX_HUNTING_DISTANCE = 50;
 
 nofHunter::nofHunter(const unsigned short x, const unsigned short y,const unsigned char player,nobUsual * workplace)
 : nofBuildingWorker(JOB_HUNTER,x,y,player,workplace), animal(0), shooting_x(0), shooting_y(0), shooting_dir(0)
@@ -162,7 +165,7 @@ void nofHunter::HandleDerivedEvent(const unsigned int id)
 
 								// Und komme ich hin?
 								if(gwg->FindFreePath(x,y,static_cast<noAnimal*>(*it)->GetX(),
-									static_cast<noAnimal*>(*it)->GetY(),60) != 0xFF)
+									static_cast<noAnimal*>(*it)->GetY(),MAX_HUNTING_DISTANCE) != 0xFF)
 									// Dann nehmen wir es
 									available_animals.push_back(static_cast<noAnimal*>(*it));
 							}
@@ -479,8 +482,9 @@ void nofHunter::WalkHome()
 		// Weiteres übernimmt nofBuildingWorker
 		WorkingReady();
 	}
-	// Weg suchen und ob wir überhaupt noch nach Hause kommen
-	else if((dir = gwg->FindFreePath(x,y,flag_x,flag_y,40)) == 0xFF)
+	// Weg suchen und ob wir überhaupt noch nach Hause kommen (Toleranz bei dem Weg mit einberechnen,
+	// damit er nicht einfach rumirrt und wegstirbt, wenn er einmal ein paar Felder zu weit gelaufen ist)
+	else if((dir = gwg->FindFreePath(x,y,flag_x,flag_y,MAX_HUNTING_DISTANCE+MAX_HUNTING_DISTANCE/4)) == 0xFF)
 	{
 		// Kein Weg führt mehr nach Hause--> Rumirren
 		StartWandering();

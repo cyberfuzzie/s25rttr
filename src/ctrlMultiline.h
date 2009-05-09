@@ -1,4 +1,4 @@
-// $Id: ctrlMultiline.h 4830 2009-05-07 18:59:21Z FloSoft $
+// $Id: ctrlMultiline.h 4840 2009-05-09 09:16:39Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -48,6 +48,9 @@ public:
 	virtual bool Msg_WheelUp(const MouseCoords& mc);
 	virtual bool Msg_WheelDown(const MouseCoords& mc);
 	virtual bool Msg_MouseMove(const MouseCoords& mc);
+
+	/// SetWidth überschreiben, damit auch die Scrollbar-Position angepasst werden kann
+	void SetWidth(const unsigned short width);
 
 protected:
 	virtual bool Draw_(void);

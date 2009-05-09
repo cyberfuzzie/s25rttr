@@ -1,4 +1,4 @@
-// $Id: nofScout_Free.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: nofScout_Free.cpp 4840 2009-05-09 09:16:39Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -153,12 +153,13 @@ void nofScout_Free::Scout()
 struct Point
 { MapCoord x,y; };
 
+const unsigned SCOUT_RANGE = 16;
 
 void nofScout_Free::GoToNewNode()
 {
 	list<Point> available_points;
 
-	for(MapCoord tx=gwg->GetXA(flag->GetX(),flag->GetY(),0), r=1;r<16;tx=gwg->GetXA(tx,flag->GetY(),0),++r)
+	for(MapCoord tx=gwg->GetXA(flag->GetX(),flag->GetY(),0), r=1;r<SCOUT_RANGE;tx=gwg->GetXA(tx,flag->GetY(),0),++r)
 	{
 		MapCoord tx2 = tx, ty2 = flag->GetY();
 		for(unsigned i = 2;i<8;++i)
@@ -182,8 +183,10 @@ void nofScout_Free::GoToNewNode()
 	{
 		list<Point>::iterator p = available_points[RANDOM.Rand(__FILE__,__LINE__,obj_id,available_points.size())];
 
-		/// Existiert ein Weg zu diesem Punkt?
-		if(gwg->FindFreePath(x,y,p->x,p->y,30) != 0xFF)
+		// Existiert ein Weg zu diesem Punkt und ist dieser Punkt auch noch von der Flagge noch in
+		// einigermaßen vernünftiger Entfernung zu erreichen, um das Drumherumlaufen um Berge usw. zu
+		// verhindern
+		if(gwg->FindFreePath(x,y,p->x,p->y,SCOUT_RANGE*2) != 0xFF && gwg->FindFreePath(flag->GetX(),flag->GetY(),p->x,p->y,SCOUT_RANGE+SCOUT_RANGE/4) != 0xFF)
 		{
 			// Als neues Ziel nehmen
 			next_x = p->x;

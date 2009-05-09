@@ -1,4 +1,4 @@
-// $Id: ctrlRectangle.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: ctrlRectangle.h 4840 2009-05-09 09:16:39Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -30,8 +30,8 @@ public:
 		unsigned short width, unsigned short height);
 
 	/// Setzt Breite und Höhe
-	void SetWidth(const unsigned short width) { this->width = width; }
-	void SetHeight(const unsigned short height) { this->height = height; }
+	virtual void SetWidth(const unsigned short width) { this->width = width; }
+	virtual void SetHeight(const unsigned short height) { this->height = height; }
 
 	/// Liefert Breite und Höhe zurück
 	unsigned short GetWidth() const { return width; }

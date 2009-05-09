@@ -1,4 +1,4 @@
-// $Id: ctrlMultiline.cpp 4830 2009-05-07 18:59:21Z FloSoft $
+// $Id: ctrlMultiline.cpp 4840 2009-05-09 09:16:39Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -204,4 +204,17 @@ bool ctrlMultiline::Msg_WheelDown(const MouseCoords& mc)
 bool ctrlMultiline::Msg_MouseMove(const MouseCoords& mc)
 {
 	return GetCtrl<Window>(0)->Msg_MouseMove(mc);
+}
+
+
+/// SetWidth überschreiben, damit auch die Scrollbar-Position angepasst werden kann
+void ctrlMultiline::SetWidth(const unsigned short width)
+{
+	// Breite der Basisklasse richtig setzen
+	ctrlRectangle::SetWidth(width);
+	// Zusätzlich Position der Scrollbar anpassen
+	GetCtrl<ctrlScrollBar>(0)->Move(width - SCROLLBAR_WIDTH,0);
+
+
+
 }

@@ -332,20 +332,9 @@ void nofAggressiveDefender::MissAggressiveDefendingWalk()
 
 void nofAggressiveDefender::ReturnHomeMissionAggressiveDefending()
 {
-	// Kollegen Bescheid sagen, falls es einen gibt
-	if(attacker)
-	{
-		attacker->AggressiveDefenderLost();
-		attacker = 0;
-	}
-
-	// Ziel Bescheid sagen
-	if(attacked_goal)
-	{
-		attacked_goal->UnlinkAggressiveDefender(this);
-		attacked_goal = 0;
-	}
-
+	// Zielen Bescheid sagen
+	InformTargetsAboutCancelling();
+	// Und nach Hause gehen
 	ReturnHome();
 }
 
@@ -360,6 +349,23 @@ void nofAggressiveDefender::AttackerLost()
 
 
 void nofAggressiveDefender::NeedForHomeDefence()
+{
+	// Angreifer Bescheid sagen
+	if(attacker)
+	{
+		attacker->AggressiveDefenderLost();
+		attacker = 0;
+	}
+	// Ziel Bescheid sagen
+	if(attacked_goal)
+	{
+		attacked_goal->UnlinkAggressiveDefender(this);
+		attacked_goal = 0;
+	}
+}
+
+/// Sagt den verschiedenen Zielen Bescheid, dass wir doch nicht mehr kommen können
+void nofAggressiveDefender::InformTargetsAboutCancelling()
 {
 	// Angreifer Bescheid sagen
 	if(attacker)

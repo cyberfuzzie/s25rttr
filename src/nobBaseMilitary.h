@@ -1,4 +1,4 @@
-// $Id: nobBaseMilitary.h 4807 2009-05-04 19:48:53Z OLiver $
+// $Id: nobBaseMilitary.h 4842 2009-05-09 11:53:45Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -127,7 +127,7 @@ public: void Serialize(SerializedGameData *sgd) const { Serialize_nobBaseMilitar
 	nofAttacker * FindAggressor(nofAggressiveDefender * defender);
 	/// Sucht für einen Angreifer den nächsten (bzw. genau den) Platz zur Fahne, damit die sich darum postieren und
 	/// warten
-	void FindAnAttackerPlace(unsigned short &ret_x,unsigned short &ret_y, unsigned short &retRedadiuss,nofAttacker * soldier);
+	void FindAnAttackerPlace(unsigned short &ret_x,unsigned short &ret_y, unsigned short &ret_radius,nofAttacker * soldier);
 	/// Sucht einen Nachrücker, der weiter hinten steht, auf diesen Posten und schickt diesen auch los
 	bool SendSuccessor(const unsigned short x, const unsigned short y, const unsigned short radius, const unsigned char dir);
 

@@ -1,4 +1,4 @@
-// $Id: nobBaseMilitary.cpp 4833 2009-05-08 15:53:36Z OLiver $
+// $Id: nobBaseMilitary.cpp 4842 2009-05-09 11:53:45Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -196,9 +196,11 @@ nofAttacker * nobBaseMilitary::FindAggressor(nofAggressiveDefender * defender)
 }
 
 
-struct Node { unsigned short x,y; };
+struct Node { 
+	unsigned short x,y;
+};
 
-void nobBaseMilitary::FindAnAttackerPlace(unsigned short &ret_x,unsigned short &ret_y, unsigned short &retRedadius,nofAttacker * soldier)
+void nobBaseMilitary::FindAnAttackerPlace(unsigned short &ret_x,unsigned short &ret_y, unsigned short &ret_radius,nofAttacker * soldier)
 {
 	
 
@@ -215,7 +217,7 @@ void nobBaseMilitary::FindAnAttackerPlace(unsigned short &ret_x,unsigned short &
 	{
 		ret_x = flag_x;
 		ret_y = flag_y;
-		retRedadius = 0;
+		ret_radius = 0;
 		return;
 	}
 
@@ -297,6 +299,7 @@ void nobBaseMilitary::FindAnAttackerPlace(unsigned short &ret_x,unsigned short &
 		{
 			ret_x = it->x;
 			ret_y = it->y;
+			ret_radius = d;
 			return;
 		}
 
@@ -309,6 +312,7 @@ void nobBaseMilitary::FindAnAttackerPlace(unsigned short &ret_x,unsigned short &
 			{
 				ret_x = it->x;
 				ret_y = it->y;
+				ret_radius = d;
 				min_length = length;
 			}
 		}
@@ -448,13 +452,17 @@ void nobBaseMilitary::CancelJobs()
 		// sollen zum Kampf
 		if((*it)->DoJobWorks() && (*it)->GetGOT() != GOT_NOF_DEFENDER)
 		{
+			nofActiveSoldier * as = dynamic_cast<nofActiveSoldier*>(*it);
+			assert(as);
+
+			// Nicht mehr auf Mission
+			troops_on_mission.erase(as);
 			// Wenn er Job-Arbeiten verrichtet, ists ein ActiveSoldier --> dem muss extra noch Bescheid gesagt werden!
-			dynamic_cast<nofActiveSoldier*>(*it)->HomeDestroyedAtBegin();
+			as->InformTargetsAboutCancelling();
 			// Wieder in das Haus verfrachten
-			this->AddActiveSoldier(dynamic_cast<nofActiveSoldier*>(*it));
+			this->AddActiveSoldier(as);
 		}
 	}
 
-	em->RemoveEvent(leaving_event);
 	leave_house.clear();
 }

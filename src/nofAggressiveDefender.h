@@ -1,4 +1,4 @@
-// $Id: nofAggressiveDefender.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: nofAggressiveDefender.h 4842 2009-05-09 11:53:45Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -47,6 +47,8 @@ private:
 	void MissAggressiveDefendingWalk();
 	/// Sucht sich für MissionAggressiveAttacking ein neues Ziel, wenns keins findet, gehts nach Hause
 	void MissionAggressiveDefendingLookForNewAggressor();
+	/// Sagt den verschiedenen Zielen Bescheid, dass wir doch nicht mehr kommen können
+	void InformTargetsAboutCancelling();
 
 public:
 

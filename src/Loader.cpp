@@ -1,4 +1,4 @@
-// $Id: Loader.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: Loader.cpp 4842 2009-05-09 11:53:45Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -721,7 +721,9 @@ void Loader::ExtractAnimatedTexture(libsiedler2::ArchivInfo *source, libsiedler2
 
 	unsigned char *buffer = new unsigned char[width*height];
 
-	memset(buffer, libsiedler2::TRANSPARENT_INDEX, width*height);
+	// Mit Startindex (also irgendeiner Farbe) füllen, um transparente Pixel und damit schwarze Punke am Rand zu verhindern
+	memset(buffer, start_index, width*height);
+
 	image->print(buffer, width, height, libsiedler2::FORMAT_PALETTED, palette, 0, 0, rect.left, rect.top, width, height);
 
 	for(unsigned char i = 0; i < color_count; ++i)

@@ -384,27 +384,9 @@ void nofAttacker::LostFighting()
 
 void nofAttacker::ReturnHomeMissionAttacking()
 {
-	//SoldierState prev = state;
-
-	// Kollegen Bescheid sagen, falls es einen gibt
-	if(defender)
-	{
-		static_cast<nofAggressiveDefender*>(defender)->AttackerLost();
-		defender = 0;
-	}
-
-	// Ziel Bescheid sagen, falls es das noch gibt
-	if(attacked_goal)
-	{
-		attacked_goal->UnlinkAggressor(this);
-		attacked_goal = 0;
-	}
-
-	//// Umstehenden Figuren Bescheid sagen
-	//if(prev == STATE_ATTACKING_WAITINGAROUNDBUILDING)
-	//	gwg->RoadNodeAvailable(this->x,this->y);
-
-
+	// Zielen Bescheid sagen
+	InformTargetsAboutCancelling();
+	// Und nach Hause gehen
 	ReturnHome();
 }
 
@@ -498,7 +480,7 @@ void nofAttacker::MissAttackingWalk()
 					if(y < flag_y && !(SafeDiff(y,flag_y)&1)) dir = 4;
 					else if(y < flag_y && (SafeDiff(y,flag_y)&1))
 					{
-						if(y&1) dir = 4; else dir = 5;
+						if(y&1) dir = 5; else dir = 4;
 					}
 					else if(y > flag_y && !(SafeDiff(y,flag_y)&1)) dir = 2;
 					else if(y > flag_y && (SafeDiff(y,flag_y)&1))
@@ -1027,4 +1009,22 @@ bool nofAttacker::IsBlockingRoads() const
 		return true;
 	else
 		return false;
+}
+
+/// Sagt den verschiedenen Zielen Bescheid, dass wir doch nicht mehr kommen können
+void nofAttacker::InformTargetsAboutCancelling()
+{
+	// Kollegen Bescheid sagen, falls es einen gibt
+	if(defender)
+	{
+		static_cast<nofAggressiveDefender*>(defender)->AttackerLost();
+		defender = 0;
+	}
+
+	// Ziel Bescheid sagen, falls es das noch gibt
+	if(attacked_goal)
+	{
+		attacked_goal->UnlinkAggressor(this);
+		attacked_goal = 0;
+	}
 }

@@ -1,4 +1,4 @@
-// $Id: nofActiveSoldier.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: nofActiveSoldier.h 4842 2009-05-09 11:53:45Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -94,6 +94,8 @@ public:
 	/// Eventhandling
 	virtual void HandleDerivedEvent(const unsigned int id);
 
+	/// Sagt den verschiedenen Zielen Bescheid, dass wir doch nicht mehr kommen können
+	virtual void InformTargetsAboutCancelling() = 0;
 	/// Wenn ein Heimat-Militärgebäude bei Missionseinsätzen zerstört wurde
 	virtual void HomeDestroyed() = 0;
 	/// Wenn er noch in der Warteschleife vom Ausgangsgebäude hängt und dieses zerstört wurde
@@ -102,6 +104,7 @@ public:
 	virtual void WonFighting() = 0;
 	/// Wenn ein Kampf verloren wurde (Tod)
 	virtual void LostFighting() = 0;
+
 
 	/// Gibt State zurück
 	SoldierState GetState() const { return state; }

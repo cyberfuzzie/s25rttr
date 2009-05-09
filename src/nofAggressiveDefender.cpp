@@ -380,3 +380,4 @@ void nofAggressiveDefender::InformTargetsAboutCancelling()
 		attacked_goal = 0;
 	}
 }
+

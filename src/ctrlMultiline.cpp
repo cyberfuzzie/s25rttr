@@ -1,4 +1,4 @@
-// $Id: ctrlMultiline.cpp 4840 2009-05-09 09:16:39Z OLiver $
+// $Id: ctrlMultiline.cpp 4843 2009-05-09 12:54:38Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -218,3 +218,4 @@ void ctrlMultiline::SetWidth(const unsigned short width)
 
 
 }
+

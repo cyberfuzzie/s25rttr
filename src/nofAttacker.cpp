@@ -1028,3 +1028,4 @@ void nofAttacker::InformTargetsAboutCancelling()
 		attacked_goal = 0;
 	}
 }
+

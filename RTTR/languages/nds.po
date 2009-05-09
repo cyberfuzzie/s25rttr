@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: s25rttr\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2009-05-04 19:54+0100\n"
-"PO-Revision-Date: 2009-05-04 20:42+0000\n"
+"POT-Creation-Date: 2009-05-06 18:14+0100\n"
+"PO-Revision-Date: 2009-05-08 13:35+0000\n"
 "Last-Translator: Demophobie <Unknown>\n"
 "Language-Team: German, Low <nds@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-05-04 20:44+0000\n"
+"X-Launchpad-Export-Date: 2009-05-08 15:08+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:41
@@ -23,7 +23,7 @@ msgstr "Post"
 
 #: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:55
 msgid "No letters!"
-msgstr "Keen Breev"
+msgstr "Keen Breevn!"
 
 #: /storage/RTTR/svn/trunk/src/languages.cpp:71
 msgid "System language"
@@ -51,11 +51,11 @@ msgstr "Toon/Musik"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:88
 msgid "Name in Game:"
-msgstr "Naam in Speel"
+msgstr "Naam in Spöl:"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:92
 msgid "Language:"
-msgstr "Spraak"
+msgstr "Spraak:"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:105
 msgid "Keyboard layout:"
@@ -79,7 +79,7 @@ msgstr "Vullbild"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:116
 msgid "Windowed"
-msgstr "Windlookmodus"
+msgstr "Finstermodus"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:119
 msgid "VSync:"
@@ -95,14 +95,14 @@ msgstr "neet unnerstütt"
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:169
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:178
 msgid "On"
-msgstr "Anschalten"
+msgstr "An"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:126
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:136
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:170
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:179
 msgid "Off"
-msgstr "Ausschalten"
+msgstr "Ut"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:129
 msgid "Vertex Buffer Objects:"
@@ -208,7 +208,7 @@ msgstr "Hackbiel"
 
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:58
 msgid "Rolling pin"
-msgstr ""
+msgstr "Rull"
 
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:59
 msgid "Bow"
@@ -239,11 +239,11 @@ msgstr "Ofbreken"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:70
 msgid "Playlist:"
-msgstr "Speellist"
+msgstr "Spöllist:"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:76
 msgid "Add"
-msgstr ""
+msgstr "D'todöhn"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:77
 msgid "Remove"
@@ -260,7 +260,7 @@ msgstr "Loden"
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:82
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:199
 msgid "Add track"
-msgstr ""
+msgstr "Titel d'todöhn"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:83
 msgid "Remove track"
@@ -276,20 +276,20 @@ msgstr "Daal"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:87
 msgid "Less repeats"
-msgstr ""
+msgstr "Minner Wiederholungen"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:88
 msgid "More repeats"
-msgstr ""
+msgstr "Mehr Wiederholungen"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:89
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:257
 msgid "Playback in this order"
-msgstr ""
+msgstr "Ofspeelen in disse Reeg"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:126
 msgid "Specify the playlist name"
-msgstr ""
+msgstr "Speellist-Naam angeben"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:141
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:165
@@ -301,32 +301,32 @@ msgstr ""
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:774
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:788
 msgid "Error"
-msgstr ""
+msgstr "Fehlernaricht"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:141
 msgid "You are not allowed to delete the standard playlist!"
-msgstr ""
+msgstr "Du düst de Standard-Spöllist neet wegmaken."
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:165
 msgid "You are not allowed to change the standard playlist!"
-msgstr "Du düst de Standard-Speellist neet umannern!"
+msgstr "Du düst de Standard-Spöllist neet umannern!"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:171
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:320
 msgid "The specified file couldn't be saved!"
-msgstr ""
+msgstr "Dei angegeben Datei kunn nich speichert warrn!"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:191
 msgid "The specified file couldn't be loaded!"
-msgstr ""
+msgstr "Dei angegeben Datei kunn nich lad warrn!"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:257
 msgid "Random playback"
-msgstr ""
+msgstr "Toföllig Upnahm"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:305
 msgid "The specified file couldn't be opened!"
-msgstr ""
+msgstr "Dei Datei kunn neet open warrn!"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:60
 msgid "Player Name"
@@ -419,7 +419,7 @@ msgstr "Minn"
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:117
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:132
 msgid "Normal"
-msgstr ""
+msgstr "Normaal"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:118
 msgid "A lot"
@@ -427,7 +427,7 @@ msgstr "Normaal"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:121
 msgid "Goals:"
-msgstr "Spölenn:"
+msgstr "Enn:"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:123
 msgid "None"
@@ -439,7 +439,7 @@ msgstr "Besitt 3/4 vun'n Land"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:125
 msgid "Total domination"
-msgstr ""
+msgstr "Alleenbestimmung"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:128
 msgid "Speed:"
@@ -471,336 +471,357 @@ msgstr "Open"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:201
 msgid "Closed"
-msgstr ""
+msgstr "Sloten"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:241
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:268
 #, c-format
 msgid "%d"
-msgstr ""
+msgstr "%d"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:247
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:256
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:568
 msgid "Africans"
-msgstr ""
+msgstr "Afrikaner"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:249
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:258
 #, c-format
 msgid "%s"
-msgstr ""
+msgstr "%s"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:251
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:260
 msgid "-"
-msgstr ""
+msgstr "-"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:462
 msgid ""
 "Game can only be started as soon as everybody has a unique color,everyone is "
 "ready and all free slots are closed."
 msgstr ""
+"Spöl kan eerste loosgahn, wenn all Spölers ünnerscheedlich Farfen hebben, "
+"klaar sünnt und all free Platzen sloten bünt."
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:568
 msgid "Japaneses"
-msgstr ""
+msgstr "Japaner"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:568
 msgid "Romans"
-msgstr ""
+msgstr "Römer"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:568
 msgid "Vikings"
-msgstr ""
+msgstr "Wikinger"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:774
 msgid "Lost connection to server!"
-msgstr ""
+msgstr "Verbindung ton Server verlurn!"
 
 #: /storage/RTTR/svn/trunk/src/iwHQ.cpp:45
 msgid "Headquarters"
-msgstr ""
+msgstr "Anloopstäe"
 
 #: /storage/RTTR/svn/trunk/src/iwHQ.cpp:51
 msgid "Reserve"
-msgstr ""
+msgstr "Reserve"
 
 #: /storage/RTTR/svn/trunk/src/iwHQ.cpp:63
 msgid "Less"
-msgstr ""
+msgstr "Minner"
 
 #: /storage/RTTR/svn/trunk/src/iwHQ.cpp:65
 msgid "More"
-msgstr ""
+msgstr "Mehr"
 
 #: /storage/RTTR/svn/trunk/src/iwHQ.cpp:67
 #, c-format
 msgid "%u/%u"
-msgstr ""
+msgstr "%u/%u"
 
 #: /storage/RTTR/svn/trunk/src/iwEndgame.cpp:48
 msgid "End game?"
-msgstr ""
+msgstr "Spöl verlaten?"
 
 #: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:72
 #: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:87
 msgid "Cancel"
-msgstr ""
+msgstr "Ofbreken"
 
 #: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:78
 #: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:85
 msgid "Yes"
-msgstr ""
+msgstr "Jo"
 
 #: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:79
 #: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:86
 msgid "No"
-msgstr ""
+msgstr "Nee"
 
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:60
 #, c-format
 msgid "The Settlers II.5 RTTR, v%s-%s"
-msgstr ""
+msgstr "Dei Siedler II.5 RTTR, v%s-%s"
 
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:62
 msgid "http://www.siedler25.org"
-msgstr ""
+msgstr "http://www.siedler25.org"
 
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:69
 msgid "Connect"
-msgstr ""
+msgstr "Verbinden"
 
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:71
 msgid "Internet Ranking"
-msgstr ""
+msgstr "Internet-Ranking"
 
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:73
 msgid "Add Server"
-msgstr ""
+msgstr "Server bidoon"
 
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:76
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:76
 msgid "Server"
-msgstr ""
+msgstr "Server"
 
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:76
 msgid "Map"
-msgstr ""
+msgstr "Koort"
 
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:76
 msgid "Player"
-msgstr ""
+msgstr "Spöler"
 
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:76
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:78
 msgid "Version"
-msgstr ""
+msgstr "Version"
 
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:78
 msgid "Name"
-msgstr ""
+msgstr "Naam"
 
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:78
 msgid "Points"
-msgstr ""
+msgstr "Punkten"
 
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:315
 msgid "Lost connection to lobby!"
-msgstr ""
+msgstr "Verbindung ton Server verlurn."
 
 #: /storage/RTTR/svn/trunk/src/iwBuildings.cpp:76
 msgid "Buildings"
-msgstr ""
+msgstr "Geböde"
 
 #: /storage/RTTR/svn/trunk/src/dskSinglePlayer.cpp:66
 msgid "Resume last game"
-msgstr ""
+msgstr "Lesde Speel wiedermaken."
 
 #: /storage/RTTR/svn/trunk/src/dskSinglePlayer.cpp:69
 msgid "Play Replay"
-msgstr ""
+msgstr "Replay ofspeelen."
 
 #: /storage/RTTR/svn/trunk/src/dskSinglePlayer.cpp:75
 msgid "Load game"
-msgstr ""
+msgstr "Speel laden"
 
 #: /storage/RTTR/svn/trunk/src/dskSinglePlayer.cpp:97
 msgid "Not available"
-msgstr ""
+msgstr "Net praat"
 
 #: /storage/RTTR/svn/trunk/src/dskSinglePlayer.cpp:97
 msgid ""
 "Singleplayer mode and AI are not yet implemented. Please use the Multiplayer "
 "mode and 'Direct IP' to create a Singleplayer game."
 msgstr ""
+"Dei Inzelspeelermodus un dei KI bünt noch net implementiert. Beed bruken sei "
+"dei Mehrspeelermodus un \"Direkte IP\", um allen to speelen."
 
 #: /storage/RTTR/svn/trunk/src/iwBaseWarehouse.cpp:61
 msgid "do nothing"
-msgstr ""
+msgstr "Schlonzen"
 
 #: /storage/RTTR/svn/trunk/src/iwBaseWarehouse.cpp:63
 msgid "Take out of store"
-msgstr ""
+msgstr "Utlagern"
 
 #: /storage/RTTR/svn/trunk/src/iwBaseWarehouse.cpp:65
 msgid "Stop storage"
-msgstr ""
+msgstr "Inlagerung stoppen"
 
 #: /storage/RTTR/svn/trunk/src/iwBaseWarehouse.cpp:70
 msgid "Select all"
-msgstr ""
+msgstr "All selektieren"
 
 #: /storage/RTTR/svn/trunk/src/iwBaseWarehouse.cpp:72
 msgid "Go to place"
-msgstr ""
+msgstr "Go ton Ort"
 
 #: /storage/RTTR/svn/trunk/src/iwBaseWarehouse.cpp:105
 msgid "Demolish house"
-msgstr ""
+msgstr "Huus ofrieten."
+
+#: /storage/RTTR/svn/trunk/src/iwSurrender.cpp:48
+msgid "Surrender game?"
+msgstr "Speel upgeben?"
+
+#: /storage/RTTR/svn/trunk/src/iwSurrender.cpp:51
+#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:104
+msgid "Surrender"
+msgstr "Upgeben"
+
+#: /storage/RTTR/svn/trunk/src/iwSurrender.cpp:53
+msgid "Don't surrender"
+msgstr "Net upgeben"
+
+#: /storage/RTTR/svn/trunk/src/iwSurrender.cpp:55
+msgid "Destroy all buildings and surrender"
+msgstr "All Huusen ofrieten und upgeben"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:91
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:93
 msgid "Please wait..."
-msgstr ""
+msgstr "Bidde töwen..."
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:113
 msgid "Author"
-msgstr ""
+msgstr "Autor"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:113
 msgid "Type"
-msgstr ""
+msgstr "Typ"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:113
 msgid "Size"
-msgstr ""
+msgstr "Grött"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:116
 msgid "Selection of maps"
-msgstr ""
+msgstr "Koort Utwahl"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:121
 msgid "Load game..."
-msgstr ""
+msgstr "Speel laden..."
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:123
 msgid "Continue"
-msgstr ""
+msgstr "Wieter"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:127
 msgid "Old maps"
-msgstr ""
+msgstr "Ool"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:129
 msgid "New maps"
-msgstr ""
+msgstr "Nee"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:131
 msgid "Own maps"
-msgstr ""
+msgstr "Egen"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:133
 msgid "Continents"
-msgstr ""
+msgstr "Kontinenten"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:135
 msgid "Campaign"
-msgstr ""
+msgstr "Aktschoon"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:137
 msgid "RTTR"
-msgstr ""
+msgstr "RTTR"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:139
 msgid "Other"
-msgstr ""
+msgstr "Anner"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:141
 msgid "Played"
-msgstr ""
+msgstr "Gespeelte"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:340
 msgid "Incomplete message was received!"
-msgstr ""
+msgstr "Unvollstännig Naricht empfangen!"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:401
 #, c-format
 msgid "%d Player"
-msgstr ""
+msgstr "%d Speeler"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:406
 msgid "Greenland"
-msgstr ""
+msgstr "Gröönland"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:407
 msgid "Wasteland"
-msgstr ""
+msgstr "Unland"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:408
 msgid "Winter world"
-msgstr ""
+msgstr "Winterdach"
 
-#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:57
+#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:58
 msgid "Game menu"
-msgstr ""
-
-#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:60
-msgid "End game"
-msgstr ""
+msgstr "Kontrull-finster"
 
 #: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:76
 msgid "Load 'ReadMe' file"
-msgstr ""
+msgstr "'Laise mi'-Datei laden"
 
 #: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:80
 msgid "Load game!"
-msgstr ""
+msgstr "Speel laden!"
 
 #: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:84
 msgid "Save game!"
-msgstr ""
+msgstr "Speel ofsekern!"
 
-#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:122
+#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:106
+msgid "End game"
+msgstr "Speel beenden"
+
+#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:126
 msgid "Readme!"
-msgstr ""
+msgstr "Laise mi!"
 
 #: /storage/RTTR/svn/trunk/src/iwMinimap.cpp:53
 msgid "Outline map"
-msgstr ""
+msgstr "Overblickkoorte"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:63
 msgid "Filename"
-msgstr ""
+msgstr "Dateinaam"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:63
 msgid "Stocktaking date"
-msgstr ""
+msgstr "Upnahmdatum"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:63
 msgid "Length"
-msgstr ""
+msgstr "Lääengdte"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:66
 msgid "Start"
-msgstr ""
+msgstr "Loosgahn"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:68
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:110
 msgid "Clear"
-msgstr ""
+msgstr "Uprümmen"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:92
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:102
 msgid "Error while playing replay!"
-msgstr ""
+msgstr "Fehler bi't ofspeelen vant Replay"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:93
 msgid "Error while opening file!"
-msgstr ""
+msgstr "Fehler bi't Openmaken von dei Datei!"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:94
 msgid "Invalid Replay!"
@@ -822,17 +843,17 @@ msgstr ""
 msgid "Are you sure to remove all replays?"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwTextfile.cpp:71
-msgid "File was not found!"
+#: /storage/RTTR/svn/trunk/src/iwTextfile.cpp:75
+msgid "The readme file was not found!"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwStorehouse.cpp:43
 msgid "Storehouse"
-msgstr ""
+msgstr "Lagerhuus"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyServerInfo.cpp:73
 msgid "Server Information"
-msgstr ""
+msgstr "Server Informatschon"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyServerInfo.cpp:75
 msgid "Map Name:"
@@ -840,23 +861,23 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyServerInfo.cpp:77
 msgid "Server Name:"
-msgstr ""
+msgstr "Servernaam:"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyServerInfo.cpp:79
 msgid "Host:"
-msgstr ""
+msgstr "Host:"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyServerInfo.cpp:81
 msgid "Version:"
-msgstr ""
+msgstr "Verschoon:"
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:125
 msgid "Map was loaded and pinned at the wall..."
-msgstr ""
+msgstr "Koort laden und an dei Müür moakt..."
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:135
 msgid "Tribal chiefs assembled around the table..."
-msgstr ""
+msgstr "Üpperste um dei Disch binannerkommen"
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:143
 msgid "Failed to load map objects."
@@ -868,68 +889,68 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:155
 msgid "Failed to load terrain data."
-msgstr ""
+msgstr "Kuntreidaten kunn neet laden warrn."
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:161
 msgid "World was put together and glued..."
-msgstr ""
+msgstr "Welt mitnanner maken und verkliestern..."
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:167
 msgid "And let's go!"
-msgstr ""
+msgstr "Loos !"
 
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:59
 msgid "The Settlers II.5 RTTR"
-msgstr ""
+msgstr "Dei Siedler II.5 RTTR"
 
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:62
 msgid "Credits"
-msgstr ""
+msgstr "Afspann"
 
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:67
 msgid "Programming"
-msgstr ""
+msgstr "Programmeren"
 
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:74
 msgid "Game testers"
-msgstr ""
+msgstr "Speeltesters"
 
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:82
 msgid "Other Support"
-msgstr ""
+msgstr "Anner Help"
 
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:103
 msgid "Donators"
-msgstr ""
+msgstr "Spenders"
 
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:105
 msgid "various anonymous donators"
-msgstr ""
+msgstr "mehrere anonym Spenders"
 
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:112
 msgid "Thank you for your donations!"
-msgstr ""
+msgstr "Bedankt för all Spenden!"
 
 #: /storage/RTTR/svn/trunk/src/GameWorldViewer.cpp:189
 msgid "(House unoccupied)"
-msgstr ""
+msgstr "(Huut net besett)"
 
 #: /storage/RTTR/svn/trunk/src/GameWorldViewer.cpp:191
 msgid "(stopped)"
-msgstr ""
+msgstr "(stoppt)"
 
 #: /storage/RTTR/svn/trunk/src/GameWorldViewer.cpp:220
 msgid "(1 soldier)"
-msgstr ""
+msgstr "(1 Suldaat)"
 
 #: /storage/RTTR/svn/trunk/src/GameWorldViewer.cpp:222
 #, c-format
 msgid "(%d soldiers)"
-msgstr ""
+msgstr "(%d Suldaaten)"
 
 #: /storage/RTTR/svn/trunk/src/iwChat.cpp:46
 msgid "Chat Window"
-msgstr ""
+msgstr "Chatfinster"
 
 #: /storage/RTTR/svn/trunk/src/iwChat.cpp:53
 msgid "All"
@@ -946,18 +967,18 @@ msgstr ""
 #: /storage/RTTR/svn/trunk/src/iwRoadWindow.cpp:47
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:67
 msgid "Activity window"
-msgstr ""
+msgstr "Akschoonfinster"
 
 #: /storage/RTTR/svn/trunk/src/iwRoadWindow.cpp:51
 msgid "Interrupt road building"
-msgstr ""
+msgstr "Straat boen ofbreken"
 
 #: /storage/RTTR/svn/trunk/src/iwRoadWindow.cpp:56
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:162
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:196
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:202
 msgid "Erect flag"
-msgstr ""
+msgstr "Fahn setten"
 
 #: /storage/RTTR/svn/trunk/src/GameClientGF_Replay.cpp:78
 #, c-format
@@ -972,16 +993,16 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwDemolishBuilding.cpp:43
 msgid "Demolish?"
-msgstr ""
+msgstr "Ofrieten?"
 
 #: /storage/RTTR/svn/trunk/src/GameClient.cpp:738
 #, c-format
 msgid "Computer %u"
-msgstr ""
+msgstr "Computer %u"
 
 #: /storage/RTTR/svn/trunk/src/GameClient.cpp:740
 msgid " (AI)"
-msgstr ""
+msgstr " (dRM)"
 
 #: /storage/RTTR/svn/trunk/src/GameClient.cpp:1153
 msgid "The Game is not in sync. Checksums of some players don't match."
@@ -995,33 +1016,33 @@ msgstr ""
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:114
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:119
 msgid "-> Build house"
-msgstr ""
+msgstr "-> Huut boen"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:109
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:113
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:118
 msgid "-> Build hut"
-msgstr ""
+msgstr "-> Kaat boen"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:120
 msgid "-> Build castle"
-msgstr ""
+msgstr "-> Slott boen"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:124
 msgid "-> Dig mines"
-msgstr ""
+msgstr "-> Minen boen"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:168
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:175
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:183
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:187
 msgid "Build road"
-msgstr ""
+msgstr "Straat boen"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:169
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:177
 msgid "Pull down flag"
-msgstr ""
+msgstr "Fahn ofrieten"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:170
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:178
@@ -1031,16 +1052,16 @@ msgstr ""
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:171
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:179
 msgid "Send out scout"
-msgstr ""
+msgstr "Spion ropen"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:176
 msgid "Build waterway"
-msgstr ""
+msgstr "Waterstraat boen"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:208
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:210
 msgid "Dig up road"
-msgstr ""
+msgstr "Straat ofrieten"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:215
 msgid "Attack options"
@@ -1048,35 +1069,35 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:223
 msgid "Attack not possible."
-msgstr ""
+msgstr "Angreep neet möglich!"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:230
 msgid "Less attackers"
-msgstr ""
+msgstr "Minner Angreepers"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:231
 msgid "More attackers"
-msgstr ""
+msgstr "Mehr Angreepers"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:235
 msgid "Weak attackers"
-msgstr ""
+msgstr "Schwacken Angreepers"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:236
 msgid "Strong attackers"
-msgstr ""
+msgstr "Stark Angreepers"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:245
 msgid "Number of attackers"
-msgstr ""
+msgstr "Anzahl an Angreepers"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:248
 msgid "Attack!"
-msgstr ""
+msgstr "Angreep!"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:255
 msgid "Display options"
-msgstr ""
+msgstr "Berichtsmodus"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:257
 msgid "Observation window"
@@ -1410,15 +1431,15 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskMainMenu.cpp:72
 msgid "Singleplayer"
-msgstr ""
+msgstr "Enkeld Spöler"
 
 #: /storage/RTTR/svn/trunk/src/dskMainMenu.cpp:74
 msgid "Multiplayer"
-msgstr ""
+msgstr "Mehrere Spöler"
 
 #: /storage/RTTR/svn/trunk/src/dskMainMenu.cpp:78
 msgid "Intro"
-msgstr ""
+msgstr "Utkiek Film"
 
 #: /storage/RTTR/svn/trunk/src/dskMainMenu.cpp:84
 msgid "Quit program"

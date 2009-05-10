@@ -1,4 +1,4 @@
-// $Id: Message.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: Message.cpp 4850 2009-05-10 11:50:42Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -72,25 +72,7 @@ bool Message::send(Socket *sock)
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  Erzeugt Speicher mit der Länge @p length
- *
- *  @param[in] length Länge des gewünschten Nachrichtenblocks.
- *
- *  @author FloSoft
- */
-void Message::alloc(unsigned int length)
-{
-	delete[] data;
-
-	this->length = length;
-
-	data = new char[length];
-	memset(data, 0, sizeof(char)*length);
-}
-
-///////////////////////////////////////////////////////////////////////////////
-/**
- *
+ *  liest vom Socket die Paketdatenmenge
  *
  *  @author FloSoft
  */
@@ -263,6 +245,8 @@ Message *Message::duplicate(void) const
 
 	msg->alloc(length);
 	memcpy(msg->data, data, length);
+
+	msg->index = index;
 
 	return msg;
 }

@@ -1,4 +1,4 @@
-// $Id: Message.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: Message.h 4850 2009-05-10 11:50:42Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -30,7 +30,7 @@ class Message
 {
 public:
 	/// Konstruktor von @p Message.
-	Message(unsigned short id) : data(0), id(id), length(0) { }
+	Message(unsigned short id) : data(NULL), id(id), length(0), index(0) { }
 	virtual ~Message();
 
 	virtual unsigned short getId() { return id; }
@@ -46,7 +46,154 @@ public:
 	virtual void run(MessageInterface *callback, unsigned int id) { throw std::logic_error("pure virtual call: Message::run(callback, id)"); };
 
 protected:
-	void alloc(unsigned int length);
+	/// Erzeugt Speicher mit der Länge @p length.
+	void alloc(unsigned int length)
+	{
+		delete[] data;
+
+		this->length = length;
+
+		data = new char[length];
+		memset(data, 0, sizeof(char)*length);
+	}
+
+	/// vergrößert/verkleinert den Speicher auf die Länge @p length.
+	void ralloc(unsigned int length)
+	{
+		unsigned int olength = this->length;
+
+		this->length = length;
+
+		// verkleinern?
+		if(olength > length)
+			olength = length;
+
+		char *ndata = new char[length];
+		memcpy(ndata, data, olength);
+
+		delete[] data;
+		data = ndata;
+	}
+
+	/// int in Message aufnehmen
+	inline void pushI(const int &value)
+	{
+		pushUI((const unsigned int)value);
+	}
+
+	/// unsigned int in Message aufnehmen
+	inline void pushUI(const unsigned int &value)
+	{
+		if(index + sizeof(unsigned int) > this->length)
+			ralloc(this->length + sizeof(unsigned int));
+
+		*((unsigned int*)&data[index]) = htonl(value);
+		index += sizeof(unsigned int);
+	}
+	
+	/// short in Message aufnehmen
+	inline void pushS(const short &value)
+	{
+		pushUS((const unsigned short)value);
+	}
+	
+	/// unsigned short in Message aufnehmen
+	inline void pushUS(const unsigned short &value)
+	{
+		if(index + sizeof(unsigned short) > this->length)
+			ralloc(this->length + sizeof(unsigned short));
+
+		*((unsigned short*)&data[index]) = htons(value);
+		index += sizeof(unsigned short);
+	}
+
+	/// char in Message aufnehmen
+	inline void pushC(const char *value, const unsigned int &length)
+	{
+		if(index + length * sizeof(unsigned char) > this->length)
+			ralloc(this->length + length * sizeof(unsigned char));
+
+		strncpy(&data[index], value, length * sizeof(unsigned char));
+		index += length * sizeof(unsigned char);
+	}
+
+	/// unsigned char in Message aufnehmen
+	inline void pushUC(const unsigned char *value, const unsigned int &length)
+	{
+		pushC((const char*)value, length);
+	}
+
+	/// std::string in Message aufnehmen
+	inline void pushStr(const std::string &value)
+	{
+		unsigned int length = value.length();
+
+		if(index + length + 1 > this->length)
+			ralloc(this->length + length + 1);
+
+		strncpy(&data[index], value.c_str(), length);
+		index += length + 1;
+	}
+
+	/// int aus Message lesen
+	inline int popI(void)
+	{
+		return popUI();
+	}
+
+	/// unsigned int aus Message lesen
+	inline unsigned int popUI(void)
+	{
+		unsigned int value;
+
+		value = htonl(*((unsigned int*)&data[index]));
+		index += sizeof(unsigned int);
+
+		return value;
+	}
+
+	/// short aus Message lesen
+	inline short popS(void)
+	{
+		return popUS();
+	}
+
+	/// unsigned short aus Message lesen
+	inline unsigned short popUS(void)
+	{
+		unsigned short value;
+
+		value = htons(*((unsigned short*)&data[index]));
+		index += sizeof(unsigned short);
+
+		return value;
+	}
+
+	/// char* aus Message lesen
+	inline const char *popC(char *value, const unsigned int &length)
+	{
+		strncpy(value, &data[index], length * sizeof(unsigned char));
+		index += length * sizeof(unsigned char);
+
+		return value;
+	}
+
+	/// unsigned char* aus Message aufnehmen
+	inline const unsigned char *popUC(unsigned char *value, const unsigned int &length)
+	{
+		return (const unsigned char*)popC((char*)value, length);
+	}
+
+	/// std::string aus Message lesen
+	inline std::string popStr(void)
+	{
+		std::string value;
+
+		value = &data[index];
+		index += value.length() + 1;
+
+		return value;
+	}
 
 private:
 	Message(void) {}
@@ -61,6 +208,7 @@ protected:
 private:
 	unsigned short id;
 	unsigned int length;
+	unsigned int index;
 };
 
 #endif //!MESSAGE_H_INCLUDED

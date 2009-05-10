@@ -1,4 +1,4 @@
-// $Id: LobbyProtocol.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: LobbyProtocol.h 4850 2009-05-10 11:50:42Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -21,7 +21,7 @@
 
 #pragma once
 
-const unsigned int LOBBYPROTOCOL_VERSION = 0xFF0002FF;
+const unsigned int LOBBYPROTOCOL_VERSION = 0xFF0003FF;
 
 enum
 {

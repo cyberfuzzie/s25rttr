@@ -1,4 +1,4 @@
-// $Id: Message.h 4850 2009-05-10 11:50:42Z FloSoft $
+// $Id: Message.h 4851 2009-05-10 12:21:04Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -113,7 +113,7 @@ protected:
 		if(index + length * sizeof(unsigned char) > this->length)
 			ralloc(this->length + length * sizeof(unsigned char));
 
-		strncpy(&data[index], value, length * sizeof(unsigned char));
+		memcpy(&data[index], value, length * sizeof(unsigned char));
 		index += length * sizeof(unsigned char);
 	}
 
@@ -172,7 +172,7 @@ protected:
 	/// char* aus Message lesen
 	inline const char *popC(char *value, const unsigned int &length)
 	{
-		strncpy(value, &data[index], length * sizeof(unsigned char));
+		memcpy(value, &data[index], length * sizeof(unsigned char));
 		index += length * sizeof(unsigned char);
 
 		return value;

@@ -3,13 +3,13 @@ msgstr ""
 "Project-Id-Version: Siedler II.5 RttR\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-05-06 18:14+0100\n"
-"PO-Revision-Date: 2009-05-06 22:36+0000\n"
-"Last-Translator: FloSoft <Unknown>\n"
+"PO-Revision-Date: 2009-05-10 09:07+0000\n"
+"Last-Translator: NoLiFe <no.live.forever@gmail.com>\n"
 "Language-Team: Siedler II.5 RttR <sf-team@siedler25.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-05-09 14:40+0000\n"
+"X-Launchpad-Export-Date: 2009-05-11 12:28+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: SLOVAKIA\n"
 "X-Poedit-Language: Slovak\n"
@@ -23,7 +23,7 @@ msgstr "Poštová schránka"
 
 #: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:55
 msgid "No letters!"
-msgstr "Ždiadne správy!"
+msgstr "Žiadne správy!"
 
 #: /storage/RTTR/svn/trunk/src/languages.cpp:71
 msgid "System language"
@@ -39,11 +39,11 @@ msgstr "Nastavenia"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:76
 msgid "Common"
-msgstr "Spoločný"
+msgstr "Všeobecné"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:78
 msgid "Graphics"
-msgstr "Grafika"
+msgstr "Grafické nastavenia"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:80
 msgid "Sound/Music"
@@ -51,7 +51,7 @@ msgstr "Zvuky/Hudba"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:88
 msgid "Name in Game:"
-msgstr "Meno v hre:"
+msgstr "Prezývka"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:92
 msgid "Language:"
@@ -71,7 +71,7 @@ msgstr "Rozlíšenie:"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:113
 msgid "Mode:"
-msgstr "Mód"
+msgstr "Spôsob zobrazenia"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:115
 msgid "Fullscreen"
@@ -180,7 +180,7 @@ msgstr "Pílka"
 
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:51
 msgid "Pick-axe"
-msgstr "Sekera"
+msgstr "Krompáč"
 
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:52
 msgid "Hammer"
@@ -204,7 +204,7 @@ msgstr "Kosa"
 
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:57
 msgid "Cleaver"
-msgstr "Cleaver"
+msgstr "Sekáčik"
 
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:58
 msgid "Rolling pin"
@@ -390,7 +390,7 @@ msgstr "Blízko hraníc"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:106
 msgid "Exploration:"
-msgstr "Skúmať:"
+msgstr "Odhalenie:"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:108
 msgid "Off (all visible)"
@@ -427,7 +427,7 @@ msgstr "Veľa"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:121
 msgid "Goals:"
-msgstr "Úlohy:"
+msgstr "Ciele:"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:123
 msgid "None"
@@ -501,8 +501,8 @@ msgid ""
 "Game can only be started as soon as everybody has a unique color,everyone is "
 "ready and all free slots are closed."
 msgstr ""
-"Hra može byť spustená iba v prípade že, každý hráč bude mať jedinečú farbu, "
-"každý bude pripravený a všetky voľné sloty budú uzatvorené."
+"Hra môže byť spustená iba v prípade že, každý hráč bude mať jedinečnú farbu, "
+"každý hráč bude pripravený a všetky voľné sloty budú uzatvorené."
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:568
 msgid "Japaneses"
@@ -526,7 +526,7 @@ msgstr "Hlavný stan"
 
 #: /storage/RTTR/svn/trunk/src/iwHQ.cpp:51
 msgid "Reserve"
-msgstr "Rezervovať"
+msgstr "Rezerva"
 
 #: /storage/RTTR/svn/trunk/src/iwHQ.cpp:63
 msgid "Less"
@@ -612,7 +612,7 @@ msgstr "Body"
 
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:315
 msgid "Lost connection to lobby!"
-msgstr "Zlyhalo spojenie s miestnostou!"
+msgstr "Zlyhalo spojenie s miestnosťou!"
 
 #: /storage/RTTR/svn/trunk/src/iwBuildings.cpp:76
 msgid "Buildings"
@@ -639,14 +639,12 @@ msgid ""
 "Singleplayer mode and AI are not yet implemented. Please use the Multiplayer "
 "mode and 'Direct IP' to create a Singleplayer game."
 msgstr ""
-"Singleplayer mode and AI are not yet implemented. Please use the Multiplayer "
-"mode and 'Direct IP' to create a Singleplayer game.Hra jedného hráča a hra "
-"proti počítači momentálne nefungujú. Prosím použite hru viacerých hráčou a "
-"\"Direct IP\" pre vytvorenie hry jedného hráča."
+"Hra jedného hráča a hra proti počítaču momentálne nefungujú. Prosím použite "
+"hru viacerých hráčou a \"Direct IP\" pre vytvorenie hry."
 
 #: /storage/RTTR/svn/trunk/src/iwBaseWarehouse.cpp:61
 msgid "do nothing"
-msgstr "nerob nič"
+msgstr "Žiadna akcia"
 
 #: /storage/RTTR/svn/trunk/src/iwBaseWarehouse.cpp:63
 msgid "Take out of store"
@@ -670,20 +668,20 @@ msgstr "Zničiť budovu"
 
 #: /storage/RTTR/svn/trunk/src/iwSurrender.cpp:48
 msgid "Surrender game?"
-msgstr ""
+msgstr "Kapitulovať?"
 
 #: /storage/RTTR/svn/trunk/src/iwSurrender.cpp:51
 #: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:104
 msgid "Surrender"
-msgstr ""
+msgstr "Kapitulovať"
 
 #: /storage/RTTR/svn/trunk/src/iwSurrender.cpp:53
 msgid "Don't surrender"
-msgstr ""
+msgstr "Nekapitulovať"
 
 #: /storage/RTTR/svn/trunk/src/iwSurrender.cpp:55
 msgid "Destroy all buildings and surrender"
-msgstr ""
+msgstr "Zničiť všetky budovy a vzdať sa"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:91
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:93
@@ -748,7 +746,7 @@ msgstr "Posledná hra"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:340
 msgid "Incomplete message was received!"
-msgstr "Incomplete message was received!Bola prijatá neúplná správa!"
+msgstr "Bola prijatá neúplná správa!"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:401
 #, c-format
@@ -757,7 +755,7 @@ msgstr "%d Hráč"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:406
 msgid "Greenland"
-msgstr "Greenland"
+msgstr "Grónsko"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:407
 msgid "Wasteland"
@@ -785,7 +783,7 @@ msgstr "Uložiť hru!"
 
 #: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:106
 msgid "End game"
-msgstr "Koniec hry"
+msgstr "Ukončiť hru"
 
 #: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:126
 msgid "Readme!"
@@ -847,7 +845,7 @@ msgstr "Vážne chceš odstrániť všetky záznamy?"
 
 #: /storage/RTTR/svn/trunk/src/iwTextfile.cpp:75
 msgid "The readme file was not found!"
-msgstr ""
+msgstr "Súbor \"Čítaj Ma\" sa nenašiel!"
 
 #: /storage/RTTR/svn/trunk/src/iwStorehouse.cpp:43
 msgid "Storehouse"
@@ -875,13 +873,11 @@ msgstr "Verzia:"
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:125
 msgid "Map was loaded and pinned at the wall..."
-msgstr ""
-"Map has been loaded and pinned at the wall...Mapa bola načítaná a pripnutá "
-"na stenu..."
+msgstr "Mapa bola načítaná a je pripravená..."
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:135
 msgid "Tribal chiefs assembled around the table..."
-msgstr ""
+msgstr "Náčelníci národov sa zhromaždili okolo stola...."
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:143
 msgid "Failed to load map objects."
@@ -897,7 +893,7 @@ msgstr "Chyba pri nahrávaní terénu."
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:161
 msgid "World was put together and glued..."
-msgstr ""
+msgstr "Svet bol vytvorený a je pripravený..."
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:167
 msgid "And let's go!"
@@ -958,15 +954,15 @@ msgstr "Chat okno"
 
 #: /storage/RTTR/svn/trunk/src/iwChat.cpp:53
 msgid "All"
-msgstr "Všetci"
+msgstr "Pre všetkých"
 
 #: /storage/RTTR/svn/trunk/src/iwChat.cpp:55
 msgid "Allies"
-msgstr "Spojenci"
+msgstr "Pre spojencov"
 
 #: /storage/RTTR/svn/trunk/src/iwChat.cpp:57
 msgid "Enemies"
-msgstr "Nepriatelia"
+msgstr "Pre nepriateľou"
 
 #: /storage/RTTR/svn/trunk/src/iwRoadWindow.cpp:47
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:67
@@ -989,6 +985,7 @@ msgstr "Vztýčiť vlajku"
 msgid ""
 "Warning: The played replay is not in sync with the original match. (GF: %u)"
 msgstr ""
+"Upozornenie: Prehrávaný záznam nie je totožný s originálnym zápasom. (GF: %u)"
 
 #: /storage/RTTR/svn/trunk/src/GameClientGF_Replay.cpp:120
 #, c-format
@@ -1070,7 +1067,7 @@ msgstr "Odstrániť cestu"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:215
 msgid "Attack options"
-msgstr "Nastavenie útoku"
+msgstr "Nastavenia útoku"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:223
 msgid "Attack not possible."
@@ -1110,7 +1107,7 @@ msgstr "Okno sledovania"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:258
 msgid "House names"
-msgstr "Názov budovy"
+msgstr "Názvy budov"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:259
 msgid "Go to headquarters"
@@ -1122,11 +1119,11 @@ msgstr "Pripojiť sa"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:54
 msgid "IP Address of Host:"
-msgstr "IP address of host:"
+msgstr "IP adresa hostiteľa"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:58
 msgid "Server-Port:"
-msgstr "port Serveru:"
+msgstr "Číslo portu:"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:62
 msgid "Password (if needed):"
@@ -1138,7 +1135,7 @@ msgstr "Neplatný port. Port musí byť v rozsahu 1 až 65535!"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:143
 msgid "Connecting with Host..."
-msgstr "Connecting with host..."
+msgstr "Pripájam sa k hostiteľovi..."
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:149
 msgid "Connection failed!"
@@ -1186,9 +1183,7 @@ msgstr "Čakám na info o hráčovi..."
 
 #: /storage/RTTR/svn/trunk/src/SerializedGameData.cpp:234
 msgid "An error occured while saving which was suppressed!"
-msgstr ""
-"An error occured while saving which was suppressed!Vyskytla sa chyba pri "
-"ukladaní!"
+msgstr "Vyskytla sa chyba pri ukladaní!"
 
 #: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:53
 msgid "Main selection"
@@ -1228,7 +1223,7 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyRanking.cpp:80
 msgid "Lost"
-msgstr "Stratený"
+msgstr "Prehral"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyRanking.cpp:80
 msgid "Won"
@@ -1253,7 +1248,7 @@ msgstr "Zničenie nie je možné"
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:105
 msgid "Construction aid mode"
-msgstr "Construction aid mode"
+msgstr "Podpora výstavby"
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:185
 #, c-format
@@ -1325,7 +1320,7 @@ msgstr "Mince"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:58
 msgid "Weapons"
-msgstr "Zbraňe"
+msgstr "Zbrane"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:59
 msgid "Beer"
@@ -1357,7 +1352,7 @@ msgstr "Kamene"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:66
 msgid "Wood"
-msgstr "Drevo"
+msgstr "Polená"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:67
 msgid "Water"
@@ -1441,7 +1436,7 @@ msgstr "After the following order"
 
 #: /storage/RTTR/svn/trunk/src/dskMainMenu.cpp:72
 msgid "Singleplayer"
-msgstr "Hra jedného hráča"
+msgstr "Jeden hráč"
 
 #: /storage/RTTR/svn/trunk/src/dskMainMenu.cpp:74
 msgid "Multiplayer"
@@ -1465,7 +1460,7 @@ msgstr "to GameFrame:"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:49
 msgid "Connecting to Lobby"
-msgstr "Connecting to lobby"
+msgstr "Prípájam sa do miestnosti"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:52
 msgid "Username:"
@@ -1489,7 +1484,7 @@ msgstr "Registrovať"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:222
 msgid "Please fill out all fields!"
-msgstr ""
+msgstr "Prosím vypĺnte všetký políčka!"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:302
 msgid "Registration successful!"
@@ -1526,7 +1521,7 @@ msgstr "Mlyn"
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:87
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:141
 msgid "Pig farm"
-msgstr "Prasačia farma"
+msgstr "Chov prasiat"
 
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:90
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:144

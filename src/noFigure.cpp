@@ -1,4 +1,4 @@
-// $Id: noFigure.cpp 4854 2009-05-11 11:26:19Z OLiver $
+// $Id: noFigure.cpp 4857 2009-05-11 18:31:33Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -543,7 +543,7 @@ void noFigure::Wander()
 				if(way < best_way)
 				{
 					// Gibts nen Weg zu dieser Flagge?
-					if((dir = gwg->FindFreePath(x,y,(*it)->GetX(),(*it)->GetY(),10,false)) != 0xFF)
+					if((dir = gwg->FindHumanPath(x,y,(*it)->GetX(),(*it)->GetY(),10,false)) != 0xFF)
 					{
 						// gucken, ob ein Weg zu einem Warenhaus führt
 						if(GAMECLIENT.GetPlayer(player)->FindWarehouse(*it,FW::Condition_StoreFigure,0,true,&job,false))
@@ -665,7 +665,7 @@ void noFigure::WanderToFlag()
 
 	// Weiter zur Flagge gehen
 	// Gibts noch nen Weg dahin bzw. existiert die Flagge noch?
-	if((dir = gwg->FindFreePath(x,y,flag_x,flag_y,60,false)) != 0xFF)
+	if((dir = gwg->FindHumanPath(x,y,flag_x,flag_y,60,false)) != 0xFF)
 	{
 		// weiter hinlaufen
 		StartWalking(dir);

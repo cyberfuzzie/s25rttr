@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 4829 2009-05-07 18:52:37Z Demophobie $
+// $Id: nobMilitary.cpp 4857 2009-05-11 18:31:33Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -716,7 +716,7 @@ void nobMilitary::NeedOccupyingTroops(const unsigned char new_owner)
 				{
 					// Und kommt er überhaupt zur Flagge (könnte ja in der 2. Reihe stehen, sodass die
 					// vor ihm ihn den Weg versperren)?
-					if(gwg->FindFreePath((*it)->GetX(),(*it)->GetY(),x+(y&1),y+1,10,false) != 0xFF)
+					if(gwg->FindHumanPath((*it)->GetX(),(*it)->GetY(),x+(y&1),y+1,10,false) != 0xFF)
 					{
 						// Dann is das der bisher beste
 						best_attacker = *it;

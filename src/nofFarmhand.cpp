@@ -1,4 +1,4 @@
-// $Id: nofFarmhand.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: nofFarmhand.cpp 4857 2009-05-11 18:31:33Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -177,7 +177,7 @@ bool nofFarmhand::IsPointAvailable(const unsigned short x, const unsigned short 
 	if(IsPointGood(x,y))
 	{
 		// Gucken, ob ein Weg hinführt
-		if(gwg->FindFreePath(this->x,this->y,x,y,20) != 0xFF)
+		if(gwg->FindHumanPath(this->x,this->y,x,y,20) != 0xFF)
 			return 1;
 		else
 			return 0;
@@ -197,7 +197,7 @@ void nofFarmhand::WalkToWorkpoint()
 		WorkStarted();
 	}
 	// Weg suchen und gucken ob der Punkt noch in Ordnung ist
-	else if((dir = gwg->FindFreePath(x,y,dest_x,dest_y,20)) == 0xFF || !IsPointGood(dest_x,dest_y))
+	else if((dir = gwg->FindHumanPath(x,y,dest_x,dest_y,20)) == 0xFF || !IsPointGood(dest_x,dest_y))
 	{
 		// Punkt freigeben
 		gwg->GetNode(dest_x,dest_y).reserved = false;;
@@ -231,7 +231,7 @@ void nofFarmhand::WalkHome()
 		WorkingReady();
 	}
 	// Weg suchen und ob wir überhaupt noch nach Hause kommen
-	else if((dir = gwg->FindFreePath(x,y,dest_x,dest_y,40)) == 0xFF)
+	else if((dir = gwg->FindHumanPath(x,y,dest_x,dest_y,40)) == 0xFF)
 	{
 		// Kein Weg führt mehr nach Hause--> Rumirren
 		StartWandering();

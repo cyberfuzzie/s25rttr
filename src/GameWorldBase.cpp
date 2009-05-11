@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 4854 2009-05-11 11:26:19Z OLiver $
+// $Id: GameWorldBase.cpp 4857 2009-05-11 18:31:33Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -241,7 +241,7 @@ bool GameWorldBase::IsPlayerTerritory(const MapCoord x, const MapCoord y) const
 	return true;
 }
 
-bool GameWorldBase::RoadAvailable(const bool boat_road,const int x, const int y,unsigned char to_dir,const bool visual)
+bool GameWorldBase::RoadAvailable(const bool boat_road,const int x, const int y,unsigned char to_dir,const bool visual) const
 {
 	// Hindernisse
 	if(GetNode(x,y).obj)
@@ -802,7 +802,7 @@ BuildingQuality GameWorldBase::CalcBQ(const MapCoord x, const MapCoord y,const u
 	return val;
 }
 
-bool GameWorldBase::IsNodeToNodeForFigure(const MapCoord x, const MapCoord y, const unsigned dir)
+bool GameWorldBase::IsNodeToNodeForFigure(const MapCoord x, const MapCoord y, const unsigned dir) const
 {
 	// Nicht über Wasser, Lava, Sümpfe gehen
 	// Als Boot dürfen wir das natürlich

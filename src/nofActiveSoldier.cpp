@@ -1,4 +1,4 @@
-// $Id: nofActiveSoldier.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: nofActiveSoldier.cpp 4857 2009-05-11 18:31:33Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -111,7 +111,7 @@ void nofActiveSoldier::WalkingHome()
 		building->SoldierLost(this);
 	}
 	// oder finden wir gar keinen Weg mehr?
-	else if((dir = gwg->FindFreePath(x,y,building->GetFlag()->GetX(),building->GetFlag()->GetY(),100)) == 0xFF)
+	else if((dir = gwg->FindHumanPath(x,y,building->GetFlag()->GetX(),building->GetFlag()->GetY(),100)) == 0xFF)
 	{
 		// Kein Weg gefunden --> Rumirren
 		StartWandering();

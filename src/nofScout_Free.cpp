@@ -1,4 +1,4 @@
-// $Id: nofScout_Free.cpp 4840 2009-05-09 09:16:39Z OLiver $
+// $Id: nofScout_Free.cpp 4857 2009-05-11 18:31:33Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -138,7 +138,7 @@ void nofScout_Free::Scout()
 	else
 	{
 		// Weg suchen
-		dir = gwg->FindFreePath(x,y,next_x,next_y,30);
+		dir = gwg->FindHumanPath(x,y,next_x,next_y,30);
 
 		// Wenns keinen gibt, neuen suchen, ansonsten hinlaufen
 		if(dir == 0xFF)
@@ -186,7 +186,7 @@ void nofScout_Free::GoToNewNode()
 		// Existiert ein Weg zu diesem Punkt und ist dieser Punkt auch noch von der Flagge noch in
 		// einigermaßen vernünftiger Entfernung zu erreichen, um das Drumherumlaufen um Berge usw. zu
 		// verhindern
-		if(gwg->FindFreePath(x,y,p->x,p->y,SCOUT_RANGE*2) != 0xFF && gwg->FindFreePath(flag->GetX(),flag->GetY(),p->x,p->y,SCOUT_RANGE+SCOUT_RANGE/4) != 0xFF)
+		if(gwg->FindHumanPath(x,y,p->x,p->y,SCOUT_RANGE*2) != 0xFF && gwg->FindHumanPath(flag->GetX(),flag->GetY(),p->x,p->y,SCOUT_RANGE+SCOUT_RANGE/4) != 0xFF)
 		{
 			// Als neues Ziel nehmen
 			next_x = p->x;

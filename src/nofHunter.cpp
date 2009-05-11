@@ -1,4 +1,4 @@
-// $Id: nofHunter.cpp 4841 2009-05-09 10:28:42Z OLiver $
+// $Id: nofHunter.cpp 4857 2009-05-11 18:31:33Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -164,7 +164,7 @@ void nofHunter::HandleDerivedEvent(const unsigned int id)
 									continue;
 
 								// Und komme ich hin?
-								if(gwg->FindFreePath(x,y,static_cast<noAnimal*>(*it)->GetX(),
+								if(gwg->FindHumanPath(x,y,static_cast<noAnimal*>(*it)->GetX(),
 									static_cast<noAnimal*>(*it)->GetY(),MAX_HUNTING_DISTANCE) != 0xFF)
 									// Dann nehmen wir es
 									available_animals.push_back(static_cast<noAnimal*>(*it));
@@ -253,7 +253,7 @@ void nofHunter::WalkedDerived()
 bool nofHunter::IsShootingPointGood(const unsigned short x, const unsigned short y)
 {
 	// Punkt muss betretbar sein und man muss ihn erreichen können
-	return (gwg->IsNodeForFigures(x,y) && gwg->FindFreePath(this->x,this->y,x,y,6)!=0xFF);
+	return (gwg->IsNodeForFigures(x,y) && gwg->FindHumanPath(this->x,this->y,x,y,6)!=0xFF);
 }
 
 void nofHunter::HandleStateChasing()
@@ -369,7 +369,7 @@ void nofHunter::HandleStateChasing()
 	else
 	{
 		// Weg dorthin suchen
-		if((dir=gwg->FindFreePath(x,y,animal->GetX(),animal->GetY(),100)) != 0xFF)
+		if((dir=gwg->FindHumanPath(x,y,animal->GetX(),animal->GetY(),100)) != 0xFF)
 		{
 			// Weg gefunden, dann hinlaufen
 			StartWalking(dir);
@@ -395,7 +395,7 @@ void nofHunter::HandleStateFindingShootingPoint()
 	else
 	{
 		// Weg dorthin suchen
-		if((dir=gwg->FindFreePath(x,y,shooting_x,shooting_y,6)) != 0xFF)
+		if((dir=gwg->FindHumanPath(x,y,shooting_x,shooting_y,6)) != 0xFF)
 		{
 			// Weg gefunden, dann hinlaufen
 			StartWalking(dir);
@@ -430,7 +430,7 @@ void nofHunter::HandleStateWalkingToCadaver()
 	else
 	{
 		// Weg dorthin suchen
-		if((dir=gwg->FindFreePath(x,y,animal->GetX(),animal->GetY(),6)) != 0xFF)
+		if((dir=gwg->FindHumanPath(x,y,animal->GetX(),animal->GetY(),6)) != 0xFF)
 		{
 			// Weg gefunden, dann hinlaufen
 			StartWalking(dir);
@@ -484,7 +484,7 @@ void nofHunter::WalkHome()
 	}
 	// Weg suchen und ob wir überhaupt noch nach Hause kommen (Toleranz bei dem Weg mit einberechnen,
 	// damit er nicht einfach rumirrt und wegstirbt, wenn er einmal ein paar Felder zu weit gelaufen ist)
-	else if((dir = gwg->FindFreePath(x,y,flag_x,flag_y,MAX_HUNTING_DISTANCE+MAX_HUNTING_DISTANCE/4)) == 0xFF)
+	else if((dir = gwg->FindHumanPath(x,y,flag_x,flag_y,MAX_HUNTING_DISTANCE+MAX_HUNTING_DISTANCE/4)) == 0xFF)
 	{
 		// Kein Weg führt mehr nach Hause--> Rumirren
 		StartWandering();

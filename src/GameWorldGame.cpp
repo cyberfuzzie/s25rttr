@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 4854 2009-05-11 11:26:19Z OLiver $
+// $Id: GameWorldGame.cpp 4857 2009-05-11 18:31:33Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -809,7 +809,7 @@ void GameWorldGame::Attack(const unsigned char player_attacker, const MapCoord x
 			{
 				// und auch der Weg zu Fuß darf dann nicht so weit sein, wenn das alles bestanden ist, können wir ihn nehmen..
 				// Bei dem freien Pfad noch ein bisschen Toleranz mit einberechnen
-				if(FindFreePath(x,y,(*it)->GetX(),(*it)->GetY(),MAX_ATTACKING_DISTANCE+10) != 0xFF)
+				if(FindHumanPath(x,y,(*it)->GetX(),(*it)->GetY(),MAX_ATTACKING_DISTANCE+10) != 0xFF)
 				{
 					// Soldaten davon nehmen
 					unsigned i = 0;

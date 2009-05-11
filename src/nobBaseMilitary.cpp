@@ -1,4 +1,4 @@
-// $Id: nobBaseMilitary.cpp 4842 2009-05-09 11:53:45Z OLiver $
+// $Id: nobBaseMilitary.cpp 4857 2009-05-11 18:31:33Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -181,7 +181,7 @@ nofAttacker * nobBaseMilitary::FindAggressor(nofAggressiveDefender * defender)
 			{
 				// Er darf auch per Fuß nicht zu weit entfernt sein (nicht dass er an der anderen Seite
 				// von nem Fluss steht (genau)
-				if(gwg->FindFreePath((*it)->GetX(),(*it)->GetY(),defender->GetX(),defender->GetY(),5) != 0xFF)
+				if(gwg->FindHumanPath((*it)->GetX(),(*it)->GetY(),defender->GetX(),defender->GetY(),5) != 0xFF)
 				{
 					// Ja, mit dem kann sich der Soldat duellieren
 					(*it)->LetsFight(defender);
@@ -305,7 +305,7 @@ void nobBaseMilitary::FindAnAttackerPlace(unsigned short &ret_x,unsigned short &
 
 		unsigned length = 0;
 		// Gültiger Weg gefunden
-		if(gwg->FindFreePath(soldier->GetX(),soldier->GetY(),it->x,it->y,100,false,&length) != 0xFF)
+		if(gwg->FindHumanPath(soldier->GetX(),soldier->GetY(),it->x,it->y,100,false,&length) != 0xFF)
 		{
 			// Kürzer als bisher kürzester Weg? --> Dann nehmen wir diesen Punkt (vorerst)
 			if(length < min_length)
@@ -389,7 +389,7 @@ void nobBaseMilitary::CheckArrestedAttackers()
 		{
 			// Und kommt er überhaupt zur Flagge (könnte ja in der 2. Reihe stehen, sodass die
 			// vor ihm ihn den Weg versperren)?
-			if(gwg->FindFreePath((*it)->GetX(),(*it)->GetY(),x+(y&1),y+1,5,false) != 0xFF)
+			if(gwg->FindHumanPath((*it)->GetX(),(*it)->GetY(),x+(y&1),y+1,5,false) != 0xFF)
 			{
 				// dann kann der zur Flagge gehen
 				(*it)->AttackFlag();
@@ -410,7 +410,7 @@ bool nobBaseMilitary::SendSuccessor(const unsigned short x, const unsigned short
 			if((*it)->GetRadius() > radius)
 			{
 				// Und findet er einen zu diesem Punkt?
-				if(gwg->FindFreePath((*it)->GetX(),(*it)->GetY(),x,y,50,false) != 0xFF)
+				if(gwg->FindHumanPath((*it)->GetX(),(*it)->GetY(),x,y,50,false) != 0xFF)
 				{
 					// dann soll er dorthin gehen
 					(*it)->StartSucceeding(x,y,radius,dir);

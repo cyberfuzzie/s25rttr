@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 4854 2009-05-11 11:26:19Z OLiver $
+// $Id: GameWorld.h 4857 2009-05-11 18:31:33Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -49,9 +49,12 @@ class nofAttacker;
 class MouseCoords;
 class noBuilding;
 class GameInterface;
+class GameWorldBase;
 
 struct RoadsBuilding;
 class FOWObject;
+
+typedef bool (*FP_Node_OK_Callback)(const GameWorldBase& gwb, const MapCoord x, const MapCoord y, const unsigned char dir, const void *param);
 
 /// Eigenschaften von einem Punkt auf der Map
 struct MapNode
@@ -188,6 +191,8 @@ public:
 
 	// Gibt ein spezifisches Objekt zurück
 	template<typename T> T * GetSpecObj(MapCoord x, MapCoord y) { return dynamic_cast<T*>( GetNode(x,y).obj ); }
+		// Gibt ein spezifisches Objekt zurück
+	template<typename T> const T * GetSpecObj(MapCoord x, MapCoord y) const { return dynamic_cast<const T*>( GetNode(x,y).obj ); }
 
 	/// Gibt ein Terrain-Dreieck um einen Punkt herum zurück.
 	unsigned char GetTerrainAround(int x, int y, unsigned char dir) const;
@@ -204,7 +209,7 @@ public:
 	unsigned char GetPointFOWRoad(MapCoord x, MapCoord y, unsigned char dir, const unsigned char viewing_player) const;
 
 	/// Kann dorthin eine Straße gebaut werden?
-	bool RoadAvailable(const bool boat_road,const int x, const int y,unsigned char to_dir,const bool visual = true);
+	bool RoadAvailable(const bool boat_road,const int x, const int y,unsigned char to_dir,const bool visual = true) const;
 	/// Bauqualitäten berechnen, bei flagonly gibt er nur 1 zurück, wenn eine Flagge möglich ist
 	BuildingQuality CalcBQ(const MapCoord x, const MapCoord y,const unsigned char player,const bool flagonly = false,const bool visual = true);
 	/// Setzt die errechnete BQ gleich mit
@@ -232,9 +237,16 @@ public:
 	void LookForMilitaryBuildings(list<nobBaseMilitary*>& buildings,const MapCoord x, const MapCoord y, const unsigned short radius) const;
 
 	/// Prüft, ob von einem bestimmten Punkt aus der Untergrund für Figuren zugänglich ist (kein Wasser,Lava,Sumpf)
-	bool IsNodeToNodeForFigure(const MapCoord x, const MapCoord y, const unsigned dir);
+	bool IsNodeToNodeForFigure(const MapCoord x, const MapCoord y, const unsigned dir) const;
 	/// Wegfinden ( A*) --> in freien Terrain, Ziel muss nicht begehbar sein, durch Bäume, für frei herumlaufende Berufe mit begrenztem Weg !
-	unsigned char FindFreePath(const int x_start,const int y_start, const int x_dest, const int y_dest,unsigned max_route,const bool random_route = true, unsigned * length = NULL);
+	bool FindFreePath(const MapCoord x_start,const MapCoord y_start,
+				  const MapCoord x_dest, const MapCoord y_dest, const bool random_route, const unsigned max_route, 
+				  std::vector<unsigned char> * route, unsigned *length, unsigned char * first_dir, 
+				  FP_Node_OK_Callback IsNodeOK, FP_Node_OK_Callback IsNodeToDestOk, const void * param);
+			/// Findet einen Weg für Figuren
+	unsigned char FindHumanPath(const MapCoord x_start,const MapCoord y_start,
+		  const MapCoord x_dest, const MapCoord y_dest, const unsigned max_route = 0xFFFFFFFF, const bool random_route = false, unsigned *length = NULL);
+
 
 	/// Baut eine (bisher noch visuell gebaute) Straße wieder zurück
 	void RemoveVisualRoad(unsigned short start_x, unsigned short start_y, const std::vector<unsigned char>& route);
@@ -315,7 +327,7 @@ public:
 	void ShowNamesAndProductivity();
 
 	/// Wegfinden ( A* ) --> Wegfindung auf allgemeinen Terrain ( ohne Straäcn ) ( fr Wegebau oder frei herumlaufende )
-	bool FindPath(std::vector<unsigned char>& route, const bool boat_road,const int x_start,const int y_start, const int x_dest, const int y_dest,const unsigned char playerid);
+	bool FindRoadPath(const MapCoord x_start,const MapCoord y_start, const MapCoord x_dest, const MapCoord y_dest,std::vector<unsigned char>& route, const bool boat_road);
 	/// Sucht die Anzahl der verfügbaren Soldaten, um das Militärgebäude an diesem Punkt anzugreifen
 	unsigned GetAvailableSoldiersForAttack(const unsigned char player_attacker,const MapCoord x, const MapCoord y);
 	/// Zeichnet die Objekte

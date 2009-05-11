@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.cpp 4854 2009-05-11 11:26:19Z OLiver $
+// $Id: dskGameInterface.cpp 4857 2009-05-11 18:31:33Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -638,7 +638,7 @@ void dskGameInterface::ActivateRoadMode(const RoadMode rm)
 bool dskGameInterface::BuildRoadPart(const int cselx, const int csely,bool end)
 {
 	std::vector<unsigned char> new_route;
-	bool path_found = gwv->FindPath(new_route, road.mode == RM_BOAT,road.point_x,road.point_y,cselx,csely,GAMECLIENT.GetPlayerID());
+	bool path_found = gwv->FindRoadPath(road.point_x,road.point_y,cselx,csely,new_route, road.mode == RM_BOAT);
 
 	// Weg gefunden?
 	if(!path_found)

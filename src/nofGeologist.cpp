@@ -1,4 +1,4 @@
-// $Id: nofGeologist.cpp 4827 2009-05-07 18:28:45Z Demophobie $
+// $Id: nofGeologist.cpp 4857 2009-05-11 18:31:33Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -209,7 +209,7 @@ void nofGeologist::Walked()
 		else
 		{
 			// Weg zum nächsten Punkt suchen
-			dir = gwg->FindFreePath(x,y,node_goal.x,node_goal.y,20);
+			dir = gwg->FindHumanPath(x,y,node_goal.x,node_goal.y,20);
 
 			// Wenns keinen gibt 
 			if(dir == 0xFF)
@@ -346,7 +346,7 @@ void nofGeologist::TestNode(const unsigned short x, const unsigned short y)
 	// Prüfen, ob er überhaupt auf der Karte liegt und nicht irgendwo im Nirvana
 	if(x < gwg->GetWidth() && y < gwg->GetHeight())
 	{
-		if(IsNodeGood(x,y) && (gwg->FindFreePath(this->x,this->y,x,y,20)) != 0xFF && !gwg->GetNode(x,y).reserved)
+		if(IsNodeGood(x,y) && (gwg->FindHumanPath(this->x,this->y,x,y,20)) != 0xFF && !gwg->GetNode(x,y).reserved)
 		{
 			nofGeologist::Point p = { x,y };
 			available_nodes.push_back(p);
@@ -371,7 +371,7 @@ unsigned char nofGeologist::GetNextNode()
 			available_nodes.erase(it);
 			// Gucken, ob er gut ist und ob man hingehen kann und ob er noch nicht reserviert wurde!
 			unsigned char ret_dir;
-			if(IsNodeGood(node_goal.x,node_goal.y) && (ret_dir = gwg->FindFreePath(x,y,node_goal.x,node_goal.y,20)) != 0xFF && !gwg->GetNode(node_goal.x,node_goal.y).reserved)
+			if(IsNodeGood(node_goal.x,node_goal.y) && (ret_dir = gwg->FindHumanPath(x,y,node_goal.x,node_goal.y,20)) != 0xFF && !gwg->GetNode(node_goal.x,node_goal.y).reserved)
 			{
 				// Reservieren
 				gwg->GetNode(node_goal.x,node_goal.y).reserved = true;;

@@ -1,4 +1,4 @@
-// $Id: Pathfinding.cpp 4855 2009-05-11 11:45:08Z OLiver $
+// $Id: Pathfinding.cpp 4857 2009-05-11 18:31:33Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -28,7 +28,7 @@
 #include "Random.h"
 #include "MapGeometry.h"
 
-#include <queue>
+#include <set>
 #include <vector>
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -52,6 +52,7 @@ void FlagNode::Clear()
 }
 
 const unsigned INVALID_PREV = 0xFFFFFFFF;
+struct Point;
 
 struct NewNode
 {
@@ -61,6 +62,7 @@ struct NewNode
 	unsigned char dir;
 	unsigned prev;
 	bool visited;
+	std::set<Point>::iterator it;
 };
 
 NewNode pf_nodes[256*256];
@@ -81,8 +83,13 @@ struct Point {
 
 	bool operator<(const Point two) const
 	{
-		return (pf_nodes[gwb->MakeCoordID(x,y)].way + CalcDistance(x,y,dst_x,dst_y))
-			> (pf_nodes[gwb->MakeCoordID(two.x,two.y)].way + CalcDistance(two.x,two.y,dst_x,dst_y));
+		unsigned way1 = pf_nodes[gwb->MakeCoordID(x,y)].way + CalcDistance(x,y,dst_x,dst_y);
+		unsigned way2 = pf_nodes[gwb->MakeCoordID(two.x,two.y)].way + CalcDistance(two.x,two.y,dst_x,dst_y);
+
+		if(way1 == way2)
+			return (gwb->MakeCoordID(x,y) < gwb->MakeCoordID(two.x,two.y) );
+		else
+			return (way1<way2);
 	}
 };
 
@@ -92,26 +99,30 @@ const GameWorldBase * Point::gwb = NULL;
 
 std::vector<unsigned> clean_list;
 
-bool GameWorldViewer::FindPath(std::vector<unsigned char>& route, const bool boat_road,const int x_start,const int y_start, const int x_dest, const int y_dest,const unsigned char playerid)
-{
-	unsigned nodes_count = 0;
-	//unsigned pathtime = VideoDriverWrapper::inst().GetTickCount();
-	std::priority_queue<Point> todo;
 
+/// Wegfinden ( A* ) --> Wegfindung auf allgemeinen Terrain ( ohne Straäcn ) ( fr Wegebau oder frei herumlaufende )
+bool GameWorldBase::FindFreePath(const MapCoord x_start,const MapCoord y_start,
+				  const MapCoord x_dest, const MapCoord y_dest, const bool random_route, 
+				  const unsigned max_route, std::vector<unsigned char> * route, unsigned *length,
+				  unsigned char * first_dir,  FP_Node_OK_Callback IsNodeOK, FP_Node_OK_Callback IsNodeToDestOk, const void * param)
+{
+		// Erst einmal wieder aufräumen
+	for(unsigned i = 0;i<clean_list.size();++i)
+		pf_nodes[clean_list[i]].visited = false;
+	clean_list.clear();
+
+	std::set<Point> todo;
 	Point::Init(x_dest,y_dest,this);
 
-	// Anfangsknoten einfgen
+	// Anfangsknoten einfügen
 	unsigned start_id = MakeCoordID(x_start,y_start);
-	todo.push(Point(x_start,y_start));
+	std::pair< std::set<Point>::iterator, bool > ret = todo.insert(Point(x_start,y_start));
+	pf_nodes[start_id].it = ret.first;
 	pf_nodes[start_id].prev = INVALID_PREV;
 	pf_nodes[start_id].visited = true;
 	clean_list.push_back(start_id);
 	pf_nodes[start_id].way = 0;
 	pf_nodes[start_id].dir = 0;
-
-	// Erst einmal wieder aufräumen
-	for(unsigned i = 0;i<clean_list.size();++i)
-		pf_nodes[clean_list[i]].visited = false;
 
 	while(true)
 	{
@@ -119,43 +130,81 @@ bool GameWorldViewer::FindPath(std::vector<unsigned char>& route, const bool boa
 		if(!todo.size())
 			return false;
 		
-		Point best = todo.top();
+		Point best = *todo.begin();
 		// Knoten behandelt --> raus aus der todo Liste
-		todo.pop();
+		todo.erase(todo.begin());
 
 		unsigned best_id = MakeCoordID(best.x,best.y);
+
+		pf_nodes[best_id].it = todo.end();
 
 		if(x_dest == best.x && y_dest == best.y)
 		{
 			// Ziel erreicht!
-			route.resize(pf_nodes[best_id].way);
+			if(length)
+				*length = pf_nodes[best_id].way;
+
+			if(route)
+				route->resize(pf_nodes[best_id].way);
+
 			for(unsigned z = pf_nodes[best_id].way-1;best_id!=start_id;--z,best_id = pf_nodes[best_id].prev)
-				route[z] = pf_nodes[best_id].dir;
+			{
+				if(route)
+					route->at(z) = pf_nodes[best_id].dir;
+				if(first_dir && z == 0)
+					*first_dir = pf_nodes[best_id].dir;
+			}
+				
 
 			//LOG.lprintf("Pathfinding: Nodes: %u; Time: %u ms\n",nodes_count,VideoDriverWrapper::inst().GetTickCount()-pathtime);
 			return true;
 		}
+
+		// Bei Zufälliger Richtung anfangen (damit man nicht immer denselben Weg geht, besonders für die Soldaten wichtig)
+		unsigned start = random_route?RANDOM.Rand("pf",__LINE__,y_start*GetWidth()+x_start,6):0;
 		
 		// Knoten in alle 6 Richtungen bilden
-		for(unsigned i = 0;i<6;++i)
+		for(unsigned z = start;z<6;++z)
 		{
+			unsigned i = (z+3)%6;
+
 			MapCoord xa = GetXA(best.x,best.y,i),
 				ya = GetYA(best.x,best.y,i);
 
 			unsigned xaid = MakeCoordID(xa,ya);
 
+			// Knoten schon auf dem Feld gebildet?
+			if(pf_nodes[xaid].visited)
+			{
+				// Dann nur ggf. Weg und Vorgänger korrigieren, falls der Weg kürzer ist
+				if(pf_nodes[best_id].it != todo.end() && pf_nodes[best_id].way+1 < pf_nodes[xaid].way)
+				{
+					pf_nodes[xaid].way  = pf_nodes[best_id].way+1;
+					pf_nodes[xaid].prev = best_id;
+					todo.erase(pf_nodes[xaid].it);
+					ret = todo.insert(Point(xa,ya));
+					pf_nodes[xaid].it = ret.first;
+
+				}
+				continue;
+			}
+
+			// Nicht über den Kartenrand lesen!
+			if(xa >= GetWidth() || xa < 0 || 
+				ya >= GetHeight() || ya < 0)
+				continue;
+
 			// Das Ziel wollen wir auf jedenfall erreichen lassen, daher nur diese zusätzlichen
 			// Bedingungen, wenn es nicht das Ziel ist
 			if(!(xa == x_dest && ya == y_dest))
 			{
-				// Knoten schon auf dem Feld gebildet?
-				if(pf_nodes[xaid].visited)
+				if(!IsNodeOK(*this,xa,ya,i,param))
 					continue;
-				// Feld bebaubar?
-				if(!RoadAvailable(boat_road,xa,ya,i))
-					continue;
-				// Auch auf unserem Territorium?
-				if(!IsPlayerTerritory(xa,ya))
+			}
+
+			if(IsNodeToDestOk)
+			{
+				if(!IsNodeToDestOk(*this,xa,ya,i,param))
 					continue;
 			}
 
@@ -166,127 +215,81 @@ bool GameWorldViewer::FindPath(std::vector<unsigned char>& route, const bool boa
 			pf_nodes[xaid].dir = i;
 			pf_nodes[xaid].prev = best_id;
 
-			todo.push(Point(xa,ya));
-			++nodes_count;
+			ret = todo.insert(Point(xa,ya));
+			pf_nodes[xaid].it = ret.first;
 		}
 	}
 }
 
-unsigned char GameWorldBase::FindFreePath(const int x_start,const int y_start, const int x_dest, const int y_dest,unsigned max_route,const bool random_route,unsigned * length)
+
+struct Param_RoadPath
 {
-	unsigned nodes_count = 0;
-	//unsigned pathtime = VideoDriverWrapper::inst().GetTickCount();
+	bool boat_road;
+};
 
-	memset(handled_nodes,0,GetWidth()*GetHeight()*sizeof(unsigned short));
-	list<Node*> todo;
+bool IsPointOK_RoadPath(const GameWorldBase& gwb, const MapCoord x, const MapCoord y, const unsigned char dir, const void *param)
+{
+	const Param_RoadPath * prp = static_cast<const Param_RoadPath*>(param);
 
-	// Anfangsknoten einfgen
-	Node start(x_start,y_start,0,0,0);
-	todo.push_back(&start);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+	// Feld bebaubar?
+	if(!gwb.RoadAvailable(prp->boat_road,x,y,dir))
+		return false;
+	// Auch auf unserem Territorium?
+	if(!gwb.IsPlayerTerritory(x,y))
+		return false;
 
-	while(1)
+	return true;
+}
+
+bool GameWorldViewer::FindRoadPath(const MapCoord x_start,const MapCoord y_start, const MapCoord x_dest, const MapCoord y_dest,std::vector<unsigned char>& route, const bool boat_road)
+{
+	Param_RoadPath prp = { boat_road };
+	return FindFreePath(x_start,y_start,x_dest,y_dest,false,100,&route,NULL,NULL,IsPointOK_RoadPath,NULL, &prp);
+}
+
+bool IsPointOK_HumanPath(const GameWorldBase& gwb, const MapCoord x, const MapCoord y, const unsigned char dir, const void *param)
+{
+	// Feld passierbar?
+	noBase * obj = gwb.GetNode(x,y).obj;
+	if(obj)
 	{
-		// Liste leer und kein Ziel erreicht --> kein Weg
-		if(!todo.size())
-			return 0xFF;
-
-		// Knoten mit den wenigsten Wegkosten zum Ziel auswäclen
-		unsigned shortest_route = 0xFFFFFFFF;
-
-		list<Node*>::iterator best_it;
-
-		for(list<Node*>::iterator it = todo.begin(); it.valid(); ++it)
-		{
-			unsigned new_way = (*it)->way + max(abs(x_dest - (*it)->x),abs(y_dest - (*it)->y));
-			if(new_way < shortest_route)
-			{
-				shortest_route = new_way;
-				best_it = it;
-			}
-		}
-
-		// Koordinaten der 6 umliegenden Punkte
-		/* id
-
-				1 2
-			 0 P 3
-				5 4
-			*/
-
-		Point coords[6];
-
-		// Bei Zufälliger Richtung anfangen (damit man nicht immer denselben Weg geht, besonders für die Soldaten wichtig)
-		unsigned start = random_route?RANDOM.Rand("pf",__LINE__,y_start*GetWidth()+x_start,6):0;
-
-
-		// Knoten in alle 6 Richtungen bilden
-		for(unsigned z = start;z<start+6;++z)
-		{
-			unsigned i = z%6;
-
-			// Nicht über den Kartenrand lesen!
-			if(coords[i].x >= GetWidth() || coords[i].x < 0 || 
-				coords[i].y >= GetHeight() || coords[i].y 
-				< 0)
-				continue;
-
-			// Nicht über Wasser, Lava, Sümpfe gehen
-			if(!IsNodeToNodeForFigure((*best_it)->x,(*best_it)->y,i))
-				continue;
-
-			if(x_dest == coords[i].x && y_dest == coords[i].y)
-			{
-				(*best_it)->next[i] = new Node(coords[i].x,coords[i].y,(*best_it)->way+1,*best_it,i);
-				Node * start = (*best_it)->next[i];
-
-				while(start->prev->prev) start = start->prev;
-
-				// Ggf. Länge setzen, wenn kein Nullpointer übergeben wurde
-				if(length)
-					*length = (*best_it)->way+1;
-
-				return start->dir;
-			}
-
-			// Maximale Strecke schon erreicht?
-			if((*best_it)->way == max_route)
-				continue;
-
-			// Knoten schon auf dem Feld gebildet
-			if(handled_nodes[coords[i].y * GetWidth() + coords[i].x])
-				continue;
-
-			// Feld passierbar?
-			noBase * obj = GetNode(coords[i].x,coords[i].y).obj;
-			if(obj)
-			{
-				if(obj->GetType() == NOP_BUILDING ||
-				obj->GetGOT() == GOT_BUILDINGSITE ||
-				obj->GetGOT() == GOT_EXTENSION ||
-				obj->GetGOT() == GOT_GRANITE || 
-				obj->GetType() == NOP_OBJECT ||
-				obj->GetGOT() == GOT_FIRE ||
-				obj->GetGOT() == GOT_GRANITE)
-				 continue;
-			}
-
-
-			if(GetNode(coords[i].x,coords[i].y).reserved)
-				continue;
-
-			(*best_it)->next[i] = new Node(coords[i].x,coords[i].y,(*best_it)->way+1,*best_it,i);
-			handled_nodes[coords[i].y * GetWidth() + coords[i].x] = 1;
-
-
-			todo.push_back((*best_it)->next[i]);
-			++nodes_count;
-		}
-
-		// Knoten behandelt --> raus aus der todo Liste
-		todo.erase(best_it);
-
+		if(obj->GetType() == NOP_BUILDING ||
+		obj->GetGOT() == GOT_BUILDINGSITE ||
+		obj->GetGOT() == GOT_EXTENSION ||
+		obj->GetGOT() == GOT_GRANITE || 
+		obj->GetType() == NOP_OBJECT ||
+		obj->GetGOT() == GOT_FIRE ||
+		obj->GetGOT() == GOT_GRANITE)
+		 return false;
 	}
+
+	if(gwb.GetNode(x,y).reserved)
+		return false;
+
+	return true;
+}
+
+bool IsPointToDestOK_HumanPath(const GameWorldBase& gwb, const MapCoord x, const MapCoord y, const unsigned char dir, const void *param)
+{
+	// Feld passierbar?
+	// Nicht über Wasser, Lava, Sümpfe gehen
+	if(!gwb.IsNodeToNodeForFigure(x,y,(dir+3)%6))
+		return false;
+
+	return true;
+}
+
+
+/// Findet einen Weg für Figuren
+unsigned char GameWorldBase::FindHumanPath(const MapCoord x_start,const MapCoord y_start,
+			const MapCoord x_dest, const MapCoord y_dest, const unsigned max_route, const bool random_route, unsigned *length)
+{
+	unsigned char first_dir;
+	if(FindFreePath(x_start,y_start,x_dest,y_dest,random_route,max_route,NULL,length,&first_dir,IsPointOK_HumanPath,
+		IsPointToDestOK_HumanPath,NULL))
+		return first_dir;
+	else
+		return 0xFF;
 }
 
 

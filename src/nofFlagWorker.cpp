@@ -1,4 +1,4 @@
-// $Id: nofFlagWorker.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: nofFlagWorker.cpp 4857 2009-05-11 18:31:33Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -118,7 +118,7 @@ void nofFlagWorker::GoToFlag()
 	else
 	{
 		// Weg suchen
-		dir = gwg->FindFreePath(x,y,flag->GetX(),flag->GetY(),40);
+		dir = gwg->FindHumanPath(x,y,flag->GetX(),flag->GetY(),40);
 
 		// Wenns keinen gibt, rumirren, ansonsten hinlaufen
 		if(dir == 0xFF)

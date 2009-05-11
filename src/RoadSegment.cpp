@@ -1,4 +1,4 @@
-// $Id: RoadSegment.cpp 4712 2009-04-25 14:05:08Z OLiver $
+// $Id: RoadSegment.cpp 4854 2009-05-11 11:26:19Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -40,16 +40,10 @@
 	static char THIS_FILE[] = __FILE__;
 #endif
 
-RoadSegment::RoadSegment(const RoadType rt,noRoadNode *const f1, noRoadNode *const f2, const unsigned char *route, unsigned short length)
-	: rt(rt), f1(f1), f2(f2), length(length), route(new unsigned char[length])
+RoadSegment::RoadSegment(const RoadType rt,noRoadNode *const f1, noRoadNode *const f2, const std::vector<unsigned char>& route)
+	: rt(rt), f1(f1), f2(f2),  route(route)
 {
 	carrier[0] = carrier[1] = 0;
-	memcpy(this->route,route,length);
-}
-
-RoadSegment::~RoadSegment()
-{
-	delete [] route;
 }
 
 void RoadSegment::Destroy_RoadSegment()
@@ -64,14 +58,14 @@ void RoadSegment::Destroy_RoadSegment()
 	if(carrier[1])
 		carrier[1]->LostWork();
 
-	if(route)
+	if(route.size())
 	{
 		// Straße durchgehen und alle Figuren sagen, dass sie die Arbeit verloren haben
 		unsigned short x = f1->GetX();
 		unsigned short y = f1->GetY();
 		unsigned short i;
 
-		for(i = 0;i<length+1;++i)
+		for(i = 0;i<route.size()+1;++i)
 		{
 			// Figuren sammeln, Achtung, einige köenn
 			list<noBase*> objects;
@@ -92,7 +86,7 @@ void RoadSegment::Destroy_RoadSegment()
 
 			gwg->RoadNodeAvailable(x,y);
 
-			if(i != length)
+			if(i != route.size())
 			{
 				int tx = x,ty = y;
 				x = gwg->GetXA(tx,ty,route[i]);
@@ -100,8 +94,7 @@ void RoadSegment::Destroy_RoadSegment()
 			}
 		}
 
-		delete [] route;
-		route = 0;
+		route.clear();
 	}
 
 
@@ -115,10 +108,10 @@ void RoadSegment::Serialize_RoadSegment(SerializedGameData * sgd) const
 	sgd->PushUnsignedChar(static_cast<unsigned char>(rt));
 	sgd->PushObject(f1,false);
 	sgd->PushObject(f2,false);
-	sgd->PushUnsignedShort(length);
+	sgd->PushUnsignedShort(route.size());
 	sgd->PushObject(carrier[0],true);
 	sgd->PushObject(carrier[1],true);
-	for(unsigned short i =0;i<length;++i)
+	for(unsigned short i =0;i<route.size();++i)
 		sgd->PushUnsignedChar(route[i]);
 
 }
@@ -127,13 +120,12 @@ RoadSegment::RoadSegment(SerializedGameData * sgd, const unsigned obj_id) : Game
 rt(static_cast<RoadType>(sgd->PopUnsignedChar())),
 f1(sgd->PopObject<noRoadNode>(GOT_UNKNOWN)),
 f2(sgd->PopObject<noRoadNode>(GOT_UNKNOWN)),
-length(sgd->PopUnsignedShort()),
-route(new unsigned char[length])
+route(sgd->PopUnsignedShort())
 
 {
 	carrier[0] = sgd->PopObject<nofCarrier>(GOT_NOF_CARRIER);
 	carrier[1] = sgd->PopObject<nofCarrier>(GOT_NOF_CARRIER);
-	for(unsigned short i =0;i<length;++i)
+	for(unsigned short i =0;i<route.size();++i)
 		route[i] = sgd->PopUnsignedChar();
 }
 
@@ -144,56 +136,53 @@ void RoadSegment::SplitRoad(noFlag * splitflag)
 	/// Ein Weg wurde getrennt, Weg in 2 Teile spalten
 	// Flagge 1 _________ Diese Flagge _________ Flagge 2
 	//         |       unterbrochener Weg       |
-
-	unsigned char * old_route = this->route;
-	unsigned short old_length = length;
+	
+	// Alten Straßenverlauf merken, damit wir später allen Leuten darau Bescheid sagen können
+	std::vector<unsigned char> old_route(route);
 
 	// Stelle herausfinden, an der der Weg zerschnitten wird ( = Länge des ersten Teilstücks )
 	unsigned length1,length2;
 	unsigned short tx = f1->GetX(), ty = f1->GetY();
-	for(length1 = 0;length1<length;++length1)
+	for(length1 = 0;length1<route.size();++length1)
 	{
 		if(tx == splitflag->GetX() && ty == splitflag->GetY())
 			break;
-
-		int tx2 = tx,ty2 = ty;
-		tx = gwg->GetXA(tx2,ty2,old_route[length1]);
-		ty = gwg->GetYA(tx2,ty2,old_route[length1]);
+		gwg->GetPointA(tx,ty,route[length1]);
 	}
 
-	length2 = length - length1;
+	length2 = this->route.size() - length1;
 
-	RoadSegment * second = new RoadSegment(this->rt,splitflag,this->f2,&old_route[length1],length2);
+	std::vector<unsigned char> second_route(length2);
+	for(unsigned i = 0;i<length2;++i)
+		second_route[i] = this->route[length1+i];
+
+	RoadSegment * second = new RoadSegment(this->rt,splitflag,this->f2,second_route);
 
 	// Eselstraße? Dann prächtige Flagge, da sie ja wieder zwischen Eselstraßen ist
 	if(this->rt == RT_DONKEY)
 		splitflag->Upgrade();
-	/*second->f1 = splitflag;
-	second->f2 = this->f2;*/
 
 	// Erstes Teilstück von F1 bis zu dieser F erstellen ( 1. Teilstück ist dieser Weg dann! )
-	this->length = length1;
-	this->route = new unsigned char[length1];
-	memcpy(this->route,old_route,length1);
+	this->route.resize(length1);
 	this->f1 = this->f1;
 	this->f2 = splitflag;
 
-	f1->routes[*this->route] = this;
-	splitflag->routes[(this->route[length1-1]+3)%6] = this;
+	f1->routes[this->route.front()] = this;
+	splitflag->routes[(this->route.back()+3)%6] = this;
 
 	//// 2. Teillstück von dieser F bis zu F2
 	//second->length = length2;
 	//second->route = new unsigned char[length2];
 	//memcpy(second->route,&old_route[length1],length2);
 
-	splitflag->routes[*second->route] = second;
-	second->f2->routes[(second->route[second->length-1]+3)%6] = second;
+	splitflag->routes[second->route.front()] = second;
+	second->f2->routes[(second->route.back()+3)%6] = second;
 
 	// Straße durchgehen und allen Figuren Bescheid sagen
 	tx = f1->GetX();
 	ty = f1->GetY();
 
-	for(unsigned short i = 0;i<old_length+1;++i)
+	for(unsigned short i = 0;i<old_route.size()+1;++i)
 	{
 		for(list<noBase*>::iterator it = gwg->GetFigures(tx,ty).begin(); it.valid(); ++it)
 		{
@@ -202,7 +191,7 @@ void RoadSegment::SplitRoad(noFlag * splitflag)
 					static_cast<noFigure*>(*it)->CorrectSplitData(second);
 		}
 
-		if(i != old_length)
+		if(i != old_route.size())
 		{
 			int tx2 = tx,ty2 = ty;
 			tx=gwg->GetXA(tx2,ty2,old_route[i]);
@@ -221,8 +210,6 @@ void RoadSegment::SplitRoad(noFlag * splitflag)
 			// (1. ist ja schon drin)
 			GAMECLIENT.GetPlayer(f1->GetPlayer())->FindCarrierForRoad(second);
 	}
-
-	delete [] old_route;
 }
 
 bool RoadSegment::AreWareJobs(const bool flag,unsigned ct,const bool take_ware_immediately) const
@@ -231,9 +218,9 @@ bool RoadSegment::AreWareJobs(const bool flag,unsigned ct,const bool take_ware_i
 
 	// Anzahl der Waren, die getragen werden wollen, ermitteln
 	if(flag)
-		jobs_count = static_cast<noFlag*>(f2)->GetWaresCountForRoad((route[length-1]+3)%6);
+		jobs_count = static_cast<noFlag*>(f2)->GetWaresCountForRoad((route.back()+3)%6);
 	else
-		jobs_count = static_cast<noFlag*>(f1)->GetWaresCountForRoad(route[0]);
+		jobs_count = static_cast<noFlag*>(f1)->GetWaresCountForRoad(route.front());
 
 	// Nur eine Ware da --> evtl läuft schon ein anderer Träger/Esel hin, nur wo Esel und Träger da sind
 	// Wenn der Träger nun natürlich schon da ist, kann er die mitnehmen
@@ -272,7 +259,7 @@ bool RoadSegment::AreWareJobs(const bool flag,unsigned ct,const bool take_ware_i
 void RoadSegment::AddWareJob(const noRoadNode * rn)
 {
 	// Wenn das eine Straße zu einer Gebäudetür ist, muss dem entsprechenden Gebäude Bescheid gesagt werden (momentan nur Lagerhäuser!)
-	if(length == 1)
+	if(route.size() == 1)
 	{
 		if(f2->GetType() == NOP_BUILDING)
 		{
@@ -320,7 +307,7 @@ void RoadSegment::UpgradeDonkeyRoad()
 
 	// Eselstraßen setzen
 	int x = f1->GetX(),y = f1->GetY();
-	for(unsigned i = 0;i<length;++i)
+	for(unsigned i = 0;i<route.size();++i)
 	{
 		gwg->SetPointRoad(x,y, route[i], RT_DONKEY+1);
 		int tx = x,ty = y;

@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: dskGameInterface.h 4854 2009-05-11 11:26:19Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -52,8 +52,7 @@ struct RoadsBuilding
 	MapCoord point_y;
 	MapCoord start_x;
 	MapCoord start_y;
-	unsigned int length; ///< Länge der gebauten Straße
-	unsigned char route[512];  ///< Richtungen der gebauten Straße
+	std::vector<unsigned char> route;  ///< Richtungen der gebauten Straße
 };
 
 class dskGameInterface : 

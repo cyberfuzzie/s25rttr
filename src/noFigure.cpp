@@ -1,4 +1,4 @@
-// $Id: noFigure.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: noFigure.cpp 4854 2009-05-11 11:26:19Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -80,7 +80,7 @@
 #endif
 
 
-	const RoadSegment noFigure::emulated_wanderroad(RoadSegment::RT_NORMAL,0,0,0,0);
+	const RoadSegment noFigure::emulated_wanderroad(RoadSegment::RT_NORMAL,0,0,std::vector<unsigned char>(0,0));
 /// Welche Strecke soll minimal und maximal zurückgelegt werden beim Rumirren, bevor eine Flagge gesucht wird
 const unsigned short WANDER_WAY_MIN = 20;
 const unsigned short WANDER_WAY_MAX = 40;
@@ -307,7 +307,7 @@ void noFigure::WalkToGoal()
 	}
 
 	// Straße abgelaufen oder noch gar keine Straße vorhanden?
-	if(((cur_rs)?(rs_pos == cur_rs->length):true))
+	if(((cur_rs)?(rs_pos == cur_rs->GetLength()):true))
 	{
 		// Ziel erreicht?
 		// Bei dem Träger können das beide Flaggen sein!
@@ -746,24 +746,24 @@ void noFigure::CorrectSplitData(const RoadSegment * const rs2)
 	// cur_rs entspricht Teilstück 1 !
 
 	// Wenn man sich auf den ersten Teilstück befindet...
-	if((rs_pos < cur_rs->length && !rs_dir) || (rs_pos > rs2->length && rs_dir))
+	if((rs_pos < cur_rs->GetLength() && !rs_dir) || (rs_pos > rs2->GetLength() && rs_dir))
 	{
 		// Nur Position berichtigen
 		if(rs_dir)
-			rs_pos -= rs2->length;
+			rs_pos -= rs2->GetLength();
 	}
 
 	// Wenn man auf dem 2. steht, ...
-	else if((rs_pos > cur_rs->length && !rs_dir) || (rs_pos < rs2->length && rs_dir))
+	else if((rs_pos > cur_rs->GetLength() && !rs_dir) || (rs_pos < rs2->GetLength() && rs_dir))
 	{
 		// Position berichtigen (wenn man in umgekehrter Richtung läuft, beibehalten!)
 		if(!rs_dir)
-			rs_pos -= cur_rs->length;
+			rs_pos -= cur_rs->GetLength();
 
 		// wir laufen auf dem 2. Teilstück
 		cur_rs = rs2;
 	}
-	else if((rs_pos == cur_rs->length && !rs_dir) || (rs_pos == rs2->length && rs_dir))
+	else if((rs_pos == cur_rs->GetLength() && !rs_dir) || (rs_pos == rs2->GetLength() && rs_dir))
 	{
 		// wir stehen genau in der Mitte
 		// abhängig von der Richtung machen, in die man gerade läuft
@@ -774,7 +774,7 @@ void noFigure::CorrectSplitData(const RoadSegment * const rs2)
 			// und wir sind da noch am Anfang
 			rs_pos = 0;
 		}
-		else if(dir == (cur_rs->route[cur_rs->length-1]+3)%6)
+		else if(dir == (cur_rs->route[cur_rs->GetLength()-1]+3)%6)
 		{
 			// wir laufen auf dem 1. Teilstück
 

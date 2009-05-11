@@ -1,4 +1,4 @@
-// $Id: GameWorldViewer.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: GameWorldViewer.cpp 4854 2009-05-11 11:26:19Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -321,9 +321,9 @@ void GameWorldViewer::Draw(const unsigned char player, unsigned * water, const b
 								GetImage(map_lst,  20)->Draw(xpos,ypos, 0, 0, 0, 0, 0, 0);
 						}
 
-						if(rb.length)
+						if(rb.route.size())
 						{
-							if(unsigned(rb.route[rb.length-1]+3) % 6 == i)
+							if(unsigned(rb.route.back()+3) % 6 == i)
 								GetImage(map_lst,  67)->Draw(xpos,ypos, 0, 0, 0, 0, 0, 0);
 						}
 					}

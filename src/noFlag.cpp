@@ -1,4 +1,4 @@
-// $Id: noFlag.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: noFlag.cpp 4854 2009-05-11 11:26:19Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -296,7 +296,7 @@ Ware * noFlag::SelectWare(const unsigned char dir,const bool swap_wares,const no
 		{
 			if(routes[i])
 			{
-				if(routes[i]->length == 1)
+				if(routes[i]->GetLength() == 1)
 				{
 					// Gebäude?
 					if(gwg->GetSpecObj<noBase>(x-!(y&1),y-1)->GetType() == NOP_BUILDING)
@@ -354,7 +354,7 @@ unsigned short noFlag::GetPunishmentPoints(const unsigned char dir) const
 		if(wares[i])
 		{
 			if(wares[i]->GetNextDir() == dir)
-				points+=routes[dir]->length*2;
+				points+=routes[dir]->GetLength()*2;
 		}
 	}
 

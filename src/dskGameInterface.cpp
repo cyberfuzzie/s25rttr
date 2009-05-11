@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.cpp 4835 2009-05-08 20:02:19Z OLiver $
+// $Id: dskGameInterface.cpp 4854 2009-05-11 11:26:19Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -88,12 +88,8 @@ dskGameInterface::dskGameInterface()
 	road.point_y = 0;
 	road.start_x = 0;
 	road.start_y = 0;
-	road.length = 0;
 
-	SetScale(false);
-
-	// Straßenbauzeug
-	memset(road.route, 0, 128);
+	SetScale(false);;
 
 	int barx = (VideoDriverWrapper::inst().GetScreenWidth() - GetImage(resource_dat, 29)->getWidth()) / 2 + 44;
 	int bary = VideoDriverWrapper::inst().GetScreenHeight() - GetImage(resource_dat, 29)->getHeight() + 4;
@@ -608,7 +604,7 @@ void dskGameInterface::ActivateRoadMode(const RoadMode rm)
 	road.mode = rm;
 	if(rm != RM_DISABLED)
 	{
-		road.length = 0;
+		road.route.clear();
 		road.start_x = road.point_x = selected_x;
 		road.start_y = road.point_y = selected_y;
 		unsigned short tmp_px,tmp_py,tmp_sx,tmp_sy;
@@ -621,8 +617,8 @@ void dskGameInterface::ActivateRoadMode(const RoadMode rm)
 	}
 	else
 	{
-		gwv->RemoveVisualRoad(road.start_x,road.start_y, road.route,road.length);
-		for(unsigned i = 0;i<road.length;++i)
+		gwv->RemoveVisualRoad(road.start_x,road.start_y, road.route);
+		for(unsigned i = 0;i<road.route.size();++i)
 		{
 			gwv->SetPointVirtualRoad(road.start_x,road.start_y, road.route[i], 0);
 			int tx2 = road.start_x,ty2 = road.start_y;
@@ -641,26 +637,24 @@ void dskGameInterface::ActivateRoadMode(const RoadMode rm)
  */
 bool dskGameInterface::BuildRoadPart(const int cselx, const int csely,bool end)
 {
-	unsigned char * path = gwv->FindPath(road.mode == RM_BOAT,road.point_x,road.point_y,cselx,csely,GAMECLIENT.GetPlayerID());
-	unsigned char * tpath = path;
+	std::vector<unsigned char> new_route;
+	bool path_found = gwv->FindPath(new_route, road.mode == RM_BOAT,road.point_x,road.point_y,cselx,csely,GAMECLIENT.GetPlayerID());
 
 	// Weg gefunden?
-	if(!path)
+	if(!path_found)
 		return false;
 
 	// Weg (visuell) bauen
-	for(;*path != 255;++path)
+	for(unsigned i = 0;i<new_route.size();++i)
 	{
-		gwv->SetPointVirtualRoad(road.point_x,road.point_y, *path, (road.mode==RM_BOAT)?3:1);
-		road.point_x = gwv->GetXA(road.point_x,road.point_y,*path);
-		road.point_y = gwv->GetYA(road.point_x,road.point_y,*path);
-		road.route[road.length++] = *path;
+		gwv->SetPointVirtualRoad(road.point_x,road.point_y, new_route[i], (road.mode==RM_BOAT)?3:1);
+		gwv->GetPointA(road.point_x,road.point_y, new_route[i]);
 		gwv->CalcRoad(road.point_x,road.point_y,GAMECLIENT.GetPlayerID());
 	}
 
-	delete [] tpath;
+	road.route.insert(road.route.end(), new_route.begin(), new_route.end());
 
-	return 1;
+	return true;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -672,7 +666,7 @@ bool dskGameInterface::BuildRoadPart(const int cselx, const int csely,bool end)
 unsigned dskGameInterface::TestBuiltRoad(const int x, const int y)
 {
 	int x2 = road.start_x, y2 = road.start_y;
-	for(unsigned i = 0;i<road.length;++i)
+	for(unsigned i = 0;i<road.route.size();++i)
 	{
 		if(x2 == x && y2 == y)
 			return i+1;
@@ -749,7 +743,7 @@ void dskGameInterface::ShowActionWindow(const iwAction::Tabs& action_tabs,int cs
  */
 void dskGameInterface::CommandBuildRoad()
 {
-	GAMECLIENT.NC_Road_Build(road.mode == RM_BOAT,road.start_x,road.start_y,road.route,road.length);
+	GAMECLIENT.NC_Road_Build(road.mode == RM_BOAT,road.start_x,road.start_y,road.route);
 	road.mode = RM_DISABLED;
 }
 
@@ -934,7 +928,7 @@ void dskGameInterface::GI_UpdateMinimap(const MapCoord x, const MapCoord y)
 /// Baut Weg zurück von Ende bis zu start_id
 void dskGameInterface::DemolishRoad(const unsigned start_id)
 {
-	for(unsigned i = road.length;i>=start_id;--i)
+	for(unsigned i = road.route.size();i>=start_id;--i)
 	{
 		int tx = road.point_x,ty = road.point_y;
 		road.point_x = gwv->GetXA(tx,ty,(road.route[i-1]+3)%6);
@@ -942,5 +936,6 @@ void dskGameInterface::DemolishRoad(const unsigned start_id)
 		gwv->SetPointVirtualRoad(road.point_x,road.point_y, road.route[i-1], 0);
 		gwv->CalcRoad(tx,ty,GAMECLIENT.GetPlayerID());
 	}
-	road.length = start_id-1;
+
+	road.route.resize(start_id-1);
 }

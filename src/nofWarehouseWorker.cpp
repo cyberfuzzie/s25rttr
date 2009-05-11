@@ -1,4 +1,4 @@
-// $Id: nofWarehouseWorker.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: nofWarehouseWorker.cpp 4854 2009-05-11 11:26:19Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -48,7 +48,7 @@ nofWarehouseWorker::nofWarehouseWorker(const unsigned short x, const unsigned sh
 	GameClient::inst().GetPlayer(player)->IncreaseInventoryJob(JOB_HELPER,1);
 	
 	/// Straße (also die 1-er-Straße vor dem Lagerhaus) setzen
-	assert(gwg->GetSpecObj<noFlag>(x+(y&1),y+1)->routes[1]->length == 1);
+	assert(gwg->GetSpecObj<noFlag>(x+(y&1),y+1)->routes[1]->GetLength() == 1);
 	cur_rs = gwg->GetSpecObj<noFlag>(x+(y&1),y+1)->routes[1];
 	rs_dir = true;
 }

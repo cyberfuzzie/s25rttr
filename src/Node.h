@@ -1,4 +1,4 @@
-// $Id: Node.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: Node.h 4854 2009-05-11 11:26:19Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -90,6 +90,5 @@ public:
 	FlagNode * next[6];
 };
 
-struct Point { int x,y; };
 
 #endif

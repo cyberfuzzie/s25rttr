@@ -1,4 +1,4 @@
-// $Id: noRoadNode.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: noRoadNode.cpp 4854 2009-05-11 11:26:19Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -90,7 +90,7 @@ void noRoadNode::DestroyRoad(const unsigned char dir)
 	if(routes[dir])
 	{
 		int tx=routes[dir]->f1->GetX(), ty=routes[dir]->f1->GetY();
-		for(unsigned z = 0;z<routes[dir]->length;++z)
+		for(unsigned z = 0;z<routes[dir]->GetLength();++z)
 		{
 			gwg->SetPointRoad(tx,ty, routes[dir]->route[z], 0);
 			int ttx = tx,tty = ty;

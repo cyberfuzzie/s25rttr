@@ -942,6 +942,70 @@
 						</File>
 					</Filter>
 				</Filter>
+				<Filter
+					Name="Hilfsfunktionen und -klassen"
+					>
+					<File
+						RelativePath="..\..\src\BinaryFile.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\BinaryFile.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\CollisionDetection.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\CollisionDetection.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\customborderbuilder.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\customborderbuilder.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\FileChecksum.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\FileChecksum.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\list.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\ListDir.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\ListDir.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\PointDistance.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\Random.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\Random.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\Swap.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="Loader"
@@ -1086,70 +1150,6 @@
 						>
 					</File>
 				</Filter>
-			</Filter>
-			<Filter
-				Name="Hilfsfunktionen und -klassen"
-				>
-				<File
-					RelativePath="..\..\src\BinaryFile.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\BinaryFile.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\CollisionDetection.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\CollisionDetection.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\customborderbuilder.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\customborderbuilder.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\FileChecksum.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\FileChecksum.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\list.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\ListDir.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\ListDir.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\PointDistance.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\Random.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\Random.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\Swap.h"
-					>
-				</File>
 			</Filter>
 			<Filter
 				Name="Spiel"

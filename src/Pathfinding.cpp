@@ -1,4 +1,4 @@
-// $Id: Pathfinding.cpp 4807 2009-05-04 19:48:53Z OLiver $
+// $Id: Pathfinding.cpp 4854 2009-05-11 11:26:19Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -26,6 +26,10 @@
 #include "noRoadNode.h"
 #include "VideoDriverWrapper.h"
 #include "Random.h"
+#include "MapGeometry.h"
+
+#include <queue>
+#include <vector>
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -47,106 +51,129 @@ void FlagNode::Clear()
 		delete next[i];
 }
 
-unsigned char * GameWorldViewer::FindPath(const bool boat_road,const int x_start,const int y_start, const int x_dest, const int y_dest,const unsigned char playerid)
+const unsigned INVALID_PREV = 0xFFFFFFFF;
+
+struct NewNode
+{
+	NewNode() : way(0), dir(0), prev(INVALID_PREV), visited(false) {}
+
+	unsigned way;
+	unsigned char dir;
+	unsigned prev;
+	bool visited;
+};
+
+NewNode pf_nodes[256*256];
+
+struct Point {
+	MapCoord x,y;
+	Point() {};
+	Point(const MapCoord x, const MapCoord y) : x(x), y(y) {}
+
+	static MapCoord dst_x, dst_y;
+	static const GameWorldBase * gwb;
+	static void Init(const MapCoord dst_x, const MapCoord dst_y,const GameWorldBase * gwb)
+	{
+		Point::dst_x = dst_x;
+		Point::dst_y = dst_y;
+		Point::gwb = gwb;
+	}
+
+	bool operator<(const Point two) const
+	{
+		return (pf_nodes[gwb->MakeCoordID(x,y)].way + CalcDistance(x,y,dst_x,dst_y))
+			> (pf_nodes[gwb->MakeCoordID(two.x,two.y)].way + CalcDistance(two.x,two.y,dst_x,dst_y));
+	}
+};
+
+MapCoord Point::dst_x = 0;
+MapCoord Point::dst_y = 0;
+const GameWorldBase * Point::gwb = NULL;
+
+std::vector<unsigned> clean_list;
+
+bool GameWorldViewer::FindPath(std::vector<unsigned char>& route, const bool boat_road,const int x_start,const int y_start, const int x_dest, const int y_dest,const unsigned char playerid)
 {
 	unsigned nodes_count = 0;
 	//unsigned pathtime = VideoDriverWrapper::inst().GetTickCount();
+	std::priority_queue<Point> todo;
 
-	memset(handled_nodes,0,GetWidth()*GetHeight()*sizeof(unsigned short));
-	list<Node*> todo;
+	Point::Init(x_dest,y_dest,this);
 
 	// Anfangsknoten einfgen
-	Node start(x_start,y_start,0,0,0);
-	todo.push_back(&start);
+	unsigned start_id = MakeCoordID(x_start,y_start);
+	todo.push(Point(x_start,y_start));
+	pf_nodes[start_id].prev = INVALID_PREV;
+	pf_nodes[start_id].visited = true;
+	clean_list.push_back(start_id);
+	pf_nodes[start_id].way = 0;
+	pf_nodes[start_id].dir = 0;
+
+	// Erst einmal wieder aufräumen
+	for(unsigned i = 0;i<clean_list.size();++i)
+		pf_nodes[clean_list[i]].visited = false;
 
 
 	while(1)
 	{
 		// Liste leer und kein Ziel erreicht --> kein Weg
 		if(!todo.size())
-			return 0;
+			return false;
 
-		// Knoten mit den wenigsten Wegkosten zum Ziel auswäclen
+		// Knoten mit den wenigsten Wegkosten zum Ziel auswählen
 		unsigned shortest_route = 0xFFFFFFFF;
 
-		list<Node*>::iterator best_it;
+		
+		Point best = todo.top();
+		// Knoten behandelt --> raus aus der todo Liste
+		todo.pop();
 
-	
-		for(list<Node*>::iterator it = todo.begin(); it.valid(); ++it)
+		unsigned best_id = MakeCoordID(best.x,best.y);
+
+		if(x_dest == best.x && y_dest == best.y)
 		{
-			unsigned new_way = (*it)->way + abs(x_dest - (*it)->x) + abs(y_dest - (*it)->y);
-			if(new_way < shortest_route)
-			{
-				shortest_route = new_way;
-				best_it = it;
-			}
+			// Ziel erreicht!
+			route.resize(pf_nodes[best_id].way);
+			for(unsigned z = pf_nodes[best_id].way-1;best_id!=start_id;--z,best_id = pf_nodes[best_id].prev)
+				route[z] = pf_nodes[best_id].dir;
+
+			//LOG.lprintf("Pathfinding: Nodes: %u; Time: %u ms\n",nodes_count,VideoDriverWrapper::inst().GetTickCount()-pathtime);
+			return true;
 		}
-
-
-		// Koordinaten der 6 umliegenden Punkte
-		/* id
-
-				1 2
-			 0 P 3
-				5 4
-			*/
-
-
-		Point coords[6] =
-		{
-			{ (*best_it)->x -1, (*best_it)->y },
-			{ (*best_it)->x-!((*best_it)->y&1), (*best_it)->y-1 },
-			{ (*best_it)->x+((*best_it)->y&1), (*best_it)->y-1 },
-			{ (*best_it)->x +1, (*best_it)->y },
-			{ (*best_it)->x+((*best_it)->y&1), (*best_it)->y+1 },
-			{ (*best_it)->x-!((*best_it)->y&1), (*best_it)->y+1 },
-		};
-
+		
 		// Knoten in alle 6 Richtungen bilden
 		for(unsigned i = 0;i<6;++i)
 		{
-			//// Nicht über Wasser, Lava, Sümpfe gehen
-			//if(!IsNodeToNodeForFigure((*best_it)->x,(*best_it)->y,i,boat_road))
-			//	continue;
+			MapCoord xa = GetXA(best.x,best.y,i),
+				ya = GetYA(best.x,best.y,i);
 
-			if(x_dest == coords[i].x && y_dest == coords[i].y)
+			unsigned xaid = MakeCoordID(xa,ya);
+
+			// Das Ziel wollen wir auf jedenfall erreichen lassen, daher nur diese zusätzlichen
+			// Bedingungen, wenn es nicht das Ziel ist
+			if(!(xa == x_dest && ya == y_dest))
 			{
-				// Ziel erreicht!
-				(*best_it)->next[i] = new Node(coords[i].x,coords[i].y,(*best_it)->way+1,*best_it,i);
-				unsigned char * route = new unsigned char[(*best_it)->way+2];
-				route[(*best_it)->way+1] =255;
-				Node * start = (*best_it)->next[i];
-				for(int z = start->way-1;start->prev;--z,start = start->prev)
-					route[z] =start->dir;
-
-				//LOG.lprintf("Pathfinding: Nodes: %u; Time: %u ms\n",nodes_count,VideoDriverWrapper::inst().GetTickCount()-pathtime);
-
-				return route;
+				// Knoten schon auf dem Feld gebildet?
+				if(pf_nodes[xaid].visited)
+					continue;
+				// Feld bebaubar?
+				if(!RoadAvailable(boat_road,xa,ya,i))
+					continue;
+				// Auch auf unserem Territorium?
+				if(!IsPlayerTerritory(xa,ya))
+					continue;
 			}
 
-			// Knoten schon auf dem Feld gebildet?
-			if(handled_nodes[coords[i].y * GetWidth() + coords[i].x])
-				continue;
-			// Feld bebaubar?
-			if(!RoadAvailable(boat_road,coords[i].x,coords[i].y,i))
-				continue;
+			// Alles in Ordnung, Knoten kann gebildet werden
+			pf_nodes[xaid].visited = true;
+			clean_list.push_back(xaid);
+			pf_nodes[xaid].way = pf_nodes[best_id].way+1;
+			pf_nodes[xaid].dir = i;
+			pf_nodes[xaid].prev = best_id;
 
-			// Auch auf unserem Territorium?
-			if(!IsPlayerTerritory(coords[i].x,coords[i].y))
-				continue;
-
-			(*best_it)->next[i] = new Node(coords[i].x,coords[i].y,(*best_it)->way+1,*best_it,i);
-			handled_nodes[coords[i].y * GetWidth() + coords[i].x] = 1;
-
-
-
-			todo.push_back((*best_it)->next[i]);
+			todo.push(Point(xa,ya));
 			++nodes_count;
 		}
-
-		// Knoten behandelt --> raus aus der todo Liste
-		todo.erase(best_it);
-
 	}
 }
 
@@ -212,7 +239,7 @@ unsigned char GameWorldGame::FindPath(const noRoadNode * const startflag, const 
 			noRoadNode * neighbour;
 			if( (neighbour = (*best_it)->flag->GetNeighbour(i)) )
 			{
-					// evtl verboten?
+				// evtl verboten?
 				if((*best_it)->flag->routes[i] == forbidden)
 					continue;
 
@@ -228,7 +255,7 @@ unsigned char GameWorldGame::FindPath(const noRoadNode * const startflag, const 
 					FlagNode * start = (*best_it)->next[i];
 
 					if(length)
-						*length = (*best_it)->realway+(*best_it)->flag->routes[i]->length;
+						*length = (*best_it)->realway+(*best_it)->flag->routes[i]->route.size();
 
 
 					while(start->prev->prev) start = start->prev;
@@ -237,7 +264,7 @@ unsigned char GameWorldGame::FindPath(const noRoadNode * const startflag, const 
 				}
 
 				// Punktezahl (Weg) für diesen Punkt ausrechnen
-				unsigned short way_score = (*best_it)->realway+(*best_it)->flag->routes[i]->length;
+				unsigned short way_score = (*best_it)->realway+(*best_it)->flag->routes[i]->route.size();
 
 
 				// Knoten schon auf dem Feld gebildet, wenn ja muss dieser besser sein
@@ -331,7 +358,7 @@ unsigned char GameWorldGame::FindPathForWare(const noRoadNode * const startflag,
 				}
 
 				// Punktezahl (Weg) für diesen Punkt ausrechnen
-				unsigned short way_score = (*best_it)->realway+(*best_it)->flag->routes[i]->length+(*best_it)->flag->GetPunishmentPoints(i);
+				unsigned short way_score = (*best_it)->realway+(*best_it)->flag->routes[i]->route.size()+(*best_it)->flag->GetPunishmentPoints(i);
 
 
 				// Knoten schon auf dem Feld gebildet, wenn ja muss dieser besser sein
@@ -399,15 +426,7 @@ unsigned char GameWorldBase::FindFreePath(const int x_start,const int y_start, c
 				5 4
 			*/
 
-		Point coords[6] =
-		{
-			{ (*best_it)->x -1, (*best_it)->y },
-			{ (*best_it)->x-!((*best_it)->y&1), (*best_it)->y-1 },
-			{ (*best_it)->x+((*best_it)->y&1), (*best_it)->y-1 },
-			{ (*best_it)->x +1, (*best_it)->y },
-			{ (*best_it)->x+((*best_it)->y&1), (*best_it)->y+1 },
-			{ (*best_it)->x-!((*best_it)->y&1), (*best_it)->y+1 },
-		};
+		Point coords[6];
 
 		// Bei Zufälliger Richtung anfangen (damit man nicht immer denselben Weg geht, besonders für die Soldaten wichtig)
 		unsigned start = random_route?RANDOM.Rand("pf",__LINE__,y_start*GetWidth()+x_start,6):0;

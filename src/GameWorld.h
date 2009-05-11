@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 4809 2009-05-04 20:10:11Z OLiver $
+// $Id: GameWorld.h 4854 2009-05-11 11:26:19Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -29,6 +29,7 @@
 #include "EventManager.h"
 #include "TerrainRenderer.h"
 #include <string>
+#include <vector>
 
 class noEnvObject;
 class noGranite;
@@ -165,6 +166,9 @@ public:
 	/// Wandelt einen Punkt in einen Nachbarpunkt um
 	void GetPointA(MapCoord& x, MapCoord& y, unsigned dir) const;
 
+	// Erzeugt eindeutige ID aus gegebenen X und Y-Werten
+	unsigned MakeCoordID(const MapCoord x, const MapCoord y) const
+	{ return y*width+x; }
 
 	/// Gibt Map-Knotenpunkt zurück
 	const MapNode& GetNode(const MapCoord x, const MapCoord y) const { assert(x<width && y<height);  return nodes[y*width+x]; }
@@ -233,7 +237,7 @@ public:
 	unsigned char FindFreePath(const int x_start,const int y_start, const int x_dest, const int y_dest,unsigned max_route,const bool random_route = true, unsigned * length = NULL);
 
 	/// Baut eine (bisher noch visuell gebaute) Straße wieder zurück
-	void RemoveVisualRoad(unsigned short start_x, unsigned short start_y, const unsigned char * const route, const unsigned length);
+	void RemoveVisualRoad(unsigned short start_x, unsigned short start_y, const std::vector<unsigned char>& route);
 
 	/// x,y ist ein Punkt auf irgendeinem Wegstck, gibt die Flagge zurück
 	noFlag * GetRoadFlag(int x, int y,unsigned char& dir,unsigned last_i=255);
@@ -266,7 +270,6 @@ protected:
 	virtual void AltitudeChanged(const MapCoord x, const MapCoord y) = 0;
 	/// Für abgeleitete Klasse, die dann das Terrain entsprechend neu generieren kann
 	virtual void VisibilityChanged(const MapCoord x, const MapCoord y) = 0;
-
 };
 
 /// "Interface-Klasse" für GameWorldBase, die die Daten grafisch anzeigt
@@ -312,7 +315,7 @@ public:
 	void ShowNamesAndProductivity();
 
 	/// Wegfinden ( A* ) --> Wegfindung auf allgemeinen Terrain ( ohne Straäcn ) ( fr Wegebau oder frei herumlaufende )
-	unsigned char * FindPath(const bool boat_road,const int x_start,const int y_start, const int x_dest, const int y_dest,const unsigned char playerid);
+	bool FindPath(std::vector<unsigned char>& route, const bool boat_road,const int x_start,const int y_start, const int x_dest, const int y_dest,const unsigned char playerid);
 	/// Sucht die Anzahl der verfügbaren Soldaten, um das Militärgebäude an diesem Punkt anzugreifen
 	unsigned GetAvailableSoldiersForAttack(const unsigned char player_attacker,const MapCoord x, const MapCoord y);
 	/// Zeichnet die Objekte
@@ -457,7 +460,8 @@ public:
 
 	/// Funktionen aus ehemaligen Game
 	/// Baut eine Straße ( nicht nur visuell, sondern auch wirklich )
-	void BuildRoad(const unsigned char playerid,const bool boat_road,unsigned short start_x,unsigned short start_y,const unsigned char * route,const unsigned length);
+	void BuildRoad(const unsigned char playerid,const bool boat_road,
+		unsigned short start_x,unsigned short start_y, const std::vector<unsigned char>& route);
 	/// Reißt eine Straße ab
 	void DestroyRoad(const MapCoord x, const MapCoord y, const unsigned char dir);
 

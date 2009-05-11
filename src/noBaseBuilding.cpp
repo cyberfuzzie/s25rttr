@@ -1,4 +1,4 @@
-// $Id: noBaseBuilding.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: noBaseBuilding.cpp 4854 2009-05-11 11:26:19Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -65,11 +65,11 @@ noBaseBuilding::noBaseBuilding(const NodalObjectType nop,const BuildingType type
 
 		// Straﬂenverbindung erstellen zwischen Flagge und Haus
 		// immer von Flagge ZU Geb‰ude (!)
-		unsigned char route = 1;
+		std::vector<unsigned char> route(1,1);
 		// Straﬂe zuweisen
 		gwg->GetSpecObj<noRoadNode>(x + (y&1),y+1)->routes[1] = // der Flagge
 		routes[4] = // dem Geb‰ude
-		new RoadSegment(RoadSegment::RT_NORMAL,gwg->GetSpecObj<noRoadNode>(x + (y&1),y+1),this,&route,1);
+		new RoadSegment(RoadSegment::RT_NORMAL,gwg->GetSpecObj<noRoadNode>(x + (y&1),y+1),this,route);
 	}
 	else
 	{

@@ -1,4 +1,4 @@
-// $Id: RoadSegment.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: RoadSegment.h 4854 2009-05-11 11:26:19Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -22,6 +22,7 @@
 #pragma once
 
 #include "GameObject.h"
+#include <vector>
 
 class nofCarrier;
 class noRoadNode;
@@ -40,10 +41,8 @@ public:
 	} rt;
 	/// die 2 Roadnodes, die den Weg eingrenzen
 	noRoadNode * f1,*f2;
-	/// Länge des Weges
-	unsigned short length;
 	/// Beschreibung des Weges, ist length groß und liegt als Beschreibung der einzelnen Richtungen vor (von f1 zu f2)
-	unsigned char * route;
+	std::vector<unsigned char> route;
 	/// Träger (und ggf. Esel), der auf diesem Weg arbeitet
 	nofCarrier * carrier[2];
 
@@ -51,12 +50,9 @@ public:
 
 	/// parametrisierter Konstruktor von @p RoadSegment.
 	RoadSegment(const RoadType rt, noRoadNode *const f1, noRoadNode *const f2,
-		const unsigned char *route, unsigned short length);
+		const std::vector<unsigned char>& route);
 
 	RoadSegment(SerializedGameData * sgd, const unsigned obj_id);
-
-	/// Destruktor von @p RoadSegment.
-	~RoadSegment(void);
 
 	/// zerstört das Objekt.
 	void Destroy(void) { Destroy_RoadSegment(); }
@@ -70,10 +66,13 @@ public:
 	/// Gibt Straßen-Typ zurück
 	RoadType GetRoadType() const { return rt; }
 
+	/// Gibt die Länge der Staße zurück
+	unsigned GetLength() const { return route.size(); }
+
 	unsigned char GetDir(const bool dir, const unsigned int id) const
 	{
 		if(dir)
-			return (route[length-id-1]+3)%6;
+			return (route[route.size()-id-1]+3)%6;
 		else
 			return route[id];
 	}

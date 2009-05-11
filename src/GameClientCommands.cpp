@@ -1,4 +1,4 @@
-// $Id: GameClientCommands.cpp 4809 2009-05-04 20:10:11Z OLiver $
+// $Id: GameClientCommands.cpp 4854 2009-05-11 11:26:19Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -61,8 +61,13 @@ void GameClient::ExecuteNC(const unsigned short nfc_type,const unsigned char pla
 		} break;
 	case NC_BUILDROAD:
 		{
+			unsigned short road_length = static_cast<const unsigned short*>(data)[3];
+			std::vector<unsigned char> route(road_length);
+			for(unsigned i = 0;i<road_length;++i)
+				route[i] = static_cast<const unsigned char*>(data)[8+i];
+
 			gw->BuildRoad(player,static_cast<const unsigned short*>(data)[0] == 1,static_cast<const unsigned short*>(data)[1],
-				static_cast<const unsigned short*>(data)[2],&static_cast<const unsigned char*>(data)[8],static_cast<const unsigned short*>(data)[3]);
+				static_cast<const unsigned short*>(data)[2],route);
 		} break;
 	case NC_DESTROYROAD:
 		{
@@ -175,7 +180,7 @@ void GameClient::ExecuteNC(const unsigned short nfc_type,const unsigned char pla
 		} break;
 	case NC_DESTROYALL:
 		{
-      gw->Armageddon(player);
+			 gw->Armageddon(player);
 			//GameClient::inst().GetPlayer(player)->Surrender();
 		} break;
 	default: return;
@@ -225,21 +230,22 @@ void GameClient::NC_DestroyFlag(const unsigned short x,const unsigned short y)
 	nfc_queue.push_back(nfc);
 }
 
-void GameClient::NC_Road_Build(const bool boat_road,const unsigned short road_start_x, const unsigned short road_start_y, const unsigned char * route, const unsigned short road_length)
+void GameClient::NC_Road_Build(const bool boat_road,const unsigned short road_start_x, const unsigned short road_start_y, const std::vector<unsigned char>& route)
 {
 	// Nicht in der Pause
 	if(framesinfo.pause || GetLocalPlayer()->IsDefeated())
 		return;
 
-	GameMessage * nfc = new GameMessage(NMS_NFC_COMMANDS,10+road_length);
+	GameMessage * nfc = new GameMessage(NMS_NFC_COMMANDS,10+route.size());
 
 	static_cast<unsigned short*>(nfc->m_pData)[0] = NC_BUILDROAD;
 	static_cast<unsigned short*>(nfc->m_pData)[1] = boat_road ? 1 : 0;
 	static_cast<unsigned short*>(nfc->m_pData)[2] = road_start_x;
 	static_cast<unsigned short*>(nfc->m_pData)[3] = road_start_y;
-	static_cast<unsigned short*>(nfc->m_pData)[4] = road_length;
-	memcpy(&static_cast<unsigned short*>(nfc->m_pData)[5],route,road_length);
+	static_cast<unsigned short*>(nfc->m_pData)[4] = static_cast<unsigned short>(route.size());
 
+	for(unsigned i = 0;i<route.size();++i)
+		static_cast<unsigned char*>(nfc->m_pData)[10+i] = route[i];
 
 	nfc_queue.push_back(nfc);
 }

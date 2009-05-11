@@ -1,4 +1,4 @@
-// $Id: GameClient.h 4809 2009-05-04 20:10:11Z OLiver $
+// $Id: GameClient.h 4854 2009-05-11 11:26:19Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -18,8 +18,6 @@
 // along with Siedler II.5 RTTR. If not, see <http://www.gnu.org/licenses/>.
 #ifndef GAMECLIENT_H_
 #define GAMECLIENT_H_
-
-#pragma once
 
 #include "Socket.h"
 
@@ -102,7 +100,7 @@ public:
 	void NC_Nothing();
 	void NC_SetFlag(const unsigned short x,const unsigned short y);
 	void NC_DestroyFlag(const unsigned short x, const unsigned short y);
-	void NC_Road_Build(const bool boat_road,const unsigned short road_start_x, const unsigned short road_start_y, const unsigned char * route, const unsigned short road_length);
+	void NC_Road_Build(const bool boat_road,const unsigned short road_start_x, const unsigned short road_start_y, const std::vector<unsigned char>& route);
 	void NC_Road_Destroy(const unsigned short x, const unsigned short y, const unsigned char dir);
 	void NC_ChangeDistribution(unsigned char * const distri_data);
 	void NC_ChangeBuildOrder(const unsigned char order_type,const unsigned char * const order);

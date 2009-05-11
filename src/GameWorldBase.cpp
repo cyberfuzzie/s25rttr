@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 4787 2009-05-03 15:52:43Z Demophobie $
+// $Id: GameWorldBase.cpp 4854 2009-05-11 11:26:19Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -514,16 +514,15 @@ void GameWorldBase::LookForMilitaryBuildings(list<nobBaseMilitary*>& buildings,c
 
 
 /// Baut eine (bisher noch visuell gebaute) Straße wieder zurück
-void GameWorldBase::RemoveVisualRoad(unsigned short start_x, unsigned short start_y, const unsigned char * const route, const unsigned length)
+void GameWorldBase::RemoveVisualRoad(unsigned short start_x, unsigned short start_y, const std::vector<unsigned char>& route)
 {
 	// Wieder zurückbauen
-	for(unsigned z = 0;z<length;++z)
+	for(unsigned z = 0;z<route.size();++z)
 	{
 		SetPointVirtualRoad(start_x,start_y, route[z],0);
-		unsigned short tx = start_x,ty = start_y;
-		start_x = GetXA(tx,ty,route[z]);
-		start_y = GetYA(tx,ty,route[z]);
-		CalcRoad(tx,ty,GAMECLIENT.GetPlayerID());
+		CalcRoad(start_x,start_y,GAMECLIENT.GetPlayerID());
+		GetPointA(start_x,start_y,route[z]);
+		
 	}
 }
 

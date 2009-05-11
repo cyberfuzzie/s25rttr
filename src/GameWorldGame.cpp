@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 4835 2009-05-08 20:02:19Z OLiver $
+// $Id: GameWorldGame.cpp 4854 2009-05-11 11:26:19Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -298,7 +298,8 @@ void GameWorldGame::DestroyBuilding(const MapCoord x, const MapCoord y, const un
 }
 
 
-void GameWorldGame::BuildRoad(const unsigned char playerid,const bool boat_road,unsigned short start_x,unsigned short start_y,const unsigned char * route,const unsigned length)
+void GameWorldGame::BuildRoad(const unsigned char playerid,const bool boat_road,
+							  unsigned short start_x,unsigned short start_y, const std::vector<unsigned char>& route)
 {
 	// TODO: Verzögerungsbugabfrage, kann später ggf. weg
 	if(!GetSpecObj<noFlag>(start_x,start_y))
@@ -309,8 +310,8 @@ void GameWorldGame::BuildRoad(const unsigned char playerid,const bool boat_road,
 	// TODO: Verzögerungsbugabfrage, kann später ggf. weg
 	// Gucken, ob der Weg überhaupt noch gebaut werden kann
 	unsigned short testx = start_x, testy = start_y;
-	assert(length > 1);
-	for(unsigned i = 0;i<length-1;++i)
+	assert(route.size() > 1);
+	for(unsigned i = 0;i<route.size()-1;++i)
 	{
 		int tx = testx,ty = testy;
 		testx = GetXA(tx,ty,route[i]);
@@ -320,14 +321,14 @@ void GameWorldGame::BuildRoad(const unsigned char playerid,const bool boat_road,
 		if(!RoadAvailable(boat_road,testx,testy,i,false) || !IsPlayerTerritory(testx,testy))
 		{
 			// Nein? Dann Weg nicht bauen und ggf. das visuelle wieder zurückbauen
-			RemoveVisualRoad(start_x,start_y,route,length);
+			RemoveVisualRoad(start_x,start_y,route);
 			return;
 		}
 	}
 
 	int tx = testx,ty = testy;
-	testx = GetXA(tx,ty,route[length-1]);
-	testy = GetYA(tx,ty,route[length-1]);
+	testx = GetXA(tx,ty,route[route.size()-1]);
+	testy = GetYA(tx,ty,route[route.size()-1]);
 
 	// Prüfen, ob am Ende auch eine Flagge steht oder eine gebaut werden kann
 	if(GetNO(testx,testy)->GetGOT() == GOT_FLAG)
@@ -336,7 +337,7 @@ void GameWorldGame::BuildRoad(const unsigned char playerid,const bool boat_road,
 		if(GetSpecObj<noFlag>(testx,testy)->GetPlayer() != playerid)
 		{
 			// Dann Weg nicht bauen und ggf. das visuelle wieder zurückbauen
-			RemoveVisualRoad(start_x,start_y,route,length);
+			RemoveVisualRoad(start_x,start_y,route);
 			return;
 		}
 	}
@@ -351,7 +352,7 @@ void GameWorldGame::BuildRoad(const unsigned char playerid,const bool boat_road,
 			if(GetNO(GetXA(testx,testy,i), GetYA(testx,testy,i))->GetGOT() == GOT_FLAG)
 			{
 				// Dann Weg nicht bauen und ggf. das visuelle wieder zurückbauen
-				RemoveVisualRoad(start_x,start_y,route,length);
+				RemoveVisualRoad(start_x,start_y,route);
 				return;
 			}
 		}
@@ -361,12 +362,10 @@ void GameWorldGame::BuildRoad(const unsigned char playerid,const bool boat_road,
 		if(GetNO(testx,testy)->GetType() == NOP_TREE)
 		{
 			// Dann Weg nicht bauen und ggf. das visuelle wieder zurückbauen
-			RemoveVisualRoad(start_x,start_y,route,length);
+			RemoveVisualRoad(start_x,start_y,route);
 			return;
 		}
 	}
-
-
 
 	// Evtl Zierobjekte abreißen (Anfangspunkt)
 	if(IsObjectionableForRoad(start_x,start_y))
@@ -377,7 +376,7 @@ void GameWorldGame::BuildRoad(const unsigned char playerid,const bool boat_road,
 		SetNO(0,start_x,start_y);
 	}
 
-	for(unsigned i = 0;i<length;++i)
+	for(unsigned i = 0;i<route.size();++i)
 	{
 		SetPointRoad(start_x,start_y, route[i], boat_road?(RoadSegment::RT_BOAT+1):(RoadSegment::RT_NORMAL+1));
 		int tx = start_x,ty = start_y;
@@ -396,12 +395,13 @@ void GameWorldGame::BuildRoad(const unsigned char playerid,const bool boat_road,
 	}
 
 	if(GetNO(start_x,start_y)->GetType() != NOP_FLAG)
-		SetFlag(start_x,start_y,playerid,(route[length-1]+3)%6);
+		SetFlag(start_x,start_y,playerid,(route[route.size()-1]+3)%6);
 
-	RoadSegment * rs = new RoadSegment(boat_road?RoadSegment::RT_BOAT:RoadSegment::RT_NORMAL,GetSpecObj<noFlag>(tmpx,tmpy),GetSpecObj<noFlag>(start_x,start_y),route,length);
+	RoadSegment * rs = new RoadSegment(boat_road?RoadSegment::RT_BOAT:RoadSegment::RT_NORMAL,
+		GetSpecObj<noFlag>(tmpx,tmpy),GetSpecObj<noFlag>(start_x,start_y),route);
 
-	GetSpecObj<noFlag>(tmpx,tmpy)->routes[*route] = rs;
-	GetSpecObj<noFlag>(start_x,start_y)->routes[(route[length-1]+3)%6] = rs;
+	GetSpecObj<noFlag>(tmpx,tmpy)->routes[route.front()] = rs;
+	GetSpecObj<noFlag>(start_x,start_y)->routes[(route.back()+3)%6] = rs;
 
 	// Der Wirtschaft mitteilen, dass eine neue Straße gebaut wurde, damit sie alles Näcige macht
 	GAMECLIENT.GetPlayer(playerid)->NewRoad(rs);
@@ -657,7 +657,7 @@ void GameWorldGame::DestroyPlayerRests(const MapCoord x, const MapCoord y, const
 	if(flag)
 	{
 		// Die Ministraße von dem Militärgebäude nich abreißen!
-		if(flag->routes[dir]->length == 1)
+		if(flag->routes[dir]->route.size() == 1)
 		{
 			if(flag->routes[dir]->f2 == exception)
 				return;

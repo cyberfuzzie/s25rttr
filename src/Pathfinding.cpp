@@ -1,4 +1,4 @@
-// $Id: Pathfinding.cpp 4854 2009-05-11 11:26:19Z OLiver $
+// $Id: Pathfinding.cpp 4855 2009-05-11 11:45:08Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -113,16 +113,11 @@ bool GameWorldViewer::FindPath(std::vector<unsigned char>& route, const bool boa
 	for(unsigned i = 0;i<clean_list.size();++i)
 		pf_nodes[clean_list[i]].visited = false;
 
-
-	while(1)
+	while(true)
 	{
 		// Liste leer und kein Ziel erreicht --> kein Weg
 		if(!todo.size())
 			return false;
-
-		// Knoten mit den wenigsten Wegkosten zum Ziel auswählen
-		unsigned shortest_route = 0xFFFFFFFF;
-
 		
 		Point best = todo.top();
 		// Knoten behandelt --> raus aus der todo Liste
@@ -174,6 +169,123 @@ bool GameWorldViewer::FindPath(std::vector<unsigned char>& route, const bool boa
 			todo.push(Point(xa,ya));
 			++nodes_count;
 		}
+	}
+}
+
+unsigned char GameWorldBase::FindFreePath(const int x_start,const int y_start, const int x_dest, const int y_dest,unsigned max_route,const bool random_route,unsigned * length)
+{
+	unsigned nodes_count = 0;
+	//unsigned pathtime = VideoDriverWrapper::inst().GetTickCount();
+
+	memset(handled_nodes,0,GetWidth()*GetHeight()*sizeof(unsigned short));
+	list<Node*> todo;
+
+	// Anfangsknoten einfgen
+	Node start(x_start,y_start,0,0,0);
+	todo.push_back(&start);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+
+	while(1)
+	{
+		// Liste leer und kein Ziel erreicht --> kein Weg
+		if(!todo.size())
+			return 0xFF;
+
+		// Knoten mit den wenigsten Wegkosten zum Ziel auswäclen
+		unsigned shortest_route = 0xFFFFFFFF;
+
+		list<Node*>::iterator best_it;
+
+		for(list<Node*>::iterator it = todo.begin(); it.valid(); ++it)
+		{
+			unsigned new_way = (*it)->way + max(abs(x_dest - (*it)->x),abs(y_dest - (*it)->y));
+			if(new_way < shortest_route)
+			{
+				shortest_route = new_way;
+				best_it = it;
+			}
+		}
+
+		// Koordinaten der 6 umliegenden Punkte
+		/* id
+
+				1 2
+			 0 P 3
+				5 4
+			*/
+
+		Point coords[6];
+
+		// Bei Zufälliger Richtung anfangen (damit man nicht immer denselben Weg geht, besonders für die Soldaten wichtig)
+		unsigned start = random_route?RANDOM.Rand("pf",__LINE__,y_start*GetWidth()+x_start,6):0;
+
+
+		// Knoten in alle 6 Richtungen bilden
+		for(unsigned z = start;z<start+6;++z)
+		{
+			unsigned i = z%6;
+
+			// Nicht über den Kartenrand lesen!
+			if(coords[i].x >= GetWidth() || coords[i].x < 0 || 
+				coords[i].y >= GetHeight() || coords[i].y 
+				< 0)
+				continue;
+
+			// Nicht über Wasser, Lava, Sümpfe gehen
+			if(!IsNodeToNodeForFigure((*best_it)->x,(*best_it)->y,i))
+				continue;
+
+			if(x_dest == coords[i].x && y_dest == coords[i].y)
+			{
+				(*best_it)->next[i] = new Node(coords[i].x,coords[i].y,(*best_it)->way+1,*best_it,i);
+				Node * start = (*best_it)->next[i];
+
+				while(start->prev->prev) start = start->prev;
+
+				// Ggf. Länge setzen, wenn kein Nullpointer übergeben wurde
+				if(length)
+					*length = (*best_it)->way+1;
+
+				return start->dir;
+			}
+
+			// Maximale Strecke schon erreicht?
+			if((*best_it)->way == max_route)
+				continue;
+
+			// Knoten schon auf dem Feld gebildet
+			if(handled_nodes[coords[i].y * GetWidth() + coords[i].x])
+				continue;
+
+			// Feld passierbar?
+			noBase * obj = GetNode(coords[i].x,coords[i].y).obj;
+			if(obj)
+			{
+				if(obj->GetType() == NOP_BUILDING ||
+				obj->GetGOT() == GOT_BUILDINGSITE ||
+				obj->GetGOT() == GOT_EXTENSION ||
+				obj->GetGOT() == GOT_GRANITE || 
+				obj->GetType() == NOP_OBJECT ||
+				obj->GetGOT() == GOT_FIRE ||
+				obj->GetGOT() == GOT_GRANITE)
+				 continue;
+			}
+
+
+			if(GetNode(coords[i].x,coords[i].y).reserved)
+				continue;
+
+			(*best_it)->next[i] = new Node(coords[i].x,coords[i].y,(*best_it)->way+1,*best_it,i);
+			handled_nodes[coords[i].y * GetWidth() + coords[i].x] = 1;
+
+
+			todo.push_back((*best_it)->next[i]);
+			++nodes_count;
+		}
+
+		// Knoten behandelt --> raus aus der todo Liste
+		todo.erase(best_it);
+
 	}
 }
 
@@ -384,119 +496,3 @@ unsigned char GameWorldGame::FindPathForWare(const noRoadNode * const startflag,
 	}
 }
 
-unsigned char GameWorldBase::FindFreePath(const int x_start,const int y_start, const int x_dest, const int y_dest,unsigned max_route,const bool random_route,unsigned * length)
-{
-	unsigned nodes_count = 0;
-	//unsigned pathtime = VideoDriverWrapper::inst().GetTickCount();
-
-	memset(handled_nodes,0,GetWidth()*GetHeight()*sizeof(unsigned short));
-	list<Node*> todo;
-
-	// Anfangsknoten einfgen
-	Node start(x_start,y_start,0,0,0);
-	todo.push_back(&start);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
-
-	while(1)
-	{
-		// Liste leer und kein Ziel erreicht --> kein Weg
-		if(!todo.size())
-			return 0xFF;
-
-		// Knoten mit den wenigsten Wegkosten zum Ziel auswäclen
-		unsigned shortest_route = 0xFFFFFFFF;
-
-		list<Node*>::iterator best_it;
-
-		for(list<Node*>::iterator it = todo.begin(); it.valid(); ++it)
-		{
-			unsigned new_way = (*it)->way + max(abs(x_dest - (*it)->x),abs(y_dest - (*it)->y));
-			if(new_way < shortest_route)
-			{
-				shortest_route = new_way;
-				best_it = it;
-			}
-		}
-
-		// Koordinaten der 6 umliegenden Punkte
-		/* id
-
-				1 2
-			 0 P 3
-				5 4
-			*/
-
-		Point coords[6];
-
-		// Bei Zufälliger Richtung anfangen (damit man nicht immer denselben Weg geht, besonders für die Soldaten wichtig)
-		unsigned start = random_route?RANDOM.Rand("pf",__LINE__,y_start*GetWidth()+x_start,6):0;
-
-
-		// Knoten in alle 6 Richtungen bilden
-		for(unsigned z = start;z<start+6;++z)
-		{
-			unsigned i = z%6;
-
-			// Nicht über den Kartenrand lesen!
-			if(coords[i].x >= GetWidth() || coords[i].x < 0 || 
-				coords[i].y >= GetHeight() || coords[i].y 
-				< 0)
-				continue;
-
-			// Nicht über Wasser, Lava, Sümpfe gehen
-			if(!IsNodeToNodeForFigure((*best_it)->x,(*best_it)->y,i))
-				continue;
-
-			if(x_dest == coords[i].x && y_dest == coords[i].y)
-			{
-				(*best_it)->next[i] = new Node(coords[i].x,coords[i].y,(*best_it)->way+1,*best_it,i);
-				Node * start = (*best_it)->next[i];
-
-				while(start->prev->prev) start = start->prev;
-
-				// Ggf. Länge setzen, wenn kein Nullpointer übergeben wurde
-				if(length)
-					*length = (*best_it)->way+1;
-
-				return start->dir;
-			}
-
-			// Maximale Strecke schon erreicht?
-			if((*best_it)->way == max_route)
-				continue;
-
-			// Knoten schon auf dem Feld gebildet
-			if(handled_nodes[coords[i].y * GetWidth() + coords[i].x])
-				continue;
-
-			// Feld passierbar?
-			noBase * obj = GetNode(coords[i].x,coords[i].y).obj;
-			if(obj)
-			{
-				if(obj->GetType() == NOP_BUILDING ||
-				obj->GetGOT() == GOT_BUILDINGSITE ||
-				obj->GetGOT() == GOT_EXTENSION ||
-				obj->GetGOT() == GOT_GRANITE || 
-				obj->GetType() == NOP_OBJECT ||
-				obj->GetGOT() == GOT_FIRE ||
-				obj->GetGOT() == GOT_GRANITE)
-				 continue;
-			}
-
-
-			if(GetNode(coords[i].x,coords[i].y).reserved)
-				continue;
-
-			(*best_it)->next[i] = new Node(coords[i].x,coords[i].y,(*best_it)->way+1,*best_it,i);
-			handled_nodes[coords[i].y * GetWidth() + coords[i].x] = 1;
-
-
-			todo.push_back((*best_it)->next[i]);
-			++nodes_count;
-		}
-
-		// Knoten behandelt --> raus aus der todo Liste
-		todo.erase(best_it);
-
-	}
-}

@@ -1,4 +1,4 @@
-// $Id: main.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: main.h 4860 2009-05-12 20:15:22Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -36,6 +36,7 @@
 #	include <unistd.h>
 #endif // !_WIN32
 
+#include <cstdio>
 #include <cstring>
 #include <string>
 #include <map>

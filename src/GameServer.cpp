@@ -1,4 +1,4 @@
-// $Id: GameServer.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: GameServer.cpp 4870 2009-05-15 21:27:56Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -343,9 +343,12 @@ void GameServer::Run(void)
 					LOG.lprintf("SERVER: Sending Message for player %d failed, kick it like Beckham!\n", client);
 					KickPlayer(client, NP_CONNECTIONLOST, 0);
 				}
+				else
+				{
+					player->send_queue.pop();
+					++count;
+				}
 			}
-			player->send_queue.pop();
-			++count;
 		}
 
 		// recv-queue abarbeiten

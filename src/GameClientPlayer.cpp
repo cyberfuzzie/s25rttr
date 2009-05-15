@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 4836 2009-05-08 20:31:23Z OLiver $
+// $Id: GameClientPlayer.cpp 4868 2009-05-15 15:48:04Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -342,16 +342,14 @@ nobBaseWarehouse * GameClientPlayer::FindWarehouse(const noRoadNode * const star
 		if(IsWarehouseGood(*w,param))
 		{
 			// Bei der erlaubten Benutzung von Bootsstraßen Waren-Pathfinding benutzen
-			if(to_wh)
-				tpath = gwg->FindPath(start,*w,1,&tlength,forbidden,use_boat_roads);
-			else
-				tpath = gwg->FindPath(*w,start,1,&tlength,forbidden,use_boat_roads);
-
-			if((tlength < best_length || !best)	&& tpath!=0xFF)
+			if(gwg->FindPathOnRoads(to_wh ? start : *w, to_wh ? *w : start,use_boat_roads,NULL,&tlength,NULL,forbidden))
 			{
-				path = tpath;
-				best_length = tlength;
-				best = (*w);
+				if(tlength < best_length || !best)
+				{
+					path = tpath;
+					best_length = tlength;
+					best = (*w);
+				}
 			}
 		}
 	}
@@ -663,8 +661,8 @@ RoadSegment * GameClientPlayer::FindRoadForDonkey(noRoadNode * start,noRoadNode 
 			noRoadNode * current_best_goal = 0;
 			// Weg zu beiden Flaggen berechnen
 			unsigned length1 = 0,length2 = 0;
-			gwg->FindPath(start,(*it)->f1,false,&length1,*it);
-			gwg->FindPath(start,(*it)->f2,false,&length2,*it);
+			gwg->FindHumanPathOnRoads(start,(*it)->f1,&length1,*it);
+			gwg->FindHumanPathOnRoads(start,(*it)->f2,&length2,*it);
 
 			// Wenn man zu einer Flagge nich kommt, die jeweils andere nehmen
 			if(!length1)
@@ -730,7 +728,7 @@ noBaseBuilding * GameClientPlayer::FindClientForWare(Ware * ware)
 			for(list<noBuildingSite*>::iterator i = building_sites.begin(); i.valid(); ++i)
 			{
 				// Weg dorthin berechnen
-				if(gwg->FindPath(ware->GetLocation(),*i,false,&way_points) != 0xFF)
+				if(gwg->FindPathForWareOnRoads(ware->GetLocation(),*i,&way_points) != 0xFF)
 				{
 					points = (*i)->CalcDistributionPoints(ware->GetLocation(),gt);
 
@@ -777,7 +775,7 @@ noBaseBuilding * GameClientPlayer::FindClientForWare(Ware * ware)
 			for(list<nobUsual*>::iterator i = buildings[*it-10].begin(); i.valid(); ++i)
 			{
 				// Weg dorthin berechnen
-				if(gwg->FindPath(ware->GetLocation(),*i,false,&way_points) != 0xFF)
+				if(gwg->FindPathForWareOnRoads(ware->GetLocation(),*i,&way_points) != 0xFF)
 				{
 					points = (*i)->CalcDistributionPoints(ware->GetLocation(),gt);
 					// Wenn 0, dann braucht er die Ware nicht
@@ -843,7 +841,7 @@ nobBaseMilitary * GameClientPlayer::FindClientForCoin(Ware * ware)
 	{
 		unsigned way_points;
 		// Weg dorthin berechnen
-		if(gwg->FindPath(ware->GetLocation(),*it,false,&way_points) != 0xFF)
+		if(gwg->FindPathForWareOnRoads(ware->GetLocation(),*it,&way_points) != 0xFF)
 		{
 			points = (*it)->CalcCoinsPoints();
 			// Wenn 0, will er gar keine Münzen (Goldzufuhr gestoppt)

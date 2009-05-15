@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 4857 2009-05-11 18:31:33Z OLiver $
+// $Id: GameWorld.h 4868 2009-05-15 15:48:04Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -238,11 +238,16 @@ public:
 
 	/// Prüft, ob von einem bestimmten Punkt aus der Untergrund für Figuren zugänglich ist (kein Wasser,Lava,Sumpf)
 	bool IsNodeToNodeForFigure(const MapCoord x, const MapCoord y, const unsigned dir) const;
-	/// Wegfinden ( A*) --> in freien Terrain, Ziel muss nicht begehbar sein, durch Bäume, für frei herumlaufende Berufe mit begrenztem Weg !
+	/// Wegfindung in freiem Terrain - Basisroutine
 	bool FindFreePath(const MapCoord x_start,const MapCoord y_start,
 				  const MapCoord x_dest, const MapCoord y_dest, const bool random_route, const unsigned max_route, 
 				  std::vector<unsigned char> * route, unsigned *length, unsigned char * first_dir, 
 				  FP_Node_OK_Callback IsNodeOK, FP_Node_OK_Callback IsNodeToDestOk, const void * param);
+	/// Wegfindung auf Straßen - Basisroutine
+	bool FindPathOnRoads(const noRoadNode * const start, const noRoadNode * const goal,
+									const bool ware_mode, std::vector<unsigned char> * route, unsigned * length,
+									unsigned char * first_dir, const RoadSegment * const forbidden);
+
 			/// Findet einen Weg für Figuren
 	unsigned char FindHumanPath(const MapCoord x_start,const MapCoord y_start,
 		  const MapCoord x_dest, const MapCoord y_dest, const unsigned max_route = 0xFFFFFFFF, const bool random_route = false, unsigned *length = NULL);
@@ -459,10 +464,10 @@ public:
 	/// Gebäude bzw Baustelle abreißen
 	void DestroyBuilding(const MapCoord x, const MapCoord y, const unsigned char playe);
 
-	/// Wegfinden ( A* ) --> Auf richtigen Wegen ( für Menschen )
-	unsigned char FindPath(const noRoadNode * const startflag, const noRoadNode * const goal,bool reverse,unsigned * length = 0,const RoadSegment * const forbidden=0, const bool use_boat_roads=false);
-	/// Wegfinden ( A* ) --> Auf richtigen Wegen ( für Waren ), gibt nur nächste Richtung zurück!
-	unsigned char FindPathForWare(const noRoadNode * const startflag, const noRoadNode * const goal);
+	/// Wegfindung für Menschen im Straßennetz
+	unsigned char FindHumanPathOnRoads(const noRoadNode * const start, const noRoadNode * const goal,unsigned * length = NULL,const RoadSegment * const forbidden = NULL);
+	/// Wegfindung für Waren im Straßennetz
+	unsigned char FindPathForWareOnRoads(const noRoadNode * const start, const noRoadNode * const goal,unsigned * length = NULL);
 
 	/// setzt den Straßen-Wert an der Stelle X,Y (berichtigt).
 	void SetRoad(const MapCoord x, const MapCoord y, unsigned char dir, unsigned char type);

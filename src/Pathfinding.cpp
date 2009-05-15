@@ -1,4 +1,4 @@
-// $Id: Pathfinding.cpp 4857 2009-05-11 18:31:33Z OLiver $
+// $Id: Pathfinding.cpp 4868 2009-05-15 15:48:04Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -39,41 +39,61 @@
 	static char THIS_FILE[] = __FILE__;
 #endif
 
-void Node::Clear()
-{
-	for(unsigned i = 0;i<6;++i)
-		delete next[i];
-}
-
-void FlagNode::Clear()
-{
-	for(unsigned i = 0;i<6;++i)
-		delete next[i];
-}
-
+/// Konstante für einen ungültigen Vorgänerknoten
 const unsigned INVALID_PREV = 0xFFFFFFFF;
+
 struct Point;
-
-struct NewNode
+/// Vergleichsoperator für die Prioritätswarteschlange bzw. std::set beim straßengebundenen Wegfinden
+class RoadNodeComperator
 {
-	NewNode() : way(0), dir(0), prev(INVALID_PREV), visited(false) {}
-
-	unsigned way;
-	unsigned char dir;
-	unsigned prev;
-	bool visited;
-	std::set<Point>::iterator it;
+public:
+	bool operator()(const noRoadNode* const rn1, const noRoadNode* const rn2) const;
 };
 
+/// Klass für einen Knoten mit dazugehörigen Informationen
+/// Wir speichern einfach die gesamte Map und sparen uns so das dauernde Allokieren und Freigeben von Speicher
+/// Die Knoten können im Array mit einer eindeutigen ID (gebildet aus y*Kartenbreite+x) identifiziert werden
+struct NewNode
+{
+	NewNode() : way(0), count_nodes(0), dir(0), prev(INVALID_PREV), visited(false) {}
+
+	/// Wegkosten, die vom Startpunkt bis zu diesem Knoten bestehen
+	unsigned way;
+	/// Anzahl der Knoten bis zu diesem Punkt, was sich von way unterscheiden kann bei der
+	/// straßengebundenen Wegfindung
+	unsigned count_nodes;
+	/// Die Richtung, über die dieser Knoten erreicht wurde
+	unsigned char dir;
+	/// ID (gebildet aus y*Kartenbreite+x) des Vorgänngerknotens
+	unsigned prev;
+	/// Wurde Knoten schon besucht (für A*-Algorithmus)
+	bool visited;
+	/// Iterator auf Position in der Prioritätswarteschlange (std::set), freies Pathfinding
+	std::set<Point>::iterator it_p;
+	/// Iterator auf Position in der Prioritätswarteschlange (std::set), weggebundenes Pathfinding
+	std::set<const noRoadNode*,RoadNodeComperator>::iterator it_rn;
+};
+
+/// Die Knoten der Map gespeichert, größtmöglichste Kartengröße nehmen
 NewNode pf_nodes[256*256];
 
+/// Punkte als Verweise auf die obengenannen Knoten, damit nur die beiden Koordinaten x,y im set mit rumgeschleppt
+/// werden müsen
 struct Point {
+public:
+	/// Die beiden Koordinaten des Punktes
 	MapCoord x,y;
+
+public:
+	/// Konstruktoren
 	Point() {};
 	Point(const MapCoord x, const MapCoord y) : x(x), y(y) {}
 
+	/// Koordinaten des Ziels beim jeweils aktuellen Pathfinding, die wir zur Bewertung der Punkte benötigen
 	static MapCoord dst_x, dst_y;
+	/// Pointer auf GameWorld, die wir brauchen, um die IDs zu berechnen bzw. die Kartengröße zu bekommen
 	static const GameWorldBase * gwb;
+	/// Diese statischen Variablen zu Beginn des Pathfindings festlegen
 	static void Init(const MapCoord dst_x, const MapCoord dst_y,const GameWorldBase * gwb)
 	{
 		Point::dst_x = dst_x;
@@ -81,11 +101,16 @@ struct Point {
 		Point::gwb = gwb;
 	}
 
+	/// Operator für den Vergleich 
 	bool operator<(const Point two) const
 	{
+		// Weglängen schätzen für beide Punkte, indem man den bisherigen Weg mit der Luftlinie vom aktullen 
+		// Punkt zum Ziel addiert und auf diese Weise den kleinsten Weg auswählt
 		unsigned way1 = pf_nodes[gwb->MakeCoordID(x,y)].way + CalcDistance(x,y,dst_x,dst_y);
 		unsigned way2 = pf_nodes[gwb->MakeCoordID(two.x,two.y)].way + CalcDistance(two.x,two.y,dst_x,dst_y);
 
+		// Wenn die Wegkosten gleich sind, vergleichen wir die Koordinaten, da wir für std::set eine streng
+		// monoton steigende Folge brauchen
 		if(way1 == way2)
 			return (gwb->MakeCoordID(x,y) < gwb->MakeCoordID(two.x,two.y) );
 		else
@@ -93,20 +118,32 @@ struct Point {
 	}
 };
 
+// Vergleichsoperator für das straßengebundene Pathfinding, wird genauso wie das freie Pathfinding
+// gehandelt, nur dass wir noRoadNodes statt direkt Points vergleichen
+bool RoadNodeComperator::operator()(const noRoadNode* const rn1, const noRoadNode* const rn2) const
+{
+	Point p1 (rn1->GetX(), rn1->GetY()), p2(rn2->GetX(), rn2->GetY());
+	return p1<p2;
+}
+
+/// Definitionen siehe oben
 MapCoord Point::dst_x = 0;
 MapCoord Point::dst_y = 0;
 const GameWorldBase * Point::gwb = NULL;
 
+/// Nach jedem Pathfinding sind Knoten der pf_nodes "verunreinigt", d.h. u.a. visited steht noch auf true
+/// Dazu werden in dieser Liste die Knoten gespeichert, die vor jedem Pathfinding erstmal einmal wieder zurück-
+/// gesetzt werden müssen
 std::vector<unsigned> clean_list;
 
 
-/// Wegfinden ( A* ) --> Wegfindung auf allgemeinen Terrain ( ohne Straäcn ) ( fr Wegebau oder frei herumlaufende )
+/// Wegfinden ( A* ), O(v lg v) --> Wegfindung auf allgemeinen Terrain (ohne Straßen), für Wegbau und frei herumlaufende Berufe
 bool GameWorldBase::FindFreePath(const MapCoord x_start,const MapCoord y_start,
 				  const MapCoord x_dest, const MapCoord y_dest, const bool random_route, 
 				  const unsigned max_route, std::vector<unsigned char> * route, unsigned *length,
 				  unsigned char * first_dir,  FP_Node_OK_Callback IsNodeOK, FP_Node_OK_Callback IsNodeToDestOk, const void * param)
 {
-		// Erst einmal wieder aufräumen
+	// Erst einmal wieder aufräumen
 	for(unsigned i = 0;i<clean_list.size();++i)
 		pf_nodes[clean_list[i]].visited = false;
 	clean_list.clear();
@@ -117,36 +154,38 @@ bool GameWorldBase::FindFreePath(const MapCoord x_start,const MapCoord y_start,
 	// Anfangsknoten einfügen
 	unsigned start_id = MakeCoordID(x_start,y_start);
 	std::pair< std::set<Point>::iterator, bool > ret = todo.insert(Point(x_start,y_start));
-	pf_nodes[start_id].it = ret.first;
+	// Und mit entsprechenden Werten füllen
+	pf_nodes[start_id].it_p = ret.first;
 	pf_nodes[start_id].prev = INVALID_PREV;
 	pf_nodes[start_id].visited = true;
 	clean_list.push_back(start_id);
 	pf_nodes[start_id].way = 0;
 	pf_nodes[start_id].dir = 0;
 
-	while(true)
+	while(todo.size())
 	{
-		// Liste leer und kein Ziel erreicht --> kein Weg
-		if(!todo.size())
-			return false;
-		
+		// Knoten mit den geringsten Wegkosten auswählen
 		Point best = *todo.begin();
 		// Knoten behandelt --> raus aus der todo Liste
 		todo.erase(todo.begin());
 
+		// ID des besten Punktes ausrechnen
 		unsigned best_id = MakeCoordID(best.x,best.y);
 
-		pf_nodes[best_id].it = todo.end();
+		// Dieser Knoten wurde aus dem set entfernt, daher wird der entsprechende Iterator
+		// auf das Ende (also nicht definiert) gesetzt, quasi als "NULL"-Ersatz
+		pf_nodes[best_id].it_p = todo.end();
 
 		if(x_dest == best.x && y_dest == best.y)
 		{
 			// Ziel erreicht!
+			// Jeweils die einzelnen Angaben zurückgeben, falls gewünscht (Pointer übergeben)
 			if(length)
 				*length = pf_nodes[best_id].way;
-
 			if(route)
 				route->resize(pf_nodes[best_id].way);
 
+			// Route rekonstruieren und ggf. die erste Richtung speichern, falls gewünscht
 			for(unsigned z = pf_nodes[best_id].way-1;best_id!=start_id;--z,best_id = pf_nodes[best_id].prev)
 			{
 				if(route)
@@ -155,8 +194,7 @@ bool GameWorldBase::FindFreePath(const MapCoord x_start,const MapCoord y_start,
 					*first_dir = pf_nodes[best_id].dir;
 			}
 				
-
-			//LOG.lprintf("Pathfinding: Nodes: %u; Time: %u ms\n",nodes_count,VideoDriverWrapper::inst().GetTickCount()-pathtime);
+			// Fertig, es wurde ein Pfad gefunden
 			return true;
 		}
 
@@ -168,40 +206,39 @@ bool GameWorldBase::FindFreePath(const MapCoord x_start,const MapCoord y_start,
 		{
 			unsigned i = (z+3)%6;
 
+			// Koordinaten des entsprechenden umliegenden Punktes bilden
 			MapCoord xa = GetXA(best.x,best.y,i),
 				ya = GetYA(best.x,best.y,i);
 
+			// ID des umliegenden Knotens bilden
 			unsigned xaid = MakeCoordID(xa,ya);
 
 			// Knoten schon auf dem Feld gebildet?
 			if(pf_nodes[xaid].visited)
 			{
 				// Dann nur ggf. Weg und Vorgänger korrigieren, falls der Weg kürzer ist
-				if(pf_nodes[best_id].it != todo.end() && pf_nodes[best_id].way+1 < pf_nodes[xaid].way)
+				if(pf_nodes[best_id].it_p != todo.end() && pf_nodes[best_id].way+1 < pf_nodes[xaid].way)
 				{
 					pf_nodes[xaid].way  = pf_nodes[best_id].way+1;
 					pf_nodes[xaid].prev = best_id;
-					todo.erase(pf_nodes[xaid].it);
+					todo.erase(pf_nodes[xaid].it_p);
 					ret = todo.insert(Point(xa,ya));
-					pf_nodes[xaid].it = ret.first;
+					pf_nodes[xaid].it_p = ret.first;
 
 				}
+				// Wir wollen nicht denselben Knoten noch einmal einfügen, daher Abbruch
 				continue;
 			}
 
-			// Nicht über den Kartenrand lesen!
-			if(xa >= GetWidth() || xa < 0 || 
-				ya >= GetHeight() || ya < 0)
-				continue;
-
 			// Das Ziel wollen wir auf jedenfall erreichen lassen, daher nur diese zusätzlichen
 			// Bedingungen, wenn es nicht das Ziel ist
-			if(!(xa == x_dest && ya == y_dest))
+			if(!(xa == x_dest && ya == y_dest) && IsNodeOK)
 			{
 				if(!IsNodeOK(*this,xa,ya,i,param))
 					continue;
 			}
 
+			// Zusätzliche Bedingungen, auch die das letzte Stück zum Ziel betreffen
 			if(IsNodeToDestOk)
 			{
 				if(!IsNodeToDestOk(*this,xa,ya,i,param))
@@ -216,17 +253,144 @@ bool GameWorldBase::FindFreePath(const MapCoord x_start,const MapCoord y_start,
 			pf_nodes[xaid].prev = best_id;
 
 			ret = todo.insert(Point(xa,ya));
-			pf_nodes[xaid].it = ret.first;
+			pf_nodes[xaid].it_p = ret.first;
+		}
+	}
+
+	// Liste leer und kein Ziel erreicht --> kein Weg
+	return false;
+}
+
+/// Wegfinden ( A* ), O(v lg v) --> Wegfindung auf allgemeinen Terrain (ohne Straßen), für Wegbau und frei herumlaufende Berufe
+bool GameWorldBase::FindPathOnRoads(const noRoadNode * const start, const noRoadNode * const goal,
+									const bool ware_mode, std::vector<unsigned char> * route, unsigned * length,
+									unsigned char * first_dir, const RoadSegment * const forbidden)
+{
+	// Erst einmal wieder aufräumen
+	for(unsigned i = 0;i<clean_list.size();++i)
+		pf_nodes[clean_list[i]].visited = false;
+	clean_list.clear();
+
+	std::set<const noRoadNode*,RoadNodeComperator> todo;
+	Point::Init(goal->GetX(),goal->GetY(),this);
+
+	// Anfangsknoten einfügen
+	std::pair< std::set<const noRoadNode*, RoadNodeComperator>::iterator, bool > ret = todo.insert(start);
+	unsigned start_id = MakeCoordID(start->GetX(),start->GetY());
+	pf_nodes[start_id].it_rn = ret.first;
+	pf_nodes[start_id].prev = INVALID_PREV;
+	pf_nodes[start_id].visited = true;
+	clean_list.push_back(start_id);
+	pf_nodes[start_id].way = 0;
+	pf_nodes[start_id].count_nodes = 0;
+	pf_nodes[start_id].dir = 0;
+
+	while(true)
+	{
+		// Liste leer und kein Ziel erreicht --> kein Weg
+		if(!todo.size())
+			return false;
+		
+		// Knoten mit den geringsten Wegkosten auswählen
+		const noRoadNode* best = *todo.begin();
+		// Knoten behandelt --> raus aus der todo Liste
+		todo.erase(todo.begin());
+
+		// ID des bisher besten Knotens bilden
+		unsigned best_id = MakeCoordID(best->GetX(),best->GetY());
+
+		// Knoten wurde entfernt, daher erstmal auf das Ende des set setzen (als Alternative zu NULL)
+		pf_nodes[best_id].it_rn = todo.end();
+
+		// Ziel erreicht?
+		if(best == goal)
+		{
+			// Ziel erreicht!
+			// Jeweils die einzelnen Angaben zurückgeben, falls gewünscht (Pointer übergeben)
+			if(length)
+				*length = pf_nodes[best_id].way;
+
+			if(route)
+				route->resize(pf_nodes[best_id].count_nodes);
+			
+			// Route rekonstruieren und ggf. die erste Richtung speichern, falls gewünscht
+			for(unsigned z = pf_nodes[best_id].count_nodes-1;best_id!=start_id;--z,best_id = pf_nodes[best_id].prev)
+			{
+				if(route)
+					route->at(z) = pf_nodes[best_id].dir;
+				if(first_dir && z == 0)
+					*first_dir = pf_nodes[best_id].dir;
+			}
+				
+
+			// Fertig, es wurde ein Pfad gefunden
+			return true;
+		}
+		
+		// Nachbarflagge bzw. Wege in allen 6 Richtungen verfolgen
+		for(unsigned i = 0;i<6;++i)
+		{
+			// Gibt es auch einen solchen Weg bzw. Nachbarflagge?
+			const noRoadNode * rna = best->GetNeighbour(i);
+			// Wenn nicht, brauchen wir mit dieser Richtung gar nicht weiter zu machen
+			if(!rna)
+				continue;
+			// ID des umliegenden Knotens bilden
+			unsigned xaid = MakeCoordID(rna->GetX(),rna->GetY());
+
+			// Neuer Weg für diesen neuen Knoten berechnen
+			unsigned new_way = pf_nodes[best_id].way +best->routes[i]->route.size();
+			// Im Warenmodus müssen wir Strafpunkte für überlastete Träger hinzuaddieren,
+			// damit der Algorithmus auch Ausweichrouten auswählt
+			if(ware_mode)
+				new_way += best->GetPunishmentPoints(i);
+
+			// Knoten schon auf dem Feld gebildet?
+			if(pf_nodes[xaid].visited)
+			{
+				// Dann nur ggf. Weg und Vorgänger korrigieren, falls der Weg kürzer ist
+				if(pf_nodes[best_id].it_rn != todo.end() && new_way < pf_nodes[xaid].way)
+				{
+					pf_nodes[xaid].way  = new_way;
+					pf_nodes[xaid].prev = best_id;
+					todo.erase(pf_nodes[xaid].it_rn);
+					ret = todo.insert(rna);
+					pf_nodes[xaid].it_rn = ret.first;
+				}
+				continue;
+			}
+
+			// evtl verboten?
+			if(best->routes[i] == forbidden)
+				continue;
+
+			// evtl Wasserstraße?
+			if(best->routes[i]->GetRoadType() == RoadSegment::RT_BOAT && !ware_mode)
+				continue;
+
+
+			// Alles in Ordnung, Knoten kann gebildet werden
+			pf_nodes[xaid].visited = true;
+			clean_list.push_back(xaid);
+			pf_nodes[xaid].count_nodes = pf_nodes[best_id].count_nodes + 1;
+			pf_nodes[xaid].way = new_way;
+			pf_nodes[xaid].dir = i;
+			pf_nodes[xaid].prev = best_id;
+
+			ret = todo.insert(rna);
+			pf_nodes[xaid].it_rn = ret.first;
 		}
 	}
 }
 
-
+/// Paremter-Struktur für Straßenbaupathfinding
 struct Param_RoadPath
 {
+	/// Straßenbaumodus erlaubt?
 	bool boat_road;
 };
 
+/// Abbruch-Bedingungen für Straßenbau-Pathfinding
 bool IsPointOK_RoadPath(const GameWorldBase& gwb, const MapCoord x, const MapCoord y, const unsigned char dir, const void *param)
 {
 	const Param_RoadPath * prp = static_cast<const Param_RoadPath*>(param);
@@ -241,12 +405,14 @@ bool IsPointOK_RoadPath(const GameWorldBase& gwb, const MapCoord x, const MapCoo
 	return true;
 }
 
+/// Straßenbau-Pathfinding
 bool GameWorldViewer::FindRoadPath(const MapCoord x_start,const MapCoord y_start, const MapCoord x_dest, const MapCoord y_dest,std::vector<unsigned char>& route, const bool boat_road)
 {
 	Param_RoadPath prp = { boat_road };
 	return FindFreePath(x_start,y_start,x_dest,y_dest,false,100,&route,NULL,NULL,IsPointOK_RoadPath,NULL, &prp);
 }
 
+/// Abbruch-Bedingungen für freien Pfad für Menschen
 bool IsPointOK_HumanPath(const GameWorldBase& gwb, const MapCoord x, const MapCoord y, const unsigned char dir, const void *param)
 {
 	// Feld passierbar?
@@ -269,6 +435,8 @@ bool IsPointOK_HumanPath(const GameWorldBase& gwb, const MapCoord x, const MapCo
 	return true;
 }
 
+/// Zusätzliche Abbruch-Bedingungen für freien Pfad für Menschen, die auch bei der letzen Kante
+/// zum Ziel eingehalten werden müssen
 bool IsPointToDestOK_HumanPath(const GameWorldBase& gwb, const MapCoord x, const MapCoord y, const unsigned char dir, const void *param)
 {
 	// Feld passierbar?
@@ -292,210 +460,22 @@ unsigned char GameWorldBase::FindHumanPath(const MapCoord x_start,const MapCoord
 		return 0xFF;
 }
 
-
-unsigned char GameWorldGame::FindPath(const noRoadNode * const startflag, const noRoadNode * const goal,bool reverse,unsigned * length,const RoadSegment * const forbidden, const bool use_boat_roads)
+/// Wegfindung für Menschen im Straßennetz
+unsigned char GameWorldGame::FindHumanPathOnRoads(const noRoadNode * const start, const noRoadNode * const goal,unsigned * length,const RoadSegment * const forbidden)
 {
-	if(startflag == goal)
-	{
-		if(length)
-			*length = 0;
+	unsigned char first_dir;
+	if(FindPathOnRoads(start, goal, false, NULL, length, &first_dir,forbidden))
+		return first_dir;
+	else
 		return 0xFF;
-	}
-	unsigned nodes_count = 0;
-	//unsigned pathtime = VideoDriverWrapper::inst().GetTickCount();
-
-	memset(handled_nodes,0,GetWidth()*GetHeight()*sizeof(unsigned short));
-	list<FlagNode*> todo;
-
-	// Anfangsknoten einfgen
-	FlagNode start(startflag,0,0,0,0);
-	todo.push_back(&start);
-
-
-	while(1)
-	{
-		// Liste leer und kein Ziel erreicht --> kein Weg
-		if(!todo.size())
-			return 0xFF;
-
-		// haben wir kein Ziel mehr O.o?
-		assert(goal);
-
-		// Knoten mit den wenigsten Wegkosten zum Ziel auswäclen
-		unsigned shortest_route = 0xFFFFFFFF;
-
-		list<FlagNode*>::iterator best_it;
-
-		for(list<FlagNode*>::iterator it = todo.begin(); it.valid(); ++it)
-		{
-
-			unsigned new_way = (*it)->realway + abs(goal->GetX() - (*it)->flag->GetX()) + abs(goal->GetY() - (*it)->flag->GetY());
-			if(new_way < shortest_route)
-			{
-				shortest_route = new_way;
-				best_it = it;
-			}
-		}
-
-
-
-		// Koordinaten der 6 umliegenden Punkte
-		/* id
-
-				1 2
-			 0 P 3
-				5 4
-			*/
-
-
-		// Knoten in alle 6 Richtungen bilden
-		for(unsigned i = 0;i<6;++i)
-		{
-			noRoadNode * neighbour;
-			if( (neighbour = (*best_it)->flag->GetNeighbour(i)) )
-			{
-				// evtl verboten?
-				if((*best_it)->flag->routes[i] == forbidden)
-					continue;
-
-				// evtl Wasserstraße?
-				if((*best_it)->flag->routes[i]->GetRoadType() == RoadSegment::RT_BOAT && !use_boat_roads)
-					continue;
-
-				if(neighbour == goal)
-				{
-					// Ziel erreicht!
-					(*best_it)->next[i] = new FlagNode(neighbour,(*best_it)->way+1,*best_it,i,0);
-
-					FlagNode * start = (*best_it)->next[i];
-
-					if(length)
-						*length = (*best_it)->realway+(*best_it)->flag->routes[i]->route.size();
-
-
-					while(start->prev->prev) start = start->prev;
-
-					return start->dir;
-				}
-
-				// Punktezahl (Weg) für diesen Punkt ausrechnen
-				unsigned short way_score = (*best_it)->realway+(*best_it)->flag->routes[i]->route.size();
-
-
-				// Knoten schon auf dem Feld gebildet, wenn ja muss dieser besser sein
-				if(handled_nodes[neighbour->GetY() * GetWidth() + neighbour->GetX()])
-				{
-					if(way_score >= handled_nodes[neighbour->GetY() * GetWidth() + neighbour->GetX()])
-						continue;
-				}
-
-
-				(*best_it)->next[i] = new FlagNode(neighbour,(*best_it)->way+1,*best_it,i,way_score);
-				handled_nodes[neighbour->GetY() * GetWidth() + neighbour->GetX()] = way_score;
-
-
-				todo.push_back((*best_it)->next[i]);
-				++nodes_count;
-			}
-		}
-
-		// Knoten behandelt --> raus aus der todo Liste
-		todo.erase(best_it);
-	}
 }
 
-
-unsigned char GameWorldGame::FindPathForWare(const noRoadNode * const startflag, const noRoadNode * const goal)
+/// Wegfindung für Waren im Straßennetz
+unsigned char GameWorldGame::FindPathForWareOnRoads(const noRoadNode * const start, const noRoadNode * const goal,unsigned * length)
 {
-	unsigned nodes_count = 0;
-
-	if(!goal)
+	unsigned char first_dir;
+	if(FindPathOnRoads(start, goal, true, NULL, length, &first_dir,NULL))
+		return first_dir;
+	else
 		return 0xFF;
-
-	memset(handled_nodes,0,GetWidth()*GetHeight()*sizeof(unsigned short));
-	list<FlagNode*> todo;
-
-
-
-	// Anfangsknoten einfgen
-	FlagNode start(startflag,0,0,0,0);
-	todo.push_back(&start);
-
-
-	while(1)
-	{
-		// Liste leer und kein Ziel erreicht --> kein Weg
-		if(!todo.size())
-			return 0xFF;
-
-		// Knoten mit den wenigsten Wegkosten zum Ziel auswäclen
-		unsigned shortest_route = 0xFFFFFFFF;
-
-		list<FlagNode*>::iterator best_it;
-
-		for(list<FlagNode*>::iterator it = todo.begin(); it.valid(); ++it)
-		{
-
-			unsigned new_way = (*it)->realway + abs(goal->GetX() - (*it)->flag->GetX()) 
-				+ abs(goal->GetY() - (*it)->flag->GetY());
-			if(new_way < shortest_route)
-			{
-				shortest_route = new_way;
-				best_it = it;
-			}
-		}
-
-
-		// Koordinaten der 6 umliegenden Punkte
-		/* id
-
-				1 2
-			 0 P 3
-				5 4
-			*/
-
-
-		// Knoten in alle 6 Richtungen bilden
-		for(unsigned i = 0;i<6;++i)
-		{
-			noRoadNode * neighbour;
-			if( (neighbour = (*best_it)->flag->GetNeighbour(i)) )
-			{
-				if(neighbour == goal)
-				{
-					// Ziel erreicht!
-					(*best_it)->next[i] = new FlagNode(neighbour,(*best_it)->way+1,*best_it,i,0);
-					FlagNode * start = (*best_it)->next[i];
-
-					while(start->prev->prev) start = start->prev;
-
-					return start->dir;
-				}
-
-				// Punktezahl (Weg) für diesen Punkt ausrechnen
-				unsigned short way_score = (*best_it)->realway+(*best_it)->flag->routes[i]->route.size()+(*best_it)->flag->GetPunishmentPoints(i);
-
-
-				// Knoten schon auf dem Feld gebildet, wenn ja muss dieser besser sein
-				if(handled_nodes[neighbour->GetY() * GetWidth() + neighbour->GetX()])
-				{
-					if(way_score >= handled_nodes[neighbour->GetY() * GetWidth() + neighbour->GetX()])
-						continue;
-				}
-
-
-
-				(*best_it)->next[i] = new FlagNode(neighbour,(*best_it)->way+1,*best_it,i,way_score);
-				handled_nodes[neighbour->GetY() * GetWidth() + neighbour->GetX()] = way_score;
-
-
-				todo.push_back((*best_it)->next[i]);
-				++nodes_count;
-			}
-		}
-
-		// Knoten behandelt --> raus aus der todo Liste
-		todo.erase(best_it);
-	}
 }
-

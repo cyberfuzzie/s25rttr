@@ -1,4 +1,4 @@
-// $Id: Ware.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: Ware.cpp 4868 2009-05-15 15:48:04Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -79,7 +79,7 @@ goal(sgd->PopObject<noBaseBuilding>(GOT_UNKNOWN))
 void Ware::RecalcRoute()
 {
 	// Nächste Richtung nehmen
-	next_dir = gwg->FindPathForWare(location,goal);
+	next_dir = gwg->FindPathForWareOnRoads(location,goal);
 
 	//char str[256];
 	//sprintf(str,"gf = %u, obj_id = %u, type = %u, next_dir = %u, goal = %u\n", 
@@ -99,7 +99,7 @@ void Ware::RecalcRoute()
 			// Lagerhaus ist unser neues Ziel
 			goal = wh;
 			// Weg berechnen
-			next_dir = gwg->FindPathForWare(location,goal);
+			next_dir = gwg->FindPathForWareOnRoads(location,goal);
 
 			wh->TakeWare(this);
 		}
@@ -156,7 +156,7 @@ void Ware::GoalDestroyed()
 			goal = GAMECLIENT.GetPlayer(location->GetPlayer())->FindWarehouse(location,FW::Condition_StoreWare,0,true,&type,true);
 
 			unsigned char last_next_dir = next_dir;
-			next_dir = gwg->FindPathForWare(location,goal);
+			next_dir = gwg->FindPathForWareOnRoads(location,goal);
 			RemoveWareJobForCurrentDir(last_next_dir);
 
 
@@ -262,7 +262,7 @@ void Ware::FindRouteToWarehouse()
 		//GAMECLIENT.GetPlayer(location->GetPlayer()].RegisterWare(this);
 
 		// Weg suchen
-		next_dir = gwg->FindPathForWare(location,goal);
+		next_dir = gwg->FindPathForWareOnRoads(location,goal);
 
 		// Es wurde ein gültiger Weg gefunden! Dann muss aber noch dem nächsten Träger Bescheid gesagt werden
 		location->routes[next_dir]->AddWareJob(location);
@@ -276,5 +276,5 @@ bool Ware::FindRouteFromWarehouse()
 {
 	if(type < 0) 
 		return 0;
-	return (gwg->FindPathForWare(location,goal) != 0xFF);
+	return (gwg->FindPathForWareOnRoads(location,goal) != 0xFF);
 }

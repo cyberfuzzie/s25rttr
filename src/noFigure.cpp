@@ -1,4 +1,4 @@
-// $Id: noFigure.cpp 4857 2009-05-11 18:31:33Z OLiver $
+// $Id: noFigure.cpp 4868 2009-05-15 15:48:04Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -354,7 +354,7 @@ void noFigure::WalkToGoal()
 		else
 		{
 			// Neuen Weg berechnen
-			unsigned char route = gwg->FindPath(gwg->GetSpecObj<noRoadNode>(x,y),goal,0);
+			unsigned char route = gwg->FindHumanPathOnRoads(gwg->GetSpecObj<noRoadNode>(x,y),goal);
 			// Kein Weg zum Ziel... nächstes Lagerhaus suchen
 			if(route == 0xFF)
 			{

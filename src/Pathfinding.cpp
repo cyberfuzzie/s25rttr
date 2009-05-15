@@ -1,4 +1,4 @@
-// $Id: Pathfinding.cpp 4868 2009-05-15 15:48:04Z OLiver $
+// $Id: Pathfinding.cpp 4869 2009-05-15 19:44:27Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -266,6 +266,10 @@ bool GameWorldBase::FindPathOnRoads(const noRoadNode * const start, const noRoad
 									const bool ware_mode, std::vector<unsigned char> * route, unsigned * length,
 									unsigned char * first_dir, const RoadSegment * const forbidden)
 {
+	// Irgendwelche Null-Anfänge oder Ziele? --> Kein Weg
+	if(!start || !goal)
+		return false;
+
 	// Erst einmal wieder aufräumen
 	for(unsigned i = 0;i<clean_list.size();++i)
 		pf_nodes[clean_list[i]].visited = false;

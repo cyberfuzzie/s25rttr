@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 4857 2009-05-11 18:31:33Z OLiver $
+// $Id: nobMilitary.cpp 4877 2009-05-17 09:51:44Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -294,8 +294,8 @@ void nobMilitary::LookForEnemyBuildings()
 		{
 			unsigned distance = CalcDistance(x,y,(*it)->GetX(),(*it)->GetY());
 
-			// in nahem Umkreis?
-			if(distance < MAX_MILITARY_DISTANCE_NEAR)
+		// in nahem Umkreis, also Grenzen berühren sich
+		if(distance <= MILITARY_RADIUS[size] + MILITARY_RADIUS[static_cast<nobMilitary*>(*it)->size]) // warum erzeugtn das ne warning in vs2008?
 			{
 				// Grenznähe entsprechend setzen
 				frontier_distance = 2;
@@ -304,8 +304,9 @@ void nobMilitary::LookForEnemyBuildings()
 				if((*it)->GetBuildingType() >= BLD_BARRACKS && (*it)->GetBuildingType() <= BLD_FORTRESS)
 					static_cast<nobMilitary*>(*it)->NewEnemyMilitaryBuilding(2);
 			}
-			// in mittlerem Umkreis?
-			else if(distance < MAX_MILITARY_DISTANCE_MIDDLE)
+			// in mittlerem Umkreis, also theoretisch angreifbar?
+      else if(distance <= BASE_ATTACKING_DISTANCE 
+        + TROOPS_COUNT[(*it)->GetNation()][static_cast<nobMilitary*>(*it)->size] * EXTENDED_ATTACKING_DISTANCE)
 			{
 				// Grenznähe entsprechend setzen
 				if(!frontier_distance)

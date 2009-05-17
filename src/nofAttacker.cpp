@@ -157,7 +157,7 @@ void nofAttacker::Walked()
 			}
 			else
 			{
-				if( (dir = gwg->FindHumanPath(x,y,flag_x,flag_y,5)) == 0xFF)
+				if( (dir = gwg->FindHumanPath(x,y,flag_x,flag_y,5,true)) == 0xFF)
 				{
 					// es wurde kein Weg mehr gefunden --> neues Plätzchen suchen und warten
 					state = STATE_ATTACKING_WALKINGTOGOAL;
@@ -512,14 +512,14 @@ void nofAttacker::MissAttackingWalk()
 				defender->GetY() == attacked_goal->GetY() ))
 				// zum Verteidiger laufen, falls er in der Nähe ist
 				dir = gwg->FindHumanPath(x,y,defender->GetX(),
-					defender->GetY(),100);
+					defender->GetY(),100,true);
 			else
 			// Zur Flagge des angegriffenen Gebäudes laufen
-				dir = gwg->FindHumanPath(x,y,goal_x,goal_y,100);
+				dir = gwg->FindHumanPath(x,y,goal_x,goal_y,100,true);
 		}
 		else
 			// Zur Flagge des angegriffenen Gebäudes laufen
-			dir = gwg->FindHumanPath(x,y,goal_x,goal_y,100);
+			dir = gwg->FindHumanPath(x,y,goal_x,goal_y,100,true);
 	}
 	else
 	{
@@ -643,7 +643,7 @@ bool nofAttacker::AttackFlag(nofDefender * defender)
 {
 	// Zur Flagge laufen, findet er einen Weg?
 	unsigned char tmp_dir = gwg->FindHumanPath(x,y,attacked_goal->GetFlag()->GetX(),
-		attacked_goal->GetFlag()->GetY(),3);
+		attacked_goal->GetFlag()->GetY(),3,true);
 
 	if(tmp_dir != 0xFF)
 	{
@@ -778,7 +778,7 @@ void nofAttacker::CapturingWalking()
 		}
 
 		// weiter zur Flagge laufen
-		if((dir = gwg->FindHumanPath(x,y,flag_x,flag_y,10)) == 0xFF)
+		if((dir = gwg->FindHumanPath(x,y,flag_x,flag_y,10,true)) == 0xFF)
 		{
 			// auweia, es wurde kein Weg mehr gefunden
 

@@ -280,7 +280,7 @@ void nofAggressiveDefender::MissAggressiveDefendingWalk()
 	if(attacker)
 		// Zum Angreifer laufen
 		dir = gwg->FindHumanPath(x,y,attacker->GetX(),
-			attacker->GetY(),100);
+			attacker->GetY(),100,true);
 	else
 	{
 		// Ansonsten gehts wieder zurück nach Hause

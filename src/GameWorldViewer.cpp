@@ -1,4 +1,4 @@
-// $Id: GameWorldViewer.cpp 4857 2009-05-11 18:31:33Z OLiver $
+// $Id: GameWorldViewer.cpp 4877 2009-05-17 09:51:44Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -426,15 +426,25 @@ unsigned GameWorldViewer::GetAvailableSoldiersForAttack(const unsigned char play
 			unsigned short soldiers_count =
 				(static_cast<nobMilitary*>(*it)->GetTroopsCount()>1)?
 				((static_cast<nobMilitary*>(*it)->GetTroopsCount()-1)*GAMECLIENT.GetPlayer(player_attacker)->military_settings[3]/5):0;
-			// darf nicht weiter als MAX_ATTACKING_DISTANCE entfernt sein
-			if(CalcDistance(x,y,(*it)->GetX(),(*it)->GetY()) < MAX_ATTACKING_DISTANCE && soldiers_count)
+
+		unsigned int distance = CalcDistance(x,y,(*it)->GetX(),(*it)->GetY());
+
+		// Falls Entfernung größer als Basisreichweite, Soldaten subtrahieren
+		if (distance > BASE_ATTACKING_DISTANCE)
+		{
+			// je einen soldaten zum entfernen vormerken für jeden EXTENDED_ATTACKING_DISTANCE großen Schritt
+			unsigned short soldiers_to_remove = ((distance - BASE_ATTACKING_DISTANCE + EXTENDED_ATTACKING_DISTANCE - 1) / EXTENDED_ATTACKING_DISTANCE);
+			if (soldiers_to_remove < soldiers_count)
+			  soldiers_count -= soldiers_to_remove;
+			else
+			  continue;
+		}
+
+			// und auch der Weg zu Fuß darf dann nicht so weit sein, wenn das alles bestanden ist, können wir ihn nehmen..
+			if(soldiers_count && FindHumanPath(x,y,(*it)->GetX(),(*it)->GetY(),MAX_ATTACKING_RUN_DISTANCE,false) != 0xFF)
 			{
-				// und auch der Weg zu Fuß darf dann nicht so weit sein, wenn das alles bestanden ist, können wir ihn nehmen..
-				if(FindHumanPath(x,y,(*it)->GetX(),(*it)->GetY(),70,false) != 0xFF)
-				{
-					// Soldaten davon nehmen
-					total_count += soldiers_count;
-				}
+				// Soldaten davon nehmen
+				total_count += soldiers_count;
 			}
 		}
 	}

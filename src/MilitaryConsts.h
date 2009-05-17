@@ -1,4 +1,4 @@
-// $Id: MilitaryConsts.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: MilitaryConsts.h 4877 2009-05-17 09:51:44Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -27,8 +27,17 @@ const unsigned short MILITARY_SQUARE_SIZE = 20;
 const unsigned MAX_MILITARY_DISTANCE_NEAR = 18;
 const unsigned MAX_MILITARY_DISTANCE_MIDDLE = 26;
 
-/// Maximale Angriffsreichweite
-const unsigned MAX_ATTACKING_DISTANCE = 20;
+/// Maximale Angriffsreichweite - jetzt überflüssig
+//const unsigned MAX_ATTACKING_DISTANCE = 20;
+
+/// Basisangriffsreichweite (Angriff mit allen Soldaten möglich)
+const unsigned BASE_ATTACKING_DISTANCE = 25;
+
+/// Erweiterte Reichweite, für die jeweils ein Soldat von der Angriffsarmee abgezogen wird
+const unsigned EXTENDED_ATTACKING_DISTANCE = 3;
+
+/// Maximale Länge für den Laufweg beim Angriff
+const unsigned MAX_ATTACKING_RUN_DISTANCE = 70;
 
 /// Besatzung in den einzelnen Militärgebäuden und nach Nation 
 const int TROOPS_COUNT[4][4] =
@@ -49,7 +58,7 @@ const unsigned short GOLD_COUNT[4][4] =
 };
 
 /// Radien der Militärgebäude ( die letzten beiden sind HQ und Hafen!)
-const unsigned short MILITARY_RADIUS[6] =
+const unsigned MILITARY_RADIUS[6] =
 { 8,9,10,11,9,4 };
 
 /// Fahnenpositionen bei den Militärgebäuden

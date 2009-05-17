@@ -1,4 +1,4 @@
-// $Id: SerializableArray.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: SerializableArray.h 4878 2009-05-17 11:40:50Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -20,6 +20,8 @@
 #define SERIALIZABLEARRAY_H_INCLUDED
 
 #pragma once
+
+#include "Message.h"
 
 template <class Type, class Allocator = Type>
 class SerializableArray
@@ -140,16 +142,13 @@ public:
 	 *
 	 *  @author FloSoft
 	 */
-	int serialize(char *data) const
+	void serialize(Message * msg) const
 	{
-		if(data)
-			memcpy(&data[0], &count, 4);
+		if(msg)
+			msg->pushUI(count);
 
-		int size = 4;
 		for(unsigned int i = 0; i < count; ++i)
-			size += elements[i].serialize((data ? &data[size] : NULL));
-
-		return size;
+			elements[i].serialize(msg);
 	}
 
 	///////////////////////////////////////////////////////////////////////////////
@@ -162,20 +161,15 @@ public:
 	 *
 	 *  @author FloSoft
 	 */
-	int deserialize(const char *data)
+	void deserialize(Message * msg)
 	{
-		if(!data)
-			return 0;
+		if(!msg)
+			return;
 
-		memcpy(&count, &data[0], 4);
+		count = msg->popUI();
 
-		alloc(count);
-
-		int size = 4;
 		for(unsigned int i = 0; i < count; ++i)
-			size += elements[i].deserialize(&data[size]);
-
-		return size;
+			elements[i].deserialize(msg);
 	}
 
 	///////////////////////////////////////////////////////////////////////////////

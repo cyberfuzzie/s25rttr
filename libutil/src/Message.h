@@ -1,4 +1,4 @@
-// $Id: Message.h 4851 2009-05-10 12:21:04Z FloSoft $
+// $Id: Message.h 4878 2009-05-17 11:40:50Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -75,6 +75,8 @@ protected:
 		data = ndata;
 	}
 
+public:
+
 	/// int in Message aufnehmen
 	inline void pushI(const int &value)
 	{
@@ -105,6 +107,18 @@ protected:
 
 		*((unsigned short*)&data[index]) = htons(value);
 		index += sizeof(unsigned short);
+	}
+
+	/// unsigned char in Message aufnehmen
+	inline void pushUC(const unsigned char value)
+	{
+		pushUC(&value,1);
+	}
+
+	/// bool in Message aufnehmen
+	inline void pushB(const bool &value)
+	{
+		pushUC(value ? 1 : 0);
 	}
 
 	/// char in Message aufnehmen
@@ -167,6 +181,20 @@ protected:
 		index += sizeof(unsigned short);
 
 		return value;
+	}
+
+	/// unsigned char in Message aufnehmen
+	inline unsigned short popUC()
+	{
+		unsigned char value;
+		popUC(&value,1);
+		return value;
+	}
+
+	/// bool in Message aufnehmen
+	inline bool popB()
+	{
+		return ((popUC() == 1) ? true : false);
 	}
 
 	/// char* aus Message lesen

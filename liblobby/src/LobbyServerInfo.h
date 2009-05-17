@@ -1,4 +1,4 @@
-// $Id: LobbyServerInfo.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: LobbyServerInfo.h 4878 2009-05-17 11:40:50Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -29,9 +29,9 @@ public:
 	/// leert die Informationen.
 	void clear(void);
 	/// serialisiert die Daten.
-	int serialize(char *data) const;
+	void serialize(Message * msg) const;
 	/// deserialisiert die Daten.
-	int deserialize(const char *data);
+	void deserialize(Message * msg);
 
 	/// Zuweisungsoperator
 	LobbyServerInfo& operator= (const LobbyServerInfo &info)

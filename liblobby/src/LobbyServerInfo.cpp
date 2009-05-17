@@ -1,4 +1,4 @@
-// $Id: LobbyServerInfo.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: LobbyServerInfo.cpp 4878 2009-05-17 11:40:50Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -70,33 +70,18 @@ void LobbyServerInfo::clear(void)
  *
  *  @author FloSoft
  */
-int LobbyServerInfo::serialize(char *data) const
+void LobbyServerInfo::serialize(Message * msg) const
 {
-	unsigned int n = name.length()+1;
-	unsigned int h = host.length()+1;
-	unsigned int v = version.length()+1;
-	unsigned int m = map.length()+1;
-	if(data)
-	{
-		memcpy(&data[0], &serverid, 4);
-
-		strncpy(&data[4], name.c_str(), name.length());
-		strncpy(&data[4+n], host.c_str(), host.length());
-
-		memcpy(&data[4+n+h], &port, 2);
-
-		strncpy(&data[6+n+h], version.c_str(), version.length());
-
-		memcpy(&data[6+n+h+v], &ping, 4);
-
-		strncpy(&data[10+n+h+v], map.c_str(), map.length());
-
-		memcpy(&data[10+n+h+v+m], &curplayers, 4);
-		memcpy(&data[14+n+h+v+m], &maxplayers, 4);
-		memcpy(&data[18+n+h+v+m], &has_password, 4);
-	}
-
-	return 22+n+h+v+m;
+	msg->pushUI(serverid);
+	msg->pushStr(name);
+	msg->pushStr(host);
+	msg->pushUS(port);
+	msg->pushStr(version);
+	msg->pushUI(ping);
+	msg->pushStr(map);
+	msg->pushUI(curplayers);
+	msg->pushUI(maxplayers);
+	msg->pushB(has_password);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -109,32 +94,16 @@ int LobbyServerInfo::serialize(char *data) const
  *
  *  @author FloSoft
  */
-int LobbyServerInfo::deserialize(const char *data)
+void LobbyServerInfo::deserialize(Message * msg)
 {
-	if(!data)
-		return 0;
-
-	memcpy(&serverid, &data[0], 4);
-
-	name = &data[4];
-	unsigned int n = name.length()+1;
-
-	host = &data[4+n];
-	unsigned int h = host.length()+1;
-
-	memcpy(&port, &data[4+n+h], 2);
-
-	version = &data[6+n+h];
-	unsigned int v = version.length()+1;
-
-	memcpy(&ping, &data[6+n+h+v], 4);
-
-	map = &data[10+n+h+v];
-	unsigned int m = map.length()+1;
-
-	memcpy(&curplayers, &data[10+n+h+v+m], 4);
-	memcpy(&maxplayers, &data[14+n+h+v+m], 4);
-	memcpy(&has_password, &data[18+n+h+v+m], 4);
-
-	return 22+n+h+v+m;
+	serverid = msg->popUI();
+	name = msg->popStr();
+	host = msg->popStr();
+	port = msg->popUS();
+	version = msg->popStr();
+	ping = msg->popUI();
+	map = msg->popStr();
+	curplayers = msg->popUI();
+	maxplayers = msg->popUI();
+	has_password = msg->popB();
 }

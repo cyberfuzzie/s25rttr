@@ -1,4 +1,4 @@
-// $Id: LobbyMessages.h 4850 2009-05-10 11:50:42Z FloSoft $
+// $Id: LobbyMessages.h 4878 2009-05-17 11:40:50Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -235,8 +235,7 @@ public:
 			LOG.write("    %d: %d %s %s:%d %s %d %s %d %d\n", i, server->getId(), server->getName().c_str(), server->getHost().c_str(), server->getPort(), server->getVersion().c_str(), server->getPing(), server->getMap().c_str(), server->getCurPlayers(), server->getMaxPlayers() );
 		}
 
-		alloc(list.serialize(NULL));
-		list.serialize(data);
+		list.serialize(this);
 	}
 	void run(MessageInterface *callback, unsigned int id) 
 	{ 
@@ -249,7 +248,7 @@ public:
 		}
 		else // Antwort
 		{
-			list.deserialize(data);
+			list.deserialize(this);
 
 			LOG.write("<<< NMS_LOBBY_SERVERLIST(%d)\n", list.getCount());
 			for(unsigned int i = 0; i < list.getCount(); ++i)
@@ -285,8 +284,7 @@ public:
 		LOG.write(">>> NMS_LOBBY_SERVERINFO\n");
 		LOG.write("    %d %s %s:%d %s %d %s %d %d\n", info.getId(), info.getName().c_str(), info.getHost().c_str(), info.getPort(), info.getVersion().c_str(), info.getPing(), info.getMap().c_str(), info.getCurPlayers(), info.getMaxPlayers() );
 
-		alloc(info.serialize(NULL));
-		info.serialize(data);
+		info.serialize(this);
 	}
 	void run(MessageInterface *callback, unsigned int id)
 	{ 
@@ -301,7 +299,7 @@ public:
 		}
 		else // Antwort
 		{
-			info.deserialize(data);
+			info.deserialize(this);
 
 			LOG.write("<<< NMS_LOBBY_SERVERINFO\n");
 			LOG.write("    %d %s %s:%d %s %d %s %d %d\n", info.getId(), info.getName().c_str(), info.getHost().c_str(), info.getPort(), info.getVersion().c_str(), info.getPing(), info.getMap().c_str(), info.getCurPlayers(), info.getMaxPlayers() );
@@ -333,8 +331,7 @@ public:
 			LOG.write("    %d: %d %s %s %d %d %d\n", i, player->getId(), player->getName().c_str(), player->getVersion().c_str(), player->getPunkte(), player->getGewonnen(), player->getVerloren());
 		}
 
-		alloc(list.serialize(NULL));
-		list.serialize(data);
+		list.serialize(this);
 	}
 	void run(MessageInterface *callback, unsigned int id)
 	{ 
@@ -347,7 +344,7 @@ public:
 		}
 		else // Antwort
 		{
-			list.deserialize(data);
+			list.deserialize(this);
 
 			LOG.write("<<< NMS_LOBBY_RANKINGLIST(%d)\n", list.getCount());
 			for(unsigned int i = 0; i < list.getCount(); ++i)
@@ -384,8 +381,7 @@ public:
 			LOG.write("    %d: %d %s %s %d %d %d\n", i, player->getId(), player->getName().c_str(), player->getVersion().c_str(), player->getPunkte(), player->getGewonnen(), player->getVerloren());
 		}
 
-		alloc(list.serialize(NULL));
-		list.serialize(data);
+		list.serialize(this);
 	}
 	void run(MessageInterface *callback, unsigned int id)
 	{ 
@@ -398,7 +394,7 @@ public:
 		}
 		else // Antwort
 		{
-			list.deserialize(data);
+			list.deserialize(this);
 
 			LOG.write("<<< NMS_LOBBY_PLAYERLIST(%d)\n", list.getCount());
 			for(unsigned int i = 0; i < list.getCount(); ++i)
@@ -535,17 +531,14 @@ public:
 		LOG.write(">>> NMS_LOBBY_SERVER_ADD\n");
 		LOG.write("    %d %s %s:%d %s %d %s %d %d\n", info.getId(), info.getName().c_str(), info.getHost().c_str(), info.getPort(), info.getVersion().c_str(), info.getPing(), info.getMap().c_str(), info.getCurPlayers(), info.getMaxPlayers() );
 
-		// Größe ermitteln und alloziieren
-		alloc(info.serialize(NULL));
-
 		// Daten serialisieren
-		info.serialize(data);
+		info.serialize(this);
 	}
 	void run(MessageInterface *callback, unsigned int id)
 	{
 		LobbyMessageInterface *cb = dynamic_cast<LobbyMessageInterface*>(callback);
 
-		info.deserialize(data);
+		info.deserialize(this);
 
 		LOG.write("<<< NMS_LOBBY_SERVER_ADD\n");
 		LOG.write("    %d %s %s:%d %s %d %s %d %d\n", info.getId(), info.getName().c_str(), info.getHost().c_str(), info.getPort(), info.getVersion().c_str(), info.getPing(), info.getMap().c_str(), info.getCurPlayers(), info.getMaxPlayers() );

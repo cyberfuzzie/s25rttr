@@ -1,4 +1,4 @@
-// $Id: LobbyPlayerInfo.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: LobbyPlayerInfo.cpp 4878 2009-05-17 11:40:50Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -67,24 +67,14 @@ void LobbyPlayerInfo::clear(void)
  *
  *  @author FloSoft
  */
-int LobbyPlayerInfo::serialize(char *data) const
+void LobbyPlayerInfo::serialize(Message * msg) const
 {
-	unsigned int n = name.length()+1;
-	unsigned int v = version.length()+1;
-
-	if(data)
-	{
-		memcpy(&data[0], &playerid, 4);
-
-		strncpy(&data[4], name.c_str(), name.length());
-		strncpy(&data[4+n], version.c_str(), version.length());
-
-		memcpy(&data[4+n+v], &punkte, 4);
-		memcpy(&data[8+n+v], &gewonnen, 4);
-		memcpy(&data[12+n+v], &verloren, 4);
-	}
-
-	return 16+n+v;
+	msg->pushUI(playerid);
+	msg->pushStr(name);
+	msg->pushStr(version);
+	msg->pushI(punkte);
+	msg->pushUI(gewonnen);
+	msg->pushUI(verloren);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -97,22 +87,12 @@ int LobbyPlayerInfo::serialize(char *data) const
  *
  *  @author FloSoft
  */
-int LobbyPlayerInfo::deserialize(const char *data)
+void LobbyPlayerInfo::deserialize(Message * msg)
 {
-	if(!data)
-		return 0;
-
-	memcpy(&playerid, &data[0], 4);
-
-	name = &data[4];
-	unsigned int n = name.length()+1;
-
-	version = &data[4+n];
-	unsigned int v = version.length()+1;
-
-	memcpy(&punkte, &data[4+n+v], 4);
-	memcpy(&gewonnen, &data[8+n+v], 4);
-	memcpy(&verloren, &data[12+n+v], 4);
-
-	return 16+n+v;
+	playerid = msg->popUI();
+	name = msg->popStr();
+	version = msg->popStr();
+	punkte = msg->popI();
+	gewonnen = msg->popUI();
+	verloren = msg->popUI();
 }

@@ -1,4 +1,4 @@
-// $Id: main.cpp 4889 2009-05-18 18:59:10Z FloSoft $
+// $Id: main.cpp 4893 2009-05-18 22:25:32Z sicherha $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -25,7 +25,7 @@
 	#undef _WIN32
 #endif
 
-#ifdef _WIN32 
+#ifdef _WIN32
 #	include <windows.h>
 #	define chdir SetCurrentDirectory
 #else
@@ -33,6 +33,8 @@
 #	include <cerrno>
 #endif
 
+#include <cstdlib>
+#include <cstring>
 #include <ctime>
 
 #include <iostream>
@@ -64,7 +66,7 @@ int main(int argc, char *argv[])
 	}
 
 	int revision = 0;
-	
+
 	if(bzr) // use bazaar revision if exist
 	{
 		bzr >> revision;
@@ -77,7 +79,7 @@ int main(int argc, char *argv[])
 		getline(svn, t); // entry count
 		getline(svn, t); // empty
 		getline(svn, t); // "dir"
-		
+
 		svn >> revision;
 		svn.close();
 	}

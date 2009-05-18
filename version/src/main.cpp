@@ -1,4 +1,4 @@
-// $Id: main.cpp 4802 2009-05-04 18:00:34Z FloSoft $
+// $Id: main.cpp 4887 2009-05-18 18:48:43Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -27,198 +27,148 @@
 
 #ifdef _WIN32 
 #	include <windows.h>
-#	include <conio.h>
 #	define chdir SetCurrentDirectory
-#	ifdef _MSC_VER
-#		pragma warning ( disable : 4996 )
-#		pragma comment ( lib, "libxml2" )
-#	endif
 #else
 #	include <unistd.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
-#include <time.h>
-#include <errno.h>
-#include <string.h>
+#include <ctime>
 
-#include <libxml/xmlmemory.h>
-#include <libxml/parser.h>
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <vector>
+
+using namespace std;
 
 int main(int argc, char *argv[])
 {
 	if(argc >= 2)
 		chdir(argv[1]);
 
-	// We only need one of those two files, whatever is present:
-	FILE *lastrevision = fopen(".bzr/branch/last-revision", "r");
-	const int errno1 = errno;
+	ifstream bzr(".bzr/branch/last-revision");
+	const int bzr_errno = errno;
 
-	FILE *entries = fopen(".svn/entries", "r");
-	if((!entries) && (!lastrevision))
+	ifstream svn(".svn/entries");
+	const int svn_errno = errno;
+
+	if(!svn && !bzr)
 	{
-		fprintf(stderr, "Failed to read any of:\n");
-		fprintf(stderr, "%s : %s\n", ".bzr/branch/last-revision", strerror(errno1));
-		fprintf(stderr, "%s : %s\n", ".svn/entries", strerror(errno));
+		cerr << "failed to read any of:" << endl;
+		cerr << ".bzr/branch/last-revision: " << strerror(bzr_errno) << endl;
+		cerr << ".svn/entries: " << strerror(svn_errno) << endl;
+
 		return 1;
 	}
 
-	char buffer[4096], *revision = NULL;
-	if(lastrevision)
+	int revision = 0;
+	
+	if(bzr) // use bazaar revision if exist
 	{
-		fgets(buffer, 4096, lastrevision);
-		revision = buffer;
-		fclose(lastrevision);
-		for(size_t i = 0; i < strlen(revision) && i < 4096; ++i)
-			if(!isdigit(revision[i]))
-				revision[i] = '\0';
+		bzr >> revision;
+		bzr.close();
 	}
-	else // (entries) is true, because we didn't exit before
-	{		
-		bool use_xml = false;
-		fgets(buffer, 4096, entries);
+	else if(svn) // using subversion revision, if no bazaar one exists
+	{
+		string t;
 
-		if(atoi(buffer) < 6)
-		{
-			use_xml = true;
-		}
-		else
-		{
-			fgets(buffer, 4096, entries);
-			fgets(buffer, 4096, entries);
-			fgets(buffer, 4096, entries);
-
-			revision = buffer;
-			for(size_t i = 0; i < strlen(revision) && i < 4096; ++i)
-				if(!isdigit(revision[i]))
-					revision[i] = '\0';
-		}
-
-		if (entries) fclose(entries);
-
-		if(use_xml)
-		{
-			LIBXML_TEST_VERSION;
-			
-			xmlKeepBlanksDefault(0);
-
-			xmlDocPtr doc;
-
-			doc = xmlParseFile(".svn/entries");
-			if(doc == NULL)
-			{
-				fprintf(stderr, "Failed to parse source %s: %s\n", ".svn/entries", strerror(errno));
-				return 1;
-			}
-
-			xmlNodePtr root_file, cur;
-
-			root_file = xmlDocGetRootElement(doc);
-			if (root_file == NULL) 
-			{
-				fprintf(stderr, "Failed to get root-element: Empty Document?\n");
-				xmlFreeDoc(doc);
-				return 1;
-			}
-
-			printf("%s\n", root_file->name);
-
-			cur = root_file->xmlChildrenNode;
-			if(cur == NULL)
-			{
-				fprintf(stderr, "Failed to get child-element: Empty Document?\n");
-				xmlFreeDoc(doc);
-				return 1;
-			}
-
-			revision = (char*)xmlGetProp(cur, (const xmlChar*)"revision");
-
-			xmlFreeDoc(doc);
-			xmlCleanupParser();
-		}
+		getline(svn, t); // entry count
+		getline(svn, t); // empty
+		getline(svn, t); // "dir"
+		
+		svn >> revision;
+		svn.close();
 	}
 
-	if(revision)
+	ifstream versionh("version.h");
+	const int versionh_errno = errno;
+
+	if(!versionh)
 	{
-		char version[100];
-		memset(version, 0, 100);
+		versionh.clear();
+		versionh.open("version.h.in");
+	}
 
-		if(argc > 1 && strcmp(argv[1], "--no-dots") == 0)
+	if(!versionh)
+	{
+		cerr << "failed to read any of:" << endl;
+		cerr << "version.h: " << strerror(versionh_errno) << endl;
+		cerr << "version.h.in: " << strerror(errno) << endl;
+
+		return 1;
+	}
+
+	vector<string> newversionh;
+
+	string l;
+	bool changed = false;
+	while(getline(versionh, l))
+	{
+		stringstream ll(l);
+		string d, n;
+		char q;
+		int v;
+
+		ll >> d; // define
+		ll >> n; // name
+		ll >> q; // "
+		ll >> v; // value
+		ll >> q; // "
+
+		if(n == "WINDOW_VERSION")
 		{
-			sprintf(version, "%s", revision);
-		}
-		else
-		{
-			if(atoi(revision) < 10)
-				sprintf(version, "0.0.0.%c", revision[0]);
-			else if(atoi(revision) < 100)
-				sprintf(version, "0.0.%c.%c", revision[0], revision[1]);
-			else if(atoi(revision) < 1000)
-				sprintf(version, "0.%c.%c.%c", revision[0], revision[1], revision[2]);
-			else
+			time_t t;
+			time(&t);
+
+			char tv[64];
+			strftime(tv, 63, "%Y%m%d", localtime(&t) );
+			if(v > 20000101 && v < atoi(tv))
 			{
-				char a,b,c;
-				a = revision[strlen(revision)-3];
-				b = revision[strlen(revision)-2];
-				c = revision[strlen(revision)-1];
-				revision[strlen(revision)-3] = '\0';
-				sprintf(version, "%s.%c.%c.%c", revision, a, b, c);
+				// set new day
+				ll.clear();
+				ll.str("");
+				ll << d << " " << n << " \"" << tv << "\"";
+				l = ll.str();
+
+				cout << "renewing version to day \"" << tv << "\"" << endl;
+				changed = true;
 			}
 		}
 
-		FILE *in = fopen("version.h", "rb");
-
-		if(!in)
-			exit(1);
-		else
+		if(n == "WINDOW_REVISION")
 		{
-			fseek(in, 0, SEEK_END);
-			unsigned long size = ftell(in);
-			fseek(in, 0, SEEK_SET);
-
-			char *buffer = new char[size+1];
-			memset(buffer, 0, sizeof(char)*(size+1));
-			fread(buffer, 1, size, in);
-			fclose(in);
-
-			char *buffer2 = new char[size*2+1];
-			memset(buffer2, 0, sizeof(char)*(size*2+1));
-
-			char v[100];
-			memset(v, 0, 100);
-
-			unsigned long y = 0;
-			for(unsigned long x = 0; x < size; ++x)
+			if(v < revision)
 			{
-				if(x < size-14 && strncmp(&buffer[x], "WINDOW_REVISION", 15) == 0)
-				{
-					unsigned long k = x;
-					while(buffer[x] != '\n' && buffer[x] != '\r')
-						++x;
+				// set new revision
+				ll.clear();
+				ll.str("");
+				ll << d << " " << n << " \"" << revision << "\"";
+				l = ll.str();
 
-					buffer[x-1] = '\0';
-					strncpy(v, &buffer[k+17], 100);
-
-					sprintf(&buffer2[y], "WINDOW_REVISION \"%s\"", version);
-					y += (unsigned long)strlen(&buffer2[y]);
-				}
-				buffer2[y++] = buffer[x];
+				cout << "renewing version to revision \"" << revision << "\"" << endl;
+				changed = true;
 			}
-
-			if(strcmp(version, v) != 0)
-			{
-				FILE *out = fopen("version.h", "wb");
-				{
-					printf("renewing version to \"%s\"\r\n", version);
-					fwrite(buffer2, 1, y, out);
-					fclose(out);
-				}
-			}
-
-			delete[] buffer;
-			delete[] buffer2;
 		}
+
+		newversionh.push_back(l);
+	}
+	versionh.close();
+
+	if(changed) // only write if changed
+	{
+		ofstream versionh("version.h");
+		const int versionh_errno = errno;
+
+		if(!versionh)
+		{
+			cerr << "failed to write to version.h: " << strerror(versionh_errno) << endl;
+			return 1;
+		}
+
+		for(vector<string>::const_iterator l = newversionh.begin(); l != newversionh.end(); ++l)
+			versionh << *l << endl;
+
+		versionh.close();
 	}
 }

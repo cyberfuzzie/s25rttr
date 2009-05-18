@@ -1,4 +1,4 @@
-// $Id: SerializableArray.h 4884 2009-05-18 16:52:52Z FloSoft $
+// $Id: SerializableArray.h 4885 2009-05-18 17:45:47Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -79,6 +79,8 @@ public:
 	template<class T, class A>
 	SerializableArray& copy(const SerializableArray<T, A> &other)
 	{
+		clear();
+
 		elements.reserve(other.getCount());
 
 		for(unsigned int i = 0; i < other.getCount(); ++i)
@@ -147,6 +149,8 @@ public:
 			return;
 
 		unsigned int count = msg->popUI();
+
+		clear();
 
 		elements.reserve(count);
 

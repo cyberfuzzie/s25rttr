@@ -1,4 +1,4 @@
-// $Id: SerializableArray.h 4885 2009-05-18 17:45:47Z FloSoft $
+// $Id: SerializableArray.h 4888 2009-05-18 18:59:04Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -45,6 +45,17 @@ public:
 	 */
 	~SerializableArray(void)
 	{
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 *  Einfügefunktion
+	 *
+	 *  @author FloSoft
+	 */
+	inline void push_back(const Type &item)
+	{
+		elements.push_back(item);
 	}
 
 	///////////////////////////////////////////////////////////////////////////////

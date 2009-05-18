@@ -1,4 +1,4 @@
-// $Id: LobbyServer.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: LobbyServer.cpp 4888 2009-05-18 18:59:04Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -658,10 +658,13 @@ void LobbyServer::SendPlayerList(unsigned int id)
 		LobbyPlayer &p = it->second;
 
 		if(p.isOccupied() && !p.isHost() && !p.isClient() )
+		{
 			++count;
+			list.push_back(p);
+		}
 	}
 	
-	list.alloc(count);
+	/*list.alloc(count);
 
 	unsigned int i = 0;
 	for(LobbyPlayerMapIterator it = players.begin(); it != players.end() && i < count; ++it)
@@ -675,7 +678,7 @@ void LobbyServer::SendPlayerList(unsigned int id)
 			*info = p;
 			++i;
 		}
-	}
+	}*/
 
 	LobbyMessage *m = new LobbyMessage_PlayerList(list);
 	if(id == 0xFFFFFFFF)

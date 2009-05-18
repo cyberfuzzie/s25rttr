@@ -1,4 +1,4 @@
-// $Id: main.cpp 4887 2009-05-18 18:48:43Z FloSoft $
+// $Id: main.cpp 4889 2009-05-18 18:59:10Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -30,6 +30,7 @@
 #	define chdir SetCurrentDirectory
 #else
 #	include <unistd.h>
+#	include <cerrno>
 #endif
 
 #include <ctime>

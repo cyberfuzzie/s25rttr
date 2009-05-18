@@ -1,4 +1,4 @@
-// $Id: MySQL.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: MySQL.cpp 4888 2009-05-18 18:59:04Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -201,14 +201,12 @@ bool MySQL::GetServerList(LobbyServerList *List)
 	char query[1024];
 	snprintf(query, 1024, "SELECT * FROM `lobby_servers` WHERE `curplayer` > 0 AND `maxplayers` > 0 ORDER BY `name` ASC;");
 
-	//LOG.lprintf("%s\n", query);
-
 	if(!DoQuery(query))
 		return false;
 
 	pResult = mysql_store_result(m_pMySQL);
 
-	LobbyServerInfo *server = List->alloc((unsigned int)mysql_num_rows(pResult));
+	unsigned int count = (unsigned int)mysql_num_rows(pResult);
 
 	if(List->getCount() == 0)
 	{
@@ -216,20 +214,24 @@ bool MySQL::GetServerList(LobbyServerList *List)
 		return true;
 	}
 
-	for(unsigned int i = 0; i < List->getCount(); i++)
+	for(unsigned int i = 0; i < count; i++)
 	{
 		Row = mysql_fetch_row(pResult);
 
-		server[i].setId(atoi(Row[0]));
-		server[i].setName(Row[1]);
-		server[i].setHost(Row[2]);
-		server[i].setPort(atoi(Row[3]));
-		server[i].setVersion(Row[4]);
-		server[i].setPing(atoi(Row[5]));
-		server[i].setMap(Row[6]);
-		server[i].setMaxPlayers(atoi(Row[7]));
-		server[i].setCurPlayers(atoi(Row[8]));
-		server[i].setPassword((atoi(Row[9]) != 0));
+		LobbyServerInfo server;
+
+		server.setId(atoi(Row[0]));
+		server.setName(Row[1]);
+		server.setHost(Row[2]);
+		server.setPort(atoi(Row[3]));
+		server.setVersion(Row[4]);
+		server.setPing(atoi(Row[5]));
+		server.setMap(Row[6]);
+		server.setMaxPlayers(atoi(Row[7]));
+		server.setCurPlayers(atoi(Row[8]));
+		server.setPassword((atoi(Row[9]) != 0));
+
+		List->push_back(server);
 	}
 
 	mysql_free_result(pResult);
@@ -291,7 +293,7 @@ bool MySQL::GetRankingList(LobbyPlayerList *List)
 
 	pResult = mysql_store_result(m_pMySQL);
 
-	LobbyPlayerInfo *player = List->alloc((int)mysql_num_rows(pResult));
+	unsigned int count = (unsigned int)mysql_num_rows(pResult);
 
 	if(List->getCount() == 0)
 	{
@@ -307,11 +309,14 @@ bool MySQL::GetRankingList(LobbyPlayerList *List)
 		if(punkte < 0)
 			punkte = 0;
 
-		player[i].setId(i + 1);
-		player[i].setName(Row[1]);
-		player[i].setGewonnen(atoi(Row[4]));
-		player[i].setVerloren(atoi(Row[5]));
-		player[i].setPunkte(punkte);
+		LobbyPlayerInfo player;
+		player.setId(i + 1);
+		player.setName(Row[1]);
+		player.setGewonnen(atoi(Row[4]));
+		player.setVerloren(atoi(Row[5]));
+		player.setPunkte(punkte);
+
+		List->push_back(player);
 	}
 
 	mysql_free_result(pResult);
@@ -322,7 +327,7 @@ bool MySQL::GetRankingList(LobbyPlayerList *List)
 bool MySQL::AddServer(LobbyServerInfo *Info)
 {
 	MYSQL_RES	*pResult;
-	MYSQL_ROW	Row;
+	//MYSQL_ROW	Row;
 
 	char query[1024];
 
@@ -372,7 +377,7 @@ bool MySQL::AddServer(LobbyServerInfo *Info)
 	if(!DoQuery(query))
 		return false;
 
-	Info->setId(mysql_insert_id(m_pMySQL));
+	Info->setId((unsigned int)mysql_insert_id(m_pMySQL));
 
 	LOG.lprintf("Neuer Server erstellt: %d: %s!\n", Info->getId(), Info->getName().c_str());
 	return true;

@@ -1,4 +1,4 @@
-// $Id: LobbyMessages.h 4878 2009-05-17 11:40:50Z OLiver $
+// $Id: LobbyMessages.h 4884 2009-05-18 16:52:52Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -47,7 +47,7 @@ public:
 	{
 		LOG.write(">>> NMS_LOBBY_LOGIN(%d, %s, %s, %s)\n", LOBBYPROTOCOL_VERSION, user.c_str(), "********", version.c_str());
 
-		alloc( 4 + user.length()+1 + pass.length()+1 + version.length()+1 );
+		//alloc( 4 + user.length()+1 + pass.length()+1 + version.length()+1 );
 
 		pushUI(LOBBYPROTOCOL_VERSION);
 		pushStr(user);
@@ -89,7 +89,7 @@ public:
 	{
 		LOG.write(">>> NMS_LOBBY_LOGIN_DONE(%s)\n", email.c_str());
 
-		alloc( email.length()+1 );
+		//alloc( email.length()+1 );
 
 		pushStr(email);
 	}
@@ -117,7 +117,7 @@ public:
 	{
 		LOG.write(">>> NMS_LOBBY_LOGIN_ERROR(%s)\n", error.c_str());
 
-		alloc(error.length()+1);
+		//alloc(error.length()+1);
 
 		pushStr(error);
 	}
@@ -147,7 +147,7 @@ public:
 	{
 		LOG.write(">>> NMS_LOBBY_REGISTER(%s, %s, %s)\n", user.c_str(), "********", email.c_str());
 
-		alloc(3 + (unsigned int)user.length() + pass.length() + email.length());
+		//alloc(3 + (unsigned int)user.length() + pass.length() + email.length());
 
 		pushStr(user);
 		pushStr(pass);
@@ -198,7 +198,7 @@ public:
 	{
 		LOG.write(">>> NMS_LOBBY_REGISTER_ERROR(%s)\n", error.c_str());
 
-		alloc( error.length()+1 );
+		//alloc( error.length()+1 );
 
 		pushStr(error);
 	}
@@ -275,7 +275,7 @@ public:
 	{
 		LOG.write(">>> NMS_LOBBY_SERVERINFO(%d)\n", server);
 
-		alloc(sizeof(unsigned int));
+		//alloc(sizeof(unsigned int));
 
 		pushUI(server);
 	}
@@ -421,7 +421,7 @@ public:
 	{
 		LOG.write(">>> NMS_LOBBY_ID(%d)\n", playerid);
 
-		alloc( sizeof(unsigned int) );
+		//alloc( sizeof(unsigned int) );
 
 		pushUI(playerid);
 	}
@@ -451,7 +451,7 @@ public:
 	{
 		LOG.write(">>> NMS_LOBBY_CHAT(%s)\n", text.c_str());
 		
-		alloc( text.length()+1 + 1 );
+		//alloc( text.length()+1 + 1 );
 
 		// leeren playernamen senden
 		pushStr("");
@@ -461,7 +461,7 @@ public:
 	{
 		LOG.write(">>> NMS_LOBBY_CHAT(%s, %s)\n", player.c_str(), text.c_str());
 
-		alloc( text.length()+1 + player.length()+1 );
+		//alloc( text.length()+1 + player.length()+1 );
 
 		pushStr(player);
 		pushStr(text);
@@ -560,7 +560,7 @@ public:
 	{
 		LOG.write(">>> NMS_LOBBY_SERVER_ADD_FAILED(%s)\n", error.c_str());
 
-		alloc( error.length()+1 );
+		//alloc( error.length()+1 );
 
 		pushStr(error);
 	}
@@ -608,7 +608,7 @@ public:
 	{
 		LOG.write(">>> NMS_LOBBY_SERVER_UPDATE_PLAYER(%d,%d)\n", curplayer, maxplayer);
 
-		alloc(sizeof(unsigned int)*2);
+		//alloc(sizeof(unsigned int)*2);
 
 		pushUI(curplayer);
 		pushUI(maxplayer);
@@ -638,7 +638,7 @@ public:
 	{
 		LOG.write(">>> NMS_LOBBY_SERVER_UPDATE_MAP(%s)\n", map.c_str());
 
-		alloc( map.length()+1 );
+		//alloc( map.length()+1 );
 
 		pushStr(map);
 	}

@@ -1,4 +1,4 @@
-// $Id: Message.cpp 4850 2009-05-10 11:50:42Z FloSoft $
+// $Id: Message.cpp 4884 2009-05-18 16:52:52Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -81,7 +81,7 @@ int Message::recv(Socket *sock, unsigned int length)
 	if(length > 0)
 	{
 		// Daten empfangen
-		alloc(length);
+		ralloc(length);
 
 		int read = sock->Recv(data, length);
 		if(length != (unsigned int)read )
@@ -243,8 +243,8 @@ Message *Message::duplicate(void) const
 {
 	Message *msg = create(id);
 
-	msg->alloc(length);
-	memcpy(msg->data, data, length);
+	msg->ralloc(length);
+	memcpy(msg->data, data, index);
 
 	msg->index = index;
 

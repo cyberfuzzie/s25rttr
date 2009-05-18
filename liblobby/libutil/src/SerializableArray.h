@@ -1,4 +1,4 @@
-// $Id: SerializableArray.h 4878 2009-05-17 11:40:50Z OLiver $
+// $Id: SerializableArray.h 4884 2009-05-18 16:52:52Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -33,7 +33,7 @@ public:
 	 *
 	 *  @author FloSoft
 	 */
-	SerializableArray(void) : count(0), elements(NULL)
+	SerializableArray(void)
 	{
 	}
 
@@ -45,7 +45,6 @@ public:
 	 */
 	~SerializableArray(void)
 	{
-		delete[] elements;
 	}
 
 	///////////////////////////////////////////////////////////////////////////////
@@ -80,10 +79,13 @@ public:
 	template<class T, class A>
 	SerializableArray& copy(const SerializableArray<T, A> &other)
 	{
-		alloc(other.getCount());
+		elements.reserve(other.getCount());
 
 		for(unsigned int i = 0; i < other.getCount(); ++i)
-			elements[i] = other.elements[i];
+		{
+			Type N = *other.getElement(i);
+			elements.push_back(N);
+		}
 
 		return *this;
 	}
@@ -94,29 +96,8 @@ public:
 	 *
 	 *  @author FloSoft
 	 */
-	Type&       operator[](unsigned int i)       { return getElement(i); }
-	const Type& operator[](unsigned int i) const { return getElement(i); }
-
-	///////////////////////////////////////////////////////////////////////////////
-	/**
-	 *  Alloziert eine Spielerliste.
-	 *
-	 *  @param[in] count Anzahl der Spieler in der Liste.
-	 *
-	 *  @author FloSoft
-	 */
-	Type *alloc(unsigned int count)
-	{
-		clear();
-
-		if(count <= 0)
-			return NULL;
-
-		this->count = count;
-		this->elements = new Allocator[count];
-
-		return elements;
-	}
+	inline Type&       operator[](unsigned int i)       { return getElement(i); }
+	inline const Type& operator[](unsigned int i) const { return getElement(i); }
 
 	///////////////////////////////////////////////////////////////////////////////
 	/**
@@ -124,12 +105,9 @@ public:
 	 *
 	 *  @author FloSoft
 	 */
-	void clear(void)
+	inline void clear(void)
 	{
-		delete[] elements;
-
-		count	= 0;
-		elements = NULL;
+		elements.clear();
 	}
 
 	///////////////////////////////////////////////////////////////////////////////
@@ -142,8 +120,10 @@ public:
 	 *
 	 *  @author FloSoft
 	 */
-	void serialize(Message * msg) const
+	inline void serialize(Message *msg) const
 	{
+		unsigned int count = elements.size();
+
 		if(msg)
 			msg->pushUI(count);
 
@@ -161,15 +141,21 @@ public:
 	 *
 	 *  @author FloSoft
 	 */
-	void deserialize(Message * msg)
+	inline void deserialize(Message *msg)
 	{
 		if(!msg)
 			return;
 
-		count = msg->popUI();
+		unsigned int count = msg->popUI();
+
+		elements.reserve(count);
 
 		for(unsigned int i = 0; i < count; ++i)
-			elements[i].deserialize(msg);
+		{
+			Type N;
+			N.deserialize(msg);
+			elements.push_back(N);
+		}
 	}
 
 	///////////////////////////////////////////////////////////////////////////////
@@ -178,10 +164,10 @@ public:
 	 *
 	 *  @author FloSoft
 	 */
-	const Type *getElement(unsigned int i) const
+	inline const Type *getElement(unsigned int i) const
 	{
-		if(i < count)
-			return &elements[i];
+		if(i < elements.size())
+			return &elements.at(i);
 
 		return NULL;
 	}
@@ -192,10 +178,10 @@ public:
 	 *
 	 *  @author FloSoft
 	 */
-	Type *getElement(unsigned int i)
+	inline Type *getElement(unsigned int i)
 	{
-		if(i < count)
-			return &elements[i];
+		if(i < elements.size())
+			return &elements.at(i);
 
 		return NULL;
 	}
@@ -206,14 +192,13 @@ public:
 	 *
 	 *  @author FloSoft
 	 */
-	unsigned int getCount(void) const
+	inline unsigned int getCount(void) const
 	{
-		return count; 
+		return elements.size(); 
 	}
 
 private:
-	unsigned int count;	///< Anzahl der Elemente in der Liste
-	Type *elements;		///< Die Elemente
+	std::vector<Type> elements;		///< Die Elemente
 };
 
 #endif // SERIALIZABLEARRAY_H_INCLUDED

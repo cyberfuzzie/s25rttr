@@ -1,4 +1,4 @@
-// $Id: main.h 4882 2009-05-18 15:33:21Z FloSoft $
+// $Id: main.h 4884 2009-05-18 16:52:52Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -47,12 +47,14 @@
 
 #include <errno.h>
 
-#include <map>
+#include <cstdlib>
 #include <cstdarg>
 #include <cstring>
+
+#include <map>
 #include <string>
+#include <vector>
 #include <sstream>
-#include <cstdlib>
 
 #if defined _WIN32 && defined _DEBUG
 	#include <crtdbg.h>

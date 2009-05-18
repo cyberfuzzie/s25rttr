@@ -1,4 +1,4 @@
-// $Id: Message.h 4878 2009-05-17 11:40:50Z OLiver $
+// $Id: Message.h 4884 2009-05-18 16:52:52Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -30,7 +30,7 @@ class Message
 {
 public:
 	/// Konstruktor von @p Message.
-	Message(unsigned short id) : data(NULL), id(id), length(0), index(0) { }
+	Message(unsigned short id) : id(id), length(0), data(NULL), index(0) { }
 	virtual ~Message();
 
 	virtual unsigned short getId() { return id; }
@@ -45,38 +45,35 @@ public:
 
 	virtual void run(MessageInterface *callback, unsigned int id) { throw std::logic_error("pure virtual call: Message::run(callback, id)"); };
 
-protected:
-	/// Erzeugt Speicher mit der Länge @p length.
-	void alloc(unsigned int length)
+private:
+	/// vergrößert den Speicher auf die nächst höhere 2er potenz zur Länge @p length.
+	inline void ralloc(const unsigned int length)
 	{
-		delete[] data;
+		if(this->length == 0)
+			this->length = 64;
 
-		this->length = length;
+		// speicher vergrößern
+		while(this->length < length)
+			this->length *= 2;
 
-		data = new char[length];
-		memset(data, 0, sizeof(char)*length);
-	}
+		if(data == NULL)
+		{
+			// neu anlegen
+			data = new char[this->length];
+			memset(data, 0, sizeof(char)*this->length);
+		}
+		else
+		{
+			// umkopieren (vergrößern)
+			char *ndata = new char[this->length];
+			memcpy(ndata, data, index);
 
-	/// vergrößert/verkleinert den Speicher auf die Länge @p length.
-	void ralloc(unsigned int length)
-	{
-		unsigned int olength = this->length;
-
-		this->length = length;
-
-		// verkleinern?
-		if(olength > length)
-			olength = length;
-
-		char *ndata = new char[length];
-		memcpy(ndata, data, olength);
-
-		delete[] data;
-		data = ndata;
+			delete[] data;
+			data = ndata;
+		}
 	}
 
 public:
-
 	/// int in Message aufnehmen
 	inline void pushI(const int &value)
 	{
@@ -187,7 +184,7 @@ public:
 	inline unsigned short popUC()
 	{
 		unsigned char value;
-		popUC(&value,1);
+		popUC(&value, 1);
 		return value;
 	}
 
@@ -230,12 +227,10 @@ private:
 
 	int recv(Socket *sock, unsigned int length);
 
-protected:
-	char *data;
-
 private:
 	unsigned short id;
 	unsigned int length;
+	char *data;
 	unsigned int index;
 };
 

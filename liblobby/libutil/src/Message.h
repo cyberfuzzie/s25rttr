@@ -1,4 +1,4 @@
-// $Id: Message.h 4884 2009-05-18 16:52:52Z FloSoft $
+// $Id: Message.h 4898 2009-05-20 13:44:45Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -33,8 +33,8 @@ public:
 	Message(unsigned short id) : id(id), length(0), data(NULL), index(0) { }
 	virtual ~Message();
 
-	virtual unsigned short getId() { return id; }
-	virtual unsigned int getSize() { return length; }
+	virtual unsigned short getId() const { return id; }
+	virtual unsigned int getSize() const { return length; }
 	bool send(Socket *sock);
 
 	static Message *recv(Socket *sock, int &error, bool wait, Message *(*createfunction)(unsigned short));
@@ -59,13 +59,13 @@ private:
 		if(data == NULL)
 		{
 			// neu anlegen
-			data = new char[this->length];
-			memset(data, 0, sizeof(char)*this->length);
+			data = new unsigned char[this->length];
+			memset(data, 0, sizeof(unsigned char)*this->length);
 		}
 		else
 		{
 			// umkopieren (vergrößern)
-			char *ndata = new char[this->length];
+			unsigned char *ndata = new unsigned char[this->length];
 			memcpy(ndata, data, index);
 
 			delete[] data;
@@ -142,7 +142,7 @@ public:
 		if(index + length + 1 > this->length)
 			ralloc(this->length + length + 1);
 
-		strncpy(&data[index], value.c_str(), length);
+		strncpy(&((char*)data)[index], value.c_str(), length);
 		index += length + 1;
 	}
 
@@ -181,7 +181,7 @@ public:
 	}
 
 	/// unsigned char in Message aufnehmen
-	inline unsigned short popUC()
+	inline unsigned char popUC()
 	{
 		unsigned char value;
 		popUC(&value, 1);
@@ -214,7 +214,7 @@ public:
 	{
 		std::string value;
 
-		value = &data[index];
+		value = (char*)&data[index];
 		index += value.length() + 1;
 
 		return value;
@@ -227,10 +227,10 @@ private:
 
 	int recv(Socket *sock, unsigned int length);
 
-private:
+protected:
 	unsigned short id;
 	unsigned int length;
-	char *data;
+	unsigned char *data;
 	unsigned int index;
 };
 

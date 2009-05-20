@@ -1,4 +1,4 @@
-// $Id: SerializableArray.h 4888 2009-05-18 18:59:04Z FloSoft $
+// $Id: SerializableArray.h 4898 2009-05-20 13:44:45Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -211,6 +211,18 @@ public:
 	{
 		return elements.size(); 
 	}
+	
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 *  ändert die Größe des Arrays
+	 *
+	 *  @author OLiver
+	 */
+	void resize(const unsigned count)
+	{
+		return elements.resize(count) 
+	}
+
 
 private:
 	std::vector<Type> elements;		///< Die Elemente

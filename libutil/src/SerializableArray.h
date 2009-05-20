@@ -1,4 +1,4 @@
-// $Id: SerializableArray.h 4898 2009-05-20 13:44:45Z OLiver $
+// $Id: SerializableArray.h 4899 2009-05-20 18:50:08Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -220,7 +220,7 @@ public:
 	 */
 	void resize(const unsigned count)
 	{
-		return elements.resize(count) 
+		return elements.resize(count);
 	}
 
 

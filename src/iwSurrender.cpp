@@ -48,11 +48,11 @@ iwSurrender::iwSurrender(void)
 	: IngameWindow(CGI_ENDGAME, 0xFFFF, 0xFFFF, 240, 100, _("Surrender game?"), GetImage(resource_dat, 41))
 {
 	// Ok
-	AddImageButton(0,  16, 24, 71, 57, TC_GREEN2, GetImage(io_dat, 32), _("Surrender"));
+	AddImageButton(0,  85, 24, 68, 57, TC_GREEN2, GetImage(io_dat, 32), _("Surrender"));
+	// Ok + Abbrennen
+	AddImageButton(2,  16, 24, 68, 57, TC_GREEN2, GetImage(io_dat, 23), _("Destroy all buildings and surrender"));	
 	// Abbrechen
-	AddImageButton(1,  88, 24, 71, 57, TC_RED1, GetImage(io_dat, 40), _("Don't surrender"));
-	// Ok + Speichern
-	AddImageButton(2, 160, 24, 65, 57, TC_GREEN2, GetImage(io_dat, 23), _("Destroy all buildings and surrender"));
+	AddImageButton(1,  158, 24, 68, 57, TC_RED1, GetImage(io_dat, 40), _("Don't surrender"));
 }
 
 

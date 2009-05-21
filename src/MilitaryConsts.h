@@ -1,4 +1,4 @@
-// $Id: MilitaryConsts.h 4877 2009-05-17 09:51:44Z OLiver $
+// $Id: MilitaryConsts.h 4907 2009-05-21 17:59:02Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -31,7 +31,7 @@ const unsigned MAX_MILITARY_DISTANCE_MIDDLE = 26;
 //const unsigned MAX_ATTACKING_DISTANCE = 20;
 
 /// Basisangriffsreichweite (Angriff mit allen Soldaten möglich)
-const unsigned BASE_ATTACKING_DISTANCE = 25;
+const unsigned BASE_ATTACKING_DISTANCE = 22;
 
 /// Erweiterte Reichweite, für die jeweils ein Soldat von der Angriffsarmee abgezogen wird
 const unsigned EXTENDED_ATTACKING_DISTANCE = 3;

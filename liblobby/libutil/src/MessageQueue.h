@@ -1,4 +1,4 @@
-// $Id: MessageQueue.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: MessageQueue.h 4910 2009-05-21 19:38:04Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -19,14 +19,7 @@
 #ifndef MESSAGEQUEUE_H_INCLUDED
 #define MESSAGEQUEUE_H_INCLUDED
 
-#pragma once
-
-#include "Message.h"
-
-#include <vector>
-
-class Socket;
-
+//class Socket;
 class MessageQueue
 {
 public:

@@ -47,7 +47,10 @@ protected:
 public:
 
 	Serializer();
-	Serializer(const unsigned initial_size);
+	/// Fill with initial data
+	// Pushes will push to the end, 
+	// while Pops will pop from the beginning
+	Serializer(const void * const data, const unsigned initial_size);
 	virtual ~Serializer();
 
 	/// Aufräumen
@@ -120,49 +123,52 @@ public:
 
 	// Lesemethoden
 
+	/// Copy all data
+	void ToBuffer(unsigned char * const data);
+
 	/// Rohdaten kopieren
 	void PopRawData(void * const data, const unsigned length)
 	{
-		memcpy(data,&this->data[length],length);
+		memcpy(data,&this->data[pos],length);
 		pos +=length; 
 	}
 
 	/// Sämtliche Integer
 	signed int PopSignedInt()
 	{
-		signed int i = *((signed int*)&data[length]);
+		signed int i = *((signed int*)&data[pos]);
 		pos +=4;
 		return i;
 	}
 	unsigned int PopUnsignedInt()
 	{
-		unsigned int i = *((unsigned int*)&data[length]);
+		unsigned int i = *((unsigned int*)&data[pos]);
 		pos +=4;
 		return i;
 	}
 
 	signed short PopSignedShort()
 	{
-		signed short i = *((signed short*)&data[length]);
+		signed short i = *((signed short*)&data[pos]);
 		pos +=2;
 		return i;
 	}
 	unsigned short PopUnsignedShort()
 	{
-		unsigned short i = *((unsigned short*)&data[length]);
+		unsigned short i = *((unsigned short*)&data[pos]);
 		pos +=2;
 		return i;
 	}
 
 	signed char PopSignedChar()
 	{
-		signed char i = *((signed char*)&data[length]);
+		signed char i = *((signed char*)&data[pos]);
 		pos +=1;
 		return i;
 	}
 	unsigned char PopUnsignedChar()
 	{
-		unsigned char i = *((unsigned char*)&data[length]);
+		unsigned char i = *((unsigned char*)&data[pos]);
 		pos +=1;
 		return i;
 	}

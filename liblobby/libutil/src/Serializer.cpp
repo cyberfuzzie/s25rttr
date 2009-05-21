@@ -5,9 +5,10 @@ Serializer::Serializer() : data(0), buffer_length(0), length(0), pos(0)
 {
 }
 
-Serializer::Serializer(const unsigned initial_size)
-: data(new unsigned char[initial_size]), buffer_length(initial_size), length(0), pos(0)
+Serializer::Serializer(const void * const data, const unsigned initial_size)
+: data(new unsigned char[initial_size]), buffer_length(initial_size), length(initial_size), pos(0)
 {
+	memcpy(this->data, data, initial_size);
 }
 
 
@@ -59,5 +60,4 @@ void Serializer::ExtendMemory(const unsigned add_length)
 		Realloc(length+add_length);
 
 }
-
 

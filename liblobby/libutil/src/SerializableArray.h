@@ -1,4 +1,4 @@
-// $Id: SerializableArray.h 4903 2009-05-21 12:04:21Z OLiver $
+// $Id: SerializableArray.h 4912 2009-05-21 20:56:47Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -109,8 +109,8 @@ public:
 	 *
 	 *  @author FloSoft
 	 */
-	inline Type&       operator[](unsigned int i)       { return getElement(i); }
-	inline const Type& operator[](unsigned int i) const { return getElement(i); }
+	inline Type&       operator[](unsigned int i)       { return elements.at(i); }
+	inline const Type& operator[](unsigned int i) const { return elements.at(i); }
 
 	///////////////////////////////////////////////////////////////////////////////
 	/**

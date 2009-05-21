@@ -1,4 +1,4 @@
-// $Id: LobbyServerInfo.cpp 4878 2009-05-17 11:40:50Z OLiver $
+// $Id: LobbyServerInfo.cpp 4903 2009-05-21 12:04:21Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -72,16 +72,16 @@ void LobbyServerInfo::clear(void)
  */
 void LobbyServerInfo::serialize(Message * msg) const
 {
-	msg->pushUI(serverid);
-	msg->pushStr(name);
-	msg->pushStr(host);
-	msg->pushUS(port);
-	msg->pushStr(version);
-	msg->pushUI(ping);
-	msg->pushStr(map);
-	msg->pushUI(curplayers);
-	msg->pushUI(maxplayers);
-	msg->pushB(has_password);
+	msg->PushUnsignedInt(serverid);
+	msg->PushString(name);
+	msg->PushString(host);
+	msg->PushUnsignedShort(port);
+	msg->PushString(version);
+	msg->PushUnsignedInt(ping);
+	msg->PushString(map);
+	msg->PushUnsignedInt(curplayers);
+	msg->PushUnsignedInt(maxplayers);
+	msg->PushBool(has_password);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -96,14 +96,14 @@ void LobbyServerInfo::serialize(Message * msg) const
  */
 void LobbyServerInfo::deserialize(Message * msg)
 {
-	serverid = msg->popUI();
-	name = msg->popStr();
-	host = msg->popStr();
-	port = msg->popUS();
-	version = msg->popStr();
-	ping = msg->popUI();
-	map = msg->popStr();
-	curplayers = msg->popUI();
-	maxplayers = msg->popUI();
-	has_password = msg->popB();
+	serverid = msg->PopUnsignedInt();
+	name = msg->PopString();
+	host = msg->PopString();
+	port = msg->PopUnsignedShort();
+	version = msg->PopString();
+	ping = msg->PopUnsignedInt();
+	map = msg->PopString();
+	curplayers = msg->PopUnsignedInt();
+	maxplayers = msg->PopUnsignedInt();
+	has_password = msg->PopBool();
 }

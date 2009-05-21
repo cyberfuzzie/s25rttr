@@ -212,6 +212,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\Serializer.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\Socket.cpp"
 				>
 			</File>
@@ -267,6 +271,10 @@
 			</File>
 			<File
 				RelativePath="..\..\src\SerializableArray.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\Serializer.h"
 				>
 			</File>
 			<File

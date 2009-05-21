@@ -1,4 +1,4 @@
-// $Id: Message.cpp 4884 2009-05-18 16:52:52Z FloSoft $
+// $Id: Message.cpp 4903 2009-05-21 12:04:21Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -81,9 +81,10 @@ int Message::recv(Socket *sock, unsigned int length)
 	if(length > 0)
 	{
 		// Daten empfangen
-		ralloc(length);
+		Realloc(length);
 
 		int read = sock->Recv(data, length);
+		this->length = length;
 		if(length != (unsigned int)read )
 		{
 			LOG.lprintf("recv: data: only got %d bytes instead of %d\n", read, length);
@@ -243,10 +244,10 @@ Message *Message::duplicate(void) const
 {
 	Message *msg = create(id);
 
-	msg->ralloc(length);
-	memcpy(msg->data, data, index);
+	msg->Realloc(length);
+	memcpy(msg->data, data, length);
 
-	msg->index = index;
+	msg->length = length;
 
 	return msg;
 }

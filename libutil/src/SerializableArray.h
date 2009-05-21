@@ -1,4 +1,4 @@
-// $Id: SerializableArray.h 4899 2009-05-20 18:50:08Z OLiver $
+// $Id: SerializableArray.h 4903 2009-05-21 12:04:21Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -138,7 +138,7 @@ public:
 		unsigned int count = elements.size();
 
 		if(msg)
-			msg->pushUI(count);
+			msg->PushUnsignedInt(count);
 
 		for(unsigned int i = 0; i < count; ++i)
 			elements[i].serialize(msg);
@@ -159,7 +159,7 @@ public:
 		if(!msg)
 			return;
 
-		unsigned int count = msg->popUI();
+		unsigned int count = msg->PopUnsignedInt();
 
 		clear();
 

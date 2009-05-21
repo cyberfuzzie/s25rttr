@@ -1,4 +1,4 @@
-// $Id: LobbyMessages.h 4884 2009-05-18 16:52:52Z FloSoft $
+// $Id: LobbyMessages.h 4903 2009-05-21 12:04:21Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -49,17 +49,17 @@ public:
 
 		//alloc( 4 + user.length()+1 + pass.length()+1 + version.length()+1 );
 
-		pushUI(LOBBYPROTOCOL_VERSION);
-		pushStr(user);
-		pushStr(pass);
-		pushStr(version);
+		PushUnsignedInt(LOBBYPROTOCOL_VERSION);
+		PushString(user);
+		PushString(pass);
+		PushString(version);
 	}
 	void run(MessageInterface *callback, unsigned int id)
 	{ 
 		LobbyMessageInterface *cb = dynamic_cast<LobbyMessageInterface*>(callback);
 
 		unsigned char rev[4];
-		popUC(rev, 4);
+		PopRawData(rev,4);
 
 		// haben wir eine gültige Revision erhalten?
 		if(rev[0] != 0xFF || rev[3] != 0xFF)
@@ -67,9 +67,9 @@ public:
 		else
 			revision = htonl(*((unsigned int*)rev));
 
-		user = popStr();
-		pass = popStr();
-		version = popStr();
+		user = PopString();
+		pass = PopString();
+		version = PopString();
 
 		LOG.write("<<< NMS_LOBBY_LOGIN(%d, %s, %s, %s)\n", revision, user.c_str(), "********", version.c_str());
 		cb->OnNMSLobbyLogin(id, revision, user, pass, version);
@@ -91,13 +91,13 @@ public:
 
 		//alloc( email.length()+1 );
 
-		pushStr(email);
+		PushString(email);
 	}
 	void run(MessageInterface *callback, unsigned int id)
 	{ 
 		LobbyMessageInterface *cb = dynamic_cast<LobbyMessageInterface*>(callback);
 
-		email = popStr();
+		email = PopString();
 
 		LOG.write("<<< NMS_LOBBY_LOGIN_DONE(%s)\n", email.c_str());
 		cb->OnNMSLobbyLoginDone(id, email);
@@ -119,13 +119,13 @@ public:
 
 		//alloc(error.length()+1);
 
-		pushStr(error);
+		PushString(error);
 	}
 	void run(MessageInterface *callback, unsigned int id)
 	{ 
 		LobbyMessageInterface *cb = dynamic_cast<LobbyMessageInterface*>(callback);
 
-		error = popStr();
+		error = PopString();
 		
 		LOG.write("<<< NMS_LOBBY_LOGIN_ERROR(%s)\n", error.c_str());
 		cb->OnNMSLobbyLoginError(id, error);
@@ -149,17 +149,17 @@ public:
 
 		//alloc(3 + (unsigned int)user.length() + pass.length() + email.length());
 
-		pushStr(user);
-		pushStr(pass);
-		pushStr(email);
+		PushString(user);
+		PushString(pass);
+		PushString(email);
 	}
 	void run(MessageInterface *callback, unsigned int id)
 	{ 
 		LobbyMessageInterface *cb = dynamic_cast<LobbyMessageInterface*>(callback);
 
-		user = popStr();
-		pass = popStr();
-		email = popStr();
+		user = PopString();
+		pass = PopString();
+		email = PopString();
 
 		LOG.write("<<< NMS_LOBBY_REGISTER(%s, %s, %s)\n", user.c_str(), "********", email.c_str());
 		cb->OnNMSLobbyRegister(id, user, pass, email);
@@ -200,13 +200,13 @@ public:
 
 		//alloc( error.length()+1 );
 
-		pushStr(error);
+		PushString(error);
 	}
 	void run(MessageInterface *callback, unsigned int id)
 	{ 
 		LobbyMessageInterface *cb = dynamic_cast<LobbyMessageInterface*>(callback);
 
-		error = popStr();
+		error = PopString();
 
 		LOG.write("<<< NMS_LOBBY_REGISTER_ERROR(%s)\n", error.c_str());
 		cb->OnNMSLobbyRegisterError(id, error);
@@ -241,7 +241,7 @@ public:
 	{ 
 		LobbyMessageInterface *cb = dynamic_cast<LobbyMessageInterface*>(callback);
 
-		if(getSize() == 0) // Anfrage
+		if(GetLength() == 0) // Anfrage
 		{
 			LOG.write("<<< NMS_LOBBY_SERVERLIST\n");
 			cb->OnNMSLobbyServerList(id);
@@ -277,7 +277,7 @@ public:
 
 		//alloc(sizeof(unsigned int));
 
-		pushUI(server);
+		PushUnsignedInt(server);
 	}
 	LobbyMessage_ServerInfo(const LobbyServerInfo &info) : LobbyMessage(NMS_LOBBY_SERVERINFO)
 	{
@@ -290,9 +290,9 @@ public:
 	{ 
 		LobbyMessageInterface *cb = dynamic_cast<LobbyMessageInterface*>(callback);
 
-		if(getSize() == sizeof(unsigned int)) // Anfrage
+		if(GetLength() == sizeof(unsigned int)) // Anfrage
 		{
-			server = popUI();
+			server = PopUnsignedInt();
 
 			LOG.write("<<< NMS_LOBBY_SERVERINFO(%d)\n", server);
 			cb->OnNMSLobbyServerInfo(id, server);
@@ -337,7 +337,7 @@ public:
 	{ 
 		LobbyMessageInterface *cb = dynamic_cast<LobbyMessageInterface*>(callback);
 
-		if(getSize() == 0) // Anfrage
+		if(GetLength() == 0) // Anfrage
 		{
 			LOG.write("<<< NMS_LOBBY_RANKINGLIST\n");
 			cb->OnNMSLobbyRankingList(id);
@@ -387,7 +387,7 @@ public:
 	{ 
 		LobbyMessageInterface *cb = dynamic_cast<LobbyMessageInterface*>(callback);
 
-		if(getSize() == 0) // Anfrage
+		if(GetLength() == 0) // Anfrage
 		{
 			LOG.write("<<< NMS_LOBBY_PLAYERLIST\n");
 			cb->OnNMSLobbyPlayerList(id);
@@ -423,13 +423,13 @@ public:
 
 		//alloc( sizeof(unsigned int) );
 
-		pushUI(playerid);
+		PushUnsignedInt(playerid);
 	}
 	void run(MessageInterface *callback, unsigned int id)
 	{
 		LobbyMessageInterface *cb = dynamic_cast<LobbyMessageInterface*>(callback);
 
-		playerid = popUI();
+		playerid = PopUnsignedInt();
 
 		LOG.write("<<< NMS_LOBBY_ID(%d)\n", playerid);
 
@@ -454,8 +454,8 @@ public:
 		//alloc( text.length()+1 + 1 );
 
 		// leeren playernamen senden
-		pushStr("");
-		pushStr(text);
+		PushString("");
+		PushString(text);
 	}
 	LobbyMessage_Chat(const std::string &player, const std::string &text) : LobbyMessage(NMS_LOBBY_CHAT)
 	{
@@ -463,15 +463,15 @@ public:
 
 		//alloc( text.length()+1 + player.length()+1 );
 
-		pushStr(player);
-		pushStr(text);
+		PushString(player);
+		PushString(text);
 	}
 	void run(MessageInterface *callback, unsigned int id)
 	{ 
 		LobbyMessageInterface *cb = dynamic_cast<LobbyMessageInterface*>(callback);
 
-		player = popStr();
-		text = popStr();
+		player = PopString();
+		text = PopString();
 
 		LOG.write("<<< NMS_LOBBY_CHAT(%s, %s)\n", player.c_str(), text.c_str());
 
@@ -562,13 +562,13 @@ public:
 
 		//alloc( error.length()+1 );
 
-		pushStr(error);
+		PushString(error);
 	}
 	void run(MessageInterface *callback, unsigned int id)
 	{
 		LobbyMessageInterface *cb = dynamic_cast<LobbyMessageInterface*>(callback);
 
-		error = popStr();
+		error = PopString();
 
 		LOG.write("<<< NMS_LOBBY_SERVER_ADD_FAILED(%s)\n", error.c_str());
 		cb->OnNMSLobbyServerAddFailed(id, error);
@@ -610,15 +610,15 @@ public:
 
 		//alloc(sizeof(unsigned int)*2);
 
-		pushUI(curplayer);
-		pushUI(maxplayer);
+		PushUnsignedInt(curplayer);
+		PushUnsignedInt(maxplayer);
 	}
 	void run(MessageInterface *callback, unsigned int id)
 	{
 		LobbyMessageInterface *cb = dynamic_cast<LobbyMessageInterface*>(callback);
 		
-		curplayer = popUI();
-		maxplayer = popUI();
+		curplayer = PopUnsignedInt();
+		maxplayer = PopUnsignedInt();
 
 		LOG.write("<<< NMS_LOBBY_SERVER_UPDATE_PLAYER(%d,%d)\n", curplayer, maxplayer);
 		cb->OnNMSLobbyServerUpdatePlayer(id, curplayer, maxplayer);
@@ -640,13 +640,13 @@ public:
 
 		//alloc( map.length()+1 );
 
-		pushStr(map);
+		PushString(map);
 	}
 	void run(MessageInterface *callback, unsigned int id)
 	{
 		LobbyMessageInterface *cb = dynamic_cast<LobbyMessageInterface*>(callback);
 
-		map = popStr();
+		map = PopString();
 
 		LOG.write("<<< NMS_LOBBY_SERVER_UPDATE_MAP(%s)\n", map.c_str());
 		cb->OnNMSLobbyServerUpdateMap(id, map);

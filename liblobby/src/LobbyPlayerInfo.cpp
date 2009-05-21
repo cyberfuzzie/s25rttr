@@ -1,4 +1,4 @@
-// $Id: LobbyPlayerInfo.cpp 4878 2009-05-17 11:40:50Z OLiver $
+// $Id: LobbyPlayerInfo.cpp 4903 2009-05-21 12:04:21Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -69,12 +69,12 @@ void LobbyPlayerInfo::clear(void)
  */
 void LobbyPlayerInfo::serialize(Message * msg) const
 {
-	msg->pushUI(playerid);
-	msg->pushStr(name);
-	msg->pushStr(version);
-	msg->pushI(punkte);
-	msg->pushUI(gewonnen);
-	msg->pushUI(verloren);
+	msg->PushUnsignedInt(playerid);
+	msg->PushString(name);
+	msg->PushString(version);
+	msg->PushSignedInt(punkte);
+	msg->PushUnsignedInt(gewonnen);
+	msg->PushUnsignedInt(verloren);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -89,10 +89,10 @@ void LobbyPlayerInfo::serialize(Message * msg) const
  */
 void LobbyPlayerInfo::deserialize(Message * msg)
 {
-	playerid = msg->popUI();
-	name = msg->popStr();
-	version = msg->popStr();
-	punkte = msg->popI();
-	gewonnen = msg->popUI();
-	verloren = msg->popUI();
+	playerid = msg->PopUnsignedInt();
+	name = msg->PopString();
+	version = msg->PopString();
+	punkte = msg->PopSignedInt();
+	gewonnen = msg->PopUnsignedInt();
+	verloren = msg->PopUnsignedInt();
 }

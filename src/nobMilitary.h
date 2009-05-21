@@ -1,4 +1,4 @@
-// $Id: nobMilitary.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: nobMilitary.h 4902 2009-05-21 09:12:10Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -102,7 +102,7 @@ public: void Serialize(SerializedGameData *sgd) const { Serialize_nobMilitary(sg
 	bool IsNewBuilt() const { return new_built; }
 
 	/// Liefert Militärradius des Gebäudes
-	unsigned short GetMilitaryRadius() const;
+	MapCoord GetMilitaryRadius() const;
 
 	/// Sucht feindliche Miitärgebäude im Umkreis und setzt die frontier_distance entsprechend (sowohl selber als
 	/// auch von den feindlichen Gebäuden) und bestellt somit ggf. neue Soldaten

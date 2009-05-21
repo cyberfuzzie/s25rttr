@@ -1,4 +1,4 @@
-// $Id: nobBaseMilitary.h 4842 2009-05-09 11:53:45Z OLiver $
+// $Id: nobBaseMilitary.h 4902 2009-05-21 09:12:10Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -86,7 +86,7 @@ public: void Serialize(SerializedGameData *sgd) const { Serialize_nobBaseMilitar
 	void AddLeavingFigure(noFigure * fig);
 
 	/// Liefert Militärradius des Gebäudes (falls es ein Militärgebäude ist)
-	virtual unsigned short GetMilitaryRadius() const { return 0; }
+	virtual MapCoord GetMilitaryRadius() const { return 0; }
 
 	/// Setzt das Alter
 	void SetAge() { age = age_counter++; }
@@ -148,13 +148,10 @@ public: void Serialize(SerializedGameData *sgd) const { Serialize_nobBaseMilitar
 	/// Sind noch Truppen drinne, die dieses Gebäude verteidigen können
 	virtual bool DefendersAvailable() const = 0;
 
-	
-
 	/// Debugging
 	bool Test(nofAttacker * attacker); 
 	bool TestOnMission(nofActiveSoldier * soldier);
 
-	
 
 
 };

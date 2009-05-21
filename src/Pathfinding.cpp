@@ -1,4 +1,4 @@
-// $Id: Pathfinding.cpp 4869 2009-05-15 19:44:27Z OLiver $
+// $Id: Pathfinding.cpp 4906 2009-05-21 13:02:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -202,7 +202,7 @@ bool GameWorldBase::FindFreePath(const MapCoord x_start,const MapCoord y_start,
 		unsigned start = random_route?RANDOM.Rand("pf",__LINE__,y_start*GetWidth()+x_start,6):0;
 		
 		// Knoten in alle 6 Richtungen bilden
-		for(unsigned z = start;z<6;++z)
+		for(unsigned z = start;z<start+6;++z)
 		{
 			unsigned i = (z+3)%6;
 

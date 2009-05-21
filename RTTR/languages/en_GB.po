@@ -3,14 +3,13 @@ msgstr ""
 "Project-Id-Version: Siedler II.5 RttR\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-05-06 18:14+0100\n"
-"PO-Revision-Date: 2009-05-11 22:54+0000\n"
-"Last-Translator: Siedler II.5 - Return To The Roots Team <sf-"
-"team@siedler25.de>\n"
+"PO-Revision-Date: 2009-05-18 18:44+0000\n"
+"Last-Translator: NastX <Unknown>\n"
 "Language-Team: Siedler II.5 RttR <sf-team@siedler25.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-05-17 09:00+0000\n"
+"X-Launchpad-Export-Date: 2009-05-21 09:52+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: UNITED KINGDOM\n"
 "X-Poedit-Language: English\n"
@@ -669,20 +668,20 @@ msgstr "Demolish house"
 
 #: /storage/RTTR/svn/trunk/src/iwSurrender.cpp:48
 msgid "Surrender game?"
-msgstr ""
+msgstr "Surrender game?"
 
 #: /storage/RTTR/svn/trunk/src/iwSurrender.cpp:51
 #: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:104
 msgid "Surrender"
-msgstr ""
+msgstr "Surrender"
 
 #: /storage/RTTR/svn/trunk/src/iwSurrender.cpp:53
 msgid "Don't surrender"
-msgstr ""
+msgstr "Don't surrender"
 
 #: /storage/RTTR/svn/trunk/src/iwSurrender.cpp:55
 msgid "Destroy all buildings and surrender"
-msgstr ""
+msgstr "Destroy all buildings and surrender"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:91
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:93
@@ -846,7 +845,7 @@ msgstr "Are you sure to remove all replays?"
 
 #: /storage/RTTR/svn/trunk/src/iwTextfile.cpp:75
 msgid "The readme file was not found!"
-msgstr ""
+msgstr "The readme file was not found!"
 
 #: /storage/RTTR/svn/trunk/src/iwStorehouse.cpp:43
 msgid "Storehouse"
@@ -1616,6 +1615,15 @@ msgid ""
 "indicates the current number of men, the second value indicates the desired "
 "number. "
 msgstr ""
+"The headquarters represents the center of your realm. The large amount of "
+"storage space available means a great many things can be safely stored here. "
+"You can release certain merchandise from the headquarters, as and when "
+"required or stop its storage. To do this, first choose the corresponding "
+"icon followed by the desired merchandise or job symbol. On the third page, "
+"you can adjust the number of reserve soldiers who are responsible for "
+"guarding the headquarters. There are two values given: the first value "
+"indicates the current number of men, the second value indicates the desired "
+"number. "
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:275
 msgid ""

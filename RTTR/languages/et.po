@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: s25rttr\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-05-06 18:14+0100\n"
-"PO-Revision-Date: 2009-05-09 09:36+0000\n"
-"Last-Translator: FloSoft <Unknown>\n"
+"PO-Revision-Date: 2009-05-19 19:00+0000\n"
+"Last-Translator: rm87 <Unknown>\n"
 "Language-Team: Estonian <et@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-05-09 14:40+0000\n"
+"X-Launchpad-Export-Date: 2009-05-21 09:52+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:406
@@ -1298,12 +1298,12 @@ msgstr "Mängu jätkati."
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:895
 #, c-format
 msgid "Player '%s' switched to player '%s'"
-msgstr ""
+msgstr "Mängija '%s' on nüüd mängija '%s'"
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:913
 #, c-format
 msgid "Player '%s' was defeated!"
-msgstr ""
+msgstr "Mängija '%s' on kaotanud!"
 
 #: /storage/RTTR/svn/trunk/src/dskDirectIP.cpp:59
 msgid "Create Game"
@@ -1439,7 +1439,7 @@ msgstr "mitmemäng"
 
 #: /storage/RTTR/svn/trunk/src/dskMainMenu.cpp:78
 msgid "Intro"
-msgstr ""
+msgstr "Sissejuhatus"
 
 #: /storage/RTTR/svn/trunk/src/dskMainMenu.cpp:84
 msgid "Quit program"
@@ -1544,7 +1544,7 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:116
 msgid "Mint"
-msgstr ""
+msgstr "Mündivalukoda"
 
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:123
 msgid "Construction"
@@ -1552,7 +1552,7 @@ msgstr "Ehitus"
 
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:129
 msgid "Shipyard"
-msgstr ""
+msgstr "Laevatehas"
 
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:135
 msgid "Bakery"
@@ -1572,7 +1572,7 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwSave.cpp:67
 msgid "Time"
-msgstr ""
+msgstr "Aeg"
 
 #: /storage/RTTR/svn/trunk/src/iwSave.cpp:67
 msgid "Start GF"
@@ -1721,6 +1721,8 @@ msgid ""
 "Grain and water are needed for rearing pigs. The meat thus obtained can then "
 "be processed by a butcher."
 msgstr ""
+"Sigade kasvatamiseks on vaja vett ja vilja. Niimoodi saadav liha läheb "
+"lihuniku juurde töötlemiseks."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:441
 msgid ""

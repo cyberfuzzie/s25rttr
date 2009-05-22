@@ -1,4 +1,4 @@
-// $Id: Message.h 4917 2009-05-22 11:01:40Z OLiver $
+// $Id: Message.h 4920 2009-05-22 20:47:07Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //a
@@ -30,6 +30,9 @@ class Message : public Serializer
 public:
 	/// Konstruktor von @p Message.
 	Message(unsigned short id) : id(id) {}
+	/// Konstruktor, um Message aus vorhandenem Datenblock heraus zu erstellen
+	Message(const unsigned id, const unsigned char * const data, const unsigned length) : Serializer(data, length) 
+		{}
 	virtual ~Message();
 
 	virtual unsigned short getId() const { return id; }
@@ -41,7 +44,7 @@ public:
 	virtual Message *create(unsigned short id) const { return create_base(id); }
 	virtual Message *duplicate() const;
 
-	virtual void run(MessageInterface *callback, unsigned int id) { throw std::logic_error("pure virtual call: Message::run(callback, id)"); };
+	virtual void run(MessageInterface *callback, unsigned int id) = 0;
 
 private:
 	Message(void) {}

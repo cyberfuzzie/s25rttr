@@ -23,7 +23,7 @@
 #include <memory.h>
 #include <string>
 
-/// Klasse die einen data zum Serialisieren verwaltet und entsprechende Methoden zum Lesen/Schreiben
+/// Klasse die einen Buffer zum Serialisieren verwaltet und entsprechende Methoden zum Lesen/Schreiben
 /// bereitstellt
 class Serializer
 {
@@ -59,6 +59,8 @@ public:
 
 	/// Getter
 	unsigned GetLength() const { return length; }
+	/// Zugriff auf die Rohdaten
+	const unsigned char * GetData() const { return data; }
 
 	/// Kopiermethoden
 

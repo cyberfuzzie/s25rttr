@@ -1,4 +1,4 @@
-// $Id: Socket.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: Socket.h 4920 2009-05-22 20:47:07Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -22,6 +22,7 @@
 #pragma once
 
 #ifdef _WIN32
+	#include <winsock.h>
 	typedef int socklen_t;
 #else
 	#include <arpa/inet.h>

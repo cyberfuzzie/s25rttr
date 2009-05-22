@@ -51,6 +51,7 @@ public:
 	// Pushes will push to the end, 
 	// while Pops will pop from the beginning
 	Serializer(const void * const data, const unsigned initial_size);
+	Serializer(const Serializer& two);
 	virtual ~Serializer();
 
 	/// Aufräumen

@@ -1,4 +1,4 @@
-// $Id: Message.h 4910 2009-05-21 19:38:04Z OLiver $
+// $Id: Message.h 4917 2009-05-22 11:01:40Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //a
@@ -45,7 +45,7 @@ public:
 
 private:
 	Message(void) {}
-	Message(const Message &) {}
+	
 	Message& operator = (const Message&) { return *this; }
 
 	int recv(Socket *sock, unsigned int length);

@@ -11,6 +11,11 @@ Serializer::Serializer(const void * const data, const unsigned initial_size)
 	memcpy(this->data, data, initial_size);
 }
 
+Serializer::Serializer(const Serializer& two) 
+: data(new unsigned char[two.buffer_length]), buffer_length(two.buffer_length), length(two.length), pos(two.pos)
+{
+	memcpy(data,two.data,length);
+}
 
 Serializer::~Serializer()
 {

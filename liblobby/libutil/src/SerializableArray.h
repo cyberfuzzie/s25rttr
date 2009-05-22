@@ -1,4 +1,4 @@
-// $Id: SerializableArray.h 4912 2009-05-21 20:56:47Z OLiver $
+// $Id: SerializableArray.h 4917 2009-05-22 11:01:40Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -167,9 +167,7 @@ public:
 
 		for(unsigned int i = 0; i < count; ++i)
 		{
-			Type N;
-			N.deserialize(msg);
-			elements.push_back(N);
+			elements.push_back(Type(i,msg));
 		}
 	}
 

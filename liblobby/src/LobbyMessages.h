@@ -1,4 +1,4 @@
-// $Id: LobbyMessages.h 4903 2009-05-21 12:04:21Z OLiver $
+// $Id: LobbyMessages.h 4918 2009-05-22 11:23:39Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -299,7 +299,7 @@ public:
 		}
 		else // Antwort
 		{
-			info.deserialize(this);
+			info = LobbyServerInfo(0,this);
 
 			LOG.write("<<< NMS_LOBBY_SERVERINFO\n");
 			LOG.write("    %d %s %s:%d %s %d %s %d %d\n", info.getId(), info.getName().c_str(), info.getHost().c_str(), info.getPort(), info.getVersion().c_str(), info.getPing(), info.getMap().c_str(), info.getCurPlayers(), info.getMaxPlayers() );
@@ -538,7 +538,7 @@ public:
 	{
 		LobbyMessageInterface *cb = dynamic_cast<LobbyMessageInterface*>(callback);
 
-		info.deserialize(this);
+		info = LobbyServerInfo(0,this);
 
 		LOG.write("<<< NMS_LOBBY_SERVER_ADD\n");
 		LOG.write("    %d %s %s:%d %s %d %s %d %d\n", info.getId(), info.getName().c_str(), info.getHost().c_str(), info.getPort(), info.getVersion().c_str(), info.getPing(), info.getMap().c_str(), info.getCurPlayers(), info.getMaxPlayers() );

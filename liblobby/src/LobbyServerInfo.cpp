@@ -1,4 +1,4 @@
-// $Id: LobbyServerInfo.cpp 4903 2009-05-21 12:04:21Z OLiver $
+// $Id: LobbyServerInfo.cpp 4918 2009-05-22 11:23:39Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -41,6 +41,22 @@ LobbyServerInfo::LobbyServerInfo(void)
 	clear();
 }
 
+/// Deserialisierungs-Konstruktor von @p LobbyServerInfo.
+LobbyServerInfo::LobbyServerInfo(const unsigned playerid, Serializer * ser) :
+	serverid(ser->PopUnsignedInt()),
+	name(ser->PopString()),
+	host(ser->PopString()),
+	port(ser->PopUnsignedShort()),
+	version(ser->PopString()),
+	ping(ser->PopUnsignedInt()),
+	map(ser->PopString()),
+	curplayers(ser->PopUnsignedInt()),
+	maxplayers(ser->PopUnsignedInt()),
+	has_password(ser->PopBool())
+{
+
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 /*
  *  leert die Informationen.
@@ -70,40 +86,16 @@ void LobbyServerInfo::clear(void)
  *
  *  @author FloSoft
  */
-void LobbyServerInfo::serialize(Message * msg) const
+void LobbyServerInfo::serialize(Serializer * ser) const
 {
-	msg->PushUnsignedInt(serverid);
-	msg->PushString(name);
-	msg->PushString(host);
-	msg->PushUnsignedShort(port);
-	msg->PushString(version);
-	msg->PushUnsignedInt(ping);
-	msg->PushString(map);
-	msg->PushUnsignedInt(curplayers);
-	msg->PushUnsignedInt(maxplayers);
-	msg->PushBool(has_password);
-}
-
-///////////////////////////////////////////////////////////////////////////////
-/*
- *  deserialisiert die Daten.
- *
- *  @param[in] data Datensatz, muss groß genug sein
- *
- *  @return liefert die Größe der gelesenen Daten zurück.
- *
- *  @author FloSoft
- */
-void LobbyServerInfo::deserialize(Message * msg)
-{
-	serverid = msg->PopUnsignedInt();
-	name = msg->PopString();
-	host = msg->PopString();
-	port = msg->PopUnsignedShort();
-	version = msg->PopString();
-	ping = msg->PopUnsignedInt();
-	map = msg->PopString();
-	curplayers = msg->PopUnsignedInt();
-	maxplayers = msg->PopUnsignedInt();
-	has_password = msg->PopBool();
+	ser->PushUnsignedInt(serverid);
+	ser->PushString(name);
+	ser->PushString(host);
+	ser->PushUnsignedShort(port);
+	ser->PushString(version);
+	ser->PushUnsignedInt(ping);
+	ser->PushString(map);
+	ser->PushUnsignedInt(curplayers);
+	ser->PushUnsignedInt(maxplayers);
+	ser->PushBool(has_password);
 }

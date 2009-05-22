@@ -1,4 +1,4 @@
-// $Id: LobbyPlayerInfo.cpp 4903 2009-05-21 12:04:21Z OLiver $
+// $Id: LobbyPlayerInfo.cpp 4918 2009-05-22 11:23:39Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -41,6 +41,17 @@ LobbyPlayerInfo::LobbyPlayerInfo(void)
 	clear();
 }
 
+/// Deserialisierungs-Konstruktor von @p LobbyPlayerInfo.
+LobbyPlayerInfo::LobbyPlayerInfo(const unsigned playerid, Serializer * ser) :
+	playerid(ser->PopUnsignedInt()),
+	name(ser->PopString()),
+	version(ser->PopString()),
+	punkte(ser->PopSignedInt()),
+	gewonnen(ser->PopUnsignedInt()),
+	verloren(ser->PopUnsignedInt())
+{
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 /*
  *  leert die Informationen.
@@ -67,32 +78,12 @@ void LobbyPlayerInfo::clear(void)
  *
  *  @author FloSoft
  */
-void LobbyPlayerInfo::serialize(Message * msg) const
+void LobbyPlayerInfo::serialize(Serializer * ser) const
 {
-	msg->PushUnsignedInt(playerid);
-	msg->PushString(name);
-	msg->PushString(version);
-	msg->PushSignedInt(punkte);
-	msg->PushUnsignedInt(gewonnen);
-	msg->PushUnsignedInt(verloren);
-}
-
-///////////////////////////////////////////////////////////////////////////////
-/*
- *  deserialisiert die Daten.
- *
- *  @param[in] data Datensatz, muss groß genug sein
- *
- *  @return liefert die Größe der gelesenen Daten zurück.
- *
- *  @author FloSoft
- */
-void LobbyPlayerInfo::deserialize(Message * msg)
-{
-	playerid = msg->PopUnsignedInt();
-	name = msg->PopString();
-	version = msg->PopString();
-	punkte = msg->PopSignedInt();
-	gewonnen = msg->PopUnsignedInt();
-	verloren = msg->PopUnsignedInt();
+	ser->PushUnsignedInt(playerid);
+	ser->PushString(name);
+	ser->PushString(version);
+	ser->PushSignedInt(punkte);
+	ser->PushUnsignedInt(gewonnen);
+	ser->PushUnsignedInt(verloren);
 }

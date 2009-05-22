@@ -1,4 +1,4 @@
-// $Id: LobbyPlayerInfo.h 4878 2009-05-17 11:40:50Z OLiver $
+// $Id: LobbyPlayerInfo.h 4918 2009-05-22 11:23:39Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -21,17 +21,19 @@
 
 #pragma once
 
+class Serializer;
+
 class LobbyPlayerInfo
 {
 public:
 	/// Konstruktor von @p LobbyPlayerInfo.
 	LobbyPlayerInfo(void);
+	/// Deserialisierungs-Konstruktor von @p LobbyPlayerInfo.
+	LobbyPlayerInfo(const unsigned playerid, Serializer * ser);
 	/// leert die Informationen.
 	void clear(void);
 	/// serialisiert die Daten.
-	void serialize(Message * msg) const;
-	/// deserialisiert die Daten.
-	void deserialize(Message * msg);
+	void serialize(Serializer * ser) const;
 
 	/// Zuweisungsoperator
 	LobbyPlayerInfo& operator= (const LobbyPlayerInfo &info)

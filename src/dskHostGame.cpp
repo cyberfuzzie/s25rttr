@@ -1,4 +1,4 @@
-// $Id: dskHostGame.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: dskHostGame.cpp 4929 2009-05-23 23:01:13Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -246,7 +246,7 @@ void dskHostGame::UpdatePlayerRow(const unsigned row)
 			// Volk
 			group->AddTextButton( 3, 240, cy, 90, 22, tc, _("Africans"),NormalFont);
 			// Farbe
-			group->AddTextButton( 4, 340, cy, 30, 22, tc, _("%s"),NormalFont);
+			group->AddTextButton( 4, 340, cy, 30, 22, tc, _(""),NormalFont);
 			// Team
 			group->AddTextButton( 5, 380, cy, 50, 22, tc, _("-"),NormalFont);
 		}
@@ -255,7 +255,7 @@ void dskHostGame::UpdatePlayerRow(const unsigned row)
 			// Volk
 			group->AddDeepening( 3, 240, cy, 90, 22, tc, _("Africans"), NormalFont, COLOR_YELLOW);
 			// Farbe
-			group->AddDeepening( 4, 340, cy, 30, 22, tc, _("%s"), NormalFont, COLOR_YELLOW);
+			group->AddDeepening( 4, 340, cy, 30, 22, tc, _(""), NormalFont, COLOR_YELLOW);
 			// Team
 			group->AddDeepening( 5, 380, cy, 50, 22, tc, _("-"), NormalFont, COLOR_YELLOW);
 		}

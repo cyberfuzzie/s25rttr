@@ -1,4 +1,4 @@
-// $Id: colors.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: colors.h 4929 2009-05-23 23:01:13Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -33,8 +33,8 @@ enum TextureColor
 };
 
 /// Farbanzahl
-const unsigned int GAME_COLORS_COUNT = 10;
-const unsigned int COLORS_COUNT = 12;
+const unsigned int GAME_COLORS_COUNT = 11;
+const unsigned int COLORS_COUNT = 13;
 
 /// Farbkonstanten
 const unsigned int COLORS[COLORS_COUNT] =
@@ -49,6 +49,7 @@ const unsigned int COLORS[COLORS_COUNT] =
 	0xFFFFFFFF, // Weiﬂ
 	0xFFFF8000, // Orange
 	0xFF6C4337, // Braun
+	0x25FFFFFF, // Durchsichtig
 	0x40000000, // Schatten
 	0xFFCCCCCC, // Grau
 };

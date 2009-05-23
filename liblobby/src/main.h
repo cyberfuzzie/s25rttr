@@ -1,4 +1,4 @@
-// $Id: main.h 4884 2009-05-18 16:52:52Z FloSoft $
+// $Id: main.h 4923 2009-05-23 11:47:41Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -74,7 +74,11 @@
 #ifndef snprintf
 	#define snprintf _snprintf
 #endif
-	#define assert _ASSERT
+
+	#ifndef assert
+		#define assert _ASSERT
+	#endif
+
 #endif
 
 #endif // _WIN32

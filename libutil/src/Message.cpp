@@ -1,4 +1,4 @@
-// $Id: Message.cpp 4903 2009-05-21 12:04:21Z OLiver $
+// $Id: Message.cpp 4923 2009-05-23 11:47:41Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -106,7 +106,7 @@ Message *Message::create_base(unsigned short id)
 	Message *msg = NULL;
 	switch(id)
 	{
-	default: break;
+	default: printf("ERROR: Message with id %u couldn't be created!\n",unsigned(id)); break;
 
 	case NMS_NULL_MSG:	{ msg = new Message_Null(); } break;
 	case NMS_DEAD_MSG:	{ msg = new Message_Dead(); } break;

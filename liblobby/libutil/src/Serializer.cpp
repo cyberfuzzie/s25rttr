@@ -50,7 +50,7 @@ void Serializer::Realloc(const unsigned int length)
 	{
 		// umkopieren (vergrößern)
 		unsigned char *ndata = new unsigned char[this->buffer_length];
-		memcpy(ndata, data, length);
+		memcpy(ndata, data, this->length);
 
 		delete[] data;
 		data = ndata;
@@ -61,7 +61,7 @@ void Serializer::Realloc(const unsigned int length)
 /// Erweitert ggf. Speicher um add_length
 void Serializer::ExtendMemory(const unsigned add_length)
 {
-	if(length + add_length < this->buffer_length)
+	if(length + add_length > this->buffer_length)
 		Realloc(length+add_length);
 
 }

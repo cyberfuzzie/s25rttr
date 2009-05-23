@@ -22,6 +22,7 @@
 
 #include <memory.h>
 #include <string>
+#include <assert.h>
 
 /// Klasse die einen Buffer zum Serialisieren verwaltet und entsprechende Methoden zum Lesen/Schreiben
 /// bereitstellt
@@ -68,7 +69,7 @@ public:
 	void PushRawData(const void * const data, const unsigned length)
 	{
 		ExtendMemory(length);
-		memcpy(this->data+length,data,length);
+		memcpy(&this->data[pos],data,length);
 		pos = this->length +=length; 
 	}
 
@@ -132,6 +133,7 @@ public:
 	/// Rohdaten kopieren
 	void PopRawData(void * const data, const unsigned length)
 	{
+		assert(pos<length);
 		memcpy(data,&this->data[pos],length);
 		pos +=length; 
 	}
@@ -139,12 +141,14 @@ public:
 	/// Sämtliche Integer
 	signed int PopSignedInt()
 	{
+		assert(pos<length);
 		signed int i = *((signed int*)&data[pos]);
 		pos +=4;
 		return i;
 	}
 	unsigned int PopUnsignedInt()
 	{
+		assert(pos<length);
 		unsigned int i = *((unsigned int*)&data[pos]);
 		pos +=4;
 		return i;
@@ -152,6 +156,7 @@ public:
 
 	signed short PopSignedShort()
 	{
+		assert(pos<length);
 		signed short i = *((signed short*)&data[pos]);
 		pos +=2;
 		return i;
@@ -165,12 +170,14 @@ public:
 
 	signed char PopSignedChar()
 	{
+		assert(pos<length);
 		signed char i = *((signed char*)&data[pos]);
 		pos +=1;
 		return i;
 	}
 	unsigned char PopUnsignedChar()
 	{
+		assert(pos<length);
 		unsigned char i = *((unsigned char*)&data[pos]);
 		pos +=1;
 		return i;
@@ -178,11 +185,13 @@ public:
 
 	bool PopBool()
 	{
+		assert(pos<length);
 		return ((PopUnsignedChar() == 1) ? true : false);
 	}
 
 	std::string PopString() 
 	{
+		assert(pos<length);
 		std::string str;
 		str.resize(PopUnsignedInt());
 		for(unsigned i = 0;i<str.length();++i)

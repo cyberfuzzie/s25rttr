@@ -29,6 +29,7 @@
 #include "iwSave.h"
 #include "WindowManager.h"
 #include "GameClient.h"
+#include "GameCommands.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -62,8 +63,8 @@ void iwSurrender::Msg_ButtonClick(const unsigned int ctrl_id)
 	{
 	case 0: // OK
 		{
-      GameClient::inst().NC_Surrender();
-      Close();
+			GameClient::inst().AddGC(new gc::Surrender);
+			Close();
 		} break;
 	case 1: // Abbrechen
 		{
@@ -71,8 +72,8 @@ void iwSurrender::Msg_ButtonClick(const unsigned int ctrl_id)
 		} break;
 	case 2: // OK + Alles abbrennen
 		{
-      GameClient::inst().NC_DestroyAll();
-      Close();
+			GameClient::inst().AddGC(new gc::DestroyAll);
+			Close();
 		} break;
 	}
 }

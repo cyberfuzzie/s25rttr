@@ -1,4 +1,4 @@
-// $Id: prebuild-mutex.cpp 4834 2009-05-08 19:45:33Z FloSoft $
+// $Id: prebuild-mutex.cpp 4932 2009-05-24 09:39:38Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -20,6 +20,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Header
 #include <windows.h>
+
+#include <ctime>
+
 #include <string>
 #include <vector>
 #include <iostream>
@@ -80,6 +83,8 @@ void copyfile(std::string file, std::string from, std::string to, std::string to
  */
 int main(int argc, char *argv[])
 {
+	srand((unsigned int)std::time(NULL));
+
 	if(argc < 4)
 	{
 		std::cout << "Usage: " << argv[0] << " pre-/postbuild $workingdir $binarydir" << std::endl;
@@ -138,11 +143,7 @@ int main(int argc, char *argv[])
 
 						std::string cmd;
 
-						// todo: das hier auch ersetzen
-						cmd = "sh dailyversion.sh";
-						exec(cmd);
-
-						cmd = "\"" + binary + "version.exe\" --no-dots";
+						cmd = "\"" + binary + "version.exe\"";
 						exec(cmd);
 
 						std::cout << "creating language files" << std::endl;
@@ -186,7 +187,7 @@ int main(int argc, char *argv[])
 				return 0;
 			}
 		}
-		Sleep(250);
+		Sleep(250 + rand() % 100);
 		++timeout;
 
 		hadtowait = true;

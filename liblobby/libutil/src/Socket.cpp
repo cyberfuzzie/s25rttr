@@ -1,4 +1,4 @@
-// $Id: Socket.cpp 4890 2009-05-18 19:13:08Z FloSoft $
+// $Id: Socket.cpp 4936 2009-05-24 15:17:07Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -657,10 +657,8 @@ std::string &Socket::IpToString(const sockaddr *addr, std::string &buffer)
 	size_t size = 0;
 	if (addr->sa_family == AF_INET) 
 		size = sizeof(sockaddr_in);
-#ifdef USE_IPV6
 	else
 		size = sizeof(sockaddr_in6);
-#endif
 
 	assert(size != 0);
 
@@ -669,10 +667,8 @@ std::string &Socket::IpToString(const sockaddr *addr, std::string &buffer)
 
 	if (addr->sa_family == AF_INET) 
 		((sockaddr_in *)copy)->sin_port = 0;
-#ifdef USE_IPV6
 	else
 		((sockaddr_in6 *)copy)->sin6_port = 0;
-#endif
 
 	DWORD le = GetLastError();
 	DWORD templen = sizeof(temp);
@@ -685,10 +681,8 @@ std::string &Socket::IpToString(const sockaddr *addr, std::string &buffer)
 
 	if (addr->sa_family == AF_INET) {
 		ip = &(((sockaddr_in *)addr)->sin_addr);
-#ifdef USE_IPV6
 	} else {
 		ip = &(((sockaddr_in6 *)addr)->sin6_addr);
-#endif
 	}
 
 	inet_ntop(addr->sa_family, ip, temp, sizeof(temp));

@@ -1,4 +1,4 @@
-// $Id: version.cpp 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: version.cpp 4936 2009-05-24 15:17:07Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -20,6 +20,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Header
 #include "version.h"
+#include <memory.h>
 #include <string>
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -33,8 +34,8 @@
 const char *GetWindowTitle()
 {
 	static char title[256];
-	std::memset(title, 0, 256);
-	std::strncpy(title, WINDOW_TITLE, 256);
+	memset(title, 0, 256);
+	strncpy(title, WINDOW_TITLE, 256);
 	std::string test;
 	return title;
 }
@@ -42,15 +43,15 @@ const char *GetWindowTitle()
 const char *GetWindowVersion()
 {
 	static char version[256];
-	std::memset(version, 0, 256);
-	std::strncpy(version, WINDOW_VERSION, 256);
+	memset(version, 0, 256);
+	strncpy(version, WINDOW_VERSION, 256);
 	return version;
 }
 
 const char *GetWindowRevision()
 {
 	static char revision[256];
-	std::memset(revision, 0, 256);
-	std::strncpy(revision, WINDOW_REVISION, 256);
+	memset(revision, 0, 256);
+	strncpy(revision, WINDOW_REVISION, 256);
 	return revision;
 }

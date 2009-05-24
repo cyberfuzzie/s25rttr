@@ -1,4 +1,4 @@
-// $Id: LobbyMessages.h 4918 2009-05-22 11:23:39Z OLiver $
+// $Id: LobbyMessages.h 4936 2009-05-24 15:17:07Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -137,6 +137,7 @@ public:
 class LobbyMessage_Register : public LobbyMessage
 {
 private:
+	unsigned int revision;
 	std::string user;
 	std::string pass;
 	std::string email;
@@ -149,6 +150,7 @@ public:
 
 		//alloc(3 + (unsigned int)user.length() + pass.length() + email.length());
 
+		PushUnsignedInt(LOBBYPROTOCOL_VERSION);
 		PushString(user);
 		PushString(pass);
 		PushString(email);
@@ -157,12 +159,21 @@ public:
 	{ 
 		LobbyMessageInterface *cb = dynamic_cast<LobbyMessageInterface*>(callback);
 
+		unsigned char rev[4];
+		PopRawData(rev,4);
+
+		// haben wir eine gültige Revision erhalten?
+		if(rev[0] != 0xFF || rev[3] != 0xFF)
+			revision = 0;
+		else
+			revision = htonl(*((unsigned int*)rev));
+
 		user = PopString();
 		pass = PopString();
 		email = PopString();
 
 		LOG.write("<<< NMS_LOBBY_REGISTER(%s, %s, %s)\n", user.c_str(), "********", email.c_str());
-		cb->OnNMSLobbyRegister(id, user, pass, email);
+		cb->OnNMSLobbyRegister(id, revision, user, pass, email);
 	}
 };
 

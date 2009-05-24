@@ -1,7 +1,9 @@
-// $Id: Message.h 4920 2009-05-22 20:47:07Z OLiver $
+// $Id: Message.h 4936 2009-05-24 15:17:07Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
-//a
+//
+// This file is part of Siedler II.5 RTTR.
+//
 // Siedler II.5 RTTR is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
@@ -31,8 +33,7 @@ public:
 	/// Konstruktor von @p Message.
 	Message(unsigned short id) : id(id) {}
 	/// Konstruktor, um Message aus vorhandenem Datenblock heraus zu erstellen
-	Message(const unsigned id, const unsigned char * const data, const unsigned length) : Serializer(data, length) 
-		{}
+	Message(const unsigned id, const unsigned char * const data, const unsigned length) : Serializer(data, length), id(id) {}
 	virtual ~Message();
 
 	virtual unsigned short getId() const { return id; }

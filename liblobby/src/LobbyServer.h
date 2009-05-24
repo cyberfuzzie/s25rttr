@@ -1,4 +1,4 @@
-// $Id: LobbyServer.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: LobbyServer.h 4936 2009-05-24 15:17:07Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -61,7 +61,7 @@ protected:
 	/// Lobby-Login-Nachricht.
 	virtual void OnNMSLobbyLogin(unsigned int id, const unsigned int revision, const std::string &user, const std::string &pass, const std::string &version);
 	/// Lobby-Register-Nachricht.
-	virtual void OnNMSLobbyRegister(unsigned int id, const std::string &user, const std::string &pass, const std::string &email);
+	virtual void OnNMSLobbyRegister(unsigned int id, const unsigned int revision, const std::string &user, const std::string &pass, const std::string &email);
 	/// Chat-Nachricht.
 	virtual void OnNMSLobbyChat(unsigned int id, const std::string &player, const std::string &text);
 	/// Pong-Nachricht.

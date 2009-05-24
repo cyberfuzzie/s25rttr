@@ -1,4 +1,4 @@
-// $Id: LobbyServer.cpp 4888 2009-05-18 18:59:04Z FloSoft $
+// $Id: LobbyServer.cpp 4936 2009-05-24 15:17:07Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -375,23 +375,36 @@ void LobbyServer::OnNMSLobbyLogin(unsigned int id, const unsigned int revision, 
  *
  *  @author FloSoft
  */
-void LobbyServer::OnNMSLobbyRegister(unsigned int id, const std::string &user, const std::string &pass, const std::string &email)
+void LobbyServer::OnNMSLobbyRegister(unsigned int id, const unsigned int revision, const std::string &user, const std::string &pass, const std::string &email)
 {
 	LobbyPlayer &player = players[id];
 
-	if(MYSQLCLIENT.RegisterUser(user, pass, email))
+	// Protokollversion prüfen
+	if(revision != LOBBYPROTOCOL_VERSION)
 	{
-		LOG.lprintf("User %s registered\n", user.c_str());
+		// zu alt
+		LOG.lprintf("User %s invalid (protocoll version wrong)", user.c_str());
 
-		player.Send(new LobbyMessage_Register_Done(1));
+		player.Send(new LobbyMessage_Login_Error("Falsche Protokollversion! Programmversion ist zu alt."));
+
+		Disconnect(player);
 	}
 	else
 	{
-		LOG.lprintf("User %s failed to register\n", user.c_str());
+		if(MYSQLCLIENT.RegisterUser(user, pass, email))
+		{
+			LOG.lprintf("User %s registered\n", user.c_str());
 
-		player.Send(new LobbyMessage_Register_Error("Registrierung fehlgeschlagen: Datenbankfehler oder Benutzer existiert schon"));
+			player.Send(new LobbyMessage_Register_Done(1));
+		}
+		else
+		{
+			LOG.lprintf("User %s failed to register\n", user.c_str());
 
-		Disconnect(player);
+			player.Send(new LobbyMessage_Register_Error("Registrierung fehlgeschlagen: Datenbankfehler oder Benutzer existiert schon"));
+
+			Disconnect(player);
+		}
 	}
 }
 

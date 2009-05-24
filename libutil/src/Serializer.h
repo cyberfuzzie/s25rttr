@@ -1,7 +1,9 @@
-// $Id: Serializer.h 4898 2009-05-20 13:44:45Z OLiver $
+// $Id: MessageQueue.h 4910 2009-05-21 19:38:04Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
-//a
+//
+// This file is part of Siedler II.5 RTTR.
+//
 // Siedler II.5 RTTR is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
@@ -14,8 +16,6 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Siedler II.5 RTTR. If not, see <http://www.gnu.org/licenses/>.
-
-
 #ifndef SERIALIZER_H_
 #define SERIALIZER_H_
 

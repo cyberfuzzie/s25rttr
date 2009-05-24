@@ -1,4 +1,4 @@
-// $Id: LobbyMessages.h 4936 2009-05-24 15:17:07Z FloSoft $
+// $Id: LobbyMessages.h 4937 2009-05-24 15:36:37Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -146,7 +146,7 @@ public:
 	LobbyMessage_Register(void) : LobbyMessage(NMS_LOBBY_REGISTER) {}
 	LobbyMessage_Register(const std::string &user, const std::string &pass, const std::string &email) : LobbyMessage(NMS_LOBBY_REGISTER)
 	{
-		LOG.write(">>> NMS_LOBBY_REGISTER(%s, %s, %s)\n", user.c_str(), "********", email.c_str());
+		LOG.write(">>> NMS_LOBBY_REGISTER(%d, %s, %s, %s)\n", revision, user.c_str(), "********", email.c_str());
 
 		//alloc(3 + (unsigned int)user.length() + pass.length() + email.length());
 
@@ -172,7 +172,7 @@ public:
 		pass = PopString();
 		email = PopString();
 
-		LOG.write("<<< NMS_LOBBY_REGISTER(%s, %s, %s)\n", user.c_str(), "********", email.c_str());
+		LOG.write("<<< NMS_LOBBY_REGISTER(%d, %s, %s, %s)\n", revision, user.c_str(), "********", email.c_str());
 		cb->OnNMSLobbyRegister(id, revision, user, pass, email);
 	}
 };

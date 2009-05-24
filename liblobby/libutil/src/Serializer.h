@@ -16,37 +16,19 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Siedler II.5 RTTR. If not, see <http://www.gnu.org/licenses/>.
-#ifndef SERIALIZER_H_
-#define SERIALIZER_H_
+#ifndef SERIALIZER_H_INCLUDED
+#define SERIALIZER_H_INCLUDED
 
+#pragma once
 
 #include <memory.h>
 #include <string>
 #include <assert.h>
 
-/// Klasse die einen Buffer zum Serialisieren verwaltet und entsprechende Methoden zum Lesen/Schreiben
-/// bereitstellt
+/// Klasse die einen Buffer zum Serialisieren verwaltet und entsprechende Methoden zum Lesen/Schreiben bereitstellt.
 class Serializer
 {
-protected:
-	/// data mit den Daten
-	unsigned char * data;
-	/// Länge des datas
-	unsigned buffer_length;
-	/// Logische Länge
-	unsigned length;
-	/// Schreib/Leseposition
-	unsigned pos;
-
-protected:
-
-	/// vergrößert den Speicher auf die nächst höhere 2er potenz zur Länge @p length.
-	void Realloc(const unsigned int length);
-	/// Erweitert ggf. Speicher um add_length
-	void ExtendMemory(const unsigned add_length);
-
 public:
-
 	Serializer();
 	/// Fill with initial data
 	// Pushes will push to the end, 
@@ -66,7 +48,7 @@ public:
 	/// Kopiermethoden
 
 	/// Rohdaten kopieren
-	void PushRawData(const void * const data, const unsigned length)
+	inline void PushRawData(const void * const data, const unsigned length)
 	{
 		ExtendMemory(length);
 		memcpy(&this->data[pos],data,length);
@@ -74,51 +56,51 @@ public:
 	}
 
 	/// Sämtliche Integer
-	void PushSignedInt(signed int i)
+	inline void PushSignedInt(signed int i)
 	{
 		ExtendMemory(4);
-		*((signed int*)&data[length]) = i;
+		*((signed int*)&data[length]) = htonl(i);
 		pos = this->length +=4;
 	}
-	void PushUnsignedInt(unsigned int i)
+	inline void PushUnsignedInt(unsigned int i)
 	{
 		ExtendMemory(4);
-		*((unsigned int*)&data[length]) = i;
+		*((unsigned int*)&data[length]) = htonl(i);
 		pos = this->length +=4;
 	}
 
-	void PushSignedShort(signed short int i)
+	inline void PushSignedShort(signed short int i)
 	{
 		ExtendMemory(2);
-		*((signed short*)&data[length]) = i;
+		*((signed short*)&data[length]) = htons(i);
 		pos = this->length +=2;
 	}
-	void PushUnsignedShort(unsigned short int i)
+	inline void PushUnsignedShort(unsigned short int i)
 	{
 		ExtendMemory(2);
-		*((unsigned short*)&data[length]) = i;
+		*((unsigned short*)&data[length]) = htons(i);
 		pos = this->length +=2;
 	}
 
-	void PushSignedChar(signed char i)
+	inline void PushSignedChar(signed char i)
 	{
 		ExtendMemory(1);
 		*((signed char*)&data[length]) = i;
 		pos = this->length +=1;
 	}
-	void PushUnsignedChar(unsigned char i)
+	inline void PushUnsignedChar(unsigned char i)
 	{
 		ExtendMemory(1);
 		*((signed char*)&data[length]) = i;
 		pos = this->length +=1;
 	}
 
-	void PushBool(bool b)
+	inline void PushBool(bool b)
 	{
 		PushUnsignedChar(b ? 1 : 0);
 	}
 
-	void PushString(const std::string& str)
+	inline void PushString(const std::string& str)
 	{
 		PushUnsignedInt(str.length());
 		for(unsigned i = 0;i<str.length();++i)
@@ -128,10 +110,13 @@ public:
 	// Lesemethoden
 
 	/// Copy all data
-	void ToBuffer(unsigned char * const buffer) { memcpy(buffer, data, length);}
+	inline void ToBuffer(unsigned char * const buffer) 
+	{ 
+		memcpy(buffer, data, length);
+	}
 
 	/// Rohdaten kopieren
-	void PopRawData(void * const data, const unsigned length)
+	inline void PopRawData(void * const data, const unsigned length)
 	{
 		assert(pos<length);
 		memcpy(data,&this->data[pos],length);
@@ -139,43 +124,43 @@ public:
 	}
 
 	/// Sämtliche Integer
-	signed int PopSignedInt()
+	inline signed int PopSignedInt()
 	{
 		assert(pos<length);
-		signed int i = *((signed int*)&data[pos]);
+		signed int i = htonl(*((signed int*)&data[pos]));
 		pos +=4;
 		return i;
 	}
-	unsigned int PopUnsignedInt()
+	inline unsigned int PopUnsignedInt()
 	{
 		assert(pos<length);
-		unsigned int i = *((unsigned int*)&data[pos]);
+		unsigned int i = htonl(*((unsigned int*)&data[pos]));
 		pos +=4;
 		return i;
 	}
 
-	signed short PopSignedShort()
+	inline signed short PopSignedShort()
 	{
 		assert(pos<length);
-		signed short i = *((signed short*)&data[pos]);
+		signed short i = htons(*((signed short*)&data[pos]));
 		pos +=2;
 		return i;
 	}
-	unsigned short PopUnsignedShort()
+	inline unsigned short PopUnsignedShort()
 	{
-		unsigned short i = *((unsigned short*)&data[pos]);
+		unsigned short i = htons(*((unsigned short*)&data[pos]));
 		pos +=2;
 		return i;
 	}
 
-	signed char PopSignedChar()
+	inline signed char PopSignedChar()
 	{
 		assert(pos<length);
 		signed char i = *((signed char*)&data[pos]);
 		pos +=1;
 		return i;
 	}
-	unsigned char PopUnsignedChar()
+	inline unsigned char PopUnsignedChar()
 	{
 		assert(pos<length);
 		unsigned char i = *((unsigned char*)&data[pos]);
@@ -183,13 +168,13 @@ public:
 		return i;
 	}
 
-	bool PopBool()
+	inline bool PopBool()
 	{
 		assert(pos<length);
 		return ((PopUnsignedChar() == 1) ? true : false);
 	}
 
-	std::string PopString() 
+	inline std::string PopString() 
 	{
 		assert(pos<length);
 		std::string str;
@@ -198,7 +183,23 @@ public:
 			str[i] = PopSignedChar();
 		return str;
 	}
+
+protected:
+	/// data mit den Daten
+	unsigned char * data;
+	/// Länge des datas
+	unsigned buffer_length;
+	/// Logische Länge
+	unsigned length;
+	/// Schreib/Leseposition
+	unsigned pos;
+
+protected:
+	/// vergrößert den Speicher auf die nächst höhere 2er potenz zur Länge @p length.
+	void Realloc(const unsigned int length);
+	/// Erweitert ggf. Speicher um add_length
+	void ExtendMemory(const unsigned add_length);
+
 };
 
-
-#endif
+#endif // !SERIALIZER_H_INCLUDED

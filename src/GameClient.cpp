@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 4940 2009-05-24 16:38:33Z FloSoft $
+// $Id: GameClient.cpp 4945 2009-05-24 17:54:00Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -786,7 +786,7 @@ inline void GameClient::OnNMSServerStart(const GameMessage_Server_Start& msg)
  */
 void GameClient::OnNMSServerChat(const GameMessage_Server_Chat& msg)
 {
-	if(msg.player != 0xFFFFFFFF)
+	if(msg.player != 0xFF)
 	{
 		if(ci)
 			ci->CI_Chat(msg.player, msg.destination, msg.text);

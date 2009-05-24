@@ -21,10 +21,6 @@
 
 #pragma once
 
-#include <memory.h>
-#include <string>
-#include <assert.h>
-
 /// Klasse die einen Buffer zum Serialisieren verwaltet und entsprechende Methoden zum Lesen/Schreiben bereitstellt. 
 /// Implementiert einen FIFO (push fügt ans ende, pop entfernt am anfang)
 class Serializer

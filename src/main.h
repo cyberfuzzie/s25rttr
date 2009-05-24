@@ -1,4 +1,4 @@
-// $Id: main.h 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: main.h 4942 2009-05-24 17:00:56Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -82,28 +82,6 @@
 #include <GL/gl.h>
 #include <GL/glext.h>
 
-///////////////////////////////////////////////////////////////////////////////
-// Eigene Header
-#include "local.h"
-#include "libutil.h"
-#include "mygettext.h"
-#include "liblobby.h"
-#include "libsiedler2.h"
-
-#include "macros.h"
-#include "colors.h"
-#include "list.h"
-#include "Swap.h"
-
-#include "glAllocator.h"
-#include "../driver/src/Sound.h"
-
-typedef struct Rect {
-	unsigned short left,top,right,bottom;
-} Rect;
-
-#include "Loader.h"
-
 #ifdef _WIN32
 
 #ifdef _MSC_VER
@@ -128,6 +106,28 @@ typedef struct Rect {
 	#define GetProcAddress(x, y) dlsym(x, y)
 	#define FreeLibrary(x) dlclose(x)
 #endif // _WIN32
+
+///////////////////////////////////////////////////////////////////////////////
+// Eigene Header
+#include "local.h"
+#include "libutil.h"
+#include "mygettext.h"
+#include "liblobby.h"
+#include "libsiedler2.h"
+
+#include "macros.h"
+#include "colors.h"
+#include "list.h"
+#include "Swap.h"
+
+#include "glAllocator.h"
+#include "../driver/src/Sound.h"
+
+typedef struct Rect {
+	unsigned short left,top,right,bottom;
+} Rect;
+
+#include "Loader.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 /**

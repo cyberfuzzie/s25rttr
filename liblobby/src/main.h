@@ -1,4 +1,4 @@
-// $Id: main.h 4923 2009-05-23 11:47:41Z OLiver $
+// $Id: main.h 4942 2009-05-24 17:00:56Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -45,6 +45,18 @@
 	#include <arpa/inet.h>
 #endif // !_WIN32
 
+#ifdef _WIN32
+
+#ifdef _MSC_VER
+	#define getch _getch
+	#ifndef snprintf
+		#define snprintf _snprintf
+	#endif
+	#define assert _ASSERT
+#endif
+
+#endif // _WIN32
+
 #include <errno.h>
 
 #include <cstdlib>
@@ -56,32 +68,12 @@
 #include <vector>
 #include <sstream>
 
-#if defined _WIN32 && defined _DEBUG
-	#include <crtdbg.h>
-#endif // _WIN32 && _DEBUG
-
 ///////////////////////////////////////////////////////////////////////////////
 // Eigene Header
 #include "local.h"
 #include "libutil.h"
 #include "mygettext.h"
 #include "liblobby.h"
-
-#ifdef _WIN32
-
-#ifdef _MSC_VER
-	#define getch _getch
-#ifndef snprintf
-	#define snprintf _snprintf
-#endif
-
-	#ifndef assert
-		#define assert _ASSERT
-	#endif
-
-#endif
-
-#endif // _WIN32
 
 const char *GetWindowTitle();
 const char *GetWindowVersion();

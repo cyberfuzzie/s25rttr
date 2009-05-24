@@ -1,4 +1,4 @@
-// $Id: main.h 4909 2009-05-21 19:31:33Z FloSoft $
+// $Id: main.h 4942 2009-05-24 17:00:56Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -79,9 +79,9 @@
 
 #ifdef _MSC_VER
 	#define getch _getch
-#ifndef snprintf
-	#define snprintf _snprintf
-#endif
+	#ifndef snprintf
+		#define snprintf _snprintf
+	#endif
 	#define assert _ASSERT
 #endif
 

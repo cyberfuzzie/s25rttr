@@ -1,4 +1,4 @@
-// $Id: main.h 4942 2009-05-24 17:00:56Z FloSoft $
+// $Id: main.h 4943 2009-05-24 17:07:30Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -43,6 +43,7 @@
 #endif
 #else
 	#include <arpa/inet.h>
+	#include <assert.h>
 #endif // !_WIN32
 
 #ifdef _WIN32

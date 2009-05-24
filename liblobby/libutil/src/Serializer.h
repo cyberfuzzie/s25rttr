@@ -226,13 +226,18 @@ public:
 	}
 
 protected:
-	Serializer& operator=(const Serializer& other)
+	void copy(const Serializer& other)
 	{
 		data = new unsigned char[other.buffer_length];
 		buffer_length = other.buffer_length;
 		length = other.length;
 		pos = other.pos;
 		memcpy(data, other.data, length);
+	}
+
+	Serializer& operator=(const Serializer& other)
+	{
+		copy(other);
 
 		return *this;
 	}

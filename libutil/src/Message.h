@@ -1,4 +1,4 @@
-// $Id: Message.h 4940 2009-05-24 16:38:33Z FloSoft $
+// $Id: Message.h 4944 2009-05-24 17:51:43Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -51,6 +51,8 @@ protected:
 	Message& operator=(const Message& other)
 	{
 		id = other.id;
+
+		copy(other);
 
 		return *this;
 	}

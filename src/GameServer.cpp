@@ -1,4 +1,4 @@
-// $Id: GameServer.cpp 4940 2009-05-24 16:38:33Z FloSoft $
+// $Id: GameServer.cpp 4946 2009-05-24 19:05:25Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -374,8 +374,8 @@ bool GameServer::StartGame()
 			return false;
 	}
 
-	bool reserved_colors[GAME_COLORS_COUNT];
-	memset(reserved_colors, 0, sizeof(bool) * GAME_COLORS_COUNT);
+	bool reserved_colors[PLAYER_COLORS_COUNT];
+	memset(reserved_colors, 0, sizeof(bool) * PLAYER_COLORS_COUNT);
 
 	// Alle ne andere Farbe?
 	for(client = 0; client < serverconfig.playercount; ++client)
@@ -492,8 +492,8 @@ void GameServer::TogglePlayerState(unsigned char client)
 	SendToAll(GameMessage_Player_Toggle_State(client));
 
 	// freie farbe suchen lassen
-	bool reserved_colors[GAME_COLORS_COUNT];
-	memset(reserved_colors, 0, sizeof(bool) * GAME_COLORS_COUNT);
+	bool reserved_colors[PLAYER_COLORS_COUNT];
+	memset(reserved_colors, 0, sizeof(bool) * PLAYER_COLORS_COUNT);
 
 	unsigned char rc = 0, cc = 0;
 	for(unsigned char cl = 0; cl < serverconfig.playercount; ++cl)
@@ -1108,8 +1108,8 @@ inline void GameServer::OnNMSPlayerToggleColor(const GameMessage_Player_Toggle_C
 	GameServerPlayer *player = &players[msg.player];
 
 	// ist die farbe auch frei, wenn nicht, "überspringen"?
-	bool reserved_colors[GAME_COLORS_COUNT];
-	memset(reserved_colors, 0, sizeof(bool) * GAME_COLORS_COUNT);
+	bool reserved_colors[PLAYER_COLORS_COUNT];
+	memset(reserved_colors, 0, sizeof(bool) * PLAYER_COLORS_COUNT);
 
 	for(unsigned char cl = 0; cl < serverconfig.playercount; ++cl)
 	{
@@ -1119,7 +1119,7 @@ inline void GameServer::OnNMSPlayerToggleColor(const GameMessage_Player_Toggle_C
 			reserved_colors[ki->color] = true;
 	}
 	do {
-		player->color = (player->color + 1) % GAME_COLORS_COUNT;
+		player->color = (player->color + 1) % PLAYER_COLORS_COUNT;
 	} while(reserved_colors[player->color]);
 
 	LOG.write("CLIENT%d >>> SERVER: NMS_PLAYER_TOGGLECOLOR\n", msg.player);
@@ -1181,8 +1181,8 @@ inline void GameServer::OnNMSMapChecksum(const GameMessage_Map_Checksum& msg)
 		player->send_queue.push(new GameMessage_Server_Name(serverconfig.gamename));
 
 		// freie farbe suchen lassen
-		bool reserved_colors[GAME_COLORS_COUNT];
-		memset(reserved_colors, 0, sizeof(bool) * GAME_COLORS_COUNT);
+		bool reserved_colors[PLAYER_COLORS_COUNT];
+		memset(reserved_colors, 0, sizeof(bool) * PLAYER_COLORS_COUNT);
 
 		unsigned char rc = 0;
 		for(unsigned char cl = 0; cl < serverconfig.playercount; ++cl)

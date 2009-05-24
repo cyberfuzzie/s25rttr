@@ -1,4 +1,4 @@
-// $Id: dskHostGame.cpp 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: dskHostGame.cpp 4946 2009-05-24 19:05:25Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -365,8 +365,8 @@ void dskHostGame::Msg_Group_ButtonClick(const unsigned int group_id, const unsig
 			GAMECLIENT.Command_ToggleColor();
 
 			GameClientPlayer *player = GAMECLIENT.GetLocalPlayer();
-			bool reserved_colors[GAME_COLORS_COUNT];
-			memset(reserved_colors, 0, sizeof(bool) * GAME_COLORS_COUNT);
+			bool reserved_colors[PLAYER_COLORS_COUNT];
+			memset(reserved_colors, 0, sizeof(bool) * PLAYER_COLORS_COUNT);
 
 			for(unsigned char cl = 0; cl < GAMECLIENT.GetPlayerCount(); ++cl)
 			{
@@ -376,7 +376,7 @@ void dskHostGame::Msg_Group_ButtonClick(const unsigned int group_id, const unsig
 					reserved_colors[others->color] = true;
 			}
 			do {
-				player->color = (player->color + 1) % GAME_COLORS_COUNT;
+				player->color = (player->color + 1) % PLAYER_COLORS_COUNT;
 			} while(reserved_colors[player->color]);
 
 		}

@@ -1,4 +1,4 @@
-// $Id: colors.h 4929 2009-05-23 23:01:13Z Demophobie $
+// $Id: colors.h 4946 2009-05-24 19:05:25Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -32,40 +32,39 @@ enum TextureColor
 	TC_BRICKS
 };
 
-/// Farbanzahl
-const unsigned int GAME_COLORS_COUNT = 11;
-const unsigned int COLORS_COUNT = 13;
 
 /// Farbkonstanten
-const unsigned int COLORS[COLORS_COUNT] =
-{
-	0xFF0073FF, // Blau
-	0xFFFF0000, // Rot
-	0xFFFFFF00, // Gelb
-	0xFF00FF00, // Grün
-	0xFFFF00FF, // Magenta
-	0xFF00FFFF, // Cyan,
-	0xFF444444, // Schwarz
-	0xFFFFFFFF, // Weiß
-	0xFFFF8000, // Orange
-	0xFF6C4337, // Braun
-	0x25FFFFFF, // Durchsichtig
-	0x40000000, // Schatten
-	0xFFCCCCCC, // Grau
-};
+const unsigned COLOR_BLUE = 0xFF0073FF;
+const unsigned COLOR_RED = 0xFFFF0000;
+const unsigned COLOR_YELLOW	= 0xFFFFFF00;
+const unsigned COLOR_GREEN	= 0xFF00FF00;
+const unsigned COLOR_MAGENTA = 0xFFFF00FF;
+const unsigned COLOR_CYAN = 0xFF00FFFF;
+const unsigned COLOR_BLACK = 0xFF444444;
+const unsigned COLOR_WHITE = 0xFFFFFFFF;
+const unsigned COLOR_ORANGE = 0xFFFF8000;
+const unsigned COLOR_BROWN = 0xFF6C4337;
+const unsigned COLOR_GHOST = 0x25FFFFFF;
+const unsigned COLOR_SHADOW = 0x40000000;
+const unsigned COLOR_GREY = 0xFFCCCCCC;
 
-#define COLOR_BLUE		COLORS[0]
-#define COLOR_RED		COLORS[1]
-#define COLOR_YELLOW	COLORS[2]
-#define COLOR_GREEN		COLORS[3]
-#define COLOR_MAGENTA	COLORS[4]
-#define COLOR_CYAN		COLORS[5]
-#define COLOR_BLACK		COLORS[6]
-#define COLOR_WHITE		COLORS[7]
-#define COLOR_ORANGE	COLORS[8]
-#define COLOR_BROWN		COLORS[9]
-#define COLOR_SHADOW    COLORS[10]
-#define COLOR_GREY		COLORS[11]
+/// Spielerfarben
+const unsigned int PLAYER_COLORS_COUNT = 11;
+
+const unsigned int COLORS[PLAYER_COLORS_COUNT] =
+{
+	COLOR_BLUE, // Blau
+	COLOR_RED, // Rot
+	COLOR_YELLOW, // Gelb
+	COLOR_GREEN, // Grün
+	COLOR_MAGENTA, // Magenta
+	COLOR_CYAN, // Cyan,
+	COLOR_BLACK, // Schwarz
+	COLOR_WHITE, // Weiß
+	COLOR_ORANGE, // Orange
+	COLOR_BROWN, // Braun
+	COLOR_GHOST // Durchsichtig
+};
 
 /// Liefert die transparente Farbkomponente zurück.
 inline unsigned GetAlpha(const unsigned int color) { return (( color & 0xFF000000) >> 24); }

@@ -258,10 +258,19 @@ void iwStatistics::DrawStatistic(StatisticType type)
     for (unsigned int i=0; i<STAT_STEP_COUNT; ++i)
     {
       if (i != 0)
-      {
-        DrawLine(topLeftX + (STAT_STEP_COUNT-i) * stepX, 
-          topLeftY + sizeY - (stat.data[type][(currentIndex >= i)?(currentIndex-i):(STAT_STEP_COUNT-i+currentIndex)]*sizeY)/max, 
-          previousX, previousY, 2, COLORS[GAMECLIENT.GetPlayer(p)->color]);
+      {	  	 
+	  if (COLORS[GAMECLIENT.GetPlayer(p)->color] == MakeColor(37,255,255,255))	// Und noch abfragen ob die Farbe durchsichtig ist
+	  {
+		DrawLine(topLeftX + (STAT_STEP_COUNT-i) * stepX,
+	 	topLeftY + sizeY - (stat.data[type][(currentIndex >= i)?(currentIndex-i):(STAT_STEP_COUNT-i+currentIndex)]*sizeY)/max,       
+		previousX, previousY, 2, MakeColor(255,150,150,150));
+	  }
+	  else
+	  {	
+		DrawLine(topLeftX + (STAT_STEP_COUNT-i) * stepX,
+	  	topLeftY + sizeY - (stat.data[type][(currentIndex >= i)?(currentIndex-i):(STAT_STEP_COUNT-i+currentIndex)]*sizeY)/max,       
+		previousX, previousY, 2, COLORS[GAMECLIENT.GetPlayer(p)->color]);
+	  }
       }
       previousX = topLeftX + (STAT_STEP_COUNT-i) * stepX;
       previousY = topLeftY + sizeY - (stat.data[type][(currentIndex >= i)?(currentIndex-i):(STAT_STEP_COUNT-i+currentIndex)]*sizeY)/max;

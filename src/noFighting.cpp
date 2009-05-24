@@ -1,4 +1,4 @@
-// $Id: noFighting.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: noFighting.cpp 4947 2009-05-24 20:02:16Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -509,6 +509,8 @@ void noFighting::HandleEvent(const unsigned int id)
 						/*em->AddEvent(this,RELEASE_FIGURES_OFFSET,1);*/
 						gwg->RoadNodeAvailable(soldiers[turn-3]->GetX(),soldiers[turn-3]->GetY());
 
+            // In die Statistik eintragen
+            GAMECLIENT.GetPlayer(player_won)->ChangeStatisticValue(STAT_VANQUISHED, 1);
 						return;
 					}
 				}
@@ -553,6 +555,8 @@ void noFighting::HandleEvent(const unsigned int id)
 				GAMECLIENT.GetPlayer(soldiers[player_lost]->GetPlayer())->DecreaseInventoryJob(soldiers[player_lost]->GetJobType(),1);
 				soldiers[player_lost]->Destroy();
 				delete soldiers[player_lost];
+
+
 				
 			} break;
 		}

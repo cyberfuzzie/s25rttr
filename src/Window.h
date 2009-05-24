@@ -1,4 +1,4 @@
-// $Id: Window.h 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: Window.h 4947 2009-05-24 20:02:16Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -192,6 +192,8 @@ public:
 	static void Draw3D(const unsigned short x, const unsigned short y, const unsigned short width, unsigned short height, const TextureColor tc, const unsigned short type, const bool illuminated = false, const bool draw_content = true);
 	/// Zeichnet ein Rechteck
 	static void DrawRectangle(unsigned short x, unsigned short y, unsigned short width, unsigned short height, unsigned int color);
+  /// Zeichnet eine Linie
+  static void DrawLine(unsigned short ax, unsigned short ay, unsigned short bx, unsigned short by, unsigned short width, unsigned int color);
 
 	// GUI-Notify-Messages
 

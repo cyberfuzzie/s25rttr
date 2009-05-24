@@ -1,4 +1,4 @@
-// $Id: GameConsts.h 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: GameConsts.h 4947 2009-05-24 20:02:16Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -359,6 +359,36 @@ struct Goods
 	Goods() { memset(goods,0,sizeof(goods)); memset(people,0,sizeof(people)); }
 };
 
+/// Verfügbare Statistikarten
+enum StatisticType
+{
+  STAT_COUNTRY = 0,
+  STAT_BUILDINGS,
+  STAT_INHABITANTS,
+  STAT_MERCHANDISE,
+  STAT_MILITARY,
+  STAT_GOLD,
+  STAT_PRODUCTIVITY,
+  STAT_VANQUISHED
+};
+
+/// Anzahl Statistikarten
+const unsigned STAT_TYPE_COUNT = 8;
+
+/// Statistikzeiträume
+enum StatisticTime
+{
+  STAT_15M = 0,
+  STAT_1H,
+  STAT_4H,
+  STAT_16H
+};
+
+/// Anzahl Statistikzeiträume
+const unsigned STAT_TIME_COUNT = 4;
+
+/// Anzahl der Statistikschritte, die gespeichert werden
+const unsigned STAT_STEP_COUNT = 30;
 
 /// Konvertierungstabelle von RttR-Nation-Indizes in Original-S2-Nation-Indizes
 const unsigned char NATION_RTTR_TO_S2[4] =

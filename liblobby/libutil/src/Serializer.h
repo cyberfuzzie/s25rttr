@@ -257,6 +257,8 @@ protected:
 	/// vergrößert den Speicher auf die nächst höhere 2er potenz zur Länge @p length.
 	inline void Realloc(const unsigned int length)
 	{
+		this->length = length;
+
 		if(this->buffer_length == 0)
 				this->buffer_length = 64;
 
@@ -286,7 +288,8 @@ protected:
 	{
 		if(length + add_length > this->buffer_length)
 			Realloc(length+add_length);
-	}
+	}
+
 private:
 	/// data mit den Daten
 	unsigned char *data;

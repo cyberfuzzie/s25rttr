@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: GameClientPlayer.cpp 4947 2009-05-24 20:02:16Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -168,6 +168,13 @@ GameClientPlayer::GameClientPlayer(const unsigned playerid) : GamePlayerInfo(pla
 
 	// Inventur nullen
 	memset(&global_inventory,0,sizeof(global_inventory));
+
+  // Statistiken mit 0en füllen
+  memset(&statistic[STAT_15M], 0, sizeof(statistic[STAT_15M]));
+  memset(&statistic[STAT_1H], 0, sizeof(statistic[STAT_1H]));
+  memset(&statistic[STAT_4H], 0, sizeof(statistic[STAT_4H]));
+  memset(&statistic[STAT_16H], 0, sizeof(statistic[STAT_16H]));
+  memset(&statisticCurrentData, 0, sizeof(statisticCurrentData));
 }
 
 void GameClientPlayer::Serialize(SerializedGameData * sgd)
@@ -238,6 +245,18 @@ void GameClientPlayer::Serialize(SerializedGameData * sgd)
 		sgd->PushUnsignedInt(global_inventory.goods[i]);
 	for(unsigned i = 0;i<JOB_TYPES_COUNT;++i)
 		sgd->PushUnsignedInt(global_inventory.people[i]);
+
+  // für Statistik, bitte prüfen!
+  for (unsigned i=0; i<STAT_TIME_COUNT; ++i)
+  {
+    for (unsigned j=0; j<STAT_TYPE_COUNT; ++j)
+      for (unsigned k=0; k<STAT_STEP_COUNT; ++k)
+        sgd->PushUnsignedInt(statistic[i].data[j][k]);
+    sgd->PushUnsignedShort(statistic[i].currentIndex);
+    sgd->PushUnsignedShort(statistic[i].counter);
+  }
+  for (unsigned i=0; i<STAT_TYPE_COUNT; ++i)
+    sgd->PushUnsignedInt(statisticCurrentData[i]);
 }
 
 void GameClientPlayer::Deserialize(SerializedGameData * sgd)
@@ -324,6 +343,18 @@ void GameClientPlayer::Deserialize(SerializedGameData * sgd)
 		global_inventory.people[i] = sgd->PopUnsignedInt();
 
 	// Visuelle Einstellungen festlegen
+
+  // für Statistik, bitte prüfen!
+  for (unsigned i=0; i<STAT_TIME_COUNT; ++i)
+  {
+    for (unsigned j=0; j<STAT_TYPE_COUNT; ++j)
+      for (unsigned k=0; k<STAT_STEP_COUNT; ++k)
+        statistic[i].data[j][k] = sgd->PopUnsignedInt();
+    statistic[i].currentIndex = sgd->PopUnsignedShort();
+    statistic[i].counter = sgd->PopUnsignedShort();
+  }
+  for (unsigned i=0; i<STAT_TYPE_COUNT; ++i)
+    statisticCurrentData[i] = sgd->PopUnsignedInt();
 }
 
 void GameClientPlayer::SwapPlayer(GameClientPlayer& two)
@@ -902,22 +933,25 @@ void GameClientPlayer::RemoveBuildingSite(noBuildingSite
 void GameClientPlayer::AddUsualBuilding(nobUsual * building)
 {
 	buildings[building->GetBuildingType()-10].push_back(building);
+  ChangeStatisticValue(STAT_BUILDINGS, 1);
 }
 
 void GameClientPlayer::RemoveUsualBuilding(nobUsual * building)
 {
 	buildings[building->GetBuildingType()-10].remove(building);
+  ChangeStatisticValue(STAT_BUILDINGS, -1);
 }
 
 void GameClientPlayer::AddMilitaryBuilding(nobMilitary * building)
 {
 	military_buildings.push_back(building);
-
+  ChangeStatisticValue(STAT_BUILDINGS, 1);
 }
 
 void GameClientPlayer::RemoveMilitaryBuilding(nobMilitary * building)
 {
 	military_buildings.remove(building);
+  ChangeStatisticValue(STAT_BUILDINGS, -1);
 	TestDefeat();
 }
 
@@ -969,6 +1003,27 @@ void GameClientPlayer::CalcProductivities(std::vector<unsigned short>& productiv
 
 		productivities[i+10] = static_cast<unsigned short>(total_productivity);
 	}
+}
+
+/// Berechnet die durschnittlichen Produktivität aller Gebäude
+unsigned short GameClientPlayer::CalcAverageProductivitiy()
+{
+  unsigned total_productivity = 0;
+  unsigned total_count = 0;
+	for(unsigned i = 0;i<30;++i)
+	{
+		// Durschnittliche Produktivität errrechnen, indem man die Produktivitäten aller Gebäude summiert
+		// und den Mittelwert bildet
+		for(std::list<nobUsual*>::iterator it = buildings[i].begin();it!=buildings[i].end();++it)
+			total_productivity += *(*it)->GetProduktivityPointer();
+
+		if(buildings[i].size())
+			total_count += buildings[i].size();
+	}
+  if (total_count == 0)
+    total_count = 1;
+
+  return total_productivity/total_count;
 }
 
 
@@ -1272,4 +1327,83 @@ void GameClientPlayer::Surrender()
 
 	// GUI Bescheid sagen
 	gwg->GetGameInterface()->GI_PlayerDefeated(playerid);
+}
+
+void GameClientPlayer::SetStatisticValue(StatisticType type, unsigned int value)
+{
+  statisticCurrentData[type] = value;
+}
+
+void GameClientPlayer::ChangeStatisticValue(StatisticType type, int change)
+{
+  assert (statisticCurrentData[type] + change >= 0);
+  statisticCurrentData[type] += change;
+}
+
+void GameClientPlayer::StatisticStep()
+{
+  // Waren aus der Inventur zählen
+  statisticCurrentData[STAT_MERCHANDISE] = 0;
+  for (unsigned int i=0; i<WARE_TYPES_COUNT; ++i)
+    statisticCurrentData[STAT_MERCHANDISE] += global_inventory.goods[i];
+
+  // Bevölkerung aus der Inventur zählen
+  statisticCurrentData[STAT_INHABITANTS] = 0;
+  for (unsigned int i=0; i<JOB_TYPES_COUNT; ++i)
+    statisticCurrentData[STAT_INHABITANTS] += global_inventory.people[i];
+  
+  // Militär aus der Inventur zählen
+  statisticCurrentData[STAT_MILITARY] = 
+    global_inventory.people[JOB_PRIVATE]
+  + global_inventory.people[JOB_PRIVATEFIRSTCLASS] * 2
+  + global_inventory.people[JOB_SERGEANT] * 3
+  + global_inventory.people[JOB_OFFICER] * 4
+  + global_inventory.people[JOB_GENERAL] * 5;
+
+
+  // Produktivität berechnen
+  statisticCurrentData[STAT_PRODUCTIVITY] = CalcAverageProductivitiy();
+
+  // 15-min-Statistik ein Feld weiterschieben
+  for (unsigned int i=0; i<STAT_TYPE_COUNT; ++i)
+  {
+    statistic[STAT_15M].data[i][incrStatIndex(statistic[STAT_15M].currentIndex)] = statisticCurrentData[i];
+  }
+  statistic[STAT_15M].currentIndex = incrStatIndex(statistic[STAT_15M].currentIndex);
+
+  // Prüfen ob 4mal 15-min-Statistik weitergeschoben wurde, wenn ja: 1-h-Statistik weiterschieben 
+  // und aktuellen Wert der 15min-Statistik benutzen
+  if (++statistic[STAT_15M].counter == 4)
+  {
+    statistic[STAT_15M].counter = 0;
+    for (unsigned int i=0; i<STAT_TYPE_COUNT; ++i)
+    {
+      statistic[STAT_1H].data[i][incrStatIndex(statistic[STAT_1H].currentIndex)] = statisticCurrentData[i];
+    }
+    statistic[STAT_1H].currentIndex = incrStatIndex(statistic[STAT_1H].currentIndex);
+    statistic[STAT_1H].counter++;
+  }
+
+  // Das gleiche für die 4-h-Statistik...
+  if (statistic[STAT_1H].counter == 4)
+  {
+    statistic[STAT_1H].counter = 0;
+    for (unsigned int i=0; i<STAT_TYPE_COUNT; ++i)
+    {
+      statistic[STAT_4H].data[i][incrStatIndex(statistic[STAT_4H].currentIndex)] = statisticCurrentData[i];
+    }
+    statistic[STAT_4H].currentIndex = incrStatIndex(statistic[STAT_4H].currentIndex);
+    statistic[STAT_4H].counter++;
+  }
+
+  // ... und die 16-h-Statistik
+  if (statistic[STAT_4H].counter == 4)
+  {
+    statistic[STAT_4H].counter = 0;
+    for (unsigned int i=0; i<STAT_TYPE_COUNT; ++i)
+    {
+      statistic[STAT_16H].data[i][incrStatIndex(statistic[STAT_16H].currentIndex)] = statisticCurrentData[i];
+    }
+    statistic[STAT_16H].currentIndex = incrStatIndex(statistic[STAT_16H].currentIndex);
+  }
 }

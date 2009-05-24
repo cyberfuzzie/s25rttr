@@ -1,4 +1,4 @@
-// $Id: nofMinter.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: nofMinter.cpp 4947 2009-05-24 20:02:16Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -75,5 +75,6 @@ void nofMinter::DrawWorking(int x, int y)
 
 GoodType nofMinter::ProduceWare()
 {
+  GAMECLIENT.GetPlayer(player)->ChangeStatisticValue(STAT_GOLD, 1);
 	return GD_COINS;
 }

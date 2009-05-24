@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 4945 2009-05-24 17:54:00Z FloSoft $
+// $Id: GameClient.cpp 4947 2009-05-24 20:02:16Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1054,10 +1054,19 @@ void GameClient::ExecuteGameFrame(const bool skipping)
 
 	// Wurde der nächsten Game-Frame zeitlich erreicht (bzw. wenn nur Frames übersprungen werden sollen,
 	// brauchen wir nicht zu warten)?
-	if(skipping || (currenttime - framesinfo.lasttime) > framesinfo.gf_length)
-	{
+	  if(skipping || (currenttime - framesinfo.lasttime) > framesinfo.gf_length)
+	  {
 		//LOG.lprintf("%d = %d\n", framesinfo.nr / framesinfo.nwf_length, Random::inst().GetCurrentRandomValue());
 
+		// Statistik-Step
+		// Soll so ca. alle 30 Sekunden aufgerufen werden
+		// TODO sinnvoll hier und sinnvoll so?^^
+		//if (framesinfo.nr / (30000/framesinfo.gf_length) > (framesinfo.nr-1) / (30000/framesinfo.gf_length))
+		if (framesinfo.nr % (30000/framesinfo.gf_length) == 0)
+		{
+			for (unsigned int i=0; i<players.getCount(); ++i)
+				players[i].StatisticStep();
+		}
 
 		if(replay_mode)
 		{

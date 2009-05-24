@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.h 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: GameClientPlayer.h 4947 2009-05-24 20:02:16Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -222,6 +222,10 @@ public:
 	/// (erwartet als Argument ein 40-er Array!)
 	void CalcProductivities(std::vector<unsigned short>& productivities); 
 
+  /// Berechnet die durschnittlichen Produktivität aller Gebäude
+  unsigned short CalcAverageProductivitiy();
+
+
 	/// Gibt Priorität der Baustelle zurück (entscheidet selbständig, welche Reihenfolge usw)
 	/// je kleiner die Rückgabe, destro größer die Priorität!
 	unsigned GetBuidingSitePriority(const noBuildingSite * building_site);
@@ -239,9 +243,9 @@ public:
 	bool IsWareRegistred(Ware * ware) { return (std::find(ware_list.begin(),ware_list.end(),ware) != ware_list.end()); }
 
 	/// Fügt Waren zur Inventur hinzu
-	void IncreaseInventoryWare(const GoodType ware, const unsigned count) { global_inventory.goods[ConvertShields(ware)]+=count; }
+  void IncreaseInventoryWare(const GoodType ware, const unsigned count) { global_inventory.goods[ConvertShields(ware)]+=count; }
 	void DecreaseInventoryWare(const GoodType ware, const unsigned count) { assert(global_inventory.goods[ConvertShields(ware)]>=count); global_inventory.goods[ConvertShields(ware)]-=count; }
-	void IncreaseInventoryJob(const Job job, const unsigned count) { global_inventory.people[job]+=count; }
+  void IncreaseInventoryJob(const Job job, const unsigned count) { global_inventory.people[job]+=count; }
 	void DecreaseInventoryJob(const Job job, const unsigned count) { assert(global_inventory.people[job]>=count); global_inventory.people[job]-=count; }
 
 	/// Gibt Inventory-Settings zurück
@@ -294,6 +298,34 @@ public:
 	void Surrender();
 
 
+  // Statistik-Sachen
+
+  void SetStatisticValue(StatisticType type, unsigned int value);
+  void ChangeStatisticValue(StatisticType type, int change);
+ 
+  void StatisticStep();
+  
+  struct Statistic
+  {
+    // 30 Datensätze pro Typ
+    unsigned int data[STAT_TYPE_COUNT][STAT_STEP_COUNT];
+    // Index, der gerade 'vorne' (rechts im Statistikfenster) ist
+    unsigned short currentIndex;
+    // Counter, bei jedem vierten Update jeweils Daten zu den längerfristigen Statistiken kopieren
+    unsigned short counter;
+  };
+
+  const Statistic& GetStatistic(StatisticTime time) { return statistic[time]; };
+
+private:
+  // Statistikdaten
+  Statistic statistic[STAT_TIME_COUNT];
+
+  // Die Statistikwerte die 'aktuell' gemessen werden
+  unsigned int statisticCurrentData[STAT_TYPE_COUNT];
+
+  unsigned short incrStatIndex(unsigned short i) { return (i==STAT_STEP_COUNT-1) ? 0 : ++i; }
+  unsigned short decrStatIndex(unsigned short i) { return (i==0) ? STAT_STEP_COUNT-1 : --i; }
 };
 
 

@@ -1,4 +1,4 @@
-// $Id: const_gui_ids.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: const_gui_ids.h 4947 2009-05-24 20:02:16Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -55,7 +55,8 @@ enum GUI_ID
 	CGI_MUSICPLAYER,
 	CGI_INPUTWINDOW,
 	CGI_HELPBUILDING,
-	CGI_NEXT = CGI_HELPBUILDING+40
+	CGI_NEXT = CGI_HELPBUILDING+40,
+  CGI_STATISTICS
 };
 
 #endif // !CONST_GUI_IDS_H_INCLUDED

@@ -1,4 +1,4 @@
-// $Id: iwMainMenu.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: iwMainMenu.cpp 4947 2009-05-24 20:02:16Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -34,6 +34,7 @@
 #include "iwInventory.h"
 #include "iwBuildings.h"
 #include "iwBuildingProductivities.h"
+#include "iwStatistics.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -101,6 +102,10 @@ void iwMainMenu::Msg_ButtonClick(const unsigned int ctrl_id)
 	case 2: // Werkzeugproduktion
 		{
 			WindowManager::inst().Show(new iwTools);
+		} break;
+	case 3: // Statistik
+		{
+			WindowManager::inst().Show(new iwStatistics);
 		} break;
 	case 5: // Gebäudestatistik
 		{

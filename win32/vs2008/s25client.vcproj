@@ -889,6 +889,22 @@
 							>
 						</File>
 						<File
+							RelativePath="..\..\src\iwStatistics.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\iwStatistics.h"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\iwStatistics.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\iwStatistics.h"
+							>
+						</File>
+						<File
 							RelativePath="..\..\src\iwStorehouse.cpp"
 							>
 						</File>

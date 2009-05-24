@@ -1,4 +1,4 @@
-// $Id: Window.cpp 4836 2009-05-08 20:31:23Z OLiver $
+// $Id: Window.cpp 4947 2009-05-24 20:02:16Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1045,6 +1045,28 @@ void Window::DrawRectangle(unsigned short x, unsigned short y, unsigned short wi
 
 	glEnable(GL_TEXTURE_2D);
 }
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  zeichnet eine Linie.
+ *
+ *  @param[in] x X-Koordinate
+ *
+ *  @author jh
+ */
+void Window::DrawLine(unsigned short ax, unsigned short ay, unsigned short bx, unsigned short by, unsigned short width, unsigned int color)
+{
+    glDisable(GL_TEXTURE_2D);
+    glColor4ub(GetRed(color), GetGreen(color), GetBlue(color), GetAlpha(color));
+
+    glLineWidth(width);
+    glBegin(GL_LINES);
+    glVertex2i(ax, ay);
+    glVertex2i(bx, by);
+    glEnd();
+
+    glEnable(GL_TEXTURE_2D);
+}  
 
 ///////////////////////////////////////////////////////////////////////////////
 /**

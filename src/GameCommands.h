@@ -430,6 +430,8 @@ public:
 		ser->PushUnsignedChar(new_player_id);
 	}
 
+	const unsigned int GetNewPlayerId() const { return new_player_id; }
+
 	/// Führt das GameCommand aus
 	void Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid);
 };

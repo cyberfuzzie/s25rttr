@@ -1,4 +1,4 @@
-// $Id: Message.cpp 4923 2009-05-23 11:47:41Z OLiver $
+// $Id: Message.cpp 4940 2009-05-24 16:38:33Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -26,18 +26,6 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  Destruktor von @p Message.
- *
- *  @author FloSoft
- */
-Message::~Message(void) 
-{
-	delete[] data;
-	data    = NULL;
-}
-
-///////////////////////////////////////////////////////////////////////////////
-/**
  *
  *
  *  @author FloSoft
@@ -50,9 +38,9 @@ bool Message::send(Socket *sock)
 		return false;
 
 	// WTF? so große Nachricht darfs nicht geben
-	if(this->length > 1024000 - 6)
+	if(GetLength() > 1024000 - 6)
 	{
-		LOG.lprintf("BIG OOPS! Message with length %u exceeds maximum of %d!\n", this->length, 1024000 - 6);
+		LOG.lprintf("BIG OOPS! Message with length %u exceeds maximum of %d!\n", GetLength(), 1024000 - 6);
 		return false;
 	}
 
@@ -61,10 +49,10 @@ bool Message::send(Socket *sock)
 	unsigned char *data = (unsigned char*)&buffer[6];
 
 	*id = this->id;
-	*length = this->length;
-	memcpy(data, this->data, this->length);
+	*length = GetLength();
+	memcpy(data, GetData(), GetLength());
 
-	if(6 + this->length != (unsigned int)sock->Send(buffer, 6 + this->length))
+	if(6 + GetLength() != (unsigned int)sock->Send(buffer, 6 + GetLength()))
 		return false;
 
 	return true;
@@ -83,8 +71,8 @@ int Message::recv(Socket *sock, unsigned int length)
 		// Daten empfangen
 		Realloc(length);
 
-		int read = sock->Recv(data, length);
-		this->length = length;
+		int read = sock->Recv(GetDataWritable(), length);
+		SetLength(length);
 		if(length != (unsigned int)read )
 		{
 			LOG.lprintf("recv: data: only got %d bytes instead of %d\n", read, length);
@@ -244,10 +232,7 @@ Message *Message::duplicate(void) const
 {
 	Message *msg = create(id);
 
-	msg->Realloc(length);
-	memcpy(msg->data, data, length);
-
-	msg->length = length;
+	*msg = *this;
 
 	return msg;
 }

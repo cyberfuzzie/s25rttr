@@ -1,4 +1,4 @@
-// $Id: GameMessages.h 4934 2009-05-24 12:47:58Z FloSoft $
+// $Id: GameMessages.h 4940 2009-05-24 16:38:33Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -38,8 +38,10 @@
 
 
 /// Castet das allgemeine Message-Interface in ein GameMessage-Interface
-inline GameMessageInterface * GetInterface(MessageInterface * mi)
-{ return dynamic_cast<GameMessageInterface*>(mi); }
+inline GameMessageInterface *GetInterface(MessageInterface *callback)
+{ 
+	return dynamic_cast<GameMessageInterface*>(callback);
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 /// eingehende Ping-Nachricht
@@ -51,7 +53,6 @@ public:
 
 	void Run(MessageInterface *callback) 
 	{ 
-		GameMessageInterface *cb = dynamic_cast<GameMessageInterface*>(callback);
 		//LOG.write("<<< NMS_PING\n");
 		GetInterface(callback)->OnNMSPing(*this);
 	}
@@ -631,7 +632,7 @@ public:
 	}
 	void Run(MessageInterface *callback) 
 	{ 
-		map_data = data + (GetLength()-GetNetLength());
+		map_data = GetDataWritable() + (GetLength()-GetNetLength());
 
 		LOG.write("<<< NMS_MAP_DATA\n");
 		GetInterface(callback)->OnNMSMapData(*this);

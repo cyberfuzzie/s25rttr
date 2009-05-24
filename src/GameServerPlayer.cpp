@@ -1,4 +1,4 @@
-// $Id: GameServerPlayer.cpp 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: GameServerPlayer.cpp 4940 2009-05-24 16:38:33Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -36,28 +36,28 @@
 ///////////////////////////////////////////////////////////////////////////////
 /// Konstruktor
 GameServerPlayer::GameServerPlayer(const unsigned playerid)
-: GamePlayerInfo(playerid),
-connecttime(0),
-last_command_timeout(0),
-pinging(false),
-lastping(0), 
-temp_ul(0),
-temp_ui(0),
-send_queue(&GameMessage::create_game),
-recv_queue(&GameMessage::create_game)
-{
-}
-
-GameServerPlayer::GameServerPlayer(const unsigned playerid, Serializer * ser)
-	: GamePlayerInfo(playerid,ser),
+	: GamePlayerInfo(playerid),
 	connecttime(0),
 	last_command_timeout(0),
 	pinging(false),
+	send_queue(&GameMessage::create_game),
+	recv_queue(&GameMessage::create_game),
 	lastping(0), 
 	temp_ul(0),
-	temp_ui(0),
+	temp_ui(0)
+{
+}
+
+GameServerPlayer::GameServerPlayer(const unsigned playerid, Serializer *ser)
+	: GamePlayerInfo(playerid, ser),
+	connecttime(0),
+	last_command_timeout(0),
+	pinging(false),
 	send_queue(&GameMessage::create_game),
-	recv_queue(&GameMessage::create_game)
+	recv_queue(&GameMessage::create_game),
+	lastping(0), 
+	temp_ul(0),
+	temp_ui(0)
 {
 }
 
@@ -131,9 +131,7 @@ void GameServerPlayer::clear()
 	temp_ul = 0;
 	temp_ui = 0;
 	so.Close();
-	
 }
-
 
 unsigned GameServerPlayer::GetTimeOut() const
 {
@@ -146,19 +144,19 @@ void GameServerPlayer::SwapPlayer(GameServerPlayer& two)
 {
 	GamePlayerInfo::SwapPlayer(two);
 
-	Swap(this->connecttime,two.connecttime);
-	Swap(this->last_command_timeout,two.last_command_timeout);
+	Swap(this->connecttime, two.connecttime);
+	Swap(this->last_command_timeout, two.last_command_timeout);
 
-	Swap(this->so,two.so);
-	Swap(this->pinging,two.pinging);
+	Swap(this->so, two.so);
+	Swap(this->pinging, two.pinging);
 
-	Swap(this->send_queue,two.send_queue);
-	Swap(this->recv_queue,two.recv_queue);
+	Swap(this->send_queue, two.send_queue);
+	Swap(this->recv_queue, two.recv_queue);
 
-	Swap(this->lastping,two.lastping);
+	Swap(this->lastping, two.lastping);
 
-	Swap(this->temp_ul,two.temp_ul);
-	Swap(this->temp_ui,two.temp_ui);
+	Swap(this->temp_ul, two.temp_ul);
+	Swap(this->temp_ui, two.temp_ui);
 }
 
 /// Spieler laggt

@@ -25,25 +25,53 @@
 #include <string>
 #include <assert.h>
 
-/// Klasse die einen Buffer zum Serialisieren verwaltet und entsprechende Methoden zum Lesen/Schreiben bereitstellt.
+/// Klasse die einen Buffer zum Serialisieren verwaltet und entsprechende Methoden zum Lesen/Schreiben bereitstellt. 
+/// Implementiert einen FIFO (push fügt ans ende, pop entfernt am anfang)
 class Serializer
 {
 public:
-	Serializer();
-	/// Fill with initial data
-	// Pushes will push to the end, 
-	// while Pops will pop from the beginning
-	Serializer(const void * const data, const unsigned initial_size);
-	Serializer(const Serializer& two);
-	virtual ~Serializer();
+	Serializer(void)
+		: data(0), buffer_length(0), length(0), pos(0) 
+	{
+	}
+
+	Serializer(const void *const data, const unsigned initial_size) 
+		: data(new unsigned char[initial_size]), buffer_length(initial_size), length(initial_size), pos(0)
+	{
+		memcpy(this->data, data, initial_size);
+	}
+
+	Serializer(const Serializer& two) 
+		: data(new unsigned char[two.buffer_length]), buffer_length(two.buffer_length), length(two.length), pos(two.pos)
+	{
+		memcpy(data,two.data,length);
+	}
+	
+	virtual ~Serializer()
+	{
+		Clear();
+	}
 
 	/// Aufräumen
-	void Clear();
+	inline void Clear()
+	{
+		delete[] data;
+		buffer_length = 0;
+		length = 0;
+		pos = 0;
+	}
 
 	/// Getter
-	unsigned GetLength() const { return length; }
+	unsigned GetLength() const 
+	{
+		return length;
+	}
+	
 	/// Zugriff auf die Rohdaten
-	const unsigned char * GetData() const { return data; }
+	const unsigned char *GetData(void) const 
+	{
+		return data;
+	}
 
 	/// Kopiermethoden
 
@@ -116,10 +144,11 @@ public:
 	}
 
 	/// Rohdaten kopieren
-	inline void PopRawData(void * const data, const unsigned length)
+	inline void PopRawData(void *const data, const unsigned length)
 	{
 		assert(pos<length);
-		memcpy(data,&this->data[pos],length);
+
+		memcpy(data, &this->data[pos], length);
 		pos +=length; 
 	}
 
@@ -127,79 +156,145 @@ public:
 	inline signed int PopSignedInt()
 	{
 		assert(pos<length);
+
 		signed int i = htonl(*((signed int*)&data[pos]));
 		pos +=4;
+
 		return i;
 	}
 	inline unsigned int PopUnsignedInt()
 	{
 		assert(pos<length);
+
 		unsigned int i = htonl(*((unsigned int*)&data[pos]));
 		pos +=4;
+
 		return i;
 	}
 
 	inline signed short PopSignedShort()
 	{
 		assert(pos<length);
+
 		signed short i = htons(*((signed short*)&data[pos]));
 		pos +=2;
+
 		return i;
 	}
 	inline unsigned short PopUnsignedShort()
 	{
+		assert(pos<length);
+
 		unsigned short i = htons(*((unsigned short*)&data[pos]));
 		pos +=2;
+		
 		return i;
 	}
 
 	inline signed char PopSignedChar()
 	{
 		assert(pos<length);
+
 		signed char i = *((signed char*)&data[pos]);
 		pos +=1;
+
 		return i;
 	}
 	inline unsigned char PopUnsignedChar()
 	{
 		assert(pos<length);
+
 		unsigned char i = *((unsigned char*)&data[pos]);
 		pos +=1;
+
 		return i;
 	}
 
 	inline bool PopBool()
 	{
 		assert(pos<length);
+
 		return ((PopUnsignedChar() == 1) ? true : false);
 	}
 
 	inline std::string PopString() 
 	{
 		assert(pos<length);
+
 		std::string str;
 		str.resize(PopUnsignedInt());
 		for(unsigned i = 0;i<str.length();++i)
 			str[i] = PopSignedChar();
+
 		return str;
 	}
 
 protected:
+	Serializer& operator=(const Serializer& other)
+	{
+		data = new unsigned char[other.buffer_length];
+		buffer_length = other.buffer_length;
+		length = other.length;
+		pos = other.pos;
+		memcpy(data, other.data, length);
+
+		return *this;
+	}
+
+	/// Schreibzugriff auf die Rohdaten
+	unsigned char *GetDataWritable(void) 
+	{
+		return data;
+	}
+
+	/// Schreibzugriff auf die Länge
+	void SetLength(const unsigned int length) 
+	{
+		this->length = length;
+	}
+
+	/// vergrößert den Speicher auf die nächst höhere 2er potenz zur Länge @p length.
+	inline void Realloc(const unsigned int length)
+	{
+		if(this->buffer_length == 0)
+				this->buffer_length = 64;
+
+		// speicher vergrößern
+		while(this->buffer_length < length)
+			this->buffer_length *= 2;
+
+		if(data == 0)
+		{
+			// neu anlegen
+			data = new unsigned char[this->buffer_length];
+			memset(data, 0, sizeof(unsigned char)*this->buffer_length);
+		}
+		else
+		{
+			// umkopieren (vergrößern)
+			unsigned char *ndata = new unsigned char[this->buffer_length];
+			memcpy(ndata, data, this->length);
+
+			delete[] data;
+			data = ndata;
+		}
+	}
+	
+	/// Erweitert ggf. Speicher um add_length
+	inline void ExtendMemory(const unsigned add_length)
+	{
+		if(length + add_length > this->buffer_length)
+			Realloc(length+add_length);
+	}
+private:
 	/// data mit den Daten
-	unsigned char * data;
+	unsigned char *data;
 	/// Länge des datas
 	unsigned buffer_length;
 	/// Logische Länge
 	unsigned length;
 	/// Schreib/Leseposition
 	unsigned pos;
-
-protected:
-	/// vergrößert den Speicher auf die nächst höhere 2er potenz zur Länge @p length.
-	void Realloc(const unsigned int length);
-	/// Erweitert ggf. Speicher um add_length
-	void ExtendMemory(const unsigned add_length);
-
 };
 
 #endif // !SERIALIZER_H_INCLUDED

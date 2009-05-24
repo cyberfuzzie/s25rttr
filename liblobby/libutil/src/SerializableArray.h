@@ -1,4 +1,4 @@
-// $Id: SerializableArray.h 4917 2009-05-22 11:01:40Z OLiver $
+// $Id: SerializableArray.h 4940 2009-05-24 16:38:33Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -167,7 +167,7 @@ public:
 
 		for(unsigned int i = 0; i < count; ++i)
 		{
-			elements.push_back(Type(i,msg));
+			elements.push_back(Allocator(i,msg));
 		}
 	}
 

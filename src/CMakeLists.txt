@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 4894 2009-05-19 07:51:32Z Demophobie $
+### $Id: CMakeLists.txt 4940 2009-05-24 16:38:33Z FloSoft $
 ################################################################################
 
 INCLUDE(FindBZip2)
@@ -134,7 +134,9 @@ SET(SOURCES_OTHER
     GameInterface.cpp         GameInterface.h
     GameManager.cpp           GameManager.h
     GameMessage.cpp           GameMessage.h
-    GameMessageQueue.cpp      GameMessageQueue.h
+    GameMessageInterface.cpp  GameMessageInterface.h
+    GameCommands.cpp		  GameCommands.h
+                              GameMessageQueue.h
     GameObject.cpp            GameObject.h
     GamePlayerInfo.cpp        GamePlayerInfo.h
     GameProtocol.h
@@ -157,7 +159,7 @@ SET(SOURCES_OTHER
     main.cpp                  main.h
     MapConsts.h
     MapGeometry.cpp           MapGeometry.h
-    Messages.h
+    MouseAndKeys.h
     Messenger.cpp             Messenger.h
     MilitaryConsts.h
     Minimap.cpp               Minimap.h

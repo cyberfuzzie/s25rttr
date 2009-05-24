@@ -1,4 +1,4 @@
-// $Id: SerializedGameData.cpp 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: SerializedGameData.cpp 4940 2009-05-24 16:38:33Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -200,8 +200,8 @@ void SerializedGameData::MakeSnapshot(GameWorld *const gw, EventManager *const e
 
 void SerializedGameData::WriteToFile(BinaryFile& file)
 {
-	file.WriteUnsignedInt(length);
-	file.WriteRawData(data,length);
+	file.WriteUnsignedInt(GetLength());
+	file.WriteRawData(GetData(), GetLength());
 }
 
 void SerializedGameData::ReadFromFile(BinaryFile& file)
@@ -211,7 +211,7 @@ void SerializedGameData::ReadFromFile(BinaryFile& file)
 	unsigned buffer_size;
 	buffer_size = file.ReadUnsignedInt();
 	Realloc(buffer_size);
-	file.ReadRawData(data,buffer_size);
+	file.ReadRawData(GetDataWritable(), buffer_size);
 
 	total_objects_count = PopUnsignedInt();
 	objects_count = 0;

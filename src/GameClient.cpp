@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: GameClient.cpp 4940 2009-05-24 16:38:33Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1174,7 +1174,7 @@ void GameClient::ExecuteAllGCs(const GameMessage_GameCommand& gcs, unsigned char
 		{
 			// ...müssen wir uns das merken
 			*player_switch_old_id = gcs.player;
-			*player_switch_new_id = dynamic_cast<gc::SwitchPlayer*>(gcs.gcs[i])->new_player_id;
+			*player_switch_new_id = dynamic_cast<gc::SwitchPlayer*>(gcs.gcs[i])->GetNewPlayerId();
 		}
 	}
 }

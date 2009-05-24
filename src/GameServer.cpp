@@ -1,4 +1,4 @@
-// $Id: GameServer.cpp 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: GameServer.cpp 4940 2009-05-24 16:38:33Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -226,6 +226,9 @@ bool GameServer::Start()
 	//// Spieler 0 erstmal der Hos
 	switch(mapinfo.map_type)
 	{
+	default:
+		break;
+
 	case MAPTYPE_OLDMAP:
 		{
 			// Host bei normalen Spieler der erste Spieler
@@ -315,7 +318,7 @@ void GameServer::Run(void)
 	for(unsigned int client = 0; client < serverconfig.playercount; ++client)
 	{
 		GameServerPlayer *player = &players[client];
-		unsigned char count = 0;
+		//unsigned char count = 0;
 
 		// maximal 10 Pakete verschicken
 		player->send_queue.send(&player->so, 10);
@@ -571,7 +574,7 @@ void GameServer::ChangeGlobalGameSettings(const GlobalGameSettings& ggs)
  */
 void GameServer::SendToAll(const GameMessage& msg)
 {
-	for(unsigned int id = id = 0; id < players.getCount(); ++id)
+	for(unsigned int id = 0; id < players.getCount(); ++id)
 	{
 		GameServerPlayer *player = players.getElement(id);
 
@@ -750,7 +753,7 @@ void GameServer::ClientWatchDog()
 								{
 									// Dann merken und NACH der Schleife erst wechseln!
 									player_switch_old_id = client;
-									player_switch_new_id = dynamic_cast<gc::SwitchPlayer*>(*it)->new_player_id;
+									player_switch_new_id = dynamic_cast<gc::SwitchPlayer*>(*it)->GetNewPlayerId();
 								}
 
 							}

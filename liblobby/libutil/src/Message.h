@@ -1,4 +1,4 @@
-// $Id: Message.h 4936 2009-05-24 15:17:07Z FloSoft $
+// $Id: Message.h 4940 2009-05-24 16:38:33Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -19,6 +19,7 @@
 #ifndef MESSAGE_H_INCLUDED
 #define MESSAGE_H_INCLUDED
 
+#pragma once
 
 #include <stdexcept>
 
@@ -34,7 +35,6 @@ public:
 	Message(unsigned short id) : id(id) {}
 	/// Konstruktor, um Message aus vorhandenem Datenblock heraus zu erstellen
 	Message(const unsigned id, const unsigned char * const data, const unsigned length) : Serializer(data, length), id(id) {}
-	virtual ~Message();
 
 	virtual unsigned short getId() const { return id; }
 	bool send(Socket *sock);
@@ -47,15 +47,20 @@ public:
 
 	virtual void run(MessageInterface *callback, unsigned int id) = 0;
 
+protected:
+	Message& operator=(const Message& other)
+	{
+		id = other.id;
+
+		return *this;
+	}
+
 private:
 	Message(void) {}
 	
-	Message& operator = (const Message&) { return *this; }
-
 	int recv(Socket *sock, unsigned int length);
 
 protected:
-
 	unsigned short id;
 };
 

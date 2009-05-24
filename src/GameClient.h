@@ -1,4 +1,4 @@
-// $Id: GameClient.h 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: GameClient.h 4940 2009-05-24 16:38:33Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -36,7 +36,8 @@ class GameClientPlayer;
 class WorldManager;
 class ClientInterface;
 class GameMessage;
-namespace gc { class GameCommand; };
+
+namespace gc { class GameCommand; }
 
 class GameClient : public Singleton<GameClient>, public GameMessageInterface
 {

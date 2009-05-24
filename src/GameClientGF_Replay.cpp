@@ -1,4 +1,4 @@
-// $Id: GameClientGF_Replay.cpp 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: GameClientGF_Replay.cpp 4940 2009-05-24 16:38:33Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -66,7 +66,7 @@ void GameClient::ExecuteGameFrame_Replay()
 				ExecuteAllGCs(msg,0,0);
 
 				// Replay ist NSYNC äh ASYNC!
-				if(!replayinfo.async && msg.checksum != 0 && msg.checksum != randcheckinfo.rand)
+				if(!replayinfo.async && msg.checksum != 0 && msg.checksum != (unsigned)randcheckinfo.rand)
 				{
 					// Meldung mit GF erzeugen
 					char msg[256];

@@ -1,6 +1,6 @@
-// $Id: MouseAndKeys.h 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: MouseAndKeys.h 4934 2009-05-24 12:47:58Z FloSoft $
 //
-// Copyright (c) 2005-2008 Settlers Freaks (sf-team at siedler25.org)
+// Copyright (c) 20052008 Settlers Freaks (sfteam at siedler25.org)
 //
 // This program is free software; you can redistribute it and/or modify it
 // under the terms of the GNU General Public License as published by the
@@ -30,14 +30,14 @@ class MouseCoords
 public:
 	MouseCoords() : x(0), y(0), ldown(false), rdown(false) {}
 	MouseCoords(int x, int y, bool ldown, bool rdown) : x(x), y(y), ldown(ldown), rdown(rdown) {}
-
+ 
 public:
-	int x;      /// x-Koordinate
-	int y;      /// y-Koordinate
+	int x;      /// xKoordinate
+	int y;      /// yKoordinate
 	bool ldown; /// Linke Maustaste gedrückt
 	bool rdown; /// Rechte Maustaste gedrückt
-};
-
+ };
+ 
 ///////////////////////////////////////////////////////////////////////////////
 /**
  *  Keydown Spezial Tasten
@@ -62,8 +62,8 @@ enum KeyType
 	KT_ESCAPE,
 	KT_CHAR = 0xFFFFFFFF
 };
-
-/// Tastaturevent-Struktur
+ 
+/// TastatureventStruktur
 struct KeyEvent
 {
 	KeyType kt;

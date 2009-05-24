@@ -1,4 +1,4 @@
-// $Id: VideoDriverLoaderInterface.h 4830 2009-05-07 18:59:21Z FloSoft $
+// $Id: VideoDriverLoaderInterface.h 4934 2009-05-24 12:47:58Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -21,7 +21,7 @@
 
 #pragma once
 
-#include "Messages.h"
+#include "MouseAndKeys.h"
 
 class VideoDriverLoaderInterface
 {

@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 4940 2009-05-24 16:38:33Z FloSoft $
+### $Id: CMakeLists.txt 4941 2009-05-24 16:40:29Z FloSoft $
 ################################################################################
 
 INCLUDE(FindBZip2)
@@ -136,7 +136,6 @@ SET(SOURCES_OTHER
     GameMessage.cpp           GameMessage.h
     GameMessageInterface.cpp  GameMessageInterface.h
     GameCommands.cpp		  GameCommands.h
-                              GameMessageQueue.h
     GameObject.cpp            GameObject.h
     GamePlayerInfo.cpp        GamePlayerInfo.h
     GameProtocol.h

@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.h 4854 2009-05-11 11:26:19Z OLiver $
+// $Id: dskGameInterface.h 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -153,7 +153,7 @@ private:
 	void CI_Error(const ClientError ce);
 
 	/// Wird aufgerufen, wann immer eine Flagge zerstört wurde, da so evtl der Wegbau abgebrochen werden muss
-	void CI_FlagDestroyed(const unsigned short x, const unsigned short y);
+	void GI_FlagDestroyed(const unsigned short x, const unsigned short y);
 	/// Spielerwechsel
 	void CI_PlayersSwapped(const unsigned player1, const unsigned player2);
 

@@ -1,4 +1,4 @@
-// $Id: GameClient.h 4854 2009-05-11 11:26:19Z OLiver $
+// $Id: GameClient.h 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -19,23 +19,26 @@
 #ifndef GAMECLIENT_H_
 #define GAMECLIENT_H_
 
+#include "Singleton.h"
 #include "Socket.h"
 
-#include "Singleton.h"
-#include "GameProtocol.h"
-#include "GameClientPlayer.h"
+#include "GameMessageInterface.h"
+
+#include "GamePlayerList.h"
+
 #include "EventManager.h"
 #include "GameFiles.h"
 #include "GameWorld.h"
 #include "GlobalGameSettings.h"
-#include <string>
 
 class Window;
 class GameClientPlayer;
 class WorldManager;
 class ClientInterface;
+class GameMessage;
+namespace gc { class GameCommand; };
 
-class GameClient : public Singleton<GameClient>
+class GameClient : public Singleton<GameClient>, public GameMessageInterface
 {
 public:
 	enum ClientState
@@ -55,10 +58,10 @@ public:
 	std::string GetGameName() const { return clientconfig.gamename; }
 
 	unsigned char GetPlayerID() const { return playerid; }
-	unsigned GetPlayerCount() const { return player_count; }
-	GameClientPlayer * GetLocalPlayer() { return players[playerid]; }
+	unsigned GetPlayerCount() const { return players.getCount(); }
 	/// Liefert einen Player zurück
-	GameClientPlayer * GetPlayer(const unsigned i) { return players[i]; }
+	GameClientPlayer * GetPlayer(const unsigned int id) { return dynamic_cast<GameClientPlayer*>(players.getElement(id)); }
+	GameClientPlayer * GetLocalPlayer(void) { return GetPlayer(playerid); }
 
 	/// Gibt GGS zurück
 	const GlobalGameSettings& GetGGS() const { return ggs; }
@@ -95,33 +98,8 @@ public:
 	int Interpolate(int x1,int x2,EventManager::EventPointer ev);
 	/// Gibt Geschwindigkeits-Faktor zurück
 
-	// NC = Network Commands
-	void ExecuteNC(const unsigned short nfc_type,const unsigned char player, const void * const data);
-	void NC_Nothing();
-	void NC_SetFlag(const unsigned short x,const unsigned short y);
-	void NC_DestroyFlag(const unsigned short x, const unsigned short y);
-	void NC_Road_Build(const bool boat_road,const unsigned short road_start_x, const unsigned short road_start_y, const std::vector<unsigned char>& route);
-	void NC_Road_Destroy(const unsigned short x, const unsigned short y, const unsigned char dir);
-	void NC_ChangeDistribution(unsigned char * const distri_data);
-	void NC_ChangeBuildOrder(const unsigned char order_type,const unsigned char * const order);
-	void NC_SetBuildingSite(const unsigned short x, const unsigned short y, const unsigned char type);
-	void NC_DestroyBuilding(const unsigned short x, const unsigned short y);
-	void NC_ChangeTransport(const unsigned char * const transport_data);
-	void NC_ChangeMilitary(const unsigned char * const military_data);
-	void NC_ChangeTools(const unsigned char * const tools_data);
-	void NC_CallGeologist(const unsigned short x, const unsigned short y);
-	void NC_CallScout(const unsigned short x, const unsigned short y);
-	void NC_Attack(const unsigned short x, const unsigned short y, const unsigned short soldiers_count,const bool strong_soldiers);
-	void NC_SwitchPlayer(const unsigned char new_id);
-	void NC_StopGold(const unsigned short x, const unsigned short y);
-	void NC_StopProduction(const unsigned short x, const unsigned short y);
-	void NC_ChangeInventorySetting(const unsigned short x, const unsigned short y,unsigned char category,unsigned char state,unsigned char type);
-	void NC_ChangeAllInventorySettings(const unsigned short x, const unsigned short y,const unsigned char category,const unsigned char state);
-	void NC_IncreaseReserve(const unsigned short x, const unsigned short y, const unsigned char rank);
-	void NC_DecreaseReserve(const unsigned short x, const unsigned short y, const unsigned char rank);
-	void NC_CheatArmageddon();
-  void NC_DestroyAll();
-	void NC_Surrender();
+	void AddGC(gc::GameCommand * gc);
+
 
 	void Command_SetFlag2(int x, int y, unsigned char player);
 	void Command_Chat(const std::string& text, const ChatDestination cd );
@@ -159,7 +137,7 @@ public:
 	void ChangeReplayPlayer(const unsigned new_id);
 
 	/// Laggt ein bestimmter Spieler gerade?
-	bool IsLagging(const unsigned int id) { return players[id]->is_lagging; }
+	bool IsLagging(const unsigned int id) { return GetPlayer(id)->is_lagging; }
 
 	/// Spiel pausiert?
 	bool IsPaused() const { return framesinfo.pause; }
@@ -175,110 +153,99 @@ public:
 
 
 private:
-
-	void FillPlayerQueues(void);
-	void HandleMessage(GameMessage *message);
-	void HandleGameMessage(GameMessage *message);
 	/// Versucht einen neuen GameFrame auszuführen, falls die Zeit dafür gekommen ist
 	void ExecuteGameFrame(const bool skipping = false);
 	void ExecuteGameFrame_Replay();
 	void ExecuteGameFrame_Game();
 	/// Filtert aus einem Network-Command-Paket alle Commands aus und führt sie aus, falls ein Spielerwechsel-Command
 	/// dabei ist, füllt er die übergebenen IDs entsprechend aus
-	void ExecuteAllNCs(unsigned char * data, unsigned char player,  unsigned char * player_switch_old_id,unsigned char * player_switch_new_id);
+	void ExecuteAllGCs(const GameMessage_GameCommand& gcs,  unsigned char * player_switch_old_id,unsigned char * player_switch_new_id);
 	/// Sendet ein NC-Paket ohne Befehle
 	void SendNothingNC(int checksum = -1);
 
 
 	//  Netzwerknachrichten
-	void OnNMSDeadMsg(GameMessage *message);
+	virtual void OnNMSDeadMsg(unsigned int id);
 
-	void OnNMSPing(GameMessage *message);
+	virtual void OnNMSPing();
 
-	void OnNMSPlayerId(GameMessage *message);
-	void OnNMSPlayerList(GameMessage *message);
-	void OnNMSPlayerNew(GameMessage *message);
-	void OnNMSPlayerPing(GameMessage *message);
-	void OnNMSPlayerToggleState(GameMessage *message);
-	void OnNMSPlayerToggleNation(GameMessage *message);
-	void OnNMSPlayerToggleTeam(GameMessage *message);
-	void OnNMSPlayerToggleColor(GameMessage *message);
-	void OnNMSPlayerReady(GameMessage *message);
-	void OnNMSPlayerKicked(GameMessage *message);
-	void OnNMSPlayerSwap(GameMessage *message);
+	virtual void OnNMSServerTypeOK(const GameMessage_Server_TypeOK& msg);
+	virtual void OnNMSServerPassword(const GameMessage_Server_Password& msg);
+	virtual void OnNMSServerName(const GameMessage_Server_Name& msg);
+	virtual void OnNMSServerStart(const GameMessage_Server_Start& msg);
+	virtual void OnNMSServerChat(const GameMessage_Server_Chat& msg);
+	virtual void OnNMSServerAsync(const GameMessage_Server_Async& msg);
 
-	void OnNMSServerTyp(GameMessage *message);
-	void OnNMSServerPassword(GameMessage *message);
-	void OnNMSServerName(GameMessage *message);
-	void OnNMSServerChat(GameMessage *message);
-	void OnNMSServerStart(GameMessage *message);
-	void OnNMSServerAsync(GameMessage *message);
+	virtual void OnNMSPlayerId(const GameMessage_Player_Id& msg);
+	virtual void OnNMSPlayerList(const GameMessage_Player_List& msg);
+	virtual void OnNMSPlayerToggleState(const GameMessage_Player_Toggle_State& msg);
+	virtual void OnNMSPlayerToggleNation(const GameMessage_Player_Toggle_Nation& msg);
+	virtual void OnNMSPlayerToggleTeam(const GameMessage_Player_Toggle_Team& msg);
+	virtual void OnNMSPlayerToggleColor(const GameMessage_Player_Toggle_Color& msg);
+	virtual void OnNMSPlayerKicked(const GameMessage_Player_Kicked& msg);
+	virtual void OnNMSPlayerPing(const GameMessage_Player_Ping& msg);
+	virtual void OnNMSPlayerNew(const GameMessage_Player_New& msg);
+	virtual void OnNMSPlayerReady(const GameMessage_Player_Ready& msg);
+	virtual void OnNMSPlayerSwap(const GameMessage_Player_Swap& msg);
 
-	void OnNMSMapName(GameMessage *message);
-	void OnNMSMapInfo(GameMessage *message);
-	void OnNMSMapData(GameMessage *message);
-	void OnNMSMapChecksum(GameMessage *message);
+	void OnNMSMapInfo(const GameMessage_Map_Info& msg);
+	void OnNMSMapData(const GameMessage_Map_Data& msg);
+	void OnNMSMapChecksumOK(const GameMessage_Map_ChecksumOK& msg);
 
-	void OnNMSGGSChange(GameMessage *message);
+	virtual void OnNMSPause(const GameMessage_Pause& msg);
+	virtual void OnNMSServerDone(const GameMessage_Server_NWFDone& msg);
+	virtual void OnNMSGameCommand(const GameMessage_GameCommand& msg);
 
-	void OnNMSNfcAnswer(GameMessage *message);
-	void OnNMSNfcDone(GameMessage *message);
-	void OnNMSNfcPause(GameMessage *message);
+	void OnNMSGGSChange(const GameMessage_GGSChange& msg);
 
 	/// Wird aufgerufen, wenn der Server gegangen ist (Verbindung verloren, ungültige Nachricht etc.)
 	void ServerLost();
-
 
 	// Replaymethoden
 
 	/// Schreibt den Header der Replaydatei
 	void WriteReplayHeader(const unsigned random_init);
 
-
-
-
 public:
-
 	/// Virtuelle Werte der Einstellungsfenster, die aber noch nicht wirksam sind, nur um die Verzögerungen zu
 	/// verstecken
 	struct VisualSettings
 	{
 		/// Verteilung
-		unsigned char distribution[20];
+		std::vector<unsigned char> distribution;
 		/// Art der Reihenfolge (0 = nach Auftraggebung, ansonsten nach build_order)
 		unsigned char order_type;
 		/// Baureihenfolge
-		unsigned char build_order[31];
+		std::vector<unsigned char> build_order;
 		/// Transport-Reihenfolge
-		unsigned char transport_order[14];
+		std::vector<unsigned char> transport_order;
 		/// Militäreinstellungen (die vom Militärmenü)
-		unsigned char military_settings[7];
+		std::vector<unsigned char> military_settings;
 		/// Werkzeugeinstellungen (in der Reihenfolge wie im Fenster!)
-		unsigned char tools_settings[12];
+		std::vector<unsigned char> tools_settings;
+
+		VisualSettings() : distribution(20), build_order(31), transport_order(14), military_settings(7), tools_settings(12)
+		{}
+
 	} visual_settings, default_settings;
 
-
 private:
-
 	/// Spielwelt
 	GameWorld * gw;
 	/// EventManager
 	EventManager * em;
 	/// Spieler
-	GameClientPlayer ** players;
-	/// Anzahl Spieler
-	unsigned char player_count;
+	GameClientPlayerList players;
 	/// Spieler-ID dieses Clients
 	unsigned char playerid;
 	/// Globale Spieleinstellungen
 	GlobalGameSettings ggs;
 
-	GameMessageQueue recv_queue, send_queue;
-	Socket so;
+	MessageQueue recv_queue, send_queue;
+	Socket socket;
 	// Was soll das sein? oO
 	unsigned int temp_ul;
 	unsigned int temp_ui;
-
 
 	ClientState state;
 
@@ -344,13 +311,13 @@ private:
 		void Clear();
 
 		int rand;
-		int last_rand;
 	} randcheckinfo;
 
 
 	ClientInterface *ci;
 
-	list<GameMessage*> nfc_queue;
+	/// GameCommands, die vom Client noch an den Server gesendet werden müssen
+	std::vector<gc::GameCommand*> gcs;
 
 	struct ReplayInfo
 	{

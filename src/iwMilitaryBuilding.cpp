@@ -1,4 +1,4 @@
-// $Id: iwMilitaryBuilding.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: iwMilitaryBuilding.cpp 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -29,15 +29,13 @@
 #include "MilitaryConsts.h"
 #include "WindowManager.h"
 #include "controls.h"
-
 #include "iwDemolishBuilding.h"
 #include "iwMsgbox.h"
 #include "iwHelp.h"
-
-
 #include "nobMilitary.h"
 #include "nofPassiveSoldier.h"
 #include "nofActiveSoldier.h"
+#include "GameCommands.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -146,7 +144,7 @@ void iwMilitaryBuilding::Msg_ButtonClick(const unsigned int ctrl_id)
 				// visuell anzeigen
 				building->StopGoldVirtual();
 				// NC senden
-				GAMECLIENT.NC_StopGold(building->GetX(), building->GetY());
+				GAMECLIENT.AddGC(new gc::StopGold(building->GetX(), building->GetY()));
 				// anderes Bild auf dem Button
 				if(building->IsGoldDisabledVirtual())
 					GetCtrl<ctrlImageButton>(6)->SetImage(GetImage(io_dat, 226));

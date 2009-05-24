@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: GameClient.cpp 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -22,6 +22,8 @@
 #include "main.h"
 #include "GameClient.h"
 
+#include "GameMessages.h"
+
 #include "SocketSet.h"
 #include "Loader.h"
 #include "Settings.h"
@@ -43,6 +45,9 @@
 #include "Settings.h"
 #include "files.h"
 #include "ClientInterface.h"
+#include "GameCommands.h"
+
+#include <sstream>
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -52,6 +57,12 @@
 	static char THIS_FILE[] = __FILE__;
 #endif
 
+///////////////////////////////////////////////////////////////////////////////
+/*
+ *  
+ *
+ *  @author
+ */
 void GameClient::ClientConfig::Clear()
 {
 	server = "";
@@ -63,6 +74,13 @@ void GameClient::ClientConfig::Clear()
 	port = 0;
 	host = false;
 }
+
+///////////////////////////////////////////////////////////////////////////////
+/*
+ *  
+ *
+ *  @author
+ */
 void GameClient::MapInfo::Clear()
 {
 	map_type = MAPTYPE_OLDMAP;
@@ -74,6 +92,13 @@ void GameClient::MapInfo::Clear()
 	delete [] zipdata;
 	zipdata = 0;
 }
+
+///////////////////////////////////////////////////////////////////////////////
+/*
+ *  
+ *
+ *  @author
+ */
 void GameClient::FramesInfo::Clear()
 {
 	nr = 0;
@@ -85,11 +110,24 @@ void GameClient::FramesInfo::Clear()
 	pausetime = 0;
 	pause = false;
 }
+
+///////////////////////////////////////////////////////////////////////////////
+/*
+ *  
+ *
+ *  @author
+ */
 void GameClient::RandCheckInfo::Clear()
 {
 	rand = 0;
-	last_rand = 0;
 }
+
+///////////////////////////////////////////////////////////////////////////////
+/*
+ *  
+ *
+ *  @author
+ */
 void GameClient::ReplayInfo::Clear()
 {
 	async = false;
@@ -99,21 +137,27 @@ void GameClient::ReplayInfo::Clear()
 	all_visible = false;
 }
 
-
 ///////////////////////////////////////////////////////////////////////////////
-/// Konstruktor
+/*
+ *  
+ *
+ *  @author FloSoft
+ */
 GameClient::GameClient(void)
+	: recv_queue(&GameMessage::create_game), send_queue(&GameMessage::create_game),
+	ci(NULL)
 {
-	ci = NULL;
-	players = 0;
-
 	clientconfig.Clear();
 	framesinfo.Clear();
 	randcheckinfo.Clear();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Destruktor
+/*
+ *  
+ *
+ *  @author FloSoft
+ */
 GameClient::~GameClient(void)
 {
 	Stop();
@@ -147,9 +191,9 @@ bool GameClient::Connect(const std::string& server, const std::string& password,
 	clientconfig.host = host;
 
 	// Verbinden
-	if(!so.Connect(server.c_str(), port))
+	if(!socket.Connect(server.c_str(), port))
 	{
-		puts("GameClient::Connect: ERROR: Connect failed!\n");
+		LOG.lprintf("GameClient::Connect: ERROR: Connect failed!\n");
 		return false;
 	}
 
@@ -165,61 +209,70 @@ bool GameClient::Connect(const std::string& server, const std::string& password,
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Hauptschleife des Clients
+/*
+ *  Hauptschleife des Clients
+ *
+ *  @author FloSoft
+ */
 void GameClient::Run()
 {
 	if(state == CS_STOPPED)
 		return;
 
-	FillPlayerQueues();
+	SocketSet set;
+
+	// erstmal auf Daten überprüfen
+	set.Clear();
+
+	// zum set hinzufügen
+	set.Add(socket);
+	if(set.Select(0, 0) > 0)
+	{
+		// nachricht empfangen
+		if(recv_queue.recv(&socket) == -1)
+		{
+			LOG.lprintf("Receiving Message from server failed\n");
+			ServerLost();
+		}
+	}
+
+	// nun auf Fehler prüfen
+	set.Clear();
+
+	// zum set hinzufügen
+	set.Add(socket);
+
+	// auf fehler prüfen
+	if(set.Select(0, 2) > 0)
+	{
+		if(set.InSet(socket))
+		{
+			// Server ist weg
+			LOG.lprintf("Error on socket to server\n");
+			ServerLost();
+		}
+	}
 
 	if(state == CS_GAME)
 		ExecuteGameFrame();
 
-	unsigned char count = 0;
-
-	// send-queue abarbeiten
-	while(send_queue.count() > 0)
-	{
-		// maximal 10 Pakete verschicken
-		if(count > 10)
-			break;
-
-		GameMessage *m = send_queue.front();
-
-		// maximal 1 großes Paket verschicken
-		if(count > 0 && m->m_uiLength > 512)
-			break;
-
-		if(m->m_usID > 0)
-		{
-			if(!m->send(&so))
-			{
-				LOG.lprintf("Sending Message to server failed\n");
-				ServerLost();
-			}
-		}
-		send_queue.pop();
-		++count;
-	}
+	// maximal 10 Pakete verschicken
+	send_queue.send(&socket, 10);
 
 	// recv-queue abarbeiten
 	while(recv_queue.count() > 0)
 	{
-		GameMessage *m = recv_queue.front();
-		if(m->m_usID > 0)
-		{
-			if(state == CS_GAME)
-				HandleGameMessage(m);
-			else
-				HandleMessage(m);
-		}
+		recv_queue.front()->run(this, 0xFFFFFFFF);
 		recv_queue.pop();
 	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Stopfunktion
+/*
+ *  Stoppt das Spiel
+ *
+ *  @author FloSoft
+ */
 void GameClient::Stop()
 {
 	if(state != CS_STOPPED)
@@ -231,16 +284,12 @@ void GameClient::Stop()
 	}
 
 	// Nicht im Spiel --> Spieler löschen
-	// (im Spiel wird das dann von ExitGame übernommen, da die Spielerdaten evtl noch für Statis-
-	// tiken usw. benötigt werden
+	// (im Spiel wird das dann von ExitGame übernommen, da die Spielerdaten evtl noch für
+	// Statistiken usw. benötigt werden
 	if(state != CS_GAME)
-	{
-		delete [] players;
-		players = 0;
-	}
+		players.clear();
 
 	state = CS_STOPPED;
-
 
 	clientconfig.Clear();
 	mapinfo.Clear();
@@ -248,50 +297,9 @@ void GameClient::Stop()
 	replayinfo.replay.StopRecording();
 
 	// NFC-Queues aufräumen
-	nfc_queue.clear();
+	gcs.clear();
 
-	so.Close();
-
-
-}
-
-///////////////////////////////////////////////////////////////////////////////
-/// füllt die Warteschlangen mit "Paketen"
-void GameClient::FillPlayerQueues(void)
-{
-	SocketSet set;
-
-	// erstmal auf Daten überprüfen
-	set.Clear();
-
-	// zum set hinzufügen
-	set.Add(so);
-	if(set.Select(0, 0) > 0)
-	{
-		// nachricht empfangen
-		if(recv_queue.recv(&so) == -1)
-		{
-			LOG.lprintf("Receiving Message from server failed\n");
-			ServerLost();
-		}
-	}
-
-	// nun auf Fehler prüfen
-	set.Clear();
-
-	// zum set hinzufügen
-	set.Add(so);
-
-	// auf fehler prüfen
-	if(set.Select(0, 2) > 0)
-	{
-		if(set.InSet(so))
-		{
-			// Server ist weg
-			LOG.lprintf("Error on socket to server\n");
-			ServerLost();
-		}
-	}
+	socket.Close();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -323,9 +331,9 @@ void GameClient::StartGame(const unsigned int random_init)
 	// Spielwelt erzeugen
 	gw = new GameWorld();
 	em = new EventManager();
-	GameObject::SetPointers(gw,em,players);
-	for(unsigned i = 0;i<player_count;++i)
-		players[i]->SetGameWorldPointer(gw);
+	GameObject::SetPointers(gw,em, &players);
+	for(unsigned i = 0;i< players.getCount(); ++i)
+		dynamic_cast<GameClientPlayer*>(players.getElement(i))->SetGameWorldPointer(gw);
 
 	if(ci)
 		ci->CI_GameStarted(gw);
@@ -370,6 +378,12 @@ void GameClient::StartGame(const unsigned int random_init)
 	}
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/*
+ *  
+ *
+ *  @author OLiver
+ */
 void GameClient::RealStart()
 {
 	framesinfo.pause = false;
@@ -379,6 +393,12 @@ void GameClient::RealStart()
 		ExecuteGameFrame_Replay();
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/*
+ *  
+ *
+ *  @author OLiver
+ */
 void GameClient::ExitGame()
 {
 	// Spielwelt zerstören
@@ -387,164 +407,41 @@ void GameClient::ExitGame()
 	gw = 0;
 	em = 0;
 
-	if(players)
-	{
-		// Player löschen
-		for(unsigned i = 0;i<player_count;++i)
-			delete players[i];
-
-		delete[] players;
-	}
-
-	players = NULL;
-}
-
-
-///////////////////////////////////////////////////////////////////////////////
-/**
- *  führt eine Nachricht aus.
- *
- *  @param[in] message Nachricht, welche ausgeführt werden soll
- *
- *  @author FloSoft
- */
-void GameClient::HandleMessage(GameMessage *message)
-{
-	if(!message)
-		return;
-
-	switch(message->m_usID)
-	{
-	default:			break;
-	case NMS_NULL_MSG:	break;
-
-	case NMS_PING:	OnNMSPing(message);	break;
-
-	case NMS_PLAYER_ID:				OnNMSPlayerId(message);				break;
-	case NMS_PLAYER_LIST:			OnNMSPlayerList(message);			break;
-	case NMS_PLAYER_NEW:			OnNMSPlayerNew(message);			break;
-	case NMS_PLAYER_PING:			OnNMSPlayerPing(message);			break;
-	case NMS_PLAYER_TOGGLESTATE:	OnNMSPlayerToggleState(message);	break;
-	case NMS_PLAYER_TOGGLENATION:	OnNMSPlayerToggleNation(message);	break;
-	case NMS_PLAYER_TOGGLETEAM:		OnNMSPlayerToggleTeam(message);		break;
-	case NMS_PLAYER_TOGGLECOLOR:	OnNMSPlayerToggleColor(message);	break;
-	case NMS_PLAYER_READY:			OnNMSPlayerReady(message);			break;
-	case NMS_PLAYER_KICKED:			OnNMSPlayerKicked(message);			break;
-	case NMS_PLAYER_SWAP:			OnNMSPlayerSwap(message);			break;
-
-	case NMS_SERVER_TYP:		OnNMSServerTyp(message);		break;
-	case NMS_SERVER_PASSWORD:	OnNMSServerPassword(message);	break;
-	case NMS_SERVER_NAME:		OnNMSServerName(message);		break;
-	case NMS_SERVER_CHAT:		OnNMSServerChat(message);		break;
-	case NMS_SERVER_START:		OnNMSServerStart(message);		break;
-
-	case NMS_MAP_NAME:		OnNMSMapName(message);		break;
-	case NMS_MAP_INFO:		OnNMSMapInfo(message);		break;
-	case NMS_MAP_DATA:		OnNMSMapData(message);		break;
-	case NMS_MAP_CHECKSUM:	OnNMSMapChecksum(message);	break;
-
-	case NMS_GGS_CHANGE:	OnNMSGGSChange(message);	break;
-
-	case NMS_DEAD_MSG:		OnNMSDeadMsg(message);		break;
-	}
+	players.clear();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  führt eine Ingame-Nachricht aus.
- *
- *  @param[in] message Nachricht, welche ausgeführt werden soll
+ *  Dead-Nachricht.
  *
  *  @author FloSoft
  */
-inline void GameClient::HandleGameMessage(GameMessage *message)
+void GameClient::OnNMSDeadMsg(unsigned int id)
 {
-	if(!message)
-		return;
-
-	switch(message->m_usID)
-	{
-	default:			break;
-	case NMS_NULL_MSG:	break;
-
-	case NMS_PING:	OnNMSPing(message);	break;
-
-	case NMS_PLAYER_KICKED:	OnNMSPlayerKicked(message);	break;
-	case NMS_PLAYER_PING:	OnNMSPlayerPing(message);	break;
-
-	case NMS_SERVER_CHAT:	OnNMSServerChat(message);	break;
-	case NMS_SERVER_ASYNC:	OnNMSServerAsync(message);	break;
-
-	case NMS_NFC_ANSWER:	OnNMSNfcAnswer(message);	break;
-	case NMS_NFC_DONE:		OnNMSNfcDone(message);		break;
-	case NMS_NFC_PAUSE:		OnNMSNfcPause(message);     break;
-
-	case NMS_DEAD_MSG:		OnNMSDeadMsg(message);		break;
-	}
-}
-
-///////////////////////////////////////////////////////////////////////////////
-/// Deadmessage
-/// @param message	Nachricht, welche ausgeführt wird
-inline void GameClient::OnNMSDeadMsg(GameMessage *message)
-{
-	if(!message)
-		return;
-	if(message->m_uiLength != 0)
-	{
-		LOG.lprintf("Invalid/corrupt message 0x%04X received\n", message->m_usID);
-
-		Stop();
-		return;
-	}
-
-	LOG.write("<<< NMS_DEAD_MSG\n");
-
 	ServerLost();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Pingmessage
-/// @param message	Nachricht, welche ausgeführt wird
-inline void GameClient::OnNMSPing(GameMessage *message)
+/**
+ *  Ping-Nachricht.
+ *
+ *  @author FloSoft
+ */
+void GameClient::OnNMSPing()
 {
-	if(!message)
-		return;
-	if(message->m_uiLength != 0)
-	{
-		LOG.lprintf("Invalid/corrupt message 0x%04X received\n", message->m_usID);
-
-		Stop();
-		return;
-	}
-
-	//LOG.write("<<< NMS_PING\n");
-
-	send_queue.push(NMS_PONG);
-
-	//LOG.write(">>>NMS_PONG\n");
+	send_queue.push(new GameMessage_Pong(1));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-/// player id
-/// @param message	Nachricht, welche ausgeführt wird
-inline void GameClient::OnNMSPlayerId(GameMessage *message)
+/**
+ *  Player-ID-Nachricht.
+ *
+ *  @author FloSoft
+ */
+void GameClient::OnNMSPlayerId(const GameMessage_Player_Id& msg)
 {
-	if(!message)
-		return;
-	if(message->m_uiLength < 1)
-	{
-		LOG.lprintf("Invalid/corrupt message 0x%04X received\n", message->m_usID);
-
-		ServerLost();
-		return;
-	}
-
-	playerid = *(unsigned char*)message->m_pData;
-
-	LOG.write("<<< NMS_PLAYER_ID(%d)\n", playerid);
-
-	if(playerid == 0xFF)
+	// haben wir eine ungültige ID erhalten? (aka Server-Voll)
+	if(msg.playerid == 0xFFFFFFFF)
 	{
 		if(ci)
 			ci->CI_Error(CE_SERVERFULL);
@@ -553,88 +450,42 @@ inline void GameClient::OnNMSPlayerId(GameMessage *message)
 		return;
 	}
 
-	GameMessage *msg = send_queue.push(NMS_SERVER_TYP);
-	char *data = (char*)msg->alloc(2 + (unsigned int)strlen(GetWindowVersion()));
-	data[0] = clientconfig.servertyp;
-	strcpy(&data[1], GetWindowVersion());
-
-	LOG.write(">>>NMS_SERVER_TYP(%d, %s)\n", clientconfig.servertyp, GetWindowVersion());
+	// Server-Typ senden
+	send_queue.push(new GameMessage_Server_Type(clientconfig.servertyp, GetWindowVersion()));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-/// player liste
-/// @param message	Nachricht, welche ausgeführt wird
-inline void GameClient::OnNMSPlayerList(GameMessage *message)
+/**
+ *  Player-List-Nachricht.
+ *
+ *  @author FloSoft
+ */
+void GameClient::OnNMSPlayerList(const GameMessage_Player_List& msg)
 {
-	if(!message)
-		return;
-	if(message->m_uiLength < 1)
+	for(unsigned int i = 0; i < players.getCount(); ++i)
 	{
-		LOG.lprintf("Invalid/corrupt message 0x%04X received\n", message->m_usID);
-
-		Stop();
-		return;
-	}
-	unsigned char *data = (unsigned char*)message->m_pData;
-	unsigned char *count = (unsigned char*)&data[0];
-	//GamePlayerInfo *list = (GamePlayerInfo*)&data[1];
-
-	player_count = *count;
-
-	LOG.write("<<< NMS_PLAYER_LIST(%d)\n", *count);
-
-
-	//// Speicherlecks vermeiden!
-	assert(!players);
-	//if(players)
-	//	delete[] players;
-
-	players = NULL;
-
-	if(player_count > 0)
-	{
-		players = new GameClientPlayer*[player_count];
-		for(unsigned char i = 0; i < player_count; ++i)
-			players[i] = new GameClientPlayer(i);
-	}
-
-
-	int j = 1;
-	for(unsigned char i = 0; i < player_count; ++i)
-	{
-		unsigned char length_name,length_origin_name;
-		length_name = data[j];
-		length_origin_name = data[j+1];
-
-		j+=2;
-
-		players[i]->name = (char*)(&data[j]);
-		j+=length_name;
-		players[i]->origin_name = (char*)(&data[j]);
-		j+=length_origin_name;
-
-		memcpy(&players[i]->ps, &data[j], 4);
-		memcpy(&players[i]->rating, &data[j+4], 2);
-		players[i]->is_host = (data[j+6] == 1) ? true : false;
-		memcpy(&players[i]->ping, &data[j+7], 2);
-		memcpy(&players[i]->nation, &data[j+9], 1);
-		memcpy(&players[i]->color, &data[j+10], 1);
-		memcpy(&players[i]->team, &data[j+11], 1);
-		players[i]->ready = (data[j+12]==1) ? true : false;
+		players[i].ps = msg.gpl[i].ps;
+		players[i].name = msg.gpl[i].name;
+		players[i].origin_name = msg.gpl[i].origin_name;
+		players[i].is_host = msg.gpl[i].is_host;
+		players[i].nation = msg.gpl[i].nation;
+		players[i].team = msg.gpl[i].team;
+		players[i].color = msg.gpl[i].color;
+		players[i].ping = msg.gpl[i].ping;
+		players[i].rating = msg.gpl[i].rating;
+		players[i].ps = msg.gpl[i].ps;
+	
+		GamePlayerInfo *player = players.getElement(i);
 
 		if(ci)
-			ci->CI_PSChanged(i,players[i]->ps);
+			ci->CI_PSChanged(i, player->ps);
 
-		if(players[i]->ps == PS_KI)
+		if(player->ps == PS_KI)
 		{
-			players[i]->ready = true;
+			player->ready = true;
 			if(ci)
-				ci->CI_ReadyChanged(i,players[i]->ready);
+				ci->CI_ReadyChanged(i, player->ready);
 		}
-
-		LOG.write("    %d: %s %d %d %d %d %d %d %s\n", i, players[i]->name.c_str(), players[i]->ps, players[i]->rating, players[i]->ping, players[i]->nation, players[i]->color, players[i]->team, (players[i]->ready ? "true" : "false") );
-
-		j += 13;
 	}
 
 	if(ci)
@@ -644,33 +495,22 @@ inline void GameClient::OnNMSPlayerList(GameMessage *message)
 ///////////////////////////////////////////////////////////////////////////////
 /// player joined
 /// @param message	Nachricht, welche ausgeführt wird
-inline void GameClient::OnNMSPlayerNew(GameMessage *message)
+inline void GameClient::OnNMSPlayerNew(const GameMessage_Player_New& msg)
 {
-	if(!message)
-		return;
-	if(message->m_uiLength < 1)
+
+
+	LOG.write("<<< NMS_PLAYER_NEW(%d)\n", msg.player );
+
+	if(msg.player != 0xFF)
 	{
-		LOG.lprintf("Invalid/corrupt message 0x%04X received\n", message->m_usID);
-
-		Stop();
-		return;
-	}
-	unsigned char *playerid = (unsigned char*)message->m_pData;
-
-	LOG.write("<<< NMS_PLAYER_NEW(%d)\n", playerid[0]);
-
-	if(playerid[0] != 0xFF)
-	{
-		char *name = (char*)&playerid[1];
-
-		if(playerid[0] < player_count)
+		if(msg.player < players.getCount())
 		{
-			players[playerid[0]]->name = name;
-			players[playerid[0]]->ps = PS_OCCUPIED;
-			players[playerid[0]]->ping = 0;
+			players[msg.player].name = msg.name;
+			players[msg.player].ps = PS_OCCUPIED;
+			players[msg.player].ping = 0;
 
 			if(ci)
-				ci->CI_NewPlayer(playerid[0]);
+				ci->CI_NewPlayer(msg.player);
 		}
 	}
 }
@@ -678,110 +518,73 @@ inline void GameClient::OnNMSPlayerNew(GameMessage *message)
 ///////////////////////////////////////////////////////////////////////////////
 /// player joined
 /// @param message	Nachricht, welche ausgeführt wird
-inline void GameClient::OnNMSPlayerPing(GameMessage *message)
+inline void GameClient::OnNMSPlayerPing(const GameMessage_Player_Ping& msg)
 {
-	if(!message)
-		return;
-	if(message->m_uiLength != 3)
+	if(msg.player != 0xFF)
 	{
-		LOG.lprintf("Invalid/corrupt message 0x%04X received\n", message->m_usID);
-
-		Stop();
-		return;
-	}
-	unsigned char playerid = *(unsigned char*)message->m_pData;
-	unsigned short ping = *(unsigned short*)&((char*)message->m_pData)[1];
-
-	//LOG.write("<<< NMS_PLAYER_PING(%d, %d)\n", playerid, ping);
-
-	if(playerid != 0xFF)
-	{
-		if(playerid < player_count)
+		if(msg.player < players.getCount())
 		{
-			players[playerid]->ping = ping;
+			players[msg.player].ping = msg.ping;
 
 			if(ci)
-				ci->CI_PingChanged(playerid,ping);
+				ci->CI_PingChanged(msg.player,msg.ping);
 		}
 	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-/// player button gedrückt
-/// @param message	Nachricht, welche ausgeführt wird
-inline void GameClient::OnNMSPlayerToggleState(GameMessage *message)
+/**
+ *  Player-Toggle-State-Nachricht.
+ *
+ *  @author FloSoft
+ */
+void GameClient::OnNMSPlayerToggleState(const GameMessage_Player_Toggle_State& msg)
 {
-	if(!message)
-		return;
-	if(message->m_uiLength != 1)
+	GameClientPlayer *player = players.getElement(msg.player);
+
+	if(msg.player != 0xFF)
 	{
-		LOG.lprintf("Invalid/corrupt message 0x%04X received\n", message->m_usID);
-
-		Stop();
-		return;
-	}
-	unsigned char playerid = *(unsigned char*)message->m_pData;
-
-	LOG.write("<<< NMS_PLAYER_TOGGLESTATE(%d)\n", playerid);
-
-	if(playerid != 0xFF)
-	{
-		if(playerid < player_count)
+		if(msg.player < players.getCount())
 		{
-			switch(players[playerid]->ps)
+			switch(player->ps)
 			{
 			case PS_FREE:
 				{
-					players[playerid]->ps = PS_KI;
+					player->ps = PS_KI;
 					// Baby mit einem Namen Taufen ("Name (KI)")
 					char str[512];
-					sprintf(str,_("Computer %u"),unsigned(playerid));
-					players[playerid]->name = str;
-					players[playerid]->name += _(" (AI)");
+					sprintf(str,_("Computer %u"),unsigned(msg.player));
+					player->name = str;
+					player->name += _(" (AI)");
 				} break;
-			case PS_KI:     players[playerid]->ps = PS_LOCKED; break;
-			case PS_LOCKED: players[playerid]->ps = PS_FREE;   break;
+			case PS_KI:     player->ps = PS_LOCKED; break;
+			case PS_LOCKED: player->ps = PS_FREE;   break;
 			default: break;
 			}
 
 			if(ci)
-				ci->CI_PSChanged(playerid,players[playerid]->ps);
+				ci->CI_PSChanged(msg.player, player->ps);
 		}
-		players[playerid]->ready = (players[playerid]->ps == PS_KI);
+		player->ready = (player->ps == PS_KI);
 
 		if(ci)
-			ci->CI_ReadyChanged(playerid,players[playerid]->ready);
+			ci->CI_ReadyChanged(msg.player, player->ready);
 	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 /// nation button gedrückt
 /// @param message	Nachricht, welche ausgeführt wird
-inline void GameClient::OnNMSPlayerToggleNation(GameMessage *message)
+inline void GameClient::OnNMSPlayerToggleNation(const GameMessage_Player_Toggle_Nation& msg)
 {
-	if(!message)
-		return;
-	if(message->m_uiLength != 2)
+	if(msg.player != 0xFF)
 	{
-		LOG.lprintf("Invalid/corrupt message 0x%04X received\n", message->m_usID);
-
-		Stop();
-		return;
-	}
-	unsigned char *data = (unsigned char*)message->m_pData;
-	unsigned char playerid = data[0];
-	Nation nation = Nation(data[1]);
-
-	LOG.write("<<< NMS_PLAYER_TOGGLENATION(%d, %d)\n", playerid, nation);
-
-	if(playerid != 0xFF)
-	{
-		if(playerid < player_count)
+		if(msg.player < players.getCount())
 		{
-			players[playerid]->nation = nation;
+			players[msg.player].nation = msg.nation;
 
 			if(ci)
-				ci->CI_NationChanged(playerid,players[playerid]->nation);
+				ci->CI_NationChanged(msg.player,msg.nation);
 		}
 	}
 }
@@ -789,31 +592,16 @@ inline void GameClient::OnNMSPlayerToggleNation(GameMessage *message)
 ///////////////////////////////////////////////////////////////////////////////
 /// team button gedrückt
 /// @param message	Nachricht, welche ausgeführt wird
-inline void GameClient::OnNMSPlayerToggleTeam(GameMessage *message)
+inline void GameClient::OnNMSPlayerToggleTeam(const GameMessage_Player_Toggle_Team& msg)
 {
-	if(!message)
-		return;
-	if(message->m_uiLength != 2)
+	if(msg.player != 0xFF)
 	{
-		LOG.lprintf("Invalid/corrupt message 0x%04X received\n", message->m_usID);
-
-		Stop();
-		return;
-	}
-	unsigned char *data = (unsigned char*)message->m_pData;
-	unsigned char playerid = data[0];
-	unsigned char team = data[1];
-
-	LOG.write("<<< NMS_PLAYER_TOGGLETEAM(%d, %d)\n", playerid, team);
-
-	if(playerid != 0xFF)
-	{
-		if(playerid < player_count)
+		if(msg.player < players.getCount())
 		{
-			players[playerid]->team = team;
+			players[msg.player].team = msg.team;
 
 			if(ci)
-				ci->CI_TeamChanged(playerid,players[playerid]->team);
+				ci->CI_TeamChanged(msg.player,msg.team);
 		}
 	}
 }
@@ -821,31 +609,16 @@ inline void GameClient::OnNMSPlayerToggleTeam(GameMessage *message)
 ///////////////////////////////////////////////////////////////////////////////
 /// color button gedrückt
 /// @param message	Nachricht, welche ausgeführt wird
-inline void GameClient::OnNMSPlayerToggleColor(GameMessage *message)
+inline void GameClient::OnNMSPlayerToggleColor(const GameMessage_Player_Toggle_Color& msg)
 {
-	if(!message)
-		return;
-	if(message->m_uiLength != 2)
+	if(msg.player != 0xFF)
 	{
-		LOG.lprintf("Invalid/corrupt message 0x%04X received\n", message->m_usID);
-
-		Stop();
-		return;
-	}
-	unsigned char *data = (unsigned char*)message->m_pData;
-	unsigned char playerid = data[0];
-	unsigned char color = data[1];
-
-	LOG.write("<<< NMS_PLAYER_TOGGLECOLOR(%d, %d)\n", playerid, color);
-
-	if(playerid != 0xFF)
-	{
-		if(playerid < player_count)
+		if(msg.player < players.getCount())
 		{
-			players[playerid]->color = color;
+			players[msg.player].color = msg.color;
 
 			if(ci)
-				ci->CI_ColorChanged(playerid,players[playerid]->color);
+				ci->CI_ColorChanged(msg.player,msg.color);
 		}
 	}
 }
@@ -858,32 +631,18 @@ inline void GameClient::OnNMSPlayerToggleColor(GameMessage *message)
  *
  *  @author FloSoft
  */
-inline void GameClient::OnNMSPlayerReady(GameMessage *message)
+inline void GameClient::OnNMSPlayerReady(const GameMessage_Player_Ready& msg)
 {
-	if(!message)
-		return;
-	if(message->m_uiLength != 2)
+	LOG.write("<<< NMS_PLAYER_READY(%d, %s)\n", msg.player, (msg.ready ? "true" : "false"));
+
+	if(msg.player != 0xFF)
 	{
-		LOG.lprintf("Invalid/corrupt message 0x%04X received\n", message->m_usID);
-
-		Stop();
-		return;
-	}
-
-	unsigned char *data = (unsigned char*)message->m_pData;
-	unsigned char playerid = data[0];
-	bool ready = (data[1] != 0 ? true : false);
-
-	LOG.write("<<< NMS_PLAYER_READY(%d, %s)\n", playerid, (ready ? "true" : "false"));
-
-	if(playerid != 0xFF)
-	{
-		if(playerid < player_count)
+		if(msg.player < players.getCount())
 		{
-			players[playerid]->ready = ready;
+			players[msg.player].ready = msg.ready;
 
 			if(ci)
-				ci->CI_ReadyChanged(playerid,players[playerid]->ready);
+				ci->CI_ReadyChanged(msg.player,players[msg.player].ready);
 		}
 	}
 }
@@ -891,92 +650,59 @@ inline void GameClient::OnNMSPlayerReady(GameMessage *message)
 ///////////////////////////////////////////////////////////////////////////////
 /// player gekickt
 /// @param message	Nachricht, welche ausgeführt wird
-inline void GameClient::OnNMSPlayerKicked(GameMessage *message)
+inline void GameClient::OnNMSPlayerKicked(const GameMessage_Player_Kicked& msg)
 {
-	if(!message)
-		return;
-	if(message->m_uiLength != sizeof(NS_PlayerKicked))
+	LOG.write("<<< NMS_PLAYER_KICKED(%d, %d, %d)\n", msg.player, msg.cause, msg.param);
+
+	if(msg.player != 0xFF)
 	{
-		LOG.lprintf("Invalid/corrupt message 0x%04X received\n", message->m_usID);
-
-		Stop();
-		return;
-	}
-	NS_PlayerKicked *npk = (NS_PlayerKicked*)message->m_pData;
-
-	LOG.write("<<< NMS_PLAYER_KICKED(%d, %d, %d)\n", npk->playerid, npk->cause, npk->param);
-
-	if(npk->playerid != 0xFF)
-	{
-		if(npk->playerid < player_count)
+		if(msg.player < players.getCount())
 		{
 			if(state == CS_GAME && GLOBALVARS.ingame)
 			{
 				// Im Spiel anzeigen, dass der Spieler das Spiel verlassen hat
-				players[npk->playerid]->ps = PS_KI;
+				players[msg.player].ps = PS_KI;
 			}
 			else
-				players[npk->playerid]->clear();
+				players[msg.player].clear();
 
 			if(ci)
-				ci->CI_PlayerLeft(npk->playerid);
+				ci->CI_PlayerLeft(msg.player);
 		}
 	}
 }
 
-inline void GameClient::OnNMSPlayerSwap(GameMessage *message)
+inline void GameClient::OnNMSPlayerSwap(const GameMessage_Player_Swap& msg)
 {
-	if(!message)
-		return;
-	if(message->m_uiLength != 2)
-	{
-		LOG.lprintf("Invalid/corrupt message 0x%04X received\n", message->m_usID);
+	LOG.write("<<< NMS_PLAYER_SWAP(%u, %u)\n", msg.player,msg.player2);
 
-		Stop();
-		return;
-	}
-
-	unsigned player1 = static_cast<unsigned char*>(message->m_pData)[0];
-	unsigned player2 = static_cast<unsigned char*>(message->m_pData)[1];
-
-	LOG.write("<<< NMS_PLAYER_SWAP(%u, %u)\n", player1,player2);
-
-	players[player1]->SwapPlayer(*players[player2]);
+	players[msg.player].SwapPlayer(players[msg.player2]);
 
 	// Evtl. sind wir betroffen?
-	if(playerid == player1)
-		playerid = player2;
-	else if(playerid == player2)
-		playerid = player1;
+	if(playerid == msg.player)
+		playerid = msg.player2;
+	else if(playerid == msg.player2)
+		playerid = msg.player;
 
 
 	if(ci)
-		ci->CI_PlayersSwapped(player1,player2);
+		ci->CI_PlayersSwapped(msg.player,msg.player2);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-/// server typ
-/// @param message	Nachricht, welche ausgeführt wird
-inline void GameClient::OnNMSServerTyp(GameMessage *message)
+/**
+ *  Server-Typ-Nachricht.
+ *
+ *  @author FloSoft
+ */
+inline void GameClient::OnNMSServerTypeOK(const GameMessage_Server_TypeOK& msg)
 {
-	if(!message)
-		return;
-	if(message->m_uiLength != 4)
-	{
-		LOG.lprintf("Invalid/corrupt message 0x%04X received\n", message->m_usID);
-
-		Stop();
-		return;
-	}
-
-	int servertypok = *(int*)message->m_pData;
-
-	LOG.write("<<< NMS_SERVER_TYP(%d)\n", servertypok);
-
-	switch(servertypok)
+	switch(msg.err_code)
 	{
 	case 0: // ok
 		break;
+
+	default:
 	case 1:
 		{
 			if(ci)
@@ -984,6 +710,7 @@ inline void GameClient::OnNMSServerTyp(GameMessage *message)
 			Stop();
 			return;
 		} break;
+
 	case 2:
 		{
 			if(ci)
@@ -993,36 +720,21 @@ inline void GameClient::OnNMSServerTyp(GameMessage *message)
 		} break;
 	}
 
-	GameMessage *msg = send_queue.push(NMS_SERVER_PASSWORD);
-	msg->m_uiLength = unsigned(clientconfig.password.length()) + 1;
-	msg->alloc(clientconfig.password.c_str());
-
-	LOG.write(">>>NMS_SERVER_PASSWORD(********)\n");
+	send_queue.push(new GameMessage_Server_Password(clientconfig.password));
 
 	if(ci)
 		ci->CI_NextConnectState(CS_QUERYPW);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-/// server passwort
-/// @param message	Nachricht, welche ausgeführt wird
-inline void GameClient::OnNMSServerPassword(GameMessage *message)
+/**
+ *  Server-Passwort-Nachricht.
+ *
+ *  @author FloSoft
+ */
+void GameClient::OnNMSServerPassword(const GameMessage_Server_Password& msg)
 {
-	if(!message)
-		return;
-	if(message->m_uiLength != 1)
-	{
-		LOG.lprintf("Invalid/corrupt message 0x%04X received\n", message->m_usID);
-
-		Stop();
-		return;
-	}
-
-	bool passwordok = *(bool*)message->m_pData;
-
-	LOG.write("<<< NMS_SERVER_PASSWORD(%d)\n", passwordok);
-
-	if(passwordok == false)
+	if(msg.password != "true")
 	{
 		if(ci)
 			ci->CI_Error(CE_WRONGPW);
@@ -1030,134 +742,84 @@ inline void GameClient::OnNMSServerPassword(GameMessage *message)
 		Stop();
 		return;
 	}
-
-	GameMessage *msg = send_queue.push(NMS_PLAYER_NAME);
-	msg->m_uiLength = (unsigned int)(SETTINGS.name.length()) + 1;
-	msg->alloc(SETTINGS.name.c_str());
-
-	LOG.write(">>>NMS_PLAYER_NAME(%s)\n", SETTINGS.name.c_str());
+	
+	send_queue.push(new GameMessage_Player_Name(SETTINGS.name));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Servername
-/// @param message	Nachricht, welche ausgeführt wird
-inline void GameClient::OnNMSServerName(GameMessage *message)
+/**
+ *  Server-Name-Nachricht.
+ *
+ *  @author FloSoft
+ */
+void GameClient::OnNMSServerName(const GameMessage_Server_Name& msg)
 {
-	if(!message)
-		return;
-	if(message->m_uiLength == 0)
-	{
-		LOG.lprintf("Invalid/corrupt message 0x%04X received\n", message->m_usID);
-
-		Stop();
-		return;
-	}
-
-	char *servername = (char *)message->m_pData;
-
-	LOG.write("<<< NMS_SERVER_NAME(%s)\n", servername);
-
-	clientconfig.gamename = servername;
+	clientconfig.gamename = msg.name;
 
 	if(ci)
 		ci->CI_NextConnectState(CS_QUERYPLAYERLIST);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Chatnachricht
-/// @param message	Nachricht, welche ausgeführt wird
-inline void GameClient::OnNMSServerChat(GameMessage *message)
+/**
+ *  Server-Start-Nachricht
+ *
+ *  @author FloSoft
+ *  @author OLiver
+ */
+inline void GameClient::OnNMSServerStart(const GameMessage_Server_Start& msg)
 {
-	if(!message)
-		return;
-	if(message->m_uiLength < 2)
-	{
-		LOG.lprintf("Invalid/corrupt message 0x%04X received\n", message->m_usID);
-
-		Stop();
-		return;
-	}
-
-	unsigned char playerid = *(unsigned char*)message->m_pData;
-	ChatDestination cd = ChatDestination(*((unsigned char*)message->m_pData+1));
-	char *text = &((char*)message->m_pData)[2];
-
-	LOG.write("<<< NMS_SERVER_CHAT(%u, %u, %s)\n", playerid, cd, text);
-
-	if(playerid != 0xFF)
-	{
-		if(ci)
-			ci->CI_Chat(playerid,cd,text);
-
-		if(state == CS_GAME)
-			/// Mit im Replay aufzeichnen
-			replayinfo.replay.AddChatCommand(framesinfo.nr,playerid,cd,text);
-
-	}
-}
-
-
-///////////////////////////////////////////////////////////////////////////////
-/// server start
-/// @param message	Nachricht, welche ausgeführt wird
-inline void GameClient::OnNMSServerStart(GameMessage *message)
-{
-	if(!message)
-		return;
-	if(message->m_uiLength != sizeof(NS_StartGameInfo))
-	{
-		LOG.lprintf("Invalid/corrupt message 0x%04X received\n", message->m_usID);
-
-		Stop();
-		return;
-	}
-
-	NS_StartGameInfo *nsgi = (NS_StartGameInfo *)message->m_pData;
-
-	LOG.write("<<< NMS_SERVER_START\n");
-
-
 	// NWF-Länge bekommen wir vom Server
-	framesinfo.nwf_length = nsgi->nwf_length;
+	framesinfo.nwf_length = msg.nwf_length;
 
-	StartGame(nsgi->random_init);
-
+	StartGame(msg.random_init);
 
 	// Nothing-Command für ersten Network-Frame senden
 	SendNothingNC(0);
 }
 
-inline void GameClient::OnNMSServerAsync(GameMessage *message)
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Server-Chat-Nachricht.
+ *
+ *  @author FloSoft
+ */
+void GameClient::OnNMSServerChat(const GameMessage_Server_Chat& msg)
 {
-	if(message->m_uiLength != player_count * 4u)
+	if(msg.player != 0xFFFFFFFF)
 	{
-		LOG.lprintf("Invalid/corrupt message 0x%04X received\n", message->m_usID);
+		if(ci)
+			ci->CI_Chat(msg.player, msg.destination, msg.text);
 
-		Stop();
-		return;
+		if(state == CS_GAME)
+			/// Mit im Replay aufzeichnen
+			replayinfo.replay.AddChatCommand(framesinfo.nr, msg.player, msg.destination, msg.text);
+
 	}
+}
 
-	LOG.write("<<< NMS_SERVER_ASYNC\n");
-
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Server-Async-Nachricht.
+ *
+ *  @author FloSoft
+ */
+void GameClient::OnNMSServerAsync(const GameMessage_Server_Async& msg)
+{
 	// Liste mit Namen und Checksummen erzeugen
-	std::string checksum_list;
-
-	for(unsigned i = 0; i < player_count; ++i)
-	{
-		char player_str[256];
-		sprintf(player_str,"%s: %u ",players[i]->name.c_str(),static_cast<int*>(message->m_pData)[i]);
-		checksum_list+=player_str;
-	}
+	std::stringstream checksum_list;
+	checksum_list << 23;
+	for(unsigned int i = 0; i < players.getCount(); ++i)
+		checksum_list << players.getElement(i)->name << ": " << msg.checksums.at(i) << "\n";
 
 	// Fehler ausgeben (Konsole)!
 	LOG.lprintf(_("The Game is not in sync. Checksums of some players don't match."));
-	LOG.lprintf(checksum_list.c_str());
+	LOG.lprintf(checksum_list.str().c_str());
 	LOG.lprintf("\n");
 
 	// Messenger im Game
 	if(ci && GLOBALVARS.ingame)
-		ci->CI_Async(checksum_list);
-
+		ci->CI_Async(checksum_list.str());
 
 	char filename[256], time_str[80];
 	unser_time_t temp = TIME.CurrentTime();
@@ -1178,36 +840,6 @@ inline void GameClient::OnNMSServerAsync(GameMessage *message)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Kartenname
-/// @param message	Nachricht, welche ausgeführt wird
-inline void GameClient::OnNMSMapName(GameMessage *message)
-{
-	if(!message)
-		return;
-	if(message->m_uiLength == 0)
-	{
-		LOG.lprintf("Invalid/corrupt message 0x%04X received\n", message->m_usID);
-
-		Stop();
-		return;
-	}
-
-	char *mapfile = (char *)message->m_pData;
-
-	LOG.write("<<< NMS_MAP_NAME(%s)\n", mapfile);
-
-	// shortname
-	clientconfig.mapfile = mapfile;
-	// full path
-	clientconfig.mapfilepath = FILE_PATHS[48] + clientconfig.mapfile;
-
-	// karteninformationen anfordern
-	send_queue.push(NMS_MAP_INFO);
-
-	LOG.write(">>>NMS_MAP_INFO\n");
-}
-
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  verarbeitet die MapInfo-Nachricht, in der die gepackte Größe,
  *  die normale Größe und Teilanzahl der Karte übertragen wird.
@@ -1216,28 +848,17 @@ inline void GameClient::OnNMSMapName(GameMessage *message)
  *
  *  @author FloSoft
  */
-inline void GameClient::OnNMSMapInfo(GameMessage *message)
+inline void GameClient::OnNMSMapInfo(const GameMessage_Map_Info& msg)
 {
-	if(!message)
-		return;
-	if(message->m_uiLength != 16)
-	{
-		LOG.lprintf("Invalid/corrupt message 0x%04X received\n", message->m_usID);
+	// shortname
+	clientconfig.mapfile = msg.map_name;
+	// full path
+	clientconfig.mapfilepath = FILE_PATHS[48] + clientconfig.mapfile;
 
-		Stop();
-		return;
-	}
-
-	unsigned int *infos = (unsigned int*)message->m_pData;
-
-	LOG.write("<<< NMS_MAP_INFO(%u, %u, %u)\n", infos[1], infos[2], infos[3]);
-
-	mapinfo.map_type = MapType(infos[0]);
-	mapinfo.partcount = infos[1];
-	mapinfo.ziplength = infos[2];
-	mapinfo.length = infos[3];
-
-	LOG.lprintf("Map has %u parts (%u/%u), i'll request them all!\n", infos[1], infos[2], infos[3]);
+	mapinfo.map_type = msg.mt;
+	mapinfo.partcount = msg.partcount;
+	mapinfo.ziplength = msg.ziplength;
+	mapinfo.length = msg.normal_length;
 
 	temp_ui = 0;
 	temp_ul = 0;
@@ -1245,34 +866,19 @@ inline void GameClient::OnNMSMapInfo(GameMessage *message)
 	if(mapinfo.zipdata)
 		delete[] mapinfo.zipdata;
 	mapinfo.zipdata = new unsigned char[mapinfo.ziplength + 1];
-
-	for(unsigned int parts = 0; parts < mapinfo.partcount; ++parts)
-	{
-		send_queue.push(NMS_MAP_DATA);
-		LOG.write(">>>NMS_MAP_DATA\n");
-	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Kartendaten
 /// @param message	Nachricht, welche ausgeführt wird
-inline void GameClient::OnNMSMapData(GameMessage *message)
+inline void GameClient::OnNMSMapData(const GameMessage_Map_Data& msg)
 {
-	if(!message)
-		return;
-	if(message->m_uiLength == 0)
-	{
-		LOG.lprintf("Invalid/corrupt message 0x%04X received\n", message->m_usID);
+	LOG.write("<<< NMS_MAP_DATA(%u)\n", msg.GetNetLength());
 
-		Stop();
-		return;
-	}
-	LOG.write("<<< NMS_MAP_DATA(%u)\n", message->m_uiLength);
+	unsigned char *data = msg.map_data;
 
-	unsigned char *data = (unsigned char*)message->m_pData;
-
-	memcpy(&mapinfo.zipdata[temp_ul], data, message->m_uiLength);
-	temp_ul += message->m_uiLength;
+	memcpy(&mapinfo.zipdata[temp_ul], data, msg.GetNetLength());
+	temp_ul += msg.GetNetLength();
 
 	++(temp_ui);
 	if(temp_ui >= mapinfo.partcount)
@@ -1323,7 +929,10 @@ inline void GameClient::OnNMSMapData(GameMessage *message)
 				const libsiedler2::ArchivItem_Map_Header *header = &(dynamic_cast<const glArchivItem_Map *>(map.get(0))->getHeader());
 				assert(header);
 
-				player_count = header->getPlayer();
+				players.clear();
+				for(unsigned i = 0;i<header->getPlayer();++i)
+					players.push_back(GameClientPlayer(i));
+
 				mapinfo.title = header->getName();
 
 			} break;
@@ -1345,11 +954,7 @@ inline void GameClient::OnNMSMapData(GameMessage *message)
 			break;
 		}
 
-		GameMessage *msg = send_queue.push(NMS_MAP_CHECKSUM);
-		msg->m_uiLength = sizeof(unsigned int);
-		msg->alloc();
-		unsigned int *crc = (unsigned int*)msg->m_pData;
-		*crc = mapinfo.checksum;
+		send_queue.push(new GameMessage_Map_Checksum(mapinfo.checksum));
 
 		LOG.write(">>>NMS_MAP_CHECKSUM(%u)\n", mapinfo.checksum);
 	}
@@ -1358,23 +963,11 @@ inline void GameClient::OnNMSMapData(GameMessage *message)
 ///////////////////////////////////////////////////////////////////////////////
 /// map-checksum
 /// @param message	Nachricht, welche ausgeführt wird
-inline void GameClient::OnNMSMapChecksum(GameMessage *message)
+inline void GameClient::OnNMSMapChecksumOK(const GameMessage_Map_ChecksumOK& msg)
 {
-	if(!message)
-		return;
-	if(message->m_uiLength != 1)
-	{
-		LOG.lprintf("Invalid/corrupt message 0x%04X received\n", message->m_usID);
+	LOG.write("<<< NMS_MAP_CHECKSUM(%d)\n", msg.correct ? 1 :0);
 
-		Stop();
-		return;
-	}
-
-	bool checksumok = *(bool*)message->m_pData;
-
-	LOG.write("<<< NMS_MAP_CHECKSUM(%d)\n", checksumok);
-
-	if(checksumok == false)
+	if(msg.correct == false)
 	{
 		if(ci)
 			ci->CI_Error(CE_WRONGMAP);
@@ -1388,23 +981,11 @@ inline void GameClient::OnNMSMapChecksum(GameMessage *message)
 ///////////////////////////////////////////////////////////////////////////////
 /// server typ
 /// @param message	Nachricht, welche ausgeführt wird
-inline void GameClient::OnNMSGGSChange(GameMessage *message)
+void GameClient::OnNMSGGSChange(const GameMessage_GGSChange& msg)
 {
-	if(!message)
-		return;
-	if(message->m_uiLength != GlobalGameSettings::GGS_BUFFER_SIZE)
-	{
-		LOG.lprintf("Invalid/corrupt message 0x%04X received\n", message->m_usID);
-
-		Stop();
-		return;
-	}
-
-	unsigned char *buffer = (unsigned char*)message->m_pData;
-
 	LOG.write("<<< NMS_GGS_CHANGE\n");
 
-	ggs.Deserialize(buffer);
+	ggs = msg.ggs;
 
 	if(ci)
 		ci->CI_GGSChanged(ggs);
@@ -1413,45 +994,19 @@ inline void GameClient::OnNMSGGSChange(GameMessage *message)
 ///////////////////////////////////////////////////////////////////////////////
 /// NFC Antwort vom Server
 /// @param message	Nachricht, welche ausgeführt wird
-inline void GameClient::OnNMSNfcAnswer(GameMessage *message)
+void GameClient::OnNMSGameCommand(const GameMessage_GameCommand& msg)
 {
-	if(!message)
-		return;
-	if(message->m_uiLength < 2)
-	{
-		LOG.lprintf("Invalid/corrupt message 0x%04X received\n", message->m_usID);
 
-		Stop();
-		return;
-	}
-
-	unsigned char player= *(unsigned char*)message->m_pData;
-//	unsigned short nc_type = *(unsigned short*)&((unsigned char*)message->m_pData)[1];
-//	unsigned char *nc_data = &((unsigned char*)message->m_pData)[3];
-
-	//LOG.write("<<< NMS_NFC_ANSWER(%u, %u)\n", playerid, nc_type);
-
-	if(player != 0xFF)
+	if(msg.player != 0xFF)
 		// Nachricht in Queue einhängen
-		players[player]->nfc_queue.push_back(new GameMessage(*message));
+		players[msg.player].gc_queue.push_back(msg);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 /// NFC Done vom Server
 /// @param message	Nachricht, welche ausgeführt wird
-inline void GameClient::OnNMSNfcDone(GameMessage *message)
+void GameClient::OnNMSServerDone(const GameMessage_Server_NWFDone& msg)
 {
-	if(!message)
-		return;
-	if(message->m_uiLength != 0)
-	{
-		LOG.lprintf("Invalid/corrupt message 0x%04X received\n", message->m_usID);
-
-		Stop();
-		return;
-	}
-
-	//LOG.write("<<< NMS_NFC_DONE\n");
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1462,19 +1017,9 @@ inline void GameClient::OnNMSNfcDone(GameMessage *message)
  *
  *  @author FloSoft
  */
-inline void GameClient::OnNMSNfcPause(GameMessage *message)
+void GameClient::OnNMSPause(const GameMessage_Pause& msg)
 {
-	if(!message)
-		return;
-	if(message->m_uiLength != 1)
-	{
-		LOG.lprintf("Invalid/corrupt message 0x%04X received\n", message->m_usID);
-
-		Stop();
-		return;
-	}
-
-	framesinfo.pause = (*(char*)message->m_pData == 1);
+	framesinfo.pause =  msg.paused;
 	framesinfo.lastmsgtime = VideoDriverWrapper::inst().GetTickCount();
 
 	LOG.write("<<< NMS_NFC_PAUSE(%u)\n", framesinfo.pause);
@@ -1538,17 +1083,17 @@ void GameClient::ExecuteGameFrame(const bool skipping)
 
 			// Schauen wir mal ob alles angekommen ist
 			bool is_lagging = false;
-			for(unsigned char i = 0; i < player_count; ++i)
+			for(unsigned char i = 0; i < players.getCount(); ++i)
 			{
-				if(players[i]->ps == PS_OCCUPIED || players[i]->ps == PS_KI)
+				if(players[i].ps == PS_OCCUPIED || players[i].ps == PS_KI)
 				{
-					if(players[i]->nfc_queue.size() == 0)
+					if(players[i].gc_queue.size() == 0)
 					{
-						players[i]->is_lagging = true;
+						players[i].is_lagging = true;
 						is_lagging = true;
 					}
 					else
-						players[i]->is_lagging = false;
+						players[i].is_lagging = false;
 				}
 			}
 
@@ -1618,44 +1163,39 @@ void GameClient::ExecuteGameFrame(const bool skipping)
 	}
 }
 
-void GameClient::ExecuteAllNCs(unsigned char * data, unsigned char player, unsigned char * player_switch_old_id,unsigned char * player_switch_new_id)
+void GameClient::ExecuteAllGCs(const GameMessage_GameCommand& gcs, unsigned char * player_switch_old_id,unsigned char * player_switch_new_id)
 {
-	// Anzahl der NCs
-	unsigned char nc_count = *data;
-
-	data+=1;
-
-	for(unsigned char i = 0;i<nc_count;++i)
+	for(unsigned char i = 0;i<gcs.gcs.size();++i)
 	{
-		// Länge auslesente
-		unsigned short length = *((unsigned short*)data);
 		// NC ausführen
-		ExecuteNC(*((unsigned short*)(data+2)),player,data+4);
-
+		gcs.gcs[i]->Execute(*gw,players[gcs.player],gcs.player);
 		//// Wenn ein Spieler gewechselt werden soll...
-		if(*((unsigned short*)(data+2)) == NC_SWITCHPLAYER && player_switch_old_id && player_switch_new_id)
+		if(gcs.gcs[i]->GetType() == gc::SWITCHPLAYER)
 		{
 			// ...müssen wir uns das merken
-			*player_switch_old_id = player;
-			*player_switch_new_id = data[4];
+			*player_switch_old_id = gcs.player;
+			*player_switch_new_id = dynamic_cast<gc::SwitchPlayer*>(gcs.gcs[i])->new_player_id;
 		}
-
-		data+=(length+2);
 	}
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Sendet ein NC-Paket ohne Befehle.
+ *
+ *  @author FloSoft
+ *  @author OLiver
+ */
 void GameClient::SendNothingNC(int checksum)
 {
 	if(checksum == -1)
 		checksum = Random::inst().GetCurrentRandomValue();
 
-	GameMessage nfc(NMS_NFC_COMMANDS, 5);
-	*static_cast<int*>(nfc.m_pData) = checksum;
-	send_queue.push(nfc);
-}
+	/*GameMessage nfc(NMS_NFC_COMMANDS, 5);
+	*static_cast<int*>(nfc.m_pData) = checksum;*/
 
-// Kleine Signatur am Anfang "RTTRRP", die ein gültiges S25 RTTR Replay kennzeichnet
-const char signature[] = {'R','T','T','R','R','P'};
+	send_queue.push(new GameMessage_GameCommand(playerid,checksum,std::vector<gc::GameCommand*>()));
+}
 
 void GameClient::WriteReplayHeader(const unsigned random_init)
 {
@@ -1675,23 +1215,23 @@ void GameClient::WriteReplayHeader(const unsigned random_init)
 	// Random-Init
 	replayinfo.replay.random_init = random_init;
 	// Spieleranzahl
-	replayinfo.replay.player_count = player_count;
+	replayinfo.replay.player_count = players.getCount();
 
 	// Spielerdaten
 	delete [] replayinfo.replay.players;
-	replayinfo.replay.players = new SavedGameFile::Player[player_count];
+	replayinfo.replay.players = new SavedGameFile::Player[players.getCount()];
 
 	// Spielerdaten
-	for(unsigned char i = 0;i<player_count;++i)
+	for(unsigned char i = 0;i<players.getCount();++i)
 	{
-		replayinfo.replay.players[i].ps = unsigned(players[i]->ps);
+		replayinfo.replay.players[i].ps = unsigned(players[i].ps);
 
-		if(players[i]->ps != PS_LOCKED)
+		if(players[i].ps != PS_LOCKED)
 		{
-			replayinfo.replay.players[i].name = players[i]->name;
-			replayinfo.replay.players[i].nation = players[i]->nation;
-			replayinfo.replay.players[i].color = players[i]->color;
-			replayinfo.replay.players[i].team = players[i]->team;
+			replayinfo.replay.players[i].name = players[i].name;
+			replayinfo.replay.players[i].nation = players[i].nation;
+			replayinfo.replay.players[i].color = players[i].color;
+			replayinfo.replay.players[i].team = players[i].team;
 		}
 	}
 
@@ -1742,24 +1282,22 @@ unsigned GameClient::StartReplay(const std::string &path, GameWorldViewer * &gwv
 
 	// NWF-Länge
 	framesinfo.nwf_length = replayinfo.replay.nwf_length;
-	// Spieleranzahl
-	player_count = replayinfo.replay.player_count;
 
-	players = new GameClientPlayer*[player_count];
+	//players.resize(replayinfo.replay.players.getCount());
 
 	// Spielerdaten
-	for(unsigned char i = 0;i<player_count;++i)
+	for(unsigned char i = 0;i<replayinfo.replay.player_count;++i)
 	{
-		players[i] = new GameClientPlayer(i);
+		players.push_back(GameClientPlayer(i));
 
-		players[i]->ps = PlayerState(replayinfo.replay.players[i].ps);
+		players[i].ps = PlayerState(replayinfo.replay.players[i].ps);
 
-		if(players[i]->ps != PS_LOCKED)
+		if(players[i].ps != PS_LOCKED)
 		{
-			players[i]->name = replayinfo.replay.players[i].name;
-			players[i]->nation = replayinfo.replay.players[i].nation;
-			players[i]->color = replayinfo.replay.players[i].color;
-			players[i]->team = replayinfo.replay.players[i].team;
+			players[i].name = replayinfo.replay.players[i].name;
+			players[i].nation = replayinfo.replay.players[i].nation;
+			players[i].color = replayinfo.replay.players[i].color;
+			players[i].team = Team(replayinfo.replay.players[i].team);
 		}
 	}
 
@@ -1859,7 +1397,7 @@ void GameClient::ServerLost()
 
 	state = CS_STOPPED;
 
-	so.Close();
+	socket.Close();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1896,20 +1434,20 @@ unsigned GameClient::WriteSaveHeader(const std::string& filename)
 	// Mapname
 	save.map_name = this->mapinfo.title;
 	// Anzahl Spieler
-	save.player_count = player_count;
-	save.players = new SavedGameFile::Player[player_count];
+	save.player_count = players.getCount();
+	save.players = new SavedGameFile::Player[players.getCount()];
 
 	// Spielerdaten
-	for(unsigned char i = 0;i<player_count;++i)
+	for(unsigned char i = 0;i<players.getCount();++i)
 	{
-		save.players[i].ps = unsigned(players[i]->ps);
+		save.players[i].ps = unsigned(players[i].ps);
 
-		if(players[i]->ps != PS_LOCKED)
+		if(players[i].ps != PS_LOCKED)
 		{
-			save.players[i].name = players[i]->name;
-			save.players[i].nation = players[i]->nation;
-			save.players[i].color = players[i]->color;
-			save.players[i].team = players[i]->team;
+			save.players[i].name = players[i].name;
+			save.players[i].nation = players[i].nation;
+			save.players[i].color = players[i].color;
+			save.players[i].team = players[i].team;
 		}
 	}
 
@@ -1994,8 +1532,8 @@ void GameClient::GetVisualSettings()
 	visual_settings.distribution[19] = player->distribution[GD_WATER].percent_buildings[BLD_DONKEYBREEDER];
 
 
-	memcpy(visual_settings.military_settings,player->military_settings,7);
-	memcpy(visual_settings.tools_settings,player->tools_settings,12);
+	visual_settings.military_settings = player->military_settings;
+	visual_settings.tools_settings = player->tools_settings;
 
 	visual_settings.order_type = player->order_type;
 
@@ -2020,3 +1558,14 @@ void GameClient::AddToGameLog(const char * const str)
 	if(!replay_mode)
 		fputs(str,game_log);
 }
+
+
+void GameClient::AddGC(gc::GameCommand * gc)
+{
+	// Nicht in der Pause
+	if(framesinfo.pause || GetLocalPlayer()->isDefeated())
+		return;
+
+	gcs.push_back(gc);
+}
+

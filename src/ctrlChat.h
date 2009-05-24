@@ -1,4 +1,4 @@
-// $Id: ctrlChat.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: ctrlChat.h 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -22,8 +22,6 @@
 #pragma once
 
 #include "Window.h"
-#include <string>
-#include <vector>
 
 /// ChatCtrl-Klasse für ein ChatCtrl.
 class ctrlChat : public Window

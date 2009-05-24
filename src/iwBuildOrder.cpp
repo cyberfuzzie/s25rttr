@@ -1,4 +1,4 @@
-// $Id: iwBuildOrder.cpp 4784 2009-05-02 20:43:44Z OLiver $
+// $Id: iwBuildOrder.cpp 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -25,6 +25,7 @@
 #include "Loader.h"
 #include "controls.h"
 #include "GameClient.h"
+#include "GameCommands.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -91,7 +92,7 @@ void iwBuildOrder::TransmitSettings()
 	if(settings_changed)
 	{
 		// Einstellungen speichern
-		GAMECLIENT.NC_ChangeBuildOrder((unsigned char)GetCtrl<ctrlComboBox>(6)->GetSelection(), GAMECLIENT.visual_settings.build_order);
+		GAMECLIENT.AddGC(new gc::ChangeBuildOrder((unsigned char)GetCtrl<ctrlComboBox>(6)->GetSelection(), GAMECLIENT.visual_settings.build_order));
 		settings_changed = false;
 	}
 }
@@ -181,7 +182,7 @@ void iwBuildOrder::Msg_ButtonClick(const unsigned int ctrl_id)
 	case 10: // Standardwerte
 		{
 			// Baureihenfolge vom Spieler kopieren
-			memcpy(GAMECLIENT.visual_settings.build_order, GAMECLIENT.default_settings.build_order, 31);
+			GAMECLIENT.visual_settings.build_order =GAMECLIENT.default_settings.build_order;
 
 			ctrlList *list = GetCtrl<ctrlList>(0);
 			list->DeleteAllItems();

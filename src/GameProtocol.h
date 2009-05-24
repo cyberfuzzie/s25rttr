@@ -1,4 +1,4 @@
-// $Id: GameProtocol.h 4809 2009-05-04 20:10:11Z OLiver $
+// $Id: GameProtocol.h 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -19,18 +19,19 @@
 #ifndef GAMEPROTOCOL_H_INCLUDED
 #define GAMEPROTOCOL_H_INCLUDED
 
+#include "Protocol.h"
+
 #pragma once
 
 ///////////////////////////////////////////////////////////////////////////////
 // Netzwerk Messages                       // client> | <server
 enum
 {
-	NMS_NULL_MSG = 0x0000, // 0
+	NMS_PING = 0x0001, // 0
+	NMS_PONG = 0x0002, // 0
 
-	NMS_PING, // 0
-	NMS_PONG, // 0
-
-	NMS_SERVER_TYP = 0x0101, // 1 servertyp, x server-version
+	NMS_SERVER_TYPE = 0x0101, // 1 servertyp, x server-version
+	NMS_SERVER_TYPEOK, // 1 servertyp, x server-version
 	NMS_SERVER_PASSWORD, // x serverpassword | 1 serverpasswordok
 	NMS_SERVER_NAME, // x servername
 	NMS_SERVER_START, // 
@@ -54,15 +55,12 @@ enum
 	NMS_MAP_INFO, // 0 | 4 parts, 4 ziplength, 4 length
 	NMS_MAP_DATA, // 0 | x mappartdata
 	NMS_MAP_CHECKSUM, // 4 checksum | 1 checksumok
+	NMS_MAP_CHECKSUMOK,
 
-	NMS_NFC_DONE = 0x0401, // 0
-	NMS_NFC_COMMANDS, // 1 nc-count, (2 nc_type, x nc_data)*nc-count
-	NMS_NFC_ANSWER, // 1 playerid, 2 nc_type, x nc_data
-	NMS_NFC_PAUSE, // 1 pause (yes/no)
-
-	NMS_GGS_CHANGE = 0x0501, // 
-
-	NMS_DEAD_MSG = 0xFFFF // 0
+	NMS_SERVER_NWF_DONE = 0x0401, // 0
+	NMS_GAMECOMMANDS,
+	NMS_PAUSE,
+	NMS_GGS_CHANGE = 0x0501 // 
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -144,21 +142,6 @@ struct NS_PlayerKicked
 	unsigned short param;
 };
 
-struct NS_StartGameInfo
-{
-	/// Initialisierungswert für den Zufallsgenerator
-	unsigned int random_init;
-	/// NWF - Länge in GameFrames
-	unsigned nwf_length;
-	// ....
-};
-
-struct NS_ChatInfo
-{
-	unsigned char pi;
-	unsigned char dest;
-};
-
 //////////////////////////////////////////
 // Sonstige Konstanten
 
@@ -178,12 +161,9 @@ enum
 // Servertypen
 enum
 {
-	NP_DEPENDENT = 0,
-	NP_INDEPENDENT
+	NP_LOBBY = 0,
+	NP_DIRECT
 };
-
-// Größe der Ping Msg ( Anzahl von 0en)
-const unsigned PING_SIZE		= 10;
 
 // Wie lange maximal warten, bis Rausschmiss des Spielers
 const unsigned PING_TIMEOUT		= 30000;
@@ -192,51 +172,15 @@ const unsigned PING_TIMEOUT		= 30000;
 enum ChatDestination
 {
 	CD_SYSTEM = 0,
-	CD_ALL	= 1,
+	CD_ALL,
 	CD_ALLIES,
 	CD_ENEMIES
 };
 
-// Netzwerk Befehle
-enum
-{
-	 NC_NOTSEND = 0,
-	 NC_NOTHING,
-	 NC_SETFLAG,
-	 NC_DESTROYFLAG,
-	 NC_BUILDROAD,
-	 NC_DESTROYROAD,
-	 NC_CHANGEDISTRIBUTION,
-	 NC_CHANGEBUILDORDER,
-	 NC_SETBUILDINGSITE,
-	 NC_DESTROYBUILDING,
-	 NC_CHANGETRANSPORT,
-	 NC_CHANGEMILITARY,
-	 NC_CHANGETOOLS,
-	 NC_CALLGEOLOGIST,
-	 NC_CALLSCOUT,
-	 NC_ATTACK,
-	 NC_SWITCHPLAYER,
-	 NC_STOPGOLD,
-	 NC_STOPPRODUCTION,
-	 NC_CHANGEINVENTORYSETTING,
-	 NC_CHANGEALLINVENTORYSETTINGS,
-	 NC_INCREASERESERVE,
-	 NC_DECREASERESERVE,
-	 NC_SURRENDER,
-	 NC_CHEAT_ARMAGEDDON,
-   NC_DESTROYALL
-};
-
-// Netzwerkframelängen
-const unsigned NFL_200MS = 200;
-const unsigned NFL_400MS = 400;
-
-
 /// Map-Typ
 enum MapType
 {
-	MAPTYPE_OLDMAP,
+	MAPTYPE_OLDMAP = 0,
 	MAPTYPE_SAVEGAME,
 	MAPTYPE_RTTRMAP,
 	MAPTYPE_RANDOMMAP

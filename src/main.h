@@ -1,4 +1,4 @@
-// $Id: main.h 4884 2009-05-18 16:52:52Z FloSoft $
+// $Id: main.h 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -70,6 +70,10 @@
 #include <ctime>
 #include <cmath>
 
+#include <map>
+#include <algorithm>
+#include <vector>
+#include <fstream>
 #include <string>
 #include <vector>
 
@@ -107,7 +111,9 @@ typedef struct Rect {
 #ifndef snprintf
 	#define snprintf _snprintf
 #endif
-	#define assert _ASSERT
+	#ifndef assert
+		#define assert _ASSERT
+	#endif
 #endif
 
 	typedef int socklen_t;

@@ -295,10 +295,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\Messages.h"
-					>
-				</File>
-				<File
 					RelativePath="..\..\src\Window.cpp"
 					>
 				</File>
@@ -2006,6 +2002,14 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\src\GameCommands.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\GameCommands.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\GameMessage.cpp"
 						>
 					</File>
@@ -2014,11 +2018,19 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\GameMessageQueue.cpp"
+						RelativePath="..\..\src\GameMessageInterface.cpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\GameMessageQueue.h"
+						RelativePath="..\..\src\GameMessageInterface.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\GameMessages.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\GameMessages.h"
 						>
 					</File>
 					<File

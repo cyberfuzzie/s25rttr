@@ -1,4 +1,4 @@
-// $Id: customborderbuilder.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: customborderbuilder.cpp 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -42,9 +42,11 @@ zu sehen sein.
 
 Vor dem Aufruf von buildBorder() muss der interne, öffentliche Zeiger *palette auf ein ArchivItem_Palette* gesetzt werden.
 */
-
+#include "main.h"
 #include "customborderbuilder.h"
 #include "glArchivItem_Bitmap_RLE.h"
+
+using namespace libsiedler2;
 
 /*--- CustomBorderBuilder-Klasse *********************************************/
 

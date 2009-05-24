@@ -1,4 +1,4 @@
-// $Id: GameInterface.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: GameInterface.h 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -33,6 +33,8 @@ public:
 	virtual void GI_PlayerDefeated(const unsigned player_id) = 0;
 	/// Es wurde etwas Minimap entscheidendes geändert --> Minimap updaten
 	virtual void GI_UpdateMinimap(const MapCoord x, const MapCoord y) = 0;
+	/// Flagge wurde zerstört
+	virtual void GI_FlagDestroyed(const MapCoord x, const MapCoord y) = 0;
 };
 
 

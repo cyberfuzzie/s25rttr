@@ -1,4 +1,4 @@
-// $Id: GameConsts.h 4746 2009-04-30 20:10:46Z OLiver $
+// $Id: GameConsts.h 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -23,6 +23,8 @@
 /// Maximale Anzahl an Spielern 
 const unsigned MAX_PLAYERS = 8;
 
+#include "mygettext.h"
+
 /// Völker
 enum Nation
 {
@@ -32,6 +34,24 @@ enum Nation
 	NAT_VIKINGS,
 	NAT_INVALID = 0xFFFFFFFF
 };
+
+/// Anzahl der Völker
+const unsigned NATION_COUNT = 4;
+
+
+/// Team
+enum Team
+{
+	TM_NOTEAM = 0,
+	TM_RANDOMTEAM,
+	TM_TEAM1,
+	TM_TEAM2,
+	TM_TEAM3,
+	TM_TEAM4
+};
+
+/// Anzahl der Team-Optionen
+const unsigned TEAM_COUNT = 6;
 
 // Bauqualitäten
 enum BuildingQuality

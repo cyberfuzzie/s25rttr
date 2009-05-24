@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 4877 2009-05-17 09:51:44Z OLiver $
+// $Id: GameWorldGame.cpp 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -120,6 +120,8 @@ void GameWorldGame::DestroyFlag(const MapCoord x, const MapCoord y)
 
 		RecalcBQAroundPointBig(x,y);
 	}
+
+	gi->GI_FlagDestroyed(x,y);
 }
 
 
@@ -1110,8 +1112,9 @@ bool GameWorldGame::IsPointCompletelyVisible(const MapCoord x, const MapCoord y,
 	}
 
 	// Sichtbereich von Spähtürmen
-	for(list<nobUsual*>::const_iterator it = GameClient::inst().GetPlayer(player)->GetBuildings(BLD_LOOKOUTTOWER).begin();
-		it.valid(); ++it)
+
+	for(std::list<nobUsual*>::const_iterator it = GameClient::inst().GetPlayer(player)->GetBuildings(BLD_LOOKOUTTOWER).begin();
+		it!=GameClient::inst().GetPlayer(player)->GetBuildings(BLD_LOOKOUTTOWER).end(); ++it)
 	{
 		// Ist Späturm überhaupt besetzt?
 		if(!(*it)->HasWorker())

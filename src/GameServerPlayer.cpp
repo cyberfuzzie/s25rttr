@@ -1,4 +1,4 @@
-// $Id: GameServerPlayer.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: GameServerPlayer.cpp 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -21,6 +21,8 @@
 // Header
 #include "main.h"
 #include "GameServerPlayer.h"
+#include "GameMessage.h"
+#include "GameMessages.h"
 #include "VideoDriverWrapper.h"
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -40,7 +42,22 @@ last_command_timeout(0),
 pinging(false),
 lastping(0), 
 temp_ul(0),
-temp_ui(0)
+temp_ui(0),
+send_queue(&GameMessage::create_game),
+recv_queue(&GameMessage::create_game)
+{
+}
+
+GameServerPlayer::GameServerPlayer(const unsigned playerid, Serializer * ser)
+	: GamePlayerInfo(playerid,ser),
+	connecttime(0),
+	last_command_timeout(0),
+	pinging(false),
+	lastping(0), 
+	temp_ul(0),
+	temp_ui(0),
+	send_queue(&GameMessage::create_game),
+	recv_queue(&GameMessage::create_game)
 {
 }
 
@@ -62,7 +79,7 @@ void GameServerPlayer::doPing()
 		lastping = VideoDriverWrapper::inst().GetTickCount();
 
 		// Ping Nachricht senden
-		send_queue.push(NMS_PING);
+		send_queue.push(new GameMessage_Ping(0xFF));
 	}
 }
 
@@ -72,11 +89,12 @@ void GameServerPlayer::doTimeout()
 {
 	if( (ps == PS_RESERVED) && ( ( VideoDriverWrapper::inst().GetTickCount() - connecttime ) > PING_TIMEOUT ) )
 	{
+		puts("aaahh");
 		LOG.lprintf("SERVER: Reserved slot %d freed due ping timeout\n", playerid);
 
-		// Todesnachricht absetzen
-		GameMessage deadmessage(NMS_DEAD_MSG);
-		deadmessage.send(&so);
+		/*// Todesnachricht absetzen
+		Message_Dead dm();
+		dm.send(&so);*/
 
 		// und aufräumen
 		clear();
@@ -120,7 +138,7 @@ void GameServerPlayer::clear()
 unsigned GameServerPlayer::GetTimeOut() const
 {
 	// Nach 34 Sekunden kicken (34 damit ab 30 erst die Meldung kommt, sonst kommt sie andauernd)
-	return 34-(VideoDriverWrapper::inst().GetTickCount()-last_command_timeout)/1000;
+	return unsigned(34-(TIME.CurrentTime()-last_command_timeout)/1000);
 }
 
 /// Tauscht Spieler
@@ -149,7 +167,7 @@ void GameServerPlayer::Lagging()
 	// Laggt neu?
 	if(!last_command_timeout)
 		// Anfangs des Laggens merken
-		last_command_timeout = VideoDriverWrapper::inst().GetTickCount();
+		last_command_timeout = TIME.CurrentTime();
 }
 
 /// Spieler laggt nicht (mehr)

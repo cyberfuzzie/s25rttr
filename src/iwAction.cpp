@@ -1,4 +1,4 @@
-// $Id: iwAction.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: iwAction.cpp 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -33,6 +33,7 @@
 #include "GameClient.h"
 #include "GameWorld.h"
 #include "WindowManager.h"
+#include "GameCommands.h"
 
 #include "noFlag.h"
 #include "nobMilitary.h"
@@ -421,7 +422,7 @@ void iwAction::Msg_ButtonClick_TabAttack(const unsigned int ctrl_id)
 		{
 			ctrlOptionGroup *ogroup = GetCtrl<ctrlTab>(0)->GetGroup(TAB_ATTACK)->GetCtrl<ctrlOptionGroup>(3);
 
-			GAMECLIENT.NC_Attack(selected_x, selected_y, selected_soldiers_count, (ogroup->GetSelection() == 1));
+			GAMECLIENT.AddGC(new gc::Attack(selected_x, selected_y, selected_soldiers_count, (ogroup->GetSelection() == 1)));
 
 			Close();
 		} break;
@@ -470,18 +471,18 @@ void iwAction::Msg_ButtonClick_TabFlag(const unsigned int ctrl_id)
 			}
 			else
 			{
-				GAMECLIENT.NC_DestroyFlag(selected_x, selected_y);
+				GAMECLIENT.AddGC(new gc::DestroyFlag(selected_x, selected_y));
 				Close();
 			}
 		} break;
 	case 4: // Geologen rufen
 		{
-			GAMECLIENT.NC_CallGeologist(selected_x, selected_y);
+			GAMECLIENT.AddGC(new gc::CallGeologist(selected_x, selected_y));
 			Close();
 		} break;
 	case 5: // Späher rufen
 		{
-			GAMECLIENT.NC_CallScout(selected_x, selected_y);
+			GAMECLIENT.AddGC(new gc::CallScout(selected_x, selected_y));
 			Close();
 		} break;
 	}
@@ -490,9 +491,9 @@ void iwAction::Msg_ButtonClick_TabFlag(const unsigned int ctrl_id)
 void iwAction::Msg_ButtonClick_TabBuild(const unsigned int ctrl_id)
 {
 	// Klick auf Gebäudebauicon
-	GAMECLIENT.NC_SetBuildingSite(selected_x, selected_y, 
+	GAMECLIENT.AddGC(new gc::SetBuildingSite(selected_x, selected_y, 
 		GetCtrl<ctrlTab>(0)->GetGroup(TAB_BUILD)->GetCtrl<ctrlTab>(1)->GetCurrentGroup()->
-		GetCtrl<ctrlBuildingIcon>(ctrl_id)->GetType());
+		GetCtrl<ctrlBuildingIcon>(ctrl_id)->GetType()));
 
 	// Fenster schließen
 	Close();
@@ -504,7 +505,7 @@ void iwAction::Msg_ButtonClick_TabSetFlag(const unsigned int ctrl_id)
 	{
 	case 1: // Flagge setzen
 		{
-			GAMECLIENT.NC_SetFlag(selected_x, selected_y);
+			GAMECLIENT.AddGC(new gc::SetFlag(selected_x, selected_y));
 		} break;
 	}
 
@@ -520,7 +521,7 @@ void iwAction::Msg_ButtonClick_TabCutRoad(const unsigned int ctrl_id)
 			unsigned char flag_dir = 0;
 			noFlag *flag = gwv->GetRoadFlag(selected_x, selected_y, flag_dir);
 			if(flag)
-				GAMECLIENT.NC_Road_Destroy(flag->GetX(), flag->GetY(), flag_dir);
+				GAMECLIENT.AddGC(new gc::DestroyRoad(flag->GetX(), flag->GetY(), flag_dir));
 		} break;
 	}
 

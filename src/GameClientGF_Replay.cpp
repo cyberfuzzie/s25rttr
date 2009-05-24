@@ -1,4 +1,4 @@
-// $Id: GameClientGF_Replay.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: GameClientGF_Replay.cpp 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -12,7 +12,7 @@
 // Siedler II.5 RTTR is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-// GNU General Public License for more details.
+// GNU General Public License for more details. 
 //
 // You should have received a copy of the GNU General Public License
 // along with Siedler II.5 RTTR. If not, see <http://www.gnu.org/licenses/>.
@@ -21,18 +21,14 @@
 // Header
 #include "main.h"
 #include "GameClient.h"
-
 #include "Loader.h"
 #include "Random.h"
-
 #include "dskGameInterface.h"
-
 #include "ClientInterface.h"
+#include "GameMessages.h"
 
 void GameClient::ExecuteGameFrame_Replay()
 {
-	int checksum = 0;
-
 	randcheckinfo.rand = RANDOM.GetCurrentRandomValue();
 
 	// Commands alle aus der Datei lesen
@@ -64,14 +60,13 @@ void GameClient::ExecuteGameFrame_Replay()
 				unsigned short length;
 
 				replayinfo.replay.ReadGameCommand(&length,&data);
-				// NCs ausführen (4 Bytes Checksumme und 1 Byte Player-ID überspringen)
-				ExecuteAllNCs(data+5,*data,0,0);
+				GameMessage_GameCommand msg(data,length);
 
-				// Checksumme auslesen und testen
-				checksum = *((unsigned int*)(data+1));
+				// NCs ausführen (4 Bytes Checksumme und 1 Byte Player-ID überspringen)
+				ExecuteAllGCs(msg,0,0);
 
 				// Replay ist NSYNC äh ASYNC!
-				if(!replayinfo.async && checksum != 0 && checksum != randcheckinfo.rand)
+				if(!replayinfo.async && msg.checksum != 0 && msg.checksum != randcheckinfo.rand)
 				{
 					// Meldung mit GF erzeugen
 					char msg[256];
@@ -130,6 +125,4 @@ void GameClient::ExecuteGameFrame_Replay()
 		// pausieren
 		framesinfo.pause = true;
 	}
-
-	randcheckinfo.last_rand = randcheckinfo.rand;
 }

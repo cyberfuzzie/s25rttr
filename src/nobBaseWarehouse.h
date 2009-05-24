@@ -1,4 +1,4 @@
-// $Id: nobBaseWarehouse.h 4746 2009-04-30 20:10:46Z OLiver $
+// $Id: nobBaseWarehouse.h 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -207,11 +207,10 @@ public: void Serialize(SerializedGameData *sgd) const { Serialize_nobBaseWarehou
 	/// Sind noch Truppen drinne, die dieses Gebäude verteidigen könnten?
 	bool DefendersAvailable() const;
 
-	/// Verändert Reserveeinstellung - visuell (nur das geforderte natürlich)
-	void IncreaseReserveVisual(unsigned rank);
-	void DecreaseReserveVisual(unsigned rank);
-	void IncreaseReserveReal(unsigned rank);
-	void DecreaseReserveReal(unsigned rank);
+	/// Verändert Reserveeinstellung - visuell (nur das geforderte natürlich) und gibt neue Anzahl zurück
+	unsigned IncreaseReserveVisual(unsigned rank);
+	unsigned DecreaseReserveVisual(unsigned rank);
+	void SetRealReserve(const unsigned rank, const unsigned count);
 
 	/// Versucht, die geforderten Reserve-Soldaten bereitzustellen
 	void RefreshReserve(unsigned rank);

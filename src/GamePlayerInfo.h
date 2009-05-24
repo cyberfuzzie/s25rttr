@@ -1,4 +1,4 @@
-// $Id: GamePlayerInfo.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: GamePlayerInfo.h 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -21,11 +21,10 @@
 #define GAMEPLAYERINFO_H_INCLUDED
 
 #include "GameProtocol.h"
-#include "GameMessageQueue.h"
 #include "Socket.h"
 #include "GameConsts.h"
-#include <string>
 
+class Serializer;
 
 enum PlayerState
 {
@@ -36,32 +35,31 @@ enum PlayerState
 	PS_KI
 };
 
-/*struct NFCQueueItem {
-	GameMessage *nfc;
-	unsigned int nr;
-};*/
-
 class GamePlayerInfo
 {
 public:
-
 	GamePlayerInfo(const unsigned playerid);
+	/// Deserialisierungskonstruktor
+	GamePlayerInfo(const unsigned playerid, Serializer * ser);
+
 	virtual ~GamePlayerInfo();
 
 	void clear();
-	bool isValid();
+
+	/// Spielerplatz belegt?
+	bool isValid() const { return (ps == PS_RESERVED || ps == PS_OCCUPIED); }
 
 	/// Ist Spieler besiegt?
-	bool IsDefeated() const { return defeated; }
-	
+	bool isDefeated() const { return defeated; }
+
+	/// serialisiert die Daten.
+	void serialize(Serializer * ser) const;
 
 protected:
-
 	/// Wechselt Spieler
 	void SwapPlayer(GamePlayerInfo& two);
 	
 protected:
-
 	/// Player-ID
 	unsigned playerid;
 	/// Besiegt?
@@ -79,17 +77,14 @@ public:
 	bool is_host;
 
 	Nation nation;
-	unsigned char team;
+	Team team;
 	unsigned char color;
 
-	unsigned short ping;
+	unsigned ping;
 	unsigned short rating;
 	
 	int checksum;
 	bool ready;
-
-
-	list<GameMessage*> nfc_queue;
-
 };
+
 #endif // GAMEPLAYERINFO_H_INCLUDED

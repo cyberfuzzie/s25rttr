@@ -1,4 +1,4 @@
-// $Id: dskDirectIP.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: dskDirectIP.cpp 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -70,11 +70,11 @@ void dskDirectIP::Msg_ButtonClick(const unsigned int ctrl_id)
 	{
 	case 3: // "Erstellen"
 		{
-			WindowManager::inst().Show(new iwDirectIPCreate(NP_INDEPENDENT));
+			WindowManager::inst().Show(new iwDirectIPCreate(NP_DIRECT));
 		} break;
 	case 4: // "Verbinden"
 		{
-			WindowManager::inst().Show(new iwDirectIPConnect(NP_INDEPENDENT));
+			WindowManager::inst().Show(new iwDirectIPConnect(NP_DIRECT));
 		} break;
 	case 5: // "Zurück"
 		{

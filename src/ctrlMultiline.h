@@ -1,4 +1,4 @@
-// $Id: ctrlMultiline.h 4840 2009-05-09 09:16:39Z OLiver $
+// $Id: ctrlMultiline.h 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -19,10 +19,7 @@
 #ifndef CTRL_MULTILINE_H_INCLUDED
 #define CTRL_MULTILINE_H_INCLUDED
 
-#include <vector>
-
 #include "ctrlRectangle.h"
-
 
 class ctrlMultiline : public ctrlRectangle
 {

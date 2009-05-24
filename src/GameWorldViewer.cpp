@@ -1,4 +1,4 @@
-// $Id: GameWorldViewer.cpp 4877 2009-05-17 09:51:44Z OLiver $
+// $Id: GameWorldViewer.cpp 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -574,7 +574,7 @@ Visibility GameWorldViewer::GetVisibility(const MapCoord x, const MapCoord y) co
 		return VIS_VISIBLE;
 
 	// Spieler schon tot? Dann auch alles sichtbar?
-	if(GameClient::inst().GetLocalPlayer()->IsDefeated())
+	if(GameClient::inst().GetLocalPlayer()->isDefeated())
 		return VIS_VISIBLE;
 
 	return CalcWithAllyVisiblity(x,y,GameClient::inst().GetPlayerID());

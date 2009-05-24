@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 4868 2009-05-15 15:48:04Z OLiver $
+// $Id: GameClientPlayer.cpp 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -42,6 +42,7 @@
 #include "GameInterface.h"
 
 #include "SerializedGameData.h"
+#include "GameMessages.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -63,7 +64,7 @@ const unsigned char STD_TRANSPORT[35] =
  *
  *  @author OLiver
  */
-GameClientPlayer::GameClientPlayer(const unsigned playerid) : GamePlayerInfo(playerid)
+GameClientPlayer::GameClientPlayer(const unsigned playerid) : GamePlayerInfo(playerid), build_order(31), military_settings(7), tools_settings(12,0)
 {
 	// Erstmal kein HQ (leerer Spieler) wie das bei manchen Karten der Fall ist
 	hqy = hqx = 0xFFFF;
@@ -146,7 +147,6 @@ GameClientPlayer::GameClientPlayer(const unsigned playerid) : GamePlayerInfo(pla
 	GAMECLIENT.visual_settings.transport_order[13] = STD_TRANSPORT[GD_BOAT];
 
 	// Militär- und Werkzeugeinstellungen
-	memset(military_settings, 0, 7);
 	military_settings[0] = 5;
 	military_settings[1] = 3;
 	military_settings[2] = 5;
@@ -154,12 +154,11 @@ GameClientPlayer::GameClientPlayer(const unsigned playerid) : GamePlayerInfo(pla
 	military_settings[4] = 1;
 	military_settings[5] = 2;
 	military_settings[6] = 5;
-	memcpy(GAMECLIENT.visual_settings.military_settings,military_settings,7);
-	memset(tools_settings,0,12);
-	memcpy(GAMECLIENT.visual_settings.tools_settings,tools_settings,12);
+	GAMECLIENT.visual_settings.military_settings = military_settings;
+	GAMECLIENT.visual_settings.tools_settings = tools_settings;
 
 	// Standardeinstellungen kopieren
-	memcpy(&GAMECLIENT.default_settings, &GAMECLIENT.visual_settings, sizeof(GameClient::VisualSettings));
+	GAMECLIENT.default_settings = GAMECLIENT.visual_settings;
 
 	defenders_pos = 0;
 	for(unsigned i = 0;i<5;++i)
@@ -186,7 +185,7 @@ void GameClientPlayer::Serialize(SerializedGameData * sgd)
 	sgd->PushObjectList(roads,true);
 
 	sgd->PushUnsignedInt(jobs_wanted.size());
-	for(list<JobNeeded>::iterator it = jobs_wanted.begin();it.valid();++it)
+	for(std::list<JobNeeded>::iterator it = jobs_wanted.begin();it!=jobs_wanted.end();++it)
 	{
 		sgd->PushUnsignedChar(it->job);
 		sgd->PushObject(it->workplace,false);
@@ -214,7 +213,7 @@ void GameClientPlayer::Serialize(SerializedGameData * sgd)
 	{
 		sgd->PushRawData(distribution[i].percent_buildings,40);
 		sgd->PushUnsignedInt(distribution[i].client_buildings.size());
-		for(list<BuildingType>::iterator it = distribution[i].client_buildings.begin();it.valid();++it)
+		for(std::list<BuildingType>::iterator it = distribution[i].client_buildings.begin();it!=distribution[i].client_buildings.end();++it)
 			sgd->PushUnsignedChar(*it);
 		sgd->PushUnsignedInt(unsigned(distribution[i].goals.size()));
 		for(unsigned z = 0;z<distribution[i].goals.size();++z)
@@ -224,13 +223,16 @@ void GameClientPlayer::Serialize(SerializedGameData * sgd)
 
 	sgd->PushUnsignedChar(order_type);
 
-	sgd->PushRawData(build_order,31);
+	for(unsigned i = 0;i<31;++i)
+		sgd->PushUnsignedChar(build_order[i]);
 
 	sgd->PushRawData(transport,WARE_TYPES_COUNT);
 
-	sgd->PushRawData(military_settings,7);
+	for(unsigned i = 0;i<7;++i)
+		sgd->PushUnsignedChar(military_settings[i]);
 
-	sgd->PushRawData(tools_settings,12);
+	for(unsigned i = 0;i<12;++i)
+		sgd->PushUnsignedChar(tools_settings[i]);
 
 	for(unsigned i = 0;i<WARE_TYPES_COUNT;++i)
 		sgd->PushUnsignedInt(global_inventory.goods[i]);
@@ -295,7 +297,8 @@ void GameClientPlayer::Deserialize(SerializedGameData * sgd)
 
 	order_type = sgd->PopUnsignedChar();
 
-	sgd->PopRawData(build_order,31);
+	for(unsigned i = 0;i<31;++i)
+		build_order[i] = sgd->PopUnsignedChar();
 
 	char str[256] = "";
 	for(unsigned char i = 0;i<31;++i)
@@ -309,9 +312,11 @@ void GameClientPlayer::Deserialize(SerializedGameData * sgd)
 
 	sgd->PopRawData(transport,WARE_TYPES_COUNT);
 
-	sgd->PopRawData(military_settings,7);
+	for(unsigned i = 0;i<7;++i)
+		military_settings[i] = sgd->PopUnsignedChar();
 
-	sgd->PopRawData(tools_settings,12);
+	for(unsigned i = 0;i<12;++i)
+		tools_settings[i] = sgd->PopUnsignedChar();
 
 	for(unsigned i = 0;i<WARE_TYPES_COUNT;++i)
 		global_inventory.goods[i] = sgd->PopUnsignedInt();
@@ -336,7 +341,7 @@ nobBaseWarehouse * GameClientPlayer::FindWarehouse(const noRoadNode * const star
 	unsigned char path = 0xFF, tpath = 0xFF;
 	unsigned tlength = 0xFFFFFFFF,best_length = 0xFFFFFFFF;
 
-	for(list<nobBaseWarehouse*>::iterator w = warehouses.begin(); w.valid(); ++w)
+	for(std::list<nobBaseWarehouse*>::iterator w = warehouses.begin(); w!=warehouses.end(); ++w)
 	{
 		// Lagerhaus geeignet?
 		if(IsWarehouseGood(*w,param))
@@ -369,7 +374,7 @@ void GameClientPlayer::NewRoad(RoadSegment * const rs)
 	FindWarehouseForAllRoads();
 
 	// Alle Straßen müssen gucken, ob sie einen Esel bekommen können
-	for(list<RoadSegment*>::iterator it = roads.begin();it!=roads.end();++it)
+	for(std::list<RoadSegment*>::iterator it = roads.begin();it!=roads.end();++it)
 		(*it)->TryGetDonkey();
 
 	// Alle Arbeitsplätze müssen nun gucken, ob sie einen Weg zu einem Lagerhaus mit entsprechender Arbeitskraft finden
@@ -383,7 +388,7 @@ void GameClientPlayer::NewRoad(RoadSegment * const rs)
 
 	// Alle Militärgebäude müssen ihre Truppen überprüfen und können nun ggf. neue bestellen
 	// und müssen prüfen, ob sie evtl Gold bekommen
-	for(list<nobMilitary*>::iterator it = military_buildings.begin();it.valid();++it)
+	for(std::list<nobMilitary*>::iterator it = military_buildings.begin();it!=military_buildings.end();++it)
 	{
 		(*it)->RegulateTroops();
 		(*it)->SearchCoins();
@@ -395,7 +400,7 @@ void GameClientPlayer::NewRoad(RoadSegment * const rs)
 void GameClientPlayer::FindClientForLostWares()
 {
 	// Alle Lost-Wares müssen gucken, ob sie ein Lagerhaus finden
-	for(list<Ware*>::iterator it = ware_list.begin(); it.valid(); ++it)
+	for(std::list<Ware*>::iterator it = ware_list.begin(); it!=ware_list.end(); ++it)
 	{
 		if((*it)->IsLostWare())
 		{
@@ -408,7 +413,7 @@ void GameClientPlayer::FindClientForLostWares()
 void GameClientPlayer::RoadDestroyed()
 {
 	// Alle Waren, die an Flagge liegen und in Lagerhäusern, müssen gucken, ob sie ihr Ziel noch erreichen können, jetzt wo eine Straße fehlt
-	for(list<Ware*>::iterator it = ware_list.begin(); it.valid(); ++it)
+	for(std::list<Ware*>::iterator it = ware_list.begin(); it!=ware_list.end(); ++it)
 	{
 		if((*it)->LieAtFlag())
 		{
@@ -431,7 +436,8 @@ void GameClientPlayer::RoadDestroyed()
 				// Das Ziel wird nun nich mehr beliefert
 				ware->NotifyGoalAboutLostWare();
 				// Ware aus der Liste raus
-				ware_list.erase(&it);
+				it = ware_list.erase(it);
+				--it;
 			}
 		}
 	}
@@ -492,7 +498,7 @@ void GameClientPlayer::RecalcDistributionOfWare(const GoodType ware)
 	// 1. Anteile der einzelnen Waren ausrechnen
 
 	// Liste von Gebäudetypen, die die Waren wollen
-	list<BuildingWhichWantWare> bwww_list;
+	std::list<BuildingWhichWantWare> bwww_list;
 
 	unsigned goal_count = 0;
 
@@ -518,17 +524,18 @@ void GameClientPlayer::RecalcDistributionOfWare(const GoodType ware)
 
 	// In Array schreiben
 	float position;
-	unsigned char pos;
-	for(list<BuildingWhichWantWare>::iterator it = bwww_list.begin();it.valid();++it)
+	unsigned  pos;
+	for(std::list<BuildingWhichWantWare>::iterator it = bwww_list.begin();it!=bwww_list.end();++it)
 	{
 		position = 0;
+
 		// Distanz zwischen zwei gleichen Gebäuden
 		float dist = float(goal_count) / float(it->count);
 
 		// Möglichst gleichmäßige Verteilung der Gebäude auf das Array berechnen
-		for(unsigned char i = 0; i < it->count; ++i, position = fmod(position + dist, float(goal_count)) )
+		for(unsigned char i = 0; i < it->count; ++i, position = std::fmod(position + dist, float(goal_count)) )
 		{
-			for(pos = (unsigned char)(position + .5); distribution[ware].goals[pos] != 0; pos = (pos + 1) % goal_count);
+			for(pos = unsigned(position + .5f); distribution[ware].goals[pos] != 0; pos = (pos + 1) % goal_count);
 			distribution[ware].goals[pos] = it->building;
 		}
 	}
@@ -548,7 +555,7 @@ void GameClientPlayer::RecalcDistributionOfWare(const GoodType ware)
 
 void GameClientPlayer::FindWarehouseForAllRoads()
 {
-	for(list<RoadSegment*>::iterator it = roads.begin(); it.valid(); ++it)
+	for(std::list<RoadSegment*>::iterator it = roads.begin(); it != roads.end(); ++it)
 	{
 		if(!(*it)->carrier[0])
 			FindCarrierForRoad(*it);
@@ -558,7 +565,7 @@ void GameClientPlayer::FindWarehouseForAllRoads()
 
 void GameClientPlayer::FindMaterialForBuildingSites()
 {
-	for(list<noBuildingSite*>::iterator it = building_sites.begin(); it.valid(); ++it)
+	for(std::list<noBuildingSite*>::iterator it = building_sites.begin(); it!=building_sites.end(); ++it)
 		(*it)->OrderConstructionMaterial();
 }
 
@@ -574,7 +581,7 @@ void GameClientPlayer::AddJobWanted(const Job job,noRoadNode * workplace)
 
 void GameClientPlayer::JobNotWanted(noRoadNode * workplace)
 {
-	for(list<JobNeeded>::iterator it = jobs_wanted.begin(); it.valid(); ++it)
+	for(std::list<JobNeeded>::iterator it = jobs_wanted.begin(); it!=jobs_wanted.end(); ++it)
 	{
 		if(it->workplace == workplace)
 		{
@@ -601,12 +608,14 @@ bool GameClientPlayer::FindWarehouseForJob(const Job job, noRoadNode * goal)
 
 void GameClientPlayer::FindWarehouseForAllJobs(const Job job)
 {
-	for(list<JobNeeded>::iterator it = jobs_wanted.begin(); it.valid(); ++it)
+	for(std::list<JobNeeded>::iterator it = jobs_wanted.begin(); it!=jobs_wanted.end(); )
 	{
 		if(job == JOB_NOTHING || it->job == job)
 		{
 			if(FindWarehouseForJob(it->job,it->workplace))
-				jobs_wanted.erase(&it);
+				it = jobs_wanted.erase(it);
+			else 
+				++it;
 		}
 	}
 }
@@ -652,7 +661,7 @@ RoadSegment * GameClientPlayer::FindRoadForDonkey(noRoadNode * start,noRoadNode 
 	// Beste Flagge dieser Straße
 	*goal = 0;
 
-	for(list<RoadSegment*>::iterator it = roads.begin();it!=roads.end();++it)
+	for(std::list<RoadSegment*>::iterator it = roads.begin();it!=roads.end();++it)
 	{
 		// Braucht die Straße einen Esel?
 		if((*it)->NeedDonkey())
@@ -717,7 +726,8 @@ noBaseBuilding * GameClientPlayer::FindClientForWare(Ware * ware)
 	if(gt == GD_BREAD || gt == GD_MEAT)
 		gt = GD_FISH;
 
-	for(list<BuildingType>::iterator it = distribution[gt].client_buildings.begin(); it.valid(); ++it)
+	for(std::list<BuildingType>::iterator it = distribution[gt].client_buildings.begin();
+		it!=distribution[gt].client_buildings.end(); ++it)
 	{
 		unsigned way_points,points;
 
@@ -725,7 +735,7 @@ noBaseBuilding * GameClientPlayer::FindClientForWare(Ware * ware)
 		if(*it == BLD_HEADQUARTERS)
 		{
 			// Bei Baustellen die Extraliste abfragen
-			for(list<noBuildingSite*>::iterator i = building_sites.begin(); i.valid(); ++i)
+			for(std::list<noBuildingSite*>::iterator i = building_sites.begin(); i!=building_sites.end(); ++i)
 			{
 				// Weg dorthin berechnen
 				if(gwg->FindPathForWareOnRoads(ware->GetLocation(),*i,&way_points) != 0xFF)
@@ -755,7 +765,7 @@ noBaseBuilding * GameClientPlayer::FindClientForWare(Ware * ware)
 			}
 
 			//// Bei Baustellen die Extraliste abfragen
-			//for(list<noBuildingSite*>::iterator i = building_sites.begin(); i.valid(); ++i)
+			//for(std::list<noBuildingSite*>::iterator i = building_sites.begin(); i.valid(); ++i)
 			//{
 			//	// Zusätzliche Distribution-Punkte draufaddieren, welcher Gebäudetyp bekommt zuerst die Waren?
 			//	if(unsigned short distri_points = (*i)->CalcDistributionPoints(ware->GetLocation(),gt))
@@ -772,7 +782,7 @@ noBaseBuilding * GameClientPlayer::FindClientForWare(Ware * ware)
 		else
 		{
 			// Für übrige Gebäude
-			for(list<nobUsual*>::iterator i = buildings[*it-10].begin(); i.valid(); ++i)
+			for(std::list<nobUsual*>::iterator i = buildings[*it-10].begin(); i!=buildings[*it-10].end(); ++i)
 			{
 				// Weg dorthin berechnen
 				if(gwg->FindPathForWareOnRoads(ware->GetLocation(),*i,&way_points) != 0xFF)
@@ -837,7 +847,7 @@ nobBaseMilitary * GameClientPlayer::FindClientForCoin(Ware * ware)
 	unsigned best_points = 0,points;
 
 	// Militärgebäude durchgehen
-	for(list<nobMilitary*>::iterator it = military_buildings.begin();it.valid();++it)
+	for(std::list<nobMilitary*>::iterator it = military_buildings.begin();it!=military_buildings.end();++it)
 	{
 		unsigned way_points;
 		// Weg dorthin berechnen
@@ -879,7 +889,7 @@ void GameClientPlayer::AddBuildingSite(noBuildingSite * building_site)
 void GameClientPlayer::RemoveBuildingSite(noBuildingSite
 * building_site)
 {
-	for(list<noBuildingSite*>::iterator it = building_sites.begin(); it.valid(); ++it)
+	for(std::list<noBuildingSite*>::iterator it = building_sites.begin(); it!=building_sites.end(); ++it)
 	{
 		if(building_site == *it)
 		{
@@ -896,7 +906,7 @@ void GameClientPlayer::AddUsualBuilding(nobUsual * building)
 
 void GameClientPlayer::RemoveUsualBuilding(nobUsual * building)
 {
-	buildings[building->GetBuildingType()-10].erase(building);
+	buildings[building->GetBuildingType()-10].remove(building);
 }
 
 void GameClientPlayer::AddMilitaryBuilding(nobMilitary * building)
@@ -907,12 +917,12 @@ void GameClientPlayer::AddMilitaryBuilding(nobMilitary * building)
 
 void GameClientPlayer::RemoveMilitaryBuilding(nobMilitary * building)
 {
-	military_buildings.erase(building);
+	military_buildings.remove(building);
 	TestDefeat();
 }
 
 /// Gibt Liste von Gebäuden des Spieler zurück
-const list<nobUsual*>& GameClientPlayer::GetBuildings(const BuildingType type)
+const std::list<nobUsual*>& GameClientPlayer::GetBuildings(const BuildingType type)
 {
 	assert(type >= 10);
 
@@ -928,13 +938,13 @@ void GameClientPlayer::GetBuildingCount(BuildingCount& bc) const
 	for(unsigned i = 0;i<30;++i)
 		bc.building_counts[i+10] = buildings[i].size();
 	// Lagerhäuser zählen
-	for(list<nobBaseWarehouse*>::const_iterator it = warehouses.begin();it.valid();++it)
+	for(std::list<nobBaseWarehouse*>::const_iterator it = warehouses.begin();it!=warehouses.end();++it)
 		++bc.building_counts[(*it)->GetBuildingType()];
 	// Militärgebäude zählen
-	for(list<nobMilitary*>::const_iterator it = military_buildings.begin();it.valid();++it)
+	for(std::list<nobMilitary*>::const_iterator it = military_buildings.begin();it!=military_buildings.end();++it)
 		++bc.building_counts[(*it)->GetBuildingType()];
 	// Baustellen zählen
-	for(list<noBuildingSite*>::const_iterator it = building_sites.begin();it.valid();++it)
+	for(std::list<noBuildingSite*>::const_iterator it = building_sites.begin();it!=building_sites.end();++it)
 		++bc.building_site_counts[(*it)->GetBuildingType()];
 }
 
@@ -951,7 +961,7 @@ void GameClientPlayer::CalcProductivities(std::vector<unsigned short>& productiv
 		// und den Mittelwert bildet
 		unsigned total_productivity = 0;
 
-		for(list<nobUsual*>::iterator it = buildings[i].begin();it.valid();++it)
+		for(std::list<nobUsual*>::iterator it = buildings[i].begin();it!=buildings[i].end();++it)
 			total_productivity += *(*it)->GetProduktivityPointer();
 
 		if(buildings[i].size())
@@ -985,7 +995,7 @@ unsigned GameClientPlayer::GetBuidingSitePriority(const noBuildingSite * buildin
 	{
 		// Reihenfolge der Bauaufträge, also was zuerst in Auftrag gegeben wurde, wird zuerst gebaut
 		unsigned i = 0;
-		for(list<noBuildingSite*>::iterator it = building_sites.begin(); it.valid(); ++it, ++i)
+		for(std::list<noBuildingSite*>::iterator it = building_sites.begin(); it!=building_sites.end(); ++it, ++i)
 		{
 			if(building_site == *it)
 				return i;
@@ -996,11 +1006,11 @@ unsigned GameClientPlayer::GetBuidingSitePriority(const noBuildingSite * buildin
 	return 0xFFFFFFFF;
 }
 
-void GameClientPlayer::ConvertTransportData(const unsigned char * const transport_data)
+void GameClientPlayer::ConvertTransportData(const std::vector<unsigned char>& transport_data)
 {
 	// Im Replay visulle Einstellungen auf die wirklichen setzen
 	if(GameClient::inst().IsReplayModeOn())
-		memcpy(GameClient::inst().visual_settings.transport_order,transport_data,14*sizeof(unsigned char));
+		GameClient::inst().visual_settings.transport_order = transport_data;
 
 	// Mit Hilfe der Standardbelegung lässt sich das recht einfach konvertieren:
 	for(unsigned i = 0;i<35;++i)
@@ -1019,7 +1029,7 @@ void GameClientPlayer::ConvertTransportData(const unsigned char * const transpor
 
 bool GameClientPlayer::IsAlly(const unsigned char player) const
 {
-	return (playerid == player || (team && team == GAMECLIENT.GetPlayer(player)->team));
+	return (playerid == player || ((team >= TM_TEAM1 && team <= TM_TEAM4)&& team == GAMECLIENT.GetPlayer(player)->team));
 }
 
 void GameClientPlayer::OrderTroops(nobMilitary * goal, unsigned count)
@@ -1042,7 +1052,7 @@ void GameClientPlayer::OrderTroops(nobMilitary * goal, unsigned count)
 
 void GameClientPlayer::RegulateAllTroops()
 {
-	for(list<nobMilitary*>::iterator it = military_buildings.begin();it.valid();++it)
+	for(std::list<nobMilitary*>::iterator it = military_buildings.begin();it!=military_buildings.end();++it)
 		(*it)->RegulateTroops();
 }
 
@@ -1052,7 +1062,7 @@ void GameClientPlayer::NewSoldierAvailable(const unsigned& soldier_count)
 {
 	// solange laufen lassen, bis soldier_count = 0, d.h. der Soldat irgendwohin geschickt wurde
 	// Zuerst nach unbesetzten Militärgebäude schauen
-	for(list<nobMilitary*>::iterator it = military_buildings.begin();it.valid() && soldier_count;++it)
+	for(std::list<nobMilitary*>::iterator it = military_buildings.begin();it!=military_buildings.end() && soldier_count;++it)
 	{
 		if((*it)->IsNewBuilt())
 			(*it)->RegulateTroops();
@@ -1062,7 +1072,7 @@ void GameClientPlayer::NewSoldierAvailable(const unsigned& soldier_count)
 		return;
 
 	// Als nächstes Gebäude in Grenznähe
-	for(list<nobMilitary*>::iterator it = military_buildings.begin();it.valid() && soldier_count;++it)
+	for(std::list<nobMilitary*>::iterator it = military_buildings.begin();it!=military_buildings.end() && soldier_count;++it)
 	{
 		if((*it)->GetFrontierDistance() == 2)
 			(*it)->RegulateTroops();
@@ -1072,7 +1082,7 @@ void GameClientPlayer::NewSoldierAvailable(const unsigned& soldier_count)
 		return;
 
 	// Und den Rest ggf.
-	for(list<nobMilitary*>::iterator it = military_buildings.begin();it.valid() && soldier_count;++it)
+	for(std::list<nobMilitary*>::iterator it = military_buildings.begin();it!=military_buildings.end() && soldier_count;++it)
 		(*it)->RegulateTroops();
 
 }
@@ -1094,12 +1104,13 @@ void GameClientPlayer::CallFlagWorker(const unsigned short x, const unsigned sho
 void GameClientPlayer::FlagDestroyed(noFlag * flag)
 {
 	// Alle durchgehen und ggf. sagen, dass sie keine Flagge mehr haben, wenn das ihre Flagge war, die zerstört wurde
-	for(list<nofFlagWorker*>::iterator it = flagworkers.begin();it.valid();++it)
+	for(std::list<nofFlagWorker*>::iterator it = flagworkers.begin();it!=flagworkers.end();++it)
 	{
 		if((*it)->GetFlag() == flag)
 		{
 			(*it)->LostWork();
-			flagworkers.erase(&it);
+			it = flagworkers.erase(it);
+			--it;
 		}
 	}
 }
@@ -1116,13 +1127,14 @@ void GameClientPlayer::RefreshDefenderList()
 	defenders_pos = 0;
 }
 
-void GameClientPlayer::ChangeMilitarySettings(const unsigned char* military_settings)
+void GameClientPlayer::ChangeMilitarySettings(const std::vector<unsigned char>& military_settings)
 {
 	// Im Replay visulle Einstellungen auf die wirklichen setzen
 	if(GameClient::inst().IsReplayModeOn())
-		memcpy(GameClient::inst().visual_settings.military_settings,military_settings,sizeof(this->military_settings));
+		GameClient::inst().visual_settings.military_settings = military_settings;
 
-	memcpy(this->military_settings,military_settings,sizeof(this->military_settings));
+	for(unsigned i = 0;i<military_settings.size();++i)
+		this->military_settings[i] = military_settings[i];
 	/// Truppen müssen neu kalkuliert werden
 	RegulateAllTroops();
 	/// Die Verteidigungsliste muss erneuert werden
@@ -1130,22 +1142,21 @@ void GameClientPlayer::ChangeMilitarySettings(const unsigned char* military_sett
 }
 
 /// Setzt neue Werkzeugeinstellungen
-void GameClientPlayer::ChangeToolsSettings(const unsigned char * tools_settings)
+void GameClientPlayer::ChangeToolsSettings(const std::vector<unsigned char>& tools_settings)
 {
 	// Im Replay visulle Einstellungen auf die wirklichen setzen
 	if(GameClient::inst().IsReplayModeOn())
-		memcpy(GameClient::inst().visual_settings.tools_settings,tools_settings,sizeof(this->tools_settings));
+		GameClient::inst().visual_settings.tools_settings = tools_settings;
 
-	memcpy(this->tools_settings,tools_settings,12);
+	this->tools_settings = tools_settings;
 }
 
 /// Setzt neue Verteilungseinstellungen
-void GameClientPlayer::ChangeDistribution(const unsigned char * distribution_settings)
+void GameClientPlayer::ChangeDistribution(const std::vector<unsigned char>& distribution_settings)
 {
 	// Im Replay visulle Einstellungen auf die wirklichen setzen
 	if(GameClient::inst().IsReplayModeOn())
-		memcpy(GameClient::inst().visual_settings.distribution,distribution_settings,
-		sizeof(GameClient::inst().visual_settings.distribution));
+		GameClient::inst().visual_settings.distribution = distribution_settings;
 
 	distribution[GD_FISH].percent_buildings[BLD_GRANITEMINE] = distribution_settings[0];
 	distribution[GD_FISH].percent_buildings[BLD_COALMINE] = distribution_settings[1];
@@ -1177,18 +1188,18 @@ void GameClientPlayer::ChangeDistribution(const unsigned char * distribution_set
 }
 
 /// Setzt neue Baureihenfolge-Einstellungen
-void GameClientPlayer::ChangeBuildOrder(const unsigned char order_type, const unsigned char * const oder_data)
+void GameClientPlayer::ChangeBuildOrder(const unsigned char order_type, const std::vector<unsigned char>& oder_data)
 {
 	// Im Replay visulle Einstellungen auf die wirklichen setzen
 	if(GameClient::inst().IsReplayModeOn())
 	{
 		GameClient::inst().visual_settings.order_type = order_type;
-		memcpy(GameClient::inst().visual_settings.build_order, oder_data, sizeof(this->build_order));
+		GameClient::inst().visual_settings.build_order = oder_data;
 	}
 
 	this->order_type = order_type;
-	memcpy(this->build_order, oder_data, sizeof(this->build_order));
-	
+	for(unsigned i = 0;i<oder_data.size();++i)
+		this->build_order[i] = oder_data[i];
 }
 
 bool GameClientPlayer::ShouldSendDefender()
@@ -1237,13 +1248,13 @@ void GameClientPlayer::TestDefeat()
 //	};*/
 //
 //	// Warenlisten der Warenhäuser sammeln
-//	for(list<nobBaseWarehouse*>::iterator wh = warehouses.begin(); wh.valid(); ++wh)
+//	for(std::list<nobBaseWarehouse*>::iterator wh = warehouses.begin(); wh.valid(); ++wh)
 //		(*wh)->GetInventory(wares, figures);
 //
 //	if(wares)
 //	{
 //		// einzelne Waren sammeln
-//		for(list<Ware*>::iterator we = ware_list.begin(); we.valid(); ++we)
+//		for(std::list<Ware*>::iterator we = ware_list.begin(); we.valid(); ++we)
 //		{
 //			++(wares[ware_map[(*we)->type]]);
 //		}

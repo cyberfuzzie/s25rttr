@@ -1,4 +1,4 @@
-// $Id: GameFiles.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: GameFiles.cpp 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -123,18 +123,21 @@ void SavedGameFile::ReadPlayerData(BinaryFile& file)
 void SavedGameFile::WriteGGS(BinaryFile& file)
 {
 	// GGS
-	unsigned char * buffer = ggs.Serialize();
-	file.WriteRawData(buffer,GlobalGameSettings::GGS_BUFFER_SIZE);
-	delete [] buffer;
+	Serializer ser;
+	ggs.Serialize(&ser);
+	file.WriteUnsignedInt(ser.GetLength());
+	file.WriteRawData(ser.GetData(),ser.GetLength());
 }
 
 void SavedGameFile::ReadGGS(BinaryFile& file)
 {
 	// GGS
 	// Buffer erzeugen
-	unsigned char * buffer = new unsigned char[GlobalGameSettings::GGS_BUFFER_SIZE];
-	file.ReadRawData(buffer,GlobalGameSettings::GGS_BUFFER_SIZE);
-	ggs.Deserialize(buffer);
+	unsigned length = file.ReadUnsignedInt();
+	unsigned char * buffer = new unsigned char[length];
+	file.ReadRawData(buffer,length);
+	Serializer ser(buffer,length);
+	ggs.Deserialize(&ser);
 	delete [] buffer;
 }
 	

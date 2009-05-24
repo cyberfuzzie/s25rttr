@@ -1,4 +1,4 @@
-// $Id: ctrlGroup.h 4830 2009-05-07 18:59:21Z FloSoft $
+// $Id: ctrlGroup.h 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -69,14 +69,6 @@ public:
 
 protected:
 	virtual bool Draw_(void);
-
-public:
-	struct MsgParam
-	{
-		Msg msg;
-		unsigned int id;
-		void *param;
-	};
 };
 
 #endif // !CTRLGROUP_H_INCLUDED

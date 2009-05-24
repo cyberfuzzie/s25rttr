@@ -1,4 +1,4 @@
-// $Id: iwDistribution.cpp 4784 2009-05-02 20:43:44Z OLiver $
+// $Id: iwDistribution.cpp 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -26,6 +26,7 @@
 #include "controls.h"
 
 #include "GameClient.h"
+#include "GameCommands.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -183,7 +184,7 @@ void iwDistribution::TransmitSettings()
 		}
 
 		// und übermitteln
-		GAMECLIENT.NC_ChangeDistribution(GAMECLIENT.visual_settings.distribution);
+		GAMECLIENT.AddGC(new gc::ChangeDistribution(GAMECLIENT.visual_settings.distribution));
 
 		settings_changed = false;
 	}

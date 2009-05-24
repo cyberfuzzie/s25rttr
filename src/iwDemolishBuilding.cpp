@@ -1,4 +1,4 @@
-// $Id: iwDemolishBuilding.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: iwDemolishBuilding.cpp 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -28,6 +28,7 @@
 #include "WindowManager.h"
 #include "GameWorld.h"
 #include "iwMsgbox.h"
+#include "GameCommands.h"
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -64,11 +65,11 @@ void iwDemolishBuilding::Msg_ButtonClick(const unsigned int ctrl_id)
 		{
 			if(got == GOT_NOB_MILITARY || got == GOT_NOB_STOREHOUSE || got == GOT_NOB_USUAL  || got == GOT_BUILDINGSITE)
 			{
-				GameClient::inst().NC_DestroyBuilding(building_x,building_y);
+				GameClient::inst().AddGC(new gc::DestroyBuilding(building_x,building_y));
 			}
 			else if(got == GOT_FLAG)
 				// Flagge (mitsamt Geb‰ude) wegreiﬂen
-				GameClient::inst().NC_DestroyFlag(building_x,building_y);
+				GameClient::inst().AddGC(new gc::DestroyFlag(building_x,building_y));
 
 			Close();
 

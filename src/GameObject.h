@@ -1,4 +1,4 @@
-// $Id: GameObject.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: GameObject.h 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -24,7 +24,7 @@
 class SerializedGameData;
 class GameWorldGame;
 class EventManager;
-class GameClientPlayer;
+class GameClientPlayerList;
 
 /// IDs für jede Klasse AM ENDE DER Hierarchie für die Speicherfunktionen
 enum GO_Type
@@ -116,7 +116,7 @@ public:
 	virtual GO_Type GetGOT(void) const = 0;
 
 	/// Setzt Pointer auf GameWorld und EventManager
-	static void SetPointers(GameWorldGame * const gwg,EventManager * const em,GameClientPlayer ** players) 
+	static void SetPointers(GameWorldGame * const gwg,EventManager * const em, GameClientPlayerList* players) 
 	{ GameObject::gwg = gwg; GameObject::em = em; GameObject::players = players; }
 	/// setzt den Objekt und Objekt-ID-Counter zurück
 	static void ResetCounter(void) { obj_id_counter = 1; obj_counter = 0; };
@@ -142,7 +142,7 @@ protected:
 	/// Zugriff auf übrige Spielwelt
 	static GameWorldGame *gwg;
 	static EventManager *em;
-	static GameClientPlayer **players;
+	static GameClientPlayerList *players;
 
 private:
 

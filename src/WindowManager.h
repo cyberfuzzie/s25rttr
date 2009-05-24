@@ -1,4 +1,4 @@
-// $Id: WindowManager.h 4830 2009-05-07 18:59:21Z FloSoft $
+// $Id: WindowManager.h 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -22,8 +22,7 @@
 #pragma once
 
 #include "Singleton.h"
-#include "Messages.h"
-#include <string>
+#include "MouseAndKeys.h"
 #include "VideoDriverLoaderInterface.h"
 
 class Window;

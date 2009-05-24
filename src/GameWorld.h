@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 4868 2009-05-15 15:48:04Z OLiver $
+// $Id: GameWorld.h 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -28,7 +28,7 @@
 #include "MilitaryConsts.h"
 #include "EventManager.h"
 #include "TerrainRenderer.h"
-#include <string>
+#include <vector>
 #include <vector>
 
 class noEnvObject;
@@ -50,6 +50,7 @@ class MouseCoords;
 class noBuilding;
 class GameInterface;
 class GameWorldBase;
+class glArchivItem_Map;
 
 struct RoadsBuilding;
 class FOWObject;

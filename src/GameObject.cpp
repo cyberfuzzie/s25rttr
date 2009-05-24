@@ -1,4 +1,4 @@
-// $Id: GameObject.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: GameObject.cpp 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -23,6 +23,8 @@
 #include "GameObject.h"
 #include "SerializedGameData.h"
 
+#include "GamePlayerList.h"
+
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
 #if defined _WIN32 && defined _DEBUG && defined _MSC_VER
@@ -40,9 +42,9 @@
 unsigned int GameObject::obj_id_counter = 1;
 unsigned int GameObject::obj_counter = 0;
 
-GameWorldGame *GameObject::gwg = 0;
-EventManager *GameObject::em = 0;
-GameClientPlayer **GameObject::players = 0;
+GameWorldGame *GameObject::gwg = NULL;
+EventManager *GameObject::em = NULL;
+GameClientPlayerList *GameObject::players = NULL;
 
 ///////////////////////////////////////////////////////////////////////////////
 /**

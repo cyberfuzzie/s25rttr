@@ -1,4 +1,4 @@
-// $Id: iwBaseWarehouse.cpp 4746 2009-04-30 20:10:46Z OLiver $
+// $Id: iwBaseWarehouse.cpp 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -30,6 +30,7 @@
 #include "iwDemolishBuilding.h"
 #include "WindowManager.h"
 #include "iwHelp.h"
+#include "GameCommands.h"
 
 #include "nobBaseWarehouse.h"
 
@@ -135,7 +136,7 @@ void iwBaseWarehouse::Msg_Group_ButtonClick(const unsigned int group_id, const u
 					// optisch schonmal setzen
 					ChangeOverlay(ctrl_id - 100, data);
 					// Befehl übertragen
-					GAMECLIENT.NC_ChangeInventorySetting(wh->GetX(),wh->GetY(),page,data,ctrl_id - 100);
+					GAMECLIENT.AddGC(new gc::ChangeInventorySetting(wh->GetX(),wh->GetY(),page,data,ctrl_id - 100));
 				}
 			}
 		} break;
@@ -175,7 +176,7 @@ void iwBaseWarehouse::Msg_ButtonClick(const unsigned int ctrl_id)
 							ChangeOverlay(i, data);
 
 						// Befehl übertragen
-						GAMECLIENT.NC_ChangeAllInventorySettings(wh->GetX(),wh->GetY(),page,data);
+						GAMECLIENT.AddGC(new gc::ChangeAllInventorySettings(wh->GetX(),wh->GetY(),page,data));
 					}
 				}
 

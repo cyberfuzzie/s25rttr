@@ -1,4 +1,4 @@
-// $Id: iwSave.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: iwSave.cpp 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -272,7 +272,7 @@ void iwLoad::SaveLoad(void)
 	// Server starten
 	ctrlTable *table = GetCtrl<ctrlTable>(0);
 
-	if(!GAMESERVER.TryToStart(csi, table->GetItemText(table->GetSelection(), 4), 1))
+	if(!GAMESERVER.TryToStart(csi, table->GetItemText(table->GetSelection(), 4), MAPTYPE_SAVEGAME))
 	{
 		// Server starten
 		if(LOBBYCLIENT.LoggedIn())

@@ -1,4 +1,4 @@
-// $Id: nobBaseWarehouse.cpp 4841 2009-05-09 10:28:42Z OLiver $
+// $Id: nobBaseWarehouse.cpp 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1075,42 +1075,29 @@ bool nobBaseWarehouse::DefendersAvailable() const
 	return false;
 }
 
-void nobBaseWarehouse::IncreaseReserveVisual(unsigned rank)
+unsigned nobBaseWarehouse::IncreaseReserveVisual(unsigned rank)
 {
-	++reserve_soldiers_claimed_visual[rank];
+	return ++reserve_soldiers_claimed_visual[rank];
 }
 
-void nobBaseWarehouse::DecreaseReserveVisual(unsigned rank)
+unsigned nobBaseWarehouse::DecreaseReserveVisual(unsigned rank)
 {
 	if(reserve_soldiers_claimed_visual[rank])
 		--reserve_soldiers_claimed_visual[rank];
+
+	return reserve_soldiers_claimed_visual[rank];
 }
 
-void nobBaseWarehouse::IncreaseReserveReal(unsigned rank)
+void nobBaseWarehouse::SetRealReserve(const unsigned rank, const unsigned count)
 {
-	++reserve_soldiers_claimed_real[rank];
+	reserve_soldiers_claimed_real[rank] = count;
 
 	// Replay oder anderer Spieler? Dann die visuellen auch erhöhen
 	if(GameClient::inst().IsReplayModeOn() || GameClient::inst().GetPlayerID() != player)
-		++reserve_soldiers_claimed_visual[rank];
+		reserve_soldiers_claimed_visual[rank] = count;
 
 	// Geforderte Soldaten ggf. einbeziehen
 	RefreshReserve(rank);
-}
-	
-void nobBaseWarehouse::DecreaseReserveReal(unsigned rank)
-{
-	if(reserve_soldiers_claimed_real[rank])
-	{
-		--reserve_soldiers_claimed_real[rank];
-
-		// Replay oder anderer Spieler? Dann die visuellen auch verringern
-		if(GameClient::inst().IsReplayModeOn() || GameClient::inst().GetPlayerID() != player)
-			--reserve_soldiers_claimed_visual[rank];
-
-		// Geforderte Soldaten ggf. wieder freigeben
-		RefreshReserve(rank);
-	}
 }
 
 void nobBaseWarehouse::RefreshReserve(unsigned rank)

@@ -1,4 +1,4 @@
-// $Id: iwMilitary.cpp 4792 2009-05-04 15:26:33Z Demophobie $
+// $Id: iwMilitary.cpp 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -25,6 +25,7 @@
 #include "Loader.h"
 #include "controls.h"
 #include "GameClient.h"
+#include "GameCommands.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -77,7 +78,7 @@ void iwMilitary::TransmitSettings()
 		for(unsigned char i = 0; i < 7; ++i)
 			GAMECLIENT.visual_settings.military_settings[i] = (unsigned char)GetCtrl<ctrlProgress>(i)->GetPosition();
 
-		GAMECLIENT.NC_ChangeMilitary(GAMECLIENT.visual_settings.military_settings);
+		GAMECLIENT.AddGC(new gc::ChangeMilitary(GAMECLIENT.visual_settings.military_settings));
 		settings_changed = false;
 	}
 }

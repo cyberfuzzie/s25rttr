@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.cpp 4857 2009-05-11 18:31:33Z OLiver $
+// $Id: dskGameInterface.cpp 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -37,6 +37,7 @@
 #include "VideoDriverWrapper.h"
 #include "LobbyClient.h"
 #include "ctrlButton.h"
+#include "GameMessages.h"
 
 #include "iwChat.h"
 #include "iwHQ.h"
@@ -499,7 +500,7 @@ bool dskGameInterface::Msg_KeyDown(const KeyEvent& ke)
 			if(GameClient::inst().IsReplayModeOn())
 				GameClient::inst().ChangeReplayPlayer(ke.c-'1');
 			else
-				GAMECLIENT.NC_SwitchPlayer(ke.c-'1');
+				GAMECLIENT.AddGC(new gc::SwitchPlayer(ke.c-'1'));
 		} return true;
 
 	case 'j': // GFs überspringen
@@ -743,11 +744,11 @@ void dskGameInterface::ShowActionWindow(const iwAction::Tabs& action_tabs,int cs
  */
 void dskGameInterface::CommandBuildRoad()
 {
-	GAMECLIENT.NC_Road_Build(road.mode == RM_BOAT,road.start_x,road.start_y,road.route);
+	GameClient::inst().AddGC(new gc::BuildRoad(road.start_x,road.start_y,road.mode == RM_BOAT,road.route));
 	road.mode = RM_DISABLED;
 }
 
-void dskGameInterface::CI_FlagDestroyed(const unsigned short x, const unsigned short y)
+void dskGameInterface::GI_FlagDestroyed(const unsigned short x, const unsigned short y)
 {
 	// Im Wegbaumodus und haben wir von hier eine Flagge gebaut?
 	if(road.mode != RM_DISABLED && road.start_x == x && road.start_y == y)

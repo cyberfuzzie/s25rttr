@@ -1,4 +1,4 @@
-// $Id: Messages.h 4830 2009-05-07 18:59:21Z FloSoft $
+// $Id: Messages.h 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -64,81 +64,9 @@ enum Msg
 	CNM_ERROR
 };
 
-///////////////////////////////////////////////////////////////////////////////
-/**
- *  Mausstatusstruct
- *
- *  @author OLiver
- */
-class MouseCoords
-{ 
-public:
-	MouseCoords() : x(0), y(0), ldown(false), rdown(false) {}
-	MouseCoords(int x, int y, bool ldown, bool rdown) : x(x), y(y), ldown(ldown), rdown(rdown) {}
 
-public:
-	int x;      /// x-Koordinate
-	int y;      /// y-Koordinate
-	bool ldown; /// Linke Maustaste gedrückt
-	bool rdown; /// Rechte Maustaste gedrückt
+ ctrl,shift,alt;
 };
 
-///////////////////////////////////////////////////////////////////////////////
-/**
- *  Keydown Spezial Tasten
- *
- *  @author OLiver
- */
-enum KeyType
-{
-	KT_INVALID = 0,
-	KT_SPACE,
-	KT_RETURN,
-	KT_LEFT,
-	KT_UP,
-	KT_RIGHT,
-	KT_DOWN,
-	KT_BACKSPACE,
-	KT_SHIFT,
-	KT_TAB,
-	KT_F1, KT_F2, KT_F3, KT_F4, KT_F5, KT_F6, KT_F7, KT_F8, KT_F9, KT_F10, KT_F11, KT_F12,
-	KT_END,  // Ende
-	KT_HOME, // Pos1
-	KT_ESCAPE,
-	KT_CHAR = 0xFFFFFFFF
-};
-
-/// Tastaturevent-Struktur
-struct KeyEvent
-{
-	KeyType kt;
-	char c;
-	bool ctrl,shift,alt;
-};
-
-enum MsgboxButton
-{
-	MSB_OK,
-	MSB_OKCANCEL,
-	MSB_YESNO,
-	MSB_YESNOCANCEL
-};
-
-enum MsgboxIcon
-{
-	MSB_QUESTIONGREEN =	72,
-	MSB_EXCLAMATIONGREEN,
-	MSB_QUESTIONRED,
-	MSB_EXCLAMATIONRED
-};
-
-enum MsgboxResult
-{
-	MSR_OK = 0,
-	MSR_CANCEL,
-	MSR_YES,
-	MSR_NO,
-	MSR_NOTHING = 0xFFFFFFFF
-};
 
 #endif // !MESSAGES_H_INCLUDED

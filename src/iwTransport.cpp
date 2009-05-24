@@ -1,4 +1,4 @@
-// $Id: iwTransport.cpp 4784 2009-05-02 20:43:44Z OLiver $
+// $Id: iwTransport.cpp 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -25,6 +25,8 @@
 #include "Loader.h"
 #include "GameClient.h"
 #include "controls.h"
+
+#include "GameCommands.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -157,7 +159,7 @@ void iwTransport::TransmitSettings()
 	if(settings_changed)
 	{
 		// Daten übertragen
-		GAMECLIENT.NC_ChangeTransport(GAMECLIENT.visual_settings.transport_order);
+		GAMECLIENT.AddGC(new gc::ChangeTransport(GAMECLIENT.visual_settings.transport_order));
 	
 		settings_changed = false;
 	}
@@ -172,7 +174,7 @@ void iwTransport::Msg_ButtonClick(const unsigned int ctrl_id)
 		{
 			ctrlOptionGroup *group = GetCtrl<ctrlOptionGroup>(6);
 
-			memcpy(GAMECLIENT.visual_settings.transport_order, GAMECLIENT.default_settings.transport_order, 14);
+			GAMECLIENT.visual_settings.transport_order = GAMECLIENT.default_settings.transport_order;
 
 			//// Tooltips in der der Standardbelegung
 			//memcpy(tooltip_indices,STD_TOOLTIP_INDICES,14*sizeof(unsigned short));

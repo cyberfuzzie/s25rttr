@@ -1,4 +1,4 @@
-// $Id: GlobalGameSettings.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: GlobalGameSettings.h 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -24,6 +24,8 @@
 #include "GameConsts.h"
 #include "GameProtocol.h"
 
+class Serializer;
+
 class GlobalGameSettings
 {
 public:
@@ -46,8 +48,8 @@ public:
 	static const unsigned GGS_BUFFER_SIZE = 7;
 
 	/// Serialisierung und Deserialisierung
-	unsigned char * Serialize() const;
-	void Deserialize(const unsigned char * buffer);
+	void Serialize(Serializer * ser) const;
+	void Deserialize(Serializer * ser);
 };
 
 #define GGS GlobalGameSettings::inst()

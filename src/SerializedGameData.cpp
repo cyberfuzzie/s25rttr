@@ -1,4 +1,4 @@
-// $Id: SerializedGameData.cpp 4741 2009-04-28 20:05:10Z OLiver $
+// $Id: SerializedGameData.cpp 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -170,20 +170,15 @@ FOWObject * SerializedGameData::Create_FOWObject(const FOW_Type fowtype)
 	}
 }
 
-SerializedGameData::SerializedGameData() : buffer(0), buffer_size(0), pos(0), objects_write(0), objects_count(0)
+SerializedGameData::SerializedGameData() : objects_write(0), objects_count(0)
 {
 }
 
-SerializedGameData::~SerializedGameData()
-{
-	delete [] buffer;
-}
 	
 void SerializedGameData::MakeSnapshot(GameWorld *const gw, EventManager *const em)
 {
 	// Buffer erzeugen
-	delete [] buffer;
-	buffer = new unsigned char[10000000];
+	Clear();
 
 	// Objektreferenzen reservieren
 	objects_write = new const GameObject*[GameObject::GetObjCount()];
@@ -201,23 +196,23 @@ void SerializedGameData::MakeSnapshot(GameWorld *const gw, EventManager *const e
 		GAMECLIENT.GetPlayer(i)->Serialize(this);
 
 	delete [] objects_write;
-
-	buffer_size = pos;
 }
 
 void SerializedGameData::WriteToFile(BinaryFile& file)
 {
-	file.WriteUnsignedInt(buffer_size);
-	file.WriteRawData(buffer,buffer_size);
+	file.WriteUnsignedInt(length);
+	file.WriteRawData(data,length);
 }
 
 void SerializedGameData::ReadFromFile(BinaryFile& file)
 {
-	delete [] buffer;
+	Clear();
+
+	unsigned buffer_size;
 	buffer_size = file.ReadUnsignedInt();
-	buffer = new unsigned char[buffer_size];
-	file.ReadRawData(buffer,buffer_size);
-	pos = 0;
+	Realloc(buffer_size);
+	file.ReadRawData(data,buffer_size);
+
 	total_objects_count = PopUnsignedInt();
 	objects_count = 0;
 	objects_read = new GameObject*[total_objects_count];

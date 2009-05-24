@@ -1,4 +1,4 @@
-// $Id: dskLobby.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: dskLobby.cpp 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -135,7 +135,7 @@ void dskLobby::Msg_ButtonClick(const unsigned int ctrl_id)
 					{
 						if(serverlist->getElement(i)->getId() == selection)
 						{
-							iwDirectIPConnect *connect = new iwDirectIPConnect(NP_DEPENDENT);
+							iwDirectIPConnect *connect = new iwDirectIPConnect(1);
 							connect->SetHost(serverlist->getElement(i)->getHost().c_str());
 							connect->SetPort(serverlist->getElement(i)->getPort());
 							WindowManager::inst().Show(connect);
@@ -152,7 +152,7 @@ void dskLobby::Msg_ButtonClick(const unsigned int ctrl_id)
 		} break;
 	case 6: // GameServer hinzufügen
 		{
-			servercreate = new iwDirectIPCreate(NP_DEPENDENT);
+			servercreate = new iwDirectIPCreate(NP_LOBBY);
 			servercreate->SetParent(this);
 			WindowManager::inst().Show(servercreate, true);
 		} break;

@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.h 4784 2009-05-02 20:43:44Z OLiver $
+// $Id: GameClientPlayer.h 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -22,6 +22,9 @@
 
 #include "GamePlayerInfo.h"
 #include "GameConsts.h"
+#include <list>
+#include <algorithm>
+
 
 class GameWorld;
 class noFlag;
@@ -39,6 +42,7 @@ class nobBaseMilitary;
 class SerializedGameData;
 class nofCarrier;
 class GameWorldGame;
+class GameMessage_GameCommand;
 
 
 /// Informationen über Gebäude-Anzahlen
@@ -56,11 +60,11 @@ private:
 	// Zugriff der Spieler auf die Spielwelt
 	GameWorldGame * gwg;
 	/// Liste der Warenhäuser des Spielers
-	list<nobBaseWarehouse*> warehouses;
+	std::list<nobBaseWarehouse*> warehouses;
 	///// Liste von unbesetzten Straßen (ohne Träger) von dem Spieler
-	//list<RoadSegment*> unoccupied_roads;
+	//std::list<RoadSegment*> unoccupied_roads;
 	/// Lister aller Straßen von dem Spieler
-	list<RoadSegment*> roads;
+	std::list<RoadSegment*> roads;
 
 	struct JobNeeded
 	{
@@ -75,18 +79,18 @@ private:
 	};
 
 	/// Liste von Baustellen/Gebäuden, die bestimmten Beruf wollen
-	list<JobNeeded> jobs_wanted;
+	std::list<JobNeeded> jobs_wanted;
 
 	/// Listen der einzelnen Gebäudetypen (nur nobUsuals!)
-	list<nobUsual*> buildings[30];
+	std::list<nobUsual*> buildings[30];
 	/// Liste von sämtlichen Baustellen
-	list<noBuildingSite*> building_sites;
+	std::list<noBuildingSite*> building_sites;
 	/// Liste von allen Militärgebäuden
-	list<nobMilitary*> military_buildings;
+	std::list<nobMilitary*> military_buildings;
 	/// Liste von sämtlichen Waren, die herumgetragen werden und an Fahnen liegen
-	list<Ware*> ware_list;
+	std::list<Ware*> ware_list;
 	/// Liste von Geologen und Spähern, die an eine Flagge gebunden sind
-	list<nofFlagWorker*> flagworkers;
+	std::list<nofFlagWorker*> flagworkers;
 
 	/// Liste, welchen nächsten 10 Angreifern Verteidiger entgegenlaufen sollen
 	bool defenders[5];
@@ -99,6 +103,8 @@ public:
 
 	/// Laggt der Spieler?
 	bool is_lagging;
+	/// Empfangene GC für diesen Spieler
+	std::list<GameMessage_GameCommand> gc_queue;
 
 	/// Koordinaten des HQs des Spielers
 	unsigned short hqx,hqy;
@@ -107,7 +113,7 @@ public:
 	struct
 	{
 		unsigned char percent_buildings[40];
-		list<BuildingType> client_buildings; // alle Gebäude, die diese Ware bekommen, zusammengefasst
+		std::list<BuildingType> client_buildings; // alle Gebäude, die diese Ware bekommen, zusammengefasst
 		std::vector<unsigned char> goals;
 		unsigned selected_goal;
 	} distribution[WARE_TYPES_COUNT];
@@ -115,13 +121,13 @@ public:
 	/// Art der Reihenfolge (0 = nach Auftraggebung, ansonsten nach build_order)
 	unsigned char order_type;
 	/// Baureihenfolge
-	unsigned char build_order[31];
+	std::vector <unsigned char> build_order;
 	/// Prioritäten der Waren im Transport
 	unsigned char transport[WARE_TYPES_COUNT];
 	/// Militäreinstellungen (die vom Militärmenü)
-	unsigned char military_settings[7];
+	std::vector <unsigned char> military_settings;
 	/// Werkzeugeinstellungen (in der Reihenfolge wie im Fenster!)
-	unsigned char tools_settings[12];
+	std::vector <unsigned char> tools_settings;
 
 private:
 
@@ -166,10 +172,10 @@ public:
 	/// Warenhaus zur Warenhausliste hinzufügen
 	void AddWarehouse(nobBaseWarehouse * wh) { warehouses.push_back(wh); }
 	/// Warenhaus aus Warenhausliste entfernen
-	void RemoveWarehouse(nobBaseWarehouse * wh) { warehouses.erase(wh); TestDefeat(); }
+	void RemoveWarehouse(nobBaseWarehouse * wh) { warehouses.remove(wh); TestDefeat(); }
 	/// (Unbesetzte) Straße aus der Liste entfernen
-	void DeleteRoad(RoadSegment * rs) { roads.erase(rs); }
-	bool TestRoads(RoadSegment * rs) { return roads.search(rs).valid(); }
+	void DeleteRoad(RoadSegment * rs) { roads.remove(rs); }
+	//bool TestRoads(RoadSegment * rs) { return roads.search(rs).valid(); }
 
 	/// Für alle unbesetzen Straßen Weg neu berechnen
 	void FindWarehouseForAllRoads();
@@ -209,7 +215,7 @@ public:
 	void RemoveMilitaryBuilding(nobMilitary * building);
 
 	/// Gibt Liste von Gebäuden des Spieler zurück
-	const list<nobUsual*>& GetBuildings(const BuildingType type);
+	const std::list<nobUsual*>& GetBuildings(const BuildingType type);
 	/// Liefert die Anzahl aller Gebäude einzeln
 	void GetBuildingCount(BuildingCount& bc) const;
 	/// Berechnet die durschnittlichen Produktivität eines jeden Gebäudetyps
@@ -225,12 +231,12 @@ public:
 	/// Berechnet die Verteilung einer (bestimmten) Ware
 	void RecalcDistributionOfWare(const GoodType ware);
 	/// Konvertiert die Daten vom wp_transport in "unser" Prioritäten-Format und setzt es
-	void ConvertTransportData(const unsigned char * const transport_data);
+	void ConvertTransportData(const std::vector<unsigned char>& transport_data);
 
 	/// Ware zur globalen Warenliste hinzufügen und entfernen
 	void RegisterWare(Ware * ware) { ware_list.push_back(ware); }
-	void RemoveWare(Ware * ware) { ware_list.erase(ware); }
-	bool IsWareRegistred(Ware * ware) { return (ware_list.search(ware)).valid(); }
+	void RemoveWare(Ware * ware) { ware_list.remove(ware); }
+	bool IsWareRegistred(Ware * ware) { return (std::find(ware_list.begin(),ware_list.end(),ware) != ware_list.end()); }
 
 	/// Fügt Waren zur Inventur hinzu
 	void IncreaseInventoryWare(const GoodType ware, const unsigned count) { global_inventory.goods[ConvertShields(ware)]+=count; }
@@ -242,7 +248,14 @@ public:
 	const Goods * GetInventory() const { return &global_inventory; }
 
 	/// Setzt neue Militäreinstellungen
-	void ChangeMilitarySettings(const unsigned char * military_settings);
+	void ChangeMilitarySettings(const std::vector<unsigned char>& military_settings);
+	/// Setzt neue Werkzeugeinstellungen
+	void ChangeToolsSettings(const std::vector<unsigned char>& tools_settings);
+	/// Setzt neue Verteilungseinstellungen
+	void ChangeDistribution(const std::vector<unsigned char>& distribution_settings);
+	/// Setzt neue Baureihenfolge-Einstellungen
+	void ChangeBuildOrder(const unsigned char order_type, const std::vector<unsigned char>& oder_data);
+
 	/// Setzt neue Werkzeugeinstellungen
 	void ChangeToolsSettings(const unsigned char * tools_settings);
 	/// Setzt neue Verteilungseinstellungen
@@ -269,7 +282,7 @@ public:
 	/// Registriert einen Geologen bzw. einen Späher an einer bestimmten Flagge, damit diese informiert werden,
 	/// wenn die Flagge abgerissen wird
 	void RegisterFlagWorker(nofFlagWorker * flagworker) { flagworkers.push_back(flagworker); }
-	void RemoveFlagWorker(nofFlagWorker * flagworker) { flagworkers.erase(flagworker); }
+	void RemoveFlagWorker(nofFlagWorker * flagworker) { flagworkers.remove(flagworker); }
 	/// Wird aufgerufen, wenn eine Flagge abgerissen wurde, damit das den Flaggen-Arbeitern gesagt werden kann
 	void FlagDestroyed(noFlag * flag);
 

@@ -1,4 +1,4 @@
-// $Id: GamePlayerInfo.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: GamePlayerInfo.cpp 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -24,7 +24,7 @@
 
 #include "VideoDriverWrapper.h"
 #include "GameMessage.h"
-#
+
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
 #if defined _WIN32 && defined _DEBUG && defined _MSC_VER
@@ -41,7 +41,7 @@ GamePlayerInfo::GamePlayerInfo(const unsigned playerid) :
 	ps(PS_FREE),
 	is_host(false),
 	nation(NAT_AFRICANS),
-	team(0),
+	team(TM_NOTEAM),
 	color(0),
 	ping(0),
 	rating(0),
@@ -49,16 +49,26 @@ GamePlayerInfo::GamePlayerInfo(const unsigned playerid) :
 {
 }
 
+/// Deserialisierungskonstruktor
+GamePlayerInfo::GamePlayerInfo(const unsigned playerid, Serializer * ser) :
+	playerid(playerid),
+	ps(PlayerState(ser->PopUnsignedChar())),
+	name(ser->PopString()),
+	origin_name(ser->PopString()),
+	is_host(ser->PopBool()),
+	nation(Nation(ser->PopUnsignedChar())),
+	team(Team(ser->PopUnsignedChar())),
+	color(ser->PopUnsignedChar()),
+	ping(ser->PopUnsignedInt()),
+	rating(ser->PopUnsignedShort()),
+	ready(ser->PopBool())
+{
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Destruktor
 GamePlayerInfo::~GamePlayerInfo(void)
 {
-	if(nfc_queue.size() > 0)
-	{
-		for(list<GameMessage*>::iterator it = nfc_queue.begin(); it.valid(); ++it)
-			delete *it;
-		nfc_queue.clear();
-	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -67,31 +77,26 @@ void GamePlayerInfo::clear(void)
 {
 	name = "";
 	defeated = false;
-
 	ps = PS_FREE;
-	
 	/*nation = team = color = 0;*/
-
 	ping = rating  = 0;
-
-
 	ready = false;
-
-	if(nfc_queue.size() > 0)
-	{
-		for(list<GameMessage*>::iterator it = nfc_queue.begin(); it.valid(); ++it)
-			delete *it;
-		nfc_queue.clear();
-	}
 }
 
-
-
-///////////////////////////////////////////////////////////////////////////////
-// liefert ob der Player schon belegt ist
-bool GamePlayerInfo::isValid()
+/// serialisiert die Daten.
+void GamePlayerInfo::serialize(Serializer * ser) const
 {
-	return (ps == PS_RESERVED || ps == PS_OCCUPIED);
+	ser->PushUnsignedChar(static_cast<unsigned char>(ps));
+	ser->PushString(name);
+	ser->PushString(origin_name);
+	ser->PushBool(is_host);
+	ser->PushUnsignedChar(static_cast<unsigned char>(nation));
+	ser->PushUnsignedChar(team);
+	ser->PushUnsignedChar(color);
+	ser->PushUnsignedInt(ping);
+	ser->PushUnsignedShort(rating);
+	ser->PushBool(ready);
+	
 }
 
 void GamePlayerInfo::SwapPlayer(GamePlayerInfo& two)
@@ -105,6 +110,5 @@ void GamePlayerInfo::SwapPlayer(GamePlayerInfo& two)
 	Swap(rating,two.rating);
 	Swap(checksum,two.checksum);
 	Swap(ready,two.ready);
-	Swap(nfc_queue,two.nfc_queue);
 }
 

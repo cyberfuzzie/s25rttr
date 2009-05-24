@@ -1,4 +1,4 @@
-// $Id: iwDirectIPConnect.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: iwDirectIPConnect.cpp 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -52,11 +52,11 @@ iwDirectIPConnect::iwDirectIPConnect(unsigned int server_type)
 
 	// "IP - Adresse vom Host"
 	AddText(0, 20, 30, _("IP Address of Host:"), COLOR_YELLOW, 0, NormalFont);
-	host = AddEdit(1, 20, 45, 260, 22, TC_GREEN2, NormalFont, 0, false, (server_type == NP_DEPENDENT),  true);
+	host = AddEdit(1, 20, 45, 260, 22, TC_GREEN2, NormalFont, 0, false, (server_type == NP_LOBBY),  true);
 
 	// "Server-Port"
 	AddText(2, 20, 80, _("Server-Port:"), COLOR_YELLOW, 0, NormalFont);
-	port = AddEdit(3, 20, 95, 260, 22, TC_GREEN2, NormalFont, 0, false, (server_type == NP_DEPENDENT),  true);
+	port = AddEdit(3, 20, 95, 260, 22, TC_GREEN2, NormalFont, 0, false, (server_type == NP_LOBBY),  true);
 
 	// "Passwort (falls vorhanden)"
 	AddText(4, 20, 130, _("Password (if needed):"), COLOR_YELLOW, 0, NormalFont);

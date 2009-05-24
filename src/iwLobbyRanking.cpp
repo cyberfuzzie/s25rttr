@@ -1,4 +1,4 @@
-// $Id: iwLobbyRanking.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: iwLobbyRanking.cpp 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -56,6 +56,7 @@ void iwLobbyRanking::UpdateRankings(bool first)
 		{
 			for(unsigned int i = 0; i < rankinglist->getCount() && i < 10; ++i)
 			{
+				const LobbyPlayerInfo *player = rankinglist->getElement(i);
 				char gewonnen[128], verloren[128], punkte[128];
 				snprintf(punkte, 128, "%d", rankinglist->getElement(i)->getPunkte());
 				snprintf(verloren, 128, "%d", rankinglist->getElement(i)->getVerloren());

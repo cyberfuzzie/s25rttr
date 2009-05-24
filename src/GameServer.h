@@ -1,4 +1,4 @@
-// $Id: GameServer.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: GameServer.h 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -22,27 +22,28 @@
 
 #pragma once
 
+#include "Singleton.h"
 #include "Socket.h"
 
-#include "Singleton.h"
-#include "GameProtocol.h"
+#include "GameMessageInterface.h"
+
 #include "GlobalGameSettings.h"
-#include <string>
+#include "GamePlayerList.h"
 
 
 class GameServerPlayer;
-class GameMessage;
 class GlobalGameSettings;
 struct CreateServerInfo;
+class GameMessage;
 
-class GameServer : public Singleton<GameServer>
+class GameServer : public Singleton<GameServer>, public GameMessageInterface
 {
 public:
 	GameServer(void);
 	~GameServer(void);
 
 	/// "Versucht" den Server zu starten (muss ggf. erst um Erlaubnis beim LobbyClient fragen)
-	bool TryToStart(const CreateServerInfo& csi, const std::string& map_path, const unsigned map_type);
+	bool TryToStart(const CreateServerInfo& csi, const std::string& map_path, const MapType map_type);
 	/// Startet den Server, muss vorher TryToStart aufgerufen werden!
 	bool Start();
 
@@ -76,32 +77,24 @@ protected:
 	void FillPlayerQueues(void);
 
 	/// Sendet ein NC-Paket ohne Befehle
-	void SendNothingNC(const unsigned char player);
-
-	void HandleMessage(GameMessage *message, unsigned char client);
-	void HandleGameMessage(GameMessage *message, unsigned char client);
+	void SendNothingNC(const unsigned int &id);
 
 	/// Generiert einen KI-Namen
 	void SetKIName(const unsigned player_id);
 
 private:
-	void OnNMSPong(GameMessage *message, unsigned char client);
+	void OnNMSPong(const GameMessage_Pong& msg);
+	void OnNMSServerType(const GameMessage_Server_Type& msg);
+	void OnNMSServerPassword(const GameMessage_Server_Password& msg);
+	void OnNMSServerChat(const GameMessage_Server_Chat& msg);
+	void OnNMSPlayerName(const GameMessage_Player_Name& msg);
+	void OnNMSPlayerToggleNation(const GameMessage_Player_Toggle_Nation& msg);
+	void OnNMSPlayerToggleTeam(const GameMessage_Player_Toggle_Team& msg);
+	void OnNMSPlayerToggleColor(const GameMessage_Player_Toggle_Color& msg);
+	void OnNMSPlayerReady(const GameMessage_Player_Ready& msg);
+	void OnNMSMapChecksum(const GameMessage_Map_Checksum& msg);
+	void OnNMSGameCommand(const GameMessage_GameCommand& msg);
 
-	void OnNMSServerType(GameMessage *message, unsigned char client);
-	void OnNMSServerPassword(GameMessage *message, unsigned char client);
-	void OnNMSServerChat(GameMessage *message, unsigned char client);
-
-	void OnNMSPlayerName(GameMessage *message, unsigned char client);
-	void OnNMSPlayerToggleNation(GameMessage *message, unsigned char client);
-	void OnNMSPlayerToggleTeam(GameMessage *message, unsigned char client);
-	void OnNMSPlayerToggleColor(GameMessage *message, unsigned char client);
-	void OnNMSPlayerReady(GameMessage *message, unsigned char client);
-
-	void OnNMSMapInfo(GameMessage *message, unsigned char client);
-	void OnNMSMapData(GameMessage *message, unsigned char client);
-	void OnNMSMapChecksum(GameMessage *message, unsigned char client);
-
-	void OnNMSNfcCommand(GameMessage *message, unsigned char client);
 
 private:
 	enum ServerState
@@ -157,11 +150,11 @@ private:
 		unsigned int checksum;
 		std::string name;
 		unsigned char *zipdata;
-		unsigned map_type;
+		MapType map_type;
 	} mapinfo;
 
 	Socket serversocket;
-	GameServerPlayer **players;
+	GameServerPlayerList players;
 	GlobalGameSettings ggs;
 };
 

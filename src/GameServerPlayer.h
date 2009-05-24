@@ -1,4 +1,4 @@
-// $Id: GameServerPlayer.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: GameServerPlayer.h 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -19,13 +19,23 @@
 #ifndef GAMESERVERPLAYER_H_INCLUDED
 #define GAMESERVERPLAYER_H_INCLUDED
 
+#pragma once
+
 #include "GamePlayerInfo.h"
+//#include "GameMessages.h"
+#include "MessageQueue.h"
+
+#include <list>
+
+class GameMessage_GameCommand;
+class Serializer;
 
 // GamePlayerInfo für die PlayerSlots des Servers
 class GameServerPlayer : public GamePlayerInfo
 {
 public:
 	GameServerPlayer(const unsigned playerid);
+	GameServerPlayer(const unsigned playerid, Serializer * ser);
 	~GameServerPlayer();
 
 	/// Gibt Sekunden bis zum TimeOut (Rausschmiss) zurück
@@ -48,14 +58,16 @@ private:
 
 	unsigned int connecttime;
 	/// Zeitpunkt, ab dem kein Kommando mehr vom Spieler kommt
-	unsigned int last_command_timeout;
+	unser_time_t last_command_timeout;
 
 public:
 	Socket so;
 	bool pinging;
 
-	GameMessageQueue send_queue;
-	GameMessageQueue recv_queue;
+	MessageQueue send_queue;
+	MessageQueue recv_queue;
+
+	std::list<GameMessage_GameCommand> gc_queue;
 
 	unsigned int lastping;
 

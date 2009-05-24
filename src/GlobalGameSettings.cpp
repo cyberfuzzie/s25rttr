@@ -1,4 +1,5 @@
-// $Id: GlobalGameSettings.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+
+// $Id: GlobalGameSettings.cpp 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -31,28 +32,24 @@
 	static char THIS_FILE[] = __FILE__;
 #endif
 
-unsigned char * GlobalGameSettings::Serialize() const
+void GlobalGameSettings::Serialize(Serializer * ser) const
 {
-	unsigned char * buffer = new unsigned char[GGS_BUFFER_SIZE];
-
-	buffer[0] = static_cast<unsigned char>(game_speed);
-	buffer[1] = static_cast<unsigned char>(game_objective);
-	buffer[2] = static_cast<unsigned char>(start_wares);
-	buffer[3] = lock_teams ? 1 : 0;
-	buffer[4] = static_cast<unsigned char>(exploration);
-	buffer[5] = team_view ? 1 : 0;
-	buffer[6] = static_cast<unsigned char>(demolition_prohibition);
-
-	return buffer;
+	ser->PushUnsignedChar( static_cast<unsigned char>(game_speed));
+	ser->PushUnsignedChar( static_cast<unsigned char>(game_objective));
+	ser->PushUnsignedChar( static_cast<unsigned char>(start_wares));
+	ser->PushBool(lock_teams);
+	ser->PushUnsignedChar( static_cast<unsigned char>(exploration));
+	ser->PushBool(team_view);
+	ser->PushUnsignedChar( static_cast<unsigned char>(demolition_prohibition));
 }
 
-void GlobalGameSettings::Deserialize(const unsigned char * buffer)
+void GlobalGameSettings::Deserialize(Serializer * ser)
 {
-	game_speed = static_cast<GameSpeed>(buffer[0]);
-	game_objective = static_cast<GameObjective>(buffer[1]);
-	start_wares = static_cast<StartWares>(buffer[2]);
-	lock_teams = (buffer[3] == 1) ? true : false;
-	exploration = static_cast<Exploration>(buffer[4]);
-	team_view = (buffer[5] == 1) ? true : false;
-	demolition_prohibition = static_cast<DemolitionProhibition>(buffer[6]);
+	game_speed = static_cast<GameSpeed>(ser->PopUnsignedChar());
+	game_objective = static_cast<GameObjective>(ser->PopUnsignedChar());
+	start_wares = static_cast<StartWares>(ser->PopUnsignedChar());
+	lock_teams = ser->PopBool();
+	exploration = static_cast<Exploration>(ser->PopUnsignedChar());
+	team_view = ser->PopBool();
+	demolition_prohibition = static_cast<DemolitionProhibition>(ser->PopUnsignedChar());
 }

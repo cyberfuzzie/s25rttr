@@ -1,4 +1,4 @@
-// $Id: SerializedGameData.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: SerializedGameData.h 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -22,10 +22,12 @@
 #pragma once
 
 #include <memory.h>
+#include <list>
 #include "list.h"
 #include "BinaryFile.h"
 #include "GameObject.h"
 #include "FOWObjects.h"
+#include "Serializer.h"
 
 class noBase;
 class GameObject;
@@ -33,14 +35,8 @@ class GameWorld;
 
 
 /// Kümmert sich um das Serialisieren der GameDaten fürs Speichern und Resynchronisieren
-class SerializedGameData
+class SerializedGameData : public Serializer
 {
-	/// Großer Buffer aller Daten
-	unsigned char * buffer;
-	/// Größe des Buffers
-	unsigned buffer_size;
-	/// Aktuelle Position im Buffer
-	unsigned pos;
 	/// Objektreferenzen
 	union
 	{
@@ -62,7 +58,6 @@ private:
 public:
 
 	SerializedGameData();
-	~SerializedGameData();
 
 	/// Nimmt das gesamte Spiel auf und speichert es im Buffer
 	void MakeSnapshot(GameWorld *const gw, EventManager *const em);
@@ -80,30 +75,6 @@ public:
 
 	/// Kopiermethoden
 
-	/// Rohdaten kopieren
-	void PushRawData(const void * const data, const unsigned length)
-	{ memcpy(buffer+pos,data,length); pos += length; }
-
-	/// Sämtliche Integer
-	void PushSignedInt(signed int i)
-	{ memcpy(buffer+pos,&i,4); pos+=4; }
-	void PushUnsignedInt(unsigned i)
-	{ memcpy(buffer+pos,&i,4); pos+=4; }
-
-	void PushSignedShort(signed short i)
-	{ memcpy(buffer+pos,&i,2); pos+=2; }
-	void PushUnsignedShort(unsigned short i)
-	{ memcpy(buffer+pos,&i,2); pos+=2; }
-
-	void PushSignedChar(signed char i)
-	{ buffer[pos] = i; ++pos; }
-	void PushUnsignedChar(unsigned char i)
-	{ buffer[pos] = i; ++pos; }
-
-	/// Booleans
-	void PushBool(const bool b)
-	{ buffer[pos] = b?1:0; ++pos; }
-
 	/// Objekt(referenzen) kopieren
 	void PushObject(const GameObject * go,const bool known); 
 
@@ -118,35 +89,22 @@ public:
 			PushObject(*it,known);
 	}
 
+	/// Kopiert eine Liste von GameObjects
+	template <typename T>
+	void PushObjectList(const std::list<T*>& gos,const bool known)
+	{
+		// Anzahl
+		PushUnsignedInt(gos.size());
+		// einzelne Objekte
+		for(typename std::list<T*>::const_iterator it = gos.begin(); it!=gos.end(); ++it)
+			PushObject(*it,known);
+	}
+
 	/// FoW-Objekt
 	void PushFOWObject(const FOWObject * fowobj);
 
 
 	// Lesemethoden
-
-	/// Rohdaten lesen
-	void PopRawData(void * const data, const unsigned length)
-	{ memcpy(data,buffer+pos,length); pos += length; }
-
-	/// Sämtliche Integer
-	signed int PopSignedInt()
-	{ signed int i; memcpy(&i,buffer+pos,4); pos+=4; return i; }
-	unsigned PopUnsignedInt()
-	{ unsigned i; memcpy(&i,buffer+pos,4); pos+=4; return i; }
-
-	signed short PopSignedShort()
-	{ signed short i; memcpy(&i,buffer+pos,2); pos+=2; return i;  }
-	unsigned short PopUnsignedShort()
-	{ unsigned short i; memcpy(&i,buffer+pos,2); pos+=2; return i;  }
-
-	signed char PopSignedChar()
-	{ return buffer[pos++]; }
-	unsigned char PopUnsignedChar()
-	{ return buffer[pos++]; }
-
-	/// Booleans
-	bool PopBool()
-	{ return (buffer[pos++]?true:false); }
 
 	/// Objekt(referenzen) lesen
 	template <typename T>
@@ -158,6 +116,17 @@ public:
 	/// Liest eine Liste von GameObjects
 	template <typename T>
 	void PopObjectList(list<T*>& gos,GO_Type got)
+	{
+		// Anzahl
+		unsigned size = PopUnsignedInt();
+		// einzelne Objekte
+		for(unsigned i = 0;i<size;++i)
+			gos.push_back(PopObject<T>(got));
+	}
+
+	/// Liest eine Liste von GameObjects
+	template <typename T>
+	void PopObjectList(std::list<T*>& gos,GO_Type got)
 	{
 		// Anzahl
 		unsigned size = PopUnsignedInt();

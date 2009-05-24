@@ -1,4 +1,4 @@
-// $Id: GameClientGF_Game.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: GameClientGF_Game.cpp 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -21,8 +21,8 @@
 // Header
 #include "main.h"
 #include "GameClient.h"
-
 #include "Random.h"
+#include "GameMessages.h"
 
 void GameClient::ExecuteGameFrame_Game()
 {
@@ -33,30 +33,26 @@ void GameClient::ExecuteGameFrame_Game()
 
 	int checksum = Random::inst().GetCurrentRandomValue();
 
-	for(unsigned char i = 0; i < player_count; ++i)
+	for(unsigned char i = 0; i < players.getCount(); ++i)
 	{
-		if(players[i]->ps == PS_OCCUPIED || players[i]->ps == PS_KI)
+		if(players[i].ps == PS_OCCUPIED || players[i].ps == PS_KI)
 		{
-			GameMessage *nfc = *players[i]->nfc_queue.begin();
-
-			// Nachricht abwerfen :)
-			players[i]->nfc_queue.pop_front();
+			GameMessage_GameCommand& msg = players[i].gc_queue.front();
 
 			// Command im Replay aufzeichnen (wenn nicht gerade eins schon läuft xD)
 			// Nur Commands reinschreiben, KEINE PLATZHALTER (nc_count = 0)
-			if(static_cast<unsigned char*>(nfc->m_pData)[5] > 0 && !replay_mode)
+			if(msg.gcs.size() > 0 && !replay_mode)
 			{
 				// Aktuelle Checksumme reinschreiben
-				*(int*)(static_cast<unsigned char*>(nfc->m_pData)+1) = checksum;
-				replayinfo.replay.AddGameCommand(framesinfo.nr,nfc->m_uiLength,static_cast<unsigned char*>(nfc->m_pData));
+				GameMessage_GameCommand tmp(msg.player,checksum,msg.gcs);
+				replayinfo.replay.AddGameCommand(framesinfo.nr,tmp.GetLength(),tmp.GetData());
 			}
 
 			// Das ganze Zeug soll die andere Funktion ausführen
-			ExecuteAllNCs(static_cast<unsigned char*>(nfc->m_pData)+5,
-				*static_cast<unsigned char*>(nfc->m_pData),
-				&player_switch_old_id,&player_switch_new_id);
+			ExecuteAllGCs(msg,&player_switch_old_id,&player_switch_new_id);
 
-			delete nfc;
+			// Nachricht abwerfen :)
+			players[i].gc_queue.pop_front();
 		}
 	}
 
@@ -66,48 +62,11 @@ void GameClient::ExecuteGameFrame_Game()
 	//LOG.lprintf("%d = %d - %d\n", framesinfo.nr / framesinfo.nwf_length, checksum, Random::inst().GetCurrentRandomValue());
 
 	// Stehen eigene Commands an, die gesendet werden müssen?
-	if(nfc_queue.size())
-	{
-		GameMessage *nfc_commands = send_queue.push(NMS_NFC_COMMANDS);
+	send_queue.push(new GameMessage_GameCommand(playerid,checksum,gcs));
 
-		// Größe des Buffers berechnen (+1 für Anzahl, jeweils +2 für Länge)
-		for(list<GameMessage*>::iterator it = nfc_queue.begin();it.valid();++it)
-			nfc_commands->m_uiLength+=((*it)->m_uiLength+2);
+	// alles gesendet --> Liste löschen
+	gcs.clear();
 
-		// +4 für Checksumme, +1 für Anzahl Commands
-		nfc_commands->m_uiLength+=5;
-
-		nfc_commands->m_pData = new unsigned char[nfc_commands->m_uiLength];
-
-		// Checksumme (4 Byte)
-		static_cast<int*>(nfc_commands->m_pData)[0] = checksum;
-		// Anzahl der Commands
-		static_cast<unsigned char*>(nfc_commands->m_pData)[4] = static_cast<unsigned char>(nfc_queue.size());
-
-		// Alle Commands in den Buffer kopieren
-		unsigned pos = 5;
-		for(list<GameMessage*>::iterator it = nfc_queue.begin();it.valid();++it)
-		{
-			unsigned short length = static_cast<unsigned short>((*it)->m_uiLength);
-			// Länge des Commands (unsigned short)
-			memcpy(&(static_cast<unsigned char*>(nfc_commands->m_pData)[pos]),&length,2);
-			// Daten des Commands
-			memcpy(&(static_cast<unsigned char*>(nfc_commands->m_pData)[pos+2]),(*it)->m_pData,(*it)->m_uiLength);
-
-			pos+=((*it)->m_uiLength+2);
-
-			// Message zerstören
-			delete (*it);
-		}
-
-		// alles gesendet --> Liste löschen
-		nfc_queue.clear();
-	}
-	else
-	{
-		// Ansonsten Nothing-Command senden, nur um zu sagen, dass wir den jetzigen Frame geschafft haben
-		SendNothingNC(checksum);
-	}
 
 	// Evtl Spieler wechseln?
 	if(player_switch_old_id != 255)

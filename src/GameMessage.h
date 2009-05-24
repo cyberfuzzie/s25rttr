@@ -1,4 +1,4 @@
-// $Id: GameMessage.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: GameMessage.h 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -16,41 +16,50 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Siedler II.5 RTTR. If not, see <http://www.gnu.org/licenses/>.
-
 #ifndef GAMEMESSAGE_H_INCLUDED
 #define GAMEMESSAGE_H_INCLUDED
 
 #pragma once
 
-class Socket;
+#include "Message.h"
 
-class GameMessage
+class GameMessage : public Message
 {
 public:
+	/// Spieler-ID, von dem diese Nachricht stammt
+	unsigned char player;
+public:
+	GameMessage(const unsigned short id) : Message(id) {}
 	/// Konstruktor von @p GameMessage.
-	GameMessage(void);
-	/// Konstruktor von @p GameMessage.
-	GameMessage(unsigned short id);
-	/// Konstruktor von @p GameMessage.
-	GameMessage(unsigned short id, unsigned int length);
-	/// Kopierkonstruktor von @p GameMessage.
-	GameMessage(const GameMessage &msg); // Copykonstruktor
+	GameMessage(const unsigned short id, const unsigned char player) 
+		: Message(id), player(player)
+	{
+		PushUnsignedChar(player);
+	}
+	/// Konstruktor, um Message aus vorhandenem Datenblock heraus zu erstellen
+	GameMessage(const unsigned id, const unsigned char * const data, const unsigned length)
+		: Message(id, data, length), player(PopUnsignedChar())
+		{
+		}
 	/// Destruktor von @p GameMessage.
-	~GameMessage(void);
+	virtual ~GameMessage(void) {};
 
-public:
-	void clear();
-	void alloc(void);
-	void alloc(const void *data);
-	void *alloc(unsigned int length);
+	/// Run Methode für GameMessages, wobei PlayerID ggf. schon in der Message festgemacht wurde
+	virtual void Run(MessageInterface *callback) = 0;
 
-	bool send(Socket *sock);
-	int recv(Socket *sock, bool wait = false);
+	virtual void run(MessageInterface *callback, unsigned int id)
+	{
+		player = PopUnsignedChar();
+		if(id != 0xFFFFFFFF)
+			player = static_cast<unsigned char>(id);
+		Run(callback);
+	}
 
-public:
-	unsigned short m_usID;
-	unsigned int m_uiLength;
-	void *m_pData;
+	/// Gibt Netto-Länge der Message zurück ohne zusätzliche Daten (Player usw)
+	unsigned GetNetLength() const { return GetLength() -1; }
+
+	static Message *create_game(unsigned short id);
+	virtual Message *create(unsigned short id) const { return create_game(id); }
 };
 
 #endif // GAMEMESSAGE_H_INCLUDED

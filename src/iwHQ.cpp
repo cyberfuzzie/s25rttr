@@ -1,4 +1,4 @@
-// $Id: iwHQ.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: iwHQ.cpp 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -26,6 +26,7 @@
 #include "nobHQ.h"
 #include "ctrlGroup.h"
 #include "GameClient.h"
+#include "GameCommands.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -77,17 +78,13 @@ void iwHQ::Msg_Group_ButtonClick(const unsigned int group_id, const unsigned int
 	if(ctrl_id >= 11 && ctrl_id < 16)
 	{
 		// Netzwerk-Nachricht generieren
-		GameClient::inst().NC_DecreaseReserve(wh->GetX(),wh->GetY(),ctrl_id-11);
-		// Visuelle Anzahl schonmal erniedrigen
-		wh->DecreaseReserveVisual(ctrl_id-11);
+		GameClient::inst().AddGC(new gc::ChangeReserve(wh->GetX(),wh->GetY(),ctrl_id-11,wh->DecreaseReserveVisual(ctrl_id-11)));
 	}
 	// Plus-Button
 	else if(ctrl_id >= 16 && ctrl_id < 21)
 	{
 		// Netzwerk-Nachricht generieren
-		GameClient::inst().NC_IncreaseReserve(wh->GetX(),wh->GetY(),ctrl_id-16);
-		// Visuelle Anzahl schonmal erniedrigen
-		wh->IncreaseReserveVisual(ctrl_id-16);
+		GameClient::inst().AddGC(new gc::ChangeReserve(wh->GetX(),wh->GetY(),ctrl_id-11,wh->IncreaseReserveVisual(ctrl_id-16)));
 	}
 
 	

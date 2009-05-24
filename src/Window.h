@@ -1,4 +1,4 @@
-// $Id: Window.h 4836 2009-05-08 20:31:23Z OLiver $
+// $Id: Window.h 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -19,14 +19,12 @@
 #ifndef WINDOW_H_INCLUDED
 #define WINDOW_H_INCLUDED
 
-#include <utility>
-#include <map>
-#include <string>
-#include <vector>
+#pragma once
 
 #include "CollisionDetection.h"
 
-#include "Messages.h"
+#include "MouseAndKeys.h"
+#include "Msgbox.h"
 #include "GameConsts.h"
 #include "colors.h"
 

@@ -1,4 +1,4 @@
-// $Id: iwTextfile.cpp 4815 2009-05-05 15:51:01Z OLiver $
+// $Id: iwTextfile.cpp 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -29,9 +29,6 @@
 #include "Settings.h"
 #include "iwMsgbox.h"
 #include "WindowManager.h"
-
-#include <fstream>
-#include <string>
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines

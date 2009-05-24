@@ -1,4 +1,4 @@
-// $Id: iwTools.cpp 4784 2009-05-02 20:43:44Z OLiver $
+// $Id: iwTools.cpp 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -25,6 +25,8 @@
 #include "Loader.h"
 #include "GameClient.h"
 #include "controls.h"
+
+#include "GameCommands.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -86,7 +88,7 @@ void iwTools::TransmitSettings()
 			GAMECLIENT.visual_settings.tools_settings[i] = 
 			(unsigned char)GetCtrl<ctrlProgress>(i)->GetPosition();
 
-		GAMECLIENT.NC_ChangeTools(GAMECLIENT.visual_settings.tools_settings);
+		GAMECLIENT.AddGC(new gc::ChangeTools(GAMECLIENT.visual_settings.tools_settings));
 
 		settings_changed = false;
 	}

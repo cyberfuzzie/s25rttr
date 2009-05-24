@@ -1,4 +1,4 @@
-// $Id: iwBuilding.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: iwBuilding.cpp 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -29,6 +29,7 @@
 #include "GameClient.h"
 #include "controls.h"
 #include "WindowManager.h"
+#include "GameCommands.h"
 
 #include "iwMsgbox.h"
 
@@ -172,7 +173,7 @@ void iwBuilding::Msg_ButtonClick(const unsigned int ctrl_id)
 				// visuell anzeigen
 				building->StopProductionVirtual();
 				// NC senden
-				GAMECLIENT.NC_StopProduction(building->GetX(), building->GetY());
+				GAMECLIENT.AddGC(new gc::StopProduction(building->GetX(), building->GetY()));
 				// anderes Bild auf dem Button
 				if(building->IsProductionDisabledVirtual())
 					GetCtrl<ctrlImageButton>(6)->SetImage(GetImage(io_dat, 197));

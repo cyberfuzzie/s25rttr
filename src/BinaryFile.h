@@ -1,4 +1,4 @@
-// $Id: BinaryFile.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: BinaryFile.h 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -18,9 +18,6 @@
 // along with Siedler II.5 RTTR. If not, see <http://www.gnu.org/licenses/>.
 #ifndef BINARY_FILE_H_
 #define BINARY_FILE_H_
-
-#include <stdio.h>
-#include <string>
 
 class String;
 

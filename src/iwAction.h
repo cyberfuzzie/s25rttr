@@ -1,4 +1,4 @@
-// $Id: iwAction.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: iwAction.h 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -82,7 +82,6 @@ private:
 	void Msg_Group_TabChange(const unsigned group_id,const unsigned int ctrl_id, const unsigned short tab_id);
 	void Msg_PaintAfter();
 
-	inline void OnMsgGroup(unsigned int id, ctrlGroup *group, ctrlGroup::MsgParam param);
 	inline void Msg_ButtonClick_TabBuild(const unsigned int ctrl_id);
 	inline void Msg_ButtonClick_TabCutRoad(const unsigned int ctrl_id);
 	inline void Msg_ButtonClick_TabFlag(const unsigned int ctrl_id);

@@ -1,4 +1,4 @@
-// $Id: dskHostGame.cpp 4929 2009-05-23 23:01:13Z Demophobie $
+// $Id: dskHostGame.cpp 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -394,7 +394,7 @@ void dskHostGame::Msg_Group_ButtonClick(const unsigned int group_id, const unsig
 			if(player_id == GAMECLIENT.GetPlayerID())
 			{
 				GAMECLIENT.Command_ToggleTeam();
-				GAMECLIENT.GetLocalPlayer()->team = (GAMECLIENT.GetLocalPlayer()->team + 1) % 6;
+				GAMECLIENT.GetLocalPlayer()->team = Team((GAMECLIENT.GetLocalPlayer()->team + 1) % TEAM_COUNT);
 				ChangeTeam(GAMECLIENT.GetPlayerID(),GAMECLIENT.GetLocalPlayer()->team);
 			}
 		} break;
@@ -551,7 +551,7 @@ void dskHostGame::UpdateGGS()
 void dskHostGame::ChangeTeam(const unsigned i, const unsigned char nr)
 {
 	const std::string teams[6] =
-	{ "-", "1","2","3","4","?" };
+	{ "-","?", "1","2","3","4", };
 
 	GetCtrl<ctrlGroup>(58-i)->GetCtrl<ctrlBaseText>(5)->SetText(teams[nr]);
 }

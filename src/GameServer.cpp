@@ -1,4 +1,4 @@
-// $Id: GameServer.cpp 4870 2009-05-15 21:27:56Z OLiver $
+// $Id: GameServer.cpp 4933 2009-05-24 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -28,6 +28,7 @@
 #include "Random.h"
 #include "VideoDriverWrapper.h"
 #include "GameMessage.h"
+#include "GameMessages.h"
 #include "GameClient.h"
 
 #include "FileChecksum.h"
@@ -91,7 +92,7 @@ void GameServer::MapInfo::Clear()
 	name ="";
 	delete [] zipdata;
 	zipdata = 0;
-	map_type = 0;
+	map_type = MAPTYPE_OLDMAP;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -103,8 +104,6 @@ GameServer::GameServer(void)
 	framesinfo.Clear();
 	serverconfig.Clear();
 	mapinfo.Clear();
-
-	players = NULL;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -116,7 +115,7 @@ GameServer::~GameServer(void)
 
 ///////////////////////////////////////////////////////////////////////////////
 // Spiel hosten
-bool GameServer::TryToStart(const CreateServerInfo& csi, const std::string& map_path, const unsigned map_type)
+bool GameServer::TryToStart(const CreateServerInfo& csi, const std::string& map_path, const MapType map_type)
 {
 	Stop();
 
@@ -169,7 +168,7 @@ bool GameServer::TryToStart(const CreateServerInfo& csi, const std::string& map_
 
 	// Von Lobby abhängig? Dann der Bescheid sagen und auf eine Antwort warten, dass wir den Server
 	// erstellen dürfen
-	if(serverconfig.servertype == NP_DEPENDENT)
+	if(serverconfig.servertype == NP_LOBBY)
 	{
 		LOBBYCLIENT.AddServer(serverconfig.gamename.c_str(), map_title.c_str(), (serverconfig.password.length() != 0), serverconfig.port);
 		return true;
@@ -219,10 +218,8 @@ bool GameServer::Start()
 	mapinfo.partcount = mapinfo.ziplength / 4096 +  ( (mapinfo.ziplength%4096) ? 1 : 0);
 
 	// Speicher für Spieler anlegen
-	players = new GameServerPlayer*[serverconfig.playercount];
-	for(unsigned char i = 0; i < serverconfig.playercount; ++i)
-		players[i] = new GameServerPlayer(i);
-
+	for(unsigned i =0;i<serverconfig.playercount;++i)
+		players.push_back(GameServerPlayer(i));
 
 	bool host_found = false;
 
@@ -232,7 +229,7 @@ bool GameServer::Start()
 	case MAPTYPE_OLDMAP:
 		{
 			// Host bei normalen Spieler der erste Spieler
-			players[0]->is_host = true;
+			players[0].is_host = true;
 		} break;
 	case MAPTYPE_SAVEGAME:
 		{
@@ -244,33 +241,33 @@ bool GameServer::Start()
 			for(unsigned char i = 0;i<serverconfig.playercount;++i)
 			{
 				// PlayerState
-				players[i]->ps = PlayerState(save.players[i].ps);
+				players[i].ps = PlayerState(save.players[i].ps);
 
-				if(players[i]->ps != PS_LOCKED)
+				if(players[i].ps != PS_LOCKED)
 				{
 					// (ehemaliger) Spielername
-					players[i]->origin_name = save.players[i].name;
+					players[i].origin_name = save.players[i].name;
 
 					// Volk, Team und Farbe
-					players[i]->nation = save.players[i].nation;
-					players[i]->color = save.players[i].color;
-					players[i]->team = save.players[i].team;
+					players[i].nation = save.players[i].nation;
+					players[i].color = save.players[i].color;
+					players[i].team = Team(save.players[i].team);
 					
 				}
 
 				// Besetzt --> freigeben, damit auch jemand reinkann
-				if(players[i]->ps == PS_OCCUPIED)
+				if(players[i].ps == PS_OCCUPIED)
 				{
-					players[i]->ps = PS_FREE;
+					players[i].ps = PS_FREE;
 					// Erster richtiger Spieler? Dann ist das der Host später
 					if(!host_found)
 					{
-						players[i]->is_host = true;
+						players[i].is_host = true;
 						host_found = true;
 					}
 				}
 				// KI-Spieler? Namen erzeugen
-				else if(players[i]->ps == PS_KI)
+				else if(players[i].ps == PS_KI)
 					SetKIName(i);
 			}
 
@@ -278,10 +275,7 @@ bool GameServer::Start()
 			ggs = save.ggs;
 		} break;
 	}
-	
 
-	if(players == NULL)
-		return false;
 
 	// ab in die Konfiguration
 	status = SS_CONFIG;
@@ -320,50 +314,17 @@ void GameServer::Run(void)
 	// queues abarbeiten
 	for(unsigned int client = 0; client < serverconfig.playercount; ++client)
 	{
-		GameServerPlayer *player = players[client];
+		GameServerPlayer *player = &players[client];
 		unsigned char count = 0;
 
-		// send-queue abarbeiten
-		while(player->send_queue.count() > 0)
-		{
-			// maximal 10 Pakete verschicken
-			if(count > 10)
-				break;
-
-			GameMessage *m = player->send_queue.front();
-
-			// maximal 1 großes Paket verschicken
-			if(count > 0 && m->m_uiLength > 512)
-				break;
-
-			if(m->m_usID > 0)
-			{
-				if(!m->send(&player->so))
-				{
-					LOG.lprintf("SERVER: Sending Message for player %d failed, kick it like Beckham!\n", client);
-					KickPlayer(client, NP_CONNECTIONLOST, 0);
-				}
-				else
-				{
-					player->send_queue.pop();
-					++count;
-				}
-			}
-		}
+		// maximal 10 Pakete verschicken
+		player->send_queue.send(&player->so, 10);
 
 		// recv-queue abarbeiten
 		while(player->recv_queue.count() > 0)
 		{
-			GameMessage *m = player->recv_queue.front();
+			player->recv_queue.front()->run(this, client);
 			player->recv_queue.pop();
-
-			if(m->m_usID > 0)
-			{
-				if(status == SS_CONFIG)
-					HandleMessage(m, client);
-				if(status == SS_GAME)
-					HandleGameMessage(m, client);
-			}
 		}
 	}
 }
@@ -373,19 +334,7 @@ void GameServer::Run(void)
 void GameServer::Stop(void)
 {
 	// player verabschieden
-	if(players)
-	{
-		for(unsigned char client = 0; players && client < serverconfig.playercount; ++client)
-		{
-			if(players[client]->isValid())
-				KickPlayer(client, NP_CONNECTIONLOST, 0);
-			delete players[client];
-		}
-
-		// und beerdigen
-		delete[] players;
-		players = NULL;
-	}
+	players.clear();
 
 	// aufräumen
 	framesinfo.Clear();
@@ -413,7 +362,7 @@ bool GameServer::StartGame()
 	// Alle Spieler da?
 	for(client = 0; client < serverconfig.playercount; ++client)
 	{
-		player = players[client];
+		player = &players[client];
 
 		// noch nicht alle spieler da -> feierabend!
 		if( (player->ps == PS_FREE) || (player->ps == PS_RESERVED) )
@@ -428,7 +377,7 @@ bool GameServer::StartGame()
 	// Alle ne andere Farbe?
 	for(client = 0; client < serverconfig.playercount; ++client)
 	{
-		player = players[client];
+		player = &players[client];
 
 		if( (player->ps == PS_OCCUPIED) || (player->ps == PS_KI) )
 		{
@@ -440,18 +389,16 @@ bool GameServer::StartGame()
 		}
 	}
 
-	NS_StartGameInfo nsgi;
-	// Bei Savegames wird der Startwert von den Clients aus der Datei gelesen!
-	nsgi.random_init = (mapinfo.map_type==MAPTYPE_SAVEGAME)?0xFFFFFFFF:VideoDriverWrapper::inst().GetTickCount();
 
-	
+	// Bei Savegames wird der Startwert von den Clients aus der Datei gelesen!
+	unsigned random_init = (mapinfo.map_type==MAPTYPE_SAVEGAME)?0xFFFFFFFF:VideoDriverWrapper::inst().GetTickCount();
 
 	// Höchsten Ping ermitteln
 	unsigned highest_ping = 0;
 
 	for(client = 0; client < serverconfig.playercount; ++client)
 	{
-		player = players[client];
+		player = &players[client];
 
 		if(player->ps == PS_OCCUPIED)
 		{
@@ -472,19 +419,14 @@ bool GameServer::StartGame()
 
 	framesinfo.nwf_length = i*gf_length;
 
-	nsgi.nwf_length = i;
-		
+	GameMessage_Server_Start start_msg(random_init,i);
 
 	LOG.lprintf("SERVER: Using gameframe length of %dms\n", gf_length);
 	LOG.lprintf("SERVER: Using networkframe length of %ums\n", framesinfo.nwf_length);
 
-	GameMessage startmessage(NMS_SERVER_START);
-	startmessage.m_uiLength = sizeof(NS_StartGameInfo);
-	startmessage.alloc(&nsgi);
-
 	// Spielstart allen mitteilen
-	SendToAll(startmessage);
-	LOG.write("SERVER >>> BROADCAST: NMS_SERVER_START(%d)\n", nsgi.random_init);
+	SendToAll(start_msg);
+	LOG.write("SERVER >>> BROADCAST: NMS_SERVER_START(%d)\n", random_init);
 
 	// ab ins game wechseln
 	status = SS_GAME;
@@ -492,13 +434,12 @@ bool GameServer::StartGame()
 	framesinfo.lasttime = VideoDriverWrapper::inst().GetTickCount();
 
 	// Spielstart allen mitteilen
-	GameMessage firstframe(NMS_NFC_DONE);
-	SendToAll(firstframe);
+	SendToAll(GameMessage_Server_NWFDone(0xff));
 
 	// Erste KI-Nachrichten schicken
 	for(unsigned char i = 0;i<this->serverconfig.playercount;++i)
 	{
-		if(players[i]->ps == PS_KI)
+		if(players[i].ps == PS_KI)
 		{
 			SendNothingNC(i);
 			//GameMessage nfc(NMS_NFC_ANSWER, 2);
@@ -519,7 +460,7 @@ bool GameServer::StartGame()
 // wechselt Spielerstatus durch
 void GameServer::TogglePlayerState(unsigned char client)
 {
-	GameServerPlayer *player = players[client];
+	GameServerPlayer *player = &players[client];
 
 	// oh ein spieler, weg mit ihm!
 	if(player->ps == PS_OCCUPIED)
@@ -544,14 +485,8 @@ void GameServer::TogglePlayerState(unsigned char client)
 	}
 	player->ready = (player->ps == PS_KI);
 
-	GameMessage msg(NMS_PLAYER_TOGGLESTATE);
-	msg.m_uiLength = 1;
-	msg.alloc(&client);
-
-	// tat verkünden!
-	SendToAll(msg);
-
-	LOG.write("SERVER >>> BROADCAST: NMS_PLAYER_TOGGLESTATE(%d)\n", client);
+	// Tat verkünden
+	SendToAll(GameMessage_Player_Toggle_State(client));
 
 	// freie farbe suchen lassen
 	bool reserved_colors[GAME_COLORS_COUNT];
@@ -560,7 +495,7 @@ void GameServer::TogglePlayerState(unsigned char client)
 	unsigned char rc = 0, cc = 0;
 	for(unsigned char cl = 0; cl < serverconfig.playercount; ++cl)
 	{
-		GameServerPlayer *ki = players[cl];
+		GameServerPlayer *ki = &players[cl];
 
 		if( (player != ki) && ( (ki->ps == PS_OCCUPIED) || (ki->ps == PS_KI) ) )
 			reserved_colors[ki->color] = true;
@@ -569,61 +504,53 @@ void GameServer::TogglePlayerState(unsigned char client)
 		if( ki->ps == PS_LOCKED )
 			++cc;
 	}
-	if(serverconfig.servertype == NP_DEPENDENT)
+	if(serverconfig.servertype == NP_LOBBY)
 		LOBBYCLIENT.UpdateServerPlayerCount(rc, serverconfig.playercount-cc);
 
 	// bis wir eine freie farbe gefunden haben!
-	// (while-schleife obwohl OnNMSPlayerToggleColor selbst schon eine freie sucht)
-	while(reserved_colors[player->color])
-	{
-		GameMessage msg(NMS_PLAYER_TOGGLECOLOR);
-		OnNMSPlayerToggleColor(&msg, client);
-	}
+	OnNMSPlayerToggleColor(GameMessage_Player_Toggle_Color(client,player->color));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Team der KI ändern
 void GameServer::TogglePlayerTeam(unsigned char client)
 {
-	GameServerPlayer *player = players[client];
+	GameServerPlayer *player = &players[client];
 
 	// nur KI
 	if(player->ps != PS_KI)
 		return;
 
 	// team wechseln
-	GameMessage msg(NMS_PLAYER_TOGGLETEAM);
-	OnNMSPlayerToggleTeam(&msg, client);
+	OnNMSPlayerToggleTeam(GameMessage_Player_Toggle_Team(client,player->team));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Farbe der KI ändern
 void GameServer::TogglePlayerColor(unsigned char client)
 {
-	GameServerPlayer *player = players[client];
+	GameServerPlayer *player = &players[client];
 
 	// nur KI
 	if(player->ps != PS_KI)
 		return;
 
 	// Farbe suchen lassen
-	GameMessage msg(NMS_PLAYER_TOGGLECOLOR);
-	OnNMSPlayerToggleColor(&msg, client);
+	OnNMSPlayerToggleColor(GameMessage_Player_Toggle_Color(client,player->color));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Nation der KI ändern
 void GameServer::TogglePlayerNation(unsigned char client)
 {
-	GameServerPlayer *player = players[client];
+	GameServerPlayer *player = &players[client];
 
 	// nur KI
 	if(player->ps != PS_KI)
 		return;
 
-	// nation wechseln
-	GameMessage msg(NMS_PLAYER_TOGGLENATION);
-	OnNMSPlayerToggleNation(&msg, client);
+	// Nation wechseln
+	OnNMSPlayerToggleNation(GameMessage_Player_Toggle_Nation(client,player->nation));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -631,44 +558,26 @@ void GameServer::TogglePlayerNation(unsigned char client)
 void GameServer::ChangeGlobalGameSettings(const GlobalGameSettings& ggs)
 {
 	this->ggs = ggs;
-
-	GameMessage msg(NMS_GGS_CHANGE);
-
-	// Einstellungen serialisieren
-	unsigned char *buffer = ggs.Serialize();
-
-	msg.m_uiLength = GlobalGameSettings::GGS_BUFFER_SIZE;
-	msg.alloc(buffer);
-
-	delete[] buffer;
-
-	// und verschicken
-	SendToAll(msg);
-
+	SendToAll(GameMessage_GGSChange(ggs));
 	LOG.write("SERVER >>> BROADCAST: NMS_GGS_CHANGE\n");
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// Nachricht an Alle
+/**
+ *  Nachricht an Alle
+ *
+ *  @author FloSoft
+ *  @author OLiver
+ */
 void GameServer::SendToAll(const GameMessage& msg)
 {
-	unsigned char client = 0xFF;
-	GameServerPlayer *player = NULL;
-
-	for(client = 0; client < serverconfig.playercount; ++client)
+	for(unsigned int id = id = 0; id < players.getCount(); ++id)
 	{
-		player = players[client];
+		GameServerPlayer *player = players.getElement(id);
 
-		// ist der slot belegt, dann nachricht senden
+		// ist der Slot Belegt, dann Nachricht senden
 		if(player->ps == PS_OCCUPIED)
-		{
-			/*if(!msg->send(&player->so))
-			{
-				LOG.lprintf("SERVER: Failed to send broadcast message to player %d, cya next life!\n", client);
-				KickPlayer(client, NP_CONNECTIONLOST, 0);
-			}*/
-			player->send_queue.push(msg);
-		}
+			player->send_queue.push(msg.duplicate());
 	}
 }
 
@@ -686,14 +595,15 @@ void GameServer::KickPlayer(unsigned char playerid, unsigned char cause, unsigne
 
 void GameServer::KickPlayer(NS_PlayerKicked npk)
 {
-	GameServerPlayer *player = players[npk.playerid];
+	GameServerPlayer *player = &players[npk.playerid];
 
 	// send-queue flushen
 	player->send_queue.flush(&player->so);
 
-	// deadmessage schicken
+/*	// deadmessage schicken
+	GameMessage_Player
 	GameMessage deadmessage(NMS_DEAD_MSG);
-	deadmessage.send(&player->so);
+	deadmessage.send(&player->so);*/
 
 	// töten, falls außerhalb
 	if(status == SS_GAME)
@@ -705,35 +615,26 @@ void GameServer::KickPlayer(NS_PlayerKicked npk)
 		player->clear();
 
 	// trauern
-	GameMessage msg(NMS_PLAYER_KICKED);
-	msg.m_uiLength = sizeof(NS_PlayerKicked);
-	msg.alloc(&npk);
+	// beleidskarte verschicken
+	SendToAll(GameMessage_Player_Kicked(npk.playerid,npk.cause,npk.param));
 
-	if(serverconfig.servertype == NP_DEPENDENT)
+	if(serverconfig.servertype == NP_LOBBY)
 	{
 		unsigned char rc = 0;
 		for(unsigned char cl = 0; cl < serverconfig.playercount; ++cl)
 		{
-			GameServerPlayer *ki = players[cl];
+			GameServerPlayer *ki = &players[cl];
 			if( (ki->ps == PS_OCCUPIED) || (ki->ps == PS_KI) )
 				++rc;
 		}
 		LOBBYCLIENT.UpdateServerPlayerCount(rc, serverconfig.playercount);
 	}
 
-	// beleidskarte verschicken
-	SendToAll(msg);
+	
 	LOG.write("SERVER >>> BROADCAST: NMS_PLAYERKICKED(%d,%d,%d)\n", npk.playerid, npk.cause, npk.param);
 
 	if(status == SS_GAME)
-	{
 		SendNothingNC(npk.playerid);
-		/*GameMessage nfc(NMS_NFC_ANSWER, 2);
-		unsigned char * data = static_cast<unsigned char*>(nfc.m_pData);
-		*data = npk.playerid;
-		*(data+1) = 0;
-		SendToAll(nfc);*/
-	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -750,10 +651,10 @@ void GameServer::ClientWatchDog()
 	// sockets zum set hinzufügen
 	for(client = 0; client < serverconfig.playercount; ++client)
 	{
-		if( players[client]->isValid() )
+		if( players[client].isValid() )
 		{
 			// zum set hinzufügen
-			set.Add(players[client]->so);
+			set.Add(players[client].so);
 		}
 	}
 
@@ -762,7 +663,7 @@ void GameServer::ClientWatchDog()
 	{
 		for(client = 0; client < serverconfig.playercount; ++client)
 		{
-			if(set.InSet(players[client]->so))
+			if(set.InSet(players[client].so))
 			{
 				LOG.lprintf("SERVER: Error on socket of player %d, bye bye!\n", client);
 				KickPlayer(client, NP_CONNECTIONLOST, 0);
@@ -772,7 +673,7 @@ void GameServer::ClientWatchDog()
 
 	for(client = 0; client < serverconfig.playercount; ++client)
 	{
-		 player = players[client];
+		 player = &players[client];
 
 		 // player anpingen
 		 player->doPing();
@@ -796,11 +697,11 @@ void GameServer::ClientWatchDog()
 
 				for(client = 0; client < serverconfig.playercount; ++client)
 				{
-					player = players[client];
+					player = &players[client];
 
 					if(player->ps == PS_OCCUPIED)
 					{
-						if(player->nfc_queue.size() == 0)
+						if(player->gc_queue.size() == 0)
 						{
 							// der erste, der erwischt wird, bekommt den zuschlag ;-)
 							lagging_player = client;
@@ -823,11 +724,11 @@ void GameServer::ClientWatchDog()
 
 					for(client = 0; client < serverconfig.playercount; ++client)
 					{
-						player = players[client];
+						player = &players[client];
 					/*	player->timeout = 30;
 						player->lasttimeout = 0;*/
 
-						if(player->nfc_queue.size() > 0)
+						if(player->gc_queue.size() > 0)
 						{
 							// Spieler laggt nicht (mehr ggf)
 							player->NotLagging();
@@ -835,65 +736,45 @@ void GameServer::ClientWatchDog()
 							// Checksumme des ersten Spielers als Richtwert
 							if(!took_checksum)
 							{
-								checksum = *static_cast<int*>((*player->nfc_queue.begin())->m_pData);
+								checksum = player->gc_queue.front().checksum;
 								took_checksum = true;
 							}
 
-							GameMessage * gw = (*player->nfc_queue.begin());
 							// Checksumme merken, da die Nachricht dann wieder entfernt wird
-							player->checksum = *static_cast<int*>((*players[client]->nfc_queue.begin())->m_pData);
+							player->checksum = player->gc_queue.front().checksum;
 
-							if(gw->m_uiLength > 0)
+							for(std::vector<gc::GameCommand*>::iterator it = player->gc_queue.front().gcs.begin();
+								it != player->gc_queue.front().gcs.end();++it)
 							{
-								// Spielerwechsel (alle NCs durchgehen und nach Spielerwechselcommand suchen)
-								unsigned char * p = static_cast<unsigned char*>(gw->m_pData);
-								// Checksumme überspringen
-								p+=4;
-								// NC-Anzahl auslesen
-								unsigned char nc_count = *p;
-
-								++p;
-
-								for(unsigned char i = 0;i<nc_count;++i)
+								if((*it)->GetType() == gc::SWITCHPLAYER)
 								{
-									// Länge des Commands
-
-									unsigned short length = *((unsigned short*)p);
-									p+=2;
-									if(length > 0)
-									{
-										// Daten
-										if(*((unsigned short*)p) == NC_SWITCHPLAYER)
-										{
-											// Dann merken und NACH der Schleife erst wechseln!
-											player_switch_old_id = client;
-											player_switch_new_id = p[2];
-										}
-										p+=length;
-									}
+									// Dann merken und NACH der Schleife erst wechseln!
+									player_switch_old_id = client;
+									player_switch_new_id = dynamic_cast<gc::SwitchPlayer*>(*it)->new_player_id;
 								}
-							}
 
-							delete gw;
-							player->nfc_queue.pop_front();
+							}
+		
+							player->gc_queue.pop_front();
 							
 							//LOG.lprintf("%d = %d - %d\n", framesinfo.nr, checksum, Random::inst().GetCurrentRandomValue());
 
 							// Checksummen nicht gleich?
 							if(player->checksum != checksum)
 							{
-								// Das muss den Clients mitgeteilt werden! --> Nachricht erzeugen
-								GameMessage msg(NMS_SERVER_ASYNC,serverconfig.playercount*4);
-								for(unsigned i = 0; i < serverconfig.playercount; ++i)
-									static_cast<int*>(msg.m_pData)[i] = players[i]->checksum;
+								// Checksummenliste erzeugen
+								std::vector<int> checksums;
+								for(unsigned int i = 0; i < players.getCount(); ++i)
+									checksums.push_back(players.getElement(i)->checksum);
 
-								SendToAll(msg);
+								// Async-Meldung rausgeben.
+								SendToAll(GameMessage_Server_Async(checksums));
 
 								// Spiel pausieren
 								TogglePause();
 
 								// diesen Spieler kicken
-								KickPlayer(client,NP_ASYNC,0);
+								KickPlayer(client, NP_ASYNC, 0);
 
 								// rausgehen
 								continue;
@@ -920,12 +801,8 @@ void GameServer::ClientWatchDog()
 					if(player_switch_old_id != 255)
 						ChangePlayer(player_switch_old_id,player_switch_new_id);
 
-					GameMessage msg(NMS_NFC_DONE);
-
-					// Done Message senden
-					SendToAll(msg);
-					//LOG.write("SERVER >>> BROADCAST: NMS_NFC_DONE\n");
-
+		
+					SendToAll(GameMessage_Server_NWFDone(0xff));
 					// Framecounter erhöhen
 					++framesinfo.nr;
 				}
@@ -939,7 +816,7 @@ void GameServer::ClientWatchDog()
 						//networkframe.paused = true;
 						//networkframe.pausetime = currenttime;
 
-						GameServerPlayer *player = players[lagging_player];
+						GameServerPlayer *player = &players[lagging_player];
 						player->Lagging();
 						if(player->GetTimeOut() == 0)
 						{
@@ -962,15 +839,15 @@ void GameServer::ClientWatchDog()
 	}
 }
 
-void GameServer::SendNothingNC(const unsigned char player)
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Sendet ein NC-Paket ohne Befehle.
+ *
+ *  @author OLiver
+ */
+void GameServer::SendNothingNC(const unsigned int &id)
 {
-	GameMessage nfc(NMS_NFC_ANSWER, 1 + 5);
-	unsigned char *data = (unsigned char*)nfc.m_pData;
-	data[0] = player;
-	/*int *rest = (int*)&data[1];
-	rest[0] = RANDOM.GetCurrentRandomValue();*/
-
-	SendToAll(nfc);
+	SendToAll(GameMessage_GameCommand(id,0,std::vector<gc::GameCommand*>()));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -994,10 +871,10 @@ void GameServer::WaitForClients(void)
 			// Geeigneten Platz suchen
 			for(unsigned int client = 0; client < serverconfig.playercount; ++client)
 			{
-				if(players[client]->ps == PS_FREE)
+				if(players[client].ps == PS_FREE)
 				{
 					// platz reservieren
-					players[client]->reserve(&socket, client);
+					players[client].reserve(&socket, client);
 					playerid = client;
 
 					// schleife beenden
@@ -1005,14 +882,8 @@ void GameServer::WaitForClients(void)
 				}
 			}
 
-			GameMessage msg(NMS_PLAYER_ID);
-
-			char *data = (char*)msg.alloc(1);
-			data[0] = playerid;
-
-			// Serverstatus senden
+			GameMessage_Player_Id msg(playerid);
 			msg.send(&socket);
-			LOG.write("SERVER >>> CLIENT%d: NMS_PLAYER_ID(%d)\n", playerid, playerid);
 
 			// war kein platz mehr frei, wenn ja dann verbindung trennen?
 			if(playerid == 0xFF)
@@ -1035,10 +906,10 @@ void GameServer::FillPlayerQueues(void)
 		// sockets zum set hinzufügen
 		for(client = 0; client < serverconfig.playercount; ++client)
 		{
-			if( players[client]->isValid() )
+			if( players[client].isValid() )
 			{
 				// zum set hinzufügen
-				set.Add(players[client]->so);
+				set.Add(players[client].so);
 			}
 		}
 
@@ -1049,16 +920,16 @@ void GameServer::FillPlayerQueues(void)
 		{
 			for(client = 0; client < serverconfig.playercount; ++client)
 			{
-				if( players[client]->isValid() && set.InSet(players[client]->so) )
+				if( players[client].isValid() && set.InSet(players[client].so) )
 				{
 					// nachricht empfangen
-					if(players[client]->recv_queue.recv(&players[client]->so) == -1)
+					if(players[client].recv_queue.recv(&players[client].so) == -1)
 					{
 						LOG.lprintf("SERVER: Receiving Message for player %d failed, kick it like Beckham!\n", client);
 						KickPlayer(client, NP_CONNECTIONLOST, 0);
 					}
 
-					if(players[client]->ps == PS_OCCUPIED)
+					if(players[client].ps == PS_OCCUPIED)
 						not_empty = true;
 				}
 			}
@@ -1067,72 +938,10 @@ void GameServer::FillPlayerQueues(void)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// führt eine nachricht aus
-void GameServer::HandleMessage(GameMessage *message, unsigned char client)
-{
-	if(!message)
-		return;
-
-	switch(message->m_usID)
-	{
-	default:			break;
-	case NMS_NULL_MSG:	break;
-
-	case NMS_PONG: OnNMSPong(message, client); break;
-
-	case NMS_SERVER_TYP:		OnNMSServerType(message, client);		break;
-	case NMS_SERVER_PASSWORD:	OnNMSServerPassword(message, client);	break;
-	case NMS_SERVER_CHAT:		OnNMSServerChat(message, client);		break;
-
-	case NMS_PLAYER_NAME:			OnNMSPlayerName(message, client);			break;
-	case NMS_PLAYER_TOGGLENATION:	OnNMSPlayerToggleNation(message, client);	break;
-	case NMS_PLAYER_TOGGLETEAM:		OnNMSPlayerToggleTeam(message, client);		break;
-	case NMS_PLAYER_TOGGLECOLOR:	OnNMSPlayerToggleColor(message, client);	break;
-	case NMS_PLAYER_READY:			OnNMSPlayerReady(message, client);			break;
-
-	case NMS_MAP_INFO:		OnNMSMapInfo(message, client);		break;
-	case NMS_MAP_DATA:		OnNMSMapData(message, client);		break;
-	case NMS_MAP_CHECKSUM:	OnNMSMapChecksum(message, client);	break;
-
-	case NMS_DEAD_MSG:	break;
-	}
-}
-
-///////////////////////////////////////////////////////////////////////////////
-// führt eine ingame-nachricht aus
-void GameServer::HandleGameMessage(GameMessage *message, unsigned char client)
-{
-	if(!message)
-		return;
-
-	switch(message->m_usID)
-	{
-	default:			break;
-	case NMS_NULL_MSG:	break;
-
-	case NMS_SERVER_CHAT:	OnNMSServerChat(message, client);	break;
-
-	case NMS_PONG: OnNMSPong(message, client); break;
-
-	case NMS_NFC_COMMANDS:	OnNMSNfcCommand(message, client);	break;
-
-	case NMS_DEAD_MSG:	break;
-	}
-}
-
-///////////////////////////////////////////////////////////////////////////////
 // pongnachricht
-inline void GameServer::OnNMSPong(GameMessage *message, unsigned char client)
+inline void GameServer::OnNMSPong(const GameMessage_Pong& msg)
 {
-	GameServerPlayer *player = players[client];
-
-	if(!message)
-		return;
-	if(message->m_uiLength != 0)
-	{
-		KickPlayer(client, NP_INCOMPLETEMSG, 0);
-		return;
-	}
+	GameServerPlayer *player = &players[msg.player];
 
 	unsigned int currenttime = VideoDriverWrapper::inst().GetTickCount();
 
@@ -1140,258 +949,160 @@ inline void GameServer::OnNMSPong(GameMessage *message, unsigned char client)
 	player->pinging = false;
 	player->lastping = currenttime;
 
-	GameMessage msg(NMS_PLAYER_PING);
-	msg.m_uiLength = 3;
-	msg.alloc();
-
-	char *data = (char*)msg.m_pData;
-	data[0] = (unsigned char)client;
-	unsigned short *ping = (unsigned short*)&data[1];
-
-	*ping = player->ping;
-
-	SendToAll(msg);
+	// Den neuen Ping allen anderen Spielern Bescheid sagen
+	GameMessage_Player_Ping ping_msg(msg.player,player->ping);
+	SendToAll(ping_msg);
 	//LOG.write("SERVER >>> BROADCAST: NMS_PLAYER_PING(%d,%u)\n", client, *ping);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // servertype
-inline void GameServer::OnNMSServerType(GameMessage *message, unsigned char client)
+inline void GameServer::OnNMSServerType(const GameMessage_Server_Type& msg)
 {
-	GameServerPlayer *player = players[client];
-
-	if(!message)
-		return;
-	if(message->m_uiLength <= 1)
-	{
-		KickPlayer(client, NP_INCOMPLETEMSG, 0);
-		return;
-	}
-
-	unsigned char typ = *(unsigned char *)message->m_pData;
-	char *version = &((char *)message->m_pData)[1];
+	GameServerPlayer *player = &players[msg.player];
 
 	int typok = 0;
-	if(typ != serverconfig.servertype)
+	if(msg.type != serverconfig.servertype)
 		typok = 1;
-	else if(strcmp(GetWindowVersion(), version) != 0)
+	else if(msg.version != GetWindowVersion())
 		typok = 2;
 
-	LOG.write("CLIENT%d >>> SERVER: NMS_SERVER_TYP(%d, %s) expected: %d, %s, ok: %s\n", client, typ, GetWindowVersion(), serverconfig.servertype, version, (typok == 0) ? "yes" : "no");
-
-	// Antwort senden
-	GameMessage *msg = player->send_queue.push(NMS_SERVER_TYP);
-	msg->m_uiLength = 4;
-	msg->alloc(&typok);
-
-	LOG.write("SERVER >>> CLIENT%d: NMS_SERVER_TYP(%d)\n", client, typok);
+	player->send_queue.push(new GameMessage_Server_TypeOK(typok));
 
 	if(typok != 0)
-		KickPlayer(client, NP_CONNECTIONLOST, 0);
+		KickPlayer(msg.player, NP_CONNECTIONLOST, 0);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// Serverpasswort
-inline void GameServer::OnNMSServerPassword(GameMessage *message, unsigned char client)
+/**
+ *  Server-Passwort-Nachricht
+ *
+ *  @author FloSoft
+ */
+void GameServer::OnNMSServerPassword(const GameMessage_Server_Password& msg)
 {
-	GameServerPlayer *player = players[client];
+	GameServerPlayer *player = &players[msg.player];
 
-	if(!message)
-		return;
+	std::string passwordok = (serverconfig.password == msg.password ? "true" : "false");
 
-	bool pwok = false;
+	player->send_queue.push(new GameMessage_Server_Password(passwordok));
 
-	if( (message->m_uiLength == 0) && (serverconfig.password.length() == 0) )
-		pwok = true;
-
-	if( (pwok == false) && (message->m_uiLength > 0) )
-	{
-		char *pw = (char *)message->m_pData;
-
-		if(pw == serverconfig.password)
-			pwok = true;
-	}
-
-	LOG.write("CLIENT%d >>> SERVER: NMS_SERVER_PASSWORD(%s) expected: %s, ok: %s\n", client, (char*)message->m_pData, serverconfig.password.c_str(), pwok ? "yes" : "no");
-
-	// Antwort senden
-	GameMessage *msg = player->send_queue.push(NMS_SERVER_PASSWORD);
-	msg->m_uiLength = 1;
-	msg->alloc(&pwok);
-
-	LOG.write("SERVER >>> CLIENT%d: NMS_SERVER_PASSWORD(%d)\n", client, pwok);
-
-	if(!pwok)
-		KickPlayer(client, NP_WRONGPASSWORD, 0);
+	if(passwordok == "false")
+		KickPlayer(msg.player, NP_WRONGPASSWORD, 0);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// Chat
-inline void GameServer::OnNMSServerChat(GameMessage *message, unsigned char client)
+/**
+ *  Server-Chat-Nachricht.
+ *
+ *  @author FloSoft
+ *  @author OLiver
+ */
+void GameServer::OnNMSServerChat(const GameMessage_Server_Chat& msg)
 {
-	GameServerPlayer *player = players[client];
+	GameServerPlayer *player = &players[msg.player];
 
-	if(!message)
-		return;
-	if(message->m_uiLength < 2)
-	{
-		KickPlayer(client, NP_INCOMPLETEMSG, 0);
-		return;
-	}
-
-	unsigned char *destination = (unsigned char*)message->m_pData;
-	char *text = &((char*)message->m_pData)[1];
-
-	LOG.write("CLIENT%d >>> SERVER: NMS_SERVER_CHAT(%u, %s)\n", client, *destination, text);
-
-	// +1 für Player-ID!
-	GameMessage answer(NMS_SERVER_CHAT,message->m_uiLength+1);
-	static_cast<unsigned char*>(answer.m_pData)[0] = client;
-	memcpy(static_cast<unsigned char*>(answer.m_pData)+1,message->m_pData,message->m_uiLength);
-
-	switch(*destination)
+	switch(msg.destination)
 	{
 	default:
 	case CD_ALL: // Alle
 		{
-			SendToAll(answer);
-
-			LOG.write("SERVER >>> BROADCAST: NMS_SERVER_CHAT(%u, %s)\n", *destination, text);
+			SendToAll(msg);
 		} break;
 	case CD_ALLIES: // Verbündete
 		{
 			// Besiegte dürfen nicht mehr heimlich mit Verbündeten reden
-			if(!players[client]->IsDefeated())
+			if(!player->isDefeated())
 			{
-				for(unsigned char c = 0; c < serverconfig.playercount; ++c)
+				for(unsigned int i = 0; i < players.getCount(); ++i)
 				{
-					GameServerPlayer *p = players[c];
+					GameServerPlayer *p = players.getElement(i);
+					
 					if(p->ps == PS_OCCUPIED && p->team == player->team)
-						p->send_queue.push(answer);
+						p->send_queue.push(msg.duplicate());
 				}
 			}
-
-			LOG.write("SERVER >>> TEAMCAST: NMS_SERVER_CHAT(%u, %s)\n", *destination, text);
 		} break;
 	case CD_ENEMIES: // Feinde
 		{
 			// Besiegte dürfen nicht mehr heimlich mit Feinden reden
-			if(!players[client]->IsDefeated())
+			if(!player->isDefeated())
 			{
-				for(unsigned char c = 0; c < serverconfig.playercount; ++c)
+				for(unsigned int i = 0; i < players.getCount(); ++i)
 				{
-					GameServerPlayer *p = players[c];
+					GameServerPlayer *p = players.getElement(i);
+
 					// Nur an Feinde aber auch an sich selber senden, damit man sieht, was man geschrieben hat
-					if( p->ps == PS_OCCUPIED && ( p->team != player->team || c == client ) )
-						p->send_queue.push(answer);
+					if(p->ps == PS_OCCUPIED && ( p->team != player->team || i == msg.player ) )
+						p->send_queue.push(msg.duplicate());
 				}
 			}
-
-			LOG.write("SERVER >>> ENEMYCAST: NMS_SERVER_CHAT(%u, %s)\n", *destination, text);
 		} break;
 	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Spielername
-inline void GameServer::OnNMSPlayerName(GameMessage *message, unsigned char client)
+inline void GameServer::OnNMSPlayerName(const GameMessage_Player_Name& msg)
 {
-	GameServerPlayer *player = players[client];
+	GameServerPlayer *player = &players[msg.player];
 
-	if(!message)
-		return;
-	if(message->m_uiLength == 0)
+	LOG.write("CLIENT%d >>> SERVER: NMS_PLAYER_NAME(%s)\n", msg.player, msg.playername.c_str());
+
+	player->name = msg.playername;
+
+	// Als Antwort Karteninformationen übertragen
+	player->temp_ul = 0;
+
+	player->send_queue.push(new GameMessage_Map_Info(mapinfo.name, mapinfo.map_type, mapinfo.partcount, 
+		mapinfo.ziplength, mapinfo.length));
+
+	// Und Kartendaten
+	for(unsigned i = 0;i<mapinfo.partcount;++i)
 	{
-		KickPlayer(client, NP_INCOMPLETEMSG, 0);
-		return;
+		unsigned data_size = ( (mapinfo.ziplength - player->temp_ul) > 4096 )
+			? 4096 : (mapinfo.ziplength - player->temp_ul);
+
+		player->send_queue.push(new GameMessage_Map_Data(&mapinfo.zipdata[player->temp_ul], data_size));
+		player->temp_ul += data_size;
 	}
-
-	char *name = (char *)message->m_pData;
-
-	LOG.write("CLIENT%d >>> SERVER: NMS_PLAYER_NAME(%s)\n", client, name);
-
-	player->name = name;
-
-	// Als Antwort Kartenname übertragen
-	GameMessage *msg = player->send_queue.push(NMS_MAP_NAME);
-	msg->m_uiLength = unsigned(mapinfo.name.length()) + 1;
-	msg->alloc(mapinfo.name.c_str());
-
-	LOG.write("SERVER >>> CLIENT%d: NMS_MAP_NAME(%s)\n", client, mapinfo.name.c_str());
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////
 // Nation weiterwechseln
-inline void GameServer::OnNMSPlayerToggleNation(GameMessage *message, unsigned char client)
+inline void GameServer::OnNMSPlayerToggleNation(const GameMessage_Player_Toggle_Nation& msg)
 {
-	GameServerPlayer *player = players[client];
+	GameServerPlayer *player = &players[msg.player];
 
-	if(!message)
-		return;
-	if(message->m_uiLength != 0)
-	{
-		KickPlayer(client, NP_INCOMPLETEMSG, 0);
-		return;
-	}
+	player->nation = msg.nation;
 
-	player->nation = Nation((unsigned(player->nation) + 1) % 4);
-
-	LOG.write("CLIENT%d >>> SERVER: NMS_PLAYER_TOGGLENATION\n", client);
+	LOG.write("CLIENT%d >>> SERVER: NMS_PLAYER_TOGGLENATION\n", msg.player);
 
 	// Nation-Change senden
-	char data[2] = { client, player->nation };
-	GameMessage togglenation(NMS_PLAYER_TOGGLENATION);
-	togglenation.m_uiLength = 2;
-	togglenation.alloc(data);
+	SendToAll(msg);
 
-	SendToAll(togglenation);
-
-	LOG.write("SERVER >>> BROADCAST: NMS_PLAYER_TOGGLENATION(%d, %d)\n", client, player->nation);
+	LOG.write("SERVER >>> BROADCAST: NMS_PLAYER_TOGGLENATION(%d, %d)\n", msg.player, player->nation);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Team weiterwechseln
-inline void GameServer::OnNMSPlayerToggleTeam(GameMessage *message, unsigned char client)
+inline void GameServer::OnNMSPlayerToggleTeam(const GameMessage_Player_Toggle_Team& msg)
 {
-	GameServerPlayer *player = players[client];
+	GameServerPlayer *player = &players[msg.player];
 
-	if(!message)
-		return;
-	if(message->m_uiLength != 0)
-	{
-		KickPlayer(client, NP_INCOMPLETEMSG, 0);
-		return;
-	}
+	player->team = msg.team;
 
-	player->team = (player->team + 1) % 6;
-
-	LOG.write("CLIENT%d >>> SERVER: NMS_PLAYER_TOGGLETEAM\n", client);
-
-	// Nation-Change senden
-	char data[2] = { client, player->team };
-	GameMessage toggleteam(NMS_PLAYER_TOGGLETEAM);
-	toggleteam.m_uiLength = 2;
-	toggleteam.alloc(data);
-
-	SendToAll(toggleteam);
-
-	LOG.write("SERVER >>> BROADCAST: NMS_PLAYER_TOGGLETEAM(%d, %d)\n", client, player->team);
+	LOG.write("CLIENT%d >>> SERVER: NMS_PLAYER_TOGGLETEAM\n", msg.player);
+	SendToAll(msg);
+	LOG.write("SERVER >>> BROADCAST: NMS_PLAYER_TOGGLETEAM(%d, %d)\n", msg.player, player->team);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Farbe weiterwechseln
-inline void GameServer::OnNMSPlayerToggleColor(GameMessage *message, unsigned char client)
+inline void GameServer::OnNMSPlayerToggleColor(const GameMessage_Player_Toggle_Color& msg)
 {
-	GameServerPlayer *player = players[client];
-
-	if(!message)
-		return;
-	if(message->m_uiLength != 0)
-	{
-		KickPlayer(client, NP_INCOMPLETEMSG, 0);
-		return;
-	}
+	GameServerPlayer *player = &players[msg.player];
 
 	// ist die farbe auch frei, wenn nicht, "überspringen"?
 	bool reserved_colors[GAME_COLORS_COUNT];
@@ -1399,7 +1110,7 @@ inline void GameServer::OnNMSPlayerToggleColor(GameMessage *message, unsigned ch
 
 	for(unsigned char cl = 0; cl < serverconfig.playercount; ++cl)
 	{
-		GameServerPlayer *ki = players[cl];
+		GameServerPlayer *ki = &players[cl];
 
 		if( (player != ki) && ( (ki->ps == PS_OCCUPIED) || (ki->ps == PS_KI) ) )
 			reserved_colors[ki->color] = true;
@@ -1408,17 +1119,9 @@ inline void GameServer::OnNMSPlayerToggleColor(GameMessage *message, unsigned ch
 		player->color = (player->color + 1) % GAME_COLORS_COUNT;
 	} while(reserved_colors[player->color]);
 
-	LOG.write("CLIENT%d >>> SERVER: NMS_PLAYER_TOGGLECOLOR\n", client);
-
-	// Nation-Change senden
-	char data[2] = { client, player->color };
-	GameMessage togglecolor(NMS_PLAYER_TOGGLECOLOR);
-	togglecolor.m_uiLength = 2;
-	togglecolor.alloc(data);
-
-	SendToAll(togglecolor);
-
-	LOG.write("SERVER >>> BROADCAST: NMS_PLAYER_TOGGLECOLOR(%d, %d)\n", client, player->color);
+	LOG.write("CLIENT%d >>> SERVER: NMS_PLAYER_TOGGLECOLOR\n", msg.player);
+	SendToAll(GameMessage_Player_Toggle_Color(msg.player,player->color));
+	LOG.write("SERVER >>> BROADCAST: NMS_PLAYER_TOGGLECOLOR(%d, %d)\n", msg.player, player->color);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1427,143 +1130,52 @@ inline void GameServer::OnNMSPlayerToggleColor(GameMessage *message, unsigned ch
  *
  *  @author FloSoft
  */
-inline void GameServer::OnNMSPlayerReady(GameMessage *message, unsigned char client)
+inline void GameServer::OnNMSPlayerReady(const GameMessage_Player_Ready& msg)
 {
-	GameServerPlayer *player = players[client];
+	GameServerPlayer *player = &players[msg.player];
 
-	if(!message)
-		return;
-	if(message->m_uiLength != 1)
-	{
-		KickPlayer(client, NP_INCOMPLETEMSG, 0);
-		return;
-	}
+	player->ready = msg.ready;
 
-	player->ready = (*((char*)message->m_pData) == 1) ? true : false;
-
-	LOG.write("CLIENT%d >>> SERVER: NMS_PLAYER_READY(%s)\n", client, (player->ready ? "true" : "false"));
-
+	LOG.write("CLIENT%d >>> SERVER: NMS_PLAYER_READY(%s)\n", msg.player, (player->ready ? "true" : "false"));
 	// Ready-Change senden
-	char data[2] = { client, player->ready ? 1 : 0 };
-	GameMessage changeready(NMS_PLAYER_READY);
-	changeready.m_uiLength = 2;
-	changeready.alloc(data);
-
-	SendToAll(changeready);
-
-	LOG.write("SERVER >>> BROADCAST: NMS_PLAYER_READY(%d, %s)\n", client, (player->ready ? "true" : "false"));
+	SendToAll(msg);
+	LOG.write("SERVER >>> BROADCAST: NMS_PLAYER_READY(%d, %s)\n", msg.player, (player->ready ? "true" : "false"));
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// Karteninfo
-inline void GameServer::OnNMSMapInfo(GameMessage *message, unsigned char client)
-{
-	GameServerPlayer *player = players[client];
-
-	if(!message)
-		return;
-	if(message->m_uiLength != 0)
-	{
-		KickPlayer(client, NP_INCOMPLETEMSG, 0);
-		return;
-	}
-	LOG.write("CLIENT%d >>> SERVER: NMS_MAP_INFO\n", client);
-
-	GameMessage *msg = player->send_queue.push(NMS_MAP_INFO);
-	msg->m_uiLength = 16;
-	msg->alloc();
-
-	unsigned int *info = (unsigned int *)msg->m_pData;
-	info[0] = mapinfo.map_type;
-	info[1] = mapinfo.partcount;
-	info[2] = mapinfo.ziplength;
-	info[3] = mapinfo.length;
-
-	player->temp_ul = 0;
-
-	LOG.write("SERVER >>> CLIENT%d: NMS_MAP_INFO(%u, %u, %u)\n", client, info[0], info[1], info[2]);
-}
-
-///////////////////////////////////////////////////////////////////////////////
-// Kartenteile
-inline void GameServer::OnNMSMapData(GameMessage *message, unsigned char client)
-{
-	GameServerPlayer *player = players[client];
-
-	if(!message)
-		return;
-	if(message->m_uiLength != 0)
-	{
-		KickPlayer(client, NP_INCOMPLETEMSG, 0);
-		return;
-	}
-	LOG.write("CLIENT%d >>> SERVER: NMS_MAP_DATA\n", client);
-
-	GameMessage *msg = player->send_queue.push(NMS_MAP_DATA);
-
-	msg->m_uiLength = ( ( (mapinfo.ziplength - player->temp_ul) > 4096 ) ? 4096 : (mapinfo.ziplength - player->temp_ul) );
-	msg->alloc(&mapinfo.zipdata[player->temp_ul]);
-
-	player->temp_ul += msg->m_uiLength;
-
-	LOG.write("SERVER >>> CLIENT%d: NMS_MAP_DATA(%u)\n", client, msg->m_uiLength);
-}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Checksumme
-inline void GameServer::OnNMSMapChecksum(GameMessage *message, unsigned char client)
+inline void GameServer::OnNMSMapChecksum(const GameMessage_Map_Checksum& msg)
 {
-	GameServerPlayer *player = players[client];
+	GameServerPlayer *player = &players[msg.player];
 
-	if(!message)
-		return;
-	if(message->m_uiLength != sizeof(unsigned int))
-	{
-		KickPlayer(client, NP_INCOMPLETEMSG, 0);
-		return;
-	}
-
-	unsigned int checksum = *(unsigned int*)message->m_pData;
 	bool checksumok = false;
 
-	if(checksum == mapinfo.checksum)
+	if(msg.checksum == mapinfo.checksum)
 		checksumok = true;
 
-	LOG.write("CLIENT%d >>> SERVER: NMS_MAP_CHECKSUM(%u) expected: %u, ok: %s\n", client, checksum, mapinfo.checksum, checksumok ? "yes" : "no");
+	LOG.write("CLIENT%d >>> SERVER: NMS_MAP_CHECKSUM(%u) expected: %u, ok: %s\n", msg.player, msg.checksum, mapinfo.checksum, checksumok ? "yes" : "no");
 
 	// Antwort senden
-	GameMessage *msg = player->send_queue.push(NMS_MAP_CHECKSUM);
-	msg->m_uiLength = 1;
-	msg->alloc(&checksumok);
+	player->send_queue.push(new GameMessage_Map_ChecksumOK(checksumok));
 
-	LOG.write("SERVER >>> CLIENT%d: NMS_MAP_CHECKSUM(%d)\n", client, checksumok);
+	LOG.write("SERVER >>> CLIENT%d: NMS_MAP_CHECKSUM(%d)\n", msg.player, checksumok);
 
 	if(!checksumok)
-		KickPlayer(client, NP_WRONGCHECKSUM, 0);
+		KickPlayer(msg.player, NP_WRONGCHECKSUM, 0);
 	else
 	{
 		// den anderen Spielern mitteilen das wir einen neuen haben
-		GameMessage playernew(NMS_PLAYER_NEW);
-		playernew.m_uiLength = (unsigned int)1 + player->name.length() + 1;
-		playernew.alloc();
+		SendToAll(GameMessage_Player_New(msg.player,player->name));
 
-		char *buffer = (char*)playernew.m_pData;
-		buffer[0] = client;
-		strncpy(&buffer[1], player->name.c_str(), player->name.length() + 1);
-
-		SendToAll(playernew);
-		LOG.write("SERVER >>> BROADCAST: NMS_PLAYER_NEW(%d, %s)\n", client, player->name.c_str());
+		LOG.write("SERVER >>> BROADCAST: NMS_PLAYER_NEW(%d, %s)\n", msg.player, player->name.c_str());
 
 		// belegt markieren
 		player->ps = PS_OCCUPIED;
 		player->lastping = VideoDriverWrapper::inst().GetTickCount();
 
 		// Servername senden
-		GameMessage *servername = player->send_queue.push(NMS_SERVER_NAME);
-		servername->m_uiLength = unsigned(serverconfig.gamename.length()) + 1;
-		servername->alloc(serverconfig.gamename.c_str());
-
-		LOG.write("SERVER >>> CLIENT%d: NMS_SERVER_NAME(%s)\n", client, serverconfig.gamename.c_str());
+		player->send_queue.push(new GameMessage_Server_Name(serverconfig.gamename));
 
 		// freie farbe suchen lassen
 		bool reserved_colors[GAME_COLORS_COUNT];
@@ -1572,142 +1184,59 @@ inline void GameServer::OnNMSMapChecksum(GameMessage *message, unsigned char cli
 		unsigned char rc = 0;
 		for(unsigned char cl = 0; cl < serverconfig.playercount; ++cl)
 		{
-			GameServerPlayer *ki = players[cl];
+			GameServerPlayer *ki = &players[cl];
 
 			if( (player != ki) && ( (ki->ps == PS_OCCUPIED) || (ki->ps == PS_KI) ) )
 				reserved_colors[ki->color] = true;
 			if( (ki->ps == PS_OCCUPIED) || (ki->ps == PS_KI) )
 				++rc;
 		}
-		if(serverconfig.servertype == NP_DEPENDENT)
+		if(serverconfig.servertype == NP_LOBBY)
 			LOBBYCLIENT.UpdateServerPlayerCount(rc, serverconfig.playercount);
 
 		// Spielerliste senden
-		GameMessage *playerlist = player->send_queue.push(NMS_PLAYER_LIST);
-		playerlist->m_uiLength = 1 + serverconfig.playercount * 15;
-		for(unsigned char i = 0; i < serverconfig.playercount; ++i)
-			playerlist->m_uiLength += (unsigned(players[i]->name.length())+unsigned(players[i]->origin_name.length())+2);
-
-		playerlist->alloc();
-
-		char *data = (char*)playerlist->m_pData;
-		unsigned char *count = (unsigned char*)&data[0];
-		//GamePlayerInfo *list = (c*)&data[1];
-
-		*count = serverconfig.playercount;
-
-		// GamePlayerInfo als Data direkt senden, sonst kommt mist raus!
-		int j = 1;
-		for(unsigned char i = 0; i < *count; ++i)
-		{
-			assert(players[i]->name.length() < 254);
-			data[j] = static_cast<unsigned char>(players[i]->name.length()+1);
-			assert(players[i]->name.length() < 254);
-			data[j+1] = static_cast<unsigned char>(players[i]->origin_name.length()+1);
-			j+=2;
-
-			memcpy(&data[j], players[i]->name.c_str(), players[i]->name.length()+1);
-			j+=int(players[i]->name.length())+1;
-			memcpy(&data[j], players[i]->origin_name.c_str(), players[i]->origin_name.length()+1);
-			j+=int(players[i]->origin_name.length())+1;
-			
-			memcpy(&data[j], &players[i]->ps, 4);
-			memcpy(&data[j+4], &players[i]->rating, 2);
-			data[j+6] = players[i]->is_host?1:0;
-			memcpy(&data[j+7], &players[i]->ping, 2);
-			memcpy(&data[j+9], &players[i]->nation, 1);
-			memcpy(&data[j+10], &players[i]->color, 1);
-			memcpy(&data[j+11], &players[i]->team, 1);
-			data[j+12] = players[i]->ready ? 1 : 0;
-
-			j+=13;
-
-			LOG.write("    %d: %s %d %d %d %d %d %d\n", i, players[i]->name.c_str(), players[i]->ps, players[i]->rating, players[i]->ping, players[i]->nation, players[i]->color, players[i]->team);
-		}
-		LOG.write("SERVER >>> CLIENT%d: NMS_PLAYER_LIST\n", client);
+		player->send_queue.push(new GameMessage_Player_List(players));
 
 		// bis wir eine freie farbe gefunden haben!
 		// (while-schleife obwohl OnNMSPlayerToggleColor selbst schon eine freie sucht)
 		while(reserved_colors[player->color])
-		{
-			GameMessage msg(NMS_PLAYER_TOGGLECOLOR);
-			OnNMSPlayerToggleColor(&msg, client);
-		}
+			OnNMSPlayerToggleColor(GameMessage_Player_Toggle_Color(msg.player,player->color));
 
 		// GGS senden
-		GameMessage msg(NMS_GGS_CHANGE);
-		// Einstellungen serialisieren
-		unsigned char *ggs_buffer = ggs.Serialize();
-
-		msg.m_uiLength = GlobalGameSettings::GGS_BUFFER_SIZE;
-		msg.alloc(ggs_buffer);
-
-		delete[] ggs_buffer;
-
 		// und verschicken
-		player->send_queue.push(msg);
+		player->send_queue.push(new GameMessage_GGSChange(ggs));
 
 		LOG.write("SERVER >>> BROADCAST: NMS_GGS_CHANGE\n");
 	}
 }
 
-//////////////////////////////////////////////////////////////////////////////
-// NFC-Kommando
-inline void GameServer::OnNMSNfcCommand(GameMessage *message, unsigned char client)
+void GameServer::OnNMSGameCommand(const GameMessage_GameCommand& msg)
 {
-	GameServerPlayer *player = players[client];
-
-	if(!message)
-		return;
-	if(message->m_uiLength < sizeof(unsigned char))
-	{
-		KickPlayer(client, NP_INCOMPLETEMSG, 0);
-		return;
-	}
-
-	LOG.write("SERVER <<< NMS_NFC_COMMAND\n");
+	GameServerPlayer *player = &players[msg.player];
 
 	// NFCs speichern
-	player->nfc_queue.push_back(new GameMessage(*message));
+	player->gc_queue.push_back(msg);
 
 	//// Command schließlich an alle Clients weiterleiten, aber nicht in der Pause und nicht, wenn derjenige Spieler besiegt wurde!
-	if(!this->framesinfo.pause && !players[client]->IsDefeated())
-	{
-		GameMessage answer(NMS_NFC_ANSWER,message->m_uiLength + 1);
-		static_cast<unsigned char*>(answer.m_pData)[0] = client;
-		memcpy(&static_cast<unsigned char*>(answer.m_pData)[1],message->m_pData,message->m_uiLength);
-		SendToAll(answer);
-	}
+	if(!this->framesinfo.pause && !players[msg.player].isDefeated())
+		SendToAll(msg);
 	else
-	{
-		// In der Pause leeres Command senden
-		GameMessage answer(NMS_NFC_ANSWER,6);
-		static_cast<unsigned char*>(answer.m_pData)[0] = client;
-		// Checksumme kopieren
-		memcpy(&static_cast<unsigned char*>(answer.m_pData)[1],message->m_pData,4);
-		// 0 NCs
-		static_cast<unsigned char*>(answer.m_pData)[5] = 0;
-		SendToAll(answer);
-	}
+		SendToAll(GameMessage_GameCommand(msg.player,msg.checksum,std::vector<gc::GameCommand*>()));
 }
 
 void GameServer::ChangePlayer(const unsigned char old_id, const unsigned char new_id)
 {
-	players[old_id]->ps = PS_KI;
-	players[new_id]->ps = PS_OCCUPIED;
-	players[new_id]->so = players[old_id]->so;
+	players[old_id].ps = PS_KI;
+	players[new_id].ps = PS_OCCUPIED;
+	players[new_id].so = players[old_id].so;
 }
+
+
 
 bool GameServer::TogglePause()
 {
 	framesinfo.pause = !framesinfo.pause;
-
-	GameMessage pause(NMS_NFC_PAUSE, 1);
-
-	LOG.write("SERVER >>> NMS_NFC_PAUSE\n");
-
-	static_cast<char*>(pause.m_pData)[0] = (char)framesinfo.pause;
-	SendToAll(pause);
+	SendToAll(GameMessage_Pause(framesinfo.pause));
 
 	return framesinfo.pause;
 }
@@ -1716,14 +1245,9 @@ bool GameServer::TogglePause()
 void GameServer::SwapPlayer(const unsigned char player1, const unsigned char player2)
 {
 	// Message verschicken
-	GameMessage swap_player(NMS_PLAYER_SWAP,2);
-	static_cast<unsigned char*>(swap_player.m_pData)[0] = player1;
-	static_cast<unsigned char*>(swap_player.m_pData)[1] = player2;
-
-	SendToAll(swap_player);
-
+	SendToAll(GameMessage_Player_Swap(player1, player2));
 	// Spieler vertauschen
-	players[player1]->SwapPlayer(*players[player2]);
+	players[player1].SwapPlayer(players[player2]);
 }
 
 void GameServer::SetKIName(const unsigned player_id)
@@ -1731,6 +1255,6 @@ void GameServer::SetKIName(const unsigned player_id)
 	// Baby mit einem Namen Taufen ("Name (KI)")
 	char str[128];
 	sprintf(str,_("Computer %u"),unsigned(player_id));
-	players[player_id]->name = str;
-	players[player_id]->name += _(" (AI)");
+	players[player_id].name = str;
+	players[player_id].name += _(" (AI)");
 }

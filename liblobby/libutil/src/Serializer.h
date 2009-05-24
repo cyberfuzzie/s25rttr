@@ -128,7 +128,7 @@ public:
 	// Lesemethoden
 
 	/// Copy all data
-	void ToBuffer(unsigned char * const data);
+	void ToBuffer(unsigned char * const buffer) { memcpy(buffer, data, length);}
 
 	/// Rohdaten kopieren
 	void PopRawData(void * const data, const unsigned length)

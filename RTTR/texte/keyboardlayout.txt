@@ -31,7 +31,7 @@ F10:.................. (Music-Player)
 F11:.................. (Siedler-Juke-Box)
 F12:.................. Option windows
 
-Cursor Tasten: Scroll the main map
+Arrow keys: Scroll the main map
 
 Additional in Replay-mode:
 

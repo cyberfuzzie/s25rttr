@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 4947 2009-05-24 20:02:16Z OLiver $
+### $Id: CMakeLists.txt 4951 2009-05-25 20:03:10Z OLiver $
 ################################################################################
 
 INCLUDE(FindBZip2)
@@ -110,6 +110,7 @@ SET(SOURCES_INGAMEWINDOWS
     )
 
 SET(SOURCES_OTHER
+    AIPlayer.h  AIPlayer.cpp AIBase.h
     BinaryFile.cpp
     BuildingConsts.h
     BurnedWarehouse.cpp       BurnedWarehouse.h

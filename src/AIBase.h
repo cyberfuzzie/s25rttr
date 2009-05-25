@@ -1,0 +1,62 @@
+// $Id: AIBase.h 4933 2009-05-24 12:29:23Z OLiver $
+//
+// Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
+//
+// This file is part of Siedler II.5 RTTR.
+//
+// Siedler II.5 RTTR is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+//
+// Siedler II.5 RTTR is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Siedler II.5 RTTR. If not, see <http://www.gnu.org/licenses/>.
+
+#include <vector>
+
+class GameWorldBase;
+class GameClientPlayer;
+class GlobalGameSettings;
+class GameClientPlayerList;
+namespace gc { class GameCommand; }
+
+/// Basisklasse für sämtliche KI-Spieler
+class AIBase
+{
+protected:
+
+	/// Eigene PlayerID, die der KI-Spieler wissen sollte, z.B. wenn er die Karte untersucht
+	const unsigned char playerid;
+	/// Verweis auf die Spielwelt, um entsprechend Informationen daraus zu erhalten
+	const GameWorldBase * const gwb;
+	/// Verweis auf den eigenen GameClientPlayer, d.h. die Wirtschaft, um daraus entsprechend Informationen zu gewinnen
+	const GameClientPlayer * const player;
+	/// Verweis auf etwaige andere Spieler, bspw. um deren Bündnisse zu überprüfen etc.
+	const GameClientPlayerList * const players;
+	/// Verweis auf die Globalen Spieleinstellungen, da diese auch die weiteren Entscheidungen beeinflussen können
+	/// (beispielsweise Siegesbedingungen, FOW usw.)
+	const GlobalGameSettings * const ggs;
+	/// Queue der GameCommands, die noch bearbeitet werden müssen
+	std::vector<gc::GameCommand*> gcs;
+
+public:
+
+	AIBase(const unsigned char playerid, const GameWorldBase * const gwb, const GameClientPlayer * const player,
+		const GameClientPlayerList * const players, const GlobalGameSettings * const ggs)
+		: playerid(playerid), gwb(gwb), player(player), players(players), ggs(ggs) {}
+
+	virtual ~AIBase() {}
+
+	/// Wird jeden GF aufgerufen und die KI kann hier entsprechende Handlungen vollziehen
+	virtual void RunGF(const unsigned gf) = 0;
+
+	/// Zugriff auf die GameCommands, um diese abarbeiten zu können
+	const std::vector<gc::GameCommand*>& GetGameCommands() const { return gcs; }
+	/// Markiert die GameCommands als abgearbeitet
+	void FetchGameCommands() { gcs.clear(); }
+};

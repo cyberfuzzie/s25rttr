@@ -1,4 +1,4 @@
-// $Id: GameServer.cpp 4946 2009-05-24 19:05:25Z OLiver $
+// $Id: GameServer.cpp 4951 2009-05-25 20:03:10Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -39,6 +39,7 @@
 #include "GameServerPlayer.h"
 
 #include "GameFiles.h"
+#include "AIPlayer.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -59,6 +60,8 @@ void GameServer::FramesInfo::Clear()
 {
 	nr = 0;
 	nwf_length = 0;
+	gf_nr = 0;
+	gf_length = 0;
 	lasttime = 0;
 	lastmsgtime = 0;
 	pausetime = 0;
@@ -221,6 +224,9 @@ bool GameServer::Start()
 	for(unsigned i =0;i<serverconfig.playercount;++i)
 		players.push_back(GameServerPlayer(i));
 
+	// Potentielle KI-Player anlegen
+	ai_players.resize(serverconfig.playercount);
+
 	bool host_found = false;
 
 	//// Spieler 0 erstmal der Hos
@@ -271,7 +277,7 @@ bool GameServer::Start()
 				}
 				// KI-Spieler? Namen erzeugen
 				else if(players[i].ps == PS_KI)
-					SetKIName(i);
+					SetAIName(i);
 			}
 
 			// Und die GGS
@@ -344,6 +350,11 @@ void GameServer::Stop(void)
 	serverconfig.Clear();
 	mapinfo.Clear();
 
+	// KI-Player zerstören
+	for(unsigned i = 0;i<ai_players.size();++i)
+		delete ai_players[i];
+	ai_players.clear();
+
 	// laden dicht machen
 	serversocket.Close();
 
@@ -410,21 +421,21 @@ bool GameServer::StartGame()
 		}
 	}
 
-	unsigned gf_length = SPEED_GF_LENGTHS[ggs.game_speed];
+	framesinfo.gf_length = SPEED_GF_LENGTHS[ggs.game_speed];
 
 	// NetworkFrame-Länge bestimmen, je schlechter (also höher) die Pings, desto länger auch die Framelänge
 	unsigned i = 1;
 	for(;i<20;++i)
 	{
-		if(i*gf_length > highest_ping+200)
+		if(i*framesinfo.gf_length > highest_ping+200)
 			break;
 	}
 
-	framesinfo.nwf_length = i*gf_length;
+	framesinfo.nwf_length = i;
 
 	GameMessage_Server_Start start_msg(random_init,i);
 
-	LOG.lprintf("SERVER: Using gameframe length of %dms\n", gf_length);
+	LOG.lprintf("SERVER: Using gameframe length of %dms\n", framesinfo.gf_length);
 	LOG.lprintf("SERVER: Using networkframe length of %ums\n", framesinfo.nwf_length);
 
 	// Spielstart allen mitteilen
@@ -439,20 +450,19 @@ bool GameServer::StartGame()
 	// Spielstart allen mitteilen
 	SendToAll(GameMessage_Server_NWFDone(0xff));
 
+	// GameClient soll erstmal starten, damit wir von ihm die benötigten Daten für die KIs bekommen
+	GameClient::inst().StartGame(random_init);
+
 	// Erste KI-Nachrichten schicken
-	for(unsigned char i = 0;i<this->serverconfig.playercount;++i)
+	for(unsigned i = 0;i<this->serverconfig.playercount;++i)
 	{
 		if(players[i].ps == PS_KI)
 		{
 			SendNothingNC(i);
-			//GameMessage nfc(NMS_NFC_ANSWER, 2);
-			//unsigned char * data = static_cast<unsigned char*>(nfc.m_pData);
-			//*data = i;
-			//*(data+1) = 0;
-			////*((unsigned short*)(&data[1])) = NC_NOTHING;
-			//SendToAll(nfc);
+			ai_players[i] = GameClient::inst().CreateAIPlayer(i);
 		}
 	}
+
 
 	LOG.write("SERVER >>> BROADCAST: NMS_NFC_DONE\n");
 
@@ -481,7 +491,7 @@ void GameServer::TogglePlayerState(unsigned char client)
 		{
 			player->ps = PS_KI;  
 			// Baby mit einem Namen Taufen ("Name (KI)")
-			SetKIName(client);
+			SetAIName(client);
 		} break;
 	case PS_KI:     player->ps = PS_LOCKED; break;
 	case PS_LOCKED: player->ps = PS_FREE;   break;
@@ -525,7 +535,7 @@ void GameServer::TogglePlayerTeam(unsigned char client)
 		return;
 
 	// team wechseln
-	OnNMSPlayerToggleTeam(GameMessage_Player_Toggle_Team(client,player->team));
+	OnNMSPlayerToggleTeam(GameMessage_Player_Toggle_Team(client,Team((player->team+1)%TEAM_COUNT)));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -539,7 +549,7 @@ void GameServer::TogglePlayerColor(unsigned char client)
 		return;
 
 	// Farbe suchen lassen
-	OnNMSPlayerToggleColor(GameMessage_Player_Toggle_Color(client,player->color));
+	OnNMSPlayerToggleColor(GameMessage_Player_Toggle_Color(client,(player->color+1)%PLAYER_COLORS_COUNT));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -548,12 +558,12 @@ void GameServer::TogglePlayerNation(unsigned char client)
 {
 	GameServerPlayer *player = &players[client];
 
-	// nur KI
+	// nur KI5
 	if(player->ps != PS_KI)
 		return;
 
 	// Nation wechseln
-	OnNMSPlayerToggleNation(GameMessage_Player_Toggle_Nation(client,player->nation));
+	OnNMSPlayerToggleNation(GameMessage_Player_Toggle_Nation(client,Nation((player->nation+1)%NATION_COUNT)));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -685,7 +695,7 @@ void GameServer::ClientWatchDog()
 		 player->doTimeout();
 	}
 
-	// prüfen ob Netwerkframe vergangen
+	// prüfen ob GF vergangen
 	if(status == SS_GAME)
 	{
 		unsigned int currenttime = VideoDriverWrapper::inst().GetTickCount();
@@ -693,149 +703,145 @@ void GameServer::ClientWatchDog()
 		if(!framesinfo.pause)
 		{
 			// network frame durchführen
-			if(currenttime - framesinfo.lasttime > framesinfo.nwf_length)
+			if(currenttime - framesinfo.lasttime > framesinfo.gf_length)
 			{
-				// auf laggende spieler prüfen und evtl Kommandos der KI-Spieler senden
-				unsigned char lagging_player = 0xFF;
-
-				for(client = 0; client < serverconfig.playercount; ++client)
+				++framesinfo.gf_nr;
+				// KIs ausführen
+				for(unsigned i = 0;i<ai_players.size();++i)
 				{
-					player = &players[client];
-
-					if(player->ps == PS_OCCUPIED)
-					{
-						if(player->gc_queue.size() == 0)
-						{
-							// der erste, der erwischt wird, bekommt den zuschlag ;-)
-							lagging_player = client;
-							break;
-						}
-					}
+					if(ai_players[i])
+						ai_players[i]->RunGF(framesinfo.gf_nr);
 				}
 
-				if(lagging_player == 0xFF)
+				// NWF vergangen?
+				if(framesinfo.gf_nr % framesinfo.nwf_length == 0)
 				{
-					// Diesen Zeitpunkt merken
-					framesinfo.lasttime = currenttime - ( currenttime - framesinfo.lasttime - framesinfo.nwf_length);
-
-					// Bei evtl. Spielerwechsel die IDs speichern, die "gewechselt" werden sollen
-					unsigned char player_switch_old_id = 255,player_switch_new_id= 255;
-
-					// Checksumme des ersten Spielers als Richtwert
-					bool took_checksum = false;
-					int checksum = 0;
+					// auf laggende spieler prüfen und evtl Kommandos der KI-Spieler senden
+					unsigned char lagging_player = 0xFF;
 
 					for(client = 0; client < serverconfig.playercount; ++client)
 					{
 						player = &players[client];
-					/*	player->timeout = 30;
-						player->lasttimeout = 0;*/
 
-						if(player->gc_queue.size() > 0)
+						if(player->ps == PS_OCCUPIED)
 						{
-							// Spieler laggt nicht (mehr ggf)
-							player->NotLagging();
-
-							// Checksumme des ersten Spielers als Richtwert
-							if(!took_checksum)
+							if(player->gc_queue.size() == 0)
 							{
-								checksum = player->gc_queue.front().checksum;
-								took_checksum = true;
+								// der erste, der erwischt wird, bekommt den zuschlag ;-)
+								lagging_player = client;
+								break;
 							}
-
-							// Checksumme merken, da die Nachricht dann wieder entfernt wird
-							player->checksum = player->gc_queue.front().checksum;
-
-							for(std::vector<gc::GameCommand*>::iterator it = player->gc_queue.front().gcs.begin();
-								it != player->gc_queue.front().gcs.end();++it)
-							{
-								if((*it)->GetType() == gc::SWITCHPLAYER)
-								{
-									// Dann merken und NACH der Schleife erst wechseln!
-									player_switch_old_id = client;
-									player_switch_new_id = dynamic_cast<gc::SwitchPlayer*>(*it)->GetNewPlayerId();
-								}
-
-							}
-		
-							player->gc_queue.pop_front();
-							
-							//LOG.lprintf("%d = %d - %d\n", framesinfo.nr, checksum, Random::inst().GetCurrentRandomValue());
-
-							// Checksummen nicht gleich?
-							if(player->checksum != checksum)
-							{
-								// Checksummenliste erzeugen
-								std::vector<int> checksums;
-								for(unsigned int i = 0; i < players.getCount(); ++i)
-									checksums.push_back(players.getElement(i)->checksum);
-
-								// Async-Meldung rausgeben.
-								SendToAll(GameMessage_Server_Async(checksums));
-
-								// Spiel pausieren
-								TogglePause();
-
-								// diesen Spieler kicken
-								KickPlayer(client, NP_ASYNC, 0);
-
-								// rausgehen
-								continue;
-							}
-
-							
 						}
-
-						// Befehle der KI senden
-						if(player->ps == PS_KI)
-						{
-							SendNothingNC(client);
-							//GameMessage nfc(NMS_NFC_ANSWER, 2);
-							//unsigned char * data = static_cast<unsigned char*>(nfc.m_pData);
-							//*data = client;
-							//*(data+1) = 0;
-							////*((unsigned short*)(&data[1])) = NC_NOTHING;
-							//SendToAll(nfc);
-						}
-
 					}
 
-					// Evtl den Spieler wechseln?
-					if(player_switch_old_id != 255)
-						ChangePlayer(player_switch_old_id,player_switch_new_id);
-
-		
-					SendToAll(GameMessage_Server_NWFDone(0xff));
-					// Framecounter erhöhen
-					++framesinfo.nr;
-				}
-				else
-				{
-					if((currenttime - framesinfo.lasttime) > framesinfo.nwf_length)
+					if(lagging_player == 0xFF)
 					{
-						//// ein spieler laggt, spiel pausieren
-						//LOG.lprintf("SERVER: %03lu Player %d lags (delay %lums)\n", framesinfo.nr, lagging_player, (currenttime - framesinfo.lasttime) - framesinfo.nwf_length);
+						// Diesen Zeitpunkt merken
+						framesinfo.lasttime = currenttime - ( currenttime - framesinfo.lasttime - framesinfo.gf_length);
 
-						//networkframe.paused = true;
-						//networkframe.pausetime = currenttime;
+						// Bei evtl. Spielerwechsel die IDs speichern, die "gewechselt" werden sollen
+						unsigned char player_switch_old_id = 255,player_switch_new_id= 255;
 
-						GameServerPlayer *player = &players[lagging_player];
-						player->Lagging();
-						if(player->GetTimeOut() == 0)
+						// Checksumme des ersten Spielers als Richtwert
+						bool took_checksum = false;
+						int checksum = 0;
+
+						for(client = 0; client < serverconfig.playercount; ++client)
 						{
-							// ???
-							//player->timeout = 30;
+							player = &players[client];
 
-							KickPlayer(lagging_player, NP_PINGTIMEOUT, 0);
+							if(player->gc_queue.size() > 0)
+							{
+								// Spieler laggt nicht (mehr ggf)
+								player->NotLagging();
+
+								// Checksumme des ersten Spielers als Richtwert
+								if(!took_checksum)
+								{
+									checksum = player->gc_queue.front().checksum;
+									took_checksum = true;
+								}
+
+								// Checksumme merken, da die Nachricht dann wieder entfernt wird
+								player->checksum = player->gc_queue.front().checksum;
+
+								for(std::vector<gc::GameCommand*>::iterator it = player->gc_queue.front().gcs.begin();
+									it != player->gc_queue.front().gcs.end();++it)
+								{
+									if((*it)->GetType() == gc::SWITCHPLAYER)
+									{
+										// Dann merken und NACH der Schleife erst wechseln!
+										player_switch_old_id = client;
+										player_switch_new_id = dynamic_cast<gc::SwitchPlayer*>(*it)->GetNewPlayerId();
+									}
+
+								}
+			
+								player->gc_queue.pop_front();
+								
+								//LOG.lprintf("%d = %d - %d\n", framesinfo.nr, checksum, Random::inst().GetCurrentRandomValue());
+
+								// Checksummen nicht gleich?
+								if(player->checksum != checksum)
+								{
+									// Checksummenliste erzeugen
+									std::vector<int> checksums;
+									for(unsigned int i = 0; i < players.getCount(); ++i)
+										checksums.push_back(players.getElement(i)->checksum);
+
+									// Async-Meldung rausgeben.
+									SendToAll(GameMessage_Server_Async(checksums));
+
+									// Spiel pausieren
+									TogglePause();
+
+									// diesen Spieler kicken
+									KickPlayer(client, NP_ASYNC, 0);
+
+									// rausgehen
+									continue;
+								}
+
+								
+							}
+
+							// Befehle der KI senden
+							if(player->ps == PS_KI)
+							{
+								SendToAll(GameMessage_GameCommand(client,0,ai_players[client]->GetGameCommands()));
+								ai_players[client]->FetchGameCommands();
+							}
 						}
-			/*			if( (currenttime - player->lasttimeout) > 1000)
-						{*/
+
+						// Evtl den Spieler wechseln?
+						if(player_switch_old_id != 255)
+							ChangePlayer(player_switch_old_id,player_switch_new_id);
+
+			
+						SendToAll(GameMessage_Server_NWFDone(0xff));
+						// Framecounter erhöhen
+						++framesinfo.nr;
+					}
+					else
+					{
+						if((currenttime - framesinfo.lasttime) > framesinfo.nwf_length*framesinfo.gf_length)
+						{
+							//// ein spieler laggt, spiel pausieren
+							GameServerPlayer *player = &players[lagging_player];
+							player->Lagging();
+							if(player->GetTimeOut() == 0)
+								KickPlayer(lagging_player, NP_PINGTIMEOUT, 0);
+
 							if(!(player->GetTimeOut() % 5))
 								LOG.lprintf("SERVER: Kicke Spieler %d in %u Sekunden\n", lagging_player, player->GetTimeOut());
 			
-						//	player->lasttimeout = currenttime;
-						//}
+						}
 					}
+				}
+				else
+				{
+					// Diesen Zeitpunkt merken
+					framesinfo.lasttime = currenttime;
 				}
 			}
 		}
@@ -1253,7 +1259,7 @@ void GameServer::SwapPlayer(const unsigned char player1, const unsigned char pla
 	players[player1].SwapPlayer(players[player2]);
 }
 
-void GameServer::SetKIName(const unsigned player_id)
+void GameServer::SetAIName(const unsigned player_id)
 {
 	// Baby mit einem Namen Taufen ("Name (KI)")
 	char str[128];

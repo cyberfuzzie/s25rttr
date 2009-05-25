@@ -1,4 +1,4 @@
-// $Id: GameServer.h 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: GameServer.h 4951 2009-05-25 20:03:10Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -35,6 +35,7 @@ class GameServerPlayer;
 class GlobalGameSettings;
 struct CreateServerInfo;
 class GameMessage;
+class AIBase;
 
 class GameServer : public Singleton<GameServer>, public GameMessageInterface
 {
@@ -80,7 +81,7 @@ protected:
 	void SendNothingNC(const unsigned int &id);
 
 	/// Generiert einen KI-Namen
-	void SetKIName(const unsigned player_id);
+	void SetAIName(const unsigned player_id);
 
 private:
 	void OnNMSPong(const GameMessage_Pong& msg);
@@ -115,6 +116,10 @@ private:
 		unsigned int nr;
 		/// Länge der Network-Frames in ms (gf-Länge * nwf_length des Clients)
 		unsigned int nwf_length;
+		/// Aktueller GF
+		unsigned gf_nr;
+		/// GF-Länge in ms
+		unsigned gf_length;
 
 		unsigned int lasttime;
 		unsigned int lastmsgtime;
@@ -156,6 +161,10 @@ private:
 	Socket serversocket;
 	GameServerPlayerList players;
 	GlobalGameSettings ggs;
+
+	/// Alle KI-Spieler und ihre Daten (NULL, falls ein solcher Spieler nicht existiert)
+	std::vector<AIBase*> ai_players;
+
 };
 
 ///////////////////////////////////////////////////////////////////////////////

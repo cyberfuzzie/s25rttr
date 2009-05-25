@@ -83,39 +83,39 @@ public:
 	inline void PushSignedInt(signed int i)
 	{
 		ExtendMemory(4);
-		*((signed int*)&data[length]) = htonl(i);
+		*((signed int*)&data[pos]) = htonl(i);
 		pos = this->length +=4;
 	}
 	inline void PushUnsignedInt(unsigned int i)
 	{
 		ExtendMemory(4);
-		*((unsigned int*)&data[length]) = htonl(i);
+		*((unsigned int*)&data[pos]) = htonl(i);
 		pos = this->length +=4;
 	}
 
 	inline void PushSignedShort(signed short int i)
 	{
 		ExtendMemory(2);
-		*((signed short*)&data[length]) = htons(i);
-		pos = this->length +=2;
+		*((signed short*)&data[pos]) = htons(i);
+		pos = this->length += 2;
 	}
 	inline void PushUnsignedShort(unsigned short int i)
 	{
 		ExtendMemory(2);
-		*((unsigned short*)&data[length]) = htons(i);
+		*((unsigned short*)&data[pos]) = htons(i);
 		pos = this->length +=2;
 	}
 
 	inline void PushSignedChar(signed char i)
 	{
 		ExtendMemory(1);
-		*((signed char*)&data[length]) = i;
+		*((signed char*)&data[pos]) = i;
 		pos = this->length +=1;
 	}
 	inline void PushUnsignedChar(unsigned char i)
 	{
 		ExtendMemory(1);
-		*((signed char*)&data[length]) = i;
+		*((signed char*)&data[pos]) = i;
 		pos = this->length +=1;
 	}
 
@@ -142,7 +142,7 @@ public:
 	/// Rohdaten kopieren
 	inline void PopRawData(void *const data, const unsigned length)
 	{
-		assert(pos<length);
+		assert(pos<this->length);
 
 		memcpy(data, &this->data[pos], length);
 		pos +=length; 
@@ -257,8 +257,6 @@ protected:
 	/// vergrößert den Speicher auf die nächst höhere 2er potenz zur Länge @p length.
 	inline void Realloc(const unsigned int length)
 	{
-		this->length = length;
-
 		if(this->buffer_length == 0)
 				this->buffer_length = 64;
 

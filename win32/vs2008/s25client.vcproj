@@ -893,11 +893,11 @@
 							>
 						</File>
 						<File
-							RelativePath="..\..\src\iwStatistics.h"
+							RelativePath="..\..\src\iwStatistics.cpp"
 							>
 						</File>
 						<File
-							RelativePath="..\..\src\iwStatistics.cpp"
+							RelativePath="..\..\src\iwStatistics.h"
 							>
 						</File>
 						<File
@@ -2078,6 +2078,22 @@
 						>
 					</File>
 				</Filter>
+			</Filter>
+			<Filter
+				Name="KI"
+				>
+				<File
+					RelativePath="..\..\src\AIBase.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\AIPlayer.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\AIPlayer.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter

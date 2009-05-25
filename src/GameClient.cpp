@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 4947 2009-05-24 20:02:16Z OLiver $
+// $Id: GameClient.cpp 4951 2009-05-25 20:03:10Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -46,6 +46,7 @@
 #include "files.h"
 #include "ClientInterface.h"
 #include "GameCommands.h"
+#include "AIPlayer.h"
 
 #include <sstream>
 
@@ -772,7 +773,9 @@ inline void GameClient::OnNMSServerStart(const GameMessage_Server_Start& msg)
 	// NWF-Länge bekommen wir vom Server
 	framesinfo.nwf_length = msg.nwf_length;
 
-	StartGame(msg.random_init);
+	/// Beim Host muss das Spiel nicht nochmal gestartet werden, das hat der Server schon erledigt
+	if(!IsHost())
+		StartGame(msg.random_init);
 
 	// Nothing-Command für ersten Network-Frame senden
 	SendNothingNC(0);
@@ -943,6 +946,10 @@ inline void GameClient::OnNMSMapData(const GameMessage_Map_Data& msg)
 					Stop();
 					return;
 				}
+
+				players.clear();
+				for(unsigned i = 0;i<mapinfo.savegame.player_count;++i)
+					players.push_back(GameClientPlayer(i));
 
 				mapinfo.title = mapinfo.savegame.map_name;
 
@@ -1578,3 +1585,8 @@ void GameClient::AddGC(gc::GameCommand * gc)
 	gcs.push_back(gc);
 }
 
+/// Erzeugt einen KI-Player, der mit den Daten vom GameClient gefüttert werden muss (zusätzlich noch mit den GameServer)
+AIPlayer * GameClient::CreateAIPlayer(const unsigned playerid)
+{
+	return new AIPlayer(playerid,gw,&players[playerid],&players,&ggs,AI::MEDIUM);
+}

@@ -1,4 +1,4 @@
-// $Id: nofCarrier.cpp 4854 2009-05-11 11:26:19Z OLiver $
+// $Id: nofCarrier.cpp 4951 2009-05-25 20:03:10Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -660,7 +660,7 @@ void nofCarrier::AbrogateWorkplace()
 
 		// wenn ich in ein Gebäude gegangen bin und dann vom Weg geworfen wurde, muss der andere
 		// ggf. die Waren tragen, die ich jetzt nicht mehr tragen kann
-		if((state == CARRS_LEAVEBUILDING || CARRS_CARRYWARETOBUILDING) && workplace->carrier[other])
+		if((state == CARRS_LEAVEBUILDING || state == CARRS_CARRYWARETOBUILDING) && workplace->carrier[other])
 		{
 			if(workplace->AreWareJobs(false,ct,true))
 				workplace->carrier[other]->AddWareJob(workplace->f1);

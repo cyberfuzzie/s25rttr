@@ -1,4 +1,4 @@
-// $Id: GameClient.h 4940 2009-05-24 16:38:33Z FloSoft $
+// $Id: GameClient.h 4951 2009-05-25 20:03:10Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -36,6 +36,7 @@ class GameClientPlayer;
 class WorldManager;
 class ClientInterface;
 class GameMessage;
+class AIPlayer;
 
 namespace gc { class GameCommand; }
 
@@ -63,6 +64,8 @@ public:
 	/// Liefert einen Player zurück
 	GameClientPlayer * GetPlayer(const unsigned int id) { return dynamic_cast<GameClientPlayer*>(players.getElement(id)); }
 	GameClientPlayer * GetLocalPlayer(void) { return GetPlayer(playerid); }
+	/// Erzeugt einen KI-Player, der mit den Daten vom GameClient gefüttert werden muss (zusätzlich noch mit den GameServer)
+	AIPlayer * CreateAIPlayer(const unsigned playerid);
 
 	/// Gibt GGS zurück
 	const GlobalGameSettings& GetGGS() const { return ggs; }
@@ -136,21 +139,17 @@ public:
 
 	/// Wechselt den aktuellen Spieler im Replaymodus
 	void ChangeReplayPlayer(const unsigned new_id);
-
 	/// Laggt ein bestimmter Spieler gerade?
 	bool IsLagging(const unsigned int id) { return GetPlayer(id)->is_lagging; }
-
 	/// Spiel pausiert?
 	bool IsPaused() const { return framesinfo.pause; }
-
 	/// Schreibt Header der Save-Datei
 	unsigned WriteSaveHeader(const std::string& filename);
-
 	/// Visuelle Einstellungen aus den richtigen ableiten
 	void GetVisualSettings();
-
 	/// Zum Log etwas hinzufügen
 	void AddToGameLog(const char * const str);
+
 
 
 private:

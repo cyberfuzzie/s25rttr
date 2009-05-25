@@ -1,4 +1,4 @@
-// $Id: SerializedGameData.cpp 4940 2009-05-24 16:38:33Z FloSoft $
+// $Id: SerializedGameData.cpp 4951 2009-05-25 20:03:10Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -211,6 +211,7 @@ void SerializedGameData::ReadFromFile(BinaryFile& file)
 	unsigned buffer_size;
 	buffer_size = file.ReadUnsignedInt();
 	Realloc(buffer_size);
+	SetLength(buffer_size);
 	file.ReadRawData(GetDataWritable(), buffer_size);
 
 	total_objects_count = PopUnsignedInt();

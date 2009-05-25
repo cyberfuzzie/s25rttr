@@ -1,4 +1,4 @@
-// $Id: GameMessages.h 4940 2009-05-24 16:38:33Z FloSoft $
+// $Id: GameMessages.h 4951 2009-05-25 20:03:10Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -388,7 +388,7 @@ public:
 public:
 	GameMessage_Player_Toggle_Nation(void) : GameMessage(NMS_PLAYER_TOGGLENATION) { }
 	GameMessage_Player_Toggle_Nation(const unsigned char player, const Nation nation)
-		: GameMessage(NMS_PLAYER_TOGGLENATION, player)
+		: GameMessage(NMS_PLAYER_TOGGLENATION, player), nation(nation)
 	{
 		PushUnsignedChar(static_cast<unsigned char>(nation));
 		LOG.write(">>> NMS_PLAYER_TOGGLENATION\n");

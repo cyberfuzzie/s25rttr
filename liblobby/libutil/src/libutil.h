@@ -1,4 +1,4 @@
-// $Id: libutil.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: libutil.h 4962 2009-05-26 17:15:30Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -24,6 +24,7 @@
 #include "files.h"
 
 #include "error.h"
+#include "Serializer.h"
 #include "SerializableArray.h"
 #include "Singleton.h"
 #include "MyTime.h"

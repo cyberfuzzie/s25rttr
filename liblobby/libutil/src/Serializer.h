@@ -75,48 +75,48 @@ public:
 	inline void PushRawData(const void * const data, const unsigned length)
 	{
 		ExtendMemory(length);
-		memcpy(&this->data[pos],data,length);
-		pos = this->length +=length; 
+		memcpy(&this->data[this->length],data,length);
+		this->length +=length; 
 	}
 
 	/// Sämtliche Integer
 	inline void PushSignedInt(signed int i)
 	{
 		ExtendMemory(4);
-		*((signed int*)&data[pos]) = htonl(i);
-		pos = this->length +=4;
+		*((signed int*)&data[length]) = htonl(i);
+		this->length +=4;
 	}
 	inline void PushUnsignedInt(unsigned int i)
 	{
 		ExtendMemory(4);
-		*((unsigned int*)&data[pos]) = htonl(i);
-		pos = this->length +=4;
+		*((unsigned int*)&data[length]) = htonl(i);
+		this->length +=4;
 	}
 
 	inline void PushSignedShort(signed short int i)
 	{
 		ExtendMemory(2);
-		*((signed short*)&data[pos]) = htons(i);
-		pos = this->length += 2;
+		*((signed short*)&data[length]) = htons(i);
+		this->length += 2;
 	}
 	inline void PushUnsignedShort(unsigned short int i)
 	{
 		ExtendMemory(2);
-		*((unsigned short*)&data[pos]) = htons(i);
-		pos = this->length +=2;
+		*((unsigned short*)&data[length]) = htons(i);
+		this->length +=2;
 	}
 
 	inline void PushSignedChar(signed char i)
 	{
 		ExtendMemory(1);
-		*((signed char*)&data[pos]) = i;
-		pos = this->length +=1;
+		*((signed char*)&data[length]) = i;
+		this->length +=1;
 	}
 	inline void PushUnsignedChar(unsigned char i)
 	{
 		ExtendMemory(1);
-		*((signed char*)&data[pos]) = i;
-		pos = this->length +=1;
+		*((signed char*)&data[length]) = i;
+		this->length +=1;
 	}
 
 	inline void PushBool(bool b)
@@ -142,7 +142,7 @@ public:
 	/// Rohdaten kopieren
 	inline void PopRawData(void *const data, const unsigned length)
 	{
-		assert(pos<this->length);
+		assert(pos+length <= this->length);
 
 		memcpy(data, &this->data[pos], length);
 		pos +=length; 
@@ -151,7 +151,7 @@ public:
 	/// Sämtliche Integer
 	inline signed int PopSignedInt()
 	{
-		assert(pos<length);
+		assert(pos+4 <= length);
 
 		signed int i = htonl(*((signed int*)&data[pos]));
 		pos +=4;
@@ -160,7 +160,7 @@ public:
 	}
 	inline unsigned int PopUnsignedInt()
 	{
-		assert(pos<length);
+		assert(pos+4 <= length);
 
 		unsigned int i = htonl(*((unsigned int*)&data[pos]));
 		pos +=4;
@@ -170,7 +170,7 @@ public:
 
 	inline signed short PopSignedShort()
 	{
-		assert(pos<length);
+		assert(pos+2 <= length);
 
 		signed short i = htons(*((signed short*)&data[pos]));
 		pos +=2;
@@ -179,7 +179,7 @@ public:
 	}
 	inline unsigned short PopUnsignedShort()
 	{
-		assert(pos<length);
+		assert(pos+2 <= length);
 
 		unsigned short i = htons(*((unsigned short*)&data[pos]));
 		pos +=2;
@@ -189,7 +189,7 @@ public:
 
 	inline signed char PopSignedChar()
 	{
-		assert(pos<length);
+		assert(pos+1 <= length);
 
 		signed char i = *((signed char*)&data[pos]);
 		pos +=1;
@@ -198,7 +198,7 @@ public:
 	}
 	inline unsigned char PopUnsignedChar()
 	{
-		assert(pos<length);
+		assert(pos+1 <= length);
 
 		unsigned char i = *((unsigned char*)&data[pos]);
 		pos +=1;
@@ -208,17 +208,18 @@ public:
 
 	inline bool PopBool()
 	{
-		assert(pos<length);
-
 		return ((PopUnsignedChar() == 1) ? true : false);
 	}
 
 	inline std::string PopString() 
 	{
-		assert(pos<length);
+		assert(pos+1 <= length);
 
 		std::string str;
 		str.resize(PopUnsignedInt());
+		
+		assert(pos + str.size() <= length);		
+
 		for(unsigned i = 0;i<str.length();++i)
 			str[i] = PopSignedChar();
 

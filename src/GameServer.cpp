@@ -1,4 +1,4 @@
-// $Id: GameServer.cpp 4951 2009-05-25 20:03:10Z OLiver $
+// $Id: GameServer.cpp 4958 2009-05-26 13:09:59Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -521,7 +521,8 @@ void GameServer::TogglePlayerState(unsigned char client)
 		LOBBYCLIENT.UpdateServerPlayerCount(rc, serverconfig.playercount-cc);
 
 	// bis wir eine freie farbe gefunden haben!
-	OnNMSPlayerToggleColor(GameMessage_Player_Toggle_Color(client,player->color));
+	if(reserved_colors[player->color] && (player->ps == PS_KI || player->ps == PS_OCCUPIED) )
+		OnNMSPlayerToggleColor(GameMessage_Player_Toggle_Color(client,player->color));
 }
 
 ///////////////////////////////////////////////////////////////////////////////

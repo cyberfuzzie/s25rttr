@@ -1,4 +1,4 @@
-// $Id: ctrlButton.h 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: ctrlButton.h 4959 2009-05-26 16:17:23Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -120,6 +120,31 @@ protected:
 
 	/// Bild
 	glArchivItem_Bitmap *image;
+};
+
+/// Button mit Farbe
+class ctrlColorButton : public ctrlButton
+{
+public:
+
+	ctrlColorButton(Window *parent, unsigned int id, unsigned short x, unsigned short y,
+		unsigned short width, unsigned short height, const TextureColor tc,
+		unsigned int fillColor, const std::string& tooltip);
+
+public:
+
+	/// Setzt Farbe des Buttons
+	void SetColor(const unsigned int fillColor) { this->fillColor = fillColor; }
+
+protected:
+
+	/// Abgeleitete Klassen müssen erweiterten Button-Inhalt zeichnen (Text in dem Fall)
+	void DrawContent() const;
+
+protected:
+
+	unsigned short width, height;
+	unsigned int fillColor;
 };
 
 

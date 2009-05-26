@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.cpp 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: dskGameInterface.cpp 4959 2009-05-26 16:17:23Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -788,6 +788,14 @@ void dskGameInterface::CI_PlayerLeft(const unsigned player_id)
 	// Im Spiel anzeigen, dass die KI das Spiel betreten hat
 	snprintf(text, 256, _("Player '%s' joined the game!"), "KI");
 	messenger.AddMessage("", 0, CD_SYSTEM, text, COLOR_GREEN);
+}
+
+void dskGameInterface::CI_GGSChanged(const GlobalGameSettings& ggs)
+{
+	// TODO: print what has changed
+	char text[256];
+	snprintf(text, 256, _("Note: Game settings changed by the server%s"),"");
+	messenger.AddMessage("", 0, CD_SYSTEM, text);
 }
 
 void dskGameInterface::CI_Chat(const unsigned player_id, const ChatDestination cd, const std::string& msg)

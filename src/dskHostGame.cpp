@@ -1,4 +1,4 @@
-// $Id: dskHostGame.cpp 4957 2009-05-26 08:33:32Z Demophobie $
+// $Id: dskHostGame.cpp 4959 2009-05-26 16:17:23Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -27,13 +27,13 @@
 #include "Loader.h"
 #include "GameClient.h"
 #include "GameServer.h"
-#include "GlobalGameSettings.h"
 #include "controls.h"
 #include "LobbyClient.h"
 
 #include "dskDirectIP.h"
 #include "dskLobby.h"
 #include "iwMsgbox.h"
+#include "iwEnhancements.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -80,17 +80,21 @@ dskHostGame::dskHostGame() :
 	AddEdit(4, 20, 530, 360, 22, TC_GREY, NormalFont);
 
 	// "Spiel starten"
-	ctrlButton *start = AddTextButton(2, 600, 530, 180, 22, TC_GREEN2, _("Start game"),NormalFont);
+	ctrlButton *start = AddTextButton(2, 600, (GAMECLIENT.IsHost() ? 560 : 530), 180, 22, TC_GREEN2, _("Start game"),NormalFont);
 	if(!GAMECLIENT.IsHost())
 		start->SetVisible(false);
 
 	// "Zurück"
-	AddTextButton(3, 600, 560, 180, 22, TC_RED1, _("Return"),NormalFont);
+	AddTextButton(3, (GAMECLIENT.IsHost() ? 400 : 600), 560, 180, 22, TC_RED1, _("Return"),NormalFont);
 
 	// "Teams sperren"
 	AddCheckBox(20, 400, 460, 180, 26, TC_GREY, _("Lock teams:"), NormalFont, !GAMECLIENT.IsHost()||GAMECLIENT.IsSavegame());
 	// "Gemeinsame Team-Sicht"
 	AddCheckBox(19, 600, 460, 180, 26, TC_GREY, _("Shared team view"), NormalFont, !GAMECLIENT.IsHost()||GAMECLIENT.IsSavegame());
+
+	// "Enhancements"
+	AddText(21, 400, 499, _("Enhancements:"), COLOR_YELLOW, 0, NormalFont);
+	AddTextButton(22, 600, 495, 180, 22, TC_GREEN1, (GAMECLIENT.IsHost() ? _("Change Settings...") : _("View Settings...")),NormalFont);
 
 	ctrlComboBox *combo;
 
@@ -246,7 +250,8 @@ void dskHostGame::UpdatePlayerRow(const unsigned row)
 			// Volk
 			group->AddTextButton( 3, 240, cy, 90, 22, tc, _("Africans"),NormalFont);
 			// Farbe
-			group->AddTextButton( 4, 340, cy, 30, 22, tc, _("T"),NormalFont);
+			//group->AddTextButton( 4, 340, cy, 30, 22, tc, _("T"),NormalFont);
+			group->AddColorButton( 4, 340, cy, 30, 22, tc, 0 );
 			// Team
 			group->AddTextButton( 5, 380, cy, 50, 22, tc, _("-"),NormalFont);
 		}
@@ -255,7 +260,8 @@ void dskHostGame::UpdatePlayerRow(const unsigned row)
 			// Volk
 			group->AddDeepening( 3, 240, cy, 90, 22, tc, _("Africans"), NormalFont, COLOR_YELLOW);
 			// Farbe
-			group->AddDeepening( 4, 340, cy, 30, 22, tc, _("T"), NormalFont, COLOR_YELLOW);
+			//group->AddDeepening( 4, 340, cy, 30, 22, tc, _("T"), NormalFont, COLOR_YELLOW);
+			group->AddColorDeepening( 4, 340, cy, 30, 22, tc, 0);
 			// Team
 			group->AddDeepening( 5, 380, cy, 50, 22, tc, _("-"), NormalFont, COLOR_YELLOW);
 		}
@@ -295,6 +301,7 @@ void dskHostGame::UpdatePlayerRow(const unsigned row)
 		ChangeTeam(row,GAMECLIENT.GetPlayer(row)->team);
 		ChangePing(row);
 		ChangeReady(row,GAMECLIENT.GetPlayer(row)->ready);
+		ChangeColor(row,GAMECLIENT.GetPlayer(row)->color);
 	}
 }
 
@@ -307,23 +314,6 @@ void dskHostGame::UpdatePlayerRow(const unsigned row)
 void dskHostGame::Msg_PaintBefore()
 {
 	GetCtrl<ctrlEdit>(4)->SetFocus();
-}
-
-///////////////////////////////////////////////////////////////////////////////
-/**
- *  Methode nach dem Zeichnen
- *
- *  @author OLiver
- */
-void dskHostGame::Msg_PaintAfter()
-{
-	// Farben malen
-	for(unsigned char i = 0; i < GAMECLIENT.GetPlayerCount(); ++i)
-	{
-		/*ctrlGroup *group =*/ GetCtrl<ctrlGroup>(50+i);
-		if(GAMECLIENT.GetPlayer(i)->ps == PS_OCCUPIED ||GAMECLIENT.GetPlayer(i)->ps == PS_KI)
-			DrawRectangle(ScaleX(342), ScaleY(82+i*30), ScaleX(26), ScaleY(18), COLORS[GAMECLIENT.GetPlayer(i)->color]);
-	}
 }
 
 void dskHostGame::Msg_Group_ButtonClick(const unsigned int group_id, const unsigned int ctrl_id)
@@ -378,7 +368,7 @@ void dskHostGame::Msg_Group_ButtonClick(const unsigned int group_id, const unsig
 			do {
 				player->color = (player->color + 1) % PLAYER_COLORS_COUNT;
 			} while(reserved_colors[player->color]);
-
+			ChangeColor(GAMECLIENT.GetPlayerID(), player->color);
 		}
 
 		// Start-Farbe der Minimap ändern
@@ -437,8 +427,10 @@ void dskHostGame::Msg_Group_ComboSelectItem(const unsigned int group_id, const u
 
 void dskHostGame::Msg_ButtonClick(const unsigned int ctrl_id)
 {
+	switch(ctrl_id)
+	{
 	// Zurück
-	if(ctrl_id == 3)
+	case 3:
 	{
 		if(GAMECLIENT.IsHost())
 			GAMESERVER.Stop();
@@ -451,21 +443,29 @@ void dskHostGame::Msg_ButtonClick(const unsigned int ctrl_id)
 			// Hauptmenü zeigen
 			WindowManager::inst().Switch(new dskDirectIP);
 
-	}
-
+	} break;
 	// Starten
-	else if(ctrl_id == 2)
+	case 2:
 	{
 		if(GAMECLIENT.IsHost())
 		{
 			if(!GAMESERVER.StartGame())
 				WindowManager::inst().Show(new iwMsgbox(_("Error"), _("Game can only be started as soon as everybody has a unique color,everyone is ready and all free slots are closed."), this, MSB_OK, MSB_EXCLAMATIONRED, 10));
 		}
-	}
-
-	else if(ctrl_id == 102)
+	} break;
+	case 102:
 	{
 		CreateMapPreview();
+	} break;
+	case 22:
+	{
+		unsigned char policy;
+		if (GAMECLIENT.IsHost())
+			policy = (GAMECLIENT.IsSavegame() ? ENH_POLICY_SERVERINGAME : ENH_POLICY_HOSTMENU);
+		else
+			policy = ENH_POLICY_READONLY;
+		WindowManager::inst().Show(new iwEnhancements(&ggs.enhs, policy, &dskHostGame::UpdateGGS, this));
+	} break;
 	}
 }
 
@@ -526,8 +526,6 @@ void dskHostGame::Msg_CheckboxChange(const unsigned int ctrl_id, const bool chec
 
 void dskHostGame::UpdateGGS()
 {
-	GlobalGameSettings ggs;
-
 	// Geschwindigkeit
 	ggs.game_speed = static_cast<GlobalGameSettings::GameSpeed>(GetCtrl<ctrlComboBox>(43)->GetSelection());
 	// Spielziel
@@ -542,7 +540,6 @@ void dskHostGame::UpdateGGS()
 	ggs.lock_teams = GetCtrl<ctrlCheck>(20)->GetCheck();
 	// Team sicht
 	ggs.team_view = GetCtrl<ctrlCheck>(19)->GetCheck();
-	
 
 	// An Server übermitteln
 	GameServer::inst().ChangeGlobalGameSettings(ggs);
@@ -581,6 +578,18 @@ void dskHostGame::ChangePing(const unsigned i)
 
 	// und setzen
 	GetCtrl<ctrlGroup>(58-i)->GetCtrl<ctrlVarDeepening>(7)->SetColor(color);
+}
+
+void dskHostGame::ChangeColor(const unsigned i, const unsigned char color)
+{
+	// decide which control type we have
+	if(!(((GAMECLIENT.IsHost() && GAMECLIENT.GetPlayer(i)->ps == PS_KI) || GAMECLIENT.GetPlayerID() == i) && !GAMECLIENT.IsSavegame()))
+		GetCtrl<ctrlGroup>(58-i)->GetCtrl<ctrlColorDeepening>(4)->SetColor(COLORS[color]);
+	else
+		GetCtrl<ctrlGroup>(58-i)->GetCtrl<ctrlColorButton>(4)->SetColor(COLORS[color]);
+	// Minimap-Startfarbe ändern
+	if(GetCtrl<ctrlPreviewMinimap>(70))
+		GetCtrl<ctrlPreviewMinimap>(70)->SetPlayerColor(i,COLORS[color]);
 }
 
 void dskHostGame::TogglePlayerReady(unsigned char player, bool ready)
@@ -700,9 +709,7 @@ void dskHostGame::CI_TeamChanged(const unsigned player_id, const unsigned char t
 
 void dskHostGame::CI_ColorChanged(const unsigned player_id, const unsigned char color)
 {
-	// Minimap-Startfarbe ändern
-	if(GetCtrl<ctrlPreviewMinimap>(70))
-		GetCtrl<ctrlPreviewMinimap>(70)->SetPlayerColor(player_id,COLORS[color]);
+	ChangeColor(player_id, color);
 }
 
 void dskHostGame::CI_PingChanged(const unsigned player_id, const unsigned short ping)
@@ -724,6 +731,8 @@ void dskHostGame::CI_PlayersSwapped(const unsigned player1, const unsigned playe
 
 void dskHostGame::CI_GGSChanged(const GlobalGameSettings& ggs)
 {
+	this->ggs = ggs;
+	
 	// Geschwindigkeit
 	GetCtrl<ctrlComboBox>(43)->SetSelection(static_cast<unsigned short>(ggs.game_speed));
 

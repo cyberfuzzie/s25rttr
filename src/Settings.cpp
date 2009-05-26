@@ -1,4 +1,4 @@
-// $Id: Settings.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: Settings.cpp 4959 2009-05-26 16:17:23Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -34,12 +34,13 @@
 	static char THIS_FILE[] = __FILE__;
 #endif
 
-const char *Settings::SETTINGS_VERSION = "6";
+const char *Settings::SETTINGS_VERSION = "7";
 
 ///////////////////////////////////////////////////////////////////////////////
 // Konstruktor
 Settings::Settings(void)
 {
+	enhs = new enhOptions();
 }
 
 bool Settings::LoadDefaults()
@@ -94,6 +95,8 @@ bool Settings::LoadDefaults()
 	Save();
 
 	LANGUAGES.setLanguage(language);
+
+	// enhs loads the default in the constructor
 	
 	return true;
 }
@@ -102,7 +105,7 @@ bool Settings::LoadDefaults()
 // Routine zum Laden der Konfiguration
 bool Settings::Load(void)
 {
-	if(!LOADER.LoadSettings() && LOADER.settings.getCount() < 20)
+	if(!LOADER.LoadSettings() && LOADER.settings.getCount() < 21)
 	{
 		warning("No or corrupt \"%s\" found, using default values.\n", FILE_PATHS[0]);
 		return LoadDefaults();
@@ -174,6 +177,29 @@ bool Settings::Load(void)
 
 	LANGUAGES.setLanguage(language);
 
+	// We had to do a little encoding to save the default enhancement options, for we can't use ^@ in the raw data
+	std::string enhText = GetTxt(settings, 20);
+	Serializer ser;
+	if (enhText.size() % 2 != 0)
+	{
+		warning("Corrupt \"%s\" found, using default values.\n", FILE_PATHS[0]);
+		return LoadDefaults();
+	}
+	for (unsigned short pos = 0; pos < enhText.size(); ++pos)
+	{
+		if (enhText[pos] >= 65 && enhText[pos] < 81 && enhText[pos+1] >= 65 && enhText[pos+1] < 81)
+		{
+			ser.PushUnsignedChar(16 * (enhText[pos]-65) + (enhText[pos+1]-65));
+			++pos;
+		}
+		else
+		{
+			warning("Corrupt \"%s\" found, using default values.\n", FILE_PATHS[0]);
+			return LoadDefaults();
+		}
+	}
+	enhs->Deserialize(&ser);
+
 	return true;
 }
 
@@ -181,12 +207,12 @@ bool Settings::Load(void)
 // Routine zum Speichern der Konfiguration
 void Settings::Save(void)
 {
-	if(LOADER.settings.getCount() < 20)
+	if(LOADER.settings.getCount() < 21)
 	{
 		LOADER.settings.clear();
-		LOADER.settings.alloc(20);
+		LOADER.settings.alloc(21);
 		libsiedler2::ArchivItem_Text text;
-		for(unsigned int i = 0; i < 20; ++i)
+		for(unsigned int i = 0; i < 21; ++i)
 			LOADER.settings.setC(i, &text);
 	}
 
@@ -231,6 +257,19 @@ void Settings::Save(void)
 	GetTxtItem(settings, 17)->setText(text);
 	GetTxtItem(settings, 18)->setText(last_ip.c_str());
 	GetTxtItem(settings, 19)->setText(playlist.c_str());
+
+	// We have to do a little encoding to save the default enhancement options, for we can't use 0x00 in the raw data
+	Serializer ser;
+	enhs->Serialize(&ser);
+	unsigned char c;
+	std::string enhText = "";
+	for (unsigned short pos = 0; pos < ser.GetLength(); ++pos)
+	{
+		c = ser.PopUnsignedChar();
+		enhText += (c / 16) + 65;
+		enhText += (c % 16) + 65;
+	}
+	GetTxtItem(settings, 20)->setText(enhText.c_str());
 
 	LOADER.SaveSettings();
 }

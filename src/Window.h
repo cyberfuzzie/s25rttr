@@ -1,4 +1,4 @@
-// $Id: Window.h 4947 2009-05-24 20:02:16Z OLiver $
+// $Id: Window.h 4959 2009-05-26 16:17:23Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -33,11 +33,13 @@ class WindowManager;
 class ctrlAlternativeEdit;
 class ctrlBuildingIcon;
 class ctrlTextButton;
+class ctrlColorButton;
 class ctrlImageButton;
 class ctrlChat;
 class ctrlCheck;
 class ctrlComboBox;
 class ctrlDeepening;
+class ctrlColorDeepening;
 class ctrlEdit;
 class ctrlGroup;
 class ctrlImage;
@@ -137,6 +139,8 @@ public:
 	ctrlBuildingIcon *AddBuildingIcon(unsigned int id, unsigned short x, unsigned short y, BuildingType type, const Nation nation, unsigned short size = 36, const char *tooltip = NULL);
 	/// fügt einen Text-ButtonCtrl hinzu.
 	ctrlTextButton *AddTextButton(unsigned int id, unsigned short x, unsigned short y,unsigned short width, unsigned short height, const TextureColor tc,const std::string& text,  glArchivItem_Font *font, const std::string& tooltip = "");
+	/// fügt einen Color-ButtonCtrl hinzu.
+	ctrlColorButton *AddColorButton(unsigned int id, unsigned short x, unsigned short y,unsigned short width, unsigned short height, const TextureColor tc, const unsigned int fillColor, const std::string& tooltip = "");
 	/// fügt einen Image-ButtonCtrl hinzu.
 	ctrlImageButton *AddImageButton(unsigned int id, unsigned short x, unsigned short y,unsigned short width, unsigned short height, const TextureColor tc,glArchivItem_Bitmap * const image, const std::string& tooltip = "");
 
@@ -149,6 +153,8 @@ public:
 	ctrlComboBox *AddComboBox(unsigned int id, unsigned short x, unsigned short y, unsigned short width, unsigned short height, TextureColor tc, glArchivItem_Font *font, unsigned short list_height, bool readonly = false);
 	/// fügt ein vertieftes TextCtrl hinzu.
 	ctrlDeepening *AddDeepening(unsigned int id, unsigned short x, unsigned short y, unsigned short width, unsigned short height, TextureColor tc, const std::string& text, glArchivItem_Font *font, unsigned int color);
+	/// Deepening fille with a color
+	ctrlColorDeepening *AddColorDeepening(unsigned int id, unsigned short x, unsigned short y, unsigned short width, unsigned short height, TextureColor tc, unsigned int fillColor);
 	/// fügt ein EditCtrl hinzu.
 	ctrlEdit *AddEdit(unsigned int id, unsigned short x, unsigned short y, unsigned short width, unsigned short height, TextureColor tc, glArchivItem_Font *font, unsigned short maxlength = 0, bool password = false, bool disabled = false, bool notify = false);
 	/// fügt eine Gruppe hinzu.

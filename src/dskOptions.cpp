@@ -1,4 +1,4 @@
-// $Id: dskOptions.cpp 4754 2009-05-01 16:35:54Z Demophobie $
+// $Id: dskOptions.cpp 4959 2009-05-26 16:17:23Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -28,9 +28,11 @@
 #include "Settings.h"
 #include "controls.h"
 #include "GlobalVars.h"
+#include "enhOption.h"
 
 #include "dskMainMenu.h"
 #include "iwMusicPlayer.h"
+#include "iwEnhancements.h"
 
 #include "languages.h"
 
@@ -66,11 +68,13 @@ dskOptions::dskOptions(void) : Desktop(GetImage(backgrounds, 1))
 {
 	// Zurück
 	AddTextButton(0, 300, 550, 200, 22,   TC_RED1, _("Back"),NormalFont);
-
+	
 	// "Optionen"
 	AddText(1, 400, 10, _("Options"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER, LargeFont);
 
 	ctrlOptionGroup *optiongroup = AddOptionGroup(10, ctrlOptionGroup::CHECK, scale);
+
+	AddTextButton(14, 520, 550, 200, 22, TC_GREEN2,     _("Enhancements"),NormalFont);
 
 	// "Allgemein"
 	optiongroup->AddTextButton(11,  80, 510, 200, 22, TC_GREEN2,     _("Common"),NormalFont);
@@ -184,6 +188,7 @@ dskOptions::dskOptions(void) : Desktop(GetImage(backgrounds, 1))
 	// Musicplayer-Button
 	groupSound->AddTextButton(71,280,175,190,22,TC_GREY,_("Music player"),NormalFont);
 	
+
 	ctrlGroup *group;
 
 	// "Allgemein" auswählen
@@ -255,7 +260,6 @@ dskOptions::dskOptions(void) : Desktop(GetImage(backgrounds, 1))
 			--i;
 		}
 	}
-
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -423,6 +427,10 @@ void dskOptions::Msg_ButtonClick(const unsigned int ctrl_id)
 			}
 
 			WindowManager::inst().Switch(new dskMainMenu);
+		} break;
+	case 14: // "Enhancements"
+		{
+			WindowManager::inst().Show(new iwEnhancements(SETTINGS.enhs, ENH_POLICY_ALL));
 		} break;
 	}
 }

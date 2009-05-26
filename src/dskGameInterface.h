@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.h 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: dskGameInterface.h 4959 2009-05-26 16:17:23Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -144,6 +144,7 @@ private:
 	bool Msg_KeyDown(const KeyEvent& ke);
 
 	void CI_PlayerLeft(const unsigned player_id);
+	void CI_GGSChanged(const GlobalGameSettings& ggs);
 	void CI_Chat(const unsigned player_id, const ChatDestination cd, const std::string& msg);
 	void CI_Async(const std::string& checksums_list);
 	void CI_ReplayAsync(const std::string& msg);

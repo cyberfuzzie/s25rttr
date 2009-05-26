@@ -1,4 +1,4 @@
-// $Id: ctrlDeepening.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: ctrlDeepening.cpp 4959 2009-05-26 16:17:23Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -64,4 +64,36 @@ bool ctrlDeepening::Draw_(void)
 	font->Draw(GetX() + width / 2, GetY() + height / 2, text.c_str(), glArchivItem_Font::DF_CENTER | glArchivItem_Font::DF_VCENTER, color);
 	
 	return true;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Konstruktor von @p ctrlColorDeepening.
+ *
+ *  @author Divan
+ */
+ctrlColorDeepening::ctrlColorDeepening(Window *parent,
+							 unsigned int id, 
+							 unsigned short x, 
+							 unsigned short y, 
+							 unsigned short width, 
+							 unsigned short height, 
+							 TextureColor tc,
+							 unsigned int fillColor)
+	: ctrlDeepening(parent, id, x, y, width, height, tc, "", NormalFont, COLOR_YELLOW),
+	 width(width),
+	 height(height),
+	 fillColor(fillColor)
+{
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  zeichnet das Fenster.
+ * 
+ *  @author Divan
+ */
+void ctrlColorDeepening::DrawContent(void) const
+{
+	DrawRectangle(x+3, y+3, width-6, height-6, fillColor);
 }

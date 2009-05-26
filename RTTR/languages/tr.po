@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: s25rttr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-26 10:28+0100\n"
+"POT-Creation-Date: 2009-05-26 10:32+0100\n"
 "PO-Revision-Date: 2009-05-16 22:45+0000\n"
 "Last-Translator: AngelSpy <melissadilara@yahoo.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
@@ -1633,6 +1633,11 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/languages.cpp:69
 msgid "System language"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:249
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:258
+msgid "T"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwBaseWarehouse.cpp:64

@@ -1,4 +1,4 @@
-// $Id: GameServer.cpp 4958 2009-05-26 13:09:59Z OLiver $
+// $Id: GameServer.cpp 4959 2009-05-26 16:17:23Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -229,7 +229,10 @@ bool GameServer::Start()
 
 	bool host_found = false;
 
-	//// Spieler 0 erstmal der Hos
+	// load preferred enhancement options
+	ggs.enhs = *(SETTINGS.enhs);
+
+	//// Spieler 0 erstmal der Host
 	switch(mapinfo.map_type)
 	{
 	default:

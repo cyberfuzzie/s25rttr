@@ -1,4 +1,4 @@
-// $Id: ctrlButton.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: ctrlButton.cpp 4959 2009-05-26 16:17:23Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -217,12 +217,29 @@ ctrlImageButton::ctrlImageButton(Window *parent, unsigned int id, unsigned short
 {
 }
 
-
-/// Abgeleitete Klassen müssen erweiterten Button-Inhalt zeichnen (Text in dem Fall)
 void ctrlImageButton::DrawContent() const
 {
 	// Bild
 	if(image)
 		image->Draw(GetX() + width / 2	 + ( (state == BUTTON_PRESSED || check) ? 2 : 0 ), GetY() + height / 2	 + ( (state == BUTTON_PRESSED || check) ? 2 : 0 ), 0, 0, 0, 0, 0, 0);
+}
+
+
+/// Abgeleitete Klassen müssen erweiterten Button-Inhalt zeichnen (Text in dem Fall)
+ctrlColorButton::ctrlColorButton(Window *parent, unsigned int id, unsigned short x, unsigned short y,
+		unsigned short width, unsigned short height, const TextureColor tc,
+		unsigned int fillColor, const std::string& tooltip) : 
+		ctrlButton(parent,id,x,y,width,height,tc,tooltip),
+		width(width),
+		height(height),
+		fillColor(fillColor)
+{
+}
+
+
+/// Abgeleitete Klassen müssen erweiterten Button-Inhalt zeichnen (Farbe in dem Fall)
+void ctrlColorButton::DrawContent() const
+{
+	DrawRectangle(x+3, y+3, width-6, height-6, fillColor);
 }
 

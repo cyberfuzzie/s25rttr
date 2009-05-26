@@ -1,4 +1,4 @@
-// $Id: Window.cpp 4947 2009-05-24 20:02:16Z OLiver $
+// $Id: Window.cpp 4959 2009-05-26 16:17:23Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -350,6 +350,20 @@ ctrlTextButton *Window::AddTextButton(unsigned int id, unsigned short x, unsigne
 	return AddCtrl(id, new ctrlTextButton(this, id, x, y, width, height, tc, text,font,tooltip));
 }
 
+/// fügt einen Color-ButtonCtrl hinzu.
+ctrlColorButton *Window::AddColorButton(unsigned int id, unsigned short x, unsigned short y,unsigned short width, unsigned short height, const TextureColor tc, const unsigned int fillColor, const std::string& tooltip)
+{
+	if(scale)
+	{
+		x = ScaleX(x);
+		y = ScaleY(y);
+		width = ScaleX(width);
+		height = ScaleY(height);
+	}
+
+	return AddCtrl(id, new ctrlColorButton(this, id, x, y, width, height, tc, fillColor, tooltip));
+}
+
 
 /// fügt einen Image-ButtonCtrl hinzu.
 ctrlImageButton *Window::AddImageButton(unsigned int id, unsigned short x, unsigned short y,unsigned short width, unsigned short height, const TextureColor tc,glArchivItem_Bitmap * const image,  const std::string& tooltip)
@@ -471,6 +485,31 @@ ctrlDeepening *Window::AddDeepening(unsigned int id,
 	}
 
 	return AddCtrl(id, new ctrlDeepening(this, id, x, y, width, height, tc, text, font, color));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  adds a colored Deepening
+ *
+ *  @author Divan
+ */
+ctrlColorDeepening *Window::AddColorDeepening(unsigned int id,
+									unsigned short x,
+									unsigned short y,
+									unsigned short width, 
+									unsigned short height, 
+									TextureColor tc, 
+									unsigned int fillColor)
+{
+	if(scale)
+	{
+		x = ScaleX(x);
+		y = ScaleY(y);
+		width = ScaleX(width);
+		height = ScaleY(height);
+	}
+
+	return AddCtrl(id, new ctrlColorDeepening(this, id, x, y, width, height, tc, fillColor));
 }
 
 ///////////////////////////////////////////////////////////////////////////////

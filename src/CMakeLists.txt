@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 4951 2009-05-25 20:03:10Z OLiver $
+### $Id: CMakeLists.txt 4959 2009-05-26 16:17:23Z Demophobie $
 ################################################################################
 
 INCLUDE(FindBZip2)
@@ -81,6 +81,7 @@ SET(SOURCES_INGAMEWINDOWS
     iwDemolishBuilding.cpp iwDemolishBuilding.h
     iwDirectIPCreate.cpp   iwDirectIPCreate.h
     iwDistribution.cpp     iwDistribution.h
+    iwEnhancements.cpp     iwEnhancements.h
     iwEndgame.cpp          iwEndgame.h
     iwHelp.cpp             iwHelp.h
     iwHQ.cpp               iwHQ.h
@@ -168,6 +169,7 @@ SET(SOURCES_OTHER
     MusicPlayer.cpp           MusicPlayer.h
     NodalObjectTypes.h
     Node.h
+    enhOption.cpp             enhOption.h
     DriverWrapper.cpp         DriverWrapper.h
     VideoDriverWrapper.cpp    VideoDriverWrapper.h
     AudioDriverWrapper.cpp    AudioDriverWrapper.h

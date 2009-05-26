@@ -1,4 +1,4 @@
-// $Id: dskHostGame.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: dskHostGame.h 4959 2009-05-26 16:17:23Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -23,6 +23,7 @@
 #include "Desktop.h"
 
 #include "GameProtocol.h"
+#include "GlobalGameSettings.h"
 
 #include "LobbyInterface.h"
 #include "ClientInterface.h"
@@ -51,12 +52,12 @@ private:
 	void ChangeReady(const unsigned i, const bool ready);
 	void ChangeNation(const unsigned i, const Nation nation);
 	void ChangePing(const unsigned i);
+	void ChangeColor(const unsigned i, const unsigned char color);
 
 	void CreateMapPreview();
 
 
 	void Msg_PaintBefore();
-	void Msg_PaintAfter();
 	void Msg_Group_ButtonClick(const unsigned int group_id, const unsigned int ctrl_id);
 	void Msg_Group_CheckboxChange(const unsigned int group_id, const unsigned int ctrl_id, const bool checked);
 	void Msg_Group_ComboSelectItem(const unsigned int group_id, const unsigned int ctrl_id, const unsigned short selection);
@@ -90,6 +91,7 @@ private:
 private:
 	int temppunkte; // TODO - wegmachen und durch korrekte punkte ersetzen!
 	glArchivItem_Bitmap_Raw preview;
+	GlobalGameSettings ggs;
 };
 
 

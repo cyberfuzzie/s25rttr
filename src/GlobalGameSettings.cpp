@@ -1,5 +1,4 @@
-
-// $Id: GlobalGameSettings.cpp 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: GlobalGameSettings.cpp 4959 2009-05-26 16:17:23Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -34,13 +33,14 @@
 
 void GlobalGameSettings::Serialize(Serializer * ser) const
 {
-	ser->PushUnsignedChar( static_cast<unsigned char>(game_speed));
-	ser->PushUnsignedChar( static_cast<unsigned char>(game_objective));
-	ser->PushUnsignedChar( static_cast<unsigned char>(start_wares));
+	ser->PushUnsignedChar(static_cast<unsigned char>(game_speed));
+	ser->PushUnsignedChar(static_cast<unsigned char>(game_objective));
+	ser->PushUnsignedChar(static_cast<unsigned char>(start_wares));
 	ser->PushBool(lock_teams);
-	ser->PushUnsignedChar( static_cast<unsigned char>(exploration));
+	ser->PushUnsignedChar(static_cast<unsigned char>(exploration));
 	ser->PushBool(team_view);
-	ser->PushUnsignedChar( static_cast<unsigned char>(demolition_prohibition));
+	ser->PushUnsignedChar(static_cast<unsigned char>(demolition_prohibition));
+	enhs.Serialize(ser);
 }
 
 void GlobalGameSettings::Deserialize(Serializer * ser)
@@ -52,4 +52,5 @@ void GlobalGameSettings::Deserialize(Serializer * ser)
 	exploration = static_cast<Exploration>(ser->PopUnsignedChar());
 	team_view = ser->PopBool();
 	demolition_prohibition = static_cast<DemolitionProhibition>(ser->PopUnsignedChar());
+	enhs.Deserialize(ser);
 }

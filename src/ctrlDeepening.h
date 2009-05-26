@@ -1,4 +1,4 @@
-// $Id: ctrlDeepening.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: ctrlDeepening.h 4959 2009-05-26 16:17:23Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -35,6 +35,23 @@ private:
 	TextureColor tc;
 	unsigned short width;
 	unsigned short height;
+};
+
+/// Colored Deepening
+class ctrlColorDeepening : public ctrlDeepening
+{
+public:
+	ctrlColorDeepening(Window *parent, unsigned int id, unsigned short x, unsigned short y, unsigned short width, unsigned short height, TextureColor tc, unsigned int fillColor);
+
+	inline void SetColor(const unsigned int fillColor) { this->fillColor = fillColor; 
+	LOG.lprintf("%d\n", fillColor); }
+
+protected:
+	virtual void DrawContent() const;
+
+protected:
+	unsigned short width, height;
+	unsigned int fillColor;
 };
 
 #endif // !CTRLDEEPENING_H_INCLUDED

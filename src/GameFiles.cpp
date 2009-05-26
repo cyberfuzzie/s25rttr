@@ -1,4 +1,4 @@
-// $Id: GameFiles.cpp 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: GameFiles.cpp 4959 2009-05-26 16:17:23Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -144,7 +144,7 @@ void SavedGameFile::ReadGGS(BinaryFile& file)
 // Kleine Signatur am Anfang "RTTRSAVE", die ein gültiges S25 RTTR Savegame kennzeichnet
 const char Savegame::SAVE_SIGNATURE[8] = {'R','T','T','R','S','A','V','E'};
 /// Version des Save-Formates
-const unsigned short Savegame::SAVE_VERSION = 5;
+const unsigned short Savegame::SAVE_VERSION = 6;
 
 Savegame::Savegame() : SavedGameFile(), start_gf(0)
 {

@@ -745,6 +745,14 @@
 							>
 						</File>
 						<File
+							RelativePath="..\..\src\iwEnhancements.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\iwEnhancements.h"
+							>
+						</File>
+						<File
 							RelativePath="..\..\src\iwHelp.cpp"
 							>
 						</File>
@@ -1172,6 +1180,14 @@
 				</File>
 				<File
 					RelativePath="..\..\src\CatapultStone.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\enhOption.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\enhOption.h"
 					>
 				</File>
 				<File

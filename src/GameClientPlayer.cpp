@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 4947 2009-05-24 20:02:16Z OLiver $
+// $Id: GameClientPlayer.cpp 4964 2009-05-26 19:42:45Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -444,7 +444,7 @@ void GameClientPlayer::FindClientForLostWares()
 void GameClientPlayer::RoadDestroyed()
 {
 	// Alle Waren, die an Flagge liegen und in Lagerhäusern, müssen gucken, ob sie ihr Ziel noch erreichen können, jetzt wo eine Straße fehlt
-	for(std::list<Ware*>::iterator it = ware_list.begin(); it!=ware_list.end(); ++it)
+	for(std::list<Ware*>::iterator it = ware_list.begin(); it!=ware_list.end(); )
 	{
 		if((*it)->LieAtFlag())
 		{
@@ -468,9 +468,11 @@ void GameClientPlayer::RoadDestroyed()
 				ware->NotifyGoalAboutLostWare();
 				// Ware aus der Liste raus
 				it = ware_list.erase(it);
-				--it;
+				continue;
 			}
 		}
+
+		++it;
 	}
 }
 
@@ -648,6 +650,8 @@ void GameClientPlayer::FindWarehouseForAllJobs(const Job job)
 			else 
 				++it;
 		}
+		else
+			++it;
 	}
 }
 
@@ -1159,14 +1163,15 @@ void GameClientPlayer::CallFlagWorker(const unsigned short x, const unsigned sho
 void GameClientPlayer::FlagDestroyed(noFlag * flag)
 {
 	// Alle durchgehen und ggf. sagen, dass sie keine Flagge mehr haben, wenn das ihre Flagge war, die zerstört wurde
-	for(std::list<nofFlagWorker*>::iterator it = flagworkers.begin();it!=flagworkers.end();++it)
+	for(std::list<nofFlagWorker*>::iterator it = flagworkers.begin();it!=flagworkers.end();)
 	{
 		if((*it)->GetFlag() == flag)
 		{
 			(*it)->LostWork();
 			it = flagworkers.erase(it);
-			--it;
 		}
+		else
+			++it;
 	}
 }
 

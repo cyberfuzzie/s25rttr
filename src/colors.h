@@ -1,4 +1,4 @@
-// $Id: colors.h 4946 2009-05-24 19:05:25Z OLiver $
+// $Id: colors.h 4956 2009-05-26 06:58:47Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -44,7 +44,7 @@ const unsigned COLOR_BLACK = 0xFF444444;
 const unsigned COLOR_WHITE = 0xFFFFFFFF;
 const unsigned COLOR_ORANGE = 0xFFFF8000;
 const unsigned COLOR_BROWN = 0xFF6C4337;
-const unsigned COLOR_GHOST = 0x25FFFFFF;
+const unsigned COLOR_GHOST = 0x10FFFFFF;
 const unsigned COLOR_SHADOW = 0x40000000;
 const unsigned COLOR_GREY = 0xFFCCCCCC;
 

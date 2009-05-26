@@ -259,7 +259,7 @@ void iwStatistics::DrawStatistic(StatisticType type)
     {
       if (i != 0)
       {	  	 
-	  if (COLORS[GAMECLIENT.GetPlayer(p)->color] == MakeColor(37,255,255,255))	// Und noch abfragen ob die Farbe durchsichtig ist
+	  if (COLORS[GAMECLIENT.GetPlayer(p)->color] == COLOR_GHOST)	// Und noch abfragen ob die Farbe durchsichtig ist
 	  {
 		DrawLine(topLeftX + (STAT_STEP_COUNT-i) * stepX,
 	 	topLeftY + sizeY - (stat.data[type][(currentIndex >= i)?(currentIndex-i):(STAT_STEP_COUNT-i+currentIndex)]*sizeY)/max,       

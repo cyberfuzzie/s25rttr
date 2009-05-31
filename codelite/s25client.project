@@ -74,8 +74,6 @@
     <File Name="../src/GlobalGameSettings.h"/>
     <File Name="../src/GamePlayerInfo.h"/>
     <File Name="../src/nofGeologist.cpp"/>
-    <File Name="../src/GameMessageQueue.cpp"/>
-    <File Name="../src/GameMessageQueue.h"/>
     <File Name="../src/nofDonkeybreeder.cpp"/>
     <File Name="../src/ctrlIngameMinimap.cpp"/>
     <File Name="../src/nofFarmhand.h"/>
@@ -157,7 +155,6 @@
     <File Name="../src/nofScout_Free.h"/>
     <File Name="../src/MapConsts.h"/>
     <File Name="../src/GammaTable.h"/>
-    <File Name="../src/ctrlBuildingIcon.h"/>
     <File Name="../src/ctrlDeepening.h"/>
     <File Name="../src/iwTools.cpp"/>
     <File Name="../src/main.h"/>
@@ -245,7 +242,6 @@
     <File Name="../src/SerializedGameData.cpp"/>
     <File Name="../src/nofShipWright.h"/>
     <File Name="../src/ClientInterface.h"/>
-    <File Name="../src/ctrlBuildingIcon.cpp"/>
     <File Name="../src/GlobalVars.h"/>
     <File Name="../src/dskSelectMap.cpp"/>
     <File Name="../src/iwStorehouse.cpp"/>
@@ -473,7 +469,6 @@
     <File Name="../libutil/src/SocketSet.h"/>
     <File Name="../libutil/src/error.cpp"/>
     <File Name="../libutil/src/error.h"/>
-    <File Name="../libutil/src/files.h"/>
     <File Name="../libutil/src/libutil.h"/>
     <File Name="../libutil/src/main.h"/>
     <VirtualDirectory Name="lobby">
@@ -498,6 +493,42 @@
       <File Name="../liblobby/src/LobbyServerList.h"/>
       <File Name="../liblobby/src/LobbyPlayerInfo.cpp"/>
       <File Name="../liblobby/src/LobbyPlayerInfo.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="GUI">
+      <VirtualDirectory Name="Controls">
+        <File Name="../src/ctrlBuildingIcon.cpp"/>
+        <File Name="../src/ctrlBuildingIcon.h"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="Desktops"/>
+      <VirtualDirectory Name="IngameWindows">
+        <File Name="../src/iwStatistics.cpp"/>
+        <File Name="../src/iwStatistics.h"/>
+        <File Name="../src/iwEnhancements.cpp"/>
+        <File Name="../src/iwEnhancements.h"/>
+        <File Name="../src/iwSurrender.cpp"/>
+        <File Name="../src/iwSurrender.h"/>
+      </VirtualDirectory>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Spiel">
+      <File Name="../src/enhOption.cpp"/>
+      <File Name="../src/enhOption.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="libutil">
+      <File Name="../libutil/src/Serializer.cpp"/>
+      <File Name="../libutil/src/Serializer.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Netzwerk">
+      <File Name="../src/GameMessageInterface.cpp"/>
+      <File Name="../src/GameMessageInterface.h"/>
+      <File Name="../src/GameMessages.cpp"/>
+      <File Name="../src/GameMessages.h"/>
+      <File Name="../src/GameCommands.cpp"/>
+      <File Name="../src/GameCommands.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="KI">
+      <File Name="../src/AIBase.h"/>
+      <File Name="../src/AIPlayer.cpp"/>
+      <File Name="../src/AIPlayer.h"/>
     </VirtualDirectory>
   </VirtualDirectory>
   <Dependencies Name="Release"/>

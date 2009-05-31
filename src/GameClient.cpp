@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 4951 2009-05-25 20:03:10Z OLiver $
+// $Id: GameClient.cpp 4980 2009-05-31 12:05:17Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1186,7 +1186,7 @@ void GameClient::ExecuteAllGCs(const GameMessage_GameCommand& gcs, unsigned char
 		// NC ausführen
 		gcs.gcs[i]->Execute(*gw,players[gcs.player],gcs.player);
 		//// Wenn ein Spieler gewechselt werden soll...
-		if(gcs.gcs[i]->GetType() == gc::SWITCHPLAYER)
+		if(gcs.gcs[i]->GetType() == gc::SWITCHPLAYER && player_switch_old_id && player_switch_new_id)
 		{
 			// ...müssen wir uns das merken
 			*player_switch_old_id = gcs.player;

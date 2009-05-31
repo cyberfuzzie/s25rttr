@@ -1,4 +1,4 @@
-// $Id: GameServer.cpp 4978 2009-05-31 10:24:24Z OLiver $
+// $Id: GameServer.cpp 4980 2009-05-31 12:05:17Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1245,6 +1245,12 @@ void GameServer::ChangePlayer(const unsigned char old_id, const unsigned char ne
 	players[old_id].ps = PS_KI;
 	players[new_id].ps = PS_OCCUPIED;
 	players[new_id].so = players[old_id].so;
+
+	// Alte KI löschen
+	delete ai_players[new_id];
+	ai_players[new_id] = 0;
+
+	ai_players[old_id] = GameClient::inst().CreateAIPlayer(old_id);
 }
 
 

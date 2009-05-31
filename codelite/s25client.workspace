@@ -14,7 +14,7 @@
   <Project Name="libendian" Path="../libsiedler2/libendian/codelite/libendian.project"/>
   <Project Name="mygettext" Path="../mygettext/codelite/mygettext.project"/>
   <BuildMatrix>
-    <WorkspaceConfiguration Name="Debug" Selected="yes">
+    <WorkspaceConfiguration Name="Debug" Selected="no">
       <Project Name="video" ConfigName="Debug"/>
       <Project Name="audio" ConfigName="Debug"/>
       <Project Name="mygettext" ConfigName="Debug"/>

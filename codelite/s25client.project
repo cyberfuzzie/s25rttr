@@ -24,7 +24,6 @@
     <File Name="../src/nofActiveSoldier.cpp"/>
     <File Name="../src/glArchivItem_Sound_Midi.cpp"/>
     <File Name="../src/noDisappearingMapEnvObject.cpp"/>
-    <File Name="../src/BurnedWarehouse.h"/>
     <File Name="../src/noStaticObject.h"/>
     <File Name="../src/iwStorehouse.h"/>
     <File Name="../src/iwMainMenu.cpp"/>
@@ -94,7 +93,6 @@
     <File Name="../src/Ware.cpp"/>
     <File Name="../src/iwBuildOrder.cpp"/>
     <File Name="../src/noExtension.cpp"/>
-    <File Name="../src/AudioDriverWrapper.h"/>
     <File Name="../src/GameClientCommands.cpp"/>
     <File Name="../src/iwMilitaryBuilding.cpp"/>
     <File Name="../src/iwLobbyServerInfo.h"/>
@@ -108,7 +106,6 @@
     <File Name="../src/dskCredits.h"/>
     <File Name="../src/nobBaseMilitary.h"/>
     <File Name="../src/ctrlPreviewMinimap.h"/>
-    <File Name="../src/BinaryFile.cpp"/>
     <File Name="../src/customborderbuilder.h"/>
     <File Name="../src/ctrlVarDeepening.h"/>
     <File Name="../src/nofIronfounder.cpp"/>
@@ -166,9 +163,7 @@
     <File Name="../src/nofDefender.h"/>
     <File Name="../src/GameClientGF_Game.cpp"/>
     <File Name="../src/GameWorldBase.cpp"/>
-    <File Name="../src/BuildingConsts.h"/>
     <File Name="../src/TerritoryRegion.h"/>
-    <File Name="../src/AudioDriverLoaderInterface.h"/>
     <File Name="../src/DoorConsts.h"/>
     <File Name="../src/iwDistribution.h"/>
     <File Name="../src/ListDir.h"/>
@@ -204,7 +199,6 @@
     <File Name="../src/nofPigbreeder.cpp"/>
     <File Name="../src/FileChecksum.h"/>
     <File Name="../src/GameServerPlayer.cpp"/>
-    <File Name="../src/AudioDriverWrapper.cpp"/>
     <File Name="../src/dskHostGame.h"/>
     <File Name="../src/nofCarrier.cpp"/>
     <File Name="../src/TerrainRenderer.h"/>
@@ -314,7 +308,6 @@
     <File Name="../src/Random.h"/>
     <File Name="../src/iwMinimap.h"/>
     <File Name="../src/languages.cpp"/>
-    <File Name="../src/CatapultStone.h"/>
     <File Name="../src/dskMainMenu.h"/>
     <File Name="../src/Window.h"/>
     <File Name="../src/nobBaseWarehouse.h"/>
@@ -336,7 +329,6 @@
     <File Name="../src/DriverWrapper.cpp"/>
     <File Name="../src/GameInterface.h"/>
     <File Name="../src/nobBaseWarehouse.cpp"/>
-    <File Name="../src/BurnedWarehouse.cpp"/>
     <File Name="../src/nofMinter.cpp"/>
     <File Name="../src/ctrlVarDeepening.cpp"/>
     <File Name="../src/controls.h"/>
@@ -354,7 +346,6 @@
     <File Name="../src/ctrlEdit.cpp"/>
     <File Name="../src/nobStorehouse.h"/>
     <File Name="../src/Desktop.cpp"/>
-    <File Name="../src/BinaryFile.h"/>
     <File Name="../src/EventManager.h"/>
     <File Name="../src/nofActiveSoldier.h"/>
     <File Name="../src/iwPostWindow.cpp"/>
@@ -439,7 +430,6 @@
     <File Name="../src/MapGeometry.h"/>
     <File Name="../src/nofDefender.cpp"/>
     <File Name="../src/nofForester.h"/>
-    <File Name="../src/CatapultStone.cpp"/>
     <File Name="../src/glArchivItem_Font.cpp"/>
     <File Name="../src/ExtensionList.cpp"/>
     <File Name="../version.cpp"/>
@@ -512,6 +502,11 @@
     <VirtualDirectory Name="Spiel">
       <File Name="../src/enhOption.cpp"/>
       <File Name="../src/enhOption.h"/>
+      <File Name="../src/BuildingConsts.h"/>
+      <File Name="../src/BurnedWarehouse.cpp"/>
+      <File Name="../src/BurnedWarehouse.h"/>
+      <File Name="../src/CatapultStone.cpp"/>
+      <File Name="../src/CatapultStone.h"/>
     </VirtualDirectory>
     <VirtualDirectory Name="libutil">
       <File Name="../libutil/src/Serializer.cpp"/>
@@ -530,86 +525,16 @@
       <File Name="../src/AIPlayer.cpp"/>
       <File Name="../src/AIPlayer.h"/>
     </VirtualDirectory>
+    <VirtualDirectory Name="Treiber">
+      <File Name="../src/AudioDriverLoaderInterface.h"/>
+      <File Name="../src/AudioDriverWrapper.cpp"/>
+      <File Name="../src/AudioDriverWrapper.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Allgemein">
+      <File Name="../src/BinaryFile.cpp"/>
+      <File Name="../src/BinaryFile.h"/>
+    </VirtualDirectory>
   </VirtualDirectory>
-  <Dependencies Name="Release"/>
-  <Settings Type="Executable">
-    <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
-      <Compiler Options="-g" Required="yes">
-        <IncludePath Value="."/>
-        <IncludePath Value="../"/>
-        <IncludePath Value="../libsiedler2/src/"/>
-        <IncludePath Value="../liblobby/src/"/>
-        <IncludePath Value="../liblobby/libutil/src/"/>
-        <IncludePath Value="../mygettext/src/"/>
-      </Compiler>
-      <Linker Options="" Required="yes">
-        <LibraryPath Value="../libsiedler2/libendian/codelite"/>
-        <LibraryPath Value="../"/>
-        <Library Value="GL"/>
-        <Library Value="siedler2"/>
-        <Library Value="mygettext"/>
-        <Library Value="endian"/>
-        <Library Value="bz2"/>
-      </Linker>
-      <ResourceCompiler Options="" Required="no"/>
-      <General OutputFile="../$(ProjectName)" IntermediateDirectory="./Debug" Command="./$(ProjectName)" CommandArguments="set environment LD_LIBRARY_PATH = ." WorkingDirectory="../" PauseExecWhenProcTerminates="yes"/>
-      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
-        <PostConnectCommands/>
-        <StartupCommands>set environment LD_LIBRARY_PATH = .</StartupCommands>
-      </Debugger>
-      <PreBuild/>
-      <PostBuild/>
-      <CustomBuild Enabled="no">
-        <CleanCommand/>
-        <BuildCommand/>
-        <PreprocessFileCommand/>
-        <SingleFileCommand/>
-        <MakefileGenerationCommand/>
-        <ThirdPartyToolName>None</ThirdPartyToolName>
-        <WorkingDirectory/>
-      </CustomBuild>
-      <AdditionalRules>
-        <CustomPostBuild/>
-        <CustomPreBuild/>
-      </AdditionalRules>
-    </Configuration>
-    <Configuration Name="Release" CompilerType="VC++" DebuggerType="GNU gdb debugger" Type="" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
-      <Compiler Options="" Required="yes">
-        <IncludePath Value="."/>
-      </Compiler>
-      <Linker Options="-O2" Required="yes"/>
-      <ResourceCompiler Options="" Required="no"/>
-      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Release" Command="./$(ProjectName)" CommandArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
-      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
-        <PostConnectCommands/>
-        <StartupCommands/>
-      </Debugger>
-      <PreBuild/>
-      <PostBuild/>
-      <CustomBuild Enabled="no">
-        <CleanCommand/>
-        <BuildCommand/>
-        <PreprocessFileCommand/>
-        <SingleFileCommand/>
-        <MakefileGenerationCommand/>
-        <ThirdPartyToolName>None</ThirdPartyToolName>
-        <WorkingDirectory/>
-      </CustomBuild>
-      <AdditionalRules>
-        <CustomPostBuild/>
-        <CustomPreBuild/>
-      </AdditionalRules>
-    </Configuration>
-    <GlobalSettings>
-      <Compiler Options="">
-        <IncludePath Value="."/>
-      </Compiler>
-      <Linker Options="">
-        <LibraryPath Value="."/>
-      </Linker>
-      <ResourceCompiler Options=""/>
-    </GlobalSettings>
-  </Settings>
   <Dependencies Name="Debug">
     <Project Name="audio"/>
     <Project Name="audio-SDL"/>
@@ -619,4 +544,83 @@
     <Project Name="libsiedler2"/>
     <Project Name="soundconvert"/>
   </Dependencies>
+  <Settings Type="Executable">
+    <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="-g" Required="yes"/>
+      <Linker Options="" Required="yes"/>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="../$(ProjectName)" IntermediateDirectory="./Debug" Command="./$(ProjectName)" CommandArguments="set environment LD_LIBRARY_PATH = ." WorkingDirectory="../" PauseExecWhenProcTerminates="yes"/>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
+        <PostConnectCommands></PostConnectCommands>
+        <StartupCommands>set environment LD_LIBRARY_PATH = .</StartupCommands>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild/>
+      <CustomBuild Enabled="no">
+        <CleanCommand></CleanCommand>
+        <BuildCommand></BuildCommand>
+        <PreprocessFileCommand></PreprocessFileCommand>
+        <SingleFileCommand></SingleFileCommand>
+        <MakefileGenerationCommand></MakefileGenerationCommand>
+        <ThirdPartyToolName>None</ThirdPartyToolName>
+        <WorkingDirectory></WorkingDirectory>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild></CustomPostBuild>
+        <CustomPreBuild>
+
+</CustomPreBuild>
+      </AdditionalRules>
+    </Configuration>
+    <Configuration Name="Release" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="-O2" Required="yes">
+        <IncludePath Value="."/>
+      </Compiler>
+      <Linker Options="-O2" Required="yes"/>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="../$(ProjectName)" IntermediateDirectory="./Release" Command="./$(ProjectName)" CommandArguments="set environment LD_LIBRARY_PATH = ." WorkingDirectory="../" PauseExecWhenProcTerminates="yes"/>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
+        <PostConnectCommands></PostConnectCommands>
+        <StartupCommands></StartupCommands>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild/>
+      <CustomBuild Enabled="no">
+        <CleanCommand></CleanCommand>
+        <BuildCommand></BuildCommand>
+        <PreprocessFileCommand></PreprocessFileCommand>
+        <SingleFileCommand></SingleFileCommand>
+        <MakefileGenerationCommand></MakefileGenerationCommand>
+        <ThirdPartyToolName>None</ThirdPartyToolName>
+        <WorkingDirectory></WorkingDirectory>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild></CustomPostBuild>
+        <CustomPreBuild>
+
+</CustomPreBuild>
+      </AdditionalRules>
+    </Configuration>
+    <GlobalSettings>
+      <Compiler Options="">
+        <IncludePath Value="."/>
+        <IncludePath Value="../"/>
+        <IncludePath Value="../libsiedler2/src/"/>
+        <IncludePath Value="../liblobby/src/"/>
+        <IncludePath Value="../liblobby/libutil/src/"/>
+        <IncludePath Value="../mygettext/src/"/>
+      </Compiler>
+      <Linker Options="">
+        <LibraryPath Value="../libsiedler2/libendian/codelite"/>
+        <LibraryPath Value="../"/>
+        <Library Value="GL"/>
+        <Library Value="siedler2"/>
+        <Library Value="mygettext"/>
+        <Library Value="endian"/>
+        <Library Value="bz2"/>
+      </Linker>
+      <ResourceCompiler Options=""/>
+    </GlobalSettings>
+  </Settings>
+  <Dependencies Name="Release"/>
 </CodeLite_Project>

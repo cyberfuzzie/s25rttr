@@ -4,8 +4,8 @@ EXECUTE_PROCESS(COMMAND "uname"
 EXECUTE_PROCESS(COMMAND "uname" "-m"
 	OUTPUT_VARIABLE CMAKE_SYSTEM_PROCESSOR OUTPUT_STRIP_TRAILING_WHITESPACE)
 
-SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mtune=native -malign-double -ffast-math -mmmx -msse -mfpmath=sse -fomit-frame-pointer")
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mtune=native -malign-double -ffast-math -mmmx -msse -mfpmath=sse -fomit-frame-pointer")
+SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mtune=native -malign-double -ffast-math -mmmx -msse -mfpmath=sse")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mtune=native -malign-double -ffast-math -mmmx -msse -mfpmath=sse")
 
 # specify the compiler
 SET(CMAKE_C_COMPILER   gcc)

@@ -1,4 +1,4 @@
-// $Id: BinaryFile.h 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: BinaryFile.h 4978 2009-05-31 10:24:24Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -21,14 +21,14 @@
 
 class String;
 
-// ÷ffnungsmethoden
+// √ñffnungsmethoden
 enum OpenFileMode
 {
 	OFM_WRITE = 0, 
 	OFM_READ
 };
 
-/// Klasse f¸r das Laden und Speichern von bin‰ren Dateien
+/// Klasse f√ºr das Laden und Speichern von bin√§ren Dateien
 class BinaryFile
 {
 private:
@@ -42,9 +42,9 @@ public:
 	~BinaryFile() { Close(); }
 
 
-	/// ÷ffnet eine Datei: liefert true falls erfolgreich
+	/// √ñffnet eine Datei: liefert true falls erfolgreich
 	bool Open(const char * const filename, const OpenFileMode of);
-	/// Schlieﬂt eine Datei: liefert true falls erfolgreich
+	/// Schlie√üt eine Datei: liefert true falls erfolgreich
 	bool Close();
 
 	/// Schreibmethoden
@@ -58,28 +58,61 @@ public:
 	void WriteRawData(const void * const data, const unsigned length)
 	{ fwrite(data,length,1,file); }
 
-	void WriteShortString(const std::string& str); /// L‰nge max 254
-	void WriteLongString(const std::string& str); /// L‰nge max 2^32-2
+	void WriteShortString(const std::string& str); /// L√§nge max 254
+	void WriteLongString(const std::string& str); /// L√§nge max 2^32-2
 
 	/// Lesemethoden
 	signed int ReadSignedInt() 
-	{ signed int i; fread(&i,4,1,file); return i; }
+	{ 
+		signed int i; 
+		unsigned read_length = fread(&i,4,1,file); 
+		assert(read_length == 1);
+		return i; 
+	}
 	unsigned int ReadUnsignedInt()
-	{ unsigned int i; fread(&i,4,1,file); return i; }
+	{ 
+		unsigned int i;
+		unsigned read_length = fread(&i,4,1,file);
+		assert(read_length == 1);
+		return i; 
+	}
 	signed short ReadSignedShort()
-	{ signed short i; fread(&i,2,1,file); return i; }
+	{
+		signed short i; 
+		unsigned read_length = fread(&i,2,1,file);
+		assert(read_length == 1);
+		return i;
+	}
 	unsigned short ReadUnsignedShort() 
-	{ unsigned short i; fread(&i,2,1,file); return i; }
+	{
+		unsigned short i;
+		unsigned read_length = fread(&i,2,1,file);
+		assert(read_length == 1);
+		return i;
+	}
 	signed char ReadSignedChar()
-	{ signed char i; fread(&i,1,1,file); return i; }
+	{ 
+		signed char i;
+		unsigned read_length = fread(&i,1,1,file); 
+		assert(read_length == 1);
+		return i; 
+	}
 	unsigned char ReadUnsignedChar()
-	{ unsigned char i; fread(&i,1,1,file); return i; }
+	{
+		unsigned char i;
+		unsigned read_length = fread(&i,1,1,file); 
+		assert(read_length == 1);
+		return i; 
+	}
 
 	void ReadRawData(void * const data, const unsigned length)
-	{ fread(data,length,1,file); }
+	{ 
+		unsigned read_length = fread(data,length,1,file);
+		assert(read_length == 1);
+	}
 
-	void ReadShortString(std::string& str); /// L‰nge max 254
-	void ReadLongString(std::string& str); /// L‰nge max 2^32-2
+	void ReadShortString(std::string& str); /// L√§nge max 254
+	void ReadLongString(std::string& str); /// L√§nge max 2^32-2
 
 	/// Setzt den Dateizeiger
 	void Seek(const long pos,const int origin) { fseek(file,pos,origin); }
@@ -92,7 +125,7 @@ public:
 	/// Datei zu Ende?
 	bool EndOfFile() const { return feof(file)?true:false; }
 
-	/// Datei g¸ltig?
+	/// Datei g√ºltig?
 	bool IsValid() const { return file?true:false; }
 
 };

@@ -1,4 +1,4 @@
-// $Id: CatapultStone.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: CatapultStone.cpp 4978 2009-05-31 10:24:24Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -47,6 +47,8 @@ start_y(start_y), dest_x(dest_x), dest_y(dest_y), explode(false), event(em->AddE
 {
 }
 
+
+
 CatapultStone::CatapultStone(SerializedGameData * sgd, const unsigned obj_id) : GameObject(sgd,obj_id),
 dest_building_x(sgd->PopUnsignedShort()),
 dest_building_y(sgd->PopUnsignedShort()),
@@ -83,7 +85,7 @@ void CatapultStone::Destroy()
 
 void CatapultStone::Draw(const GameWorldViewer& gwv,const int xoffset, const int yoffset)
 {
-	// Stein überhaupt zeichnen (wenn Quelle und Ziel nicht sichtbar sind, dann nicht!)
+	// Stein Ã¼berhaupt zeichnen (wenn Quelle und Ziel nicht sichtbar sind, dann nicht!)
 	if(gwv.GetVisibility(dest_building_x,dest_building_y) != VIS_VISIBLE &&
 		gwv.GetVisibility(dest_map_x,dest_map_y) != VIS_VISIBLE)
 		return;
@@ -126,7 +128,7 @@ void CatapultStone::HandleEvent(const unsigned int id)
 {
 	if(explode)
 	{
-		// Explodiert --> mich zerstören
+		// Explodiert --> mich zerstÃ¶ren
 		gwg->RemoveCatapultStone(this);
 		em->AddToKillList(this);
 	}
@@ -139,7 +141,7 @@ void CatapultStone::HandleEvent(const unsigned int id)
 		// Trifft der Stein?
 		if(dest_building_x == dest_map_x && dest_building_y == dest_map_y)
 		{
-			// Steht an der Stelle noch ein Militärgebäude zum Bombardieren?
+			// Steht an der Stelle noch ein MilitÃ¤rgebÃ¤ude zum Bombardieren?
 			if(gwg->GetNO(dest_building_x,dest_building_y)->GetGOT() == GOT_NOB_MILITARY)
 				gwg->GetSpecObj<nobMilitary>(dest_building_x,dest_building_y)->HitOfCatapultStone();
 		}

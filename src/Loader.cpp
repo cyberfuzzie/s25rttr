@@ -1,4 +1,4 @@
-// $Id: Loader.cpp 4842 2009-05-09 11:53:45Z OLiver $
+// $Id: Loader.cpp 4978 2009-05-31 10:24:24Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -66,10 +66,10 @@ Loader::~Loader(void)
 /**
  *  formt Pfade korrekt um.
  *
- *  @param[in,out] destination Zielspeicher, muss groß genug sein!
+ *  @param[in,out] destination Zielspeicher, muss groÃŸ genug sein!
  *  @param[in]     constant    der Konstante Pfad
  *
- *  @return liefert @p destination zurück
+ *  @return liefert @p destination zurÃ¼ck
  *
  *  @author FloSoft
  */
@@ -90,7 +90,7 @@ char *Loader::GetFilePath(char *destination, const char *constant)
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  Lädt alle allgemeinen Dateien.
+ *  LÃ¤dt alle allgemeinen Dateien.
  *
  *  @return @p true bei Erfolg, @p false bei Fehler.
  *
@@ -117,7 +117,7 @@ bool Loader::LoadFiles(void)
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  Lädt die Menüdateien.
+ *  LÃ¤dt die MenÃ¼dateien.
  *
  *  @return @p true bei Erfolg, @p false bei Fehler.
  *
@@ -143,7 +143,7 @@ bool Loader::LoadMenu(void)
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  Lädt die Paletten.
+ *  LÃ¤dt die Paletten.
  *
  *  @return @p true bei Erfolg, @p false bei Fehler.
  *
@@ -172,7 +172,7 @@ bool Loader::LoadPalettes(void)
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  Lädt die Hintergrunddateien.
+ *  LÃ¤dt die Hintergrunddateien.
  *
  *  @return @p true bei Erfolg, @p false bei Fehler.
  *
@@ -248,7 +248,7 @@ bool Loader::LoadBackgrounds(void)
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  Lädt alle Textfiles.
+ *  LÃ¤dt alle Textfiles.
  *
  *  @return @p true bei Erfolg, @p false bei Fehler.
  *
@@ -291,7 +291,7 @@ bool Loader::LoadTXTs(void)
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  Lädt alle Sounds.
+ *  LÃ¤dt alle Sounds.
  *
  *  @return liefert true bei Erfolg, false bei Fehler
  *
@@ -320,12 +320,13 @@ bool Loader::LoadSounds(void)
 				cmd[x] = '\\';
 		}
 #endif // !_WIN32
-		system(cmd);
+		if(system(cmd) == -1)
+			return false;
 
 		// 2ter versuch
 		if(!LoadFile(FILE_PATHS[55], GetPalette(0), &sound_lst))
 		{
-			// Datei kopieren, und zwar schön portabel :P ...
+			// Datei kopieren, und zwar schÃ¶n portabel :P ...
 
 			LOG.lprintf("Kopiere Datei %s nach %s: ", GetFilePath(b, FILE_PATHS[49]), GetFilePath(b, FILE_PATHS[55]));
 
@@ -383,10 +384,10 @@ bool Loader::LoadSounds(void)
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  Lädt eine Datei in ein ArchivInfo.
+ *  LÃ¤dt eine Datei in ein ArchivInfo.
  *
  *  @param[in] pfad    Der Dateipfad
- *  @param[in] palette (falls benötigt) die Palette.
+ *  @param[in] palette (falls benÃ¶tigt) die Palette.
  *  @param[in] archiv  Das Zielarchivinfo.
  *
  *  @return @p true bei Erfolg, @p false bei Fehler.
@@ -417,7 +418,7 @@ bool Loader::LoadFile(const char *pfad, const libsiedler2::ArchivItem_Palette *p
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  Lädt die Settings.
+ *  LÃ¤dt die Settings.
  *
  *  @return @p true bei Erfolg, @p false bei Fehler.
  *
@@ -467,7 +468,7 @@ bool Loader::SaveSettings()
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  Lädt die Spieldateien.
+ *  LÃ¤dt die Spieldateien.
  *
  *  @param[in] gfxset  Das GFX-Set
  *  @param[in] nations Array der zu ladenden Nationen.
@@ -482,7 +483,7 @@ bool Loader::LoadGame(unsigned char gfxset, bool *nations)
 	{
 		if(nations[i])
 		{
-			// Völker-Grafiken laden
+			// VÃ¶lker-Grafiken laden
 			nation_bobs[i].clear();
 			if(!LoadFile(FILE_PATHS[27 + i + (gfxset == 2)*NATION_COUNT], GetPalette(0), &nation_bobs[i]))
 				return false;
@@ -563,7 +564,7 @@ bool Loader::LoadGame(unsigned char gfxset, bool *nations)
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  Lädt das Terrain.
+ *  LÃ¤dt das Terrain.
  *
  *  @param[in] gfxset  Das GFX-Set
  *
@@ -613,7 +614,7 @@ bool Loader::LoadTerrain(unsigned char gfxset)
 		{192,104,247,160},
 	};
 
-	// Ränder
+	// RÃ¤nder
 	Rect rec_raender[5] =
 	{
 		{192,176,256,192}, // Schnee
@@ -649,7 +650,7 @@ bool Loader::LoadTerrain(unsigned char gfxset)
 	lava.clear();
 	ExtractAnimatedTexture(&lbm, &lava,  rects[15], 4, 248);
 
-	// die 5 Ränder
+	// die 5 RÃ¤nder
 	borders.clear();
 	for(unsigned char i = 0; i < 5; ++i)
 		ExtractTexture(&lbm, &borders, rec_raender[i]);
@@ -721,7 +722,7 @@ void Loader::ExtractAnimatedTexture(libsiedler2::ArchivInfo *source, libsiedler2
 
 	unsigned char *buffer = new unsigned char[width*height];
 
-	// Mit Startindex (also irgendeiner Farbe) füllen, um transparente Pixel und damit schwarze Punke am Rand zu verhindern
+	// Mit Startindex (also irgendeiner Farbe) fÃ¼llen, um transparente Pixel und damit schwarze Punke am Rand zu verhindern
 	memset(buffer, start_index, width*height);
 
 	image->print(buffer, width, height, libsiedler2::FORMAT_PALETTED, palette, 0, 0, rect.left, rect.top, width, height);

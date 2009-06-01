@@ -1,4 +1,4 @@
-// $Id: ctrlDeepening.h 4983 2009-06-01 07:33:02Z OLiver $
+// $Id: ctrlDeepening.h 4984 2009-06-01 10:37:37Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -31,6 +31,8 @@ public:
 
 protected:
 	virtual bool Draw_(void);
+	/// Abgeleitete Klassen müssen erweiterten Inhalt zeichnen
+	virtual void DrawContent() const {}
 
 private:
 	TextureColor tc;
@@ -48,7 +50,7 @@ public:
 	virtual void SetColor(const unsigned int fill_color);
 
 protected:
-	virtual void DrawContent() const;
+	void DrawContent() const;
 
 protected:
 	unsigned short width, height;

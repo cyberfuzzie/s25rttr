@@ -1,4 +1,4 @@
-// $Id: MessageQueue.cpp 4983 2009-06-01 07:33:02Z OLiver $
+// $Id: MessageQueue.cpp 4984 2009-06-01 10:37:37Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -39,6 +39,29 @@
 MessageQueue::~MessageQueue(void)
 {
 	clear();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Copy-Konstruktor von @p MessageQueue, um Messages neu zu erstellen, ansonsten werden
+ *  nur die Pointer kopiert!
+ *
+ *  @author OLiver
+ */
+MessageQueue::MessageQueue(const MessageQueue& mq) : messages(mq.messages.size()), createfunction(mq.createfunction)
+{
+	for(unsigned i = 0;i<mq.messages.size();++i)
+		messages[i] = mq.messages[i]->duplicate();
+}
+
+/// Zuweisungsoperator, da Messages kopiert werden müssen
+MessageQueue& MessageQueue::operator=(const MessageQueue& mq)
+{
+	messages.resize(mq.messages.size());
+	for(unsigned i = 0;i<mq.messages.size();++i)
+		messages[i] = mq.messages[i]->duplicate();
+
+	return *this;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -1,4 +1,4 @@
-// $Id: MessageQueue.h 4983 2009-06-01 07:33:02Z OLiver $
+// $Id: MessageQueue.h 4984 2009-06-01 10:37:37Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -24,12 +24,16 @@ class MessageQueue
 {
 public:
 	MessageQueue(Message *(*createfunction)(unsigned short)) : createfunction(createfunction) {}
+	MessageQueue(const MessageQueue& mq);
 	~MessageQueue(void);
+
+	MessageQueue& operator=(const MessageQueue& mq);
 
 private:
 	typedef std::vector<Message *> Queue;
 	typedef std::vector<Message *>::iterator QueueIt;
 	Queue messages;
+	Message *(*createfunction)(unsigned short);
 
 public:
 	void clear(void);
@@ -51,9 +55,7 @@ public:
 	Message *front() { return (messages.size() > 0 ? (*messages.begin()) : NULL); }
 	/// entfernt das vorderste Element aus der Queue.
 	void pop(void);
-
-private:
-	Message *(*createfunction)(unsigned short);
+	
 };
 
 #endif // LOBBYMESSAGEQUEUE_H_INCLUDED

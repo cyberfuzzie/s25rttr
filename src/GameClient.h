@@ -1,4 +1,4 @@
-// $Id: GameClient.h 4951 2009-05-25 20:03:10Z OLiver $
+// $Id: GameClient.h 4984 2009-06-01 10:37:37Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -167,7 +167,7 @@ private:
 	//  Netzwerknachrichten
 	virtual void OnNMSDeadMsg(unsigned int id);
 
-	virtual void OnNMSPing();
+	virtual void OnNMSPing(const GameMessage_Ping& msg);
 
 	virtual void OnNMSServerTypeOK(const GameMessage_Server_TypeOK& msg);
 	virtual void OnNMSServerPassword(const GameMessage_Server_Password& msg);

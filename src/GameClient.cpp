@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 4983 2009-06-01 07:33:02Z OLiver $
+// $Id: GameClient.cpp 4984 2009-06-01 10:37:37Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -429,9 +429,9 @@ void GameClient::OnNMSDeadMsg(unsigned int id)
  *
  *  @author FloSoft
  */
-void GameClient::OnNMSPing()
+void GameClient::OnNMSPing(const GameMessage_Ping& msg)
 {
-	send_queue.push(new GameMessage_Pong(1));
+	send_queue.push(new GameMessage_Pong(0xFF));
 }
 
 ///////////////////////////////////////////////////////////////////////////////

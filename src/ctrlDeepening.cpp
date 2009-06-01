@@ -1,4 +1,4 @@
-// $Id: ctrlDeepening.cpp 4983 2009-06-01 07:33:02Z OLiver $
+// $Id: ctrlDeepening.cpp 4984 2009-06-01 10:37:37Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -62,6 +62,8 @@ bool ctrlDeepening::Draw_(void)
 	Draw3D(GetX(), GetY(), width, height, tc, 2);
 
 	font->Draw(GetX() + width / 2, GetY() + height / 2, text.c_str(), glArchivItem_Font::DF_CENTER | glArchivItem_Font::DF_VCENTER, color);
+
+	DrawContent();	
 	
 	return true;
 }

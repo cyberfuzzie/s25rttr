@@ -1,4 +1,4 @@
-// $Id: GameProtocol.h 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: GameProtocol.h 4985 2009-06-01 13:05:27Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -185,5 +185,9 @@ enum MapType
 	MAPTYPE_RTTRMAP,
 	MAPTYPE_RANDOMMAP
 };
+
+/// Größe eines Map-Paketes
+/// ACHTUNG: IPV4 garantiert nur maximal 576!!
+const unsigned MAP_PART_SIZE = 512;
 
 #endif // !GAMEPROTOCOL_H_INCLUDED

@@ -1,4 +1,4 @@
-// $Id: GameServer.cpp 4983 2009-06-01 07:33:02Z OLiver $
+// $Id: GameServer.cpp 4985 2009-06-01 13:05:27Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -221,7 +221,7 @@ bool GameServer::Start()
 
 	delete[] map_data;
 
-	mapinfo.partcount = mapinfo.ziplength / 4096 +  ( (mapinfo.ziplength%4096) ? 1 : 0);
+	mapinfo.partcount = mapinfo.ziplength / MAP_PART_SIZE +  ( (mapinfo.ziplength%MAP_PART_SIZE) ? 1 : 0);
 
 	// Speicher für Spieler anlegen
 	for(unsigned i =0;i<serverconfig.playercount;++i)
@@ -1076,8 +1076,8 @@ inline void GameServer::OnNMSPlayerName(const GameMessage_Player_Name& msg)
 	// Und Kartendaten
 	for(unsigned i = 0;i<mapinfo.partcount;++i)
 	{
-		unsigned data_size = ( (mapinfo.ziplength - player->temp_ul) > 4096 )
-			? 4096 : (mapinfo.ziplength - player->temp_ul);
+		unsigned data_size = ( (mapinfo.ziplength - player->temp_ul) > MAP_PART_SIZE )
+			? MAP_PART_SIZE : (mapinfo.ziplength - player->temp_ul);
 
 		player->send_queue.push(new GameMessage_Map_Data(&mapinfo.zipdata[player->temp_ul], data_size));
 		player->temp_ul += data_size;

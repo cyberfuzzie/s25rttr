@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 4980 2009-05-31 12:05:17Z OLiver $
+// $Id: GameClient.cpp 4983 2009-06-01 07:33:02Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -230,12 +230,13 @@ void GameClient::Run()
 	if(set.Select(0, 0) > 0)
 	{
 		// nachricht empfangen
-		if(recv_queue.recv(&socket) == -1)
+		if(!recv_queue.recv(&socket))
 		{
 			LOG.lprintf("Receiving Message from server failed\n");
 			ServerLost();
 		}
 	}
+
 
 	// nun auf Fehler prüfen
 	set.Clear();
@@ -450,6 +451,8 @@ void GameClient::OnNMSPlayerId(const GameMessage_Player_Id& msg)
 		Stop();
 		return;
 	}
+
+	this->playerid = msg.playerid;
 
 	// Server-Typ senden
 	send_queue.push(new GameMessage_Server_Type(clientconfig.servertyp, GetWindowVersion()));

@@ -1,4 +1,4 @@
-// $Id: ctrlButton.h 4959 2009-05-26 16:17:23Z Demophobie $
+// $Id: ctrlButton.h 4983 2009-06-01 07:33:02Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -123,7 +123,7 @@ protected:
 };
 
 /// Button mit Farbe
-class ctrlColorButton : public ctrlButton
+class ctrlColorButton : public ctrlButton, public ColorControlInterface
 {
 public:
 
@@ -133,8 +133,8 @@ public:
 
 public:
 
-	/// Setzt Farbe des Buttons
-	void SetColor(const unsigned int fillColor) { this->fillColor = fillColor; }
+	/// Setzt die Farbe des Controls
+	virtual void SetColor(const unsigned int fill_color);
 
 protected:
 

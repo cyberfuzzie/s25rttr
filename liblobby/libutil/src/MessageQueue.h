@@ -1,4 +1,4 @@
-// $Id: MessageQueue.h 4910 2009-05-21 19:38:04Z OLiver $
+// $Id: MessageQueue.h 4983 2009-06-01 07:33:02Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -42,7 +42,7 @@ public:
 
 	/// verschickt Pakete der Queue, maximal @p max, mit einem maximal @p sizelimit groﬂ (aber beliebig viele kleine)
 	bool send(Socket *sock, int max, unsigned int sizelimit = 512);
-	int recv(Socket *sock, bool wait = false);
+	bool recv(Socket *sock, bool wait = false);
 
 public:
 	/// h‰ngt ein Element hinten an.

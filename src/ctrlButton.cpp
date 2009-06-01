@@ -1,4 +1,4 @@
-// $Id: ctrlButton.cpp 4959 2009-05-26 16:17:23Z Demophobie $
+// $Id: ctrlButton.cpp 4983 2009-06-01 07:33:02Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -243,3 +243,8 @@ void ctrlColorButton::DrawContent() const
 	DrawRectangle(x+3, y+3, width-6, height-6, fillColor);
 }
 
+
+void ctrlColorButton::SetColor(const unsigned int fill_color)
+{
+	this->fillColor = fill_color;
+}

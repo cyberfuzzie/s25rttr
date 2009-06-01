@@ -1,4 +1,4 @@
-// $Id: ctrlDeepening.cpp 4959 2009-05-26 16:17:23Z Demophobie $
+// $Id: ctrlDeepening.cpp 4983 2009-06-01 07:33:02Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -85,6 +85,12 @@ ctrlColorDeepening::ctrlColorDeepening(Window *parent,
 	 height(height),
 	 fillColor(fillColor)
 {
+}
+
+/// Setzt die Farbe des Controls
+void ctrlColorDeepening::SetColor(const unsigned int fill_color)
+{
+	this->fillColor = fill_color;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

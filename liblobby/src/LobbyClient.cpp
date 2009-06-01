@@ -1,4 +1,4 @@
-// $Id: LobbyClient.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: LobbyClient.cpp 4983 2009-06-01 07:33:02Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -77,7 +77,7 @@ void LobbyClient::Run(void)
 	if(set.Select(0, 0) > 0)
 	{
 		// nachricht empfangen
-		if(recv_queue.recv(&socket) == -1)
+		if(!recv_queue.recv(&socket))
 		{
 			LOG.lprintf("Receiving Message from server failed\n");
 			ServerLost();

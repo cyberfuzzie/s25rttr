@@ -1,4 +1,4 @@
-// $Id: ctrlRectangle.h 4840 2009-05-09 09:16:39Z OLiver $
+// $Id: ctrlRectangle.h 4983 2009-06-01 07:33:02Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -41,6 +41,14 @@ protected:
 
 	/// Breite und Höhe des Controls
 	unsigned short width, height;
+};
+
+/// Interface für Klassen, in denen eine Farbe angezeigt wird
+class ColorControlInterface
+{
+public:
+	/// Setzt die Farbe des Controls
+	virtual void SetColor(const unsigned int fill_color) = 0; 
 };
 
 

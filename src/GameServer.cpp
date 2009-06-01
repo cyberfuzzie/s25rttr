@@ -1,4 +1,4 @@
-// $Id: GameServer.cpp 4980 2009-05-31 12:05:17Z OLiver $
+// $Id: GameServer.cpp 4983 2009-06-01 07:33:02Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -939,7 +939,7 @@ void GameServer::FillPlayerQueues(void)
 				if( players[client].isValid() && set.InSet(players[client].so) )
 				{
 					// nachricht empfangen
-					if(players[client].recv_queue.recv(&players[client].so) == -1)
+					if(!players[client].recv_queue.recv(&players[client].so))
 					{
 						LOG.lprintf("SERVER: Receiving Message for player %d failed, kick it like Beckham!\n", client);
 						KickPlayer(client, NP_CONNECTIONLOST, 0);
@@ -1096,7 +1096,7 @@ inline void GameServer::OnNMSPlayerToggleNation(const GameMessage_Player_Toggle_
 	LOG.write("CLIENT%d >>> SERVER: NMS_PLAYER_TOGGLENATION\n", msg.player);
 
 	// Nation-Change senden
-	SendToAll(msg);
+	SendToAll(GameMessage_Player_Toggle_Nation(msg.player,msg.nation));
 
 	LOG.write("SERVER >>> BROADCAST: NMS_PLAYER_TOGGLENATION(%d, %d)\n", msg.player, player->nation);
 }
@@ -1110,7 +1110,7 @@ inline void GameServer::OnNMSPlayerToggleTeam(const GameMessage_Player_Toggle_Te
 	player->team = msg.team;
 
 	LOG.write("CLIENT%d >>> SERVER: NMS_PLAYER_TOGGLETEAM\n", msg.player);
-	SendToAll(msg);
+	SendToAll(GameMessage_Player_Toggle_Team(msg.player,msg.team));
 	LOG.write("SERVER >>> BROADCAST: NMS_PLAYER_TOGGLETEAM(%d, %d)\n", msg.player, player->team);
 }
 
@@ -1154,7 +1154,7 @@ inline void GameServer::OnNMSPlayerReady(const GameMessage_Player_Ready& msg)
 
 	LOG.write("CLIENT%d >>> SERVER: NMS_PLAYER_READY(%s)\n", msg.player, (player->ready ? "true" : "false"));
 	// Ready-Change senden
-	SendToAll(msg);
+	SendToAll(GameMessage_Player_Ready(msg.player,msg.ready));
 	LOG.write("SERVER >>> BROADCAST: NMS_PLAYER_READY(%d, %s)\n", msg.player, (player->ready ? "true" : "false"));
 }
 

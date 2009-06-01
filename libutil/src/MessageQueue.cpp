@@ -1,4 +1,4 @@
-// $Id: MessageQueue.cpp 4903 2009-05-21 12:04:21Z OLiver $
+// $Id: MessageQueue.cpp 4983 2009-06-01 07:33:02Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -73,7 +73,7 @@ void MessageQueue::pop(void)
 
 ///////////////////////////////////////////////////////////////////////////////
 /// ruft eine nachricht ab und hängt sie in die queue
-int MessageQueue::recv(Socket *sock, bool wait)
+bool MessageQueue::recv(Socket *sock, bool wait)
 {
 	if(!sock)
 		return false;

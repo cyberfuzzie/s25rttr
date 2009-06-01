@@ -1,4 +1,4 @@
-// $Id: dskHostGame.cpp 4959 2009-05-26 16:17:23Z Demophobie $
+// $Id: dskHostGame.cpp 4983 2009-06-01 07:33:02Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -582,11 +582,8 @@ void dskHostGame::ChangePing(const unsigned i)
 
 void dskHostGame::ChangeColor(const unsigned i, const unsigned char color)
 {
-	// decide which control type we have
-	if(!(((GAMECLIENT.IsHost() && GAMECLIENT.GetPlayer(i)->ps == PS_KI) || GAMECLIENT.GetPlayerID() == i) && !GAMECLIENT.IsSavegame()))
-		GetCtrl<ctrlGroup>(58-i)->GetCtrl<ctrlColorDeepening>(4)->SetColor(COLORS[color]);
-	else
-		GetCtrl<ctrlGroup>(58-i)->GetCtrl<ctrlColorButton>(4)->SetColor(COLORS[color]);
+	GetCtrl<ctrlGroup>(58-i)->GetCtrl<ColorControlInterface>(4)->SetColor(COLORS[color]);
+
 	// Minimap-Startfarbe ändern
 	if(GetCtrl<ctrlPreviewMinimap>(70))
 		GetCtrl<ctrlPreviewMinimap>(70)->SetPlayerColor(i,COLORS[color]);

@@ -1,4 +1,4 @@
-// $Id: ctrlDeepening.h 4959 2009-05-26 16:17:23Z Demophobie $
+// $Id: ctrlDeepening.h 4983 2009-06-01 07:33:02Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -22,6 +22,7 @@
 #pragma once
 
 #include "ctrlText.h"
+#include "ctrlRectangle.h"
 
 class ctrlDeepening : public ctrlText
 {
@@ -38,13 +39,13 @@ private:
 };
 
 /// Colored Deepening
-class ctrlColorDeepening : public ctrlDeepening
+class ctrlColorDeepening : public ctrlDeepening, public ColorControlInterface
 {
 public:
 	ctrlColorDeepening(Window *parent, unsigned int id, unsigned short x, unsigned short y, unsigned short width, unsigned short height, TextureColor tc, unsigned int fillColor);
 
-	inline void SetColor(const unsigned int fillColor) { this->fillColor = fillColor; 
-	LOG.lprintf("%d\n", fillColor); }
+	/// Setzt die Farbe des Controls
+	virtual void SetColor(const unsigned int fill_color);
 
 protected:
 	virtual void DrawContent() const;

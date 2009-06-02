@@ -713,6 +713,14 @@
 							>
 						</File>
 						<File
+							RelativePath="..\..\src\iwDiplomacy.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\iwDiplomacy.h"
+							>
+						</File>
+						<File
 							RelativePath="..\..\src\iwDirectIPConnect.cpp"
 							>
 						</File>

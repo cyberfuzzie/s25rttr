@@ -1,4 +1,4 @@
-// $Id: const_gui_ids.h 4959 2009-05-26 16:17:23Z Demophobie $
+// $Id: const_gui_ids.h 4991 2009-06-02 18:40:11Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -55,9 +55,11 @@ enum GUI_ID
 	CGI_MUSICPLAYER,
 	CGI_INPUTWINDOW,
 	CGI_ENHANCEMENTS,
+	CGI_STATISTICS,
+	CGI_DIPLOMACY,
 	CGI_HELPBUILDING,
 	CGI_NEXT = CGI_HELPBUILDING+40,
-  CGI_STATISTICS
+ 
 };
 
 #endif // !CONST_GUI_IDS_H_INCLUDED

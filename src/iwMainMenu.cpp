@@ -1,4 +1,4 @@
-// $Id: iwMainMenu.cpp 4947 2009-05-24 20:02:16Z OLiver $
+// $Id: iwMainMenu.cpp 4991 2009-06-02 18:40:11Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -35,6 +35,7 @@
 #include "iwBuildings.h"
 #include "iwBuildingProductivities.h"
 #include "iwStatistics.h"
+#include "iwDiplomacy.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -77,8 +78,8 @@ iwMainMenu::iwMainMenu(void)
 
 	// Gebäude
 	AddImageButton( 10,  12, 166,  53, 44, TC_GREY, GetImage(io_dat, 24), _("Series sequence"));
-	//// Militär
-	//AddImageButton( 8,  68, 118,  53, 44, TC_GREY, GetImage(io_dat, 133), _("Military"));
+	// Diplomatie (todo: besseres Bild suchen)
+	AddImageButton( 11,  68, 166,  53, 44, TC_GREY, GetImage(io_dat, 191), _("Diplomacy"));
 	//// Schiffe
 	//AddImageButton( 9, 124, 118,  53, 44, TC_GREY, GetImage(io_dat, 175), _("Ship register"));
 
@@ -130,6 +131,12 @@ void iwMainMenu::Msg_ButtonClick(const unsigned int ctrl_id)
 		{
 			WindowManager::inst().Show(new iwBuildOrder);
 		} break;
+	case 11: // Diplomatie
+		{
+			WindowManager::inst().Show(new iwDiplomacy);
+		} break;
+	
+	
 	case 30: // Optionen
 		{
 			WindowManager::inst().Show(new iwOptionsWindow);

@@ -1,4 +1,4 @@
-// $Id: BinaryFile.h 4978 2009-05-31 10:24:24Z OLiver $
+// $Id: BinaryFile.h 4990 2009-06-02 17:50:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -65,50 +65,43 @@ public:
 	signed int ReadSignedInt() 
 	{ 
 		signed int i; 
-		unsigned read_length = fread(&i,4,1,file); 
-		assert(read_length == 1);
+		fread(&i,4,1,file); 
 		return i; 
 	}
 	unsigned int ReadUnsignedInt()
 	{ 
 		unsigned int i;
-		unsigned read_length = fread(&i,4,1,file);
-		assert(read_length == 1);
+		fread(&i,4,1,file);
 		return i; 
 	}
 	signed short ReadSignedShort()
 	{
 		signed short i; 
-		unsigned read_length = fread(&i,2,1,file);
-		assert(read_length == 1);
+		fread(&i,2,1,file);
 		return i;
 	}
 	unsigned short ReadUnsignedShort() 
 	{
 		unsigned short i;
-		unsigned read_length = fread(&i,2,1,file);
-		assert(read_length == 1);
+		fread(&i,2,1,file);
 		return i;
 	}
 	signed char ReadSignedChar()
 	{ 
 		signed char i;
-		unsigned read_length = fread(&i,1,1,file); 
-		assert(read_length == 1);
+		fread(&i,1,1,file); 
 		return i; 
 	}
 	unsigned char ReadUnsignedChar()
 	{
 		unsigned char i;
-		unsigned read_length = fread(&i,1,1,file); 
-		assert(read_length == 1);
+		fread(&i,1,1,file); 
 		return i; 
 	}
 
 	void ReadRawData(void * const data, const unsigned length)
 	{ 
-		unsigned read_length = fread(data,length,1,file);
-		assert(read_length == 1);
+		fread(data,length,1,file);
 	}
 
 	void ReadShortString(std::string& str); /// Länge max 254

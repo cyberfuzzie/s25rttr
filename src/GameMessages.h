@@ -1,4 +1,4 @@
-// $Id: GameMessages.h 4951 2009-05-25 20:03:10Z OLiver $
+// $Id: GameMessages.h 4990 2009-06-02 17:50:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -786,7 +786,7 @@ public:
 
 public:
 	GameMessage_Pause(void) : GameMessage(NMS_PAUSE) { }
-	GameMessage_Pause(const bool pause) 
+	GameMessage_Pause(const bool paused) 
 		: GameMessage(NMS_PAUSE,0xFF)
 	{
 		PushBool(paused);

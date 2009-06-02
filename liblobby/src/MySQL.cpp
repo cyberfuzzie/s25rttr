@@ -1,4 +1,4 @@
-// $Id: MySQL.cpp 4888 2009-05-18 18:59:04Z FloSoft $
+// $Id: MySQL.cpp 4988 2009-06-02 16:52:14Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -208,7 +208,7 @@ bool MySQL::GetServerList(LobbyServerList *List)
 
 	unsigned int count = (unsigned int)mysql_num_rows(pResult);
 
-	if(List->getCount() == 0)
+	if(count == 0)
 	{
 		mysql_free_result(pResult);
 		return true;
@@ -295,13 +295,13 @@ bool MySQL::GetRankingList(LobbyPlayerList *List)
 
 	unsigned int count = (unsigned int)mysql_num_rows(pResult);
 
-	if(List->getCount() == 0)
+	if(count == 0)
 	{
 		mysql_free_result(pResult);
 		return true;
 	}
 
-	for(unsigned int i = 0; i < List->getCount(); i++)
+	for(unsigned int i = 0; i < count; i++)
 	{
 		Row = mysql_fetch_row(pResult);
 

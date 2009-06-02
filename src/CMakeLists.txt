@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 4959 2009-05-26 16:17:23Z Demophobie $
+### $Id: CMakeLists.txt 4992 2009-06-02 18:42:05Z OLiver $
 ################################################################################
 
 INCLUDE(FindBZip2)
@@ -79,6 +79,7 @@ SET(SOURCES_INGAMEWINDOWS
     iwChat.cpp             iwChat.h
     iwDirectIPConnect.cpp  iwDirectIPConnect.h
     iwDemolishBuilding.cpp iwDemolishBuilding.h
+    iwDiplomacy.cpp	iwDiplomacy.h
     iwDirectIPCreate.cpp   iwDirectIPCreate.h
     iwDistribution.cpp     iwDistribution.h
     iwEnhancements.cpp     iwEnhancements.h

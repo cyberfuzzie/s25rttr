@@ -1,4 +1,4 @@
-// $Id: ctrlButton.h 4983 2009-06-01 07:33:02Z OLiver $
+// $Id: ctrlButton.h 4996 2009-06-03 19:01:25Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -109,6 +109,9 @@ public:
 	void SwapImage(ctrlImageButton *two) { Swap(image, two->image); }
 	/// Gibt Bild zurück
 	glArchivItem_Bitmap * GetButtonImage() const { return image; }
+	/// Ändert Farbfilter, mit dem dieses Bild gezeichnet werden soll
+	void SetModulationColor(const unsigned modulation_color)
+	{ this->modulation_color = modulation_color; }
 	
 
 protected:
@@ -120,6 +123,8 @@ protected:
 
 	/// Bild
 	glArchivItem_Bitmap *image;
+	/// Farbe mit der das Bild gezeichnet werden soll
+	unsigned modulation_color;
 };
 
 /// Button mit Farbe

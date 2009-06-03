@@ -1,4 +1,4 @@
-// $Id: ctrlButton.cpp 4983 2009-06-01 07:33:02Z OLiver $
+// $Id: ctrlButton.cpp 4996 2009-06-03 19:01:25Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -172,14 +172,17 @@ bool ctrlButton::Draw_(void)
 		GetY() + height 
 	};
 
-	if(border)
-		Draw3D(buttonrect.left, buttonrect.top, width, height, tc, (unsigned short)((check) ? 2 : state), illuminated);
-	else
+	if(tc != TC_INVISIBLE)
 	{
-		if(state == BUTTON_UP || state == BUTTON_PRESSED)
-			GetImage(io_dat, tc*2 + 1)->Draw(buttonrect.left, buttonrect.top, 0, 0, 0, 0, width, height);
+		if(border)
+			Draw3D(buttonrect.left, buttonrect.top, width, height, tc, (unsigned short)((check) ? 2 : state), illuminated);
 		else
-			GetImage(io_dat, tc*2)->Draw(buttonrect.left, buttonrect.top,  0, 0, 0, 0, width, height);
+		{
+			if(state == BUTTON_UP || state == BUTTON_PRESSED)
+				GetImage(io_dat, tc*2 + 1)->Draw(buttonrect.left, buttonrect.top, 0, 0, 0, 0, width, height);
+			else
+				GetImage(io_dat, tc*2)->Draw(buttonrect.left, buttonrect.top,  0, 0, 0, 0, width, height);
+		}
 	}
 
 	/// Inhalt malen (Text, Bilder usw.)
@@ -213,7 +216,8 @@ void ctrlTextButton::DrawContent() const
 
 ctrlImageButton::ctrlImageButton(Window *parent, unsigned int id, unsigned short x, unsigned short y,
 		unsigned short width, unsigned short height, const TextureColor tc,
-		glArchivItem_Bitmap * const image, const std::string& tooltip) : ctrlButton(parent,id,x,y,width,height,tc,tooltip), image(image)
+		glArchivItem_Bitmap * const image, const std::string& tooltip)
+		: ctrlButton(parent,id,x,y,width,height,tc,tooltip), image(image), modulation_color(0xFFFFFFFF)
 {
 }
 
@@ -221,7 +225,7 @@ void ctrlImageButton::DrawContent() const
 {
 	// Bild
 	if(image)
-		image->Draw(GetX() + width / 2	 + ( (state == BUTTON_PRESSED || check) ? 2 : 0 ), GetY() + height / 2	 + ( (state == BUTTON_PRESSED || check) ? 2 : 0 ), 0, 0, 0, 0, 0, 0);
+		image->Draw(GetX() + width / 2	 + ( (state == BUTTON_PRESSED || check) ? 2 : 0 ), GetY() + height / 2	 + ( (state == BUTTON_PRESSED || check) ? 2 : 0 ), 0, 0, 0, 0, 0, 0, modulation_color);
 }
 
 

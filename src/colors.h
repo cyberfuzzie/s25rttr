@@ -1,4 +1,4 @@
-// $Id: colors.h 4963 2009-05-26 17:58:04Z Demophobie $
+// $Id: colors.h 4996 2009-06-03 19:01:25Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -29,7 +29,8 @@ enum TextureColor
 	TC_GREEN1,
 	TC_GREEN2,
 	TC_RED2,
-	TC_BRICKS
+	TC_BRICKS,
+	TC_INVISIBLE
 };
 
 

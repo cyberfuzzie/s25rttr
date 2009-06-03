@@ -1,4 +1,4 @@
-// $Id: IngameWindow.cpp 4836 2009-05-08 20:31:23Z OLiver $
+// $Id: IngameWindow.cpp 4996 2009-06-03 19:01:25Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -278,6 +278,9 @@ bool IngameWindow::Draw_()
 		// Links und rechts unten die 2 kleinen Knäufe
 		GetImage(resource_dat, 45)->Draw(x, y + height-GetImage(resource_dat, 45)->getHeight(), 0, 0, 0, 0, 0, 0);
 		GetImage(resource_dat, 45)->Draw(x + width - GetImage(resource_dat, 45)->getWidth(), y + height-GetImage(resource_dat, 45)->getHeight(), 0, 0, 0, 0, 0, 0);
+
+		// Msg_PaintBefore aufrufen vor den Controls
+		Msg_PaintBefore();
 
 		DrawControls();
 	}

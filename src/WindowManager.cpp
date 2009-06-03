@@ -1,4 +1,4 @@
-// $Id: WindowManager.cpp 4830 2009-05-07 18:59:21Z FloSoft $
+// $Id: WindowManager.cpp 4996 2009-06-03 19:01:25Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -119,9 +119,6 @@ void WindowManager::Draw(void)
 					// und raus (korruption der liste verhindern)
 					break;
 				}
-
-				// Msg_PaintBefore aufrufen
-				(*it)->Msg_PaintBefore();
 
 				// Fenster zeichnen
 				(*it)->Draw();

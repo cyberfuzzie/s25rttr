@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 5004 2009-06-05 16:30:51Z OLiver $
+// $Id: GameClientPlayer.cpp 5005 2009-06-05 20:30:30Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1412,4 +1412,36 @@ void GameClientPlayer::StatisticStep()
     }
     statistic[STAT_16H].currentIndex = incrStatIndex(statistic[STAT_16H].currentIndex);
   }
+}
+
+
+
+GameClientPlayer::Pact::Pact(Serializer * ser) :
+	duration(ser->PopUnsignedInt()),
+	start(ser->PopUnsignedInt())
+{
+}
+
+void GameClientPlayer::Pact::Serialize(Serializer * ser)
+{
+	ser->PushUnsignedInt(duration);
+	ser->PushUnsignedInt(start);
+}
+
+GameClientPlayer::PactSuggestion::PactSuggestion(Serializer * ser) :
+	id(ser->PopUnsignedInt()),
+	suggestion_time(ser->PopUnsignedInt()),
+	player(ser->PopUnsignedChar()),
+	pt(PactType(ser->PopUnsignedChar())),
+	duration(ser->PopUnsignedInt())
+{
+}
+
+void GameClientPlayer::PactSuggestion::Serialize(Serializer * ser)
+{
+	ser->PushUnsignedInt(id);
+	ser->PushUnsignedInt(suggestion_time);
+	ser->PushUnsignedChar(player);
+	ser->PushUnsignedChar(static_cast<unsigned char>(pt));
+	ser->PushUnsignedInt(duration);
 }

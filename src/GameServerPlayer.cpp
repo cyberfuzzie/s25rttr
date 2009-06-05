@@ -1,4 +1,4 @@
-// $Id: GameServerPlayer.cpp 4940 2009-05-24 16:38:33Z FloSoft $
+// $Id: GameServerPlayer.cpp 5005 2009-06-05 20:30:30Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -152,6 +152,7 @@ void GameServerPlayer::SwapPlayer(GameServerPlayer& two)
 
 	Swap(this->send_queue, two.send_queue);
 	Swap(this->recv_queue, two.recv_queue);
+	Swap(this->gc_queue,two.gc_queue);
 
 	Swap(this->lastping, two.lastping);
 

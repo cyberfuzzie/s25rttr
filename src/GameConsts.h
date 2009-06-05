@@ -1,4 +1,4 @@
-// $Id: GameConsts.h 4947 2009-05-24 20:02:16Z OLiver $
+// $Id: GameConsts.h 5005 2009-06-05 20:30:30Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -413,5 +413,21 @@ inline GoodType ConvertShields(const GoodType good) { return (good == GD_SHIELDV
 /// Reichweite der Bergarbeiter
 const unsigned MINER_RADIUS = 2;
 
+/// Vertragsypen
+enum PactType
+{
+	TREATY_OF_ALLIANCE = 0,
+	NON_AGGRESSION_PACT
+};
+
+/// Anzahl der unterschiedlichen Bündnisse
+const unsigned PACTS_COUNT = 2;
+
+/// Namen der Verträge
+const std::string PACT_NAMES[32] = 
+{
+	gettext_noop("Treaty of alliance"),
+	gettext_noop("Non-aggression pact")
+};
 
 #endif

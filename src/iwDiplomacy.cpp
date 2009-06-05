@@ -125,4 +125,43 @@ void iwDiplomacy::Msg_PaintAfter()
 
 void iwDiplomacy::Msg_ButtonClick(const unsigned int ctrl_id)
 {
+	WindowManager::inst().Show(new iwSuggestPact(TREATY_OF_ALLIANCE,0));
+}
+
+/////////////////////////////
+/////////////////////////////
+
+/// Titel für die Fenster für unterschiedliche Bündnistypen
+const char * const PACT_TITLES[PACTS_COUNT] =
+{
+	gettext_noop("Suggest treaty of alliance"),
+	gettext_noop("Suggest non-aggression pact")
+};
+
+
+iwSuggestPact::iwSuggestPact(const PactType pt, const unsigned char player) : IngameWindow(CGI_SUGGESTPACT,(unsigned short)-1, 
+					(unsigned short)-1,300,200,_(PACT_TITLES[pt]), GetImage(resource_dat, 41)), pt(pt), player(player)
+{
+	glArchivItem_Bitmap * image;
+
+	switch(pt)
+	{
+	case TREATY_OF_ALLIANCE: image = GetImage(io_dat,61); break;
+	case NON_AGGRESSION_PACT: image = GetImage(io_dat,100); break;
+	default: image = NULL;
+	}
+
+	// Bild als Orientierung, welchen Vertrag wir gerade bearbeiten
+	if(image)
+		this->AddImage(0,55,100,image);
+
+	AddText(1,100,30,_("Contract type:"),COLOR_YELLOW,0,NormalFont);
+	AddText(2,100,50,_(PACT_NAMES[pt]),COLOR_GREEN,0,NormalFont);
+	AddText(3,100,80,_("To player:"),COLOR_YELLOW,0,NormalFont);
+	AddText(4,100,100,GameClient::inst().GetPlayer(player)->name,COLORS[GameClient::inst().GetPlayer(player)->color],0,NormalFont);
+}
+
+
+void iwSuggestPact::Msg_ButtonClick(const unsigned int ctrl_id)
+{
 }

@@ -22,6 +22,7 @@
 
 #include "IngameWindow.h"
 
+/// Diplomatiefenster: Übersicht über alle Spieler im Spiel und Schmieden von Bündnissen
 class iwDiplomacy : public IngameWindow
 {
 public:
@@ -34,6 +35,23 @@ private:
 	void Msg_PaintAfter();
 	void Msg_ButtonClick(const unsigned int ctrl_id);
 };
+
+/// Kleines Fenster, über das einem Spieler ein neues Bündnis angeboten werden kann
+class iwSuggestPact : public IngameWindow
+{
+	const PactType pt;
+	const unsigned char player;
+public:
+	
+	iwSuggestPact(const PactType pt, const unsigned char player);
+
+public:
+
+	void Msg_ButtonClick(const unsigned int ctrl_id);
+
+};
+
+
 
 
 #endif // !iwBUILDORDER_H_INCLUDED

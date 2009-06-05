@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.h 4947 2009-05-24 20:02:16Z OLiver $
+// $Id: GameClientPlayer.h 5005 2009-06-05 20:30:30Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -98,6 +98,42 @@ private:
 
 	/// Inventur
 	Goods global_inventory;
+
+	/// Bündnisse mit anderen Spielern
+	struct Pact
+	{
+		/// Dauer (in GF), 0 = kein Bündnise, 0xFFFFFFFF = Bündnis auf Ewigkeit
+		unsigned duration;
+		/// Startzeitpunkt (in GF)
+		unsigned start;
+
+		Pact() : duration(0), start(0) {}
+		Pact(Serializer * ser);
+		void Serialize(Serializer * ser);
+	};
+	/// Bündnisse dieses Spielers mit anderen Spielern
+	Pact pacts[MAX_PLAYERS][PACTS_COUNT];
+
+	/// Bündnisvorschläge, die von einem anderen Spieler an diesen Spieler gemacht wurden
+	struct PactSuggestion
+	{
+		/// ID dieses Bündnisvorschlag
+		unsigned id;
+		/// Zeitpunkt des Vorschlags durch den Spieler (damit nicht weit im Nachhinein der Vertrag durch
+		/// den anderen Spieler getätigt werden kann, obwohl ersterer vielleicht gar nicht mehr dazu bereit ist
+		unsigned suggestion_time;
+		/// Der andere Spieler
+		unsigned char player;
+		/// Bündnisart
+		PactType pt;
+		/// Dauer des Bündnisses 
+		unsigned duration;
+
+		PactSuggestion(Serializer * ser);
+		void Serialize(Serializer * ser);
+	};
+
+	std::list<PactSuggestion> pact_suggestions;
 
 public:
 

@@ -172,4 +172,6 @@ void DestroyAll::Execute(GameWorldGame& gwg, GameClientPlayer& player, const uns
 	 gwg.Armageddon(playerid);
 }
 
-
+void SuggestPact::Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid)
+{
+}

@@ -1,4 +1,4 @@
-// $Id: Message.cpp 4940 2009-05-24 16:38:33Z FloSoft $
+// $Id: Message.cpp 5003 2009-06-05 15:45:19Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -145,7 +145,7 @@ Message *Message::recv(Socket *sock, int &error, bool wait, Message *(*createfun
 				continue;
 
 			if(retval != -1)
-				error = 2;
+				error = 0;
 			
 			return NULL;
 		}
@@ -156,7 +156,7 @@ Message *Message::recv(Socket *sock, int &error, bool wait, Message *(*createfun
 			if(wait)
 				continue;
 
-			error = 2;
+			error = 1;
 			return NULL;
 		}
 
@@ -188,7 +188,7 @@ Message *Message::recv(Socket *sock, int &error, bool wait, Message *(*createfun
 	{
 		LOG.write("recv: block: only got %d bytes instead of %d, waiting for next try\n", read, 6);
 		if(read != -1)
-			error = 2;
+			error = 3;
 		
 		return NULL;
 	}
@@ -199,7 +199,7 @@ Message *Message::recv(Socket *sock, int &error, bool wait, Message *(*createfun
 	{
 		LOG.write("recv: block-waiting: not enough input (%d/%d) for message (0x%04X), waiting for next try\n", read, (*length)+6, *id);
 		if(read != -1)
-			error = 2;
+			error = 4;
 		
 		return NULL;
 	}

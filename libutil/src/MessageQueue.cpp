@@ -1,4 +1,4 @@
-// $Id: MessageQueue.cpp 4984 2009-06-01 10:37:37Z OLiver $
+// $Id: MessageQueue.cpp 5003 2009-06-05 15:45:19Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -102,7 +102,7 @@ bool MessageQueue::recv(Socket *sock, bool wait)
 		return false;
 
 	// Nachricht abrufen
-	int error = 0;
+	int error = -1;
 	Message *msg = Message::recv(sock, error, wait, createfunction);
 
 	if(msg)
@@ -110,7 +110,9 @@ bool MessageQueue::recv(Socket *sock, bool wait)
 		push(msg);
 		return true;
 	}
-	return false;
+
+	// noch nicht alles empfangen, true liefern für okay (error == -1 bedeutet fehler
+	return (error >= 0);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

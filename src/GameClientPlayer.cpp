@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 4964 2009-05-26 19:42:45Z OLiver $
+// $Id: GameClientPlayer.cpp 5004 2009-06-05 16:30:51Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -362,6 +362,7 @@ void GameClientPlayer::SwapPlayer(GameClientPlayer& two)
 	GamePlayerInfo::SwapPlayer(two);
 
 	Swap(this->is_lagging,two.is_lagging);
+	Swap(this->gc_queue,two.gc_queue);
 }
 
 nobBaseWarehouse * GameClientPlayer::FindWarehouse(const noRoadNode * const start,bool (*IsWarehouseGood)(nobBaseWarehouse*,const void*),

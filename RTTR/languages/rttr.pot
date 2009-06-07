@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Siedler II.5 RttR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-26 10:32+0100\n"
-"PO-Revision-Date: 2009-05-26 10:32+0100\n"
+"POT-Creation-Date: 2009-06-07 22:04+0100\n"
+"PO-Revision-Date: 2009-06-07 22:05+0100\n"
 "Last-Translator: \n"
 "Language-Team: Siedler II.5 RttR <sf-team@siedler25.org>\n"
 "MIME-Version: 1.0\n"
@@ -27,106 +27,110 @@ msgstr ""
 msgid "System language"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:68
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:70
 msgid "Back"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:71
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:73
 msgid "Options"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:76
-msgid "Common"
-msgstr ""
-
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:78
-msgid "Graphics"
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:77
+msgid "Enhancements"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:80
+msgid "Common"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:82
+msgid "Graphics"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:84
 msgid "Sound/Music"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:88
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:92
 msgid "Name in Game:"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:92
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:96
 msgid "Language:"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:105
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:109
 msgid "Keyboard layout:"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:106
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:110
 msgid "Readme"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:109
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:113
 msgid "Resolution:"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:113
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:117
 msgid "Mode:"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:115
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:119
 msgid "Fullscreen"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:116
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:120
 msgid "Windowed"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:119
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:123
 msgid "VSync:"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:123
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:133
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:127
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:137
 msgid "not supported"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:125
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:135
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:169
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:178
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:129
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:139
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:173
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:182
 msgid "On"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:126
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:136
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:170
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:179
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:130
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:140
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:174
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:183
 msgid "Off"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:129
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:133
 msgid "Vertex Buffer Objects:"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:139
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:143
 msgid "Graphics Driver"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:153
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:157
 msgid "Sounddriver"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:167
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:171
 msgid "Music"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:176
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:180
 msgid "Effects"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:185
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:189
 msgid "Music player"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:441
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:449
 msgid "Keyboard layout"
 msgstr ""
 
@@ -295,9 +299,9 @@ msgstr ""
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:191
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:305
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:320
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:462
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:774
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:788
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:453
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:780
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:794
 msgid "Error"
 msgstr ""
 
@@ -374,142 +378,149 @@ msgstr ""
 msgid "Shared team view"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:99
-msgid "Demolition prohibition:"
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:96
+msgid "Enhancements:"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:102
-msgid "When attack"
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:97
+msgid "Change Settings..."
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:97
+msgid "View Settings..."
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:103
-msgid "Near frontiers"
+msgid "Demolition prohibition:"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:106
-msgid "Exploration:"
+msgid "When attack"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:108
-msgid "Off (all visible)"
-msgstr ""
-
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:109
-msgid "Classic (Settlers 2)"
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:107
+msgid "Near frontiers"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:110
-msgid "Fog of War"
+msgid "Exploration:"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:111
-msgid "FoW - all explored"
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:112
+msgid "Off (all visible)"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:113
+msgid "Classic (Settlers 2)"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:114
-msgid "Goods at start:"
+msgid "Fog of War"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:116
-msgid "Low"
-msgstr ""
-
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:117
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:132
-msgid "Normal"
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:115
+msgid "FoW - all explored"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:118
-msgid "A lot"
+msgid "Goods at start:"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:120
+msgid "Low"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:121
-msgid "Goals:"
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:136
+msgid "Normal"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:123
-msgid "None"
-msgstr ""
-
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:124
-msgid "Conquer 3/4 of map"
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:122
+msgid "A lot"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:125
-msgid "Total domination"
+msgid "Goals:"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:127
+msgid "None"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:128
+msgid "Conquer 3/4 of map"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:129
+msgid "Total domination"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:132
 msgid "Speed:"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:130
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:134
 msgid "Very slow"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:131
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:135
 msgid "Slow"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:133
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:137
 msgid "Fast"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:134
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:138
 msgid "Very fast"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:149
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:153
 msgid "Map: "
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:196
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:200
 msgid "Open"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:201
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:205
 msgid "Closed"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:241
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:268
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:245
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:274
 #, c-format
 msgid "%d"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:247
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:256
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:568
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:251
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:261
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:565
 msgid "Africans"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:249
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:258
-msgid "T"
-msgstr ""
-
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:251
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:260
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:256
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:266
 msgid "-"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:462
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:453
 msgid "Game can only be started as soon as everybody has a unique color,everyone is ready and all free slots are closed."
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:568
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:565
 msgid "Japaneses"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:568
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:565
 msgid "Romans"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:568
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:565
 msgid "Vikings"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:774
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:780
 msgid "Lost connection to server!"
 msgstr ""
 
@@ -983,20 +994,20 @@ msgstr ""
 msgid "Demolish?"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:557
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:560
 #, c-format
 msgid "Computer %u"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:559
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:562
 msgid " (AI)"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:819
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:822
 msgid "The Game is not in sync. Checksums of some players don't match."
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:1163
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:1166
 msgid "Auto-Save"
 msgstr ""
 
@@ -1171,40 +1182,44 @@ msgstr ""
 msgid "An error occured while saving which was suppressed!"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:54
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:55
 msgid "Main selection"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:57
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:58
 msgid "Distribution of goods"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:59
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:60
 msgid "Transport"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:64
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:65
 msgid "General statistics"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:65
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:66
 msgid "Merchandise statistics"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:69
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:70
 msgid "Stock"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:74
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:75
 msgid "Military"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:76
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:77
 msgid "Ship register"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:79
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:80
 msgid "Series sequence"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:82
+msgid "Diplomacy"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyRanking.cpp:81
@@ -1217,6 +1232,22 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwWares.cpp:167
 msgid "Next page"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/enhOption.cpp:69
+msgid "Waterway's maximum length"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/enhOption.cpp:70
+msgid "0 means infinite"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/iwEnhancements.cpp:82
+msgid "Apply Changes"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/iwEnhancements.cpp:83
+msgid "Discard Changes"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwMilitaryBuilding.cpp:169
@@ -1255,38 +1286,71 @@ msgstr ""
 msgid "Player '%s' joined the game!"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:796
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:822
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:845
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:797
+#, c-format
+msgid "Note: Game settings changed by the server%s"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:804
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:830
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:853
 #, c-format
 msgid "<%s> "
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:805
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:813
 msgid "A auto-savegame is created..."
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:822
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:845
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:830
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:853
 msgid "SYSTEM"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:823
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:831
 msgid "Game was paused."
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:846
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:854
 msgid "Game was resumed."
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:892
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:900
 #, c-format
 msgid "Player '%s' switched to player '%s'"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:910
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:918
 #, c-format
 msgid "Player '%s' was defeated!"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:80
+msgid "Treaties"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:99
+msgid "Treaty of alliance"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:105
+msgid "Non-aggression pact"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:137
+msgid "Suggest treaty of alliance"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:138
+msgid "Suggest non-aggression pact"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:158
+msgid "Contract type:"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:160
+msgid "To player:"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskDirectIP.cpp:59

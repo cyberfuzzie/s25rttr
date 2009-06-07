@@ -1,4 +1,4 @@
-// $Id: GameServer.cpp 4985 2009-06-01 13:05:27Z OLiver $
+// $Id: GameServer.cpp 5012 2009-06-07 18:18:21Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -625,10 +625,13 @@ void GameServer::KickPlayer(NS_PlayerKicked npk)
 	GameMessage deadmessage(NMS_DEAD_MSG);
 	deadmessage.send(&player->so);*/
 
-	// tÃ¶ten, falls auÃŸerhalb
+	// töten, falls außerhalb
 	if(status == SS_GAME)
 	{
+		// KI-Spieler muss übernehmen
 		player->ps = PS_KI;
+		ai_players[npk.playerid] = GameClient::inst().CreateAIPlayer(npk.playerid);
+		// Und Socket schließen, das brauchen wir nicht mehr
 		player->so.Close();
 	}
 	else

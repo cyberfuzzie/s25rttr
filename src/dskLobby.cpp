@@ -1,4 +1,4 @@
-// $Id: dskLobby.cpp 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: dskLobby.cpp 5011 2009-06-07 12:40:05Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -135,7 +135,7 @@ void dskLobby::Msg_ButtonClick(const unsigned int ctrl_id)
 					{
 						if(serverlist->getElement(i)->getId() == selection)
 						{
-							iwDirectIPConnect *connect = new iwDirectIPConnect(1);
+							iwDirectIPConnect *connect = new iwDirectIPConnect(NP_LOBBY);
 							connect->SetHost(serverlist->getElement(i)->getHost().c_str());
 							connect->SetPort(serverlist->getElement(i)->getPort());
 							WindowManager::inst().Show(connect);

@@ -497,6 +497,8 @@
         <File Name="../src/iwEnhancements.h"/>
         <File Name="../src/iwSurrender.cpp"/>
         <File Name="../src/iwSurrender.h"/>
+        <File Name="../src/iwDiplomacy.cpp"/>
+        <File Name="../src/iwDiplomacy.h"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="Spiel">
@@ -562,10 +564,10 @@
       </AdditionalRules>
     </Configuration>
     <Configuration Name="Release" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
-      <Compiler Options="-O2" Required="yes">
+      <Compiler Options="-O3" Required="yes">
         <IncludePath Value="."/>
       </Compiler>
-      <Linker Options="-O2" Required="yes"/>
+      <Linker Options="-O3" Required="yes"/>
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="../$(ProjectName)" IntermediateDirectory="./Release" Command="./$(ProjectName)" CommandArguments="set environment LD_LIBRARY_PATH = ." WorkingDirectory="../" PauseExecWhenProcTerminates="yes"/>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
@@ -609,6 +611,7 @@
       <ResourceCompiler Options=""/>
     </GlobalSettings>
   </Settings>
+  <Dependencies Name="Release"/>
   <Dependencies Name="Debug">
     <Project Name="audio"/>
     <Project Name="audio-SDL"/>
@@ -618,5 +621,4 @@
     <Project Name="libsiedler2"/>
     <Project Name="soundconvert"/>
   </Dependencies>
-  <Dependencies Name="Release"/>
 </CodeLite_Project>

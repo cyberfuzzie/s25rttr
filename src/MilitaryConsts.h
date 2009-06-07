@@ -1,4 +1,4 @@
-// $Id: MilitaryConsts.h 4907 2009-05-21 17:59:02Z Demophobie $
+// $Id: MilitaryConsts.h 5013 2009-06-07 19:58:03Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -20,26 +20,23 @@
 #ifndef MILITARY_CONSTS_H_
 #define MILITARY_CONSTS_H_
 
-/// Grˆﬂe der Milit‰rquadrate (in Knotenpunkten), in die die Welt eingeteilt wurde f¸r Milit‰rgeb‰ude
+/// Gr√∂√üe der Milit√§rquadrate (in Knotenpunkten), in die die Welt eingeteilt wurde f√ºr Milit√§rgeb√§ude
 const unsigned short MILITARY_SQUARE_SIZE = 20;
 
-/// Maximale Entfernungen f¸r "nahe Milit‰rgeb‰udedistanz" und "mittlere Milit‰rgeb‰udedistanz"
+/// Maximale Entfernungen f√ºr "nahe Milit√§rgeb√§udedistanz" und "mittlere Milit√§rgeb√§udedistanz"
 const unsigned MAX_MILITARY_DISTANCE_NEAR = 18;
 const unsigned MAX_MILITARY_DISTANCE_MIDDLE = 26;
 
-/// Maximale Angriffsreichweite - jetzt ¸berfl¸ssig
-//const unsigned MAX_ATTACKING_DISTANCE = 20;
+/// Basisangriffsreichweite (Angriff mit allen Soldaten m√∂glich)
+const unsigned BASE_ATTACKING_DISTANCE = 21;
 
-/// Basisangriffsreichweite (Angriff mit allen Soldaten mˆglich)
-const unsigned BASE_ATTACKING_DISTANCE = 22;
+/// Erweiterte Reichweite, f√ºr die jeweils ein Soldat von der Angriffsarmee abgezogen wird
+const unsigned EXTENDED_ATTACKING_DISTANCE = 1;
 
-/// Erweiterte Reichweite, f¸r die jeweils ein Soldat von der Angriffsarmee abgezogen wird
-const unsigned EXTENDED_ATTACKING_DISTANCE = 3;
-
-/// Maximale L‰nge f¸r den Laufweg beim Angriff
+/// Maximale L√§nge f√ºr den Laufweg beim Angriff
 const unsigned MAX_ATTACKING_RUN_DISTANCE = 70;
 
-/// Besatzung in den einzelnen Milit‰rgeb‰uden und nach Nation 
+/// Besatzung in den einzelnen Milit√§rgeb√§uden und nach Nation 
 const int TROOPS_COUNT[4][4] =
 {
 	{2,3,6,9},
@@ -48,7 +45,7 @@ const int TROOPS_COUNT[4][4] =
 	{2,3,6,9}
 };
 
-/// Gold in den einzelnen Milit‰rgeb‰uden und nach Nation
+/// Gold in den einzelnen Milit√§rgeb√§uden und nach Nation
 const unsigned short GOLD_COUNT[4][4] =
 {
 	{1,2,4,6},
@@ -57,13 +54,13 @@ const unsigned short GOLD_COUNT[4][4] =
 	{1,2,4,6}
 };
 
-/// Radien der Milit‰rgeb‰ude ( die letzten beiden sind HQ und Hafen!)
+/// Radien der Milit√§rgeb√§ude ( die letzten beiden sind HQ und Hafen!)
 const unsigned MILITARY_RADIUS[6] =
 { 8,9,10,11,9,4 };
 
-/// Fahnenpositionen bei den Milit‰rgeb‰uden
+/// Fahnenpositionen bei den Milit√§rgeb√§uden
 
-// Besatzungsflaggen (4 Vˆlker x 4 Grˆﬂen x 2 X+Y) - ab 3162
+// Besatzungsflaggen (4 V√∂lker x 4 Gr√∂√üen x 2 X+Y) - ab 3162
 const signed char TROOPS_FLAGS[4][4][2] =
 {
 	{{24,-41},{19,-41},{31,-88},{35,-67}},
@@ -72,13 +69,13 @@ const signed char TROOPS_FLAGS[4][4][2] =
 	{{-5,-50},{-5,-51},{-9,-74},{-12,-58}}
 };
 
-// Besatzungsflaggen f¸r die HQs
+// Besatzungsflaggen f√ºr die HQs
 const signed char TROOPS_FLAGS_HQ[4][2] =
 {
 	{-12,-102},{-19,-94},{-18,-112},{20,-54},
 };
 
-/// Grenzflaggen (4 Vˆlker x 4 Grˆﬂen x 2 X+Y) - ab 3162 
+/// Grenzflaggen (4 V√∂lker x 4 Gr√∂√üen x 2 X+Y) - ab 3162 
 const signed char BORDER_FLAGS[4][4][2] =
 {
 	{{-6,-36},{7,-48},{-18,-28},{-47,-64}},
@@ -97,19 +94,19 @@ const unsigned char HITPOINTS[4][5] =
 	{3,4,5,6,7}
 };
 
-/// Sichtweite der Milit‰rgeb‰ude (relativ); wird auf die normale Grenzweite draufaddiert
+/// Sichtweite der Milit√§rgeb√§ude (relativ); wird auf die normale Grenzweite draufaddiert
 const unsigned VISUALRANGE_MILITARY = 3;
-/// Sichtweite von Sp‰ht¸rmen (absolut)
+/// Sichtweite von Sp√§ht√ºrmen (absolut)
 const unsigned VISUALRANGE_LOOKOUTTOWER = 20;
-/// Sichtweite von Sp‰hern
+/// Sichtweite von Sp√§hern
 const unsigned VISUALRANGE_SCOUT = 3;
 /// Sichtweite von Soldaten
 const unsigned VISUALRANGE_SOLDIER = 2;
 
-/// Befˆrderungszeit von Soldaten ( =UPGRADE_TIME + rand(UPGRADE_TIME_RANDOM) )
+/// Bef√∂rderungszeit von Soldaten ( =UPGRADE_TIME + rand(UPGRADE_TIME_RANDOM) )
 const unsigned UPGRADE_TIME = 100;
 const unsigned UPGRADE_TIME_RANDOM = 300;
-/// Genesungszeit von Soldaten in H‰usern, Zeit, die gebraucht wird um sich um einen Hitpoint zu erholen
+/// Genesungszeit von Soldaten in H√§usern, Zeit, die gebraucht wird um sich um einen Hitpoint zu erholen
 // ( =CONVALESCE_TIME + rand(CONVALESCE_TIME_RANDOM) )
 const unsigned CONVALESCE_TIME = 500;
 const unsigned CONVALESCE_TIME_RANDOM = 500;

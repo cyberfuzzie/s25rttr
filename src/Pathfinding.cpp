@@ -1,4 +1,4 @@
-// $Id: Pathfinding.cpp 4906 2009-05-21 13:02:23Z OLiver $
+// $Id: Pathfinding.cpp 5013 2009-06-07 19:58:03Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -39,20 +39,20 @@
 	static char THIS_FILE[] = __FILE__;
 #endif
 
-/// Konstante für einen ungültigen Vorgänerknoten
+/// Konstante fÃ¼r einen ungÃ¼ltigen VorgÃ¤nerknoten
 const unsigned INVALID_PREV = 0xFFFFFFFF;
 
 struct Point;
-/// Vergleichsoperator für die Prioritätswarteschlange bzw. std::set beim straßengebundenen Wegfinden
+/// Vergleichsoperator fÃ¼r die PrioritÃ¤tswarteschlange bzw. std::set beim straÃŸengebundenen Wegfinden
 class RoadNodeComperator
 {
 public:
 	bool operator()(const noRoadNode* const rn1, const noRoadNode* const rn2) const;
 };
 
-/// Klass für einen Knoten mit dazugehörigen Informationen
+/// Klass fÃ¼r einen Knoten mit dazugehÃ¶rigen Informationen
 /// Wir speichern einfach die gesamte Map und sparen uns so das dauernde Allokieren und Freigeben von Speicher
-/// Die Knoten können im Array mit einer eindeutigen ID (gebildet aus y*Kartenbreite+x) identifiziert werden
+/// Die Knoten kÃ¶nnen im Array mit einer eindeutigen ID (gebildet aus y*Kartenbreite+x) identifiziert werden
 struct NewNode
 {
 	NewNode() : way(0), count_nodes(0), dir(0), prev(INVALID_PREV), visited(false) {}
@@ -60,25 +60,25 @@ struct NewNode
 	/// Wegkosten, die vom Startpunkt bis zu diesem Knoten bestehen
 	unsigned way;
 	/// Anzahl der Knoten bis zu diesem Punkt, was sich von way unterscheiden kann bei der
-	/// straßengebundenen Wegfindung
+	/// straÃŸengebundenen Wegfindung
 	unsigned count_nodes;
-	/// Die Richtung, über die dieser Knoten erreicht wurde
+	/// Die Richtung, Ã¼ber die dieser Knoten erreicht wurde
 	unsigned char dir;
-	/// ID (gebildet aus y*Kartenbreite+x) des Vorgänngerknotens
+	/// ID (gebildet aus y*Kartenbreite+x) des VorgÃ¤nngerknotens
 	unsigned prev;
-	/// Wurde Knoten schon besucht (für A*-Algorithmus)
+	/// Wurde Knoten schon besucht (fÃ¼r A*-Algorithmus)
 	bool visited;
-	/// Iterator auf Position in der Prioritätswarteschlange (std::set), freies Pathfinding
+	/// Iterator auf Position in der PrioritÃ¤tswarteschlange (std::set), freies Pathfinding
 	std::set<Point>::iterator it_p;
-	/// Iterator auf Position in der Prioritätswarteschlange (std::set), weggebundenes Pathfinding
+	/// Iterator auf Position in der PrioritÃ¤tswarteschlange (std::set), weggebundenes Pathfinding
 	std::set<const noRoadNode*,RoadNodeComperator>::iterator it_rn;
 };
 
-/// Die Knoten der Map gespeichert, größtmöglichste Kartengröße nehmen
+/// Die Knoten der Map gespeichert, grÃ¶ÃŸtmÃ¶glichste KartengrÃ¶ÃŸe nehmen
 NewNode pf_nodes[256*256];
 
 /// Punkte als Verweise auf die obengenannen Knoten, damit nur die beiden Koordinaten x,y im set mit rumgeschleppt
-/// werden müsen
+/// werden mÃ¼sen
 struct Point {
 public:
 	/// Die beiden Koordinaten des Punktes
@@ -89,9 +89,9 @@ public:
 	Point() {};
 	Point(const MapCoord x, const MapCoord y) : x(x), y(y) {}
 
-	/// Koordinaten des Ziels beim jeweils aktuellen Pathfinding, die wir zur Bewertung der Punkte benötigen
+	/// Koordinaten des Ziels beim jeweils aktuellen Pathfinding, die wir zur Bewertung der Punkte benÃ¶tigen
 	static MapCoord dst_x, dst_y;
-	/// Pointer auf GameWorld, die wir brauchen, um die IDs zu berechnen bzw. die Kartengröße zu bekommen
+	/// Pointer auf GameWorld, die wir brauchen, um die IDs zu berechnen bzw. die KartengrÃ¶ÃŸe zu bekommen
 	static const GameWorldBase * gwb;
 	/// Diese statischen Variablen zu Beginn des Pathfindings festlegen
 	static void Init(const MapCoord dst_x, const MapCoord dst_y,const GameWorldBase * gwb)
@@ -101,15 +101,15 @@ public:
 		Point::gwb = gwb;
 	}
 
-	/// Operator für den Vergleich 
+	/// Operator fÃ¼r den Vergleich 
 	bool operator<(const Point two) const
 	{
-		// Weglängen schätzen für beide Punkte, indem man den bisherigen Weg mit der Luftlinie vom aktullen 
-		// Punkt zum Ziel addiert und auf diese Weise den kleinsten Weg auswählt
+		// WeglÃ¤ngen schÃ¤tzen fÃ¼r beide Punkte, indem man den bisherigen Weg mit der Luftlinie vom aktullen 
+		// Punkt zum Ziel addiert und auf diese Weise den kleinsten Weg auswÃ¤hlt
 		unsigned way1 = pf_nodes[gwb->MakeCoordID(x,y)].way + CalcDistance(x,y,dst_x,dst_y);
 		unsigned way2 = pf_nodes[gwb->MakeCoordID(two.x,two.y)].way + CalcDistance(two.x,two.y,dst_x,dst_y);
 
-		// Wenn die Wegkosten gleich sind, vergleichen wir die Koordinaten, da wir für std::set eine streng
+		// Wenn die Wegkosten gleich sind, vergleichen wir die Koordinaten, da wir fÃ¼r std::set eine streng
 		// monoton steigende Folge brauchen
 		if(way1 == way2)
 			return (gwb->MakeCoordID(x,y) < gwb->MakeCoordID(two.x,two.y) );
@@ -118,7 +118,7 @@ public:
 	}
 };
 
-// Vergleichsoperator für das straßengebundene Pathfinding, wird genauso wie das freie Pathfinding
+// Vergleichsoperator fÃ¼r das straÃŸengebundene Pathfinding, wird genauso wie das freie Pathfinding
 // gehandelt, nur dass wir noRoadNodes statt direkt Points vergleichen
 bool RoadNodeComperator::operator()(const noRoadNode* const rn1, const noRoadNode* const rn2) const
 {
@@ -132,18 +132,18 @@ MapCoord Point::dst_y = 0;
 const GameWorldBase * Point::gwb = NULL;
 
 /// Nach jedem Pathfinding sind Knoten der pf_nodes "verunreinigt", d.h. u.a. visited steht noch auf true
-/// Dazu werden in dieser Liste die Knoten gespeichert, die vor jedem Pathfinding erstmal einmal wieder zurück-
-/// gesetzt werden müssen
+/// Dazu werden in dieser Liste die Knoten gespeichert, die vor jedem Pathfinding erstmal einmal wieder zurÃ¼ck-
+/// gesetzt werden mÃ¼ssen
 std::vector<unsigned> clean_list;
 
 
-/// Wegfinden ( A* ), O(v lg v) --> Wegfindung auf allgemeinen Terrain (ohne Straßen), für Wegbau und frei herumlaufende Berufe
+/// Wegfinden ( A* ), O(v lg v) --> Wegfindung auf allgemeinen Terrain (ohne StraÃŸen), fÃ¼r Wegbau und frei herumlaufende Berufe
 bool GameWorldBase::FindFreePath(const MapCoord x_start,const MapCoord y_start,
 				  const MapCoord x_dest, const MapCoord y_dest, const bool random_route, 
 				  const unsigned max_route, std::vector<unsigned char> * route, unsigned *length,
 				  unsigned char * first_dir,  FP_Node_OK_Callback IsNodeOK, FP_Node_OK_Callback IsNodeToDestOk, const void * param)
 {
-	// Erst einmal wieder aufräumen
+	// Erst einmal wieder aufrÃ¤umen
 	for(unsigned i = 0;i<clean_list.size();++i)
 		pf_nodes[clean_list[i]].visited = false;
 	clean_list.clear();
@@ -151,10 +151,10 @@ bool GameWorldBase::FindFreePath(const MapCoord x_start,const MapCoord y_start,
 	std::set<Point> todo;
 	Point::Init(x_dest,y_dest,this);
 
-	// Anfangsknoten einfügen
+	// Anfangsknoten einfÃ¼gen
 	unsigned start_id = MakeCoordID(x_start,y_start);
 	std::pair< std::set<Point>::iterator, bool > ret = todo.insert(Point(x_start,y_start));
-	// Und mit entsprechenden Werten füllen
+	// Und mit entsprechenden Werten fÃ¼llen
 	pf_nodes[start_id].it_p = ret.first;
 	pf_nodes[start_id].prev = INVALID_PREV;
 	pf_nodes[start_id].visited = true;
@@ -164,7 +164,7 @@ bool GameWorldBase::FindFreePath(const MapCoord x_start,const MapCoord y_start,
 
 	while(todo.size())
 	{
-		// Knoten mit den geringsten Wegkosten auswählen
+		// Knoten mit den geringsten Wegkosten auswÃ¤hlen
 		Point best = *todo.begin();
 		// Knoten behandelt --> raus aus der todo Liste
 		todo.erase(todo.begin());
@@ -176,16 +176,17 @@ bool GameWorldBase::FindFreePath(const MapCoord x_start,const MapCoord y_start,
 		// auf das Ende (also nicht definiert) gesetzt, quasi als "NULL"-Ersatz
 		pf_nodes[best_id].it_p = todo.end();
 
-		if(x_dest == best.x && y_dest == best.y)
+		// Ziel schon erreicht? Allerdings Null-Weg, wenn Start=Ende ist, verbieten
+		if(x_dest == best.x && y_dest == best.y && pf_nodes[best_id].way)
 		{
 			// Ziel erreicht!
-			// Jeweils die einzelnen Angaben zurückgeben, falls gewünscht (Pointer übergeben)
+			// Jeweils die einzelnen Angaben zurÃ¼ckgeben, falls gewÃ¼nscht (Pointer Ã¼bergeben)
 			if(length)
 				*length = pf_nodes[best_id].way;
 			if(route)
 				route->resize(pf_nodes[best_id].way);
 
-			// Route rekonstruieren und ggf. die erste Richtung speichern, falls gewünscht
+			// Route rekonstruieren und ggf. die erste Richtung speichern, falls gewÃ¼nscht
 			for(unsigned z = pf_nodes[best_id].way-1;best_id!=start_id;--z,best_id = pf_nodes[best_id].prev)
 			{
 				if(route)
@@ -197,8 +198,12 @@ bool GameWorldBase::FindFreePath(const MapCoord x_start,const MapCoord y_start,
 			// Fertig, es wurde ein Pfad gefunden
 			return true;
 		}
+		
+		// Maximaler Weg schon erreicht? In dem Fall brauchen wir keine weiteren Knoten von diesem aus bilden
+		if(pf_nodes[best_id].way == max_route)
+			continue;
 
-		// Bei Zufälliger Richtung anfangen (damit man nicht immer denselben Weg geht, besonders für die Soldaten wichtig)
+		// Bei ZufÃ¤lliger Richtung anfangen (damit man nicht immer denselben Weg geht, besonders fÃ¼r die Soldaten wichtig)
 		unsigned start = random_route?RANDOM.Rand("pf",__LINE__,y_start*GetWidth()+x_start,6):0;
 		
 		// Knoten in alle 6 Richtungen bilden
@@ -216,7 +221,7 @@ bool GameWorldBase::FindFreePath(const MapCoord x_start,const MapCoord y_start,
 			// Knoten schon auf dem Feld gebildet?
 			if(pf_nodes[xaid].visited)
 			{
-				// Dann nur ggf. Weg und Vorgänger korrigieren, falls der Weg kürzer ist
+				// Dann nur ggf. Weg und VorgÃ¤nger korrigieren, falls der Weg kÃ¼rzer ist
 				if(pf_nodes[best_id].it_p != todo.end() && pf_nodes[best_id].way+1 < pf_nodes[xaid].way)
 				{
 					pf_nodes[xaid].way  = pf_nodes[best_id].way+1;
@@ -226,11 +231,11 @@ bool GameWorldBase::FindFreePath(const MapCoord x_start,const MapCoord y_start,
 					pf_nodes[xaid].it_p = ret.first;
 
 				}
-				// Wir wollen nicht denselben Knoten noch einmal einfügen, daher Abbruch
+				// Wir wollen nicht denselben Knoten noch einmal einfÃ¼gen, daher Abbruch
 				continue;
 			}
 
-			// Das Ziel wollen wir auf jedenfall erreichen lassen, daher nur diese zusätzlichen
+			// Das Ziel wollen wir auf jedenfall erreichen lassen, daher nur diese zusÃ¤tzlichen
 			// Bedingungen, wenn es nicht das Ziel ist
 			if(!(xa == x_dest && ya == y_dest) && IsNodeOK)
 			{
@@ -238,7 +243,7 @@ bool GameWorldBase::FindFreePath(const MapCoord x_start,const MapCoord y_start,
 					continue;
 			}
 
-			// Zusätzliche Bedingungen, auch die das letzte Stück zum Ziel betreffen
+			// ZusÃ¤tzliche Bedingungen, auch die das letzte StÃ¼ck zum Ziel betreffen
 			if(IsNodeToDestOk)
 			{
 				if(!IsNodeToDestOk(*this,xa,ya,i,param))
@@ -261,16 +266,16 @@ bool GameWorldBase::FindFreePath(const MapCoord x_start,const MapCoord y_start,
 	return false;
 }
 
-/// Wegfinden ( A* ), O(v lg v) --> Wegfindung auf allgemeinen Terrain (ohne Straßen), für Wegbau und frei herumlaufende Berufe
+/// Wegfinden ( A* ), O(v lg v) --> Wegfindung auf allgemeinen Terrain (ohne StraÃŸen), fÃ¼r Wegbau und frei herumlaufende Berufe
 bool GameWorldBase::FindPathOnRoads(const noRoadNode * const start, const noRoadNode * const goal,
 									const bool ware_mode, std::vector<unsigned char> * route, unsigned * length,
 									unsigned char * first_dir, const RoadSegment * const forbidden)
 {
-	// Irgendwelche Null-Anfänge oder Ziele? --> Kein Weg
+	// Irgendwelche Null-AnfÃ¤nge oder Ziele? --> Kein Weg
 	if(!start || !goal)
 		return false;
 
-	// Erst einmal wieder aufräumen
+	// Erst einmal wieder aufrÃ¤umen
 	for(unsigned i = 0;i<clean_list.size();++i)
 		pf_nodes[clean_list[i]].visited = false;
 	clean_list.clear();
@@ -278,7 +283,7 @@ bool GameWorldBase::FindPathOnRoads(const noRoadNode * const start, const noRoad
 	std::set<const noRoadNode*,RoadNodeComperator> todo;
 	Point::Init(goal->GetX(),goal->GetY(),this);
 
-	// Anfangsknoten einfügen
+	// Anfangsknoten einfÃ¼gen
 	std::pair< std::set<const noRoadNode*, RoadNodeComperator>::iterator, bool > ret = todo.insert(start);
 	unsigned start_id = MakeCoordID(start->GetX(),start->GetY());
 	pf_nodes[start_id].it_rn = ret.first;
@@ -295,7 +300,7 @@ bool GameWorldBase::FindPathOnRoads(const noRoadNode * const start, const noRoad
 		if(!todo.size())
 			return false;
 		
-		// Knoten mit den geringsten Wegkosten auswählen
+		// Knoten mit den geringsten Wegkosten auswÃ¤hlen
 		const noRoadNode* best = *todo.begin();
 		// Knoten behandelt --> raus aus der todo Liste
 		todo.erase(todo.begin());
@@ -306,18 +311,18 @@ bool GameWorldBase::FindPathOnRoads(const noRoadNode * const start, const noRoad
 		// Knoten wurde entfernt, daher erstmal auf das Ende des set setzen (als Alternative zu NULL)
 		pf_nodes[best_id].it_rn = todo.end();
 
-		// Ziel erreicht?
-		if(best == goal)
+		// Ziel erreicht, allerdings keine Nullwege erlauben?
+		if(best == goal &&  pf_nodes[best_id].way)
 		{
 			// Ziel erreicht!
-			// Jeweils die einzelnen Angaben zurückgeben, falls gewünscht (Pointer übergeben)
+			// Jeweils die einzelnen Angaben zurÃ¼ckgeben, falls gewÃ¼nscht (Pointer Ã¼bergeben)
 			if(length)
 				*length = pf_nodes[best_id].way;
 
 			if(route)
 				route->resize(pf_nodes[best_id].count_nodes);
 			
-			// Route rekonstruieren und ggf. die erste Richtung speichern, falls gewünscht
+			// Route rekonstruieren und ggf. die erste Richtung speichern, falls gewÃ¼nscht
 			for(unsigned z = pf_nodes[best_id].count_nodes-1;best_id!=start_id;--z,best_id = pf_nodes[best_id].prev)
 			{
 				if(route)
@@ -342,17 +347,17 @@ bool GameWorldBase::FindPathOnRoads(const noRoadNode * const start, const noRoad
 			// ID des umliegenden Knotens bilden
 			unsigned xaid = MakeCoordID(rna->GetX(),rna->GetY());
 
-			// Neuer Weg für diesen neuen Knoten berechnen
+			// Neuer Weg fÃ¼r diesen neuen Knoten berechnen
 			unsigned new_way = pf_nodes[best_id].way +best->routes[i]->route.size();
-			// Im Warenmodus müssen wir Strafpunkte für überlastete Träger hinzuaddieren,
-			// damit der Algorithmus auch Ausweichrouten auswählt
+			// Im Warenmodus mÃ¼ssen wir Strafpunkte fÃ¼r Ã¼berlastete TrÃ¤ger hinzuaddieren,
+			// damit der Algorithmus auch Ausweichrouten auswÃ¤hlt
 			if(ware_mode)
 				new_way += best->GetPunishmentPoints(i);
 
 			// Knoten schon auf dem Feld gebildet?
 			if(pf_nodes[xaid].visited)
 			{
-				// Dann nur ggf. Weg und Vorgänger korrigieren, falls der Weg kürzer ist
+				// Dann nur ggf. Weg und VorgÃ¤nger korrigieren, falls der Weg kÃ¼rzer ist
 				if(pf_nodes[best_id].it_rn != todo.end() && new_way < pf_nodes[xaid].way)
 				{
 					pf_nodes[xaid].way  = new_way;
@@ -368,7 +373,7 @@ bool GameWorldBase::FindPathOnRoads(const noRoadNode * const start, const noRoad
 			if(best->routes[i] == forbidden)
 				continue;
 
-			// evtl Wasserstraße?
+			// evtl WasserstraÃŸe?
 			if(best->routes[i]->GetRoadType() == RoadSegment::RT_BOAT && !ware_mode)
 				continue;
 
@@ -387,14 +392,14 @@ bool GameWorldBase::FindPathOnRoads(const noRoadNode * const start, const noRoad
 	}
 }
 
-/// Paremter-Struktur für Straßenbaupathfinding
+/// Paremter-Struktur fÃ¼r StraÃŸenbaupathfinding
 struct Param_RoadPath
 {
-	/// Straßenbaumodus erlaubt?
+	/// StraÃŸenbaumodus erlaubt?
 	bool boat_road;
 };
 
-/// Abbruch-Bedingungen für Straßenbau-Pathfinding
+/// Abbruch-Bedingungen fÃ¼r StraÃŸenbau-Pathfinding
 bool IsPointOK_RoadPath(const GameWorldBase& gwb, const MapCoord x, const MapCoord y, const unsigned char dir, const void *param)
 {
 	const Param_RoadPath * prp = static_cast<const Param_RoadPath*>(param);
@@ -409,14 +414,14 @@ bool IsPointOK_RoadPath(const GameWorldBase& gwb, const MapCoord x, const MapCoo
 	return true;
 }
 
-/// Straßenbau-Pathfinding
+/// StraÃŸenbau-Pathfinding
 bool GameWorldViewer::FindRoadPath(const MapCoord x_start,const MapCoord y_start, const MapCoord x_dest, const MapCoord y_dest,std::vector<unsigned char>& route, const bool boat_road)
 {
 	Param_RoadPath prp = { boat_road };
 	return FindFreePath(x_start,y_start,x_dest,y_dest,false,100,&route,NULL,NULL,IsPointOK_RoadPath,NULL, &prp);
 }
 
-/// Abbruch-Bedingungen für freien Pfad für Menschen
+/// Abbruch-Bedingungen fÃ¼r freien Pfad fÃ¼r Menschen
 bool IsPointOK_HumanPath(const GameWorldBase& gwb, const MapCoord x, const MapCoord y, const unsigned char dir, const void *param)
 {
 	// Feld passierbar?
@@ -439,12 +444,12 @@ bool IsPointOK_HumanPath(const GameWorldBase& gwb, const MapCoord x, const MapCo
 	return true;
 }
 
-/// Zusätzliche Abbruch-Bedingungen für freien Pfad für Menschen, die auch bei der letzen Kante
-/// zum Ziel eingehalten werden müssen
+/// ZusÃ¤tzliche Abbruch-Bedingungen fÃ¼r freien Pfad fÃ¼r Menschen, die auch bei der letzen Kante
+/// zum Ziel eingehalten werden mÃ¼ssen
 bool IsPointToDestOK_HumanPath(const GameWorldBase& gwb, const MapCoord x, const MapCoord y, const unsigned char dir, const void *param)
 {
 	// Feld passierbar?
-	// Nicht über Wasser, Lava, Sümpfe gehen
+	// Nicht Ã¼ber Wasser, Lava, SÃ¼mpfe gehen
 	if(!gwb.IsNodeToNodeForFigure(x,y,(dir+3)%6))
 		return false;
 
@@ -452,11 +457,11 @@ bool IsPointToDestOK_HumanPath(const GameWorldBase& gwb, const MapCoord x, const
 }
 
 
-/// Findet einen Weg für Figuren
+/// Findet einen Weg fÃ¼r Figuren
 unsigned char GameWorldBase::FindHumanPath(const MapCoord x_start,const MapCoord y_start,
 			const MapCoord x_dest, const MapCoord y_dest, const unsigned max_route, const bool random_route, unsigned *length)
 {
-	unsigned char first_dir;
+	unsigned char first_dir = 0xFF;
 	if(FindFreePath(x_start,y_start,x_dest,y_dest,random_route,max_route,NULL,length,&first_dir,IsPointOK_HumanPath,
 		IsPointToDestOK_HumanPath,NULL))
 		return first_dir;
@@ -464,20 +469,20 @@ unsigned char GameWorldBase::FindHumanPath(const MapCoord x_start,const MapCoord
 		return 0xFF;
 }
 
-/// Wegfindung für Menschen im Straßennetz
+/// Wegfindung fÃ¼r Menschen im StraÃŸennetz
 unsigned char GameWorldGame::FindHumanPathOnRoads(const noRoadNode * const start, const noRoadNode * const goal,unsigned * length,const RoadSegment * const forbidden)
 {
-	unsigned char first_dir;
+	unsigned char first_dir = 0xFF;
 	if(FindPathOnRoads(start, goal, false, NULL, length, &first_dir,forbidden))
 		return first_dir;
 	else
 		return 0xFF;
 }
 
-/// Wegfindung für Waren im Straßennetz
+/// Wegfindung fÃ¼r Waren im StraÃŸennetz
 unsigned char GameWorldGame::FindPathForWareOnRoads(const noRoadNode * const start, const noRoadNode * const goal,unsigned * length)
 {
-	unsigned char first_dir;
+	unsigned char first_dir = 0xFF;
 	if(FindPathOnRoads(start, goal, true, NULL, length, &first_dir,NULL))
 		return first_dir;
 	else

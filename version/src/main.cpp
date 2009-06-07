@@ -1,4 +1,4 @@
-// $Id: main.cpp 4893 2009-05-18 22:25:32Z sicherha $
+// $Id: main.cpp 5013 2009-06-07 19:58:03Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -48,7 +48,14 @@ using namespace std;
 int main(int argc, char *argv[])
 {
 	if(argc >= 2)
-		chdir(argv[1]);
+	{
+		return 0;
+		if(chdir(argv[1]) != 0)
+		{
+			cerr << "chdir to directory \"" << argv[1] << "\" failed!" << endl;
+			return 1;
+		}
+	}
 
 	ifstream bzr(".bzr/branch/last-revision");
 	const int bzr_errno = errno;

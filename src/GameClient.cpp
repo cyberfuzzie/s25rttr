@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 5017 2009-06-08 16:21:51Z OLiver $
+// $Id: GameClient.cpp 5018 2009-06-08 18:24:25Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1069,10 +1069,8 @@ void GameClient::ExecuteGameFrame(const bool skipping)
 		//LOG.lprintf("%d = %d\n", framesinfo.nr / framesinfo.nwf_length, Random::inst().GetCurrentRandomValue());
 
 		// Statistik-Step
-		// Soll so ca. alle 30 Sekunden aufgerufen werden
-		// TODO sinnvoll hier und sinnvoll so?^^
-		//if (framesinfo.nr / (30000/framesinfo.gf_length) > (framesinfo.nr-1) / (30000/framesinfo.gf_length))
-		if (framesinfo.nr % (30000/framesinfo.gf_length) == 0)
+		// Soll alle 750 GFs (30 Sekunden auf 'Schnell') aufgerufen werden
+		if (framesinfo.nr % 750 == 0)
 		{
 			for (unsigned int i=0; i<players.getCount(); ++i)
 				players[i].StatisticStep();
@@ -1614,4 +1612,40 @@ std::string GameClient::FormatGFTime(const unsigned gf) const
 		sprintf(str,"%02u:%02u",minutes,seconds);
 
 	return std::string(str);
+}
+
+
+// Sendet eine Postnachricht an den Spieler
+void GameClient::SendPostMessage(PostMsg *msg)
+{
+	if (postMessages.size() == MAX_POST_MESSAGES)
+	{
+		DeletePostMessage(*(--postMessages.end())); // muhahaha, geht das?
+	}
+
+	postMessages.push_front(msg);
+
+	ci->CI_NewPostMessage(postMessages.size());
+}
+
+// Entfernt eine Postnachricht aus der Liste und löscht sie
+void GameClient::DeletePostMessage(PostMsg *msg)
+{
+	for(std::list<PostMsg*>::iterator it = postMessages.begin(); it != postMessages.end(); ++it)
+	{
+		if (msg == *it)
+		{
+			postMessages.erase(it);
+			delete msg;
+
+			ci->CI_PostMessageDeleted(postMessages.size());
+			break;
+		}
+	}
+}
+
+GameClientPlayer::Pact::Pact(Serializer * ser) :
+	duration(ser->PopUnsignedInt()),
+	start(ser->PopUnsignedInt())
+{
 }

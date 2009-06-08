@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.cpp 4959 2009-05-26 16:17:23Z Demophobie $
+// $Id: dskGameInterface.cpp 5018 2009-06-08 18:24:25Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -62,6 +62,7 @@
 #include "nobMilitary.h"
 #include "nobStorehouse.h"
 #include "nobUsual.h"
+#include <sstream>
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -103,6 +104,8 @@ dskGameInterface::dskGameInterface()
 		->SetBorder(false);
 	AddImageButton(3, barx + 37*3, bary, 37, 32, TC_GREEN1, GetImage(io_dat,  62), _("Post office"))
 		->SetBorder(false);
+
+  AddText(4, barx + 37*3 + 18, bary + 24, "0", COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_VCENTER, SmallFont);
 
 	LOBBYCLIENT.SetInterface(this);
 	GAMECLIENT.SetInterface(this);
@@ -149,7 +152,7 @@ void dskGameInterface::Msg_ButtonClick(const unsigned int ctrl_id)
 		} break;
 	case 3: // Post
 		{
-			WindowManager::inst().Show(new iwPostWindow);
+			WindowManager::inst().Show(new iwPostWindow(*gwv));
 		} break;
 	}
 }
@@ -947,4 +950,34 @@ void dskGameInterface::DemolishRoad(const unsigned start_id)
 	}
 
 	road.route.resize(start_id-1);
+}
+
+/// Updatet das Post-Icon mit der Nachrichtenanzahl und der Taube
+void dskGameInterface::UpdatePostIcon(const unsigned postmessages_count)
+{
+	// Taube setzen oder nicht (Post) 
+	if (postmessages_count == 0)
+		GetCtrl<ctrlImageButton>(3)->SetImage(GetImage(io_dat, 62));
+	else
+		GetCtrl<ctrlImageButton>(3)->SetImage(GetImage(io_dat, 59));
+
+	// und Anzahl der Postnachrichten aktualisieren
+	std::stringstream ss;
+	ss << postmessages_count;
+	GetCtrl<ctrlText>(4)->SetText(ss.str());
+}
+
+/// Neue Post-Nachricht eingetroffen
+void dskGameInterface::CI_NewPostMessage(const unsigned postmessages_count)
+{
+	UpdatePostIcon(postmessages_count);
+
+	// Tauben-Sound abspielen
+	GetSound(sound_lst, 114)->Play(255,false);
+}
+
+/// Es wurde eine Postnachricht vom Spieler gelöscht
+void dskGameInterface::CI_PostMessageDeleted(const unsigned postmessages_count)
+{
+	UpdatePostIcon(postmessages_count);
 }

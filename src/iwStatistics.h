@@ -41,6 +41,7 @@ private:
   ctrlText *maxValue;
   std::vector<ctrlText*> timeAnnotations;
   std::vector<bool> activePlayers;
+  unsigned numPlayingPlayers;
 
   void Msg_ButtonClick(const unsigned int ctrl_id);
   void Msg_PaintAfter();

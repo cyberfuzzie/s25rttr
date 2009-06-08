@@ -1,4 +1,4 @@
-// $Id: ClientInterface.h 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: ClientInterface.h 5018 2009-06-08 18:24:25Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -79,6 +79,9 @@ public:
 	virtual void CI_GGSChanged(const GlobalGameSettings& ggs);
 
 	virtual void CI_Chat(const unsigned player_id, const ChatDestination cd, const std::string& msg);
+
+	virtual void CI_NewPostMessage(const unsigned postmessages_count);
+	virtual void CI_PostMessageDeleted(const unsigned postmessages_count);
 
 	virtual void CI_Async(const std::string& checksums_list);
 	virtual void CI_ReplayAsync(const std::string& msg);

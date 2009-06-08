@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 4902 2009-05-21 09:12:10Z OLiver $
+// $Id: nobMilitary.cpp 5018 2009-06-08 18:24:25Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -110,7 +110,7 @@ void nobMilitary::Destroy_nobMilitary()
 	// Land drumherum neu berechnen (nur wenn es schon besetzt wurde!)
 	// Nach dem BaseDestroy erst, da in diesem erst das Feuer gesetzt, die Straße gelöscht wird usw.
 	if(!new_built)
-		gwg->RecalcTerritory(this,MILITARY_RADIUS[size],true);
+		gwg->RecalcTerritory(this,MILITARY_RADIUS[size],true, false);
 }
 
 void nobMilitary::Serialize_nobMilitary(SerializedGameData * sgd) const
@@ -490,12 +490,14 @@ void nobMilitary::AddPassiveSoldier(nofPassiveSoldier * soldier)
 	// Wurde dieses Gebäude zum ersten Mal besetzt?
 	if(new_built)
 	{
+		if(GameClient::inst().GetPlayerID() == this->player)
+			GameClient::inst().SendPostMessage(new ImagePostMsgWithLocation(_("Military building\n occupied"), PMC_MILITARY, this->x, this->y, this->type, this->nation));
 		// Ist nun besetzt
 		new_built = false;
 		// Alter ab jetzt setzen
 		SetAge();
 		// Landgrenzen verschieben
-		gwg->RecalcTerritory(this,MILITARY_RADIUS[size],false);
+		gwg->RecalcTerritory(this,MILITARY_RADIUS[size],false, true);
 		// Tür zumachen
 		CloseDoor();
 		// Fanfarensound abspieln, falls das Militärgebäude im Sichtbereich ist und unseres ist
@@ -646,7 +648,7 @@ void nobMilitary::Capture(const unsigned char new_owner)
 	GetFlag()->Capture(new_owner);
 
 	// Territorium neu berechnen
-	gwg->RecalcTerritory(this,MILITARY_RADIUS[size],false);
+	gwg->RecalcTerritory(this,MILITARY_RADIUS[size],false, false);
 
 	// Sichtbarkeiten berechnen für alten Spieler
 	gwg->RecalcVisibilitiesAroundPoint(GetX(),GetY(),GetMilitaryRadius()+VISUALRANGE_MILITARY+1,old_player, false);
@@ -692,6 +694,15 @@ void nobMilitary::Capture(const unsigned char new_owner)
 
 	// Fanfarensound abspieln, falls das Militärgebäude im Sichtbereich ist und unseres ist
 	gwg->MilitaryBuildingCaptured(x,y,player);
+
+	// Post verschicken, an den alten Besitzer und an den neuen Besitzer
+	if(GameClient::inst().GetPlayerID() == old_player)
+		GameClient::inst().SendPostMessage(
+			new ImagePostMsgWithLocation(_("Military building lost"), PMC_MILITARY, x, y, GetBuildingType(), GetNation()));
+	if(GameClient::inst().GetPlayerID() == this->player)
+		GameClient::inst().SendPostMessage(
+			new ImagePostMsgWithLocation(_("Military building captured"), PMC_MILITARY, x, y, GetBuildingType(), GetNation()));
+
 }
 
 void nobMilitary::NeedOccupyingTroops(const unsigned char new_owner)
@@ -898,6 +909,11 @@ void nobMilitary::HitOfCatapultStone()
 	else
 		// ansonsten noch neue Soldaten ggf. bestellen
 		RegulateTroops();
+
+	// Post verschicken
+	if(GameClient::inst().GetPlayerID() == this->player)
+		GameClient::inst().SendPostMessage(
+		new ImagePostMsgWithLocation(_("A catapult is firing\n upon us!"), PMC_MILITARY, x, y, GetBuildingType(), GetNation()));
 }
 
 /// Darf das Militärgebäude abgerissen werden (Abriss-Verbot berücksichtigen)?

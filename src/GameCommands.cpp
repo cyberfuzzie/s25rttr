@@ -55,6 +55,7 @@ GameCommand * GameCommand::CreateGameCommand(const Type gst, Serializer * ser)
 	case CHANGEINVENTORYSETTING: return new ChangeInventorySetting(ser);
 	case CHANGEALLINVENTORYSETTINGS: return new ChangeAllInventorySettings(ser);
 	case CHANGERESERVE: return new ChangeReserve(ser);
+	case SUGGESTPACT: return new SuggestPact(ser);
 	case SURRENDER: return new Surrender(ser);
 	case CHEAT_ARMAGEDDON: return new CheatArmageddon(ser);
 	case DESTROYALL: return new DestroyAll(ser);
@@ -174,4 +175,5 @@ void DestroyAll::Execute(GameWorldGame& gwg, GameClientPlayer& player, const uns
 
 void SuggestPact::Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid)
 {
+	player.SuggestPact(this->player,pt,duration);
 }

@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.h 5017 2009-06-08 16:21:51Z OLiver $
+// $Id: GameClientPlayer.h 5018 2009-06-08 18:24:25Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -24,6 +24,8 @@
 #include "GameConsts.h"
 #include <list>
 #include <algorithm>
+#include "MapConsts.h"
+#include "PostMsg.h"
 
 
 class GameWorld;
@@ -365,8 +367,8 @@ private:
 
   unsigned short incrStatIndex(unsigned short i) { return (i==STAT_STEP_COUNT-1) ? 0 : ++i; }
   unsigned short decrStatIndex(unsigned short i) { return (i==0) ? STAT_STEP_COUNT-1 : --i; }
-};
 
+};
 
 
 #endif

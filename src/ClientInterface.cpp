@@ -1,4 +1,4 @@
-// $Id: ClientInterface.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: ClientInterface.cpp 5018 2009-06-08 18:24:25Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -48,6 +48,9 @@ void ClientInterface::CI_PlayersSwapped(const unsigned player1, const unsigned p
 void ClientInterface::CI_GGSChanged(const GlobalGameSettings& ggs) {}
 
 void ClientInterface::CI_Chat(const unsigned player_id, const ChatDestination cd, const std::string& msg) {}
+
+void ClientInterface::CI_NewPostMessage(const unsigned postmessages_count) {}
+void ClientInterface::CI_PostMessageDeleted(const unsigned postmessages_count) {}
 
 void ClientInterface::CI_Async(const std::string& checksums_list) {}
 void ClientInterface::CI_ReplayAsync(const std::string& msg) {}

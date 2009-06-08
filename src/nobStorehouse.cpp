@@ -1,4 +1,4 @@
-// $Id: nobStorehouse.cpp 4841 2009-05-09 10:28:42Z OLiver $
+// $Id: nobStorehouse.cpp 5018 2009-06-08 18:24:25Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -52,6 +52,11 @@ nobStorehouse::nobStorehouse(const unsigned short x, const unsigned short y,cons
 
 	// Evtl gabs verlorene Waren, die jetzt in das HQ wieder reinkönnen
 	GAMECLIENT.GetPlayer(player)->FindClientForLostWares();
+
+	// Post versenden
+	if(GameClient::inst().GetPlayerID() == this->player)
+		GameClient::inst().SendPostMessage(new ImagePostMsgWithLocation(
+			_("New storehouse finished"), PMC_GENERAL, x, y, BLD_STOREHOUSE, nation));
 }
 
 

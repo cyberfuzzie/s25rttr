@@ -1,4 +1,4 @@
-// $Id: nobHQ.cpp 4746 2009-04-30 20:10:46Z OLiver $
+// $Id: nobHQ.cpp 5018 2009-06-08 18:24:25Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -47,7 +47,7 @@ nobHQ::nobHQ(const unsigned short x, const unsigned short y,const unsigned char 
 
 	// ins Militärquadrat einfügen
 	gwg->GetMilitarySquare(x,y).push_back(this);
-	gwg->RecalcTerritory(this,GetMilitaryRadius(),false);
+	gwg->RecalcTerritory(this,GetMilitaryRadius(),false,true);
 
 
 	// StartWaren setzen ( provisorisch )
@@ -287,7 +287,7 @@ void nobHQ::Destroy_nobHQ()
 
 	// Land drumherum neu berechnen (nur wenn es schon besetzt wurde!)
 	// Nach dem BaseDestroy erst, da in diesem erst das Feuer gesetzt, die Straße gelöscht wird usw.
-	gwg->RecalcTerritory(this,MILITARY_RADIUS[GetSize()],true);
+	gwg->RecalcTerritory(this,MILITARY_RADIUS[GetSize()],true, false);
 }
 
 void nobHQ::Serialize_nobHQ(SerializedGameData * sgd) const

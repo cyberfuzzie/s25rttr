@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: GameWorld.h 5018 2009-06-08 18:24:25Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -485,7 +485,7 @@ public:
 
 	/// Berechnet das Land in einem bestimmten Bereich (um ein neues, abgerissenes oder eingenommenes
 	/// Militärgebäude rum) neu, destroyed gibt an, ob building abgerissen wurde und somit nicht einberechnet werden soll
-	void RecalcTerritory(const nobBaseMilitary * const building,const unsigned short radius, const bool destroyed);
+	void RecalcTerritory(const nobBaseMilitary * const building,const unsigned short radius, const bool destroyed, const bool newBuilt);
 	/// Greift ein Militärgebäude auf x,y an (entsendet dafür die Soldaten etc.)
 	void Attack(const unsigned char player_attacker, const MapCoord x, const MapCoord y, const unsigned short soldiers_count, const bool strong_soldiers);
 

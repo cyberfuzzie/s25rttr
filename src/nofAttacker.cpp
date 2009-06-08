@@ -35,6 +35,7 @@
 #include "SerializedGameData.h"
 #include "nobBaseWarehouse.h"
 #include "MapGeometry.h"
+#include "PostMsg.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -445,6 +446,12 @@ void nofAttacker::MissAttackingWalk()
 					static_cast<nofAggressiveDefender*>(defender)->AttackerLost();
 					defender = 0;
 				}
+
+				// Post schicken "Wir werden angegriffen" TODO evtl. unschön, da jeder Attacker das dann aufruft
+				if(attacked_goal->GetPlayer() == GameClient::inst().GetPlayerID())
+					GAMECLIENT.SendPostMessage(
+						new ImagePostMsgWithLocation(_("We are under attack!"), PMC_MILITARY, x, y, 
+						attacked_goal->GetBuildingType(), attacked_goal->GetNation()));
 
 				// Dann Verteidiger rufen
 				if(attacked_goal->CallDefender(this))

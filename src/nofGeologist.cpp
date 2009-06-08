@@ -1,4 +1,4 @@
-// $Id: nofGeologist.cpp 4857 2009-05-11 18:31:33Z OLiver $
+// $Id: nofGeologist.cpp 5018 2009-06-08 18:24:25Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -44,7 +44,7 @@
 #endif
 
 nofGeologist::nofGeologist(const unsigned short x, const unsigned short y,const unsigned char player,noRoadNode * goal)
-: nofFlagWorker(JOB_GEOLOGIST,x,y,player,goal),  signs(0)
+: nofFlagWorker(JOB_GEOLOGIST,x,y,player,goal),  signs(0), resAlreadyFound(std::vector<bool>(5))
 {
 	node_goal.x = 0;
 	node_goal.y = 0;
@@ -65,10 +65,14 @@ void nofGeologist::Serialize_nofGeologist(SerializedGameData * sgd) const
 
 	sgd->PushUnsignedShort(node_goal.x);
 	sgd->PushUnsignedShort(node_goal.y);
+
+  for(unsigned i=0; i<5; ++i)
+    sgd->PushBool(resAlreadyFound[i]);
+
 }
 
 nofGeologist::nofGeologist(SerializedGameData * sgd, const unsigned obj_id) : nofFlagWorker(sgd,obj_id),
-signs(sgd->PopUnsignedShort())
+signs(sgd->PopUnsignedShort()), resAlreadyFound(std::vector<bool>(5))
 {
 	unsigned available_nodes_count = sgd->PopUnsignedInt();
 	for(unsigned i = 0;i<available_nodes_count;++i)
@@ -81,6 +85,9 @@ signs(sgd->PopUnsignedShort())
 
 	node_goal.x = sgd->PopUnsignedShort();
 	node_goal.y = sgd->PopUnsignedShort();
+
+  for(unsigned i=0; i<5; ++i)
+    resAlreadyFound[i] = sgd->PopBool();
 }
 
 void nofGeologist::Draw(int x, int y)
@@ -176,6 +183,10 @@ void nofGeologist::GoalReached()
 	// Geologe muss nun 15 Schildchen aufstellen
 
 	signs = 15;
+
+  // Für jeden Ressourcentyp nur einmal eine Post-Nachricht schicken
+  for(unsigned i=0; i<5; ++i)
+    resAlreadyFound[i] = false;
 
 	// Umgebung absuchen
 	LookForNewNodes();
@@ -443,30 +454,60 @@ void nofGeologist::SetSign(const unsigned char resources)
 		// Kohle
 		type = 2;
 		quantity = (resources-0x40)/3;
+		if (!resAlreadyFound[type])
+		{
+			if(GameClient::inst().GetPlayerID() == this->player)
+				GameClient::inst().SendPostMessage(new PostMsgWithLocation(_("Found coal"), PMC_GEOLOGIST, x, y));
+			resAlreadyFound[type] = true;
+		}
 	}
 	else if(resources >= 0x49 && resources <= 0x4F)
 	{
 		// Eisen
 		type = 0;
 		quantity = (resources-0x48)/3;
+		if (!resAlreadyFound[type])
+		{
+			if(GameClient::inst().GetPlayerID() == this->player)
+				GameClient::inst().SendPostMessage(new PostMsgWithLocation(_("Found ironore"), PMC_GEOLOGIST, x, y));
+			resAlreadyFound[type] = true;
+		}
 	}
 	else if(resources >= 0x51 && resources <= 0x57)
 	{
 		// Gold
 		type = 1;
 		quantity = (resources-0x50)/3;
+		if (!resAlreadyFound[type])
+		{
+			if(GameClient::inst().GetPlayerID() == this->player)
+				GameClient::inst().SendPostMessage(new PostMsgWithLocation(_("Found gold"), PMC_GEOLOGIST, x, y));
+			resAlreadyFound[type] = true;
+		}
 	}
 	else if(resources >= 0x59 && resources <= 0x5F)
 	{
 		// Granit
 		type = 3;
 		quantity = (resources-0x58)/3;
+		if (!resAlreadyFound[type])
+		{
+			if(GameClient::inst().GetPlayerID() == this->player)
+				GameClient::inst().SendPostMessage(new PostMsgWithLocation(_("Found granite"), PMC_GEOLOGIST, x, y));
+			resAlreadyFound[type] = true;
+		}
 	}
 	else if(resources == 0x20 || resources == 0x21)
 	{
 		// Wasser
 		type = 4;
 		quantity = 0;
+		if (!resAlreadyFound[type])
+		{
+			if(GameClient::inst().GetPlayerID() == this->player)
+				GameClient::inst().SendPostMessage(new PostMsgWithLocation(_("Found water"), PMC_GEOLOGIST, x, y));
+			resAlreadyFound[type] = true;
+		}
 	}
 	else
 	{

@@ -1,4 +1,4 @@
-// $Id: nofBuildingWorker.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: nofBuildingWorker.cpp 5018 2009-06-08 18:24:25Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -44,7 +44,7 @@
 #endif
 
 nofBuildingWorker::nofBuildingWorker(const Job job,const unsigned short x, const unsigned short y,const unsigned char player,nobUsual * workplace)
-: noFigure(job,x,y,player,workplace), state(STATE_FIGUREWORK), workplace(workplace), ware(GD_NOTHING), not_working(0), since_not_working(0xFFFFFFFF), was_sounding(false)
+: noFigure(job,x,y,player,workplace), state(STATE_FIGUREWORK), workplace(workplace), ware(GD_NOTHING), not_working(0), since_not_working(0xFFFFFFFF), was_sounding(false), OutOfRessourcesMsgSent(false)
 {
 }
 
@@ -62,6 +62,7 @@ void nofBuildingWorker::Serialize_nofBuildingWorker(SerializedGameData * sgd) co
 		sgd->PushUnsignedInt(since_not_working);
 		sgd->PushBool(was_sounding);
 	}
+  sgd->PushBool(OutOfRessourcesMsgSent);
 }
 
 nofBuildingWorker::nofBuildingWorker(SerializedGameData * sgd, const unsigned obj_id) : noFigure(sgd,obj_id),
@@ -83,6 +84,7 @@ state(State(sgd->PopUnsignedChar()))
 		since_not_working = 0xFFFFFFFF;
 		was_sounding = false;
 	}
+  OutOfRessourcesMsgSent = sgd->PopBool();
 }
 
 
@@ -362,6 +364,16 @@ bool nofBuildingWorker::GetResources(unsigned char type)
 				}
 			}
 		}
+	}
+
+	// Hoffe das passt auch, Post verschicken, keine Rohstoffe mehr da
+	if (!OutOfRessourcesMsgSent)
+	{
+		if(GameClient::inst().GetPlayerID() == this->player)
+			GameClient::inst().SendPostMessage(
+			  new ImagePostMsgWithLocation(_("This mine is exhausted"), PMC_GENERAL, x, y, 
+			  workplace->GetBuildingType(), workplace->GetNation()));
+		OutOfRessourcesMsgSent = true;
 	}
 
 	// Hoffe das passt...

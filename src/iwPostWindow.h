@@ -1,4 +1,4 @@
-// $Id: iwPostWindow.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: iwPostWindow.h 5018 2009-06-08 18:24:25Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -21,11 +21,34 @@
 #define WP_POSTOFFICE_H_
 
 #include "IngameWindow.h"
+#include "GameWorld.h"
+#include "PostMsg.h"
 
 class iwPostWindow : public IngameWindow
 {
 public:
-	iwPostWindow(void);
+	iwPostWindow(GameWorldViewer& gwv);
+  void Msg_PaintBefore();
+  void Msg_ButtonClick(const unsigned int ctrl_id);
+
+private:
+  GameWorldViewer& gwv;
+  ctrlText *postText;
+  ctrlImage *postImage;
+  ctrlText *postMsgInfos;
+
+  ctrlImageButton *gotoButton;
+  ctrlImageButton *deleteButton;
+  
+  ctrlImageButton *acceptButton;
+  ctrlImageButton *declineButton;
+
+  unsigned currentMessage;
+
+  PostMsg *GetPostMsg(unsigned pos) const;
+  void DisplayPostMessage();
+
+  unsigned lastSize;
 
 };
 

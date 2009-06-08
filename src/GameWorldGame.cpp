@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 4947 2009-05-24 20:02:16Z OLiver $
+// $Id: GameWorldGame.cpp 5018 2009-06-08 18:24:25Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -468,7 +468,7 @@ void GameWorldGame::DestroyRoad(const MapCoord x, const MapCoord y, const unsign
 }
 
 
-void GameWorldGame::RecalcTerritory(const nobBaseMilitary * const building,const unsigned short radius, const bool destroyed)
+void GameWorldGame::RecalcTerritory(const nobBaseMilitary * const building,const unsigned short radius, const bool destroyed, const bool newBuilt)
 {
 	list<nobBaseMilitary*> buildings; // Liste von Militärgebäuden in der Nähe
 
@@ -535,10 +535,19 @@ void GameWorldGame::RecalcTerritory(const nobBaseMilitary * const building,const
 		}
 	}
 
-  for (unsigned i=0; i<GAMECLIENT.GetPlayerCount(); ++i)
-  {
-    GAMECLIENT.GetPlayer(i)->ChangeStatisticValue(STAT_COUNTRY, sizeChanges[i]);
-  }
+	for (unsigned i=0; i<GAMECLIENT.GetPlayerCount(); ++i)
+	{
+		GAMECLIENT.GetPlayer(i)->ChangeStatisticValue(STAT_COUNTRY, sizeChanges[i]);
+
+		// Negatives Wachstum per Post dem/der jeweiligen Landesherren/dame melden, nur bei neugebauten Gebäuden
+		if (newBuilt && sizeChanges[i] < 0)
+		{
+			if(GameClient::inst().GetPlayerID() == i)
+				GameClient::inst().SendPostMessage(
+					new ImagePostMsgWithLocation(_("Lost land by this building"), PMC_MILITARY, building->GetX(), building->GetY(), 
+					building->GetBuildingType(), building->GetNation()));
+		}
+	}
 
 	for(MapCoord y = y1;y<y2;++y)
 	{

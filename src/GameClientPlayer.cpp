@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 5017 2009-06-08 16:21:51Z OLiver $
+// $Id: GameClientPlayer.cpp 5018 2009-06-08 18:24:25Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -257,6 +257,7 @@ void GameClientPlayer::Serialize(SerializedGameData * sgd)
   }
   for (unsigned i=0; i<STAT_TYPE_COUNT; ++i)
     sgd->PushUnsignedInt(statisticCurrentData[i]);
+
 }
 
 void GameClientPlayer::Deserialize(SerializedGameData * sgd)
@@ -1412,14 +1413,6 @@ void GameClientPlayer::StatisticStep()
     }
     statistic[STAT_16H].currentIndex = incrStatIndex(statistic[STAT_16H].currentIndex);
   }
-}
-
-
-
-GameClientPlayer::Pact::Pact(Serializer * ser) :
-	duration(ser->PopUnsignedInt()),
-	start(ser->PopUnsignedInt())
-{
 }
 
 void GameClientPlayer::Pact::Serialize(Serializer * ser)

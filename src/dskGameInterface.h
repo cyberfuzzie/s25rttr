@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.h 4959 2009-05-26 16:17:23Z Demophobie $
+// $Id: dskGameInterface.h 5018 2009-06-08 18:24:25Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -134,6 +134,9 @@ private:
 	/// Baut Weg zurück von Ende bis zu start_id
 	void DemolishRoad(const unsigned start_id);
 
+	/// Updatet das Post-Icon mit der Nachrichtenanzahl und der Taube
+	void UpdatePostIcon(const unsigned postmessages_count);
+
 	void Msg_ButtonClick(const unsigned int ctrl_id);
 	void Msg_PaintBefore();
 	void Msg_PaintAfter();
@@ -152,6 +155,8 @@ private:
 	void CI_GamePaused();
 	void CI_GameResumed();
 	void CI_Error(const ClientError ce);
+	void CI_NewPostMessage(const unsigned postmessages_count);
+	void CI_PostMessageDeleted(const unsigned postmessages_count);
 
 	/// Wird aufgerufen, wann immer eine Flagge zerstört wurde, da so evtl der Wegbau abgebrochen werden muss
 	void GI_FlagDestroyed(const unsigned short x, const unsigned short y);

@@ -1,4 +1,4 @@
-// $Id: nofFarmhand.cpp 4857 2009-05-11 18:31:33Z OLiver $
+// $Id: nofFarmhand.cpp 5018 2009-06-08 18:24:25Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -29,6 +29,7 @@
 #include "JobConsts.h"
 #include "SoundManager.h"
 #include "SerializedGameData.h"
+#include "GameClient.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -159,6 +160,28 @@ void nofFarmhand::HandleDerivedEvent(const unsigned int id)
 			}
 			else
 			{
+
+				if(GameClient::inst().GetPlayerID() == this->player)
+				{
+					if (!OutOfRessourcesMsgSent)
+					{
+						switch(job)
+						{
+						case JOB_STONEMASON:
+							GameClient::inst().SendPostMessage(
+							  new ImagePostMsgWithLocation(_("No more stones\n in range"), PMC_GENERAL, x, y, workplace->GetBuildingType(), workplace->GetNation()));
+							break;
+						case JOB_FISHER:
+							GameClient::inst().SendPostMessage(
+							  new ImagePostMsgWithLocation(_("No more fishes\n in range"), PMC_GENERAL, x, y, workplace->GetBuildingType(), workplace->GetNation()));
+							break;
+						default:
+							break;
+						}
+						OutOfRessourcesMsgSent = true;
+					}
+				}
+
 				// Weiter warten, vielleicht gibts ja später wieder mal was
 				current_ev = em->AddEvent(this,JOB_CONSTS[job].wait1_length,1);
 

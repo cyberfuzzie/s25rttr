@@ -1,4 +1,4 @@
-// $Id: nofScout_LookoutTower.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: nofScout_LookoutTower.cpp 5018 2009-06-08 18:24:25Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -25,6 +25,7 @@
 #include "GameWorld.h"
 #include "MilitaryConsts.h"
 #include "nobUsual.h"
+#include "GameClient.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -73,4 +74,9 @@ void nofScout_LookoutTower::WorkplaceReached()
 {
 	// Im enstprechenden Radius alles sichtbar machen
 	gwg->SetVisibilitiesAroundPoint(x,y,VISUALRANGE_LOOKOUTTOWER,player);
+
+	// Und Post versenden
+	if(GameClient::inst().GetPlayerID() == this->player)
+		GameClient::inst().SendPostMessage(new ImagePostMsgWithLocation(
+			_("Lookout-tower occupied"), PMC_MILITARY, x, y, workplace->GetBuildingType(), workplace->GetNation()));
 }

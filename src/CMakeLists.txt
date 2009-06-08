@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 4992 2009-06-02 18:42:05Z OLiver $
+### $Id: CMakeLists.txt 5018 2009-06-08 18:24:25Z OLiver $
 ################################################################################
 
 INCLUDE(FindBZip2)
@@ -259,6 +259,7 @@ SET(SOURCES_OTHER
     nofWoodcutter.cpp         nofWoodcutter.h
     nofWorkman.cpp            nofWorkman.h
     FOWObjects.cpp            FOWObjects.h
+    PostMsg.cpp	              PostMsg.h
     )
 
 SET(SOURCES_GL

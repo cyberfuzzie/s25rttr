@@ -1,4 +1,4 @@
-// $Id: nofGeologist.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: nofGeologist.h 5018 2009-06-08 18:24:25Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -39,6 +39,7 @@ private:
 	/// maximaler Radius wie weit die Geologen sich von der Flagge entfernen würde
 	static const unsigned short MAX_RADIUS = 10;
 
+  std::vector<bool> resAlreadyFound;
 
 private:
 

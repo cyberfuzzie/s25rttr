@@ -295,6 +295,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\PostMsg.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\PostMsg.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\Window.cpp"
 					>
 				</File>

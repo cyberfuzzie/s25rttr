@@ -47,25 +47,42 @@ iwStatistics::iwStatistics()
 {
   activePlayers = std::vector<bool>(7);
 
-  // Bilder für die Spieler malen (nur vier in Gebrauch, da kein einzelner Führer auswählbar)
-  unsigned short startX = 126 - (GameClient::inst().GetPlayerCount()-1) * 17;
+  // Spieler zählen
+  numPlayingPlayers = 0;
   for (unsigned i=0; i<GameClient::inst().GetPlayerCount(); ++i)
   {
+    if (GameClient::inst().GetPlayer(i)->ps == PS_KI || GameClient::inst().GetPlayer(i)->ps == PS_OCCUPIED)
+      numPlayingPlayers++;
+  }
+
+  // Bilder für die spielenden Spieler malen (nur vier in Gebrauch, da kein einzelner Führer auswählbar)
+  unsigned short startX = 126 - (numPlayingPlayers - 1) * 17;
+  unsigned pos = 0;
+  
+  for (unsigned i=0; i<GameClient::inst().GetPlayerCount(); ++i)
+  {
+    // nicht belegte Spielplätze rauswerfen
+    if (!(GameClient::inst().GetPlayer(i)->ps == PS_KI || GameClient::inst().GetPlayer(i)->ps == PS_OCCUPIED))
+    {
+      activePlayers[i] = false;
+      continue;
+    }
     switch(GameClient::inst().GetPlayer(i)->nation)
     {
-    case NAT_AFRICANS: AddImageButton(1+i, startX + i * 34 - 17, 45-23, 34, 47, TC_GREEN1, GetImage(io_dat, 257), GameClient::inst().GetPlayer(i)->name)->SetBorder(false);
+    case NAT_AFRICANS: AddImageButton(1+i, startX + pos * 34 - 17, 45-23, 34, 47, TC_GREEN1, GetImage(io_dat, 257), GameClient::inst().GetPlayer(i)->name)->SetBorder(false);
       break;
-    case NAT_JAPANESES: AddImageButton(1+i, startX + i * 34 - 17, 45-23, 34, 47, TC_GREEN1, GetImage(io_dat, 253), GameClient::inst().GetPlayer(i)->name)->SetBorder(false);
+    case NAT_JAPANESES: AddImageButton(1+i, startX + pos * 34 - 17, 45-23, 34, 47, TC_GREEN1, GetImage(io_dat, 253), GameClient::inst().GetPlayer(i)->name)->SetBorder(false);
       break;
-    case NAT_ROMANS: AddImageButton(1+i, startX + i * 34 - 17, 45-23, 34, 47, TC_GREEN1, GetImage(io_dat, 252), GameClient::inst().GetPlayer(i)->name)->SetBorder(false);
+    case NAT_ROMANS: AddImageButton(1+i, startX + pos * 34 - 17, 45-23, 34, 47, TC_GREEN1, GetImage(io_dat, 252), GameClient::inst().GetPlayer(i)->name)->SetBorder(false);
       break;
-    case NAT_VIKINGS: AddImageButton(1+i, startX + i * 34 - 17, 45-23, 34, 47, TC_GREEN1, GetImage(io_dat, 256), GameClient::inst().GetPlayer(i)->name)->SetBorder(false);
+    case NAT_VIKINGS: AddImageButton(1+i, startX + pos * 34 - 17, 45-23, 34, 47, TC_GREEN1, GetImage(io_dat, 256), GameClient::inst().GetPlayer(i)->name)->SetBorder(false);
       break;
     case NAT_INVALID:
       break;
     }
 
     activePlayers[i] = true;
+    pos++;
   }
 
   // Statistikfeld
@@ -198,11 +215,19 @@ void iwStatistics::Msg_OptionGroupChange(const unsigned int ctrl_id, const unsig
 void iwStatistics::Msg_PaintAfter()
 {
   // Die farbigen Boxen unter den Spielerportraits malen
-  unsigned short startX = 126 - GameClient::inst().GetPlayerCount() * 17;
+  unsigned short startX = 126 - numPlayingPlayers * 17;
+  unsigned pos = 0;
   for (unsigned i=0; i<GameClient::inst().GetPlayerCount(); ++i)
   {
+    if (!(GameClient::inst().GetPlayer(i)->ps == PS_KI || GameClient::inst().GetPlayer(i)->ps == PS_OCCUPIED))
+    {
+      continue;
+    }
     if (activePlayers[i])
-      DrawRectangle(this->x + startX + i * 34, this->y + 68, 34, 12, COLORS[GameClient::inst().GetPlayer(i)->color]);
+    {
+      DrawRectangle(this->x + startX + pos * 34, this->y + 68, 34, 12, COLORS[GameClient::inst().GetPlayer(i)->color]);
+    }
+    pos++;
   }
 
   // Koordinatenachsen malen

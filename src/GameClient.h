@@ -1,4 +1,4 @@
-// $Id: GameClient.h 5017 2009-06-08 16:21:51Z OLiver $
+// $Id: GameClient.h 5018 2009-06-08 18:24:25Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -207,6 +207,17 @@ private:
 
 	/// Schreibt den Header der Replaydatei
 	void WriteReplayHeader(const unsigned random_init);
+
+// Post-Sachen
+public:
+
+	void SendPostMessage(PostMsg *msg);
+	const std::list<PostMsg*>& GetPostMessages() { return postMessages; }
+	void DeletePostMessage(PostMsg *msg);
+  
+
+private:
+	std::list<PostMsg*> postMessages;
 
 public:
 	/// Virtuelle Werte der Einstellungsfenster, die aber noch nicht wirksam sind, nur um die Verzögerungen zu

@@ -1,4 +1,4 @@
-// $Id: nofBuildingWorker.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: nofBuildingWorker.h 5018 2009-06-08 18:24:25Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -138,6 +138,8 @@ public:		void Destroy() { Destroy_nofBuildingWorker(); }
 	/// Wird aufgerufen, nachdem die Produktion in dem Gebäude, wo er arbeitet, verboten wurde
 	void ProductionStopped();
 
+protected:
+  bool OutOfRessourcesMsgSent;
 };
 
 #endif

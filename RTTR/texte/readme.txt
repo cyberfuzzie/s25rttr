@@ -1,4 +1,4 @@
-2008.05.25                 SETTLERS II.5 - RETURN TO THE ROOTS                0.7-dev
+2008.06.08                 SETTLERS II.5 - RETURN TO THE ROOTS                0.7-dev
 ------------------------------------------------------------------------------------
 
 A. Reference Note
@@ -203,18 +203,20 @@ D. Crash and bugs
    Thanks a lot
 
    Settlers Freaks
-   May 25th 2009
+   June 08th 2009
 
 ------------------------------------------------------------------------------------
 
 E. Summary: Updates and changelog
 
- * 0.7-dev - Seventh version - 25.05.2009 *
+ * 0.7-dev - Seventh version - 08.06.2009 *
    -------------------------------------------------------------------------
    - OpenSource!
    - Translation: Dutch
    - Translation: Russian (Font is missing)
    - Statistics
+   - Postoffice
+   - Diplomacy - unfinished
  
  * 0.6 - Sixth version - 25.01.2009 *
    -------------------------------------------------------------------------

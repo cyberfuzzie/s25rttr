@@ -1,4 +1,4 @@
-// $Id: Pathfinding.cpp 5013 2009-06-07 19:58:03Z OLiver $
+// $Id: Pathfinding.cpp 5017 2009-06-08 16:21:51Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -170,6 +170,7 @@ bool GameWorldBase::FindFreePath(const MapCoord x_start,const MapCoord y_start,
 		todo.erase(todo.begin());
 
 		// ID des besten Punktes ausrechnen
+
 		unsigned best_id = MakeCoordID(best.x,best.y);
 
 		// Dieser Knoten wurde aus dem set entfernt, daher wird der entsprechende Iterator

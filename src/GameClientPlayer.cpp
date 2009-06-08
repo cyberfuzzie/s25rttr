@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 5005 2009-06-05 20:30:30Z OLiver $
+// $Id: GameClientPlayer.cpp 5017 2009-06-08 16:21:51Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1429,7 +1429,7 @@ void GameClientPlayer::Pact::Serialize(Serializer * ser)
 }
 
 GameClientPlayer::PactSuggestion::PactSuggestion(Serializer * ser) :
-	id(ser->PopUnsignedInt()),
+	//id(ser->PopUnsignedInt()),
 	suggestion_time(ser->PopUnsignedInt()),
 	player(ser->PopUnsignedChar()),
 	pt(PactType(ser->PopUnsignedChar())),
@@ -1439,9 +1439,15 @@ GameClientPlayer::PactSuggestion::PactSuggestion(Serializer * ser) :
 
 void GameClientPlayer::PactSuggestion::Serialize(Serializer * ser)
 {
-	ser->PushUnsignedInt(id);
+	//ser->PushUnsignedInt(id);
 	ser->PushUnsignedInt(suggestion_time);
 	ser->PushUnsignedChar(player);
 	ser->PushUnsignedChar(static_cast<unsigned char>(pt));
 	ser->PushUnsignedInt(duration);
+}
+
+/// Macht Bündnisvorschlag an diesen Spieler
+void GameClientPlayer::SuggestPact(const unsigned char other_player, const PactType pt, const unsigned duration)
+{
+	pact_suggestions.push_back(PactSuggestion(GameClient::inst().GetGFNumber(),other_player,pt,duration));
 }

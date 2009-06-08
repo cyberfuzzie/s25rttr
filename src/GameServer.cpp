@@ -1,4 +1,4 @@
-// $Id: GameServer.cpp 5012 2009-06-07 18:18:21Z OLiver $
+// $Id: GameServer.cpp 5017 2009-06-08 16:21:51Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -619,11 +619,6 @@ void GameServer::KickPlayer(NS_PlayerKicked npk)
 
 	// send-queue flushen
 	player->send_queue.flush(&player->so);
-
-/*	// deadmessage schicken
-	GameMessage_Player
-	GameMessage deadmessage(NMS_DEAD_MSG);
-	deadmessage.send(&player->so);*/
 
 	// töten, falls außerhalb
 	if(status == SS_GAME)

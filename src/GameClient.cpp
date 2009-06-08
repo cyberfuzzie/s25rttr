@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 4984 2009-06-01 10:37:37Z OLiver $
+// $Id: GameClient.cpp 5017 2009-06-08 16:21:51Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1592,4 +1592,26 @@ void GameClient::AddGC(gc::GameCommand * gc)
 AIPlayer * GameClient::CreateAIPlayer(const unsigned playerid)
 {
 	return new AIPlayer(playerid,gw,&players[playerid],&players,&ggs,AI::MEDIUM);
+}
+
+/// Wandelt eine GF-Angabe in eine Zeitangabe um (HH:MM:SS oder MM:SS wenn Stunden = 0)
+std::string GameClient::FormatGFTime(const unsigned gf) const
+{
+	// In Sekunden umrechnen
+	unsigned total_seconds = gf * framesinfo.gf_length / 1000;
+
+	// Angaben rausfiltern
+	unsigned hours = total_seconds / 3600;
+	unsigned minutes =  total_seconds / 60;
+	unsigned seconds = total_seconds % 60;
+
+	char str[64];
+
+	// ganze Stunden mit dabei? Dann entsprechend anderes format, ansonsten ignorieren wir die einfach
+	if(hours)
+		sprintf(str,"%02u:%02u:%02u",hours,minutes,seconds);
+	else
+		sprintf(str,"%02u:%02u",minutes,seconds);
+
+	return std::string(str);
 }

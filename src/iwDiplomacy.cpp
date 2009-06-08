@@ -139,8 +139,28 @@ const char * const PACT_TITLES[PACTS_COUNT] =
 };
 
 
+/// Anzahl der unterschiedlich möglichen Längen ("für immer" nicht mit eingerechnet!)
+const unsigned DURATION_COUNT = 3;
+
+/// Längen für die Dauer des Vertrages (kurz-, mittel- und langfristig)
+const unsigned DURATIONS[DURATION_COUNT] =
+{
+	5000,
+	30000,
+	100000
+};
+
+/// Namen für diese Vertragsdauern
+const char * const DURATION_NAMES[DURATION_COUNT] = 
+{
+	gettext_noop("Short-run"),
+	gettext_noop("Medium-term"),
+	gettext_noop("Long-run")
+};
+
+
 iwSuggestPact::iwSuggestPact(const PactType pt, const unsigned char player) : IngameWindow(CGI_SUGGESTPACT,(unsigned short)-1, 
-					(unsigned short)-1,300,200,_(PACT_TITLES[pt]), GetImage(resource_dat, 41)), pt(pt), player(player)
+					(unsigned short)-1,320,215,_(PACT_TITLES[pt]), GetImage(resource_dat, 41)), pt(pt), player(player)
 {
 	glArchivItem_Bitmap * image;
 
@@ -156,12 +176,31 @@ iwSuggestPact::iwSuggestPact(const PactType pt, const unsigned char player) : In
 		this->AddImage(0,55,100,image);
 
 	AddText(1,100,30,_("Contract type:"),COLOR_YELLOW,0,NormalFont);
-	AddText(2,100,50,_(PACT_NAMES[pt]),COLOR_GREEN,0,NormalFont);
-	AddText(3,100,80,_("To player:"),COLOR_YELLOW,0,NormalFont);
-	AddText(4,100,100,GameClient::inst().GetPlayer(player)->name,COLORS[GameClient::inst().GetPlayer(player)->color],0,NormalFont);
+	AddText(2,100,45,_(PACT_NAMES[pt]),COLOR_GREEN,0,NormalFont);
+	AddText(3,100,70,_("To player:"),COLOR_YELLOW,0,NormalFont);
+	AddText(4,100,85,GameClient::inst().GetPlayer(player)->name,COLORS[GameClient::inst().GetPlayer(player)->color],0,NormalFont);
+	AddText(5,100,110,_("Duration:"),COLOR_YELLOW,0,NormalFont);
+	ctrlComboBox * combo = AddComboBox(6,100,125,190,22,TC_GREEN2,NormalFont,100);
+
+	// Zeiten zur Combobox hinzufügen
+	for(unsigned i = 0;i<DURATION_COUNT;++i)
+	{
+		char str[256];
+		sprintf(str,"%s  (%s)",DURATION_NAMES[i],GameClient::inst().FormatGFTime(DURATIONS[i]).c_str());
+		combo->AddString(str);
+	}
+
+	// Option "ewig" noch hinzufügen
+	combo->AddString(_("Eternal"));
+
+	AddTextButton(7,110,170,100,22,TC_GREEN2,_("Confirm"),NormalFont);
 }
 
 
 void iwSuggestPact::Msg_ButtonClick(const unsigned int ctrl_id)
 {
+	/// Dauer auswählen (wenn id == DURATION_COUNT, dann "für alle Ewigkeit" ausgewählt)
+	unsigned selected_id = GetCtrl<ctrlComboBox>(6)->GetSelection();
+	unsigned duration = (selected_id== DURATION_COUNT) ? 0xFFFFFFFF : DURATIONS[selected_id];
+	GameClient::inst().AddGC(new gc::SuggestPact(player,this->pt,duration));
 }

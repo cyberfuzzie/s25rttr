@@ -605,8 +605,6 @@ public:
 /// Unterbreitet anderen Spielern einen Bündnisvertrag
 class SuggestPact : public GameCommand
 {
-	/// Vertrags-ID, um sich später darauf hier beziehen zu können
-	const unsigned id;
 	/// Spieler, dem das Angebot unterbreitet werden soll
 	const unsigned char player;
 	/// Art des Vertrages
@@ -616,15 +614,14 @@ class SuggestPact : public GameCommand
 
 public:
 
-	SuggestPact(const unsigned id, const unsigned char player, const PactType pt, const unsigned duration) : GameCommand(SUGGESTPACT),
-		id(id), player(player), pt(pt), duration(duration) {}
+	SuggestPact(const unsigned char player, const PactType pt, const unsigned duration) : GameCommand(SUGGESTPACT),
+		 player(player), pt(pt), duration(duration) {}
 	SuggestPact(Serializer * ser) : GameCommand(SUGGESTPACT),
-		id(ser->PopUnsignedInt()), player(ser->PopUnsignedChar()), pt(PactType(ser->PopUnsignedChar())), duration(ser->PopUnsignedInt()) {}
+		player(ser->PopUnsignedChar()), pt(PactType(ser->PopUnsignedChar())), duration(ser->PopUnsignedInt()) {}
 
 
 	virtual void Serialize(Serializer *ser) const
 	{
-		ser->PushUnsignedInt(id);
 		ser->PushUnsignedChar(player);
 		ser->PushUnsignedChar(static_cast<unsigned char>(pt));
 		ser->PushUnsignedInt(duration);

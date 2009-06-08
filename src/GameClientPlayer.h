@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.h 5005 2009-06-05 20:30:30Z OLiver $
+// $Id: GameClientPlayer.h 5017 2009-06-08 16:21:51Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -117,8 +117,6 @@ private:
 	/// Bündnisvorschläge, die von einem anderen Spieler an diesen Spieler gemacht wurden
 	struct PactSuggestion
 	{
-		/// ID dieses Bündnisvorschlag
-		unsigned id;
 		/// Zeitpunkt des Vorschlags durch den Spieler (damit nicht weit im Nachhinein der Vertrag durch
 		/// den anderen Spieler getätigt werden kann, obwohl ersterer vielleicht gar nicht mehr dazu bereit ist
 		unsigned suggestion_time;
@@ -129,6 +127,8 @@ private:
 		/// Dauer des Bündnisses 
 		unsigned duration;
 
+		PactSuggestion(const unsigned suggestion_time, const unsigned char player, const PactType pt, const unsigned duration) 
+			: suggestion_time(suggestion_time), player(player), pt(pt), duration(duration) {}
 		PactSuggestion(Serializer * ser);
 		void Serialize(Serializer * ser);
 	};
@@ -258,8 +258,8 @@ public:
 	/// (erwartet als Argument ein 40-er Array!)
 	void CalcProductivities(std::vector<unsigned short>& productivities); 
 
-  /// Berechnet die durschnittlichen Produktivität aller Gebäude
-  unsigned short CalcAverageProductivitiy();
+	/// Berechnet die durschnittlichen Produktivität aller Gebäude
+	unsigned short CalcAverageProductivitiy();
 
 
 	/// Gibt Priorität der Baustelle zurück (entscheidet selbständig, welche Reihenfolge usw)
@@ -332,6 +332,9 @@ public:
 
 	/// Er gibt auf
 	void Surrender();
+
+	/// Macht Bündnisvorschlag an diesen Spieler
+	void SuggestPact(const unsigned char other_player, const PactType pt, const unsigned duration);
 
 
   // Statistik-Sachen

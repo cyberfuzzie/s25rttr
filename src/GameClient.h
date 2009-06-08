@@ -1,4 +1,4 @@
-// $Id: GameClient.h 4984 2009-06-01 10:37:37Z OLiver $
+// $Id: GameClient.h 5017 2009-06-08 16:21:51Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -126,6 +126,8 @@ public:
 	bool IsReplayFOWDisabled() const { return replayinfo.all_visible; }
 	/// Gibt Replay-Ende (GF) zurück
 	unsigned GetLastReplayGF() const { return replayinfo.replay.last_gf; }
+	/// Wandelt eine GF-Angabe in eine Zeitangabe um (HH:MM:SS oder MM:SS wenn Stunden = 0)
+	std::string FormatGFTime(const unsigned gf) const;
 
 	/// Gibt Replay-Dateiname zurück
 	const std::string& GetReplayFileName() const { return replayinfo.filename; }

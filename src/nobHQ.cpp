@@ -1,4 +1,4 @@
-// $Id: nobHQ.cpp 5018 2009-06-08 18:24:25Z OLiver $
+// $Id: nobHQ.cpp 5020 2009-06-08 18:57:13Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -184,7 +184,7 @@ nobHQ::nobHQ(const unsigned short x, const unsigned short y,const unsigned char 
 		goods.people[JOB_ARMORER] = 4;
 		goods.people[JOB_BUILDER] = 10;
 		goods.people[JOB_PLANER] = 6;
-		goods.people[JOB_PRIVATE] = 45;
+		goods.people[JOB_PRIVATE] = 46;
 		goods.people[JOB_PRIVATEFIRSTCLASS] = 0;
 		goods.people[JOB_SERGEANT] = 0;
 		goods.people[JOB_OFFICER] = 0;
@@ -254,7 +254,7 @@ nobHQ::nobHQ(const unsigned short x, const unsigned short y,const unsigned char 
 		goods.people[JOB_ARMORER] = 8;
 		goods.people[JOB_BUILDER] = 20;
 		goods.people[JOB_PLANER] = 12;
-		goods.people[JOB_PRIVATE] = 91;
+		goods.people[JOB_PRIVATE] = 92;
 		goods.people[JOB_PRIVATEFIRSTCLASS] = 0;
 		goods.people[JOB_SERGEANT] = 0;
 		goods.people[JOB_OFFICER] = 0;

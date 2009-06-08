@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 5018 2009-06-08 18:24:25Z OLiver $
+// $Id: GameClientPlayer.cpp 5021 2009-06-08 19:11:15Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1444,3 +1444,4 @@ void GameClientPlayer::SuggestPact(const unsigned char other_player, const PactT
 {
 	pact_suggestions.push_back(PactSuggestion(GameClient::inst().GetGFNumber(),other_player,pt,duration));
 }
+

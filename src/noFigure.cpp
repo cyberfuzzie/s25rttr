@@ -1,4 +1,4 @@
-// $Id: noFigure.cpp 4868 2009-05-15 15:48:04Z OLiver $
+// $Id: noFigure.cpp 5024 2009-06-09 20:02:17Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -205,13 +205,14 @@ bool noFigure::CalcFigurRelative(int &x, int &y)
 	int x2 = static_cast<int>(gwg->GetTerrainX(gwg->GetXA(this->x,this->y,dir),gwg->GetYA(this->x,this->y,dir)));
 	int y2 = static_cast<int>(gwg->GetTerrainY(gwg->GetXA(this->x,this->y,dir),gwg->GetYA(this->x,this->y,dir)));
 
+	MapCoord xa = gwg->GetXA(this->x,this->y,1), ya = gwg->GetYA(this->x,this->y,1);
 
-	if(dir == 1 && (gwg->GetNO(this->x-!(this->y&1),this->y-1)->GetType() == NOP_BUILDINGSITE || gwg->GetNO(this->x-!(this->y&1),this->y-1)->GetType() == NOP_BUILDING))
+	if(dir == 1 && (gwg->GetNO(xa,ya)->GetType() == NOP_BUILDINGSITE || gwg->GetNO(xa,ya)->GetType() == NOP_BUILDING))
 	{
-		x2 += gwg->GetSpecObj<noBaseBuilding>(this->x-!(this->y&1),this->y-1)->GetDoorPointX();
-		y2 += gwg->GetSpecObj<noBaseBuilding>(this->x-!(this->y&1),this->y-1)->GetDoorPointY();
-		x += gwg->GetSpecObj<noBaseBuilding>(this->x-!(this->y&1),this->y-1)->GetDoorPointX();
-		y += gwg->GetSpecObj<noBaseBuilding>(this->x-!(this->y&1),this->y-1)->GetDoorPointY();
+		x2 += gwg->GetSpecObj<noBaseBuilding>(xa,ya)->GetDoorPointX();
+		y2 += gwg->GetSpecObj<noBaseBuilding>(xa,ya)->GetDoorPointY();
+		x += gwg->GetSpecObj<noBaseBuilding>(xa,ya)->GetDoorPointX();
+		y += gwg->GetSpecObj<noBaseBuilding>(xa,ya)->GetDoorPointY();
 	}
 	else if(gwg->GetNO(this->x,this->y)->GetType() == NOP_BUILDINGSITE || gwg->GetNO(this->x,this->y)->GetType() == NOP_BUILDING)
 	{
@@ -245,8 +246,8 @@ void noFigure::StartWalking(const unsigned char dir)
 	}
 
 	// Gehen wir in ein Gebäude?
-	if(dir == 1 && gwg->GetNO(x-!(y&1),y-1)->GetType() == NOP_BUILDING)
-		gwg->GetSpecObj<noBuilding>(x-!(y&1),y-1)->OpenDoor(); // Dann die Tür aufmachen
+	if(dir == 1 && gwg->GetNO(gwg->GetXA(x,y,1),gwg->GetYA(x,y,1))->GetType() == NOP_BUILDING)
+		gwg->GetSpecObj<noBuilding>(gwg->GetXA(x,y,1),gwg->GetYA(x,y,1))->OpenDoor(); // Dann die Tür aufmachen
 	// oder aus einem raus?
 	if(dir == 4 && gwg->GetNO(x,y)->GetType() == NOP_BUILDING)
 		gwg->GetSpecObj<noBuilding>(x,y)->OpenDoor(); // Dann die Tür aufmachen
@@ -937,8 +938,8 @@ void noFigure::NodeFreed(const unsigned short x, const unsigned short y)
 			
 
 			// Gehen wir in ein Gebäude? Dann wieder ausgleichen, weil wir die Türen sonst doppelt aufmachen!
-			if(dir == 1 && gwg->GetNO(this->x-!(this->y&1),this->y-1)->GetType() == NOP_BUILDING)
-				gwg->GetSpecObj<noBuilding>(this->x-!(this->y&1),this->y-1)->CloseDoor(); 
+			if(dir == 1 && gwg->GetNO(gwg->GetXA(this->x,this->y,1),gwg->GetYA(this->x,this->y,1))->GetType() == NOP_BUILDING)
+				gwg->GetSpecObj<noBuilding>(gwg->GetXA(this->x,this->y,1),gwg->GetYA(this->x,this->y,1))->CloseDoor(); 
 			// oder aus einem raus?
 			if(dir == 4 && gwg->GetNO(this->x,this->y)->GetType() == NOP_BUILDING)
 				gwg->GetSpecObj<noBuilding>(this->x,this->y)->CloseDoor();

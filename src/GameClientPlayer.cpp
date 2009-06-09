@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 5021 2009-06-08 19:11:15Z Demophobie $
+// $Id: GameClientPlayer.cpp 5024 2009-06-09 20:02:17Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -758,13 +758,15 @@ noBaseBuilding * GameClientPlayer::FindClientForWare(Ware * ware)
 
 	// Warentyp herausfinden
 	GoodType gt = ware->type;
+	// Warentyp für Client-Gebäude
+	GoodType gt_clients = ware->type;
 	// Andere Nahrung als Fisch ansehen, da nur dieser als Nahrung für Bergwerke und in der Verteilung
 	// akzeptiert wird
-	if(gt == GD_BREAD || gt == GD_MEAT)
-		gt = GD_FISH;
+	if(gt_clients == GD_BREAD || gt_clients == GD_MEAT)
+		gt_clients = GD_FISH;
 
-	for(std::list<BuildingType>::iterator it = distribution[gt].client_buildings.begin();
-		it!=distribution[gt].client_buildings.end(); ++it)
+	for(std::list<BuildingType>::iterator it = distribution[gt_clients].client_buildings.begin();
+		it!=distribution[gt_clients].client_buildings.end(); ++it)
 	{
 		unsigned way_points,points;
 

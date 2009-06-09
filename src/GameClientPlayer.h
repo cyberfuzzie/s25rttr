@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.h 5018 2009-06-08 18:24:25Z OLiver $
+// $Id: GameClientPlayer.h 5024 2009-06-09 20:02:17Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -297,13 +297,6 @@ public:
 	void ChangeDistribution(const std::vector<unsigned char>& distribution_settings);
 	/// Setzt neue Baureihenfolge-Einstellungen
 	void ChangeBuildOrder(const unsigned char order_type, const std::vector<unsigned char>& oder_data);
-
-	/// Setzt neue Werkzeugeinstellungen
-	void ChangeToolsSettings(const unsigned char * tools_settings);
-	/// Setzt neue Verteilungseinstellungen
-	void ChangeDistribution(const unsigned char * distribution_settings);
-	/// Setzt neue Baureihenfolge-Einstellungen
-	void ChangeBuildOrder(const unsigned char order_type, const unsigned char * const oder_data);
 
 	/// Ist ein anderer Spieler ein Verbündeter von uns?
 	bool IsAlly(const unsigned char player) const;

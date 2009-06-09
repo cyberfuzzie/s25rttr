@@ -1,4 +1,4 @@
-// $Id: GameServer.cpp 5017 2009-06-08 16:21:51Z OLiver $
+// $Id: GameServer.cpp 5024 2009-06-09 20:02:17Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1240,6 +1240,10 @@ void GameServer::OnNMSGameCommand(const GameMessage_GameCommand& msg)
 
 void GameServer::ChangePlayer(const unsigned char old_id, const unsigned char new_id)
 {
+	// old_id muss richtiger Spieler, new_id KI sein, ansonsten geht das natürlich nicht
+	if( !(players[old_id].ps == PS_OCCUPIED && players[new_id].ps == PS_KI) )
+		return;
+
 	players[old_id].ps = PS_KI;
 	players[new_id].ps = PS_OCCUPIED;
 	players[new_id].so = players[old_id].so;

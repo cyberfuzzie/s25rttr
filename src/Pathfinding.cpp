@@ -1,4 +1,4 @@
-// $Id: Pathfinding.cpp 5017 2009-06-08 16:21:51Z OLiver $
+// $Id: Pathfinding.cpp 5024 2009-06-09 20:02:17Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -223,14 +223,14 @@ bool GameWorldBase::FindFreePath(const MapCoord x_start,const MapCoord y_start,
 			if(pf_nodes[xaid].visited)
 			{
 				// Dann nur ggf. Weg und Vorgänger korrigieren, falls der Weg kürzer ist
-				if(pf_nodes[best_id].it_p != todo.end() && pf_nodes[best_id].way+1 < pf_nodes[xaid].way)
+				if(pf_nodes[xaid].it_p != todo.end() && pf_nodes[best_id].way+1 < pf_nodes[xaid].way)
 				{
 					pf_nodes[xaid].way  = pf_nodes[best_id].way+1;
 					pf_nodes[xaid].prev = best_id;
 					todo.erase(pf_nodes[xaid].it_p);
 					ret = todo.insert(Point(xa,ya));
 					pf_nodes[xaid].it_p = ret.first;
-
+					pf_nodes[xaid].dir = i;
 				}
 				// Wir wollen nicht denselben Knoten noch einmal einfügen, daher Abbruch
 				continue;
@@ -359,13 +359,15 @@ bool GameWorldBase::FindPathOnRoads(const noRoadNode * const start, const noRoad
 			if(pf_nodes[xaid].visited)
 			{
 				// Dann nur ggf. Weg und Vorgänger korrigieren, falls der Weg kürzer ist
-				if(pf_nodes[best_id].it_rn != todo.end() && new_way < pf_nodes[xaid].way)
+				if(pf_nodes[xaid].it_rn != todo.end() && new_way < pf_nodes[xaid].way)
 				{
 					pf_nodes[xaid].way  = new_way;
 					pf_nodes[xaid].prev = best_id;
 					todo.erase(pf_nodes[xaid].it_rn);
 					ret = todo.insert(rna);
 					pf_nodes[xaid].it_rn = ret.first;
+					pf_nodes[xaid].dir = i;
+					pf_nodes[xaid].count_nodes = pf_nodes[best_id].count_nodes + 1;
 				}
 				continue;
 			}

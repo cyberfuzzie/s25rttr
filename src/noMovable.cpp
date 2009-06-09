@@ -1,4 +1,4 @@
-// $Id: noMovable.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: noMovable.cpp 5024 2009-06-09 20:02:17Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -119,7 +119,7 @@ void noMovable::StartMoving(const unsigned char dir, unsigned gf_length)
 	if(dir == 1 || dir == 2)
 	{
 		gwg->RemoveFigure(this,x,y);
-		gwg->AddFigure(this,x+(y&1)-2+dir,y-1);
+		gwg->AddFigure(this,gwg->GetXA(x,y,dir),gwg->GetYA(x,y,dir));
 	}
 }
 
@@ -176,7 +176,7 @@ void noMovable::PauseWalking()
 		// --> rückgängig!
 		if(dir == 1 || dir == 2)
 		{
-			gwg->RemoveFigure(this,x+(y&1)-2+dir,y-1);
+			gwg->RemoveFigure(this,gwg->GetXA(x,y,dir),gwg->GetYA(x,y,dir));
 			gwg->AddFigure(this,x,y);
 			
 		}

@@ -1,4 +1,4 @@
-// $Id: nobBaseWarehouse.cpp 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: nobBaseWarehouse.cpp 5024 2009-06-09 20:02:17Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -139,14 +139,12 @@ void nobBaseWarehouse::Serialize_nobBaseWarehouse(SerializedGameData * sgd) cons
 	{
 		sgd->PushUnsignedInt(goods.goods[i]);
 		sgd->PushUnsignedInt(real_goods.goods[i]);
-		sgd->PushUnsignedChar(inventory_settings_visual.wares[i]);
 		sgd->PushUnsignedChar(inventory_settings_real.wares[i]);
 	}
 	for(unsigned i = 0;i<JOB_TYPES_COUNT;++i)
 	{
 		sgd->PushUnsignedInt(goods.people[i]);
 		sgd->PushUnsignedInt(real_goods.people[i]);
-		sgd->PushUnsignedChar(inventory_settings_visual.figures[i]);
 		sgd->PushUnsignedChar(inventory_settings_real.figures[i]);
 	}
 }

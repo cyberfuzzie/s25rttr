@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 5025 2009-06-09 20:03:58Z OLiver $
+// $Id: GameClient.cpp 5027 2009-06-09 20:49:01Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -816,7 +816,11 @@ void GameClient::OnNMSServerAsync(const GameMessage_Server_Async& msg)
 	std::stringstream checksum_list;
 	checksum_list << 23;
 	for(unsigned int i = 0; i < players.getCount(); ++i)
-		checksum_list << players.getElement(i)->name << ": " << msg.checksums.at(i) << "\n";
+	{
+		checksum_list << players.getElement(i)->name << ": " << msg.checksums.at(i);
+		if(i != players.getCount()-1)
+			checksum_list << ", ";
+	}
 
 	// Fehler ausgeben (Konsole)!
 	LOG.lprintf(_("The Game is not in sync. Checksums of some players don't match."));
@@ -1624,7 +1628,8 @@ void GameClient::SendPostMessage(PostMsg *msg)
 
 	postMessages.push_front(msg);
 
-	ci->CI_NewPostMessage(postMessages.size());
+	if(ci)
+		ci->CI_NewPostMessage(postMessages.size());
 }
 
 // Entfernt eine Postnachricht aus der Liste und löscht sie

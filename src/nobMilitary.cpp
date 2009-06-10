@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 5018 2009-06-08 18:24:25Z OLiver $
+// $Id: nobMilitary.cpp 5031 2009-06-10 17:14:12Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -702,6 +702,9 @@ void nobMilitary::Capture(const unsigned char new_owner)
 	if(GameClient::inst().GetPlayerID() == this->player)
 		GameClient::inst().SendPostMessage(
 			new ImagePostMsgWithLocation(_("Military building captured"), PMC_MILITARY, x, y, GetBuildingType(), GetNation()));
+
+	// ggf. Fenster schließen vom alten Spieler
+	gwg->ImportantObjectDestroyed(x,y);
 
 }
 

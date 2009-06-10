@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 5018 2009-06-08 18:24:25Z OLiver $
+// $Id: GameWorldGame.cpp 5031 2009-06-10 17:14:12Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -278,7 +278,12 @@ void GameWorldGame::DestroyBuilding(const MapCoord x, const MapCoord y, const un
 	if(GetNO(x,y)->GetType() == NOP_BUILDING || 
 		GetNO(x,y)->GetType() == NOP_BUILDINGSITE)
 	{
+		
 		noBaseBuilding * nbb  = GetSpecObj<noBaseBuilding>(x,y);
+
+		// Ist das Gebäude auch von dem Spieler, der es abreißen will?
+		if(nbb->GetPlayer() != player)
+			return;
 
 		// Militärgebäude?
 		if(nbb->GetGOT() == GOT_NOB_MILITARY)

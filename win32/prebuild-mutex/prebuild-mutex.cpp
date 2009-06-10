@@ -1,4 +1,4 @@
-// $Id: prebuild-mutex.cpp 5031 2009-06-10 17:14:12Z OLiver $
+// $Id: prebuild-mutex.cpp 5032 2009-06-10 18:47:56Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -83,8 +83,6 @@ void copyfile(std::string file, std::string from, std::string to, std::string to
  */
 int main(int argc, char *argv[])
 {
-	return 0;
-
 	srand((unsigned int)std::time(NULL));
 
 	if(argc < 4)

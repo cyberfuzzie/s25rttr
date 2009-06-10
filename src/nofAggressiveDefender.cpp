@@ -288,7 +288,18 @@ void nofAggressiveDefender::MissAggressiveDefendingWalk()
 		return;
 	}
 
+	// Bin ich schon beim Angreifer, der wartet?
+	if(x == attacker->GetX() && y == attacker->GetY() 
+		&& (attacker->GetState() == nofActiveSoldier::STATE_WAITINGFORFIGHT 
+		|| attacker->GetState() == nofActiveSoldier::STATE_ATTACKING_WAITINGAROUNDBUILDING))
+	{
+		// Dann die Köpfe rollen lassen...
+		gwg->AddFigure(new noFighting(attacker,this),x,y);
 
+		state = STATE_AGGRESSIVEDEFENDING_FIGHTING;
+		attacker->state = STATE_ATTACKING_FIGHTINGVSAGGRESSIVEDEFENDER;
+		return;
+	}
 
 
 	if(dir == 0xFF)
@@ -298,21 +309,10 @@ void nofAggressiveDefender::MissAggressiveDefendingWalk()
 	}
 	else
 	{
-		// Bin ich schon beim Angreifer, der wartet?
-		if(x == attacker->GetX() && y == attacker->GetY() 
-			&& (attacker->GetState() == nofActiveSoldier::STATE_WAITINGFORFIGHT 
-			|| attacker->GetState() == nofActiveSoldier::STATE_ATTACKING_WAITINGAROUNDBUILDING))
-		{
-			// Dann die Köpfe rollen lassen...
-			gwg->AddFigure(new noFighting(attacker,this),x,y);
-
-			state = STATE_AGGRESSIVEDEFENDING_FIGHTING;
-			attacker->state = STATE_ATTACKING_FIGHTINGVSAGGRESSIVEDEFENDER;
-		}
 		// ist der Angreifer in meiner Nähe und wartet er noch nicht auf mich
 		// und ist da noch Platz für einen Kampf?
 		// Wenn er schon vor dem Militärgebäude wartet, kann ich nicht auf ihn warten
-		else if(CalcDistance(x,y,attacker->GetX(),attacker->GetY())<3 &&
+		if(CalcDistance(x,y,attacker->GetX(),attacker->GetY())<3 &&
 			attacker->state != STATE_WAITINGFORFIGHT &&
 			attacker->state != STATE_ATTACKING_WAITINGAROUNDBUILDING &&
 			gwg->ValidPointForFighting(x,y) &&

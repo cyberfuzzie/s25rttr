@@ -521,8 +521,7 @@ void nofAttacker::MissAttackingWalk()
 				dir = gwg->FindHumanPath(x,y,defender->GetX(),
 					defender->GetY(),100,true);
 			else
-			// Zur Flagge des angegriffenen Gebäudes laufen
-				dir = gwg->FindHumanPath(x,y,goal_x,goal_y,100,true);
+					dir = gwg->FindHumanPath(x,y,goal_x,goal_y,100,true);
 		}
 		else
 			// Zur Flagge des angegriffenen Gebäudes laufen
@@ -532,6 +531,21 @@ void nofAttacker::MissAttackingWalk()
 	{
 		// Ansonsten findet man sowieso keinen Weg mehr dahin
 		dir = 0xFF;
+	}
+
+	/// Bin ich beim Verteidiger angekommen, dann muss das vermerkt werden und wir dürfen nicht nach Hause
+	// gehen, da nämlich in dem Fall KEIN Weg gefunden wird
+	if(defender)
+	{
+		// Bin ich schon beim Verteidiger?
+		if(x == defender->GetX() && y == defender->GetY() && static_cast<nofAggressiveDefender*>(defender)->state == STATE_WAITINGFORFIGHT)
+		{
+			// Dann die Köpfe rollen lassen...
+			gwg->AddFigure(new noFighting(defender,this),x,y);
+			state = STATE_ATTACKING_FIGHTINGVSAGGRESSIVEDEFENDER;
+			static_cast<nofAggressiveDefender*>(defender)->state = STATE_AGGRESSIVEDEFENDING_FIGHTING;
+			return;
+		}
 	}
 
 
@@ -579,18 +593,10 @@ void nofAttacker::MissAttackingWalk()
 		}
 		else if(defender)
 		{
-			// Bin ich schon beim Verteidiger?
-			if(x == defender->GetX() && y == defender->GetY() && static_cast<nofAggressiveDefender*>(defender)->state == STATE_WAITINGFORFIGHT)
-			{
-				// Dann die Köpfe rollen lassen...
-				gwg->AddFigure(new noFighting(defender,this),x,y);
-				state = STATE_ATTACKING_FIGHTINGVSAGGRESSIVEDEFENDER;
-				static_cast<nofAggressiveDefender*>(defender)->state = STATE_AGGRESSIVEDEFENDING_FIGHTING;
-			}
 			// ist der Verteidiger in meiner Nähe und wartet er noch nicht auf mich
 			// und ist da noch Platz für einen Kampf?
 			// Nicht an die Flagge des angegriffenen Militärgebäudes stellen!
-			else if(CalcDistance(x,y,defender->GetX(),defender->GetY())<3 &&
+			if(CalcDistance(x,y,defender->GetX(),defender->GetY())<3 &&
 				static_cast<nofAggressiveDefender*>(defender)->state != STATE_WAITINGFORFIGHT &&
 				!(x == attacked_goal->GetX() + (attacked_goal->GetY()&1) && y == attacked_goal->GetY()+1))
 			{

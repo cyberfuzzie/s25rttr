@@ -53,7 +53,7 @@
 				PrecompiledHeaderThrough=""
 				WarningLevel="3"
 				DebugInformationFormat="4"
-				DisableSpecificWarnings="4996;4355;4250;4512"
+				DisableSpecificWarnings="4996;4355;4250;4512;6385"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -71,9 +71,12 @@
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="1"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
 				TargetMachine="1"
+				Profile="true"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -125,14 +128,21 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="3"
+				InlineFunctionExpansion="2"
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="1"
+				OmitFramePointers="true"
 				WholeProgramOptimization="true"
 				AdditionalIncludeDirectories="&quot;$(SolutionDir)..\..\&quot;;&quot;$(SolutionDir)..\..\libutil\src&quot;;&quot;$(SolutionDir)..\..\mygettext\src&quot;;&quot;$(SolutionDir)..\..\libsiedler2\src&quot;;&quot;$(SolutionDir)..\..\liblobby\src&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
+				StringPooling="true"
 				MinimalRebuild="false"
 				RuntimeLibrary="2"
+				BufferSecurityCheck="false"
+				EnableFunctionLevelLinking="true"
+				EnableEnhancedInstructionSet="2"
 				UsePrecompiledHeader="0"
+				BrowseInformation="1"
 				WarningLevel="3"
 				WarnAsError="true"
 				DebugInformationFormat="0"
@@ -525,6 +535,14 @@
 						RelativePath="..\..\src\ctrlVarText.h"
 						>
 					</File>
+					<File
+						RelativePath="..\..\src\enhOption.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\enhOption.h"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="Fenster"
@@ -914,14 +932,6 @@
 						</File>
 						<File
 							RelativePath="..\..\src\iwStatistics.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\..\src\iwStatistics.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\..\src\iwStatistics.h"
 							>
 						</File>
 						<File

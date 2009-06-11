@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 4508 2009-02-04 08:13:25Z FloSoft $
+### $Id: CMakeLists.txt 5035 2009-06-11 10:00:01Z FloSoft $
 ################################################################################
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.4)
@@ -54,8 +54,8 @@ CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/local.h.cmake
 
 ################################################################################
 
-ADD_CUSTOM_TARGET(version.h ALL cp -u version.h.cmake version.h
-                  COMMAND ${CMAKE_BINARY_DIR}/version/src/version --no-dots
+ADD_CUSTOM_TARGET(version.h ALL cp version.h.cmake version.h
+                  COMMAND ${CMAKE_BINARY_DIR}/version/src/version
                   DEPENDS version
                   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 

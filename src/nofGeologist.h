@@ -1,4 +1,4 @@
-// $Id: nofGeologist.h 5018 2009-06-08 18:24:25Z OLiver $
+// $Id: nofGeologist.h 5043 2009-06-13 12:15:12Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -62,6 +62,7 @@ private:
 	/// Setzt das Schild, wenn noch was frei ist
 	void SetSign(const unsigned char resources);
 
+	bool IsSignInArea(unsigned char type) const;
 
 public:
 

@@ -1,4 +1,4 @@
-// $Id: dskSelectMap.cpp 4713 2009-04-25 16:53:04Z OLiver $
+// $Id: dskSelectMap.cpp 5043 2009-06-13 12:15:12Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -142,6 +142,7 @@ dskSelectMap::dskSelectMap(const CreateServerInfo& csi)
 
 	AddPreviewMinimap(11, 110, 445, 140, 140, NULL);
 	AddText(12, 260, 470, _("Map: "), COLOR_YELLOW, glArchivItem_Font::DF_LEFT, NormalFont);
+	AddText(13, 260, 490, _("Mapfile: "), COLOR_YELLOW, glArchivItem_Font::DF_LEFT, NormalFont);
 
 	// "Eigene" auswählen
 	optiongroup->SetSelection(5, true);
@@ -222,6 +223,9 @@ void dskSelectMap::Msg_TableSelectItem(const unsigned int ctrl_id, const unsigne
 
 						ctrlText *text = GetCtrl<ctrlText>(12);
 						text->SetText(std::string(map->getHeader().getName()) );
+						text->Move(110 + preview->GetWidth() + 10, text->GetY(true), true);
+						text = GetCtrl<ctrlText>(13);
+						text->SetText(path.c_str());
 						text->Move(110 + preview->GetWidth() + 10, text->GetY(true), true);
 					}
 				}

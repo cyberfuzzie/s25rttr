@@ -1,4 +1,4 @@
-// $Id: noSign.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: noSign.h 5043 2009-06-13 12:15:12Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -44,6 +44,8 @@ public:		void Destroy() { Destroy_noSign(); }
 	void Draw(int x, int y);
 
 	void HandleEvent(const unsigned int id);
+
+	unsigned char GetSignType() const { return type; }
 
 private:
 

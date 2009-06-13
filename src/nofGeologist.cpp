@@ -1,4 +1,4 @@
-// $Id: nofGeologist.cpp 5018 2009-06-08 18:24:25Z OLiver $
+// $Id: nofGeologist.cpp 5043 2009-06-13 12:15:12Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -448,72 +448,67 @@ void nofGeologist::SetSign(const unsigned char resources)
 	// Schildtyp und -häufigkeit herausfinden
 	unsigned char type,quantity;
 
-
 	if(resources >= 0x41 && resources <= 0x47)
 	{
 		// Kohle
 		type = 2;
 		quantity = (resources-0x40)/3;
-		if (!resAlreadyFound[type])
-		{
-			if(GameClient::inst().GetPlayerID() == this->player)
-				GameClient::inst().SendPostMessage(new PostMsgWithLocation(_("Found coal"), PMC_GEOLOGIST, x, y));
-			resAlreadyFound[type] = true;
-		}
 	}
 	else if(resources >= 0x49 && resources <= 0x4F)
 	{
 		// Eisen
 		type = 0;
 		quantity = (resources-0x48)/3;
-		if (!resAlreadyFound[type])
-		{
-			if(GameClient::inst().GetPlayerID() == this->player)
-				GameClient::inst().SendPostMessage(new PostMsgWithLocation(_("Found ironore"), PMC_GEOLOGIST, x, y));
-			resAlreadyFound[type] = true;
-		}
 	}
 	else if(resources >= 0x51 && resources <= 0x57)
 	{
 		// Gold
 		type = 1;
 		quantity = (resources-0x50)/3;
-		if (!resAlreadyFound[type])
-		{
-			if(GameClient::inst().GetPlayerID() == this->player)
-				GameClient::inst().SendPostMessage(new PostMsgWithLocation(_("Found gold"), PMC_GEOLOGIST, x, y));
-			resAlreadyFound[type] = true;
-		}
 	}
 	else if(resources >= 0x59 && resources <= 0x5F)
 	{
 		// Granit
 		type = 3;
 		quantity = (resources-0x58)/3;
-		if (!resAlreadyFound[type])
-		{
-			if(GameClient::inst().GetPlayerID() == this->player)
-				GameClient::inst().SendPostMessage(new PostMsgWithLocation(_("Found granite"), PMC_GEOLOGIST, x, y));
-			resAlreadyFound[type] = true;
-		}
 	}
 	else if(resources == 0x20 || resources == 0x21)
 	{
 		// Wasser
 		type = 4;
 		quantity = 0;
-		if (!resAlreadyFound[type])
-		{
-			if(GameClient::inst().GetPlayerID() == this->player)
-				GameClient::inst().SendPostMessage(new PostMsgWithLocation(_("Found water"), PMC_GEOLOGIST, x, y));
-			resAlreadyFound[type] = true;
-		}
 	}
 	else
 	{
 		// nichts
 		type = 5;
 		quantity = 0;
+	}
+
+	if (type < 5)
+	{
+		if (!resAlreadyFound[type] && !IsSignInArea(type))
+		{
+			if(GameClient::inst().GetPlayerID() == this->player)
+			{
+				switch(type)
+				{
+					case 0: GameClient::inst().SendPostMessage(new PostMsgWithLocation(_("Found ironore"), PMC_GEOLOGIST, x, y));
+						break;
+					case 1: GameClient::inst().SendPostMessage(new PostMsgWithLocation(_("Found gold"), PMC_GEOLOGIST, x, y));
+						break;
+					case 2: GameClient::inst().SendPostMessage(new PostMsgWithLocation(_("Found coal"), PMC_GEOLOGIST, x, y));
+						break;
+					case 3: GameClient::inst().SendPostMessage(new PostMsgWithLocation(_("Found granite"), PMC_GEOLOGIST, x, y));
+						break;
+					case 4: GameClient::inst().SendPostMessage(new PostMsgWithLocation(_("Found water"), PMC_GEOLOGIST, x, y));
+						break;
+					default:
+						;
+				}
+			}
+		}
+		resAlreadyFound[type] = true;
 	}
 
 
@@ -548,4 +543,26 @@ void nofGeologist::LostWork()
 			gwg->GetNode(node_goal.x,node_goal.y).reserved = false;;
 		} break;
 	}
+}
+
+bool nofGeologist::IsSignInArea(unsigned char type) const
+{
+	const unsigned short radius = 7;
+	for(MapCoord tx=gwg->GetXA(x,y,0), r=1; r<=radius; tx=gwg->GetXA(tx,y,0), ++r)
+	{
+		MapCoord tx2 = tx, ty2 = y;
+		for(unsigned i = 2;i<8;++i)
+		{
+			for(MapCoord r2=0;r2<r;gwg->GetPointA(tx2,ty2,i%6),++r2)
+			{
+				noSign *sign = 0;
+				if (sign = gwg->GetSpecObj<noSign>(tx2, ty2))
+				{
+					if (sign->GetSignType() == type)
+						return true;
+				}
+			}
+		}
+	}
+	return false;
 }

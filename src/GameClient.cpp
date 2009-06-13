@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 5027 2009-06-09 20:49:01Z OLiver $
+// $Id: GameClient.cpp 5041 2009-06-13 11:52:29Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1073,6 +1073,15 @@ void GameClient::ExecuteGameFrame(const bool skipping)
 		//LOG.lprintf("%d = %d\n", framesinfo.nr / framesinfo.nwf_length, Random::inst().GetCurrentRandomValue());
 		if(replay_mode)
 		{
+			// Statistik-Step
+			// Soll alle 750 GFs (30 Sekunden auf 'Schnell') aufgerufen werden
+			if (framesinfo.nr % 750 == 0)
+			{
+				for (unsigned int i=0; i<players.getCount(); ++i)
+					players[i].StatisticStep();
+			}
+
+
 			// Diesen Zeitpunkt merken
 			framesinfo.lasttime = currenttime - ( currenttime - framesinfo.lasttime - framesinfo.gf_length);
 			// Nächster Game-Frame erreicht
@@ -1114,14 +1123,6 @@ void GameClient::ExecuteGameFrame(const bool skipping)
 			{
 				// Kein Lag, normal weitermachen
 
-				// Statistik-Step
-				// Soll alle 750 GFs (30 Sekunden auf 'Schnell') aufgerufen werden
-				if (framesinfo.nr % 750 == 0)
-				{
-					for (unsigned int i=0; i<players.getCount(); ++i)
-						players[i].StatisticStep();
-				}
-
 				// Diesen Zeitpunkt merken
 				framesinfo.lasttime = currenttime;
 				// Nächster Game-Frame erreicht
@@ -1142,6 +1143,14 @@ void GameClient::ExecuteGameFrame(const bool skipping)
 		else
 		{
 			// Nähster GameFrame zwischen framesinfos
+
+			// Statistik-Step
+			// Soll alle 750 GFs (30 Sekunden auf 'Schnell') aufgerufen werden
+			if (framesinfo.nr % 750 == 0)
+			{
+				for (unsigned int i=0; i<players.getCount(); ++i)
+					players[i].StatisticStep();
+			}
 
 			// Diesen Zeitpunkt merken
 			framesinfo.lasttime = currenttime;

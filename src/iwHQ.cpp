@@ -1,4 +1,4 @@
-// $Id: iwHQ.cpp 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: iwHQ.cpp 5041 2009-06-13 11:52:29Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -84,7 +84,7 @@ void iwHQ::Msg_Group_ButtonClick(const unsigned int group_id, const unsigned int
 	else if(ctrl_id >= 16 && ctrl_id < 21)
 	{
 		// Netzwerk-Nachricht generieren
-		GameClient::inst().AddGC(new gc::ChangeReserve(wh->GetX(),wh->GetY(),ctrl_id-11,wh->IncreaseReserveVisual(ctrl_id-16)));
+		GameClient::inst().AddGC(new gc::ChangeReserve(wh->GetX(),wh->GetY(),ctrl_id-16,wh->IncreaseReserveVisual(ctrl_id-16)));
 	}
 
 	

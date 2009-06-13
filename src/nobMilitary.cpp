@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 5031 2009-06-10 17:14:12Z OLiver $
+// $Id: nobMilitary.cpp 5041 2009-06-13 11:52:29Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -176,9 +176,9 @@ void nobMilitary::Draw(int x, int y)
 
 
 
-	//char number[256];
-	//sprintf(number,"%u",this->obj_id);
-	//NormalFont->Draw(x,y,number,0,0xFF00FF00);
+	char number[256];
+	sprintf(number,"%u",this->obj_id);
+	NormalFont->Draw(x,y,number,0,0xFF00FF00);
 }
 
 void nobMilitary::HandleEvent(const unsigned int id)

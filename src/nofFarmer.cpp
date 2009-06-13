@@ -1,4 +1,4 @@
-// $Id: nofFarmer.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: nofFarmer.cpp 5045 2009-06-13 13:04:59Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -179,14 +179,14 @@ bool nofFarmer::IsPointGood(const unsigned short x, const unsigned short y)
 
 		// Ist Platz frei?
 		NodalObjectType nop = gwg->GetNO(x,y)->GetType();
-		if(nop != NOP_ENVIRONMENT && nop&& nop != NOP_NOTHING)
+		if(nop != NOP_ENVIRONMENT && nop && nop != NOP_NOTHING)
 			return false;
 
 		for(unsigned char i = 0;i<6;++i)
 		{
 			// Nicht direkt neben andere Getreidefelder und Gebäude setzen!
 			nop = gwg->GetNO(gwg->GetXA(x,y,i),gwg->GetYA(x,y,i))->GetType();
-			if(nop == NOP_GRAINFIELD || nop == NOP_BUILDING)
+			if(nop == NOP_GRAINFIELD || nop == NOP_BUILDING || nop == NOP_BUILDINGSITE)
 				return false;
 		}
 

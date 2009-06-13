@@ -1,4 +1,4 @@
-// $Id: nofGeologist.cpp 5043 2009-06-13 12:15:12Z OLiver $
+// $Id: nofGeologist.cpp 5044 2009-06-13 12:27:55Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -556,7 +556,7 @@ bool nofGeologist::IsSignInArea(unsigned char type) const
 			for(MapCoord r2=0;r2<r;gwg->GetPointA(tx2,ty2,i%6),++r2)
 			{
 				noSign *sign = 0;
-				if (sign = gwg->GetSpecObj<noSign>(tx2, ty2))
+				if ((sign = gwg->GetSpecObj<noSign>(tx2, ty2)))
 				{
 					if (sign->GetSignType() == type)
 						return true;

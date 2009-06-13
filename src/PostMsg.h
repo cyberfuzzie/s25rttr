@@ -80,19 +80,26 @@ private:
   Nation senderNation;
 };
 
+class iwPostWindow;
 // TODO: evtl noch verschiedene ermöglichen durch einen weiteren Parameter? Allianz, Nicht-Angriffspakt, Zeitbegrenzung, whatever
 /// Diplomatie-Post-Nachricht, mit Annehmen- und Ablehnen-Knopf
 class DiplomacyPostMsg : public PostMsg
 {
+	friend class iwPostWindow;
 public:
-  DiplomacyPostMsg(const std::string& text, PostMessageCategory cat, unsigned playerID);
-  DiplomacyPostMsg(SerializedGameData * sgd);
+	DiplomacyPostMsg(const unsigned char player, const PactType pt, const unsigned duration);
+	DiplomacyPostMsg(SerializedGameData * sgd);
 
-  unsigned GetPlayerID() const { return playerID; }
-  virtual void Serialize(SerializedGameData *sgd);
+	unsigned GetPlayerID() const { return player; }
+	virtual void Serialize(SerializedGameData *sgd);
 
 private:
-  unsigned playerID;	// nur beispiel, wird nicht benutzt aktuell!
+	/// ID des Vertrages (= normalerweise die GF-Nummer, zu der es vorgeschlagen wurde)
+	unsigned id;
+	/// Spieler, den das Bündnis betrifft
+	unsigned char player;
+	/// Vertragsart
+	PactType pt;
 };
 
 #endif

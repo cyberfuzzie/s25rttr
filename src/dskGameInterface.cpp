@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.cpp 5018 2009-06-08 18:24:25Z OLiver $
+// $Id: dskGameInterface.cpp 5047 2009-06-13 20:32:24Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -503,7 +503,10 @@ bool dskGameInterface::Msg_KeyDown(const KeyEvent& ke)
 			if(GameClient::inst().IsReplayModeOn())
 				GameClient::inst().ChangeReplayPlayer(ke.c-'1');
 			else
-				GAMECLIENT.AddGC(new gc::SwitchPlayer(ke.c-'1'));
+			{
+				if(GameClient::inst().GetPlayer(ke.c-'1')->ps == PS_KI)
+					GAMECLIENT.AddGC(new gc::SwitchPlayer(ke.c-'1'));
+			}
 		} return true;
 
 	case 'j': // GFs überspringen

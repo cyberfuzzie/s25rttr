@@ -177,3 +177,8 @@ void SuggestPact::Execute(GameWorldGame& gwg, GameClientPlayer& player, const un
 {
 	player.SuggestPact(this->player,pt,duration);
 }
+
+void AcceptPact::Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid)
+{
+	player.AcceptPact(id,pt,this->player);
+}

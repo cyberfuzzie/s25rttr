@@ -40,6 +40,7 @@ enum Type
 	CHANGEALLINVENTORYSETTINGS,
 	CHANGERESERVE,
 	SUGGESTPACT,
+	ACCEPTPACT,
 	SURRENDER,
 	CHEAT_ARMAGEDDON,
 	DESTROYALL
@@ -631,7 +632,41 @@ public:
 	void Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid);
 };
 
+
+/// Antwortet auf einen Bündnisvorschlag mit Annehmen oder Ablehnung
+class AcceptPact : public GameCommand
+{
+	/// Vertrag angenommen oder abgelehnt?
+	bool accepted;
+	/// ID des Vertrages
+	const unsigned id;
+	/// Art des Vertrages
+	const PactType pt;
+	/// Spieler, der das Angebot unterbreitet hat
+	const unsigned char player;
+
+public:
+
+	AcceptPact(const bool accepted,const unsigned id, const PactType pt, const unsigned char player) : GameCommand(ACCEPTPACT),
+		accepted(accepted), id(id), pt(pt), player(player) {}
+	AcceptPact(Serializer * ser) : GameCommand(ACCEPTPACT),
+		accepted(ser->PopBool()), id(ser->PopUnsignedInt()), pt(PactType(ser->PopUnsignedChar())), player(ser->PopUnsignedChar()) {}
+
+
+	virtual void Serialize(Serializer *ser) const
+	{
+		ser->PushBool(accepted);
+		ser->PushUnsignedInt(id);
+		ser->PushUnsignedChar(static_cast<unsigned char>(pt));
+		ser->PushUnsignedChar(player);
+	}
+
+	/// Führt das GameCommand aus
+	void Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid);
+};
+
 }
+
 
 
 #endif

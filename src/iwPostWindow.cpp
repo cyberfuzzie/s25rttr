@@ -1,4 +1,4 @@
-// $Id: iwPostWindow.cpp 5018 2009-06-08 18:24:25Z OLiver $
+// $Id: iwPostWindow.cpp 5047 2009-06-13 20:32:24Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -32,6 +32,7 @@
 #include "macros.h"
 #include "GameClient.h"
 #include "GameClientPlayer.h"
+#include "GameCommands.h"
 #include <iostream>
 #include <sstream>
 ///////////////////////////////////////////////////////////////////////////////
@@ -64,10 +65,7 @@ iwPostWindow::iwPostWindow(GameWorldViewer& gwv)
   deleteButton = AddImageButton(15,211,246, 30, 26,TC_GREY,GetImage(io_dat, 106));	// Mülleimer, nur sichtbar, wenn Nachricht da
   deleteButton->SetVisible(false);
 
-  acceptButton = AddImageButton(16,87,185, 30, 26,TC_GREEN1,GetImage(io_dat, 32));  // Button mit Haken, zum Annehmen von Verträgen
-  acceptButton->SetVisible(false);
-  declineButton = AddImageButton(17,137,185, 30, 26,TC_RED1,GetImage(io_dat, 40));  // Button mit Kreuz, zum Ablehnen von Verträgen
-  declineButton->SetVisible(false);
+ 
 
   postMsgInfos = AddText(18, 127, 228, "", MakeColor(255, 188, 100, 88), glArchivItem_Font::DF_CENTER | glArchivItem_Font::DF_BOTTOM, SmallFont);
   postMsgInfos->SetVisible(false);
@@ -75,6 +73,11 @@ iwPostWindow::iwPostWindow(GameWorldViewer& gwv)
   postImage = AddImage(13, 127, 155, GetImage(io_dat, 225));
 
   postText = AddText(12,126,151, _("No letters!"), 0xFF886034, glArchivItem_Font::DF_CENTER | glArchivItem_Font::DF_BOTTOM, GetFont(resource_dat, 0));
+
+   acceptButton = AddImageButton(16,87,185, 30, 26,TC_GREEN1,GetImage(io_dat, 32));  // Button mit Haken, zum Annehmen von Verträgen
+  acceptButton->SetVisible(false);
+  declineButton = AddImageButton(17,137,185, 30, 26,TC_RED1,GetImage(io_dat, 40));  // Button mit Kreuz, zum Ablehnen von Verträgen
+  declineButton->SetVisible(false);
 
   currentMessage = 0;
   DisplayPostMessage();
@@ -123,18 +126,18 @@ void iwPostWindow::Msg_ButtonClick(const unsigned int ctrl_id)
     break;
 
     // Vertrag annehmen
-  case 16:
-    {
-      PostMsg *pm = GetPostMsg(currentMessage);
-      DiplomacyPostMsg *dpm = dynamic_cast<DiplomacyPostMsg*>(pm);
-      if (dpm)
-      {
-        //dpm->GetPlayerID();
-        // TODO Damit was tun
-        // GAMECLIENT.GetPlayer(dpm->GetPlayerID();)->MakeMeAlly(me);
-      }
-    }
-    break;
+	case 16:
+	{
+		PostMsg *pm = GetPostMsg(currentMessage);
+		DiplomacyPostMsg *dpm = dynamic_cast<DiplomacyPostMsg*>(pm);
+		if (dpm)
+		{
+			GameClient::inst().AddGC(new gc::AcceptPact(true,dpm->id,dpm->pt,dpm->player));
+
+			GameClient::inst().DeletePostMessage(pm);
+			currentMessage = (currentMessage > 0) ? currentMessage - 1 : 0;
+		}
+	} break;
 
     // Vertrag ablehnen
   case 17:

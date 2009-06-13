@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 5024 2009-06-09 20:02:17Z OLiver $
+// $Id: GameClientPlayer.cpp 5047 2009-06-13 20:32:24Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1441,9 +1441,34 @@ void GameClientPlayer::PactSuggestion::Serialize(Serializer * ser)
 	ser->PushUnsignedInt(duration);
 }
 
+
 /// Macht Bündnisvorschlag an diesen Spieler
 void GameClientPlayer::SuggestPact(const unsigned char other_player, const PactType pt, const unsigned duration)
 {
 	pact_suggestions.push_back(PactSuggestion(GameClient::inst().GetGFNumber(),other_player,pt,duration));
+
+	// Post-Message generieren, wenn dieser Pakt den lokalen Spieler betrifft
+	if(playerid == GameClient::inst().GetPlayerID())
+		GameClient::inst().SendPostMessage(new DiplomacyPostMsg(other_player,pt,duration));
 }
 
+/// Akzeptiert ein bestimmtes Bündnis, welches an diesen Spieler gemacht wurde
+void GameClientPlayer::AcceptPact(const unsigned id, const PactType pt, const unsigned char other_player)
+{
+	for(std::list<PactSuggestion>::iterator it = pact_suggestions.begin();it!=pact_suggestions.end();++it)
+	{
+		if(id == it->suggestion_time && pt == it->pt && it->player == other_player)
+		{
+			// Pakt einwickeln
+			MakePact(pt,other_player,it->duration);
+			GameClient::inst().GetPlayer(other_player)->MakePact(pt,playerid,it->duration);
+		}
+	}
+}
+
+/// Bündnis (real, d.h. spielentscheidend) abschließen
+void GameClientPlayer::MakePact(const PactType pt, const unsigned char other_player, const unsigned duration)
+{
+	pacts[other_player][pt].start = GameClient::inst().GetGFNumber();
+	pacts[other_player][pt].duration = duration;
+}

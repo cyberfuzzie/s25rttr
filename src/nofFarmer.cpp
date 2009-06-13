@@ -1,4 +1,4 @@
-// $Id: nofFarmer.cpp 5045 2009-06-13 13:04:59Z OLiver $
+// $Id: nofFarmer.cpp 5047 2009-06-13 20:32:24Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -151,12 +151,12 @@ bool nofFarmer::IsPointGood(const unsigned short x, const unsigned short y)
 {
 	
 	// Entweder gibts ein Getreidefeld, das wir abernten können...
-    if(gwg->GetNO(x,y)->GetType() == NOP_GRAINFIELD)
+	if(gwg->GetNO(x,y)->GetType() == NOP_GRAINFIELD)
 	{
 		return (gwg->GetSpecObj<noGrainfield>(x,y)->IsHarvestable());
 	}
 	// oder einen freien Platz, wo wir ein neues sähen können
-    else
+	else
 	{
 		// Nicht auf Straßen bauen!
 		for(unsigned char i = 0;i<6;++i)

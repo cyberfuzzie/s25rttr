@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.h 5024 2009-06-09 20:02:17Z OLiver $
+// $Id: GameClientPlayer.h 5047 2009-06-13 20:32:24Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -169,11 +169,12 @@ public:
 
 private:
 
-
 	// Sucht Weg für Job zu entsprechenden noRoadNode
 	bool FindWarehouseForJob(const Job job, noRoadNode * goal);
 	/// Prüft, ob der Spieler besiegt wurde
 	void TestDefeat();
+	/// Bündnis (real, d.h. spielentscheidend) abschließen
+	void MakePact(const PactType pt, const unsigned char other_player, const unsigned duration);
 
 public:
 	/// Konstruktor von @p GameClientPlayer.
@@ -330,6 +331,8 @@ public:
 
 	/// Macht Bündnisvorschlag an diesen Spieler
 	void SuggestPact(const unsigned char other_player, const PactType pt, const unsigned duration);
+	/// Akzeptiert ein bestimmtes Bündnis, welches an diesen Spieler gemacht wurde
+	void AcceptPact(const unsigned id, const PactType pt, const unsigned char other_player);
 
 
   // Statistik-Sachen

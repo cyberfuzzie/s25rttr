@@ -91,17 +91,34 @@ void ImagePostMsgWithLocation::Serialize(SerializedGameData *sgd)
   sgd->PushUnsignedInt(senderNation);
 }
 
+/// Titel für die Fenster für unterschiedliche Bündnistypen
+const char * const PACT_TITLES[PACTS_COUNT] =
+{
+	gettext_noop("treaty of alliance"),
+	gettext_noop("non-aggression pact")
+};
 
-DiplomacyPostMsg::DiplomacyPostMsg(const std::string& text, PostMessageCategory cat, unsigned playerID)
-: PostMsg(text, cat), playerID(playerID) { type = PMT_DIPLOMACY; }
+DiplomacyPostMsg::DiplomacyPostMsg(const unsigned char player, const PactType pt, const unsigned duration)
+: PostMsg("", PMC_DIPLOMACY), player(player), pt(pt)
+{ 
+	char msg[512];
+	sprintf(msg,_("The player '%s' offers you a %s."),GameClient::inst().GetPlayer(player)->name.c_str(),
+		_(PACT_TITLES[pt]));
+
+	char duration_msg[512];
+	if(duration == 0xFFFFFFFF)
+		strcpy(duration_msg,_("Duration: Forever"));
+	else
+		sprintf(duration_msg,_("Duration: %u GF (%s)"),duration,GameClient::inst().FormatGFTime(duration).c_str());
+
+	text = std::string(msg)+"\n"+duration_msg;
+}
 
 DiplomacyPostMsg::DiplomacyPostMsg(SerializedGameData *sgd)
 : PostMsg(sgd) {
-  playerID = sgd->PopUnsignedInt();
 }
 
 void DiplomacyPostMsg::Serialize(SerializedGameData *sgd)
 {
   PostMsg::Serialize(sgd);
-  sgd->PushUnsignedInt(playerID);
 }

@@ -1,4 +1,4 @@
-// $Id: GameClientCommands.cpp 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: GameClientCommands.cpp 5047 2009-06-13 20:32:24Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -135,6 +135,10 @@ void GameClient::ChangePlayer(const unsigned char old_id, const unsigned char ne
 {
 	// Gleiche ID - wäre unsinnig zu wechseln
 	if(old_id == new_id)
+		return;
+
+	// old_id muss richtiger Spieler, new_id KI sein, ansonsten geht das natürlich nicht
+	if( !(players[old_id].ps == PS_OCCUPIED && players[new_id].ps == PS_KI) )
 		return;
 
 	players[old_id].ps = PS_KI;

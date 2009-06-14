@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 5041 2009-06-13 11:52:29Z OLiver $
+// $Id: GameClient.cpp 5050 2009-06-14 14:01:09Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1045,6 +1045,39 @@ void GameClient::OnNMSPause(const GameMessage_Pause& msg)
 
 }
 
+/// Findet heraus, ob ein Spieler laggt und setzt bei diesen Spieler den entsprechenden flag
+bool GameClient::IsPlayerLagging()
+{
+	bool is_lagging = false;
+
+	for(unsigned char i = 0; i < players.getCount(); ++i)
+	{
+		if(players[i].ps == PS_OCCUPIED || players[i].ps == PS_KI)
+		{
+			if(players[i].gc_queue.size() == 0)
+			{
+				players[i].is_lagging = true;
+				is_lagging = true;
+			}
+			else
+				players[i].is_lagging = false;
+		}
+	}
+
+	return is_lagging;
+}
+
+/// Führt für alle Spieler einen Statistikschritt aus, wenn die Zeit es verlangt
+void GameClient::StatisticStep()
+{
+	// Soll alle 750 GFs (30 Sekunden auf 'Schnell') aufgerufen werden
+	if (framesinfo.nr % 750 == 0)
+	{
+		for (unsigned int i=0; i<players.getCount(); ++i)
+			players[i].StatisticStep();
+	}
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 /// testet ob ein Netwerkframe abgelaufen ist und führt dann ggf die Befehle aus
 void GameClient::ExecuteGameFrame(const bool skipping)
@@ -1074,14 +1107,8 @@ void GameClient::ExecuteGameFrame(const bool skipping)
 		if(replay_mode)
 		{
 			// Statistik-Step
-			// Soll alle 750 GFs (30 Sekunden auf 'Schnell') aufgerufen werden
-			if (framesinfo.nr % 750 == 0)
-			{
-				for (unsigned int i=0; i<players.getCount(); ++i)
-					players[i].StatisticStep();
-			}
-
-
+			StatisticStep();
+		
 			// Diesen Zeitpunkt merken
 			framesinfo.lasttime = currenttime - ( currenttime - framesinfo.lasttime - framesinfo.gf_length);
 			// Nächster Game-Frame erreicht
@@ -1103,25 +1130,12 @@ void GameClient::ExecuteGameFrame(const bool skipping)
 			// Beim Replay geht das etwas anderes, da werden die NFCs aus der Datei gelesen
 
 			// Schauen wir mal ob alles angekommen ist
-			bool is_lagging = false;
-			for(unsigned char i = 0; i < players.getCount(); ++i)
-			{
-				if(players[i].ps == PS_OCCUPIED || players[i].ps == PS_KI)
-				{
-					if(players[i].gc_queue.size() == 0)
-					{
-						players[i].is_lagging = true;
-						is_lagging = true;
-					}
-					else
-						players[i].is_lagging = false;
-				}
-			}
-
 			// Laggt einer oder nicht?
-			if(!is_lagging)
+			if(!IsPlayerLagging())
 			{
 				// Kein Lag, normal weitermachen
+
+				StatisticStep();
 
 				// Diesen Zeitpunkt merken
 				framesinfo.lasttime = currenttime;
@@ -1134,10 +1148,6 @@ void GameClient::ExecuteGameFrame(const bool skipping)
 				framesinfo.frame_time = currenttime - framesinfo.lasttime;
 
 			} // if(!is_lagging)
-			else
-			{
-				// LAG!
-			} // else, if(!is_lagging)
 
 		} // if(framesinfo.nr % framesinfo.nwf_length == 0)
 		else
@@ -1145,12 +1155,7 @@ void GameClient::ExecuteGameFrame(const bool skipping)
 			// Nähster GameFrame zwischen framesinfos
 
 			// Statistik-Step
-			// Soll alle 750 GFs (30 Sekunden auf 'Schnell') aufgerufen werden
-			if (framesinfo.nr % 750 == 0)
-			{
-				for (unsigned int i=0; i<players.getCount(); ++i)
-					players[i].StatisticStep();
-			}
+			StatisticStep();
 
 			// Diesen Zeitpunkt merken
 			framesinfo.lasttime = currenttime;

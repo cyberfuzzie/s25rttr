@@ -1,4 +1,4 @@
-// $Id: GameClient.h 5018 2009-06-08 18:24:25Z OLiver $
+// $Id: GameClient.h 5050 2009-06-14 14:01:09Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -164,6 +164,10 @@ private:
 	void ExecuteAllGCs(const GameMessage_GameCommand& gcs,  unsigned char * player_switch_old_id,unsigned char * player_switch_new_id);
 	/// Sendet ein NC-Paket ohne Befehle
 	void SendNothingNC(int checksum = -1);
+	/// Findet heraus, ob ein Spieler laggt und setzt bei diesen Spieler den entsprechenden flag
+	bool IsPlayerLagging();
+	/// Führt für alle Spieler einen Statistikschritt aus, wenn die Zeit es verlangt
+	void StatisticStep();
 
 
 	//  Netzwerknachrichten

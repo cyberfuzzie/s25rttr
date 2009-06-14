@@ -26,6 +26,7 @@
 #include "nobUsual.h"
 #include "nobMilitary.h"
 #include "nobBaseWarehouse.h"
+#include "GameClient.h"
 
 using namespace gc;
 
@@ -56,6 +57,8 @@ GameCommand * GameCommand::CreateGameCommand(const Type gst, Serializer * ser)
 	case CHANGEALLINVENTORYSETTINGS: return new ChangeAllInventorySettings(ser);
 	case CHANGERESERVE: return new ChangeReserve(ser);
 	case SUGGESTPACT: return new SuggestPact(ser);
+	case ACCEPTPACT: return new AcceptPact(ser);
+	case CANCELPACT: return new CancelPact(ser);
 	case SURRENDER: return new Surrender(ser);
 	case CHEAT_ARMAGEDDON: return new CheatArmageddon(ser);
 	case DESTROYALL: return new DestroyAll(ser);
@@ -180,5 +183,10 @@ void SuggestPact::Execute(GameWorldGame& gwg, GameClientPlayer& player, const un
 
 void AcceptPact::Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid)
 {
-	player.AcceptPact(id,pt,this->player);
+	GameClient::inst().GetPlayer(this->player)->AcceptPact(id,pt,playerid);
+}
+
+void CancelPact::Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid)
+{
+	player.CancelPact(pt,this->player);
 }

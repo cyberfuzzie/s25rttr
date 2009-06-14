@@ -41,6 +41,7 @@ enum Type
 	CHANGERESERVE,
 	SUGGESTPACT,
 	ACCEPTPACT,
+	CANCELPACT,
 	SURRENDER,
 	CHEAT_ARMAGEDDON,
 	DESTROYALL
@@ -664,6 +665,34 @@ public:
 	/// Führt das GameCommand aus
 	void Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid);
 };
+
+
+/// Bündnis abbrechen bzw. das Angebot zurücknehmen, falls dieses schon gestellt wurde
+class CancelPact : public GameCommand
+{
+	/// Vertragsart
+	const PactType pt;
+	/// Anderen Spieler, den dies noch betrifft
+	const unsigned char player;
+
+public:
+
+	CancelPact(const PactType pt, const unsigned char player) : GameCommand(CANCELPACT),
+		pt(pt), player(player) {}
+	CancelPact(Serializer * ser) : GameCommand(CANCELPACT),
+		pt(PactType(ser->PopUnsignedChar())), player(ser->PopUnsignedChar()) {}
+
+
+	virtual void Serialize(Serializer *ser) const
+	{
+		ser->PushUnsignedChar(static_cast<unsigned char>(pt));
+		ser->PushUnsignedChar(player);
+	}
+
+	/// Führt das GameCommand aus
+	void Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid);
+};
+
 
 }
 

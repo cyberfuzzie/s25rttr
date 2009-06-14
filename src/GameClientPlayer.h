@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.h 5047 2009-06-13 20:32:24Z OLiver $
+// $Id: GameClientPlayer.h 5051 2009-06-14 20:12:36Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -104,19 +104,21 @@ private:
 	/// Bündnisse mit anderen Spielern
 	struct Pact
 	{
+		/// Bündnis schon akzeptiert oder nur vorgeschlagen?
+		bool accepted;
 		/// Dauer (in GF), 0 = kein Bündnise, 0xFFFFFFFF = Bündnis auf Ewigkeit
 		unsigned duration;
 		/// Startzeitpunkt (in GF)
 		unsigned start;
 
-		Pact() : duration(0), start(0) {}
+		Pact() : accepted(false), duration(0), start(0) {}
 		Pact(Serializer * ser);
 		void Serialize(Serializer * ser);
 	};
 	/// Bündnisse dieses Spielers mit anderen Spielern
 	Pact pacts[MAX_PLAYERS][PACTS_COUNT];
 
-	/// Bündnisvorschläge, die von einem anderen Spieler an diesen Spieler gemacht wurden
+	/*/// Bündnisvorschläge, die von einem anderen Spieler an diesen Spieler gemacht wurden
 	struct PactSuggestion
 	{
 		/// Zeitpunkt des Vorschlags durch den Spieler (damit nicht weit im Nachhinein der Vertrag durch
@@ -135,7 +137,7 @@ private:
 		void Serialize(Serializer * ser);
 	};
 
-	std::list<PactSuggestion> pact_suggestions;
+	std::list<PactSuggestion> pact_suggestions;*/
 
 public:
 
@@ -333,6 +335,20 @@ public:
 	void SuggestPact(const unsigned char other_player, const PactType pt, const unsigned duration);
 	/// Akzeptiert ein bestimmtes Bündnis, welches an diesen Spieler gemacht wurde
 	void AcceptPact(const unsigned id, const PactType pt, const unsigned char other_player);
+	/// Gibt Einverständnis, dass dieser Spieler den Pakt auflösen will
+	/// Falls dieser Spieler einen Bündnisvorschlag gemacht hat, wird dieser dagegen zurückgenommen
+	void CancelPact(const PactType pt, const unsigned char other_player);
+	/// Zeigt an, ob ein Pakt besteht
+	enum PactState
+	{
+		NO_PACT = 0, /// Kein Pakt geschlossen
+		IN_PROGRESS, /// Pakt angeboten, aber noch nicht akzeptiert
+		ACCEPTED /// Bündnis in Kraft
+	};
+	PactState GetPactState(const PactType pt, const unsigned char other_player) const;
+	/// Gibt die verbleibende Dauer zurück, die ein Bündnis noch laufen wird (0xFFFFFFFF = für immer)
+	unsigned GetRemainingPactTime(const PactType pt, const unsigned char other_player) const;
+		
 
 
   // Statistik-Sachen

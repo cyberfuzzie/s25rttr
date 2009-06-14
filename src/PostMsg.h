@@ -87,7 +87,7 @@ class DiplomacyPostMsg : public PostMsg
 {
 	friend class iwPostWindow;
 public:
-	DiplomacyPostMsg(const unsigned char player, const PactType pt, const unsigned duration);
+	DiplomacyPostMsg(const unsigned id, const unsigned char player, const PactType pt, const unsigned duration);
 	DiplomacyPostMsg(SerializedGameData * sgd);
 
 	unsigned GetPlayerID() const { return player; }

@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 5047 2009-06-13 20:32:24Z OLiver $
+// $Id: GameClientPlayer.cpp 5051 2009-06-14 20:12:36Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1423,7 +1423,7 @@ void GameClientPlayer::Pact::Serialize(Serializer * ser)
 	ser->PushUnsignedInt(start);
 }
 
-GameClientPlayer::PactSuggestion::PactSuggestion(Serializer * ser) :
+/*GameClientPlayer::PactSuggestion::PactSuggestion(Serializer * ser) :
 	//id(ser->PopUnsignedInt()),
 	suggestion_time(ser->PopUnsignedInt()),
 	player(ser->PopUnsignedChar()),
@@ -1440,35 +1440,90 @@ void GameClientPlayer::PactSuggestion::Serialize(Serializer * ser)
 	ser->PushUnsignedChar(static_cast<unsigned char>(pt));
 	ser->PushUnsignedInt(duration);
 }
-
+*/
 
 /// Macht Bündnisvorschlag an diesen Spieler
 void GameClientPlayer::SuggestPact(const unsigned char other_player, const PactType pt, const unsigned duration)
 {
-	pact_suggestions.push_back(PactSuggestion(GameClient::inst().GetGFNumber(),other_player,pt,duration));
+	pacts[other_player][pt].accepted = false;
+	pacts[other_player][pt].duration = duration;
+	pacts[other_player][pt].start = GameClient::inst().GetGFNumber();
 
 	// Post-Message generieren, wenn dieser Pakt den lokalen Spieler betrifft
-	if(playerid == GameClient::inst().GetPlayerID())
-		GameClient::inst().SendPostMessage(new DiplomacyPostMsg(other_player,pt,duration));
+	if(other_player == GameClient::inst().GetPlayerID())
+		GameClient::inst().SendPostMessage(new DiplomacyPostMsg(pacts[other_player][pt].start,playerid,pt,duration));
 }
 
 /// Akzeptiert ein bestimmtes Bündnis, welches an diesen Spieler gemacht wurde
 void GameClientPlayer::AcceptPact(const unsigned id, const PactType pt, const unsigned char other_player)
 {
-	for(std::list<PactSuggestion>::iterator it = pact_suggestions.begin();it!=pact_suggestions.end();++it)
+	if(pacts[other_player][pt].accepted == false && pacts[other_player][pt].start == id)
 	{
-		if(id == it->suggestion_time && pt == it->pt && it->player == other_player)
-		{
-			// Pakt einwickeln
-			MakePact(pt,other_player,it->duration);
-			GameClient::inst().GetPlayer(other_player)->MakePact(pt,playerid,it->duration);
-		}
+		// Pakt einwickeln
+		MakePact(pt,other_player,pacts[other_player][pt].duration);
+		GameClient::inst().GetPlayer(other_player)->MakePact(pt,playerid,pacts[other_player][pt].duration);
 	}
 }
 
 /// Bündnis (real, d.h. spielentscheidend) abschließen
 void GameClientPlayer::MakePact(const PactType pt, const unsigned char other_player, const unsigned duration)
 {
+	pacts[other_player][pt].accepted = true;
 	pacts[other_player][pt].start = GameClient::inst().GetGFNumber();
 	pacts[other_player][pt].duration = duration;
+}
+
+/// Zeigt an, ob ein Pakt besteht
+GameClientPlayer::PactState GameClientPlayer::GetPactState(const PactType pt, const unsigned char other_player) const
+{
+	// Prüfen, ob Bündnis in Kraft ist
+	if(pacts[other_player][pt].duration)
+	{
+		if(!pacts[other_player][pt].accepted)
+			return IN_PROGRESS;
+
+		else if(pacts[other_player][pt].duration == 0xFFFFFFFF)
+		{
+			if(pacts[other_player][pt].accepted)
+				return ACCEPTED;
+		}
+		else if(pacts[other_player][pt].accepted && pacts[other_player][pt].start 
+			+ pacts[other_player][pt].duration <= GameClient::inst().GetGFNumber())
+			return ACCEPTED;
+
+	}
+
+	return NO_PACT;
+}
+
+/// Gibt die verbleibende Dauer zurück, die ein Bündnis noch laufen wird (0xFFFFFFFF = für immer)
+unsigned GameClientPlayer::GetRemainingPactTime(const PactType pt, const unsigned char other_player) const
+{
+	if(pacts[other_player][pt].duration)
+	{
+		if(pacts[other_player][pt].accepted)
+		{
+			if(pacts[other_player][pt].duration == 0xFFFFFFFF)
+				return 0xFFFFFFFF;
+			else if(pacts[other_player][pt].start + pacts[other_player][pt].duration <= GameClient::inst().GetGFNumber())
+				return (GameClient::inst().GetGFNumber() - (pacts[other_player][pt].start + pacts[other_player][pt].duration));
+		}
+	}
+
+	return 0;
+}
+
+/// Gibt Einverständnis, dass dieser Spieler den Pakt auflösen will
+/// Falls dieser Spieler einen Bündnisvorschlag gemacht hat, wird dieser dagegen zurückgenommen
+void GameClientPlayer::CancelPact(const PactType pt, const unsigned char other_player)
+{
+	// Besteht bereits ein Bündnis?
+	if(pacts[other_player][pt].accepted)
+	{
+	}
+	else
+	{
+		// Es besteht kein Bündnis, also unseren Bündnisvorschlag wieder zurücknehmen
+		pacts[other_player][pt].duration = 0;
+	}
 }

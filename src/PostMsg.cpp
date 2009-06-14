@@ -98,9 +98,11 @@ const char * const PACT_TITLES[PACTS_COUNT] =
 	gettext_noop("non-aggression pact")
 };
 
-DiplomacyPostMsg::DiplomacyPostMsg(const unsigned char player, const PactType pt, const unsigned duration)
-: PostMsg("", PMC_DIPLOMACY), player(player), pt(pt)
+DiplomacyPostMsg::DiplomacyPostMsg(const unsigned id, const unsigned char player, const PactType pt, const unsigned duration)
+: PostMsg("", PMC_DIPLOMACY), id(id), player(player), pt(pt)
 { 
+	type = PMT_DIPLOMACY;
+
 	char msg[512];
 	sprintf(msg,_("The player '%s' offers you a %s."),GameClient::inst().GetPlayer(player)->name.c_str(),
 		_(PACT_TITLES[pt]));

@@ -45,7 +45,7 @@ const unsigned short HEADER_Y = 30;
 /// Position der ersten Zeile (Y)
 const unsigned short FIRST_LINE_Y = 55;
 /// Höhe der einzelnen farbigen Zeilen
-const unsigned short CELL_HEIGHT = 50;
+const unsigned short CELL_HEIGHT = 65;
 /// Abstand zwischen den farbigen Zeilen
 const unsigned short SPACE_HEIGHT = 20;
 /// Abstand vom Rand der Zeilen
@@ -100,15 +100,22 @@ iwDiplomacy::iwDiplomacy()
 			{
 				// Bündnisvertrag-Button
 				glArchivItem_Bitmap * image = GetImage(io_dat,61);
-				AddImageButton(300+i,LINE_DISTANCE_TO_MARGINS+TREATIES_POS-TREATIE_BUTTON_SPACE/2-(image->getWidth()+8),
-					FIRST_LINE_Y + i*(CELL_HEIGHT+SPACE_HEIGHT) + CELL_HEIGHT/2 - (image->getHeight()+8)/2,image->getWidth()+8,
-					image->getHeight()+8,TC_GREY,image,_("Treaty of alliance"));
+				ctrlButton * button = AddImageButton(300+i,LINE_DISTANCE_TO_MARGINS+TREATIES_POS-TREATIE_BUTTON_SPACE/2-(image->getWidth()+8),
+					FIRST_LINE_Y + i*(CELL_HEIGHT+SPACE_HEIGHT) + CELL_HEIGHT/2 - 40/2,40,
+					40,TC_GREY,image,_("Treaty of alliance"));
+
+				// Verbleibende Zeit unter dem Button
+				AddText(500+i,button->GetX(false)+button->GetWidth()/2,button->GetY(false)+button->GetHeight()+4,"",COLOR_YELLOW,glArchivItem_Font::DF_CENTER,SmallFont);
 
 				// Nichtangriffspakt
 				image = GetImage(io_dat,100);
-				AddImageButton(400+i,LINE_DISTANCE_TO_MARGINS+TREATIES_POS+TREATIE_BUTTON_SPACE/2,
-					FIRST_LINE_Y + i*(CELL_HEIGHT+SPACE_HEIGHT) + CELL_HEIGHT/2 - (image->getHeight()+8)/2,image->getWidth()+8,
-					image->getHeight()+8,TC_GREY,image,_("Non-aggression pact"));
+				button = AddImageButton(400+i,LINE_DISTANCE_TO_MARGINS+TREATIES_POS+TREATIE_BUTTON_SPACE/2,
+					FIRST_LINE_Y + i*(CELL_HEIGHT+SPACE_HEIGHT) + CELL_HEIGHT/2 - 40/2,40,
+					40,TC_GREY,image,_("Non-aggression pact"));
+
+						// Verbleibende Zeit unter dem Button
+				AddText(600+i,button->GetX(false)+button->GetWidth()/2,button->GetY(false)+button->GetHeight()+4,"",COLOR_YELLOW,glArchivItem_Font::DF_CENTER,SmallFont);
+
 			}
 		}
 	}
@@ -132,7 +139,7 @@ void iwDiplomacy::Msg_PaintAfter()
 	// Farben, die zu den 3 Bündnisstates gesetzt werden (0-kein Bündnis, 1-in Arbeit, 2-Bündnis abgeschlossen)
 	const unsigned PACT_COLORS[3] =
 	{
-		COLOR_RED, COLOR_YELLOW,COLOR_RED
+		COLOR_RED, COLOR_YELLOW,COLOR_GREEN
 	};
 
 	
@@ -152,7 +159,6 @@ void iwDiplomacy::Msg_PaintAfter()
 			// Farbe je nach Bündnisstatus setzen
 			button->SetModulationColor(PACT_COLORS[GameClient::inst().GetLocalPlayer()->GetPactState(NON_AGGRESSION_PACT,i)]);
 
-
 		// Ggf. Ping aktualisieren
 		if(ctrlDeepening * pingfield = GetCtrl<ctrlDeepening>(200+i))
 		{
@@ -161,14 +167,28 @@ void iwDiplomacy::Msg_PaintAfter()
 			pingfield->SetText(ping);
 		}
 
-			
+		// Verbleibende Zeit der Bündnisse in den Text-Ctrls anzeigen
+		if(GetCtrl<ctrlText>(500+i))
+		{
+			for(unsigned z = 0;z<2;++z)
+			{
+				unsigned duration = GameClient::inst().GetLocalPlayer()->GetRemainingPactTime(TREATY_OF_ALLIANCE,i);
+				// Überhaupt ein Bündnis abgeschlossen und Bündnis nicht für die Ewigkeit?
+				if(duration > 0 && duration != 0xFFFFFFFF)
+					// Dann entsprechende Zeit setzen
+					GetCtrl<ctrlText>(500+z*100+i)->SetText(GameClient::inst().FormatGFTime(duration));
+				else
+					// Ansonsten leer
+					GetCtrl<ctrlText>(500+z*100+i)->SetText("");
+			}
+		}
 	}
 }
 
 void iwDiplomacy::Msg_ButtonClick(const unsigned int ctrl_id)
 {
 	// Bündnisverträge
-	if(ctrl_id >= 300 && ctrl_id <= 400)
+	if(ctrl_id >= 300 && ctrl_id < 400)
 	{
 		unsigned char player_id = static_cast<unsigned char>(ctrl_id-300);
 		// Noch kein Bündnis abgeschlossen?
@@ -180,7 +200,7 @@ void iwDiplomacy::Msg_ButtonClick(const unsigned int ctrl_id)
 			GameClient::inst().AddGC(new gc::CancelPact(TREATY_OF_ALLIANCE,player_id));
 	}
 	// Nichtangriffspakte
-	if(ctrl_id >= 400 && ctrl_id <= 500)
+	if(ctrl_id >= 400 && ctrl_id < 500)
 	{
 		unsigned char player_id = static_cast<unsigned char>(ctrl_id-400);
 		// Noch kein Bündnis abgeschlossen?

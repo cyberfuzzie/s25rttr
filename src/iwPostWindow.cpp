@@ -1,4 +1,4 @@
-// $Id: iwPostWindow.cpp 5047 2009-06-13 20:32:24Z OLiver $
+// $Id: iwPostWindow.cpp 5061 2009-06-17 20:42:11Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -129,10 +129,14 @@ void iwPostWindow::Msg_ButtonClick(const unsigned int ctrl_id)
 	case 16:
 	{
 		PostMsg *pm = GetPostMsg(currentMessage);
-		DiplomacyPostMsg *dpm = dynamic_cast<DiplomacyPostMsg*>(pm);
+		DiplomacyPostQuestion *dpm = dynamic_cast<DiplomacyPostQuestion*>(pm);
 		if (dpm)
 		{
-			GameClient::inst().AddGC(new gc::AcceptPact(true,dpm->id,dpm->pt,dpm->player));
+			// Vertrag akzeptieren?
+			if(dpm->dp_type == DiplomacyPostQuestion::ACCEPT)
+				GameClient::inst().AddGC(new gc::AcceptPact(true,dpm->id,dpm->pt,dpm->player));
+			else if(dpm->dp_type == DiplomacyPostQuestion::CANCEL)
+				GameClient::inst().AddGC(new gc::CancelPact(dpm->pt,dpm->player));
 
 			GameClient::inst().DeletePostMessage(pm);
 			currentMessage = (currentMessage > 0) ? currentMessage - 1 : 0;
@@ -143,7 +147,7 @@ void iwPostWindow::Msg_ButtonClick(const unsigned int ctrl_id)
   case 17:
     {
       PostMsg *pm = GetPostMsg(currentMessage);
-      DiplomacyPostMsg *dpm = dynamic_cast<DiplomacyPostMsg*>(pm);
+      DiplomacyPostQuestion *dpm = dynamic_cast<DiplomacyPostQuestion*>(pm);
       if (dpm)
       {
         //dpm->GetPlayerID();
@@ -275,9 +279,9 @@ void iwPostWindow::DisplayPostMessage()
     declineButton->SetVisible(false);
     }
     break;
-  case PMT_DIPLOMACY:
+  case PMT_DIPLOMACYQUESTION:
     {
-    DiplomacyPostMsg *dpm = dynamic_cast<DiplomacyPostMsg*>(pm);
+    DiplomacyPostQuestion *dpm = dynamic_cast<DiplomacyPostQuestion*>(pm);
     assert(dpm);
     postText->SetText(pm->GetText());
     postText->Move(xTextTopCenter, yTextTopCenter);
@@ -290,6 +294,7 @@ void iwPostWindow::DisplayPostMessage()
     }
     break;
   case PMT_NORMAL:
+  case PMT_DIPLOMACYINFO:
     postText->SetText(pm->GetText());
     postText->Move(xTextCenter, yTextCenter);
     postImage->SetVisible(false);

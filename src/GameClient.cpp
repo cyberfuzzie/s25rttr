@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 5050 2009-06-14 14:01:09Z OLiver $
+// $Id: GameClient.cpp 5061 2009-06-17 20:42:11Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -353,7 +353,12 @@ void GameClient::StartGame(const unsigned int random_init)
 		GetVisualSettings();
 	}
 	else
+	{
 		gw->LoadMap(clientconfig.mapfilepath);
+		/// Startbündnisse setzen
+		for(unsigned i = 0;i<GetPlayerCount();++i)
+			players[i].MakeStartPacts();
+	}
 
 	// Zeit setzen
 	framesinfo.lasttime = VideoDriverWrapper::inst().GetTickCount();

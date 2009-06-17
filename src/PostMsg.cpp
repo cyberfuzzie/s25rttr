@@ -98,10 +98,11 @@ const char * const PACT_TITLES[PACTS_COUNT] =
 	gettext_noop("non-aggression pact")
 };
 
-DiplomacyPostMsg::DiplomacyPostMsg(const unsigned id, const unsigned char player, const PactType pt, const unsigned duration)
-: PostMsg("", PMC_DIPLOMACY), id(id), player(player), pt(pt)
+/// Akzeptieren
+DiplomacyPostQuestion::DiplomacyPostQuestion(const unsigned id, const unsigned char player, const PactType pt, const unsigned duration)
+: PostMsg("", PMC_DIPLOMACY),dp_type(ACCEPT), id(id), player(player), pt(pt)
 { 
-	type = PMT_DIPLOMACY;
+	type = PMT_DIPLOMACYQUESTION;
 
 	char msg[512];
 	sprintf(msg,_("The player '%s' offers you a %s."),GameClient::inst().GetPlayer(player)->name.c_str(),
@@ -116,11 +117,50 @@ DiplomacyPostMsg::DiplomacyPostMsg(const unsigned id, const unsigned char player
 	text = std::string(msg)+"\n"+duration_msg;
 }
 
-DiplomacyPostMsg::DiplomacyPostMsg(SerializedGameData *sgd)
+/// Vertrag auflösen
+DiplomacyPostQuestion::DiplomacyPostQuestion(const unsigned id, const unsigned char player, const PactType pt)
+: PostMsg("", PMC_DIPLOMACY), dp_type(CANCEL), id(id), player(player), pt(pt)
+{ 
+	type = PMT_DIPLOMACYQUESTION;
+
+	char msg[512];
+	sprintf(msg,_("The player '%s' want to cancel the '%s' between you both primaturely. Do you agree?"),GameClient::inst().GetPlayer(player)->name.c_str(),
+		_(PACT_TITLES[pt]));
+
+	text = msg;
+}
+
+DiplomacyPostQuestion::DiplomacyPostQuestion(SerializedGameData *sgd)
 : PostMsg(sgd) {
 }
 
-void DiplomacyPostMsg::Serialize(SerializedGameData *sgd)
+void DiplomacyPostQuestion::Serialize(SerializedGameData *sgd)
 {
   PostMsg::Serialize(sgd);
+}
+
+
+DiplomacyPostInfo::DiplomacyPostInfo(const unsigned char other_player, const Type type, const PactType pt)
+: PostMsg("", PMC_DIPLOMACY)
+{
+	this->type = PMT_DIPLOMACYINFO;
+
+	char msg[512];
+	if(type == ACCEPT)
+		sprintf(msg,_("The %s between player '%s' and you has been concluded."),_(PACT_TITLES[pt]),
+			GameClient::inst().GetPlayer(other_player)->name.c_str());
+	else if(type == CANCEL)
+		sprintf(msg,_("The %s between player '%s' and you has been cancelled."),_(PACT_TITLES[pt]),
+			GameClient::inst().GetPlayer(other_player)->name.c_str());
+}
+
+
+DiplomacyPostInfo::DiplomacyPostInfo(SerializedGameData * sgd) : PostMsg(sgd)
+{
+}
+
+
+void DiplomacyPostInfo::Serialize(SerializedGameData *sgd)
+{
+	 PostMsg::Serialize(sgd);
 }

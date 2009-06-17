@@ -1,4 +1,4 @@
-// $Id: GameConsts.h 5018 2009-06-08 18:24:25Z OLiver $
+// $Id: GameConsts.h 5061 2009-06-17 20:42:11Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -437,7 +437,7 @@ enum PostMessageCategory
   PMC_GEOLOGIST, // PostMsgWithLocation
   PMC_GENERAL, // ImagePostMsgWithLocation
   PMC_SAVEWARNING, // PostMsg
-  PMC_DIPLOMACY, // DiplomacyPostMsg (man braucht vll noch verschiedene?)
+  PMC_DIPLOMACY, // DiplomacyPostQuestion (man braucht vll noch verschiedene?)
   PMC_OTHER  // PostMsg
 };
 
@@ -447,7 +447,8 @@ enum PostMessageType
   PMT_NORMAL,               // PostMsg
   PMT_WITH_LOCATION,        // PostMsgWithLocation
   PMT_IMAGE_WITH_LOCATION,  // ImagePostMsgWithLocation
-  PMT_DIPLOMACY             // DiplomacyPostMsg
+  PMT_DIPLOMACYQUESTION,             // DiplomacyPostQuestion
+  PMT_DIPLOMACYINFO            // DiplomacyPostInfo
 };
 
 /// Maximale Nachrichtenanzahl im Briefkasten

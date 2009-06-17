@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.h 5051 2009-06-14 20:12:36Z OLiver $
+// $Id: GameClientPlayer.h 5061 2009-06-17 20:42:11Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -110,8 +110,10 @@ private:
 		unsigned duration;
 		/// Startzeitpunkt (in GF)
 		unsigned start;
+		/// Will dieser Spieler (also der this-Pointer) diesen Vertrag auflösen?
+		bool want_cancel;
 
-		Pact() : accepted(false), duration(0), start(0) {}
+		Pact() : accepted(false), duration(0), start(0), want_cancel(false) {}
 		Pact(Serializer * ser);
 		void Serialize(Serializer * ser);
 	};
@@ -348,6 +350,8 @@ public:
 	PactState GetPactState(const PactType pt, const unsigned char other_player) const;
 	/// Gibt die verbleibende Dauer zurück, die ein Bündnis noch laufen wird (0xFFFFFFFF = für immer)
 	unsigned GetRemainingPactTime(const PactType pt, const unsigned char other_player) const;
+	/// Setzt die initialen Bündnisse ahand der Teams
+	void MakeStartPacts();
 		
 
 

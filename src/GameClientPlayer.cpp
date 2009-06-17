@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 5051 2009-06-14 20:12:36Z OLiver $
+// $Id: GameClientPlayer.cpp 5061 2009-06-17 20:42:11Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -169,12 +169,12 @@ GameClientPlayer::GameClientPlayer(const unsigned playerid) : GamePlayerInfo(pla
 	// Inventur nullen
 	memset(&global_inventory,0,sizeof(global_inventory));
 
-  // Statistiken mit 0en füllen
-  memset(&statistic[STAT_15M], 0, sizeof(statistic[STAT_15M]));
-  memset(&statistic[STAT_1H], 0, sizeof(statistic[STAT_1H]));
-  memset(&statistic[STAT_4H], 0, sizeof(statistic[STAT_4H]));
-  memset(&statistic[STAT_16H], 0, sizeof(statistic[STAT_16H]));
-  memset(&statisticCurrentData, 0, sizeof(statisticCurrentData));
+	// Statistiken mit 0en füllen
+	memset(&statistic[STAT_15M], 0, sizeof(statistic[STAT_15M]));
+	memset(&statistic[STAT_1H], 0, sizeof(statistic[STAT_1H]));
+	memset(&statistic[STAT_4H], 0, sizeof(statistic[STAT_4H]));
+	memset(&statistic[STAT_16H], 0, sizeof(statistic[STAT_16H]));
+	memset(&statisticCurrentData, 0, sizeof(statisticCurrentData));
 }
 
 void GameClientPlayer::Serialize(SerializedGameData * sgd)
@@ -1451,7 +1451,7 @@ void GameClientPlayer::SuggestPact(const unsigned char other_player, const PactT
 
 	// Post-Message generieren, wenn dieser Pakt den lokalen Spieler betrifft
 	if(other_player == GameClient::inst().GetPlayerID())
-		GameClient::inst().SendPostMessage(new DiplomacyPostMsg(pacts[other_player][pt].start,playerid,pt,duration));
+		GameClient::inst().SendPostMessage(new DiplomacyPostQuestion(pacts[other_player][pt].start,playerid,pt,duration));
 }
 
 /// Akzeptiert ein bestimmtes Bündnis, welches an diesen Spieler gemacht wurde
@@ -1471,6 +1471,11 @@ void GameClientPlayer::MakePact(const PactType pt, const unsigned char other_pla
 	pacts[other_player][pt].accepted = true;
 	pacts[other_player][pt].start = GameClient::inst().GetGFNumber();
 	pacts[other_player][pt].duration = duration;
+	pacts[other_player][pt].want_cancel = false;
+
+	// Den Spielern eine Informationsnachricht schicken
+	if(GameClient::inst().GetPlayerID() == playerid)
+		GameClient::inst().SendPostMessage(new DiplomacyPostInfo(other_player,DiplomacyPostInfo::ACCEPT,pt));
 }
 
 /// Zeigt an, ob ein Pakt besteht
@@ -1482,13 +1487,13 @@ GameClientPlayer::PactState GameClientPlayer::GetPactState(const PactType pt, co
 		if(!pacts[other_player][pt].accepted)
 			return IN_PROGRESS;
 
-		else if(pacts[other_player][pt].duration == 0xFFFFFFFF)
+		if(pacts[other_player][pt].duration == 0xFFFFFFFF)
 		{
 			if(pacts[other_player][pt].accepted)
 				return ACCEPTED;
 		}
-		else if(pacts[other_player][pt].accepted && pacts[other_player][pt].start 
-			+ pacts[other_player][pt].duration <= GameClient::inst().GetGFNumber())
+		else if(GameClient::inst().GetGFNumber() <= pacts[other_player][pt].start 
+			+ pacts[other_player][pt].duration )
 			return ACCEPTED;
 
 	}
@@ -1520,10 +1525,55 @@ void GameClientPlayer::CancelPact(const PactType pt, const unsigned char other_p
 	// Besteht bereits ein Bündnis?
 	if(pacts[other_player][pt].accepted)
 	{
+		// Vermerken, dass der Spieler das Bündnis auflösen will
+		pacts[other_player][pt].want_cancel = true;
+
+		// Will der andere Spieler das Bündnis auch auflösen?
+		if(GameClient::inst().GetPlayer(other_player)->pacts[playerid][pt].want_cancel)
+		{
+			// Dann wird das Bündnis aufgelöst
+			pacts[other_player][pt].accepted = false;
+			pacts[other_player][pt].duration = 0;
+			pacts[other_player][pt].want_cancel = false;
+
+			GameClient::inst().GetPlayer(other_player)->pacts[other_player][pt].accepted = false;
+			GameClient::inst().GetPlayer(other_player)->pacts[other_player][pt].duration = 0;
+			GameClient::inst().GetPlayer(other_player)->pacts[other_player][pt].want_cancel = false;
+
+			// Den Spielern eine Informationsnachricht schicken
+			if(GameClient::inst().GetPlayerID() == playerid || GameClient::inst().GetPlayerID() == other_player)
+			{
+				// Anderen Spieler von sich aus ermitteln
+				unsigned char client_other_player = (GameClient::inst().GetPlayerID() == playerid) ? other_player : playerid;
+				GameClient::inst().SendPostMessage(new DiplomacyPostInfo(client_other_player,DiplomacyPostInfo::CANCEL,pt));
+			}
+		}
+		// Ansonsten den anderen Spieler fragen, ob der das auch so sieht
+		else if(other_player == GameClient::inst().GetPlayerID())
+			GameClient::inst().SendPostMessage(new DiplomacyPostQuestion(pacts[other_player][pt].start,playerid,pt));
 	}
 	else
 	{
 		// Es besteht kein Bündnis, also unseren Bündnisvorschlag wieder zurücknehmen
 		pacts[other_player][pt].duration = 0;
+	}
+}
+
+void GameClientPlayer::MakeStartPacts()
+{
+	// Zu den Spielern im selben Team Bündnisse (sowohl Bündnisvertrag als auch Nichtangriffspakt) aufbauen
+	for(unsigned i = 0;i<GameClient::inst().GetPlayerCount();++i)
+	{
+		GameClientPlayer * p = GameClient::inst().GetPlayer(i);
+		if(team == p->team && team >= TM_TEAM1 && team <= TM_TEAM2)
+		{
+			for(unsigned z = 0;z<PACTS_COUNT;++z)
+			{
+				pacts[i][z].accepted = true;
+				pacts[i][z].duration = 0xFFFFFFFF;
+				pacts[i][z].start = 0;
+				pacts[i][z].want_cancel = false;
+			}
+		}
 	}
 }

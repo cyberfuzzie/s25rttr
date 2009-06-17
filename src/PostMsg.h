@@ -83,23 +83,56 @@ private:
 class iwPostWindow;
 // TODO: evtl noch verschiedene ermöglichen durch einen weiteren Parameter? Allianz, Nicht-Angriffspakt, Zeitbegrenzung, whatever
 /// Diplomatie-Post-Nachricht, mit Annehmen- und Ablehnen-Knopf
-class DiplomacyPostMsg : public PostMsg
+class DiplomacyPostQuestion : public PostMsg
 {
 	friend class iwPostWindow;
 public:
-	DiplomacyPostMsg(const unsigned id, const unsigned char player, const PactType pt, const unsigned duration);
-	DiplomacyPostMsg(SerializedGameData * sgd);
+		/// Typ der Diplomatienachricht
+	enum Type
+	{
+		ACCEPT, /// Nachricht, die den Spieler fragt, ob ein anderer Spieler den Vertrag akzeptiert
+		CANCEL /// Nachricht, die den Spieler fragt, ob ein bestehender Vertrag aufgelöst werden soll
+	};
+
+	/// Vertrag akzeptieren
+	DiplomacyPostQuestion(const unsigned id, const unsigned char player, const PactType pt, const unsigned duration);
+	/// Vertrag auflösen
+	DiplomacyPostQuestion(const unsigned id, const unsigned char player, const PactType pt);
+	DiplomacyPostQuestion(SerializedGameData * sgd);
 
 	unsigned GetPlayerID() const { return player; }
 	virtual void Serialize(SerializedGameData *sgd);
 
 private:
+	/// Typ der Diplomatienachricht
+	Type dp_type;
+
 	/// ID des Vertrages (= normalerweise die GF-Nummer, zu der es vorgeschlagen wurde)
 	unsigned id;
 	/// Spieler, den das Bündnis betrifft
 	unsigned char player;
 	/// Vertragsart
 	PactType pt;
+};
+
+/// 
+class DiplomacyPostInfo : public PostMsg
+{
+	friend class iwPostWindow;
+public:
+	enum Type
+	{
+		ACCEPT, /// Nachricht, die den Spieler fragt, ob ein anderer Spieler den Vertrag akzeptiert
+		CANCEL /// Nachricht, die den Spieler fragt, ob ein bestehender Vertrag aufgelöst werden soll
+	};
+
+	DiplomacyPostInfo(const unsigned char other_player, const Type dp_type, const PactType pt);
+	DiplomacyPostInfo(SerializedGameData * sgd);
+
+	virtual void Serialize(SerializedGameData *sgd);
+
+	/// Typ der Diplomatienachricht
+	
 };
 
 #endif

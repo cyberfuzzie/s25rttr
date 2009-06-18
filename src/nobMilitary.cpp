@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 5042 2009-06-13 11:59:00Z OLiver $
+// $Id: nobMilitary.cpp 5066 2009-06-18 20:22:24Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -358,21 +358,54 @@ void nobMilitary::RegulateTroops()
 		// Zu viel --> überflüssige Truppen nach Hause schicken
 
 		// Zuerst die bestellten Soldaten wegschicken
-		for(list<nofPassiveSoldier*>::iterator it = ordered_troops.begin();diff&&ordered_troops.size();++diff,++it)
+		// Schwache zuerst zurück
+		if (GameClient::inst().GetPlayer(player)->military_settings[1] > 2)
 		{
-			(*it)->NotNeeded();
-			ordered_troops.erase(&it);
+			for(list<nofPassiveSoldier*>::iterator it = ordered_troops.begin();diff&&ordered_troops.size();++diff,++it)
+			{
+				(*it)->NotNeeded();
+				ordered_troops.erase(&it);
+			}
+		}
+		// Starke zuerst zurück
+		else
+		{
+			for(list<nofPassiveSoldier*>::iterator it = ordered_troops.end();diff&&ordered_troops.size();++diff,--it)
+			{
+				if (it.valid())
+				{	
+					(*it)->NotNeeded();
+					ordered_troops.erase(&it);
+				}
+			}
 		}
 
 		// Nur rausschicken, wenn es einen Weg zu einem Lagerhaus gibt!
 		if(GameClient::inst().GetPlayer(player)->FindWarehouse(this,FW::NoCondition,0,true,0,false))
 		{
 			// Dann den Rest (einer muss immer noch drinbleiben!)
-			for(list<nofPassiveSoldier*>::iterator it = troops.begin();diff&&troops.size()>1;++diff,++it)
+			// erst die schwachen Soldaten raus
+			if (GameClient::inst().GetPlayer(player)->military_settings[1] > 2)
 			{
-				(*it)->LeaveBuilding();
-				AddLeavingFigure(*it);
-				troops.erase(&it);
+				for(list<nofPassiveSoldier*>::iterator it = troops.begin();diff&&troops.size()>1;++diff,++it)
+				{
+					(*it)->LeaveBuilding();
+					AddLeavingFigure(*it);
+					troops.erase(&it);
+				}
+			}
+			// erst die starken Soldaten raus
+			else
+			{
+				for(list<nofPassiveSoldier*>::iterator it = troops.end();diff&&troops.size()>1;++diff,--it)
+				{
+					if (it.valid())
+					{
+						(*it)->LeaveBuilding();
+						AddLeavingFigure(*it);
+						troops.erase(&it);
+					}
+				}
 			}
 		}
 
@@ -387,7 +420,7 @@ void nobMilitary::RegulateTroops()
 
 int nobMilitary::CalcTroopsCount()
 {
-	return (TROOPS_COUNT[nation][size]-1)*GAMECLIENT.GetPlayer(player)->military_settings[4+frontier_distance]/5 + 1;
+	return (TROOPS_COUNT[nation][size]-1)*GAMECLIENT.GetPlayer(player)->military_settings[4+frontier_distance]/10 + 1;
 }
 
 void nobMilitary::TakeWare(Ware * ware)
@@ -424,7 +457,23 @@ bool nobMilitary::FreePlaceAtFlag()
 }
 void nobMilitary::GotWorker(Job job, noFigure * worker)
 {
-	ordered_troops.push_back(static_cast<nofPassiveSoldier*>(worker));
+	// Soldaten in ordered_troops einsortieren, vorne die schwachen, hinten die starken
+	nofPassiveSoldier *soldier = static_cast<nofPassiveSoldier*>(worker);
+
+	// Nach Rang sortiert einfügen!
+	for(list<nofPassiveSoldier*>::iterator it = ordered_troops.end(); it.valid(); --it)
+	{
+		// Ist das einzufügende Item größer als das aktuelle?
+		if(soldier->GetRank() >= (*it)->GetRank())
+		{
+			// ja dann hier einfügen
+			ordered_troops.insert(it, soldier);
+			return;
+		}
+	}
+
+	// Wenn wir hier ankommen wurde noch kein Platz gefunden -> ganz nach vorn
+	ordered_troops.push_front(soldier);
 }
 
 void nobMilitary::CancelOrders()

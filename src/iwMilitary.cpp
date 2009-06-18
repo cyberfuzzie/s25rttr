@@ -1,4 +1,4 @@
-// $Id: iwMilitary.cpp 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: iwMilitary.cpp 5066 2009-06-18 20:22:24Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -50,9 +50,9 @@ iwMilitary::iwMilitary(void)
 	AddProgress(1,17,57,132,26,TC_GREY,121,122,5,"",4,4,0,_("Weak defense"),_("Strong defense"));
 	AddProgress(2,17,89,132,26,TC_GREY,123,124,5,"",4,4,0,_("Fewer defenders"),_("More defenders"));
 	AddProgress(3,17,121,132,26,TC_GREY,209,210,5,"",4,4,0,_("Less attackers"),_("More attackers"));
-	AddProgress(4,17,153,132,26,TC_GREY,129,130,5,"",4,4,0,_("Interior"),_("Interior"));
-	AddProgress(5,17,185,132,26,TC_GREY,127,128,5,"",4,4,0,_("Center of country"),_("Center of country"));
-	AddProgress(6,17,217,132,26,TC_GREY,125,126,5,"",4,4,0,_("Border areas"),_("Border areas"));
+	AddProgress(4,17,153,132,26,TC_GREY,129,130,10,"",4,4,0,_("Interior"),_("Interior"));
+	AddProgress(5,17,185,132,26,TC_GREY,127,128,10,"",4,4,0,_("Center of country"),_("Center of country"));
+	AddProgress(6,17,217,132,26,TC_GREY,125,126,10,"",4,4,0,_("Border areas"),_("Border areas"));
 
 	// unteren 2 Buttons
 	AddImageButton(7,18,250,30,32,TC_GREY, GetImage(io_dat,21), _("Help"));

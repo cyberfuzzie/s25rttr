@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 5061 2009-06-17 20:42:11Z OLiver $
+// $Id: GameClientPlayer.cpp 5066 2009-06-18 20:22:24Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -151,9 +151,9 @@ GameClientPlayer::GameClientPlayer(const unsigned playerid) : GamePlayerInfo(pla
 	military_settings[1] = 3;
 	military_settings[2] = 5;
 	military_settings[3] = 3;
-	military_settings[4] = 1;
-	military_settings[5] = 2;
-	military_settings[6] = 5;
+	military_settings[4] = 2;
+	military_settings[5] = 4;
+	military_settings[6] = 10;
 	GAMECLIENT.visual_settings.military_settings = military_settings;
 	GAMECLIENT.visual_settings.tools_settings = tools_settings;
 

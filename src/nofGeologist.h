@@ -1,4 +1,4 @@
-// $Id: nofGeologist.h 5043 2009-06-13 12:15:12Z OLiver $
+// $Id: nofGeologist.h 5066 2009-06-18 20:22:24Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -79,6 +79,7 @@ public:
 
 	/// Wird aufgerufen, wenn die Flagge abgerissen wurde
 	void LostWork();
+
 };
 
 #endif

@@ -1,4 +1,4 @@
-// $Id: nobBaseWarehouse.cpp 5026 2009-06-09 20:30:21Z OLiver $
+// $Id: nobBaseWarehouse.cpp 5066 2009-06-18 20:22:24Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -709,19 +709,40 @@ void nobBaseWarehouse::OrderTroops(nobMilitary * goal, unsigned count)
 {
 	// Soldaten durchgehen und count rausschicken
 
-	// Ränge durchgehen
-	for(unsigned i = 5;i && count;--i)
+	// Ränge durchgehen, absteigend, starke zuerst
+	if (GameClient::inst().GetPlayer(player)->military_settings[1] > 2)
 	{
-		// Vertreter der Ränge ggf rausschicken
-		while(real_goods.people[JOB_PRIVATE-1+i] && count)
+		for(unsigned i = 5;i && count;--i)
 		{
-			nofSoldier * soldier = new nofPassiveSoldier(x,y,player,goal,goal,i-1);
-			AddLeavingFigure(soldier);
-			goal->GotWorker(JOB_NOTHING,soldier);
+			// Vertreter der Ränge ggf rausschicken
+			while(real_goods.people[JOB_PRIVATE-1+i] && count)
+			{
+				nofSoldier * soldier = new nofPassiveSoldier(x,y,player,goal,goal,i-1);
+				AddLeavingFigure(soldier);
+				goal->GotWorker(JOB_NOTHING,soldier);
 
-			--real_goods.people[JOB_PRIVATE-1+i];
+				--real_goods.people[JOB_PRIVATE-1+i];
 
-			--count;
+				--count;
+			}
+		}
+	}
+	// Ränge durchgehen, aufsteigend, schwache zuerst
+	else
+	{
+		for(unsigned i = 1;i<=5 && count;++i)
+		{
+			// Vertreter der Ränge ggf rausschicken
+			while(real_goods.people[JOB_PRIVATE-1+i] && count)
+			{
+				nofSoldier * soldier = new nofPassiveSoldier(x,y,player,goal,goal,i-1);
+				AddLeavingFigure(soldier);
+				goal->GotWorker(JOB_NOTHING,soldier);
+
+				--real_goods.people[JOB_PRIVATE-1+i];
+
+				--count;
+			}
 		}
 	}
 	

@@ -1,4 +1,4 @@
-// $Id: nofHunter.cpp 4857 2009-05-11 18:31:33Z OLiver $
+// $Id: nofHunter.cpp 5065 2009-06-18 17:25:27Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -369,7 +369,7 @@ void nofHunter::HandleStateChasing()
 	else
 	{
 		// Weg dorthin suchen
-		if((dir=gwg->FindHumanPath(x,y,animal->GetX(),animal->GetY(),100)) != 0xFF)
+		if((dir=gwg->FindHumanPath(x,y,animal->GetX(),animal->GetY(),MAX_HUNTING_DISTANCE)) != 0xFF)
 		{
 			// Weg gefunden, dann hinlaufen
 			StartWalking(dir);

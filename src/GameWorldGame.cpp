@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 5031 2009-06-10 17:14:12Z OLiver $
+// $Id: GameWorldGame.cpp 5065 2009-06-18 17:25:27Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -516,7 +516,7 @@ void GameWorldGame::RecalcTerritory(const nobBaseMilitary * const building,const
 	bool * owner_changed = new bool[(x2-x1)*(y2-y1)];
 
 
-  std::vector<int> sizeChanges(GAMECLIENT.GetPlayerCount());
+	std::vector<int> sizeChanges(GAMECLIENT.GetPlayerCount());
 	// Daten von der TR kopieren in die richtige Karte, dabei zus. Grenzen korrigieren und Objekte zerstören, falls
 	// das Land davon jemanden anders nun gehört
  	for(MapCoord y = y1;y<y2;++y)
@@ -530,10 +530,10 @@ void GameWorldGame::RecalcTerritory(const nobBaseMilitary * const building,const
 				// Dann entsprechend neuen Besitzer setzen
 				GetNode(x,y).owner = player;
 				owner_changed[(x2-x1)*(y-y1)+(x-x1)] = true;
-        if (player != 0)
-          sizeChanges[player-1]++;
-        if (prev_player != 0)
-          sizeChanges[prev_player-1]--;
+				if (player != 0)
+					sizeChanges[player-1]++;
+				if (prev_player != 0)
+					sizeChanges[prev_player-1]--;
 			}
 			else
 				owner_changed[(x2-x1)*(y-y1)+(x-x1)] = false;

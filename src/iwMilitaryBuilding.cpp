@@ -1,4 +1,4 @@
-// $Id: iwMilitaryBuilding.cpp 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: iwMilitaryBuilding.cpp 5065 2009-06-18 17:25:27Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -139,7 +139,7 @@ void iwMilitaryBuilding::Msg_ButtonClick(const unsigned int ctrl_id)
 		} break;
 	case 6: // Gold einstellen/erlauben
 		{
-			if(!GameClient::inst().IsReplayModeOn())
+			if(!GameClient::inst().IsReplayModeOn() && !GameClient::inst().IsPaused())
 			{
 				// visuell anzeigen
 				building->StopGoldVirtual();

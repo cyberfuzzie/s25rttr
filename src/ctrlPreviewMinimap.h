@@ -1,4 +1,4 @@
-// $Id: ctrlPreviewMinimap.h 4969 2009-05-28 16:13:11Z Demophobie $
+// $Id: ctrlPreviewMinimap.h 5065 2009-06-18 17:25:27Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -56,14 +56,10 @@ public:
 	/// Setzt die (Start-)Farbe eines Spielers bzw. löscht diesen (color = 0)
 	void SetPlayerColor(const unsigned id, const unsigned color)
 	{
-		if (players[id].color == COLOR_GHOST)
-		{
-		players[id].color = MakeColor(255,150,150,150);
-		}
-		else
-		{
 		players[id].color = color;
-		}		
+
+		if (players[id].color == COLOR_GHOST)
+			players[id].color = MakeColor(255,150,150,150);	
 
 	}
 

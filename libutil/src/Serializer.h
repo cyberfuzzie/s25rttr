@@ -52,6 +52,7 @@ public:
 	inline void Clear()
 	{
 		delete[] data;
+		data = 0;
 		buffer_length = 0;
 		length = 0;
 		pos = 0;

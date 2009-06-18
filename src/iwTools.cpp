@@ -1,4 +1,4 @@
-// $Id: iwTools.cpp 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: iwTools.cpp 5065 2009-06-18 17:25:27Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -126,5 +126,5 @@ void iwTools::UpdateSettings()
 {
 	// Einstellungen festlegen
 	for(unsigned i = 0;i<12;++i)
-		GetCtrl<ctrlProgress>(i)->SetPosition(GAMECLIENT.visual_settings.military_settings[i]);
+		GetCtrl<ctrlProgress>(i)->SetPosition(GAMECLIENT.visual_settings.tools_settings[i]);
 }

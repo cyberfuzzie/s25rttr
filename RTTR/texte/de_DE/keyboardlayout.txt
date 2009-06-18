@@ -31,18 +31,20 @@ F10:.................. (Music-Player)
 F11:.................. (Siedler-Juke-Box)
 F12:.................. Options-Fenster
 
+Im Nachrichten Fenster:
+
+DEL:................ (Nachricht lï¿½schen)
+G:.................... (Zum Ort der Nachricht gehen)
++/-:.................. (Nï¿½chste/Vorherige Nachricht)
+
 Cursor Tasten: Kartenausschnitt scrollen
 
 Im Replay Modus zusätzlich:
 
 D:.................... Karte auf- und zudecken
 J:.................... Zu einem bestimmten GF springen
-
-Im Nachrichten Fenster:
-
-DEL:................ (Nachricht löschen)
-G:.................... (Zum Ort der Nachricht gehen)
-+/-:.................. (Nächste/Vorherige Nachricht)
+P:.................... Pause/Fortsetzen (Auch noch GF Sprung)
+1-7:.................. Spielerwechsel
 
 ------------------------------------------------------------------------
 http://www.siedler25.org    Copyright (C) 2005-2009 Settlers Freaks

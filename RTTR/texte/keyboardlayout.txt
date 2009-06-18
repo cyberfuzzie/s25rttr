@@ -31,19 +31,20 @@ F10:.................. (Music-Player)
 F11:.................. (Siedler-Juke-Box)
 F12:.................. Option windows
 
-Arrow keys: Scroll the main map
-
-Additional in Replay-mode:
-
-D:.................... Discover/cover up map
-J:.................... Go to specific GF
-
 Post office:
 
 DEL:................ (Delete message)
 G:.................... (Go to site of event)
 +/-:.................. (Next/previous message)
 
+Arrow keys: Scroll the main map
+
+Additional in Replay-mode:
+
+D:.................... Discover/cover up map
+J:.................... Go to specific GF
+P:.................... Pause/Resume (also after GF jump)
+1-7:.................. Change to other player
 ------------------------------------------------------------------------
 http://www.siedler25.org    Copyright (C) 2005-2009 Settlers Freaks
 ------------------------------------------------------------------------

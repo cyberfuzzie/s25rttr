@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 5066 2009-06-18 20:22:24Z OLiver $
+// $Id: nobMilitary.cpp 5069 2009-06-19 17:59:32Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -370,12 +370,16 @@ void nobMilitary::RegulateTroops()
 		// Starke zuerst zurück
 		else
 		{
-			for(list<nofPassiveSoldier*>::iterator it = ordered_troops.end();diff&&ordered_troops.size();++diff,--it)
+			for(list<nofPassiveSoldier*>::iterator it = ordered_troops.end();diff&&ordered_troops.size();++diff)
 			{
 				if (it.valid())
 				{	
 					(*it)->NotNeeded();
 					ordered_troops.erase(&it);
+				}
+				else
+				{
+					--it;
 				}
 			}
 		}
@@ -397,13 +401,17 @@ void nobMilitary::RegulateTroops()
 			// erst die starken Soldaten raus
 			else
 			{
-				for(list<nofPassiveSoldier*>::iterator it = troops.end();diff&&troops.size()>1;++diff,--it)
+				for(list<nofPassiveSoldier*>::iterator it = troops.end();diff&&troops.size()>1;++diff)
 				{
 					if (it.valid())
 					{
 						(*it)->LeaveBuilding();
 						AddLeavingFigure(*it);
 						troops.erase(&it);
+					}
+					else
+					{
+						--it;
 					}
 				}
 			}

@@ -1,4 +1,4 @@
-// $Id: Window.cpp 4959 2009-05-26 16:17:23Z Demophobie $
+// $Id: Window.cpp 5070 2009-06-19 20:05:10Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -206,7 +206,7 @@ bool Window::RelayMouseMessage(bool (Window::*msg)(const MouseCoords&),const Mou
 			}
 	}
 
-	// Nur vorläufig
+	/*// Nur vorläufig
 	if(processed && msg == &Window::Msg_LeftDown)
 	{
 		for(std::map<unsigned int,Window*>::iterator it = idmap.begin(); it != idmap.end() && active; ++it)
@@ -220,7 +220,7 @@ bool Window::RelayMouseMessage(bool (Window::*msg)(const MouseCoords&),const Mou
 				it->second->Msg_LeftDown_After(mc);
 
 		}
-	}
+	}*/
 
 	return processed;
 }

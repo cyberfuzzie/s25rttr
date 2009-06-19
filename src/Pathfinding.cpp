@@ -1,4 +1,4 @@
-// $Id: Pathfinding.cpp 5024 2009-06-09 20:02:17Z OLiver $
+// $Id: Pathfinding.cpp 5070 2009-06-19 20:05:10Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -355,6 +355,15 @@ bool GameWorldBase::FindPathOnRoads(const noRoadNode * const start, const noRoad
 			if(ware_mode)
 				new_way += best->GetPunishmentPoints(i);
 
+			// evtl verboten?
+			if(best->routes[i] == forbidden)
+				continue;
+
+			// evtl Wasserstraße?
+			if(best->routes[i]->GetRoadType() == RoadSegment::RT_BOAT && !ware_mode)
+				continue;
+
+
 			// Knoten schon auf dem Feld gebildet?
 			if(pf_nodes[xaid].visited)
 			{
@@ -371,15 +380,6 @@ bool GameWorldBase::FindPathOnRoads(const noRoadNode * const start, const noRoad
 				}
 				continue;
 			}
-
-			// evtl verboten?
-			if(best->routes[i] == forbidden)
-				continue;
-
-			// evtl Wasserstraße?
-			if(best->routes[i]->GetRoadType() == RoadSegment::RT_BOAT && !ware_mode)
-				continue;
-
 
 			// Alles in Ordnung, Knoten kann gebildet werden
 			pf_nodes[xaid].visited = true;

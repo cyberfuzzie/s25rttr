@@ -1,4 +1,4 @@
-// $Id: nobHQ.cpp 5020 2009-06-08 18:57:13Z Demophobie $
+// $Id: nobHQ.cpp 5070 2009-06-19 20:05:10Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -280,14 +280,16 @@ nobHQ::nobHQ(const unsigned short x, const unsigned short y,const unsigned char 
 
 void nobHQ::Destroy_nobHQ()
 {
-	// Wieder aus dem Militärquadrat rauswerfen
-	gwg->GetMilitarySquare(x,y).erase(this);
+	
 
 	Destroy_nobBaseWarehouse();
 
 	// Land drumherum neu berechnen (nur wenn es schon besetzt wurde!)
 	// Nach dem BaseDestroy erst, da in diesem erst das Feuer gesetzt, die Straße gelöscht wird usw.
 	gwg->RecalcTerritory(this,MILITARY_RADIUS[GetSize()],true, false);
+
+	// Wieder aus dem Militärquadrat rauswerfen
+	gwg->GetMilitarySquare(x,y).erase(this);
 }
 
 void nobHQ::Serialize_nobHQ(SerializedGameData * sgd) const

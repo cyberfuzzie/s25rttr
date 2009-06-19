@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 5069 2009-06-19 17:59:32Z OLiver $
+// $Id: nobMilitary.cpp 5070 2009-06-19 20:05:10Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -85,9 +85,7 @@ nobMilitary::~nobMilitary()
 
 void nobMilitary::Destroy_nobMilitary()
 {
-	// Wieder aus dem Militärquadrat rauswerfen
-	GAMECLIENT.GetPlayer(player)->RemoveMilitaryBuilding(this);
-	gwg->GetMilitarySquare(x,y).erase(this);
+	
 
 	// Bestellungen stornieren
 	CancelOrders();
@@ -111,6 +109,10 @@ void nobMilitary::Destroy_nobMilitary()
 	// Nach dem BaseDestroy erst, da in diesem erst das Feuer gesetzt, die Straße gelöscht wird usw.
 	if(!new_built)
 		gwg->RecalcTerritory(this,MILITARY_RADIUS[size],true, false);
+
+	// Wieder aus dem Militärquadrat rauswerfen
+	GAMECLIENT.GetPlayer(player)->RemoveMilitaryBuilding(this);
+	gwg->GetMilitarySquare(x,y).erase(this);
 }
 
 void nobMilitary::Serialize_nobMilitary(SerializedGameData * sgd) const

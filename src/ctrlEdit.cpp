@@ -1,4 +1,4 @@
-// $Id: ctrlEdit.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: ctrlEdit.cpp 5070 2009-06-19 20:05:10Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -215,7 +215,7 @@ void ctrlEdit::Msg_PaintAfter()
 bool ctrlEdit::Msg_LeftDown(const MouseCoords& mc)
 {
 	if((newfocus = Coll(mc.x, mc.y, GetX(), GetY(), width, height)))
-		return true;
+		return false; /// vorläufig, um Fokus zu für andere Edit-Felder zu kriegen, damit es zu keinen Doppelfokus kommt
 	else
 		return false;
 }

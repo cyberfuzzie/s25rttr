@@ -500,6 +500,8 @@
         <File Name="../src/iwDiplomacy.cpp"/>
         <File Name="../src/iwDiplomacy.h"/>
       </VirtualDirectory>
+      <File Name="../src/PostMsg.cpp"/>
+      <File Name="../src/PostMsg.h"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Spiel">
       <File Name="../src/enhOption.cpp"/>

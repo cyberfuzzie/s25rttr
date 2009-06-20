@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 5074 2009-06-20 14:31:41Z OLiver $
+// $Id: nobMilitary.cpp 5075 2009-06-20 14:32:46Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -319,6 +319,20 @@ void nobMilitary::LookForEnemyBuildings(const nobBaseMilitary * const exception)
 				// Wenns ein richtiges Militärgebäude ist, dann dort auch entsprechend setzen
 				if((*it)->GetBuildingType() >= BLD_BARRACKS && (*it)->GetBuildingType() <= BLD_FORTRESS)
 					static_cast<nobMilitary*>(*it)->NewEnemyMilitaryBuilding(1);
+			}
+			// andere Richtung muss auch getestet werden, zumindest wenns eine normaler Militärgebäude ist, Bug 389843
+			else if ((*it)->GetGOT() == GOT_NOB_MILITARY)
+			{
+				nobMilitary *mil = dynamic_cast<nobMilitary*>(*it);
+				if(distance <= BASE_ATTACKING_DISTANCE + TROOPS_COUNT[mil->nation][mil->size] * EXTENDED_ATTACKING_DISTANCE)
+				{
+					// Grenznähe entsprechend setzen
+					if(!frontier_distance)
+						frontier_distance = 1;
+
+					// dort auch entsprechend setzen
+					mil->NewEnemyMilitaryBuilding(1);
+				}
 			}
 		}
 	}

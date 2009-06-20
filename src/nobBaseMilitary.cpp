@@ -1,4 +1,4 @@
-// $Id: nobBaseMilitary.cpp 4857 2009-05-11 18:31:33Z OLiver $
+// $Id: nobBaseMilitary.cpp 5074 2009-06-20 14:31:41Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -118,7 +118,7 @@ void nobBaseMilitary::Destroy_nobBaseMilitary()
 	{
 		if((*it)->GetPlayer() != player
 			&& (*it)->GetBuildingType() >= BLD_BARRACKS  && (*it)->GetBuildingType() <= BLD_FORTRESS)
-			static_cast<nobMilitary*>(*it)->LookForEnemyBuildings();
+			static_cast<nobMilitary*>(*it)->LookForEnemyBuildings(this);
 	}
 
 

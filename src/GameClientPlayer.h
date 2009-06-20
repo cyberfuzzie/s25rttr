@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.h 5061 2009-06-17 20:42:11Z OLiver $
+// $Id: GameClientPlayer.h 5074 2009-06-20 14:31:41Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -303,7 +303,9 @@ public:
 	/// Setzt neue Baureihenfolge-Einstellungen
 	void ChangeBuildOrder(const unsigned char order_type, const std::vector<unsigned char>& oder_data);
 
-	/// Ist ein anderer Spieler ein Verbündeter von uns?
+	/// Darf der andere Spieler von mir angegriffen werden?
+	bool IsPlayerAttackable(const unsigned char player) const;
+	/// Ist ein anderer Spieler ein richtiger Verbündeter von uns, d.h. Teamsicht, Unterstützung durch aggressive Verteidiger usw.?
 	bool IsAlly(const unsigned char player) const;
 	/// Truppen bestellen
 	void OrderTroops(nobMilitary * goal, unsigned count);

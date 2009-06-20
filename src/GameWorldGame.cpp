@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 5065 2009-06-18 17:25:27Z OLiver $
+// $Id: GameWorldGame.cpp 5074 2009-06-20 14:31:41Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -793,7 +793,7 @@ void GameWorldGame::Attack(const unsigned char player_attacker, const MapCoord x
 		return;
 
 	// Auch noch ein Gebäude von einem Feind (nicht inzwischen eingenommen)?
-	if(GameClient::inst().GetPlayer(player_attacker)->IsAlly(GetSpecObj<noBuilding>(x,y)->GetPlayer()))
+	if(!GameClient::inst().GetPlayer(player_attacker)->IsPlayerAttackable(GetSpecObj<noBuilding>(x,y)->GetPlayer()))
 		return;
 
 	// Prüfen, ob der angreifende Spieler das Gebäude überhaupt sieht (Cheatvorsorge)

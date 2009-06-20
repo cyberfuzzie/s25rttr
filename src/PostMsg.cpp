@@ -152,6 +152,8 @@ DiplomacyPostInfo::DiplomacyPostInfo(const unsigned char other_player, const Typ
 	else if(type == CANCEL)
 		sprintf(msg,_("The %s between player '%s' and you has been cancelled."),_(PACT_TITLES[pt]),
 			GameClient::inst().GetPlayer(other_player)->name.c_str());
+
+	text = msg;
 }
 
 

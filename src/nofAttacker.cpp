@@ -574,8 +574,8 @@ void nofAttacker::MissAttackingWalk()
 					// wie man selbst sein, da das Gebäude ja z.B. schon erobert worden sein kann
 					if(((*it)->GetBuildingType() != BLD_HEADQUARTERS || (*it) == attacked_goal)
 						&& CalcDistance(x,y,(*it)->GetX(),(*it)->GetY()) < 15
-						&& (*it)->GetPlayer() == attacked_goal->GetPlayer() && 
-						!GameClient::inst().GetPlayer(player)->IsAlly((*it)->GetPlayer()))
+						&& GameClient::inst().GetPlayer(attacked_goal->GetPlayer())->IsAlly((*it)->GetPlayer())  && 
+						GameClient::inst().GetPlayer(player)->IsPlayerAttackable((*it)->GetPlayer()))
 					{
 						// ggf. Verteidiger rufen
 						if( (defender = (*it)->SendDefender(this)))

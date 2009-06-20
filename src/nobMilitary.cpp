@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 5070 2009-06-19 20:05:10Z OLiver $
+// $Id: nobMilitary.cpp 5074 2009-06-20 14:31:41Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -86,7 +86,6 @@ nobMilitary::~nobMilitary()
 void nobMilitary::Destroy_nobMilitary()
 {
 	
-
 	// Bestellungen stornieren
 	CancelOrders();
 
@@ -113,6 +112,9 @@ void nobMilitary::Destroy_nobMilitary()
 	// Wieder aus dem Militärquadrat rauswerfen
 	GAMECLIENT.GetPlayer(player)->RemoveMilitaryBuilding(this);
 	gwg->GetMilitarySquare(x,y).erase(this);
+
+
+	
 }
 
 void nobMilitary::Serialize_nobMilitary(SerializedGameData * sgd) const
@@ -281,7 +283,7 @@ unsigned short nobMilitary::GetMilitaryRadius() const
 	return MILITARY_RADIUS[size];
 }
 
-void nobMilitary::LookForEnemyBuildings()
+void nobMilitary::LookForEnemyBuildings(const nobBaseMilitary * const exception)
 {
 	// Umgebung nach Militärgebäuden absuchen
 	list<nobBaseMilitary*> buildings;
@@ -292,7 +294,7 @@ void nobMilitary::LookForEnemyBuildings()
 	for(list<nobBaseMilitary*>::iterator it = buildings.begin();it.valid();++it)
 	{
 		// feindliches Militärgebäude?
-		if((*it)->GetPlayer() != player && !GAMECLIENT.GetPlayer((*it)->GetPlayer())->IsAlly(player))
+		if(*it != exception && (*it)->GetPlayer() != player && GAMECLIENT.GetPlayer((*it)->GetPlayer())->IsPlayerAttackable(player))
 		{
 			unsigned distance = CalcDistance(x,y,(*it)->GetX(),(*it)->GetY());
 
@@ -721,7 +723,7 @@ void nobMilitary::Capture(const unsigned char new_owner)
 	for(list<nobBaseMilitary*>::iterator it = buildings.begin();it.valid();++it)
 	{
 		// verbündetes Gebäude?
-		if(((*it)->GetPlayer() == player || GAMECLIENT.GetPlayer((*it)->GetPlayer())->IsAlly(player))
+		if(GAMECLIENT.GetPlayer((*it)->GetPlayer())->IsPlayerAttackable(old_player)
 			&& (*it)->GetBuildingType() >= BLD_BARRACKS && (*it)->GetBuildingType() <= BLD_FORTRESS)
 			// Grenzflaggen von dem neu berechnen
 			static_cast<nobMilitary*>(*it)->LookForEnemyBuildings();

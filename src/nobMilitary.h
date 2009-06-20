@@ -1,4 +1,4 @@
-// $Id: nobMilitary.h 4902 2009-05-21 09:12:10Z OLiver $
+// $Id: nobMilitary.h 5074 2009-06-20 14:31:41Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -105,8 +105,8 @@ public: void Serialize(SerializedGameData *sgd) const { Serialize_nobMilitary(sg
 	MapCoord GetMilitaryRadius() const;
 
 	/// Sucht feindliche Miitärgebäude im Umkreis und setzt die frontier_distance entsprechend (sowohl selber als
-	/// auch von den feindlichen Gebäuden) und bestellt somit ggf. neue Soldaten
-	void LookForEnemyBuildings();
+	/// auch von den feindlichen Gebäuden) und bestellt somit ggf. neue Soldaten, exception wird nicht mit einbezogen
+	void LookForEnemyBuildings(const nobBaseMilitary * const exception = NULL);
 	
 	/// Wird von gegnerischem Gebäude aufgerufen, wenn sie neu gebaut worden sind und es so ein neues Gebäude im Umkreis gibt
 	/// setzt frontier_distance neu falls möglich und sendet ggf. Verstärkung

@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.cpp 5047 2009-06-13 20:32:24Z OLiver $
+// $Id: dskGameInterface.cpp 5074 2009-06-20 14:31:41Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -735,7 +735,7 @@ void dskGameInterface::ShowActionWindow(const iwAction::Tabs& action_tabs,int cs
 	// Angriffstab muss wissen, wieviel Soldaten maximal entsendet werden können
 	if(action_tabs.attack)
 	{
-		if(!GAMECLIENT.GetLocalPlayer()->IsAlly(gwv->GetSpecObj<noBuilding>(cselx, csely)->GetPlayer()))
+		if(GAMECLIENT.GetLocalPlayer()->IsPlayerAttackable(gwv->GetSpecObj<noBuilding>(cselx, csely)->GetPlayer()))
 			params = gwv->GetAvailableSoldiersForAttack(GAMECLIENT.GetPlayerID(), cselx, csely);
 	}
 

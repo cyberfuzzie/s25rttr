@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 5066 2009-06-18 20:22:24Z OLiver $
+// $Id: GameClientPlayer.cpp 5074 2009-06-20 14:31:41Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1092,8 +1092,25 @@ void GameClientPlayer::ConvertTransportData(const std::vector<unsigned char>& tr
 
 bool GameClientPlayer::IsAlly(const unsigned char player) const
 {
-	return (playerid == player || ((team >= TM_TEAM1 && team <= TM_TEAM4)&& team == GAMECLIENT.GetPlayer(player)->team));
+	// Der Spieler ist ja auch zu sich selber verbündet ;
+	if(playerid == player)
+		return true;
+	else
+		return (GetPactState(TREATY_OF_ALLIANCE,player) == GameClientPlayer::ACCEPTED);
+
 }
+
+/// Darf der andere Spieler von mir angegriffen werden?
+bool GameClientPlayer::IsPlayerAttackable(const unsigned char player) const
+{
+	// Verbündete dürfen nicht angegriffen werden
+	if(IsAlly(player))
+		return false;
+	else
+		// Ansonsten darf bei bestehendem Nichtangriffspakt ebenfalls nicht angegriffen werden
+		return (GetPactState(NON_AGGRESSION_PACT,player) != GameClientPlayer::ACCEPTED);
+}
+
 
 void GameClientPlayer::OrderTroops(nobMilitary * goal, unsigned count)
 {
@@ -1510,8 +1527,8 @@ unsigned GameClientPlayer::GetRemainingPactTime(const PactType pt, const unsigne
 		{
 			if(pacts[other_player][pt].duration == 0xFFFFFFFF)
 				return 0xFFFFFFFF;
-			else if(pacts[other_player][pt].start + pacts[other_player][pt].duration <= GameClient::inst().GetGFNumber())
-				return (GameClient::inst().GetGFNumber() - (pacts[other_player][pt].start + pacts[other_player][pt].duration));
+			else if(GameClient::inst().GetGFNumber() <= pacts[other_player][pt].start + pacts[other_player][pt].duration)
+				return ((pacts[other_player][pt].start + pacts[other_player][pt].duration)-GameClient::inst().GetGFNumber());
 		}
 	}
 
@@ -1536,9 +1553,9 @@ void GameClientPlayer::CancelPact(const PactType pt, const unsigned char other_p
 			pacts[other_player][pt].duration = 0;
 			pacts[other_player][pt].want_cancel = false;
 
-			GameClient::inst().GetPlayer(other_player)->pacts[other_player][pt].accepted = false;
-			GameClient::inst().GetPlayer(other_player)->pacts[other_player][pt].duration = 0;
-			GameClient::inst().GetPlayer(other_player)->pacts[other_player][pt].want_cancel = false;
+			GameClient::inst().GetPlayer(other_player)->pacts[playerid][pt].accepted = false;
+			GameClient::inst().GetPlayer(other_player)->pacts[playerid][pt].duration = 0;
+			GameClient::inst().GetPlayer(other_player)->pacts[playerid][pt].want_cancel = false;
 
 			// Den Spielern eine Informationsnachricht schicken
 			if(GameClient::inst().GetPlayerID() == playerid || GameClient::inst().GetPlayerID() == other_player)

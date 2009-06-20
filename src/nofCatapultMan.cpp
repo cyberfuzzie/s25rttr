@@ -1,4 +1,4 @@
-// $Id: nofCatapultMan.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: nofCatapultMan.cpp 5074 2009-06-20 14:31:41Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -140,7 +140,7 @@ void nofCatapultMan::HandleDerivedEvent(const unsigned int id)
 			for(list<nobBaseMilitary*>::iterator it = buildings.begin();it.valid();++it)
 			{
 				// Auch ein richtiges Militärgebäude (kein HQ usw.), 
-				if((*it)->GetGOT() == GOT_NOB_MILITARY && !GameClient::inst().GetPlayer(player)->IsAlly((*it)->GetPlayer()))
+				if((*it)->GetGOT() == GOT_NOB_MILITARY && GameClient::inst().GetPlayer(player)->IsPlayerAttackable((*it)->GetPlayer()))
 				{
 					// Was nicht im Nebel liegt und auch schon besetzt wurde (nicht neu gebaut)?
 					if(gwg->GetNode((*it)->GetX(),(*it)->GetY()).fow[player].visibility == VIS_VISIBLE

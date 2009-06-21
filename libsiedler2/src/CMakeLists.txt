@@ -12,7 +12,7 @@ ADD_LIBRARY(siedler2 libsiedler2.cpp ArchivInfo.cpp ArchivItem.cpp
             LoadACT.cpp WriteACT.cpp LoadBBM.cpp WriteBBM.cpp LoadBMP.cpp
             WriteBMP.cpp LoadBOB.cpp WriteBOB.cpp LoadDATIDX.cpp WriteDATIDX.cpp
             LoadLBM.cpp WriteLBM.cpp LoadLST.cpp WriteLST.cpp LoadMAP.cpp
-            WriteMAP.cpp LoadTXT.cpp WriteTXT.cpp LoadSND.cpp MIDI_Track.cpp
+            WriteMAP.cpp LoadTLST.cpp LoadTXT.cpp WriteTXT.cpp LoadSND.cpp MIDI_Track.cpp
             XMIDI_Track.cpp)
 
 TARGET_LINK_LIBRARIES(siedler2 endian)

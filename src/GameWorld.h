@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 5018 2009-06-08 18:24:25Z OLiver $
+// $Id: GameWorld.h 5079 2009-06-21 13:12:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -321,7 +321,7 @@ public:
 	// Wege und Grenzsteine zeichnen ( nur reingenommen, da die Position sowieso hier berechnet wird, da bietet es sich an )
 	void DrawWays(const int x, const int y, const float xpos, const float ypos);
 	unsigned char IsBoundaryStone(const int x, const int y);
-	void DrawBoundaryStone(const int x, const int y, const MapCoord tx, const MapCoord ty, const int xpos, const int ypos);
+	void DrawBoundaryStone(const int x, const int y, const MapCoord tx, const MapCoord ty, const int xpos, const int ypos, Visibility vis);
 
 	/// Bauqualitäten anzeigen oder nicht
 	void ShowBQ() { show_bq = !show_bq; }

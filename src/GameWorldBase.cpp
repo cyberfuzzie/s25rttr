@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 4857 2009-05-11 18:31:33Z OLiver $
+// $Id: GameWorldBase.cpp 5079 2009-06-21 13:12:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1089,6 +1089,9 @@ void GameWorldBase::RecalcShadow(const MapCoord x, const MapCoord y)
 Visibility GameWorldBase::CalcWithAllyVisiblity(const MapCoord x, const MapCoord y, const unsigned char player) const
 {
 	Visibility best_visibility = GetNode(x,y).fow[player].visibility;
+
+	if (best_visibility == VIS_VISIBLE)
+		return best_visibility;
 
 	/// Teamsicht aktiviert?
 	if(GameClient::inst().GetGGS().team_view)

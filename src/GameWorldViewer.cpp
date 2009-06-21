@@ -1,4 +1,4 @@
-// $Id: GameWorldViewer.cpp 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: GameWorldViewer.cpp 5079 2009-06-21 13:12:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -73,11 +73,11 @@ void GameWorldViewer::Draw(const unsigned char player, unsigned * water, const b
 				shortest_len = abs(VideoDriverWrapper::inst().GetMouseX() - static_cast<int>(xpos)) + abs(VideoDriverWrapper::inst().GetMouseY() - static_cast<int>(ypos));
 			}
 
-			DrawBoundaryStone(x,y,tx,ty,xpos,ypos);
+			Visibility visibility = GetVisibility(tx,ty);
 
+			DrawBoundaryStone(x,y,tx,ty,xpos,ypos, visibility);
 
 			/// Nur bei Sichtbaren Stellen zeichnen
-			Visibility visibility = GetVisibility(tx,ty);
 			if(visibility == VIS_VISIBLE)
 			{
 				////////////////////////////////////////////////
@@ -355,10 +355,8 @@ unsigned char GameWorldViewer::IsBoundaryStone(const int x, const int y)
 		return 0;
 }
 
-void GameWorldViewer::DrawBoundaryStone(const int x, const int y, const MapCoord tx, const MapCoord ty, const int xpos, const int ypos)
+void GameWorldViewer::DrawBoundaryStone(const int x, const int y, const MapCoord tx, const MapCoord ty, const int xpos, const int ypos, Visibility vis)
 {
-	Visibility vis = GetVisibility(tx,ty);
-
 	if(vis == VIS_INVISIBLE)
 		// schwarz/unsichtbar, nichts zeichnen
 		return;

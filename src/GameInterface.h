@@ -1,4 +1,4 @@
-// $Id: GameInterface.h 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: GameInterface.h 5078 2009-06-21 11:41:45Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -35,6 +35,8 @@ public:
 	virtual void GI_UpdateMinimap(const MapCoord x, const MapCoord y) = 0;
 	/// Flagge wurde zerstört
 	virtual void GI_FlagDestroyed(const MapCoord x, const MapCoord y) = 0;
+	/// Bündnisvertrag wurde abgeschlossen oder abgebrochen --> Minimap updaten
+	virtual void GI_TreatyOfAllianceChanged() = 0;
 };
 
 

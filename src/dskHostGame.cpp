@@ -1,4 +1,4 @@
-// $Id: dskHostGame.cpp 4983 2009-06-01 07:33:02Z OLiver $
+// $Id: dskHostGame.cpp 5078 2009-06-21 11:41:45Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -161,9 +161,6 @@ dskHostGame::dskHostGame() :
 
 	//// GGS aktualisieren, zum ersten Mal
 	this->CI_GGSChanged(GameClient::inst().GetGGS());
-
-	//CreateMapPreview();
-
 
 	LOBBYCLIENT.SetInterface(this);
 	if(LOBBYCLIENT.LoggedIn())

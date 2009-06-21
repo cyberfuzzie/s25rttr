@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.h 5018 2009-06-08 18:24:25Z OLiver $
+// $Id: dskGameInterface.h 5078 2009-06-21 11:41:45Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -167,6 +167,8 @@ private:
 	void GI_PlayerDefeated(const unsigned player_id);
 	/// Es wurde etwas Minimap entscheidendes geändert --> Minimap updaten
 	void GI_UpdateMinimap(const MapCoord x, const MapCoord y);
+	/// Bündnisvertrag wurde abgeschlossen oder abgebrochen --> Minimap updaten
+	void GI_TreatyOfAllianceChanged();
 	
 };
 

@@ -45,9 +45,9 @@ const unsigned short HEADER_Y = 30;
 /// Position der ersten Zeile (Y)
 const unsigned short FIRST_LINE_Y = 55;
 /// Höhe der einzelnen farbigen Zeilen
-const unsigned short CELL_HEIGHT = 65;
+const unsigned short CELL_HEIGHT = 60;
 /// Abstand zwischen den farbigen Zeilen
-const unsigned short SPACE_HEIGHT = 20;
+const unsigned short SPACE_HEIGHT = 10;
 /// Abstand vom Rand der Zeilen
 const unsigned short LINE_DISTANCE_TO_MARGINS = 20;
 /// Größe der Pingfelder
@@ -120,7 +120,8 @@ iwDiplomacy::iwDiplomacy()
 		}
 	}
 
-
+	// Farben festlegen
+	Msg_PaintAfter();
 }
 
 void iwDiplomacy::Msg_PaintBefore()
@@ -172,7 +173,7 @@ void iwDiplomacy::Msg_PaintAfter()
 		{
 			for(unsigned z = 0;z<2;++z)
 			{
-				unsigned duration = GameClient::inst().GetLocalPlayer()->GetRemainingPactTime(TREATY_OF_ALLIANCE,i);
+				unsigned duration = GameClient::inst().GetLocalPlayer()->GetRemainingPactTime(PactType(z),i);
 				// Überhaupt ein Bündnis abgeschlossen und Bündnis nicht für die Ewigkeit?
 				if(duration > 0 && duration != 0xFFFFFFFF)
 					// Dann entsprechende Zeit setzen

@@ -1,4 +1,4 @@
-// $Id: GameClient.h 5050 2009-06-14 14:01:09Z OLiver $
+// $Id: GameClient.h 5078 2009-06-21 11:41:45Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -62,7 +62,7 @@ public:
 	unsigned char GetPlayerID() const { return playerid; }
 	unsigned GetPlayerCount() const { return players.getCount(); }
 	/// Liefert einen Player zurück
-	GameClientPlayer * GetPlayer(const unsigned int id) { return dynamic_cast<GameClientPlayer*>(players.getElement(id)); }
+	GameClientPlayer * GetPlayer(const unsigned int id) { return players.getElement(id); }
 	GameClientPlayer * GetLocalPlayer(void) { return GetPlayer(playerid); }
 	/// Erzeugt einen KI-Player, der mit den Daten vom GameClient gefüttert werden muss (zusätzlich noch mit den GameServer)
 	AIPlayer * CreateAIPlayer(const unsigned playerid);

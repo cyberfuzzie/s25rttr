@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 5074 2009-06-20 14:31:41Z OLiver $
+// $Id: GameClientPlayer.cpp 5078 2009-06-21 11:41:45Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1440,25 +1440,6 @@ void GameClientPlayer::Pact::Serialize(Serializer * ser)
 	ser->PushUnsignedInt(start);
 }
 
-/*GameClientPlayer::PactSuggestion::PactSuggestion(Serializer * ser) :
-	//id(ser->PopUnsignedInt()),
-	suggestion_time(ser->PopUnsignedInt()),
-	player(ser->PopUnsignedChar()),
-	pt(PactType(ser->PopUnsignedChar())),
-	duration(ser->PopUnsignedInt())
-{
-}
-
-void GameClientPlayer::PactSuggestion::Serialize(Serializer * ser)
-{
-	//ser->PushUnsignedInt(id);
-	ser->PushUnsignedInt(suggestion_time);
-	ser->PushUnsignedChar(player);
-	ser->PushUnsignedChar(static_cast<unsigned char>(pt));
-	ser->PushUnsignedInt(duration);
-}
-*/
-
 /// Macht Bündnisvorschlag an diesen Spieler
 void GameClientPlayer::SuggestPact(const unsigned char other_player, const PactType pt, const unsigned duration)
 {
@@ -1493,6 +1474,18 @@ void GameClientPlayer::MakePact(const PactType pt, const unsigned char other_pla
 	// Den Spielern eine Informationsnachricht schicken
 	if(GameClient::inst().GetPlayerID() == playerid)
 		GameClient::inst().SendPostMessage(new DiplomacyPostInfo(other_player,DiplomacyPostInfo::ACCEPT,pt));
+
+	// Ggf. den GUI Bescheid sagen, um Sichtbarkeiten etc. neu zu berechnen
+	if(pt == TREATY_OF_ALLIANCE && GameClient::inst().GetPlayerID() == playerid)
+	{
+		if(gwg->GetGameInterface())
+			gwg->GetGameInterface()->GI_TreatyOfAllianceChanged();
+	}
+
+	// Besetzung der Militärgebäude der jeweiligen Spieler überprüfen, da ja jetzt neue Feinde oder neue 
+	// Verbündete sich in Grenznähe befinden könnten
+	this->RegulateAllTroops();
+	GameClient::inst().GetPlayer(other_player)->RegulateAllTroops();
 }
 
 /// Zeigt an, ob ein Pakt besteht
@@ -1573,7 +1566,7 @@ void GameClientPlayer::CancelPact(const PactType pt, const unsigned char other_p
 	{
 		// Es besteht kein Bündnis, also unseren Bündnisvorschlag wieder zurücknehmen
 		pacts[other_player][pt].duration = 0;
-	}
+	} 
 }
 
 void GameClientPlayer::MakeStartPacts()

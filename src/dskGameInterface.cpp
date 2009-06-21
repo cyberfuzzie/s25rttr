@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.cpp 5074 2009-06-20 14:31:41Z OLiver $
+// $Id: dskGameInterface.cpp 5078 2009-06-21 11:41:45Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -938,6 +938,19 @@ void dskGameInterface::GI_UpdateMinimap(const MapCoord x, const MapCoord y)
 {
 	// Minimap Bescheid sagen
 	minimap.UpdateNode(x,y);
+}
+
+/// Bündnisvertrag wurde abgeschlossen oder abgebrochen --> Minimap updaten
+void dskGameInterface::GI_TreatyOfAllianceChanged()
+{
+	// Nur wenn Team-Sicht aktiviert ist, können sihc die Sichtbarkeiten auch ändern
+	if(GameClient::inst().GetGGS().team_view)
+	{
+		/// Sichtbarkeiten neu berechnen
+		gwv->RecalcAllColors();
+		// Minimap updaten
+		minimap.UpdateAll();
+	}
 }
 
 /// Baut Weg zurück von Ende bis zu start_id

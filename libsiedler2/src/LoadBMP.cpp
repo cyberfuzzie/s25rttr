@@ -1,4 +1,4 @@
-// $Id: LoadBMP.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: LoadBMP.cpp 5081 2009-06-21 19:57:30Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -63,7 +63,7 @@ static void LoadBMP_ReadLine(FILE *bmp, unsigned short y, unsigned int bmih_size
  *
  *  @author FloSoft
  */
-int libsiedler2::loader::LoadBMP(const char *file, ArchivInfo *items)
+int libsiedler2::loader::LoadBMP(const char *file, ArchivItem **item)
 {
 	struct BMHD {
 		unsigned short header; // 2
@@ -89,7 +89,7 @@ int libsiedler2::loader::LoadBMP(const char *file, ArchivInfo *items)
 
 	FILE *bmp;
 
-	if(file == NULL || items == NULL)
+	if(file == NULL || item == NULL)
 		return 1;
 
 	// Datei zum lesen öffnen
@@ -177,12 +177,12 @@ int libsiedler2::loader::LoadBMP(const char *file, ArchivInfo *items)
 	if(bmih.clrused == 0)
 		bmih.clrused = (int)pow(2.0, bmih.bbp);
 
-	items->alloc(2);
+	//items->alloc(2);
 
 	if(bmih.bbp == 8)
 	{
 		ArchivItem_Palette *palette = (ArchivItem_Palette*)(*allocator)(BOBTYPE_PALETTE, 0, NULL);
-		items->set(0, palette);
+		//items->set(0, palette);
 
 		// Farbpalette lesen
 		unsigned char colors[256][4];
@@ -190,14 +190,14 @@ int libsiedler2::loader::LoadBMP(const char *file, ArchivInfo *items)
 			return 10;
 
 		// Farbpalette zuweisen
-		for(int i = 0; i < bmih.clrused; ++i)
+	/*	for(int i = 0; i < bmih.clrused; ++i)
 			palette->set(i, colors[i][2], colors[i][1], colors[i][0]);
 
-		bitmap->setPalette(palette);
+		bitmap->setPalette(palette);*/
 	}
 
 	// Bitmap zuweisen
-	items->set(1, bitmap);
+	*item = bitmap;
 
 	// Bitmapdaten setzen
 	bitmap->setWidth(bmih.width);

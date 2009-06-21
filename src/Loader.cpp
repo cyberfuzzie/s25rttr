@@ -1,4 +1,4 @@
-// $Id: Loader.cpp 4978 2009-05-31 10:24:24Z OLiver $
+// $Id: Loader.cpp 5081 2009-06-21 19:57:30Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -188,7 +188,7 @@ bool Loader::LoadBackgrounds(void)
 	if(!LoadFile(FP_MENU_BACKGROUNDS[FILE_SPLASH_ID], NULL, &splash ) )
 		return false;
 
-	glArchivItem_Bitmap *image = dynamic_cast<glArchivItem_Bitmap*>(splash.get(1));
+	glArchivItem_Bitmap *image = dynamic_cast<glArchivItem_Bitmap*>(splash.get(0));
 	image->setFilter(GL_LINEAR);
 	image->Draw(0, 0, VideoDriverWrapper::inst().GetScreenWidth(), VideoDriverWrapper::inst().GetScreenHeight(), 0, 0, 0, 0);
 	VideoDriverWrapper::inst().SwapBuffers();
@@ -198,7 +198,7 @@ bool Loader::LoadBackgrounds(void)
 		libsiedler2::ArchivInfo bgd;
 		if(i == FILE_SPLASH_ID)
 		{
-			backgrounds.setC(i, splash.get(1));
+			backgrounds.setC(i, splash.get(0));
 		}
 		else
 		{

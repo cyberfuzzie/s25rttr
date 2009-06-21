@@ -1,4 +1,4 @@
-// $Id: prototypen.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: prototypen.h 5081 2009-06-21 19:57:30Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -38,6 +38,9 @@ namespace libsiedler2
 		/// schreibt ein ArchivInfo eine LST-File.
 		int WriteLST(const char *file, const ArchivItem_Palette *palette, const ArchivInfo *items);
 
+		/// lädt eine TLST-File (beschriebenes LST-File in Textform) in ein ArchivInfo.
+		int LoadTLST(const char *file, ArchivInfo *items);
+
 		/// lädt eine BBM-File in ein ArchivInfo.
 		int LoadBBM(const char *file, ArchivInfo *items);
 
@@ -57,7 +60,7 @@ namespace libsiedler2
 		int WriteDATIDX(const char *file, const ArchivItem_Palette *palette, const ArchivInfo *items);
 
 		/// lädt eine BMP-File in ein ArchivInfo.
-		int LoadBMP(const char *file, ArchivInfo *items);
+		int LoadBMP(const char *file, ArchivItem **item);
 
 		/// schreibt ein ArchivInfo in eine BMP-File.
 		int WriteBMP(const char *file, const ArchivItem_Palette *palette, const ArchivInfo *items, long nr = -1);

@@ -1,4 +1,4 @@
-// $Id: LoadBMP.cpp 5090 2009-06-23 13:07:47Z FloSoft $
+// $Id: LoadBMP.cpp 5091 2009-06-23 18:27:10Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -56,7 +56,10 @@ static inline void LoadBMP_ReadLine(FILE *bmp,
 			} break;
 		case 3: // 24 bit
 			{
-				bitmap->tex_setPixel(x, y, buffer[x*bbp+2],buffer[x*bbp+1], buffer[x*bbp+0], 0xFF);
+				if(buffer[x*bbp+2] == 0xFF && buffer[x*bbp+1] == 0x00 && buffer[x*bbp+0] == 0x8F) // transparenz? (color-key "rosa")
+					bitmap->tex_setPixel(x, y, 0, 0, 0, 0x00);
+				else
+					bitmap->tex_setPixel(x, y, buffer[x*bbp+2], buffer[x*bbp+1], buffer[x*bbp+0], 0xFF);
 			} break;
 		}
 	}

@@ -1,4 +1,4 @@
-// $Id: ArchivItem_Bitmap_Player.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: ArchivItem_Bitmap_Player.cpp 5091 2009-06-23 18:27:10Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -570,7 +570,7 @@ int libsiedler2::baseArchivItem_Bitmap_Player::create(unsigned short width,
 			{
 			case FORMAT_RGBA:
 				{
-					unsigned char c = palette->lookup(buffer[position + 2], buffer[position + 1], buffer[position]);
+					unsigned char c = palette->lookup(buffer[position + 2], buffer[position + 1], buffer[position + 0]);
 					if(buffer[position + 3] != 0x00)
 					{
 						if(c >= color && c <= color+3) // Spielerfarbe
@@ -702,23 +702,19 @@ int libsiedler2::baseArchivItem_Bitmap_Player::printHelper(unsigned char *buffer
 					case 4:
 						{
 							// Ziel ist RGB+A
-							if(only_player)
+							if(tex_pdata[position3] != TRANSPARENT_INDEX)
 							{
-								if(tex_pdata[position3] != TRANSPARENT_INDEX)
-								{
-									// Playerfarbe setzen
-									buffer[position + 3] = 0xFF;
-									palette->get(tex_pdata[position3] + color, &buffer[position + 0], &buffer[position + 1], &buffer[position + 2]);
-								}
+								// Playerfarbe setzen
+								buffer[position + 3] = 0xFF;
+								palette->get(tex_pdata[position3] + color, &buffer[position + 2], &buffer[position + 1], &buffer[position + 0]);
 							}
-							else
+							if(tex_data[position2] != TRANSPARENT_INDEX) // bei Transparenz wird buffer nicht verändert
 							{
-								if(tex_data[position2] != TRANSPARENT_INDEX) // bei Transparenz wird buffer nicht verändert
+								if(!only_player)
 								{
 									// normale Pixel setzen
 									buffer[position + 3] = 0xFF;
-									palette->get(tex_data[position2], &buffer[position + 0], &buffer[position + 1], &buffer[position + 2]);
-								
+									palette->get(tex_data[position2], &buffer[position + 2], &buffer[position + 1], &buffer[position + 0]);
 								}
 							}
 						} break;
@@ -731,17 +727,14 @@ int libsiedler2::baseArchivItem_Bitmap_Player::printHelper(unsigned char *buffer
 					case 1:
 						{
 							// Ziel ist Paletted
+							if(tex_pdata[position3] != TRANSPARENT_INDEX)
+							{
+								// Playerfarbe setzen
+								buffer[position] = tex_pdata[position3] + color;
+							}
 							if(tex_data[position2 + 3] == 0xFF)  // bei Transparenz wird buffer nicht verändert
 							{
-								if(tex_pdata[position3] != TRANSPARENT_INDEX)
-								{
-									if(only_player)
-									{
-										// Playerfarbe setzen
-										buffer[position] = tex_pdata[position3] + color;
-									}
-								}
-								else if(!only_player)
+								if(!only_player)
 								{
 									// normale Pixel setzen
 									buffer[position] = tex_getPixel(x, y, palette);
@@ -751,18 +744,15 @@ int libsiedler2::baseArchivItem_Bitmap_Player::printHelper(unsigned char *buffer
 					case 4:
 						{
 							// Ziel ist auch RGB+A
+							if(tex_pdata[position3] != TRANSPARENT_INDEX)
+							{
+								// Playerfarbe setzen
+								palette->get(tex_pdata[position3] + color, &buffer[position + 2], &buffer[position + 1], &buffer[position + 0]);
+								buffer[position + 3] = 0xFF; // a
+							}
 							if(tex_data[position2 + 3] == 0xFF)  // bei Transparenz wird buffer nicht verändert
 							{
-								if(tex_pdata[position3] != TRANSPARENT_INDEX)
-								{
-									if(only_player)
-									{
-										// Playerfarbe setzen
-										palette->get(tex_pdata[position3] + color, &buffer[position + 2], &buffer[position + 1], &buffer[position + 0]);
-										buffer[position + 3] = tex_data[position2 + 3]; // a
-									}
-								}
-								else if(!only_player)
+								if(!only_player)
 								{
 									// normale Pixel setzen
 									buffer[position + 0] = tex_data[position2 + 0]; // b

@@ -1,4 +1,4 @@
-// $Id: WriteBBM.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: WriteBBM.cpp 5091 2009-06-23 18:27:10Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -71,7 +71,7 @@ int libsiedler2::loader::WriteBBM(const char *file, const ArchivInfo *items)
 		return 3;
 
 	// Länge schreiben
-	length = 4 + count * (768*3 + 8);
+	length = 4 + count * (256*3 + 8);
 	if(libendian::le_write_ui(length, bbm) != 0)
 		return 4;
 
@@ -85,18 +85,18 @@ int libsiedler2::loader::WriteBBM(const char *file, const ArchivInfo *items)
 		if(palette->getBobType() == BOBTYPE_PALETTE)
 		{
 			// Chunk schreiben
-			if(libendian::le_write_c(cmap, 4, bbm) != 4)
+			if(libendian::be_write_c(cmap, 4, bbm) != 4)
 				return 6;
 
 			// Länge schreiben
-			length = 768*3;
-			if(libendian::le_write_ui(length, bbm) != 0)
+			length = 256*3;
+			if(libendian::be_write_ui(length, bbm) != 0)
 				return 7;
 
 			// Farbpalette zuweisen
 			unsigned char colors[256][3];
 			for(unsigned int k = 0; k < 256; ++k)
-				palette->get(k, &colors[k][2], &colors[k][1], &colors[k][0]);
+				palette->get(k, &colors[k][0], &colors[k][1], &colors[k][2]);
 
 			// Farbpalette schreiben
 			if(libendian::le_write_uc(colors[0], 256*3, bbm) != 256*3)

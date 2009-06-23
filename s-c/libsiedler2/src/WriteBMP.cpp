@@ -1,4 +1,4 @@
-// $Id: WriteBMP.cpp 5090 2009-06-23 13:07:47Z FloSoft $
+// $Id: WriteBMP.cpp 5091 2009-06-23 18:27:10Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -173,7 +173,12 @@ int libsiedler2::loader::WriteBMP(const char *file, const ArchivItem_Palette *pa
 	memset(buffer, 0x00, bmih.width*bmih.height * 4 + 1);
 
 	/// @todo: bug im print?!?
-	if(bitmap->print(buffer, bmih.width, bmih.height, FORMAT_RGBA, palette) != 0)
+	if(bitmap->getBobType() == BOBTYPE_BITMAP_PLAYER)
+	{
+		if(dynamic_cast<const baseArchivItem_Bitmap_Player*>(bitmap)->print(buffer, bmih.width, bmih.height, FORMAT_RGBA, palette, 128) != 0)
+			return 7;
+	}
+	else if(bitmap->print(buffer, bmih.width, bmih.height, FORMAT_RGBA, palette) != 0)
 		return 7;
 
 	unsigned char placeholder[80];
@@ -193,9 +198,9 @@ int libsiedler2::loader::WriteBMP(const char *file, const ArchivItem_Palette *pa
 				} break;
 			case 24:
 				{
-					unsigned char r = buffer[4*(x + bmih.width*y)];
+					unsigned char r = buffer[4*(x + bmih.width*y) + 2];
 					unsigned char g = buffer[4*(x + bmih.width*y) + 1];
-					unsigned char b = buffer[4*(x + bmih.width*y) + 2];
+					unsigned char b = buffer[4*(x + bmih.width*y) + 0];
 					if(buffer[4*(x + bmih.width*y) + 3] == 0x00)
 					{
 						r = 0xff;

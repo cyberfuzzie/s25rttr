@@ -1,4 +1,4 @@
-// $Id: ArchivItem_Bitmap_Shadow.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: ArchivItem_Bitmap_Shadow.h 5090 2009-06-23 13:07:47Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -57,7 +57,7 @@ namespace libsiedler2
 		ArchivItem_Bitmap_Shadow(void) : baseArchivItem_Bitmap(), baseArchivItem_Bitmap_Shadow() {}
 
 		/// Kopierkonstruktor von @p ArchivItem_Bitmap_Shadow.
-		ArchivItem_Bitmap_Shadow(const ArchivItem_Bitmap_Shadow *item) : baseArchivItem_Bitmap(), baseArchivItem_Bitmap_Shadow(item) {}
+		ArchivItem_Bitmap_Shadow(const ArchivItem_Bitmap_Shadow *item) : baseArchivItem_Bitmap(item), baseArchivItem_Bitmap_Shadow(item) {}
 	};
 }
 

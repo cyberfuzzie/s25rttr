@@ -1,4 +1,4 @@
-// $Id: LoadBMP.cpp 5088 2009-06-23 11:22:55Z FloSoft $
+// $Id: LoadBMP.cpp 5090 2009-06-23 13:07:47Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -103,7 +103,7 @@ int libsiedler2::loader::LoadBMP(const char *file, ArchivItem **image, ArchivIte
 
 	FILE *bmp;
 
-	if(file == NULL || item == NULL)
+	if(file == NULL || image == NULL)
 		return 1;
 
 	// Datei zum lesen öffnen
@@ -209,9 +209,9 @@ int libsiedler2::loader::LoadBMP(const char *file, ArchivItem **image, ArchivIte
 		if(palette)
 		{
 			for(int i = 0; i < bmih.clrused; ++i)
-				palette->set(i, colors[i][2], colors[i][1], colors[i][0]);
+				dynamic_cast<ArchivItem_Palette*>(*palette)->set(i, colors[i][2], colors[i][1], colors[i][0]);
 
-			bitmap->setPalette(palette);
+			bitmap->setPalette(dynamic_cast<ArchivItem_Palette*>(*palette));
 		}
 	}
 

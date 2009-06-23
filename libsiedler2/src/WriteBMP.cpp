@@ -1,4 +1,4 @@
-// $Id: WriteBMP.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: WriteBMP.cpp 5090 2009-06-23 13:07:47Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -83,6 +83,7 @@ int libsiedler2::loader::WriteBMP(const char *file, const ArchivItem_Palette *pa
 
 			switch(items->get(i)->getBobType())
 			{
+			case BOBTYPE_BITMAP_PLAYER:
 			case BOBTYPE_BITMAP_RLE:
 			case BOBTYPE_BITMAP_SHADOW:
 			case BOBTYPE_BITMAP_RAW:

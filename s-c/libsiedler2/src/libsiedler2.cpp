@@ -1,4 +1,4 @@
-// $Id: libsiedler2.cpp 5081 2009-06-21 19:57:30Z OLiver $
+// $Id: libsiedler2.cpp 5090 2009-06-23 13:07:47Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -304,8 +304,8 @@ int libsiedler2::Load(const char *file, libsiedler2::ArchivInfo *items, const li
 		ret = loader::LoadBBM(file, items);
 	else if(strncmp(endung, "bmp", 3)==0)
 	{
-		items->alloc(1);
-		ret = loader::LoadBMP(file, items->getP(0));
+		items->alloc(2);
+		ret = loader::LoadBMP(file, items->getP(0), items->getP(1));
 	}
 	else if(strncmp(endung, "bob", 3)==0)
 		ret = loader::LoadBOB(file, palette, items);

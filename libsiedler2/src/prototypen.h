@@ -1,4 +1,4 @@
-// $Id: prototypen.h 5081 2009-06-21 19:57:30Z OLiver $
+// $Id: prototypen.h 5088 2009-06-23 11:22:55Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -60,7 +60,7 @@ namespace libsiedler2
 		int WriteDATIDX(const char *file, const ArchivItem_Palette *palette, const ArchivInfo *items);
 
 		/// lädt eine BMP-File in ein ArchivInfo.
-		int LoadBMP(const char *file, ArchivItem **item);
+		int LoadBMP(const char *file, ArchivItem **image, ArchivItem **palette = NULL);
 
 		/// schreibt ein ArchivInfo in eine BMP-File.
 		int WriteBMP(const char *file, const ArchivItem_Palette *palette, const ArchivInfo *items, long nr = -1);

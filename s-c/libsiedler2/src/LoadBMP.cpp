@@ -1,4 +1,4 @@
-// $Id: LoadBMP.cpp 5081 2009-06-21 19:57:30Z OLiver $
+// $Id: LoadBMP.cpp 5088 2009-06-23 11:22:55Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -29,18 +29,32 @@
 	static char THIS_FILE[] = __FILE__;
 #endif
 
-static void LoadBMP_ReadLine(FILE *bmp, unsigned short y, unsigned int bmih_size, unsigned int size, unsigned int width, unsigned char bbp, libsiedler2::baseArchivItem_Bitmap *bitmap, unsigned char *buffer)
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  liest eine Bitmapzeile
+ *
+ *  @author OLiver
+ */
+static inline void LoadBMP_ReadLine(FILE *bmp, 
+									unsigned short y, 
+									unsigned int bmih_size, 
+									unsigned int size, 
+									unsigned int width, 
+									unsigned char bbp, 
+									libsiedler2::baseArchivItem_Bitmap *bitmap, 
+									unsigned char *buffer)
 {
-	libendian::le_read_uc(buffer, width*bbp, bmp);
+	libendian::le_read_uc(buffer, width * bbp, bmp);
+
 	for(unsigned short x = 0; x < width; ++x)
 	{
 		switch(bbp)
 		{
-		case 1:
+		case 1: // 256
 			{
 				bitmap->tex_setPixel(x, y, buffer[x*bbp], NULL);
 			} break;
-		case 3:
+		case 3: // 24 bit
 			{
 				bitmap->tex_setPixel(x, y, buffer[x*bbp+2],buffer[x*bbp+1], buffer[x*bbp+0], 0xFF);
 			} break;
@@ -63,7 +77,7 @@ static void LoadBMP_ReadLine(FILE *bmp, unsigned short y, unsigned int bmih_size
  *
  *  @author FloSoft
  */
-int libsiedler2::loader::LoadBMP(const char *file, ArchivItem **item)
+int libsiedler2::loader::LoadBMP(const char *file, ArchivItem **image, ArchivItem **palette)
 {
 	struct BMHD {
 		unsigned short header; // 2
@@ -181,7 +195,9 @@ int libsiedler2::loader::LoadBMP(const char *file, ArchivItem **item)
 
 	if(bmih.bbp == 8)
 	{
-		ArchivItem_Palette *palette = (ArchivItem_Palette*)(*allocator)(BOBTYPE_PALETTE, 0, NULL);
+		if(palette)
+			*palette = (ArchivItem_Palette*)(*allocator)(BOBTYPE_PALETTE, 0, NULL);
+		//ArchivItem_Palette *palette = (ArchivItem_Palette*)(*allocator)(BOBTYPE_PALETTE, 0, NULL);
 		//items->set(0, palette);
 
 		// Farbpalette lesen
@@ -190,14 +206,18 @@ int libsiedler2::loader::LoadBMP(const char *file, ArchivItem **item)
 			return 10;
 
 		// Farbpalette zuweisen
-	/*	for(int i = 0; i < bmih.clrused; ++i)
-			palette->set(i, colors[i][2], colors[i][1], colors[i][0]);
+		if(palette)
+		{
+			for(int i = 0; i < bmih.clrused; ++i)
+				palette->set(i, colors[i][2], colors[i][1], colors[i][0]);
 
-		bitmap->setPalette(palette);*/
+			bitmap->setPalette(palette);
+		}
 	}
 
 	// Bitmap zuweisen
-	*item = bitmap;
+	if(image)
+		*image = bitmap;
 
 	// Bitmapdaten setzen
 	bitmap->setWidth(bmih.width);

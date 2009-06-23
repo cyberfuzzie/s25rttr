@@ -1,4 +1,4 @@
-// $Id: ArchivItem_Bitmap.cpp 5091 2009-06-23 18:27:10Z FloSoft $
+// $Id: ArchivItem_Bitmap.cpp 5093 2009-06-23 19:45:20Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -689,7 +689,7 @@ int libsiedler2::baseArchivItem_Bitmap::print(unsigned char *buffer,
 							// Ziel ist RGB+A
 							if(tex_data[position2] != TRANSPARENT_INDEX) // bei Transparenz wird buffer nicht verändert
 							{
-								palette->get(tex_data[position2], &buffer[position + 0], &buffer[position + 1], &buffer[position + 2]);
+								palette->get(tex_data[position2], &buffer[position + 2], &buffer[position + 1], &buffer[position + 0]);
 								buffer[position + 3] = 0xFF;
 							}
 						} break;

@@ -1,4 +1,4 @@
-// $Id: glArchivItem_Bitmap_Player.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: glArchivItem_Bitmap_Player.cpp 5093 2009-06-23 19:45:20Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -81,7 +81,7 @@ void glArchivItem_Bitmap_Player::GenerateTexture(void)
 	//if(!palette)
 	setPalette(GetPalette(6));
 
-	int iformat = GL_RGBA, dformat = GL_RGBA; //GL_BGRA_EXT;
+	int iformat = GL_RGBA, dformat = GL_BGRA; //GL_BGRA_EXT;
 
 	unsigned char *buffer = new unsigned char[tex_width*tex_height*4];
 

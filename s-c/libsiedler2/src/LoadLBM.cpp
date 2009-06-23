@@ -1,4 +1,4 @@
-// $Id: LoadLBM.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: LoadLBM.cpp 5093 2009-06-23 19:45:20Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -195,6 +195,7 @@ int libsiedler2::loader::LoadLBM(const char *file, ArchivInfo *items)
 				{
 				case 0: // unkomprimiert
 					{
+						/*assert(false);*/
 					} break;
 				case 1: // komprimiert (RLE?)
 					{

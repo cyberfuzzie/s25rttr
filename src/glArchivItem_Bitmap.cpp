@@ -1,4 +1,4 @@
-// $Id: glArchivItem_Bitmap.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: glArchivItem_Bitmap.cpp 5093 2009-06-23 19:45:20Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -181,7 +181,7 @@ void glArchivItem_Bitmap::GenerateTexture(void)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filter);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter);
 
-	int iformat = GL_RGBA, dformat = GL_RGBA;
+	int iformat = GL_RGBA, dformat = GL_BGRA;
 
 	unsigned char *buffer = new unsigned char[tex_width*tex_height*4];
 

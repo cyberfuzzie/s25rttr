@@ -1,4 +1,4 @@
-// $Id: lstpacker.cpp 5091 2009-06-23 18:27:10Z FloSoft $
+// $Id: lstpacker.cpp 5092 2009-06-23 18:58:55Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -111,9 +111,9 @@ int main(int argc, char* argv[])
 
 		unpack(directory, lst, palette);
 
-		argv[1][directory.size()] = '\0';
+		//argv[1][directory.size()] = '\0';
 	}
-	//else
+	else
 	{
 		string directory(argv[1]);
 		string file(argv[1]);

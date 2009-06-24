@@ -53,6 +53,7 @@ class GameCommand
 	/// Typ dieses Command
 	const Type gst;
 public:
+	virtual ~GameCommand(void) {}
 
 	/// Erzeugt GameCommand anhand von Typen
 	static GameCommand * CreateGameCommand(const Type gst, Serializer * ser);

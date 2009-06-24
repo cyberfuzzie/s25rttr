@@ -1,4 +1,4 @@
-// $Id: VideoDriverWrapper.cpp 4798 2009-05-04 17:30:57Z FloSoft $
+// $Id: VideoDriverWrapper.cpp 5098 2009-06-24 17:09:39Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -246,7 +246,7 @@ bool VideoDriverWrapper::hasExtension(const char *extension)
  */
 void VideoDriverWrapper::CleanUp()
 {
-	glDeleteTextures(texture_pos, texture_list);
+	glDeleteTextures(texture_pos, (const GLuint*)texture_list);
 
 	memset(texture_list, 0, sizeof(unsigned int)*texture_pos);
 	texture_pos = 0;
@@ -266,7 +266,7 @@ unsigned int VideoDriverWrapper::GenerateTexture()
 		return 0;
 	}
 
-	glGenTextures(1, &texture_list[texture_pos]);
+	glGenTextures(1, (GLuint*)&texture_list[texture_pos]);
 
 	return texture_list[texture_pos++];
 }
@@ -390,6 +390,7 @@ void VideoDriverWrapper::LoadAllExtensions()
 	// auf VertexBufferObject-Extension testen
 	if((GLOBALVARS.ext_vbo = hasExtension("GL_ARB_vertex_buffer_object")))
 	{
+#ifndef __APPLE__
 		if ( (glBindBufferARB = pto2ptf<PFNGLBINDBUFFERARBPROC>(loadExtension("glBindBufferARB"))) == NULL)
 			GLOBALVARS.ext_vbo = false;
 		else if ( (glDeleteBuffersARB = pto2ptf<PFNGLDELETEBUFFERSARBPROC>(loadExtension("glDeleteBuffersARB"))) == NULL)
@@ -400,6 +401,7 @@ void VideoDriverWrapper::LoadAllExtensions()
 			GLOBALVARS.ext_vbo = false;
 		else if ( (glBufferSubDataARB = pto2ptf<PFNGLBUFFERSUBDATAARBPROC>(loadExtension("glBufferSubDataARB"))) == NULL)
 			GLOBALVARS.ext_vbo = false;
+#endif // ! __APPLE__
 	}
 }
 

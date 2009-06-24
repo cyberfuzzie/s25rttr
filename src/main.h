@@ -1,4 +1,4 @@
-// $Id: main.h 5003 2009-06-05 15:45:19Z FloSoft $
+// $Id: main.h 5098 2009-06-24 17:09:39Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -80,8 +80,13 @@
 
 #include <bzlib.h>
 
-#include <GL/gl.h>
-#include <GL/glext.h>
+#ifdef __APPLE__
+	#include <OpenGL/gl.h>
+	#include <OpenGL/glext.h>
+#else
+	#include <GL/gl.h>
+	#include <GL/glext.h>
+#endif // !__APPLE__
 
 #ifdef _WIN32
 

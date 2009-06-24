@@ -1,4 +1,4 @@
-// $Id: ExtensionList.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: ExtensionList.h 5098 2009-06-24 17:09:39Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -25,8 +25,16 @@
 	#include <windows.h>
 #endif // _WIN32
 
-#include <GL/gl.h>
-#include <GL/glext.h>
+#ifdef __APPLE__
+	#include <OpenGL/gl.h>
+	#include <OpenGL/glext.h>
+
+	#define GL_COMBINE_EXT                    0x8570
+	#define GL_RGB_SCALE_EXT                  0x8573
+#else
+	#include <GL/gl.h>
+	#include <GL/glext.h>
+#endif // !__APPLE__
 
 // WGL_EXT_swap_control
 #ifdef _WIN32
@@ -37,14 +45,15 @@
 
 extern PFNWGLSWAPINTERVALFARPROC wglSwapIntervalEXT;
 
-// GL_ARB_vertex_buffer_object
-extern PFNGLBINDBUFFERARBPROC glBindBufferARB; // VBO Bind-Prozedur
-extern PFNGLDELETEBUFFERSARBPROC glDeleteBuffersARB; // VBO Lösch-Prozedur
-extern PFNGLGENBUFFERSARBPROC glGenBuffersARB; // VBO Namens Generations-Prozedur
-extern PFNGLBUFFERDATAARBPROC glBufferDataARB; // VBO Daten-Lade-Prozedur
-extern PFNGLBUFFERSUBDATAARBPROC glBufferSubDataARB; /// VBO Daten-Änder-Prozedur
-
-// GL_EXT_paletted_texture
-extern PFNGLCOLORTABLEEXTPROC glColorTableEXT;
+#ifndef __APPLE__
+	// GL_ARB_vertex_buffer_object
+	extern PFNGLBINDBUFFERARBPROC glBindBufferARB; // VBO Bind-Prozedur
+	extern PFNGLDELETEBUFFERSARBPROC glDeleteBuffersARB; // VBO Lösch-Prozedur
+	extern PFNGLGENBUFFERSARBPROC glGenBuffersARB; // VBO Namens Generations-Prozedur
+	extern PFNGLBUFFERDATAARBPROC glBufferDataARB; // VBO Daten-Lade-Prozedur
+	extern PFNGLBUFFERSUBDATAARBPROC glBufferSubDataARB; /// VBO Daten-Änder-Prozedur
+	// GL_EXT_paletted_texture
+	extern PFNGLCOLORTABLEEXTPROC glColorTableEXT;
+#endif // !__APPLE__
 
 #endif // EXTENSIONLIST_H_INCLUDED

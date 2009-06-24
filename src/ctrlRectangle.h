@@ -1,4 +1,4 @@
-// $Id: ctrlRectangle.h 4983 2009-06-01 07:33:02Z OLiver $
+// $Id: ctrlRectangle.h 5098 2009-06-24 17:09:39Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -47,6 +47,8 @@ protected:
 class ColorControlInterface
 {
 public:
+	virtual ~ColorControlInterface(void) { }
+
 	/// Setzt die Farbe des Controls
 	virtual void SetColor(const unsigned int fill_color) = 0; 
 };

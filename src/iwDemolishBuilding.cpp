@@ -1,4 +1,4 @@
-// $Id: iwDemolishBuilding.cpp 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: iwDemolishBuilding.cpp 5098 2009-06-24 17:09:39Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -41,7 +41,7 @@
 
 /// Konstruktor von @p iwBuilding.
 iwDemolishBuilding::iwDemolishBuilding(GameWorldViewer * const gwv,const GO_Type got,const unsigned short building_x, const unsigned short building_y,const BuildingType building, const Nation nation, const unsigned guiid)
-: IngameWindow(guiid,-2,-2,200,200,_("Demolish?"),GetImage(resource_dat, 41)), gwv(gwv),  got(got),
+: IngameWindow(guiid,0xFFFE,0xFFFE,200,200,_("Demolish?"),GetImage(resource_dat, 41)), gwv(gwv),  got(got),
 			   building_x(building_x),  building_y(building_y), building(building), nation(nation)
 {
 	

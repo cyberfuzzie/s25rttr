@@ -1,4 +1,4 @@
-// $Id: glArchivItem_Bitmap.cpp 5093 2009-06-23 19:45:20Z FloSoft $
+// $Id: glArchivItem_Bitmap.cpp 5098 2009-06-24 17:09:39Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -139,7 +139,7 @@ unsigned int glArchivItem_Bitmap::GetTexture()
  */
 void glArchivItem_Bitmap::DeleteTexture()
 {
-	glDeleteTextures(1, &texture);
+	glDeleteTextures(1, (const GLuint*)&texture);
 	texture = 0;
 }
 

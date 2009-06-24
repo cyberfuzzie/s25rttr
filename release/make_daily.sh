@@ -28,7 +28,7 @@ EXIT=$?
 echo "Build completed: $(date)" >>$TARGET/build_${ARCH}.log
 
 if [ $EXIT != 0 ] ; then
-  cat $TARGET/build_${ARCH}.log | /usr/bin/mail -s "Daily Build $VERSION Failed"  sf-team@siedler25.org
+  cat $TARGET/build_${ARCH}.log | /usr/bin/mail -s "Daily Build $VERSION Failed" -c bugs@siedler25.org sf-team@siedler25.org
 
   EXIT=1
 else

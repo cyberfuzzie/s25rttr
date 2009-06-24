@@ -272,7 +272,7 @@ void iwStatistics::DrawStatistic(StatisticType type)
   maxValue->SetText(ss.str());
 
   // Statistiklinien zeichnen
-  unsigned short previousX, previousY;
+  unsigned short previousX=0, previousY=0;
   for (unsigned p=0; p<GAMECLIENT.GetPlayerCount(); ++p)
   {
     if (!activePlayers[p])

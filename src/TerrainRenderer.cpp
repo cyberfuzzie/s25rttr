@@ -1,4 +1,4 @@
-// $Id: TerrainRenderer.cpp 4788 2009-05-03 15:57:32Z OLiver $
+// $Id: TerrainRenderer.cpp 5098 2009-06-24 17:09:39Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -47,9 +47,9 @@ TerrainRenderer::~TerrainRenderer()
 {
 	if(SETTINGS.vbo)
 	{
-		glDeleteBuffersARB(1, &vbo_vertices);
-		glDeleteBuffersARB(1, &vbo_texcoords);
-		glDeleteBuffersARB(1, &vbo_colors);
+		glDeleteBuffersARB(1, (const GLuint*)&vbo_vertices);
+		glDeleteBuffersARB(1, (const GLuint*)&vbo_texcoords);
+		glDeleteBuffersARB(1, (const GLuint*)&vbo_colors);
 	}
 
 	delete[] vertices;
@@ -303,19 +303,19 @@ void TerrainRenderer::GenerateOpenGL(const GameWorldViewer * gwv)
 	if(SETTINGS.vbo)
 	{
 		// Generiere und Binde den Vertex Buffer
-		glGenBuffersARB(1, &vbo_vertices);
+		glGenBuffersARB(1, (GLuint*)&vbo_vertices);
 		glBindBufferARB(GL_ARRAY_BUFFER_ARB, vbo_vertices);
 		glBufferDataARB(GL_ARRAY_BUFFER_ARB, (offset + border_count) * 3 * 2 * sizeof(float), gl_vertices, GL_STATIC_DRAW_ARB);
 		glVertexPointer(2, GL_FLOAT, 0, NULL);
 
 		// Generiere und Binde den Textur Koordinaten Buffer
-		glGenBuffersARB(1, &vbo_texcoords);
+		glGenBuffersARB(1, (GLuint*)&vbo_texcoords);
 		glBindBufferARB(GL_ARRAY_BUFFER_ARB,vbo_texcoords);
 		glBufferDataARB(GL_ARRAY_BUFFER_ARB, (offset + border_count) * 3 * 2 * sizeof(float), gl_texcoords, GL_STATIC_DRAW_ARB );
 		glTexCoordPointer(2, GL_FLOAT, 0, NULL);
 
 		// Generiere und Binde den Color Buffer
-		glGenBuffersARB(1, &vbo_colors);
+		glGenBuffersARB(1, (GLuint*)&vbo_colors);
 		glBindBufferARB(GL_ARRAY_BUFFER_ARB,vbo_colors);
 		glBufferDataARB(GL_ARRAY_BUFFER_ARB, (offset + border_count) * 3 * 3 * sizeof(float), gl_colors, GL_STATIC_DRAW_ARB );
 		glColorPointer(3, GL_FLOAT, 0, NULL);
@@ -1179,7 +1179,7 @@ void TerrainRenderer::UpdateAllColors(const GameWorldViewer * gwv)
 	if(SETTINGS.vbo)
 	{
 		// Generiere und Binde den Color Buffer
-		glGenBuffersARB(1, &vbo_colors);
+		glGenBuffersARB(1, (GLuint*)&vbo_colors);
 		glBindBufferARB(GL_ARRAY_BUFFER_ARB,vbo_colors);
 		glBufferDataARB(GL_ARRAY_BUFFER_ARB, (width * height * 2 + border_count) * 3 * 3 * sizeof(float), gl_colors, GL_STATIC_DRAW_ARB );
 		glColorPointer(3, GL_FLOAT, 0, NULL);

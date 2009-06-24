@@ -1,8 +1,9 @@
 ################################################################################
-### $Id: CMakeLists.txt 5035 2009-06-11 10:00:01Z FloSoft $
+### $Id: CMakeLists.txt 5098 2009-06-24 17:09:39Z FloSoft $
 ################################################################################
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.4)
+CMAKE_POLICY(SET CMP0003 OLD)
 
 ################################################################################
 
@@ -70,8 +71,8 @@ INCLUDE(cmake/crosscompile.cmake)
 ADD_SUBDIRECTORY(driver)
 ADD_SUBDIRECTORY(mygettext)
 ADD_SUBDIRECTORY(libsiedler2)
-Add_SUBDIRECTORY(libutil)
-Add_SUBDIRECTORY(liblobby)
+ADD_SUBDIRECTORY(libutil)
+ADD_SUBDIRECTORY(liblobby)
 ADD_SUBDIRECTORY(s-c)
 ADD_SUBDIRECTORY(s25update)
 ADD_SUBDIRECTORY(src)

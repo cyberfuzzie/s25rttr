@@ -1,4 +1,4 @@
-// $Id: ExtensionList.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: ExtensionList.cpp 5098 2009-06-24 17:09:39Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -35,13 +35,13 @@ PFNWGLSWAPINTERVALFARPROC wglSwapIntervalEXT = NULL;
 
 // GL_ARB_vertex_buffer_object
 
-//#ifdef _WIN32
-PFNGLGENBUFFERSARBPROC glGenBuffersARB = NULL;
-PFNGLBINDBUFFERARBPROC glBindBufferARB = NULL;
-PFNGLBUFFERDATAARBPROC glBufferDataARB = NULL;
-PFNGLDELETEBUFFERSARBPROC glDeleteBuffersARB = NULL;
-PFNGLBUFFERSUBDATAARBPROC glBufferSubDataARB = NULL;
+#ifndef __APPLE__
+	PFNGLGENBUFFERSARBPROC glGenBuffersARB = NULL;
+	PFNGLBINDBUFFERARBPROC glBindBufferARB = NULL;
+	PFNGLBUFFERDATAARBPROC glBufferDataARB = NULL;
+	PFNGLDELETEBUFFERSARBPROC glDeleteBuffersARB = NULL;
+	PFNGLBUFFERSUBDATAARBPROC glBufferSubDataARB = NULL;
 
-// GL_EXT_paletted_texture
-PFNGLCOLORTABLEEXTPROC glColorTableEXT = NULL;
-//#endif
+	// GL_EXT_paletted_texture
+	PFNGLCOLORTABLEEXTPROC glColorTableEXT = NULL;
+#endif // !__APPLE__

@@ -21,12 +21,12 @@
 // Header
 #include "main.h"
 #include "GameCommands.h"
+#include "GameClient.h"
 #include "GameClientPlayer.h"
 #include "GameWorld.h"
 #include "nobUsual.h"
 #include "nobMilitary.h"
 #include "nobBaseWarehouse.h"
-#include "GameClient.h"
 
 using namespace gc;
 
@@ -183,7 +183,7 @@ void SuggestPact::Execute(GameWorldGame& gwg, GameClientPlayer& player, const un
 
 void AcceptPact::Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid)
 {
-	GameClient::inst().GetPlayer(this->player)->AcceptPact(id,pt,playerid);
+	::GameClient::inst().GetPlayer(this->player)->AcceptPact(id,pt,playerid);
 }
 
 void CancelPact::Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid)

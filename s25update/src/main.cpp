@@ -1,4 +1,4 @@
-// $Id: main.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: main.cpp 5103 2009-06-24 20:01:23Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -25,15 +25,23 @@
 using namespace std;
 
 #ifdef _LINUX_x86_64
+#	undef ARCH
 #	define ARCH "x86_64"
 #endif
 
 #ifdef _LINUX_i686
+#	undef ARCH
 #	define ARCH "i686"
 #endif
 
 #ifdef _WIN32
+#	undef ARCH
 #	define ARCH "win32"
+#endif
+
+#ifdef __APPLE__
+#	undef ARCH
+#	define ARCH "macos"
 #endif
 
 #ifndef ARCH

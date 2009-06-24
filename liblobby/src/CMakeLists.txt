@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 4512 2009-02-04 08:34:58Z FloSoft $
+### $Id: CMakeLists.txt 5099 2009-06-24 17:10:59Z FloSoft $
 ################################################################################
 
 INCLUDE(CheckCXXCompilerFlag)
@@ -29,7 +29,7 @@ INCLUDE_DIRECTORIES("../../" "../../libutil/src/" "../../mygettext/src/")
 IF (LOBBY_C)
 
     ADD_LIBRARY(lobby_c STATIC ${SOURCES_LOBBY} LobbyClient.cpp LobbyClient.h)
-    TARGET_LINK_LIBRARIES(lobby_c util mygettext)
+    TARGET_LINK_LIBRARIES(lobby_c s25util mygettext)
     
     INSTALL(TARGETS lobby_c DESTINATION lib)
 
@@ -40,7 +40,7 @@ ENDIF (LOBBY_C)
 IF (LOBBY_S)
 
     ADD_LIBRARY(lobby_s STATIC ${SOURCES_LOBBY} LobbyServer.cpp LobbyServer.h  LobbyPlayer.cpp LobbyPlayer.h MySQL.cpp MySQL.h)
-    TARGET_LINK_LIBRARIES(lobby_s util mygettext mysqlclient)
+    TARGET_LINK_LIBRARIES(lobby_s s25util mygettext mysqlclient)
 
     INSTALL(TARGETS lobby_s DESTINATION lib)
 

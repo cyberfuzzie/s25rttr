@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 5075 2009-06-20 14:32:46Z OLiver $
+// $Id: nobMilitary.cpp 5102 2009-06-24 18:43:06Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -882,6 +882,15 @@ void nobMilitary::StopGold()
 	// Evtl neue Goldmünzen bestellen, wenn das umgestellt wurde
 	if(!disable_coins)
 		SearchCoins();
+	// Goldzufuhr dagegen deaktiviert?
+	else
+	{
+		// Goldmünzen zurückschicken
+		for(list<Ware*>::iterator it = ordered_coins.begin();it.valid();++it)
+			WareNotNeeded(*it);
+
+		ordered_coins.clear();
+	}
 }
 
 

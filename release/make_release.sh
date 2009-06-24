@@ -18,12 +18,12 @@ fi
 
 echo "Building in $BUILDDIR for $ARCH"
 
-echo "Executing cmake -DPREFIX=. -DCMAKE_BUILD_TYPE=Debug -DCOMPILEFOR_PLATFORM=$ARCH .."
+echo "Executing cmake -DPREFIX=. -DCMAKE_BUILD_TYPE=RelWithDebugInfo -DCOMPILEFOR_PLATFORM=$ARCH .."
 
 mkdir -vp $BUILDDIR
 OLDDIR=$PWD
 cd $BUILDDIR
-if ! cmake -DPREFIX=. -DCMAKE_BUILD_TYPE=Debug -DCOMPILEFOR_PLATFORM=$ARCH ..  ; then
+if ! cmake -DPREFIX=. -DCMAKE_BUILD_TYPE=RelWithDebugInfo -DCOMPILEFOR_PLATFORM=$ARCH ..  ; then
 	exit 1
 fi
 cd $OLDDIR
@@ -31,7 +31,7 @@ unset OLDDIR
 
 mkdir -vp $BUILDDIR/RTTR
 
-if ! make -C $BUILDDIR ; then
+if ! make -j 2 -C $BUILDDIR ; then
 	exit 1
 fi
 

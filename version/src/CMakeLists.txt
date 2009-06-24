@@ -1,15 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 3190 2008-02-03 12:44:21Z FloSoft $
-################################################################################
-
-INCLUDE(FindLibXml2)
-
-IF (NOT LIBXML2_FOUND)
-	MESSAGE(FATAL_ERROR "libxml2 not found")
-ENDIF (NOT LIBXML2_FOUND)
-
-ADD_DEFINITIONS(${LIBXML2_DEFINITIONS})
-
+### $Id: CMakeLists.txt 5100 2009-06-24 17:11:59Z FloSoft $
 ################################################################################
 
 IF ("${CROSSCOMPILE}" STREQUAL "1" )
@@ -33,7 +23,5 @@ ENDIF ("${CROSSCOMPILE}" STREQUAL "1" )
 SET(version_SRCS main.cpp)
 
 ADD_EXECUTABLE(version ${version_SRCS})
-
-TARGET_LINK_LIBRARIES(version ${LIBXML2_LIBRARIES})
 
 ################################################################################

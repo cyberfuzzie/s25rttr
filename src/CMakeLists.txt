@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 5018 2009-06-08 18:24:25Z OLiver $
+### $Id: CMakeLists.txt 5106 2009-06-25 20:43:46Z OLiver $
 ################################################################################
 
 INCLUDE(FindBZip2)
@@ -220,6 +220,7 @@ SET(SOURCES_OTHER
     nobHQ.cpp                 nobHQ.h
     nobMilitary.cpp           nobMilitary.h
     nobUsual.cpp              nobUsual.h
+    nobShipYard.cpp  nobShipYard.h
     nofActiveSoldier.cpp      nofActiveSoldier.h
     nofAggressiveDefender.cpp nofAggressiveDefender.h
     nofArmorer.cpp            nofArmorer.h
@@ -252,6 +253,7 @@ SET(SOURCES_OTHER
     nofPlaner.cpp             nofPlaner.h
     nofScout_Free.cpp         nofScout_Free.h
     nofScout_LookoutTower.cpp nofScout_LookoutTower.h
+    nofShipWright.cpp nofShipWright.h
     nofSoldier.cpp            nofSoldier.h
     nofStonemason.cpp         nofStonemason.h
     nofWarehouseWorker.cpp    nofWarehouseWorker.h

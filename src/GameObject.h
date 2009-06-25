@@ -1,4 +1,4 @@
-// $Id: GameObject.h 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: GameObject.h 5106 2009-06-25 20:43:46Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -34,6 +34,7 @@ enum GO_Type
 	GOT_NOB_MILITARY,
 	GOT_NOB_STOREHOUSE,
 	GOT_NOB_USUAL,
+	GOT_NOB_SHIPYARD,
 	GOT_BUILDINGSITE,
 	GOT_NOF_AGGRESSIVEDEFENDER,
 	GOT_NOF_ATTACKER,

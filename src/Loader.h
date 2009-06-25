@@ -1,4 +1,4 @@
-// $Id: Loader.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: Loader.h 5106 2009-06-25 20:43:46Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -77,6 +77,7 @@ public:
 	libsiedler2::ArchivInfo palettes;
 	libsiedler2::ArchivInfo backgrounds;
 	libsiedler2::ArchivInfo pics;
+
 
 	libsiedler2::ArchivInfo client_txt;
 	libsiedler2::ArchivInfo lang_txt;

@@ -1,4 +1,4 @@
-// $Id: nofWorkman.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: nofWorkman.cpp 5106 2009-06-25 20:43:46Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -61,55 +61,67 @@ void nofWorkman::HandleDerivedEvent(const unsigned int id)
 	{
 	case STATE_WAITING1:
 		{
-			// Nach 1. Warten wird gearbeitet
-			current_ev = em->AddEvent(this,JOB_CONSTS[job].work_length,1);
-			state = STATE_WORK;
-			workplace->is_working = true;
-
-			// Waren verbrauchen
-			workplace->ConsumeWares();
-
-
+			HandleStateWaiting1();
 		} break;
 	case STATE_WORK:
 		{
-			// Nach Arbeiten wird noch ein bisschen gewartet, bevor das Produkt herausgetragen wird
-			// Bei 0 mind. 1 GF
-			current_ev = em->AddEvent(this,JOB_CONSTS[job].wait2_length?JOB_CONSTS[job].wait2_length:1,1);
-			state = STATE_WAITING2;
-			// wir arbeiten nicht mehr
-			workplace->is_working = false;
-
-			// Evtl. Sounds löschen
-			if(was_sounding)
-			{
-				SoundManager::inst().WorkingFinished(this);
-				was_sounding = false;
-			}
+			HandleStateWork();
 		} break;
 	case STATE_WAITING2:
 		{
-			current_ev = 0;
-
-			// Ware erzeugen... (noch nicht "richtig"!, sondern nur viruell erstmal)
-			if((ware = ProduceWare()) == GD_NOTHING)
-			{
-				// Soll keine erzeugt werden --> wieder anfangen zu arbeiten
-				TryToWork();
-			}
-			else
-			{
-				// und diese raustragen
-				StartWalking(4);
-				state = STATE_CARRYOUTWARE;
-			}
-
-			// abgeleiteten Klassen Bescheid sagen
-			WorkFinished();
-			
+			HandleStateWaiting2();
 		} break;
     default:
 		break;
+	}
+}
+
+void nofWorkman::HandleStateWaiting1()
+{
+	// Nach 1. Warten wird gearbeitet
+	current_ev = em->AddEvent(this,JOB_CONSTS[job].work_length,1);
+	state = STATE_WORK;
+	workplace->is_working = true;
+
+	// Waren verbrauchen
+	workplace->ConsumeWares();
+}
+
+void nofWorkman::HandleStateWaiting2()
+{
+	current_ev = 0;
+
+	// Ware erzeugen... (noch nicht "richtig"!, sondern nur viruell erstmal)
+	if((ware = ProduceWare()) == GD_NOTHING)
+	{
+		// Soll keine erzeugt werden --> wieder anfangen zu arbeiten
+		TryToWork();
+	}
+	else
+	{
+		// und diese raustragen
+		StartWalking(4);
+		state = STATE_CARRYOUTWARE;
+	}
+
+	// abgeleiteten Klassen Bescheid sagen
+	WorkFinished();
+}
+
+void nofWorkman::HandleStateWork()
+{
+	// Nach Arbeiten wird noch ein bisschen gewartet, bevor das Produkt herausgetragen wird
+	// Bei 0 mind. 1 GF
+	current_ev = em->AddEvent(this,JOB_CONSTS[job].wait2_length?JOB_CONSTS[job].wait2_length:1,1);
+	state = STATE_WAITING2;
+	// wir arbeiten nicht mehr
+	workplace->is_working = false;
+
+	// Evtl. Sounds löschen
+	if(was_sounding)
+	{
+		SoundManager::inst().WorkingFinished(this);
+		was_sounding = false;
 	}
 }
 

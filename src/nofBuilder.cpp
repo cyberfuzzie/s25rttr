@@ -1,4 +1,4 @@
-// $Id: nofBuilder.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: nofBuilder.cpp 5106 2009-06-25 20:43:46Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -30,7 +30,7 @@
 #include "noBuildingSite.h"
 #include "Random.h"
 
-#include "nobUsual.h"
+#include "nobShipYard.h"
 #include "EventManager.h"
 #include "nobMilitary.h"
 #include "nobStorehouse.h"
@@ -190,18 +190,15 @@ void nofBuilder::HandleDerivedEvent(const unsigned int id)
 
 				}
 				else if(building_type >= BLD_BARRACKS && building_type <= BLD_FORTRESS)
-				{
 					// Militärgebäude
 					gwg->SetNO(new nobMilitary(building_type,x,y,player,building_nation),x,y);
-				}
+				else if(building_type == BLD_SHIPYARD)
+					// Schiffsbauer kriegt eine Extrawurst
+					gwg->SetNO(new nobShipYard(x,y,player,building_nation),x,y);
 				else
-				{
 					// normale Gebäude
 					gwg->SetNO(new nobUsual(building_type,x,y,player,building_nation),x,y);
 
-				}
-
-				
 				
 				// Nach Hause laufen bzw. auch rumirren
 				rs_pos = 0;

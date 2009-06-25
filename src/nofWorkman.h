@@ -1,4 +1,4 @@
-// $Id: nofWorkman.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: nofWorkman.h 5106 2009-06-25 20:43:46Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -30,11 +30,19 @@ class nofWorkman : public nofBuildingWorker
 private:
 
 	// Funktionen, die nur von der Basisklasse  aufgerufen werden, wenn...
-	void WalkedDerived(); // man gelaufen ist
+	virtual void WalkedDerived(); // man gelaufen ist
 	/// Gibt den Warentyp zurück, welche der Arbeiter erzeugen will
 	virtual GoodType ProduceWare() = 0;
 	/// Abgeleitete Klasse informieren, wenn man fertig ist mit Arbeiten
 	virtual void WorkFinished();
+
+protected:
+
+	/// Entsprechende Methoden für die Abwicklung der einzelnen Zustände
+	/// Nach erstem Warten, sprich der Arbeiter muss versuchen, neu anfangen zu arbeiten
+	void HandleStateWaiting1();
+	void HandleStateWaiting2();
+	void HandleStateWork();
 
 public:
 
@@ -45,7 +53,7 @@ public:
 	protected:	void Serialize_nofWorkman(SerializedGameData * sgd) const;
 	public:		void Serialize(SerializedGameData *sgd) const { Serialize_nofWorkman(sgd); }
 
-	void HandleDerivedEvent(const unsigned int id);
+	virtual void HandleDerivedEvent(const unsigned int id);
 
 
 };

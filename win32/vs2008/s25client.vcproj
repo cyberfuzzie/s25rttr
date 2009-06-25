@@ -1498,6 +1498,14 @@
 							>
 						</File>
 						<File
+							RelativePath="..\..\src\nobShipYard.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\nobShipYard.h"
+							>
+						</File>
+						<File
 							RelativePath="..\..\src\nobStorehouse.cpp"
 							>
 						</File>
@@ -1731,6 +1739,10 @@
 						</File>
 						<File
 							RelativePath="..\..\src\nofScout_LookoutTower.h"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\nofShipWright.cpp"
 							>
 						</File>
 						<File

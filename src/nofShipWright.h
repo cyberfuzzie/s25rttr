@@ -1,4 +1,4 @@
-// $Id: nofShipWright.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: nofShipWright.h 5106 2009-06-25 20:43:46Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -40,6 +40,8 @@ public:
 		: nofWorkman(sgd,obj_id) {}
 
 	GO_Type GetGOT() const { return GOT_NOF_SHIPWRIGHT; }
+
+	void HandleDerivedEvent(const unsigned int id);
 };
 
 

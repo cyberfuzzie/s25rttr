@@ -1,4 +1,4 @@
-// $Id: SerializedGameData.cpp 4951 2009-05-25 20:03:10Z OLiver $
+// $Id: SerializedGameData.cpp 5106 2009-06-25 20:43:46Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -31,7 +31,7 @@
 #include "nobHQ.h"
 #include "nobMilitary.h"
 #include "nobStorehouse.h"
-#include "nobUsual.h"
+#include "nobShipYard.h"
 #include "nofAggressiveDefender.h"
 #include "nofAttacker.h"
 #include "nofDefender.h"
@@ -102,6 +102,7 @@ GameObject * SerializedGameData::Create_GameObject(const GO_Type got, const unsi
 	case GOT_NOB_MILITARY: return new nobMilitary(this,obj_id);
 	case GOT_NOB_STOREHOUSE: return new nobStorehouse(this,obj_id);
 	case GOT_NOB_USUAL: return new nobUsual(this,obj_id);
+	case GOT_NOB_SHIPYARD: return new nobShipYard(this,obj_id);
 	case GOT_NOF_AGGRESSIVEDEFENDER: return new nofAggressiveDefender(this,obj_id);
 	case GOT_NOF_ATTACKER: return new nofAttacker(this,obj_id);
 	case GOT_NOF_DEFENDER: return new nofDefender(this,obj_id);

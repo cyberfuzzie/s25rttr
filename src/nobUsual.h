@@ -1,4 +1,4 @@
-// $Id: nobUsual.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: nobUsual.h 5106 2009-06-25 20:43:46Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -69,7 +69,7 @@ public:		void Destroy() { Destroy_nobUsual(); }
 protected: void Serialize_nobUsual(SerializedGameData * sgd) const;
 public: void Serialize(SerializedGameData *sgd) const { Serialize_nobUsual(sgd); }
 
-	GO_Type GetGOT() const { return GOT_NOB_USUAL; }
+	virtual GO_Type GetGOT() const { return GOT_NOB_USUAL; }
 
 	void Draw(int x,int y);
 

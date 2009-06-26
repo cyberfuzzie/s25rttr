@@ -74,6 +74,9 @@ COPY /Y ..\..\RTTR\languages\tr.mo RTTR\languages\tr.mo
 DEL RTTR\languages\pl.po
 COPY /Y ..\..\RTTR\languages\pl.mo RTTR\languages\pl.mo
 
+DEL RTTR\languages\cs.po
+COPY /Y ..\..\RTTR\languages\pl.mo RTTR\languages\cs.mo
+
 MKDIR 
 driver\audio
 COPY /Y ..\..\driver\audio\*.dll driver\audio

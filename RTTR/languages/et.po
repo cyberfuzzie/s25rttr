@@ -7,23 +7,32 @@ msgid ""
 msgstr ""
 "Project-Id-Version: s25rttr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-07 22:04+0100\n"
-"PO-Revision-Date: 2009-06-26 11:54+0000\n"
-"Last-Translator: FloSoft <Unknown>\n"
+"POT-Creation-Date: 2009-06-26 08:54+0100\n"
+"PO-Revision-Date: 2009-06-26 18:51+0000\n"
+"Last-Translator: rm87 <Unknown>\n"
 "Language-Team: Estonian <et@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-06-26 13:56+0000\n"
+"X-Launchpad-Export-Date: 2009-06-26 20:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
-#: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:41
+#: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:47
 msgid "Post office"
 msgstr "Postkontor"
 
-#: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:55
+#: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:75
+#: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:223
 msgid "No letters!"
 msgstr "Kirju pole!"
+
+#: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:246
+msgid "Message"
+msgstr "Sõnum"
+
+#: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:246
+msgid "of"
+msgstr "/"
 
 #: /storage/RTTR/svn/trunk/src/languages.cpp:69
 msgid "System language"
@@ -231,6 +240,28 @@ msgstr "Algne"
 msgid "Productivity"
 msgstr "Tootlikkus"
 
+#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:569
+msgid ""
+"Military building\n"
+" occupied"
+msgstr ""
+"Sõjaline ehitis\n"
+"asustatud"
+
+#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:776
+msgid "Military building lost"
+msgstr "Sõjaline ehitis kaotatud"
+
+#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:779
+msgid "Military building captured"
+msgstr "Sõjaline ehitis vallutatud"
+
+#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:1003
+msgid ""
+"A catapult is firing\n"
+" upon us!"
+msgstr "Katapult tulistab meie suunas!"
+
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:44
 #: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:65
 #: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:71
@@ -301,9 +332,9 @@ msgstr "Täpsusta muusikanimekirja nime"
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:191
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:305
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:320
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:453
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:780
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:794
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:450
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:777
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:791
 msgid "Error"
 msgstr "Viga"
 
@@ -481,32 +512,32 @@ msgstr "Väga kiire"
 msgid "Map: "
 msgstr "Kaart: "
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:200
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:197
 msgid "Open"
 msgstr "Vaba"
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:205
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:202
 msgid "Closed"
 msgstr "Suletud"
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:245
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:274
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:242
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:271
 #, c-format
 msgid "%d"
 msgstr "%d"
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:251
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:261
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:565
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:248
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:258
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:562
 msgid "Africans"
 msgstr "Aafriklased"
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:256
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:266
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:253
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:263
 msgid "-"
 msgstr "-"
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:453
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:450
 msgid ""
 "Game can only be started as soon as everybody has a unique color,everyone is "
 "ready and all free slots are closed."
@@ -514,19 +545,19 @@ msgstr ""
 "Mängu saab alustada alles siis kui kõigil on valitud unikaalne värv, "
 "mängijad on valmis ja kõik vabad kohad on täidetud."
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:565
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:562
 msgid "Japaneses"
 msgstr "Jaapanlased"
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:565
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:562
 msgid "Romans"
 msgstr "Roomlased"
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:565
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:562
 msgid "Vikings"
 msgstr "Vikingid"
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:780
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:777
 msgid "Lost connection to server!"
 msgstr "Ühendus serveriga on katkenud!"
 
@@ -754,24 +785,28 @@ msgstr "Muu"
 msgid "Played"
 msgstr "Mängitud"
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:340
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:145
+msgid "Mapfile: "
+msgstr "Kaardifail: "
+
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:344
 msgid "Incomplete message was received!"
 msgstr "Poolik sõnum võeti vastu!"
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:401
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:405
 #, c-format
 msgid "%d Player"
 msgstr "%d Mängija"
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:406
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:410
 msgid "Greenland"
 msgstr "Rohelus"
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:407
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:411
 msgid "Wasteland"
 msgstr "Tühermaa"
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:408
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:412
 msgid "Winter world"
 msgstr "Talvemaa"
 
@@ -802,6 +837,47 @@ msgstr "Loe mind!"
 #: /storage/RTTR/svn/trunk/src/iwMinimap.cpp:53
 msgid "Outline map"
 msgstr "Kontuurkaart"
+
+#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:97
+msgid "treaty of alliance"
+msgstr "liiduleping"
+
+#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:98
+msgid "non-aggression pact"
+msgstr "mittekallaletungileping"
+
+#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:108
+#, c-format
+msgid "The player '%s' offers you a %s."
+msgstr "Mängija '%s' pakub sulle %s."
+
+#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:113
+msgid "Duration: Forever"
+msgstr "Kestvus: Igavesti"
+
+#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:115
+#, c-format
+msgid "Duration: %u GF (%s)"
+msgstr "Kestvus: %u GF (%s)"
+
+#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:127
+#, c-format
+msgid ""
+"The player '%s' want to cancel the '%s' between you both primaturely. Do you "
+"agree?"
+msgstr ""
+"Mängija '%s'  soovib tühistada teie vahelise '%s'u ennetähtaegselt . Kas sa "
+"nõustud?"
+
+#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:150
+#, c-format
+msgid "The %s between player '%s' and you has been concluded."
+msgstr "%s mängija '%s' ja sinu vahel on lõppenud."
+
+#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:153
+#, c-format
+msgid "The %s between player '%s' and you has been cancelled."
+msgstr "%s mängija '%s' ja sinu vahel on tühistatud!"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:63
 msgid "Filename"
@@ -875,7 +951,7 @@ msgstr "Serveri nimetus:"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyServerInfo.cpp:79
 msgid "Host:"
-msgstr ""
+msgstr "Host:"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyServerInfo.cpp:81
 msgid "Version:"
@@ -975,7 +1051,6 @@ msgid "Enemies"
 msgstr "Vaenlased"
 
 #: /storage/RTTR/svn/trunk/src/iwRoadWindow.cpp:47
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:68
 msgid "Activity window"
 msgstr ""
 
@@ -984,9 +1059,6 @@ msgid "Interrupt road building"
 msgstr "Katkesta tee ehitamine"
 
 #: /storage/RTTR/svn/trunk/src/iwRoadWindow.cpp:56
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:163
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:197
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:203
 msgid "Erect flag"
 msgstr "Püstita lipp"
 
@@ -1001,24 +1073,32 @@ msgstr "Hoiatus: Tagasimäng ei ole sünkroonis esialgse mänguga. (GF: %u)"
 msgid "Notice: The played replay has ended. (GF: %u)"
 msgstr "Märkus: Tagasimäng on lõppenud. (GF: %u)"
 
+#: /storage/RTTR/svn/trunk/src/nofBuildingWorker.cpp:374
+msgid "This mine is exhausted"
+msgstr "See kaevandus on ammendunud"
+
 #: /storage/RTTR/svn/trunk/src/iwDemolishBuilding.cpp:44
 msgid "Demolish?"
 msgstr "Lammutan?"
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:560
+#: /storage/RTTR/svn/trunk/src/nofAttacker.cpp:453
+msgid "We are under attack!"
+msgstr "Me oleme rünnaku all!"
+
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:565
 #, c-format
 msgid "Computer %u"
 msgstr "Arvuti %u"
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:562
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:567
 msgid " (AI)"
 msgstr " (TI)"
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:822
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:831
 msgid "The Game is not in sync. Checksums of some players don't match."
 msgstr "Mäng ei ole sünkroonis. Mõnede mängijate kontrollsumma ei sobi."
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:1166
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:1186
 msgid "Auto-Save"
 msgstr "Automaatne Salvestus"
 
@@ -1107,7 +1187,7 @@ msgstr "Ründa!"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:256
 msgid "Display options"
-msgstr ""
+msgstr "Ekraani seaded"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:258
 msgid "Observation window"
@@ -1127,7 +1207,7 @@ msgstr "Ühine mänguga"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:54
 msgid "IP Address of Host:"
-msgstr ""
+msgstr "Host'i IP aadress:"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:58
 msgid "Server-Port:"
@@ -1143,7 +1223,7 @@ msgstr "Vigane port. Võimalik portide vahemik on 1-65535!"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:143
 msgid "Connecting with Host..."
-msgstr ""
+msgstr "Ühendan hostiga..."
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:149
 msgid "Connection failed!"
@@ -1163,7 +1243,7 @@ msgstr "Vale kliendi versioon"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:214
 msgid "Connection to Host closed!"
-msgstr ""
+msgstr "Ühendus hostiga suletud!"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:215
 msgid "Too short Message received!"
@@ -1189,7 +1269,7 @@ msgstr "Kontrollin kaarti ..."
 msgid "Waiting for Playerinfo..."
 msgstr "Ootan mängijainfot..."
 
-#: /storage/RTTR/svn/trunk/src/SerializedGameData.cpp:230
+#: /storage/RTTR/svn/trunk/src/SerializedGameData.cpp:231
 msgid "An error occured while saving which was suppressed!"
 msgstr "Salvestamisel ilmnes viga, salvestamine peatati!"
 
@@ -1241,6 +1321,22 @@ msgstr "Kaotanud"
 msgid "Won"
 msgstr "Võitnud"
 
+#: /storage/RTTR/svn/trunk/src/nofFarmhand.cpp:172
+msgid ""
+"No more stones\n"
+" in range"
+msgstr ""
+"Rohkem kive \n"
+"ulatuses pole"
+
+#: /storage/RTTR/svn/trunk/src/nofFarmhand.cpp:176
+msgid ""
+"No more fishes\n"
+" in range"
+msgstr ""
+"Rohkem kalu \n"
+"ulatuses pole"
+
 #: /storage/RTTR/svn/trunk/src/iwWares.cpp:167
 msgid "Next page"
 msgstr "Järgmine lehekülg"
@@ -1274,68 +1370,68 @@ msgstr "Lammutamine ei ole lubatud, kuna ehitis asub piiri alal!"
 msgid "Demolition not possible"
 msgstr "Lammutamine ei ole võimalik"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:102
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:103
 msgid "Construction aid mode"
 msgstr "Arvuti assisteeritud ehitamine"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:182
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:185
 #, c-format
 msgid ""
 "(Replay-Mode) Current GF: %u (End at: %u) / GF length: %u ms / NWF length: "
 "%u gf (%u ms)"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:184
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:187
 #, c-format
 msgid ""
 "Current GF: %u / GF length: %u ms / NWF length: %u gf (%u ms) /  Ping: %u ms"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:786
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:792
 #, c-format
 msgid "Player '%s' left the game!"
 msgstr "Mängija '%s' lahkus mängust!"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:789
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:795
 #, c-format
 msgid "Player '%s' joined the game!"
 msgstr "Mängija '%s' liitus mänguga!"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:797
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:803
 #, c-format
 msgid "Note: Game settings changed by the server%s"
 msgstr "Märkus: Mängu seaded muudetud serveri%s poolt"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:804
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:830
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:853
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:810
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:836
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:859
 #, c-format
 msgid "<%s> "
 msgstr "<%s> "
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:813
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:819
 msgid "A auto-savegame is created..."
 msgstr "Automaatse mängusalvestuse tegemine..."
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:830
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:853
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:836
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:859
 msgid "SYSTEM"
 msgstr "SÜSTEEM"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:831
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:837
 msgid "Game was paused."
 msgstr "Mäng peatati."
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:854
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:860
 msgid "Game was resumed."
 msgstr "Mängu jätkati."
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:900
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:906
 #, c-format
 msgid "Player '%s' switched to player '%s'"
 msgstr "Mängija '%s' on nüüd mängija '%s'"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:918
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:924
 #, c-format
 msgid "Player '%s' was defeated!"
 msgstr "Mängija '%s' on kaotanud!"
@@ -1344,29 +1440,57 @@ msgstr "Mängija '%s' on kaotanud!"
 msgid "Treaties"
 msgstr "Lepingud"
 
-#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:99
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:105
 msgid "Treaty of alliance"
 msgstr "Liiduleping"
 
-#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:105
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:114
 msgid "Non-aggression pact"
 msgstr "Mittekallaletungileping"
 
-#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:137
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:224
 msgid "Suggest treaty of alliance"
 msgstr "Paku liidulepingut"
 
-#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:138
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:225
 msgid "Suggest non-aggression pact"
 msgstr "Paku mittekallaletungilepingut"
 
-#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:158
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:243
+msgid "Short-run"
+msgstr "Lühiajaline"
+
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:244
+msgid "Medium-term"
+msgstr "Keskmise ajaline"
+
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:245
+msgid "Long-run"
+msgstr "Pikaajaline"
+
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:265
 msgid "Contract type:"
 msgstr "Lepingu tüüp:"
 
-#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:160
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:267
 msgid "To player:"
 msgstr "Mängijale:"
+
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:269
+msgid "Duration:"
+msgstr "Kestvus:"
+
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:283
+msgid "Eternal"
+msgstr "Igavene"
+
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:285
+msgid "Confirm"
+msgstr "Kinnita"
+
+#: /storage/RTTR/svn/trunk/src/nofScout_LookoutTower.cpp:81
+msgid "Lookout-tower occupied"
+msgstr "Vaatlustorn asustatud"
 
 #: /storage/RTTR/svn/trunk/src/dskDirectIP.cpp:59
 msgid "Create Game"
@@ -1425,28 +1549,28 @@ msgid "Boats"
 msgstr "Paadid"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:90
-#: /storage/RTTR/svn/trunk/src/iwBuildOrder.cpp:56
 msgid "Top"
 msgstr "Ülemiseks"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:92
-#: /storage/RTTR/svn/trunk/src/iwBuildOrder.cpp:58
 msgid "Up"
 msgstr "Ülespoole"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:94
-#: /storage/RTTR/svn/trunk/src/iwBuildOrder.cpp:60
 msgid "Down"
 msgstr "Allapoole"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:96
-#: /storage/RTTR/svn/trunk/src/iwBuildOrder.cpp:62
 msgid "Bottom"
 msgstr "Alumiseks"
 
+#: /storage/RTTR/svn/trunk/src/GameWorldGame.cpp:552
+msgid "Lost land by this building"
+msgstr ""
+
 #: /storage/RTTR/svn/trunk/src/iwBuildingSite.cpp:57
 msgid "Order of building site"
-msgstr ""
+msgstr "Ehitiste ehitamise järjekord"
 
 #: /storage/RTTR/svn/trunk/src/iwMilitary.cpp:49
 msgid "Fewer recruits"
@@ -1548,49 +1672,69 @@ msgstr "Palun täida küik väljad!"
 msgid "Registration successful!"
 msgstr "Registreerimine õnnestus!"
 
+#: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:496
+msgid "Found ironore"
+msgstr "Leiti rauamaaki"
+
+#: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:498
+msgid "Found gold"
+msgstr "Leiti kulda"
+
+#: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:500
+msgid "Found coal"
+msgstr "Leiti sütt"
+
+#: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:502
+msgid "Found granite"
+msgstr "Leiti graniiti"
+
+#: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:504
+msgid "Found water"
+msgstr "Leiti vett"
+
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:46
 msgid "Statistics"
 msgstr "Statistika"
 
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:76
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:96
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:146
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:93
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:113
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:163
 msgid "Size of country"
 msgstr "Maa suurus"
 
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:78
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:154
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:95
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:171
 msgid "Inhabitants"
 msgstr "Elanikke"
 
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:79
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:158
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:96
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:175
 msgid "Merchandise"
 msgstr "Kaupasid"
 
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:80
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:162
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:97
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:179
 msgid "Military strength"
 msgstr "Sõjaväe tugevus"
 
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:83
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:174
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:100
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:191
 msgid "Vanquished enemies"
 msgstr "Vaenlasi võidetud"
 
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:87
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:104
 msgid "15 m"
 msgstr "15 m"
 
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:88
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:105
 msgid "1 h"
 msgstr "1 t"
 
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:89
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:106
 msgid "4 h"
 msgstr "4 t"
 
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:90
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:107
 msgid "16 h"
 msgstr "16 t"
 
@@ -1706,6 +1850,10 @@ msgstr ""
 #: /storage/RTTR/svn/trunk/src/iwDirectIPCreate.cpp:144
 msgid "Please enter a name for the game"
 msgstr "Palun sisesta nimi mängu jaoks"
+
+#: /storage/RTTR/svn/trunk/src/nobStorehouse.cpp:59
+msgid "New storehouse finished"
+msgstr "Uus ladu valmis"
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:252
 msgid ""

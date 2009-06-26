@@ -1,52 +1,54 @@
+# Czech translation for s25rttr
+# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
+# This file is distributed under the same license as the s25rttr package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: Siedler II.5 RttR\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-26 22:58+0100\n"
-"PO-Revision-Date: 2009-06-26 22:58+0100\n"
-"Last-Translator: \n"
-"Language-Team: Siedler II.5 RttR <sf-team@siedler25.org>\n"
+"Project-Id-Version: s25rttr\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2009-06-26 08:54+0100\n"
+"PO-Revision-Date: 2009-06-26 20:51+0000\n"
+"Last-Translator: Jan Matyas <Unknown>\n"
+"Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-05-21 09:52+0000\n"
+"X-Launchpad-Export-Date: 2009-06-26 20:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
-"X-Poedit-SourceCharset: iso-8859-15\n"
-"X-Poedit-Basepath: F:\\programmierung\\Projekte\\siedler15\\s25client\\trunk\n"
-"X-Poedit-SearchPath-0: /storage/RTTR/svn/trunk/src\n"
 
 #: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:47
 msgid "Post office"
-msgstr ""
+msgstr "Pošta"
 
 #: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:75
 #: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:223
 msgid "No letters!"
-msgstr ""
+msgstr "Žádné zprávy"
 
 #: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:246
 msgid "Message"
-msgstr ""
+msgstr "Zpráva"
 
 #: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:246
 msgid "of"
-msgstr ""
+msgstr "z"
 
 #: /storage/RTTR/svn/trunk/src/languages.cpp:69
 msgid "System language"
-msgstr ""
+msgstr "Systémový jazyk"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:70
 msgid "Back"
-msgstr ""
+msgstr "Zpět"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:73
 msgid "Options"
-msgstr ""
+msgstr "Možnosti"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:77
 msgid "Enhancements"
-msgstr ""
+msgstr "Rozšíření"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:80
 msgid "Common"
@@ -54,102 +56,102 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:82
 msgid "Graphics"
-msgstr ""
+msgstr "Grafika"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:84
 msgid "Sound/Music"
-msgstr ""
+msgstr "Zvuky/Hudba"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:92
 msgid "Name in Game:"
-msgstr ""
+msgstr "Jméno ve hře"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:96
 msgid "Language:"
-msgstr ""
+msgstr "Jazyk:"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:109
 msgid "Keyboard layout:"
-msgstr ""
+msgstr "Rozložení klávesnice:"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:110
 msgid "Readme"
-msgstr ""
+msgstr "Čtimě"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:113
 msgid "Resolution:"
-msgstr ""
+msgstr "Rozlišení:"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:117
 msgid "Mode:"
-msgstr ""
+msgstr "Režim:"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:119
 msgid "Fullscreen"
-msgstr ""
+msgstr "Celá obrazovka"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:120
 msgid "Windowed"
-msgstr ""
+msgstr "V okně"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:123
 msgid "VSync:"
-msgstr ""
+msgstr "Vertikální synchronizace"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:127
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:137
 msgid "not supported"
-msgstr ""
+msgstr "nepodporováno"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:129
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:139
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:173
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:182
 msgid "On"
-msgstr ""
+msgstr "Zapnuto"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:130
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:140
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:174
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:183
 msgid "Off"
-msgstr ""
+msgstr "Vypnuto"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:133
 msgid "Vertex Buffer Objects:"
-msgstr ""
+msgstr "Vertex Buffer Objects:"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:143
 msgid "Graphics Driver"
-msgstr ""
+msgstr "Ovladač grafiky"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:157
 msgid "Sounddriver"
-msgstr ""
+msgstr "Ovladač zvuku"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:171
 msgid "Music"
-msgstr ""
+msgstr "Hudba"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:180
 msgid "Effects"
-msgstr ""
+msgstr "Efekty"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:189
 msgid "Music player"
-msgstr ""
+msgstr "Přehravač hudby"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:449
 msgid "Keyboard layout"
-msgstr ""
+msgstr "Rozložení klávesnice"
 
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:46
 msgid "Tools"
-msgstr ""
+msgstr "Nástroje"
 
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:50
 msgid "Tongs"
-msgstr ""
+msgstr "Kleště"
 
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:50
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:51
@@ -164,7 +166,7 @@ msgstr ""
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:60
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:61
 msgid "Less often"
-msgstr ""
+msgstr "Méně často"
 
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:50
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:51
@@ -179,148 +181,152 @@ msgstr ""
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:60
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:61
 msgid "More often"
-msgstr ""
+msgstr "Častěji"
 
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:51
 msgid "Axe"
-msgstr ""
+msgstr "Sekera"
 
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:52
 msgid "Saw"
-msgstr ""
+msgstr "Pila"
 
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:53
 msgid "Pick-axe"
-msgstr ""
+msgstr "Krumpáč"
 
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:54
 msgid "Hammer"
-msgstr ""
+msgstr "Kladivo"
 
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:55
 msgid "Shovel"
-msgstr ""
+msgstr "Lopata"
 
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:56
 msgid "Crucible"
-msgstr ""
+msgstr "Tyglík"
 
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:57
 msgid "Rod and line"
-msgstr ""
+msgstr "Udice"
 
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:58
 msgid "Scythe"
-msgstr ""
+msgstr "Kosa"
 
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:59
 msgid "Cleaver"
-msgstr ""
+msgstr "Sekáček"
 
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:60
 msgid "Rolling pin"
-msgstr ""
+msgstr "Váleček"
 
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:61
 msgid "Bow"
-msgstr ""
+msgstr "Luk"
 
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:64
 #: /storage/RTTR/svn/trunk/src/iwBuildingProductivities.cpp:103
 msgid "Help"
-msgstr ""
+msgstr "Nápověda"
 
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:66
 msgid "Default"
-msgstr ""
+msgstr "Výchozí"
 
 #: /storage/RTTR/svn/trunk/src/iwBuildingProductivities.cpp:82
 msgid "Productivity"
-msgstr ""
+msgstr "Produktivita"
 
-#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:556
+#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:569
 msgid ""
 "Military building\n"
 " occupied"
 msgstr ""
+"Vojenská stavba\n"
+" obsazena"
 
-#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:770
+#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:776
 msgid "Military building lost"
-msgstr ""
+msgstr "Vojenská stavba zničena"
 
-#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:773
+#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:779
 msgid "Military building captured"
-msgstr ""
+msgstr "Vojenská stavba zajata"
 
-#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:997
+#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:1003
 msgid ""
 "A catapult is firing\n"
 " upon us!"
 msgstr ""
+"Jsme pod palbou\n"
+" katapultu!!!"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:44
 #: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:65
 #: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:71
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:45
 msgid "Abort"
-msgstr ""
+msgstr "Přerušit"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:70
 msgid "Playlist:"
-msgstr ""
+msgstr "Seznam skladeb:"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:76
 msgid "Add"
-msgstr ""
+msgstr "Přidat"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:77
 msgid "Remove"
-msgstr ""
+msgstr "Odebrat"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:78
 msgid "Save"
-msgstr ""
+msgstr "Uložit"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:79
 msgid "Load"
-msgstr ""
+msgstr "Načíst"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:82
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:199
 msgid "Add track"
-msgstr ""
+msgstr "Přidat skladbu"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:83
 msgid "Remove track"
-msgstr ""
+msgstr "Odstranit skladbu"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:84
 msgid "Upwards"
-msgstr ""
+msgstr "Nahoru"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:85
 msgid "Downwards"
-msgstr ""
+msgstr "Dolů"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:87
 msgid "Less repeats"
-msgstr ""
+msgstr "Méně opakování"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:88
 msgid "More repeats"
-msgstr ""
+msgstr "Více opakování"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:89
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:257
 msgid "Playback in this order"
-msgstr ""
+msgstr "Přehrát v tomto pořadí"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:126
 msgid "Specify the playlist name"
-msgstr ""
+msgstr "Zadej název playlistu"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:141
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:165
@@ -332,540 +338,550 @@ msgstr ""
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:777
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:791
 msgid "Error"
-msgstr ""
+msgstr "Chyba"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:141
 msgid "You are not allowed to delete the standard playlist!"
-msgstr ""
+msgstr "Základní playlist není možné smazat!"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:165
 msgid "You are not allowed to change the standard playlist!"
-msgstr ""
+msgstr "Základní playlist není možné měnit!"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:171
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:320
 msgid "The specified file couldn't be saved!"
-msgstr ""
+msgstr "Vybraný soubor není možné uložit!"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:191
 msgid "The specified file couldn't be loaded!"
-msgstr ""
+msgstr "Vybraný soubor není možné načíst!"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:257
 msgid "Random playback"
-msgstr ""
+msgstr "Přehrávat náhodně"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:305
 msgid "The specified file couldn't be opened!"
-msgstr ""
+msgstr "Vybraný soubor není možné otevřít!"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:60
 msgid "Player Name"
-msgstr ""
+msgstr "Jméno hráče"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:62
 msgid "Classification"
-msgstr ""
+msgstr "Klasifikace"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:64
 msgid "Race"
-msgstr ""
+msgstr "Rasa"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:66
 msgid "Color"
-msgstr ""
+msgstr "Barva"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:68
 msgid "Team"
-msgstr ""
+msgstr "Tým"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:70
 msgid "Ready?"
-msgstr ""
+msgstr "Připraven?"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:72
 msgid "Ping"
-msgstr ""
+msgstr "Ping"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:75
 msgid "Past player"
-msgstr ""
+msgstr "Poslední hráč"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:83
 msgid "Start game"
-msgstr ""
+msgstr "Start hry"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:88
 msgid "Return"
-msgstr ""
+msgstr "Zpět"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:91
 msgid "Lock teams:"
-msgstr ""
+msgstr "Uzamčít týmy:"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:93
 msgid "Shared team view"
-msgstr ""
+msgstr "Sdílet výhled v týmu"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:96
 msgid "Enhancements:"
-msgstr ""
+msgstr "Rozšíření:"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:97
 msgid "Change Settings..."
-msgstr ""
+msgstr "Změnit nastavení..."
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:97
 msgid "View Settings..."
-msgstr ""
+msgstr "Ukázat nastavení..."
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:103
 msgid "Demolition prohibition:"
-msgstr ""
+msgstr "Zákaz demolice:"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:106
 msgid "When attack"
-msgstr ""
+msgstr "Při přepadení"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:107
 msgid "Near frontiers"
-msgstr ""
+msgstr "Poblíž hranic"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:110
 msgid "Exploration:"
-msgstr ""
+msgstr "Prozkoumané území:"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:112
 msgid "Off (all visible)"
-msgstr ""
+msgstr "Celá mapa viditelná"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:113
 msgid "Classic (Settlers 2)"
-msgstr ""
+msgstr "Klasika (Settlers 2)"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:114
 msgid "Fog of War"
-msgstr ""
+msgstr "Fog of War"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:115
 msgid "FoW - all explored"
-msgstr ""
+msgstr "Prozkoumané je vidět"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:118
 msgid "Goods at start:"
-msgstr ""
+msgstr "Počáteční suroviny:"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:120
 msgid "Low"
-msgstr ""
+msgstr "Málo"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:121
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:136
 msgid "Normal"
-msgstr ""
+msgstr "Normálně"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:122
 msgid "A lot"
-msgstr ""
+msgstr "Hodně"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:125
 msgid "Goals:"
-msgstr ""
+msgstr "Cíle:"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:127
 msgid "None"
-msgstr ""
+msgstr "Žádný"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:128
 msgid "Conquer 3/4 of map"
-msgstr ""
+msgstr "Ovládnout 3/4 mapy"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:129
 msgid "Total domination"
-msgstr ""
+msgstr "Úplná převaha"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:132
 msgid "Speed:"
-msgstr ""
+msgstr "Rychlost:"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:134
 msgid "Very slow"
-msgstr ""
+msgstr "Velmi pomalu"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:135
 msgid "Slow"
-msgstr ""
+msgstr "Pomalu"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:137
 msgid "Fast"
-msgstr ""
+msgstr "Rychle"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:138
 msgid "Very fast"
-msgstr ""
+msgstr "Velmi rychle"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:153
 msgid "Map: "
-msgstr ""
+msgstr "Mapa: "
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:197
 msgid "Open"
-msgstr ""
+msgstr "Otevřený"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:202
 msgid "Closed"
-msgstr ""
+msgstr "Uzavřen"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:242
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:271
 #, c-format
 msgid "%d"
-msgstr ""
+msgstr "%d"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:248
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:258
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:562
 msgid "Africans"
-msgstr ""
+msgstr "Afričané"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:253
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:263
 msgid "-"
-msgstr ""
+msgstr "-"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:450
-msgid "Game can only be started as soon as everybody has a unique color,everyone is ready and all free slots are closed."
+msgid ""
+"Game can only be started as soon as everybody has a unique color,everyone is "
+"ready and all free slots are closed."
 msgstr ""
+"Hra může být spuštěna jakmile bude mít každý hráč jedinečnou barvu, bude "
+"připraven ke hře a volné sloty budou uzavřeny."
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:562
 msgid "Japaneses"
-msgstr ""
+msgstr "Japonci"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:562
 msgid "Romans"
-msgstr ""
+msgstr "Řimané"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:562
 msgid "Vikings"
-msgstr ""
+msgstr "Vikingové"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:777
 msgid "Lost connection to server!"
-msgstr ""
+msgstr "Připojení k serveru ztraceno!"
 
 #: /storage/RTTR/svn/trunk/src/iwHQ.cpp:46
 msgid "Headquarters"
-msgstr ""
+msgstr "Hlavní budova"
 
 #: /storage/RTTR/svn/trunk/src/iwHQ.cpp:52
 msgid "Reserve"
-msgstr ""
+msgstr "Rezervy"
 
 #: /storage/RTTR/svn/trunk/src/iwHQ.cpp:64
 msgid "Less"
-msgstr ""
+msgstr "Méně"
 
 #: /storage/RTTR/svn/trunk/src/iwHQ.cpp:66
 msgid "More"
-msgstr ""
+msgstr "Více"
 
 #: /storage/RTTR/svn/trunk/src/iwHQ.cpp:68
 #, c-format
 msgid "%u/%u"
-msgstr ""
+msgstr "%u/%u"
 
 #: /storage/RTTR/svn/trunk/src/iwEndgame.cpp:48
 msgid "End game?"
-msgstr ""
+msgstr "Ukončit hru?"
 
 #: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:72
 #: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:87
 msgid "Cancel"
-msgstr ""
+msgstr "Zrušit"
 
 #: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:78
 #: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:85
 msgid "Yes"
-msgstr ""
+msgstr "Ano"
 
 #: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:79
 #: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:86
 msgid "No"
-msgstr ""
+msgstr "Ne"
 
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:60
 #, c-format
 msgid "The Settlers II.5 RTTR, v%s-%s"
-msgstr ""
+msgstr "The Settlers II.5 RTTR, v%s-%s"
 
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:62
 msgid "http://www.siedler25.org"
-msgstr ""
+msgstr "http://www.siedler25.org"
 
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:69
 msgid "Connect"
-msgstr ""
+msgstr "Připojit se"
 
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:71
 msgid "Internet Ranking"
-msgstr ""
+msgstr "Internetové hodnocení"
 
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:73
 msgid "Add Server"
-msgstr ""
+msgstr "Přidat server"
 
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:76
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:76
 msgid "Server"
-msgstr ""
+msgstr "Server"
 
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:76
 msgid "Map"
-msgstr ""
+msgstr "Mapa"
 
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:76
 msgid "Player"
-msgstr ""
+msgstr "Hráč"
 
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:76
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:78
 msgid "Version"
-msgstr ""
+msgstr "Verze"
 
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:78
 msgid "Name"
-msgstr ""
+msgstr "Jméno"
 
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:78
 msgid "Points"
-msgstr ""
+msgstr "Bodů"
 
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:315
 msgid "Lost connection to lobby!"
-msgstr ""
+msgstr "Připojení k lobby ztraceno!"
 
 #: /storage/RTTR/svn/trunk/src/iwBuildings.cpp:76
 msgid "Buildings"
-msgstr ""
+msgstr "Budovy"
 
 #: /storage/RTTR/svn/trunk/src/dskSinglePlayer.cpp:66
 msgid "Resume last game"
-msgstr ""
+msgstr "Nahrát poslední hru"
 
 #: /storage/RTTR/svn/trunk/src/dskSinglePlayer.cpp:69
 msgid "Play Replay"
-msgstr ""
+msgstr "Přehrát replay"
 
 #: /storage/RTTR/svn/trunk/src/dskSinglePlayer.cpp:75
 msgid "Load game"
-msgstr ""
+msgstr "Nahrát hru"
 
 #: /storage/RTTR/svn/trunk/src/dskSinglePlayer.cpp:97
 msgid "Not available"
-msgstr ""
+msgstr "Nedostupné"
 
 #: /storage/RTTR/svn/trunk/src/dskSinglePlayer.cpp:97
-msgid "Singleplayer mode and AI are not yet implemented. Please use the Multiplayer mode and 'Direct IP' to create a Singleplayer game."
+msgid ""
+"Singleplayer mode and AI are not yet implemented. Please use the Multiplayer "
+"mode and 'Direct IP' to create a Singleplayer game."
 msgstr ""
+"V singleplayeru není implementována AI. Prosím, použijte Multiplayer a "
+"'Přímá IP' a vytvořit Singleplayer hru."
 
 #: /storage/RTTR/svn/trunk/src/iwBaseWarehouse.cpp:62
 msgid "do nothing"
-msgstr ""
+msgstr "nic nedělat"
 
 #: /storage/RTTR/svn/trunk/src/iwBaseWarehouse.cpp:64
 msgid "Take out of store"
-msgstr ""
+msgstr "Vyskladnit"
 
 #: /storage/RTTR/svn/trunk/src/iwBaseWarehouse.cpp:66
 msgid "Stop storage"
-msgstr ""
+msgstr "Zákaz skladování"
 
 #: /storage/RTTR/svn/trunk/src/iwBaseWarehouse.cpp:71
 msgid "Select all"
-msgstr ""
+msgstr "Vybrat vše"
 
 #: /storage/RTTR/svn/trunk/src/iwBaseWarehouse.cpp:73
 msgid "Go to place"
-msgstr ""
+msgstr "Jít na místo"
 
 #: /storage/RTTR/svn/trunk/src/iwBaseWarehouse.cpp:106
 msgid "Demolish house"
-msgstr ""
+msgstr "Zbourat budovu"
 
 #: /storage/RTTR/svn/trunk/src/iwSurrender.cpp:49
 msgid "Surrender game?"
-msgstr ""
+msgstr "Vzdát hru?"
 
 #: /storage/RTTR/svn/trunk/src/iwSurrender.cpp:52
 #: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:104
 msgid "Surrender"
-msgstr ""
+msgstr "Vzdát se"
 
 #: /storage/RTTR/svn/trunk/src/iwSurrender.cpp:54
 msgid "Destroy all buildings and surrender"
-msgstr ""
+msgstr "Zbourat všechny budovy a vzdát se"
 
 #: /storage/RTTR/svn/trunk/src/iwSurrender.cpp:56
 msgid "Don't surrender"
-msgstr ""
+msgstr "Nevzdávat se"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:91
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:93
 msgid "Please wait..."
-msgstr ""
+msgstr "Čekejte prosím..."
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:113
 msgid "Author"
-msgstr ""
+msgstr "Autor"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:113
 msgid "Type"
-msgstr ""
+msgstr "Typ"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:113
 msgid "Size"
-msgstr ""
+msgstr "Velikost"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:116
 msgid "Selection of maps"
-msgstr ""
+msgstr "Výběr map"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:121
 msgid "Load game..."
-msgstr ""
+msgstr "Nahrát hru..."
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:123
 msgid "Continue"
-msgstr ""
+msgstr "Pokračovat"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:127
 msgid "Old maps"
-msgstr ""
+msgstr "Staré mapy"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:129
 msgid "New maps"
-msgstr ""
+msgstr "Nové mapy"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:131
 msgid "Own maps"
-msgstr ""
+msgstr "Vlastní mapy"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:133
 msgid "Continents"
-msgstr ""
+msgstr "Kontinenty"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:135
 msgid "Campaign"
-msgstr ""
+msgstr "Kampaň"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:137
 msgid "RTTR"
-msgstr ""
+msgstr "RTTR"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:139
 msgid "Other"
-msgstr ""
+msgstr "Jiné"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:141
 msgid "Played"
-msgstr ""
+msgstr "Dříve hrané"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:145
 msgid "Mapfile: "
-msgstr ""
+msgstr "Soubor s mapou: "
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:344
 msgid "Incomplete message was received!"
-msgstr ""
+msgstr "Byla přijata nekompletní zpráva!"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:405
 #, c-format
 msgid "%d Player"
-msgstr ""
+msgstr "%d Hráč"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:410
 msgid "Greenland"
-msgstr ""
+msgstr "Zelený ostrov"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:411
 msgid "Wasteland"
-msgstr ""
+msgstr "Pustina"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:412
 msgid "Winter world"
-msgstr ""
+msgstr "Zimní svět"
 
 #: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:58
 msgid "Game menu"
-msgstr ""
+msgstr "Herní menu"
 
 #: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:76
 msgid "Load 'ReadMe' file"
-msgstr ""
+msgstr "Načíst soubor 'Čti mně'"
 
 #: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:80
 msgid "Load game!"
-msgstr ""
+msgstr "Načíst hru!"
 
 #: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:84
 msgid "Save game!"
-msgstr ""
+msgstr "Uložit hru!"
 
 #: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:106
 msgid "End game"
-msgstr ""
+msgstr "Konec hry"
 
 #: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:126
 msgid "Readme!"
-msgstr ""
+msgstr "Čti mně!"
 
 #: /storage/RTTR/svn/trunk/src/iwMinimap.cpp:53
 msgid "Outline map"
-msgstr ""
+msgstr "Přehledová mapka"
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:97
 msgid "treaty of alliance"
-msgstr ""
+msgstr "spojenecká smlouva"
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:98
 msgid "non-aggression pact"
-msgstr ""
+msgstr "pakt o neútočení"
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:108
 #, c-format
 msgid "The player '%s' offers you a %s."
-msgstr ""
+msgstr "Hráč '%s' nabízí %s."
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:113
 msgid "Duration: Forever"
-msgstr ""
+msgstr "Trvání: navždy"
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:115
 #, c-format
 msgid "Duration: %u GF (%s)"
-msgstr ""
+msgstr "Délka: %u GF (%s)"
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:127
 #, c-format
-msgid "The player '%s' want to cancel the '%s' between you both primaturely. Do you agree?"
-msgstr ""
+msgid ""
+"The player '%s' want to cancel the '%s' between you both primaturely. Do you "
+"agree?"
+msgstr "Hráč '%s' si přeje předčasně zrušit '%s' mezi vámi. Souhlasíte?"
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:150
 #, c-format
 msgid "The %s between player '%s' and you has been concluded."
-msgstr ""
+msgstr "%s mezi hráčem '%s' a vámi byla uzavřena."
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:153
 #, c-format
 msgid "The %s between player '%s' and you has been cancelled."
-msgstr ""
+msgstr "%s mezi hráčem '%s' a vámi byla zrušena."
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:63
 msgid "Filename"
-msgstr ""
+msgstr "Název souboru"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:63
 msgid "Stocktaking date"
@@ -873,77 +889,77 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:63
 msgid "Length"
-msgstr ""
+msgstr "Délka"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:66
 msgid "Start"
-msgstr ""
+msgstr "Start"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:68
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:110
 msgid "Clear"
-msgstr ""
+msgstr "Vyčistit"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:92
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:102
 msgid "Error while playing replay!"
-msgstr ""
+msgstr "Při přehrávání replaye se vyskytla chyba!"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:93
 msgid "Error while opening file!"
-msgstr ""
+msgstr "Chyba při otvírání souboru!"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:94
 msgid "Invalid Replay!"
-msgstr ""
+msgstr "Neplatný replay!"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:95
 msgid "Error: Replay is too old!"
-msgstr ""
+msgstr "Chyba: Replay je příliš starý!"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:96
 msgid "Program version is too old to play that replay!"
-msgstr ""
+msgstr "Verze programu je příliš zastaralá k přehrání replaye!"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:98
 msgid "Temporary map file was not found!"
-msgstr ""
+msgstr "Dočasný soubor s mapou nebyl nalezen!"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:110
 msgid "Are you sure to remove all replays?"
-msgstr ""
+msgstr "Chcete opravdu smazat všechny replaye?"
 
 #: /storage/RTTR/svn/trunk/src/iwTextfile.cpp:72
 msgid "The readme file was not found!"
-msgstr ""
+msgstr "Soubor 'Čti mě' nebyl nalezen!"
 
 #: /storage/RTTR/svn/trunk/src/iwStorehouse.cpp:43
 msgid "Storehouse"
-msgstr ""
+msgstr "Skladiště"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyServerInfo.cpp:73
 msgid "Server Information"
-msgstr ""
+msgstr "Informace o serveru"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyServerInfo.cpp:75
 msgid "Map Name:"
-msgstr ""
+msgstr "Jméno mapy:"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyServerInfo.cpp:77
 msgid "Server Name:"
-msgstr ""
+msgstr "Jméno serveru:"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyServerInfo.cpp:79
 msgid "Host:"
-msgstr ""
+msgstr "Hostitel:"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyServerInfo.cpp:81
 msgid "Version:"
-msgstr ""
+msgstr "Verze:"
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:125
 msgid "Map was loaded and pinned at the wall..."
-msgstr ""
+msgstr "Mapa byla načtena a pověšena na zeď..."
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:135
 msgid "Tribal chiefs assembled around the table..."
@@ -951,7 +967,7 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:143
 msgid "Failed to load map objects."
-msgstr ""
+msgstr "Chyba při nahrávání objektů mapy."
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:147
 msgid "Game crate was picked and spread out..."
@@ -959,7 +975,7 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:155
 msgid "Failed to load terrain data."
-msgstr ""
+msgstr "Chyba při nahrávání teréních dat."
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:161
 msgid "World was put together and glued..."
@@ -967,115 +983,116 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:167
 msgid "And let's go!"
-msgstr ""
+msgstr "Tak pojďme na to!"
 
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:59
 msgid "The Settlers II.5 RTTR"
-msgstr ""
+msgstr "The Settlers II.5 RTTR"
 
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:62
 msgid "Credits"
-msgstr ""
+msgstr "Autoři"
 
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:67
 msgid "Programming"
-msgstr ""
+msgstr "Programování"
 
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:74
 msgid "Game testers"
-msgstr ""
+msgstr "Testeři"
 
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:82
 msgid "Other Support"
-msgstr ""
+msgstr "Další vývoj"
 
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:103
 msgid "Donators"
-msgstr ""
+msgstr "Přispěli"
 
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:105
 msgid "various anonymous donators"
-msgstr ""
+msgstr "mnoho anonymních dárců"
 
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:112
 msgid "Thank you for your donations!"
-msgstr ""
+msgstr "Děkujeme za příspěvek!"
 
 #: /storage/RTTR/svn/trunk/src/GameWorldViewer.cpp:189
 msgid "(House unoccupied)"
-msgstr ""
+msgstr "(Budova neobsazena)"
 
 #: /storage/RTTR/svn/trunk/src/GameWorldViewer.cpp:191
 msgid "(stopped)"
-msgstr ""
+msgstr "(zastaveno)"
 
 #: /storage/RTTR/svn/trunk/src/GameWorldViewer.cpp:220
 msgid "(1 soldier)"
-msgstr ""
+msgstr "(1 voják)"
 
 #: /storage/RTTR/svn/trunk/src/GameWorldViewer.cpp:222
 #, c-format
 msgid "(%d soldiers)"
-msgstr ""
+msgstr "(%d vojáků)"
 
 #: /storage/RTTR/svn/trunk/src/iwChat.cpp:47
 msgid "Chat Window"
-msgstr ""
+msgstr "Okno chatu"
 
 #: /storage/RTTR/svn/trunk/src/iwChat.cpp:54
 msgid "All"
-msgstr ""
+msgstr "Vše"
 
 #: /storage/RTTR/svn/trunk/src/iwChat.cpp:56
 msgid "Allies"
-msgstr ""
+msgstr "Spojenci"
 
 #: /storage/RTTR/svn/trunk/src/iwChat.cpp:58
 msgid "Enemies"
-msgstr ""
+msgstr "Nepřátelé"
 
 #: /storage/RTTR/svn/trunk/src/iwRoadWindow.cpp:47
 msgid "Activity window"
-msgstr ""
+msgstr "Pracovní okno"
 
 #: /storage/RTTR/svn/trunk/src/iwRoadWindow.cpp:51
 msgid "Interrupt road building"
-msgstr ""
+msgstr "Přerušit výstavbu cesty"
 
 #: /storage/RTTR/svn/trunk/src/iwRoadWindow.cpp:56
 msgid "Erect flag"
-msgstr ""
+msgstr "Vztyčit vlajku"
 
 #: /storage/RTTR/svn/trunk/src/GameClientGF_Replay.cpp:73
 #, c-format
-msgid "Warning: The played replay is not in sync with the original match. (GF: %u)"
+msgid ""
+"Warning: The played replay is not in sync with the original match. (GF: %u)"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/GameClientGF_Replay.cpp:115
 #, c-format
 msgid "Notice: The played replay has ended. (GF: %u)"
-msgstr ""
+msgstr "Poznámka: Přehrávaný replay je na konci. (GF: %u)"
 
 #: /storage/RTTR/svn/trunk/src/nofBuildingWorker.cpp:374
 msgid "This mine is exhausted"
-msgstr ""
+msgstr "Důl je vytěžen"
 
 #: /storage/RTTR/svn/trunk/src/iwDemolishBuilding.cpp:44
 msgid "Demolish?"
-msgstr ""
+msgstr "Zbořit?"
 
 #: /storage/RTTR/svn/trunk/src/nofAttacker.cpp:453
 msgid "We are under attack!"
-msgstr ""
+msgstr "Útočí na nás!"
 
 #: /storage/RTTR/svn/trunk/src/GameClient.cpp:565
 #, c-format
 msgid "Computer %u"
-msgstr ""
+msgstr "Počítač %u"
 
 #: /storage/RTTR/svn/trunk/src/GameClient.cpp:567
 msgid " (AI)"
-msgstr ""
+msgstr " (AI)"
 
 #: /storage/RTTR/svn/trunk/src/GameClient.cpp:831
 msgid "The Game is not in sync. Checksums of some players don't match."
@@ -1083,174 +1100,174 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/GameClient.cpp:1186
 msgid "Auto-Save"
-msgstr ""
+msgstr "Automatické ukládání"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:101
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:115
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:120
 msgid "-> Build house"
-msgstr ""
+msgstr "-> Postavit budovu"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:110
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:114
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:119
 msgid "-> Build hut"
-msgstr ""
+msgstr "-> Postavit chatč"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:121
 msgid "-> Build castle"
-msgstr ""
+msgstr "-> Postavit hrad"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:125
 msgid "-> Dig mines"
-msgstr ""
+msgstr "-> Vykopat důl"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:169
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:176
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:184
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:188
 msgid "Build road"
-msgstr ""
+msgstr "Postavit cestu"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:170
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:178
 msgid "Pull down flag"
-msgstr ""
+msgstr "Zrušit vlajku"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:171
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:179
 msgid "Call in geologist"
-msgstr ""
+msgstr "Přivolat geologa"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:172
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:180
 msgid "Send out scout"
-msgstr ""
+msgstr "Vystal skautíka"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:177
 msgid "Build waterway"
-msgstr ""
+msgstr "Postavit vodní cestu"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:209
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:211
 msgid "Dig up road"
-msgstr ""
+msgstr "Postavit cestu"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:216
 msgid "Attack options"
-msgstr ""
+msgstr "Nastavení útoku"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:224
 msgid "Attack not possible."
-msgstr ""
+msgstr "Není možné útočit."
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:231
 msgid "Less attackers"
-msgstr ""
+msgstr "Méně útočníků"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:232
 msgid "More attackers"
-msgstr ""
+msgstr "Více útočníků"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:236
 msgid "Weak attackers"
-msgstr ""
+msgstr "Slabí útočníci"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:237
 msgid "Strong attackers"
-msgstr ""
+msgstr "Silní útočníci"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:246
 msgid "Number of attackers"
-msgstr ""
+msgstr "Počet útočníků"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:249
 msgid "Attack!"
-msgstr ""
+msgstr "Útok!"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:256
 msgid "Display options"
-msgstr ""
+msgstr "Volby zobrazení"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:258
 msgid "Observation window"
-msgstr ""
+msgstr "Pozorovací okno"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:259
 msgid "House names"
-msgstr ""
+msgstr "Názvy budov"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:260
 msgid "Go to headquarters"
-msgstr ""
+msgstr "Jít do hlavní budovy"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:48
 msgid "Join Game"
-msgstr ""
+msgstr "Připojit se ke hře"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:54
 msgid "IP Address of Host:"
-msgstr ""
+msgstr "IP adresa hostitele:"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:58
 msgid "Server-Port:"
-msgstr ""
+msgstr "Port:"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:62
 msgid "Password (if needed):"
-msgstr ""
+msgstr "Heslo (pokud je vyžadováno):"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:135
 msgid "Invalid port. The valid port-range is 1 to 65535!"
-msgstr ""
+msgstr "Špatný port. Přípustné jsou hodnoty mezi 1 a 65535!"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:143
 msgid "Connecting with Host..."
-msgstr ""
+msgstr "Spojuji s hostitelem..."
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:149
 msgid "Connection failed!"
-msgstr ""
+msgstr "Spojení se nezdařilo!"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:211
 msgid "This Server is full!"
-msgstr ""
+msgstr "Server je již plný!"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:212
 msgid "Wrong Password!"
-msgstr ""
+msgstr "Neplatné heslo!"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:213
 msgid "Wrong client version"
-msgstr ""
+msgstr "Špatné verze klienta"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:214
 msgid "Connection to Host closed!"
-msgstr ""
+msgstr "Spojení s hostitelem bylo ukončeno!"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:215
 msgid "Too short Message received!"
-msgstr ""
+msgstr "Byla obdržena neúplná odpověď."
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:216
 msgid "Wrong Server Type!"
-msgstr ""
+msgstr "Špatný typ serveru!"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:226
 msgid "Waiting for Reply..."
-msgstr ""
+msgstr "Čekám na odezvu..."
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:227
 msgid "Checking Password..."
-msgstr ""
+msgstr "Ověřuji heslo..."
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:228
 msgid "Checking Map..."
-msgstr ""
+msgstr "Ověřuji mapu..."
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:229
 msgid "Waiting for Playerinfo..."
-msgstr ""
+msgstr "Čekám na Informace o hráči..."
 
 #: /storage/RTTR/svn/trunk/src/SerializedGameData.cpp:231
 msgid "An error occured while saving which was suppressed!"
@@ -1258,19 +1275,19 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:55
 msgid "Main selection"
-msgstr ""
+msgstr "Hlavní nabídka"
 
 #: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:58
 msgid "Distribution of goods"
-msgstr ""
+msgstr "Distribuce zboží"
 
 #: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:60
 msgid "Transport"
-msgstr ""
+msgstr "Transport"
 
 #: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:65
 msgid "General statistics"
-msgstr ""
+msgstr "Souhrnné statistiky"
 
 #: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:66
 msgid "Merchandise statistics"
@@ -1278,75 +1295,80 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:70
 msgid "Stock"
-msgstr ""
+msgstr "Zásoby"
 
 #: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:75
 msgid "Military"
-msgstr ""
+msgstr "Armáda"
 
 #: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:77
 msgid "Ship register"
-msgstr ""
+msgstr "Katalog lodí"
 
 #: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:80
 msgid "Series sequence"
-msgstr ""
+msgstr "Priorita výstavby budov"
 
 #: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:82
 msgid "Diplomacy"
-msgstr ""
+msgstr "Diplomacie"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyRanking.cpp:81
 msgid "Lost"
-msgstr ""
+msgstr "Prohra"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyRanking.cpp:81
 msgid "Won"
-msgstr ""
+msgstr "Výhra"
 
 #: /storage/RTTR/svn/trunk/src/nofFarmhand.cpp:172
 msgid ""
 "No more stones\n"
 " in range"
 msgstr ""
+"V dosahu není žádné\n"
+" další kamení"
 
 #: /storage/RTTR/svn/trunk/src/nofFarmhand.cpp:176
 msgid ""
 "No more fishes\n"
 " in range"
 msgstr ""
+"V dosahu nejsou žádné\n"
+" další ryby"
 
 #: /storage/RTTR/svn/trunk/src/iwWares.cpp:167
 msgid "Next page"
-msgstr ""
+msgstr "Další stránka"
 
 #: /storage/RTTR/svn/trunk/src/enhOption.cpp:69
 msgid "Waterway's maximum length"
-msgstr ""
+msgstr "Maximální délka vodní cesty"
 
 #: /storage/RTTR/svn/trunk/src/enhOption.cpp:70
 msgid "0 means infinite"
-msgstr ""
+msgstr "0 znamená nekočeně"
 
 #: /storage/RTTR/svn/trunk/src/iwEnhancements.cpp:82
 msgid "Apply Changes"
-msgstr ""
+msgstr "Použít změny"
 
 #: /storage/RTTR/svn/trunk/src/iwEnhancements.cpp:83
 msgid "Discard Changes"
-msgstr ""
+msgstr "Zahodit změny"
 
 #: /storage/RTTR/svn/trunk/src/iwMilitaryBuilding.cpp:169
 msgid "Demolition ist not allowed because the building is under attack!"
-msgstr ""
+msgstr "Budovu není možné zbořit, protože je právě pod útokem!"
 
 #: /storage/RTTR/svn/trunk/src/iwMilitaryBuilding.cpp:170
-msgid "Demolition ist not allowed because the building is located in border area!"
-msgstr ""
+msgid ""
+"Demolition ist not allowed because the building is located in border area!"
+msgstr "Budovu není možné zbořit, protože zasahuje do hraniční oblasti!"
 
 #: /storage/RTTR/svn/trunk/src/iwMilitaryBuilding.cpp:173
 msgid "Demolition not possible"
-msgstr ""
+msgstr "Budovu není možné zbořit"
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:103
 msgid "Construction aid mode"
@@ -1354,35 +1376,40 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:185
 #, c-format
-msgid "(Replay-Mode) Current GF: %u (End at: %u) / GF length: %u ms / NWF length: %u gf (%u ms)"
+msgid ""
+"(Replay-Mode) Current GF: %u (End at: %u) / GF length: %u ms / NWF length: "
+"%u gf (%u ms)"
 msgstr ""
+"(Replay-Mód) pozice GF: %u (Konec na: %u) / GF délka: %u ms / NWF délka: %u "
+"gf (%u ms)"
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:187
 #, c-format
-msgid "Current GF: %u / GF length: %u ms / NWF length: %u gf (%u ms) /  Ping: %u ms"
+msgid ""
+"Current GF: %u / GF length: %u ms / NWF length: %u gf (%u ms) /  Ping: %u ms"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:792
 #, c-format
 msgid "Player '%s' left the game!"
-msgstr ""
+msgstr "Hráč '%s' opustil hru!"
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:795
 #, c-format
 msgid "Player '%s' joined the game!"
-msgstr ""
+msgstr "Ke hře se připojil '%s'!"
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:803
 #, c-format
 msgid "Note: Game settings changed by the server%s"
-msgstr ""
+msgstr "Poznámka: Nastavení hry bylo změněno serverem %s"
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:810
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:836
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:859
 #, c-format
 msgid "<%s> "
-msgstr ""
+msgstr "<%s> "
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:819
 msgid "A auto-savegame is created..."
@@ -1391,37 +1418,37 @@ msgstr ""
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:836
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:859
 msgid "SYSTEM"
-msgstr ""
+msgstr "Systém"
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:837
 msgid "Game was paused."
-msgstr ""
+msgstr "Hra pozastavena."
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:860
 msgid "Game was resumed."
-msgstr ""
+msgstr "Hra opět běží."
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:906
 #, c-format
 msgid "Player '%s' switched to player '%s'"
-msgstr ""
+msgstr "Hráč '%s' se vyměnil s hráčem '%s'"
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:924
 #, c-format
 msgid "Player '%s' was defeated!"
-msgstr ""
+msgstr "Hráč '%s' byl poražen!"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:80
 msgid "Treaties"
-msgstr ""
+msgstr "Smlouvy"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:105
 msgid "Treaty of alliance"
-msgstr ""
+msgstr "Spojenecká smlouva"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:114
 msgid "Non-aggression pact"
-msgstr ""
+msgstr "Pakt o neútočení"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:224
 msgid "Suggest treaty of alliance"
@@ -1429,7 +1456,7 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:225
 msgid "Suggest non-aggression pact"
-msgstr ""
+msgstr "Nabídnout pakt o neútočení"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:243
 msgid "Short-run"
@@ -1437,11 +1464,11 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:244
 msgid "Medium-term"
-msgstr ""
+msgstr "Střednědobý"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:245
 msgid "Long-run"
-msgstr ""
+msgstr "Dlouhodobý"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:265
 msgid "Contract type:"
@@ -1449,139 +1476,139 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:267
 msgid "To player:"
-msgstr ""
+msgstr "Hráči:"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:269
 msgid "Duration:"
-msgstr ""
+msgstr "Délka:"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:283
 msgid "Eternal"
-msgstr ""
+msgstr "Stálý"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:285
 msgid "Confirm"
-msgstr ""
+msgstr "Potvrdit"
 
 #: /storage/RTTR/svn/trunk/src/nofScout_LookoutTower.cpp:81
 msgid "Lookout-tower occupied"
-msgstr ""
+msgstr "Hlídková věž byla obsazena"
 
 #: /storage/RTTR/svn/trunk/src/dskDirectIP.cpp:59
 msgid "Create Game"
-msgstr ""
+msgstr "Vytvořit hru"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:59
 msgid "Coins"
-msgstr ""
+msgstr "Mince"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:60
 msgid "Weapons"
-msgstr ""
+msgstr "Zbraně"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:61
 msgid "Beer"
-msgstr ""
+msgstr "Pivo"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:62
 msgid "Iron"
-msgstr ""
+msgstr "Železo"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:63
 msgid "Gold"
-msgstr ""
+msgstr "Zlato"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:64
 msgid "Iron ore"
-msgstr ""
+msgstr "Železná ruda"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:65
 msgid "Coal"
-msgstr ""
+msgstr "Uhlí"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:66
 msgid "Boards"
-msgstr ""
+msgstr "Desky"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:67
 msgid "Stones"
-msgstr ""
+msgstr "Kamení"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:68
 msgid "Wood"
-msgstr ""
+msgstr "Dřevo"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:69
 msgid "Water"
-msgstr ""
+msgstr "Voda"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:70
 msgid "Food"
-msgstr ""
+msgstr "Jídlo"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:72
 msgid "Boats"
-msgstr ""
+msgstr "Čluny"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:90
 msgid "Top"
-msgstr ""
+msgstr "Nahoře"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:92
 msgid "Up"
-msgstr ""
+msgstr "Nahoru"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:94
 msgid "Down"
-msgstr ""
+msgstr "Dolů"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:96
 msgid "Bottom"
-msgstr ""
+msgstr "Dole"
 
 #: /storage/RTTR/svn/trunk/src/GameWorldGame.cpp:552
 msgid "Lost land by this building"
-msgstr ""
+msgstr "Díky této budově jsme ztratili území"
 
 #: /storage/RTTR/svn/trunk/src/iwBuildingSite.cpp:57
 msgid "Order of building site"
-msgstr ""
+msgstr "Staveniště"
 
 #: /storage/RTTR/svn/trunk/src/iwMilitary.cpp:49
 msgid "Fewer recruits"
-msgstr ""
+msgstr "Méně rekrutů"
 
 #: /storage/RTTR/svn/trunk/src/iwMilitary.cpp:49
 msgid "More recruits"
-msgstr ""
+msgstr "Více rekrutů"
 
 #: /storage/RTTR/svn/trunk/src/iwMilitary.cpp:50
 msgid "Weak defense"
-msgstr ""
+msgstr "Slabá obrana"
 
 #: /storage/RTTR/svn/trunk/src/iwMilitary.cpp:50
 msgid "Strong defense"
-msgstr ""
+msgstr "Silná obrana"
 
 #: /storage/RTTR/svn/trunk/src/iwMilitary.cpp:51
 msgid "Fewer defenders"
-msgstr ""
+msgstr "Méně obránců"
 
 #: /storage/RTTR/svn/trunk/src/iwMilitary.cpp:51
 msgid "More defenders"
-msgstr ""
+msgstr "Více obránců"
 
 #: /storage/RTTR/svn/trunk/src/iwMilitary.cpp:53
 msgid "Interior"
-msgstr ""
+msgstr "Vnitrozemí"
 
 #: /storage/RTTR/svn/trunk/src/iwMilitary.cpp:54
 msgid "Center of country"
-msgstr ""
+msgstr "Střed země"
 
 #: /storage/RTTR/svn/trunk/src/iwMilitary.cpp:55
 msgid "Border areas"
-msgstr ""
+msgstr "Hraniční oblasti"
 
 #: /storage/RTTR/svn/trunk/src/iwBuildOrder.cpp:68
 msgid "Sequence of given order"
@@ -1593,19 +1620,19 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskMainMenu.cpp:72
 msgid "Singleplayer"
-msgstr ""
+msgstr "Singleplayer"
 
 #: /storage/RTTR/svn/trunk/src/dskMainMenu.cpp:74
 msgid "Multiplayer"
-msgstr ""
+msgstr "Multiplayer"
 
 #: /storage/RTTR/svn/trunk/src/dskMainMenu.cpp:78
 msgid "Intro"
-msgstr ""
+msgstr "Úvod"
 
 #: /storage/RTTR/svn/trunk/src/dskMainMenu.cpp:84
 msgid "Quit program"
-msgstr ""
+msgstr "Ukončit program"
 
 #: /storage/RTTR/svn/trunk/src/iwSkipGFs.cpp:44
 msgid "Skip GameFrames"
@@ -1617,39 +1644,39 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:49
 msgid "Connecting to Lobby"
-msgstr ""
+msgstr "Připojuji do Lobby"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:52
 msgid "Username:"
-msgstr ""
+msgstr "Uživatelské jméno"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:58
 msgid "Password:"
-msgstr ""
+msgstr "Heslo:"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:63
 msgid "Email Address:"
-msgstr ""
+msgstr "E-mailová adresa:"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:68
 msgid "Save Password?"
-msgstr ""
+msgstr "Zapamatovat si heslo?"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:79
 msgid "Register"
-msgstr ""
+msgstr "Registrace"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:222
 msgid "Please fill out all fields!"
-msgstr ""
+msgstr "Prosím, vyplňte všechny pole!"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:302
 msgid "Registration successful!"
-msgstr ""
+msgstr "Registrace proběhla úspěšně!"
 
 #: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:496
 msgid "Found ironore"
-msgstr ""
+msgstr "Nalezeno železo"
 
 #: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:498
 msgid "Found gold"
@@ -1657,516 +1684,574 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:500
 msgid "Found coal"
-msgstr ""
+msgstr "Nalezeno uhlí"
 
 #: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:502
 msgid "Found granite"
-msgstr ""
+msgstr "Nalezen kámen"
 
 #: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:504
 msgid "Found water"
-msgstr ""
+msgstr "Nalezena voda"
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:46
 msgid "Statistics"
-msgstr ""
+msgstr "Statistiky"
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:93
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:113
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:163
 msgid "Size of country"
-msgstr ""
+msgstr "Velikost země"
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:95
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:171
 msgid "Inhabitants"
-msgstr ""
+msgstr "Obyvatelstvo"
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:96
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:175
 msgid "Merchandise"
-msgstr ""
+msgstr "Obchodování"
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:97
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:179
 msgid "Military strength"
-msgstr ""
+msgstr "Síla armády"
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:100
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:191
 msgid "Vanquished enemies"
-msgstr ""
+msgstr "Zabití nepřátelé"
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:104
 msgid "15 m"
-msgstr ""
+msgstr "15 m"
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:105
 msgid "1 h"
-msgstr ""
+msgstr "1 h"
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:106
 msgid "4 h"
-msgstr ""
+msgstr "4 h"
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:107
 msgid "16 h"
-msgstr ""
+msgstr "16 h"
 
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:67
 msgid "Foodstuff"
-msgstr ""
+msgstr "Potraviny"
 
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:69
 msgid "Granite mine"
-msgstr ""
+msgstr "Kamenolom"
 
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:72
 msgid "Coal mine"
-msgstr ""
+msgstr "Uhelný důl"
 
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:75
 msgid "Iron mine"
-msgstr ""
+msgstr "Železný důl"
 
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:78
 msgid "Gold mine"
-msgstr ""
+msgstr "Zlatý důl"
 
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:82
 msgid "Grain"
-msgstr ""
+msgstr "Obilí"
 
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:85
 msgid "Mill"
-msgstr ""
+msgstr "Mlýn"
 
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:88
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:142
 msgid "Pig farm"
-msgstr ""
+msgstr "Vepřín"
 
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:91
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:145
 msgid "Donkey breeding"
-msgstr ""
+msgstr "Oslí farma"
 
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:94
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:139
 msgid "Brewery"
-msgstr ""
+msgstr "Pivovar"
 
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:101
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:111
 msgid "Armory"
-msgstr ""
+msgstr "Kovárna"
 
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:104
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:127
 msgid "Metalworker"
-msgstr ""
+msgstr "Kovář"
 
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:114
 msgid "Iron smelter"
-msgstr ""
+msgstr "Slévárna"
 
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:117
 msgid "Mint"
-msgstr ""
+msgstr "Mincovna"
 
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:124
 msgid "Construction"
-msgstr ""
+msgstr "Staveniště"
 
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:130
 msgid "Shipyard"
-msgstr ""
+msgstr "Loděnice"
 
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:136
 msgid "Bakery"
-msgstr ""
+msgstr "Pekárna"
 
 #: /storage/RTTR/svn/trunk/src/dskMultiPlayer.cpp:65
 msgid "Internet Lobby"
-msgstr ""
+msgstr "Internet Lobby"
 
 #: /storage/RTTR/svn/trunk/src/dskMultiPlayer.cpp:67
 msgid "Network/LAN"
-msgstr ""
+msgstr "Network/LAN"
 
 #: /storage/RTTR/svn/trunk/src/dskMultiPlayer.cpp:69
 msgid "Direct IP"
-msgstr ""
+msgstr "Přímá IP"
 
 #: /storage/RTTR/svn/trunk/src/iwSave.cpp:67
 msgid "Time"
-msgstr ""
+msgstr "Čas"
 
 #: /storage/RTTR/svn/trunk/src/iwSave.cpp:67
 msgid "Start GF"
-msgstr ""
+msgstr "Start GF"
 
 #: /storage/RTTR/svn/trunk/src/iwSave.cpp:203
 msgid "Auto-Save every:"
-msgstr ""
+msgstr "Automaticky uložit každých:"
 
 #: /storage/RTTR/svn/trunk/src/iwSave.cpp:207
 msgid "Disabled"
-msgstr ""
+msgstr "Zakázáno"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPCreate.cpp:55
 msgid "Game's Name:"
-msgstr ""
+msgstr "Název hry:"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPCreate.cpp:75
 msgid "'s Game"
-msgstr ""
+msgstr "hra"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPCreate.cpp:144
 msgid "Please enter a name for the game"
-msgstr ""
+msgstr "Prosím, zadejte název hry"
 
 #: /storage/RTTR/svn/trunk/src/nobStorehouse.cpp:59
 msgid "New storehouse finished"
-msgstr ""
+msgstr "Nové skladiště je dokončeno"
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:252
-msgid "The headquarters represents the center of your realm. The large amount of storage space available means a great many things can be safely stored here. You can release certain merchandise from the headquarters, as and when required or stop its storage. To do this, first choose the corresponding icon followed by the desired merchandise or job symbol. On the third page, you can adjust the number of reserve soldiers who are responsible for guarding the headquarters. There are two values given: the first value indicates the current number of men, the second value indicates the desired number. "
+msgid ""
+"The headquarters represents the center of your realm. The large amount of "
+"storage space available means a great many things can be safely stored here. "
+"You can release certain merchandise from the headquarters, as and when "
+"required or stop its storage. To do this, first choose the corresponding "
+"icon followed by the desired merchandise or job symbol. On the third page, "
+"you can adjust the number of reserve soldiers who are responsible for "
+"guarding the headquarters. There are two values given: the first value "
+"indicates the current number of men, the second value indicates the desired "
+"number. "
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:275
-msgid "The barracks is a very small hut which can be used by your soldiers as quarters. Using the gold coin button you can stop the delivery of gold coins to the soldiers stationed here. However, without gold coins the soldiers here can not train and improve their skills."
+msgid ""
+"The barracks is a very small hut which can be used by your soldiers as "
+"quarters. Using the gold coin button you can stop the delivery of gold coins "
+"to the soldiers stationed here. However, without gold coins the soldiers "
+"here can not train and improve their skills."
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:287
-msgid "The guardhouse is a comfortable place for the military which is also protected by solid stone walls. Using the gold coin button you can stop the delivery of gold coins to the soldiers stationed here. However, without gold coins the soldiers here can not train and improve their skills."
+msgid ""
+"The guardhouse is a comfortable place for the military which is also "
+"protected by solid stone walls. Using the gold coin button you can stop the "
+"delivery of gold coins to the soldiers stationed here. However, without gold "
+"coins the soldiers here can not train and improve their skills."
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:303
-msgid "The watchtower with its large amount of space is best suited for stationing a large number of your troops. Using the gold coin button you can stop the delivery of gold coins to the soldiers stationed here. However, without gold coins the soldiers here can not train and improve their skills."
+msgid ""
+"The watchtower with its large amount of space is best suited for stationing "
+"a large number of your troops. Using the gold coin button you can stop the "
+"delivery of gold coins to the soldiers stationed here. However, without gold "
+"coins the soldiers here can not train and improve their skills."
 msgstr ""
+"Věž poskytuje dostatek místa pro pobyt velkého množství tvých vojáků. "
+"Použitím ikony s mincí můžeš zakázat doručování zlatých mincí do příslušné "
+"vojenské budovy. Pokud ovšem vojákům zlato nedoručíš, nemohou se zlepšovat "
+"ve svých bojových dovednostech."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:319
-msgid "The defensive capabilities and size of the fortress are unsurpassed. This stronghold ensures that other valuable buildings and commodities are protected. Using the gold coin button you can stop the delivery of gold coins to the soldiers stationed here. However, without gold coins the soldiers here can not train and improve their skills."
+msgid ""
+"The defensive capabilities and size of the fortress are unsurpassed. This "
+"stronghold ensures that other valuable buildings and commodities are "
+"protected. Using the gold coin button you can stop the delivery of gold "
+"coins to the soldiers stationed here. However, without gold coins the "
+"soldiers here can not train and improve their skills."
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:334
-msgid "The quarrying of stone in a granite mine guarantees the supply of stone for buildings. However, eben a granite mine has to feed its workers."
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:346
+msgid ""
+"From the lookout tower you can see far into previously unexplored lands."
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:342
-msgid "The mining of coal supports the metalworks and smithy. This hard work requires an adequate supply of food."
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:355
+msgid ""
+"Thanks to its immense strength, the catapults represents an effective weapon "
+"against enemy military buildings."
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:349
-msgid "Deep within the mountains, miners dig for iron ore. They will obviously need a lot of food for the strenuous work."
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:362
+msgid ""
+"A woodcutter provides the sawmill with logs. A forester is able to replant "
+"the depleted forest."
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:356
-msgid "A gold mine allows you to prospect for valuable gold deposits. For this, it is necessary to ensure that the miners are provided with plenty of food."
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:369
+msgid ""
+"The fish man is responsible for finding water rich in fish. His fish feed a "
+"great many miners."
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:365
-msgid "From the lookout tower you can see far into previously unexplored lands."
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:375
+msgid ""
+"The stonemason works the stone near his quarry into bricks. These are needed "
+"mainly for building houses and as ammunition for catapults."
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:374
-msgid "Thanks to its immense strength, the catapults represents an effective weapon against enemy military buildings."
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:383
+msgid ""
+"Within his area, the forester ensures the survival of the forest. He plants "
+"all types of trees."
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:381
-msgid "A woodcutter provides the sawmill with logs. A forester is able to replant the depleted forest."
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:390
+msgid ""
+"The butcher processes the livestock delivered into nutritious ham on which "
+"you miners are fed."
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:388
-msgid "The fish man is responsible for finding water rich in fish. His fish feed a great many miners."
-msgstr ""
-
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:394
-msgid "The stonemason works the stone near his quarry into bricks. These are needed mainly for building houses and as ammunition for catapults."
-msgstr ""
-
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:402
-msgid "Within his area, the forester ensures the survival of the forest. He plants all types of trees."
-msgstr ""
-
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:409
-msgid "The butcher processes the livestock delivered into nutritious ham on which you miners are fed."
-msgstr ""
-
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:416
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:397
 msgid "Meat the hunter acquires is used to feed the miners."
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:421
-msgid "The brewer produces fine beer from grain and water. This drink is needed to fill the soldiers with courage."
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:402
+msgid ""
+"The brewer produces fine beer from grain and water. This drink is needed to "
+"fill the soldiers with courage."
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:428
-msgid "The armory produces swords and strong shields. This equipment is vital for your soldiers."
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:409
+msgid ""
+"The armory produces swords and strong shields. This equipment is vital for "
+"your soldiers."
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:415
+msgid ""
+"The countless tools which your workers need are made in the metalworks. This "
+"requires boards and iron."
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:422
+msgid ""
+"Raw iron ore is smelted in the iron smelters with the help of coal and raw "
+"iron. The processed iron is then used to making weapons (in the Armory) and "
+"tools (in the metalworks)."
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:434
-msgid "The countless tools which your workers need are made in the metalworks. This requires boards and iron."
+msgid ""
+"Grain and water are needed for rearing pigs. The meat thus obtained can then "
+"be processed by a butcher."
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:441
-msgid "Raw iron ore is smelted in the iron smelters with the help of coal and raw iron. The processed iron is then used to making weapons (in the Armory) and tools (in the metalworks)."
-msgstr ""
-
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:453
-msgid "Grain and water are needed for rearing pigs. The meat thus obtained can then be processed by a butcher."
+msgid ""
+"The storehouse can help reduce long transportation journeys and is suited to "
+"the temporary storage of merchandise and inhabitants. You can release "
+"certain merchandise from the storehouse, as and when required. "
+"Alternatively, the storage function can be disabled. To do this, first "
+"choose the relevant icon followed by the desired merchandise or job symbol."
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:460
-msgid "The storehouse can help reduce long transportation journeys and is suited to the temporary storage of merchandise and inhabitants. You can release certain merchandise from the storehouse, as and when required. Alternatively, the storage function can be disabled. To do this, first choose the relevant icon followed by the desired merchandise or job symbol."
+msgid ""
+"The grain is ground in the windmill. The flour from the windmill is later "
+"used at the bakery to bake bread."
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:479
-msgid "The grain is ground in the windmill. The flour from the windmill is later used at the bakery to bake bread."
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:467
+msgid ""
+"The flour produced at the windmill can be combined with water in the bakery "
+"to make oven-fresh bread. It's your miners' favorite!"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:486
-msgid "The flour produced at the windmill can be combined with water in the bakery to make oven-fresh bread. It's your miners' favorite!"
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:475
+msgid ""
+"The carpenter turns the woodcutter's logs into made-to-measure planks. There "
+"form the basic for building houses and ships."
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:494
-msgid "The carpenter turns the woodcutter's logs into made-to-measure planks. There form the basic for building houses and ships."
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:483
+msgid ""
+"The mint is responsible for producing valuable gold coins. These precious "
+"objects are produced using coal and gold."
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:502
-msgid "The mint is responsible for producing valuable gold coins. These precious objects are produced using coal and gold."
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:490
+msgid ""
+"A well supplies water to the bakery, brewery, donkey breeder and pig farm."
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:509
-msgid "A well supplies water to the bakery, brewery, donkey breeder and pig farm."
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:496
+msgid ""
+"It is possible to build small rowing boats as well as huge cargo ships in a "
+"shipyard. The boards required for this are skillfully worked by shipwrights."
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:515
-msgid "It is possible to build small rowing boats as well as huge cargo ships in a shipyard. The boards required for this are skillfully worked by shipwrights."
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:505
+msgid ""
+"The farmer plants and harvests grain in the surrounding fields. A windmill "
+"then processes the harvested grain into flour or can be used to feed the "
+"pigs."
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:524
-msgid "The farmer plants and harvests grain in the surrounding fields. A windmill then processes the harvested grain into flour or can be used to feed the pigs."
-msgstr ""
-
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:532
-msgid "The pack donkeys bred here are used to transport your merchandise more efficiently. They are reared on water and grain."
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:513
+msgid ""
+"The pack donkeys bred here are used to transport your merchandise more "
+"efficiently. They are reared on water and grain."
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:157
 msgid "Boat"
-msgstr ""
+msgstr "Loď"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:158
 msgid "Sword"
-msgstr ""
+msgstr "Meč"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:160
 msgid "Flour"
-msgstr ""
+msgstr "Mouka"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:161
 msgid "Fish"
-msgstr ""
+msgstr "Ryba"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:162
 msgid "Bread"
-msgstr ""
+msgstr "Chleba"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:163
 msgid "Shield"
-msgstr ""
+msgstr "Štít"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:174
 msgid "Meat"
-msgstr ""
+msgstr "Maso"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:175
 msgid "Ham"
-msgstr ""
+msgstr "Kýta"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:233
 msgid "Barracks"
-msgstr ""
+msgstr "Kasárny"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:234
 msgid "Guardhouse"
-msgstr ""
+msgstr "Strážnice"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:236
 msgid "Watchtower"
-msgstr ""
+msgstr "Strážní věž"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:241
 msgid "Fortress"
-msgstr ""
+msgstr "Pevnost"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:246
 msgid "Lookout tower"
-msgstr ""
+msgstr "Hlídková věž"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:248
 msgid "Catapult"
-msgstr ""
+msgstr "Katapult"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:249
 msgid "Woodcutter"
-msgstr ""
+msgstr "Dřevorubec"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:250
 msgid "Fishery"
-msgstr ""
+msgstr "Rybář"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:251
 msgid "Quarry"
-msgstr ""
+msgstr "Kameník"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:252
 msgid "Forester"
-msgstr ""
+msgstr "Lesník"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:253
 msgid "Slaughterhouse"
-msgstr ""
+msgstr "Jatka"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:254
 msgid "Hunter"
-msgstr ""
+msgstr "Lovec"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:257
 msgid "Metalworks"
-msgstr ""
+msgstr "Železárna"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:265
 msgid "Sawmill"
-msgstr ""
+msgstr "Pila"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:267
 msgid "Well"
-msgstr ""
+msgstr "Studna"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:269
 msgid "Farm"
-msgstr ""
+msgstr "Farma"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:271
 msgid "Harbor building"
-msgstr ""
+msgstr "Přístaviště"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:317
 msgid "Helper"
-msgstr ""
+msgstr "Pomocník"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:318
 msgid "Woodchopper"
-msgstr ""
+msgstr "Dřevorubec"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:319
 msgid "Fisher"
-msgstr ""
+msgstr "Rybář"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:320
 msgid "Ranger"
-msgstr ""
+msgstr "Walker Texas Ranger"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:321
 msgid "Carpenter"
-msgstr ""
+msgstr "Tesař"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:322
 msgid "Stonemason"
-msgstr ""
+msgstr "Kameník"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:323
 msgid "Huntsman"
-msgstr ""
+msgstr "Lovec"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:324
 msgid "Farmer"
-msgstr ""
+msgstr "Framář"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:325
 msgid "Miller"
-msgstr ""
+msgstr "Mlynář"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:326
 msgid "Baker"
-msgstr ""
+msgstr "Pekař"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:327
 msgid "Butcher"
-msgstr ""
+msgstr "Řezník"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:328
 msgid "Miner"
-msgstr ""
+msgstr "Horník"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:329
 msgid "Brewer"
-msgstr ""
+msgstr "Pivař"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:330
 msgid "Pig breeder"
-msgstr ""
+msgstr "Chovatel prasat"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:331
 msgid "Donkey breeder"
-msgstr ""
+msgstr "Chovatel oslů"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:332
 msgid "Iron founder"
-msgstr ""
+msgstr "Slévač železa"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:333
 msgid "Minter"
-msgstr ""
+msgstr "Mincovník"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:335
 msgid "Armorer"
-msgstr ""
+msgstr "Zbrojař"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:336
 msgid "Builder"
-msgstr ""
+msgstr "Stavař"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:337
 msgid "Planer"
-msgstr ""
+msgstr "Plánovač"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:338
 msgid "Private"
-msgstr ""
+msgstr "Vojín"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:339
 msgid "Private first class"
-msgstr ""
+msgstr "Desátník"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:340
 msgid "Sergeant"
-msgstr ""
+msgstr "Seržant"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:341
 msgid "Officer"
-msgstr ""
+msgstr "Plukovník"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:342
 msgid "General"
-msgstr ""
+msgstr "Generál"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:343
 msgid "Geologist"
-msgstr ""
+msgstr "Geolog"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:344
 msgid "Shipwright"
-msgstr ""
+msgstr "Loďař"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:345
 msgid "Scout"
-msgstr ""
+msgstr "Průzkumník"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:346
 msgid "Pack donkey"
-msgstr ""
-
+msgstr "Stádo oslů"

@@ -2,27 +2,36 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Siedler II.5 RttR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-07 22:04+0100\n"
-"PO-Revision-Date: 2009-06-04 23:03+0000\n"
+"POT-Creation-Date: 2009-06-26 08:54+0100\n"
+"PO-Revision-Date: 2009-06-26 16:44+0000\n"
 "Last-Translator: Siedler II.5 - Return To The Roots Team <sf-"
 "team@siedler25.de>\n"
 "Language-Team: Siedler II.5 RttR <sf-team@siedler25.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-06-26 06:48+0000\n"
+"X-Launchpad-Export-Date: 2009-06-26 20:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: RUSSIAN FEDERATION\n"
 "X-Poedit-Language: Russian\n"
 "X-Poedit-SourceCharset: iso-8859-15\n"
 
-#: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:41
+#: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:47
 msgid "Post office"
 msgstr "Почта"
 
-#: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:55
+#: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:75
+#: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:223
 msgid "No letters!"
 msgstr "Нет писем!"
+
+#: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:246
+msgid "Message"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:246
+msgid "of"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/languages.cpp:69
 msgid "System language"
@@ -230,6 +239,26 @@ msgstr "Стандарт"
 msgid "Productivity"
 msgstr "Производительность"
 
+#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:569
+msgid ""
+"Military building\n"
+" occupied"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:776
+msgid "Military building lost"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:779
+msgid "Military building captured"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:1003
+msgid ""
+"A catapult is firing\n"
+" upon us!"
+msgstr ""
+
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:44
 #: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:65
 #: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:71
@@ -300,9 +329,9 @@ msgstr "Укажите название списка воспроизведен�
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:191
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:305
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:320
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:453
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:780
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:794
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:450
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:777
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:791
 msgid "Error"
 msgstr "Ошибка"
 
@@ -480,32 +509,32 @@ msgstr "Очень быстро"
 msgid "Map: "
 msgstr "Карта: "
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:200
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:197
 msgid "Open"
 msgstr "Открыть"
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:205
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:202
 msgid "Closed"
 msgstr "Закрыто"
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:245
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:274
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:242
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:271
 #, c-format
 msgid "%d"
 msgstr "%d"
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:251
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:261
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:565
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:248
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:258
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:562
 msgid "Africans"
 msgstr "Африканцы"
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:256
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:266
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:253
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:263
 msgid "-"
 msgstr "-"
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:453
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:450
 msgid ""
 "Game can only be started as soon as everybody has a unique color,everyone is "
 "ready and all free slots are closed."
@@ -513,19 +542,19 @@ msgstr ""
 "Игра может быть начата только когда все имеют уникальный цвет, все готовы, и "
 "все свободные слоты закрыты."
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:565
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:562
 msgid "Japaneses"
 msgstr "Японцы"
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:565
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:562
 msgid "Romans"
 msgstr "Римляне"
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:565
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:562
 msgid "Vikings"
 msgstr "Викинги"
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:780
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:777
 msgid "Lost connection to server!"
 msgstr "Потеряно подключение к серверу!"
 
@@ -753,24 +782,28 @@ msgstr ""
 msgid "Played"
 msgstr "Игранные"
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:340
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:145
+msgid "Mapfile: "
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:344
 msgid "Incomplete message was received!"
 msgstr "Получено неполное сообщение!"
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:401
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:405
 #, c-format
 msgid "%d Player"
 msgstr "%d Игрок"
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:406
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:410
 msgid "Greenland"
 msgstr "Трава"
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:407
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:411
 msgid "Wasteland"
 msgstr "Пустошь"
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:408
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:412
 msgid "Winter world"
 msgstr "Снег"
 
@@ -801,6 +834,45 @@ msgstr "Readme!"
 #: /storage/RTTR/svn/trunk/src/iwMinimap.cpp:53
 msgid "Outline map"
 msgstr "Мини-карта"
+
+#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:97
+msgid "treaty of alliance"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:98
+msgid "non-aggression pact"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:108
+#, c-format
+msgid "The player '%s' offers you a %s."
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:113
+msgid "Duration: Forever"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:115
+#, c-format
+msgid "Duration: %u GF (%s)"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:127
+#, c-format
+msgid ""
+"The player '%s' want to cancel the '%s' between you both primaturely. Do you "
+"agree?"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:150
+#, c-format
+msgid "The %s between player '%s' and you has been concluded."
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:153
+#, c-format
+msgid "The %s between player '%s' and you has been cancelled."
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:63
 msgid "Filename"
@@ -974,7 +1046,6 @@ msgid "Enemies"
 msgstr "Враги"
 
 #: /storage/RTTR/svn/trunk/src/iwRoadWindow.cpp:47
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:68
 msgid "Activity window"
 msgstr "Окно активности"
 
@@ -983,9 +1054,6 @@ msgid "Interrupt road building"
 msgstr "Прервать строительство дороги"
 
 #: /storage/RTTR/svn/trunk/src/iwRoadWindow.cpp:56
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:163
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:197
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:203
 msgid "Erect flag"
 msgstr "Установть флаг"
 
@@ -1002,24 +1070,32 @@ msgstr ""
 msgid "Notice: The played replay has ended. (GF: %u)"
 msgstr "Заметка: Повтор закончился. (GF: %u)"
 
+#: /storage/RTTR/svn/trunk/src/nofBuildingWorker.cpp:374
+msgid "This mine is exhausted"
+msgstr ""
+
 #: /storage/RTTR/svn/trunk/src/iwDemolishBuilding.cpp:44
 msgid "Demolish?"
 msgstr "Взорвать?"
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:560
+#: /storage/RTTR/svn/trunk/src/nofAttacker.cpp:453
+msgid "We are under attack!"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:565
 #, c-format
 msgid "Computer %u"
 msgstr "Компьютер %u"
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:562
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:567
 msgid " (AI)"
 msgstr " (ИИ)"
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:822
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:831
 msgid "The Game is not in sync. Checksums of some players don't match."
 msgstr "Игра не синхронизирована. Чексуммы некоторых игроков не совпадают."
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:1166
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:1186
 msgid "Auto-Save"
 msgstr "Автосохранение"
 
@@ -1190,7 +1266,7 @@ msgstr "Проверка карты..."
 msgid "Waiting for Playerinfo..."
 msgstr "Ожидание информации об игроках..."
 
-#: /storage/RTTR/svn/trunk/src/SerializedGameData.cpp:230
+#: /storage/RTTR/svn/trunk/src/SerializedGameData.cpp:231
 msgid "An error occured while saving which was suppressed!"
 msgstr "Во время сохранения возникла ошибка, которая была подавлена!"
 
@@ -1242,6 +1318,18 @@ msgstr "Потеряно"
 msgid "Won"
 msgstr "Выиграл"
 
+#: /storage/RTTR/svn/trunk/src/nofFarmhand.cpp:172
+msgid ""
+"No more stones\n"
+" in range"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/nofFarmhand.cpp:176
+msgid ""
+"No more fishes\n"
+" in range"
+msgstr ""
+
 #: /storage/RTTR/svn/trunk/src/iwWares.cpp:167
 msgid "Next page"
 msgstr "Следующая страница"
@@ -1275,11 +1363,11 @@ msgstr "Взыв запрещен: здание слишком близко к �
 msgid "Demolition not possible"
 msgstr "Взрыв невозможен"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:102
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:103
 msgid "Construction aid mode"
 msgstr "Режим строительных подсказок"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:182
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:185
 #, c-format
 msgid ""
 "(Replay-Mode) Current GF: %u (End at: %u) / GF length: %u ms / NWF length: "
@@ -1288,58 +1376,58 @@ msgstr ""
 "(Replay-Mode) Current GF: %u (End at: %u) / GF length: %u ms / NWF length: "
 "%u gf (%u ms)"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:184
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:187
 #, c-format
 msgid ""
 "Current GF: %u / GF length: %u ms / NWF length: %u gf (%u ms) /  Ping: %u ms"
 msgstr ""
 "Current GF: %u / GF length: %u ms / NWF length: %u gf (%u ms) /  Ping: %u ms"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:786
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:792
 #, c-format
 msgid "Player '%s' left the game!"
 msgstr "Игрок '%s' покинул игру!"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:789
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:795
 #, c-format
 msgid "Player '%s' joined the game!"
 msgstr "Игрок '%s' присоединился к игре!"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:797
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:803
 #, c-format
 msgid "Note: Game settings changed by the server%s"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:804
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:830
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:853
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:810
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:836
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:859
 #, c-format
 msgid "<%s> "
 msgstr "<%s> "
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:813
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:819
 msgid "A auto-savegame is created..."
 msgstr "Произведено автосохранение..."
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:830
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:853
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:836
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:859
 msgid "SYSTEM"
 msgstr "СИСТЕМА"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:831
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:837
 msgid "Game was paused."
 msgstr "Игра приостановлена."
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:854
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:860
 msgid "Game was resumed."
 msgstr "Игра продолжена."
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:900
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:906
 #, c-format
 msgid "Player '%s' switched to player '%s'"
 msgstr "Игрок '%s' переключился на игрока '%s'"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:918
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:924
 #, c-format
 msgid "Player '%s' was defeated!"
 msgstr "Игрок '%s' побежден!"
@@ -1348,28 +1436,56 @@ msgstr "Игрок '%s' побежден!"
 msgid "Treaties"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:99
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:105
 msgid "Treaty of alliance"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:105
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:114
 msgid "Non-aggression pact"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:137
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:224
 msgid "Suggest treaty of alliance"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:138
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:225
 msgid "Suggest non-aggression pact"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:158
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:243
+msgid "Short-run"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:244
+msgid "Medium-term"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:245
+msgid "Long-run"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:265
 msgid "Contract type:"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:160
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:267
 msgid "To player:"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:269
+msgid "Duration:"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:283
+msgid "Eternal"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:285
+msgid "Confirm"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/nofScout_LookoutTower.cpp:81
+msgid "Lookout-tower occupied"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskDirectIP.cpp:59
@@ -1429,24 +1545,24 @@ msgid "Boats"
 msgstr "Лодки"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:90
-#: /storage/RTTR/svn/trunk/src/iwBuildOrder.cpp:56
 msgid "Top"
 msgstr "На самый верх"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:92
-#: /storage/RTTR/svn/trunk/src/iwBuildOrder.cpp:58
 msgid "Up"
 msgstr "Вверх"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:94
-#: /storage/RTTR/svn/trunk/src/iwBuildOrder.cpp:60
 msgid "Down"
 msgstr "Вниз"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:96
-#: /storage/RTTR/svn/trunk/src/iwBuildOrder.cpp:62
 msgid "Bottom"
 msgstr "Низ"
+
+#: /storage/RTTR/svn/trunk/src/GameWorldGame.cpp:552
+msgid "Lost land by this building"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwBuildingSite.cpp:57
 msgid "Order of building site"
@@ -1552,49 +1668,69 @@ msgstr "Пожалуйста, заполните все поля!"
 msgid "Registration successful!"
 msgstr "Регистрация успешна!"
 
+#: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:496
+msgid "Found ironore"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:498
+msgid "Found gold"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:500
+msgid "Found coal"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:502
+msgid "Found granite"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:504
+msgid "Found water"
+msgstr ""
+
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:46
 msgid "Statistics"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:76
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:96
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:146
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:93
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:113
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:163
 msgid "Size of country"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:78
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:154
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:95
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:171
 msgid "Inhabitants"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:79
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:158
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:96
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:175
 msgid "Merchandise"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:80
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:162
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:97
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:179
 msgid "Military strength"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:83
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:174
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:100
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:191
 msgid "Vanquished enemies"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:87
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:104
 msgid "15 m"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:88
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:105
 msgid "1 h"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:89
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:106
 msgid "4 h"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:90
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:107
 msgid "16 h"
 msgstr ""
 
@@ -1710,6 +1846,10 @@ msgstr "Игра"
 #: /storage/RTTR/svn/trunk/src/iwDirectIPCreate.cpp:144
 msgid "Please enter a name for the game"
 msgstr "Пожалуйтса введине название игры"
+
+#: /storage/RTTR/svn/trunk/src/nobStorehouse.cpp:59
+msgid "New storehouse finished"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:252
 msgid ""

@@ -10,7 +10,7 @@ ADD_SUBDIRECTORY( src )
 #original Makefile.am contents follow:
 
 #################################################################################
-### $Id: Makefile.am 1608 2007-03-16 21:05:41Z FloSoft $
+### $Id: CMakeLists.txt 5113 2009-06-26 08:23:54Z FloSoft $
 #################################################################################
 #
 #include $(top_srcdir)/m4/doxygen.am

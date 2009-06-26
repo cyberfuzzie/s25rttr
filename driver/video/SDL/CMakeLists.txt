@@ -9,7 +9,7 @@ ADD_SUBDIRECTORY( src )
 #original Makefile.am contents follow:
 
 #################################################################################
-### $Id: Makefile.am 1374 2006-12-18 18:31:43Z FloSoft $
+### $Id: CMakeLists.txt 5113 2009-06-26 08:23:54Z FloSoft $
 #################################################################################
 #
 ## Verweis auf die Makefiles der Unterverzeichnisse

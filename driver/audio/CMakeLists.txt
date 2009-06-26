@@ -9,7 +9,7 @@ ADD_SUBDIRECTORY( SDL )
 #original Makefile.am contents follow:
 
 #################################################################################
-### $Id: Makefile.am 1753 2007-04-17 10:36:41Z FloSoft $
+### $Id: CMakeLists.txt 5113 2009-06-26 08:23:54Z FloSoft $
 #################################################################################
 #
 ## Verweis auf die Makefiles der Unterverzeichnisse

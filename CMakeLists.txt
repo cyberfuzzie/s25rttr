@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 5123 2009-06-26 18:37:38Z FloSoft $
+### $Id: CMakeLists.txt 5124 2009-06-26 18:57:09Z FloSoft $
 ################################################################################
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.4)
@@ -57,7 +57,9 @@ CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/version.h.cmake
 
 ################################################################################
 
-ADD_CUSTOM_TARGET(version ALL
+ADD_SUBDIRECTORY(version)
+
+ADD_CUSTOM_TARGET(updateversion ALL
                   COMMAND ${CMAKE_BINARY_DIR}/version/src/version
                   DEPENDS version
                   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
@@ -78,7 +80,6 @@ ADD_SUBDIRECTORY(liblobby)
 ADD_SUBDIRECTORY(s-c)
 ADD_SUBDIRECTORY(s25update)
 ADD_SUBDIRECTORY(src)
-ADD_SUBDIRECTORY(version)
 
 ################################################################################
 

@@ -1,4 +1,4 @@
-// $Id: nobBaseWarehouse.cpp 5066 2009-06-18 20:22:24Z OLiver $
+// $Id: nobBaseWarehouse.cpp 5118 2009-06-26 15:39:28Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -51,7 +51,7 @@
 /// Intervall für Ausleerung (in gf)
 const unsigned EMPTY_INTERVAL = 100;
 /// Dauer für das Erstellen von Trägern
-const unsigned short PRODUCE_HELPERS_GF = 390;
+const unsigned short PRODUCE_HELPERS_GF = 300;
 const unsigned short PRODUCE_HELPERS_RANDOM_GF = 20;
 /// Dauer für das Rekrutierung von Soldaten
 const unsigned short RECRUITE_GF = 400;

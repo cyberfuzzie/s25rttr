@@ -1,4 +1,4 @@
-// $Id: glArchivItem_Bitmap.h 5109 2009-06-26 06:40:04Z FloSoft $
+// $Id: glArchivItem_Bitmap.h 5110 2009-06-26 06:45:50Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -36,35 +36,7 @@ public:
 	virtual ~glArchivItem_Bitmap(void);
 
 	/// Erzeugt und zeichnet die Textur.
-	virtual void Draw(short dst_x, short dst_y, short dst_w = 0, short dst_h = 0, short src_x = 0, short src_y = 0, short src_w = 0, short src_h = 0, unsigned int color = COLOR_WHITE)
-{
-	if(texture == 0)
-		GenerateTexture();
-	if(texture == 0)
-		return;
-
-	if(src_w == 0)
-		src_w = width;
-	if(src_h == 0)
-		src_h = height;
-	if(dst_w == 0)
-		dst_w = src_w;
-	if(dst_h == 0)
-		dst_h = src_h;
-
-	glEnable(GL_TEXTURE_2D);
-
-	glColor4ub( GetRed(color), GetGreen(color), GetBlue(color), GetAlpha(color));
-	glBindTexture(GL_TEXTURE_2D, texture);
-
-	glBegin(GL_QUADS);
-	DrawVertex( (float)(dst_x-nx),         (float)(dst_y-ny),         (float)src_x,         (float)src_y);
-	DrawVertex( (float)(dst_x-nx),         (float)(dst_y-ny + dst_h), (float)src_x,         (float)(src_y+src_h));
-	DrawVertex( (float)(dst_x-nx + dst_w), (float)(dst_y-ny + dst_h), (float)(src_x+src_w), (float)(src_y+src_h));
-	DrawVertex( (float)(dst_x-nx + dst_w), (float)(dst_y-ny),         (float)(src_x+src_w), (float)src_y);
-	glEnd();
-}
-
+	virtual void Draw(short dst_x, short dst_y, short dst_w = 0, short dst_h = 0, short src_x = 0, short src_y = 0, short src_w = 0, short src_h = 0, unsigned int color = COLOR_WHITE);
 	/// liefert das GL-Textur-Handle.
 	unsigned int GetTexture();
 	/// Löscht die GL-Textur (z.B fürs Neuerstellen)
@@ -76,11 +48,8 @@ protected:
 	/// Erzeugt die Textur.
 	virtual void GenerateTexture();
 	/// Zeichnet einen Vertex inkl Texturkoordinaten.
-	inline void DrawVertex(float x, float y, float tx, float ty)
-{
-	glTexCoord2f(tx/tex_width, ty/tex_height);
-	glVertex2f(x, y);
-}
+	void DrawVertex(float x, float y, float tx, float ty);
+
 protected:
 	unsigned int texture; ///< Das GL-Textur-Handle
 	unsigned int filter;  ///< Der aktuell gewählte Texturfilter

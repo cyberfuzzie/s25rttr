@@ -13,8 +13,8 @@ SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -I/System/Library/Frameworks/SDL.framework/H
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -I/System/Library/Frameworks/SDL.framework/Headers -I/System/Library/Frameworks/SDL_mixer.framework/Headers -mtune=prescott -malign-double -ffast-math -mmmx -msse -mfpmath=sse -fomit-frame-pointer ")
 
 # set rpath correctly - fucking CMAKE!
-SET(CMAKE_C_LINK_FLAGS 	"${CMAKE_C_LINK_FLAGS} -L/usr/i686-apple-darwin9/lib -framework OpenGL -framework SDL -framework SDL_mixer")
-SET(CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -L/usr/i686-apple-darwin9/lib -framework OpenGL -framework SDL -framework SDL_mixer")
+SET(CMAKE_C_LINK_FLAGS 	"${CMAKE_C_LINK_FLAGS} -L/usr/i686-apple-darwin9/lib -framework OpenGL")
+SET(CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -L/usr/i686-apple-darwin9/lib -framework OpenGL")
 
 SET(CMAKE_FIND_ROOT_PATH "/usr/i686-apple-darwin9")
 

@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: CMakeLists.txt 5098 2009-06-24 17:09:39Z FloSoft $
+### $Id: CMakeLists.txt 5120 2009-06-26 16:32:05Z FloSoft $
 #################################################################################
 
 INCLUDE(FindSDL)
@@ -15,6 +15,10 @@ IF (SDL_FOUND)
 		ADD_DEFINITIONS(-DBUILD_DLL)
 		ADD_CUSTOM_COMMAND(TARGET videoSDL POST_BUILD COMMAND if [ -f libvideoSDL.so ] \; then cp -v libvideoSDL.so videoSDL.dll \; else cp -v libvideoSDL.dll videoSDL.dll \; fi )
 	ENDIF ( "${COMPILEFOR}" STREQUAL "win32")
+
+	IF ( "${COMPILEFOR}" STREQUAL "macos")
+		SET_TARGET_PROPERTIES(${TARGET} PROPERTIES LINK_FLAGS "-framework SDL")
+	ENDIF ( "${COMPILEFOR}" STREQUAL "macos")
 
 	ADD_CUSTOM_COMMAND(TARGET videoSDL POST_BUILD COMMAND ln -fvs SDL/src/libvideoSDL${CMAKE_SHARED_LIBRARY_SUFFIX} ../../videoSDL${CMAKE_SHARED_LIBRARY_SUFFIX})
 	

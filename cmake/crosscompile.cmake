@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: crosscompile.cmake 5119 2009-06-26 16:29:28Z FloSoft $
+### $Id: crosscompile.cmake 5120 2009-06-26 16:32:05Z FloSoft $
 #################################################################################
 
 # read host compiler machine triplet
@@ -89,7 +89,7 @@ IF ( "${AD_CDM_OV}" MATCHES "apple" )
 ENDIF ( "${AD_CDM_OV}" MATCHES "apple" )
 
 IF ( "${AD_CDM_OV}" MATCHES "mingw" )
-	# Cygwin/Mingw sepzifische Parameter
+	# Cygwin/Mingw spezifische Parameter
 
 	SET(COMPILEFOR "win32")
 ENDIF ( "${AD_CDM_OV}" MATCHES "mingw" )

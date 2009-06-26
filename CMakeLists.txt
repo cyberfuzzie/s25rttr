@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 5098 2009-06-24 17:09:39Z FloSoft $
+### $Id: CMakeLists.txt 5121 2009-06-26 18:15:01Z FloSoft $
 ################################################################################
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.4)
@@ -52,10 +52,12 @@ ENDIF (NOT "${COMPILEFOR}" STREQUAL "win32" )
 
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/local.h.cmake
                ${CMAKE_CURRENT_SOURCE_DIR}/local.h)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/version.h.cmake
+               ${CMAKE_CURRENT_SOURCE_DIR}/version.h)
 
 ################################################################################
 
-ADD_CUSTOM_TARGET(version.h ALL cp version.h.cmake version.h
+ADD_CUSTOM_TARGET(version.h ALL
                   COMMAND ${CMAKE_BINARY_DIR}/version/src/version
                   DEPENDS version
                   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})

@@ -1,4 +1,4 @@
-// $Id: BuildingConsts.h 4800 2009-05-04 17:52:33Z Demophobie $
+// $Id: BuildingConsts.h 5116 2009-06-26 14:31:54Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -330,16 +330,35 @@ const char * const BUILDING_HELP_STRINGS[40] =
 	"skills."),
 
 	// Granite mine
-	"Todo",
+	gettext_noop(
+	"The quarrying of stone in a "
+	"granite mine guarantees the "
+	"supply of stone for buildings. "
+	"However, eben a granite mine has " 
+	"to feed its workers."),
 
 	// Coal mine
-	"Todo",
+	gettext_noop(
+	"The mining of coal supports the "
+	"metalworks and smithy. This hard "
+	"work requires an adequate supply " 
+	"of food."),
 
 	// Iron mine
-	"Todo",
+	gettext_noop(
+	"Deep within the mountains, "
+	"miners dig for iron ore. They "
+	"will obviously need a lot of " 
+	"food for the strenuous work."),
 
 	// Gold mine
-	"Todo",
+	gettext_noop(
+	"A gold mine allows you to "
+	"prospect for valuable gold "
+	"deposits. For this, it is "
+	"necessary to ensure that the "
+	"miners are provided with plenty " 
+	"of food."),
 
 	// Lookout-tower
 	gettext_noop(

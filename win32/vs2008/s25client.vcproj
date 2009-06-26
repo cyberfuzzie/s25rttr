@@ -1926,6 +1926,18 @@
 							>
 						</File>
 						<File
+							RelativePath="..\..\src\noShipBuildingSite.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\noShipBuildingSite.h"
+							>
+						</File>
+						<File
+							RelativePath=".\noShipBuildingSite.h"
+							>
+						</File>
+						<File
 							RelativePath="..\..\src\noSign.cpp"
 							>
 						</File>

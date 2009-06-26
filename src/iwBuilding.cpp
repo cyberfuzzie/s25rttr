@@ -1,4 +1,4 @@
-// $Id: iwBuilding.cpp 5117 2009-06-26 14:35:48Z OLiver $
+// $Id: iwBuilding.cpp 5125 2009-06-26 20:10:42Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -33,7 +33,7 @@
 
 #include "iwMsgbox.h"
 
-#include "nobUsual.h"
+#include "nobShipYard.h"
 #include "iwDemolishBuilding.h"
 #include "iwHelp.h"
 #include "BuildingConsts.h"
@@ -45,6 +45,10 @@
 	#undef THIS_FILE
 	static char THIS_FILE[] = __FILE__;
 #endif
+
+/// IDs in der IO_DAT von Boot und Schiffs-Bild für den Umschaltebutton beim Schiffsbauer
+const unsigned IODAT_BOAT_ID = 219;
+const unsigned IODAT_SHIP_ID = 218;
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
@@ -74,9 +78,18 @@ iwBuilding::iwBuilding(GameWorldViewer * const gwv,dskGameInterface *const gi,no
 	// Abreißen
 	AddImageButton( 5,  50, 147, 34, 32, TC_GREY, GetImage(io_dat,  23), _("Demolish house"));
 	// Produktivität einstellen (196,197) (bei Spähturm ausblenden)
-	Window * enable_productivity = AddImageButton( 6,  90, 147, 32, 32, TC_GREY, GetImage(io_dat, ((building->IsProductionDisabledVirtual())?197:196)));
+	Window * enable_productivity = AddImageButton( 6,  90, 147, 34, 32, TC_GREY, GetImage(io_dat, ((building->IsProductionDisabledVirtual())?197:196)));
 	if(building->GetBuildingType() == BLD_LOOKOUTTOWER)
 		enable_productivity->SetVisible(false);
+	// Bei Bootsbauer Button zum Umwählen von Booten und Schiffen
+	if(building->GetBuildingType() == BLD_SHIPYARD)
+	{
+		// Jenachdem Boot oder Schiff anzeigen
+		unsigned io_dat_id = (static_cast<nobShipYard*>(building)->GetMode() == nobShipYard::BOATS) 
+			? IODAT_BOAT_ID : IODAT_SHIP_ID;
+		AddImageButton(11,130,147,43,32,TC_GREY,GetImage(io_dat,io_dat_id));
+	}
+
 	// "Gehe Zum Ort"
 	AddImageButton( 7, 179, 147, 30, 32, TC_GREY, GetImage(io_dat, 107), _("Go to place"));
 
@@ -191,6 +204,19 @@ void iwBuilding::Msg_ButtonClick(const unsigned int ctrl_id)
 	case 7: // "Gehe Zum Ort"
 		{
 			gwv->MoveToMapObject(building->GetX(), building->GetY());
+		} break;
+	case 11: // Schiff/Boot umstellen bei Schiffsbauer
+		{
+			if(GameClient::inst().AddGC(new gc::ChangeShipYardMode(building->GetX(), building->GetY())))
+			{
+				// Auch optisch den Button umstellen
+				ctrlImageButton * button = GetCtrl<ctrlImageButton>(11);
+				if(button->GetButtonImage() == GetImage(io_dat,IODAT_BOAT_ID))
+					button->SetImage(GetImage(io_dat,IODAT_SHIP_ID));
+				else
+					button->SetImage(GetImage(io_dat,IODAT_BOAT_ID));
+			}
+
 		} break;
 	}
 }

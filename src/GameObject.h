@@ -1,4 +1,4 @@
-// $Id: GameObject.h 5106 2009-06-25 20:43:46Z OLiver $
+// $Id: GameObject.h 5125 2009-06-26 20:10:42Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -86,7 +86,8 @@ enum GO_Type
 	GOT_ROADSEGMENT,
 	GOT_WARE,
 	GOT_CATAPULTSTONE,
-	GOT_BURNEDWAREHOUSE
+	GOT_BURNEDWAREHOUSE,
+	GOT_SHIPBUILDINGSITE
 };
 
 /// Basisklasse für alle Spielobjekte

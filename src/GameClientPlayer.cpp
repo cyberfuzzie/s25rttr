@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 5078 2009-06-21 11:41:45Z OLiver $
+// $Id: GameClientPlayer.cpp 5125 2009-06-26 20:10:42Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1460,6 +1460,11 @@ void GameClientPlayer::AcceptPact(const unsigned id, const PactType pt, const un
 		// Pakt einwickeln
 		MakePact(pt,other_player,pacts[other_player][pt].duration);
 		GameClient::inst().GetPlayer(other_player)->MakePact(pt,playerid,pacts[other_player][pt].duration);
+
+		// Besetzung der Militärgebäude der jeweiligen Spieler überprüfen, da ja jetzt neue Feinde oder neue 
+		// Verbündete sich in Grenznähe befinden könnten
+		this->RegulateAllTroops();
+		GameClient::inst().GetPlayer(other_player)->RegulateAllTroops();
 	}
 }
 
@@ -1481,11 +1486,6 @@ void GameClientPlayer::MakePact(const PactType pt, const unsigned char other_pla
 		if(gwg->GetGameInterface())
 			gwg->GetGameInterface()->GI_TreatyOfAllianceChanged();
 	}
-
-	// Besetzung der Militärgebäude der jeweiligen Spieler überprüfen, da ja jetzt neue Feinde oder neue 
-	// Verbündete sich in Grenznähe befinden könnten
-	this->RegulateAllTroops();
-	GameClient::inst().GetPlayer(other_player)->RegulateAllTroops();
 }
 
 /// Zeigt an, ob ein Pakt besteht

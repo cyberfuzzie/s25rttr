@@ -20,3 +20,11 @@ void nobShipYard::Serialize(SerializedGameData *sgd) const
 	sgd->PushUnsignedChar(static_cast<unsigned char>(mode));
 }
 
+/// Schaltet Modus entsprechend um
+void nobShipYard::ToggleMode()
+{
+	if(mode == nobShipYard::BOATS)
+		mode = nobShipYard::SHIPS;
+	else
+		mode = nobShipYard::BOATS;
+}

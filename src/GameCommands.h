@@ -42,6 +42,7 @@ enum Type
 	SUGGESTPACT,
 	ACCEPTPACT,
 	CANCELPACT,
+	CHANGESHIPYARDMODE,
 	SURRENDER,
 	CHEAT_ARMAGEDDON,
 	DESTROYALL
@@ -693,6 +694,20 @@ public:
 	/// Führt das GameCommand aus
 	void Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid);
 };
+
+/// Zwischen Boote und Schiffen beim Schiffsbauer hin- und herschalten
+class ChangeShipYardMode : public Coords
+{
+public:
+	ChangeShipYardMode(const MapCoord x, const MapCoord y)
+		: Coords(CHANGESHIPYARDMODE,x,y) {}
+	ChangeShipYardMode(Serializer * ser)
+		: Coords(CHANGESHIPYARDMODE,ser) {}
+
+	/// Führt das GameCommand aus
+	void Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid);
+};
+
 
 
 }

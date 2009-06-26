@@ -1,4 +1,4 @@
-// $Id: Loader.cpp 5081 2009-06-21 19:57:30Z OLiver $
+// $Id: Loader.cpp 5125 2009-06-26 20:10:42Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -553,6 +553,14 @@ bool Loader::LoadGame(unsigned char gfxset, bool *nations)
 	// BOOT.LST laden
 	boat_lst.clear();
 	if(!LoadFile(FILE_PATHS[86], GetPalette(0), &boat_lst))
+	{
+		lastgfx = 0xFF;
+		return false;
+	}
+
+	// BOOT.LST laden
+	boot_lst.clear();
+	if(!LoadFile(FILE_PATHS[92], GetPalette(0), &boot_lst))
 	{
 		lastgfx = 0xFF;
 		return false;

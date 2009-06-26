@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 5106 2009-06-25 20:43:46Z OLiver $
+### $Id: CMakeLists.txt 5125 2009-06-26 20:10:42Z OLiver $
 ################################################################################
 
 INCLUDE(FindBZip2)
@@ -207,6 +207,7 @@ SET(SOURCES_OTHER
     noMovable.cpp             noMovable.h
     noNothing.cpp             noNothing.h
     noRoadNode.cpp            noRoadNode.h
+    noShipBuildingSite.cpp noShipBuildingSite.h
     noSign.cpp                noSign.h
     noSkeleton.cpp            noSkeleton.h
     noStaticObject.cpp        noStaticObject.h

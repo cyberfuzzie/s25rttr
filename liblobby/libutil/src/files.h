@@ -1,4 +1,4 @@
-// $Id: files.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: files.h 5125 2009-06-26 20:10:42Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -177,6 +177,7 @@ const char * const FILE_PATHS[] =
 	/* 89 */RTTRDIR "/LANG.GER", // sprachliste
 	/* 90 */RTTRDIR "/MUSIC/",
 	/* 91 */RTTRDIR "/MAPS/OTHER/"
+	/* 92 */GAMEDIR "/DATA/BOOT_Z.LST",
 };
 
 /// Menühintergründe

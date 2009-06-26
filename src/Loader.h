@@ -1,4 +1,4 @@
-// $Id: Loader.h 5106 2009-06-25 20:43:46Z OLiver $
+// $Id: Loader.h 5125 2009-06-26 20:10:42Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -95,6 +95,7 @@ public:
 	libsiedler2::ArchivInfo nation_icons[NATION_COUNT];
 	libsiedler2::ArchivInfo misxbobs[6];
 	libsiedler2::ArchivInfo boat_lst;
+	libsiedler2::ArchivInfo boot_lst;
 
 	libsiedler2::ArchivInfo carrier_bob;
 	libsiedler2::ArchivInfo jobs_bob;

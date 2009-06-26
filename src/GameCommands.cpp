@@ -24,7 +24,7 @@
 #include "GameClient.h"
 #include "GameClientPlayer.h"
 #include "GameWorld.h"
-#include "nobUsual.h"
+#include "nobShipYard.h"
 #include "nobMilitary.h"
 #include "nobBaseWarehouse.h"
 
@@ -59,6 +59,7 @@ GameCommand * GameCommand::CreateGameCommand(const Type gst, Serializer * ser)
 	case SUGGESTPACT: return new SuggestPact(ser);
 	case ACCEPTPACT: return new AcceptPact(ser);
 	case CANCELPACT: return new CancelPact(ser);
+	case CHANGESHIPYARDMODE: return new ChangeShipYardMode(ser);
 	case SURRENDER: return new Surrender(ser);
 	case CHEAT_ARMAGEDDON: return new CheatArmageddon(ser);
 	case DESTROYALL: return new DestroyAll(ser);
@@ -139,9 +140,8 @@ void StopGold::Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsig
 }
 void StopProduction::Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid)
 {
-	if(gwg.GetNO(x,y)->GetGOT() == GOT_NOB_USUAL)
+	if(gwg.GetNO(x,y)->GetGOT() == GOT_NOB_USUAL || gwg.GetNO(x,y)->GetGOT() == GOT_NOB_SHIPYARD)
 		gwg.GetSpecObj<nobUsual>(x,y)->StopProduction();
-
 }
 void ChangeInventorySetting::Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid)
 {
@@ -189,4 +189,10 @@ void AcceptPact::Execute(GameWorldGame& gwg, GameClientPlayer& player, const uns
 void CancelPact::Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid)
 {
 	player.CancelPact(pt,this->player);
+}
+
+void ChangeShipYardMode::Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid)
+{
+	if(gwg.GetNO(x,y)->GetGOT() == GOT_NOB_SHIPYARD)
+		gwg.GetSpecObj<nobShipYard>(x,y)->ToggleMode();
 }

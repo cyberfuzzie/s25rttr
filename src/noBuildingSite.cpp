@@ -1,4 +1,4 @@
-// $Id: noBuildingSite.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: noBuildingSite.cpp 5125 2009-06-26 20:10:42Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -216,6 +216,7 @@ void noBuildingSite::Draw(int x, int y)
 			build_height = image->getHeight() - progress;
 			if(progress != 0)
 				image->Draw(x, y+build_height, 0, 0, 0, build_height, 0, progress);
+
 		}
 
 		// Schatten

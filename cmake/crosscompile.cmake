@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: crosscompile.cmake 4155 2008-10-21 19:39:24Z FloSoft $
+### $Id: crosscompile.cmake 5119 2009-06-26 16:29:28Z FloSoft $
 #################################################################################
 
 # read host compiler machine triplet
@@ -81,6 +81,12 @@ IF ( "${AD_CDM_OV}" MATCHES "linux" )
 		SET(COMPILEFOR "32bit")
 	ENDIF ( "${AD_CDM_OV}" MATCHES "x86_64" )
 ENDIF ( "${AD_CDM_OV}" MATCHES "linux" )
+
+IF ( "${AD_CDM_OV}" MATCHES "apple" )
+	# Apple spezifische Parameter
+
+	SET(COMPILEFOR "macos")
+ENDIF ( "${AD_CDM_OV}" MATCHES "apple" )
 
 IF ( "${AD_CDM_OV}" MATCHES "mingw" )
 	# Cygwin/Mingw sepzifische Parameter

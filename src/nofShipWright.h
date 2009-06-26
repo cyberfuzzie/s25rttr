@@ -1,4 +1,4 @@
-// $Id: nofShipWright.h 5106 2009-06-25 20:43:46Z OLiver $
+// $Id: nofShipWright.h 5109 2009-06-26 06:40:04Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -47,3 +47,4 @@ public:
 
 
 #endif
+

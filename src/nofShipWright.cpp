@@ -38,3 +38,4 @@ void nofShipWright::HandleDerivedEvent(const unsigned int id)
 		break;
 	}
 }
+

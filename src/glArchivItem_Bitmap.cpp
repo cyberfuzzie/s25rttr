@@ -1,4 +1,4 @@
-// $Id: glArchivItem_Bitmap.cpp 5098 2009-06-24 17:09:39Z FloSoft $
+// $Id: glArchivItem_Bitmap.cpp 5109 2009-06-26 06:40:04Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -89,7 +89,7 @@ glArchivItem_Bitmap::~glArchivItem_Bitmap(void)
  *
  *  @author FloSoft
  */
-void glArchivItem_Bitmap::Draw(short dst_x, short dst_y, short dst_w, short dst_h, short src_x, short src_y, short src_w, short src_h, unsigned int color)
+/*void glArchivItem_Bitmap::Draw(short dst_x, short dst_y, short dst_w, short dst_h, short src_x, short src_y, short src_w, short src_h, unsigned int color)
 {
 	if(texture == 0)
 		GenerateTexture();
@@ -116,7 +116,7 @@ void glArchivItem_Bitmap::Draw(short dst_x, short dst_y, short dst_w, short dst_
 	DrawVertex( (float)(dst_x-nx + dst_w), (float)(dst_y-ny + dst_h), (float)(src_x+src_w), (float)(src_y+src_h));
 	DrawVertex( (float)(dst_x-nx + dst_w), (float)(dst_y-ny),         (float)(src_x+src_w), (float)src_y);
 	glEnd();
-}
+}*/
 
 ///////////////////////////////////////////////////////////////////////////////
 /** 
@@ -198,8 +198,8 @@ void glArchivItem_Bitmap::GenerateTexture(void)
  *
  *  @author FloSoft
  */
-void glArchivItem_Bitmap::DrawVertex(float x, float y, float tx, float ty)
+/*void glArchivItem_Bitmap::DrawVertex(float x, float y, float tx, float ty)
 {
 	glTexCoord2f(tx/tex_width, ty/tex_height);
 	glVertex2f(x, y);
-}
+}*/

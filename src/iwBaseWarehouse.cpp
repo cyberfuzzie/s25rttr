@@ -1,4 +1,4 @@
-// $Id: iwBaseWarehouse.cpp 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: iwBaseWarehouse.cpp 5117 2009-06-26 14:35:48Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -131,13 +131,9 @@ void iwBaseWarehouse::Msg_Group_ButtonClick(const unsigned int group_id, const u
 			if(data != 0)
 			{
 				// Nicht bei Replays setzen
-				if(!GAMECLIENT.IsReplayModeOn())
-				{
+				if(GAMECLIENT.AddGC(new gc::ChangeInventorySetting(wh->GetX(),wh->GetY(),page,data,ctrl_id - 100)))
 					// optisch schonmal setzen
-					ChangeOverlay(ctrl_id - 100, data);
-					// Befehl übertragen
-					GAMECLIENT.AddGC(new gc::ChangeInventorySetting(wh->GetX(),wh->GetY(),page,data,ctrl_id - 100));
-				}
+					ChangeOverlay(ctrl_id - 100, data);;
 			}
 		} break;
 	}
@@ -168,15 +164,12 @@ void iwBaseWarehouse::Msg_ButtonClick(const unsigned int ctrl_id)
 				if(data != 0)
 				{
 					// Nicht bei Replays setzen
-					if(!GAMECLIENT.IsReplayModeOn())
+					if(GAMECLIENT.AddGC(new gc::ChangeAllInventorySettings(wh->GetX(),wh->GetY(),page,data)))
 					{
 						// optisch setzen
 						unsigned short count = ((page == 0)?WARE_TYPES_COUNT:JOB_TYPES_COUNT);
 						for(unsigned char i = 0; i < count; ++i)
 							ChangeOverlay(i, data);
-
-						// Befehl übertragen
-						GAMECLIENT.AddGC(new gc::ChangeAllInventorySettings(wh->GetX(),wh->GetY(),page,data));
 					}
 				}
 

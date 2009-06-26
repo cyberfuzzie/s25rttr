@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.cpp 5078 2009-06-21 11:41:45Z OLiver $
+// $Id: dskGameInterface.cpp 5117 2009-06-26 14:35:48Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -615,8 +615,8 @@ void dskGameInterface::ActivateRoadMode(const RoadMode rm)
 		road.start_x = road.point_x = selected_x;
 		road.start_y = road.point_y = selected_y;
 		unsigned short tmp_px,tmp_py,tmp_sx,tmp_sy;
-		gwv->ConvertCoords(road.point_x,road.point_y,tmp_px,tmp_py);
-		gwv->ConvertCoords(road.start_x,road.start_y,tmp_sx,tmp_sy);
+		gwv->ConvertCoords(road.point_x,road.point_y,&tmp_px,&tmp_py);
+		gwv->ConvertCoords(road.start_x,road.start_y,&tmp_sx,&tmp_sy);
 		road.point_x = tmp_px;
 		road.point_y = tmp_py;
 		road.start_x = tmp_sx;

@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 5079 2009-06-21 13:12:23Z OLiver $
+// $Id: GameWorldBase.cpp 5117 2009-06-26 14:35:48Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -160,7 +160,7 @@ const FOWObject * GameWorldBase::GetFOWObject(const MapCoord x, const MapCoord y
 		return &::nothing;
 }
 
-void GameWorldBase::ConvertCoords(int x, int y, unsigned short& x_out, unsigned short& y_out) const
+void GameWorldBase::ConvertCoords(int x, int y, unsigned short * x_out, unsigned short * y_out) const
 {
 	while(x < 0)
 		x += width;
@@ -172,8 +172,37 @@ void GameWorldBase::ConvertCoords(int x, int y, unsigned short& x_out, unsigned 
 	x %= width;
 	y %= height;
 
-	x_out = static_cast<unsigned short>(x);
-	y_out = static_cast<unsigned short>(y);
+	*x_out = static_cast<unsigned short>(x);
+	*y_out = static_cast<unsigned short>(y);
+}
+
+MapCoord GameWorldBase::CalcDistanceAroundBorderX(const MapCoord x1, const MapCoord x2) const
+{
+	int diff = int(x2) - int(x1);
+	
+	if(diff >= 0)
+		// Differenz positiv --> nicht über den Rand, d.h. normale Distanz
+		return MapCoord(diff);
+	else
+	{
+		// Ansonten Stück bis zum Rand und das Stück vom Rand bis zu Punkt 2
+		return (width-x1) + x2;
+	}
+
+}
+
+MapCoord GameWorldBase::CalcDistanceAroundBorderY(const MapCoord y1, const MapCoord y2) const
+{
+	int diff = int(y2) - int(y1);
+	
+	if(diff >= 0)
+		// Differenz positiv --> nicht über den Rand, d.h. normale Distanz
+		return MapCoord(diff);
+	else
+	{
+		// Ansonten Stück bis zum Rand und das Stück vom Rand bis zu Punkt 2
+		return (width-y1) + y2;
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -877,7 +906,7 @@ unsigned short GameWorldBase::GetXA(const MapCoord x, const MapCoord y, unsigned
 	}
 
 	unsigned short rx,ry;
-	ConvertCoords(tx,int(y),rx,ry);
+	ConvertCoords(tx,int(y),&rx,&ry);
 
 	return rx;
 }
@@ -915,7 +944,7 @@ unsigned short GameWorldBase::GetYA(const MapCoord x, const MapCoord y, unsigned
 	}
 
 	unsigned short rx,ry;
-	ConvertCoords(int(x),ty,rx,ry);
+	ConvertCoords(int(x),ty,&rx,&ry);
 
 	return ry;
 }
@@ -944,7 +973,7 @@ MapCoord GameWorldBase::GetXA2(const MapCoord x, const MapCoord y, unsigned dir)
 
 
 	unsigned short rx,ry;
-	ConvertCoords(tx,int(y),rx,ry);
+	ConvertCoords(tx,int(y),&rx,&ry);
 
 	return rx;
 }
@@ -959,7 +988,7 @@ MapCoord GameWorldBase::GetYA2(const MapCoord x, const MapCoord y, unsigned dir)
 
 
 	unsigned short rx,ry;
-	ConvertCoords(int(x),int(y)+ADD_Y[dir],rx,ry);
+	ConvertCoords(int(x),int(y)+ADD_Y[dir],&rx,&ry);
 
 	return ry;
 }

@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 5102 2009-06-24 18:43:06Z OLiver $
+// $Id: nobMilitary.cpp 5117 2009-06-26 14:35:48Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -234,37 +234,24 @@ void nobMilitary::HandleEvent(const unsigned int id)
 			// Wenn der nachfolgende (schwächere) Soldat einen niedrigeren Rang hat,
 			// wird dieser ebenfalls befördert usw.!
 
-			// wurde schon ein Soldat befördert (der nächste Soldat muss einen niedrigeren Rang haben, wenn er
-			// auch befördert werden soll)
-			bool upgraded = false;
+			// Rang des letzten beförerten Soldaten, 4 am Anfang setzen, damit keine Generäle befördert werden
+			unsigned char last_rank = 4;
 
 			for(list<nofPassiveSoldier*>::iterator it = troops.end();it.valid();--it)
 			{
-				if(upgraded)
+				// Es wurde schon einer befördert, dieser Soldat muss nun einen niedrigeren Rang
+				// als der letzte haben, damit er auch noch befördert werden kann
+				if((*it)->GetRank() < last_rank)
 				{
-					// Es wurde schon einer befördert, dieser Soldat muss nun einen niedrigeren Rang
-					// als der letzte haben, damit er auch noch befördert werden kann, ansonsten Schleife beenden, a
-					// niemand weiter mehr befördert werden darf
-					if((*it)->GetRank() < (*it.GetNext())->GetRank()-1)
-						(*it)->Upgrade();
-					else
-						break;
-				}
-				else
-				{
-					// Lässt sich der Soldat noch befördern?
-					if((*it)->GetRank()<4)
-					{
-						// Dann befördern
-						(*it)->Upgrade();
-						// Wir haben einen befördert
-						upgraded = true;
-					}
+					// Rang merken
+					last_rank = (*it)->GetRank();
+					// Dann befördern
+					(*it)->Upgrade();
 				}
 			}
 
 			// Wurde jemand befördert?
-			if(upgraded)
+			if(last_rank < 4)
 			{
 				// Goldmünze verbrauchen
 				--coins;
@@ -675,7 +662,14 @@ nofDefender * nobMilitary::ProvideDefender(nofAttacker * const attacker)
 {
 	// Überhaupt Soldaten da?
 	if(!troops.size())
-		return 0;
+	{
+		/// Soldaten, die noch auf Mission gehen wollen, canceln und für die Verteidigung mit einziehen
+		CancelJobs();
+		// Nochmal versuchen
+		if(!troops.size())
+			return 0;
+	}
+
 
 	list<nofPassiveSoldier*>::iterator soldier = ChooseSoldier();
 

@@ -1,4 +1,4 @@
-// $Id: GameClient.h 5078 2009-06-21 11:41:45Z OLiver $
+// $Id: GameClient.h 5117 2009-06-26 14:35:48Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -102,7 +102,8 @@ public:
 	int Interpolate(int x1,int x2,EventManager::EventPointer ev);
 	/// Gibt Geschwindigkeits-Faktor zurück
 
-	void AddGC(gc::GameCommand * gc);
+	/// Fügt ein GameCommand für den Spieler hinzu und gibt bei Erfolg true zurück, ansonstn false (in der Pause oder wenn Spieler besiegt ist)
+	bool AddGC(gc::GameCommand * gc);
 
 
 	void Command_SetFlag2(int x, int y, unsigned char player);

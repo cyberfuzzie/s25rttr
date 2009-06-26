@@ -1,4 +1,4 @@
-// $Id: iwBuilding.cpp 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: iwBuilding.cpp 5117 2009-06-26 14:35:48Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -167,13 +167,13 @@ void iwBuilding::Msg_ButtonClick(const unsigned int ctrl_id)
 		} break;
 	case 6:
 		{
-			// Produktion einstellen/fortführen, nicht im Replay
-			if(!GameClient::inst().IsReplayModeOn())
+			// Produktion einstellen/fortführen
+			// NC senden
+			if(GAMECLIENT.AddGC(new gc::StopProduction(building->GetX(), building->GetY())))
 			{
-				// visuell anzeigen
+				// visuell anzeigen, falls erfolgreich
 				building->StopProductionVirtual();
-				// NC senden
-				GAMECLIENT.AddGC(new gc::StopProduction(building->GetX(), building->GetY()));
+				
 				// anderes Bild auf dem Button
 				if(building->IsProductionDisabledVirtual())
 					GetCtrl<ctrlImageButton>(6)->SetImage(GetImage(io_dat, 197));

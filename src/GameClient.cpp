@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 5061 2009-06-17 20:42:11Z OLiver $
+// $Id: GameClient.cpp 5117 2009-06-26 14:35:48Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1599,13 +1599,14 @@ void GameClient::AddToGameLog(const char * const str)
 }
 
 
-void GameClient::AddGC(gc::GameCommand * gc)
+bool GameClient::AddGC(gc::GameCommand * gc)
 {
-	// Nicht in der Pause
+	// Nicht in der Pause oder wenn er besiegt wurde
 	if(framesinfo.pause || GetLocalPlayer()->isDefeated())
-		return;
+		return false;
 
 	gcs.push_back(gc);
+	return true;
 }
 
 /// Erzeugt einen KI-Player, der mit den Daten vom GameClient gefüttert werden muss (zusätzlich noch mit den GameServer)
@@ -1661,7 +1662,8 @@ void GameClient::DeletePostMessage(PostMsg *msg)
 			postMessages.erase(it);
 			delete msg;
 
-			ci->CI_PostMessageDeleted(postMessages.size());
+			if(ci)
+				ci->CI_PostMessageDeleted(postMessages.size());
 			break;
 		}
 	}

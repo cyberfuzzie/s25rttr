@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 5074 2009-06-20 14:31:41Z OLiver $
+// $Id: GameWorldGame.cpp 5117 2009-06-26 14:35:48Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -600,32 +600,30 @@ void GameWorldGame::RecalcTerritory(const nobBaseMilitary * const building,const
 
 	// Grenzsteine neu berechnen, noch 1 über das Areal hinausgehen, da dieses auch die Grenzsteine rundrum
 	// mit beeinflusst
-	
-	MapCoord x,y;
-	MapCoord end_x,end_y;
-	ConvertCoords(int(x1)-3,int(y1)-3,x,y);
-	ConvertCoords(int(x2)+3,int(y2)+3,end_x,end_y);
 
-	for(;y!=end_y;y=GetYA(0,y,4))
+	for(int y = y1-3;y < y2+3;++y)
 	{
-		ConvertCoords(int(x1)-3,y,x,y);
-		for(;x!=end_x;x=GetXA(x,y,3))
+		for(int x = x1-3;x < x2+3;++x)
 		{
-			unsigned char owner = GetNode(x,y).owner;
+			// Korrigierte X-Koordinaten (nicht über den Rand gehen)
+			MapCoord xc,yc;
+			ConvertCoords(x,y,&xc,&yc);
+
+			unsigned char owner = GetNode(xc,yc).owner;
 
 			// Grenzstein direkt auf diesem Punkt?
-			if(owner && IsBorderNode(x,y,owner))
+			if(owner && IsBorderNode(xc,yc,owner))
 			{
-				GetNode(x,y).boundary_stones[0] = owner;
+				GetNode(xc,yc).boundary_stones[0] = owner;
 
 				// Grenzsteine prüfen auf den Zwischenstücken in die 3 Richtungen nach unten und nach rechts
 				for(unsigned i = 0;i<3;++i)
 				{
-					MapCoord xa = GetXA(x,y,3+i), ya = GetYA(x,y,3+i);
+					MapCoord xa = GetXA(xc,yc,3+i), ya = GetYA(xc,yc,3+i);
 					if(IsBorderNode(xa,ya,owner))
-						GetNode(x,y).boundary_stones[i+1] = owner;
+						GetNode(xc,yc).boundary_stones[i+1] = owner;
 					else
-						GetNode(x,y).boundary_stones[i+1] = 0;
+						GetNode(xc,yc).boundary_stones[i+1] = 0;
 
 				}
 			}
@@ -633,7 +631,7 @@ void GameWorldGame::RecalcTerritory(const nobBaseMilitary * const building,const
 			{
 				// Kein Grenzstein --> etwaige vorherige Grenzsteine löschen
 				for(unsigned i = 0;i<4;++i)
-					GetNode(x,y).boundary_stones[i] = 0;
+					GetNode(xc,yc).boundary_stones[i] = 0;
 
 				//for(unsigned i = 0;i<3;++i)
 				//	GetNodeAround(x,y,3+i).boundary_stones[i+1] = 0;

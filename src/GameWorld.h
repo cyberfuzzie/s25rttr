@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 5079 2009-06-21 13:12:23Z OLiver $
+// $Id: GameWorld.h 5117 2009-06-26 14:35:48Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -169,6 +169,10 @@ public:
 	MapCoord GetYA2(const MapCoord x, const MapCoord y, unsigned dir) const;
 	/// Wandelt einen Punkt in einen Nachbarpunkt um
 	void GetPointA(MapCoord& x, MapCoord& y, unsigned dir) const;
+	/// Berechnet die Differenz zweier Koordinaten von x1 zu x2, wenn man berücksichtigt, dass man über den 
+	/// Rand weitergehen kann
+	MapCoord CalcDistanceAroundBorderX(const MapCoord x1, const MapCoord x2) const;
+	MapCoord CalcDistanceAroundBorderY(const MapCoord y1, const MapCoord y2) const;
 
 	// Erzeugt eindeutige ID aus gegebenen X und Y-Werten
 	unsigned MakeCoordID(const MapCoord x, const MapCoord y) const
@@ -261,7 +265,7 @@ public:
 	noFlag * GetRoadFlag(int x, int y,unsigned char& dir,unsigned last_i=255);
 
 	/// Konvertiert die Koordinaten.
-	void ConvertCoords(int x, int y, unsigned short& x_out, unsigned short& y_out) const;
+	void ConvertCoords(int x, int y, unsigned short * x_out, unsigned short * y_out) const;
 
 	/// Erzeugt eine GUI-ID für die Fenster von Map-Objekten
 	unsigned CreateGUIID(const MapCoord x, const MapCoord y) const

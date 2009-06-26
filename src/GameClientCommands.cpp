@@ -1,4 +1,4 @@
-// $Id: GameClientCommands.cpp 5047 2009-06-13 20:32:24Z OLiver $
+// $Id: GameClientCommands.cpp 5117 2009-06-26 14:35:48Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -133,6 +133,10 @@ void GameClient::Command_ToggleColor()
  */
 void GameClient::ChangePlayer(const unsigned char old_id, const unsigned char new_id)
 {
+	// ID auch innerhalb der Spielerzahl?
+	if(new_id >= players.getCount())
+		return;
+
 	// Gleiche ID - wäre unsinnig zu wechseln
 	if(old_id == new_id)
 		return;

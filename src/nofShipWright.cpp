@@ -1,7 +1,12 @@
 #include "main.h"
 #include "nofShipWright.h"
 #include "nobShipYard.h"
+#include "GameWorld.h"
+#include "SerializedGameData.h"
 
+nofShipWright::nofShipWright(const unsigned short x, const unsigned short y,const unsigned char player,nobUsual * workplace) 
+		: nofWorkman(JOB_SHIPWRIGHT,x,y,player,workplace), ship_x(0xFFFF), ship_y(0xFFFF)
+{}
 
 void nofShipWright::HandleDerivedEvent(const unsigned int id)
 {
@@ -15,7 +20,8 @@ void nofShipWright::HandleDerivedEvent(const unsigned int id)
 				nofWorkman::HandleStateWaiting1();
 			else
 			{
-				// Auf Suche nach Schiffsbauplatz gehen
+				// Besitze ich noch ein Schiff, was gebaut werden muss?
+				noBase * obj = gwg->GetNode(ship_x,ship_y).obj;
 			}
 		} break;
 	case STATE_WORK:
@@ -27,6 +33,7 @@ void nofShipWright::HandleDerivedEvent(const unsigned int id)
 				nofWorkman::HandleStateWork();
 			else
 			{
+
 			}
 		} break;
 	case STATE_WAITING2:
@@ -39,3 +46,17 @@ void nofShipWright::HandleDerivedEvent(const unsigned int id)
 	}
 }
 
+nofShipWright::nofShipWright(SerializedGameData * sgd, const unsigned obj_id) 
+: nofWorkman(sgd,obj_id),
+ship_x(sgd->PopUnsignedShort()),
+ship_y(sgd->PopUnsignedShort())
+{
+}
+
+void nofShipWright::Serialize(SerializedGameData *sgd) const
+{
+	nofWorkman::Serialize(sgd);
+
+	sgd->PushUnsignedShort(ship_x);
+	sgd->PushUnsignedShort(ship_y);
+}

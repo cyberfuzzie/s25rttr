@@ -1,4 +1,4 @@
-// $Id: GameWorld.cpp 4835 2009-05-08 20:02:19Z OLiver $
+// $Id: GameWorld.cpp 5132 2009-06-27 10:13:02Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -34,6 +34,7 @@
 #include "noAnimal.h"
 #include "CatapultStone.h"
 #include "Random.h"
+#include <queue>
 
 #include "WindowManager.h"
 #include "SoundManager.h"
@@ -88,6 +89,7 @@ void GameWorld::Scan(glArchivItem_Map *map)
 			node.owner = 0;
 			for(unsigned i = 0;i<4;++i)
 				node.boundary_stones[i] = 0;
+			node.sea_id = 0;
 			
 			// FOW-Zeug initialisieren
 			for(unsigned i = 0;i<GameClient::inst().GetPlayerCount();++i)
@@ -361,6 +363,24 @@ void GameWorld::Scan(glArchivItem_Map *map)
 		}
 	}
 
+	/// Weltmeere vermessen
+	for(unsigned y = 0;y<height;++y)
+	{
+		for(unsigned x = 0;x<width;++x)
+		{
+			// Noch kein Meer an diesem Punkt?
+			if(!GetNode(x,y).sea_id)
+			{
+				// Aber trotzdem Teil eines noch nicht vermessenen Meeres?
+				if(IsSeaPoint(x,y))
+				{
+					unsigned sea_size = MeasureSea(x,y,seas.size());
+					seas.push_back(Sea(sea_size));
+				}
+			}
+		}
+	}
+
 	/// Schatten und BQ berechnen
 	for(unsigned y = 0;y<height;++y)
 	{
@@ -620,6 +640,58 @@ void GameWorld::MilitaryBuildingCaptured(const unsigned short x, const MapCoord 
 	}
 }
 
+/// Vermisst ein neues Weltmeer von einem Punkt aus, indem es alle mit diesem Punkt verbundenen
+/// Wasserpunkte mit der gleichen ID belegt und die Anzahl zurückgibt
+struct Point { 
+	MapCoord x,y;
+};
+
+unsigned GameWorld::MeasureSea(const MapCoord x, const MapCoord y, const unsigned short sea_id)
+{
+	// Breitensuche von diesem Punkt aus durchführen
+	std::vector<bool> visited(width*height,false);
+	std::queue<Point> todo;
+
+	Point start = {x,y};
+	todo.push(start);
+
+	// Knoten zählen (Startknoten schon mit inbegriffen)
+	unsigned count = 0;
+
+	while(!todo.empty())
+	{
+		Point p = todo.front();
+		todo.pop();
+
+		if(visited[p.y*width+p.x])
+			continue;
+
+		GetNode(p.x,p.y).sea_id = sea_id;
+
+		for(unsigned i = 0;i<6;++i)
+		{
+			MapCoord xa,ya;
+			xa = GetXA(p.x,p.y,i);
+			ya = GetYA(p.x,p.y,i);
+
+			// Ist das dort auch ein Meerespunkt?
+			if(!IsSeaPoint(xa,ya))
+				continue;
+
+			if(!visited[ya*width+xa])
+			{
+				Point add = {xa,ya};
+				todo.push(add);
+			}
+		}
+
+		visited[p.y*width+p.x] = true;
+		++count;
+	}
+
+	return count;
+
+}
 
 //void GameWorld::RecalcAllVisibilities()
 //{

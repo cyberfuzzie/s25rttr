@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 5117 2009-06-26 14:35:48Z OLiver $
+// $Id: GameWorld.h 5132 2009-06-27 10:13:02Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -94,6 +94,8 @@ struct MapNode
 		unsigned char boundary_stones[4];
 	} fow[MAX_PLAYERS];
 
+	/// Meeres-ID, d.h. zu welchem Meer gehört dieser Punkt (0 = kein Meer)
+	unsigned short sea_id;
 
 	/// Objekt, welches sich dort befindet
 	noBase * obj;
@@ -130,6 +132,16 @@ protected:
 
 	/// Rendert das Terrain
 	TerrainRenderer tr;
+
+	/// Informationen über die Weltmeere
+	struct Sea
+	{
+		/// Anzahl der Knoten, welches sich in diesem Meer befinden
+		unsigned nodes_count;
+
+		Sea(const unsigned nodes_count) : nodes_count(nodes_count) {}
+	};
+	std::vector<Sea> seas;
 
 
 public:
@@ -205,6 +217,8 @@ public:
 	unsigned char GetWalkingTerrain1(MapCoord x, MapCoord y, unsigned char dir) const;
 	/// Gibt das Terrain zurück, über das ein Mensch/Tier laufen müsste, von X,Y in Richtung DIR (Rückwärts).
 	unsigned char GetWalkingTerrain2(MapCoord x, MapCoord y, unsigned char dir) const;
+	/// Gibt zurück, ob ein Punkt vollständig von Wasser umgeben ist
+	bool IsSeaPoint(MapCoord x, MapCoord y) const;
 
 	/// liefert den Straßen-Wert an der Stelle X,Y
 	unsigned char GetRoad(const MapCoord x, const MapCoord y, unsigned char dir, bool all = false) const;
@@ -278,10 +292,12 @@ public:
 
 	/// Verändert die Höhe eines Punktes und die damit verbundenen Schatten
 	void ChangeAltitude(const MapCoord x, const MapCoord y, const unsigned char altitude);
-
 	
 	/// Ermittelt Sichtbarkeit eines Punktes auch unter Einbeziehung der Verbündeten des jeweiligen Spielers
 	Visibility CalcWithAllyVisiblity(const MapCoord x, const MapCoord y, const unsigned char player) const; 
+
+	/// Ermittelt, ob ein Punkt Küstenpunkt ist, d.h. Zugang zu einem schiffbaren Meer hat
+	bool IsCoastalPoint(const MapCoord x, const MapCoord y) const;
 
 protected:
 
@@ -548,9 +564,13 @@ public:
 	void MilitaryBuildingCaptured(const MapCoord x, const MapCoord y, const unsigned char player);
 
 private:
+	/// Vermisst ein neues Weltmeer von einem Punkt aus, indem es alle mit diesem Punkt verbundenen
+	/// Wasserpunkte mit der gleichen sea_id belegt und die Anzahl zurückgibt
+	unsigned MeasureSea(const MapCoord x, const MapCoord y, const unsigned short sea_id);
 
 	/// Erstellt Objekte anhand der ausgelesenen S2map
 	void Scan(glArchivItem_Map *map);
+
 
 };
 

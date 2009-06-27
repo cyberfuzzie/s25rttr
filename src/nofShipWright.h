@@ -1,4 +1,4 @@
-// $Id: nofShipWright.h 5109 2009-06-26 06:40:04Z FloSoft $
+// $Id: nofShipWright.h 5132 2009-06-27 10:13:02Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -25,6 +25,9 @@
 /// Schiffsbauer - erstmal nur provisorisch, da er nur Boote baut
 class nofShipWright : public nofWorkman
 {
+	/// Punkt, an dem das Schiff steht, an dem er gerade arbeitet
+	MapCoord ship_x, ship_y;
+private:
 	/// Zeichnet ihn beim Arbeiten
 	void DrawWorking(int x, int y) {}
 	/// Gibt die ID in JOBS.BOB zurück, wenn der Beruf Waren rausträgt (bzw rein)
@@ -34,14 +37,14 @@ class nofShipWright : public nofWorkman
 
 public:
 
-	nofShipWright(const unsigned short x, const unsigned short y,const unsigned char player,nobUsual * workplace) 
-		: nofWorkman(JOB_SHIPWRIGHT,x,y,player,workplace) {}
-	nofShipWright(SerializedGameData * sgd, const unsigned obj_id)
-		: nofWorkman(sgd,obj_id) {}
+	nofShipWright(const unsigned short x, const unsigned short y,const unsigned char player,nobUsual * workplace);
+	nofShipWright(SerializedGameData * sgd, const unsigned obj_id);
 
 	GO_Type GetGOT() const { return GOT_NOF_SHIPWRIGHT; }
 
 	void HandleDerivedEvent(const unsigned int id);
+
+	void Serialize(SerializedGameData *sgd) const;
 };
 
 

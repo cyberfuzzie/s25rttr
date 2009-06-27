@@ -76,7 +76,7 @@ void noShipBuildingSite::Draw(int x, int y)
 {	
 	if(progress < PROGRESS_PARTS[1])
 	{
-		glArchivItem_Bitmap * image =  GetImage(boot_lst,25);
+		glArchivItem_Bitmap * image = GetImage(boot_lst,25);
 		unsigned height = image->getHeight() * unsigned(progress) / PROGRESS_PARTS[0];
 		image->Draw(x,y+(image->getHeight()-height),0,0,0,(image->getHeight()-height),0,height);
 		image =  GetImage(boot_lst,26);

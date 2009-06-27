@@ -1,4 +1,4 @@
-// $Id: GameObject.h 5125 2009-06-26 20:10:42Z OLiver $
+// $Id: GameObject.h 5133 2009-06-27 13:48:59Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -30,6 +30,7 @@ class GameClientPlayerList;
 enum GO_Type
 {
 	GOT_UNKNOWN = 0,
+	GOT_NOTHING,
 	GOT_NOB_HQ,
 	GOT_NOB_MILITARY,
 	GOT_NOB_STOREHOUSE,

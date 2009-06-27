@@ -1,4 +1,4 @@
-// $Id: nofFarmhand.cpp 5018 2009-06-08 18:24:25Z OLiver $
+// $Id: nofFarmhand.cpp 5133 2009-06-27 13:48:59Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -238,8 +238,8 @@ void nofFarmhand::StartWalkingHome()
 {
 	state = STATE_WALKINGHOME;
 	// Fahne vor dem Gebäude anpeilen
-	dest_x = workplace->GetX()+(workplace->GetY()&1);
-	dest_y = workplace->GetY()+1;
+	dest_x = gwg->GetXA(workplace->GetX(), workplace->GetY(), 4);
+	dest_y = gwg->GetYA(workplace->GetX(), workplace->GetY(), 4);
 
 	// Zu Laufen anfangen
 	WalkHome();
@@ -275,7 +275,7 @@ void nofFarmhand::WorkAborted()
 {
 	// Platz freigeben, falls man gerade arbeitet
 	if(state == STATE_WORK || state == STATE_WALKTOWORKPOINT)
-		gwg->GetNode(dest_x,dest_y).reserved = false;;
+		gwg->GetNode(dest_x,dest_y).reserved = false;
 
 	WorkAborted_Farmhand();
 }
@@ -283,4 +283,19 @@ void nofFarmhand::WorkAborted()
 
 void nofFarmhand::WorkAborted_Farmhand()
 {
+}
+
+
+/// Zeichnen der Figur in sonstigen Arbeitslagen
+void nofFarmhand::DrawOtherStates(const int x, const int y)
+{
+	switch(state)
+	{
+	case STATE_WALKTOWORKPOINT:
+		{
+			// Normales Laufen zeichnen
+			DrawWalking(x,y);
+		} break;
+	default: return;
+	}
 }

@@ -1,4 +1,4 @@
-// $Id: GameWorld.cpp 5132 2009-06-27 10:13:02Z OLiver $
+// $Id: GameWorld.cpp 5133 2009-06-27 13:48:59Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -458,60 +458,17 @@ void GameWorld::Serialize(SerializedGameData *sgd) const
 		}
 		sgd->PushObject(nodes[i].obj,false);
 		sgd->PushObjectList(nodes[i].figures,false);
-
-
+		sgd->PushUnsignedShort(nodes[i].sea_id);
 	}
-
-	// Alle Objekte serialisieren
-	//
-	//// Figuren und Objekte zählen
-	//unsigned objects_count = 0,figures_count = 0;
-	//for(unsigned i = 0;i<map_size;++i)
-	//{
-	//	if(objects[i])
-	//		++objects_count;
-	//	if(figures[i].size())
-	//		++figures_count;
-	//}
-
-	//unsigned diff = 0;
-
-	//sgd->PushUnsignedInt(objects_count);
-
-	//for(unsigned i = 0;i<map_size;++i,++diff)
-	//{
-	//	// Gibts hier mal wieder welche?
-	//	if(objects[i])
-	//	{
-	//		// Differenz zum letzen "Vorkommen"
-	//		sgd->PushUnsignedInt(diff);
-	//		// Objekt drauf
-	//		sgd->PushObject(objects[i],false);
-
-	//		diff = 0;
-	//	}
-	//}
-
-	//sgd->PushUnsignedInt(figures_count);
-
-	//// Und noch alle Figuren
-	//// Immer nur die Differnzen zwischen "Figurenvorkommen" schreiben, da es ja relativ wenige sind
-	//diff = 0;
-	//for(unsigned i = 0;i<map_size;++i,++diff)
-	//{
-	//	// Gibts hier mal wieder welche?
-	//	if(figures[i].size())
-	//	{
-	//		// Differenz zum letzen "Vorkommen"
-	//		sgd->PushUnsignedInt(diff);
-	//		sgd->PushObjectList(figures[i],false);
-
-	//		diff = 0;
-	//	}
-	//}
 
 	// Katapultsteine serialisieren
 	sgd->PushObjectList<CatapultStone>(catapult_stones,true);
+	// Meeresinformationen serialisieren
+	sgd->PushUnsignedInt(seas.size());
+	for(unsigned i = 0;i<seas.size();++i)
+	{
+		sgd->PushUnsignedInt(seas[i].nodes_count);
+	}
 
 
 }
@@ -574,28 +531,18 @@ void GameWorld::Deserialize(SerializedGameData *sgd)
 		}
 		nodes[i].obj = sgd->PopObject<noBase>(GOT_UNKNOWN);
 		sgd->PopObjectList<noBase>(nodes[i].figures,GOT_UNKNOWN);
+		nodes[i].sea_id = sgd->PopUnsignedShort();
 	}
-
-	//// Objekte einlesen
-	//unsigned objects_count = sgd->PopUnsignedInt();
-	//unsigned pos = 0;
-	//for(unsigned i = 0;i<objects_count;++i)
-	//{
-	//	pos += sgd->PopUnsignedInt();
-	//	objects[pos] = sgd->PopObject<noBase>(GOT_UNKNOWN);
-	//}
-
-	//// Figuren einlesen
-	//unsigned figures_count = sgd->PopUnsignedInt();
-	//pos = 0;
-	//for(unsigned i = 0;i<figures_count;++i)
-	//{
-	//	pos += sgd->PopUnsignedInt();
-	//	sgd->PopObjectList<noBase>(figures[pos],GOT_UNKNOWN);
-	//}
 
 	// Katapultsteine deserialisieren
 	sgd->PopObjectList(catapult_stones,GOT_CATAPULTSTONE);
+
+	// Meeresinformationen deserialisieren
+	seas.resize(sgd->PopUnsignedInt());
+	for(unsigned i = 0;i<seas.size();++i)
+	{
+		seas[i].nodes_count = sgd->PopUnsignedInt();
+	}
 
 	// BQ neu berechnen
 	for(unsigned y = 0;y<height;++y)

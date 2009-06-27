@@ -1,4 +1,4 @@
-// $Id: nofBuildingWorker.h 5018 2009-06-08 18:24:25Z OLiver $
+// $Id: nofBuildingWorker.h 5133 2009-06-27 13:48:59Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -101,6 +101,8 @@ private:
 	virtual void WorkAborted();
 	/// Arbeitsplatz wurde erreicht
 	virtual void WorkplaceReached();
+	/// Zeichnen der Figur in sonstigen Arbeitslagen
+	virtual void DrawOtherStates(const int x, const int y);
 
 	/// nur für Bergarbeiter!
 	/// Sucht die Nähe nach einer bestimmten Ressource ab und gibt true zurück, wenn er fündig wird und baut ggf eins

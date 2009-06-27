@@ -37,9 +37,9 @@
 	static char THIS_FILE[] = __FILE__;
 #endif
 
-noShipBuildingSite::noShipBuildingSite(const unsigned short x, const unsigned short y)
+noShipBuildingSite::noShipBuildingSite(const unsigned short x, const unsigned short y, const unsigned char player)
 	: noCoordBase(NOP_ENVIRONMENT,x,y), 
-	progress(0)
+	player(player), progress(0)
 {
 }
 
@@ -58,10 +58,12 @@ void noShipBuildingSite::Serialize(SerializedGameData * sgd) const
 {
 	Serialize_noCoordBase(sgd);
 
+	sgd->PushUnsignedChar(player);
 	sgd->PushUnsignedChar(progress);
 }
 
 noShipBuildingSite::noShipBuildingSite(SerializedGameData * sgd, const unsigned obj_id) : noCoordBase(sgd,obj_id),
+player(sgd->PopUnsignedChar()),
 progress(sgd->PopUnsignedChar())
 {
 }
@@ -74,37 +76,50 @@ const unsigned TOTAL_PROGRESS = PROGRESS_PARTS[0] + PROGRESS_PARTS[1] + PROGRESS
 
 void noShipBuildingSite::Draw(int x, int y)
 {	
-	if(progress < PROGRESS_PARTS[1])
+	if(progress < PROGRESS_PARTS[0]+PROGRESS_PARTS[1])
 	{
-		glArchivItem_Bitmap * image = GetImage(boot_lst,25);
-		unsigned height = image->getHeight() * unsigned(progress) / PROGRESS_PARTS[0];
+		glArchivItem_Bitmap * image = GetImage(boot_lst,24);
+		unsigned height = min(image->getHeight() * unsigned(progress) / PROGRESS_PARTS[0],
+			unsigned(image->getHeight()));
 		image->Draw(x,y+(image->getHeight()-height),0,0,0,(image->getHeight()-height),0,height);
-		image =  GetImage(boot_lst,26);
-		height = image->getHeight() * unsigned(progress) / PROGRESS_PARTS[0];
+		image =  GetImage(boot_lst,25);
+		height = min(image->getHeight() * unsigned(progress) / PROGRESS_PARTS[0],
+			unsigned(image->getHeight()));
 		image->Draw(x,y+(image->getHeight()-height),0,0,0,(image->getHeight()-height),0,height,COLOR_SHADOW);
 	}
-	if(progress >= PROGRESS_PARTS[0])
+	if(progress > PROGRESS_PARTS[0])
 	{
 		unsigned real_progress = progress - PROGRESS_PARTS[0];
-		glArchivItem_Bitmap * image =  GetImage(boot_lst,27);
-		unsigned height = image->getHeight() * unsigned(real_progress) / PROGRESS_PARTS[0];
+		glArchivItem_Bitmap * image =  GetImage(boot_lst,26);
+		unsigned height = min(image->getHeight() * unsigned(real_progress) / PROGRESS_PARTS[1],
+			unsigned(image->getHeight()));
 		image->Draw(x,y+(image->getHeight()-height),0,0,0,(image->getHeight()-height),0,height);
-		image =  GetImage(boot_lst,28);
-		height = image->getHeight() * unsigned(real_progress) / PROGRESS_PARTS[0];
+		image =  GetImage(boot_lst,27);
+		height = min(image->getHeight() * unsigned(real_progress) / PROGRESS_PARTS[1],
+			unsigned(image->getHeight()));
 		image->Draw(x,y+(image->getHeight()-height),0,0,0,(image->getHeight()-height),0,height,COLOR_SHADOW);
 	}
-	if(progress >= PROGRESS_PARTS[1])
+	if(progress > PROGRESS_PARTS[0]+PROGRESS_PARTS[1])
 	{
-		unsigned real_progress = progress - PROGRESS_PARTS[0] - PROGRESS_PARTS[0];
+		unsigned real_progress = progress - PROGRESS_PARTS[0] - PROGRESS_PARTS[1];
 		glArchivItem_Bitmap * image =  GetImage(boot_lst,28);
-		unsigned height = image->getHeight() * unsigned(real_progress) / PROGRESS_PARTS[0];
+		unsigned height = image->getHeight() * unsigned(real_progress) / PROGRESS_PARTS[2];
 		image->Draw(x,y+(image->getHeight()-height),0,0,0,(image->getHeight()-height),0,height);
 		image =  GetImage(boot_lst,29);
-		height = image->getHeight() * unsigned(real_progress) / PROGRESS_PARTS[0];
+		height = image->getHeight() * unsigned(real_progress) / PROGRESS_PARTS[2];
 		image->Draw(x,y+(image->getHeight()-height),0,0,0,(image->getHeight()-height),0,height,COLOR_SHADOW);
 
 	}
+}
 
-	
 
+
+/// Das Schiff wird um eine Stufe weitergebaut
+void noShipBuildingSite::MakeBuildStep()
+{
+	++progress;
+
+	// todo  Schiff bauen
+	if(progress > PROGRESS_PARTS[0] + PROGRESS_PARTS[1] + PROGRESS_PARTS[2])
+		progress = PROGRESS_PARTS[0] + PROGRESS_PARTS[1] + PROGRESS_PARTS[2];
 }

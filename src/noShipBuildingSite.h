@@ -26,20 +26,30 @@ class noShipBuildingSite: public noCoordBase
 {
 public:
 
-	noShipBuildingSite(const unsigned short x, const unsigned short y);
+	noShipBuildingSite(const unsigned short x, const unsigned short y, const unsigned char player);
 	noShipBuildingSite(SerializedGameData * sgd, const unsigned obj_id);
 	~noShipBuildingSite();
 	void Destroy();
 	void Serialize(SerializedGameData *sgd) const;
 	GO_Type GetGOT() const { return GOT_SHIPBUILDINGSITE; }
 
+	/// Gibt den Eigentümer zurück
+	unsigned char GetPlayer() const { return player; }
+
+	/// Das Schiff wird um eine Stufe weitergebaut
+	void MakeBuildStep();
+
 protected:	
 
 	void Draw(int x, int y);
 
 private:
+
+	/// Spieler, dem dieses Schiff gehört
+	unsigned char player;
 	/// Baufortschritt des Schiffes
 	unsigned char progress;
+
 };
 
 #endif // !NOSKELETON_H_INCLUDED

@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 5132 2009-06-27 10:13:02Z OLiver $
+// $Id: GameWorldBase.cpp 5133 2009-06-27 13:48:59Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -158,6 +158,16 @@ const FOWObject * GameWorldBase::GetFOWObject(const MapCoord x, const MapCoord y
 		return GetNode(x,y).fow[spectator_player].object;
 	else
 		return &::nothing;
+}
+
+/// Gibt den GOT des an diesem Punkt befindlichen Objekts zurück bzw. GOT_NOTHING, wenn keins existiert
+GO_Type GameWorldBase::GetGOT(const MapCoord x, const MapCoord y) const
+{
+	noBase * obj = GetNode(x,y).obj;
+	if(obj)
+		return obj->GetGOT();
+	else
+		return GOT_NOTHING;
 }
 
 void GameWorldBase::ConvertCoords(int x, int y, unsigned short * x_out, unsigned short * y_out) const

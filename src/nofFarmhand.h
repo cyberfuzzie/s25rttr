@@ -1,4 +1,4 @@
-// $Id: nofFarmhand.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: nofFarmhand.h 5133 2009-06-27 13:48:59Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -63,6 +63,9 @@ private:
 	/// Abgeleitete Klasse informieren, wenn fertig ist mit Arbeiten
 	virtual void WorkFinished() = 0;
 	/// Wird aufgerufen, wenn der Arbeiter seine Arbeit plötzlich abrechen
+
+	/// Zeichnen der Figur in sonstigen Arbeitslagen
+	void DrawOtherStates(const int x, const int y);
 
 public:
 

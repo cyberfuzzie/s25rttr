@@ -1,4 +1,4 @@
-// $Id: nofShipWright.h 5132 2009-06-27 10:13:02Z OLiver $
+// $Id: nofShipWright.h 5133 2009-06-27 13:48:59Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -26,24 +26,39 @@
 class nofShipWright : public nofWorkman
 {
 	/// Punkt, an dem das Schiff steht, an dem er gerade arbeitet
-	MapCoord ship_x, ship_y;
+	MapCoord dest_x, dest_y;
 private:
 	/// Zeichnet ihn beim Arbeiten
-	void DrawWorking(int x, int y) {}
+	void DrawWorking(int x, int y);
 	/// Gibt die ID in JOBS.BOB zurück, wenn der Beruf Waren rausträgt (bzw rein)
 	unsigned short GetCarryID() const { return 90; }
 	/// Der Arbeiter erzeugt eine Ware
 	GoodType ProduceWare() { return GD_BOAT; }
 
+	/// Startet das Laufen zu der Arbeitsstelle, dem Schiff
+	void StartWalkingToShip(const unsigned char first_dir);
+
+	/// Ist ein bestimmter Punkt auf der Karte für den Schiffsbau geeignet
+	bool IsPointGood(const MapCoord x, const MapCoord y) const;
+
+	/// Der Schiffsbauer hat einen Bauschritt bewältigt und geht wieder zurück zum Haus
+	void WorkFinished();
+
+	void WalkToWorkpoint();
+	void StartWalkingHome();
+	void WalkHome();
+	void WorkAborted();
+	void WalkedDerived();
+
+	/// Zeichnen der Figur in sonstigen Arbeitslagen
+	void DrawOtherStates(const int x, const int y);
+
 public:
 
 	nofShipWright(const unsigned short x, const unsigned short y,const unsigned char player,nobUsual * workplace);
 	nofShipWright(SerializedGameData * sgd, const unsigned obj_id);
-
 	GO_Type GetGOT() const { return GOT_NOF_SHIPWRIGHT; }
-
 	void HandleDerivedEvent(const unsigned int id);
-
 	void Serialize(SerializedGameData *sgd) const;
 };
 

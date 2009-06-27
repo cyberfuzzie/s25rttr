@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 5132 2009-06-27 10:13:02Z OLiver $
+// $Id: GameWorld.h 5133 2009-06-27 13:48:59Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -139,6 +139,7 @@ protected:
 		/// Anzahl der Knoten, welches sich in diesem Meer befinden
 		unsigned nodes_count;
 
+		Sea() : nodes_count(0) {}
 		Sea(const unsigned nodes_count) : nodes_count(nodes_count) {}
 	};
 	std::vector<Sea> seas;
@@ -205,6 +206,8 @@ public:
 	const noBase * GetNO(const MapCoord x, const MapCoord y) const;
 	/// Gibt ein FOW-Objekt zurück, falls keins existiert, wird ein "Nothing-Objekt" zurückgegeben
 	const FOWObject * GetFOWObject(const MapCoord x, const MapCoord y, const unsigned spectator_player) const;
+	/// Gibt den GOT des an diesem Punkt befindlichen Objekts zurück bzw. GOT_NOTHING, wenn keins existiert
+	GO_Type GetGOT(const MapCoord x, const MapCoord y) const;
 
 	// Gibt ein spezifisches Objekt zurück
 	template<typename T> T * GetSpecObj(MapCoord x, MapCoord y) { return dynamic_cast<T*>( GetNode(x,y).obj ); }

@@ -1,4 +1,4 @@
-// $Id: nofBuildingWorker.cpp 5018 2009-06-08 18:24:25Z OLiver $
+// $Id: nofBuildingWorker.cpp 5133 2009-06-27 13:48:59Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -100,7 +100,7 @@ void nofBuildingWorker::Draw(int x,int y)
 	switch(state)
 	{
 	case STATE_FIGUREWORK:
-	case STATE_WALKTOWORKPOINT:
+	
 	case STATE_HUNTER_CHASING:
 	case STATE_HUNTER_WALKINGTOCADAVER:
 	case STATE_HUNTER_FINDINGSHOOTINGPOINT:
@@ -133,6 +133,7 @@ void nofBuildingWorker::Draw(int x,int y)
 				DrawWalking(x,y);
 		} break;
     default:
+		DrawOtherStates(x,y);
 		break;
 	}
 }
@@ -449,3 +450,7 @@ void nofBuildingWorker::WorkplaceReached()
 {
 }
 
+/// Zeichnen der Figur in sonstigen Arbeitslagen
+void nofBuildingWorker::DrawOtherStates(const int x, const int y)
+{
+}

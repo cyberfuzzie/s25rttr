@@ -196,3 +196,4 @@ void ChangeShipYardMode::Execute(GameWorldGame& gwg, GameClientPlayer& player, c
 	if(gwg.GetNO(x,y)->GetGOT() == GOT_NOB_SHIPYARD)
 		gwg.GetSpecObj<nobShipYard>(x,y)->ToggleMode();
 }
+

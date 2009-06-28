@@ -1,4 +1,4 @@
-// $Id: iwPostWindow.h 5018 2009-06-08 18:24:25Z OLiver $
+// $Id: iwPostWindow.h 5136 2009-06-28 12:12:57Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -33,7 +33,6 @@ public:
 
 private:
   GameWorldViewer& gwv;
-  ctrlText *postText;
   ctrlImage *postImage;
   ctrlText *postMsgInfos;
 
@@ -45,8 +44,14 @@ private:
 
   unsigned currentMessage;
 
+	/// Liefert Pointer auf die pos-te Nachricht zurück
   PostMsg *GetPostMsg(unsigned pos) const;
+
+	/// Passt Steuerelemente an, setzt Einstellung für diverse Controls passend für die aktuelle PostMessage
   void DisplayPostMessage();
+
+	/// Setzt den Text mehrzeilig in das Postfenster
+	void SetMessageText(const std::string& message);
 
   unsigned lastSize;
 

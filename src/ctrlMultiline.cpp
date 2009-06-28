@@ -1,4 +1,4 @@
-// $Id: ctrlMultiline.cpp 4843 2009-05-09 12:54:38Z Demophobie $
+// $Id: ctrlMultiline.cpp 5136 2009-06-28 12:12:57Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -219,3 +219,12 @@ void ctrlMultiline::SetWidth(const unsigned short width)
 
 }
 
+/// Textzeile ersetzen. Klappt bestimmt nicht mit Scrollbar-Kram
+void ctrlMultiline::SetLine(const unsigned index, const std::string& str, unsigned int color)
+{
+	if (index < lines.size())
+	{
+		Line line = { str, color };
+		lines[index] = line;
+	}
+}

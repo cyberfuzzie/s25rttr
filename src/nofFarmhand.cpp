@@ -1,4 +1,4 @@
-// $Id: nofFarmhand.cpp 5133 2009-06-27 13:48:59Z OLiver $
+// $Id: nofFarmhand.cpp 5136 2009-06-28 12:12:57Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -169,11 +169,11 @@ void nofFarmhand::HandleDerivedEvent(const unsigned int id)
 						{
 						case JOB_STONEMASON:
 							GameClient::inst().SendPostMessage(
-							  new ImagePostMsgWithLocation(_("No more stones\n in range"), PMC_GENERAL, x, y, workplace->GetBuildingType(), workplace->GetNation()));
+							  new ImagePostMsgWithLocation(_("No more stones in range"), PMC_GENERAL, x, y, workplace->GetBuildingType(), workplace->GetNation()));
 							break;
 						case JOB_FISHER:
 							GameClient::inst().SendPostMessage(
-							  new ImagePostMsgWithLocation(_("No more fishes\n in range"), PMC_GENERAL, x, y, workplace->GetBuildingType(), workplace->GetNation()));
+							  new ImagePostMsgWithLocation(_("No more fishes in range"), PMC_GENERAL, x, y, workplace->GetBuildingType(), workplace->GetNation()));
 							break;
 						default:
 							break;

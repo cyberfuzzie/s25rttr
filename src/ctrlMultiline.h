@@ -1,4 +1,4 @@
-// $Id: ctrlMultiline.h 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: ctrlMultiline.h 5136 2009-06-28 12:12:57Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -36,6 +36,7 @@ public:
 	unsigned GetLineCount() { return unsigned(lines.size()); }
 	/// Gibt den index-ten Eintrag zurück
 	const std::string& GetLine(const unsigned index) const { return lines[index].str; }
+	void SetLine(const unsigned index, const std::string& str, unsigned int color);
 
 	/// Schaltet Box ein und aus
 	void EnableBox(const bool enable) { draw_box = enable; }

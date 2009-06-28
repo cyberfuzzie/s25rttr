@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 5117 2009-06-26 14:35:48Z OLiver $
+// $Id: nobMilitary.cpp 5136 2009-06-28 12:12:57Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -553,7 +553,7 @@ void nobMilitary::AddPassiveSoldier(nofPassiveSoldier * soldier)
 	if(new_built)
 	{
 		if(GameClient::inst().GetPlayerID() == this->player)
-			GameClient::inst().SendPostMessage(new ImagePostMsgWithLocation(_("Military building\n occupied"), PMC_MILITARY, this->x, this->y, this->type, this->nation));
+			GameClient::inst().SendPostMessage(new ImagePostMsgWithLocation(_("Military building occupied"), PMC_MILITARY, this->x, this->y, this->type, this->nation));
 		// Ist nun besetzt
 		new_built = false;
 		// Alter ab jetzt setzen
@@ -994,7 +994,7 @@ void nobMilitary::HitOfCatapultStone()
 	// Post verschicken
 	if(GameClient::inst().GetPlayerID() == this->player)
 		GameClient::inst().SendPostMessage(
-		new ImagePostMsgWithLocation(_("A catapult is firing\n upon us!"), PMC_MILITARY, x, y, GetBuildingType(), GetNation()));
+		new ImagePostMsgWithLocation(_("A catapult is firing upon us!"), PMC_MILITARY, x, y, GetBuildingType(), GetNation()));
 }
 
 /// Darf das Militärgebäude abgerissen werden (Abriss-Verbot berücksichtigen)?

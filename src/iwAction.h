@@ -1,4 +1,4 @@
-// $Id: iwAction.h 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: iwAction.h 5139 2009-06-28 21:06:58Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -48,7 +48,7 @@ public:
 		/// Haupttabs
 		bool build, setflag, watch, flag, cutroad, attack;
 		/// Gebäude-Bau-Tabs
-		enum BuildTab { BT_HUT = 0, BT_HOUSE, BT_CASTLE, BT_MINE} build_tabs;
+		enum BuildTab { BT_HUT = 0, BT_HOUSE, BT_CASTLE, BT_MINE, BT_HARBOR } build_tabs;
 
 		Tabs() : build(false), setflag(false), watch(false), flag(false), cutroad(false), attack(false),
 			build_tabs(BT_HUT) {}

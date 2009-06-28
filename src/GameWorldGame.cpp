@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 5117 2009-06-26 14:35:48Z OLiver $
+// $Id: GameWorldGame.cpp 5139 2009-06-28 21:06:58Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -236,11 +236,11 @@ void GameWorldGame::SetBuildingSite(const BuildingType type,const MapCoord x, co
 
 	switch(BUILDING_SIZE[type])
 	{
-
-	case BZ_HUT: if(!(bq >= BQ_HUT && bq <= BQ_CASTLE)) return; break;
-	case BZ_HOUSE: if(!(bq >= BQ_HOUSE && bq <= BQ_CASTLE)) return; break;
-	case BZ_CASTLE: if(bq != BQ_CASTLE) return; break;
-	case BZ_MINE: if(bq != BQ_MINE) return; break;
+	case BQ_HUT: if(!((bq >= BQ_HUT && bq <= BQ_CASTLE) || bq == BQ_HARBOR)) return; break;
+	case BQ_HOUSE: if(!((bq >= BQ_HOUSE && bq <= BQ_CASTLE) || bq == BQ_HARBOR)) return; break;
+	case BQ_CASTLE: if(!( bq == BQ_CASTLE || bq == BQ_HARBOR)) return; break;
+	case BQ_HARBOR: if(bq != BQ_HARBOR) return; break;
+	case BQ_MINE: if(bq != BQ_MINE) return; break;
 	}
 
 	// TODO: Verzögerungsbugabfrage, kann später ggf. weg
@@ -250,11 +250,6 @@ void GameWorldGame::SetBuildingSite(const BuildingType type,const MapCoord x, co
 		if(IsMilitaryBuildingNearNode(x,y))
 			return;
 	}
-
-
-	// vorerst gebäude deaktivieren, die noch nicht gehen!
-	if(type == BLD_HARBORBUILDING)
-		return;
 
 	// ggf. vorherige Objekte löschen
 	noBase *no = GetSpecObj<noBase>(x,y);

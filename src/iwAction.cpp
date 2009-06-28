@@ -1,4 +1,4 @@
-// $Id: iwAction.cpp 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: iwAction.cpp 5139 2009-06-28 21:06:58Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -115,6 +115,7 @@ iwAction::iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, cons
 				build_tab->AddTab(GetImage(io_dat, 68), _("-> Build house"), Tabs::BT_HOUSE);
 			} break;
 		case Tabs::BT_CASTLE:
+		case Tabs::BT_HARBOR:
 			{
 				build_tab->AddTab(GetImage(io_dat, 67), _("-> Build hut"), Tabs::BT_HUT);
 				build_tab->AddTab(GetImage(io_dat, 68), _("-> Build house"), Tabs::BT_HOUSE);
@@ -132,20 +133,27 @@ iwAction::iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, cons
 		{
 			{ BLD_WOODCUTTER, BLD_FORESTER, BLD_QUARRY, BLD_FISHERY, BLD_HUNTER, BLD_BARRACKS, BLD_GUARDHOUSE, BLD_LOOKOUTTOWER, BLD_WELL },
 			{ BLD_SAWMILL, BLD_SLAUGHTERHOUSE, BLD_MILL, BLD_BAKERY, BLD_IRONSMELTER, BLD_METALWORKS, BLD_ARMORY, BLD_MINT, BLD_SHIPYARD, BLD_BREWERY, BLD_STOREHOUSE, BLD_WATCHTOWER, BLD_CATAPULT },
-			{ BLD_FARM, BLD_PIGFARM, BLD_DONKEYBREEDER, BLD_FORTRESS},
+			{ BLD_FARM, BLD_PIGFARM, BLD_DONKEYBREEDER, BLD_FORTRESS, BLD_HARBORBUILDING},
 			{ BLD_GOLDMINE, BLD_IRONMINE, BLD_COALMINE, BLD_GRANITEMINE}
 		};
 
-		unsigned count_tabs = (tabs.build_tabs == Tabs::BT_MINE) ? 1 : unsigned(tabs.build_tabs)+1;
-		for(unsigned char i = 0; i < count_tabs; ++i)
+		const unsigned TABS_COUNT[5] = {1,2,3,1,3};
+
+		for(unsigned char i = 0; i < TABS_COUNT[tabs.build_tabs]; ++i)
 		{
 			unsigned char k = 0;
 			Tabs::BuildTab bt = (tabs.build_tabs == Tabs::BT_MINE) ? Tabs::BT_MINE : Tabs::BuildTab(i);
 		
-			for(unsigned char j = 0; j < building_count[bt]; ++j)
+			// Anzahl der Gebäude-Icons in dieser Tab-Gruppe ermiteln
+			unsigned count = building_count[bt];
+			// Ggf. noch den Hafen dazurechnen
+			if(tabs.build_tabs == Tabs::BT_HARBOR && bt == Tabs::BT_CASTLE)
+				++count;
+			for(unsigned char j = 0; j < count; ++j)
 			{
 				// Wenn Militärgebäude an der Stelle nicht erlaubt sind, überspringen
-				if(!military_buildings && building_icons[bt][j] >= BLD_BARRACKS && building_icons[i][j] <= BLD_FORTRESS)
+				if(!military_buildings && building_icons[bt][j] >= BLD_BARRACKS && 
+					building_icons[i][j] <= BLD_FORTRESS)
 					continue;
 
 				build_tab->GetGroup(bt)->AddBuildingIcon(j, (k%5)*36, (k/5)*36 + 45, building_icons[bt][j], GameClient::inst().GetLocalPlayer()->nation, 36, _(BUILDING_NAMES[building_icons[bt][j]]));

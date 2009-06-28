@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 5133 2009-06-27 13:48:59Z OLiver $
+// $Id: GameWorld.h 5139 2009-06-28 21:06:58Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -96,6 +96,8 @@ struct MapNode
 
 	/// Meeres-ID, d.h. zu welchem Meer gehört dieser Punkt (0 = kein Meer)
 	unsigned short sea_id;
+	/// Könnte hier ein Hafen gesetzt werden?
+	bool harbor;
 
 	/// Objekt, welches sich dort befindet
 	noBase * obj;

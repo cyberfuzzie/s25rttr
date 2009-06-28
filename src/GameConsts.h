@@ -1,4 +1,4 @@
-// $Id: GameConsts.h 5061 2009-06-17 20:42:11Z OLiver $
+// $Id: GameConsts.h 5139 2009-06-28 21:06:58Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -62,7 +62,7 @@ enum BuildingQuality
 	BQ_HOUSE,
 	BQ_CASTLE,
 	BQ_MINE,
-	BQ_HARBOUR,
+	BQ_HARBOR,
 	BQ_DANGER =	255
 };
 

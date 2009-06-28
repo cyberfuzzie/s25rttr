@@ -1,4 +1,4 @@
-// $Id: ArchivItem_Map.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: ArchivItem_Map.cpp 5139 2009-06-28 21:06:58Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -133,9 +133,9 @@ int libsiedler2::ArchivItem_Map::loadHelper(FILE *file, bool only_header )
 		if(libendian::le_read_us(&height, file) != 0)
 			return 5;
 
-		if(header->getWidth() == 0)
+		//if(header->getWidth() == 0)
 			header->setWidth(width);
-		if(header->getHeight() == 0)
+		//if(header->getHeight() == 0)
 			header->setHeight(height);
 
 		// 6 Unbekannte Daten überspringen

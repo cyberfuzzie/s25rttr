@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.cpp 5117 2009-06-26 14:35:48Z OLiver $
+// $Id: dskGameInterface.cpp 5139 2009-06-28 21:06:58Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -337,6 +337,7 @@ bool dskGameInterface::Msg_LeftDown(const MouseCoords& mc)
 				case BQ_HOUSE: action_tabs.build_tabs = iwAction::Tabs::BT_HOUSE; break;
 				case BQ_CASTLE: action_tabs.build_tabs = iwAction::Tabs::BT_CASTLE; break;
 				case BQ_MINE: action_tabs.build_tabs = iwAction::Tabs::BT_MINE; break;
+				case BQ_HARBOR: action_tabs.build_tabs = iwAction::Tabs::BT_HARBOR; break;
 				default: break;
 				}
 

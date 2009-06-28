@@ -1,4 +1,4 @@
-// $Id: GameWorldViewer.cpp 5079 2009-06-21 13:12:23Z OLiver $
+// $Id: GameWorldViewer.cpp 5139 2009-06-28 21:06:58Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -269,7 +269,7 @@ void GameWorldViewer::Draw(const unsigned char player, unsigned * water, const b
 				case BQ_HUT: mid = 42; break;
 				case BQ_HOUSE: mid = 43; break;
 				case BQ_CASTLE: mid = 44; break;
-				case BQ_HARBOUR: mid = 45; break;
+				case BQ_HARBOR: mid = 45; break;
 				default: break;
 				}
 

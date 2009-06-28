@@ -1,4 +1,4 @@
-// $Id: GameWorld.cpp 5133 2009-06-27 13:48:59Z OLiver $
+// $Id: GameWorld.cpp 5139 2009-06-28 21:06:58Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -82,8 +82,21 @@ void GameWorld::Scan(glArchivItem_Map *map)
 			// Aufpassen, dass die Terrainindizes im Rahmen liegen, ansonsten 0 nehmen, unbekanntes Terrain (Bsp. 
 			// Karte "Drachenebene")
 			unsigned char t1 = map->GetMapDataAt(MAP_TERRAIN1, x, y), t2 = map->GetMapDataAt(MAP_TERRAIN2, x, y);
-			node.t1 = (t1<20)?TERRAIN_INDIZES[t1]:0;
+			
+			// Hafenplatz?
+			if(t1 == 78)
+			{
+				node.t1 = TT_STEPPE;
+				node.harbor = true;
+			}
+			else
+			{
+				node.t1 = (t1<20)?TERRAIN_INDIZES[t1]:0;
+				node.harbor = false;
+			}
 			node.t2 = (t2<20)?TERRAIN_INDIZES[t2]:0;
+
+
 			node.resources = map->GetMapDataAt(MAP_RESOURCES, x, y);
 			node.reserved = false;
 			node.owner = 0;
@@ -138,9 +151,12 @@ void GameWorld::Scan(glArchivItem_Map *map)
 			// Player Startpos (provisorisch)
 			case 0x80:
 				{
-					GAMECLIENT.GetPlayer(lc)->hqx = x;
-					GAMECLIENT.GetPlayer(lc)->hqy = y;
-					nodes[pos].obj = NULL;
+					if(lc < GameClient::inst().GetPlayerCount())
+					{
+						GAMECLIENT.GetPlayer(lc)->hqx = x;
+						GAMECLIENT.GetPlayer(lc)->hqy = y;
+						nodes[pos].obj = NULL;
+					}
 				} break;
 
 			// Baum 1-4
@@ -459,6 +475,7 @@ void GameWorld::Serialize(SerializedGameData *sgd) const
 		sgd->PushObject(nodes[i].obj,false);
 		sgd->PushObjectList(nodes[i].figures,false);
 		sgd->PushUnsignedShort(nodes[i].sea_id);
+		sgd->PushBool(nodes[i].harbor);
 	}
 
 	// Katapultsteine serialisieren
@@ -532,6 +549,7 @@ void GameWorld::Deserialize(SerializedGameData *sgd)
 		nodes[i].obj = sgd->PopObject<noBase>(GOT_UNKNOWN);
 		sgd->PopObjectList<noBase>(nodes[i].figures,GOT_UNKNOWN);
 		nodes[i].sea_id = sgd->PopUnsignedShort();
+		nodes[i].harbor = sgd->PopBool();
 	}
 
 	// Katapultsteine deserialisieren

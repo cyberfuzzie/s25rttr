@@ -1,4 +1,4 @@
-// $Id: Ware.cpp 4868 2009-05-15 15:48:04Z OLiver $
+// $Id: Ware.cpp 5137 2009-06-28 19:28:27Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -49,6 +49,8 @@ next_dir(255), state(STATE_WAITINWAREHOUSE), location(location), type(type), goa
 Ware::~Ware()
 {
 	/*assert(!GAMECLIENT.GetPlayer(location->GetPlayer()].IsWareRegistred(this));*/
+	if(location)
+		assert(!GameClient::inst().GetPlayer(location->GetPlayer())->IsWareDependent(this));
 }
 
 void Ware::Destroy(void)
@@ -175,13 +177,18 @@ void Ware::GoalDestroyed()
 			// Lagerhaus Bescheid sagen
 			goal->TakeWare(this);
 		}
-		else
+		else if(state == STATE_CARRIED)
 		{
-			goal = GAMECLIENT.GetPlayer(location->GetPlayer())->FindWarehouse(location,FW::Condition_StoreWare,0,true,&type,true);
+			// Ziel = aktuelle Position, d.h. der Träger, der die Ware trägt, geht gerade in das Zielgebäude rein
+			// d.h. es ist sowieso zu spät
+			if(goal != location)
+			{
+				goal = GAMECLIENT.GetPlayer(location->GetPlayer())->FindWarehouse(location,FW::Condition_StoreWare,0,true,&type,true);
 
-			if(goal)
-				// Lagerhaus ggf. Bescheid sagen
-				goal->TakeWare(this);
+				if(goal)
+					// Lagerhaus ggf. Bescheid sagen
+					goal->TakeWare(this);
+			}
 		}
 	}
 }

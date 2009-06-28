@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 5136 2009-06-28 12:12:57Z OLiver $
+// $Id: nobMilitary.cpp 5137 2009-06-28 19:28:27Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -259,6 +259,9 @@ void nobMilitary::HandleEvent(const unsigned int id)
 
 				// Evtl neues Beförderungsevent anmelden
 				PrepareUpgrading();
+
+				// Ggf. neue Goldmünzen bestellen
+				SearchCoins();
 			}
 
 		} break;

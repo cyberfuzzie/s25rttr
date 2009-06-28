@@ -1,4 +1,4 @@
-// $Id: nofCarrier.cpp 4951 2009-05-25 20:03:10Z OLiver $
+// $Id: nofCarrier.cpp 5137 2009-06-28 19:28:27Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -392,7 +392,7 @@ void nofCarrier::Walked()
 {
 	// Bootssounds ggf. löschen
 	if(ct == CT_BOAT && state != CARRS_FIGUREWORK)
-			SoundManager::inst().WorkingFinished(this);
+		SoundManager::inst().WorkingFinished(this);
 
 	switch(state)
 	{
@@ -469,6 +469,8 @@ void nofCarrier::Walked()
 					state = CARRS_CARRYWARETOBUILDING;
 					StartWalking(1);
 					cur_rs = this_flag->routes[1];
+					// location wird immer auf nächste Flagge gesetzt --> in dem Fall aktualisieren
+					carried_ware->Carry((cur_rs->f1 == this_flag)? cur_rs->f2 : cur_rs->f1);
 				}
 				else
 				{

@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.h 5074 2009-06-20 14:31:41Z OLiver $
+// $Id: GameClientPlayer.h 5137 2009-06-28 19:28:27Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -284,6 +284,7 @@ public:
 	void RegisterWare(Ware * ware) { ware_list.push_back(ware); }
 	void RemoveWare(Ware * ware) { ware_list.remove(ware); }
 	bool IsWareRegistred(Ware * ware) { return (std::find(ware_list.begin(),ware_list.end(),ware) != ware_list.end()); }
+	bool IsWareDependent(Ware * ware);
 
 	/// Fügt Waren zur Inventur hinzu
   void IncreaseInventoryWare(const GoodType ware, const unsigned count) { global_inventory.goods[ConvertShields(ware)]+=count; }

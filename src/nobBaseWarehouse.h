@@ -1,4 +1,4 @@
-// $Id: nobBaseWarehouse.h 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: nobBaseWarehouse.h 5137 2009-06-28 19:28:27Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -187,6 +187,8 @@ public: void Serialize(SerializedGameData *sgd) const { Serialize_nobBaseWarehou
 
 	//// Entfernt eine abhängige Ware wieder aus der Liste (wird mit TakeWare hinzugefügt)
 	void RemoveDependentWare(Ware * ware) { dependent_wares.erase(ware); }
+	/// Überprüft, ob Ware abhängig ist
+	bool IsWareDependent(Ware * ware) { return dependent_wares.search(ware).valid(); }
 
 	/// Prüft, ob es Waren zum Auslagern gibt
 	bool AreWaresToEmpty() const;

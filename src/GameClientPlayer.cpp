@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 5125 2009-06-26 20:10:42Z OLiver $
+// $Id: GameClientPlayer.cpp 5137 2009-06-28 19:28:27Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1586,4 +1586,16 @@ void GameClientPlayer::MakeStartPacts()
 			}
 		}
 	}
+}
+
+
+bool GameClientPlayer::IsWareDependent(Ware * ware)
+{
+	for(std::list<nobBaseWarehouse*>::iterator it = warehouses.begin();it!=warehouses.end();++it)
+	{
+		if((*it)->IsWareDependent(ware))
+			return true;
+	}
+
+	return false;
 }

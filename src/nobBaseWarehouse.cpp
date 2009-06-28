@@ -1,4 +1,4 @@
-// $Id: nobBaseWarehouse.cpp 5118 2009-06-26 15:39:28Z Demophobie $
+// $Id: nobBaseWarehouse.cpp 5137 2009-06-28 19:28:27Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -701,6 +701,7 @@ void nobBaseWarehouse::CancelFigure(noFigure * figure)
 
 void nobBaseWarehouse::TakeWare(Ware * ware)
 {
+	assert(ware->GetObjId() != 536528);
 	// Ware zur Abhängigkeitsliste hinzufügen, damit sie benachrichtigt wird, wenn dieses Lagerhaus zerstört wird
 	dependent_wares.push_back(ware);
 }

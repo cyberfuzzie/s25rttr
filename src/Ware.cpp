@@ -1,4 +1,4 @@
-// $Id: Ware.cpp 5137 2009-06-28 19:28:27Z OLiver $
+// $Id: Ware.cpp 5138 2009-06-28 19:29:38Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -43,14 +43,14 @@ next_dir(255), state(STATE_WAITINWAREHOUSE), location(location), type(type), goa
 {
 	// Ware in den Index mit eintragen
 	GAMECLIENT.GetPlayer(location->GetPlayer())->RegisterWare(this);
-	assert(obj_id != 610542);
+	//assert(obj_id != 610542);
 }
 
 Ware::~Ware()
 {
 	/*assert(!GAMECLIENT.GetPlayer(location->GetPlayer()].IsWareRegistred(this));*/
-	if(location)
-		assert(!GameClient::inst().GetPlayer(location->GetPlayer())->IsWareDependent(this));
+	//if(location)
+	//	assert(!GameClient::inst().GetPlayer(location->GetPlayer())->IsWareDependent(this));
 }
 
 void Ware::Destroy(void)

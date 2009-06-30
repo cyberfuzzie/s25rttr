@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 5139 2009-06-28 21:06:58Z OLiver $
+// $Id: GameWorldBase.cpp 5144 2009-06-30 07:45:36Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -316,7 +316,8 @@ bool GameWorldBase::RoadAvailable(const bool boat_road,const int x, const int y,
 		if(GetNO(GetXA(x,y,i),GetYA(x,y,i))->GetType() == NOP_BUILDING
 			|| GetNO(GetXA(x,y,i),GetYA(x,y,i))->GetType() == NOP_BUILDINGSITE)
 		{
-			if(GetSpecObj<noBaseBuilding>(GetXA(x,y,i),GetYA(x,y,i))->GetSize() == 2)
+			BuildingQuality bq = GetSpecObj<noBaseBuilding>(GetXA(x,y,i),GetYA(x,y,i))->GetSize();
+			if(bq == BQ_CASTLE || bq == BQ_HARBOR)
 				return 0;
 		}
 	}

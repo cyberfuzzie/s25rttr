@@ -1,4 +1,4 @@
-// $Id: noBuildingSite.cpp 5125 2009-06-26 20:10:42Z OLiver $
+// $Id: noBuildingSite.cpp 5144 2009-06-30 07:45:36Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -50,7 +50,7 @@ noBuildingSite::noBuildingSite(const BuildingType type,const unsigned short x, c
 : noBaseBuilding(NOP_BUILDINGSITE,type,x,y,player), state(STATE_BUILDING), planer(0), builder(0), boards(0), stones(0), used_boards(0),used_stones(0), build_progress(0)
 {
 	// Überprüfen, ob die Baustelle erst noch planiert werden muss (nur bei mittleren/großen Gebäuden)
-	if(GetSize() == BZ_HOUSE || GetSize() == BZ_CASTLE)
+	if(GetSize() == BQ_HOUSE || GetSize() == BQ_CASTLE || GetSize() == BQ_HARBOR)
 	{
 		// Höhe auf dem Punkt, wo die Baustelle steht
 		int altitude = gwg->GetNode(x,y).altitude;

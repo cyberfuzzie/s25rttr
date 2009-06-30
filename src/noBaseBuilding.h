@@ -1,4 +1,4 @@
-// $Id: noBaseBuilding.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: noBaseBuilding.h 5144 2009-06-30 07:45:36Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -64,7 +64,7 @@ public:		void Destroy() { Destroy_noBaseBuilding(); }
 	virtual void WareLost(Ware * ware) = 0;
 
 	/// Gibt diverse Sachen zurück
-	unsigned char GetSize() const { return BUILDING_SIZE[type]; }
+	BuildingQuality GetSize() const { return BUILDING_SIZE[type]; }
 	BuildingType GetBuildingType () const { return type; }
 	Nation GetNation() const { return nation; }
 

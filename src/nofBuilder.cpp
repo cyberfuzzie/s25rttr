@@ -1,4 +1,4 @@
-// $Id: nofBuilder.cpp 5106 2009-06-25 20:43:46Z OLiver $
+// $Id: nofBuilder.cpp 5144 2009-06-30 07:45:36Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -34,6 +34,7 @@
 #include "EventManager.h"
 #include "nobMilitary.h"
 #include "nobStorehouse.h"
+#include "nobHarborBuilding.h"
 #include "SoundManager.h"
 #include "SerializedGameData.h"
 
@@ -175,11 +176,16 @@ void nofBuilder::HandleDerivedEvent(const unsigned int id)
 				if(building_type == BLD_STOREHOUSE || building_type== BLD_HARBORBUILDING)
 				{
 					// Lagerhäuser
-					nobStorehouse * sh = new nobStorehouse(x,y,player,building_nation);
-					gwg->SetNO(sh,x,y);
+					nobBaseWarehouse * wh;
+					if(building_type == BLD_STOREHOUSE)
+						wh = new nobStorehouse(x,y,player,building_nation);
+					else
+						wh = new nobHarborBuilding(x,y,player,building_nation);
+
+					gwg->SetNO(wh,x,y);
 
 					// Mich dort gleich einquartieren und nicht erst zurücklaufen
-					sh->AddFigure(this);
+					wh->AddFigure(this);
 					gwg->RemoveFigure(this,x,y);
 
 					// Evtl Träger aus dem HQ wieder verwenden

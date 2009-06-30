@@ -1,4 +1,4 @@
-// $Id: GameWorld.cpp 5139 2009-06-28 21:06:58Z OLiver $
+// $Id: GameWorld.cpp 5144 2009-06-30 07:45:36Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -88,6 +88,9 @@ void GameWorld::Scan(glArchivItem_Map *map)
 			{
 				node.t1 = TT_STEPPE;
 				node.harbor = true;
+
+				HarborPlace p = {x,y};
+				harbor_pos.push_back(p);
 			}
 			else
 			{
@@ -397,6 +400,17 @@ void GameWorld::Scan(glArchivItem_Map *map)
 		}
 	}
 
+	/// Hafenplätze zu den Weltmeeren zuordnen
+	for(unsigned y = 0;y<height;++y)
+	{
+		for(unsigned x = 0;x<width;++x)
+		{
+			if(GetNode(x,y).harbor)
+			{
+			}
+		}
+		}
+
 	/// Schatten und BQ berechnen
 	for(unsigned y = 0;y<height;++y)
 	{
@@ -550,6 +564,12 @@ void GameWorld::Deserialize(SerializedGameData *sgd)
 		sgd->PopObjectList<noBase>(nodes[i].figures,GOT_UNKNOWN);
 		nodes[i].sea_id = sgd->PopUnsignedShort();
 		nodes[i].harbor = sgd->PopBool();
+
+		if(nodes[i].harbor)
+		{
+			HarborPlace p = {i%width,i/width};
+			harbor_pos.push_back(p);
+		}
 	}
 
 	// Katapultsteine deserialisieren

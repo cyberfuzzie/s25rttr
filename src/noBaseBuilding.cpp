@@ -1,4 +1,4 @@
-// $Id: noBaseBuilding.cpp 4854 2009-05-11 11:26:19Z OLiver $
+// $Id: noBaseBuilding.cpp 5144 2009-06-30 07:45:36Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -83,7 +83,7 @@ noBaseBuilding::noBaseBuilding(const NodalObjectType nop,const BuildingType type
 	}
 
 	// Werde/Bin ich (mal) ein großes Schloss? Dann müssen die Anbauten gesetzt werden
-	if(GetSize() == 2)
+	if(GetSize() == BQ_CASTLE || GetSize() == BQ_HARBOR)
 	{
 		unsigned short coords[6] = {x-1,y,x-!(y&1),y-1,x+ (y&1),y-1};
 
@@ -180,7 +180,8 @@ void noBaseBuilding::WareNotNeeded(Ware * ware)
 
 void noBaseBuilding::DestroyBuildingExtensions()
 {
-	if(GetSize() == 2)
+	// Nur bei großen Gebäuden gibts diese Anbauten
+	if(GetSize() == BQ_CASTLE || GetSize() == BQ_HARBOR)
 	{
 		noBase *no;
 		

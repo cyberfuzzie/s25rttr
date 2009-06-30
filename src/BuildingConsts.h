@@ -1,4 +1,4 @@
-// $Id: BuildingConsts.h 5139 2009-06-28 21:06:58Z OLiver $
+// $Id: BuildingConsts.h 5144 2009-06-30 07:45:36Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -70,24 +70,24 @@ enum BuildingSize
 };
 
 // Größe der Gebäude
-const unsigned char BUILDING_SIZE[40] =
+const BuildingQuality BUILDING_SIZE[40] =
 {
 	BQ_CASTLE,
 	BQ_HUT,
 	BQ_HUT,
-	255,
+	BQ_NOTHING,
 	BQ_HOUSE,
-	255,
-	255,
-	255,
-	255,
+	BQ_NOTHING,
+	BQ_NOTHING,
+	BQ_NOTHING,
+	BQ_NOTHING,
 	BQ_CASTLE,
 	BQ_MINE,
 	BQ_MINE,
 	BQ_MINE,
 	BQ_MINE,
 	BQ_HUT,
-	255,
+	BQ_NOTHING,
 	BQ_HOUSE,
 	BQ_HUT,
 	BQ_HUT,
@@ -99,10 +99,10 @@ const unsigned char BUILDING_SIZE[40] =
 	BQ_HOUSE,
 	BQ_HOUSE,
 	BQ_HOUSE,
-	255,
+	BQ_NOTHING,
 	BQ_CASTLE,
 	BQ_HOUSE,
-	255,
+	BQ_NOTHING,
 	BQ_HOUSE,
 	BQ_HOUSE,
 	BQ_HOUSE,
@@ -111,7 +111,7 @@ const unsigned char BUILDING_SIZE[40] =
 	BQ_HOUSE,
 	BQ_CASTLE,
 	BQ_CASTLE,
-	255
+	BQ_NOTHING
 };
 
 // Konstanten zu den "normalen Gebäuden" (Betrieben), beginnt erst mit Granitmine

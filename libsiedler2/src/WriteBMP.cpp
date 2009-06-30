@@ -1,4 +1,4 @@
-// $Id: WriteBMP.cpp 5091 2009-06-23 18:27:10Z FloSoft $
+// $Id: WriteBMP.cpp 5147 2009-06-30 20:19:48Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -142,6 +142,8 @@ int libsiedler2::loader::WriteBMP(const char *file, const ArchivItem_Palette *pa
 		return 5;
 	if(libendian::le_write_ui(bmih.compression, bmp) != 0)
 		return 5;
+
+	unsigned int bmihsizepos = ftell(bmp);
 	if(libendian::le_write_ui(bmih.size, bmp) != 0)
 		return 5;
 	if(libendian::le_write_i(bmih.xppm, bmp) != 0)
@@ -223,6 +225,11 @@ int libsiedler2::loader::WriteBMP(const char *file, const ArchivItem_Palette *pa
 		libendian::le_write_uc(placeholder, 4 - (ftell(bmp) % 4), bmp);
 
 	delete[] buffer;
+
+	unsigned int endsize = ftell(bmp);
+	fseek(bmp, bmihsizepos, SEEK_SET);
+	if(libendian::le_write_ui(endsize - bmihsizepos, bmp) != 0)
+		return 9;
 
 	// Datei schliessen
 	fclose(bmp);

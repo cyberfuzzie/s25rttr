@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 5139 2009-06-28 21:06:58Z OLiver $
+// $Id: GameWorldGame.cpp 5146 2009-06-30 19:10:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -241,6 +241,7 @@ void GameWorldGame::SetBuildingSite(const BuildingType type,const MapCoord x, co
 	case BQ_CASTLE: if(!( bq == BQ_CASTLE || bq == BQ_HARBOR)) return; break;
 	case BQ_HARBOR: if(bq != BQ_HARBOR) return; break;
 	case BQ_MINE: if(bq != BQ_MINE) return; break;
+	default: break;
 	}
 
 	// TODO: Verzögerungsbugabfrage, kann später ggf. weg

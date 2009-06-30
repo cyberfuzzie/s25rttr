@@ -1,4 +1,4 @@
-// $Id: BuildingConsts.h 5144 2009-06-30 07:45:36Z OLiver $
+// $Id: BuildingConsts.h 5145 2009-06-30 19:00:18Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -440,10 +440,10 @@ const char * const BUILDING_HELP_STRINGS[40] =
 	gettext_noop(
 	"Raw iron ore is smelted in the "
 	"iron smelters with the help of "
-	"coal and raw iron. The processed "
-	"iron is then used to making "
-	"weapons (in the Armory) and "
-	"tools (in the metalworks)."),
+	"coal. The processed iron is "
+	"then used to making weapons "
+	"(in the Armory) and tools "
+	"(in the metalworks)."),
 
 	// Nothing
 	"",
@@ -493,7 +493,7 @@ const char * const BUILDING_HELP_STRINGS[40] =
 	gettext_noop(
 	"The carpenter turns the "
 	"woodcutter's logs into "
-	"made-to-measure planks. There "
+	"made-to-measure planks. These "
 	"form the basic for building "
 	"houses and ships."),
 

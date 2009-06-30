@@ -28,6 +28,7 @@
 #include "EventManager.h"
 #include "Random.h"
 #include "SerializedGameData.h"
+#include "noShip.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -119,7 +120,14 @@ void noShipBuildingSite::MakeBuildStep()
 {
 	++progress;
 
-	// todo  Schiff bauen
+	// Schiff fertiggestellt?
 	if(progress > PROGRESS_PARTS[0] + PROGRESS_PARTS[1] + PROGRESS_PARTS[2])
-		progress = PROGRESS_PARTS[0] + PROGRESS_PARTS[1] + PROGRESS_PARTS[2];
+	{
+		// Mich vernichten
+		em->AddToKillList(this);
+		gwg->SetNO(NULL,x,y);
+		// ein fertiges Schiff stattdessen hinsetzen
+		gwg->AddFigure(new noShip(x,y,player),x,y);
+	}
+		
 }

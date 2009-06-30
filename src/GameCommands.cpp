@@ -27,6 +27,7 @@
 #include "nobShipYard.h"
 #include "nobMilitary.h"
 #include "nobBaseWarehouse.h"
+#include "nobHarborBuilding.h"
 
 using namespace gc;
 
@@ -60,6 +61,7 @@ GameCommand * GameCommand::CreateGameCommand(const Type gst, Serializer * ser)
 	case ACCEPTPACT: return new AcceptPact(ser);
 	case CANCELPACT: return new CancelPact(ser);
 	case CHANGESHIPYARDMODE: return new ChangeShipYardMode(ser);
+	case STARTEXPEDITION: return new StartExpedition(ser);
 	case SURRENDER: return new Surrender(ser);
 	case CHEAT_ARMAGEDDON: return new CheatArmageddon(ser);
 	case DESTROYALL: return new DestroyAll(ser);
@@ -195,5 +197,11 @@ void ChangeShipYardMode::Execute(GameWorldGame& gwg, GameClientPlayer& player, c
 {
 	if(gwg.GetNO(x,y)->GetGOT() == GOT_NOB_SHIPYARD)
 		gwg.GetSpecObj<nobShipYard>(x,y)->ToggleMode();
+}
+
+void StartExpedition::Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid)
+{
+	if(gwg.GetNO(x,y)->GetGOT() == GOT_NOB_HARBORBUILDING)
+		gwg.GetSpecObj<nobHarborBuilding>(x,y)->StartExpedition();
 }
 

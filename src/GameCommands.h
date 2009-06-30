@@ -43,6 +43,8 @@ enum Type
 	ACCEPTPACT,
 	CANCELPACT,
 	CHANGESHIPYARDMODE,
+	STARTEXPEDITION,
+	STARTATTACKINGEXPEDITION,
 	SURRENDER,
 	CHEAT_ARMAGEDDON,
 	DESTROYALL
@@ -708,6 +710,19 @@ public:
 	void Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid);
 };
 
+/// Expedition starten
+class StartExpedition : public Coords
+{
+	friend class GameClient;
+public:
+	StartExpedition(const MapCoord x, const MapCoord y)
+		: Coords(STARTEXPEDITION,x,y) {}
+	StartExpedition(Serializer * ser)
+		: Coords(STARTEXPEDITION,ser) {}
+
+	/// Führt das GameCommand aus
+	void Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid);
+};
 
 
 }

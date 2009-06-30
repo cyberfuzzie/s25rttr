@@ -1,4 +1,4 @@
-// $Id: noAnimal.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: noAnimal.cpp 5148 2009-06-30 21:02:09Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -118,7 +118,7 @@ void noAnimal::Draw(int x, int y)
 			// Laufend (bzw. Ente schwimmend zeichnen)
 
 			// Interpolieren zwischen beiden Knotenpunkten
-			CalcAnimalRelative(x,y);
+			CalcWalkingRelative(x,y);
 			// Zeichnen
 			GetImage(map_lst,ANIMALCONSTS[species].walking_id+ANIMALCONSTS[species].animation_steps*((dir+3)%6)
 				+GAMECLIENT.Interpolate(ASCENT_ANIMATION_STEPS[ascent],current_ev)%ANIMALCONSTS[species].animation_steps)
@@ -473,24 +473,7 @@ void noAnimal::StopHunting()
 	}
 }
 
-void noAnimal::CalcAnimalRelative(int &x, int &y)
-{
-	int x1 = static_cast<int>(gwg->GetTerrainX(this->x,this->y));
-	int y1 = static_cast<int>(gwg->GetTerrainY(this->x,this->y));
-	int x2 = static_cast<int>(gwg->GetTerrainX(gwg->GetXA(this->x,this->y,dir),gwg->GetYA(this->x,this->y,dir)));
-	int y2 = static_cast<int>(gwg->GetTerrainY(gwg->GetXA(this->x,this->y,dir),gwg->GetYA(this->x,this->y,dir)));
 
-
-	// Wenn sie runterlaufen, muss es andersrum sein, da die Tiere dann immer vom OBEREN Punkt aus gezeichnet werden
-	if(dir == 1 || dir == 2)
-	{
-		Swap(x1,x2);
-		Swap(y1,y2);
-	}
-
-	CalcRelative(x,y,x1,y1,x2,y2);
-
-}
 
 void noAnimal::Die()
 {

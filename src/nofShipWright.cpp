@@ -6,6 +6,7 @@
 #include "SerializedGameData.h"
 #include "SoundManager.h"
 #include "GameClient.h"
+#include "Random.h"
 
 nofShipWright::nofShipWright(const unsigned short x, const unsigned short y,const unsigned char player,nobUsual * workplace) 
 		: nofWorkman(JOB_SHIPWRIGHT,x,y,player,workplace), dest_x(0xFFFF), dest_y(0xFFFF)
@@ -16,6 +17,11 @@ const unsigned SHIPWRIGHT_WALKING_DISTANCE = 20;
 /// Arbeitszeit des Schiffsbauers beim Bauen von großen Schiffen
 const unsigned WORKING_TIME_SHIPS = 70;
 
+
+struct ShipPoint
+{	MapCoord x,y;
+	unsigned char first_dir;
+};
 
 void nofShipWright::HandleDerivedEvent(const unsigned int id)
 {
@@ -29,6 +35,9 @@ void nofShipWright::HandleDerivedEvent(const unsigned int id)
 				nofWorkman::HandleStateWaiting1();
 			else
 			{
+				// Verfügbare Punkte, die geeignete Plätze darstellen würden
+				std::vector<ShipPoint> available_points;
+
 				// Wege müssen immer von der Flagge aus berechnet werden
 				MapCoord flag_x = gwg->GetXA(x,y,4), flag_y = gwg->GetYA(x,y,4);
 				for(MapCoord tx=gwg->GetXA(x,y,0), r=1;r<=SHIPWRIGHT_RADIUS;tx=gwg->GetXA(tx,y,0),++r)
@@ -53,48 +62,58 @@ void nofShipWright::HandleDerivedEvent(const unsigned int id)
 									static_cast<noShipBuildingSite*>(obj)->GetPlayer() == player &&
 									(first_dir=gwg->FindHumanPath(flag_x,flag_y,tx2,ty2,SHIPWRIGHT_WALKING_DISTANCE)) != 0xFF)
 								{
-									// Loslaufen
-									dest_x = tx2;
-									dest_y = ty2;
-									StartWalkingToShip(first_dir);
-									return;
+									ShipPoint p = {tx2,ty2, first_dir};
+									available_points.push_back(p);
+
+								
 								}
 							}
 						}
 					}
 				}
 
-				for(MapCoord tx=gwg->GetXA(x,y,0), r=1;r<=SHIPWRIGHT_RADIUS;tx=gwg->GetXA(tx,y,0),++r)
+				// Kein Schiff im Bau gefunden? Dann Plätzchen für ein neues Schiff suchen
+				if(!available_points.size())
 				{
-					MapCoord tx2 = tx, ty2 = y;
-					for(unsigned i = 2;i<8;++i)
+					for(MapCoord tx=gwg->GetXA(x,y,0), r=1;r<=SHIPWRIGHT_RADIUS;tx=gwg->GetXA(tx,y,0),++r)
 					{
-						for(MapCoord r2=0;r2<r;gwg->GetPointA(tx2,ty2,i%6),++r2)
+						MapCoord tx2 = tx, ty2 = y;
+						for(unsigned i = 2;i<8;++i)
 						{
-							// Dieser Punkt geeignet?
-							if(IsPointGood(tx2,ty2))
+							for(MapCoord r2=0;r2<r;gwg->GetPointA(tx2,ty2,i%6),++r2)
 							{
-								// Weg dorthin finden
-								unsigned char first_dir = gwg->FindHumanPath(flag_x,flag_y,tx2,ty2,SHIPWRIGHT_WALKING_DISTANCE);
-								if(first_dir != 0xFF)
+								// Dieser Punkt geeignet?
+								if(IsPointGood(tx2,ty2))
 								{
-									// Loslaufen
-									dest_x = tx2;
-									dest_y = ty2;
-									StartWalkingToShip(first_dir);
-									return;
+									// Weg dorthin finden
+									unsigned char first_dir = gwg->FindHumanPath(flag_x,flag_y,tx2,ty2,SHIPWRIGHT_WALKING_DISTANCE);
+									if(first_dir != 0xFF)
+									{
+										ShipPoint p = {tx2,ty2, first_dir};
+										available_points.push_back(p);
+									}
 								}
 							}
 						}
 					}
 				}
 
-				// Nichts zu arbeiten gefunden
-				StartNotWorking();
-				// Weiter warten, vielleicht gibts ja später wieder mal was
-				current_ev = em->AddEvent(this,JOB_CONSTS[job].wait1_length,1);
-			
-
+				// Punkte gefunden?
+				if(available_points.size())
+				{
+					// Einen Punkt zufällig auswählen und dorthin laufen
+					ShipPoint p = available_points[RANDOM.Rand(__FILE__,__LINE__,obj_id,available_points.size())];
+					dest_x = p.x;
+					dest_y = p.y;
+					StartWalkingToShip(p.first_dir);
+				}
+				else
+				{
+					// Nichts zu arbeiten gefunden
+					StartNotWorking();
+					// Weiter warten, vielleicht gibts ja später wieder mal was
+					current_ev = em->AddEvent(this,JOB_CONSTS[job].wait1_length,1);
+				}
 			}
 		} break;
 	case STATE_WORK:

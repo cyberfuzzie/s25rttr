@@ -1,4 +1,4 @@
-// $Id: iwBaseWarehouse.cpp 5117 2009-06-26 14:35:48Z OLiver $
+// $Id: iwBaseWarehouse.cpp 5148 2009-06-30 21:02:09Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -94,8 +94,8 @@ iwBaseWarehouse::iwBaseWarehouse(GameWorldViewer * const gwv,const char *const t
 		}
 	}
 
-	// Lagerhaus?
-	if(wh->GetGOT() == GOT_NOB_STOREHOUSE)
+	// Lagerhaus oder Hafengebäude?
+	if(wh->GetGOT() == GOT_NOB_STOREHOUSE || wh->GetGOT() == GOT_NOB_HARBORBUILDING)
 	{
 
 		// Abbrennbutton hinzufügen

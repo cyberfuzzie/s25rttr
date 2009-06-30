@@ -1,4 +1,4 @@
-// $Id: NodalObjectTypes.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: NodalObjectTypes.h 5148 2009-06-30 21:02:09Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -38,6 +38,7 @@ enum NodalObjectType
 	NOP_FIGHTING, // Kampf,
 	NOP_ANIMAL, // Tier
 	NOP_BURNEDWAREHOUSE, // abgebranntes Lagerhaus, aus dem die Menschen jetzt strömen
+	NOP_SHIP, // Schiff
 	NOP_ERROR
 };
 

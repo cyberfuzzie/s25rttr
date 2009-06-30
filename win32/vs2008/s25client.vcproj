@@ -209,78 +209,6 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<Filter
-				Name="Allgemein"
-				>
-				<File
-					RelativePath="..\..\src\colors.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\GameManager.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\GameManager.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\GlobalVars.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\GlobalVars.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\languages.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\languages.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\local.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\macros.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\main.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\main.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\Settings.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\Settings.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\signale.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\signale.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\version.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\version.h"
-					>
-				</File>
-			</Filter>
-			<Filter
 				Name="GUI"
 				>
 				<File
@@ -783,6 +711,18 @@
 						</File>
 						<File
 							RelativePath="..\..\src\iwEnhancements.h"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\iwHarborBuilding.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\iwHarborBuilding.h"
+							>
+						</File>
+						<File
+							RelativePath=".\iwHarbourBuilding.h"
 							>
 						</File>
 						<File
@@ -1320,6 +1260,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\noShip.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\Pathfinding.cpp"
 					>
 				</File>
@@ -1460,6 +1404,10 @@
 					</File>
 					<File
 						RelativePath="..\..\src\noRoadNode.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\noShip.h"
 						>
 					</File>
 					<Filter
@@ -1938,11 +1886,11 @@
 							>
 						</File>
 						<File
-							RelativePath="..\..\src\noShipBuildingSite.h"
+							RelativePath=".\noShipBuildingSite.h"
 							>
 						</File>
 						<File
-							RelativePath=".\noShipBuildingSite.h"
+							RelativePath="..\..\src\noShipBuildingSite.h"
 							>
 						</File>
 						<File
@@ -2167,6 +2115,78 @@
 						>
 					</File>
 				</Filter>
+			</Filter>
+			<Filter
+				Name="Allgemein"
+				>
+				<File
+					RelativePath="..\..\src\colors.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\GameManager.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\GameManager.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\GlobalVars.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\GlobalVars.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\languages.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\languages.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\local.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\macros.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\main.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\main.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\Settings.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\Settings.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\signale.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\signale.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\version.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\version.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter

@@ -1,4 +1,4 @@
-// $Id: noMovable.cpp 5024 2009-06-09 20:02:17Z OLiver $
+// $Id: noMovable.cpp 5148 2009-06-30 21:02:09Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -152,6 +152,25 @@ void noMovable::CalcRelative(int &x, int &y,int x1, int y1,int x2,int y2)
 		x	-= (((x1-x2) * (int(gf_length * GAMECLIENT.GetGFLength())-int((gf_diff) * GAMECLIENT.GetGFLength()+frame_time))) / int(gf_length * GAMECLIENT.GetGFLength()));
 		y	-= (((y1-y2) * (int(gf_length * GAMECLIENT.GetGFLength())-int((gf_diff) * GAMECLIENT.GetGFLength()+frame_time))) / int(gf_length * GAMECLIENT.GetGFLength()));
 	}
+}
+
+/// Interpoliert fürs Laufen zwischen zwei Kartenpunkten
+void noMovable::CalcWalkingRelative(int &x, int &y)
+{
+	int x1 = static_cast<int>(gwg->GetTerrainX(this->x,this->y));
+	int y1 = static_cast<int>(gwg->GetTerrainY(this->x,this->y));
+	int x2 = static_cast<int>(gwg->GetTerrainX(gwg->GetXA(this->x,this->y,dir),gwg->GetYA(this->x,this->y,dir)));
+	int y2 = static_cast<int>(gwg->GetTerrainY(gwg->GetXA(this->x,this->y,dir),gwg->GetYA(this->x,this->y,dir)));
+
+
+	// Wenn sie runterlaufen, muss es andersrum sein, da die Tiere dann immer vom OBEREN Punkt aus gezeichnet werden
+	if(dir == 1 || dir == 2)
+	{
+		Swap(x1,x2);
+		Swap(y1,y2);
+	}
+
+	CalcRelative(x,y,x1,y1,x2,y2);
 }
 
 

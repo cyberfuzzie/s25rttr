@@ -1,4 +1,4 @@
-// $Id: noAnimal.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: noAnimal.h 5148 2009-06-30 21:02:09Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -65,8 +65,7 @@ class noAnimal : public noMovable
 
 private:
 
-	/// Interpoliert fürs Laufen
-	void CalcAnimalRelative(int &x, int &y);
+
 	/// entscheidet, was nach einem gelaufenen Abschnitt weiter zu tun ist
 	void Walked();
 	/// Sucht eine Richtung, in die das Tier gehen kann

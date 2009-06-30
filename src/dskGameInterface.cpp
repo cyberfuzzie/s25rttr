@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.cpp 5139 2009-06-28 21:06:58Z OLiver $
+// $Id: dskGameInterface.cpp 5148 2009-06-30 21:02:09Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -42,6 +42,7 @@
 #include "iwChat.h"
 #include "iwHQ.h"
 #include "iwStorehouse.h"
+#include "iwHarborBuilding.h"
 #include "iwAction.h"
 #include "iwRoadWindow.h"
 #include "iwBuildingSite.h"
@@ -56,8 +57,8 @@
 #include "iwOptionsWindow.h"
 #include "iwEndgame.h"
 
-#include "noBuilding.h"
 #include "nobHQ.h"
+#include "nobHarborBuilding.h"
 #include "noBuildingSite.h"
 #include "nobMilitary.h"
 #include "nobStorehouse.h"
@@ -299,14 +300,18 @@ bool dskGameInterface::Msg_LeftDown(const MouseCoords& mc)
 		// Evtl ists nen Haus? (unser Haus)
 		if(gwv->GetNO(cselx,csely)->GetType() == NOP_BUILDING	&& gwv->GetNode(cselx,csely).owner-1 == (signed)GAMECLIENT.GetPlayerID())
 		{
+			BuildingType bt = static_cast<noBuilding*>(gwv->GetNO(cselx,csely))->GetBuildingType();
 			// HQ
-			if(static_cast<noBuilding*>(gwv->GetNO(cselx,csely))->GetBuildingType() == BLD_HEADQUARTERS)
+			if(bt == BLD_HEADQUARTERS)
 				WindowManager::inst().Show(new iwHQ(gwv,gwv->GetSpecObj<nobHQ>(cselx,csely)));
 			// Lagerhäuser
-			else if(static_cast<noBuilding*>(gwv->GetNO(cselx,csely))->GetBuildingType() == BLD_STOREHOUSE)
+			else if(bt == BLD_STOREHOUSE)
 				WindowManager::inst().Show(new iwStorehouse(gwv,gwv->GetSpecObj<nobStorehouse>(cselx,csely)));
+			// Hafengebäude
+			else if(bt == BLD_HARBORBUILDING)
+				WindowManager::inst().Show(new iwHarborBuilding(gwv,gwv->GetSpecObj<nobHarborBuilding>(cselx,csely)));
 			// Militärgebäude
-			else if(static_cast<noBuilding*>(gwv->GetNO(cselx,csely))->GetBuildingType() <= BLD_FORTRESS)
+			else if(bt <= BLD_FORTRESS)
 				WindowManager::inst().Show(new iwMilitaryBuilding(gwv,gwv->GetSpecObj<nobMilitary>(cselx,csely)));
 			else
 				WindowManager::inst().Show(new iwBuilding(gwv,this,gwv->GetSpecObj<nobUsual>(cselx,csely)));

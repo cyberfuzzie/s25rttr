@@ -1,4 +1,4 @@
-// $Id: noMovable.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: noMovable.h 5148 2009-06-30 21:02:09Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -67,6 +67,8 @@ public:		void Destroy() { Destroy_noMovable(); }
 	void StartMoving(const unsigned char dir, unsigned gf_length);
 	// Interpoliert die Positon zwischen zwei Knotenpunkten
 	void CalcRelative(int &x, int &y,int x1 = 0, int y1 = 0,int x2 = 0,int y2 = 0);
+	/// Interpoliert fürs Laufen zwischen zwei Kartenpunkten
+	void CalcWalkingRelative(int &x, int &y);
 	// Steht er in der zwischen 2 Wegpunkten?
 	bool IsStandingBetweenNodes() const { return (pause_walked_gf>0) ? true : false; }
 };

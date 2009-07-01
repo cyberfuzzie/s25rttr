@@ -1,4 +1,4 @@
-// $Id: glArchivItem_Font.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: glArchivItem_Font.cpp 5155 2009-07-01 15:37:53Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -87,6 +87,9 @@ void glArchivItem_Font::Draw(short x,
 							 const std::string& end, 
 							 unsigned short end_length)
 {
+	if(!_font)
+		initFont();
+
 	// Breite bestimmen
 	if(length == 0)
 		length = (unsigned short)text.length();
@@ -170,12 +173,15 @@ void glArchivItem_Font::Draw(short x,
 		}
 		else
 		{
-			glArchivItem_Bitmap_Player *c = dynamic_cast<glArchivItem_Bitmap_Player *>(get(ANSI_TO_OEM[(unsigned char)text[i]]));
-			if(c)
+			unsigned char c = ANSI_TO_OEM[(unsigned char)text[i]];
+			if(_charwidths[c] > 0)
 			{
-				c->setFilter(GL_LINEAR);
-				c->Draw(cx, cy, 0, 0, 0, 0, 0, 0, color, (GetAlpha(color)<<24) | 0x00FFFFFF);
-				cx += c->getWidth();
+				unsigned int x = 0, y = 0;
+				x = c % 16;
+				y = c / 16;
+
+				_font->Draw(cx, cy, _charwidths[c], dy, x*(dx+2)+1, y*(dy+2)+1, _charwidths[c], dy, color, (GetAlpha(color) << 24) | 0x00FFFFFF);
+				cx += _charwidths[c];
 			}
 		}
 	}
@@ -190,12 +196,15 @@ void glArchivItem_Font::Draw(short x,
 			}
 			else
 			{
-				glArchivItem_Bitmap_Player *c = dynamic_cast<glArchivItem_Bitmap_Player *>(get(ANSI_TO_OEM[(unsigned char)end[i]]));
-				if(c)
+				unsigned char c = ANSI_TO_OEM[(unsigned char)text[i]];
+				if(_charwidths[c] > 0)
 				{
-					c->setFilter(GL_LINEAR);
-					c->Draw(cx, cy, 0, 0, 0, 0, 0, 0, color, (GetAlpha(color)<<24) | 0x00FFFFFF);
-					cx += c->getWidth();
+					unsigned int x = 0, y = 0;
+					x = c % 16;
+					y = c / 16;
+
+					_font->Draw(cx, cy, 0, 0, x+1, y+1, _charwidths[c], dy, color, (GetAlpha(color) << 24) | 0x00FFFFFF);
+					cx += _charwidths[c];
 				}
 			}
 		}
@@ -214,7 +223,7 @@ void glArchivItem_Font::Draw(short x,
  */
 bool glArchivItem_Font::CharExist(unsigned char c) const
 {
-	return (get(ANSI_TO_OEM[c]) != NULL);
+	return (_charwidths[c] > 0);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -238,11 +247,7 @@ unsigned short glArchivItem_Font::getWidth(const std::string& text, unsigned len
 	unsigned short w = 0, wm = 0;
 	for(unsigned short i = 0; i < length; ++i)
 	{
-		unsigned short cw = 0;
-
-		const glArchivItem_Bitmap_Player *c = dynamic_cast<const glArchivItem_Bitmap_Player *>(get(ANSI_TO_OEM[(unsigned char)text[i]]));
-		if(c)
-			cw = c->getWidth();
+		unsigned short cw = _charwidths[ANSI_TO_OEM[(unsigned char)text[i]]];
 
 		if(text[i] == '\n')
 		{
@@ -344,7 +349,7 @@ void glArchivItem_Font::GetWrapInfo(const std::string& text,
 			{
 				// Länge des Leerzeichens mit draufaddieren
 				line_width += word_width;
-				line_width += dynamic_cast<const glArchivItem_Bitmap_Player *>(get((unsigned char)' '))->getWidth();
+				line_width += _charwidths[' '];
 				// neues Wort fängt dann nach dem Leerzeichen an (falls wir nicht schon am Ende vom Text sind)
 				if(i < length-1)
 				{
@@ -362,7 +367,7 @@ void glArchivItem_Font::GetWrapInfo(const std::string& text,
 					// neue Zeile anfangen mit diesem Wort
 					wi.positions[wi.count++] = word_start;
 					// In der Zeile ist schon das Wort und das jetzige Leerzeichen mit drin
-					line_width = word_width + dynamic_cast<const glArchivItem_Bitmap_Player *>(get((unsigned char)' '))->getWidth();
+					line_width = word_width + _charwidths[' '];
 					// Neues Wort beginnen (falls wir nicht schon am Ende vom Text sind)
 					if(i < length-1)
 					{
@@ -375,14 +380,12 @@ void glArchivItem_Font::GetWrapInfo(const std::string& text,
 					// ansonsten muss das Wort zwangsläufig auf mehrere Zeilen verteilt werden
 					for(size_t z = 0;text[word_start+z]!=' '&&text[word_start+z];++z)
 					{
-						unsigned short letter_width = 
-							dynamic_cast<const glArchivItem_Bitmap_Player *>
-							(get(ANSI_TO_OEM[(unsigned char)text[word_start+z]]))->getWidth();
+						unsigned short letter_width = _charwidths[ANSI_TO_OEM[(unsigned char)text[word_start+z]]];
+
 						// passt der neue Buchstabe noch mit drauf?
 						if(line_width + letter_width <= ((wi.count==1) ? primary_width : secondary_width))
 							line_width += letter_width;
 						else
-
 						{
 							// wenn nicht, muss hier ein Umbruch erfolgen
 
@@ -393,7 +396,7 @@ void glArchivItem_Font::GetWrapInfo(const std::string& text,
 					}
 
 					// Leerzeichen nicht vergessen
-					line_width += dynamic_cast<const glArchivItem_Bitmap_Player *>(get((unsigned char)' '))->getWidth();
+					line_width += _charwidths[' '];
 
 					// Neues Wort beginnen (falls wir nicht schon am Ende vom Text sind)
 					if(i < length-1)
@@ -407,8 +410,43 @@ void glArchivItem_Font::GetWrapInfo(const std::string& text,
 		else
 		{
 			// Anderes Zeichen --> einfach dessen Breite mit addieren
-			if(dynamic_cast<const glArchivItem_Bitmap_Player *>(get(ANSI_TO_OEM[(unsigned char)text[i]])))
-				word_width += dynamic_cast<const glArchivItem_Bitmap_Player *>(get(ANSI_TO_OEM[(unsigned char)text[i]]))->getWidth();
+			if( CharExist(ANSI_TO_OEM[(unsigned char)text[i]]) )
+				word_width += _charwidths[ANSI_TO_OEM[(unsigned char)text[i]]];
 		}
 	}
+}
+
+void glArchivItem_Font::initFont()
+{
+	_font = dynamic_cast<glArchivItem_Bitmap_Player *>(glAllocator(libsiedler2::BOBTYPE_BITMAP_PLAYER, 0, NULL));
+
+	memset(_charwidths, 0, sizeof(_charwidths));
+
+	int w = (dx+2) * 16 + 2;
+	int h = (dy+2) * 16 + 2;
+	unsigned int buffersize = w * h * 4; // RGBA Puffer für alle Buchstaben
+	unsigned char *buffer = new unsigned char[buffersize];
+	memset(buffer, 0, buffersize);
+
+	int x = 1;
+	int y = 1 + 2 * (dy+2);
+	for(int i = 32; i < 256; ++i)
+	{
+		if( (i % 16) == 0 && i != 32 )
+		{
+			y += dy+2;
+			x = 1;
+		}
+
+		const glArchivItem_Bitmap_Player *c = dynamic_cast<const glArchivItem_Bitmap_Player *>(get(i));
+		if(c)
+		{
+			c->print(buffer, w, h, libsiedler2::FORMAT_RGBA, GetPalette(0), 132, x, y);
+			_charwidths[i] = c->getWidth();
+		}
+		x += dx+2;
+	}
+
+	_font->create(w, h, buffer, w, h, libsiedler2::FORMAT_RGBA, GetPalette(0), 132);
+	_font->setFilter(GL_LINEAR);
 }

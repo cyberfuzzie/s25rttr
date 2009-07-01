@@ -1,4 +1,4 @@
-// $Id: VideoDriverWrapper.cpp 5098 2009-06-24 17:09:39Z FloSoft $
+// $Id: VideoDriverWrapper.cpp 5155 2009-07-01 15:37:53Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -127,7 +127,11 @@ bool VideoDriverWrapper::CreateScreen(const unsigned short screen_width, const u
 	this->fullscreen = fullscreen;
 
 	// DriverWrapper Initialisieren
-	Initialize(screen_width, screen_height);
+	if(!Initialize(screen_width, screen_height))
+	{
+		fatal_error("Initialisieren des OpenGL-Kontexts fehlgeschlagen!\n");
+		return false;
+	}
 
 	// VSYNC ggf abschalten/einschalten
 	if(GLOBALVARS.ext_swapcontrol)
@@ -311,7 +315,7 @@ bool VideoDriverWrapper::Run()
  *
  *  @author FloSoft
  */
-void VideoDriverWrapper::Initialize(const short width, const short height)
+bool VideoDriverWrapper::Initialize(const short width, const short height)
 {
 	// Viewport mit widthxheight setzen
 	glViewport(0, 0, width, height);
@@ -353,13 +357,16 @@ void VideoDriverWrapper::Initialize(const short width, const short height)
 	glLoadIdentity();
 
 	// Extensions laden
-	LoadAllExtensions();
+	if(!LoadAllExtensions())
+		return false;
 
 	// Puffer leeren
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	// Buffer swappen um den leeren Buffer darzustellen
 	SwapBuffers();
+
+	return true;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -368,7 +375,7 @@ void VideoDriverWrapper::Initialize(const short width, const short height)
  *
  *  @author FloSoft
  */
-void VideoDriverWrapper::LoadAllExtensions()
+bool VideoDriverWrapper::LoadAllExtensions()
 {
 	// auf VSync-Extension testen
 #ifdef _WIN32
@@ -403,6 +410,8 @@ void VideoDriverWrapper::LoadAllExtensions()
 			GLOBALVARS.ext_vbo = false;
 #endif // ! __APPLE__
 	}
+
+	return true;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

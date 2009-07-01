@@ -1,4 +1,4 @@
-// $Id: glArchivItem_Font.h 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: glArchivItem_Font.h 5155 2009-07-01 15:37:53Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -27,9 +27,9 @@ class glArchivItem_Font : public libsiedler2::ArchivItem_Font
 public:
 
 	/// Konstruktor von @p glArchivItem_Font.
-	glArchivItem_Font(void) : ArchivItem_Font() {};
+	glArchivItem_Font(void) : ArchivItem_Font(), _font(NULL) {}
 	/// Kopierkonstruktor von @p glArchivItem_Font.
-	glArchivItem_Font(const glArchivItem_Font *item) : ArchivItem_Font(item) {};
+	glArchivItem_Font(const glArchivItem_Font *item) : ArchivItem_Font(item), _font(NULL) {}
 
 	/// Zeichnet einen Text.
 	void Draw(short x, short y, const std::string& text, unsigned int format, unsigned int color = COLOR_WHITE, unsigned short length = 0, unsigned short max = 0xFFFF, const std::string& end = "...", unsigned short end_length = 0);
@@ -71,6 +71,11 @@ public:
 		DF_BOTTOM  = 4,
 		DF_VCENTER = 8
 	};
+
+private:
+	void initFont();
+	glArchivItem_Bitmap_Player *_font;
+	unsigned int _charwidths[256];
 };
 
 #endif // !GLARCHIVITEM_FONT_H_INCLUDED

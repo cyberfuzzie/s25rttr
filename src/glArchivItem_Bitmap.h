@@ -1,4 +1,4 @@
-// $Id: glArchivItem_Bitmap.h 5152 2009-07-01 06:33:32Z FloSoft $
+// $Id: glArchivItem_Bitmap.h 5155 2009-07-01 15:37:53Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -77,10 +77,10 @@ protected:
 	virtual void GenerateTexture();
 	/// Zeichnet einen Vertex inkl Texturkoordinaten.
 	inline void DrawVertex(float x, float y, float tx, float ty)
-{
-	glTexCoord2f(tx/tex_width, ty/tex_height);
-	glVertex2f(x, y);
-}
+	{
+		glTexCoord2f(tx/tex_width, ty/tex_height);
+		glVertex2f(x, y);
+	}
 protected:
 	unsigned int texture; ///< Das GL-Textur-Handle
 	unsigned int filter;  ///< Der aktuell gewählte Texturfilter

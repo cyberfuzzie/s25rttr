@@ -1,4 +1,4 @@
-// $Id: ArchivItem_Bitmap_Player.cpp 5091 2009-06-23 18:27:10Z FloSoft $
+// $Id: ArchivItem_Bitmap_Player.cpp 5155 2009-07-01 15:37:53Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -651,10 +651,10 @@ int libsiedler2::baseArchivItem_Bitmap_Player::printHelper(unsigned char *buffer
 	if(palette == NULL)
 		return 2;
 
-	if(from_w == 0 || from_x+from_w > tex_width)
-		from_w = tex_width-from_x;
-	if(from_h == 0 || from_y+from_h > tex_height)
-		from_h = tex_height-from_y;
+	if(from_w == 0 || from_x+from_w > width)
+		from_w = width-from_x;
+	if(from_h == 0 || from_y+from_h > height)
+		from_h = height-from_y;
 
 	unsigned short bpp = 0;
 	switch(buffer_format)

@@ -1,4 +1,4 @@
-// $Id: VideoDriverWrapper.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: VideoDriverWrapper.h 5155 2009-07-01 15:37:53Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -78,7 +78,7 @@ public:
 
 private:
 	// Viewpoint und Co initialisieren
-	void Initialize(const short width, const short height);
+	bool Initialize(const short width, const short height);
 
 	// prüft ob eine Extension verfügbar ist
 	bool hasExtension(const char *extension);
@@ -87,7 +87,7 @@ private:
 	void *loadExtension(const char *extension);
 
 	// Alle (im Programm benutzen) Extensions laden
-	void LoadAllExtensions();
+	bool LoadAllExtensions();
 
 private:
 

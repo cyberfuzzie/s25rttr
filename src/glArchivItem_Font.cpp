@@ -1,4 +1,4 @@
-// $Id: glArchivItem_Font.cpp 5156 2009-07-01 17:35:43Z FloSoft $
+// $Id: glArchivItem_Font.cpp 5157 2009-07-01 18:25:00Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -85,21 +85,6 @@ void glArchivItem_Font::Draw(short x,
 							 unsigned short max, 
 							 const std::string& end, 
 							 unsigned short end_length)
-{
-	Drawhelper(x, y, text, format, color, length, max, end, end_length, -1);
-	Drawhelper(x, y, text, format, color, length, max, end, end_length, 1);
-}
-
-void glArchivItem_Font::Drawhelper(short x, 
-							 short y, 
-							 const std::string& text, 
-							 unsigned int format, 
-							 unsigned int color, 
-							 unsigned short length, 
-							 unsigned short max, 
-							 const std::string& end, 
-							 unsigned short end_length, 
-							 int layer)
 {
 	if(!_font)
 		initFont();
@@ -193,7 +178,7 @@ void glArchivItem_Font::Drawhelper(short x,
 				x = c % 16;
 				y = c / 16;
 
-				_font->Draw(cx, cy, _charwidths[c], dy, x*(dx+2)+1, y*(dy+2)+1, _charwidths[c], dy, color, (GetAlpha(color) << 24) | 0x00FFFFFF, layer);
+				_font->Draw(cx, cy, _charwidths[c], dy, x*(dx+2)+1, y*(dy+2)+1, _charwidths[c], dy, color, (GetAlpha(color) << 24) | 0x00FFFFFF);
 				cx += _charwidths[c];
 			}
 		}

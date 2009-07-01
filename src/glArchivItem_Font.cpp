@@ -1,4 +1,4 @@
-// $Id: glArchivItem_Font.cpp 5155 2009-07-01 15:37:53Z FloSoft $
+// $Id: glArchivItem_Font.cpp 5156 2009-07-01 17:35:43Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -76,7 +76,6 @@ const unsigned char ANSI_TO_OEM[256] =
  *
  *  @author OLiver
  */
-
 void glArchivItem_Font::Draw(short x, 
 							 short y, 
 							 const std::string& text, 
@@ -86,6 +85,21 @@ void glArchivItem_Font::Draw(short x,
 							 unsigned short max, 
 							 const std::string& end, 
 							 unsigned short end_length)
+{
+	Drawhelper(x, y, text, format, color, length, max, end, end_length, -1);
+	Drawhelper(x, y, text, format, color, length, max, end, end_length, 1);
+}
+
+void glArchivItem_Font::Drawhelper(short x, 
+							 short y, 
+							 const std::string& text, 
+							 unsigned int format, 
+							 unsigned int color, 
+							 unsigned short length, 
+							 unsigned short max, 
+							 const std::string& end, 
+							 unsigned short end_length, 
+							 int layer)
 {
 	if(!_font)
 		initFont();
@@ -97,7 +111,6 @@ void glArchivItem_Font::Draw(short x,
 		end_length = (unsigned short)end.length();
 
 	bool enable_end;
-
 
 	unsigned short text_max = max;
 	unsigned short text_width = getWidth(text, length, &text_max);
@@ -180,7 +193,7 @@ void glArchivItem_Font::Draw(short x,
 				x = c % 16;
 				y = c / 16;
 
-				_font->Draw(cx, cy, _charwidths[c], dy, x*(dx+2)+1, y*(dy+2)+1, _charwidths[c], dy, color, (GetAlpha(color) << 24) | 0x00FFFFFF);
+				_font->Draw(cx, cy, _charwidths[c], dy, x*(dx+2)+1, y*(dy+2)+1, _charwidths[c], dy, color, (GetAlpha(color) << 24) | 0x00FFFFFF, layer);
 				cx += _charwidths[c];
 			}
 		}
@@ -441,12 +454,12 @@ void glArchivItem_Font::initFont()
 		const glArchivItem_Bitmap_Player *c = dynamic_cast<const glArchivItem_Bitmap_Player *>(get(i));
 		if(c)
 		{
-			c->print(buffer, w, h, libsiedler2::FORMAT_RGBA, GetPalette(0), 132, x, y);
+			c->print(buffer, w, h, libsiedler2::FORMAT_RGBA, GetPalette(6), 128, x, y);
 			_charwidths[i] = c->getWidth();
 		}
 		x += dx+2;
 	}
 
-	_font->create(w, h, buffer, w, h, libsiedler2::FORMAT_RGBA, GetPalette(0), 132);
+	_font->create(w, h, buffer, w, h, libsiedler2::FORMAT_RGBA, GetPalette(6), 128);
 	_font->setFilter(GL_LINEAR);
 }

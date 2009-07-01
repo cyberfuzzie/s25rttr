@@ -1,4 +1,4 @@
-// $Id: glArchivItem_Bitmap_Player.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: glArchivItem_Bitmap_Player.h 5156 2009-07-01 17:35:43Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -31,7 +31,7 @@ public:
 	/// Kopierkonstruktor von @p ArchivItem_Bitmap_Player.
 	glArchivItem_Bitmap_Player(const glArchivItem_Bitmap_Player *item) : baseArchivItem_Bitmap(item), baseArchivItem_Bitmap_Player(item), glArchivItem_Bitmap(item), ptexture(0) {}
 
-	void Draw(short dst_x, short dst_y, short dst_w = 0, short dst_h = 0, short src_x = 0, short src_y = 0, short src_w = 0, short src_h = 0, const unsigned player_color = 0xFFFFFFFF, const unsigned color = 0xFFFFFFFF);
+	void Draw(short dst_x, short dst_y, short dst_w = 0, short dst_h = 0, short src_x = 0, short src_y = 0, short src_w = 0, short src_h = 0, const unsigned player_color = 0xFFFFFFFF, const unsigned color = 0xFFFFFFFF, int only_player = 0);
 
 	void setFilter(unsigned int filter);
 

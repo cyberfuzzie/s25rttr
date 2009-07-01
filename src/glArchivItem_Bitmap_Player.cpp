@@ -1,4 +1,4 @@
-// $Id: glArchivItem_Bitmap_Player.cpp 5098 2009-06-24 17:09:39Z FloSoft $
+// $Id: glArchivItem_Bitmap_Player.cpp 5156 2009-07-01 17:35:43Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -34,7 +34,7 @@
 	static char THIS_FILE[] = __FILE__;
 #endif
 
-void glArchivItem_Bitmap_Player::Draw(short dst_x, short dst_y, short dst_w, short dst_h, short src_x, short src_y, short src_w, short src_h, const unsigned player_color, const unsigned color)
+void glArchivItem_Bitmap_Player::Draw(short dst_x, short dst_y, short dst_w, short dst_h, short src_x, short src_y, short src_w, short src_h, const unsigned player_color, const unsigned color, int only_player)
 {
 	if(texture == 0 || ptexture == 0)
 		GenerateTexture();
@@ -52,25 +52,31 @@ void glArchivItem_Bitmap_Player::Draw(short dst_x, short dst_y, short dst_w, sho
 
 	glEnable(GL_TEXTURE_2D);
 
-	glColor4ub( GetRed(color), GetGreen(color), GetBlue(color),  GetAlpha(color));
-	glBindTexture(GL_TEXTURE_2D, texture);
+	if(only_player <= 0)
+	{
+		glColor4ub( GetRed(color), GetGreen(color), GetBlue(color),  GetAlpha(color));
+		glBindTexture(GL_TEXTURE_2D, texture);
 
-	glBegin(GL_QUADS);
-	DrawVertex( (float)(dst_x-nx),         (float)(dst_y-ny),         (float)src_x,         (float)src_y);
-	DrawVertex( (float)(dst_x-nx),         (float)(dst_y-ny + dst_h), (float)src_x,         (float)(src_y+src_h));
-	DrawVertex( (float)(dst_x-nx + dst_w), (float)(dst_y-ny + dst_h), (float)(src_x+src_w), (float)(src_y+src_h));
-	DrawVertex( (float)(dst_x-nx + dst_w), (float)(dst_y-ny),         (float)(src_x+src_w), (float)src_y);
-	glEnd();
+		glBegin(GL_QUADS);
+		DrawVertex( (float)(dst_x-nx),         (float)(dst_y-ny),         (float)src_x,         (float)src_y);
+		DrawVertex( (float)(dst_x-nx),         (float)(dst_y-ny + dst_h), (float)src_x,         (float)(src_y+src_h));
+		DrawVertex( (float)(dst_x-nx + dst_w), (float)(dst_y-ny + dst_h), (float)(src_x+src_w), (float)(src_y+src_h));
+		DrawVertex( (float)(dst_x-nx + dst_w), (float)(dst_y-ny),         (float)(src_x+src_w), (float)src_y);
+		glEnd();
+	}
 
-	glColor4ub( GetRed(player_color), GetGreen(player_color), GetBlue(player_color),  GetAlpha(player_color));
-	glBindTexture(GL_TEXTURE_2D, ptexture);
+	if(only_player >= 0)
+	{
+		glColor4ub( GetRed(player_color), GetGreen(player_color), GetBlue(player_color),  GetAlpha(player_color));
+		glBindTexture(GL_TEXTURE_2D, ptexture);
 
-	glBegin(GL_QUADS);
-	DrawVertex( (float)(dst_x-nx),         (float)(dst_y-ny),         (float)src_x,         (float)src_y);
-	DrawVertex( (float)(dst_x-nx),         (float)(dst_y-ny + dst_h), (float)src_x,         (float)(src_y+src_h));
-	DrawVertex( (float)(dst_x-nx + dst_w), (float)(dst_y-ny + dst_h), (float)(src_x+src_w), (float)(src_y+src_h));
-	DrawVertex( (float)(dst_x-nx + dst_w), (float)(dst_y-ny),         (float)(src_x+src_w), (float)src_y);
-	glEnd();
+		glBegin(GL_QUADS);
+		DrawVertex( (float)(dst_x-nx),         (float)(dst_y-ny),         (float)src_x,         (float)src_y);
+		DrawVertex( (float)(dst_x-nx),         (float)(dst_y-ny + dst_h), (float)src_x,         (float)(src_y+src_h));
+		DrawVertex( (float)(dst_x-nx + dst_w), (float)(dst_y-ny + dst_h), (float)(src_x+src_w), (float)(src_y+src_h));
+		DrawVertex( (float)(dst_x-nx + dst_w), (float)(dst_y-ny),         (float)(src_x+src_w), (float)src_y);
+		glEnd();
+	}
 }
 
 void glArchivItem_Bitmap_Player::GenerateTexture(void)

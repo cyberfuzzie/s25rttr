@@ -1,4 +1,4 @@
-// $Id: glArchivItem_Font.h 5155 2009-07-01 15:37:53Z FloSoft $
+// $Id: glArchivItem_Font.h 5156 2009-07-01 17:35:43Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -74,6 +74,8 @@ public:
 
 private:
 	void initFont();
+	void Drawhelper(short x, short y, const std::string& text, unsigned int format, unsigned int color = COLOR_WHITE, unsigned short length = 0, unsigned short max = 0xFFFF, const std::string& end = "...", unsigned short end_length = 0, int layer = 0);
+
 	glArchivItem_Bitmap_Player *_font;
 	unsigned int _charwidths[256];
 };

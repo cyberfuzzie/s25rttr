@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 5127 2009-06-26 21:01:58Z Demophobie $
+### $Id: CMakeLists.txt 5152 2009-07-01 06:33:32Z FloSoft $
 ################################################################################
 
 INCLUDE(FindBZip2)
@@ -79,7 +79,7 @@ SET(SOURCES_INGAMEWINDOWS
     iwChat.cpp             iwChat.h
     iwDirectIPConnect.cpp  iwDirectIPConnect.h
     iwDemolishBuilding.cpp iwDemolishBuilding.h
-    iwDiplomacy.cpp	iwDiplomacy.h
+    iwDiplomacy.cpp	   iwDiplomacy.h
     iwDirectIPCreate.cpp   iwDirectIPCreate.h
     iwDistribution.cpp     iwDistribution.h
     iwEnhancements.cpp     iwEnhancements.h
@@ -99,7 +99,7 @@ SET(SOURCES_INGAMEWINDOWS
     iwOptionsWindow.cpp    iwOptionsWindow.h
     iwPlayReplay.cpp       iwPlayReplay.h
     iwPostWindow.cpp       iwPostWindow.h
-    iwTextfile.cpp           iwTextfile.h
+    iwTextfile.cpp         iwTextfile.h
     iwRoadWindow.cpp       iwRoadWindow.h
     iwSave.cpp             iwSave.h
     iwSkipGFs.cpp          iwSkipGFs.h
@@ -109,6 +109,7 @@ SET(SOURCES_INGAMEWINDOWS
     iwWares.cpp            iwWares.h
     iwSurrender.cpp	   iwSurrender.h
     iwStatistics.cpp	   iwStatistics.h
+    iwHarborBuilding.cpp   iwHarborBuilding.h
     )
 
 SET(SOURCES_OTHER
@@ -139,7 +140,7 @@ SET(SOURCES_OTHER
     GameManager.cpp           GameManager.h
     GameMessage.cpp           GameMessage.h
     GameMessageInterface.cpp  GameMessageInterface.h
-    GameCommands.cpp		  GameCommands.h
+    GameCommands.cpp          GameCommands.h
     GameObject.cpp            GameObject.h
     GamePlayerInfo.cpp        GamePlayerInfo.h
     GameProtocol.h
@@ -209,6 +210,7 @@ SET(SOURCES_OTHER
     noRoadNode.cpp            noRoadNode.h
     noShipBuildingSite.cpp noShipBuildingSite.h
     noSign.cpp                noSign.h
+    noShip.cpp                noShip.h
     noSkeleton.cpp            noSkeleton.h
     noStaticObject.cpp        noStaticObject.h
     noTree.cpp                noTree.h
@@ -216,12 +218,13 @@ SET(SOURCES_OTHER
     noDisappearingMapEnvObject.cpp noDisappearingMapEnvObject.h
     nobStorehouse.cpp
     noBaseBuilding.cpp
+    nobHarborBuilding.cpp     nobHarborBuilding.h
     nobBaseMilitary.cpp       nobBaseMilitary.h
     nobBaseWarehouse.cpp      nobBaseWarehouse.h
     nobHQ.cpp                 nobHQ.h
     nobMilitary.cpp           nobMilitary.h
     nobUsual.cpp              nobUsual.h
-    nobShipYard.cpp  nobShipYard.h
+    nobShipYard.cpp           nobShipYard.h
     nofActiveSoldier.cpp      nofActiveSoldier.h
     nofAggressiveDefender.cpp nofAggressiveDefender.h
     nofArmorer.cpp            nofArmorer.h

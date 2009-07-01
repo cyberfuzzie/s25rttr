@@ -31,7 +31,7 @@ class noShip : public noMovable
 	/// Was macht das Schiff gerade?
 	enum State
 	{
-		STATE_IDLE = 0, /// Schiff hat nix zu tun und hängt irgendwo an der Küste rum 
+		STATE_IDLE = 0 /// Schiff hat nix zu tun und hängt irgendwo an der Küste rum 
 	} state;
 
 private:

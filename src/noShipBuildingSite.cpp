@@ -73,7 +73,7 @@ progress(sgd->PopUnsignedChar())
 const unsigned PROGRESS_PARTS[3] =
 { 4, 2, 3};
 
-const unsigned TOTAL_PROGRESS = PROGRESS_PARTS[0] + PROGRESS_PARTS[1] + PROGRESS_PARTS[2];
+//const unsigned TOTAL_PROGRESS = PROGRESS_PARTS[0] + PROGRESS_PARTS[1] + PROGRESS_PARTS[2];
 
 void noShipBuildingSite::Draw(int x, int y)
 {	

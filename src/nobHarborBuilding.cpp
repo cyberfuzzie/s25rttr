@@ -121,7 +121,7 @@ void nobHarborBuilding::StartExpedition()
 		if(expedition.builder)
 		{
 			++real_goods.people[JOB_BUILDER];
-			goods.people[JOB_BUILDER];
+			++goods.people[JOB_BUILDER];
 			// Evtl. Abnehmer für die Figur wieder finden
 			GAMECLIENT.GetPlayer(player)->FindWarehouseForAllJobs(JOB_BUILDER);
 		}

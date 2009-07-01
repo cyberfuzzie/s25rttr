@@ -1,4 +1,4 @@
-// $Id: glArchivItem_Font.h 5157 2009-07-01 18:25:00Z FloSoft $
+// $Id: glArchivItem_Font.h 5158 2009-07-01 20:13:00Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -76,7 +76,7 @@ private:
 	void initFont();
 
 	glArchivItem_Bitmap_Player *_font;
-	unsigned int _charwidths[256];
+	unsigned short _charwidths[256];
 };
 
 #endif // !GLARCHIVITEM_FONT_H_INCLUDED

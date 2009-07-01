@@ -1,4 +1,4 @@
-// $Id: glArchivItem_Font.cpp 5157 2009-07-01 18:25:00Z FloSoft $
+// $Id: glArchivItem_Font.cpp 5158 2009-07-01 20:13:00Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -323,6 +323,8 @@ void glArchivItem_Font::GetWrapInfo(const std::string& text,
 									const unsigned short primary_width, const unsigned short secondary_width,
 									WrapInfo& wi)
 {
+	if(!_font)
+		initFont();
 	// Breite der aktuellen Zeile
 	unsigned short line_width = 0;
 	// Breite des aktuellen Wortes

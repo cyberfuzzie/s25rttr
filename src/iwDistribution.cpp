@@ -1,4 +1,4 @@
-// $Id: iwDistribution.cpp 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: iwDistribution.cpp 5153 2009-07-01 13:31:56Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -101,7 +101,7 @@ iwDistribution::iwDistribution(void)
 	group->AddText(31, 120,  60, _("Armory"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
 	progress = group->AddProgress(32, 20,  60, 200, 20, TC_GREY, 139, 138, 10);
 	// Schlosserei
-	group->AddText(33, 120, 100, _("Metalworker"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
+	group->AddText(33, 120, 100, _("Metalworks"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
 	progress = group->AddProgress(34, 20, 100, 200, 20, TC_GREY, 139, 138, 10);
 
 	// Kohlegruppe

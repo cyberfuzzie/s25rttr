@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: s25rttr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-26 08:54+0100\n"
-"PO-Revision-Date: 2009-06-26 20:18+0000\n"
+"POT-Creation-Date: 2009-06-26 22:58+0100\n"
+"PO-Revision-Date: 2009-06-29 20:51+0000\n"
 "Last-Translator: eddiek2 <eddiek2@o2.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-06-26 20:56+0000\n"
+"X-Launchpad-Export-Date: 2009-06-30 19:20+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:47
@@ -68,7 +68,7 @@ msgstr "Imię w grze"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:96
 msgid "Language:"
-msgstr "Język"
+msgstr "Język:"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:109
 msgid "Keyboard layout:"
@@ -96,7 +96,7 @@ msgstr "W oknie"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:123
 msgid "VSync:"
-msgstr "Synchronizacja pionowa"
+msgstr "Synchronizacja pionowa:"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:127
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:137
@@ -240,25 +240,29 @@ msgstr "Domyślne"
 msgid "Productivity"
 msgstr "Produktywność"
 
-#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:569
+#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:556
 msgid ""
 "Military building\n"
 " occupied"
 msgstr ""
+"Budynek wojskowy\n"
+" zajęty"
 
-#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:776
+#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:770
 msgid "Military building lost"
-msgstr ""
+msgstr "Wojskowy budynek utracony"
 
-#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:779
+#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:773
 msgid "Military building captured"
-msgstr ""
+msgstr "Wojskowy budynek przejęty"
 
-#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:1003
+#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:997
 msgid ""
 "A catapult is firing\n"
 " upon us!"
 msgstr ""
+"Ostrzał katapulty\n"
+" na nas!"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:44
 #: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:65
@@ -272,7 +276,7 @@ msgstr "Anuluj"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:70
 msgid "Playlist:"
-msgstr "Playlista"
+msgstr "Playlista:"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:76
 msgid "Add"
@@ -391,7 +395,7 @@ msgstr "Ping"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:75
 msgid "Past player"
-msgstr "Przeszły gracz"
+msgstr "Były gracz"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:83
 msgid "Start game"
@@ -423,7 +427,7 @@ msgstr "Pokaż ustawienia..."
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:103
 msgid "Demolition prohibition:"
-msgstr "Zakaz wyburzania"
+msgstr "Zakaz wyburzania:"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:106
 msgid "When attack"
@@ -455,7 +459,7 @@ msgstr "Mgła wojny - wszystko odkryte"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:118
 msgid "Goods at start:"
-msgstr "Surowce na starcie"
+msgstr "Surowce na start:"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:120
 msgid "Low"
@@ -488,7 +492,7 @@ msgstr "Totalna dominacja"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:132
 msgid "Speed:"
-msgstr "Prędkość"
+msgstr "Prędkość:"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:134
 msgid "Very slow"
@@ -785,11 +789,11 @@ msgstr "Grane"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:145
 msgid "Mapfile: "
-msgstr ""
+msgstr "Plik mapy: "
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:344
 msgid "Incomplete message was received!"
-msgstr "Otrzymano niekompletną wiadomość"
+msgstr "Otrzymano niekompletną wiadomość!"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:405
 #, c-format
@@ -814,7 +818,7 @@ msgstr "Menu gry"
 
 #: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:76
 msgid "Load 'ReadMe' file"
-msgstr "Wczytaj plik CzytajTo"
+msgstr "Wczytaj plik 'CzytajTo'"
 
 #: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:80
 msgid "Load game!"
@@ -838,25 +842,25 @@ msgstr "Minimapa"
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:97
 msgid "treaty of alliance"
-msgstr ""
+msgstr "sojusz"
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:98
 msgid "non-aggression pact"
-msgstr ""
+msgstr "pakt o nieagresji"
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:108
 #, c-format
 msgid "The player '%s' offers you a %s."
-msgstr ""
+msgstr "Gracz '%s' oferuje ci %s."
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:113
 msgid "Duration: Forever"
-msgstr ""
+msgstr "Czas trwania: Wiecznie"
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:115
 #, c-format
 msgid "Duration: %u GF (%s)"
-msgstr ""
+msgstr "Czas trwania: %u GF (%s)"
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:127
 #, c-format
@@ -864,16 +868,18 @@ msgid ""
 "The player '%s' want to cancel the '%s' between you both primaturely. Do you "
 "agree?"
 msgstr ""
+"Gracz '%s' chce przedwcześnie anulować '%s' zawarty między wami. Zgadzasz "
+"się?"
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:150
 #, c-format
 msgid "The %s between player '%s' and you has been concluded."
-msgstr ""
+msgstr "%s pomiędzy tobą i graczem '%s' został zawarty."
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:153
 #, c-format
 msgid "The %s between player '%s' and you has been cancelled."
-msgstr ""
+msgstr "%s pomiędzy tobą i graczem '%s' został anulowany."
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:63
 msgid "Filename"
@@ -1072,7 +1078,7 @@ msgstr "Koniec odtwarzanej powtórki (GF: %u)"
 
 #: /storage/RTTR/svn/trunk/src/nofBuildingWorker.cpp:374
 msgid "This mine is exhausted"
-msgstr ""
+msgstr "Wyczerpano złoża"
 
 #: /storage/RTTR/svn/trunk/src/iwDemolishBuilding.cpp:44
 msgid "Demolish?"
@@ -1080,7 +1086,7 @@ msgstr "Zniszczyć?"
 
 #: /storage/RTTR/svn/trunk/src/nofAttacker.cpp:453
 msgid "We are under attack!"
-msgstr ""
+msgstr "Jesteśmy atakowani!"
 
 #: /storage/RTTR/svn/trunk/src/GameClient.cpp:565
 #, c-format
@@ -1158,7 +1164,7 @@ msgstr "Opcje ataku"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:224
 msgid "Attack not possible."
-msgstr "Atak niemożliwy"
+msgstr "Atak niemożliwy."
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:231
 msgid "Less attackers"
@@ -1206,7 +1212,7 @@ msgstr "Dołącz do gry"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:54
 msgid "IP Address of Host:"
-msgstr "Adres IP hosta"
+msgstr "Adres IP hosta:"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:58
 msgid "Server-Port:"
@@ -1214,7 +1220,7 @@ msgstr "Serwer-Port:"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:62
 msgid "Password (if needed):"
-msgstr "Hasło (jeśli wymagane)"
+msgstr "Hasło (jeśli wymagane):"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:135
 msgid "Invalid port. The valid port-range is 1 to 65535!"
@@ -1325,12 +1331,16 @@ msgid ""
 "No more stones\n"
 " in range"
 msgstr ""
+"Brak kamieni\n"
+" w zasięgu"
 
 #: /storage/RTTR/svn/trunk/src/nofFarmhand.cpp:176
 msgid ""
 "No more fishes\n"
 " in range"
 msgstr ""
+"Brak ryb\n"
+" w zasięgu"
 
 #: /storage/RTTR/svn/trunk/src/iwWares.cpp:167
 msgid "Next page"
@@ -1459,15 +1469,15 @@ msgstr "Propozycja paktu o nieagresji"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:243
 msgid "Short-run"
-msgstr ""
+msgstr "Krótki okres czasu"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:244
 msgid "Medium-term"
-msgstr ""
+msgstr "Średni okres czasu"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:245
 msgid "Long-run"
-msgstr ""
+msgstr "Długi okres czasu"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:265
 msgid "Contract type:"
@@ -1479,19 +1489,19 @@ msgstr "Do gracza:"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:269
 msgid "Duration:"
-msgstr ""
+msgstr "Czas trwania:"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:283
 msgid "Eternal"
-msgstr ""
+msgstr "Wieczny"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:285
 msgid "Confirm"
-msgstr ""
+msgstr "Potwierdź"
 
 #: /storage/RTTR/svn/trunk/src/nofScout_LookoutTower.cpp:81
 msgid "Lookout-tower occupied"
-msgstr ""
+msgstr "Wieża obserwacyjna zajęta"
 
 #: /storage/RTTR/svn/trunk/src/dskDirectIP.cpp:59
 msgid "Create Game"
@@ -1567,7 +1577,7 @@ msgstr "Dół"
 
 #: /storage/RTTR/svn/trunk/src/GameWorldGame.cpp:552
 msgid "Lost land by this building"
-msgstr ""
+msgstr "Stracono terytorium przez ten budynek."
 
 #: /storage/RTTR/svn/trunk/src/iwBuildingSite.cpp:57
 msgid "Order of building site"
@@ -1611,11 +1621,11 @@ msgstr "Obszary przygraniczne"
 
 #: /storage/RTTR/svn/trunk/src/iwBuildOrder.cpp:68
 msgid "Sequence of given order"
-msgstr "Kolejność danego zlecenia"
+msgstr "Według kolejności danego zlecenia"
 
 #: /storage/RTTR/svn/trunk/src/iwBuildOrder.cpp:69
 msgid "After the following order"
-msgstr "Po następującym zleceniu"
+msgstr "Według następującej kolejności"
 
 #: /storage/RTTR/svn/trunk/src/dskMainMenu.cpp:72
 msgid "Singleplayer"
@@ -1675,23 +1685,23 @@ msgstr "Rejestracja udana!"
 
 #: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:496
 msgid "Found ironore"
-msgstr ""
+msgstr "Znaleziono rudę żelaza"
 
 #: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:498
 msgid "Found gold"
-msgstr ""
+msgstr "Znaleziono złoto"
 
 #: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:500
 msgid "Found coal"
-msgstr ""
+msgstr "Znaleziono węgiel"
 
 #: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:502
 msgid "Found granite"
-msgstr ""
+msgstr "Znaleziono granit"
 
 #: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:504
 msgid "Found water"
-msgstr ""
+msgstr "Znaleziono wodę"
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:46
 msgid "Statistics"
@@ -1854,7 +1864,7 @@ msgstr "Prosze wpisać nazwę gry"
 
 #: /storage/RTTR/svn/trunk/src/nobStorehouse.cpp:59
 msgid "New storehouse finished"
-msgstr ""
+msgstr "Ukończono budowę magazynu"
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:252
 msgid ""
@@ -1928,13 +1938,45 @@ msgstr ""
 "żołnierzy. Pamiętaj jednak, że bez złotych monet żołnierze nie mogą "
 "trenować, a co za tym idzie - zwiększać swoich umiejętności."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:346
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:334
+msgid ""
+"The quarrying of stone in a granite mine guarantees the supply of stone for "
+"buildings. However, eben a granite mine has to feed its workers."
+msgstr ""
+"Wydobywanie kamieni w kopalni granitu gwarantuje zaopatrzenie budynków w ten "
+"surowiec. Jednakże, nawet kopalnia granitu musi karmić swoich pracowników."
+
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:342
+msgid ""
+"The mining of coal supports the metalworks and smithy. This hard work "
+"requires an adequate supply of food."
+msgstr ""
+"Wydobywany węgiel zaopatruje zakłady metalowe oraz kuźnię. Ta ciężka praca "
+"wymaga adekwatnego zaopatrzenia w żywność."
+
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:349
+msgid ""
+"Deep within the mountains, miners dig for iron ore. They will obviously need "
+"a lot of food for the strenuous work."
+msgstr ""
+"Wysoko w górach, górnicy wydobywają rudę żelaza. Będą oni potrzebowali wiele "
+"jedzenia przy tej wyczerpującej pracy."
+
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:356
+msgid ""
+"A gold mine allows you to prospect for valuable gold deposits. For this, it "
+"is necessary to ensure that the miners are provided with plenty of food."
+msgstr ""
+"Kopalnia złota pozwala ci pozyskiwać cenne złoto. Niezbędne do tego jest "
+"zapewnienie górnikom mnóstwa jedzenia."
+
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:365
 msgid ""
 "From the lookout tower you can see far into previously unexplored lands."
 msgstr ""
 "Z wieży obserwacyjnej możesz obserwować odległe, niezbadane dotąd tereny."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:355
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:374
 msgid ""
 "Thanks to its immense strength, the catapults represents an effective weapon "
 "against enemy military buildings."
@@ -1942,7 +1984,7 @@ msgstr ""
 "Dzięki swej ogromnej sile, katapulta jest efektywna bronią przeciwko wrogim "
 "budynkom militarnym."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:362
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:381
 msgid ""
 "A woodcutter provides the sawmill with logs. A forester is able to replant "
 "the depleted forest."
@@ -1950,7 +1992,7 @@ msgstr ""
 "Drwal zaopatruje tartak w kłody. Leśnik potrafi zasadzić nowe drzewa na "
 "miejsce wyciętych."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:369
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:388
 msgid ""
 "The fish man is responsible for finding water rich in fish. His fish feed a "
 "great many miners."
@@ -1958,7 +2000,7 @@ msgstr ""
 "Rybak odpowiedzialny jest za znalezienie wody obfitej w ryby. Złowione przez "
 "niego ryby zapęłnią żołądki wielu górników."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:375
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:394
 msgid ""
 "The stonemason works the stone near his quarry into bricks. These are needed "
 "mainly for building houses and as ammunition for catapults."
@@ -1967,7 +2009,7 @@ msgstr ""
 "wykorzystywany jest głównie do budowania domów oraz jako amunicja do "
 "katapult."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:383
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:402
 msgid ""
 "Within his area, the forester ensures the survival of the forest. He plants "
 "all types of trees."
@@ -1975,19 +2017,19 @@ msgstr ""
 "W tej okolicy, leśnik może zapewnić przetrwanie lasu. Potrafi sadzić "
 "wszystkie rodzaje drzew."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:390
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:409
 msgid ""
 "The butcher processes the livestock delivered into nutritious ham on which "
 "you miners are fed."
 msgstr ""
-"Rzeźnik przetwarza otrzymane zwierzęta hodowlane w mięso, którym karmieni sa "
+"Rzeźnik przetwarza otrzymane zwierzęta hodowlane w mięso, którym karmieni są "
 "później górnicy."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:397
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:416
 msgid "Meat the hunter acquires is used to feed the miners."
 msgstr "Zdobywane przez myśliwego mięso stanowi pokarm dla górników."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:402
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:421
 msgid ""
 "The brewer produces fine beer from grain and water. This drink is needed to "
 "fill the soldiers with courage."
@@ -1995,7 +2037,7 @@ msgstr ""
 "Piwowar warzy godne piwo z ziaren zboża oraz wody. Ten napój jest potrzebny "
 "do utrzymania u twych żołnierzy stałego poziomu odwagi."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:409
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:428
 msgid ""
 "The armory produces swords and strong shields. This equipment is vital for "
 "your soldiers."
@@ -2003,7 +2045,7 @@ msgstr ""
 "W zbrojowni produkuje się miecze oraz mocne tarcze. Wyposażenie to jest "
 "niezbędne dla twoich żołnierzy."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:415
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:434
 msgid ""
 "The countless tools which your workers need are made in the metalworks. This "
 "requires boards and iron."
@@ -2012,7 +2054,7 @@ msgstr ""
 "produkowane są w zakładach metalowych. Do ich produkcji potrzebne są żelazo "
 "oraz deski."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:422
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:441
 msgid ""
 "Raw iron ore is smelted in the iron smelters with the help of coal and raw "
 "iron. The processed iron is then used to making weapons (in the Armory) and "
@@ -2022,7 +2064,7 @@ msgstr ""
 "Otrzymane w ten sposób żelazo używane jest do produkcji broni (w zbrojowni) "
 "oraz narzędzi (w zakładach metalowych)."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:434
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:453
 msgid ""
 "Grain and water are needed for rearing pigs. The meat thus obtained can then "
 "be processed by a butcher."
@@ -2030,7 +2072,7 @@ msgstr ""
 "Zboże i woda są potrzebne do tuczenia świń. Wyhodowane w ten sposób "
 "zwierzęta mogą zostać później wykorzystane przez rzeźnika."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:441
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:460
 msgid ""
 "The storehouse can help reduce long transportation journeys and is suited to "
 "the temporary storage of merchandise and inhabitants. You can release "
@@ -2044,7 +2086,7 @@ msgstr ""
 "magazynu może zostać wyłączona. Aby to zrobić kliknij na odpowiedniej ikonie "
 "przy wybranym towarze lub symbolu pracy."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:460
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:479
 msgid ""
 "The grain is ground in the windmill. The flour from the windmill is later "
 "used at the bakery to bake bread."
@@ -2052,7 +2094,7 @@ msgstr ""
 "Zboże jest mielone w młynie. Otrzymywana w ten sposób mąka jest używana "
 "później w piekarnie do pieczenia chleba."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:467
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:486
 msgid ""
 "The flour produced at the windmill can be combined with water in the bakery "
 "to make oven-fresh bread. It's your miners' favorite!"
@@ -2060,7 +2102,7 @@ msgstr ""
 "Produkowana w młynie mąka jest w piekarni mieszana z wodą, aby potem wypiec "
 "z niej świeży chleb. Twoi górnicy za nim przepadają!"
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:475
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:494
 msgid ""
 "The carpenter turns the woodcutter's logs into made-to-measure planks. There "
 "form the basic for building houses and ships."
@@ -2068,7 +2110,7 @@ msgstr ""
 "Cieśla zamienia kłody drwala w deski. Te z kolei stanowią podstawę budowli "
 "domów oraz statków."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:483
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:502
 msgid ""
 "The mint is responsible for producing valuable gold coins. These precious "
 "objects are produced using coal and gold."
@@ -2076,13 +2118,13 @@ msgstr ""
 "Mennica jest odpowiedzialna za produkcję cennych złotych monet. Te jakże "
 "kochane przedmioty produkowane są przy użyciu złota i węgla."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:490
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:509
 msgid ""
 "A well supplies water to the bakery, brewery, donkey breeder and pig farm."
 msgstr ""
 "Studnia zapewnia wodę dla piekarni, browaru, hodowli osłów oraz farmy świń."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:496
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:515
 msgid ""
 "It is possible to build small rowing boats as well as huge cargo ships in a "
 "shipyard. The boards required for this are skillfully worked by shipwrights."
@@ -2090,7 +2132,7 @@ msgstr ""
 "W stoczni możesz tworzyć zarówno małe łódki jak i olbrzymie transportowce. "
 "Niezbędne do ich budowy deski są pracowicie obrabiane przez szkutnika."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:505
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:524
 msgid ""
 "The farmer plants and harvests grain in the surrounding fields. A windmill "
 "then processes the harvested grain into flour or can be used to feed the "
@@ -2099,7 +2141,7 @@ msgstr ""
 "Rolnik sadzi i kosi zboże. Zboże jest przetwarzane w młynie w mąkę, lub może "
 "być użyte do karmienia świń."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:513
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:532
 msgid ""
 "The pack donkeys bred here are used to transport your merchandise more "
 "efficiently. They are reared on water and grain."

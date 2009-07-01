@@ -2,15 +2,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Siedler II.5 RttR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-26 08:54+0100\n"
-"PO-Revision-Date: 2009-06-26 19:40+0000\n"
+"POT-Creation-Date: 2009-06-26 22:58+0100\n"
+"PO-Revision-Date: 2009-06-27 09:52+0000\n"
 "Last-Translator: Siedler II.5 - Return To The Roots Team <sf-"
 "team@siedler25.de>\n"
 "Language-Team: Siedler II.5 RttR <sf-team@siedler25.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-06-26 20:56+0000\n"
+"X-Launchpad-Export-Date: 2009-06-30 19:20+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: FINLAND\n"
 "X-Poedit-Language: Finnish\n"
@@ -25,59 +25,59 @@ msgstr "Postitoimisto"
 #: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:75
 #: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:223
 msgid "No letters!"
-msgstr ""
+msgstr "Ei kirjeitä!"
 
 #: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:246
 msgid "Message"
-msgstr ""
+msgstr "Viesti"
 
 #: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:246
 msgid "of"
-msgstr ""
+msgstr "/"
 
 #: /storage/RTTR/svn/trunk/src/languages.cpp:69
 msgid "System language"
-msgstr ""
+msgstr "Järjestelmän kieli"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:70
 msgid "Back"
-msgstr "Palaa"
+msgstr "Takaisin"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:73
 msgid "Options"
-msgstr "Asetukset"
+msgstr "Valinnat"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:77
 msgid "Enhancements"
-msgstr ""
+msgstr "Ehostukset"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:80
 msgid "Common"
-msgstr ""
+msgstr "Yleiset"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:82
 msgid "Graphics"
-msgstr ""
+msgstr "Grafiikka"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:84
 msgid "Sound/Music"
-msgstr ""
+msgstr "Ääni/musiikki"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:92
 msgid "Name in Game:"
-msgstr ""
+msgstr "Nimi pelissä:"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:96
 msgid "Language:"
-msgstr ""
+msgstr "Kieli:"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:109
 msgid "Keyboard layout:"
-msgstr ""
+msgstr "Näppäimistöasettelu:"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:110
 msgid "Readme"
-msgstr ""
+msgstr "Lueminut"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:113
 msgid "Resolution:"
@@ -85,62 +85,62 @@ msgstr "Resoluutio:"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:117
 msgid "Mode:"
-msgstr "Moodi:"
+msgstr "Tila:"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:119
 msgid "Fullscreen"
-msgstr ""
+msgstr "Koko näyttö"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:120
 msgid "Windowed"
-msgstr ""
+msgstr "Ikkunassa"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:123
 msgid "VSync:"
-msgstr ""
+msgstr "Pystypiirtoajoitus:"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:127
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:137
 msgid "not supported"
-msgstr ""
+msgstr "ei tuettu"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:129
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:139
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:173
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:182
 msgid "On"
-msgstr ""
+msgstr "Käytössä"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:130
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:140
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:174
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:183
 msgid "Off"
-msgstr "Pois"
+msgstr "Pois käytöstä"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:133
 msgid "Vertex Buffer Objects:"
-msgstr ""
+msgstr "Vertex Buffer Objectit:"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:143
 msgid "Graphics Driver"
-msgstr ""
+msgstr "Grafiikka-ajuri"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:157
 msgid "Sounddriver"
-msgstr ""
+msgstr "Ääniajuri"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:171
 msgid "Music"
-msgstr ""
+msgstr "Musiikki"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:180
 msgid "Effects"
-msgstr ""
+msgstr "Tehosteet"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:189
 msgid "Music player"
-msgstr ""
+msgstr "Musiikkisoitin"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:449
 msgid "Keyboard layout"
@@ -167,7 +167,7 @@ msgstr "Pihtejä"
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:60
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:61
 msgid "Less often"
-msgstr ""
+msgstr "Harvemmin"
 
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:50
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:51
@@ -182,7 +182,7 @@ msgstr ""
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:60
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:61
 msgid "More often"
-msgstr ""
+msgstr "Useammin"
 
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:51
 msgid "Axe"
@@ -239,27 +239,35 @@ msgstr "Palauta oletusarvot"
 
 #: /storage/RTTR/svn/trunk/src/iwBuildingProductivities.cpp:82
 msgid "Productivity"
-msgstr "Rakennukset"
+msgstr "Tuottavuus"
 
-#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:569
+#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:556
 msgid ""
 "Military building\n"
 " occupied"
 msgstr ""
+"Armeijan rakennus\n"
+"miehitetty"
 
-#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:776
+#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:770
 msgid "Military building lost"
 msgstr ""
+"Armeijan rakennus\r\n"
+"menetetty"
 
-#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:779
+#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:773
 msgid "Military building captured"
 msgstr ""
+"Armeijan rakennus\r\n"
+"vallattu"
 
-#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:1003
+#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:997
 msgid ""
 "A catapult is firing\n"
 " upon us!"
 msgstr ""
+"Katapultti ampuu\n"
+"meitä kohti!"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:44
 #: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:65
@@ -269,61 +277,61 @@ msgstr "OK"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:45
 msgid "Abort"
-msgstr ""
+msgstr "Keskeytä"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:70
 msgid "Playlist:"
-msgstr ""
+msgstr "Soittolista:"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:76
 msgid "Add"
-msgstr ""
+msgstr "Lisää"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:77
 msgid "Remove"
-msgstr ""
+msgstr "Poista"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:78
 msgid "Save"
-msgstr ""
+msgstr "Tallenna"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:79
 msgid "Load"
-msgstr ""
+msgstr "Lataa"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:82
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:199
 msgid "Add track"
-msgstr ""
+msgstr "Lisää kappale"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:83
 msgid "Remove track"
-msgstr ""
+msgstr "Poista kappale"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:84
 msgid "Upwards"
-msgstr ""
+msgstr "Ylemmäs"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:85
 msgid "Downwards"
-msgstr ""
+msgstr "Alemmas"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:87
 msgid "Less repeats"
-msgstr ""
+msgstr "Vähemmän toistoja"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:88
 msgid "More repeats"
-msgstr ""
+msgstr "Lisää toistoja"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:89
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:257
 msgid "Playback in this order"
-msgstr ""
+msgstr "Toista järjestyksessä"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:126
 msgid "Specify the playlist name"
-msgstr ""
+msgstr "Anna soittolistan nimi"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:141
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:165
@@ -335,64 +343,64 @@ msgstr ""
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:777
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:791
 msgid "Error"
-msgstr ""
+msgstr "Virhe"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:141
 msgid "You are not allowed to delete the standard playlist!"
-msgstr ""
+msgstr "Et voi poistaa oletussoittolistaa!"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:165
 msgid "You are not allowed to change the standard playlist!"
-msgstr ""
+msgstr "Et voi muuttaa oletussoittolistaa!"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:171
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:320
 msgid "The specified file couldn't be saved!"
-msgstr ""
+msgstr "Määriteltyä tiedostoa ei voitu tallentaa!"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:191
 msgid "The specified file couldn't be loaded!"
-msgstr ""
+msgstr "Määriteltyä tiedostoa ei voitu ladata!"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:257
 msgid "Random playback"
-msgstr ""
+msgstr "Satunnaistoisto"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:305
 msgid "The specified file couldn't be opened!"
-msgstr ""
+msgstr "Määriteltyä tiedostoa ei voitu avata!"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:60
 msgid "Player Name"
-msgstr ""
+msgstr "Pelaajan nimi"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:62
 msgid "Classification"
-msgstr ""
+msgstr "Luokitus"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:64
 msgid "Race"
-msgstr ""
+msgstr "Rotu"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:66
 msgid "Color"
-msgstr ""
+msgstr "Väri"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:68
 msgid "Team"
-msgstr ""
+msgstr "Joukkue"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:70
 msgid "Ready?"
-msgstr ""
+msgstr "Valmis?"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:72
 msgid "Ping"
-msgstr ""
+msgstr "Vasteaika"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:75
 msgid "Past player"
-msgstr ""
+msgstr "Mennyt pelaaja"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:83
 msgid "Start game"
@@ -400,39 +408,39 @@ msgstr "Aloita peli"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:88
 msgid "Return"
-msgstr ""
+msgstr "Palaa"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:91
 msgid "Lock teams:"
-msgstr ""
+msgstr "Lukitse joukkueet:"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:93
 msgid "Shared team view"
-msgstr ""
+msgstr "Jaettu joukkuenäkymä"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:96
 msgid "Enhancements:"
-msgstr ""
+msgstr "Ehostukset:"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:97
 msgid "Change Settings..."
-msgstr ""
+msgstr "Muuta asetuksia..."
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:97
 msgid "View Settings..."
-msgstr ""
+msgstr "Näkymän asetukset..."
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:103
 msgid "Demolition prohibition:"
-msgstr ""
+msgstr "Tuhoamisen esto:"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:106
 msgid "When attack"
-msgstr ""
+msgstr "Hyökätessä"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:107
 msgid "Near frontiers"
-msgstr ""
+msgstr "Lähellä rajoja"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:110
 msgid "Exploration:"
@@ -440,36 +448,36 @@ msgstr "Kartan peitto:"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:112
 msgid "Off (all visible)"
-msgstr ""
+msgstr "Pois (näytä kaikki)"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:113
 msgid "Classic (Settlers 2)"
-msgstr ""
+msgstr "Perinteinen (Settlers II)"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:114
 msgid "Fog of War"
-msgstr ""
+msgstr "Rajoitettu näkyvyys"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:115
 msgid "FoW - all explored"
-msgstr ""
+msgstr "Rajoitettu näkyvyys (näytä kaikki)"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:118
 msgid "Goods at start:"
-msgstr "Liitot:"
+msgstr "Resurssit alussa:"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:120
 msgid "Low"
-msgstr "Kansa kansaa vastaan"
+msgstr "Vähäiset"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:121
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:136
 msgid "Normal"
-msgstr "Kaikki kaikkia vastaan"
+msgstr "Tavanomaiset"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:122
 msgid "A lot"
-msgstr "Ihminen vs. tietokone"
+msgstr "Paljon"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:125
 msgid "Goals:"
@@ -489,35 +497,35 @@ msgstr "Täydellinen hallinta"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:132
 msgid "Speed:"
-msgstr ""
+msgstr "Nopeus:"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:134
 msgid "Very slow"
-msgstr ""
+msgstr "Hyvin hidas"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:135
 msgid "Slow"
-msgstr ""
+msgstr "Hidas"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:137
 msgid "Fast"
-msgstr ""
+msgstr "Nopea"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:138
 msgid "Very fast"
-msgstr ""
+msgstr "Hyvin nopea"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:153
 msgid "Map: "
-msgstr ""
+msgstr "Kartta: "
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:197
 msgid "Open"
-msgstr ""
+msgstr "Avoinna"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:202
 msgid "Closed"
-msgstr ""
+msgstr "Suljettu"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:242
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:271
@@ -529,7 +537,7 @@ msgstr "%d"
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:258
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:562
 msgid "Africans"
-msgstr ""
+msgstr "Afrikkalaiset"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:253
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:263
@@ -541,22 +549,24 @@ msgid ""
 "Game can only be started as soon as everybody has a unique color,everyone is "
 "ready and all free slots are closed."
 msgstr ""
+"Peli voidaan aloitta vasta kun kaikilla on uniikki väri, he ovat "
+"ilmoittaneet olevansa valmiita ja kaikki avoimet paikat on täytetty."
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:562
 msgid "Japaneses"
-msgstr ""
+msgstr "Japanilaiset"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:562
 msgid "Romans"
-msgstr ""
+msgstr "Roomalaiset"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:562
 msgid "Vikings"
-msgstr ""
+msgstr "Viikingit"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:777
 msgid "Lost connection to server!"
-msgstr ""
+msgstr "Yhteys palvelimelle katkesi!"
 
 #: /storage/RTTR/svn/trunk/src/iwHQ.cpp:46
 msgid "Headquarters"
@@ -568,11 +578,11 @@ msgstr "Reservi"
 
 #: /storage/RTTR/svn/trunk/src/iwHQ.cpp:64
 msgid "Less"
-msgstr ""
+msgstr "Vähemmän"
 
 #: /storage/RTTR/svn/trunk/src/iwHQ.cpp:66
 msgid "More"
-msgstr ""
+msgstr "Enemmän"
 
 #: /storage/RTTR/svn/trunk/src/iwHQ.cpp:68
 #, c-format
@@ -591,12 +601,12 @@ msgstr "Peruuta"
 #: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:78
 #: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:85
 msgid "Yes"
-msgstr ""
+msgstr "Kyllä"
 
 #: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:79
 #: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:86
 msgid "No"
-msgstr ""
+msgstr "Ei"
 
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:60
 #, c-format
@@ -609,23 +619,23 @@ msgstr "http://www.siedler25.org"
 
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:69
 msgid "Connect"
-msgstr ""
+msgstr "Yhdistä"
 
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:71
 msgid "Internet Ranking"
-msgstr ""
+msgstr "Internet-pisteytys"
 
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:73
 msgid "Add Server"
-msgstr ""
+msgstr "Lisää palvelin"
 
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:76
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:76
 msgid "Server"
-msgstr ""
+msgstr "Palvelin"
 
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:76
 msgid "Map"
@@ -638,23 +648,23 @@ msgstr "Pelaaja"
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:76
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:78
 msgid "Version"
-msgstr ""
+msgstr "Versio"
 
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:78
 msgid "Name"
-msgstr ""
+msgstr "Nimi"
 
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:78
 msgid "Points"
-msgstr ""
+msgstr "Pisteet"
 
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:315
 msgid "Lost connection to lobby!"
-msgstr ""
+msgstr "Yhteys chattiin katkesi!"
 
 #: /storage/RTTR/svn/trunk/src/iwBuildings.cpp:76
 msgid "Buildings"
-msgstr "Tuottavuus"
+msgstr "Rakennukset"
 
 #: /storage/RTTR/svn/trunk/src/dskSinglePlayer.cpp:66
 msgid "Resume last game"
@@ -662,7 +672,7 @@ msgstr "Jatka edellistä peliä"
 
 #: /storage/RTTR/svn/trunk/src/dskSinglePlayer.cpp:69
 msgid "Play Replay"
-msgstr ""
+msgstr "Toista uusinta"
 
 #: /storage/RTTR/svn/trunk/src/dskSinglePlayer.cpp:75
 msgid "Load game"
@@ -670,17 +680,19 @@ msgstr "Lataa peli"
 
 #: /storage/RTTR/svn/trunk/src/dskSinglePlayer.cpp:97
 msgid "Not available"
-msgstr ""
+msgstr "Ei saatavilla"
 
 #: /storage/RTTR/svn/trunk/src/dskSinglePlayer.cpp:97
 msgid ""
 "Singleplayer mode and AI are not yet implemented. Please use the Multiplayer "
 "mode and 'Direct IP' to create a Singleplayer game."
 msgstr ""
+"Yksinpeliä ja tekoälyä ei ole vielä kehitetty. Käytä moninpelimoodin 'Suora "
+"IP' -vaihtoehtoa yksinpelin aloittamiseksi."
 
 #: /storage/RTTR/svn/trunk/src/iwBaseWarehouse.cpp:62
 msgid "do nothing"
-msgstr "Poista varastosta"
+msgstr "Ei muutoksia"
 
 #: /storage/RTTR/svn/trunk/src/iwBaseWarehouse.cpp:64
 msgid "Take out of store"
@@ -700,45 +712,45 @@ msgstr "Keskitä"
 
 #: /storage/RTTR/svn/trunk/src/iwBaseWarehouse.cpp:106
 msgid "Demolish house"
-msgstr ""
+msgstr "Tuhoa rakennus"
 
 #: /storage/RTTR/svn/trunk/src/iwSurrender.cpp:49
 msgid "Surrender game?"
-msgstr ""
+msgstr "Antaudu pelistä?"
 
 #: /storage/RTTR/svn/trunk/src/iwSurrender.cpp:52
 #: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:104
 msgid "Surrender"
-msgstr ""
+msgstr "Antaudu"
 
 #: /storage/RTTR/svn/trunk/src/iwSurrender.cpp:54
 msgid "Destroy all buildings and surrender"
-msgstr ""
+msgstr "Tuhoa kaikki rakennukset ja antaudu"
 
 #: /storage/RTTR/svn/trunk/src/iwSurrender.cpp:56
 msgid "Don't surrender"
-msgstr ""
+msgstr "Älä antaudu"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:91
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:93
 msgid "Please wait..."
-msgstr ""
+msgstr "Odota hetki..."
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:113
 msgid "Author"
-msgstr ""
+msgstr "Laatinut"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:113
 msgid "Type"
-msgstr ""
+msgstr "Maasto"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:113
 msgid "Size"
-msgstr ""
+msgstr "Koko"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:116
 msgid "Selection of maps"
-msgstr ""
+msgstr "Karttavalinta"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:121
 msgid "Load game..."
@@ -746,23 +758,23 @@ msgstr "Lataa peli..."
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:123
 msgid "Continue"
-msgstr ""
+msgstr "Jatka"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:127
 msgid "Old maps"
-msgstr "Vanhat"
+msgstr "Vanhat kartat"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:129
 msgid "New maps"
-msgstr "Uudet"
+msgstr "Uudet kartat"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:131
 msgid "Own maps"
-msgstr "Omat"
+msgstr "Omat kartat"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:133
 msgid "Continents"
-msgstr ""
+msgstr "Mantereet"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:135
 msgid "Campaign"
@@ -774,40 +786,40 @@ msgstr "RTTR"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:139
 msgid "Other"
-msgstr ""
+msgstr "Muut"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:141
 msgid "Played"
-msgstr ""
+msgstr "Pelatut"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:145
 msgid "Mapfile: "
-msgstr ""
+msgstr "Karttatiedosto: "
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:344
 msgid "Incomplete message was received!"
-msgstr ""
+msgstr "Vastaanotettiin katkennut viesti!"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:405
 #, c-format
 msgid "%d Player"
-msgstr ""
+msgstr "%d pelaaja"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:410
 msgid "Greenland"
-msgstr ""
+msgstr "Vihertävä"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:411
 msgid "Wasteland"
-msgstr ""
+msgstr "Liejuinen"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:412
 msgid "Winter world"
-msgstr ""
+msgstr "Talvinen"
 
 #: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:58
 msgid "Game menu"
-msgstr ""
+msgstr "Pelin valikko"
 
 #: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:76
 msgid "Load 'ReadMe' file"
@@ -819,7 +831,7 @@ msgstr "Lataa peli!"
 
 #: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:84
 msgid "Save game!"
-msgstr "Lataa peli!"
+msgstr "Tallenna peli!"
 
 #: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:106
 msgid "End game"
@@ -831,29 +843,29 @@ msgstr "LueMinut!"
 
 #: /storage/RTTR/svn/trunk/src/iwMinimap.cpp:53
 msgid "Outline map"
-msgstr ""
+msgstr "Rajaa kartta"
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:97
 msgid "treaty of alliance"
-msgstr ""
+msgstr "liittosopimusta"
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:98
 msgid "non-aggression pact"
-msgstr ""
+msgstr "hyökkäämättömyyssopimusta"
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:108
 #, c-format
 msgid "The player '%s' offers you a %s."
-msgstr ""
+msgstr "Pelaaja '%s' tarjoaa sinulle %s."
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:113
 msgid "Duration: Forever"
-msgstr ""
+msgstr "Kesto: ikuisesti"
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:115
 #, c-format
 msgid "Duration: %u GF (%s)"
-msgstr ""
+msgstr "Kesto: %u PR (%s)"
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:127
 #, c-format
@@ -861,28 +873,29 @@ msgid ""
 "The player '%s' want to cancel the '%s' between you both primaturely. Do you "
 "agree?"
 msgstr ""
+"Pelaaja '%s' ei halua enää ylläpitää '%s' kanssasi. Oletko samaa mieltä?"
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:150
 #, c-format
 msgid "The %s between player '%s' and you has been concluded."
-msgstr ""
+msgstr "Aiemmin muodostettua %s sinun ja pelaajan '%s' välillä ei enää ole."
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:153
 #, c-format
 msgid "The %s between player '%s' and you has been cancelled."
-msgstr ""
+msgstr "Aiemmin muodostettua %s sinun ja pelaajan '%s' välillä ei enää ole."
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:63
 msgid "Filename"
-msgstr ""
+msgstr "Tiedostonimi"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:63
 msgid "Stocktaking date"
-msgstr ""
+msgstr "Varastoimispäivä"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:63
 msgid "Length"
-msgstr ""
+msgstr "Kesto"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:66
 msgid "Start"
@@ -891,40 +904,40 @@ msgstr "Aloita"
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:68
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:110
 msgid "Clear"
-msgstr ""
+msgstr "Tyhjennä"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:92
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:102
 msgid "Error while playing replay!"
-msgstr ""
+msgstr "Virhe uusintaa toistaessa!"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:93
 msgid "Error while opening file!"
-msgstr ""
+msgstr "Virhe tiedostoa avattaessa!"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:94
 msgid "Invalid Replay!"
-msgstr ""
+msgstr "Kelpaamaton uusinta!"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:95
 msgid "Error: Replay is too old!"
-msgstr ""
+msgstr "Virhe: uusinta on vanhentunut!"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:96
 msgid "Program version is too old to play that replay!"
-msgstr ""
+msgstr "Ohjelman versio on liian vanha uusinnalle!"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:98
 msgid "Temporary map file was not found!"
-msgstr ""
+msgstr "Väliaikaiskartan tiedostoa ei löytynyt!"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:110
 msgid "Are you sure to remove all replays?"
-msgstr ""
+msgstr "Haluatko varmasti poistaa kaikki uusinnat?"
 
 #: /storage/RTTR/svn/trunk/src/iwTextfile.cpp:72
 msgid "The readme file was not found!"
-msgstr ""
+msgstr "Lueminut-tiedostoa ei löytynyt!"
 
 #: /storage/RTTR/svn/trunk/src/iwStorehouse.cpp:43
 msgid "Storehouse"
@@ -932,51 +945,51 @@ msgstr "Varasto"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyServerInfo.cpp:73
 msgid "Server Information"
-msgstr ""
+msgstr "Palvelimen tiedot"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyServerInfo.cpp:75
 msgid "Map Name:"
-msgstr ""
+msgstr "Kartan nimi:"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyServerInfo.cpp:77
 msgid "Server Name:"
-msgstr ""
+msgstr "Palvelimen nimi:"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyServerInfo.cpp:79
 msgid "Host:"
-msgstr ""
+msgstr "Isäntä:"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyServerInfo.cpp:81
 msgid "Version:"
-msgstr ""
+msgstr "Versio:"
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:125
 msgid "Map was loaded and pinned at the wall..."
-msgstr ""
+msgstr "Kartta ladattiin ja lisättiin näkyville..."
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:135
 msgid "Tribal chiefs assembled around the table..."
-msgstr ""
+msgstr "Heimopäälliköt kokoontuivat pöydän ääreen..."
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:143
 msgid "Failed to load map objects."
-msgstr ""
+msgstr "Karttaobjektien lataus epäonnistui."
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:147
 msgid "Game crate was picked and spread out..."
-msgstr ""
+msgstr "Peli laitettiin jakoon..."
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:155
 msgid "Failed to load terrain data."
-msgstr ""
+msgstr "Maaston lataus epäonnistui."
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:161
 msgid "World was put together and glued..."
-msgstr ""
+msgstr "Maailma kyhättiin kasaan liimalla..."
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:167
 msgid "And let's go!"
-msgstr ""
+msgstr "Valmista!"
 
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:59
 msgid "The Settlers II.5 RTTR"
@@ -988,27 +1001,27 @@ msgstr "Tekijät"
 
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:67
 msgid "Programming"
-msgstr ""
+msgstr "Ohjelmoijat"
 
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:74
 msgid "Game testers"
-msgstr ""
+msgstr "Testaajat"
 
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:82
 msgid "Other Support"
-msgstr ""
+msgstr "Muu tuki"
 
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:103
 msgid "Donators"
-msgstr ""
+msgstr "Lahjoittajat"
 
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:105
 msgid "various anonymous donators"
-msgstr ""
+msgstr "useita nimettömiä lahjoittajia"
 
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:112
 msgid "Thank you for your donations!"
-msgstr ""
+msgstr "Kiitokset lahjoituksistanne!"
 
 #: /storage/RTTR/svn/trunk/src/GameWorldViewer.cpp:189
 msgid "(House unoccupied)"
@@ -1029,19 +1042,19 @@ msgstr "(%d sotilasta)"
 
 #: /storage/RTTR/svn/trunk/src/iwChat.cpp:47
 msgid "Chat Window"
-msgstr ""
+msgstr "Chatti-ikkuna"
 
 #: /storage/RTTR/svn/trunk/src/iwChat.cpp:54
 msgid "All"
-msgstr ""
+msgstr "Kaikki"
 
 #: /storage/RTTR/svn/trunk/src/iwChat.cpp:56
 msgid "Allies"
-msgstr ""
+msgstr "Liittolaiset"
 
 #: /storage/RTTR/svn/trunk/src/iwChat.cpp:58
 msgid "Enemies"
-msgstr ""
+msgstr "Viholliset"
 
 #: /storage/RTTR/svn/trunk/src/iwRoadWindow.cpp:47
 msgid "Activity window"
@@ -1049,7 +1062,7 @@ msgstr "Toimintoikkuna"
 
 #: /storage/RTTR/svn/trunk/src/iwRoadWindow.cpp:51
 msgid "Interrupt road building"
-msgstr "Peitä tie"
+msgstr "Keskeytä tien luonti"
 
 #: /storage/RTTR/svn/trunk/src/iwRoadWindow.cpp:56
 msgid "Erect flag"
@@ -1060,15 +1073,16 @@ msgstr "Aseta lippu"
 msgid ""
 "Warning: The played replay is not in sync with the original match. (GF: %u)"
 msgstr ""
+"Varoitus: toistettu uusinta ei ole alkuperäisen pelin tahdissa. (PR: %u)"
 
 #: /storage/RTTR/svn/trunk/src/GameClientGF_Replay.cpp:115
 #, c-format
 msgid "Notice: The played replay has ended. (GF: %u)"
-msgstr ""
+msgstr "Huomautus: uusinnan toisto on päättynyt. (PR: %u)"
 
 #: /storage/RTTR/svn/trunk/src/nofBuildingWorker.cpp:374
 msgid "This mine is exhausted"
-msgstr ""
+msgstr "Tämä kaivos on ehtynyt"
 
 #: /storage/RTTR/svn/trunk/src/iwDemolishBuilding.cpp:44
 msgid "Demolish?"
@@ -1076,51 +1090,53 @@ msgstr "Tuhoa?"
 
 #: /storage/RTTR/svn/trunk/src/nofAttacker.cpp:453
 msgid "We are under attack!"
-msgstr ""
+msgstr "Meidät on saarrettu!"
 
 #: /storage/RTTR/svn/trunk/src/GameClient.cpp:565
 #, c-format
 msgid "Computer %u"
-msgstr ""
+msgstr "Tietokone %u"
 
 #: /storage/RTTR/svn/trunk/src/GameClient.cpp:567
 msgid " (AI)"
-msgstr ""
+msgstr " (tekoäly)"
 
 #: /storage/RTTR/svn/trunk/src/GameClient.cpp:831
 msgid "The Game is not in sync. Checksums of some players don't match."
 msgstr ""
+"Pelin tahdistus ei ole kohdallaan: kaikkien pelaajien tarkistussummat eivät "
+"täsmää."
 
 #: /storage/RTTR/svn/trunk/src/GameClient.cpp:1186
 msgid "Auto-Save"
-msgstr ""
+msgstr "Automaattitallennus"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:101
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:115
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:120
 msgid "-> Build house"
-msgstr "-> Rekenna talo"
+msgstr "-> Rakenna talo"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:110
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:114
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:119
 msgid "-> Build hut"
-msgstr "-> Rekenna maja"
+msgstr "-> Rakenna maja"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:121
 msgid "-> Build castle"
-msgstr "-> Rekenna linna"
+msgstr "-> Rakenna lukaali"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:125
 msgid "-> Dig mines"
-msgstr "-> Peusta kaivos"
+msgstr "-> Perusta kaivos"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:169
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:176
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:184
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:188
 msgid "Build road"
-msgstr "Perusta tie"
+msgstr "Luo tie"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:170
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:178
@@ -1139,20 +1155,20 @@ msgstr "Lähetä tiedustelija"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:177
 msgid "Build waterway"
-msgstr ""
+msgstr "Perusta vesireitti"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:209
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:211
 msgid "Dig up road"
-msgstr ""
+msgstr "Peitä tie"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:216
 msgid "Attack options"
-msgstr ""
+msgstr "Hyökkääminen"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:224
 msgid "Attack not possible."
-msgstr ""
+msgstr "Hyökkäystä ei voi suorittaa"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:231
 msgid "Less attackers"
@@ -1164,23 +1180,23 @@ msgstr "Enemmän hyökkääjiä"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:236
 msgid "Weak attackers"
-msgstr ""
+msgstr "Heikkoja hyökkääjiä"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:237
 msgid "Strong attackers"
-msgstr ""
+msgstr "Vahvoja hyökkääjiä"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:246
 msgid "Number of attackers"
-msgstr ""
+msgstr "Hyökkääjiä"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:249
 msgid "Attack!"
-msgstr ""
+msgstr "Hyökkää!"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:256
 msgid "Display options"
-msgstr ""
+msgstr "Näyttöasetukset"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:258
 msgid "Observation window"
@@ -1196,75 +1212,75 @@ msgstr "Keskitä päämajaan"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:48
 msgid "Join Game"
-msgstr ""
+msgstr "Liity peliin"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:54
 msgid "IP Address of Host:"
-msgstr ""
+msgstr "Isännän IP-osoite:"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:58
 msgid "Server-Port:"
-msgstr ""
+msgstr "Palvelimen portti:"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:62
 msgid "Password (if needed):"
-msgstr ""
+msgstr "Salasana (jos käytössä):"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:135
 msgid "Invalid port. The valid port-range is 1 to 65535!"
-msgstr ""
+msgstr "Kelpaamaton portti: portin tulee olla väliltä 1 - 65535!"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:143
 msgid "Connecting with Host..."
-msgstr ""
+msgstr "Yhdistetään isäntään..."
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:149
 msgid "Connection failed!"
-msgstr ""
+msgstr "Yhteys epäonnistui!"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:211
 msgid "This Server is full!"
-msgstr ""
+msgstr "Palvelin on täynnä!"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:212
 msgid "Wrong Password!"
-msgstr ""
+msgstr "Väärä salasana!"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:213
 msgid "Wrong client version"
-msgstr ""
+msgstr "Ohjelman versio ei kelpaa"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:214
 msgid "Connection to Host closed!"
-msgstr ""
+msgstr "Yhteys isäntään suljettu!"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:215
 msgid "Too short Message received!"
-msgstr ""
+msgstr "Vastaanotettiin liian lyhyt viesti!"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:216
 msgid "Wrong Server Type!"
-msgstr ""
+msgstr "Eri palvelimen asetus!"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:226
 msgid "Waiting for Reply..."
-msgstr ""
+msgstr "Odotetaan vastausta..."
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:227
 msgid "Checking Password..."
-msgstr ""
+msgstr "Tarkistetaan salasana..."
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:228
 msgid "Checking Map..."
-msgstr ""
+msgstr "Tarkistetaan kartta..."
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:229
 msgid "Waiting for Playerinfo..."
-msgstr ""
+msgstr "Odotetaan pelaajatietoja..."
 
 #: /storage/RTTR/svn/trunk/src/SerializedGameData.cpp:231
 msgid "An error occured while saving which was suppressed!"
-msgstr ""
+msgstr "Tallennettaessa tapahtui virhe, joka tukahdetettiin!"
 
 #: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:55
 msgid "Main selection"
@@ -1272,7 +1288,7 @@ msgstr "Asetusvalikko"
 
 #: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:58
 msgid "Distribution of goods"
-msgstr "Hyödykkeiden jakelu"
+msgstr "Resurssien jakelu"
 
 #: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:60
 msgid "Transport"
@@ -1300,31 +1316,35 @@ msgstr "Laivarekisteri"
 
 #: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:80
 msgid "Series sequence"
-msgstr ""
+msgstr "Järjestyssarja"
 
 #: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:82
 msgid "Diplomacy"
-msgstr ""
+msgstr "Diplomatia"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyRanking.cpp:81
 msgid "Lost"
-msgstr ""
+msgstr "Hävitty"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyRanking.cpp:81
 msgid "Won"
-msgstr ""
+msgstr "Voitettu"
 
 #: /storage/RTTR/svn/trunk/src/nofFarmhand.cpp:172
 msgid ""
 "No more stones\n"
 " in range"
 msgstr ""
+"Graniitti on\n"
+"loppunut lähialueilta"
 
 #: /storage/RTTR/svn/trunk/src/nofFarmhand.cpp:176
 msgid ""
 "No more fishes\n"
 " in range"
 msgstr ""
+"Kalat ovat\n"
+"loppuneet lähivesiltä"
 
 #: /storage/RTTR/svn/trunk/src/iwWares.cpp:167
 msgid "Next page"
@@ -1332,32 +1352,32 @@ msgstr "Seuraava sivu"
 
 #: /storage/RTTR/svn/trunk/src/enhOption.cpp:69
 msgid "Waterway's maximum length"
-msgstr ""
+msgstr "Vesireitin maksimipituus"
 
 #: /storage/RTTR/svn/trunk/src/enhOption.cpp:70
 msgid "0 means infinite"
-msgstr ""
+msgstr "0 = ääretön"
 
 #: /storage/RTTR/svn/trunk/src/iwEnhancements.cpp:82
 msgid "Apply Changes"
-msgstr ""
+msgstr "Toteuta muutokset"
 
 #: /storage/RTTR/svn/trunk/src/iwEnhancements.cpp:83
 msgid "Discard Changes"
-msgstr ""
+msgstr "Hylkää muutokset"
 
 #: /storage/RTTR/svn/trunk/src/iwMilitaryBuilding.cpp:169
 msgid "Demolition ist not allowed because the building is under attack!"
-msgstr ""
+msgstr "Hyökkäyksen alaista rakennusta ei voi tuhota!"
 
 #: /storage/RTTR/svn/trunk/src/iwMilitaryBuilding.cpp:170
 msgid ""
 "Demolition ist not allowed because the building is located in border area!"
-msgstr ""
+msgstr "Rajaseudun rakennusta ei voi tuhota!"
 
 #: /storage/RTTR/svn/trunk/src/iwMilitaryBuilding.cpp:173
 msgid "Demolition not possible"
-msgstr ""
+msgstr "Tuhoaminen ei onnistu"
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:103
 msgid "Construction aid mode"
@@ -1369,27 +1389,31 @@ msgid ""
 "(Replay-Mode) Current GF: %u (End at: %u) / GF length: %u ms / NWF length: "
 "%u gf (%u ms)"
 msgstr ""
+"(Uusinta) Nykyinen PR: %u (päättyy: %u) / PR kesto: %u ms / NWF kesto: %u PR "
+"(%u ms)"
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:187
 #, c-format
 msgid ""
 "Current GF: %u / GF length: %u ms / NWF length: %u gf (%u ms) /  Ping: %u ms"
 msgstr ""
+"Nykyinen PR: %u / PR kesto: %u ms / NWF kesto: %u PR (%u ms) / Vasteaika: %u "
+"ms"
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:792
 #, c-format
 msgid "Player '%s' left the game!"
-msgstr ""
+msgstr "Pelaaja '%s' poistui pelistä!"
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:795
 #, c-format
 msgid "Player '%s' joined the game!"
-msgstr ""
+msgstr "Pelaaja '%s' liittyi peliin!"
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:803
 #, c-format
 msgid "Note: Game settings changed by the server%s"
-msgstr ""
+msgstr "Huomautus: palvelin %s vaihtui pelin asetuksia."
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:810
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:836
@@ -1400,90 +1424,90 @@ msgstr "<%s> "
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:819
 msgid "A auto-savegame is created..."
-msgstr ""
+msgstr "Automaattitallennus..."
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:836
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:859
 msgid "SYSTEM"
-msgstr ""
+msgstr "JÄRJESTELMÄ"
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:837
 msgid "Game was paused."
-msgstr ""
+msgstr "Peli tauotettiin."
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:860
 msgid "Game was resumed."
-msgstr ""
+msgstr "Peliä jatkettiin."
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:906
 #, c-format
 msgid "Player '%s' switched to player '%s'"
-msgstr ""
+msgstr "Pelaaja '%s' siirtyi pelaajaksi '%s'"
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:924
 #, c-format
 msgid "Player '%s' was defeated!"
-msgstr ""
+msgstr "Pelaaja '%s' on lyöty!"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:80
 msgid "Treaties"
-msgstr ""
+msgstr "Sopimukset"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:105
 msgid "Treaty of alliance"
-msgstr ""
+msgstr "Liittosopimus"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:114
 msgid "Non-aggression pact"
-msgstr ""
+msgstr "Hyökkäämättömyyssopimus"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:224
 msgid "Suggest treaty of alliance"
-msgstr ""
+msgstr "Ehdota liittoutumista"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:225
 msgid "Suggest non-aggression pact"
-msgstr ""
+msgstr "Ehdota hyökkäämättömyyssopimusta"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:243
 msgid "Short-run"
-msgstr ""
+msgstr "Lyhyelle aikavälille"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:244
 msgid "Medium-term"
-msgstr ""
+msgstr "Toviksi"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:245
 msgid "Long-run"
-msgstr ""
+msgstr "Pitkälle aikavälille"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:265
 msgid "Contract type:"
-msgstr ""
+msgstr "Sopimus:"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:267
 msgid "To player:"
-msgstr ""
+msgstr "Pelaajalle:"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:269
 msgid "Duration:"
-msgstr ""
+msgstr "Kesto:"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:283
 msgid "Eternal"
-msgstr ""
+msgstr "Ikuinen"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:285
 msgid "Confirm"
-msgstr ""
+msgstr "Vahvista"
 
 #: /storage/RTTR/svn/trunk/src/nofScout_LookoutTower.cpp:81
 msgid "Lookout-tower occupied"
-msgstr ""
+msgstr "Tähystystorni on miehitetty"
 
 #: /storage/RTTR/svn/trunk/src/dskDirectIP.cpp:59
 msgid "Create Game"
-msgstr ""
+msgstr "Luo peli"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:59
 msgid "Coins"
@@ -1491,7 +1515,7 @@ msgstr "Kolikkoja"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:60
 msgid "Weapons"
-msgstr ""
+msgstr "Aseita"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:61
 msgid "Beer"
@@ -1499,7 +1523,7 @@ msgstr "Olutta"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:62
 msgid "Iron"
-msgstr "Terästä"
+msgstr "Rautaa"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:63
 msgid "Gold"
@@ -1507,7 +1531,7 @@ msgstr "Kultaa"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:64
 msgid "Iron ore"
-msgstr "Rautaa"
+msgstr "Rautamalmia"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:65
 msgid "Coal"
@@ -1523,19 +1547,19 @@ msgstr "Kiviä"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:68
 msgid "Wood"
-msgstr "Puuta"
+msgstr "Tukkeja"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:69
 msgid "Water"
-msgstr "Vettä"
+msgstr "Vesiämpäriä"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:70
 msgid "Food"
-msgstr "Ruuan"
+msgstr "Ruokaa"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:72
 msgid "Boats"
-msgstr "Veneet"
+msgstr "Veneitä"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:90
 msgid "Top"
@@ -1547,7 +1571,7 @@ msgstr "Tärkeämpi"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:94
 msgid "Down"
-msgstr "Vähemmän"
+msgstr "Vähemmän tärkeä"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:96
 msgid "Bottom"
@@ -1555,11 +1579,11 @@ msgstr "Vähiten tärkeä"
 
 #: /storage/RTTR/svn/trunk/src/GameWorldGame.cpp:552
 msgid "Lost land by this building"
-msgstr ""
+msgstr "Rakennus vei maitasi"
 
 #: /storage/RTTR/svn/trunk/src/iwBuildingSite.cpp:57
 msgid "Order of building site"
-msgstr ""
+msgstr "Rakennusmääräys"
 
 #: /storage/RTTR/svn/trunk/src/iwMilitary.cpp:49
 msgid "Fewer recruits"
@@ -1591,7 +1615,7 @@ msgstr "Sisämaat"
 
 #: /storage/RTTR/svn/trunk/src/iwMilitary.cpp:54
 msgid "Center of country"
-msgstr "Välimaat"
+msgstr "Turvavyöhyke"
 
 #: /storage/RTTR/svn/trunk/src/iwMilitary.cpp:55
 msgid "Border areas"
@@ -1599,23 +1623,23 @@ msgstr "Rajaseudut"
 
 #: /storage/RTTR/svn/trunk/src/iwBuildOrder.cpp:68
 msgid "Sequence of given order"
-msgstr ""
+msgstr "Määräyksen mukaisesti"
 
 #: /storage/RTTR/svn/trunk/src/iwBuildOrder.cpp:69
 msgid "After the following order"
-msgstr ""
+msgstr "Määräyksen jälkeen"
 
 #: /storage/RTTR/svn/trunk/src/dskMainMenu.cpp:72
 msgid "Singleplayer"
-msgstr ""
+msgstr "Yksinpeli"
 
 #: /storage/RTTR/svn/trunk/src/dskMainMenu.cpp:74
 msgid "Multiplayer"
-msgstr ""
+msgstr "Moninpeli"
 
 #: /storage/RTTR/svn/trunk/src/dskMainMenu.cpp:78
 msgid "Intro"
-msgstr "Intro"
+msgstr "Esittely"
 
 #: /storage/RTTR/svn/trunk/src/dskMainMenu.cpp:84
 msgid "Quit program"
@@ -1623,113 +1647,113 @@ msgstr "Lopeta peli"
 
 #: /storage/RTTR/svn/trunk/src/iwSkipGFs.cpp:44
 msgid "Skip GameFrames"
-msgstr ""
+msgstr "Pudota PeliRuutuja"
 
 #: /storage/RTTR/svn/trunk/src/iwSkipGFs.cpp:47
 msgid "to GameFrame:"
-msgstr ""
+msgstr "siirry PeliRuutuun:"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:49
 msgid "Connecting to Lobby"
-msgstr ""
+msgstr "Yhdistetään chattiin"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:52
 msgid "Username:"
-msgstr ""
+msgstr "Käyttäjänimi:"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:58
 msgid "Password:"
-msgstr ""
+msgstr "Salasana:"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:63
 msgid "Email Address:"
-msgstr ""
+msgstr "Sähköpostiosoite:"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:68
 msgid "Save Password?"
-msgstr ""
+msgstr "Tallenna salasana?"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:79
 msgid "Register"
-msgstr ""
+msgstr "Rekisteröidy"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:222
 msgid "Please fill out all fields!"
-msgstr ""
+msgstr "Täytä kaikki kentät!"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:302
 msgid "Registration successful!"
-msgstr ""
+msgstr "Rekisteröinti onnistui!"
 
 #: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:496
 msgid "Found ironore"
-msgstr ""
+msgstr "Löytyi rautamalmia"
 
 #: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:498
 msgid "Found gold"
-msgstr ""
+msgstr "Löytyi kultaa"
 
 #: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:500
 msgid "Found coal"
-msgstr ""
+msgstr "Löytyi hiiltä"
 
 #: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:502
 msgid "Found granite"
-msgstr ""
+msgstr "Löytyi graniittia"
 
 #: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:504
 msgid "Found water"
-msgstr ""
+msgstr "Löytyi vettä"
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:46
 msgid "Statistics"
-msgstr ""
+msgstr "Tilastot"
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:93
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:113
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:163
 msgid "Size of country"
-msgstr ""
+msgstr "Maan koko"
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:95
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:171
 msgid "Inhabitants"
-msgstr ""
+msgstr "Asukkaita"
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:96
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:175
 msgid "Merchandise"
-msgstr ""
+msgstr "Resursseja"
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:97
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:179
 msgid "Military strength"
-msgstr ""
+msgstr "Armeijan vahvuus"
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:100
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:191
 msgid "Vanquished enemies"
-msgstr ""
+msgstr "Tuhottuja vihollisia"
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:104
 msgid "15 m"
-msgstr ""
+msgstr "15 m"
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:105
 msgid "1 h"
-msgstr ""
+msgstr "1 t"
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:106
 msgid "4 h"
-msgstr ""
+msgstr "4 t"
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:107
 msgid "16 h"
-msgstr ""
+msgstr "16 t"
 
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:67
 msgid "Foodstuff"
-msgstr "Ruuan"
+msgstr "Ruokatarvikkeita"
 
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:69
 msgid "Granite mine"
@@ -1778,11 +1802,11 @@ msgstr "Aseseppä"
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:104
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:127
 msgid "Metalworker"
-msgstr "Työkalupaja"
+msgstr "Metallityöläinen"
 
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:114
 msgid "Iron smelter"
-msgstr "Teräsvalamo"
+msgstr "Sulattamo"
 
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:117
 msgid "Mint"
@@ -1790,7 +1814,7 @@ msgstr "Rahavalamo"
 
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:124
 msgid "Construction"
-msgstr ""
+msgstr "Rakennus"
 
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:130
 msgid "Shipyard"
@@ -1802,47 +1826,47 @@ msgstr "Leipomo"
 
 #: /storage/RTTR/svn/trunk/src/dskMultiPlayer.cpp:65
 msgid "Internet Lobby"
-msgstr ""
+msgstr "Internet-chatti"
 
 #: /storage/RTTR/svn/trunk/src/dskMultiPlayer.cpp:67
 msgid "Network/LAN"
-msgstr ""
+msgstr "Verkko/LAN"
 
 #: /storage/RTTR/svn/trunk/src/dskMultiPlayer.cpp:69
 msgid "Direct IP"
-msgstr ""
+msgstr "Suora IP"
 
 #: /storage/RTTR/svn/trunk/src/iwSave.cpp:67
 msgid "Time"
-msgstr ""
+msgstr "Aika"
 
 #: /storage/RTTR/svn/trunk/src/iwSave.cpp:67
 msgid "Start GF"
-msgstr ""
+msgstr "Aloittava PR"
 
 #: /storage/RTTR/svn/trunk/src/iwSave.cpp:203
 msgid "Auto-Save every:"
-msgstr ""
+msgstr "Automaattitallennusten väli:"
 
 #: /storage/RTTR/svn/trunk/src/iwSave.cpp:207
 msgid "Disabled"
-msgstr ""
+msgstr "Ei käytössä"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPCreate.cpp:55
 msgid "Game's Name:"
-msgstr ""
+msgstr "Pelin nimi:"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPCreate.cpp:75
 msgid "'s Game"
-msgstr ""
+msgstr "-peli"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPCreate.cpp:144
 msgid "Please enter a name for the game"
-msgstr ""
+msgstr "Nimeä peli"
 
 #: /storage/RTTR/svn/trunk/src/nobStorehouse.cpp:59
 msgid "New storehouse finished"
-msgstr ""
+msgstr "Varastorakennus valmistui"
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:252
 msgid ""
@@ -1856,6 +1880,14 @@ msgid ""
 "indicates the current number of men, the second value indicates the desired "
 "number. "
 msgstr ""
+"Päämaja edustaa valtakuntasi keskusta. Suuri määrä varastotilaa sallii "
+"monien asioiden säilömisen siellä turvallisesti. Voit tarpeen mukaan poistaa "
+"jotkin resurssit sieltä tai lakkauttaa niiden vastaanoton. Voit tehdä tämän "
+"napsauttamalla ensin toimintoa vastaavaa painiketta ja sen jälkeen resurssia "
+"edustavaa kuvaketta. Kolmannella sivulla voit määrittää reservissä olevat "
+"sotilaat, jotka vastaavat päämajan suojelusta. Näkymässä on kaksi lukua: "
+"ensimmäinen kertoo sotilaiden tämänhetkisen määrän, toinen vastaavasti "
+"kertoo halutun määrän. "
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:275
 msgid ""
@@ -1864,6 +1896,10 @@ msgid ""
 "to the soldiers stationed here. However, without gold coins the soldiers "
 "here can not train and improve their skills."
 msgstr ""
+"Parakki on hyvin pieni rakennus jota sotilaasi voivat käyttää "
+"asuintiloinaan. Käyttämällä kultakolikkopainiketta voit keskeyttää "
+"kolikoiden jaon sotilaille. Sotilaat eivät kuitenkaan tällöin voi "
+"harjoitella ja parantaa kykyjään."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:287
 msgid ""
@@ -1872,6 +1908,10 @@ msgid ""
 "delivery of gold coins to the soldiers stationed here. However, without gold "
 "coins the soldiers here can not train and improve their skills."
 msgstr ""
+"Vahtitalo on miellyttävä paikka sotilaille, joka tarjoaa suojaa kivimuurein. "
+"Käyttämällä kultakolikkopainiketta voit keskeyttää kolikoiden jaon "
+"sotilaille. Sotilaat eivät kuitenkaan tällöin voi harjoitella ja parantaa "
+"kykyjään."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:303
 msgid ""
@@ -1880,6 +1920,9 @@ msgid ""
 "delivery of gold coins to the soldiers stationed here. However, without gold "
 "coins the soldiers here can not train and improve their skills."
 msgstr ""
+"Vahtitorni tarjoaa paljon tilaa suurelle määrälle sotilaita. Käyttämällä "
+"kultakolikkopainiketta voit keskeyttää kolikoiden jaon sotilaille. Sotilaat "
+"eivät kuitenkaan tällöin voi harjoitella ja parantaa kykyjään."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:319
 msgid ""
@@ -1889,84 +1932,142 @@ msgid ""
 "coins to the soldiers stationed here. However, without gold coins the "
 "soldiers here can not train and improve their skills."
 msgstr ""
+"Linnakkeen tarjoamaa puolustusta ja kokoa ei voida ylittää. Tämä rakennus "
+"totta vie suojaa tärkeimmät rakennuksesi. Käyttämällä kultakolikkopainiketta "
+"voit keskeyttää kolikoiden jaon sotilaille. Sotilaat eivät kuitenkaan "
+"tällöin voi harjoitella ja parantaa kykyjään."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:346
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:334
+msgid ""
+"The quarrying of stone in a granite mine guarantees the supply of stone for "
+"buildings. However, eben a granite mine has to feed its workers."
+msgstr ""
+"Kiven louhinta graniittikaivoksessa varmistaa tarvittavan materiaalin "
+"saannin rakennuksille. Graniittikaivoksenkin työntekijät tarvitsevat ruokaa."
+
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:342
+msgid ""
+"The mining of coal supports the metalworks and smithy. This hard work "
+"requires an adequate supply of food."
+msgstr ""
+"Hiili on tärkeää raaka-ainetta kullan ja raudan käsittelyssä. Tämä tärkeä "
+"työ kuluttaa ruokatarvikkeita."
+
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:349
+msgid ""
+"Deep within the mountains, miners dig for iron ore. They will obviously need "
+"a lot of food for the strenuous work."
+msgstr ""
+"Syvällä vuorien kätköissä kaivosmiehet ovat rautamalmin kimpussa. Kuten "
+"arvata saattaa, ruokaa kuluu paljon."
+
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:356
+msgid ""
+"A gold mine allows you to prospect for valuable gold deposits. For this, it "
+"is necessary to ensure that the miners are provided with plenty of food."
+msgstr ""
+"Kultakaivos mahdollistaa arvokkaiden kultavarantojen louhinnan. "
+"Ruokatarjoilun on paras toimia tai kulta jää suoniinsa."
+
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:365
 msgid ""
 "From the lookout tower you can see far into previously unexplored lands."
-msgstr ""
+msgstr "Tähystystornilla näet kauas, jopa aiemmin tuntemattomille seuduille."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:355
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:374
 msgid ""
 "Thanks to its immense strength, the catapults represents an effective weapon "
 "against enemy military buildings."
 msgstr ""
+"Kalapultit ovat vaikuttavan tarkkuutensa ansiosta tehokas ase vihollisten "
+"rakennuksia vastaan."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:362
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:381
 msgid ""
 "A woodcutter provides the sawmill with logs. A forester is able to replant "
 "the depleted forest."
 msgstr ""
+"Puunhakkaaja tarjoaa tukkeja sajalle. Metsittäjä kykenee ylläpitämään metsää."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:369
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:388
 msgid ""
 "The fish man is responsible for finding water rich in fish. His fish feed a "
 "great many miners."
 msgstr ""
+"Kalastaja on vastuussa kalarikkaiden vesien löytämisestä. Hänen kalansa "
+"ruokkivat monet nälkäiset kaivosmiehet."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:375
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:394
 msgid ""
 "The stonemason works the stone near his quarry into bricks. These are needed "
 "mainly for building houses and as ammunition for catapults."
 msgstr ""
+"Kivenlouhija louhii graniitin sopiviksi möhkäleiksi. Näitä tarvitaan lähinnä "
+"rakentamiseen ja katapulttien ammuksiksi."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:383
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:402
 msgid ""
 "Within his area, the forester ensures the survival of the forest. He plants "
 "all types of trees."
 msgstr ""
+"Metsittäjä varmistaa metsän säilymisen omalla aluellaan. Hän istuttaa "
+"kaikenlaisia puita."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:390
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:409
 msgid ""
 "The butcher processes the livestock delivered into nutritious ham on which "
 "you miners are fed."
 msgstr ""
+"Teurastaja käsittelee hänelle tuodut ruhot kinkuksi, joilla ruokkia "
+"kaivosmiehesi."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:397
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:416
 msgid "Meat the hunter acquires is used to feed the miners."
 msgstr ""
+"Metsästäjän hankkimaa lihaa käytetään kaivosmiesten mahojen täyttämiseen."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:402
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:421
 msgid ""
 "The brewer produces fine beer from grain and water. This drink is needed to "
 "fill the soldiers with courage."
 msgstr ""
+"Oluenpanija tuottaa hienointa olutta viljasta ja vedestä. Tällä juomalla "
+"täytetään sotilaat rohkeudella!"
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:409
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:428
 msgid ""
 "The armory produces swords and strong shields. This equipment is vital for "
 "your soldiers."
 msgstr ""
+"Aseseppä valmistaa miekkoja ja vahvoja kilpiä. Sotilaita ei saa ilman."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:415
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:434
 msgid ""
 "The countless tools which your workers need are made in the metalworks. This "
 "requires boards and iron."
 msgstr ""
+"Työkalupaja valmistaa lukuisat eri työkalut, joita työläisesi kaipaavat. "
+"Valmistus vaatii lautoja ja rautaa."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:422
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:441
 msgid ""
 "Raw iron ore is smelted in the iron smelters with the help of coal and raw "
 "iron. The processed iron is then used to making weapons (in the Armory) and "
 "tools (in the metalworks)."
 msgstr ""
+"Rautamalmi käsitellään sulattamossa hiilen voimin raudaksi. Rautaa voidaan "
+"käyttää aseiden valmistukseen (asesepän voimin) tai työkalujen valmistukseen "
+"(työkalupajassa)."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:434
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:453
 msgid ""
 "Grain and water are needed for rearing pigs. The meat thus obtained can then "
 "be processed by a butcher."
 msgstr ""
+"Siat pärjäävät viljalla ja vedellä. Teurastaja voi käsitellä sioista saadun "
+"lihan."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:441
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:460
 msgid ""
 "The storehouse can help reduce long transportation journeys and is suited to "
 "the temporary storage of merchandise and inhabitants. You can release "
@@ -1974,54 +2075,75 @@ msgid ""
 "Alternatively, the storage function can be disabled. To do this, first "
 "choose the relevant icon followed by the desired merchandise or job symbol."
 msgstr ""
+"Varasto kykenee lyhentämään kuljetusmatkoja ja toimii hyvin väliaikaisena "
+"säilytyspaikkana resursseille ja asukkaille. Voit poistaa resursseja "
+"varastosta tarpeen mukaan, tai voit estää säilyttämisen kokonaan."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:460
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:479
 msgid ""
 "The grain is ground in the windmill. The flour from the windmill is later "
 "used at the bakery to bake bread."
 msgstr ""
+"Vilja käsitellään jauhoiksi tuulimyllyssä. Jauhot taas voidaan käyttää "
+"leivän tekoon leipomossa."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:467
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:486
 msgid ""
 "The flour produced at the windmill can be combined with water in the bakery "
 "to make oven-fresh bread. It's your miners' favorite!"
 msgstr ""
+"Tuulimyllyssä valmistettu jauho yhdistettynä veteen luo maukasta "
+"uunituorettaa leipää. Se jos mikä maistuu kaivoksissa ahertaville!"
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:475
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:494
 msgid ""
 "The carpenter turns the woodcutter's logs into made-to-measure planks. There "
 "form the basic for building houses and ships."
 msgstr ""
+"Puuseppä viimeistelee puunhakkaajan tukit sopivan mittaisiksi laudoiksi. Ne "
+"toimivat rakennusten ja laivojen raaka-aineina."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:483
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:502
 msgid ""
 "The mint is responsible for producing valuable gold coins. These precious "
 "objects are produced using coal and gold."
 msgstr ""
+"Rahavalamo tuottaa arvokkaita kultakolikkoja. Näitä valmistetaan hiilen ja "
+"kullan avuin."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:490
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:509
 msgid ""
 "A well supplies water to the bakery, brewery, donkey breeder and pig farm."
 msgstr ""
+"Kaivosta saadaan vettä leipomoon, olutpanimoon, aasinkasvattajalle ja "
+"sikalaan."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:496
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:515
 msgid ""
 "It is possible to build small rowing boats as well as huge cargo ships in a "
 "shipyard. The boards required for this are skillfully worked by shipwrights."
 msgstr ""
+"Laivatelakalla voidaan valmistaa niin pieniä soutuveneitä kuin massiivisia "
+"kuljetuslaivoja. Laivanrakentajat käsittelevät saamansa laudat suurella "
+"ammattitaidolla."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:505
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:524
 msgid ""
 "The farmer plants and harvests grain in the surrounding fields. A windmill "
 "then processes the harvested grain into flour or can be used to feed the "
 "pigs."
 msgstr ""
+"Viljelijä viljelee maata ja siten tuottaa viljaa ympäröivillä pelloilla. "
+"Vilja voidaan jatkokäsitellä tuulimyllyssä jauhoiksi tai tarjota "
+"sellaisenaan sikojen muonaksi."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:513
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:532
 msgid ""
 "The pack donkeys bred here are used to transport your merchandise more "
 "efficiently. They are reared on water and grain."
 msgstr ""
+"Täällä kasvatetut aasit kelpaavat kuormajuhdiksi teillesi, jolloin tavara "
+"kulkee jouhevammin. Vedellä ja viljalla saadaan aaseja vaikka kuinka!"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:157
 msgid "Boat"
@@ -2097,7 +2219,7 @@ msgstr "Metsittäjä"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:253
 msgid "Slaughterhouse"
-msgstr "Työkalupaja"
+msgstr "Teurastamo"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:254
 msgid "Hunter"
@@ -2121,7 +2243,7 @@ msgstr "Maatila"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:271
 msgid "Harbor building"
-msgstr ""
+msgstr "Satamarakennus"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:317
 msgid "Helper"
@@ -2185,7 +2307,7 @@ msgstr "Aasinkasvattajia"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:332
 msgid "Iron founder"
-msgstr "Teräksenvalajia"
+msgstr "Raudansulattajia"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:333
 msgid "Minter"

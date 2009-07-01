@@ -2,15 +2,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Siedler II.5 RttR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-26 08:54+0100\n"
-"PO-Revision-Date: 2009-06-26 19:04+0000\n"
+"POT-Creation-Date: 2009-06-26 22:58+0100\n"
+"PO-Revision-Date: 2009-06-27 09:22+0000\n"
 "Last-Translator: Siedler II.5 - Return To The Roots Team <sf-"
 "team@siedler25.de>\n"
 "Language-Team: Siedler II.5 RttR <sf-team@siedler25.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-06-26 20:56+0000\n"
+"X-Launchpad-Export-Date: 2009-06-30 19:20+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: SPAIN\n"
 "X-Poedit-Language: Spanish\n"
@@ -241,21 +241,21 @@ msgstr "Configuración por defecto"
 msgid "Productivity"
 msgstr "Productividad"
 
-#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:569
+#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:556
 msgid ""
 "Military building\n"
 " occupied"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:776
+#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:770
 msgid "Military building lost"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:779
+#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:773
 msgid "Military building captured"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:1003
+#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:997
 msgid ""
 "A catapult is firing\n"
 " upon us!"
@@ -1921,14 +1921,38 @@ msgstr ""
 "de oro a los soldados situados aquí. Sin embargo, sin monedas de oro los "
 "soldados no podrán entrenar ni mejorar sus habilidades."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:346
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:334
+msgid ""
+"The quarrying of stone in a granite mine guarantees the supply of stone for "
+"buildings. However, eben a granite mine has to feed its workers."
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:342
+msgid ""
+"The mining of coal supports the metalworks and smithy. This hard work "
+"requires an adequate supply of food."
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:349
+msgid ""
+"Deep within the mountains, miners dig for iron ore. They will obviously need "
+"a lot of food for the strenuous work."
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:356
+msgid ""
+"A gold mine allows you to prospect for valuable gold deposits. For this, it "
+"is necessary to ensure that the miners are provided with plenty of food."
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:365
 msgid ""
 "From the lookout tower you can see far into previously unexplored lands."
 msgstr ""
 "Desde la torre de observación se puede observar lejos a las tierras "
 "inexploradas previamente."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:355
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:374
 msgid ""
 "Thanks to its immense strength, the catapults represents an effective weapon "
 "against enemy military buildings."
@@ -1936,7 +1960,7 @@ msgstr ""
 "Gracias a su gran fuerza, las catapultas representan una arma efectiva "
 "contra los edificios militares enemigos."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:362
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:381
 msgid ""
 "A woodcutter provides the sawmill with logs. A forester is able to replant "
 "the depleted forest."
@@ -1944,7 +1968,7 @@ msgstr ""
 "El leñador abastece el aserradero con troncos. El guardia forestal es capaz "
 "de reforestar el bosque."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:369
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:388
 msgid ""
 "The fish man is responsible for finding water rich in fish. His fish feed a "
 "great many miners."
@@ -1952,7 +1976,7 @@ msgstr ""
 "El pescador es responsible de encontrar agua abundante en pescados. Sus "
 "pescados alimentan a muchos mineros."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:375
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:394
 msgid ""
 "The stonemason works the stone near his quarry into bricks. These are needed "
 "mainly for building houses and as ammunition for catapults."
@@ -1961,7 +1985,7 @@ msgstr ""
 "ladrillos son necesarios principalmente para la construcción de casas y como "
 "munición para las catapultas."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:383
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:402
 msgid ""
 "Within his area, the forester ensures the survival of the forest. He plants "
 "all types of trees."
@@ -1969,7 +1993,7 @@ msgstr ""
 "Dentro de su área, el guardia forestal asegura la supervivencia del bosque. "
 "El planta todo tipo de árboles."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:390
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:409
 msgid ""
 "The butcher processes the livestock delivered into nutritious ham on which "
 "you miners are fed."
@@ -1977,12 +2001,12 @@ msgstr ""
 "El carnicero procesa el ganado entregado en jamón nutritivo, con el cual tus "
 "mineros pueden ser alimentados."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:397
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:416
 msgid "Meat the hunter acquires is used to feed the miners."
 msgstr ""
 "La carne que el cazador obtiene es utilizada para alimentar a los mineros."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:402
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:421
 msgid ""
 "The brewer produces fine beer from grain and water. This drink is needed to "
 "fill the soldiers with courage."
@@ -1990,7 +2014,7 @@ msgstr ""
 "El cervecero produce cerveza fina de grano y agua. Esta bebida es necesaria "
 "para llenar a los soldados de coraje."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:409
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:428
 msgid ""
 "The armory produces swords and strong shields. This equipment is vital for "
 "your soldiers."
@@ -1998,7 +2022,7 @@ msgstr ""
 "La armería produce espadas y escudos Fuertes. Este equipo es vital para tus "
 "soldados."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:415
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:434
 msgid ""
 "The countless tools which your workers need are made in the metalworks. This "
 "requires boards and iron."
@@ -2006,7 +2030,7 @@ msgstr ""
 "Las innumerables herramientas que tus trabajadores necesitan son fabricadas "
 "en la metalistería. Estas requieren tablas y hierro."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:422
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:441
 msgid ""
 "Raw iron ore is smelted in the iron smelters with the help of coal and raw "
 "iron. The processed iron is then used to making weapons (in the Armory) and "
@@ -2017,7 +2041,7 @@ msgstr ""
 "procesado es posteriormente utilizado para hacer armas (en la Armería) y "
 "herramientas (en la Metalistería)."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:434
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:453
 msgid ""
 "Grain and water are needed for rearing pigs. The meat thus obtained can then "
 "be processed by a butcher."
@@ -2025,7 +2049,7 @@ msgstr ""
 "Granos y agua son necesarios para criar puercos. La carne obtenida puede "
 "entonces ser procesada por un carnicero."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:441
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:460
 msgid ""
 "The storehouse can help reduce long transportation journeys and is suited to "
 "the temporary storage of merchandise and inhabitants. You can release "
@@ -2040,7 +2064,7 @@ msgstr ""
 "deshabilitada. Para realizar esto, primero se debe escoger el icono "
 "relevante seguido de la mercancía deseada o símbolo de trabajo."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:460
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:479
 msgid ""
 "The grain is ground in the windmill. The flour from the windmill is later "
 "used at the bakery to bake bread."
@@ -2048,7 +2072,7 @@ msgstr ""
 "Los granos son molidos en el Molino de viento. La harina proveniente del "
 "Molino de viento es usada posteriormente en la panadería para hornear pan."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:467
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:486
 msgid ""
 "The flour produced at the windmill can be combined with water in the bakery "
 "to make oven-fresh bread. It's your miners' favorite!"
@@ -2056,7 +2080,7 @@ msgstr ""
 "La harina producida en el Molino de viento puede ser combinada con agua en "
 "la panadería para hacer pan recién horneado. Es el favorito de tus mineros!"
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:475
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:494
 msgid ""
 "The carpenter turns the woodcutter's logs into made-to-measure planks. There "
 "form the basic for building houses and ships."
@@ -2064,7 +2088,7 @@ msgstr ""
 "El carpintero convierte los troncos del leñador en tablas hechas a la "
 "medida. Estas forman la material prima para construir casas y barcos."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:483
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:502
 msgid ""
 "The mint is responsible for producing valuable gold coins. These precious "
 "objects are produced using coal and gold."
@@ -2072,14 +2096,14 @@ msgstr ""
 "La casa de moneda es responsable de producir valiosas monedas de oro. Estos "
 "preciados objetos son producidos utilizando carbón y oro."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:490
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:509
 msgid ""
 "A well supplies water to the bakery, brewery, donkey breeder and pig farm."
 msgstr ""
 "El pozo suministra agua a la panadería, cervecería, criadero de burros y la "
 "granja de puercos."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:496
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:515
 msgid ""
 "It is possible to build small rowing boats as well as huge cargo ships in a "
 "shipyard. The boards required for this are skillfully worked by shipwrights."
@@ -2088,7 +2112,7 @@ msgstr ""
 "barcos de carga en el astillero. Las tablas que son requeridas para esto son "
 "hábilmente trabajadas por los constructores de barcos."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:505
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:524
 msgid ""
 "The farmer plants and harvests grain in the surrounding fields. A windmill "
 "then processes the harvested grain into flour or can be used to feed the "
@@ -2098,7 +2122,7 @@ msgstr ""
 "viento procesa el grano cosechado en harina o también puede ser utilizado "
 "para alimentar los puercos."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:513
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:532
 msgid ""
 "The pack donkeys bred here are used to transport your merchandise more "
 "efficiently. They are reared on water and grain."

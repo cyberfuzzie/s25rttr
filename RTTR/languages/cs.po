@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: s25rttr\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2009-06-26 08:54+0100\n"
-"PO-Revision-Date: 2009-06-26 20:51+0000\n"
-"Last-Translator: Jan Matyas <Unknown>\n"
+"POT-Creation-Date: 2009-06-26 22:58+0100\n"
+"PO-Revision-Date: 2009-06-29 09:33+0000\n"
+"Last-Translator: FELiX <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-06-26 20:56+0000\n"
+"X-Launchpad-Export-Date: 2009-06-30 19:20+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:47
@@ -44,7 +44,7 @@ msgstr "Zpět"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:73
 msgid "Options"
-msgstr "Možnosti"
+msgstr "Nastavení"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:77
 msgid "Enhancements"
@@ -52,7 +52,7 @@ msgstr "Rozšíření"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:80
 msgid "Common"
-msgstr ""
+msgstr "Obecné"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:82
 msgid "Graphics"
@@ -240,7 +240,7 @@ msgstr "Výchozí"
 msgid "Productivity"
 msgstr "Produktivita"
 
-#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:569
+#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:556
 msgid ""
 "Military building\n"
 " occupied"
@@ -248,15 +248,15 @@ msgstr ""
 "Vojenská stavba\n"
 " obsazena"
 
-#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:776
+#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:770
 msgid "Military building lost"
 msgstr "Vojenská stavba zničena"
 
-#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:779
+#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:773
 msgid "Military building captured"
 msgstr "Vojenská stavba zajata"
 
-#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:1003
+#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:997
 msgid ""
 "A catapult is firing\n"
 " upon us!"
@@ -885,7 +885,7 @@ msgstr "Název souboru"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:63
 msgid "Stocktaking date"
-msgstr ""
+msgstr "Datum inventury (revize)"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:63
 msgid "Length"
@@ -963,7 +963,7 @@ msgstr "Mapa byla načtena a pověšena na zeď..."
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:135
 msgid "Tribal chiefs assembled around the table..."
-msgstr ""
+msgstr "Vůdcové kmenů se sešli u jednacího stolu..."
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:143
 msgid "Failed to load map objects."
@@ -971,7 +971,7 @@ msgstr "Chyba při nahrávání objektů mapy."
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:147
 msgid "Game crate was picked and spread out..."
-msgstr ""
+msgstr "Hra byla vytvořena..."
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:155
 msgid "Failed to load terrain data."
@@ -979,7 +979,7 @@ msgstr "Chyba při nahrávání teréních dat."
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:161
 msgid "World was put together and glued..."
-msgstr ""
+msgstr "Svět byl poskládán a slepen dohromady..."
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:167
 msgid "And let's go!"
@@ -1003,7 +1003,7 @@ msgstr "Testeři"
 
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:82
 msgid "Other Support"
-msgstr "Další vývoj"
+msgstr "Podpora"
 
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:103
 msgid "Donators"
@@ -1067,6 +1067,7 @@ msgstr "Vztyčit vlajku"
 msgid ""
 "Warning: The played replay is not in sync with the original match. (GF: %u)"
 msgstr ""
+"Upozornění: Přehrávaný replay není synchronizovaný s originálním. (GF: %u)"
 
 #: /storage/RTTR/svn/trunk/src/GameClientGF_Replay.cpp:115
 #, c-format
@@ -1097,6 +1098,8 @@ msgstr " (AI)"
 #: /storage/RTTR/svn/trunk/src/GameClient.cpp:831
 msgid "The Game is not in sync. Checksums of some players don't match."
 msgstr ""
+"Hra nemohla být synchronizována. Kontrolní součty některých hráčů se "
+"neshodují."
 
 #: /storage/RTTR/svn/trunk/src/GameClient.cpp:1186
 msgid "Auto-Save"
@@ -1151,7 +1154,7 @@ msgstr "Postavit vodní cestu"
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:209
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:211
 msgid "Dig up road"
-msgstr "Postavit cestu"
+msgstr "Zrušit cestu"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:216
 msgid "Attack options"
@@ -1159,7 +1162,7 @@ msgstr "Nastavení útoku"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:224
 msgid "Attack not possible."
-msgstr "Není možné útočit."
+msgstr "Není možné zaútočit."
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:231
 msgid "Less attackers"
@@ -1271,7 +1274,7 @@ msgstr "Čekám na Informace o hráči..."
 
 #: /storage/RTTR/svn/trunk/src/SerializedGameData.cpp:231
 msgid "An error occured while saving which was suppressed!"
-msgstr ""
+msgstr "Při ukládání se vyskytla chyba, kterou se ale podařilo potlačit!"
 
 #: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:55
 msgid "Main selection"
@@ -1291,7 +1294,7 @@ msgstr "Souhrnné statistiky"
 
 #: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:66
 msgid "Merchandise statistics"
-msgstr ""
+msgstr "Statistiky obchodu"
 
 #: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:70
 msgid "Stock"
@@ -1303,7 +1306,7 @@ msgstr "Armáda"
 
 #: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:77
 msgid "Ship register"
-msgstr "Katalog lodí"
+msgstr "Seznam lodí"
 
 #: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:80
 msgid "Series sequence"
@@ -1334,8 +1337,8 @@ msgid ""
 "No more fishes\n"
 " in range"
 msgstr ""
-"V dosahu nejsou žádné\n"
-" další ryby"
+"Všechny už ryby byly \n"
+" vychytány"
 
 #: /storage/RTTR/svn/trunk/src/iwWares.cpp:167
 msgid "Next page"
@@ -1372,7 +1375,7 @@ msgstr "Budovu není možné zbořit"
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:103
 msgid "Construction aid mode"
-msgstr ""
+msgstr "Pomoc při stavbě"
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:185
 #, c-format
@@ -1388,6 +1391,7 @@ msgstr ""
 msgid ""
 "Current GF: %u / GF length: %u ms / NWF length: %u gf (%u ms) /  Ping: %u ms"
 msgstr ""
+"Aktuální GF: %u / GF délka: %u ms / NWF délka: %u gf (%u ms) /  Ping: %u ms"
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:792
 #, c-format
@@ -1413,7 +1417,7 @@ msgstr "<%s> "
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:819
 msgid "A auto-savegame is created..."
-msgstr ""
+msgstr "Probíhá automatické ukládání hry..."
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:836
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:859
@@ -1452,7 +1456,7 @@ msgstr "Pakt o neútočení"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:224
 msgid "Suggest treaty of alliance"
-msgstr ""
+msgstr "Navrhnout spojenectví"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:225
 msgid "Suggest non-aggression pact"
@@ -1460,7 +1464,7 @@ msgstr "Nabídnout pakt o neútočení"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:243
 msgid "Short-run"
-msgstr ""
+msgstr "Krátkodobý"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:244
 msgid "Medium-term"
@@ -1472,7 +1476,7 @@ msgstr "Dlouhodobý"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:265
 msgid "Contract type:"
-msgstr ""
+msgstr "Typ kontraktu:"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:267
 msgid "To player:"
@@ -1612,11 +1616,11 @@ msgstr "Hraniční oblasti"
 
 #: /storage/RTTR/svn/trunk/src/iwBuildOrder.cpp:68
 msgid "Sequence of given order"
-msgstr ""
+msgstr "Pořadí je určeno podle příchodu"
 
 #: /storage/RTTR/svn/trunk/src/iwBuildOrder.cpp:69
 msgid "After the following order"
-msgstr ""
+msgstr "Podle následujícího pořadí"
 
 #: /storage/RTTR/svn/trunk/src/dskMainMenu.cpp:72
 msgid "Singleplayer"
@@ -1636,11 +1640,11 @@ msgstr "Ukončit program"
 
 #: /storage/RTTR/svn/trunk/src/iwSkipGFs.cpp:44
 msgid "Skip GameFrames"
-msgstr ""
+msgstr "Přeskoči GameFrames"
 
 #: /storage/RTTR/svn/trunk/src/iwSkipGFs.cpp:47
 msgid "to GameFrame:"
-msgstr ""
+msgstr "do GameFrame:"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:49
 msgid "Connecting to Lobby"
@@ -1680,7 +1684,7 @@ msgstr "Nalezeno železo"
 
 #: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:498
 msgid "Found gold"
-msgstr ""
+msgstr "Nalezeno zlato"
 
 #: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:500
 msgid "Found coal"
@@ -1746,7 +1750,7 @@ msgstr "Potraviny"
 
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:69
 msgid "Granite mine"
-msgstr "Kamenolom"
+msgstr "Kamenný důl"
 
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:72
 msgid "Coal mine"
@@ -1869,6 +1873,13 @@ msgid ""
 "indicates the current number of men, the second value indicates the desired "
 "number. "
 msgstr ""
+"Hlavní stan představuje centrum tvé říše. Poskytuje dostatek skladovacího "
+"prostoru pro uložení rozličných zásob. Z hlavního stanu je v případě potřeby "
+"možné nechat některé zboží vyskladnit nebo zakázat zde jeho ukládání. K "
+"těmto úkonům slouží ikony v dolní části okna. Na třetí stránce můžete "
+"nastavit počet vojáků, kteří zůstanou v rezervě a budou bránit hlavní stan "
+"při přepadení. První číslo ukazuje současný stav; číslo za lomítkem pak "
+"indikuje, kolik vojáků chcete v rezervě mít. "
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:275
 msgid ""
@@ -1877,6 +1888,10 @@ msgid ""
 "to the soldiers stationed here. However, without gold coins the soldiers "
 "here can not train and improve their skills."
 msgstr ""
+"Kasárna je selmi malá budova, kterou obývají tvoji vojáci. Použitím ikony s "
+"mincí můžeš zastavit doručování mincí vojákům do příslušné kasárny. Pokud "
+"ovšem vojákům zlato nedoručíš, nemohou se zlepšit ve svých bojových "
+"dovednostech."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:287
 msgid ""
@@ -1885,6 +1900,10 @@ msgid ""
 "delivery of gold coins to the soldiers stationed here. However, without gold "
 "coins the soldiers here can not train and improve their skills."
 msgstr ""
+"Strážnice je pohodlné sídlo pro tvé vojáky, které je chráněno pevnými "
+"kamennými zdmi. Použitím ikony s mincí můžeš zakázat doručování zlatých "
+"mincí do příslušné vojenské budovy. Pokud ovšem vojákům zlato nedoručíš, "
+"nemohou se zlepšovat ve svých bojových dovednostech."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:303
 msgid ""
@@ -1906,84 +1925,145 @@ msgid ""
 "coins to the soldiers stationed here. However, without gold coins the "
 "soldiers here can not train and improve their skills."
 msgstr ""
+"Pevnost je nejsilnější vojenskou budovou ve hře a pojme nejvíce vojáků. "
+"Použitím ikony s mincí můžeš zakázat doručování zlatých mincí do příslušné "
+"vojenské budovy. Pokud ovšem vojákům zlato nedoručíš, nemohou se zlepšovat "
+"ve svých bojových dovednostech."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:346
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:334
+msgid ""
+"The quarrying of stone in a granite mine guarantees the supply of stone for "
+"buildings. However, eben a granite mine has to feed its workers."
+msgstr ""
+"Těžením kamene v žulovém dole je zabezpečován přísun kamene pro stavbu domů. "
+"Na rozdíl od kameníka ale žulový důl potřebuje pro svoji práci přísun jídla."
+
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:342
+msgid ""
+"The mining of coal supports the metalworks and smithy. This hard work "
+"requires an adequate supply of food."
+msgstr ""
+"The mining of coal supports the metalworks and smithy. This hard work "
+"requires an adequate supply of food.\r\n"
+"(podle mě je ten ENG text kokotina - metalworks nepotřebuje uhlí...) Uhlí je "
+"jedna z nejdůležitějších surovin kterou potřebuje např. mincovna nebo "
+"slévač. Tvrdá práce horníků vyžaduje mnoho jídla."
+
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:349
+msgid ""
+"Deep within the mountains, miners dig for iron ore. They will obviously need "
+"a lot of food for the strenuous work."
+msgstr ""
+"Hluboko v horách těží horníci železnou rudu. Ke své těžké práci potřebují "
+"mít přísun mnoha a mnoha jídla."
+
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:356
+msgid ""
+"A gold mine allows you to prospect for valuable gold deposits. For this, it "
+"is necessary to ensure that the miners are provided with plenty of food."
+msgstr ""
+"Zlato je jedním s požadavků na úspěch ve hře. Aby horníci mohli těžit zlatou "
+"rudu je jim potřeba zajistit trvalý přísun jídla."
+
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:365
 msgid ""
 "From the lookout tower you can see far into previously unexplored lands."
-msgstr ""
+msgstr "Špionská věž slouží k odhalení doposud neprozkoumaného území."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:355
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:374
 msgid ""
 "Thanks to its immense strength, the catapults represents an effective weapon "
 "against enemy military buildings."
 msgstr ""
+"Katapult představuje mocnou zbraň proti nepřátelským vojenským budovám, "
+"které jsou na dostřel."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:362
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:381
 msgid ""
 "A woodcutter provides the sawmill with logs. A forester is able to replant "
 "the depleted forest."
 msgstr ""
+"Dřevorubec zajišťuje přísun klád pro pilu. Lesník naopak znovu vysazuje "
+"stromy a zajišťuje obnovu vykáceného lesa."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:369
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:388
 msgid ""
 "The fish man is responsible for finding water rich in fish. His fish feed a "
 "great many miners."
 msgstr ""
+"Rybář loví ve vodách bohatých na ryby. Jeho rybami se pak živí velmi mnoho "
+"horníků."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:375
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:394
 msgid ""
 "The stonemason works the stone near his quarry into bricks. These are needed "
 "mainly for building houses and as ammunition for catapults."
 msgstr ""
+"Kameník těží kámen, který najde v blízkosti svého příbytku, a opracovává ho "
+"do stavebních bloků. Ty se použijí k výstavbě budov nebo jako střelivo do "
+"katapultů."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:383
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:402
 msgid ""
 "Within his area, the forester ensures the survival of the forest. He plants "
 "all types of trees."
 msgstr ""
+"Lesník zajišťuje výsadbu stromů v okolí svého příbytku. Vysazuje rozličné "
+"druhy stromů."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:390
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:409
 msgid ""
 "The butcher processes the livestock delivered into nutritious ham on which "
 "you miners are fed."
 msgstr ""
+"Řezník se stará o zpracování masa z vepřína - to pak může být využito k "
+"obživě horníků v dolech."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:397
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:416
 msgid "Meat the hunter acquires is used to feed the miners."
-msgstr ""
+msgstr "Maso ulovené lovcem je obživa pro horníky."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:402
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:421
 msgid ""
 "The brewer produces fine beer from grain and water. This drink is needed to "
 "fill the soldiers with courage."
 msgstr ""
+"Pivovar produkuje chutné pivko z obilí a vody. Tento nápoj pak dodává tvým "
+"vojákům patřičnou odvahu."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:409
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:428
 msgid ""
 "The armory produces swords and strong shields. This equipment is vital for "
 "your soldiers."
 msgstr ""
+"V kovárně se vyrábí meče a štíty. Toto vybavení je nezbytné pro tvoje vojáky."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:415
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:434
 msgid ""
 "The countless tools which your workers need are made in the metalworks. This "
 "requires boards and iron."
 msgstr ""
+"V nářaďovně se vyrábí bezpočet různých nástrojů, které pak využijí "
+"nejrůznější řemeslnící. Nářaďovna potřebuje přísun prken a oceli."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:422
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:441
 msgid ""
 "Raw iron ore is smelted in the iron smelters with the help of coal and raw "
 "iron. The processed iron is then used to making weapons (in the Armory) and "
 "tools (in the metalworks)."
 msgstr ""
+"Ve slévárnách se z uhlí a surové železné rudy vyrábí kvalitní ocel. Ta se "
+"pak dále využívá v kovárně nebo nářaďovně."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:434
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:453
 msgid ""
 "Grain and water are needed for rearing pigs. The meat thus obtained can then "
 "be processed by a butcher."
 msgstr ""
+"Ve vepříně se vykrmují tuční vepři. Získané maso se pak dále zpracovává u "
+"řezníka. Pro vepřín je nutné zajistit přísun obilí a vody."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:441
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:460
 msgid ""
 "The storehouse can help reduce long transportation journeys and is suited to "
 "the temporary storage of merchandise and inhabitants. You can release "
@@ -1991,54 +2071,70 @@ msgid ""
 "Alternatively, the storage function can be disabled. To do this, first "
 "choose the relevant icon followed by the desired merchandise or job symbol."
 msgstr ""
+"Sklad je dočasným úložštěm pro všechny typy surovin a podílí se na zkrácení "
+"doby nutné k jejich dopravě na místo určení. V konkrétním skladu je možné "
+"zakázat skladování určité suroviny nebo i nařídit její vyskladnění."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:460
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:479
 msgid ""
 "The grain is ground in the windmill. The flour from the windmill is later "
 "used at the bakery to bake bread."
 msgstr ""
+"V mlýnech se obilí od sedláka zpracovává na mouku. Ta se pak využije v "
+"pekárně."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:467
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:486
 msgid ""
 "The flour produced at the windmill can be combined with water in the bakery "
 "to make oven-fresh bread. It's your miners' favorite!"
 msgstr ""
+"Pekárna se zásobuje moukou z mlýna a vodou ze studny. Vyrábí se zde kvalitní "
+"pečivo, které mají rádi horníci v dolech."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:475
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:494
 msgid ""
 "The carpenter turns the woodcutter's logs into made-to-measure planks. There "
 "form the basic for building houses and ships."
 msgstr ""
+"V pile se zpracovávají dřevěné klády od dřevorubce na prkna. Ta jsou "
+"nezbytná pro výstavbu budov i lodí."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:483
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:502
 msgid ""
 "The mint is responsible for producing valuable gold coins. These precious "
 "objects are produced using coal and gold."
 msgstr ""
+"Mincovna produkuje mince vysoké hodnoty. Vyžaduje k tomu přísun zlata a uhlí."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:490
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:509
 msgid ""
 "A well supplies water to the bakery, brewery, donkey breeder and pig farm."
-msgstr ""
+msgstr "Studna zajišťuje vodu pro pekárnu, pivovar, oslí farmu a vepřín."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:496
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:515
 msgid ""
 "It is possible to build small rowing boats as well as huge cargo ships in a "
 "shipyard. The boards required for this are skillfully worked by shipwrights."
 msgstr ""
+"V loděnici se vyrábějí malé čluny i velké plachetnice. Loděnice vyžaduje "
+"neustálý přísun dřevěných prken."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:505
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:524
 msgid ""
 "The farmer plants and harvests grain in the surrounding fields. A windmill "
 "then processes the harvested grain into flour or can be used to feed the "
 "pigs."
 msgstr ""
+"Sedlák pěstuje na svých polích obilí. To se v mlýně mele na mouku nebo se ve "
+"vepříně použije ke krmení prasat."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:513
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:532
 msgid ""
 "The pack donkeys bred here are used to transport your merchandise more "
 "efficiently. They are reared on water and grain."
 msgstr ""
+"Zde je krmeno stádo přepravních oslů, kteří jsou používáni ke zrychlení a "
+"zefektivnění transportu. Je potřeba voda a obilí"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:157
 msgid "Boat"
@@ -2122,7 +2218,7 @@ msgstr "Lovec"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:257
 msgid "Metalworks"
-msgstr "Železárna"
+msgstr "Nářaďovna"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:265
 msgid "Sawmill"
@@ -2154,7 +2250,7 @@ msgstr "Rybář"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:320
 msgid "Ranger"
-msgstr "Walker Texas Ranger"
+msgstr "Lesník"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:321
 msgid "Carpenter"
@@ -2170,7 +2266,7 @@ msgstr "Lovec"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:324
 msgid "Farmer"
-msgstr "Framář"
+msgstr "Sedlák"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:325
 msgid "Miller"
@@ -2190,7 +2286,7 @@ msgstr "Horník"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:329
 msgid "Brewer"
-msgstr "Pivař"
+msgstr "Sládek"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:330
 msgid "Pig breeder"
@@ -2254,4 +2350,4 @@ msgstr "Průzkumník"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:346
 msgid "Pack donkey"
-msgstr "Stádo oslů"
+msgstr "Přepravní osel"

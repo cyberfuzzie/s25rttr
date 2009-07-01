@@ -2,14 +2,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Siedler II.5 RttR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-26 08:54+0100\n"
-"PO-Revision-Date: 2009-06-26 17:21+0000\n"
-"Last-Translator: NoLiFe <no.live.forever@gmail.com>\n"
+"POT-Creation-Date: 2009-06-26 22:58+0100\n"
+"PO-Revision-Date: 2009-06-27 09:20+0000\n"
+"Last-Translator: FELiX <Unknown>\n"
 "Language-Team: Siedler II.5 RttR <sf-team@siedler25.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-06-26 20:56+0000\n"
+"X-Launchpad-Export-Date: 2009-06-30 19:20+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: SLOVAKIA\n"
 "X-Poedit-Language: Slovak\n"
@@ -28,11 +28,11 @@ msgstr "Žiadne správy!"
 
 #: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:246
 msgid "Message"
-msgstr ""
+msgstr "Správa"
 
 #: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:246
 msgid "of"
-msgstr ""
+msgstr "z"
 
 #: /storage/RTTR/svn/trunk/src/languages.cpp:69
 msgid "System language"
@@ -119,7 +119,7 @@ msgstr "Vypnuté"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:133
 msgid "Vertex Buffer Objects:"
-msgstr ""
+msgstr "Vertex Buffer Objects:"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:143
 msgid "Graphics Driver"
@@ -240,25 +240,29 @@ msgstr "Základné"
 msgid "Productivity"
 msgstr "Produktivita"
 
-#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:569
+#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:556
 msgid ""
 "Military building\n"
 " occupied"
 msgstr ""
+"Vojenská budova\n"
+" obsazena"
 
-#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:776
+#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:770
 msgid "Military building lost"
-msgstr ""
+msgstr "Vojenská budova ztracena"
 
-#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:779
+#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:773
 msgid "Military building captured"
-msgstr ""
+msgstr "Vojenská budova zajata"
 
-#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:1003
+#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:997
 msgid ""
 "A catapult is firing\n"
 " upon us!"
 msgstr ""
+"Jsme pod palbou\n"
+" z katapultu!"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:44
 #: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:65
@@ -391,7 +395,7 @@ msgstr "Odozva"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:75
 msgid "Past player"
-msgstr ""
+msgstr "Poslední hráč"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:83
 msgid "Start game"
@@ -785,7 +789,7 @@ msgstr "Posledná hra"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:145
 msgid "Mapfile: "
-msgstr ""
+msgstr "Soubor s mapou: "
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:344
 msgid "Incomplete message was received!"
@@ -842,21 +846,21 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:98
 msgid "non-aggression pact"
-msgstr ""
+msgstr "Pakt o neútočení"
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:108
 #, c-format
 msgid "The player '%s' offers you a %s."
-msgstr ""
+msgstr "Hráč '%s' nabízí %s."
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:113
 msgid "Duration: Forever"
-msgstr ""
+msgstr "Trvání: Navždy"
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:115
 #, c-format
 msgid "Duration: %u GF (%s)"
-msgstr ""
+msgstr "Trvání: %u GF (%s)"
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:127
 #, c-format
@@ -1072,7 +1076,7 @@ msgstr "Poznámka: záznam skončil. (GF: %u)"
 
 #: /storage/RTTR/svn/trunk/src/nofBuildingWorker.cpp:374
 msgid "This mine is exhausted"
-msgstr ""
+msgstr "Tento důl je vytěžený"
 
 #: /storage/RTTR/svn/trunk/src/iwDemolishBuilding.cpp:44
 msgid "Demolish?"
@@ -1080,7 +1084,7 @@ msgstr "Zničiť?"
 
 #: /storage/RTTR/svn/trunk/src/nofAttacker.cpp:453
 msgid "We are under attack!"
-msgstr ""
+msgstr "Útočí na nás!"
 
 #: /storage/RTTR/svn/trunk/src/GameClient.cpp:565
 #, c-format
@@ -1324,12 +1328,16 @@ msgid ""
 "No more stones\n"
 " in range"
 msgstr ""
+"Veškerý kámen byl\n"
+" vytěžen"
 
 #: /storage/RTTR/svn/trunk/src/nofFarmhand.cpp:176
 msgid ""
 "No more fishes\n"
 " in range"
 msgstr ""
+"Všechny ryby byly\n"
+" vyloveny"
 
 #: /storage/RTTR/svn/trunk/src/iwWares.cpp:167
 msgid "Next page"
@@ -1341,7 +1349,7 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/enhOption.cpp:70
 msgid "0 means infinite"
-msgstr ""
+msgstr "0 znamená nekonečně"
 
 #: /storage/RTTR/svn/trunk/src/iwEnhancements.cpp:82
 msgid "Apply Changes"
@@ -1349,7 +1357,7 @@ msgstr "Použit zmeny"
 
 #: /storage/RTTR/svn/trunk/src/iwEnhancements.cpp:83
 msgid "Discard Changes"
-msgstr ""
+msgstr "Zahodiť zmeny"
 
 #: /storage/RTTR/svn/trunk/src/iwMilitaryBuilding.cpp:169
 msgid "Demolition ist not allowed because the building is under attack!"
@@ -1475,7 +1483,7 @@ msgstr "Pre hráča:"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:269
 msgid "Duration:"
-msgstr ""
+msgstr "Trvanie:"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:283
 msgid "Eternal"
@@ -1483,7 +1491,7 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:285
 msgid "Confirm"
-msgstr ""
+msgstr "Potvrdiť"
 
 #: /storage/RTTR/svn/trunk/src/nofScout_LookoutTower.cpp:81
 msgid "Lookout-tower occupied"
@@ -1687,7 +1695,7 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:504
 msgid "Found water"
-msgstr ""
+msgstr "Nalezena voda"
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:46
 msgid "Statistics"
@@ -1907,12 +1915,36 @@ msgid ""
 "soldiers here can not train and improve their skills."
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:346
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:334
+msgid ""
+"The quarrying of stone in a granite mine guarantees the supply of stone for "
+"buildings. However, eben a granite mine has to feed its workers."
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:342
+msgid ""
+"The mining of coal supports the metalworks and smithy. This hard work "
+"requires an adequate supply of food."
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:349
+msgid ""
+"Deep within the mountains, miners dig for iron ore. They will obviously need "
+"a lot of food for the strenuous work."
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:356
+msgid ""
+"A gold mine allows you to prospect for valuable gold deposits. For this, it "
+"is necessary to ensure that the miners are provided with plenty of food."
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:365
 msgid ""
 "From the lookout tower you can see far into previously unexplored lands."
 msgstr "Z pozorovateľne dovidíš na miesta ktoré ešte neboli preskúmané."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:355
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:374
 msgid ""
 "Thanks to its immense strength, the catapults represents an effective weapon "
 "against enemy military buildings."
@@ -1920,7 +1952,7 @@ msgstr ""
 "Sila katapultu je nesporná. Katapult je efektívna zbran proti nepriateľským "
 "budovám."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:362
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:381
 msgid ""
 "A woodcutter provides the sawmill with logs. A forester is able to replant "
 "the depleted forest."
@@ -1928,7 +1960,7 @@ msgstr ""
 "Drevorubač poskytuje polená píle. Lesník vysádza vyrúbaní les novými "
 "stromčekami."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:369
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:388
 msgid ""
 "The fish man is responsible for finding water rich in fish. His fish feed a "
 "great many miners."
@@ -1936,7 +1968,7 @@ msgstr ""
 "Rybár loví čerstvé ryby z riek a morí. Ryby su vynikajúca potrava pre "
 "baníkov."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:375
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:394
 msgid ""
 "The stonemason works the stone near his quarry into bricks. These are needed "
 "mainly for building houses and as ammunition for catapults."
@@ -1944,13 +1976,13 @@ msgstr ""
 "Kamenár získava kamene z priľahlého lomu. Kamene sú potrebné pre vačšinu "
 "budov a slúžia ako munícia pre katapulty."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:383
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:402
 msgid ""
 "Within his area, the forester ensures the survival of the forest. He plants "
 "all types of trees."
 msgstr "Lesník vysádza nové stromčeky v okolí lesníckej búdy."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:390
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:409
 msgid ""
 "The butcher processes the livestock delivered into nutritious ham on which "
 "you miners are fed."
@@ -1958,11 +1990,11 @@ msgstr ""
 "Mäsiar v mäsiarni spracuváva prasatá na výborné mäso ktoré putuje hladným "
 "baníkom."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:397
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:416
 msgid "Meat the hunter acquires is used to feed the miners."
 msgstr "Poľovník loví divú zver z ktoréj získava mäso."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:402
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:421
 msgid ""
 "The brewer produces fine beer from grain and water. This drink is needed to "
 "fill the soldiers with courage."
@@ -1970,7 +2002,7 @@ msgstr ""
 "Pivovárník vo svojom pivovare vyrába výborné pivo z obilia a vody. Pivo, meč "
 "a štít  sú potrebné na vytrénovanie nového vojaka."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:409
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:428
 msgid ""
 "The armory produces swords and strong shields. This equipment is vital for "
 "your soldiers."
@@ -1978,7 +2010,7 @@ msgstr ""
 "Skúsený zbrojmajster kuje meče a štíty. Tie potrebujú Vaši nováčikovia aby "
 "sa stali plnohodnotnými vojakmi."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:415
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:434
 msgid ""
 "The countless tools which your workers need are made in the metalworks. This "
 "requires boards and iron."
@@ -1986,7 +2018,7 @@ msgstr ""
 "Nástroje potrebné v daľších pracovných odvetviach vyrábá kováč v kovodieľni. "
 "Na výrobu nástrojov potrebuje dosky a železo."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:422
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:441
 msgid ""
 "Raw iron ore is smelted in the iron smelters with the help of coal and raw "
 "iron. The processed iron is then used to making weapons (in the Armory) and "
@@ -1998,7 +2030,7 @@ msgstr ""
 "železa. Vyrobené železo sa použiva na výrobu zbraní (v Zbrojnici) a na "
 "výrobu nástrojov (v Kovodielni)."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:434
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:453
 msgid ""
 "Grain and water are needed for rearing pigs. The meat thus obtained can then "
 "be processed by a butcher."
@@ -2006,7 +2038,7 @@ msgstr ""
 "Voda a obilie sú potrebné pre chov prasiat. Prastá z farmy sa spracúvajú u "
 "mäsiara."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:441
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:460
 msgid ""
 "The storehouse can help reduce long transportation journeys and is suited to "
 "the temporary storage of merchandise and inhabitants. You can release "
@@ -2015,7 +2047,7 @@ msgid ""
 "choose the relevant icon followed by the desired merchandise or job symbol."
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:460
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:479
 msgid ""
 "The grain is ground in the windmill. The flour from the windmill is later "
 "used at the bakery to bake bread."
@@ -2023,7 +2055,7 @@ msgstr ""
 "Obilie sa melie na múku v mlyne. Múka sa následne uskladní alebo putuje do "
 "pekárne kde sa z nej upečie chlieb."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:467
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:486
 msgid ""
 "The flour produced at the windmill can be combined with water in the bakery "
 "to make oven-fresh bread. It's your miners' favorite!"
@@ -2031,14 +2063,14 @@ msgstr ""
 "Pekár z múky ktorá sa pomelie v mlyne a z vody ktorú dodá studňa dokáže "
 "upiecť čerstvý chlieb. Chlieb slúži ako potrava pre baníkov."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:475
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:494
 msgid ""
 "The carpenter turns the woodcutter's logs into made-to-measure planks. There "
 "form the basic for building houses and ships."
 msgstr ""
 "Tesár reže polená na dosky, ktoré su základom na stavbu budov a lodí."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:483
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:502
 msgid ""
 "The mint is responsible for producing valuable gold coins. These precious "
 "objects are produced using coal and gold."
@@ -2046,14 +2078,14 @@ msgstr ""
 "Mincovňa vyrába zlaté mince ktoré slúžia na zvyšovanie úrovne vojakov. Na "
 "výrobu zlatej mince dreba zlatú rudu a uhlie."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:490
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:509
 msgid ""
 "A well supplies water to the bakery, brewery, donkey breeder and pig farm."
 msgstr ""
 "Studňa poskytuje vodu pre pekáreň, pivovar, chov somárov a pre prasačiu "
 "farmu."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:496
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:515
 msgid ""
 "It is possible to build small rowing boats as well as huge cargo ships in a "
 "shipyard. The boards required for this are skillfully worked by shipwrights."
@@ -2061,7 +2093,7 @@ msgstr ""
 "V lodenici sa vyrábajú člnky a veľké prepravné lode.Pre výrobu člnov a lodí "
 "sú potrebne dosky."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:505
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:524
 msgid ""
 "The farmer plants and harvests grain in the surrounding fields. A windmill "
 "then processes the harvested grain into flour or can be used to feed the "
@@ -2071,7 +2103,7 @@ msgstr ""
 "Oblie sa používa buď ako potrava pre prasatá a somáre, na výrobu piva v "
 "pivovare alebo sa pomelie v mlyne na múku."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:513
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:532
 msgid ""
 "The pack donkeys bred here are used to transport your merchandise more "
 "efficiently. They are reared on water and grain."

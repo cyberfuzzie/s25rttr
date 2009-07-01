@@ -30,6 +30,7 @@
 #include "GameClientPlayer.h"
 #include "Ware.h"
 #include "EventManager.h"
+#include "noShip.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -55,6 +56,10 @@ nobHarborBuilding::nobHarborBuilding(const unsigned short x, const unsigned shor
 	// Evtl gabs verlorene Waren, die jetzt in den Hafen wieder reinkönnen
 	GAMECLIENT.GetPlayer(player)->FindClientForLostWares();
 
+	/// Die Meere herausfinden, an die dieser Hafen grenzt
+	for(unsigned i = 0;i<6;++i)
+		sea_ids[i] = gwg->IsCoastalPoint(gwg->GetXA(x,y,i), gwg->GetYA(x,y,i));
+
 	// Post versenden
 	if(GameClient::inst().GetPlayerID() == this->player)
 		GameClient::inst().SendPostMessage(new ImagePostMsgWithLocation(
@@ -79,14 +84,17 @@ void nobHarborBuilding::Serialize(SerializedGameData * sgd) const
 nobHarborBuilding::nobHarborBuilding(SerializedGameData * sgd, const unsigned obj_id) 
 : nobBaseWarehouse(sgd,obj_id)
 {
-	/// Die Meere herausfinden, an die dieser Hafen grenzt
-	for(unsigned i = 0;i<12;++i)
-	{
-		unsigned short sea_id = gwg->GetNode(gwg->GetXA2(x,y,i),gwg->GetYA2(x,y,i)).sea_id;
-		if(sea_id)
-			sea_ids.push_back(sea_id);
-	}
+	
 }
+
+/// Positionen der einzelnen Expeditionsgüter vor dem Hafengebäude für alle 4 Völker jeweils
+struct Point { int x,y; };
+// Relative Position des Bauarbeiters 
+const Point BUILDER_POS[4] = { {0,0}, {0,0}, {0,0}, {0,0} };
+/// Relative Position der Brettertürme
+const Point BOARDS_POS[4] = { {0,0}, {0,0}, {0,0}, {0,0} };
+/// Relative Position der Steintürme
+const Point STONES_POS[4] = { {0,0}, {0,0}, {0,0}, {0,0} };
 
 
 void nobHarborBuilding::Draw(int x,int y)
@@ -101,15 +109,15 @@ void nobHarborBuilding::Draw(int x,int y)
 
 		// Bretter
 		for(unsigned char i = 0;i<expedition.boards;++i)
-			GetImage(map_lst, 2200+GD_BOARDS)->Draw(x+GetDoorPointX()-5,y+GetDoorPointY()-10-i*4,0,0,0,0,0,0);
+			GetImage(map_lst, 2200+GD_BOARDS)->Draw(x+BOARDS_POS[nation].x-5,y+BOARDS_POS[nation].y-i*4,0,0,0,0,0,0);
 		// Steine
 		for(unsigned char i = 0;i<expedition.stones;++i)
-			GetImage(map_lst, 2200+GD_STONES)->Draw(x+GetDoorPointX()+8,y+GetDoorPointY()-12-i*4,0,0,0,0,0,0);
+			GetImage(map_lst, 2200+GD_STONES)->Draw(x+BOARDS_POS[nation].x+8,y+BOARDS_POS[nation].y-i*4,0,0,0,0,0,0);
 
 		// Und den Bauarbeiter, falls er schon da ist
 		if(expedition.builder)
 		{
-			unsigned id = GameClient::inst().GetGlobalAnimation(1000,1,1,this->x+this->y);
+			unsigned id = GameClient::inst().GetGlobalAnimation(1000,1,10,this->x+this->y);
 
 			const int WALKING_DISTANCE = 30;
 
@@ -118,16 +126,19 @@ void nobHarborBuilding::Draw(int x,int y)
 			// Id vom laufen
 			unsigned walking_id = (id/32)%8;
 
-			int right_point = x - 20;
+			int right_point = x - 20 + BUILDER_POS[nation].x;
 
 			if(id < 500)
 			{
-				GetBobFile(jobs_bob)->Draw(23,0,false,walking_id,right_point-walking_distance,y,COLORS[GAMECLIENT.GetPlayer(player)->color]);
+				GetBobFile(jobs_bob)->Draw(23,0,false,walking_id,right_point-walking_distance,
+					y+BUILDER_POS[nation].y,COLORS[GAMECLIENT.GetPlayer(player)->color]);
 				//DrawShadow(right_point-walking_distance,y,walking_id,0);
 			}
 			else
 			{
-				GetBobFile(jobs_bob)->Draw(23,0,false,walking_id,right_point-walking_distance,y,COLORS[GAMECLIENT.GetPlayer(player)->color]);
+				GetBobFile(jobs_bob)->Draw(23,3,false,walking_id,
+					right_point-WALKING_DISTANCE+walking_distance,y+BUILDER_POS[nation].y,
+					COLORS[GAMECLIENT.GetPlayer(player)->color]);
 				//DrawShadow(right_point-WALKING_DISTANCE+walking_distance,y,walking_id,0);
 			}		
 		}
@@ -270,10 +281,94 @@ void nobHarborBuilding::WareLost(Ware * ware)
 /// Grenzt der Hafen an ein bestimmtes Meer an?
 bool nobHarborBuilding::IsAtThisSea(const unsigned short sea_id) const
 {
-	for(unsigned i = 0;i<sea_ids.size();++i)
+	for(unsigned i = 0;i<6;++i)
 	{
 		if(sea_id == sea_ids[i])
 			return true;
 	}
 	return false;
+}
+
+
+/// Schiff ist angekommen
+void nobHarborBuilding::ShipArrived(noShip * ship)
+{
+	// Verfügbare Aufgaben abklappern
+
+	// Steht Expedition zum Start bereit
+	if(expedition.active && expedition.builder 
+		&& expedition.boards == BUILDING_COSTS[nation][BLD_HARBORBUILDING].boards
+		&& expedition.stones == BUILDING_COSTS[nation][BLD_HARBORBUILDING].stones)
+	{
+		// Aufräumen am Hafen
+		expedition.active = false;
+		// Expedition starten
+		ship->StartExpedition();
+	}
+	else
+	{
+		assert(false);
+	}
+}
+
+/// Legt eine Ware im Lagerhaus ab
+void nobHarborBuilding::AddWare(Ware * ware)
+{
+
+	// Brauchen wir die Ware?
+	if(expedition.active)
+	{
+		if((ware->type == GD_BOARDS && expedition.boards < BUILDING_COSTS[nation][BLD_HARBORBUILDING].boards)
+			|| (ware->type == GD_STONES && expedition.stones < BUILDING_COSTS[nation][BLD_HARBORBUILDING].stones))
+		{
+			if(ware->type == GD_BOARDS) ++expedition.boards;
+			else if(ware->type == GD_STONES) ++expedition.stones;
+
+			// Ware nicht mehr abhängig
+			RemoveDependentWare(ware);
+			// Dann zweigen wir die einfach mal für die Expedition ab
+			GAMECLIENT.GetPlayer(player)->RemoveWare(ware);
+			delete ware;
+
+			// Ggf. ist jetzt alles benötigte da
+			CheckExpeditionReady();
+			return;
+		}
+	}
+
+	nobBaseWarehouse::AddWare(ware);
+
+}
+
+/// Prüft, ob eine Expedition von den Waren her vollständig ist und ruft ggf. das Schiff
+void nobHarborBuilding::CheckExpeditionReady()
+{
+	// Alles da?
+	if(expedition.boards < BUILDING_COSTS[nation][BLD_HARBORBUILDING].boards)
+		return;
+	if(expedition.stones < BUILDING_COSTS[nation][BLD_HARBORBUILDING].stones)
+		return;
+	if(!expedition.builder)
+		return;
+
+	// Dann bestellen wir mal das Schiff
+	players->getElement(player)->OrderShip(this);
+}
+
+
+/// Gibt den Punkt eines bestimmtes Meeres um den Hafen herum an, sodass Schiffe diesen anfahren können
+void nobHarborBuilding::GetCoastalPoint(MapCoord * px, MapCoord * py, const unsigned short sea_id) const
+{
+	for(unsigned i = 0;i<6;++i)
+	{
+		if(sea_ids[i] == sea_id)
+		{
+			*px = gwg->GetXA(x,y,i);
+			*py = gwg->GetYA(x,y,i);
+		}
+	}
+
+	// Keinen Punkt gefunden
+	*px = 0xFFFF;
+	*py = 0xFFFF;
 }

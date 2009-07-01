@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 5154 2009-07-01 14:57:25Z OLiver $
+// $Id: GameClientPlayer.cpp 5159 2009-07-01 21:29:52Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1605,6 +1605,44 @@ bool GameClientPlayer::IsWareDependent(Ware * ware)
 	return false;
 }
 
+/// Registriert ein Schiff beim Einwohnermeldeamt
+void GameClientPlayer::RegisterShip(noShip * ship)
+{ 
+	ships.push_back(ship); 
+
+	// Evtl. steht irgendwo eine Expedition an und das Schiff kann diese übernehmen
+	nobHarborBuilding * best = 0;
+	unsigned best_length = 0xFFFFFFFF;
+	std::vector<unsigned char> best_route;
+
+	// Beste Weglänge, die ein Schiff zurücklegen muss, welches gerade nichts zu tun hat
+	for(std::list<nobHarborBuilding*>::iterator it = ships_needed.begin();it!=ships_needed.end();++it)
+	{
+		// liegen wir am gleichen Meer?
+		if((*it)->IsAtThisSea(ship->GetSeaID()))
+		{
+			MapCoord dest_x,dest_y;
+			(*it)->GetCoastalPoint(&dest_x,&dest_y,ship->GetSeaID());
+			unsigned length;
+			std::vector<unsigned char> route;
+			if(gwg->FindShipPath(ship->GetX(),ship->GetY(),dest_x,dest_y,&route,&length))
+			{
+				if(length < best_length)
+				{
+					best = *it;
+					best_length = length;
+					best_route = route;
+				}
+			}
+		}
+	}
+
+	// Einen Hafen gefunden?
+	if(best)
+		// Dann bekommt das gleich der Hafen
+		ship->GoToHarbor(best,best_route);
+}
+
 /// Schiff für Hafen bestellen
 void GameClientPlayer::OrderShip(nobHarborBuilding * hb)
 {
@@ -1621,19 +1659,35 @@ void GameClientPlayer::OrderShip(nobHarborBuilding * hb)
 		{
 			if(hb->IsAtThisSea((*it)->GetSeaID()))
 			{
+				MapCoord dest_x,dest_y;
+				hb->GetCoastalPoint(&dest_x,&dest_y,(*it)->GetSeaID());
 				unsigned length;
-				if(gwg->FindShipPath((*it)->GetX(),(*it)->GetY(),hb->GetX(),hb->GetY(),NULL,&length))
+				std::vector<unsigned char> route;
+				if(gwg->FindShipPath((*it)->GetX(),(*it)->GetY(),dest_x,dest_y,&route,&length))
 				{
 					if(length < best_length)
 					{
 						best = *it;
 						best_length = length;
+						best_route = route;
 					}
 				}
 			}
 		}
 	}
 
+	// Eins gefunden?
+	if(best)
+	{
+		// Dann bekommt das gleich der Hafen
+		best->GoToHarbor(hb,best_route);
+	}
+	else
+	{
+		// Ansonsten in die Liste aufnehmen, damit der Hafen irgendwann mal sein Schiff bekommt
+		// wenn mal wieder eines Zeit hat
+		ships_needed.push_back(hb);
+	}
 }
 
 /// Meldet EIN bestelltes Schiff wieder ab

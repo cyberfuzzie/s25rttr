@@ -22,6 +22,8 @@
 
 #include "nobBaseWarehouse.h"
 
+class noShip;
+
 class nobHarborBuilding : public nobBaseWarehouse
 {
 	struct ExpeditionInfo
@@ -38,13 +40,15 @@ class nobHarborBuilding : public nobBaseWarehouse
 
 	/// Bestell-Ware-Event
 	EventManager::EventPointer orderware_ev;
-	/// Die Meeres-IDs aller angrenzenden Meere
-	std::vector<unsigned short> sea_ids;
+	/// Die Meeres-IDs aller angrenzenden Meere (jeweils für die 6 drumherumliegenden Küstenpunkte)
+	unsigned short sea_ids[6];
 
 private:
 
 	/// Bestellt die zusätzlichen erforderlichen Waren für eine Expedition
 	void OrderExpeditionWares();
+	/// Prüft, ob eine Expedition von den Waren her vollständig ist und ruft ggf. das Schiff
+	void CheckExpeditionReady();
 
 public:
 
@@ -61,14 +65,20 @@ public:
 
 	/// Eine bestellte Ware konnte doch nicht kommen
 	void WareLost(Ware * ware);
+	/// Legt eine Ware im Lagerhaus ab
+	void AddWare(Ware * ware);
 	
 	/// Startet eine Expedition oder stoppt sie, wenn bereits eine stattfindet
 	void StartExpedition();
 	/// Ist Expedition in Vorbereitung?
 	bool IsExpeditionActive() const { return expedition.active; }
+	/// Schiff ist angekommen
+	void ShipArrived(noShip * ship);
 
 	/// Grenzt der Hafen an ein bestimmtes Meer an?
 	bool IsAtThisSea(const unsigned short sea_id) const;
+	/// Gibt den Punkt eines bestimmtes Meeres um den Hafen herum an, sodass Schiffe diesen anfahren können
+	void GetCoastalPoint(MapCoord * px, MapCoord * py, const unsigned short sea_id) const;
 	
 };
 

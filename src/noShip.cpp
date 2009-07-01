@@ -35,7 +35,7 @@ const unsigned SHIP_SPEED = 20;
 
 
 /// Konstruktor
-noShip::noShip(const unsigned short x, const unsigned short y, const unsigned char playe) 
+noShip::noShip(const unsigned short x, const unsigned short y, const unsigned char player) 
 : noMovable(NOP_SHIP,x,y), player(player), state(STATE_IDLE), sea_id(0)
 {
 	// Meer ermitteln, auf dem dieses Schiff fährt
@@ -92,6 +92,18 @@ void noShip::Draw(int x, int y)
 		{
 			DrawDriving(x,y);
 		} break;
+	case STATE_EXPEDITION_LOADING:
+		{
+			GetImage(boot_lst, ((dir+3)%6)*2 + 1)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
+			GetImage(boot_lst, ((dir+3)%6)*2)->Draw(x,y);
+		} break;
+	case STATE_EXPEDITION_WAIT:
+		{
+			GetImage(boot_lst, ((dir+3)%6)*2 + 1)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
+			GetImage(boot_lst, ((dir+3)%6)*2)->Draw(x,y);
+			/// Waren zeichnen 
+			GetImage(boot_lst, 30+((dir+3)%6))->Draw(x,y);
+		} break;
 	}
 
 }
@@ -120,6 +132,18 @@ void noShip::HandleEvent(const unsigned int id)
 
 			// entscheiden, was als nächstes zu tun ist
 			Driven();
+		} break;
+	default:
+		{
+			switch(state)
+			{
+			default: break;
+			case STATE_EXPEDITION_LOADING:
+				{
+					// Schiff ist nun bereit und Expedition kann beginnen
+					state = STATE_EXPEDITION_WAIT;
+				} break;
+			}
 		} break;
 
 	}
@@ -162,14 +186,26 @@ void noShip::GoToHarbor(nobHarborBuilding * hb, const std::vector<unsigned char>
 
 void noShip::HandleState_GoToHarbor()
 {
+	nobHarborBuilding * hb = gwg->GetSpecObj<nobHarborBuilding>(goal_x,goal_y);
+
 	// Sind wir schon da?
-	if(goal_x == x && goal_y == y)
+	if(pos == route.size())
 	{
 		// Hafen Bescheid sagen
+		hb->ShipArrived(this);
 	}
 	else
 	{
+		// Existiert der Hafen ü
 		StartDriving(route[pos++]);
 	}
-
 }
+
+/// Startet eine Expedition
+void noShip::StartExpedition()
+{
+	/// Schiff wird "beladen", also kurze Zeit am Hafen stehen, bevor wir bereit sind
+	state = STATE_EXPEDITION_LOADING;
+	current_ev = em->AddEvent(this,200,1);
+}
+

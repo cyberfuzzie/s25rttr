@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.h 5154 2009-07-01 14:57:25Z OLiver $
+// $Id: GameClientPlayer.h 5159 2009-07-01 21:29:52Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -340,7 +340,7 @@ public:
 	nobBaseWarehouse * GetFirstWH() { return *warehouses.begin(); }
 
 	/// Registriert ein Schiff beim Einwohnermeldeamt
-	void RegisterShip(noShip * ship) { ships.push_back(ship); }
+	void RegisterShip(noShip * ship);
 	/// Meldet das Schiff wieder ab
 	void RemoveShip(noShip * ship) { ships.remove(ship); }
 	/// Schiff für Hafen bestellen

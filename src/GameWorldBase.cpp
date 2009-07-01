@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 5144 2009-06-30 07:45:36Z OLiver $
+// $Id: GameWorldBase.cpp 5159 2009-07-01 21:29:52Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1167,22 +1167,20 @@ Visibility GameWorldBase::CalcWithAllyVisiblity(const MapCoord x, const MapCoord
 
 
 /// Ermittelt, ob ein Punkt Küstenpunkt ist, d.h. Zugang zu einem schiffbaren Meer hat
-bool GameWorldBase::IsCoastalPoint(const MapCoord x, const MapCoord y) const
+unsigned short GameWorldBase::IsCoastalPoint(const MapCoord x, const MapCoord y) const
 {
 	// Punkt muss selbst zu keinem Meer gehören
 	if(GetNode(x,y).sea_id)
-		return false;
+		return 0;
 
 	// Um den Punkt herum muss ein gültiger Meeres Punkt sein
 	for(unsigned i = 0;i<6;++i)
 	{
-		if(GetNodeAround(x,y,i).sea_id)
+		if(unsigned short sea_id = GetNodeAround(x,y,i).sea_id)
 		{
 			// Dieses Meer schiffbar (todo: andere Kritierien wie Hafenplätze etc.)?
 			if(seas[GetNodeAround(x,y,i).sea_id].nodes_count > 20)
-			{
-				return true;
-			}
+				return sea_id;
 		}
 	}
 

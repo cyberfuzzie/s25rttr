@@ -1,4 +1,4 @@
-// $Id: nobHQ.cpp 5137 2009-06-28 19:28:27Z OLiver $
+// $Id: nobHQ.cpp 5159 2009-07-01 21:29:52Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -84,7 +84,7 @@ nobHQ::nobHQ(const unsigned short x, const unsigned short y,const unsigned char 
 		goods.goods[GD_SHIELDVIKINGS] = 0;
 		goods.goods[GD_SHIELDAFRICANS] = 0;
 		goods.goods[GD_GRAIN] = 0;
-		goods.goods[GD_COINS] = 10;
+		goods.goods[GD_COINS] = 0;
 		goods.goods[GD_GOLD] = 0;
 		goods.goods[GD_IRONORE] = 8;
 		goods.goods[GD_COAL] = 8;

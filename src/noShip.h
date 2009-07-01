@@ -35,8 +35,10 @@ class noShip : public noMovable
 	enum State
 	{
 		STATE_IDLE = 0, /// Schiff hat nix zu tun und hängt irgendwo an der Küste rum 
-		STATE_GOTOHARBOR
-
+		STATE_GOTOHARBOR,
+		STATE_EXPEDITION_LOADING,
+		STATE_EXPEDITION_WAIT,
+		STATE_EXPEDITION_DRIVE
 	} state;
 
 	/// Das Meer, auf dem dieses Schiff fährt
@@ -84,6 +86,8 @@ public:
 
 	/// Fährt zum Hafen, um dort eine Mission (Expedition) zu erledigen
 	void GoToHarbor(nobHarborBuilding * hb, const std::vector<unsigned char>& route);
+	/// Startet eine Expedition
+	void StartExpedition();
 };
 
 

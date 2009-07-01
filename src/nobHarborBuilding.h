@@ -38,6 +38,8 @@ class nobHarborBuilding : public nobBaseWarehouse
 
 	/// Bestell-Ware-Event
 	EventManager::EventPointer orderware_ev;
+	/// Die Meeres-IDs aller angrenzenden Meere
+	std::vector<unsigned short> sea_ids;
 
 private:
 
@@ -57,11 +59,16 @@ public:
 	void Draw(int x, int y);
 	void HandleEvent(const unsigned int id);
 
+	/// Eine bestellte Ware konnte doch nicht kommen
+	void WareLost(Ware * ware);
 	
 	/// Startet eine Expedition oder stoppt sie, wenn bereits eine stattfindet
 	void StartExpedition();
 	/// Ist Expedition in Vorbereitung?
 	bool IsExpeditionActive() const { return expedition.active; }
+
+	/// Grenzt der Hafen an ein bestimmtes Meer an?
+	bool IsAtThisSea(const unsigned short sea_id) const;
 	
 };
 

@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.h 5137 2009-06-28 19:28:27Z OLiver $
+// $Id: GameClientPlayer.h 5154 2009-07-01 14:57:25Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -43,6 +43,8 @@ class nofFlagWorker;
 class nobBaseMilitary;
 class SerializedGameData;
 class nofCarrier;
+class noShip;
+class nobHarborBuilding;
 class GameWorldGame;
 class GameMessage_GameCommand;
 
@@ -93,6 +95,11 @@ private:
 	std::list<Ware*> ware_list;
 	/// Liste von Geologen und Spähern, die an eine Flagge gebunden sind
 	std::list<nofFlagWorker*> flagworkers;
+	/// Liste von Schiffen dieses Spielers
+	std::list<noShip*> ships;
+	/// Liste von Häfen, die Schiffe haben wollen
+	std::list<nobHarborBuilding*> ships_needed;
+
 
 	/// Liste, welchen nächsten 10 Angreifern Verteidiger entgegenlaufen sollen
 	bool defenders[5];
@@ -332,6 +339,14 @@ public:
 	/// Gibt erstes Lagerhaus zurück
 	nobBaseWarehouse * GetFirstWH() { return *warehouses.begin(); }
 
+	/// Registriert ein Schiff beim Einwohnermeldeamt
+	void RegisterShip(noShip * ship) { ships.push_back(ship); }
+	/// Meldet das Schiff wieder ab
+	void RemoveShip(noShip * ship) { ships.remove(ship); }
+	/// Schiff für Hafen bestellen
+	void OrderShip(nobHarborBuilding * hb);
+	/// Meldet EIN bestelltes Schiff wieder ab
+	void RemoveOrderedShip(nobHarborBuilding * hb);
 
 	/// Er gibt auf
 	void Surrender();

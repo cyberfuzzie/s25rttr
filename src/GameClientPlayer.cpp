@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 5137 2009-06-28 19:28:27Z OLiver $
+// $Id: GameClientPlayer.cpp 5154 2009-07-01 14:57:25Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -33,11 +33,12 @@
 
 #include "noFlag.h"
 #include "noBuildingSite.h"
-#include "nobBaseWarehouse.h"
 #include "nobUsual.h"
 #include "nobMilitary.h"
 #include "nofFlagWorker.h"
 #include "nofCarrier.h"
+#include "noShip.h"
+#include "nobHarborBuilding.h"
 
 #include "GameInterface.h"
 
@@ -209,6 +210,8 @@ void GameClientPlayer::Serialize(SerializedGameData * sgd)
 
 	sgd->PushObjectList(flagworkers,false);
 
+	sgd->PushObjectList(ships,true);
+
 	for(unsigned i = 0;i<5;++i)
 		sgd->PushBool(defenders[i]);
 	sgd->PushUnsignedShort(defenders_pos);
@@ -294,6 +297,8 @@ void GameClientPlayer::Deserialize(SerializedGameData * sgd)
 	sgd->PopObjectList(ware_list,GOT_WARE);
 
 	sgd->PopObjectList(flagworkers,GOT_UNKNOWN);
+
+	sgd->PopObjectList(ships,GOT_SHIP);
 
 	for(unsigned i = 0;i<5;++i)
 		defenders[i] = sgd->PopBool();
@@ -1598,4 +1603,48 @@ bool GameClientPlayer::IsWareDependent(Ware * ware)
 	}
 
 	return false;
+}
+
+/// Schiff für Hafen bestellen
+void GameClientPlayer::OrderShip(nobHarborBuilding * hb)
+{
+	// Schiff mit der besten Weglänge bestimmen
+	noShip * best = 0;
+	unsigned best_length = 0xFFFFFFFF;
+	std::vector<unsigned char> best_route;
+
+	// Beste Weglänge, die ein Schiff zurücklegen muss, welches gerade nichts zu tun hat
+	for(std::list<noShip*>::iterator it = ships.begin();it!=ships.end();++it)
+	{
+		// Hat das Schiff gerade nichts zu tun und liegen wir am gleichen Meer?
+		if((*it)->IsIdling())
+		{
+			if(hb->IsAtThisSea((*it)->GetSeaID()))
+			{
+				unsigned length;
+				if(gwg->FindShipPath((*it)->GetX(),(*it)->GetY(),hb->GetX(),hb->GetY(),NULL,&length))
+				{
+					if(length < best_length)
+					{
+						best = *it;
+						best_length = length;
+					}
+				}
+			}
+		}
+	}
+
+}
+
+/// Meldet EIN bestelltes Schiff wieder ab
+void GameClientPlayer::RemoveOrderedShip(nobHarborBuilding * hb)
+{
+	for(std::list<nobHarborBuilding*>::iterator it = ships_needed.begin();it!=ships_needed.end();++it)
+	{
+		if(*it == hb)
+		{
+			ships_needed.erase(it);
+			return;
+		}
+	}
 }

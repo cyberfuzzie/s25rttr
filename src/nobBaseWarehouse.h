@@ -1,4 +1,4 @@
-// $Id: nobBaseWarehouse.h 5137 2009-06-28 19:28:27Z OLiver $
+// $Id: nobBaseWarehouse.h 5154 2009-07-01 14:57:25Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -169,7 +169,7 @@ public: void Serialize(SerializedGameData *sgd) const { Serialize_nobBaseWarehou
 
 	void CarryOutWare();
 	/// Eine bestellte Ware konnte doch nicht kommen
-	void WareLost(Ware * ware);
+	virtual void WareLost(Ware * ware);
 	/// Bestellte Ware, die sich noch hier drin befindet, storniert ihre Auslieferung
 	void CancelWare(Ware * ware);
 	/// Bestellte Figur, die sich noch inder Warteschlange befindet, kommt nicht mehr und will rausgehauen werden

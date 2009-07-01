@@ -21,6 +21,9 @@
 #define NO_SHIP_H_
 
 #include "noMovable.h"
+#include "MapConsts.h"
+
+class nobHarborBuilding;
 
 /// Klasse für die Schiffe
 class noShip : public noMovable
@@ -31,8 +34,18 @@ class noShip : public noMovable
 	/// Was macht das Schiff gerade?
 	enum State
 	{
-		STATE_IDLE = 0 /// Schiff hat nix zu tun und hängt irgendwo an der Küste rum 
+		STATE_IDLE = 0, /// Schiff hat nix zu tun und hängt irgendwo an der Küste rum 
+		STATE_GOTOHARBOR
+
 	} state;
+
+	/// Das Meer, auf dem dieses Schiff fährt
+	unsigned short sea_id;
+	/// Ziel des Schiffes
+	MapCoord goal_x, goal_y;
+	/// Schiffsroute 
+	std::vector<unsigned char> route;
+	unsigned pos;
 
 private:
 
@@ -40,6 +53,11 @@ private:
 	void Driven();
 	/// Fängt an zu fahren
 	void StartDriving(const unsigned char dir);
+
+	void HandleState_GoToHarbor();
+
+	/// Zeichnet normales Fahren auf dem Meer ohne irgendwelche Güter
+	void DrawDriving(int x, int y);
 
 public:
 
@@ -58,6 +76,14 @@ public:
 	void Draw(int x, int y);
 	// Benachrichtigen, wenn neuer gf erreicht wurde
 	void HandleEvent(const unsigned int id);
+
+	/// Hat das Schiff gerade nichts zu tun
+	bool IsIdling() const { return (state == STATE_IDLE); }
+	/// Gibt die ID des Meeres zurück, auf dem es sich befindet
+	unsigned short GetSeaID() const { return sea_id; }
+
+	/// Fährt zum Hafen, um dort eine Mission (Expedition) zu erledigen
+	void GoToHarbor(nobHarborBuilding * hb, const std::vector<unsigned char>& route);
 };
 
 

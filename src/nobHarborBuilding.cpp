@@ -79,6 +79,13 @@ void nobHarborBuilding::Serialize(SerializedGameData * sgd) const
 nobHarborBuilding::nobHarborBuilding(SerializedGameData * sgd, const unsigned obj_id) 
 : nobBaseWarehouse(sgd,obj_id)
 {
+	/// Die Meere herausfinden, an die dieser Hafen grenzt
+	for(unsigned i = 0;i<12;++i)
+	{
+		unsigned short sea_id = gwg->GetNode(gwg->GetXA2(x,y,i),gwg->GetYA2(x,y,i)).sea_id;
+		if(sea_id)
+			sea_ids.push_back(sea_id);
+	}
 }
 
 
@@ -86,6 +93,46 @@ void nobHarborBuilding::Draw(int x,int y)
 {
 	// Gebäude an sich zeichnen
   	DrawBaseBuilding(x,y);
+
+	// Läuft gerade eine Expedition?
+	if(expedition.active)
+	{
+		// Waren für die Expedition zeichnen
+
+		// Bretter
+		for(unsigned char i = 0;i<expedition.boards;++i)
+			GetImage(map_lst, 2200+GD_BOARDS)->Draw(x+GetDoorPointX()-5,y+GetDoorPointY()-10-i*4,0,0,0,0,0,0);
+		// Steine
+		for(unsigned char i = 0;i<expedition.stones;++i)
+			GetImage(map_lst, 2200+GD_STONES)->Draw(x+GetDoorPointX()+8,y+GetDoorPointY()-12-i*4,0,0,0,0,0,0);
+
+		// Und den Bauarbeiter, falls er schon da ist
+		if(expedition.builder)
+		{
+			unsigned id = GameClient::inst().GetGlobalAnimation(1000,1,1,this->x+this->y);
+
+			const int WALKING_DISTANCE = 30;
+
+			// Wegstrecke, die er von einem Punkt vom anderen schon gelaufen ist
+			int walking_distance = (id%500)*WALKING_DISTANCE/500;
+			// Id vom laufen
+			unsigned walking_id = (id/32)%8;
+
+			int right_point = x - 20;
+
+			if(id < 500)
+			{
+				GetBobFile(jobs_bob)->Draw(23,0,false,walking_id,right_point-walking_distance,y,COLORS[GAMECLIENT.GetPlayer(player)->color]);
+				//DrawShadow(right_point-walking_distance,y,walking_id,0);
+			}
+			else
+			{
+				GetBobFile(jobs_bob)->Draw(23,0,false,walking_id,right_point-walking_distance,y,COLORS[GAMECLIENT.GetPlayer(player)->color]);
+				//DrawShadow(right_point-WALKING_DISTANCE+walking_distance,y,walking_id,0);
+			}		
+		}
+			
+	}
 }
 
 
@@ -209,4 +256,24 @@ void nobHarborBuilding::OrderExpeditionWares()
 	// Wenn immer noch nicht alles da ist, später noch einmal bestellen
 	orderware_ev = em->AddEvent(this,210,10);
 
+}
+
+
+/// Eine bestellte Ware konnte doch nicht kommen
+void nobHarborBuilding::WareLost(Ware * ware)
+{
+	// ggf. neue Waren für Expedition bestellen
+	if(expedition.active && (ware->type == GD_BOARDS || ware->type == GD_STONES))
+		OrderExpeditionWares();
+}
+
+/// Grenzt der Hafen an ein bestimmtes Meer an?
+bool nobHarborBuilding::IsAtThisSea(const unsigned short sea_id) const
+{
+	for(unsigned i = 0;i<sea_ids.size();++i)
+	{
+		if(sea_id == sea_ids[i])
+			return true;
+	}
+	return false;
 }

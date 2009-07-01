@@ -1,4 +1,4 @@
-// $Id: Pathfinding.cpp 5070 2009-06-19 20:05:10Z OLiver $
+// $Id: Pathfinding.cpp 5154 2009-07-01 14:57:25Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -447,6 +447,8 @@ bool IsPointOK_HumanPath(const GameWorldBase& gwb, const MapCoord x, const MapCo
 	return true;
 }
 
+
+
 /// Zusätzliche Abbruch-Bedingungen für freien Pfad für Menschen, die auch bei der letzen Kante
 /// zum Ziel eingehalten werden müssen
 bool IsPointToDestOK_HumanPath(const GameWorldBase& gwb, const MapCoord x, const MapCoord y, const unsigned char dir, const void *param)
@@ -459,6 +461,29 @@ bool IsPointToDestOK_HumanPath(const GameWorldBase& gwb, const MapCoord x, const
 	return true;
 }
 
+/// Abbruch-Bedingungen für freien Pfad für Schiffe
+bool IsPointOK_ShipPath(const GameWorldBase& gwb, const MapCoord x, const MapCoord y, const unsigned char dir, const void *param)
+{
+	// Ein Meeresfeld?
+	for(unsigned i = 0;i<6;++i)
+	{
+		if(gwb.GetTerrainAround(x,y,i) != TT_WATER)
+			return false;
+	}
+
+	return true;
+}
+
+/// Zusätzliche Abbruch-Bedingungen für freien Pfad für Schiffe, die auch bei der letzen Kante
+/// zum Ziel eingehalten werden müssen
+bool IsPointToDestOK_ShipPath(const GameWorldBase& gwb, const MapCoord x, const MapCoord y, const unsigned char dir, const void *param)
+{
+	// Der Übergang muss immer aus Wasser sein zu beiden Seiten
+	if(gwb.GetWalkingTerrain1(x,y,(dir+3)%6) == TT_WATER && gwb.GetWalkingTerrain2(x,y,(dir+3)%6) == TT_WATER)
+		return true;
+	else
+		return false;
+}
 
 /// Findet einen Weg für Figuren
 unsigned char GameWorldBase::FindHumanPath(const MapCoord x_start,const MapCoord y_start,
@@ -490,4 +515,12 @@ unsigned char GameWorldGame::FindPathForWareOnRoads(const noRoadNode * const sta
 		return first_dir;
 	else
 		return 0xFF;
+}
+
+
+/// Wegfindung für Schiffe auf dem Wasser
+bool GameWorldBase::FindShipPath(const MapCoord x_start,const MapCoord y_start, const MapCoord x_dest, const MapCoord y_dest, std::vector<unsigned char> * route, unsigned * length)
+{
+	return FindFreePath(x_start,y_start,x_dest,y_dest,true,200,route,length,NULL,IsPointOK_ShipPath,
+		IsPointToDestOK_ShipPath,NULL);
 }

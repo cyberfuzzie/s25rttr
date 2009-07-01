@@ -29,14 +29,28 @@
 #include "EventManager.h"
 #include "GameWorld.h"
 #include "SerializedGameData.h"
+#include "nobHarborBuilding.h"
 
 const unsigned SHIP_SPEED = 20;
 
 
 /// Konstruktor
 noShip::noShip(const unsigned short x, const unsigned short y, const unsigned char playe) 
-: noMovable(NOP_SHIP,x,y), player(player), state(STATE_IDLE)
+: noMovable(NOP_SHIP,x,y), player(player), state(STATE_IDLE), sea_id(0)
 {
+	// Meer ermitteln, auf dem dieses Schiff fährt
+	for(unsigned i = 0;i<6;++i)
+	{
+		unsigned short sea_id = gwg->GetNodeAround(x,y,i).sea_id;
+		if(sea_id)
+			this->sea_id = sea_id;
+	}
+
+	// Auf irgendeinem Meer müssen wir ja sein
+	assert(sea_id > 0);
+
+	// Schiff registrieren lassen
+	players->getElement(player)->RegisterShip(this);
 }
 
 void noShip::Serialize(SerializedGameData * sgd) const
@@ -45,16 +59,21 @@ void noShip::Serialize(SerializedGameData * sgd) const
 
 	sgd->PushUnsignedChar(player);
 	sgd->PushUnsignedChar(static_cast<unsigned char>(state));
+	sgd->PushUnsignedShort(sea_id);
 }
 
 noShip::noShip(SerializedGameData * sgd, const unsigned obj_id) : noMovable(sgd,obj_id),
 player(player),
-state(State(sgd->PopUnsignedChar()))
+state(State(sgd->PopUnsignedChar())),
+sea_id(sgd->PopUnsignedShort())
 {
+	
 }
 
 void noShip::Destroy()
 {
+	// Schiff wieder abmelden
+	players->getElement(player)->RemoveShip(this);
 }
 
 
@@ -69,8 +88,21 @@ void noShip::Draw(int x, int y)
 			GetImage(boot_lst, 1)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
 			GetImage(boot_lst, 0)->Draw(x,y);
 		} break;
+	case STATE_GOTOHARBOR:
+		{
+			DrawDriving(x,y);
+		} break;
 	}
 
+}
+/// Zeichnet normales Fahren auf dem Meer ohne irgendwelche Güter
+void noShip::DrawDriving(int x, int y)
+{
+	// Interpolieren zwischen beiden Knotenpunkten
+	CalcWalkingRelative(x,y);
+
+	GetImage(boot_lst,13+(dir+3)%6)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
+	GetImage(boot_lst,12+(dir+3)%6)->Draw(x,y);
 }
 
 
@@ -101,9 +133,43 @@ void noShip::StartDriving(const unsigned char dir)
 
 void noShip::Driven()
 {
-	/*switch(state)
+	switch(state)
 	{
+	case STATE_GOTOHARBOR:
+		HandleState_GoToHarbor();
+		break;
 	default:
 		break;
-	}*/
+	}
+}
+
+
+/// Fährt zum Hafen, um dort eine Mission (Expedition) zu erledigen
+void noShip::GoToHarbor(nobHarborBuilding * hb, const std::vector<unsigned char>& route)
+{
+	state = STATE_GOTOHARBOR;
+
+	goal_x = hb->GetX();
+	goal_y = hb->GetY();
+
+	// Route merken
+	this->route = route;
+	pos = 1;
+
+	// losfahren
+	StartDriving(route[0]);
+}
+
+void noShip::HandleState_GoToHarbor()
+{
+	// Sind wir schon da?
+	if(goal_x == x && goal_y == y)
+	{
+		// Hafen Bescheid sagen
+	}
+	else
+	{
+		StartDriving(route[pos++]);
+	}
+
 }

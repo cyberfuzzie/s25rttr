@@ -1,4 +1,4 @@
-// $Id: Pathfinding.cpp 5154 2009-07-01 14:57:25Z OLiver $
+// $Id: Pathfinding.cpp 5164 2009-07-02 12:36:35Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -395,6 +395,31 @@ bool GameWorldBase::FindPathOnRoads(const noRoadNode * const start, const noRoad
 	}
 }
 
+
+
+/// Ermittelt, ob eine freie Route noch passierbar ist und gibt den Endpunkt der Route zurück
+bool GameWorldBase::CheckFreeRoute(const MapCoord x_start,const MapCoord y_start, const std::vector<unsigned char>& route, const unsigned pos, 
+	FP_Node_OK_Callback IsNodeOK, FP_Node_OK_Callback IsNodeToDestOk,  MapCoord* x_dest, MapCoord* y_dest, const void * const param)
+{
+	MapCoord x = x_start, y = y_start;
+
+	for(unsigned i = pos;i<route.size();++i)
+	{
+		GetPointA(x,y,route[i]);
+		if(!IsNodeToDestOk(*this,x,y,route[i],param))
+			return false;
+		if(i < route.size()-1 && !IsNodeOK(*this,x,y,route[i],param))
+			return false;
+	}
+
+	if(x_dest)
+		*x_dest = x;
+	if(y_dest)
+		*y_dest = y;
+
+	return true;
+}
+
 /// Paremter-Struktur für Straßenbaupathfinding
 struct Param_RoadPath
 {
@@ -523,4 +548,12 @@ bool GameWorldBase::FindShipPath(const MapCoord x_start,const MapCoord y_start, 
 {
 	return FindFreePath(x_start,y_start,x_dest,y_dest,true,200,route,length,NULL,IsPointOK_ShipPath,
 		IsPointToDestOK_ShipPath,NULL);
+}
+
+/// Prüft, ob eine Schiffsroute noch Gültigkeit hat
+bool GameWorldGame::CheckShipRoute(const MapCoord x_start,const MapCoord y_start, const std::vector<unsigned char>& route, const unsigned pos, 
+		 MapCoord* x_dest,  MapCoord* y_dest)
+{
+	return CheckFreeRoute(x_start,y_start,route,pos,IsPointOK_ShipPath,
+		IsPointToDestOK_ShipPath,x_dest,y_dest,NULL);
 }

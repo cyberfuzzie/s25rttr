@@ -43,7 +43,7 @@ class noShip : public noMovable
 
 	/// Das Meer, auf dem dieses Schiff fährt
 	unsigned short sea_id;
-	/// Ziel des Schiffes
+	/// Zielpunkt des Schiffes
 	MapCoord goal_x, goal_y;
 	/// Schiffsroute 
 	std::vector<unsigned char> route;
@@ -57,6 +57,20 @@ private:
 	void StartDriving(const unsigned char dir);
 
 	void HandleState_GoToHarbor();
+
+	enum Result
+	{
+		DRIVING = 0,
+		GOAL_REACHED,
+		NO_ROUTE_FOUND,
+		HARBOR_DOESNT_EXIST
+	};
+
+
+	/// Fährt weiter zu einem Hafen
+	Result DriveToHarbour();
+	/// Fährt weiter zu Hafenbauplatz
+	Result DriveToHarbourPlace();
 
 	/// Zeichnet normales Fahren auf dem Meer ohne irgendwelche Güter
 	void DrawDriving(int x, int y);

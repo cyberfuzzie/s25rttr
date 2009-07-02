@@ -49,6 +49,8 @@ noShip::noShip(const unsigned short x, const unsigned short y, const unsigned ch
 	// Auf irgendeinem Meer müssen wir ja sein
 	assert(sea_id > 0);
 
+	gwg->AddFigure(this,x,y);
+
 	// Schiff registrieren lassen
 	players->getElement(player)->RegisterShip(this);
 }
@@ -113,8 +115,8 @@ void noShip::DrawDriving(int x, int y)
 	// Interpolieren zwischen beiden Knotenpunkten
 	CalcWalkingRelative(x,y);
 
-	GetImage(boot_lst,13+(dir+3)%6)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
-	GetImage(boot_lst,12+(dir+3)%6)->Draw(x,y);
+	GetImage(boot_lst,13+((dir+3)%6)*2)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
+	GetImage(boot_lst,12+((dir+3)%6)*2)->Draw(x,y);
 }
 
 
@@ -186,18 +188,27 @@ void noShip::GoToHarbor(nobHarborBuilding * hb, const std::vector<unsigned char>
 
 void noShip::HandleState_GoToHarbor()
 {
-	nobHarborBuilding * hb = gwg->GetSpecObj<nobHarborBuilding>(goal_x,goal_y);
-
-	// Sind wir schon da?
-	if(pos == route.size())
+	Result res = DriveToHarbour();
+	switch(res)
 	{
-		// Hafen Bescheid sagen
-		hb->ShipArrived(this);
-	}
-	else
-	{
-		// Existiert der Hafen ü
-		StartDriving(route[pos++]);
+	default: return;
+	case GOAL_REACHED:
+		{
+			// Hafen Bescheid sagen, dass wir da sind
+			gwg->GetSpecObj<nobHarborBuilding>(goal_x,goal_y)->ShipArrived(this);
+		} break;
+	case NO_ROUTE_FOUND:
+		{
+			// Dem Hafen Bescheid sagen
+			gwg->GetSpecObj<nobHarborBuilding>(goal_x,goal_y)->ShipLost(this);
+			// Nichts machen und idlen
+			state = STATE_IDLE;
+		} break;
+	case HARBOR_DOESNT_EXIST:
+		{
+			// Nichts machen und idlen
+			state = STATE_IDLE;
+		} break;
 	}
 }
 
@@ -209,3 +220,61 @@ void noShip::StartExpedition()
 	current_ev = em->AddEvent(this,200,1);
 }
 
+/// Fährt weiter zu einem Hafen
+noShip::Result noShip::DriveToHarbour()
+{
+	// Existiert der Hafen überhaupt noch?
+	if(gwg->GetGOT(goal_x,goal_y) != GOT_NOB_HARBORBUILDING)
+		return HARBOR_DOESNT_EXIST;
+
+	nobHarborBuilding * hb = gwg->GetSpecObj<nobHarborBuilding>(goal_x,goal_y);
+
+	// Sind wir schon da?
+	if(pos == route.size())
+		return GOAL_REACHED;
+	else
+	{
+		// Punkt, zu dem uns der Hafen hinführen will (Küstenpunkt)
+		MapCoord coastal_x, coastal_y;
+		hb->GetCoastalPoint(&coastal_x, &coastal_y,sea_id);
+
+		MapCoord goal_x_route, goal_y_route;
+
+		// Route überprüfen
+		if(!gwg->CheckShipRoute(x,y,route,pos,&goal_x_route,&goal_y_route))
+		{
+			// Route kann nicht mehr passiert werden --> neue Route suchen
+			if(!gwg->FindShipPath(x,y,coastal_x,coastal_y,&route,NULL))
+			{
+				// Wieder keine gefunden -> raus
+				return NO_ROUTE_FOUND;
+			}
+
+			// Wir fangen bei der neuen Route wieder von vorne an
+			pos = 0;
+		}
+
+		// Kommen wir auch mit unser bisherigen Route an dem ursprünglich anvisierten Hafenplatz an?
+		if(!(coastal_x == goal_x_route && coastal_x == goal_x_route))
+		{
+			// Nein, d.h. wenn wir schon nah dran sind, müssen wir die Route neu berechnen
+			if(route.size()-pos < 10)
+			{
+				if(!gwg->FindShipPath(x,y,coastal_x,coastal_y,&route,NULL))
+					// Keiner gefunden -> raus
+					return NO_ROUTE_FOUND;
+
+				pos = 0;
+			}
+		}
+
+		StartDriving(route[pos++]);
+		return DRIVING;
+	}
+}
+
+/// Fährt weiter zu Hafenbauplatz
+noShip::Result noShip::DriveToHarbourPlace()
+{
+	return DRIVING;
+}

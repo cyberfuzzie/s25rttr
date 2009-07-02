@@ -365,10 +365,18 @@ void nobHarborBuilding::GetCoastalPoint(MapCoord * px, MapCoord * py, const unsi
 		{
 			*px = gwg->GetXA(x,y,i);
 			*py = gwg->GetYA(x,y,i);
+			return;
 		}
 	}
 
 	// Keinen Punkt gefunden
 	*px = 0xFFFF;
 	*py = 0xFFFF;
+}
+
+/// Schiff konnte nicht mehr kommen
+void nobHarborBuilding::ShipLost(noShip * ship)
+{
+	// Neues Schiff bestellen
+	players->getElement(player)->OrderShip(this);
 }

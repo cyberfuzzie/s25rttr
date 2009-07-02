@@ -127,7 +127,7 @@ void noShipBuildingSite::MakeBuildStep()
 		em->AddToKillList(this);
 		gwg->SetNO(NULL,x,y);
 		// ein fertiges Schiff stattdessen hinsetzen
-		gwg->AddFigure(new noShip(x,y,player),x,y);
+		new noShip(x,y,player);
 	}
 		
 }

@@ -74,6 +74,8 @@ public:
 	bool IsExpeditionActive() const { return expedition.active; }
 	/// Schiff ist angekommen
 	void ShipArrived(noShip * ship);
+	/// Schiff konnte nicht mehr kommen
+	void ShipLost(noShip * ship);
 
 	/// Grenzt der Hafen an ein bestimmtes Meer an?
 	bool IsAtThisSea(const unsigned short sea_id) const;

@@ -1,4 +1,4 @@
-// $Id: gettext.cpp 5100 2009-06-24 17:11:59Z FloSoft $
+// $Id: gettext.cpp 5169 2009-07-02 19:26:17Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -230,7 +230,7 @@ void GetText::loadCatalog()
 
 		if(iconv_cd != 0)
 		{
-#if defined _WIN32 || defined __APPLE__
+#if defined _WIN32
 			const
 #endif
 			char *input = value;

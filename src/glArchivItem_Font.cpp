@@ -1,4 +1,4 @@
-// $Id: glArchivItem_Font.cpp 5167 2009-07-02 18:49:25Z FloSoft $
+// $Id: glArchivItem_Font.cpp 5168 2009-07-02 19:03:51Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -349,7 +349,7 @@ void glArchivItem_Font::GetWrapInfo(const std::string& text,
 			{
 				// Länge des Leerzeichens mit draufaddieren
 				line_width += word_width;
-				line_width += _charwidths[' '];
+				line_width += _charwidths[(unsigned int)' '];
 				// neues Wort fängt dann nach dem Leerzeichen an (falls wir nicht schon am Ende vom Text sind)
 				if(i < length-1)
 				{
@@ -367,7 +367,7 @@ void glArchivItem_Font::GetWrapInfo(const std::string& text,
 					// neue Zeile anfangen mit diesem Wort
 					wi.positions[wi.count++] = word_start;
 					// In der Zeile ist schon das Wort und das jetzige Leerzeichen mit drin
-					line_width = word_width + _charwidths[' '];
+					line_width = word_width + _charwidths[(unsigned int)' '];
 					// Neues Wort beginnen (falls wir nicht schon am Ende vom Text sind)
 					if(i < length-1)
 					{
@@ -396,7 +396,7 @@ void glArchivItem_Font::GetWrapInfo(const std::string& text,
 					}
 
 					// Leerzeichen nicht vergessen
-					line_width += _charwidths[' '];
+					line_width += _charwidths[(unsigned int)' '];
 
 					// Neues Wort beginnen (falls wir nicht schon am Ende vom Text sind)
 					if(i < length-1)

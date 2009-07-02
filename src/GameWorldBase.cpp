@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 5159 2009-07-01 21:29:52Z OLiver $
+// $Id: GameWorldBase.cpp 5165 2009-07-02 13:41:58Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -31,6 +31,7 @@
 #include "TerrainRenderer.h"
 #include "nobBaseMilitary.h"
 #include "MapGeometry.h"
+#include "noMovable.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -1185,4 +1186,35 @@ unsigned short GameWorldBase::IsCoastalPoint(const MapCoord x, const MapCoord y)
 	}
 
 	return false;
+}
+
+/// Gibt Dynamische Objekte, die von einem bestimmten Punkt aus laufen oder dort stehen sowie andere Objekte,
+/// die sich dort befinden, zurück
+void GameWorldBase::GetDynamicObjectsFrom(const MapCoord x, const MapCoord y,list<noBase*>& objects) const
+{
+	// Auch über und unter dem Punkt gucken, da dort auch die Figuren hängen können!
+	const unsigned short coords[6] =
+	{
+		x,y,
+		GetXA(x,y,1),GetYA(x,y,1),
+		GetXA(x,y,2),GetYA(x,y,2)
+	};
+
+	for(unsigned i = 0;i<3;++i)
+	{
+		for(list<noBase*>::iterator it = GetFigures(coords[i*2],coords[i*2+1]).begin();
+			it.valid();++it)
+		{
+			// Ist es auch ein Figur und befindet sie sich an diesem Punkt?
+			if((*it)->GetType() == NOP_FIGURE || (*it)->GetGOT() == GOT_ANIMAL)
+			{
+				if(static_cast<noMovable*>(*it)->GetX() == x && static_cast<noMovable*>(*it)->GetY() == y)
+					objects.push_back(*it);
+			}
+			else if(i == 0)
+				// Den Rest nur bei den richtigen Koordinaten aufnehmen
+				objects.push_back(*it);
+
+		}
+	}
 }

@@ -860,6 +860,14 @@
 							>
 						</File>
 						<File
+							RelativePath="..\..\src\iwShip.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\iwShip.h"
+							>
+						</File>
+						<File
 							RelativePath="..\..\src\iwSkipGFs.cpp"
 							>
 						</File>
@@ -1884,11 +1892,11 @@
 							>
 						</File>
 						<File
-							RelativePath=".\noShipBuildingSite.h"
+							RelativePath="..\..\src\noShipBuildingSite.h"
 							>
 						</File>
 						<File
-							RelativePath="..\..\src\noShipBuildingSite.h"
+							RelativePath=".\noShipBuildingSite.h"
 							>
 						</File>
 						<File

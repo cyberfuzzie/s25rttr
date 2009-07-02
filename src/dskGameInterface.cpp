@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.cpp 5148 2009-06-30 21:02:09Z OLiver $
+// $Id: dskGameInterface.cpp 5165 2009-07-02 13:41:58Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -56,6 +56,7 @@
 #include "iwTextfile.h"
 #include "iwOptionsWindow.h"
 #include "iwEndgame.h"
+#include "iwShip.h"
 
 #include "nobHQ.h"
 #include "nobHarborBuilding.h"
@@ -297,6 +298,14 @@ bool dskGameInterface::Msg_LeftDown(const MouseCoords& mc)
 
 		unsigned short cselx=gwv->GetSelX(),csely = gwv->GetSelY();
 
+
+		// Vielleicht steht hier auch ein Schiff?
+		if(noShip * ship = gwv->GetShip(cselx,csely,GameClient::inst().GetPlayerID()))
+		{
+			WindowManager::inst().Show(new iwShip(gwv,this,ship));
+			return true;
+		}
+
 		// Evtl ists nen Haus? (unser Haus)
 		if(gwv->GetNO(cselx,csely)->GetType() == NOP_BUILDING	&& gwv->GetNode(cselx,csely).owner-1 == (signed)GAMECLIENT.GetPlayerID())
 		{
@@ -326,6 +335,7 @@ bool dskGameInterface::Msg_LeftDown(const MouseCoords& mc)
 
 		}
 
+		
 		action_tabs.watch = true;
 		// Unser Land
 		if(gwv->GetNode(cselx,csely).owner == GAMECLIENT.GetPlayerID()+1)

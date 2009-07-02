@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 5164 2009-07-02 12:36:35Z OLiver $
+// $Id: GameWorld.h 5165 2009-07-02 13:41:58Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -51,6 +51,7 @@ class noBuilding;
 class GameInterface;
 class GameWorldBase;
 class glArchivItem_Map;
+class noShip;
 
 struct RoadsBuilding;
 class FOWObject;
@@ -214,6 +215,13 @@ public:
 	const FOWObject * GetFOWObject(const MapCoord x, const MapCoord y, const unsigned spectator_player) const;
 	/// Gibt den GOT des an diesem Punkt befindlichen Objekts zurück bzw. GOT_NOTHING, wenn keins existiert
 	GO_Type GetGOT(const MapCoord x, const MapCoord y) const;
+
+	/// Gibt Figuren, die sich auf einem bestimmten Punkt befinden, zurück
+	/// nicht bei laufenden Figuren oder
+	list<noBase*>& GetFigures(const MapCoord x, const MapCoord y) const { return nodes[y*width+x].figures; }
+	/// Gibt Dynamische Objekte, die von einem bestimmten Punkt aus laufen oder dort stehen sowie andere Objekte,
+	/// die sich dort befinden, zurück
+	void GetDynamicObjectsFrom(const MapCoord x, const MapCoord y,list<noBase*>& objects) const;
 
 	// Gibt ein spezifisches Objekt zurück
 	template<typename T> T * GetSpecObj(MapCoord x, MapCoord y) { return dynamic_cast<T*>( GetNode(x,y).obj ); }
@@ -421,9 +429,12 @@ public:
 	/// Schattierungen (vor allem FoW) neu berechnen
 	void RecalcAllColors();
 
-
 	/// liefert sichtbare Straße, im Nebel entsprechend die FoW-Straße
 	unsigned char GetVisibleRoad(const MapCoord x, const MapCoord y, unsigned char dir, const Visibility visibility) const;
+
+	/// Gibt das erste Schiff, was gefunden wird von diesem Spieler, zurück, ansonsten NULL, falls es nicht
+	/// existiert
+	noShip * GetShip(const MapCoord x, const MapCoord y, const unsigned char player) const;
 };
 
 /// "Interface-Klasse" für das Spiel
@@ -467,13 +478,6 @@ public:
 	void SetNO(noBase * obj, const MapCoord x, const MapCoord y) { GetNode(x,y).obj = obj; }
 	void AddFigure(noBase * fig,const MapCoord x, const MapCoord y);
 	void RemoveFigure(const noBase * fig,const MapCoord x, const MapCoord y);
-	/// Gibt Figuren, die sich auf einem bestimmten Punkt befinden, zurück
-	/// nicht bei laufenden Figuren oder
-	list<noBase*>& GetFigures(const MapCoord x, const MapCoord y) const { return nodes[y*width+x].figures; }
-	/// Gibt Dynamische Objekte, die von einem bestimmten Punkt aus laufen oder dort stehen sowie andere Objekte,
-	/// die sich dort befinden, zurück
-	void GetDynamicObjectsFrom(const MapCoord x, const MapCoord y,list<noBase*>& objects) const;
-
 
 	/// Berechnet Bauqualitäten an Punkt x;y und den ersten Kreis darum neu
 	void RecalcBQAroundPoint(const MapCoord x, const MapCoord y);

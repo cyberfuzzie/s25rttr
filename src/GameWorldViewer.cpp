@@ -1,4 +1,4 @@
-// $Id: GameWorldViewer.cpp 5139 2009-06-28 21:06:58Z OLiver $
+// $Id: GameWorldViewer.cpp 5165 2009-07-02 13:41:58Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -34,6 +34,7 @@
 #include "MapConsts.h"
 #include "dskGameInterface.h"
 #include "FOWObjects.h"
+#include "noShip.h"
 
 GameWorldViewer::GameWorldViewer() : show_bq(false), show_names(false), show_productivity(false),
 xoffset(0), yoffset(0), selx(0), sely(0), sx(0), sy(0), scroll(false), last_xoffset(0), last_yoffset(0), show_coordinates(false)
@@ -596,4 +597,24 @@ unsigned char GameWorldViewer::GetVisibleRoad(const MapCoord x, const MapCoord y
 	else
 		// Unsichtbar -> keine Straße zeichnen
 		return 0;
+}
+
+
+/// Gibt das erste Schiff, was gefunden wird von diesem Spieler, zurück, ansonsten NULL, falls es nicht
+/// existiert
+noShip * GameWorldViewer::GetShip(const MapCoord x, const MapCoord y, const unsigned char player) const
+{
+	list<noBase*> objs;
+	GetDynamicObjectsFrom(x,y,objs);
+
+	for(list<noBase*>::iterator it = objs.begin();it.valid();++it)
+	{
+		if((*it)->GetGOT() == GOT_SHIP)
+		{
+			if(static_cast<noShip*>(*it)->GetPlayer() == player)
+				return static_cast<noShip*>(*it);
+		}
+	}
+
+	return NULL;
 }

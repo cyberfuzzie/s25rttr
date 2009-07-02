@@ -93,6 +93,8 @@ public:
 	// Benachrichtigen, wenn neuer gf erreicht wurde
 	void HandleEvent(const unsigned int id);
 
+	/// Gibt den Besitzer zurück
+	unsigned char GetPlayer() const { return player; }
 	/// Hat das Schiff gerade nichts zu tun
 	bool IsIdling() const { return (state == STATE_IDLE); }
 	/// Gibt die ID des Meeres zurück, auf dem es sich befindet

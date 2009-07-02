@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 5152 2009-07-01 06:33:32Z FloSoft $
+### $Id: CMakeLists.txt 5165 2009-07-02 13:41:58Z OLiver $
 ################################################################################
 
 INCLUDE(FindBZip2)
@@ -102,6 +102,7 @@ SET(SOURCES_INGAMEWINDOWS
     iwTextfile.cpp         iwTextfile.h
     iwRoadWindow.cpp       iwRoadWindow.h
     iwSave.cpp             iwSave.h
+    iwShip.cpp iwShip.h
     iwSkipGFs.cpp          iwSkipGFs.h
     iwStorehouse.cpp
     iwTools.cpp            iwTools.h

@@ -1,4 +1,4 @@
-// $Id: Settings.cpp 4959 2009-05-26 16:17:23Z Demophobie $
+// $Id: Settings.cpp 5170 2009-07-02 19:58:31Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -40,7 +40,7 @@ const char *Settings::SETTINGS_VERSION = "7";
 // Konstruktor
 Settings::Settings(void)
 {
-	enhs = new enhOptions();
+	enhs = NULL;
 }
 
 bool Settings::LoadDefaults()
@@ -105,6 +105,8 @@ bool Settings::LoadDefaults()
 // Routine zum Laden der Konfiguration
 bool Settings::Load(void)
 {
+	enhs = new enhOptions();
+
 	if(!LOADER.LoadSettings() && LOADER.settings.getCount() < 21)
 	{
 		warning("No or corrupt \"%s\" found, using default values.\n", FILE_PATHS[0]);

@@ -459,14 +459,6 @@
 						RelativePath="..\..\src\ctrlVarText.h"
 						>
 					</File>
-					<File
-						RelativePath="..\..\src\enhOption.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\enhOption.h"
-						>
-					</File>
 				</Filter>
 				<Filter
 					Name="Fenster"
@@ -700,14 +692,6 @@
 						</File>
 						<File
 							RelativePath="..\..\src\iwEndgame.h"
-							>
-						</File>
-						<File
-							RelativePath="..\..\src\iwEnhancements.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\..\src\iwEnhancements.h"
 							>
 						</File>
 						<File
@@ -1891,11 +1875,11 @@
 							>
 						</File>
 						<File
-							RelativePath="..\..\src\noShipBuildingSite.h"
+							RelativePath=".\noShipBuildingSite.h"
 							>
 						</File>
 						<File
-							RelativePath=".\noShipBuildingSite.h"
+							RelativePath="..\..\src\noShipBuildingSite.h"
 							>
 						</File>
 						<File

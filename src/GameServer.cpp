@@ -1,4 +1,4 @@
-// $Id: GameServer.cpp 5024 2009-06-09 20:02:17Z OLiver $
+// $Id: GameServer.cpp 5171 2009-07-02 20:21:42Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -231,9 +231,6 @@ bool GameServer::Start()
 	ai_players.resize(serverconfig.playercount);
 
 	bool host_found = false;
-
-	// load preferred enhancement options
-	ggs.enhs = *(SETTINGS.enhs);
 
 	//// Spieler 0 erstmal der Host
 	switch(mapinfo.map_type)

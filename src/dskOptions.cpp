@@ -1,4 +1,4 @@
-// $Id: dskOptions.cpp 4959 2009-05-26 16:17:23Z Demophobie $
+// $Id: dskOptions.cpp 5171 2009-07-02 20:21:42Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -28,11 +28,9 @@
 #include "Settings.h"
 #include "controls.h"
 #include "GlobalVars.h"
-#include "enhOption.h"
 
 #include "dskMainMenu.h"
 #include "iwMusicPlayer.h"
-#include "iwEnhancements.h"
 
 #include "languages.h"
 
@@ -427,10 +425,6 @@ void dskOptions::Msg_ButtonClick(const unsigned int ctrl_id)
 			}
 
 			WindowManager::inst().Switch(new dskMainMenu);
-		} break;
-	case 14: // "Enhancements"
-		{
-			WindowManager::inst().Show(new iwEnhancements(SETTINGS.enhs, ENH_POLICY_ALL));
 		} break;
 	}
 }

@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 5165 2009-07-02 13:41:58Z OLiver $
+### $Id: CMakeLists.txt 5171 2009-07-02 20:21:42Z FloSoft $
 ################################################################################
 
 INCLUDE(FindBZip2)
@@ -82,7 +82,6 @@ SET(SOURCES_INGAMEWINDOWS
     iwDiplomacy.cpp	   iwDiplomacy.h
     iwDirectIPCreate.cpp   iwDirectIPCreate.h
     iwDistribution.cpp     iwDistribution.h
-    iwEnhancements.cpp     iwEnhancements.h
     iwEndgame.cpp          iwEndgame.h
     iwHelp.cpp             iwHelp.h
     iwHQ.cpp               iwHQ.h
@@ -172,7 +171,6 @@ SET(SOURCES_OTHER
     MusicPlayer.cpp           MusicPlayer.h
     NodalObjectTypes.h
     Node.h
-    enhOption.cpp             enhOption.h
     DriverWrapper.cpp         DriverWrapper.h
     VideoDriverWrapper.cpp    VideoDriverWrapper.h
     AudioDriverWrapper.cpp    AudioDriverWrapper.h

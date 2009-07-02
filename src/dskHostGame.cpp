@@ -1,4 +1,4 @@
-// $Id: dskHostGame.cpp 5078 2009-06-21 11:41:45Z OLiver $
+// $Id: dskHostGame.cpp 5171 2009-07-02 20:21:42Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -33,7 +33,6 @@
 #include "dskDirectIP.h"
 #include "dskLobby.h"
 #include "iwMsgbox.h"
-#include "iwEnhancements.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -453,15 +452,6 @@ void dskHostGame::Msg_ButtonClick(const unsigned int ctrl_id)
 	case 102:
 	{
 		CreateMapPreview();
-	} break;
-	case 22:
-	{
-		unsigned char policy;
-		if (GAMECLIENT.IsHost())
-			policy = (GAMECLIENT.IsSavegame() ? ENH_POLICY_SERVERINGAME : ENH_POLICY_HOSTMENU);
-		else
-			policy = ENH_POLICY_READONLY;
-		WindowManager::inst().Show(new iwEnhancements(&ggs.enhs, policy, &dskHostGame::UpdateGGS, this));
 	} break;
 	}
 }

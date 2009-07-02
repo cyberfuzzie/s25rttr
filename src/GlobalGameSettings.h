@@ -1,4 +1,4 @@
-// $Id: GlobalGameSettings.h 4959 2009-05-26 16:17:23Z Demophobie $
+// $Id: GlobalGameSettings.h 5171 2009-07-02 20:21:42Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -23,7 +23,6 @@
 #include "Singleton.h"
 #include "GameConsts.h"
 #include "GameProtocol.h"
-#include "enhOption.h"
 #include "Settings.h"
 
 class Serializer;
@@ -34,7 +33,7 @@ public:
 
 	// TODO: letzte Settings aus der settings.bin möglichst laden
 	GlobalGameSettings() : game_speed(GS_FAST), game_objective(GO_NONE), start_wares(SWR_NORMAL), 
-		lock_teams(true), exploration(EXP_FOGOFWAR), team_view(true), demolition_prohibition(DP_NEARFRONTIERS), enhs(*(SETTINGS.enhs)) {}
+		lock_teams(true), exploration(EXP_FOGOFWAR), team_view(true), demolition_prohibition(DP_NEARFRONTIERS) {}
 
 
 	enum GameSpeed { GS_VERYSLOW = 0,GS_SLOW , GS_NORMAL, GS_FAST, GS_VERYFAST } game_speed;
@@ -46,11 +45,10 @@ public:
 	/// Abriss bei Angriff erlaubt?
 	enum DemolitionProhibition { DP_OFF = 0, DP_UNDERATTACK, DP_NEARFRONTIERS } demolition_prohibition;
 
-	enhOptions enhs;
-	
+
 	/// Größe des Serialisierungsbuffers
 	// static const unsigned GGS_BUFFER_SIZE = 7;
-	unsigned GetLength() const {return 7 + 1 + 8 * enhs.size(); }
+	unsigned GetLength() const {return 7; }
 
 	/// Serialisierung und Deserialisierung
 	void Serialize(Serializer * ser) const;

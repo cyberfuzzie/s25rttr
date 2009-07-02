@@ -1,4 +1,4 @@
-// $Id: Settings.h 4959 2009-05-26 16:17:23Z Demophobie $
+// $Id: Settings.h 5171 2009-07-02 20:21:42Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -24,7 +24,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Header
 #include "Singleton.h"
-#include "enhOption.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Klasse für die Konfiguration
@@ -63,8 +62,6 @@ public:
 	std::string last_ip;
 	/// Musicplayer playlist name
 	std::string playlist;
-	/// Enhancement options
-	enhOptions* enhs;
 };
 
 ///////////////////////////////////////////////////////////////////////////////

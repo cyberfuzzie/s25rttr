@@ -1,4 +1,4 @@
-// $Id: Settings.cpp 5170 2009-07-02 19:58:31Z FloSoft $
+// $Id: Settings.cpp 5171 2009-07-02 20:21:42Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -40,7 +40,6 @@ const char *Settings::SETTINGS_VERSION = "7";
 // Konstruktor
 Settings::Settings(void)
 {
-	enhs = NULL;
 }
 
 bool Settings::LoadDefaults()
@@ -105,8 +104,6 @@ bool Settings::LoadDefaults()
 // Routine zum Laden der Konfiguration
 bool Settings::Load(void)
 {
-	enhs = new enhOptions();
-
 	if(!LOADER.LoadSettings() && LOADER.settings.getCount() < 21)
 	{
 		warning("No or corrupt \"%s\" found, using default values.\n", FILE_PATHS[0]);
@@ -179,29 +176,6 @@ bool Settings::Load(void)
 
 	LANGUAGES.setLanguage(language);
 
-	// We had to do a little encoding to save the default enhancement options, for we can't use ^@ in the raw data
-	std::string enhText = GetTxt(settings, 20);
-	Serializer ser;
-	if (enhText.size() % 2 != 0)
-	{
-		warning("Corrupt \"%s\" found, using default values.\n", FILE_PATHS[0]);
-		return LoadDefaults();
-	}
-	for (unsigned short pos = 0; pos < enhText.size(); ++pos)
-	{
-		if (enhText[pos] >= 65 && enhText[pos] < 81 && enhText[pos+1] >= 65 && enhText[pos+1] < 81)
-		{
-			ser.PushUnsignedChar(16 * (enhText[pos]-65) + (enhText[pos+1]-65));
-			++pos;
-		}
-		else
-		{
-			warning("Corrupt \"%s\" found, using default values.\n", FILE_PATHS[0]);
-			return LoadDefaults();
-		}
-	}
-	enhs->Deserialize(&ser);
-
 	return true;
 }
 
@@ -259,19 +233,6 @@ void Settings::Save(void)
 	GetTxtItem(settings, 17)->setText(text);
 	GetTxtItem(settings, 18)->setText(last_ip.c_str());
 	GetTxtItem(settings, 19)->setText(playlist.c_str());
-
-	// We have to do a little encoding to save the default enhancement options, for we can't use 0x00 in the raw data
-	Serializer ser;
-	enhs->Serialize(&ser);
-	unsigned char c;
-	std::string enhText = "";
-	for (unsigned short pos = 0; pos < ser.GetLength(); ++pos)
-	{
-		c = ser.PopUnsignedChar();
-		enhText += (c / 16) + 65;
-		enhText += (c % 16) + 65;
-	}
-	GetTxtItem(settings, 20)->setText(enhText.c_str());
 
 	LOADER.SaveSettings();
 }

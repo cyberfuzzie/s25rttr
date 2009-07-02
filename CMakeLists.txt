@@ -1,9 +1,15 @@
 ################################################################################
-### $Id: CMakeLists.txt 5124 2009-06-26 18:57:09Z FloSoft $
+### $Id: CMakeLists.txt 5172 2009-07-02 20:35:05Z FloSoft $
 ################################################################################
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.4)
 CMAKE_POLICY(SET CMP0003 OLD)
+
+SET(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules)
+
+INCLUDE(MacroEnsureOutOfSourceBuild)
+
+macro_ensure_out_of_source_build("${PROJECT_NAME} requires an out of source build. Please go to the build directory and run './cmake.sh [options]' there.")
 
 ################################################################################
 

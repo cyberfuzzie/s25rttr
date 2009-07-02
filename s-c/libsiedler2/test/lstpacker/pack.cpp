@@ -1,4 +1,4 @@
-// $Id: pack.cpp 5091 2009-06-23 18:27:10Z FloSoft $
+// $Id: pack.cpp 5163 2009-07-02 09:39:35Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -73,12 +73,15 @@ bool stringCompare( const fileentry &left, const fileentry &right )
 	return false;
 }
 
-void pack(const string &directory, const string &file, const ArchivItem_Palette* palette)
+void pack(const string &directory, const string &file, const ArchivItem_Palette* palette, ArchivInfo *lst)
 {
 	HANDLE hFile;
 	WIN32_FIND_DATAA wfd;
 
-	ArchivInfo lst;
+	ArchivInfo tlst;
+
+	if(lst == NULL)
+		lst = &tlst;
 
 	string rpath = directory + "\\*.*";
 
@@ -108,16 +111,18 @@ void pack(const string &directory, const string &file, const ArchivItem_Palette*
 					else if(*it == "shadow")
 						file.bobtype = BOBTYPE_BITMAP_SHADOW;
 
-					else if(it->substr(0, 2) == "nx")
+					else if(it->substr(0, 2) == "nx" || it->substr(0, 2) == "dx")
 						file.nx = atoi(it->substr(2).c_str());
-					else if(it->substr(0, 2) == "ny")
+					else if(it->substr(0, 2) == "ny" || it->substr(0, 2) == "dy")
 						file.ny = atoi(it->substr(2).c_str());
 
 					else
 						file.file += (file.file.empty() ? "" : ".") + *it;
 				}
 
-				if((wf.back()) == "bmp")
+				if((wf.back()) == "fon")
+					file.type = "font";
+				else if((wf.back()) == "bmp")
 					file.type = "bitmap";
 				else if((wf.back()) == "bbm" || (wf.back()) == "act")
 				{
@@ -126,9 +131,13 @@ void pack(const string &directory, const string &file, const ArchivItem_Palette*
 				}
 				else if((wf.back()) == "empty")
 					file.type = "empty";
-
-				file.path = whole_path;
-				files.push_back(file);
+				
+				
+				if((wf.back()) != "db") // do not add "Thumbs.db"
+				{
+					file.path = whole_path;
+					files.push_back(file);
+				}
 			}
 
 		} while(FindNextFileA(hFile, &wfd));
@@ -149,9 +158,17 @@ void pack(const string &directory, const string &file, const ArchivItem_Palette*
 		ArchivInfo items;
 
 		cout << "Reading file " << whole_path << ": ";
-		if(it->type == "empty" || Load(whole_path.c_str(), &items, palette) != 0)
+		if(it->type == "font")
 		{
-			lst.alloc_inc(1); // add empty item
+			ArchivItem_Font font;
+			font.setDx(it->nx & 0xFF);
+			font.setDy(it->ny & 0xFF);
+			pack(whole_path, "", palette, &font);
+			lst->pushC(&font);
+		}
+		else if(it->type == "empty" || Load(whole_path.c_str(), &items, palette) != 0)
+		{
+			lst->alloc_inc(1); // add empty item
 			if(it->type == "empty")
 				cout << "ignored" << endl;
 			else
@@ -204,16 +221,19 @@ void pack(const string &directory, const string &file, const ArchivItem_Palette*
 				neu = n;
 			}
 
-			lst.pushC(neu);
+			lst->pushC(neu);
 		}
 	}
 	delete[] buffer;
 
 	cout << "Writing data to " << file << ": ";
 
-	if(WriteLST(file.c_str(), palette, &lst) != 0)
-		cout << "failed" << endl;
-	else
-		cout << "done" << endl;
+	if(lst == &tlst) // only write to lstfile if the caller does not want the ArchivInfo back
+	{
+		if(WriteLST(file.c_str(), palette, lst) != 0)
+			cout << "failed" << endl;
+		else
+			cout << "done" << endl;
+	}
 }
 

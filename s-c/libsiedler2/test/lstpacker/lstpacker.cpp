@@ -1,4 +1,4 @@
-// $Id: lstpacker.cpp 5092 2009-06-23 18:58:55Z FloSoft $
+// $Id: lstpacker.cpp 5163 2009-07-02 09:39:35Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -37,7 +37,7 @@ using namespace libsiedler2;
 using namespace loader;
 
 void unpack(const string &directory, const ArchivInfo &lst, const ArchivItem_Palette* palette);
-void pack(const string &directory, const string &file, const ArchivItem_Palette* palette);
+void pack(const string &directory, const string &file, const ArchivItem_Palette* palette, ArchivInfo *lst = NULL);
 
 int main(int argc, char* argv[])
 {
@@ -106,8 +106,6 @@ int main(int argc, char* argv[])
 
 			return 3;
 		}
-
-		CreateDirectory(directory.c_str(), NULL);
 
 		unpack(directory, lst, palette);
 

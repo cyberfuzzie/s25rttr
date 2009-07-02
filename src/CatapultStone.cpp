@@ -1,4 +1,4 @@
-// $Id: CatapultStone.cpp 4978 2009-05-31 10:24:24Z OLiver $
+// $Id: CatapultStone.cpp 5166 2009-07-02 16:51:17Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -118,9 +118,9 @@ void CatapultStone::Draw(const GameWorldViewer& gwv,const int xoffset, const int
 		int diff = int((dx*dx-y_diff)*200);
 
 		// Schatten auf linearer Linie zeichnen
-		GetImage(map_lst,3101)->Draw((x-xoffset+world_width)%world_width,(y-yoffset+world_height)%world_height,0,0,0,0,0,0,COLOR_SHADOW);
+		GetImage(map_lst, 3101)->Draw((x-xoffset+world_width)%world_width,(y-yoffset+world_height)%world_height,0,0,0,0,0,0,COLOR_SHADOW);
 		// Stein auf Parabel zeichnen
-		GetImage(map_lst,3100)->Draw((x-xoffset+world_width)%world_width,(y-yoffset+world_height+diff)%world_height);	
+		GetImage(map_lst, 3100)->Draw((x-xoffset+world_width)%world_width,(y-yoffset+world_height+diff)%world_height);	
 	}
 }
 

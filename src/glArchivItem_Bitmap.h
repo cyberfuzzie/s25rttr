@@ -1,4 +1,4 @@
-// $Id: glArchivItem_Bitmap.h 5155 2009-07-01 15:37:53Z FloSoft $
+// $Id: glArchivItem_Bitmap.h 5166 2009-07-02 16:51:17Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -37,33 +37,38 @@ public:
 
 	/// Erzeugt und zeichnet die Textur.
 	virtual void Draw(short dst_x, short dst_y, short dst_w = 0, short dst_h = 0, short src_x = 0, short src_y = 0, short src_w = 0, short src_h = 0, unsigned int color = COLOR_WHITE)
-{
-	if(texture == 0)
-		GenerateTexture();
-	if(texture == 0)
-		return;
+	{
+		if(texture == 0)
+			GenerateTexture();
+		if(texture == 0)
+			return;
 
-	if(src_w == 0)
-		src_w = width;
-	if(src_h == 0)
-		src_h = height;
-	if(dst_w == 0)
-		dst_w = src_w;
-	if(dst_h == 0)
-		dst_h = src_h;
+		if(src_w == 0)
+			src_w = width;
+		if(src_h == 0)
+			src_h = height;
+		if(dst_w == 0)
+			dst_w = src_w;
+		if(dst_h == 0)
+			dst_h = src_h;
 
-	glEnable(GL_TEXTURE_2D);
+		glEnable(GL_TEXTURE_2D);
 
-	glColor4ub( GetRed(color), GetGreen(color), GetBlue(color), GetAlpha(color));
-	glBindTexture(GL_TEXTURE_2D, texture);
+		glColor4ub( GetRed(color), GetGreen(color), GetBlue(color), GetAlpha(color));
+		glBindTexture(GL_TEXTURE_2D, texture);
 
-	glBegin(GL_QUADS);
-	DrawVertex( (float)(dst_x-nx),         (float)(dst_y-ny),         (float)src_x,         (float)src_y);
-	DrawVertex( (float)(dst_x-nx),         (float)(dst_y-ny + dst_h), (float)src_x,         (float)(src_y+src_h));
-	DrawVertex( (float)(dst_x-nx + dst_w), (float)(dst_y-ny + dst_h), (float)(src_x+src_w), (float)(src_y+src_h));
-	DrawVertex( (float)(dst_x-nx + dst_w), (float)(dst_y-ny),         (float)(src_x+src_w), (float)src_y);
-	glEnd();
-}
+		float faktor = 1.0f;
+
+		if(getBobType() == libsiedler2::BOBTYPE_BITMAP_PLAYER) // if we have a player image, we're in the wrong function, but we'll fix that later ...
+			faktor = 2.0f;
+
+		glBegin(GL_QUADS);
+		DrawVertex( (float)(dst_x-nx),         (float)(dst_y-ny),         (float)src_x/faktor,         (float)src_y);
+		DrawVertex( (float)(dst_x-nx),         (float)(dst_y-ny + dst_h), (float)src_x/faktor,         (float)(src_y+src_h));
+		DrawVertex( (float)(dst_x-nx + dst_w), (float)(dst_y-ny + dst_h), (float)(src_x+src_w)/faktor, (float)(src_y+src_h));
+		DrawVertex( (float)(dst_x-nx + dst_w), (float)(dst_y-ny),         (float)(src_x+src_w)/faktor, (float)src_y);
+		glEnd();
+	}
 
 	/// liefert das GL-Textur-Handle.
 	unsigned int GetTexture();

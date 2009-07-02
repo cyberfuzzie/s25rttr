@@ -1,4 +1,4 @@
-// $Id: nofCarrier.cpp 5137 2009-06-28 19:28:27Z OLiver $
+// $Id: nofCarrier.cpp 5167 2009-07-02 18:49:25Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -239,7 +239,7 @@ void nofCarrier::Draw(int x, int y)
 
 						// Nein, dann Animation abspielen
 						GetRomBob(ANIMATION[fat?1:0][animation_id][(current_gf-next_animation)/FRAME_GF])
-							->Draw(x,y,0,0,0,0,0,0,COLORS[GAMECLIENT.GetPlayer(player)->color]);
+							->Draw(x,y,0,0,0,0,0,0,COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
 					}
 				}
 
@@ -331,14 +331,14 @@ void nofCarrier::Draw(int x, int y)
 			else if(state == CARRS_WAITFORWARE || (waiting_for_free_node && !pause_walked_gf && !carried_ware))
 			{
 				// Steht und wartet (ohne Ware)
-				GetPlayerImage(boat_lst,((dir+3)%6)*8)->Draw(x,y,0,0,0,0,0,0,COLORS[GAMECLIENT.GetPlayer(player)->color]);
+				GetPlayerImage(boat_lst,((dir+3)%6)*8)->Draw(x,y,0,0,0,0,0,0,COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
 				// Schatten des Boots (Eselschatten)
 				GetImage(map_lst,2048+dir%3)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
 			}
 			else if(state == CARRS_WAITFORWARESPACE || (waiting_for_free_node && !pause_walked_gf && carried_ware))
 			{
 				// Steht und wartet (ohne Ware)
-				GetPlayerImage(boat_lst,(((dir)+3)%6)*8)->Draw(x,y,0,0,0,0,0,0,COLORS[GAMECLIENT.GetPlayer(player)->color]);
+				GetPlayerImage(boat_lst,(((dir)+3)%6)*8)->Draw(x,y,0,0,0,0,0,0,COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
 				// Schatten des Boots (Eselschatten)
 				GetImage(map_lst,2048+(dir)%3)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
 		
@@ -355,7 +355,7 @@ void nofCarrier::Draw(int x, int y)
 				CalcFigurRelative(x,y);		
 
 				// ruderndes Boot zeichnen
-				GetPlayerImage(boat_lst,((dir+3)%6)*8+ani_step)->Draw(x,y,0,0,0,0,0,0,COLORS[GAMECLIENT.GetPlayer(player)->color]);
+				GetPlayerImage(boat_lst,((dir+3)%6)*8+ani_step)->Draw(x,y,0,0,0,0,0,0,COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
 				// Schatten des Boots (Eselschatten)
 				GetImage(map_lst,2048+dir%3)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
 

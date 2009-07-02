@@ -1,4 +1,4 @@
-// $Id: nofCatapultMan.cpp 5074 2009-06-20 14:31:41Z OLiver $
+// $Id: nofCatapultMan.cpp 5167 2009-07-02 18:49:25Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -80,7 +80,7 @@ void nofCatapultMan::DrawWorking(int x, int y)
 					step = -step;
 
 				// Katapult auf dem Dach mit Stein drehend zeichnen
-				GetRomBob(1781 + (7 + step) % 6)->Draw(x - 7, y - 19);
+				GetRomBob(1781 + (7 + step) % 6)->Draw(x - 7, y - 19, 0, 0, 0, 0, 0, 0, COLOR_WHITE, COLOR_WHITE);
 			}
 			//else
 			//	// Katapult schieﬂend zeichnen
@@ -93,7 +93,7 @@ void nofCatapultMan::DrawWorking(int x, int y)
 
 			if(step < 2 * 3)
 				// Katapult nach Schieﬂen zeichnen (hin und her wippen
-				GetRomBob(1787+(step%2)*6+(7+wheel_steps)%6)->Draw(x-7,y-19);
+				GetRomBob(1787+(step%2)*6+(7+wheel_steps)%6)->Draw(x - 7, y - 19, 0, 0, 0, 0, 0, 0, COLOR_WHITE, COLOR_WHITE);
 			else
 			{
 				step = (step-6)/2;
@@ -102,7 +102,7 @@ void nofCatapultMan::DrawWorking(int x, int y)
 					step = -(step);
 
 				// Katapult auf dem Dach mit Stein drehend zeichnen (zur¸ck in Ausgangsposition: Richtung 4)
-				GetRomBob(1775+(7+wheel_steps-step)%6)->Draw(x-7,y-19);
+				GetRomBob(1775+(7+wheel_steps-step)%6)->Draw(x - 7, y - 19, 0, 0, 0, 0, 0, 0, COLOR_WHITE, COLOR_WHITE);
 			}
 
 		} break;

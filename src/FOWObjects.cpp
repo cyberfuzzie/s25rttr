@@ -1,4 +1,4 @@
-// $Id: FOWObjects.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: FOWObjects.cpp 5167 2009-07-02 18:49:25Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -225,7 +225,7 @@ void fowFlag::Serialize(SerializedGameData *sgd) const
 void fowFlag::Draw(int x, int y) const
 {
 	// Flagge
-	GetBobPlayerImage(GAMECLIENT.GetPlayer(player)->nation, 100+flag_type*20)->Draw(x,y,0,0,0,0,0,0,CalcPlayerFOWDrawColor(COLORS[GAMECLIENT.GetPlayer(player)->color]),FOW_DRAW_COLOR);
+	GetBobPlayerImage(GAMECLIENT.GetPlayer(player)->nation, 100+flag_type*20)->Draw(x,y,0,0,0,0,0,0,FOW_DRAW_COLOR, CalcPlayerFOWDrawColor(COLORS[GAMECLIENT.GetPlayer(player)->color]));
 	// Schatten
 	GetBobImage(GAMECLIENT.GetPlayer(player)->nation, 100+flag_type*20+10)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
 }

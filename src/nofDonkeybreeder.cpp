@@ -1,4 +1,4 @@
-// $Id: nofDonkeybreeder.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: nofDonkeybreeder.cpp 5167 2009-07-02 18:49:25Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -83,7 +83,7 @@ void nofDonkeybreeder::DrawWorking(int x, int y)
 	else if(now_id < 1200)
 		GetBobFile(jobs_bob)->Draw(24,3,false,((now_id-400)/70)%8,x+walk_start[nation][0]+4+walk_length[nation]*(now_id-400)/800,y+walk_start[nation][1]+4,color);
 	else if(now_id < 2000)
-		GetRomBob(291+(now_id-1200)/100)->Draw(x+walk_start[nation][0]+4+walk_length[nation],y+walk_start[nation][1]+4,0,0,0,0,0,0,color);
+		GetRomBob(291+(now_id-1200)/100)->Draw(x+walk_start[nation][0]+4+walk_length[nation],y+walk_start[nation][1]+4,0,0,0,0,0,0, COLOR_WHITE, color);
 	else if(now_id < 2800)
 		GetBobFile(jobs_bob)->Draw(24,0,false,((now_id-2000)/70)%8,x+walk_start[nation][0]+4+walk_length[nation]*(800-(now_id-2000))/800,y+walk_start[nation][1]+4,color);
 	else if(now_id < 3200)

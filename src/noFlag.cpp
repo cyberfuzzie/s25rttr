@@ -1,4 +1,4 @@
-// $Id: noFlag.cpp 4854 2009-05-11 11:26:19Z OLiver $
+// $Id: noFlag.cpp 5167 2009-07-02 18:49:25Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -197,7 +197,7 @@ void noFlag::Draw(int x, int y)
 	}
 
 	// Flagge
-	GetBobPlayerImage(GAMECLIENT.GetPlayer(player)->nation, nr+GAMECLIENT.GetGlobalAnimation(8,80,40,ani_offset))->Draw(x,y,0,0,0,0,0,0,COLORS[GAMECLIENT.GetPlayer(player)->color]);
+	GetBobPlayerImage(GAMECLIENT.GetPlayer(player)->nation, nr+GAMECLIENT.GetGlobalAnimation(8,80,40,ani_offset))->Draw(x,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
 	// Schatten
 	GetBobImage(GAMECLIENT.GetPlayer(player)->nation, nr+10+GAMECLIENT.GetGlobalAnimation(8,80,40,ani_offset))->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
 

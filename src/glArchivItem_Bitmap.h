@@ -1,4 +1,4 @@
-// $Id: glArchivItem_Bitmap.h 5166 2009-07-02 16:51:17Z FloSoft $
+// $Id: glArchivItem_Bitmap.h 5167 2009-07-02 18:49:25Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -36,7 +36,7 @@ public:
 	virtual ~glArchivItem_Bitmap(void);
 
 	/// Erzeugt und zeichnet die Textur.
-	virtual void Draw(short dst_x, short dst_y, short dst_w = 0, short dst_h = 0, short src_x = 0, short src_y = 0, short src_w = 0, short src_h = 0, unsigned int color = COLOR_WHITE)
+	virtual void Draw(short dst_x, short dst_y, short dst_w = 0, short dst_h = 0, short src_x = 0, short src_y = 0, short src_w = 0, short src_h = 0, const unsigned int color = COLOR_WHITE, const unsigned int unused = COLOR_WHITE)
 	{
 		if(texture == 0)
 			GenerateTexture();
@@ -57,16 +57,13 @@ public:
 		glColor4ub( GetRed(color), GetGreen(color), GetBlue(color), GetAlpha(color));
 		glBindTexture(GL_TEXTURE_2D, texture);
 
-		float faktor = 1.0f;
-
-		if(getBobType() == libsiedler2::BOBTYPE_BITMAP_PLAYER) // if we have a player image, we're in the wrong function, but we'll fix that later ...
-			faktor = 2.0f;
+		assert(getBobType() != libsiedler2::BOBTYPE_BITMAP_PLAYER);
 
 		glBegin(GL_QUADS);
-		DrawVertex( (float)(dst_x-nx),         (float)(dst_y-ny),         (float)src_x/faktor,         (float)src_y);
-		DrawVertex( (float)(dst_x-nx),         (float)(dst_y-ny + dst_h), (float)src_x/faktor,         (float)(src_y+src_h));
-		DrawVertex( (float)(dst_x-nx + dst_w), (float)(dst_y-ny + dst_h), (float)(src_x+src_w)/faktor, (float)(src_y+src_h));
-		DrawVertex( (float)(dst_x-nx + dst_w), (float)(dst_y-ny),         (float)(src_x+src_w)/faktor, (float)src_y);
+		DrawVertex( (float)(dst_x-nx),         (float)(dst_y-ny),         (float)src_x,         (float)src_y);
+		DrawVertex( (float)(dst_x-nx),         (float)(dst_y-ny + dst_h), (float)src_x,         (float)(src_y+src_h));
+		DrawVertex( (float)(dst_x-nx + dst_w), (float)(dst_y-ny + dst_h), (float)(src_x+src_w), (float)(src_y+src_h));
+		DrawVertex( (float)(dst_x-nx + dst_w), (float)(dst_y-ny),         (float)(src_x+src_w), (float)src_y);
 		glEnd();
 	}
 

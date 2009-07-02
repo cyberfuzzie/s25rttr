@@ -1,4 +1,4 @@
-// $Id: nofHunter.cpp 5065 2009-06-18 17:25:27Z OLiver $
+// $Id: nofHunter.cpp 5167 2009-07-02 18:49:25Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -86,7 +86,7 @@ void nofHunter::DrawWorking(int x,int y)
 			{
 				// die Animation in dieser Richtung ist etwas anders als die in den restlichen
 				unsigned short id = GAMECLIENT.Interpolate(13,current_ev);
-				GetRomBob(219+id)->Draw(x,y,0,0,0,0,0,0,COLORS[GAMECLIENT.GetPlayer(player)->color]);
+				GetRomBob(219+id)->Draw(x,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
 
 				if(id == 12)
 				{
@@ -97,7 +97,7 @@ void nofHunter::DrawWorking(int x,int y)
 			else
 			{
 				unsigned short id = GAMECLIENT.Interpolate(8,current_ev);
-				GetRomBob(1686+((shooting_dir+2)%6)*8+id)->Draw(x,y,0,0,0,0,0,0,COLORS[GAMECLIENT.GetPlayer(player)->color]);
+				GetRomBob(1686+((shooting_dir+2)%6)*8+id)->Draw(x,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
 
 				if(id == 7)
 				{
@@ -118,7 +118,7 @@ void nofHunter::DrawWorking(int x,int y)
 			else if(id < 36) draw_id = 236+(id-4)%8;
 			else draw_id = 244+id-36;
 
-			GetRomBob(draw_id)->Draw(x,y,0,0,0,0,0,0,COLORS[GAMECLIENT.GetPlayer(player)->color]);
+			GetRomBob(draw_id)->Draw(x,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
 		} break;
 	}
 }

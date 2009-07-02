@@ -1,4 +1,4 @@
-// $Id: nofBaker.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: nofBaker.cpp 5167 2009-07-02 18:49:25Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -87,7 +87,7 @@ void nofBaker::DrawWorking(int x, int y)
     }
     if((now_id>=8) && (now_id<16) ){ //brot in den ofen schieben
         GetRomBob(182+(now_id%8))
-            ->Draw(x+offsets[workplace->GetNation()][0],y+offsets[wpNation][1],0,0,0,0,0,0,COLORS[plColor]);
+            ->Draw(x+offsets[workplace->GetNation()][0],y+offsets[wpNation][1],0,0,0,0,0,0,COLOR_WHITE, COLORS[plColor]);
 
 		// "Brot-rein/raus"-Sound
 		if((now_id%8) == 4)
@@ -98,11 +98,11 @@ void nofBaker::DrawWorking(int x, int y)
     }
     if((now_id>=16) && (now_id<max_id-16) ){ //warten
         GetRomBob(189)
-            ->Draw(x+offsets[workplace->GetNation()][0],y+offsets[wpNation][1],0,0,0,0,0,0,COLORS[plColor]);
+            ->Draw(x+offsets[workplace->GetNation()][0],y+offsets[wpNation][1],0,0,0,0,0,0,COLOR_WHITE, COLORS[plColor]);
     }
     if((now_id>=max_id-16) && (now_id<max_id-8) ){ //brot aus dem ofen holen
         GetRomBob(182+7-(now_id%8))
-            ->Draw(x+offsets[workplace->GetNation()][0],y+offsets[wpNation][1],0,0,0,0,0,0,COLORS[plColor]);
+            ->Draw(x+offsets[workplace->GetNation()][0],y+offsets[wpNation][1],0,0,0,0,0,0,COLOR_WHITE, COLORS[plColor]);
 
 		// "Brot-rein/raus"-Sound
 		if((now_id%8) == 4)

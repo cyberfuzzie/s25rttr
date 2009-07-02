@@ -1,4 +1,4 @@
-// $Id: noFighting.cpp 4947 2009-05-24 20:02:16Z OLiver $
+// $Id: noFighting.cpp 5167 2009-07-02 18:49:25Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -376,11 +376,11 @@ void noFighting::Draw(int x, int y)
 			{
 				// Noch kurz dastehen und warten, bis man stirbt
 				glArchivItem_Bitmap_Player *image = GetRomBob(FIGHT_ANIMATIONS[GAMECLIENT.GetPlayer(soldiers[turn-3]->GetPlayer())->nation][soldiers[turn-3]->GetRank()][turn-3].defending[0][0]);
-				image->Draw(x,y,0,0,0,0,0,0,COLORS[GAMECLIENT.GetPlayer(soldiers[turn-3]->GetPlayer())->color]);
+				image->Draw(x,y,0,0,0,0,0,0,COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(soldiers[turn-3]->GetPlayer())->color]);
 			}
 			else
 				// Sich in Luft auflösen
-				GetRomBob(903+animation-4)->Draw(x +((turn-3 == 0)?(-12):12),y,0,0,0,0,0,0,COLORS[GAMECLIENT.GetPlayer(soldiers[turn-3]->GetPlayer())->color]);
+				GetRomBob(903+animation-4)->Draw(x +((turn-3 == 0)?(-12):12),y,0,0,0,0,0,0,COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(soldiers[turn-3]->GetPlayer())->color]);
 
 			// Sterbesound abspielen
 			if(animation == 6)
@@ -415,7 +415,7 @@ void noFighting::Draw(int x, int y)
 					// Angreifen
 					GetRomBob(
 					FIGHT_ANIMATIONS[GAMECLIENT.GetPlayer(soldiers[i]->GetPlayer())->nation][soldiers[i]->GetRank()][i].
-					attacking[animation])->Draw(x,y,0,0,0,0,0,0,COLORS[GAMECLIENT.GetPlayer(soldiers[i]->GetPlayer())->color]);
+					attacking[animation])->Draw(x,y,0,0,0,0,0,0,COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(soldiers[i]->GetPlayer())->color]);
 				}
 				else
 				{
@@ -425,7 +425,7 @@ void noFighting::Draw(int x, int y)
 						// Verteidigungsanimation
 						GetRomBob(
 						FIGHT_ANIMATIONS[GAMECLIENT.GetPlayer(soldiers[i]->GetPlayer())->nation][soldiers[i]->GetRank()][i].
-						defending[defending_animation][animation])->Draw(x,y,0,0,0,0,0,0,COLORS[GAMECLIENT.GetPlayer(soldiers[i]->GetPlayer())->color]);
+						defending[defending_animation][animation])->Draw(x,y,0,0,0,0,0,0,COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(soldiers[i]->GetPlayer())->color]);
 
 						// Wenn schwache Soldaten Schild hinhalten (Ani 0 und 1) und stärkere sich mit den Schwertern schützen (Ani 0)
 						// dann Schwert-aneinanderklirr-Sound abspielen
@@ -441,7 +441,7 @@ void noFighting::Draw(int x, int y)
 							// weiß aufblinken
 							GetRomBob(
 							HIT_SOLDIERS[GAMECLIENT.GetPlayer(soldiers[i]->GetPlayer())->nation][soldiers[i]->GetRank()]+i)
-							->Draw(x,y,0,0,0,0,0,0,COLORS[GAMECLIENT.GetPlayer(soldiers[i]->GetPlayer())->color]);
+							->Draw(x,y,0,0,0,0,0,0,COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(soldiers[i]->GetPlayer())->color]);
 
 							// Treffersound
 							SoundManager::inst().PlayNOSound(105,this,1);
@@ -450,7 +450,7 @@ void noFighting::Draw(int x, int y)
 							// normal dastehen
 							GetRomBob(
 							FIGHT_ANIMATIONS[GAMECLIENT.GetPlayer(soldiers[i]->GetPlayer())->nation][soldiers[i]->GetRank()][i].
-							defending[0][0])->Draw(x,y,0,0,0,0,0,0,COLORS[GAMECLIENT.GetPlayer(soldiers[i]->GetPlayer())->color]);
+							defending[0][0])->Draw(x,y,0,0,0,0,0,0,COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(soldiers[i]->GetPlayer())->color]);
 					}
 				}
 			}

@@ -1,4 +1,4 @@
-// $Id: glArchivItem_Font.cpp 5158 2009-07-01 20:13:00Z FloSoft $
+// $Id: glArchivItem_Font.cpp 5167 2009-07-02 18:49:25Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -178,7 +178,7 @@ void glArchivItem_Font::Draw(short x,
 				x = c % 16;
 				y = c / 16;
 
-				_font->Draw(cx, cy, _charwidths[c], dy, x*(dx+2)+1, y*(dy+2)+1, _charwidths[c], dy, color, (GetAlpha(color) << 24) | 0x00FFFFFF);
+				_font->Draw(cx, cy, _charwidths[c], dy, x*(dx+2)+1, y*(dy+2)+1, _charwidths[c], dy, (GetAlpha(color) << 24) | 0x00FFFFFF, color);
 				cx += _charwidths[c];
 			}
 		}
@@ -201,7 +201,7 @@ void glArchivItem_Font::Draw(short x,
 					x = c % 16;
 					y = c / 16;
 
-					_font->Draw(cx, cy, 0, 0, x+1, y+1, _charwidths[c], dy, color, (GetAlpha(color) << 24) | 0x00FFFFFF);
+					_font->Draw(cx, cy, 0, 0, x+1, y+1, _charwidths[c], dy, (GetAlpha(color) << 24) | 0x00FFFFFF, color);
 					cx += _charwidths[c];
 				}
 			}

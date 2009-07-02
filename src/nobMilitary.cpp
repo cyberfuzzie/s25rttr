@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 5137 2009-06-28 19:28:27Z OLiver $
+// $Id: nobMilitary.cpp 5167 2009-07-02 18:49:25Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -168,7 +168,7 @@ void nobMilitary::Draw(int x, int y)
 	unsigned flags = min<unsigned>(troops.size()+this->leave_house.size(),4);
 
 	for(unsigned i = 0;i<flags;++i)
-		GetMapPlayerImage(3162+GAMECLIENT.GetGlobalAnimation(8,80,40,this->x*this->y*i))->Draw(x+TROOPS_FLAGS[nation][size][0],y+TROOPS_FLAGS[nation][size][1]+(i)*3,0,0,0,0,0,0,COLORS[GAMECLIENT.GetPlayer(player)->color]);
+		GetMapPlayerImage(3162+GAMECLIENT.GetGlobalAnimation(8,80,40,this->x*this->y*i))->Draw(x+TROOPS_FLAGS[nation][size][0],y+TROOPS_FLAGS[nation][size][1]+(i)*3,0,0,0,0,0,0,COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
 
 	// Die Fahne, die anzeigt wie weit das Gebäude von der Grenze entfernt ist, zeichnen
 	GetMapBob(3150+frontier_distance*4+GAMECLIENT.GetGlobalAnimation(8,5,5,this->x*this->y*age)/2)

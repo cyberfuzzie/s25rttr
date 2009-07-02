@@ -1,4 +1,4 @@
-// $Id: nofBuilder.cpp 5144 2009-06-30 07:45:36Z OLiver $
+// $Id: nofBuilder.cpp 5167 2009-07-02 18:49:25Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -330,7 +330,7 @@ void nofBuilder::Draw(int x, int y)
 				if(index < 12 || index > 19)
 				{
 					// Bauarbeiter steht
-					GetRomBob(353+index%4)->Draw(x+building_site->GetDoorPointX()+rel_x, y+building_site->GetDoorPointY()+rel_y, 0,0,0,0,0,0, COLORS[GAMECLIENT.GetPlayer(building_site->GetPlayer())->color]);
+					GetRomBob(353+index%4)->Draw(x+building_site->GetDoorPointX()+rel_x, y+building_site->GetDoorPointY()+rel_y, 0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(building_site->GetPlayer())->color]);
 
 					if(index%4 == 2)
 						SoundManager::inst().PlayNOSound(78,this,index, 160-rand()%60);
@@ -338,7 +338,7 @@ void nofBuilder::Draw(int x, int y)
 				else
 				{
 					// er kniet
-					GetRomBob(283+index%4)->Draw(x+building_site->GetDoorPointX()+rel_x, y+building_site->GetDoorPointY()+rel_y, 0,0,0,0,0,0, COLORS[GAMECLIENT.GetPlayer(building_site->GetPlayer())->color]);
+					GetRomBob(283+index%4)->Draw(x+building_site->GetDoorPointX()+rel_x, y+building_site->GetDoorPointY()+rel_y, 0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(building_site->GetPlayer())->color]);
 					
 					if(index%4 == 2)
 						SoundManager::inst().PlayNOSound(72,this,index, 160-rand()%60);
@@ -348,7 +348,7 @@ void nofBuilder::Draw(int x, int y)
 			else if(rel_x < 5)
 			{
 				// in der Mitte mit "Händen"
-				GetRomBob(287+(index/2)%4)->Draw(x+building_site->GetDoorPointX()+rel_x, y+building_site->GetDoorPointY()+rel_y, 0,0,0,0,0,0, COLORS[GAMECLIENT.GetPlayer(building_site->GetPlayer())->color]);
+				GetRomBob(287+(index/2)%4)->Draw(x+building_site->GetDoorPointX()+rel_x, y+building_site->GetDoorPointY()+rel_y, 0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(building_site->GetPlayer())->color]);
 			}
 			else
 			{
@@ -356,7 +356,7 @@ void nofBuilder::Draw(int x, int y)
 				if(index < 12 || index > 19)
 				{
 					// Bauarbeiter steht
-					GetRomBob(279+index%4)->Draw(x+building_site->GetDoorPointX()+rel_x, y+building_site->GetDoorPointY()+rel_y, 0,0,0,0,0,0, COLORS[GAMECLIENT.GetPlayer(building_site->GetPlayer())->color]);
+					GetRomBob(279+index%4)->Draw(x+building_site->GetDoorPointX()+rel_x, y+building_site->GetDoorPointY()+rel_y, 0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(building_site->GetPlayer())->color]);
 
 					if(index%4 == 2)
 						SoundManager::inst().PlayNOSound(78,this,index, 160-rand()%60);
@@ -364,7 +364,7 @@ void nofBuilder::Draw(int x, int y)
 				else 
 				{
 					// er kniet
-					GetRomBob(283+index%4)->Draw(x+building_site->GetDoorPointX()+rel_x, y+building_site->GetDoorPointY()+rel_y, 0,0,0,0,0,0, COLORS[GAMECLIENT.GetPlayer(building_site->GetPlayer())->color]);
+					GetRomBob(283+index%4)->Draw(x+building_site->GetDoorPointX()+rel_x, y+building_site->GetDoorPointY()+rel_y, 0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(building_site->GetPlayer())->color]);
 
 					if(index%4 == 2)
 						SoundManager::inst().PlayNOSound(72,this,index, 160-rand()%60);

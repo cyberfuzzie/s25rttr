@@ -1,4 +1,4 @@
-// $Id: GameWorldViewer.cpp 5165 2009-07-02 13:41:58Z OLiver $
+// $Id: GameWorldViewer.cpp 5167 2009-07-02 18:49:25Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -370,8 +370,7 @@ void GameWorldViewer::DrawBoundaryStone(const int x, const int y, const MapCoord
 	{
 		unsigned player_color = COLORS[GAMECLIENT.GetPlayer(owner-1)->color];
 
-		GetBobPlayerImage(GAMECLIENT.GetPlayer(owner-1)->nation, 0)->Draw(xpos,ypos,0,0,0,0,0,0,fow ? CalcPlayerFOWDrawColor(player_color) : player_color
-			,fow ? FOW_DRAW_COLOR : 0xFFFFFFFF);
+		GetBobPlayerImage(GAMECLIENT.GetPlayer(owner-1)->nation, 0)->Draw(xpos,ypos,0,0,0,0,0,0,fow ? FOW_DRAW_COLOR : COLOR_WHITE, fow ? CalcPlayerFOWDrawColor(player_color) : player_color);
 		GetBobImage(GAMECLIENT.GetPlayer(owner-1)->nation, 1)->Draw(xpos,ypos,0,0,0,0,0,0,COLOR_SHADOW);
 
 		for(unsigned i = 0;i<3;++i)
@@ -380,7 +379,7 @@ void GameWorldViewer::DrawBoundaryStone(const int x, const int y, const MapCoord
 			{
 				GetBobPlayerImage(GAMECLIENT.GetPlayer(owner-1)->nation, 0)->Draw(xpos-static_cast<int>((tr.GetTerrainX(tx,ty)-tr.GetTerrainXAround(tx,ty,3+i))/2.0f),
 					ypos-static_cast<int>((tr.GetTerrainY(tx,ty)-tr.GetTerrainYAround(tx,ty,3+i))/2.0f),0,0,0,0,0,0,
-					(vis == VIS_VISIBLE) ? player_color : CalcPlayerFOWDrawColor(player_color),(vis == VIS_VISIBLE) ? 0xFFFFFFFF : FOW_DRAW_COLOR);
+					(vis == VIS_VISIBLE) ? COLOR_WHITE : FOW_DRAW_COLOR, (vis == VIS_VISIBLE) ? player_color : CalcPlayerFOWDrawColor(player_color));
 				GetBobImage(GAMECLIENT.GetPlayer(owner-1)->nation, 1)->Draw(xpos-static_cast<int>((tr.GetTerrainX(tx,ty)-tr.GetTerrainXAround(tx,ty,3+i))/2.0f),
 					ypos-static_cast<int>((tr.GetTerrainY(tx,ty)-tr.GetTerrainYAround(tx,ty,3+i))/2.0f),0,0,0,0,0,0,COLOR_SHADOW);
 			}

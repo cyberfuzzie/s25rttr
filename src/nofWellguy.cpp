@@ -1,4 +1,4 @@
-// $Id: nofWellguy.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: nofWellguy.cpp 5167 2009-07-02 18:49:25Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -88,19 +88,19 @@ void nofWellguy::DrawWorking(int x, int y)
     else if( (now_id>=8)&&(now_id<16) ){ //eimer runter lassen
         if(now_id==8){
             GetRomBob(346)
-                ->Draw(x+offsets[workplace->GetNation()][0],y+offsets[wpNation][1],0,0,0,0,0,0,COLORS[plColor]);
+                ->Draw(x+offsets[workplace->GetNation()][0],y+offsets[wpNation][1],0,0,0,0,0,0, COLOR_WHITE, COLORS[plColor]);
         }else{
             GetRomBob(346+(now_id%8)-1)
-                ->Draw(x+offsets[workplace->GetNation()][0],y+offsets[wpNation][1],0,0,0,0,0,0,COLORS[plColor]);
+                ->Draw(x+offsets[workplace->GetNation()][0],y+offsets[wpNation][1],0,0,0,0,0,0, COLOR_WHITE, COLORS[plColor]);
         }
     }
     else if( (now_id>=16)&&(now_id<max_id-16) ){ //kurbeln
         GetRomBob(330+(now_id%8))
-            ->Draw(x+offsets[workplace->GetNation()][0],y+offsets[wpNation][1],0,0,0,0,0,0,COLORS[plColor]);
+            ->Draw(x+offsets[workplace->GetNation()][0],y+offsets[wpNation][1],0,0,0,0,0,0, COLOR_WHITE, COLORS[plColor]);
     }
     else if( (now_id>=max_id-16)&&(now_id<max_id-8) ){ //eimer rauf kurbeln
         GetRomBob(338+(now_id%8))
-            ->Draw(x+offsets[workplace->GetNation()][0],y+offsets[wpNation][1],0,0,0,0,0,0,COLORS[plColor]);
+            ->Draw(x+offsets[workplace->GetNation()][0],y+offsets[wpNation][1],0,0,0,0,0,0, COLOR_WHITE, COLORS[plColor]);
     }
     else if( (now_id>=max_id-8)&&(now_id<max_id-4) ){ //laufen 3
         GetBobFile(carrier_bob)->Draw(11,walkdirection[wpNation][3],false,now_id%8,walkx_r,walky_r,COLORS[plColor]);

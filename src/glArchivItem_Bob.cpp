@@ -1,4 +1,4 @@
-// $Id: glArchivItem_Bob.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: glArchivItem_Bob.cpp 5167 2009-07-02 18:49:25Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -48,8 +48,8 @@ void glArchivItem_Bob::Draw(unsigned int item, unsigned int direction, bool fat,
 
 	glArchivItem_Bitmap_Player *koerper = dynamic_cast<glArchivItem_Bitmap_Player*>(get(body));
 	if(koerper)
-		koerper->Draw(x, y, 0, 0, 0, 0, 0, 0, color);
+		koerper->Draw(x, y, 0, 0, 0, 0, 0, 0, COLOR_WHITE, color);
 	glArchivItem_Bitmap_Player *ware = dynamic_cast<glArchivItem_Bitmap_Player*>(get(96+links[good]));
 	if(ware)
-		ware->Draw(x, y, 0, 0, 0, 0, 0, 0, color);
+		ware->Draw(x, y, 0, 0, 0, 0, 0, 0, COLOR_WHITE, color);
 }

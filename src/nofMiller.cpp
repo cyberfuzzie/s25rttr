@@ -1,4 +1,4 @@
-// $Id: nofMiller.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: nofMiller.cpp 5167 2009-07-02 18:49:25Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -71,15 +71,15 @@ void nofMiller::DrawWorking(int x, int y)
     }
     if( (now_id>=8) && (now_id<16)){  //hinsetzen
         GetRomBob(166+(now_id%8))
-            ->Draw(x+offsets_sitdown[workplace->GetNation()][0],y+offsets_sitdown[workplace->GetNation()][1],0,0,0,0,0,0,COLORS[GAMECLIENT.GetPlayer(workplace->GetPlayer())->color]);
+            ->Draw(x+offsets_sitdown[workplace->GetNation()][0],y+offsets_sitdown[workplace->GetNation()][1],0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(workplace->GetPlayer())->color]);
     }
     if( (now_id>=16) && (now_id<max_id-16)){  //schlafen
         GetRomBob(174+(now_id%8))
-            ->Draw(x+offsets[workplace->GetNation()][0],y+offsets[workplace->GetNation()][1],0,0,0,0,0,0,COLORS[GAMECLIENT.GetPlayer(workplace->GetPlayer())->color]);
+            ->Draw(x+offsets[workplace->GetNation()][0],y+offsets[workplace->GetNation()][1],0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(workplace->GetPlayer())->color]);
     }
     if( (now_id>=max_id-16) && (now_id<max_id-8)){ //aufstehn
         GetRomBob(166+7-(now_id%8))
-            ->Draw(x+offsets_sitdown[workplace->GetNation()][0],y+offsets_sitdown[workplace->GetNation()][1],0,0,0,0,0,0,COLORS[GAMECLIENT.GetPlayer(workplace->GetPlayer())->color]);
+            ->Draw(x+offsets_sitdown[workplace->GetNation()][0],y+offsets_sitdown[workplace->GetNation()][1],0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(workplace->GetPlayer())->color]);
     }
     if( (now_id>=max_id-8) && (now_id<max_id-4)){  //zurücklaufen teil 1
         GetBobFile(jobs_bob)->Draw(16,0,true,now_id%8,x+walkoffsets[7-(now_id%8)][0],y+walkoffsets[7-(now_id%8)][1],COLORS[GAMECLIENT.GetPlayer(player)->color]);

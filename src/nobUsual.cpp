@@ -1,4 +1,4 @@
-// $Id: nobUsual.cpp 5024 2009-06-09 20:02:17Z OLiver $
+// $Id: nobUsual.cpp 5167 2009-07-02 18:49:25Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -207,7 +207,7 @@ void nobUsual::Draw(int x,int y)
 	// Bei Katapulthaus Katapult oben auf dem Dach zeichnen, falls er nicht "arbeitet"
 	else if(type == BLD_CATAPULT && !is_working)
 	{
-		GetRomBob(1776)->Draw(x-7,y-19);
+		GetRomBob(1776)->Draw(x-7,y-19, 0,0,0,0,0,0,COLOR_WHITE,COLOR_WHITE);
 
 		if(worker)
 			if(worker->GetObjId() == 696956)

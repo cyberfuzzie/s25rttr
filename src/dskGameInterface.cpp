@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.cpp 5165 2009-07-02 13:41:58Z OLiver $
+// $Id: dskGameInterface.cpp 5167 2009-07-02 18:49:25Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -217,7 +217,7 @@ void dskGameInterface::Msg_PaintAfter()
 	{
 		GameClientPlayer *player = GAMECLIENT.GetPlayer(i);
 		if(player->is_lagging)
-			GetPlayerImage(rttr_lst, 0)->Draw(SETTINGS.width-70-i*40, 35, 30, 30, 0, 0, 0, 0, COLORS[player->color]);
+			GetPlayerImage(rttr_lst, 0)->Draw(SETTINGS.width-70-i*40, 35, 30, 30, 0, 0, 0, 0,  COLOR_WHITE, COLORS[player->color]);
 	}
 }
 

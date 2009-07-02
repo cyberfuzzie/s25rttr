@@ -1,4 +1,4 @@
-// $Id: glArchivItem_Bitmap_Player.cpp 5157 2009-07-01 18:25:00Z FloSoft $
+// $Id: glArchivItem_Bitmap_Player.cpp 5167 2009-07-02 18:49:25Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -34,7 +34,7 @@
 	static char THIS_FILE[] = __FILE__;
 #endif
 
-void glArchivItem_Bitmap_Player::Draw(short dst_x, short dst_y, short dst_w, short dst_h, short src_x, short src_y, short src_w, short src_h, const unsigned player_color, const unsigned color)
+void glArchivItem_Bitmap_Player::Draw(short dst_x, short dst_y, short dst_w, short dst_h, short src_x, short src_y, short src_w, short src_h, const unsigned int color, const unsigned int player_color)
 {
 	if(texture == 0 || ptexture == 0)
 		GenerateTexture();

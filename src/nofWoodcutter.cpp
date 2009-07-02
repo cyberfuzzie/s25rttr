@@ -1,4 +1,4 @@
-// $Id: nofWoodcutter.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: nofWoodcutter.cpp 5167 2009-07-02 18:49:25Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -63,7 +63,7 @@ void nofWoodcutter::DrawWorking(int x,int y)
 	else if(i < 82)
 	{
 		// 2. Hacken
-		GetRomBob(24+(i-10)%8)->Draw(x-9,y,0,0,0,0,0,0,COLORS[GAMECLIENT.GetPlayer(player)->color]);
+		GetRomBob(24+(i-10)%8)->Draw(x-9,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
 
 		if((i-10)%8 == 3)
 		{
@@ -75,7 +75,7 @@ void nofWoodcutter::DrawWorking(int x,int y)
 	else if(i<105)
 	{
 		// 3. Warten bis Baum umfällt
-		GetRomBob(24)->Draw(x-9,y,0,0,0,0,0,0,COLORS[GAMECLIENT.GetPlayer(player)->color]);
+		GetRomBob(24)->Draw(x-9,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
 
 		if(i == 90)
 		{

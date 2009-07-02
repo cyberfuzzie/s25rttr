@@ -1,4 +1,4 @@
-// $Id: nofFarmer.cpp 5047 2009-06-13 20:32:24Z OLiver $
+// $Id: nofFarmer.cpp 5167 2009-07-02 18:49:25Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -69,7 +69,7 @@ void nofFarmer::DrawWorking(int x,int y)
 
     if(harvest){
         GetRomBob(140+(now_id=GAMECLIENT.Interpolate(88,current_ev))%8)
-            ->Draw(x,y,0,0,0,0,0,0,COLORS[GAMECLIENT.GetPlayer(player)->color]);
+            ->Draw(x,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
 
 		// Evtl Sound abspielen
 		if(now_id%8 == 3)
@@ -80,7 +80,7 @@ void nofFarmer::DrawWorking(int x,int y)
 
     }else{
         GetRomBob(132+GAMECLIENT.Interpolate(88,current_ev)%8)
-            ->Draw(x,y,0,0,0,0,0,0,COLORS[GAMECLIENT.GetPlayer(player)->color]);
+            ->Draw(x,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
     }
 
 

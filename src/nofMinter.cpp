@@ -1,4 +1,4 @@
-// $Id: nofMinter.cpp 4947 2009-05-24 20:02:16Z OLiver $
+// $Id: nofMinter.cpp 5167 2009-07-02 18:49:25Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -60,7 +60,7 @@ void nofMinter::DrawWorking(int x, int y)
 	if(now_id < 91)
 	{
 		GetRomBob(84+(now_id)%8)
-			->Draw(x+offsets[workplace->GetNation()][0],y+offsets[workplace->GetNation()][1],0,0,0,0,0,0,COLORS[GAMECLIENT.GetPlayer(workplace->GetPlayer())->color]);
+			->Draw(x+offsets[workplace->GetNation()][0],y+offsets[workplace->GetNation()][1],0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(workplace->GetPlayer())->color]);
 
 		// Evtl Sound abspielen
 		if(now_id%8 == 3)

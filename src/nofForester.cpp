@@ -1,4 +1,4 @@
-// $Id: nofForester.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: nofForester.cpp 5167 2009-07-02 18:49:25Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -57,7 +57,7 @@ void nofForester::DrawWorking(int x,int y)
 	unsigned short now_id;
 	// Baum pflanzen
 	GetRomBob(48+(now_id=GAMECLIENT.Interpolate(36,current_ev)))
-		->Draw(x,y,0,0,0,0,0,0,COLORS[GAMECLIENT.GetPlayer(player)->color]);
+		->Draw(x,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
 
 	// Schaufel-Sound
 	if(now_id == 7 || now_id == 18)

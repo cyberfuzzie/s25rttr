@@ -1,4 +1,4 @@
-// $Id: nofMiner.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: nofMiner.cpp 5167 2009-07-02 18:49:25Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -58,11 +58,11 @@ void nofMiner::DrawWorking(int x, int y)
 	unsigned now_id = GAMECLIENT.Interpolate(160,current_ev);
 	if(workplace->GetNation()==2)
 		GetRomBob(92+now_id%8)->Draw(x+offsets[workplace->GetNation()*8+(workplace->GetBuildingType()-BLD_GRANITEMINE)*2],
-		y+offsets[workplace->GetNation()*8+(workplace->GetBuildingType()-BLD_GRANITEMINE)*2+1],0,0,0,0,0,0);
+		y+offsets[workplace->GetNation()*8+(workplace->GetBuildingType()-BLD_GRANITEMINE)*2+1],0,0,0,0,0,0, COLOR_WHITE, COLOR_WHITE);
 	else
 		GetRomBob(1799+now_id%4)
 		->Draw(x+offsets[workplace->GetNation()*8+(workplace->GetBuildingType()-BLD_GRANITEMINE)*2],
-		y+offsets[workplace->GetNation()*8+(workplace->GetBuildingType()-BLD_GRANITEMINE)*2+1],0,0,0,0,0,0);
+		y+offsets[workplace->GetNation()*8+(workplace->GetBuildingType()-BLD_GRANITEMINE)*2+1],0,0,0,0,0,0, COLOR_WHITE, COLOR_WHITE);
 	// 1799
 
 	if(now_id%8 == 3)

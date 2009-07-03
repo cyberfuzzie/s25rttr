@@ -1,4 +1,4 @@
-// $Id: dskSelectMap.cpp 5043 2009-06-13 12:15:12Z OLiver $
+// $Id: dskSelectMap.cpp 5175 2009-07-03 06:53:46Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -78,7 +78,6 @@
  *  @author OLiver
  */
 
-
 /// Bitte-Warten Fenster, welches aufgerufen wird, nachdem der Server gestartet wurde bis zum Weitergehen
 /// modal damit man den "Weiter"-Button nicht 2x betätigt
 class iwPleaseWait : public IngameWindow
@@ -137,8 +136,10 @@ dskSelectMap::dskSelectMap(const CreateServerInfo& csi)
 	optiongroup->AddTextButton(5, 10, 160, 90,  22, TC_GREY, _("RTTR"), NormalFont);
 	// "Andere"
 	optiongroup->AddTextButton(6, 10, 185, 90,  22, TC_GREY, _("Other"), NormalFont);
+	// "Andere"
+	optiongroup->AddTextButton(7, 10, 210, 90,  22, TC_GREY, _("Sea"), NormalFont);
 	// "Heruntergeladene"
-	optiongroup->AddTextButton(7, 10, 210, 90,  22, TC_GREY, _("Played"), NormalFont);
+	optiongroup->AddTextButton(8, 10, 235, 90,  22, TC_GREY, _("Played"), NormalFont);
 
 	AddPreviewMinimap(11, 110, 445, 140, 140, NULL);
 	AddText(12, 260, 470, _("Map: "), COLOR_YELLOW, glArchivItem_Font::DF_LEFT, NormalFont);
@@ -173,7 +174,7 @@ void dskSelectMap::Msg_OptionGroupChange(const unsigned int ctrl_id, const unsig
 	// Tabelle leeren
 	table->DeleteAllItems();
 
-	static const unsigned int ids[] = { 39, 40, 41, 42, 43, 52, 91, 48 };
+	static const unsigned int ids[] = { 39, 40, 41, 42, 43, 52, 91, 93, 48 };
 	char path[4096];
 
 	// Und wieder füllen lassen

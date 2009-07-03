@@ -1137,14 +1137,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\enhOption.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\enhOption.h"
-					>
-				</File>
-				<File
 					RelativePath="..\..\src\EventManager.cpp"
 					>
 				</File>

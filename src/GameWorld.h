@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 5165 2009-07-02 13:41:58Z OLiver $
+// $Id: GameWorld.h 5178 2009-07-03 11:55:24Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -28,7 +28,7 @@
 #include "MilitaryConsts.h"
 #include "EventManager.h"
 #include "TerrainRenderer.h"
-#include <vector>
+#include "main.h"
 #include <vector>
 
 class noEnvObject;
@@ -97,8 +97,8 @@ struct MapNode
 
 	/// Meeres-ID, d.h. zu welchem Meer gehört dieser Punkt (0 = kein Meer)
 	unsigned short sea_id;
-	/// Könnte hier ein Hafen gesetzt werden?
-	bool harbor;
+	/// Hafenpunkt-ID (0 = kein Hafenpunkt)
+	unsigned harbor_id;
 
 	/// Objekt, welches sich dort befindet
 	noBase * obj;
@@ -148,8 +148,22 @@ protected:
 	std::vector<Sea> seas;
 
 	/// Alle Hafenpositionen
-	struct HarborPlace { MapCoord x, y; };
-	std::vector<HarborPlace> harbor_pos;
+	struct HarborPos
+	{
+		MapCoord x,y;
+		struct Neighbor
+		{
+			unsigned id;
+			unsigned distance;
+			
+			bool operator<(const Neighbor& two) const
+			{ return distance < two.distance; }
+		};
+		unsigned short sea_ids[6];
+		std::vector<Neighbor> neighbors[6];
+	};
+
+	std::vector< HarborPos > harbor_pos;
 
 
 public:
@@ -318,9 +332,25 @@ public:
 	/// Ermittelt Sichtbarkeit eines Punktes auch unter Einbeziehung der Verbündeten des jeweiligen Spielers
 	Visibility CalcWithAllyVisiblity(const MapCoord x, const MapCoord y, const unsigned char player) const; 
 
+	/// Ist es an dieser Stelle für einen Spieler möglich einen Hafen zu bauen
+	bool IsHarborPointFree(const unsigned harbor_id, const unsigned char player, 
+		const unsigned short sea_id) const;
+	/// Gibt die Koordinaten eines bestimmten Hafenpunktes zurück
+	Point<MapCoord> GetHarborPoint(const unsigned harbor_id) const;
+	/// Gibt die ID eines Hafenpunktes zurück
+	unsigned GetHarborPointID(const MapCoord x, const MapCoord y) const
+	{ return GetNode(x,y).harbor_id; }
 	/// Ermittelt, ob ein Punkt Küstenpunkt ist, d.h. Zugang zu einem schiffbaren Meer hat 
 	/// und gibt ggf. die Meeres-ID zurück, ansonsten 0
 	unsigned short IsCoastalPoint(const MapCoord x, const MapCoord y) const;
+		/// Grenzt der Hafen an ein bestimmtes Meer an?
+	bool IsAtThisSea(const unsigned harbor_id, const unsigned short sea_id) const;
+	/// Gibt den Punkt eines bestimmtes Meeres um den Hafen herum an, sodass Schiffe diesen anfahren können
+	void GetCoastalPoint(const unsigned harbor_id, MapCoord * px, MapCoord * py, const unsigned short sea_id) const;
+	/// Sucht freie Hafenpunkte, also wo noch ein Hafen gebaut werden kann
+	unsigned GetNextFreeHarborPoint(const unsigned origin_harbor_id, const unsigned char dir,
+										   const unsigned char player, const unsigned short sea_id) const;
+	
 
 protected:
 
@@ -331,6 +361,12 @@ protected:
 	virtual void AltitudeChanged(const MapCoord x, const MapCoord y) = 0;
 	/// Für abgeleitete Klasse, die dann das Terrain entsprechend neu generieren kann
 	virtual void VisibilityChanged(const MapCoord x, const MapCoord y) = 0;
+
+	/// Gibt nächsten Hafenpunkt in einer bestimmten Richtung zurück, bzw. 0, wenn es keinen gibt 
+	unsigned GetNextHarborPoint(const unsigned origin_harbor_id, const unsigned char dir,
+										   const unsigned char player, const unsigned short sea_id,
+		bool (GameWorldBase::*IsPointOK)(const unsigned, const unsigned char, const unsigned short) const) const;
+
 };
 
 /// "Interface-Klasse" für GameWorldBase, die die Daten grafisch anzeigt
@@ -468,6 +504,9 @@ protected:
 
 	/// Erzeugt FOW-Objekte, -Straßen und -Grensteine von aktuellen Punkt für einen bestimmten Spieler
 	void SaveFOWNode(const MapCoord x, const MapCoord y, const unsigned player);
+	/// Berechnet für alle Hafenpunkt jeweils die Richtung und Entfernung zu allen anderen Hafenpunkten
+	/// über die Kartenränder hinweg
+	void CalcHarborPosNeighbors();
 
 
 public:

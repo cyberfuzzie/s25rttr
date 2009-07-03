@@ -37,17 +37,19 @@ class noShip : public noMovable
 		STATE_IDLE = 0, /// Schiff hat nix zu tun und hängt irgendwo an der Küste rum 
 		STATE_GOTOHARBOR,
 		STATE_EXPEDITION_LOADING,
-		STATE_EXPEDITION_WAIT,
-		STATE_EXPEDITION_DRIVE
+		STATE_EXPEDITION_WAITING,
+		STATE_EXPEDITION_DRIVING
 	} state;
 
 	/// Das Meer, auf dem dieses Schiff fährt
 	unsigned short sea_id;
 	/// Zielpunkt des Schiffes
-	MapCoord goal_x, goal_y;
+	unsigned goal_harbor_id;
 	/// Schiffsroute 
 	std::vector<unsigned char> route;
 	unsigned pos;
+	/// Namen des Schiffs
+	std::string name;
 
 private:
 
@@ -99,6 +101,13 @@ public:
 	bool IsIdling() const { return (state == STATE_IDLE); }
 	/// Gibt die ID des Meeres zurück, auf dem es sich befindet
 	unsigned short GetSeaID() const { return sea_id; }
+	/// Gibt den Schiffsnamen zurück
+	const std::string& GetName() const { return name; }
+	/// Führt das Schiff gerade eine Expedition durch und wartet auf weitere Befehle?
+	bool IsWaitingForExpeditionInstructions() const 
+	{ return (state == STATE_EXPEDITION_WAITING); }
+	/// Beim Warten bei der Expedition: Gibt die Hafenpunkt-ID zurück, wo es sich gerade befindet
+	unsigned GetCurrentHarbor() const;
 
 	/// Fährt zum Hafen, um dort eine Mission (Expedition) zu erledigen
 	void GoToHarbor(nobHarborBuilding * hb, const std::vector<unsigned char>& route);

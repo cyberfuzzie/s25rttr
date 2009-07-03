@@ -1,4 +1,4 @@
-// $Id: nofScout_Free.cpp 4857 2009-05-11 18:31:33Z OLiver $
+// $Id: nofScout_Free.cpp 5178 2009-07-03 11:55:24Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -150,14 +150,11 @@ void nofScout_Free::Scout()
 	}
 }
 
-struct Point
-{ MapCoord x,y; };
-
 const unsigned SCOUT_RANGE = 16;
 
 void nofScout_Free::GoToNewNode()
 {
-	list<Point> available_points;
+	list<Point<MapCoord>> available_points;
 
 	for(MapCoord tx=gwg->GetXA(flag->GetX(),flag->GetY(),0), r=1;r<SCOUT_RANGE;tx=gwg->GetXA(tx,flag->GetY(),0),++r)
 	{
@@ -170,7 +167,7 @@ void nofScout_Free::GoToNewNode()
 				if(gwg->GetNode(tx2,ty2).fow[player].visibility != VIS_VISIBLE
 					&& gwg->IsNodeForFigures(tx2,ty2))
 				{
-					Point p = { tx2, ty2 };
+					Point<MapCoord> p (tx2, ty2);
 					available_points.push_back(p);
 				}
 			}
@@ -181,7 +178,7 @@ void nofScout_Free::GoToNewNode()
 	bool found_point = false;
 	while(available_points.size() && !found_point)
 	{
-		list<Point>::iterator p = available_points[RANDOM.Rand(__FILE__,__LINE__,obj_id,available_points.size())];
+		list<Point<MapCoord>>::iterator p = available_points[RANDOM.Rand(__FILE__,__LINE__,obj_id,available_points.size())];
 
 		// Existiert ein Weg zu diesem Punkt und ist dieser Punkt auch noch von der Flagge noch in
 		// einigermaßen vernünftiger Entfernung zu erreichen, um das Drumherumlaufen um Berge usw. zu

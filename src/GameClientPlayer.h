@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.h 5159 2009-07-01 21:29:52Z OLiver $
+// $Id: GameClientPlayer.h 5178 2009-07-03 11:55:24Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -96,7 +96,7 @@ private:
 	/// Liste von Geologen und Spähern, die an eine Flagge gebunden sind
 	std::list<nofFlagWorker*> flagworkers;
 	/// Liste von Schiffen dieses Spielers
-	std::list<noShip*> ships;
+	std::vector<noShip*> ships;
 	/// Liste von Häfen, die Schiffe haben wollen
 	std::list<nobHarborBuilding*> ships_needed;
 
@@ -342,11 +342,18 @@ public:
 	/// Registriert ein Schiff beim Einwohnermeldeamt
 	void RegisterShip(noShip * ship);
 	/// Meldet das Schiff wieder ab
-	void RemoveShip(noShip * ship) { ships.remove(ship); }
+	void RemoveShip(noShip * ship);
 	/// Schiff für Hafen bestellen
 	void OrderShip(nobHarborBuilding * hb);
 	/// Meldet EIN bestelltes Schiff wieder ab
 	void RemoveOrderedShip(nobHarborBuilding * hb);
+	/// Gibt die ID eines Schiffes zurück
+	unsigned GetShipID(const noShip * const ship) const;
+	/// Gibt ein Schiff anhand der ID zurück bzw. NULL, wenn keines mit der ID existiert
+	noShip * GetShipByID(const unsigned ship_id) const;
+	/// Gibt die Gesamtanzahl von Schiffen zurück
+	unsigned GetShipCount() const { return ships.size(); }
+
 
 	/// Er gibt auf
 	void Surrender();

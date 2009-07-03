@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 5165 2009-07-02 13:41:58Z OLiver $
+// $Id: GameWorldGame.cpp 5178 2009-07-03 11:55:24Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1333,4 +1333,75 @@ bool GameWorldGame::IsBorderNode(const MapCoord x, const MapCoord y, const unsig
 {
 	// Wenn ich Besitzer des Punktes bin, dieser mir aber nicht gehört
 	return (GetNode(x,y).owner == player && !IsPlayerTerritory(x,y));
+}
+
+/// Berechnet für alle Hafenpunkt jeweils die Richtung und Entfernung zu allen anderen Hafenpunkten
+/// über die Kartenränder hinweg
+void GameWorldGame::CalcHarborPosNeighbors()
+{
+	Point<int> diffs[9] =
+	{
+		Point<int>(0,0),
+		Point<int>(-width,0),
+		Point<int>(width,0),
+		Point<int>(0,height),
+		Point<int>(-width,height),
+		Point<int>(width,height),
+		Point<int>(0,-height),
+		Point<int>(-width,-height),
+		Point<int>(width,-height)
+	};
+
+
+	for(unsigned i = 0;i<harbor_pos.size();++i)
+	{
+		for(unsigned z = 0;z<harbor_pos.size();++z)
+		{
+			if(i == z)
+				continue;
+
+			for(unsigned o = 0;o<9;++o)
+			{
+				MapCoord ox = harbor_pos[i].x + diffs[o].x,
+					oy = harbor_pos[i].y + diffs[o].y;
+				// Richtung bestimmen, in der dieser Punkt relativ zum Ausgangspunkt steht
+				unsigned char dir;
+				
+				unsigned diff = SafeDiff(oy,harbor_pos[z].y);
+				if(!diff)
+					diff = 1;
+				// Oben?
+				bool marginal_x = ((SafeDiff(ox,harbor_pos[z].x) * 1000 / diff) < 87);
+				if(harbor_pos[z].y < oy)
+				{
+					if(marginal_x)
+						dir = 0;
+					else if(harbor_pos[z].x < ox)
+						dir = 5;
+					else if(harbor_pos[z].x > ox)
+						dir = 1;
+				}
+				else
+				{
+					if(marginal_x)
+						dir = 3;
+					else if(harbor_pos[z].x < ox)
+						dir = 4;
+					else if(harbor_pos[z].x > ox)
+						dir = 2;
+				}
+
+				GameWorldBase::HarborPos::Neighbor nb 
+					= { z+1, CalcDistance(ox,oy,harbor_pos[z].x,harbor_pos[z].y) };
+				harbor_pos[i].neighbors[dir].push_back(nb);
+			}
+		}
+
+		// Nach Entfernung sortieren
+		for(unsigned dir = 0;dir<6;++dir)
+			std::sort(harbor_pos[i].neighbors[dir].begin(),
+			harbor_pos[i].neighbors[dir].begin() + harbor_pos[i].neighbors[dir].size());
+
+
+	}
 }

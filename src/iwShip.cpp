@@ -57,8 +57,8 @@ const unsigned IODAT_SHIP_ID = 218;
  *  @author OLiver
  */
 iwShip::iwShip(GameWorldViewer * const gwv,dskGameInterface *const gi,noShip *const ship)
-: IngameWindow(ship->CreateGUIID(),(unsigned short)-2, (unsigned short)-2, 252, 238, _("Ship register"), GetImage(resource_dat, 41)),
-	gwv(gwv), gi(gi), ship(ship)
+: IngameWindow(CGI_SHIP,(unsigned short)-2, (unsigned short)-2, 252, 238, _("Ship register"), GetImage(resource_dat, 41)),
+gwv(gwv), gi(gi), ship_id(GameClient::inst().GetPlayer(ship->GetPlayer())->GetShipID(ship)), player(ship->GetPlayer())
 {
 	AddImage(  0,126,101, GetImage(io_dat, 228));
 	AddImageButton( 2, 18,192, 30, 35,TC_GREY,GetImage(io_dat, 225));		// Viewer: 226 - Hilfe
@@ -67,8 +67,16 @@ iwShip::iwShip(GameWorldViewer * const gwv,dskGameInterface *const gi,noShip *co
 	AddImageButton( 5,111,196, 30, 26,TC_GREY,GetImage(io_dat, 104));		// Viewer: 105 - Vor
 	AddImageButton( 6,141,196, 30, 26,TC_GREY,GetImage(io_dat, 105));		// Viewer: 106 - Schnell vor
 
+	// Die Expeditionsweiterfahrbuttons
+	AddImageButton(10,60,81,18,18,TC_GREY,GetImage(io_dat,187),_("Found colony"));
 	
-	
+	const int BUTTON_POS[6][2] =
+	{
+		60,61, 80,70, 80,90, 60,101, 40,90, 40,70
+	};
+
+	for(unsigned i = 0;i<6;++i)
+		AddImageButton(11+i,BUTTON_POS[i][0],BUTTON_POS[i][1],18,18,TC_GREY,GetImage(io_dat,181+(i+4)%6));
 }
 
 
@@ -79,7 +87,46 @@ void iwShip::Msg_PaintBefore()
 
 void iwShip::Msg_PaintAfter()
 {
-		
+	// Schiff holen
+	noShip * ship = GameClient::inst().GetPlayer(player)->GetShipByID(ship_id);
+
+	// Kein Schiff gefunden? Dann erstes Schiff holen
+	if(!ship)
+	{
+		ship_id = 0;
+		// Nochmal probieren
+		ship = GameClient::inst().GetPlayer(ship->GetPlayer())->GetShipByID(ship_id);
+		// Immer noch nicht? Dann gibt es keine Schiffe mehr und wir zeigen eine entsprechende Meldung an
+		if(!ship)
+		{
+			GetFont(resource_dat, 0)->Draw(GetX()+width/2,GetY()+60,_("No ships available"),glArchivItem_Font::DF_CENTER,COLOR_WINDOWBROWN);
+			return;
+		}
+	}
+
+
+	// Schiffsname
+	GetFont(resource_dat, 0)->Draw(GetX()+42,GetY()+42,ship->GetName(),0,COLOR_WINDOWBROWN);
+	// Schiffs-Nr.
+	char str[32];
+	sprintf(str,"%u/%u",ship_id+1,GameClient::inst().GetPlayer(ship->GetPlayer())->GetShipCount());
+	GetFont(resource_dat, 0)->Draw(GetX()+208,GetY()+42,str,glArchivItem_Font::DF_RIGHT,COLOR_WINDOWBROWN);
+	// Das Schiffs-Bild
+	GetImage(boot_lst,12)->Draw(GetX()+138,GetY()+117);
+
+	// Expeditions-Buttons malen?
+	if(ship->IsWaitingForExpeditionInstructions())
+	{
+		for(unsigned char i = 0;i<6;++i)
+			GetCtrl<Window>(11+i)->SetVisible(gwv->GetNextFreeHarborPoint(ship->GetCurrentHarbor(),
+			i,ship->GetPlayer(),ship->GetSeaID()) > 0);
+	}
+	else
+	{
+		// Alle Buttons inklusive Anker in der Mitte ausblenden
+		for(unsigned i = 0;i<7;++i)
+			GetCtrl<Window>(10+i)->SetVisible(false);
+	}
 }
 
 

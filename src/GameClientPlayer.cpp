@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 5159 2009-07-01 21:29:52Z OLiver $
+// $Id: GameClientPlayer.cpp 5178 2009-07-03 11:55:24Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -210,7 +210,7 @@ void GameClientPlayer::Serialize(SerializedGameData * sgd)
 
 	sgd->PushObjectList(flagworkers,false);
 
-	sgd->PushObjectList(ships,true);
+	sgd->PushObjectVector(ships,true);
 
 	for(unsigned i = 0;i<5;++i)
 		sgd->PushBool(defenders[i]);
@@ -298,7 +298,7 @@ void GameClientPlayer::Deserialize(SerializedGameData * sgd)
 
 	sgd->PopObjectList(flagworkers,GOT_UNKNOWN);
 
-	sgd->PopObjectList(ships,GOT_SHIP);
+	sgd->PopObjectVector(ships,GOT_SHIP);
 
 	for(unsigned i = 0;i<5;++i)
 		defenders[i] = sgd->PopBool();
@@ -1619,10 +1619,10 @@ void GameClientPlayer::RegisterShip(noShip * ship)
 	for(std::list<nobHarborBuilding*>::iterator it = ships_needed.begin();it!=ships_needed.end();++it)
 	{
 		// liegen wir am gleichen Meer?
-		if((*it)->IsAtThisSea(ship->GetSeaID()))
+		if(gwg->IsAtThisSea((*it)->GetHarborPosID(),ship->GetSeaID()))
 		{
 			MapCoord dest_x,dest_y;
-			(*it)->GetCoastalPoint(&dest_x,&dest_y,ship->GetSeaID());
+			gwg->GetCoastalPoint((*it)->GetHarborPosID(),&dest_x,&dest_y,ship->GetSeaID());
 			unsigned length;
 			std::vector<unsigned char> route;
 			if(gwg->FindShipPath(ship->GetX(),ship->GetY(),dest_x,dest_y,&route,&length))
@@ -1652,22 +1652,22 @@ void GameClientPlayer::OrderShip(nobHarborBuilding * hb)
 	std::vector<unsigned char> best_route;
 
 	// Beste Weglänge, die ein Schiff zurücklegen muss, welches gerade nichts zu tun hat
-	for(std::list<noShip*>::iterator it = ships.begin();it!=ships.end();++it)
+	for(unsigned i = 0;i<ships.size();++i)
 	{
 		// Hat das Schiff gerade nichts zu tun und liegen wir am gleichen Meer?
-		if((*it)->IsIdling())
+		if(ships[i]->IsIdling())
 		{
-			if(hb->IsAtThisSea((*it)->GetSeaID()))
+			if(gwg->IsAtThisSea(gwg->GetHarborPointID(hb->GetX(),hb->GetY()),ships[i]->GetSeaID()))
 			{
 				MapCoord dest_x,dest_y;
-				hb->GetCoastalPoint(&dest_x,&dest_y,(*it)->GetSeaID());
+				gwg->GetCoastalPoint(hb->GetHarborPosID(),&dest_x,&dest_y,ships[i]->GetSeaID());
 				unsigned length;
 				std::vector<unsigned char> route;
-				if(gwg->FindShipPath((*it)->GetX(),(*it)->GetY(),dest_x,dest_y,&route,&length))
+				if(gwg->FindShipPath(ships[i]->GetX(),ships[i]->GetY(),dest_x,dest_y,&route,&length))
 				{
 					if(length < best_length)
 					{
-						best = *it;
+						best = ships[i];
 						best_length = length;
 						best_route = route;
 					}
@@ -1701,4 +1701,35 @@ void GameClientPlayer::RemoveOrderedShip(nobHarborBuilding * hb)
 			return;
 		}
 	}
+}
+
+
+/// Meldet das Schiff wieder ab
+void GameClientPlayer::RemoveShip(noShip * ship)
+{
+	for(unsigned i = 0;i<ships.size();++i)
+	{
+		if(ships[i] == ship)
+		{
+			ships.erase(ships.begin()+i);
+			return;
+		}
+	}
+}
+
+
+/// Gibt die ID eines Schiffes zurück
+unsigned GameClientPlayer::GetShipID(const noShip * const ship) const
+{
+	for(unsigned i = 0;i<ships.size();++i)
+		if(ships[i] == ship)
+			return i;
+
+	return 0xFFFFFFFF;
+}
+
+/// Gibt ein Schiff anhand der ID zurück bzw. NULL, wenn keines mit der ID existiert
+noShip * GameClientPlayer::GetShipByID(const unsigned ship_id) const
+{
+	return ships[ship_id];
 }

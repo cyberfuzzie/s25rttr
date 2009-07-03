@@ -23,8 +23,8 @@
 
 
 /// Ermittelt Abstand zwischen 2 Punkten auf der Map (mit Pythagoras)
-unsigned CalcDistance(const MapCoord x1, const MapCoord y1,
-					  const MapCoord x2, const MapCoord y2);
+unsigned CalcDistance(const int x1, const int y1,
+					  const int x2, const int y2);
 
 
 

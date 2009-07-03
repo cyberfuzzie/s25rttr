@@ -1,4 +1,4 @@
-// $Id: nofFarmhand.cpp 5136 2009-06-28 12:12:57Z OLiver $
+// $Id: nofFarmhand.cpp 5178 2009-07-03 11:55:24Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -57,9 +57,6 @@ dest_x(sgd->PopUnsignedShort()),
 dest_y(sgd->PopUnsignedShort())
 {}
 
-struct Point
-{ unsigned short x,y; };
-
 
 void nofFarmhand::WalkedDerived()
 {
@@ -105,7 +102,7 @@ void nofFarmhand::HandleDerivedEvent(const unsigned int id)
 			// Anzahl der Radien, wo wir gültige Punkte gefunden haben
 			unsigned radius_count = 0;
 
-			list<Point> available_points;
+			list<Point<MapCoord>> available_points;
 
 			for(MapCoord tx=gwg->GetXA(x,y,0), r=1;r<=RADIUS[job-JOB_WOODCUTTER];tx=gwg->GetXA(tx,y,0),++r)
 			{
@@ -119,8 +116,7 @@ void nofFarmhand::HandleDerivedEvent(const unsigned int id)
 					{
 						if(IsPointAvailable(tx2,ty2) && !gwg->GetNode(tx2,ty2).reserved)
 						{
-							Point p = { tx2, ty2 };
-							available_points.push_back(p);
+							available_points.push_back(Point<MapCoord>(tx2, ty2));
 							found_in_radius = true;
 						}
 					}
@@ -139,7 +135,7 @@ void nofFarmhand::HandleDerivedEvent(const unsigned int id)
 			if(available_points.size())
 			{
 				// Ein Objekt zufällig heraussuchen
-				Point p = *available_points[RANDOM.Rand(__FILE__,__LINE__,obj_id,available_points.size())];
+				Point<MapCoord> p = *available_points[RANDOM.Rand(__FILE__,__LINE__,obj_id,available_points.size())];
 
 				// Als neues Ziel nehmen
 				dest_x = p.x;

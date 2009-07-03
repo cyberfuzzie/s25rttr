@@ -1,4 +1,4 @@
-// $Id: SerializedGameData.h 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: SerializedGameData.h 5178 2009-07-03 11:55:24Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -23,6 +23,7 @@
 
 #include <memory.h>
 #include <list>
+#include <vector>
 #include "list.h"
 #include "BinaryFile.h"
 #include "GameObject.h"
@@ -100,6 +101,17 @@ public:
 			PushObject(*it,known);
 	}
 
+	/// Kopiert eine Liste von GameObjects
+	template <typename T>
+	void PushObjectVector(const std::vector<T*>& gos,const bool known)
+	{
+		// Anzahl
+		PushUnsignedInt(gos.size());
+		// einzelne Objekte
+		for(unsigned i = 0;i<gos.size();++i)
+			PushObject(gos[i],known);
+	}
+
 	/// FoW-Objekt
 	void PushFOWObject(const FOWObject * fowobj);
 
@@ -134,6 +146,19 @@ public:
 		for(unsigned i = 0;i<size;++i)
 			gos.push_back(PopObject<T>(got));
 	}
+
+	/// Liest einen Vektor von GameObjects
+	template <typename T>
+	void PopObjectVector(std::vector<T*>& gos,GO_Type got)
+	{
+		// Anzahl
+		unsigned size = PopUnsignedInt();
+		gos.resize(size);
+		// einzelne Objekte
+		for(unsigned i = 0;i<size;++i)
+			gos[i] = PopObject<T>(got);
+	}
+
 
 	/// Fügt ein gelesenes Objekt zur globalen Objektliste dazu
 	void AddObject(GameObject * go);

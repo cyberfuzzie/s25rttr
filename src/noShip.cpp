@@ -36,7 +36,7 @@ const unsigned SHIP_SPEED = 20;
 
 /// Konstruktor
 noShip::noShip(const unsigned short x, const unsigned short y, const unsigned char player) 
-: noMovable(NOP_SHIP,x,y), player(player), state(STATE_IDLE), sea_id(0)
+: noMovable(NOP_SHIP,x,y), player(player), state(STATE_IDLE), sea_id(0), name("Give me a name")
 {
 	// Meer ermitteln, auf dem dieses Schiff fährt
 	for(unsigned i = 0;i<6;++i)
@@ -99,7 +99,7 @@ void noShip::Draw(int x, int y)
 			GetImage(boot_lst, ((dir+3)%6)*2 + 1)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
 			GetImage(boot_lst, ((dir+3)%6)*2)->Draw(x,y);
 		} break;
-	case STATE_EXPEDITION_WAIT:
+	case STATE_EXPEDITION_WAITING:
 		{
 			GetImage(boot_lst, ((dir+3)%6)*2 + 1)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
 			GetImage(boot_lst, ((dir+3)%6)*2)->Draw(x,y);
@@ -143,7 +143,7 @@ void noShip::HandleEvent(const unsigned int id)
 			case STATE_EXPEDITION_LOADING:
 				{
 					// Schiff ist nun bereit und Expedition kann beginnen
-					state = STATE_EXPEDITION_WAIT;
+					state = STATE_EXPEDITION_WAITING;
 				} break;
 			}
 		} break;
@@ -175,8 +175,7 @@ void noShip::GoToHarbor(nobHarborBuilding * hb, const std::vector<unsigned char>
 {
 	state = STATE_GOTOHARBOR;
 
-	goal_x = hb->GetX();
-	goal_y = hb->GetY();
+	goal_harbor_id = gwg->GetNode(hb->GetX(),hb->GetY()).harbor_id;
 
 	// Route merken
 	this->route = route;
@@ -194,13 +193,15 @@ void noShip::HandleState_GoToHarbor()
 	default: return;
 	case GOAL_REACHED:
 		{
+			Point<MapCoord> goal(gwg->GetHarborPoint(goal_harbor_id));
 			// Hafen Bescheid sagen, dass wir da sind
-			gwg->GetSpecObj<nobHarborBuilding>(goal_x,goal_y)->ShipArrived(this);
+			gwg->GetSpecObj<nobHarborBuilding>(goal.x,goal.y)->ShipArrived(this);
 		} break;
 	case NO_ROUTE_FOUND:
 		{
+			Point<MapCoord> goal(gwg->GetHarborPoint(goal_harbor_id));
 			// Dem Hafen Bescheid sagen
-			gwg->GetSpecObj<nobHarborBuilding>(goal_x,goal_y)->ShipLost(this);
+			gwg->GetSpecObj<nobHarborBuilding>(goal.x,goal.y)->ShipLost(this);
 			// Nichts machen und idlen
 			state = STATE_IDLE;
 		} break;
@@ -223,11 +224,14 @@ void noShip::StartExpedition()
 /// Fährt weiter zu einem Hafen
 noShip::Result noShip::DriveToHarbour()
 {
+	Point<MapCoord> goal(gwg->GetHarborPoint(goal_harbor_id));
+	
+
 	// Existiert der Hafen überhaupt noch?
-	if(gwg->GetGOT(goal_x,goal_y) != GOT_NOB_HARBORBUILDING)
+	if(gwg->GetGOT(goal.x,goal.y) != GOT_NOB_HARBORBUILDING)
 		return HARBOR_DOESNT_EXIST;
 
-	nobHarborBuilding * hb = gwg->GetSpecObj<nobHarborBuilding>(goal_x,goal_y);
+	nobHarborBuilding * hb = gwg->GetSpecObj<nobHarborBuilding>(goal.x,goal.y);
 
 	// Sind wir schon da?
 	if(pos == route.size())
@@ -236,7 +240,7 @@ noShip::Result noShip::DriveToHarbour()
 	{
 		// Punkt, zu dem uns der Hafen hinführen will (Küstenpunkt)
 		MapCoord coastal_x, coastal_y;
-		hb->GetCoastalPoint(&coastal_x, &coastal_y,sea_id);
+		gwg->GetCoastalPoint(goal_harbor_id,&coastal_x, &coastal_y,sea_id);
 
 		MapCoord goal_x_route, goal_y_route;
 
@@ -255,7 +259,7 @@ noShip::Result noShip::DriveToHarbour()
 		}
 
 		// Kommen wir auch mit unser bisherigen Route an dem ursprünglich anvisierten Hafenplatz an?
-		if(!(coastal_x == goal_x_route && coastal_x == goal_x_route))
+		if(!(coastal_x == goal_x_route && coastal_y == goal_y_route))
 		{
 			// Nein, d.h. wenn wir schon nah dran sind, müssen wir die Route neu berechnen
 			if(route.size()-pos < 10)
@@ -277,4 +281,11 @@ noShip::Result noShip::DriveToHarbour()
 noShip::Result noShip::DriveToHarbourPlace()
 {
 	return DRIVING;
+}
+
+
+unsigned noShip::GetCurrentHarbor() const
+{
+	assert(state == STATE_EXPEDITION_WAITING);
+	return goal_harbor_id;
 }

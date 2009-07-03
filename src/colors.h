@@ -1,4 +1,4 @@
-// $Id: colors.h 4996 2009-06-03 19:01:25Z OLiver $
+// $Id: colors.h 5178 2009-07-03 11:55:24Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -48,6 +48,7 @@ const unsigned COLOR_BROWN = 0xFF6C4337;
 const unsigned COLOR_GHOST = 0x05FFFFFF;
 const unsigned COLOR_SHADOW = 0x40000000;
 const unsigned COLOR_GREY = 0xFFCCCCCC;
+const unsigned COLOR_WINDOWBROWN = 0xFF886034;
 
 /// Spielerfarben
 const unsigned int PLAYER_COLORS_COUNT = 11;

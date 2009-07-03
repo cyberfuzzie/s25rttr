@@ -31,7 +31,8 @@ class iwShip : public IngameWindow
 {
 	GameWorldViewer * const gwv;
 	dskGameInterface *const gi; ///< Das GameInterface
-	noShip * ship;              ///< Das Schiff
+	unsigned ship_id; /// ID des Schiffes, welches gerade angezeigt wird
+	unsigned char player; /// Besitzer des Schiffes, den wir für die Umwandlung ID->richtiges Schiff brauchen
 
 public:
 	/// Konstruktor von @p iwBuilding.

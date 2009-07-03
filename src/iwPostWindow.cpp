@@ -1,4 +1,4 @@
-// $Id: iwPostWindow.cpp 5136 2009-06-28 12:12:57Z OLiver $
+// $Id: iwPostWindow.cpp 5178 2009-07-03 11:55:24Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -76,9 +76,9 @@ iwPostWindow::iwPostWindow(GameWorldViewer& gwv)
 	// Multiline-Teil mit drei leeren Zeilen erzeugen
 	ctrlMultiline *text = AddMultiline(12, 126, 141, 200, 50, TC_INVISIBLE, GetFont(resource_dat, 0), glArchivItem_Font::DF_CENTER | glArchivItem_Font::DF_BOTTOM);
 	text->EnableBox(false);
-	text->AddString("",0xFF886034,false);
-	text->AddString("",0xFF886034,false);
-	text->AddString("",0xFF886034,false);
+	text->AddString("",COLOR_WINDOWBROWN,false);
+	text->AddString("",COLOR_WINDOWBROWN,false);
+	text->AddString("",COLOR_WINDOWBROWN,false);
 
 	SetMessageText(_("No letters!"));
 
@@ -325,9 +325,9 @@ void iwPostWindow::SetMessageText(const std::string& message)
 	for(unsigned i = 0; i < 3; ++i)
 	{
 		if (i < wi.count)
-			text->SetLine(i, lines[i], 0xFF886034);
+			text->SetLine(i, lines[i], COLOR_WINDOWBROWN);
 		else
-			text->SetLine(i, "", 0xFF886034);
+			text->SetLine(i, "", COLOR_WINDOWBROWN);
 	}
 
 	delete [] lines;

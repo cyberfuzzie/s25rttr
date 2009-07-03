@@ -1,4 +1,4 @@
-// $Id: main.h 5098 2009-06-24 17:09:39Z FloSoft $
+// $Id: main.h 5178 2009-07-03 11:55:24Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -166,6 +166,15 @@ inline T max(T a, T b) { return ((a) < (b)) ? (b) : (a); }
 /// Berechnet Differenz von 2 (unsigned!) Werten
 template <typename T>
 inline T SafeDiff(T a, T b) { return ((a) > (b)) ? (a-b) : (b-a); }
+
+// 2D-Punkt
+template <typename T>
+struct Point
+{
+	T x,y;
+	Point(const T x, const T y) : x(x), y(y) {}
+};
+
 
 const char *GetWindowTitle();
 const char *GetWindowVersion();

@@ -77,10 +77,9 @@ public:
 	/// Schiff konnte nicht mehr kommen
 	void ShipLost(noShip * ship);
 
-	/// Grenzt der Hafen an ein bestimmtes Meer an?
-	bool IsAtThisSea(const unsigned short sea_id) const;
-	/// Gibt den Punkt eines bestimmtes Meeres um den Hafen herum an, sodass Schiffe diesen anfahren können
-	void GetCoastalPoint(MapCoord * px, MapCoord * py, const unsigned short sea_id) const;
+	/// Gibt die Hafenplatz-ID zurück, auf der der Hafen steht
+	unsigned GetHarborPosID() const;
+
 	
 };
 

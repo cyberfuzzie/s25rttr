@@ -1,4 +1,4 @@
-// $Id: GameWorld.cpp 5144 2009-06-30 07:45:36Z OLiver $
+// $Id: GameWorld.cpp 5178 2009-07-03 11:55:24Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -87,15 +87,17 @@ void GameWorld::Scan(glArchivItem_Map *map)
 			if(t1 == 78)
 			{
 				node.t1 = TT_STEPPE;
-				node.harbor = true;
+				
 
-				HarborPlace p = {x,y};
+				GameWorldBase::HarborPos p = {x,y};
 				harbor_pos.push_back(p);
+
+				node.harbor_id = harbor_pos.size();
 			}
 			else
 			{
 				node.t1 = (t1<20)?TERRAIN_INDIZES[t1]:0;
-				node.harbor = false;
+				node.harbor_id = 0;
 			}
 			node.t2 = (t2<20)?TERRAIN_INDIZES[t2]:0;
 
@@ -400,16 +402,16 @@ void GameWorld::Scan(glArchivItem_Map *map)
 		}
 	}
 
-	/// Hafenplätze zu den Weltmeeren zuordnen
-	for(unsigned y = 0;y<height;++y)
+	/// Die Meere herausfinden, an die die Hafenpunkte grenzen
+	for(unsigned i = 0;i<harbor_pos.size();++i)
 	{
-		for(unsigned x = 0;x<width;++x)
-		{
-			if(GetNode(x,y).harbor)
-			{
-			}
-		}
-		}
+		for(unsigned z = 0;z<6;++z)
+			harbor_pos[i].sea_ids[z] = IsCoastalPoint(GetXA(harbor_pos[i].x,harbor_pos[i].y,z),
+			GetYA(harbor_pos[i].x,harbor_pos[i].y,z));
+	}
+
+	// Nachbarn der einzelnen Hafenplätze ermitteln
+	CalcHarborPosNeighbors();
 
 	/// Schatten und BQ berechnen
 	for(unsigned y = 0;y<height;++y)
@@ -489,7 +491,7 @@ void GameWorld::Serialize(SerializedGameData *sgd) const
 		sgd->PushObject(nodes[i].obj,false);
 		sgd->PushObjectList(nodes[i].figures,false);
 		sgd->PushUnsignedShort(nodes[i].sea_id);
-		sgd->PushBool(nodes[i].harbor);
+		sgd->PushUnsignedInt(nodes[i].harbor_id);
 	}
 
 	// Katapultsteine serialisieren
@@ -563,11 +565,11 @@ void GameWorld::Deserialize(SerializedGameData *sgd)
 		nodes[i].obj = sgd->PopObject<noBase>(GOT_UNKNOWN);
 		sgd->PopObjectList<noBase>(nodes[i].figures,GOT_UNKNOWN);
 		nodes[i].sea_id = sgd->PopUnsignedShort();
-		nodes[i].harbor = sgd->PopBool();
+		nodes[i].harbor_id = sgd->PopUnsignedInt();
 
-		if(nodes[i].harbor)
+		if(nodes[i].harbor_id)
 		{
-			HarborPlace p = {i%width,i/width};
+			GameWorldBase::HarborPos  p = {i%width,i/width};
 			harbor_pos.push_back(p);
 		}
 	}
@@ -627,17 +629,13 @@ void GameWorld::MilitaryBuildingCaptured(const unsigned short x, const MapCoord 
 
 /// Vermisst ein neues Weltmeer von einem Punkt aus, indem es alle mit diesem Punkt verbundenen
 /// Wasserpunkte mit der gleichen ID belegt und die Anzahl zurückgibt
-struct Point { 
-	MapCoord x,y;
-};
-
 unsigned GameWorld::MeasureSea(const MapCoord x, const MapCoord y, const unsigned short sea_id)
 {
 	// Breitensuche von diesem Punkt aus durchführen
 	std::vector<bool> visited(width*height,false);
-	std::queue<Point> todo;
+	std::queue<Point<MapCoord>> todo;
 
-	Point start = {x,y};
+	Point<MapCoord> start(x,y);
 	todo.push(start);
 
 	// Knoten zählen (Startknoten schon mit inbegriffen)
@@ -645,7 +643,7 @@ unsigned GameWorld::MeasureSea(const MapCoord x, const MapCoord y, const unsigne
 
 	while(!todo.empty())
 	{
-		Point p = todo.front();
+		Point<MapCoord> p = todo.front();
 		todo.pop();
 
 		if(visited[p.y*width+p.x])
@@ -665,7 +663,7 @@ unsigned GameWorld::MeasureSea(const MapCoord x, const MapCoord y, const unsigne
 
 			if(!visited[ya*width+xa])
 			{
-				Point add = {xa,ya};
+				Point<MapCoord> add(xa,ya);
 				todo.push(add);
 			}
 		}

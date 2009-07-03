@@ -1,4 +1,4 @@
-// $Id: Pathfinding.cpp 5164 2009-07-02 12:36:35Z OLiver $
+// $Id: Pathfinding.cpp 5178 2009-07-03 11:55:24Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -42,13 +42,14 @@
 /// Konstante für einen ungültigen Vorgänerknoten
 const unsigned INVALID_PREV = 0xFFFFFFFF;
 
-struct Point;
 /// Vergleichsoperator für die Prioritätswarteschlange bzw. std::set beim straßengebundenen Wegfinden
 class RoadNodeComperator
 {
 public:
 	bool operator()(const noRoadNode* const rn1, const noRoadNode* const rn2) const;
 };
+
+struct PathfindingPoint;
 
 /// Klass für einen Knoten mit dazugehörigen Informationen
 /// Wir speichern einfach die gesamte Map und sparen uns so das dauernde Allokieren und Freigeben von Speicher
@@ -69,7 +70,7 @@ struct NewNode
 	/// Wurde Knoten schon besucht (für A*-Algorithmus)
 	bool visited;
 	/// Iterator auf Position in der Prioritätswarteschlange (std::set), freies Pathfinding
-	std::set<Point>::iterator it_p;
+	std::set<PathfindingPoint>::iterator it_p;
 	/// Iterator auf Position in der Prioritätswarteschlange (std::set), weggebundenes Pathfinding
 	std::set<const noRoadNode*,RoadNodeComperator>::iterator it_rn;
 };
@@ -79,15 +80,15 @@ NewNode pf_nodes[256*256];
 
 /// Punkte als Verweise auf die obengenannen Knoten, damit nur die beiden Koordinaten x,y im set mit rumgeschleppt
 /// werden müsen
-struct Point {
+struct PathfindingPoint {
 public:
 	/// Die beiden Koordinaten des Punktes
 	MapCoord x,y;
 
 public:
 	/// Konstruktoren
-	Point() {};
-	Point(const MapCoord x, const MapCoord y) : x(x), y(y) {}
+	PathfindingPoint() {};
+	PathfindingPoint(const MapCoord x, const MapCoord y) : x(x), y(y) {}
 
 	/// Koordinaten des Ziels beim jeweils aktuellen Pathfinding, die wir zur Bewertung der Punkte benötigen
 	static MapCoord dst_x, dst_y;
@@ -96,13 +97,13 @@ public:
 	/// Diese statischen Variablen zu Beginn des Pathfindings festlegen
 	static void Init(const MapCoord dst_x, const MapCoord dst_y,const GameWorldBase * gwb)
 	{
-		Point::dst_x = dst_x;
-		Point::dst_y = dst_y;
-		Point::gwb = gwb;
+		PathfindingPoint::dst_x = dst_x;
+		PathfindingPoint::dst_y = dst_y;
+		PathfindingPoint::gwb = gwb;
 	}
 
 	/// Operator für den Vergleich 
-	bool operator<(const Point two) const
+	bool operator<(const PathfindingPoint two) const
 	{
 		// Weglängen schätzen für beide Punkte, indem man den bisherigen Weg mit der Luftlinie vom aktullen 
 		// Punkt zum Ziel addiert und auf diese Weise den kleinsten Weg auswählt
@@ -122,14 +123,14 @@ public:
 // gehandelt, nur dass wir noRoadNodes statt direkt Points vergleichen
 bool RoadNodeComperator::operator()(const noRoadNode* const rn1, const noRoadNode* const rn2) const
 {
-	Point p1 (rn1->GetX(), rn1->GetY()), p2(rn2->GetX(), rn2->GetY());
+	PathfindingPoint p1 (rn1->GetX(), rn1->GetY()), p2(rn2->GetX(), rn2->GetY());
 	return p1<p2;
 }
 
 /// Definitionen siehe oben
-MapCoord Point::dst_x = 0;
-MapCoord Point::dst_y = 0;
-const GameWorldBase * Point::gwb = NULL;
+MapCoord PathfindingPoint::dst_x = 0;
+MapCoord PathfindingPoint::dst_y = 0;
+const GameWorldBase * PathfindingPoint::gwb = NULL;
 
 /// Nach jedem Pathfinding sind Knoten der pf_nodes "verunreinigt", d.h. u.a. visited steht noch auf true
 /// Dazu werden in dieser Liste die Knoten gespeichert, die vor jedem Pathfinding erstmal einmal wieder zurück-
@@ -148,12 +149,12 @@ bool GameWorldBase::FindFreePath(const MapCoord x_start,const MapCoord y_start,
 		pf_nodes[clean_list[i]].visited = false;
 	clean_list.clear();
 
-	std::set<Point> todo;
-	Point::Init(x_dest,y_dest,this);
+	std::set<PathfindingPoint> todo;
+	PathfindingPoint::Init(x_dest,y_dest,this);
 
 	// Anfangsknoten einfügen
 	unsigned start_id = MakeCoordID(x_start,y_start);
-	std::pair< std::set<Point>::iterator, bool > ret = todo.insert(Point(x_start,y_start));
+	std::pair< std::set<PathfindingPoint>::iterator, bool > ret = todo.insert(PathfindingPoint(x_start,y_start));
 	// Und mit entsprechenden Werten füllen
 	pf_nodes[start_id].it_p = ret.first;
 	pf_nodes[start_id].prev = INVALID_PREV;
@@ -165,7 +166,7 @@ bool GameWorldBase::FindFreePath(const MapCoord x_start,const MapCoord y_start,
 	while(todo.size())
 	{
 		// Knoten mit den geringsten Wegkosten auswählen
-		Point best = *todo.begin();
+		PathfindingPoint best = *todo.begin();
 		// Knoten behandelt --> raus aus der todo Liste
 		todo.erase(todo.begin());
 
@@ -228,7 +229,7 @@ bool GameWorldBase::FindFreePath(const MapCoord x_start,const MapCoord y_start,
 					pf_nodes[xaid].way  = pf_nodes[best_id].way+1;
 					pf_nodes[xaid].prev = best_id;
 					todo.erase(pf_nodes[xaid].it_p);
-					ret = todo.insert(Point(xa,ya));
+					ret = todo.insert(PathfindingPoint(xa,ya));
 					pf_nodes[xaid].it_p = ret.first;
 					pf_nodes[xaid].dir = i;
 				}
@@ -258,7 +259,7 @@ bool GameWorldBase::FindFreePath(const MapCoord x_start,const MapCoord y_start,
 			pf_nodes[xaid].dir = i;
 			pf_nodes[xaid].prev = best_id;
 
-			ret = todo.insert(Point(xa,ya));
+			ret = todo.insert(PathfindingPoint(xa,ya));
 			pf_nodes[xaid].it_p = ret.first;
 		}
 	}
@@ -282,7 +283,7 @@ bool GameWorldBase::FindPathOnRoads(const noRoadNode * const start, const noRoad
 	clean_list.clear();
 
 	std::set<const noRoadNode*,RoadNodeComperator> todo;
-	Point::Init(goal->GetX(),goal->GetY(),this);
+	PathfindingPoint::Init(goal->GetX(),goal->GetY(),this);
 
 	// Anfangsknoten einfügen
 	std::pair< std::set<const noRoadNode*, RoadNodeComperator>::iterator, bool > ret = todo.insert(start);

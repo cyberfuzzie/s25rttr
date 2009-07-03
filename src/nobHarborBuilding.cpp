@@ -87,14 +87,12 @@ nobHarborBuilding::nobHarborBuilding(SerializedGameData * sgd, const unsigned ob
 	
 }
 
-/// Positionen der einzelnen Expeditionsgüter vor dem Hafengebäude für alle 4 Völker jeweils
-struct Point { int x,y; };
 // Relative Position des Bauarbeiters 
-const Point BUILDER_POS[4] = { {0,0}, {0,0}, {0,0}, {0,0} };
+const Point<int> BUILDER_POS[4] = { Point<int>(0,0), Point<int>(0,0), Point<int>(0,0), Point<int>(0,0) };
 /// Relative Position der Brettertürme
-const Point BOARDS_POS[4] = { {0,0}, {0,0}, {0,0}, {0,0} };
+const Point<int> BOARDS_POS[4] = { Point<int>(0,0), Point<int>(0,0), Point<int>(0,0), Point<int>(0,0) };
 /// Relative Position der Steintürme
-const Point STONES_POS[4] = { {0,0}, {0,0}, {0,0}, {0,0} };
+const Point<int> STONES_POS[4] = { Point<int>(0,0), Point<int>(0,0), Point<int>(0,0), Point<int>(0,0) };
 
 
 void nobHarborBuilding::Draw(int x,int y)
@@ -278,16 +276,6 @@ void nobHarborBuilding::WareLost(Ware * ware)
 		OrderExpeditionWares();
 }
 
-/// Grenzt der Hafen an ein bestimmtes Meer an?
-bool nobHarborBuilding::IsAtThisSea(const unsigned short sea_id) const
-{
-	for(unsigned i = 0;i<6;++i)
-	{
-		if(sea_id == sea_ids[i])
-			return true;
-	}
-	return false;
-}
 
 
 /// Schiff ist angekommen
@@ -356,27 +344,16 @@ void nobHarborBuilding::CheckExpeditionReady()
 }
 
 
-/// Gibt den Punkt eines bestimmtes Meeres um den Hafen herum an, sodass Schiffe diesen anfahren können
-void nobHarborBuilding::GetCoastalPoint(MapCoord * px, MapCoord * py, const unsigned short sea_id) const
-{
-	for(unsigned i = 0;i<6;++i)
-	{
-		if(sea_ids[i] == sea_id)
-		{
-			*px = gwg->GetXA(x,y,i);
-			*py = gwg->GetYA(x,y,i);
-			return;
-		}
-	}
-
-	// Keinen Punkt gefunden
-	*px = 0xFFFF;
-	*py = 0xFFFF;
-}
 
 /// Schiff konnte nicht mehr kommen
 void nobHarborBuilding::ShipLost(noShip * ship)
 {
 	// Neues Schiff bestellen
 	players->getElement(player)->OrderShip(this);
+}
+
+/// Gibt die Hafenplatz-ID zurück, auf der der Hafen steht
+unsigned nobHarborBuilding::GetHarborPosID() const
+{
+	return gwg->GetHarborPointID(x,y);
 }

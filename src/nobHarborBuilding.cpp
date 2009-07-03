@@ -357,3 +357,4 @@ unsigned nobHarborBuilding::GetHarborPosID() const
 {
 	return gwg->GetHarborPointID(x,y);
 }
+

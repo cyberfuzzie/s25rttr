@@ -13,7 +13,7 @@ nofShipWright::nofShipWright(const unsigned short x, const unsigned short y,cons
 {}
 
 const unsigned SHIPWRIGHT_RADIUS = 10;
-const unsigned SHIPWRIGHT_WALKING_DISTANCE = 20;
+const unsigned SHIPWRIGHT_WALKING_DISTANCE = 15;
 /// Arbeitszeit des Schiffsbauers beim Bauen von groﬂen Schiffen
 const unsigned WORKING_TIME_SHIPS = 70;
 

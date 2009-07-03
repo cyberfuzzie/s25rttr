@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 5178 2009-07-03 11:55:24Z OLiver $
+// $Id: GameClientPlayer.cpp 5181 2009-07-03 15:05:04Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1733,3 +1733,4 @@ noShip * GameClientPlayer::GetShipByID(const unsigned ship_id) const
 {
 	return ships[ship_id];
 }
+

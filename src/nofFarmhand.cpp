@@ -1,4 +1,4 @@
-// $Id: nofFarmhand.cpp 5178 2009-07-03 11:55:24Z OLiver $
+// $Id: nofFarmhand.cpp 5180 2009-07-03 14:19:17Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -102,7 +102,7 @@ void nofFarmhand::HandleDerivedEvent(const unsigned int id)
 			// Anzahl der Radien, wo wir gültige Punkte gefunden haben
 			unsigned radius_count = 0;
 
-			list<Point<MapCoord>> available_points;
+			list< Point<MapCoord> > available_points;
 
 			for(MapCoord tx=gwg->GetXA(x,y,0), r=1;r<=RADIUS[job-JOB_WOODCUTTER];tx=gwg->GetXA(tx,y,0),++r)
 			{

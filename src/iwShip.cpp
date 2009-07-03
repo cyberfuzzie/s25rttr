@@ -72,7 +72,7 @@ gwv(gwv), gi(gi), ship_id(GameClient::inst().GetPlayer(ship->GetPlayer())->GetSh
 	
 	const int BUTTON_POS[6][2] =
 	{
-		60,61, 80,70, 80,90, 60,101, 40,90, 40,70
+		{60,61}, {80,70}, {80,90}, {60,101}, {40,90}, {40,70}
 	};
 
 	for(unsigned i = 0;i<6;++i)

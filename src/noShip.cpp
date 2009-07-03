@@ -231,7 +231,7 @@ noShip::Result noShip::DriveToHarbour()
 	if(gwg->GetGOT(goal.x,goal.y) != GOT_NOB_HARBORBUILDING)
 		return HARBOR_DOESNT_EXIST;
 
-	nobHarborBuilding * hb = gwg->GetSpecObj<nobHarborBuilding>(goal.x,goal.y);
+	//nobHarborBuilding * hb = gwg->GetSpecObj<nobHarborBuilding>(goal.x,goal.y);
 
 	// Sind wir schon da?
 	if(pos == route.size())

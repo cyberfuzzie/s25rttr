@@ -1,4 +1,4 @@
-// $Id: GameWorld.cpp 5178 2009-07-03 11:55:24Z OLiver $
+// $Id: GameWorld.cpp 5180 2009-07-03 14:19:17Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -633,7 +633,7 @@ unsigned GameWorld::MeasureSea(const MapCoord x, const MapCoord y, const unsigne
 {
 	// Breitensuche von diesem Punkt aus durchführen
 	std::vector<bool> visited(width*height,false);
-	std::queue<Point<MapCoord>> todo;
+	std::queue< Point<MapCoord> > todo;
 
 	Point<MapCoord> start(x,y);
 	todo.push(start);

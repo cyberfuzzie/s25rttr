@@ -32,11 +32,12 @@
 #include "nobHarborBuilding.h"
 
 const unsigned SHIP_SPEED = 20;
-
+const unsigned int ship_count = 3;
+const std::string ship_names[ship_count] = {"Talarius", "Demophobius", "Olivianus"};
 
 /// Konstruktor
 noShip::noShip(const unsigned short x, const unsigned short y, const unsigned char player) 
-: noMovable(NOP_SHIP,x,y), player(player), state(STATE_IDLE), sea_id(0), name("Give me a name")
+: noMovable(NOP_SHIP,x,y), player(player), state(STATE_IDLE), sea_id(0), name(ship_names[Random::inst().Rand(__FILE__,__LINE__,this->obj_id, ship_count)])
 {
 	// Meer ermitteln, auf dem dieses Schiff fährt
 	for(unsigned i = 0;i<6;++i)

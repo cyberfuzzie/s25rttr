@@ -32,8 +32,8 @@
 #include "nobHarborBuilding.h"
 
 const unsigned SHIP_SPEED = 20;
-const unsigned int ship_count = 3;
-const std::string ship_names[ship_count] = {"Talarius", "Demophobius", "Olivianus"};
+const unsigned int ship_count = 4;
+const std::string ship_names[ship_count] = {"FloSoftius", "Demophobius", "Olivianus", "Spikeonius"};
 
 /// Konstruktor
 noShip::noShip(const unsigned short x, const unsigned short y, const unsigned char player) 

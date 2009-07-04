@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 5190 2009-07-04 21:18:10Z OLiver $
+// $Id: GameWorldGame.cpp 5191 2009-07-04 21:31:14Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1339,18 +1339,17 @@ bool GameWorldGame::IsBorderNode(const MapCoord x, const MapCoord y, const unsig
 /// über die Kartenränder hinweg
 void GameWorldGame::CalcHarborPosNeighbors()
 {
-	Point<int> diffs[9] =
-	{
-		Point<int>(0,0),
-		Point<int>(-width,0),
-		Point<int>(width,0),
-		Point<int>(0,height),
-		Point<int>(-width,height),
-		Point<int>(width,height),
-		Point<int>(0,-height),
-		Point<int>(-width,-height),
-		Point<int>(width,-height)
-	};
+//	Point<int> diffs[9] =
+//	{
+//		Point<int>(0,0),
+//		Point<int>(-width,0),
+//		Point<int>(width,0),
+//		Point<int>(0,height),
+//		Point<int>(-width,height),
+//		Point<int>(width,height),
+//		Point<int>(0,-height),
+//		Point<int>(width,-height)
+//	};
 
 
 	/*for(unsigned i = 0;i<harbor_pos.size();++i)
@@ -1363,7 +1362,7 @@ void GameWorldGame::CalcHarborPosNeighbors()
 			// Sea-IDs vergleichen und wenn es hier schon keine Gemeinsamkeit gibt, 
 			harbor_pos[i].sea_ids[
 
-			/*for(unsigned o = 0;o<9;++o)
+			for(unsigned o = 0;o<9;++o)
 			{
 				int ox = harbor_pos[i].x + diffs[o].x,
 					oy = harbor_pos[i].y + diffs[o].y;

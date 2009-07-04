@@ -1,4 +1,4 @@
-// $Id: Pathfinding.cpp 5178 2009-07-03 11:55:24Z OLiver $
+// $Id: Pathfinding.cpp 5190 2009-07-04 21:18:10Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -142,7 +142,7 @@ std::vector<unsigned> clean_list;
 bool GameWorldBase::FindFreePath(const MapCoord x_start,const MapCoord y_start,
 				  const MapCoord x_dest, const MapCoord y_dest, const bool random_route, 
 				  const unsigned max_route, std::vector<unsigned char> * route, unsigned *length,
-				  unsigned char * first_dir,  FP_Node_OK_Callback IsNodeOK, FP_Node_OK_Callback IsNodeToDestOk, const void * param)
+				  unsigned char * first_dir, CrossBorders* cb,  FP_Node_OK_Callback IsNodeOK, FP_Node_OK_Callback IsNodeToDestOk, const void * param)
 {
 	// Erst einmal wieder aufräumen
 	for(unsigned i = 0;i<clean_list.size();++i)
@@ -447,7 +447,7 @@ bool IsPointOK_RoadPath(const GameWorldBase& gwb, const MapCoord x, const MapCoo
 bool GameWorldViewer::FindRoadPath(const MapCoord x_start,const MapCoord y_start, const MapCoord x_dest, const MapCoord y_dest,std::vector<unsigned char>& route, const bool boat_road)
 {
 	Param_RoadPath prp = { boat_road };
-	return FindFreePath(x_start,y_start,x_dest,y_dest,false,100,&route,NULL,NULL,IsPointOK_RoadPath,NULL, &prp);
+	return FindFreePath(x_start,y_start,x_dest,y_dest,false,100,&route,NULL,NULL,NULL,IsPointOK_RoadPath,NULL, &prp);
 }
 
 /// Abbruch-Bedingungen für freien Pfad für Menschen
@@ -516,7 +516,7 @@ unsigned char GameWorldBase::FindHumanPath(const MapCoord x_start,const MapCoord
 			const MapCoord x_dest, const MapCoord y_dest, const unsigned max_route, const bool random_route, unsigned *length)
 {
 	unsigned char first_dir = 0xFF;
-	if(FindFreePath(x_start,y_start,x_dest,y_dest,random_route,max_route,NULL,length,&first_dir,IsPointOK_HumanPath,
+	if(FindFreePath(x_start,y_start,x_dest,y_dest,random_route,max_route,NULL,length,&first_dir,NULL,IsPointOK_HumanPath,
 		IsPointToDestOK_HumanPath,NULL))
 		return first_dir;
 	else
@@ -545,9 +545,11 @@ unsigned char GameWorldGame::FindPathForWareOnRoads(const noRoadNode * const sta
 
 
 /// Wegfindung für Schiffe auf dem Wasser
-bool GameWorldBase::FindShipPath(const MapCoord x_start,const MapCoord y_start, const MapCoord x_dest, const MapCoord y_dest, std::vector<unsigned char> * route, unsigned * length)
+bool GameWorldBase::FindShipPath(const MapCoord x_start,const MapCoord y_start, const MapCoord x_dest,
+								 const MapCoord y_dest, std::vector<unsigned char> * route, unsigned * length, 
+								 GameWorldBase::CrossBorders * cb)
 {
-	return FindFreePath(x_start,y_start,x_dest,y_dest,true,200,route,length,NULL,IsPointOK_ShipPath,
+	return FindFreePath(x_start,y_start,x_dest,y_dest,true,200,route,length,NULL,cb,IsPointOK_ShipPath,
 		IsPointToDestOK_ShipPath,NULL);
 }
 

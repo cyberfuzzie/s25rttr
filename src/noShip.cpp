@@ -249,7 +249,7 @@ noShip::Result noShip::DriveToHarbour()
 		if(!gwg->CheckShipRoute(x,y,route,pos,&goal_x_route,&goal_y_route))
 		{
 			// Route kann nicht mehr passiert werden --> neue Route suchen
-			if(!gwg->FindShipPath(x,y,coastal_x,coastal_y,&route,NULL))
+			if(!gwg->FindShipPath(x,y,coastal_x,coastal_y,&route,NULL,NULL))
 			{
 				// Wieder keine gefunden -> raus
 				return NO_ROUTE_FOUND;
@@ -265,7 +265,7 @@ noShip::Result noShip::DriveToHarbour()
 			// Nein, d.h. wenn wir schon nah dran sind, müssen wir die Route neu berechnen
 			if(route.size()-pos < 10)
 			{
-				if(!gwg->FindShipPath(x,y,coastal_x,coastal_y,&route,NULL))
+				if(!gwg->FindShipPath(x,y,coastal_x,coastal_y,&route,NULL,NULL))
 					// Keiner gefunden -> raus
 					return NO_ROUTE_FOUND;
 
@@ -301,20 +301,29 @@ void noShip::ContinueExpedition(const unsigned char dir)
 	unsigned new_goal = gwg->GetNextFreeHarborPoint(goal_harbor_id,dir,player,sea_id);
 
 	// Auch ein Ziel gefunden?
-	if(new_goal)
-	{
-		// Pfad dorthin finden
+	if(!new_goal)
+		return;
 
+	Point<MapCoord> goal = gwg->GetHarborPoint(new_goal);
 
-		// Dann fahren wir da mal hin
-		goal_harbor_id = new_goal;
+	// Versuchen, Weg zu finden
+	if(!gwg->FindShipPath(x,y,goal.x,goal.y,&route,NULL,NULL))
+		return;
 
+	// Dann fahren wir da mal hin
+	pos = 0;
+	goal_harbor_id = new_goal;
+	state = STATE_EXPEDITION_DRIVING;
 
-	}
 }
 
 /// Weist das Schiff an, an der aktuellen Position einen Hafen zu gründen
 void noShip::FoundColony()
 {
 	assert(state == STATE_EXPEDITION_WAITING);
+}
+
+
+void noShip::HandleState_ExpeditionDriving()
+{
 }

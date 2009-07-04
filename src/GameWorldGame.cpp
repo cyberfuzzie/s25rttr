@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 5188 2009-07-04 09:39:31Z OLiver $
+// $Id: GameWorldGame.cpp 5190 2009-07-04 21:18:10Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1353,14 +1353,17 @@ void GameWorldGame::CalcHarborPosNeighbors()
 	};
 
 
-	for(unsigned i = 0;i<harbor_pos.size();++i)
+	/*for(unsigned i = 0;i<harbor_pos.size();++i)
 	{
 		for(unsigned z = 0;z<harbor_pos.size();++z)
 		{
 			if(i == z)
 				continue;
 
-			for(unsigned o = 0;o<9;++o)
+			// Sea-IDs vergleichen und wenn es hier schon keine Gemeinsamkeit gibt, 
+			harbor_pos[i].sea_ids[
+
+			/*for(unsigned o = 0;o<9;++o)
 			{
 				int ox = harbor_pos[i].x + diffs[o].x,
 					oy = harbor_pos[i].y + diffs[o].y;
@@ -1403,5 +1406,5 @@ void GameWorldGame::CalcHarborPosNeighbors()
 			harbor_pos[i].neighbors[dir].begin() + harbor_pos[i].neighbors[dir].size());
 
 
-	}
+	}*/
 }

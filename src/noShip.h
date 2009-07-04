@@ -59,6 +59,7 @@ private:
 	void StartDriving(const unsigned char dir);
 
 	void HandleState_GoToHarbor();
+	void HandleState_ExpeditionDriving();
 
 	enum Result
 	{

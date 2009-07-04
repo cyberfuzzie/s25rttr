@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 5178 2009-07-03 11:55:24Z OLiver $
+// $Id: GameWorld.h 5190 2009-07-04 21:18:10Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -288,10 +288,16 @@ public:
 
 	/// Prüft, ob von einem bestimmten Punkt aus der Untergrund für Figuren zugänglich ist (kein Wasser,Lava,Sumpf)
 	bool IsNodeToNodeForFigure(const MapCoord x, const MapCoord y, const unsigned dir) const;
+
+	/// Informationen, ob Grenzen überquert wurden
+	struct CrossBorders
+	{ bool x,y; };
+
+
 	/// Wegfindung in freiem Terrain - Basisroutine
 	bool FindFreePath(const MapCoord x_start,const MapCoord y_start,
 				  const MapCoord x_dest, const MapCoord y_dest, const bool random_route, const unsigned max_route, 
-				  std::vector<unsigned char> * route, unsigned *length, unsigned char * first_dir, 
+				  std::vector<unsigned char> * route, unsigned *length, unsigned char * first_dir, CrossBorders* cb,
 				  FP_Node_OK_Callback IsNodeOK, FP_Node_OK_Callback IsNodeToDestOk, const void * param);
 	/// Ermittelt, ob eine freie Route noch passierbar ist und gibt den Endpunkt der Route zurück
 	bool CheckFreeRoute(const MapCoord x_start,const MapCoord y_start, const std::vector<unsigned char>& route,
@@ -305,7 +311,8 @@ public:
 	unsigned char FindHumanPath(const MapCoord x_start,const MapCoord y_start,
 		  const MapCoord x_dest, const MapCoord y_dest, const unsigned max_route = 0xFFFFFFFF, const bool random_route = false, unsigned *length = NULL);
 	/// Wegfindung für Schiffe auf dem Wasser
-	bool FindShipPath(const MapCoord x_start,const MapCoord y_start, const MapCoord x_dest, const MapCoord y_dest, std::vector<unsigned char> * route, unsigned * length);
+	bool FindShipPath(const MapCoord x_start,const MapCoord y_start, const MapCoord x_dest, const MapCoord y_dest, std::vector<unsigned char> * route, unsigned * length, 
+								 CrossBorders * cb);
 
 
 	/// Baut eine (bisher noch visuell gebaute) Straße wieder zurück

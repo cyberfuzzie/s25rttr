@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 5181 2009-07-03 15:05:04Z FloSoft $
+// $Id: GameClientPlayer.cpp 5188 2009-07-04 09:39:31Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1639,8 +1639,12 @@ void GameClientPlayer::RegisterShip(noShip * ship)
 
 	// Einen Hafen gefunden?
 	if(best)
+	{
 		// Dann bekommt das gleich der Hafen
 		ship->GoToHarbor(best,best_route);
+		ships_needed.remove(best);
+	}
+
 }
 
 /// Schiff für Hafen bestellen

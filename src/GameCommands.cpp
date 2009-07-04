@@ -205,3 +205,9 @@ void StartExpedition::Execute(GameWorldGame& gwg, GameClientPlayer& player, cons
 		gwg.GetSpecObj<nobHarborBuilding>(x,y)->StartExpedition();
 }
 
+void ExpeditionCommand::Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid)
+{
+	//if(gwg.GetNO(x,y)->GetGOT() == GOT_NOB_HARBORBUILDING)
+	//	gwg.GetSpecObj<nobHarborBuilding>(x,y)->StartExpedition();
+}
+

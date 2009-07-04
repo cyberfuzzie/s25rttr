@@ -113,6 +113,10 @@ public:
 	void GoToHarbor(nobHarborBuilding * hb, const std::vector<unsigned char>& route);
 	/// Startet eine Expedition
 	void StartExpedition();
+	/// Weist das Schiff an, in einer bestimmten Richtung die Expedition fortzusetzen
+	void ContinueExpedition(const unsigned char dir);
+	/// Weist das Schiff an, an der aktuellen Position einen Hafen zu gründen
+	void FoundColony();
 };
 
 

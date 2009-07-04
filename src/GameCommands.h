@@ -45,6 +45,7 @@ enum Type
 	CHANGESHIPYARDMODE,
 	STARTEXPEDITION,
 	STARTATTACKINGEXPEDITION,
+	EXPEDITION_COMMAND,
 	SURRENDER,
 	CHEAT_ARMAGEDDON,
 	DESTROYALL
@@ -724,10 +725,48 @@ public:
 	void Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid);
 };
 
+/// Wartendes Schiff einer Expedition Befehle geben
+class ExpeditionCommand : public GameCommand
+{
+public:
+
+	/// Aktion, die ausgeführt wird
+	enum Action
+	{
+		FOUNDCOLONY = 0,
+		NORTH,
+		NORTHEAST,
+		SOUTHEAST,
+		SOUTH,
+		SOUTHWEST,
+		NORTHWEST
+	};
+
+	ExpeditionCommand(const Action action, const unsigned ship_id)
+		: GameCommand(EXPEDITION_COMMAND), action(action), ship_id(ship_id) {}
+
+	ExpeditionCommand(Serializer * ser)
+		: GameCommand(EXPEDITION_COMMAND),
+		action(Action(ser->PopUnsignedChar())),
+		ship_id(ser->PopUnsignedInt()) {}
+
+	virtual void Serialize(Serializer *ser) const
+	{
+		ser->PushUnsignedChar(static_cast<unsigned char>(action));
+		ser->PushUnsignedInt(ship_id);
+	}
+
+	/// Führt das GameCommand aus
+	void Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid);
+
+private:
+	/// Die Aktion, die ausgeführt werden soll
+	Action action;
+	/// Schiff, welches dieses Command betrifft
+	unsigned ship_id;
+};
 
 }
-
-
 
 #endif
 

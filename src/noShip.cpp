@@ -290,3 +290,31 @@ unsigned noShip::GetCurrentHarbor() const
 	assert(state == STATE_EXPEDITION_WAITING);
 	return goal_harbor_id;
 }
+
+
+/// Weist das Schiff an, in einer bestimmten Richtung die Expedition fortzusetzen
+void noShip::ContinueExpedition(const unsigned char dir)
+{
+	assert(state == STATE_EXPEDITION_WAITING);
+
+	// Nächsten Hafenpunkt in dieser Richtung suchen
+	unsigned new_goal = gwg->GetNextFreeHarborPoint(goal_harbor_id,dir,player,sea_id);
+
+	// Auch ein Ziel gefunden?
+	if(new_goal)
+	{
+		// Pfad dorthin finden
+
+
+		// Dann fahren wir da mal hin
+		goal_harbor_id = new_goal;
+
+
+	}
+}
+
+/// Weist das Schiff an, an der aktuellen Position einen Hafen zu gründen
+void noShip::FoundColony()
+{
+	assert(state == STATE_EXPEDITION_WAITING);
+}

@@ -1,4 +1,4 @@
-// $Id: GameWorld.cpp 5180 2009-07-03 14:19:17Z FloSoft $
+// $Id: GameWorld.cpp 5188 2009-07-04 09:39:31Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -55,8 +55,9 @@ bool GameWorld::LoadMap(const std::string& filename)
 
 	tr.GenerateOpenGL(this);
 
-	this->MoveToMapObject(GameClient::inst().GetPlayer(GameClient::inst().GetPlayerID())->hqx,
-		GameClient::inst().GetPlayer(GameClient::inst().GetPlayerID())->hqy);
+	if(GameClient::inst().GetPlayer(GameClient::inst().GetPlayerID())->hqx != 0xFFFF)
+		this->MoveToMapObject(GameClient::inst().GetPlayer(GameClient::inst().GetPlayerID())->hqx,
+			GameClient::inst().GetPlayer(GameClient::inst().GetPlayerID())->hqy);
 
 	return true;
 }
@@ -84,10 +85,9 @@ void GameWorld::Scan(glArchivItem_Map *map)
 			unsigned char t1 = map->GetMapDataAt(MAP_TERRAIN1, x, y), t2 = map->GetMapDataAt(MAP_TERRAIN2, x, y);
 			
 			// Hafenplatz?
-			if(t1 == 78)
+			if(t1 >= 0x40 && t1 <= 0x54)
 			{
-				node.t1 = TT_STEPPE;
-				
+				t1 -= 0x40;
 
 				GameWorldBase::HarborPos p = {x,y};
 				harbor_pos.push_back(p);
@@ -95,10 +95,11 @@ void GameWorld::Scan(glArchivItem_Map *map)
 				node.harbor_id = harbor_pos.size();
 			}
 			else
-			{
-				node.t1 = (t1<20)?TERRAIN_INDIZES[t1]:0;
 				node.harbor_id = 0;
-			}
+				
+	
+
+			node.t1 = (t1<20)?TERRAIN_INDIZES[t1]:0;
 			node.t2 = (t2<20)?TERRAIN_INDIZES[t2]:0;
 
 

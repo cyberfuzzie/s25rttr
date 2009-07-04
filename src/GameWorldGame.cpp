@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 5178 2009-07-03 11:55:24Z OLiver $
+// $Id: GameWorldGame.cpp 5188 2009-07-04 09:39:31Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1362,16 +1362,16 @@ void GameWorldGame::CalcHarborPosNeighbors()
 
 			for(unsigned o = 0;o<9;++o)
 			{
-				MapCoord ox = harbor_pos[i].x + diffs[o].x,
+				int ox = harbor_pos[i].x + diffs[o].x,
 					oy = harbor_pos[i].y + diffs[o].y;
 				// Richtung bestimmen, in der dieser Punkt relativ zum Ausgangspunkt steht
 				unsigned char dir;
 				
-				unsigned diff = SafeDiff(oy,harbor_pos[z].y);
+				unsigned diff = SafeDiff<int>(oy,harbor_pos[z].y);
 				if(!diff)
 					diff = 1;
 				// Oben?
-				bool marginal_x = ((SafeDiff(ox,harbor_pos[z].x) * 1000 / diff) < 87);
+				bool marginal_x = ((SafeDiff<int>(ox,harbor_pos[z].x) * 1000 / diff) < 87);
 				if(harbor_pos[z].y < oy)
 				{
 					if(marginal_x)

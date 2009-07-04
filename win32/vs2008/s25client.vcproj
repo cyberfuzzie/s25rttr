@@ -41,7 +41,6 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/MP4"
 				Optimization="0"
 				AdditionalIncludeDirectories="&quot;$(SolutionDir)..\..\&quot;;&quot;$(SolutionDir)..\..\libutil\src&quot;;&quot;$(SolutionDir)..\..\mygettext\src&quot;;&quot;$(SolutionDir)..\..\libsiedler2\src&quot;;&quot;$(SolutionDir)..\..\liblobby\src&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;_VC"
@@ -1867,11 +1866,11 @@
 							>
 						</File>
 						<File
-							RelativePath=".\noShipBuildingSite.h"
+							RelativePath="..\..\src\noShipBuildingSite.h"
 							>
 						</File>
 						<File
-							RelativePath="..\..\src\noShipBuildingSite.h"
+							RelativePath=".\noShipBuildingSite.h"
 							>
 						</File>
 						<File

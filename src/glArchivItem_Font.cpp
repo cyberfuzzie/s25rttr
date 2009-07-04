@@ -1,4 +1,4 @@
-// $Id: glArchivItem_Font.cpp 5168 2009-07-02 19:03:51Z FloSoft $
+// $Id: glArchivItem_Font.cpp 5187 2009-07-04 07:36:56Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -221,7 +221,7 @@ void glArchivItem_Font::Draw(short x,
  */
 bool glArchivItem_Font::CharExist(unsigned char c) const
 {
-	return (_charwidths[c] > 0);
+	return (_charwidths[ANSI_TO_OEM[c]] > 0);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -410,7 +410,7 @@ void glArchivItem_Font::GetWrapInfo(const std::string& text,
 		else
 		{
 			// Anderes Zeichen --> einfach dessen Breite mit addieren
-			if( CharExist(ANSI_TO_OEM[(unsigned char)text[i]]) )
+			if( CharExist((unsigned char)text[i]) )
 				word_width += _charwidths[ANSI_TO_OEM[(unsigned char)text[i]]];
 		}
 	}

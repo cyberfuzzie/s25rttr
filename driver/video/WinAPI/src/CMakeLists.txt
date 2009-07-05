@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: CMakeLists.txt 5113 2009-06-26 08:23:54Z FloSoft $
+### $Id: CMakeLists.txt 5194 2009-07-05 09:26:54Z FloSoft $
 #################################################################################
 
 FIND_LIBRARY(GDI32_LIBRARY    gdi32)
@@ -21,7 +21,7 @@ FIND_LIBRARY(USER32_LIBRARY   user32)
 		ADD_CUSTOM_COMMAND(TARGET videoWinAPI POST_BUILD COMMAND if [ -f libvideoWinAPI.so ] \; then cp -v libvideoWinAPI.so videoWinAPI.dll \; else cp -v libvideoWinAPI.dll videoWinAPI.dll \; fi )
 	ENDIF ( "${COMPILEFOR}" STREQUAL "win32")
 
-	ADD_CUSTOM_COMMAND(TARGET videoWinAPI POST_BUILD COMMAND ln -fvs SDL/src/libvideoWinAPI{CMAKE_SHARED_LIBRARY_SUFFIX} ../../videoWinAPI{CMAKE_SHARED_LIBRARY_SUFFIX})
+	ADD_CUSTOM_COMMAND(TARGET videoWinAPI POST_BUILD COMMAND ln -fvs SDL/src/libvideoWinAPI${CMAKE_SHARED_LIBRARY_SUFFIX} ../../videoWinAPI${CMAKE_SHARED_LIBRARY_SUFFIX})
 
 	INSTALL(TARGETS videoWinAPI DESTINATION lib)
 #ENDIF (GDI32_LIBRARY AND OPENGL_LIBRARY AND USER32_LIBRARY)

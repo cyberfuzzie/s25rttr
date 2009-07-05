@@ -1,4 +1,4 @@
-// $Id: files.h 5175 2009-07-03 06:53:46Z FloSoft $
+// $Id: files.h 5200 2009-07-05 19:11:52Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -85,16 +85,16 @@
 // Konstanten
 const char * const FILE_PATHS[] =
 {
-	/*	0 */SETTINGSFILE,
-	/*	1 */RTTRDIR "",
-	/*	2 */GAMEDIR "",
-	/*	3 */GAMEDIR "",
-	/*	4 */RTTRDIR "",
-	/*	5 */GAMEDIR "/GFX/PALETTE/PAL5.BBM",
-	/*	6 */GAMEDIR "/GFX/PALETTE/PAL6.BBM",
-	/*	7 */GAMEDIR "/GFX/PALETTE/PAL7.BBM",
-	/*	8 */GAMEDIR "/GFX/PALETTE/PALETTI0.BBM",
-	/*	9 */GAMEDIR "/GFX/PALETTE/PALETTI1.BBM",
+	/*  0 */SETTINGSFILE,
+	/*  1 */RTTRDIR "",
+	/*  2 */GAMEDIR "",
+	/*  3 */GAMEDIR "",
+	/*  4 */RTTRDIR "",
+	/*  5 */GAMEDIR "/GFX/PALETTE/PAL5.BBM",
+	/*  6 */GAMEDIR "/GFX/PALETTE/PAL6.BBM",
+	/*  7 */GAMEDIR "/GFX/PALETTE/PAL7.BBM",
+	/*  8 */GAMEDIR "/GFX/PALETTE/PALETTI0.BBM",
+	/*  9 */GAMEDIR "/GFX/PALETTE/PALETTI1.BBM",
 	/* 10 */GAMEDIR "/GFX/PALETTE/PALETTI8.BBM",
 	/* 11 */GAMEDIR "/DATA/RESOURCE.DAT",
 	/* 12 */GAMEDIR "/DATA/IO/IO.DAT",
@@ -132,11 +132,11 @@ const char * const FILE_PATHS[] =
 	/* 44 */GAMEDIR "/DATA/BOBS/CARRIER.BOB",
 	/* 45 */GAMEDIR "/DATA/BOBS/JOBS.BOB",
 	/* 46 */DRIVERDIR "/",
-	/* 47 */RTTRDIR "/LOGS/",
-	/* 48 */RTTRDIR "/MAPS/", // die heruntergeladenen Karten
+	/* 47 */SETTINGSDIR "/LOGS/",
+	/* 48 */SETTINGSDIR "/MAPS/", // die heruntergeladenen Karten
 	/* 49 */GAMEDIR "/DATA/SOUNDDAT/SOUND.LST", // die originale sound.lst
 	/* 50 */RTTRDIR "/MUSIC/SNG/SNG_*.OGG", // die musik
-	/* 51 */RTTRDIR "/REPLAYS/",
+	/* 51 */SETTINGSDIR "/REPLAYS/",
 	/* 52 */RTTRDIR "/MAPS/NEW/", // unsere eigenen neuen Karten
 	/* 53 */GAMEDIR "/DATA/SOUNDDAT/SNG/SNG_*.DAT", // die originale sound.lst
 	/* 54 */RTTRDIR "/outline_fonts.lst",
@@ -170,7 +170,7 @@ const char * const FILE_PATHS[] =
 	/* 82 */GAMEDIR "/GFX/PICS/MISSION/NASIA.LBM",
 	/* 83 */GAMEDIR "/GFX/PICS/MISSION/SAMERICA.LBM",
 	/* 84 */GAMEDIR "/GFX/PICS/MISSION/SASIA.LBM",
-	/* 85 */RTTRDIR "/SAVE/",
+	/* 85 */SETTINGSDIR "/SAVE/",
 	/* 86 */GAMEDIR "/DATA/BOBS/BOAT.LST",
 	/* 87 */RTTRDIR "/CLIENT.LOCAL.GER", // lokale client.ger, für debug-zwecke
 	/* 88 */RTTRDIR "/texte/",

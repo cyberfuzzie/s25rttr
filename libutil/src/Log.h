@@ -1,4 +1,4 @@
-// $Id: Log.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: Log.h 5200 2009-07-05 19:11:52Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -29,6 +29,9 @@ public:
 	Log(void);
 	/// Desktruktor von @p Log.
 	~Log(void);
+
+	/// öffnet das Log (falls noch nicht offen)
+	void open(void);
 
 	void getlasterror(const char *text);
 

@@ -1,4 +1,4 @@
-// $Id: Log.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: Log.cpp 5200 2009-07-05 19:11:52Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -38,15 +38,8 @@
  *
  *  @author FloSoft
  */
-Log::Log(void)
+Log::Log(void) : log(NULL)
 {
-	// Dateiname erzeugen
-	char filename[256], time[80];
-	TIME.FormatTime(time, "%Y-%m-%d_%H-%i-%s", NULL);
-
-	sprintf(filename,"%s%s.log", FILE_PATHS[47], time);
-
-	log = fopen(filename, "w");
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -59,6 +52,26 @@ Log::~Log(void)
 {
 	if(log)
 		fclose(log);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  öffnet das Log (falls noch nicht offen)
+ *
+ *  @author FloSoft
+ */
+void Log::open(void)
+{
+	if(!log)
+	{
+		// Dateiname erzeugen
+		char filename[256], time[80];
+		TIME.FormatTime(time, "%Y-%m-%d_%H-%i-%s", NULL);
+
+		sprintf(filename,"%s%s.log", FILE_PATHS[47], time);
+
+		log = fopen(filename, "w");
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -116,6 +129,8 @@ void Log::write(const char *format, ...)
  */
 void Log::vwrite(const char *format, va_list list)
 {
+	open();
+
 	if(log)
 	{
 		// timestamp erzeugen

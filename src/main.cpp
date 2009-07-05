@@ -1,4 +1,4 @@
-// $Id: main.cpp 5122 2009-06-26 18:18:00Z FloSoft $
+// $Id: main.cpp 5200 2009-07-05 19:11:52Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -111,6 +111,22 @@ int main(int argc, char *argv[])
 	sigaction(SIGPIPE, &sa, NULL);
 	sigaction(SIGALRM, &sa, NULL);
 #endif // _WIN32
+
+	// diverse dirs anlegen
+	char dir[512];
+	const unsigned int dir_count = 4;
+	unsigned int dirs[dir_count] = { 47, 48, 51, 85 };
+
+	for(unsigned int i = 0; i < dir_count; ++i)
+	{
+		Loader::GetFilePath(dir, FILE_PATHS[dirs[i]]);
+		
+		#ifdef _WIN32
+			CreateDirectory(dir, NULL);
+		#else
+			mkdir(dir, 0750);
+		#endif
+	}
 
 	libsiedler2::setTextureFormat(libsiedler2::FORMAT_PALETTED);
 	libsiedler2::setAllocator(glAllocator);

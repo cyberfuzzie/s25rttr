@@ -1,4 +1,4 @@
-// $Id: VideoDriver.h 4830 2009-05-07 18:59:21Z FloSoft $
+// $Id: VideoDriver.h 5195 2009-07-05 09:44:30Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -68,7 +68,12 @@ public:
 	virtual void *GetFunction(const char *function) const;
 
 	/// Listet verfügbare Videomodi auf
-	struct VideoMode { unsigned short width, height; };
+	struct VideoMode {
+		unsigned short width;
+		unsigned short height; 
+
+		bool operator==(const VideoMode& o)	{	return (width == o.width && height == o.height);	}
+	};
 	virtual void ListVideoModes(std::vector<VideoMode>& video_modes) const;
 
 	/// Funktion zum Auslesen der Mauskoordinaten.

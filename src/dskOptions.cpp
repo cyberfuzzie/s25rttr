@@ -1,4 +1,4 @@
-// $Id: dskOptions.cpp 5171 2009-07-02 20:21:42Z FloSoft $
+// $Id: dskOptions.cpp 5195 2009-07-05 09:44:30Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -37,7 +37,9 @@
 #include "VideoDriverWrapper.h"
 #include "AudioDriverWrapper.h"
 #include "MusicPlayer.h"
+
 #include "iwTextfile.h"
+#include "iwMsgbox.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -417,11 +419,24 @@ void dskOptions::Msg_ButtonClick(const unsigned int ctrl_id)
 	case 0: // "Zurück"
 		{
 			SETTINGS.Save();
+			
+			// Auflösung/Vollbildmodus geändert?
 			if(SETTINGS.width != VideoDriverWrapper::inst().GetScreenWidth() ||
 				SETTINGS.height != VideoDriverWrapper::inst().GetScreenHeight() ||
 				SETTINGS.fullscreen != VideoDriverWrapper::inst().IsFullscreen())
 			{
-				VideoDriverWrapper::inst().ResizeScreen(SETTINGS.width,SETTINGS.height,SETTINGS.fullscreen);
+				if(!VideoDriverWrapper::inst().ResizeScreen(SETTINGS.width,SETTINGS.height,SETTINGS.fullscreen))
+				{
+					WindowManager::inst().Show(new iwMsgbox(_("Sorry!"), _("You need to restart your game to change the screen resolution!"), this, MSB_OK, MSB_EXCLAMATIONGREEN, 1));
+					break;
+				}
+			}
+
+			if(SETTINGS.video_driver != VideoDriverWrapper::inst().GetName() || 
+				SETTINGS.audio_driver != AudioDriverWrapper::inst().GetName())
+			{
+				WindowManager::inst().Show(new iwMsgbox(_("Sorry!"), _("You need to restart your game to change the video or audio driver!"), this, MSB_OK, MSB_EXCLAMATIONGREEN, 1));
+				break;
 			}
 
 			WindowManager::inst().Switch(new dskMainMenu);
@@ -429,23 +444,44 @@ void dskOptions::Msg_ButtonClick(const unsigned int ctrl_id)
 	}
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *
+ *
+ *  @author OLiver
+ */
 void dskOptions::Msg_Group_ButtonClick(const unsigned int group_id, const unsigned int ctrl_id)
 {
 	switch(ctrl_id)
 	{
+	default:
+		break;
 	case 71: // "Music player"
 		{
 			WindowManager::inst().Show(new iwMusicPlayer);
 		} break;
-	
 	case 35: // "Keyboard Readme"
-               {
-                        WindowManager::inst().Show(new iwTextfile("keyboardlayout.txt",_("Keyboard layout")));
-                } break;
-
-        }
-
-
+		{
+			WindowManager::inst().Show(new iwTextfile("keyboardlayout.txt", _("Keyboard layout") ) );
+		} break;
+	}
 }
 
-
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *
+ *
+ *  @author FloSoft
+ */
+void dskOptions::Msg_MsgBoxResult(const unsigned int msgbox_id, const MsgboxResult mbr)
+{
+	switch(msgbox_id)
+	{
+	default:
+		break;
+	case 1: // "You need to restart your game ..."
+		{
+			WindowManager::inst().Switch(new dskMainMenu);
+		} break;
+	}
+}

@@ -1,4 +1,4 @@
-// $Id: AudioDriver.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: AudioDriver.cpp 5195 2009-07-05 09:44:30Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -73,7 +73,25 @@ AudioDriver::~AudioDriver(void)
 	sounds.clear();
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/** 
+ *  Funktion zum Auslesen des Treibernamens.
+ *
+ *  @return liefert den Treibernamen zurück
+ *
+ *  @author FloSoft
+ */
+const char *AudioDriver::GetName(void) const
+{
+	return NULL;
+}
 
+///////////////////////////////////////////////////////////////////////////////
+/** 
+ * 
+ *
+ *  @author OLiver
+ */
 unsigned AudioDriver::GeneratePlayID()
 {
 	// Ende erreicht?
@@ -85,4 +103,3 @@ unsigned AudioDriver::GeneratePlayID()
 
 	return play_id_counter++;
 }
-

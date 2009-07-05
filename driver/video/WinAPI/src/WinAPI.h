@@ -1,4 +1,4 @@
-// $Id: WinAPI.h 4828 2009-05-07 18:40:37Z FloSoft $
+// $Id: WinAPI.h 5195 2009-07-05 09:44:30Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -32,6 +32,9 @@ public:
 
 	/// Destruktor von @p VideoWinAPI.
 	~VideoWinAPI(void);
+
+	/// Funktion zum Auslesen des Treibernamens.
+	const char *GetName(void) const;
 
 	/// Treiberinitialisierungsfunktion.
 	bool Initialize(void);

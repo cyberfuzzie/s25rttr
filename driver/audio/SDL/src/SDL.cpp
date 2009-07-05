@@ -1,4 +1,4 @@
-// $Id: SDL.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: SDL.cpp 5195 2009-07-05 09:44:30Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -87,6 +87,19 @@ AudioSDL::AudioSDL(AudioDriverLoaderInterface * adli) : AudioDriver(adli), maste
 AudioSDL::~AudioSDL(void)
 {
 	CleanUp();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/** 
+ *  Funktion zum Auslesen des Treibernamens.
+ *
+ *  @return liefert den Treibernamen zurück
+ *
+ *  @author FloSoft
+ */
+const char *AudioSDL::GetName(void) const
+{
+	return GetDriverName();
 }
 
 ///////////////////////////////////////////////////////////////////////////////

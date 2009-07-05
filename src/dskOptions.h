@@ -1,4 +1,4 @@
-// $Id: dskOptions.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: dskOptions.h 5195 2009-07-05 09:44:30Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -27,22 +27,22 @@
 /// Klasse des Optionen Desktops.
 class dskOptions: public Desktop
 {
-	// Vector für die Auflösungen
-	std::vector<VideoDriver::VideoMode> video_modes;
-
 public:
-
 	dskOptions(void);
-	~dskOptions();
+	~dskOptions(void);
 
 private:
+	void Msg_OptionGroupChange(const unsigned int ctrl_id, const unsigned short selection);
+	void Msg_ButtonClick(const unsigned int ctrl_id);
+	void Msg_MsgBoxResult(const unsigned int msgbox_id, const MsgboxResult mbr);
 
+	void Msg_Group_ButtonClick(const unsigned int group_id, const unsigned int ctrl_id);
 	void Msg_Group_ProgressChange(const unsigned int group_id, const unsigned int ctrl_id, const unsigned short position);
 	void Msg_Group_ComboSelectItem(const unsigned int group_id, const unsigned int ctrl_id, const unsigned short selection);
 	void Msg_Group_OptionGroupChange(const unsigned int group_id, const unsigned int ctrl_id, const unsigned short selection);
-	void Msg_OptionGroupChange(const unsigned int ctrl_id, const unsigned short selection);
-	void Msg_ButtonClick(const unsigned int ctrl_id);
-	void Msg_Group_ButtonClick(const unsigned int group_id, const unsigned int ctrl_id);
- };
+
+private:
+	std::vector<VideoDriver::VideoMode> video_modes; ///< Vector für die Auflösungen
+};
 
 #endif // !dskOPTIONS_H_INCLUDED

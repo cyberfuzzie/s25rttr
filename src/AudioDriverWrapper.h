@@ -1,4 +1,4 @@
-// $Id: AudioDriverWrapper.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: AudioDriverWrapper.h 5195 2009-07-05 09:44:30Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -68,6 +68,7 @@ public:
 	 void SetMasterMusicVolume(unsigned char volume)
 	{ if(audiodriver) audiodriver->SetMasterMusicVolume(volume); }
 
+	const char *GetName(void) const { if(audiodriver) return audiodriver->GetName();	return NULL; }
 private:
 
 	void Msg_MusicFinished();

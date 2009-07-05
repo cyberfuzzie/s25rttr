@@ -1,4 +1,4 @@
-// $Id: WinAPI.cpp 4842 2009-05-09 11:53:45Z OLiver $
+// $Id: WinAPI.cpp 5195 2009-07-05 09:44:30Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -127,6 +127,19 @@ VideoWinAPI::VideoWinAPI(VideoDriverLoaderInterface * CallBack) : VideoDriver(Ca
 VideoWinAPI::~VideoWinAPI(void)
 {
 	pVideoWinAPI = NULL;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/** 
+ *  Funktion zum Auslesen des Treibernamens.
+ *
+ *  @return liefert den Treibernamen zurück
+ *
+ *  @author FloSoft
+ */
+const char *VideoWinAPI::GetName(void) const
+{
+	return GetDriverName();
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -1,4 +1,4 @@
-// $Id: SDL.cpp 4854 2009-05-11 11:26:19Z OLiver $
+// $Id: SDL.cpp 5195 2009-07-05 09:44:30Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -114,6 +114,19 @@ VideoSDL::~VideoSDL(void)
 
 ///////////////////////////////////////////////////////////////////////////////
 /** 
+ *  Funktion zum Auslesen des Treibernamens.
+ *
+ *  @return liefert den Treibernamen zurück
+ *
+ *  @author FloSoft
+ */
+const char *VideoSDL::GetName(void) const
+{
+	return GetDriverName();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/** 
  *  Treiberinitialisierungsfunktion.
  *
  *  @return @p true bei Erfolg, @p false bei Fehler
@@ -224,17 +237,68 @@ bool VideoSDL::ResizeScreen(unsigned short width, unsigned short height, const b
 	if(!initialized)
 		return false;
 
-	// Die SDL-Implementierung kann das noch nicht!
+	// Die SDL-Implementierung kann das noch nicht direkt, also umweg über WinAPI!
 #ifdef WIN32
-	return false;
-#endif
+	SDL_SysWMinfo info;
+	int retval;
 
+	/* Grab the window manager specific information */
+	retval = -1;
+	SDL_SetError("SDL is not running on known window manager");
+
+	SDL_VERSION(&info.version);
+	if ( SDL_GetWMInfo(&info) )
+	{
+		if(this->fullscreen && !fullscreen)
+		{
+			ChangeDisplaySettings(NULL, 0);
+		}
+
+		ShowWindow(info.window, SW_HIDE);
+
+		// Fensterstyle ggf. ändern
+		SetWindowLongPtr(info.window, GWL_STYLE, (fullscreen ? WS_POPUP : (WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_OVERLAPPED | WS_SYSMENU | WS_MINIMIZEBOX | WS_CAPTION) ) );
+		SetWindowLongPtr(info.window, GWL_EXSTYLE, (fullscreen ? WS_EX_APPWINDOW : (WS_EX_APPWINDOW | WS_EX_WINDOWEDGE) ) );
+		SetWindowPos(info.window, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
+
+		RECT pos = {
+			(fullscreen ? 0 : GetSystemMetrics(SM_CXSCREEN) / 2 - (width) / 2),
+			(fullscreen ? 0 : GetSystemMetrics(SM_CYSCREEN) / 2 - (height) / 2),
+			(width) + (fullscreen ? 0 : 2 * GetSystemMetrics(SM_CXFIXEDFRAME)),
+			(height) + (fullscreen ? 0 : 2 * GetSystemMetrics(SM_CXFIXEDFRAME) + GetSystemMetrics(SM_CYCAPTION))
+		};
+
+		screen->w = width;
+		screen->h = height;
+
+		// Fenstergröße ändern
+		SetWindowPos(info.window, HWND_TOP, pos.left, pos.top, pos.right, pos.bottom, SWP_SHOWWINDOW|SWP_DRAWFRAME|SWP_FRAMECHANGED);
+
+		// Bei Vollbild Auflösung umstellen
+		if(fullscreen)
+		{
+			DEVMODE dm;
+			memset(&dm, 0, sizeof(dm));
+			dm.dmSize = sizeof(dm);
+			dm.dmFields = DM_PELSWIDTH | DM_PELSHEIGHT;
+			dm.dmPelsWidth = width;
+			dm.dmPelsHeight = height;
+
+			ChangeDisplaySettings(&dm, CDS_FULLSCREEN);
+		}
+
+		this->fullscreen = fullscreen;
+
+		ShowWindow(info.window, SW_SHOW);
+	}
+#else // unter anderen Platformen kann SDL das ohne den OpenGL-Kontext zu killen
 	// Videomodus setzen
 	if(!(screen = SDL_SetVideoMode( width, height, 32, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_OPENGL | ((fullscreen) ? SDL_FULLSCREEN : 0) )))
 	{
 		fprintf(stderr, "%s\n", SDL_GetError());
 		return false;
 	}
+#endif
 
 	return true;
 }
@@ -418,7 +482,8 @@ void VideoSDL::ListVideoModes(std::vector<VideoMode>& video_modes) const
 	for (unsigned i=0; modes[i]; ++i)
 	{
 		VideoMode vm = { modes[i]->w, modes[i]->h };
-		video_modes.push_back(vm);
+		if(std::find(video_modes.begin(), video_modes.end(), vm) == video_modes.end())
+			video_modes.push_back(vm);
 	}
 
 }

@@ -1,4 +1,4 @@
-// $Id: VideoDriverWrapper.h 5155 2009-07-01 15:37:53Z FloSoft $
+// $Id: VideoDriverWrapper.h 5195 2009-07-05 09:44:30Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -75,6 +75,8 @@ public:
 	bool Run();
 
 	unsigned int GetTickCount();
+
+	const char *GetName(void) const { if(videodriver) return videodriver->GetName();	return NULL; }
 
 private:
 	// Viewpoint und Co initialisieren

@@ -1,4 +1,4 @@
-// $Id: SDL.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: SDL.h 5195 2009-07-05 09:44:30Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -32,6 +32,9 @@ public:
 
 	/// Destruktor von @p VideoSDL.
 	~VideoSDL(void);
+
+	/// Funktion zum Auslesen des Treibernamens.
+	const char *GetName(void) const;
 
 	/// Treiberinitialisierungsfunktion.
 	bool Initialize(void);

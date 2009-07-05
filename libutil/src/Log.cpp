@@ -1,4 +1,4 @@
-// $Id: Log.cpp 5200 2009-07-05 19:11:52Z FloSoft $
+// $Id: Log.cpp 5202 2009-07-05 19:45:08Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -68,7 +68,7 @@ void Log::open(void)
 		char filename[256], time[80];
 		TIME.FormatTime(time, "%Y-%m-%d_%H-%i-%s", NULL);
 
-		sprintf(filename,"%s%s.log", FILE_PATHS[47], time);
+		sprintf(filename,"%s%s.log", GetFilePath(FILE_PATHS[47]).c_str(), time);
 
 		log = fopen(filename, "w");
 	}

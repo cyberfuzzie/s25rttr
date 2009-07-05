@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: CMakeLists.txt 5113 2009-06-26 08:23:54Z FloSoft $
+### $Id: CMakeLists.txt 5202 2009-07-05 19:45:08Z FloSoft $
 #################################################################################
 
 IF ( "${CROSSCOMPILE}" STREQUAL "1" )
@@ -18,7 +18,7 @@ INCLUDE_DIRECTORIES("../../")
 
 #################################################################################
 
-ADD_LIBRARY(s25util STATIC Log.cpp Socket.cpp SocketSet.cpp MyTime.cpp error.cpp MessageQueue.cpp SerializableArray.cpp Messages.cpp MessageInterface.cpp Message.cpp Serializer.cpp)
+ADD_LIBRARY(s25util STATIC Log.cpp Socket.cpp SocketSet.cpp MyTime.cpp error.cpp MessageQueue.cpp SerializableArray.cpp Messages.cpp MessageInterface.cpp Message.cpp Serializer.cpp files.cpp)
 
 IF ( "${COMPILEFOR}" STREQUAL "win32" )
     ADD_DEFINITIONS("-D_WIN32_WINNT=0x0501")

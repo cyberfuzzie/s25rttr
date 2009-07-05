@@ -1,4 +1,4 @@
-// $Id: Loader.h 5125 2009-06-26 20:10:42Z OLiver $
+// $Id: Loader.h 5201 2009-07-05 19:35:52Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -32,8 +32,6 @@ public:
 	Loader(void);
 	/// Desktruktor von @p Loader.
 	~Loader(void);
-
-	static char *GetFilePath(char *destination, const char *constant);
 
 	/// Lädt alle allgemeinen Dateien.
 	bool LoadFiles(void);

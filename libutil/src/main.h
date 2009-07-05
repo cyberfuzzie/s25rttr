@@ -1,4 +1,4 @@
-// $Id: main.h 4942 2009-05-24 17:00:56Z FloSoft $
+// $Id: main.h 5201 2009-07-05 19:35:52Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -69,6 +69,7 @@
 #include <cstring>
 
 #include <string>
+#include <sstream>
 #include <vector>
 
 #if defined _WIN32 && defined _DEBUG

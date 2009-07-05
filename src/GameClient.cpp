@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 5117 2009-06-26 14:35:48Z OLiver $
+// $Id: GameClient.cpp 5201 2009-07-05 19:35:52Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -846,7 +846,7 @@ void GameClient::OnNMSServerAsync(const GameMessage_Server_Async& msg)
 
 	LOG.lprintf("Async log saved at \"%s\"\n",filename);
 
-	sprintf(filename,"%s%s.sav",FILE_PATHS[85], time_str);
+	sprintf(filename,"%s%s.sav", GetFilePath(FILE_PATHS[85]).c_str(), time_str);
 
 	GameClient::inst().WriteSaveHeader(filename);
 
@@ -868,7 +868,7 @@ inline void GameClient::OnNMSMapInfo(const GameMessage_Map_Info& msg)
 	// shortname
 	clientconfig.mapfile = msg.map_name;
 	// full path
-	clientconfig.mapfilepath = FILE_PATHS[48] + clientconfig.mapfile;
+	clientconfig.mapfilepath = GetFilePath(FILE_PATHS[48]) + clientconfig.mapfile;
 
 	mapinfo.map_type = msg.mt;
 	mapinfo.partcount = msg.partcount;
@@ -1182,7 +1182,7 @@ void GameClient::ExecuteGameFrame(const bool skipping)
 			// Alle .... GF
 			if(framesinfo.nr % SETTINGS.autosave_interval == 0)
 			{
-				std::string tmp = FILE_PATHS[85];
+				std::string tmp = GetFilePath(FILE_PATHS[85]).c_str();
 				tmp += _("Auto-Save");
 				tmp += ".sav";
 
@@ -1243,7 +1243,7 @@ void GameClient::WriteReplayHeader(const unsigned random_init)
 	unser_time_t temp = TIME.CurrentTime();
 	TIME.FormatTime(time, "%Y-%m-%d_%H-%i-%s", &temp);
 
-	sprintf(filename,"%s%s.rpl",FILE_PATHS[51], time);
+	sprintf(filename,"%s%s.rpl", GetFilePath(FILE_PATHS[51]).c_str(), time);
 
 	// Headerinfos füllen
 
@@ -1365,7 +1365,7 @@ unsigned GameClient::StartReplay(const std::string &path, GameWorldViewer * &gwv
 
 			// Richtigen Pfad zur Map erstellen
 			clientconfig.mapfile = replayinfo.replay.map_name;
-			clientconfig.mapfilepath = FILE_PATHS[48] +  replayinfo.replay.map_name;
+			clientconfig.mapfilepath = GetFilePath(FILE_PATHS[48]) +  replayinfo.replay.map_name;
 
 			// Und entpackte Mapdaten speichern
 			BinaryFile map_f;

@@ -1,4 +1,4 @@
-// $Id: Loader.cpp 5125 2009-06-26 20:10:42Z OLiver $
+// $Id: Loader.cpp 5201 2009-07-05 19:35:52Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -60,32 +60,6 @@ Loader::Loader(void)
  */
 Loader::~Loader(void)
 {
-}
-
-///////////////////////////////////////////////////////////////////////////////
-/**
- *  formt Pfade korrekt um.
- *
- *  @param[in,out] destination Zielspeicher, muss groß genug sein!
- *  @param[in]     constant    der Konstante Pfad
- *
- *  @return liefert @p destination zurück
- *
- *  @author FloSoft
- */
-char *Loader::GetFilePath(char *destination, const char *constant)
-{
-	assert(constant);
-	assert(destination);
-
-	// ist der Pfad ein Home-Dir?
-	if(constant[0] == '~') {
-		sprintf(destination, "%s%s", getenv("HOME"), &constant[1]);
-	} else if (destination != constant) {
-		strcpy(destination, constant);
-	}
-
-	return destination;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -256,11 +230,9 @@ bool Loader::LoadBackgrounds(void)
  */
 bool Loader::LoadTXTs(void)
 {
-	char path[512];
-
 	// client.ger.local laden
 	LOG.lprintf("lade %s: ", FILE_PATHS[87]);
-	if(libsiedler2::loader::LoadTXT(GetFilePath(path, FILE_PATHS[87]), &client_txt, false) == 0)
+	if(libsiedler2::loader::LoadTXT(GetFilePath( FILE_PATHS[87]).c_str(), &client_txt, false) == 0)
 	{
 		LOG.lprintf("fertig\n");
 		LOG.lprintf("WARNUNG: Benutze lokale Debug-Konfiguration\n");
@@ -270,13 +242,13 @@ bool Loader::LoadTXTs(void)
 		LOG.lprintf("fehlgeschlagen\nKeine lokale Debug-Konfiguration gefunden\n");
 		// client.ger laden
 		LOG.lprintf("lade %s\n", FILE_PATHS[18]);
-		if(libsiedler2::loader::LoadTXT(GetFilePath(path, FILE_PATHS[18]), &client_txt, false) != 0)
+		if(libsiedler2::loader::LoadTXT(GetFilePath(FILE_PATHS[18]).c_str(), &client_txt, false) != 0)
 			return false;
 	}
 
 	// lang.ger laden
 	LOG.lprintf("lade %s: ", FILE_PATHS[89]);
-	if(libsiedler2::loader::LoadTXT(GetFilePath(path, FILE_PATHS[89]), &lang_txt, false) == 0)
+	if(libsiedler2::loader::LoadTXT(GetFilePath(FILE_PATHS[89]).c_str(), &lang_txt, false) == 0)
 		LOG.lprintf("fertig\n");
 	else
 	{
@@ -299,19 +271,17 @@ bool Loader::LoadTXTs(void)
  */
 bool Loader::LoadSounds(void)
 {
-	char file[512];
 	// konvertierte sound.lst laden
 	if(!LoadFile(FILE_PATHS[55], GetPalette(0), &sound_lst))
 	{
 		char cmd[4096];
 		char name[4096];
-		char a[512],b[512],c[512];
 #ifdef _WIN32
 		strcpy(name, "\\sound-convert.exe");
 #else
 		strcpy(name, "/sound-convert");
 #endif
-		snprintf(cmd, 4096, "%s%s -s \"%s\" -f \"%s\" -t \"%s\"", GetFilePath(a, FILE_PATHS[57]), name, GetFilePath(b, FILE_PATHS[56]), GetFilePath(c, FILE_PATHS[49]), GetFilePath(file, FILE_PATHS[55]));
+		snprintf(cmd, 4096, "%s%s -s \"%s\" -f \"%s\" -t \"%s\"", GetFilePath(FILE_PATHS[57]).c_str(), name, GetFilePath(FILE_PATHS[56]).c_str(), GetFilePath(FILE_PATHS[49]).c_str(), GetFilePath(FILE_PATHS[55]).c_str());
 		//LOG.lprintf("%s\n", cmd);
 #ifdef _WIN32
 		for(unsigned int x = 0; x < 4096; ++x)
@@ -328,10 +298,10 @@ bool Loader::LoadSounds(void)
 		{
 			// Datei kopieren, und zwar schön portabel :P ...
 
-			LOG.lprintf("Kopiere Datei %s nach %s: ", GetFilePath(b, FILE_PATHS[49]), GetFilePath(b, FILE_PATHS[55]));
+			LOG.lprintf("Kopiere Datei %s nach %s: ", GetFilePath(FILE_PATHS[49]).c_str(), GetFilePath(FILE_PATHS[55]).c_str());
 
-			FILE *f = fopen(GetFilePath(b, FILE_PATHS[49]), "rb");
-			FILE *t = fopen(GetFilePath(b, FILE_PATHS[55]), "wb");
+			FILE *f = fopen(GetFilePath(FILE_PATHS[49]).c_str(), "rb");
+			FILE *t = fopen(GetFilePath(FILE_PATHS[55]).c_str(), "wb");
 			if(!f || !t)
 			{
 				LOG.lprintf("fehlgeschlagen\n");
@@ -357,7 +327,7 @@ bool Loader::LoadSounds(void)
 	}
 
 	std::list<std::string> liste;
-	ListDir(GetFilePath(file, FILE_PATHS[50]), NULL, NULL, &liste);
+	ListDir(GetFilePath(FILE_PATHS[50]), NULL, NULL, &liste);
 
 	unsigned int i = 0;
 	sng_lst.alloc(unsigned(liste.size()));
@@ -398,13 +368,12 @@ bool Loader::LoadFile(const char *pfad, const libsiedler2::ArchivItem_Palette *p
 {
 	unsigned int ladezeit = VideoDriverWrapper::inst().GetTickCount();
 
-	char file[512];
-	GetFilePath(file, pfad);
+	std::string file = GetFilePath(pfad);
 
-	LOG.lprintf("lade \"%s\": ", file);
+	LOG.lprintf("lade \"%s\": ", file.c_str());
 	fflush(stdout);
 
-	if(libsiedler2::Load(file, archiv, palette) != 0)
+	if(libsiedler2::Load(file.c_str(), archiv, palette) != 0)
 	{
 		LOG.lprintf("fehlgeschlagen\n");
 		return false;
@@ -428,13 +397,12 @@ bool Loader::LoadSettings()
 {
 	settings.clear();
 
-	char file[512];
-	GetFilePath(file, FILE_PATHS[0]);
+	std::string file = GetFilePath(FILE_PATHS[0]);
 
-	LOG.lprintf("lade \"%s\": ", file);
+	LOG.lprintf("lade \"%s\": ", file.c_str());
 	fflush(stdout);
 
-	if(libsiedler2::Load(file, &settings) != 0)
+	if(libsiedler2::Load(file.c_str(), &settings) != 0)
 		return false;
 
 	LOG.lprintf("fertig\n");
@@ -452,13 +420,12 @@ bool Loader::LoadSettings()
  */
 bool Loader::SaveSettings()
 {
-	char file[512];
-	GetFilePath(file, FILE_PATHS[0]);
+	std::string file = GetFilePath(FILE_PATHS[0]);
 
-	LOG.lprintf("schreibe \"%s\": ", file);
+	LOG.lprintf("schreibe \"%s\": ", file.c_str());
 	fflush(stdout);
 
-	if(libsiedler2::Write(file, &settings) != 0)
+	if(libsiedler2::Write(file.c_str(), &settings) != 0)
 		return false;
 
 	LOG.lprintf("fertig\n");

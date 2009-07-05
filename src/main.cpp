@@ -1,4 +1,4 @@
-// $Id: main.cpp 5200 2009-07-05 19:11:52Z FloSoft $
+// $Id: main.cpp 5201 2009-07-05 19:35:52Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -113,18 +113,17 @@ int main(int argc, char *argv[])
 #endif // _WIN32
 
 	// diverse dirs anlegen
-	char dir[512];
 	const unsigned int dir_count = 4;
 	unsigned int dirs[dir_count] = { 47, 48, 51, 85 };
 
 	for(unsigned int i = 0; i < dir_count; ++i)
 	{
-		Loader::GetFilePath(dir, FILE_PATHS[dirs[i]]);
+		std::string dir = GetFilePath(FILE_PATHS[dirs[i]]);
 		
 		#ifdef _WIN32
-			CreateDirectory(dir, NULL);
+			CreateDirectory(dir.c_str(), NULL);
 		#else
-			mkdir(dir, 0750);
+			mkdir(dir.c_str(), 0750);
 		#endif
 	}
 

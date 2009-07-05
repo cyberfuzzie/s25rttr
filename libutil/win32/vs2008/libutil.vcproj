@@ -190,6 +190,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\files.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\Log.cpp"
 				>
 			</File>

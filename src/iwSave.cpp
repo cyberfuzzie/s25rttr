@@ -1,4 +1,4 @@
-// $Id: iwSave.cpp 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: iwSave.cpp 5201 2009-07-05 19:35:52Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -117,7 +117,7 @@ void iwSaveLoad::RefreshTable()
 	GetCtrl<ctrlTable>(0)->DeleteAllItems();
 
 	// Verzeichnis auflisten
-	std::string tmp = FILE_PATHS[85];
+	std::string tmp = GetFilePath(FILE_PATHS[85]);
 	tmp += "*.sav";
 	ListDir(tmp.c_str(),iwSave::FillSaveTable,GetCtrl<ctrlTable>(0));
 }
@@ -174,7 +174,7 @@ void iwSaveLoad::FillSaveTable(const std::string& filename, void *param)
 void iwSave::SaveLoad()
 {
 	// Speichern
-	std::string tmp = FILE_PATHS[85];
+	std::string tmp = GetFilePath(FILE_PATHS[85]);
 	tmp += GetCtrl<ctrlEdit>(1)->GetText();
 	tmp += ".sav";
 

@@ -1,4 +1,4 @@
-// $Id: iwPlayReplay.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: iwPlayReplay.cpp 5201 2009-07-05 19:35:52Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -68,7 +68,7 @@ iwPlayReplay::iwPlayReplay(void)
 	AddTextButton(2, 305, 260, 100, 22, TC_RED1, _("Clear"),NormalFont);
 
 	// Verzeichnis auflisten
-	std::string tmp = FILE_PATHS[51];
+	std::string tmp = GetFilePath(FILE_PATHS[51]);
 	tmp += "*.rpl";
 	ListDir(tmp, FillReplayTable, table);
 
@@ -119,7 +119,7 @@ void iwPlayReplay::Msg_MsgBoxResult(const unsigned msgbox_id, const MsgboxResult
 	if(mbr == MSR_YES && msgbox_id == 1)
 	{
 		// Dateien löschen
-		std::string tmp = FILE_PATHS[51];
+		std::string tmp = GetFilePath(FILE_PATHS[51]);
 		tmp += "*.rpl";
 		ListDir(tmp, RemoveReplay, 0);
 

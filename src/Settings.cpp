@@ -1,4 +1,4 @@
-// $Id: Settings.cpp 5171 2009-07-02 20:21:42Z FloSoft $
+// $Id: Settings.cpp 5201 2009-07-05 19:35:52Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -76,13 +76,11 @@ bool Settings::LoadDefaults()
 	effekte = true;
 	effekte_volume = 75;
 
-	char dir[512];
-	Loader::GetFilePath(dir, SETTINGSDIR);
-
+	std::string dir = GetFilePath(SETTINGSDIR);
 	#ifdef _WIN32
-		CreateDirectory(dir, NULL);
+		CreateDirectory(dir.c_str(), NULL);
 	#else
-		mkdir(dir, 0750);
+		mkdir(dir.c_str(), 0750);
 	#endif
 
 	autosave_interval = 0;

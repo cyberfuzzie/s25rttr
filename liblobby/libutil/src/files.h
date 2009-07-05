@@ -1,4 +1,4 @@
-// $Id: files.h 5200 2009-07-05 19:11:52Z FloSoft $
+// $Id: files.h 5201 2009-07-05 19:35:52Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -191,5 +191,7 @@ const char * const FP_MENU_BACKGROUNDS[] =
 };
 
 const unsigned FILE_SPLASH_ID = 3;
+
+std::string GetFilePath(std::string from);
 
 #endif // FILES_H_INCLUDED

@@ -1156,13 +1156,13 @@ msgstr ""
 #: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:773
 msgid "Military building captured"
 msgstr ""
-"Armeijan rakennus\r\n"
+"Armeijan rakennus\n"
 "vallattu"
 
 #: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:770
 msgid "Military building lost"
 msgstr ""
-"Armeijan rakennus\r\n"
+"Armeijan rakennus\n"
 "menetetty"
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:97

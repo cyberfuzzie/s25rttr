@@ -1,4 +1,4 @@
-// $Id: files.h 5201 2009-07-05 19:35:52Z FloSoft $
+// $Id: files.h 5205 2009-07-06 07:31:40Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -178,7 +178,8 @@ const char * const FILE_PATHS[] =
 	/* 90 */RTTRDIR "/MUSIC/",
 	/* 91 */RTTRDIR "/MAPS/OTHER/",
 	/* 92 */GAMEDIR "/DATA/BOOT_Z.LST",
-	/* 93 */RTTRDIR "/MAPS/SEA/"
+	/* 93 */RTTRDIR "/MAPS/SEA/",
+	/* 94 */SETTINGSDIR
 };
 
 /// Menühintergründe

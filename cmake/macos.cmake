@@ -7,16 +7,16 @@ SET(CMAKE_C_COMPILER   i686-apple-darwin9-gcc)
 SET(CMAKE_CXX_COMPILER i686-apple-darwin9-g++)
 SET(CMAKE_RANLIB i686-apple-darwin9-ranlib)
 
-SET(CMAKE_PREFIX_PATH "/usr/i686-apple-darwin9")
+SET(CMAKE_PREFIX_PATH "/usr/i686-apple-darwin9/SDKs/MacOSX10.4u.sdk")
 
-SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -I/System/Library/Frameworks/SDL.framework/Headers -I/System/Library/Frameworks/SDL_mixer.framework/Headers -mtune=prescott -malign-double -ffast-math -mmmx -msse -mfpmath=sse -fomit-frame-pointer ")
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -I/System/Library/Frameworks/SDL.framework/Headers -I/System/Library/Frameworks/SDL_mixer.framework/Headers -mtune=prescott -malign-double -ffast-math -mmmx -msse -mfpmath=sse -fomit-frame-pointer ")
+SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mtune=prescott -malign-double -ffast-math -mmmx -msse -mfpmath=sse -fomit-frame-pointer ")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mtune=prescott -malign-double -ffast-math -mmmx -msse -mfpmath=sse -fomit-frame-pointer ")
 
 # set rpath correctly - fucking CMAKE!
-SET(CMAKE_C_LINK_FLAGS 	"${CMAKE_C_LINK_FLAGS} -L/usr/i686-apple-darwin9/lib -framework OpenGL")
-SET(CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -L/usr/i686-apple-darwin9/lib -framework OpenGL")
+SET(CMAKE_C_LINK_FLAGS 	"${CMAKE_C_LINK_FLAGS} -framework OpenGL -L${CMAKE_SOURCE_DIR}/macos -lSDLmain")
+SET(CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -framework OpenGL -L${CMAKE_SOURCE_DIR}/macos -lSDLmain")
 
-SET(CMAKE_FIND_ROOT_PATH "/usr/i686-apple-darwin9")
+SET(CMAKE_FIND_ROOT_PATH "/usr/i686-apple-darwin9/SDKs/MacOSX10.4u.sdk")
 
 # search for programs in the build host directories
 SET(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)

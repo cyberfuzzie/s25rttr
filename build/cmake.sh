@@ -1,6 +1,6 @@
 #!/bin/sh
 ###############################################################################
-## $Id: cmake.sh 2735 2007-09-08 14:22:04Z FloSoft $
+## $Id: cmake.sh 5210 2009-07-07 12:26:12Z FloSoft $
 ###############################################################################
 
 
@@ -57,6 +57,14 @@ if [ ! -e S2 ] ; then
 	fi
 fi
 
+if [ -z "$ARCH" ] ; then
+	if [ "$(uname -s)" = "Darwin" ] ; then
+		ARCH=macos.local
+	else
+		ARCH=local
+	fi
+fi
+
 PREFIX=/usr/local
 BINDIR=
 DATADIR=
@@ -93,6 +101,10 @@ while test $# != 0 ; do
 		$ac_shift
 		DATADIR=$ac_optarg
 	;;
+	-arch | --arch)
+		$ac_shift
+		ARCH=$ac_optarg
+	;;
   	-enable-* | --enable-*)
     	ac_feature=`expr "x$ac_option" : 'x-*enable-\([^=]*\)'`
     	# Reject names that are not valid shell variable names.
@@ -116,8 +128,13 @@ while test $# != 0 ; do
 	shift
 done
 
+PARAMS=""
+
 echo "Setting Prefix to \"$PREFIX\""
-PARAMS="-DPREFIX=$PREFIX"
+PARAMS="$PARAMS -DPREFIX=$PREFIX"
+
+echo "Setting Architecture to \"$ARCH\""
+PARAMS="$PARAMS -DCOMPILEFOR_PLATFORM=$ARCH"
 
 if [ ! -z "$BINDIR" ] ; then
 	echo "Setting Binary Dir to \"$BINDIR\""

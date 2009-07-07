@@ -1,4 +1,4 @@
-// $Id: main.cpp 5205 2009-07-06 07:31:40Z FloSoft $
+// $Id: main.cpp 5213 2009-07-07 13:28:04Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -26,6 +26,10 @@
 #include "Socket.h"
 
 #include "GameManager.h"
+
+#ifdef __APPLE__
+#	include <SDL/SDL_main.h>
+#endif // __APPLE__
 
 #if defined _WIN32 && defined _DEBUG && defined _MSC_VER && !defined NOHWETRANS
 #	include <windows.h>

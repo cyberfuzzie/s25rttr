@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 5211 2009-07-07 13:14:17Z FloSoft $
+### $Id: CMakeLists.txt 5213 2009-07-07 13:28:04Z FloSoft $
 ################################################################################
 
 INCLUDE(FindBZip2)
@@ -329,6 +329,10 @@ ENDIF ( "${COMPILEFOR}" STREQUAL "win32" )
 
 ADD_EXECUTABLE(s25client ${s25client_SRCS})
 TARGET_LINK_LIBRARIES(s25client siedler2 lobby_c s25util mygettext ${BZIP2_LIBRARIES} ${OPENGL_gl_LIBRARY})
+
+IF ( "${COMPILEFOR}" STREQUAL "macos")
+	SET_TARGET_PROPERTIES(s25client PROPERTIES LINK_FLAGS "-framework SDL -framework Cocoa")
+ENDIF ( "${COMPILEFOR}" STREQUAL "macos")
 
 IF ( "${COMPILEFOR}" STREQUAL "win32" )
     TARGET_LINK_LIBRARIES(s25client wsock32 bz2 ${TARGET_LINK_LIBRARIES} )

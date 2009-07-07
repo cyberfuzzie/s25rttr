@@ -1,21 +1,7 @@
-ADD_SUBDIRECTORY( SDL ) 
+#################################################################################
+### $Id: CMakeLists.txt 5211 2009-07-07 13:14:17Z FloSoft $
+#################################################################################
 
-
-########### install files ###############
-
-
-
-
-#original Makefile.am contents follow:
+ADD_SUBDIRECTORY( SDL )
 
 #################################################################################
-### $Id: CMakeLists.txt 5113 2009-06-26 08:23:54Z FloSoft $
-#################################################################################
-#
-## Verweis auf die Makefiles der Unterverzeichnisse
-#SUBDIRS = SDL
-#
-#.PHONY: mrproper
-#
-#mrproper:
-#	sh $(srcdir)/cleanup.sh

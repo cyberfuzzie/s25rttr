@@ -1,4 +1,4 @@
-// $Id: DriverWrapper.cpp 4816 2009-05-05 17:42:19Z FloSoft $
+// $Id: DriverWrapper.cpp 5211 2009-07-07 13:14:17Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -155,7 +155,12 @@ void DriverWrapper::LoadDriverList(const DriverType dt, list<DriverItem>& driver
 		std::string path = FILE_PATHS[46] + DIRECTORY[dt] + "/" + "rls_*.dll";
 #	endif
 #else
-	std::string path = FILE_PATHS[46] + DIRECTORY[dt] + "/" + "*.so";
+	std::string path = FILE_PATHS[46] + DIRECTORY[dt] + "/" + 
+#ifdef __APPLE__
+		"*.dylib";
+#else
+		"*.so";
+#endif // !__APPLE__
 #endif // !_WIN32
 
 	ListDir(path, 0, 0, &driver_files);

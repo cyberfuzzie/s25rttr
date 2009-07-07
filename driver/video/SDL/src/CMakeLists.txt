@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: CMakeLists.txt 5120 2009-06-26 16:32:05Z FloSoft $
+### $Id: CMakeLists.txt 5211 2009-07-07 13:14:17Z FloSoft $
 #################################################################################
 
 INCLUDE(FindSDL)
@@ -8,6 +8,14 @@ IF (SDL_FOUND)
 	INCLUDE_DIRECTORIES(../../../src)
 
 	ADD_LIBRARY(videoSDL SHARED SDL.cpp SDL.h main.h oem.cpp oem.h ../../../../version.cpp ../../../src/DriverInterface.cpp)
+
+	# Let the user choose the flags used for this directory.
+	SET(videoSDL_C_FLAGS "-I${SDL_INCLUDE_DIR}" CACHE STRING "CFLAGS to use for videoSDL")
+	SET(videoSDL_CXX_FLAGS "-I${SDL_INCLUDE_DIR}" CACHE STRING "CXXFLAGS to use for videoSDL")
+	
+	# Add the user's chosen flags to the build for this directory.
+	SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${videoSDL_C_FLAGS}")
+	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${videoSDL_CXX_FLAGS}")
 
 	TARGET_LINK_LIBRARIES(videoSDL videodrv ${SDL_LIBRARY})
 

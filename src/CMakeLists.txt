@@ -1,21 +1,21 @@
 ################################################################################
-### $Id: CMakeLists.txt 5171 2009-07-02 20:21:42Z FloSoft $
+### $Id: CMakeLists.txt 5211 2009-07-07 13:14:17Z FloSoft $
 ################################################################################
 
 INCLUDE(FindBZip2)
 IF (NOT BZIP2_FOUND)
-    MESSAGE(FATAL_ERROR "BZip2 not found")
+    MESSAGE(FATAL_ERROR "FATAL ERROR: BZip2 library not found")
 ENDIF (NOT BZIP2_FOUND)
 ADD_DEFINITIONS(${BZIP2_DEFINITIONS})
 
 INCLUDE(FindOpenGL)
 IF (NOT OPENGL_FOUND)
-    MESSAGE(FATAL_ERROR "OpenGL not found")
+    MESSAGE(FATAL_ERROR "FATAL ERROR: OpenGL library not found")
 ENDIF (NOT OPENGL_FOUND)
 
 INCLUDE(../cmake/FindGettext.cmake)
 IF (NOT GETTEXT_FOUND)
-    MESSAGE(FATAL_ERROR "GetText not found")
+    MESSAGE(FATAL_ERROR "FATAL ERROR: gettext library not found")
 ENDIF (NOT GETTEXT_FOUND)
 
 ################################################################################

@@ -1,4 +1,4 @@
-// $Id: main.cpp 5103 2009-06-24 20:01:23Z FloSoft $
+// $Id: main.cpp 5221 2009-07-08 09:28:46Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -179,11 +179,13 @@ static bool DownloadFile(string url, string &to, string path = "", string progre
 {
 	CURL *curl_handle;
 	FILE *tofp = NULL;
+	bool ok = true;
 
 	curl_handle = curl_easy_init();
 
 	curl_easy_setopt(curl_handle, CURLOPT_URL, url.c_str());
 	curl_easy_setopt(curl_handle, CURLOPT_USERAGENT, "s25update/1.0");
+	curl_easy_setopt(curl_handle, CURLOPT_FAILONERROR, 1);
 
 	// Write file to Memory?
 	if(path == "")
@@ -210,13 +212,15 @@ static bool DownloadFile(string url, string &to, string path = "", string progre
 
 	//curl_easy_setopt(curl_handle, CURLOPT_VERBOSE, 1L);
 	
-	curl_easy_perform(curl_handle);
+	if(curl_easy_perform(curl_handle) != 0)
+		ok = false;
+	
 	curl_easy_cleanup(curl_handle);
 
 	if(tofp)
 		fclose(tofp);
 
-	return true;
+	return ok;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -261,6 +265,8 @@ int main(int argc, char *argv[])
 
 	stringstream flstream(filelist);
 
+	cout << filelist << endl;
+	
 	// parse filelist
 	string line;
 	while( getline(flstream, line) )

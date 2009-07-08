@@ -1,4 +1,4 @@
-// $Id: main.cpp 5221 2009-07-08 09:28:46Z FloSoft $
+// $Id: main.cpp 5224 2009-07-08 09:44:57Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -265,7 +265,7 @@ int main(int argc, char *argv[])
 
 	stringstream flstream(filelist);
 
-	cout << filelist << endl;
+	//cout << filelist << endl;
 	
 	// parse filelist
 	string line;

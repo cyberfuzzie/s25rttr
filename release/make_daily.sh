@@ -84,8 +84,10 @@ else
 	touch $TARGET/$ARCH/revision-$REVISION
 	touch $TARGET/$ARCH/version-$VERSION
 
-	/srv/buildfarm/uploadrs.sh $TARGET/s25rttr_${VERSION}-${REVISION}_${ARCH}.tar.bz2 >> $TARGET/build_${ARCH}.log
-        rm -f $TARGET/s25rttr_${VERSION}-${REVISION}_${ARCH}.tar.bz2 >> $TARGET/build_${ARCH}.log
+	if [ -z "$NORS" ] ; then
+		/srv/buildfarm/uploadrs.sh $TARGET/s25rttr_${VERSION}-${REVISION}_${ARCH}.tar.bz2 >> $TARGET/build_${ARCH}.log
+		rm -f $TARGET/s25rttr_${VERSION}-${REVISION}_${ARCH}.tar.bz2 >> $TARGET/build_${ARCH}.log
+	fi
 
 	EXIT=0
 fi

@@ -19,6 +19,7 @@ mkdir -vp s25client.app/Contents/MacOS/bin
 
 # binaries und paketdaten kopieren
 cp -v ../../bin/macos/rttr.command s25client.app/Contents/MacOS/
+cp -v ../../bin/macos/rttr.terminal s25client.app/Contents/MacOS/
 cp -v ../../bin/macos/icon.icns s25client.app/Contents/Resources/
 cp -v ../../bin/macos/PkgInfo s25client.app/Contents/
 cp -v ../../bin/macos/Info.plist s25client.app/Contents/

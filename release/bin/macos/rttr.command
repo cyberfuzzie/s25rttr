@@ -52,7 +52,9 @@ fi
 
 if [ ! "$1" = "noupdate" ] ; then
 	if [ -f ./share/s25rttr/RTTR/s25update ] ; then
-		./share/s25rttr/RTTR/s25update
+		cd ../../../
+		./s25client.app/Contents/MacOS/share/s25rttr/RTTR/s25update
+		cd s25client.app/Contents/MacOS
 	fi
 fi
 

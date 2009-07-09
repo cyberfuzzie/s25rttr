@@ -48,7 +48,7 @@ dpkg-sig -v -k 6D09334C -s builder ../../deb/s25rttr_${VERSION}_${PKGARCH}.deb
 
 # copy to target
 if [ ! -z "$TARGET" ] ; then
-	reprepro -Vb $TARGET/deb remove sid s25rttr
+	#reprepro -Vb $TARGET/deb remove sid s25rttr
 	reprepro -Vb $TARGET/deb includedeb sid ../../deb/s25rttr_${VERSION}_${PKGARCH}.deb
 	
 	mkdir -p $TARGET/$ARCH

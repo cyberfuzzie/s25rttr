@@ -1,4 +1,4 @@
-// $Id: ArchivInfo.h 5239 2009-07-09 21:15:45Z FloSoft $
+// $Id: ArchivInfo.h 5240 2009-07-09 21:18:51Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -149,8 +149,8 @@ namespace libsiedler2
 		void copy(unsigned int to, unsigned int from, unsigned int count, const ArchivInfo *source);
 
 	protected:
-		unsigned long count; ///< Anzahl der Elemente.
 		ArchivItem **data;   ///< die Elemente.
+		unsigned long count; ///< Anzahl der Elemente.
 	};
 }
 

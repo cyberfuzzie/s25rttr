@@ -1,22 +1,12 @@
 #################################################################################
-### $Id: CMakeLists.txt 5214 2009-07-07 13:35:10Z FloSoft $
+### $Id: CMakeLists.txt 5227 2009-07-09 12:09:54Z FloSoft $
 #################################################################################
 
-FIND_LIBRARY(SNDFILE_LIBRARY sndfile)
-FIND_LIBRARY(SAMPLERATE_LIBRARY samplerate)
+INCLUDE(FindSndfile)
+INCLUDE(FindSamplerate)
 
-IF (NOT SNDFILE_LIBRARY)
-	MESSAGE(WARNING ": libsndfile not found: Will not build sound-convert binary")
-	MESSAGE(WARNING ": You won't have correct sound effects without this!")
-ENDIF (NOT SNDFILE_LIBRARY)
-
-IF (NOT SAMPLERATE_LIBRARY)
-	MESSAGE(WARNING ": libsamplerate not found: Will not build sound-convert binary")
-	MESSAGE(WARNING ": You won't have correct sound effects without this!")
-ENDIF (NOT SAMPLERATE_LIBRARY)
-
-IF (SNDFILE_LIBRARY)
-	IF (SAMPLERATE_LIBRARY)
+IF (SNDFILE_FOUND)
+	IF (SAMPLERATE_FOUND)
 
 		# Let the user choose the flags used for this directory.
 		SET(SC_C_FLAGS "-mno-align-double -I${SNDFILE_INCLUDE_DIR} -I${SAMPLERATE_INCLUDE_DIR}" CACHE STRING "CFLAGS to use for sound-convert")
@@ -38,11 +28,21 @@ IF (SNDFILE_LIBRARY)
 			ADD_CUSTOM_COMMAND(TARGET sound-convert POST_BUILD COMMAND if [ -f sound-convert.exe ] \; then cp -v sound-convert.exe sound-convert \; fi)
 		ENDIF ( "${COMPILEFOR}" STREQUAL "win32")
 		
+		IF ( "${COMPILEFOR}" STREQUAL "macos")
+			SET_TARGET_PROPERTIES(sound-convert PROPERTIES LINK_FLAGS "-framework sndfile -framework samplerate")
+		ENDIF ( "${COMPILEFOR}" STREQUAL "macos")
+
 		ADD_CUSTOM_COMMAND(TARGET sound-convert POST_BUILD COMMAND cp -v sound-convert ../../RTTR/sound-convert)
 		
 		INSTALL(TARGETS sound-convert DESTINATION bin)
 
-	ENDIF (SAMPLERATE_LIBRARY)
-ENDIF (SNDFILE_LIBRARY)
+	ELSE (SAMPLERATE_FOUND)
+		MESSAGE(WARNING ": libsamplerate not found: Will not build sound-convert binary")
+		MESSAGE(WARNING ": You won't have correct sound effects without this!")
+	ENDIF (SAMPLERATE_FOUND)
+ELSE (SNDFILE_FOUND)
+	MESSAGE(WARNING ": libsndfile not found: Will not build sound-convert binary")
+	MESSAGE(WARNING ": You won't have correct sound effects without this!")
+ENDIF (SNDFILE_FOUND)
 
 #################################################################################

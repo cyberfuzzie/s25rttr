@@ -1,4 +1,4 @@
-// $Id: ArchivInfo.cpp 5238 2009-07-09 20:50:28Z FloSoft $
+// $Id: ArchivInfo.cpp 5239 2009-07-09 21:15:45Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -178,14 +178,6 @@ void libsiedler2::ArchivInfo::clear(void)
  *
  *  @author FloSoft
  */
-void libsiedler2::ArchivInfo::set(int index, ArchivItem *item)
-{
-	if(!data)
-		return;
-
-	if( (unsigned long)index < count && index >= 0)
-		data[(unsigned long)index] = item;
-}
 
 ///////////////////////////////////////////////////////////////////////////////
 /** 
@@ -222,12 +214,6 @@ void libsiedler2::ArchivInfo::setC(int index, const ArchivItem *item)
  *
  *  @author FloSoft
  */
-void libsiedler2::ArchivInfo::push(ArchivItem *item)
-{
-	alloc_inc(1);
-
-	data[count-1] = item;
-}
 
 ///////////////////////////////////////////////////////////////////////////////
 /** 
@@ -257,16 +243,6 @@ void libsiedler2::ArchivInfo::pushC(const ArchivItem *item)
  *
  *  @author FloSoft
  */
-libsiedler2::ArchivItem *libsiedler2::ArchivInfo::get(int index)
-{
-	if(!data)
-		return NULL;
-
-	if( (unsigned long)index < count && index >= 0)
-		return data[(unsigned long)index];
-
-	return NULL;
-}
 
 ///////////////////////////////////////////////////////////////////////////////
 /** 
@@ -278,16 +254,6 @@ libsiedler2::ArchivItem *libsiedler2::ArchivInfo::get(int index)
  *
  *  @author FloSoft
  */
-const libsiedler2::ArchivItem *libsiedler2::ArchivInfo::get(int index) const
-{
-	if(!data)
-		return NULL;
-
-	if( (unsigned long)index < count && index >= 0)
-		return data[(unsigned long)index];
-
-	return NULL;
-}
 
 ///////////////////////////////////////////////////////////////////////////////
 /** 
@@ -299,16 +265,6 @@ const libsiedler2::ArchivItem *libsiedler2::ArchivInfo::get(int index) const
  *
  *  @author FloSoft
  */
-libsiedler2::ArchivItem **libsiedler2::ArchivInfo::getP(int index)
-{
-	if(!data)
-		return NULL;
-
-	if( (unsigned long)index < count && index >= 0)
-		return &data[(unsigned long)index];
-
-	return NULL;
-}
 
 ///////////////////////////////////////////////////////////////////////////////
 /** 
@@ -318,10 +274,6 @@ libsiedler2::ArchivItem **libsiedler2::ArchivInfo::getP(int index)
  *
  *  @author FloSoft
  */
-unsigned long libsiedler2::ArchivInfo::getCount(void) const
-{
-	return count;
-}
 
 ///////////////////////////////////////////////////////////////////////////////
 /** 
@@ -333,10 +285,6 @@ unsigned long libsiedler2::ArchivInfo::getCount(void) const
  *
  *  @author FloSoft
  */
-libsiedler2::ArchivItem *libsiedler2::ArchivInfo::operator[](int index)
-{
-	return get(index);
-}
 
 ///////////////////////////////////////////////////////////////////////////////
 /** 
@@ -348,17 +296,6 @@ libsiedler2::ArchivItem *libsiedler2::ArchivInfo::operator[](int index)
  *
  *  @author FloSoft
  */
-libsiedler2::ArchivInfo &libsiedler2::ArchivInfo::operator=(ArchivInfo &info)
-{
-	clear();
-
-	alloc(info.count);
-
-	for(unsigned long i = 0; i < count; ++i)
-		setC(i, info.get(i));
-
-	return *this;
-}
 
 ///////////////////////////////////////////////////////////////////////////////
 /** 

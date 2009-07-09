@@ -1,4 +1,4 @@
-// $Id: ArchivInfo.h 5238 2009-07-09 20:50:28Z FloSoft $
+// $Id: ArchivInfo.h 5239 2009-07-09 21:15:45Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -57,34 +57,93 @@ namespace libsiedler2
 		}
 
 		/// Setzt den Inhalt eines ArchivItems auf das des Übergebenen.
-		void set(int index, ArchivItem *item);
+		inline void set(int index, ArchivItem *item)
+		{
+			if(!data)
+				return;
+
+			if( (unsigned long)index < count && index >= 0)
+				data[(unsigned long)index] = item;
+		}
 
 		/// kopiert den Inhalt eines ArchivItems auf das des Übergebenen.
 		void setC(int index, const ArchivItem *item);
 
 		/// fügt ein Element hinten an.
-		void push(ArchivItem *item);
+		inline void push(ArchivItem *item)
+		{
+			alloc_inc(1);
+
+			data[count-1] = item;
+		}
 
 		/// fügt ein Element hinten an und kopiert die Daten von @p item.
 		void pushC(const ArchivItem *item);
 
 		/// liefert den Inhalt eines ArchivItems am entsprechenden Index.
-		ArchivItem *get(int index);
+		inline ArchivItem *get(int index)
+		{
+			if(!data)
+				return NULL;
+
+			if( (unsigned long)index < count && index >= 0)
+				return data[(unsigned long)index];
+
+			return NULL;
+		}
 
 		/// liefert den Inhalt eines ArchivItems am entsprechenden Index.
-		const ArchivItem *get(int index) const;
+		inline const ArchivItem *get(int index) const
+		{
+			if(!data)
+				return NULL;
+
+			if( (unsigned long)index < count && index >= 0)
+				return data[(unsigned long)index];
+
+			return NULL;
+		}
 
 		/// liefert den Pointer eines ArchivItems am entsprechenden Index.
-		ArchivItem **getP(int index);
+		inline ArchivItem **getP(int index)
+		{
+			if(!data)
+				return NULL;
+
+			if( (unsigned long)index < count && index >= 0)
+				return &data[(unsigned long)index];
+
+			return NULL;
+		}
 
 		/// liefert die Größe des Archivs.
-		unsigned long getCount(void) const;
+		inline unsigned long getCount(void) const
+		{
+			return count;
+		}
 
 		/// Index-Operator von @p ArchivInfo. 
-		ArchivItem *operator[](int index);
+		inline const ArchivItem *operator[](int index) const
+		{
+			return get(index);
+		}
+
+		/// Index-Operator von @p ArchivInfo. 
+		inline ArchivItem *operator[](int index)
+		{
+			return get(index);
+		}
 
 		/// Zuweisungsoperator von @p ArchivInfo.
-		ArchivInfo& operator=(ArchivInfo &info);
+		inline ArchivInfo& operator=(const ArchivInfo &info)
+		{
+			alloc(info.count);
+
+			for(unsigned long i = 0; i < count; ++i)
+				setC(i, info.get(i));
+
+			return *this;
+		}
 
 		/// Kopierfunktion von @p ArchivInfo.
 		void copy(unsigned int to, unsigned int from, unsigned int count, const ArchivInfo *source);

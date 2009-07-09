@@ -1,4 +1,4 @@
-// $Id: Loader.cpp 5238 2009-07-09 20:50:28Z FloSoft $
+// $Id: Loader.cpp 5239 2009-07-09 21:15:45Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -365,10 +365,6 @@ bool Loader::LoadSounds(void)
  */
 bool Loader::LoadFile(const char *pfad, const libsiedler2::ArchivItem_Palette *palette)
 {
-	libsiedler2::ArchivInfo archiv;
-	if(!LoadFile(pfad, palette, &archiv))
-		return false;
-
 	std::string p = pfad;
 	transform ( p.begin(), p.end(), p.begin(), tolower );
 
@@ -380,8 +376,13 @@ bool Loader::LoadFile(const char *pfad, const libsiedler2::ArchivItem_Palette *p
 	if(pp != std::string::npos)
 		p = p.substr(pp+1);
 
-	// Archiv in Map einfügen
+	// leeres Archiv in Map einfügen
+	libsiedler2::ArchivInfo archiv;
 	files.insert(std::make_pair(p, archiv));
+
+	// dann daten reinladen um kopieren zu vermeiden
+	if(!LoadFile(pfad, palette, &files.find(p)->second))
+		return false;
 
 	/// @todo: ggf items nur überschreiben falls eintrag in map schon vorhanden, so könnte man "overrides" implementieren, 
 	/// das man einzelen originalbilder durch eigene dateien überschreibt

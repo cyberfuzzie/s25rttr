@@ -38,15 +38,18 @@ sed -i "s/Architecture: x/Architecture: $PKGARCH/" ../deb/s25rttr_$VERSION/DEBIA
 
 mkdir -vp ../../deb
 
-chown -R root.games ../deb/s25rttr_$VERSION
-dpkg -b ../deb/s25rttr_$VERSION/ ../../deb/s25rttr_${VERSION}_${PKGARCH}.deb
+sudo chown -R root.games ../deb/s25rttr_$VERSION
+sudo chmod 0755 ../deb/s25rttr_$VERSION
+sudo dpkg -b ../deb/s25rttr_$VERSION/ ../../deb/s25rttr_${VERSION}_${PKGARCH}.deb
+sudo chown sifldoer.Domain\ Admins ../../deb/s25rttr_${VERSION}_${PKGARCH}.deb
+sudo chown -R sifldoer.Domain\ Admins ../deb/s25rttr_$VERSION
 dpkg-sig -v -k 6D09334C -s builder ../../deb/s25rttr_${VERSION}_${PKGARCH}.deb
 
-reprepro -Vb $TARGET/s25client includedeb unstable
 
 # copy to target
 if [ ! -z "$TARGET" ] ; then
-	reprepro -Vb $TARGET/s25client includedeb unstable ../../deb/s25rttr_${VERSION}_${PKGARCH}.deb
+	reprepro -Vb $TARGET/deb remove sid s25rttr
+	reprepro -Vb $TARGET/deb includedeb sid ../../deb/s25rttr_${VERSION}_${PKGARCH}.deb
 	
 	mkdir -p $TARGET/$ARCH
 	

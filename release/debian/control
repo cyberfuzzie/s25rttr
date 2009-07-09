@@ -1,0 +1,15 @@
+Package: s25rttr
+Version: x
+Section: games
+Priority: optional
+Bugs: <https://bugs.siedler25.org/>
+Homepage: <https://www.siedler25.org>
+Architecture: x
+Essential: no
+Depends: libsdl1.2debian, libsdl-mixer1.2, libsndfile1 (>=0.1.17), libsamplerate0 (>= 0.1.2), gettext
+Installed-Size: x
+Maintainer: Florian Doersch <sf-team@siedler25.org>
+Replaces: s25client
+Provides: s25rttr
+Description: The Settlers 2.5 RttR is a remake of the game The Settlers 2 of Bluebyte. It supports multiplayer games via ethernet and internet. Don't forget: The original game files of The Settlers 2 Gold must be copied to /usr/share/s25rttr/S2 and must be readably for the user to play this game.
+

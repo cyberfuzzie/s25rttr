@@ -1,11 +1,13 @@
 ################################################################################
-### $Id: CMakeLists.txt 5100 2009-06-24 17:11:59Z FloSoft $
+### $Id: CMakeLists.txt 5231 2009-07-09 15:46:54Z FloSoft $
 ################################################################################
 
 IF ("${CROSSCOMPILE}" STREQUAL "1" )
 	MESSAGE(STATUS "version: Reverting to host compiler to avoid \"cannot execute binary file\"")
 	SET(CMAKE_C_COMPILER "gcc")
 	SET(CMAKE_CXX_COMPILER "g++")
+	SET(CMAKE_C_FLAGS "")
+	SET(CMAKE_CXX_FLAGS "")
 	SET(CMAKE_C_LINK_FLAGS "")
 	SET(CMAKE_CXX_LINK_FLAGS "-lz")
 	

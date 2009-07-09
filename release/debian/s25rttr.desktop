@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Settlers II.5 RttR
+Name[de]=Siedler II.5 RttR
+Comment=A Settlers II Remake
+Comment[de]=Eine Siedler II Nachprogrammierung
+Exec=rttr.sh noupdate
+Icon=s25rttr.png
+Terminal=true
+Type=Application
+Categories=Game;StrategyGame;

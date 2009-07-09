@@ -28,7 +28,6 @@ cp -v ../../bin/macos/PkgInfo s25client.app/Contents/
 cp -v ../../bin/macos/Info.plist s25client.app/Contents/
 mv -v bin/* s25client.app/Contents/MacOS/bin
 
-rm -rf s25client.app/Contents/MacOS/share/s25rttr/RTTR/languages/*.po
 rm -rf bin
 rm -rf lib
 

@@ -35,7 +35,7 @@ if ! make -j 2 -C $BUILDDIR ; then
 	exit 1
 fi
 
-rm -vr $ARCH
+sudo rm -vr $ARCH
 mkdir -vp $ARCH
 if ! cd $ARCH ; then
 	exit 1
@@ -70,6 +70,7 @@ cd ../..
 
 cp -rv ../../../RTTR/languages/*.mo share/s25rttr/RTTR/languages/
 
+rm -vf share/s25rttr/RTTR/languages/*.po
 rm -vf share/s25rttr/RTTR/REPLAYS/*.rpl
 rm -vf share/s25rttr/RTTR/sound.lst
 rm -vf share/s25rttr/RTTR/settings.bin

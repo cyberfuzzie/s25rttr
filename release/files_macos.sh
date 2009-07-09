@@ -11,11 +11,12 @@ cp -v ../../$BUILDDIR/s-c/src/sound-convert share/s25rttr/RTTR
 # app anlegen
 mkdir -vp s25client.app/Contents/{Frameworks,MacOS,Resources}
 
-# frameworks kopieren
-cp -rv /usr/i686-apple-darwin9/SDKs/MacOSX10.4u.sdk/Library/Frameworks/SDL.framework s25client.app/Contents/Frameworks/
-cp -rv /usr/i686-apple-darwin9/SDKs/MacOSX10.4u.sdk/Library/Frameworks/SDL_mixer.framework s25client.app/Contents/Frameworks/
-cp -rv /usr/i686-apple-darwin9/SDKs/MacOSX10.4u.sdk/Library/Frameworks/sndfile.framework s25client.app/Contents/Frameworks/
-cp -rv /usr/i686-apple-darwin9/SDKs/MacOSX10.4u.sdk/Library/Frameworks/samplerate.framework s25client.app/Contents/Frameworks/
+# frameworks kopieren (da updater nicht mit symlinks umgehen kann, nur lib kopieren
+mkdir -vp s25client.app/Contents/Frameworks/{SDL,SDL_mixer,sndfile,samplerate}.framework
+cp -v /usr/i686-apple-darwin9/SDKs/MacOSX10.4u.sdk/Library/Frameworks/SDL.framework/SDL s25client.app/Contents/Frameworks/SDL.framework/SDL
+cp -v /usr/i686-apple-darwin9/SDKs/MacOSX10.4u.sdk/Library/Frameworks/SDL_mixer.framework/SDL_mixer s25client.app/Contents/Frameworks/SDL_mixer.framework/SDL_mixer
+cp -v /usr/i686-apple-darwin9/SDKs/MacOSX10.4u.sdk/Library/Frameworks/sndfile.framework/sndfile s25client.app/Contents/Frameworks/sndfile.framework/sndfile
+cp -v /usr/i686-apple-darwin9/SDKs/MacOSX10.4u.sdk/Library/Frameworks/samplerate.framework/samplerate s25client.app/Contents/Frameworks/samplerate.framework/samplerate
 
 mkdir -vp s25client.app/Contents/MacOS/bin
 

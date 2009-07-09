@@ -3,9 +3,8 @@ msgstr ""
 "Project-Id-Version: Siedler II.5 RttR\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-06-26 22:58+0100\n"
-"PO-Revision-Date: 2009-07-02 23:21+0000\n"
-"Last-Translator: Siedler II.5 - Return To The Roots Team <sf-"
-"team@siedler25.de>\n"
+"PO-Revision-Date: 2009-07-09 22:26+0100\n"
+"Last-Translator: \n"
 "Language-Team: Siedler II.5 RttR <sf-team@siedler25.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -15,8 +14,8 @@ msgstr ""
 "X-Poedit-Country: GERMANY\n"
 "X-Poedit-Language: German\n"
 "X-Poedit-SourceCharset: iso-8859-15\n"
-"X-Poedit-SearchPath-0: /storage/RTTR/svn/trunk/src\n"
 "X-Poedit-Basepath: /storage/RTTR/svn/trunk/src\n"
+"X-Poedit-SearchPath-0: /storage/RTTR/svn/trunk/src\n"
 
 #: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:47
 msgid "Post office"
@@ -537,12 +536,8 @@ msgid "-"
 msgstr "-"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:450
-msgid ""
-"Game can only be started as soon as everybody has a unique color,everyone is "
-"ready and all free slots are closed."
-msgstr ""
-"Spel kan alleen beginnen zodra iedereen een unieke kleur heeft, iedereen "
-"klaar is en alle vrije plaatsen gesloten zijn."
+msgid "Game can only be started as soon as everybody has a unique color,everyone is ready and all free slots are closed."
+msgstr "Spel kan alleen beginnen zodra iedereen een unieke kleur heeft, iedereen klaar is en alle vrije plaatsen gesloten zijn."
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:562
 msgid "Japaneses"
@@ -675,12 +670,8 @@ msgid "Not available"
 msgstr "Niet beschikbaar"
 
 #: /storage/RTTR/svn/trunk/src/dskSinglePlayer.cpp:97
-msgid ""
-"Singleplayer mode and AI are not yet implemented. Please use the Multiplayer "
-"mode and 'Direct IP' to create a Singleplayer game."
-msgstr ""
-"Singleplayer modus en KI zijn nog niet geïmplementeerd. Gebruik de "
-"Multiplayer modus en \"Direct IP\", om een Singelplayer spel te creëren aub."
+msgid "Singleplayer mode and AI are not yet implemented. Please use the Multiplayer mode and 'Direct IP' to create a Singleplayer game."
+msgstr "Singleplayer modus en KI zijn nog niet geïmplementeerd. Gebruik de Multiplayer modus en \"Direct IP\", om een Singelplayer spel te creëren aub."
 
 #: /storage/RTTR/svn/trunk/src/iwBaseWarehouse.cpp:62
 msgid "do nothing"
@@ -861,9 +852,7 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:127
 #, c-format
-msgid ""
-"The player '%s' want to cancel the '%s' between you both primaturely. Do you "
-"agree?"
+msgid "The player '%s' want to cancel the '%s' between you both primaturely. Do you agree?"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:150
@@ -1061,11 +1050,8 @@ msgstr "Zet vlag op"
 
 #: /storage/RTTR/svn/trunk/src/GameClientGF_Replay.cpp:73
 #, c-format
-msgid ""
-"Warning: The played replay is not in sync with the original match. (GF: %u)"
-msgstr ""
-"Waarschuwing: De afgespeelde herhaling loopt niet synchroon met de "
-"oorspronkelijke wedstrijd. (GF: %u)"
+msgid "Warning: The played replay is not in sync with the original match. (GF: %u)"
+msgstr "Waarschuwing: De afgespeelde herhaling loopt niet synchroon met de oorspronkelijke wedstrijd. (GF: %u)"
 
 #: /storage/RTTR/svn/trunk/src/GameClientGF_Replay.cpp:115
 #, c-format
@@ -1095,9 +1081,7 @@ msgstr " (KI)"
 
 #: /storage/RTTR/svn/trunk/src/GameClient.cpp:831
 msgid "The Game is not in sync. Checksums of some players don't match."
-msgstr ""
-"Het spel loopt niet synchroon. De checksommen van sommige spelers komt niet "
-"overeen."
+msgstr "Het spel loopt niet synchroon. De checksommen van sommige spelers komt niet overeen."
 
 #: /storage/RTTR/svn/trunk/src/GameClient.cpp:1186
 msgid "Auto-Save"
@@ -1359,10 +1343,8 @@ msgid "Demolition ist not allowed because the building is under attack!"
 msgstr "Slopen is niet toegestaan omdat het gebouw wordt aangevallen!"
 
 #: /storage/RTTR/svn/trunk/src/iwMilitaryBuilding.cpp:170
-msgid ""
-"Demolition ist not allowed because the building is located in border area!"
-msgstr ""
-"Slopen is niet toegestaan omdat het gebouw zich in het grensgebied bevindt!"
+msgid "Demolition ist not allowed because the building is located in border area!"
+msgstr "Slopen is niet toegestaan omdat het gebouw zich in het grensgebied bevindt!"
 
 #: /storage/RTTR/svn/trunk/src/iwMilitaryBuilding.cpp:173
 msgid "Demolition not possible"
@@ -1374,19 +1356,13 @@ msgstr "Constructie-helpmodus"
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:185
 #, c-format
-msgid ""
-"(Replay-Mode) Current GF: %u (End at: %u) / GF length: %u ms / NWF length: "
-"%u gf (%u ms)"
-msgstr ""
-"(Herhalings-Modus) Actuele GF: %u (Einde: %u) / GF-duur: %u ms / NWF-duur: "
-"%u gf (%u ms)"
+msgid "(Replay-Mode) Current GF: %u (End at: %u) / GF length: %u ms / NWF length: %u gf (%u ms)"
+msgstr "(Herhalings-Modus) Actuele GF: %u (Einde: %u) / GF-duur: %u ms / NWF-duur: %u gf (%u ms)"
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:187
 #, c-format
-msgid ""
-"Current GF: %u / GF length: %u ms / NWF length: %u gf (%u ms) /  Ping: %u ms"
-msgstr ""
-"Actuele GF: %u / GF-duur: %u ms / NWF-duur: %u gf (%u ms) / Ping: %u ms"
+msgid "Current GF: %u / GF length: %u ms / NWF length: %u gf (%u ms) /  Ping: %u ms"
+msgstr "Actuele GF: %u / GF-duur: %u ms / NWF-duur: %u gf (%u ms) / Ping: %u ms"
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:792
 #, c-format
@@ -1857,275 +1833,128 @@ msgid "New storehouse finished"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:252
-msgid ""
-"The headquarters represents the center of your realm. The large amount of "
-"storage space available means a great many things can be safely stored here. "
-"You can release certain merchandise from the headquarters, as and when "
-"required or stop its storage. To do this, first choose the corresponding "
-"icon followed by the desired merchandise or job symbol. On the third page, "
-"you can adjust the number of reserve soldiers who are responsible for "
-"guarding the headquarters. There are two values given: the first value "
-"indicates the current number of men, the second value indicates the desired "
-"number. "
+msgid "The headquarters represents the center of your realm. The large amount of storage space available means a great many things can be safely stored here. You can release certain merchandise from the headquarters, as and when required or stop its storage. To do this, first choose the corresponding icon followed by the desired merchandise or job symbol. On the third page, you can adjust the number of reserve soldiers who are responsible for guarding the headquarters. There are two values given: the first value indicates the current number of men, the second value indicates the desired number. "
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:275
-msgid ""
-"The barracks is a very small hut which can be used by your soldiers as "
-"quarters. Using the gold coin button you can stop the delivery of gold coins "
-"to the soldiers stationed here. However, without gold coins the soldiers "
-"here can not train and improve their skills."
-msgstr ""
-"De barak is een klein hutje die door je soldaten kan worden gebruikt als "
-"kamp. Door de gouden munt-knop te gebruiken kun je de toevoer van gouden "
-"munten naar de hier gestationeerde soldaten stoppen. Echter, zonder gouden "
-"munten kunnen de soldaten hier niet trainen en hun vaardigheden verbeteren."
+msgid "The barracks is a very small hut which can be used by your soldiers as quarters. Using the gold coin button you can stop the delivery of gold coins to the soldiers stationed here. However, without gold coins the soldiers here can not train and improve their skills."
+msgstr "De barak is een klein hutje die door je soldaten kan worden gebruikt als kamp. Door de gouden munt-knop te gebruiken kun je de toevoer van gouden munten naar de hier gestationeerde soldaten stoppen. Echter, zonder gouden munten kunnen de soldaten hier niet trainen en hun vaardigheden verbeteren."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:287
-msgid ""
-"The guardhouse is a comfortable place for the military which is also "
-"protected by solid stone walls. Using the gold coin button you can stop the "
-"delivery of gold coins to the soldiers stationed here. However, without gold "
-"coins the soldiers here can not train and improve their skills."
-msgstr ""
-"Het wachthuis is een comfortabele plek voor je soldaten die hier worden "
-"beschermd door sterke stenen muren. Door de gouden munt-knop te gebruiken "
-"kun je de toevoer van gouden munten naar de hier gestationeerde soldaten "
-"stoppen. Echter, zonder gouden munten kunnen de soldaten hier niet trainen "
-"en hun vaardigheden verbeteren."
+msgid "The guardhouse is a comfortable place for the military which is also protected by solid stone walls. Using the gold coin button you can stop the delivery of gold coins to the soldiers stationed here. However, without gold coins the soldiers here can not train and improve their skills."
+msgstr "Het wachthuis is een comfortabele plek voor je soldaten die hier worden beschermd door sterke stenen muren. Door de gouden munt-knop te gebruiken kun je de toevoer van gouden munten naar de hier gestationeerde soldaten stoppen. Echter, zonder gouden munten kunnen de soldaten hier niet trainen en hun vaardigheden verbeteren."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:303
-msgid ""
-"The watchtower with its large amount of space is best suited for stationing "
-"a large number of your troops. Using the gold coin button you can stop the "
-"delivery of gold coins to the soldiers stationed here. However, without gold "
-"coins the soldiers here can not train and improve their skills."
-msgstr ""
-"De wachttoren kan een groot aantal soldaten herbergen. Door de gouden munt-"
-"knop te gebruiken kun je de toevoer van gouden munten naar de hier "
-"gestationeerde soldaten stoppen. Echter, zonder gouden munten kunnen de "
-"soldaten hier niet trainen en hun vaardigheden verbeteren."
+msgid "The watchtower with its large amount of space is best suited for stationing a large number of your troops. Using the gold coin button you can stop the delivery of gold coins to the soldiers stationed here. However, without gold coins the soldiers here can not train and improve their skills."
+msgstr "De wachttoren kan een groot aantal soldaten herbergen. Door de gouden munt-knop te gebruiken kun je de toevoer van gouden munten naar de hier gestationeerde soldaten stoppen. Echter, zonder gouden munten kunnen de soldaten hier niet trainen en hun vaardigheden verbeteren."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:319
-msgid ""
-"The defensive capabilities and size of the fortress are unsurpassed. This "
-"stronghold ensures that other valuable buildings and commodities are "
-"protected. Using the gold coin button you can stop the delivery of gold "
-"coins to the soldiers stationed here. However, without gold coins the "
-"soldiers here can not train and improve their skills."
-msgstr ""
-"De verdedigingskracht en grootte van de vesting zijn onovertroffen. Deze "
-"vesting verzekert dat de overige waardevolle gebouwen en bezittingen worden "
-"beschermd. Door de gouden munt-knop te gebruiken kun je de toevoer van "
-"gouden munten naar de hier gestationeerde soldaten stoppen. Echter, zonder "
-"gouden munten kunnen de soldaten hier niet trainen en hun vaardigheden "
-"verbeteren."
+msgid "The defensive capabilities and size of the fortress are unsurpassed. This stronghold ensures that other valuable buildings and commodities are protected. Using the gold coin button you can stop the delivery of gold coins to the soldiers stationed here. However, without gold coins the soldiers here can not train and improve their skills."
+msgstr "De verdedigingskracht en grootte van de vesting zijn onovertroffen. Deze vesting verzekert dat de overige waardevolle gebouwen en bezittingen worden beschermd. Door de gouden munt-knop te gebruiken kun je de toevoer van gouden munten naar de hier gestationeerde soldaten stoppen. Echter, zonder gouden munten kunnen de soldaten hier niet trainen en hun vaardigheden verbeteren."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:334
-msgid ""
-"The quarrying of stone in a granite mine guarantees the supply of stone for "
-"buildings. However, eben a granite mine has to feed its workers."
+msgid "The quarrying of stone in a granite mine guarantees the supply of stone for buildings. However, eben a granite mine has to feed its workers."
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:342
-msgid ""
-"The mining of coal supports the metalworks and smithy. This hard work "
-"requires an adequate supply of food."
+msgid "The mining of coal supports the metalworks and smithy. This hard work requires an adequate supply of food."
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:349
-msgid ""
-"Deep within the mountains, miners dig for iron ore. They will obviously need "
-"a lot of food for the strenuous work."
+msgid "Deep within the mountains, miners dig for iron ore. They will obviously need a lot of food for the strenuous work."
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:356
-msgid ""
-"A gold mine allows you to prospect for valuable gold deposits. For this, it "
-"is necessary to ensure that the miners are provided with plenty of food."
+msgid "A gold mine allows you to prospect for valuable gold deposits. For this, it is necessary to ensure that the miners are provided with plenty of food."
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:365
-msgid ""
-"From the lookout tower you can see far into previously unexplored lands."
-msgstr ""
-"Vanuit de uitkijktoren kun je ver in voorheen onverkend gebied kijken."
+msgid "From the lookout tower you can see far into previously unexplored lands."
+msgstr "Vanuit de uitkijktoren kun je ver in voorheen onverkend gebied kijken."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:374
-msgid ""
-"Thanks to its immense strength, the catapults represents an effective weapon "
-"against enemy military buildings."
-msgstr ""
-"Dankzij hun immense kracht zijn katapulten een effectief wapen tegen "
-"militaire gebouwen van de tegenstander."
+msgid "Thanks to its immense strength, the catapults represents an effective weapon against enemy military buildings."
+msgstr "Dankzij hun immense kracht zijn katapulten een effectief wapen tegen militaire gebouwen van de tegenstander."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:381
-msgid ""
-"A woodcutter provides the sawmill with logs. A forester is able to replant "
-"the depleted forest."
-msgstr ""
-"Een houthakker levert boomstammen aan de houtzagerij. Een houtvester is in "
-"staat om een uitgeput bos te herplanten."
+msgid "A woodcutter provides the sawmill with logs. A forester is able to replant the depleted forest."
+msgstr "Een houthakker levert boomstammen aan de houtzagerij. Een houtvester is in staat om een uitgeput bos te herplanten."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:388
-msgid ""
-"The fish man is responsible for finding water rich in fish. His fish feed a "
-"great many miners."
-msgstr ""
-"De visser is verantwoordelijk voor het vangen van vis. Met vis kunnen "
-"mijnwerkers worden gevoed."
+msgid "The fish man is responsible for finding water rich in fish. His fish feed a great many miners."
+msgstr "De visser is verantwoordelijk voor het vangen van vis. Met vis kunnen mijnwerkers worden gevoed."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:394
-msgid ""
-"The stonemason works the stone near his quarry into bricks. These are needed "
-"mainly for building houses and as ammunition for catapults."
-msgstr ""
-"De steenhouwer verwerkt het steen in de buurt van zijn steengroeve tot "
-"bouwstenen. Deze zijn benodigd voor het bouwen van huizen en als ammunitie "
-"voor katapulten."
+msgid "The stonemason works the stone near his quarry into bricks. These are needed mainly for building houses and as ammunition for catapults."
+msgstr "De steenhouwer verwerkt het steen in de buurt van zijn steengroeve tot bouwstenen. Deze zijn benodigd voor het bouwen van huizen en als ammunitie voor katapulten."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:402
-msgid ""
-"Within his area, the forester ensures the survival of the forest. He plants "
-"all types of trees."
-msgstr ""
-"De houtvester zorgt binnen zijn gebied voor het behoud van het bos. Hij "
-"plant allerlei soorten bomen."
+msgid "Within his area, the forester ensures the survival of the forest. He plants all types of trees."
+msgstr "De houtvester zorgt binnen zijn gebied voor het behoud van het bos. Hij plant allerlei soorten bomen."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:409
-msgid ""
-"The butcher processes the livestock delivered into nutritious ham on which "
-"you miners are fed."
-msgstr ""
-"De slager verwerkt het aangeleverde vee tot voedzame ham waarmee je "
-"mijnwerkers worden gevoed."
+msgid "The butcher processes the livestock delivered into nutritious ham on which you miners are fed."
+msgstr "De slager verwerkt het aangeleverde vee tot voedzame ham waarmee je mijnwerkers worden gevoed."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:416
 msgid "Meat the hunter acquires is used to feed the miners."
-msgstr ""
-"Het vlees dat de jager verkrijgt wordt gebruikt om de mijnwerkers te voeden."
+msgstr "Het vlees dat de jager verkrijgt wordt gebruikt om de mijnwerkers te voeden."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:421
-msgid ""
-"The brewer produces fine beer from grain and water. This drink is needed to "
-"fill the soldiers with courage."
-msgstr ""
-"De bierbrouwer produceert bier uit graan en water. Deze drank is benodigd om "
-"je soldaten aan te moedigen."
+msgid "The brewer produces fine beer from grain and water. This drink is needed to fill the soldiers with courage."
+msgstr "De bierbrouwer produceert bier uit graan en water. Deze drank is benodigd om je soldaten aan te moedigen."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:428
-msgid ""
-"The armory produces swords and strong shields. This equipment is vital for "
-"your soldiers."
-msgstr ""
-"De wapensmidse produceert zwaarden en schilden. Deze uitrusting is vitaal "
-"voor je soldaten."
+msgid "The armory produces swords and strong shields. This equipment is vital for your soldiers."
+msgstr "De wapensmidse produceert zwaarden en schilden. Deze uitrusting is vitaal voor je soldaten."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:434
-msgid ""
-"The countless tools which your workers need are made in the metalworks. This "
-"requires boards and iron."
-msgstr ""
-"De eindeloze werktuigen die je arbeiders nodig hebben worden vervaardigd in "
-"de werkplaats. Hiervoor zijn planken en ijzer nodig."
+msgid "The countless tools which your workers need are made in the metalworks. This requires boards and iron."
+msgstr "De eindeloze werktuigen die je arbeiders nodig hebben worden vervaardigd in de werkplaats. Hiervoor zijn planken en ijzer nodig."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:441
-msgid ""
-"Raw iron ore is smelted in the iron smelters with the help of coal and raw "
-"iron. The processed iron is then used to making weapons (in the Armory) and "
-"tools (in the metalworks)."
-msgstr ""
-"Ruw ijzererts wordt gesmolten in de ijzersmelterij met behulp van steenkool. "
-"Het bewerkte ijzer wordt vervolgens gebruikt om wapens (in de wapensmidse) "
-"en werktuigen (in de metaalfabriek) te maken."
+msgid "Raw iron ore is smelted in the iron smelters with the help of coal and raw iron. The processed iron is then used to making weapons (in the Armory) and tools (in the metalworks)."
+msgstr "Ruw ijzererts wordt gesmolten in de ijzersmelterij met behulp van steenkool. Het bewerkte ijzer wordt vervolgens gebruikt om wapens (in de wapensmidse) en werktuigen (in de metaalfabriek) te maken."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:453
-msgid ""
-"Grain and water are needed for rearing pigs. The meat thus obtained can then "
-"be processed by a butcher."
-msgstr ""
-"Graan en water zijn nodig voor het fokken van varkens. Het vlees dat hiermee "
-"verkregen wordt kan worden verwerkt door een slager."
+msgid "Grain and water are needed for rearing pigs. The meat thus obtained can then be processed by a butcher."
+msgstr "Graan en water zijn nodig voor het fokken van varkens. Het vlees dat hiermee verkregen wordt kan worden verwerkt door een slager."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:460
-msgid ""
-"The storehouse can help reduce long transportation journeys and is suited to "
-"the temporary storage of merchandise and inhabitants. You can release "
-"certain merchandise from the storehouse, as and when required. "
-"Alternatively, the storage function can be disabled. To do this, first "
-"choose the relevant icon followed by the desired merchandise or job symbol."
-msgstr ""
-"De opslagplaats is handig voor het verkorten van de duur van het vervoer en "
-"voor de tijdelijke opslag van goederen en inwoners. Je kunt bepaalde "
-"goederen scheiden van de opslagplaats, wanneer je dit wil. Daarnaast kan de "
-"opslag worden uitgeschakeld. Om dit te doen moet je eerst het relevante "
-"icoontje aanklikken gevolgd door het gewenste goed- of baansymbool."
+msgid "The storehouse can help reduce long transportation journeys and is suited to the temporary storage of merchandise and inhabitants. You can release certain merchandise from the storehouse, as and when required. Alternatively, the storage function can be disabled. To do this, first choose the relevant icon followed by the desired merchandise or job symbol."
+msgstr "De opslagplaats is handig voor het verkorten van de duur van het vervoer en voor de tijdelijke opslag van goederen en inwoners. Je kunt bepaalde goederen scheiden van de opslagplaats, wanneer je dit wil. Daarnaast kan de opslag worden uitgeschakeld. Om dit te doen moet je eerst het relevante icoontje aanklikken gevolgd door het gewenste goed- of baansymbool."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:479
-msgid ""
-"The grain is ground in the windmill. The flour from the windmill is later "
-"used at the bakery to bake bread."
-msgstr ""
-"Het graan wordt gemalen in de molen. Het meel van de molen kan later worden "
-"gebruikt bij de bakkerij om brood te maken."
+msgid "The grain is ground in the windmill. The flour from the windmill is later used at the bakery to bake bread."
+msgstr "Het graan wordt gemalen in de molen. Het meel van de molen kan later worden gebruikt bij de bakkerij om brood te maken."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:486
-msgid ""
-"The flour produced at the windmill can be combined with water in the bakery "
-"to make oven-fresh bread. It's your miners' favorite!"
-msgstr ""
-"Het in de molen geproduceerde meel kan bij de bakkerij worden gecombineerd "
-"met water om brood te maken. Dit is voedsel voor je mijnwerkers."
+msgid "The flour produced at the windmill can be combined with water in the bakery to make oven-fresh bread. It's your miners' favorite!"
+msgstr "Het in de molen geproduceerde meel kan bij de bakkerij worden gecombineerd met water om brood te maken. Dit is voedsel voor je mijnwerkers."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:494
-msgid ""
-"The carpenter turns the woodcutter's logs into made-to-measure planks. There "
-"form the basic for building houses and ships."
-msgstr ""
-"De houtzager verwerkt de boomstammen van de houthakker tot kant-en-klare "
-"planken. Deze vormen de basis voor het bouwen van huizen en schepen."
+msgid "The carpenter turns the woodcutter's logs into made-to-measure planks. There form the basic for building houses and ships."
+msgstr "De houtzager verwerkt de boomstammen van de houthakker tot kant-en-klare planken. Deze vormen de basis voor het bouwen van huizen en schepen."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:502
-msgid ""
-"The mint is responsible for producing valuable gold coins. These precious "
-"objects are produced using coal and gold."
-msgstr ""
-"De muntenperserij is verantwoordelijk voor het produceren van waardevolle "
-"gouden munten. Hiervoor zijn steenkool en goud benodigd."
+msgid "The mint is responsible for producing valuable gold coins. These precious objects are produced using coal and gold."
+msgstr "De muntenperserij is verantwoordelijk voor het produceren van waardevolle gouden munten. Hiervoor zijn steenkool en goud benodigd."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:509
-msgid ""
-"A well supplies water to the bakery, brewery, donkey breeder and pig farm."
-msgstr ""
-"Een waterput levert water aan de bakkerij, bierbrouwerij, ezelsfokkerij en "
-"varkensboerderij."
+msgid "A well supplies water to the bakery, brewery, donkey breeder and pig farm."
+msgstr "Een waterput levert water aan de bakkerij, bierbrouwerij, ezelsfokkerij en varkensboerderij."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:515
-msgid ""
-"It is possible to build small rowing boats as well as huge cargo ships in a "
-"shipyard. The boards required for this are skillfully worked by shipwrights."
-msgstr ""
-"Het is mogelijk om zowel kleine roeiboten als grote goederenschepen te "
-"bouwen in een scheepswerg. De benodigde planken worden behendig bewerkt door "
-"scheepsbouwers."
+msgid "It is possible to build small rowing boats as well as huge cargo ships in a shipyard. The boards required for this are skillfully worked by shipwrights."
+msgstr "Het is mogelijk om zowel kleine roeiboten als grote goederenschepen te bouwen in een scheepswerg. De benodigde planken worden behendig bewerkt door scheepsbouwers."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:524
-msgid ""
-"The farmer plants and harvests grain in the surrounding fields. A windmill "
-"then processes the harvested grain into flour or can be used to feed the "
-"pigs."
-msgstr ""
-"De boer plant en oogst graan in de omliggende graanvelden. Het graan kan in "
-"de molen worden verwerkt tot meel, in de brouwerij tot bier en het kan "
-"gebruikt worden om varkens en ezels te voeden."
+msgid "The farmer plants and harvests grain in the surrounding fields. A windmill then processes the harvested grain into flour or can be used to feed the pigs."
+msgstr "De boer plant en oogst graan in de omliggende graanvelden. Het graan kan in de molen worden verwerkt tot meel, in de brouwerij tot bier en het kan gebruikt worden om varkens en ezels te voeden."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:532
-msgid ""
-"The pack donkeys bred here are used to transport your merchandise more "
-"efficiently. They are reared on water and grain."
-msgstr ""
-"De pakezels die hier worden gefokt worden gebruikt om je goederen "
-"efficiënter te vervoeren. Ze worden gefokt met water en graan."
+msgid "The pack donkeys bred here are used to transport your merchandise more efficiently. They are reared on water and grain."
+msgstr "De pakezels die hier worden gefokt worden gebruikt om je goederen efficiënter te vervoeren. Ze worden gefokt met water en graan."
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:157
 msgid "Boat"
@@ -2345,75 +2174,52 @@ msgstr "Pakezel"
 
 #~ msgid "File was not found!"
 #~ msgstr "Bestand niet gevonden!"
-
 #~ msgid "1024x768"
 #~ msgstr "1024x768"
-
 #~ msgid "1280x1024"
 #~ msgstr "1280x1024"
-
 #~ msgid "1600x1200"
 #~ msgstr "1600x1200"
-
 #~ msgid "640x480"
 #~ msgstr "640x480"
-
 #~ msgid "800x600"
 #~ msgstr "800x600"
-
 #~ msgid "About"
 #~ msgstr "Über Siedler RTTR"
-
 #~ msgid "Airhardt"
 #~ msgstr "Airhardt"
-
 #~ msgid "Cat666"
 #~ msgstr "Cat666"
-
 #~ msgid "Devil"
 #~ msgstr "Devil"
-
 #~ msgid "Divan"
 #~ msgstr "Divan"
-
 #~ msgid "Fenan"
 #~ msgstr "Fenan"
-
 #~ msgid "Florian Doersch (FloSoft)"
 #~ msgstr "Florian Dörsch (FloSoft)"
-
 #~ msgid "Jan Montag"
 #~ msgstr "Jan Montag"
-
 #~ msgid "Jonas Trampe (NastX)"
 #~ msgstr "Jonas Trampe (NastX)"
-
 #~ msgid "Oliver Siebert (OLiver)"
 #~ msgstr "Oliver Siebert (OLiver)"
-
 #~ msgid "Patrick Haak (Demophobie)"
 #~ msgstr "Patrick Haak (Demophobie)"
-
 #~ msgid "Sotham"
 #~ msgstr "Sotham"
-
 #~ msgid "Zwoks-Stef"
 #~ msgstr "Zwoks-Stef"
-
 #~ msgid "continuing game"
 #~ msgstr "Setze Spiel fort"
-
 #~ msgid "liwo"
 #~ msgstr "liwo"
-
 #~ msgid "morlock"
 #~ msgstr "morlock"
-
 #~ msgid "muhahahaha"
 #~ msgstr "muhahahaha"
-
 #~ msgid "pausing game"
 #~ msgstr "Pausiere Spiel"
-
 #~ msgid "° 2005 - 2009 Settlers Freaks"
 #~ msgstr "° 2005 - 2009 Settlers Freaks"
+

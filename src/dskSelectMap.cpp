@@ -1,4 +1,4 @@
-// $Id: dskSelectMap.cpp 5175 2009-07-03 06:53:46Z FloSoft $
+// $Id: dskSelectMap.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -87,7 +87,7 @@ public:
 };
 
 iwPleaseWait::iwPleaseWait()
-: IngameWindow(CGI_PLEASEWAIT, 0xFFFF, 0xFFFF, 300, 60, _("Please wait..."), GetImage(resource_dat, 41),true)
+: IngameWindow(CGI_PLEASEWAIT, 0xFFFF, 0xFFFF, 300, 60, _("Please wait..."), LOADER.GetImageN("resource", 41),true)
 {
 	AddText(0,GetWidth()/2,GetHeight()/2,_("Please wait..."),COLOR_YELLOW,
 		glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_VCENTER,NormalFont);

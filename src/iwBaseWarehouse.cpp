@@ -1,4 +1,4 @@
-// $Id: iwBaseWarehouse.cpp 5148 2009-06-30 21:02:09Z OLiver $
+// $Id: iwBaseWarehouse.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -54,23 +54,23 @@ iwBaseWarehouse::iwBaseWarehouse(GameWorldViewer * const gwv,const char *const t
  : iwWares(wh->CreateGUIID(),0xFFFE, 0xFFFE, 167, 416, title, page_count, true, NormalFont, wh->GetInventory()), gwv(gwv), wh(wh)
 {
 	// Basisinitialisierungsänderungen
-	background = GetImage(resource_dat, 41);
+	background = LOADER.GetImageN("resource", 41);
 
 	// Auswahl für Auslagern/Einlagern Verbieten-Knöpfe
 	ctrlOptionGroup *group = AddOptionGroup(10, ctrlOptionGroup::CHECK);
 	// nix tun
-	group->AddImageButton(0, 16, 335, 32, 32, TC_GREY, GetImage(io_dat, 214), _("do nothing"));
+	group->AddImageButton(0, 16, 335, 32, 32, TC_GREY, LOADER.GetImageN("io", 214), _("do nothing"));
 	// Auslagern
-	group->AddImageButton(1, 52, 335, 32, 32, TC_GREY, GetImage(io_dat, 211), _("Take out of store"));
+	group->AddImageButton(1, 52, 335, 32, 32, TC_GREY, LOADER.GetImageN("io", 211), _("Take out of store"));
 	// Einlagern verbieten
-	group->AddImageButton(2, 86, 335, 32, 32, TC_GREY, GetImage(io_dat, 212), _("Stop storage"));
+	group->AddImageButton(2, 86, 335, 32, 32, TC_GREY, LOADER.GetImageN("io", 212), _("Stop storage"));
 	// nix tun auswählen
 	group->SetSelection(0);
 
 	// Alle auswählen bzw setzen!
-	AddImageButton(11, 122, 335, 32, 32,TC_GREY, GetImage(io_dat, 223), _("Select all"));
+	AddImageButton(11, 122, 335, 32, 32,TC_GREY, LOADER.GetImageN("io", 223), _("Select all"));
 	// "Gehe Zu Ort"
-	AddImageButton(13, 122, 369, 32, 32,TC_GREY, GetImage(io_dat, 107), _("Go to place"));
+	AddImageButton(13, 122, 369, 32, 32,TC_GREY, LOADER.GetImageN("io", 107), _("Go to place"));
 
 	// Ein/Auslager Overlays entsprechend setzen
 	// bei Replays die reellen Einstellungen nehmen, weils die visuellen da logischweise nich gibt!
@@ -103,7 +103,7 @@ iwBaseWarehouse::iwBaseWarehouse(GameWorldViewer * const gwv,const char *const t
 		GetCtrl<ctrlButton>(0)->SetWidth(32);
 		GetCtrl<ctrlButton>(0)->Move(86,369,true);
 
-		AddImageButton(1, 52, 369, 32, 32, TC_GREY, GetImage(io_dat,  23), _("Demolish house"));
+		AddImageButton(1, 52, 369, 32, 32, TC_GREY, LOADER.GetImageN("io",  23), _("Demolish house"));
 	}
 }
 

@@ -1,4 +1,4 @@
-// $Id: ArchivInfo.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: ArchivInfo.h 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -33,6 +33,7 @@ namespace libsiedler2
 		ArchivInfo(void);
 
 		/// Kopierkonstruktor von @p ArchivInfo.
+		ArchivInfo(const ArchivInfo &info);
 		ArchivInfo(const ArchivInfo *info);
 
 		/// Destruktor von @p ArchivInfo, räumt automatisch auf.
@@ -46,6 +47,14 @@ namespace libsiedler2
 
 		/// gibt die angelegten Daten wieder frei.
 		void clear(void);
+
+		/// setzt den Inhalt auf das übergebene ArchivInfo
+		inline void set(const ArchivInfo *info)
+		{
+			alloc(info->count);
+			for(unsigned long i = 0; i < count; ++i)
+				setC(i, info->get(i));
+		}
 
 		/// Setzt den Inhalt eines ArchivItems auf das des Übergebenen.
 		void set(int index, ArchivItem *item);

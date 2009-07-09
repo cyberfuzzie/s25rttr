@@ -1,4 +1,4 @@
-// $Id: iwHQ.cpp 5041 2009-06-13 11:52:29Z OLiver $
+// $Id: iwHQ.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -61,9 +61,9 @@ iwHQ::iwHQ(GameWorldViewer * const gwv,nobHQ *hq)
 		// Rang-Bild
 		reserve->AddImage(6+i,34,107+Y_DISTANCE*i,GetImage(map_lst,  2321+i));
 		// Minus-Button
-		reserve->AddImageButton(11+i,54,95+Y_DISTANCE*i,24,24,TC_RED1,GetImage(io_dat,139),_("Less"));
+		reserve->AddImageButton(11+i,54,95+Y_DISTANCE*i,24,24,TC_RED1,LOADER.GetImageN("io",139),_("Less"));
 		// Plus-Button
-		reserve->AddImageButton(16+i,118,95+Y_DISTANCE*i,24,24,TC_GREEN2,GetImage(io_dat,138),_("More"));
+		reserve->AddImageButton(16+i,118,95+Y_DISTANCE*i,24,24,TC_GREEN2,LOADER.GetImageN("io",138),_("More"));
 		// Anzahl-Text
 		reserve->AddVarText(21+i,100,100+Y_DISTANCE*i,_("%u/%u"),0xFFFFFF00,glArchivItem_Font::DF_CENTER,NormalFont,2,
 			hq->GetReservePointerAvailable(i),hq->GetReservePointerClaimed(i));

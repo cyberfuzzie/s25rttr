@@ -1,4 +1,4 @@
-// $Id: iwChat.cpp 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: iwChat.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -44,7 +44,7 @@ unsigned char iwChat::chat_dest = 0;
  *  @author OLiver
  */
 iwChat::iwChat()
-	: IngameWindow(CGI_CHAT, 0xFFFF, 0xFFFF, 300, 150, _("Chat Window"), GetImage(resource_dat, 41))
+	: IngameWindow(CGI_CHAT, 0xFFFF, 0xFFFF, 300, 150, _("Chat Window"), LOADER.GetImageN("resource", 41))
 {
 	// Eingabefeld für Chattext
 	AddEdit(0, 20, 30, 260, 22, TC_GREY, NormalFont);

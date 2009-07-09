@@ -1,4 +1,4 @@
-// $Id: iwSave.cpp 5201 2009-07-05 19:35:52Z FloSoft $
+// $Id: iwSave.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -62,7 +62,7 @@ const unsigned AUTO_SAVE_INTERVALS[AUTO_SAVE_INTERVALS_COUNT] =
  *  @author OLiver
  */
 iwSaveLoad::iwSaveLoad(const unsigned short add_height, const std::string& window_title)
-: IngameWindow(CGI_SAVE, 0xFFFF, 0xFFFF, 600, 400+add_height, window_title, GetImage(resource_dat, 41))
+: IngameWindow(CGI_SAVE, 0xFFFF, 0xFFFF, 600, 400+add_height, window_title, LOADER.GetImageN("resource", 41))
 {
 	AddTable(0, 20, 30, 560, 300, TC_GREEN2, NormalFont, 5, _("Filename"), 270, _("Map"), 250, _("Time"), 250, _("Start GF"), 320,  "", 0);
 
@@ -197,7 +197,7 @@ void iwSave::SaveLoad()
 iwSave::iwSave() : iwSaveLoad(40,_("Save game!"))
 {
 	AddEdit(1,20,390,510,22,TC_GREEN2,NormalFont);
-	AddImageButton(2,540,386,40,40,TC_GREEN2,GetImage(io_dat, 47));
+	AddImageButton(2,540,386,40,40,TC_GREEN2,LOADER.GetImageN("io", 47));
 
 	// Autospeicherzeug
 	AddText(3,20,350,_("Auto-Save every:"),0xFFFFFF00,0,NormalFont);
@@ -258,7 +258,7 @@ void iwSave::Msg_ComboSelectItem(const unsigned int ctrl_id, const unsigned shor
 iwLoad::iwLoad(const CreateServerInfo& csi) : iwSaveLoad(0,_("Load game!")),  csi(csi)
 {
 	AddEdit(1,20,350,510,22,TC_GREEN2,NormalFont);
-	AddImageButton(2,540,346,40,40,TC_GREEN2,GetImage(io_dat, 48));
+	AddImageButton(2,540,346,40,40,TC_GREEN2,LOADER.GetImageN("io", 48));
 }
 
 ///////////////////////////////////////////////////////////////////////////////

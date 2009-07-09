@@ -1,4 +1,4 @@
-// $Id: iwOptionsWindow.cpp 4809 2009-05-04 20:10:11Z OLiver $
+// $Id: iwOptionsWindow.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -55,12 +55,12 @@
  *  @author OLiver
  */
 iwOptionsWindow::iwOptionsWindow()
-	: IngameWindow(CGI_OPTIONSWINDOW, 0xFFFF, 0xFFFF, 300, 505, _("Game menu"), GetImage(resource_dat, 41))
+	: IngameWindow(CGI_OPTIONSWINDOW, 0xFFFF, 0xFFFF, 300, 505, _("Game menu"), LOADER.GetImageN("resource", 41))
 {
 	
 
 	// Der Soldat oben
-	AddImage(1, 150, 36, GetImage(io_dat, 30));
+	AddImage(1, 150, 36, LOADER.GetImageN("io", 30));
 
 	// Versionszeile
 	AddVarText(2, 150, 76, _("The Settlers II.5 RTTR, v%s-%s"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER | glArchivItem_Font::DF_BOTTOM, NormalFont, 2, GetWindowVersion(), GetWindowRevision());
@@ -68,26 +68,26 @@ iwOptionsWindow::iwOptionsWindow()
 	AddText(3, 150, 96, "° 2005 - 2009 Settlers Freaks", COLOR_YELLOW, glArchivItem_Font::DF_CENTER | glArchivItem_Font::DF_BOTTOM, NormalFont);
 
 	// "Tastaturbelegung"
-	AddImageButton(4, 35, 120, 35, 35,TC_GREEN2, GetImage(io_dat, 79));
+	AddImageButton(4, 35, 120, 35, 35,TC_GREEN2, LOADER.GetImageN("io", 79));
 	AddText(5, 85, 140, _("Keyboard layout"), COLOR_YELLOW, 0 | glArchivItem_Font::DF_BOTTOM, NormalFont);
 
 	// "'Lies mich'-Datei laden"
-	AddImageButton(6, 35, 160, 35, 35, TC_GREEN2, GetImage(io_dat, 79));
+	AddImageButton(6, 35, 160, 35, 35, TC_GREEN2, LOADER.GetImageN("io", 79));
 	AddText(7, 85, 180, _("Load 'ReadMe' file"), COLOR_YELLOW, 0 | glArchivItem_Font::DF_BOTTOM, NormalFont);
 
 	// "Spiel laden!"
-	AddImageButton( 8, 35, 210, 35, 35, TC_GREEN2, GetImage(io_dat, 48));
+	AddImageButton( 8, 35, 210, 35, 35, TC_GREEN2, LOADER.GetImageN("io", 48));
 	AddText(9, 85, 230, _("Load game!"), COLOR_YELLOW, 0 | glArchivItem_Font::DF_BOTTOM, NormalFont);
 
 	// "Spiel speichern!"
-	AddImageButton(10, 35, 250, 35, 35, TC_GREEN2, GetImage(io_dat, 47));
+	AddImageButton(10, 35, 250, 35, 35, TC_GREEN2, LOADER.GetImageN("io", 47));
 	AddText(11, 85, 270, _("Save game!"), COLOR_YELLOW, 0 | glArchivItem_Font::DF_BOTTOM, NormalFont);
 
 	// Geräusche an/aus
-	AddImageButton(12, 35, 300, 35, 35, TC_GREEN2, GetImage(io_dat, 114+!SETTINGS.effekte));
+	AddImageButton(12, 35, 300, 35, 35, TC_GREEN2, LOADER.GetImageN("io", 114+!SETTINGS.effekte));
 
 	// Musik an/aus
-	AddImageButton(13, 35, 340, 35, 35, TC_GREEN2, GetImage(io_dat, 116+!SETTINGS.musik));
+	AddImageButton(13, 35, 340, 35, 35, TC_GREEN2, LOADER.GetImageN("io", 116+!SETTINGS.musik));
 
 	// Geräuschlautstärke
 	AddProgress(14, 100, 306, 160, 22, TC_GREEN2, 139, 138, 10)
@@ -133,7 +133,7 @@ void iwOptionsWindow::Msg_ButtonClick(const unsigned int ctrl_id)
 	case 12: // Geräusche an/aus
 		{
 			SETTINGS.effekte = !SETTINGS.effekte;
-			GetCtrl<ctrlImageButton>(12)->SetImage(GetImage(io_dat, 114+!SETTINGS.effekte));
+			GetCtrl<ctrlImageButton>(12)->SetImage(LOADER.GetImageN("io", 114+!SETTINGS.effekte));
 
 			if(!SETTINGS.effekte)
 				SoundManager::inst().StopAll();
@@ -142,7 +142,7 @@ void iwOptionsWindow::Msg_ButtonClick(const unsigned int ctrl_id)
 	case 13: // Musik an/aus
 		{
 			SETTINGS.musik = !SETTINGS.musik;
-			GetCtrl<ctrlImageButton>(13)->SetImage(GetImage(io_dat, 116+!SETTINGS.musik));
+			GetCtrl<ctrlImageButton>(13)->SetImage(LOADER.GetImageN("io", 116+!SETTINGS.musik));
 			if(SETTINGS.musik)
 				MusicPlayer::inst().StartPlaying();
 			else

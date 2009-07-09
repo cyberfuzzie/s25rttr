@@ -73,7 +73,7 @@ const unsigned short REMAINING_TIME_SPACE = 10;
  */
 iwDiplomacy::iwDiplomacy()
 : IngameWindow(CGI_DIPLOMACY,(unsigned short)-1, (unsigned short)-1, 500, FIRST_LINE_Y+GameClient::inst().GetPlayerCount()*(CELL_HEIGHT+SPACE_HEIGHT)+20, _("Diplomacy"), 
-			   GetImage(resource_dat, 41))
+			   LOADER.GetImageN("resource", 41))
 {
 	// "Header" der Tabelle
 	AddText(0,LINE_DISTANCE_TO_MARGINS+PING_FIELD_POS,HEADER_Y,_("Ping"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
@@ -99,7 +99,7 @@ iwDiplomacy::iwDiplomacy()
 			if(GameClient::inst().GetPlayerID() != i)
 			{
 				// Bündnisvertrag-Button
-				glArchivItem_Bitmap * image = GetImage(io_dat,61);
+				glArchivItem_Bitmap * image = LOADER.GetImageN("io",61);
 				ctrlButton * button = AddImageButton(300+i,LINE_DISTANCE_TO_MARGINS+TREATIES_POS-TREATIE_BUTTON_SPACE/2-(image->getWidth()+8),
 					FIRST_LINE_Y + i*(CELL_HEIGHT+SPACE_HEIGHT) + CELL_HEIGHT/2 - 40/2,40,
 					40,TC_GREY,image,_("Treaty of alliance"));
@@ -108,7 +108,7 @@ iwDiplomacy::iwDiplomacy()
 				AddText(500+i,button->GetX(false)+button->GetWidth()/2,button->GetY(false)+button->GetHeight()+4,"",COLOR_YELLOW,glArchivItem_Font::DF_CENTER,SmallFont);
 
 				// Nichtangriffspakt
-				image = GetImage(io_dat,100);
+				image = LOADER.GetImageN("io",100);
 				button = AddImageButton(400+i,LINE_DISTANCE_TO_MARGINS+TREATIES_POS+TREATIE_BUTTON_SPACE/2,
 					FIRST_LINE_Y + i*(CELL_HEIGHT+SPACE_HEIGHT) + CELL_HEIGHT/2 - 40/2,40,
 					40,TC_GREY,image,_("Non-aggression pact"));
@@ -247,14 +247,14 @@ const char * const DURATION_NAMES[DURATION_COUNT] =
 
 
 iwSuggestPact::iwSuggestPact(const PactType pt, const unsigned char player) : IngameWindow(CGI_SUGGESTPACT,(unsigned short)-1, 
-					(unsigned short)-1,320,215,_(PACT_TITLES[pt]), GetImage(resource_dat, 41)), pt(pt), player(player)
+					(unsigned short)-1,320,215,_(PACT_TITLES[pt]), LOADER.GetImageN("resource", 41)), pt(pt), player(player)
 {
 	glArchivItem_Bitmap * image;
 
 	switch(pt)
 	{
-	case TREATY_OF_ALLIANCE: image = GetImage(io_dat,61); break;
-	case NON_AGGRESSION_PACT: image = GetImage(io_dat,100); break;
+	case TREATY_OF_ALLIANCE: image = LOADER.GetImageN("io",61); break;
+	case NON_AGGRESSION_PACT: image = LOADER.GetImageN("io",100); break;
 	default: image = NULL;
 	}
 

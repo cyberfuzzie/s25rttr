@@ -1,4 +1,4 @@
-// $Id: iwWares.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: iwWares.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -47,7 +47,7 @@ iwWares::iwWares(unsigned int id, unsigned short x , unsigned short y,
 				 const unsigned short width, const unsigned short height,
 				 const std::string& title, unsigned char page_count,
 		bool allow_outhousing, glArchivItem_Font *font, const Goods *inventory)
-	: IngameWindow(id, x, y, width, height, title, GetImage(io_dat, 5)),
+	: IngameWindow(id, x, y, width, height, title, LOADER.GetImageN("io", 5)),
 	inventory(inventory), page(0), page_count(page_count)
 {
 	if(!font)
@@ -133,20 +133,20 @@ iwWares::iwWares(unsigned int id, unsigned short x , unsigned short y,
 
 		// Overlay für "Nicht Einlagern"
 		
-		ctrlImage *image = wares->AddImage(400+INVENTORY_IDS[0][ware_id], (four ? 40 : 26)+x*28, 30+y*42, GetImage(io_dat, 222));
+		ctrlImage *image = wares->AddImage(400+INVENTORY_IDS[0][ware_id], (four ? 40 : 26)+x*28, 30+y*42, LOADER.GetImageN("io", 222));
 		image->SetVisible(false);
 		if(INVENTORY_IDS[1][ware_id] != 0xFFFF)
 		{
-			image = figures->AddImage(400+INVENTORY_IDS[1][ware_id], (four ? 40 : 26)+x*28, 30+y*42, GetImage(io_dat, 222));
+			image = figures->AddImage(400+INVENTORY_IDS[1][ware_id], (four ? 40 : 26)+x*28, 30+y*42, LOADER.GetImageN("io", 222));
 			image->SetVisible(false);
 		}
 
 		// Overlay für "Auslagern"
-		image = wares->AddImage(500+INVENTORY_IDS[0][ware_id], (four ? 40 : 26)+x*28, 44+y*42, GetImage(io_dat, 221));
+		image = wares->AddImage(500+INVENTORY_IDS[0][ware_id], (four ? 40 : 26)+x*28, 44+y*42, LOADER.GetImageN("io", 221));
 		image->SetVisible(false);
 		if(INVENTORY_IDS[1][ware_id] != 0xFFFF)
 		{
-			image = figures->AddImage(500+INVENTORY_IDS[1][ware_id], (four ? 40 : 26)+x*28, 44+y*42, GetImage(io_dat, 221));
+			image = figures->AddImage(500+INVENTORY_IDS[1][ware_id], (four ? 40 : 26)+x*28, 44+y*42, LOADER.GetImageN("io", 221));
 			image->SetVisible(false);
 		}
 
@@ -164,9 +164,9 @@ iwWares::iwWares(unsigned int id, unsigned short x , unsigned short y,
 	figures->SetVisible(false);
 
 	// "Blättern"
-	AddImageButton(0, 52, height-47, 66, 32, TC_GREY, GetImage(io_dat, 84), _("Next page"));
+	AddImageButton(0, 52, height-47, 66, 32, TC_GREY, LOADER.GetImageN("io", 84), _("Next page"));
 	// Hilfe
-	AddImageButton(12,  16, height-47, 32, 32,TC_GREY, GetImage(io_dat, 21), _("Help"));
+	AddImageButton(12,  16, height-47, 32, 32,TC_GREY, LOADER.GetImageN("io", 21), _("Help"));
 }
 
 void iwWares::Msg_ButtonClick(const unsigned int ctrl_id)

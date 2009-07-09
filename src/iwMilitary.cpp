@@ -1,4 +1,4 @@
-// $Id: iwMilitary.cpp 5066 2009-06-18 20:22:24Z OLiver $
+// $Id: iwMilitary.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -42,7 +42,7 @@
  *  @author OLiver
  */
 iwMilitary::iwMilitary(void)
-	: IngameWindow(CGI_MILITARY, 0xFFFE, 0xFFFE, 168, 298, _("Military"), GetImage(io_dat, 5)),
+	: IngameWindow(CGI_MILITARY, 0xFFFE, 0xFFFE, 168, 298, _("Military"), LOADER.GetImageN("io", 5)),
 	settings_changed(false)
 {
 	// Einzelne Balken
@@ -55,8 +55,8 @@ iwMilitary::iwMilitary(void)
 	AddProgress(6,17,217,132,26,TC_GREY,125,126,10,"",4,4,0,_("Border areas"),_("Border areas"));
 
 	// unteren 2 Buttons
-	AddImageButton(7,18,250,30,32,TC_GREY, GetImage(io_dat,21), _("Help"));
-	AddImageButton(8,120,250,30,32,TC_GREY, GetImage(io_dat,191),_("Default"));
+	AddImageButton(7,18,250,30,32,TC_GREY, LOADER.GetImageN("io",21), _("Help"));
+	AddImageButton(8,120,250,30,32,TC_GREY, LOADER.GetImageN("io",191),_("Default"));
 
 	// Absendetimer, in 2s-Abschnitten wird jeweils das ganze als Netzwerknachricht ggf. abgeschickt
 	AddTimer(9,2000);

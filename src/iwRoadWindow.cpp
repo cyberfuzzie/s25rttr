@@ -1,4 +1,4 @@
-// $Id: iwRoadWindow.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: iwRoadWindow.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -44,16 +44,16 @@
  *  @author OLiver
  */
 iwRoadWindow::iwRoadWindow(dskGameInterface *const GameInterface, bool flagpossible, int mouse_x, int mouse_y)
-	: IngameWindow(CGI_ROADWINDOW, mouse_x, mouse_y, 200, 100, _("Activity window"), GetImage(io_dat, 1)),
+	: IngameWindow(CGI_ROADWINDOW, mouse_x, mouse_y, 200, 100, _("Activity window"), LOADER.GetImageN("io", 1)),
 	GameInterface(GameInterface), last_x(mouse_x), last_y(mouse_y)
 {
 	// Bau abbrechen
-	ctrlButton *cancel = AddImageButton(1, 10, 20, 36, 36, TC_GREY, GetImage(io_dat, 110), _("Interrupt road building"));
+	ctrlButton *cancel = AddImageButton(1, 10, 20, 36, 36, TC_GREY, LOADER.GetImageN("io", 110), _("Interrupt road building"));
 
 	if(flagpossible)
 	{
 		// Flagge platzieren
-		AddImageButton(0, 10, 20, 36, 36, TC_GREY, GetImage(io_dat, 70), _("Erect flag"));
+		AddImageButton(0, 10, 20, 36, 36, TC_GREY, LOADER.GetImageN("io", 70), _("Erect flag"));
 		// Abbrechenbutton daneben schieben
 		cancel->Move(46, 20);
 	}

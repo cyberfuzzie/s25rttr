@@ -1,4 +1,4 @@
-// $Id: iwMilitaryBuilding.cpp 5065 2009-06-18 17:25:27Z OLiver $
+// $Id: iwMilitaryBuilding.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -52,7 +52,7 @@
  *  @author OLiver
  */
 iwMilitaryBuilding::iwMilitaryBuilding(GameWorldViewer * const gwv,nobMilitary *const building)
-: IngameWindow(building->CreateGUIID(), (unsigned short)-2, (unsigned short)-2, 226, 194, _(BUILDING_NAMES[building->GetBuildingType()]), GetImage(resource_dat, 41)),
+: IngameWindow(building->CreateGUIID(), (unsigned short)-2, (unsigned short)-2, 226, 194, _(BUILDING_NAMES[building->GetBuildingType()]), LOADER.GetImageN("resource", 41)),
 	building(building), gwv(gwv) 
 {
 	// Schwert
@@ -64,13 +64,13 @@ iwMilitaryBuilding::iwMilitaryBuilding(GameWorldViewer * const gwv,nobMilitary *
 	AddImage(3, 196, 39, GetImage(map_lst, 2250 + GD_SHIELDROMANS));
 
 	// Hilfe
-	AddImageButton(4,  16, 147, 30, 32, TC_GREY, GetImage(io_dat,  21));
+	AddImageButton(4,  16, 147, 30, 32, TC_GREY, LOADER.GetImageN("io",  21));
 	// Abreißen
-	AddImageButton(5,  50, 147, 34, 32, TC_GREY, GetImage(io_dat,  23));
+	AddImageButton(5,  50, 147, 34, 32, TC_GREY, LOADER.GetImageN("io",  23));
 	// Gold an/aus (227,226)
-	AddImageButton(6,  90, 147, 32, 32, TC_GREY, GetImage(io_dat, ((building->IsGoldDisabledVirtual())?226:227)));
+	AddImageButton(6,  90, 147, 32, 32, TC_GREY, LOADER.GetImageN("io", ((building->IsGoldDisabledVirtual())?226:227)));
 	// "Gehe Zu Ort"
-	AddImageButton(7, 179, 147, 30, 32, TC_GREY, GetImage(io_dat, 107), _("Go to place"));
+	AddImageButton(7, 179, 147, 30, 32, TC_GREY, LOADER.GetImageN("io", 107), _("Go to place"));
 
 	// Gebäudebild
 	AddImage(8, 117, 114, GetBobImage(building->GetNation(), 250 + 5*building->GetBuildingType()));
@@ -147,9 +147,9 @@ void iwMilitaryBuilding::Msg_ButtonClick(const unsigned int ctrl_id)
 				GAMECLIENT.AddGC(new gc::StopGold(building->GetX(), building->GetY()));
 				// anderes Bild auf dem Button
 				if(building->IsGoldDisabledVirtual())
-					GetCtrl<ctrlImageButton>(6)->SetImage(GetImage(io_dat, 226));
+					GetCtrl<ctrlImageButton>(6)->SetImage(LOADER.GetImageN("io", 226));
 				else
-					GetCtrl<ctrlImageButton>(6)->SetImage(GetImage(io_dat, 227));
+					GetCtrl<ctrlImageButton>(6)->SetImage(LOADER.GetImageN("io", 227));
 			}
 		} break;
 	case 7: // "Gehe Zu Ort"

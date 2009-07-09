@@ -1,4 +1,4 @@
-// $Id: glArchivItem_Bitmap_Player.cpp 5167 2009-07-02 18:49:25Z FloSoft $
+// $Id: glArchivItem_Bitmap_Player.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -97,11 +97,11 @@ void glArchivItem_Bitmap_Player::GenerateTexture(void)
 	printHelper(buffer, tex_width*2, tex_height, libsiedler2::FORMAT_RGBA, palette, 128, tex_width, 0, 0, 0, 0, 0, true);
 	glTexImage2D(GL_TEXTURE_2D, 0, iformat, tex_width*2, tex_height, 0, dformat, GL_UNSIGNED_BYTE, buffer);
 
-	libsiedler2::ArchivInfo bmp;
+	/*libsiedler2::ArchivInfo bmp;
 	glArchivItem_Bitmap_Player bmpp;
 	bmpp.create(tex_width*2, tex_height, buffer, tex_width*2, tex_height, libsiedler2::FORMAT_RGBA, GetPalette(6), 128);
 	bmp.pushC(&bmpp);
-	libsiedler2::loader::WriteBMP("test.bmp", GetPalette(6), &bmp);
+	libsiedler2::loader::WriteBMP("test.bmp", GetPalette(6), &bmp);*/
 
 	// Playertextur erzeugen
 	/*glBindTexture(GL_TEXTURE_2D, ptexture);

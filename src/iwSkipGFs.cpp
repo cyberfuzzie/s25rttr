@@ -1,4 +1,4 @@
-// $Id: iwSkipGFs.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: iwSkipGFs.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -41,7 +41,7 @@
  *  @author OLiver
  */
 iwSkipGFs::iwSkipGFs(void)
-	: IngameWindow(CGI_SKIPGFS, 0xFFFF, 0xFFFF, 300, 110, _("Skip GameFrames"), GetImage(resource_dat, 41))
+	: IngameWindow(CGI_SKIPGFS, 0xFFFF, 0xFFFF, 300, 110, _("Skip GameFrames"), LOADER.GetImageN("resource", 41))
 {
 	// Text vor Editfeld
 	AddText(0, 50, 36,_("to GameFrame:"), COLOR_YELLOW, 0, NormalFont);

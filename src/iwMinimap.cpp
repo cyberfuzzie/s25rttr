@@ -1,4 +1,4 @@
-// $Id: iwMinimap.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: iwMinimap.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -50,7 +50,7 @@ const unsigned short BUTTON_WINDOW_SPACE = 5;
 
 iwMinimap::iwMinimap(IngameMinimap * minimap, GameWorldViewer& gwv) 
 : IngameWindow(CGI_MINIMAP,0xFFFF,0xFFF,MINIMAP_WINDOW_WIDTH,
-	MINIMAP_WINDOW_HEIGHT,_("Outline map"),GetImage(resource_dat, 41)), extended(false)								   
+	MINIMAP_WINDOW_HEIGHT,_("Outline map"),LOADER.GetImageN("resource", 41)), extended(false)								   
 {
 
 
@@ -59,10 +59,10 @@ iwMinimap::iwMinimap(IngameMinimap * minimap, GameWorldViewer& gwv)
 
 	// Land, Häuser, Straßen an/aus
 	for(unsigned i = 0;i<3;++i)
-		AddImageButton(i+1,10+WINDOW_MAP_SPACE+BUTTON_WIDTH*i,0,BUTTON_WIDTH,BUTTON_HEIGHT,TC_GREY,GetImage(io_dat,85+i));
+		AddImageButton(i+1,10+WINDOW_MAP_SPACE+BUTTON_WIDTH*i,0,BUTTON_WIDTH,BUTTON_HEIGHT,TC_GREY,LOADER.GetImageN("io",85+i));
 
 	// Fenster vergrößern/verkleinern
-	AddImageButton(4,0,0,BUTTON_WIDTH,BUTTON_HEIGHT,TC_GREY,GetImage(io_dat,109));
+	AddImageButton(4,0,0,BUTTON_WIDTH,BUTTON_HEIGHT,TC_GREY,LOADER.GetImageN("io",109));
 
 
 	ChangeWindowSize(width,height);
@@ -100,7 +100,7 @@ void iwMinimap::ChangeWindowSize(const unsigned short width, const unsigned shor
 	GetCtrl<ctrlImageButton>(4)->Move(GetWidth()-10-BUTTON_WIDTH-WINDOW_MAP_SPACE,GetHeight()-10-BUTTON_HEIGHT-BUTTON_WINDOW_SPACE);
 
 	// Bild vom Vergrößern/Verkleinern-Button anpassen
-	GetCtrl<ctrlImageButton>(4)->SetImage(GetImage(io_dat,extended ? 108 : 109));
+	GetCtrl<ctrlImageButton>(4)->SetImage(LOADER.GetImageN("io",extended ? 108 : 109));
 }
 
 void iwMinimap::Msg_ButtonClick(const unsigned ctrl_id)

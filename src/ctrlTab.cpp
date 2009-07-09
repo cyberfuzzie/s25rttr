@@ -1,4 +1,4 @@
-// $Id: ctrlTab.cpp 4830 2009-05-07 18:59:21Z FloSoft $
+// $Id: ctrlTab.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -221,7 +221,7 @@ bool ctrlTab::Draw_(void)
 {
 	DrawControls();
 
-	GetImage(io_dat, 3)->Draw(GetX() + tab_count*36, GetY(), 0, 0, 0, 0, width - tab_count*36, 45);
+	LOADER.GetImageN("io", 3)->Draw(GetX() + tab_count*36, GetY(), 0, 0, 0, 0, width - tab_count*36, 45);
 	
 	Draw3D(GetX(), GetY()+32, width, 13, TC_GREEN1, 0);
 

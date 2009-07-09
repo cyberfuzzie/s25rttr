@@ -52,7 +52,7 @@ iwHarborBuilding::iwHarborBuilding(GameWorldViewer * const gwv,nobHarborBuilding
 	// "Expedition"-Überschrift
 	harbor_page->AddText(0,83,70,_("Expedition"),0xFFFFFF00,glArchivItem_Font::DF_CENTER,NormalFont);
 	// Button zum Expedition starten
-	ctrlImageButton * button = harbor_page->AddImageButton(1,65,100,30,30,TC_GREY,GetImage(io_dat,176),_("Start expedition"));
+	ctrlImageButton * button = harbor_page->AddImageButton(1,65,100,30,30,TC_GREY,LOADER.GetImageN("io",176),_("Start expedition"));
 
 	// Visuelle Rückmeldung, grün einfärben, wenn Expedition gestartet wurde
 	if(static_cast<nobHarborBuilding*>(wh)->IsExpeditionActive())

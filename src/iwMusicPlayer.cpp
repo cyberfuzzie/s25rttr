@@ -1,4 +1,4 @@
-// $Id: iwMusicPlayer.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: iwMusicPlayer.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -38,7 +38,7 @@
 
 iwMusicPlayer::InputWindow::InputWindow(iwMusicPlayer * parent,const unsigned win_id,const std::string& title) 
 : IngameWindow(CGI_INPUTWINDOW,(unsigned short)-2, (unsigned short)-2,
-			   300,100,title,GetImage(resource_dat, 41),true), parent(parent), win_id(win_id)
+			   300,100,title,LOADER.GetImageN("resource", 41),true), parent(parent), win_id(win_id)
 {
 	AddEdit(0,20,30,GetWidth()-40,22,TC_GREEN2,NormalFont);
 	AddTextButton(1,20,60,100,22,TC_GREEN1,_("OK"),NormalFont);
@@ -63,7 +63,7 @@ void iwMusicPlayer::InputWindow::Msg_EditEnter(const unsigned int ctrl_id)
 
 iwMusicPlayer::iwMusicPlayer() 
 : IngameWindow(CGI_MUSICPLAYER,(unsigned short)-1,(unsigned short)-1,430,360,_("Music player"), 
-			   GetImage(resource_dat, 41))
+			   LOADER.GetImageN("resource", 41))
 {
 
 	AddList(0,20,30,330,200,TC_GREEN1,NormalFont);
@@ -79,14 +79,14 @@ iwMusicPlayer::iwMusicPlayer()
 	AddTextButton(6,b2->GetX(false),320,button_width,22,TC_GREEN2,_("Load"),NormalFont);
 
 	// Buttons für die Musikstücke
-	AddImageButton(7,370,30,40,40,TC_GREY,GetImage(io_dat,138),_("Add track"));
-	AddImageButton(8,370,80,40,40,TC_RED1,GetImage(io_dat,220),_("Remove track"));
-	AddImageButton(9,370,130,40,15,TC_GREY,GetImage(io_dat,33),_("Upwards"));
-	AddImageButton(10,370,145,40,15,TC_GREY,GetImage(io_dat,34),_("Downwards"));
+	AddImageButton(7,370,30,40,40,TC_GREY,LOADER.GetImageN("io",138),_("Add track"));
+	AddImageButton(8,370,80,40,40,TC_RED1,LOADER.GetImageN("io",220),_("Remove track"));
+	AddImageButton(9,370,130,40,15,TC_GREY,LOADER.GetImageN("io",33),_("Upwards"));
+	AddImageButton(10,370,145,40,15,TC_GREY,LOADER.GetImageN("io",34),_("Downwards"));
 	AddDeepening(11,370,170,40,20,TC_GREY,"1",NormalFont,COLOR_YELLOW);
-	AddImageButton(12,370,190,20,20,TC_RED1,GetImage(io_dat,139),_("Less repeats"));
-	AddImageButton(13,390,190,20,20,TC_GREY,GetImage(io_dat,138),_("More repeats"));
-	AddImageButton(14,370,220,40,40,TC_GREY,GetImage(io_dat,107),_("Playback in this order")); //225
+	AddImageButton(12,370,190,20,20,TC_RED1,LOADER.GetImageN("io",139),_("Less repeats"));
+	AddImageButton(13,390,190,20,20,TC_GREY,LOADER.GetImageN("io",138),_("More repeats"));
+	AddImageButton(14,370,220,40,40,TC_GREY,LOADER.GetImageN("io",107),_("Playback in this order")); //225
 
 	// Mit Werten füllen
 	MusicPlayer::inst().FillWindow(this);
@@ -252,9 +252,9 @@ void iwMusicPlayer::Msg_ButtonClick(const unsigned int ctrl_id)
 	case 14:
 		{
 			GetCtrl<ctrlImageButton>(14)->SetImage(GetCtrl<ctrlImageButton>(14)->GetButtonImage() == 
-				GetImage(io_dat,107) ? GetImage(io_dat,225) : GetImage(io_dat,107));
+				LOADER.GetImageN("io",107) ? LOADER.GetImageN("io",225) : LOADER.GetImageN("io",107));
 			GetCtrl<ctrlImageButton>(14)->SetTooltip(GetCtrl<ctrlImageButton>(14)->GetButtonImage() == 
-				GetImage(io_dat,107) ? _("Playback in this order") : _("Random playback"));
+				LOADER.GetImageN("io",107) ? _("Playback in this order") : _("Random playback"));
 		} break;
 
 	
@@ -341,7 +341,7 @@ void iwMusicPlayer::SetRepeats(const unsigned repeats)
 void iwMusicPlayer::SetRandomPlayback(const bool random_playback)
 {
 	GetCtrl<ctrlImageButton>(14)->SetImage(
-		random_playback ? GetImage(io_dat,225) : GetImage(io_dat,107));
+		random_playback ? LOADER.GetImageN("io",225) : LOADER.GetImageN("io",107));
 }
 
 void iwMusicPlayer::GetSegments(std::vector<std::string>& segments) const
@@ -359,7 +359,7 @@ unsigned iwMusicPlayer::GetRepeats() const
 bool iwMusicPlayer::GetRandomPlayback() const
 {
 	return !(GetCtrl<ctrlImageButton>(14)->GetButtonImage() == 
-				GetImage(io_dat,107));
+				LOADER.GetImageN("io",107));
 }
 
 

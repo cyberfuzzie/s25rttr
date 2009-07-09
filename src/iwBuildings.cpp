@@ -1,4 +1,4 @@
-// $Id: iwBuildings.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: iwBuildings.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -73,7 +73,7 @@ const unsigned short font_distance_y = 20;
 
 
 /// Konstruktor von @p iwMilitary.
-iwBuildings::iwBuildings() : IngameWindow(CGI_BUILDINGS, 0xFFFE, 0xFFFE, 185, 430, _("Buildings"), GetImage(resource_dat, 41))
+iwBuildings::iwBuildings() : IngameWindow(CGI_BUILDINGS, 0xFFFE, 0xFFFE, 185, 430, _("Buildings"), LOADER.GetImageN("resource", 41))
 {
 	// Symbole für die einzelnen Gebäude erstellen
 	for(unsigned short y = 0;y<8;++y)
@@ -86,7 +86,7 @@ iwBuildings::iwBuildings() : IngameWindow(CGI_BUILDINGS, 0xFFFE, 0xFFFE, 185, 43
 	}
 
 	// Hilfe-Button
-	AddImageButton(32,width-14-30,height-20-32,30,32,TC_GREY, GetImage(io_dat,21), _("Help"));
+	AddImageButton(32,width-14-30,height-20-32,30,32,TC_GREY, LOADER.GetImageN("io",21), _("Help"));
 
 }
 

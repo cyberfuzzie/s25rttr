@@ -1,4 +1,4 @@
-// $Id: iwPostWindow.cpp 5178 2009-07-03 11:55:24Z OLiver $
+// $Id: iwPostWindow.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -45,25 +45,25 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 iwPostWindow::iwPostWindow(GameWorldViewer& gwv) 
-: IngameWindow(CGI_POSTOFFICE, 0xFFFF, 0xFFFF, 254, 295, _("Post office"), GetImage(resource_dat, 41)), gwv(gwv)
+: IngameWindow(CGI_POSTOFFICE, 0xFFFF, 0xFFFF, 254, 295, _("Post office"), LOADER.GetImageN("resource", 41)), gwv(gwv)
 {
-	AddImageButton( 0, 18, 25, 35, 35,TC_GREY,GetImage(io_dat, 190));		// Viewer: 191 - Papier
-	AddImageButton( 1, 56, 25, 35, 35,TC_GREY,GetImage(io_dat, 30));		// Viewer:  31 - Soldat
-	AddImageButton( 2, 91, 25, 35, 35,TC_GREY,GetImage(io_dat, 20));		// Viewer:  21 - Geologe
-	AddImageButton( 3,126, 25, 35, 35,TC_GREY,GetImage(io_dat, 28));		// Viewer:  29 - Wage
-	AddImageButton( 4,161, 25, 35, 35,TC_GREY,GetImage(io_dat, 189));		// Viewer: 190 - Neue Nachricht
-	AddImageButton( 5,199, 25, 35, 35,TC_GREY,GetImage(io_dat, 79));		// Viewer:  80 - Notiz
-	AddImage(  6,126,151, GetImage(io_dat, 228));
-	AddImageButton( 7, 18,242, 30, 35,TC_GREY,GetImage(io_dat, 225));		// Viewer: 226 - Hilfe
-	AddImageButton( 8, 51,246, 30, 26,TC_GREY,GetImage(io_dat, 102));		// Viewer: 103 - Schnell zurück
-	AddImageButton( 9, 81,246, 30, 26,TC_GREY,GetImage(io_dat, 103));		// Viewer: 104 - Zurück
-	AddImageButton(10,111,246, 30, 26,TC_GREY,GetImage(io_dat, 104));		// Viewer: 105 - Vor
-	AddImageButton(11,141,246, 30, 26,TC_GREY,GetImage(io_dat, 105));		// Viewer: 106 - Schnell vor
+	AddImageButton( 0, 18, 25, 35, 35,TC_GREY,LOADER.GetImageN("io", 190));		// Viewer: 191 - Papier
+	AddImageButton( 1, 56, 25, 35, 35,TC_GREY,LOADER.GetImageN("io", 30));		// Viewer:  31 - Soldat
+	AddImageButton( 2, 91, 25, 35, 35,TC_GREY,LOADER.GetImageN("io", 20));		// Viewer:  21 - Geologe
+	AddImageButton( 3,126, 25, 35, 35,TC_GREY,LOADER.GetImageN("io", 28));		// Viewer:  29 - Wage
+	AddImageButton( 4,161, 25, 35, 35,TC_GREY,LOADER.GetImageN("io", 189));		// Viewer: 190 - Neue Nachricht
+	AddImageButton( 5,199, 25, 35, 35,TC_GREY,LOADER.GetImageN("io", 79));		// Viewer:  80 - Notiz
+	AddImage(  6,126,151, LOADER.GetImageN("io", 228));
+	AddImageButton( 7, 18,242, 30, 35,TC_GREY,LOADER.GetImageN("io", 225));		// Viewer: 226 - Hilfe
+	AddImageButton( 8, 51,246, 30, 26,TC_GREY,LOADER.GetImageN("io", 102));		// Viewer: 103 - Schnell zurück
+	AddImageButton( 9, 81,246, 30, 26,TC_GREY,LOADER.GetImageN("io", 103));		// Viewer: 104 - Zurück
+	AddImageButton(10,111,246, 30, 26,TC_GREY,LOADER.GetImageN("io", 104));		// Viewer: 105 - Vor
+	AddImageButton(11,141,246, 30, 26,TC_GREY,LOADER.GetImageN("io", 105));		// Viewer: 106 - Schnell vor
 
 
-	gotoButton = AddImageButton(14,181,246, 30, 26,TC_GREY,GetImage(io_dat, 107));	// Goto, nur sichtbar wenn Nachricht mit Koordinaten da
+	gotoButton = AddImageButton(14,181,246, 30, 26,TC_GREY,LOADER.GetImageN("io", 107));	// Goto, nur sichtbar wenn Nachricht mit Koordinaten da
 	gotoButton->SetVisible(false);
-	deleteButton = AddImageButton(15,211,246, 30, 26,TC_GREY,GetImage(io_dat, 106));	// Mülleimer, nur sichtbar, wenn Nachricht da
+	deleteButton = AddImageButton(15,211,246, 30, 26,TC_GREY,LOADER.GetImageN("io", 106));	// Mülleimer, nur sichtbar, wenn Nachricht da
 	deleteButton->SetVisible(false);
 
 
@@ -71,10 +71,10 @@ iwPostWindow::iwPostWindow(GameWorldViewer& gwv)
 	postMsgInfos = AddText(18, 127, 228, "", MakeColor(255, 188, 100, 88), glArchivItem_Font::DF_CENTER | glArchivItem_Font::DF_BOTTOM, SmallFont);
 	postMsgInfos->SetVisible(false);
 
-	postImage = AddImage(13, 127, 155, GetImage(io_dat, 225));
+	postImage = AddImage(13, 127, 155, LOADER.GetImageN("io", 225));
 
 	// Multiline-Teil mit drei leeren Zeilen erzeugen
-	ctrlMultiline *text = AddMultiline(12, 126, 141, 200, 50, TC_INVISIBLE, GetFont(resource_dat, 0), glArchivItem_Font::DF_CENTER | glArchivItem_Font::DF_BOTTOM);
+	ctrlMultiline *text = AddMultiline(12, 126, 141, 200, 50, TC_INVISIBLE, LOADER.GetFontN("resource", 0), glArchivItem_Font::DF_CENTER | glArchivItem_Font::DF_BOTTOM);
 	text->EnableBox(false);
 	text->AddString("",COLOR_WINDOWBROWN,false);
 	text->AddString("",COLOR_WINDOWBROWN,false);
@@ -82,9 +82,9 @@ iwPostWindow::iwPostWindow(GameWorldViewer& gwv)
 
 	SetMessageText(_("No letters!"));
 
-	acceptButton = AddImageButton(16,87,185, 30, 26,TC_GREEN1,GetImage(io_dat, 32));  // Button mit Haken, zum Annehmen von Verträgen
+	acceptButton = AddImageButton(16,87,185, 30, 26,TC_GREEN1,LOADER.GetImageN("io", 32));  // Button mit Haken, zum Annehmen von Verträgen
 	acceptButton->SetVisible(false);
-	declineButton = AddImageButton(17,137,185, 30, 26,TC_RED1,GetImage(io_dat, 40));  // Button mit Kreuz, zum Ablehnen von Verträgen
+	declineButton = AddImageButton(17,137,185, 30, 26,TC_RED1,LOADER.GetImageN("io", 40));  // Button mit Kreuz, zum Ablehnen von Verträgen
 	declineButton->SetVisible(false);
 
 	currentMessage = 0;
@@ -319,7 +319,7 @@ void iwPostWindow::SetMessageText(const std::string& message)
 
 	glArchivItem_Font::WrapInfo wi;
 
-	GetFont(resource_dat, 0)->GetWrapInfo(message,190,190,wi);
+	LOADER.GetFontN("resource", 0)->GetWrapInfo(message,190,190,wi);
 	std::string *lines = new std::string[wi.count];
 	wi.CreateSingleStrings(message,lines);
 	for(unsigned i = 0; i < 3; ++i)

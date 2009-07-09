@@ -1,4 +1,4 @@
-// $Id: Loader.cpp 5201 2009-07-05 19:35:52Z FloSoft $
+// $Id: Loader.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -101,15 +101,15 @@ bool Loader::LoadFiles(void)
 bool Loader::LoadMenu(void)
 {
 	// resource.dat laden
-	if(!LoadFile(FILE_PATHS[11], GetPalette(0), &resource_dat))
+	if(!LoadFile(FILE_PATHS[11], GetPalette(0)))
 		return false;
 
 	// io.dat laden
-	if(!LoadFile(FILE_PATHS[12], GetPalette(0), &io_dat))
+	if(!LoadFile(FILE_PATHS[12], GetPalette(0)))
 		return false;
 
 	// outline_fonts.lst laden
-	if(!LoadFile(FILE_PATHS[54], GetPalette(0), &outline_fonts_lst))
+	if(!LoadFile(FILE_PATHS[54], GetPalette(0)))
 		return false;
 
 	return true;
@@ -354,6 +354,43 @@ bool Loader::LoadSounds(void)
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
+ *  Lädt eine Datei in ein ArchivInfo in @p files auf Basis des Dateinames.
+ *
+ *  @param[in] pfad    Der Dateipfad
+ *  @param[in] palette (falls benötigt) die Palette.
+ *
+ *  @return @p true bei Erfolg, @p false bei Fehler.
+ *
+ *  @author FloSoft
+ */
+bool Loader::LoadFile(const char *pfad, const libsiedler2::ArchivItem_Palette *palette)
+{
+	libsiedler2::ArchivInfo archiv;
+	if(!LoadFile(pfad, palette, &archiv))
+		return false;
+
+	std::string p = pfad;
+	transform ( p.begin(), p.end(), p.begin(), tolower );
+
+	unsigned int pp = p.find_last_of('.');
+	if(pp != std::string::npos)
+		p = p.substr(0, pp);
+
+	pp = p.find_last_of("/\\");
+	if(pp != std::string::npos)
+		p = p.substr(pp+1);
+
+	// Archiv in Map einfügen
+	files.insert(std::make_pair(p, archiv));
+
+	/// @todo: ggf items nur überschreiben falls eintrag in map schon vorhanden, so könnte man "overrides" implementieren, 
+	/// das man einzelen originalbilder durch eigene dateien überschreibt
+
+	return true;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
  *  Lädt eine Datei in ein ArchivInfo.
  *
  *  @param[in] pfad    Der Dateipfad
@@ -383,7 +420,6 @@ bool Loader::LoadFile(const char *pfad, const libsiedler2::ArchivItem_Palette *p
 
 	return true;
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////
 /**

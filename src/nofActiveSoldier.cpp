@@ -1,4 +1,4 @@
-// $Id: nofActiveSoldier.cpp 4857 2009-05-11 18:31:33Z OLiver $
+// $Id: nofActiveSoldier.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -163,7 +163,7 @@ void nofActiveSoldier::Draw(int x, int y)
 
 	/*char str[255];
 	sprintf(str,"%u",obj_id);
-	GetFont(resource_dat,0)->Draw(x,y,str,0,0xFFFF0000);*/
+	LOADER.GetFontN("resource",0)->Draw(x,y,str,0,0xFFFF0000);*/
 }
 
 void nofActiveSoldier::HandleDerivedEvent(const unsigned int id)

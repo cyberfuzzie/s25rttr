@@ -1,4 +1,4 @@
-// $Id: ctrlComboBox.cpp 4830 2009-05-07 18:59:21Z FloSoft $
+// $Id: ctrlComboBox.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -58,7 +58,7 @@ ctrlComboBox::ctrlComboBox(Window *parent,
 	liste->SetVisible(false);
 
 	if(!readonly)
-		AddImageButton(1, width-height, 0, height, height, tc, GetImage(io_dat, 34));
+		AddImageButton(1, width-height, 0, height, height, tc, LOADER.GetImageN("io", 34));
 }
 
 void ctrlComboBox::Msg_PaintAfter()

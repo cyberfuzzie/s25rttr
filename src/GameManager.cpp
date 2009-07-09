@@ -1,4 +1,4 @@
-// $Id: GameManager.cpp 4817 2009-05-05 19:23:05Z FloSoft $
+// $Id: GameManager.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -169,9 +169,9 @@ bool GameManager::Run()
 	{
 		// Mauszeiger zeichnen
 		if(VideoDriverWrapper::inst().IsLeftDown())
-			GetImage(resource_dat, 31)->Draw(VideoDriverWrapper::inst().GetMouseX(), VideoDriverWrapper::inst().GetMouseY(), 0, 0, 0, 0, 0, 0);
+			LOADER.GetImageN("resource", 31)->Draw(VideoDriverWrapper::inst().GetMouseX(), VideoDriverWrapper::inst().GetMouseY(), 0, 0, 0, 0, 0, 0);
 		else
-			GetImage(resource_dat, 30)->Draw(VideoDriverWrapper::inst().GetMouseX(), VideoDriverWrapper::inst().GetMouseY(), 0, 0, 0, 0, 0, 0);
+			LOADER.GetImageN("resource", 30)->Draw(VideoDriverWrapper::inst().GetMouseX(), VideoDriverWrapper::inst().GetMouseY(), 0, 0, 0, 0, 0, 0);
 	}
 
 	// Framerate berechnen

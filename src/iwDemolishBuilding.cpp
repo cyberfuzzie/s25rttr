@@ -1,4 +1,4 @@
-// $Id: iwDemolishBuilding.cpp 5098 2009-06-24 17:09:39Z FloSoft $
+// $Id: iwDemolishBuilding.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -41,16 +41,16 @@
 
 /// Konstruktor von @p iwBuilding.
 iwDemolishBuilding::iwDemolishBuilding(GameWorldViewer * const gwv,const GO_Type got,const unsigned short building_x, const unsigned short building_y,const BuildingType building, const Nation nation, const unsigned guiid)
-: IngameWindow(guiid,0xFFFE,0xFFFE,200,200,_("Demolish?"),GetImage(resource_dat, 41)), gwv(gwv),  got(got),
+: IngameWindow(guiid,0xFFFE,0xFFFE,200,200,_("Demolish?"),LOADER.GetImageN("resource", 41)), gwv(gwv),  got(got),
 			   building_x(building_x),  building_y(building_y), building(building), nation(nation)
 {
 	
 	// Ja
-	AddImageButton(0,14,140,66,40,TC_RED1,GetImage(io_dat, 32));
+	AddImageButton(0,14,140,66,40,TC_RED1,LOADER.GetImageN("io", 32));
 	// Nein
-	AddImageButton(1,82,140,66,40,TC_GREY,GetImage(io_dat, 40));
+	AddImageButton(1,82,140,66,40,TC_GREY,LOADER.GetImageN("io", 40));
 	// Gehe zum Standort
-	AddImageButton(2,150,140,36,40,TC_GREY,GetImage(io_dat, 107));
+	AddImageButton(2,150,140,36,40,TC_GREY,LOADER.GetImageN("io", 107));
 	// Gebäudebild
 	AddImage(3, 104, 109, GetBobImage(nation, 250+5*building));
 	// Gebäudename

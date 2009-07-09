@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.cpp 5167 2009-07-02 18:49:25Z FloSoft $
+// $Id: dskGameInterface.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -95,16 +95,16 @@ dskGameInterface::dskGameInterface()
 
 	SetScale(false);;
 
-	int barx = (VideoDriverWrapper::inst().GetScreenWidth() - GetImage(resource_dat, 29)->getWidth()) / 2 + 44;
-	int bary = VideoDriverWrapper::inst().GetScreenHeight() - GetImage(resource_dat, 29)->getHeight() + 4;
+	int barx = (VideoDriverWrapper::inst().GetScreenWidth() - LOADER.GetImageN("resource", 29)->getWidth()) / 2 + 44;
+	int bary = VideoDriverWrapper::inst().GetScreenHeight() - LOADER.GetImageN("resource", 29)->getHeight() + 4;
 
-	AddImageButton(0, barx,        bary, 37, 32, TC_GREEN1, GetImage(io_dat,  50), _("Map"))
+	AddImageButton(0, barx,        bary, 37, 32, TC_GREEN1, LOADER.GetImageN("io",  50), _("Map"))
 		->SetBorder(false);
-	AddImageButton(1, barx + 37,   bary, 37, 32, TC_GREEN1, GetImage(io_dat, 192), _("Main selection"))
+	AddImageButton(1, barx + 37,   bary, 37, 32, TC_GREEN1, LOADER.GetImageN("io", 192), _("Main selection"))
 		->SetBorder(false);
-	AddImageButton(2, barx + 37*2, bary, 37, 32, TC_GREEN1, GetImage(io_dat,  83), _("Construction aid mode"))
+	AddImageButton(2, barx + 37*2, bary, 37, 32, TC_GREEN1, LOADER.GetImageN("io",  83), _("Construction aid mode"))
 		->SetBorder(false);
-	AddImageButton(3, barx + 37*3, bary, 37, 32, TC_GREEN1, GetImage(io_dat,  62), _("Post office"))
+	AddImageButton(3, barx + 37*3, bary, 37, 32, TC_GREEN1, LOADER.GetImageN("io",  62), _("Post office"))
 		->SetBorder(false);
 
   AddText(4, barx + 37*3 + 18, bary + 24, "0", COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_VCENTER, SmallFont);
@@ -118,7 +118,7 @@ dskGameInterface::dskGameInterface()
 	GLOBALVARS.ingame = true;
 	gwv->SetGameInterface(this);
 
-	cbb.loadEdges( &Loader::inst().resource_dat );
+	cbb.loadEdges( &LOADER.GetFiles().find("resource")->second );
 	cbb.buildBorder(VideoDriverWrapper::inst().GetScreenWidth(),
 		VideoDriverWrapper::inst().GetScreenHeight(),&borders);
 }
@@ -171,11 +171,11 @@ void dskGameInterface::Msg_PaintBefore()
 	dynamic_cast<glArchivItem_Bitmap*>(borders.get(2))->Draw(0,12); // links
 	dynamic_cast<glArchivItem_Bitmap*>(borders.get(3))->Draw(VideoDriverWrapper::inst().GetScreenWidth()-12,12); // rechts
 
-	GetImage(resource_dat, 17)->Draw(12,12, 0, 0, 0, 0, 0, 0);
-	GetImage(resource_dat, 18)->Draw(VideoDriverWrapper::inst().GetScreenWidth()-12-GetImage(resource_dat, 18)->getWidth(),12, 0, 0, 0, 0, 0, 0);
-	GetImage(resource_dat, 19)->Draw(12,VideoDriverWrapper::inst().GetScreenHeight()-12-GetImage(resource_dat, 19)->getHeight(), 0, 0, 0, 0, 0, 0);
-	GetImage(resource_dat, 20)->Draw(VideoDriverWrapper::inst().GetScreenWidth()-12-GetImage(resource_dat, 20)->getWidth(),VideoDriverWrapper::inst().GetScreenHeight()-12-GetImage(resource_dat, 20)->getHeight(), 0, 0, 0, 0, 0, 0);
-	GetImage(resource_dat, 29)->Draw(VideoDriverWrapper::inst().GetScreenWidth()/2-GetImage(resource_dat, 29)->getWidth()/2,VideoDriverWrapper::inst().GetScreenHeight()-GetImage(resource_dat, 29)->getHeight(), 0, 0, 0, 0, 0, 0);
+	LOADER.GetImageN("resource", 17)->Draw(12,12, 0, 0, 0, 0, 0, 0);
+	LOADER.GetImageN("resource", 18)->Draw(VideoDriverWrapper::inst().GetScreenWidth()-12-LOADER.GetImageN("resource", 18)->getWidth(),12, 0, 0, 0, 0, 0, 0);
+	LOADER.GetImageN("resource", 19)->Draw(12,VideoDriverWrapper::inst().GetScreenHeight()-12-LOADER.GetImageN("resource", 19)->getHeight(), 0, 0, 0, 0, 0, 0);
+	LOADER.GetImageN("resource", 20)->Draw(VideoDriverWrapper::inst().GetScreenWidth()-12-LOADER.GetImageN("resource", 20)->getWidth(),VideoDriverWrapper::inst().GetScreenHeight()-12-LOADER.GetImageN("resource", 20)->getHeight(), 0, 0, 0, 0, 0, 0);
+	LOADER.GetImageN("resource", 29)->Draw(VideoDriverWrapper::inst().GetScreenWidth()/2-LOADER.GetImageN("resource", 29)->getWidth()/2,VideoDriverWrapper::inst().GetScreenHeight()-LOADER.GetImageN("resource", 29)->getHeight(), 0, 0, 0, 0, 0, 0);
 }
 
 void dskGameInterface::Msg_PaintAfter()
@@ -198,18 +198,18 @@ void dskGameInterface::Msg_PaintAfter()
 	if(road.mode != RM_DISABLED)
 	{
 		if(VideoDriverWrapper::inst().IsLeftDown())
-			GetImage(resource_dat, 35)->Draw(VideoDriverWrapper::inst().GetMouseX(),VideoDriverWrapper::inst().GetMouseY(), 0, 0, 0, 0, 0, 0);
+			LOADER.GetImageN("resource", 35)->Draw(VideoDriverWrapper::inst().GetMouseX(),VideoDriverWrapper::inst().GetMouseY(), 0, 0, 0, 0, 0, 0);
 		else
-			GetImage(resource_dat, 34)->Draw(VideoDriverWrapper::inst().GetMouseX(),VideoDriverWrapper::inst().GetMouseY(), 0, 0, 0, 0, 0, 0);
+			LOADER.GetImageN("resource", 34)->Draw(VideoDriverWrapper::inst().GetMouseX(),VideoDriverWrapper::inst().GetMouseY(), 0, 0, 0, 0, 0, 0);
 	}
 	else
 	{
 		if(VideoDriverWrapper::inst().IsLeftDown())
-			GetImage(resource_dat, 31)->Draw(VideoDriverWrapper::inst().GetMouseX(),VideoDriverWrapper::inst().GetMouseY(), 0, 0, 0, 0, 0, 0);
+			LOADER.GetImageN("resource", 31)->Draw(VideoDriverWrapper::inst().GetMouseX(),VideoDriverWrapper::inst().GetMouseY(), 0, 0, 0, 0, 0, 0);
 		else if(VideoDriverWrapper::inst().IsRightDown())
-			GetImage(resource_dat, 32)->Draw(VideoDriverWrapper::inst().GetMouseX(),VideoDriverWrapper::inst().GetMouseY(), 0, 0, 0, 0, 0, 0);
+			LOADER.GetImageN("resource", 32)->Draw(VideoDriverWrapper::inst().GetMouseX(),VideoDriverWrapper::inst().GetMouseY(), 0, 0, 0, 0, 0, 0);
 		else
-			GetImage(resource_dat, 30)->Draw(VideoDriverWrapper::inst().GetMouseX(),VideoDriverWrapper::inst().GetMouseY(), 0, 0, 0, 0, 0, 0);
+			LOADER.GetImageN("resource", 30)->Draw(VideoDriverWrapper::inst().GetMouseX(),VideoDriverWrapper::inst().GetMouseY(), 0, 0, 0, 0, 0, 0);
 	}
 
 	// Laggende Spieler anzeigen in Form von Schnecken
@@ -229,8 +229,8 @@ void dskGameInterface::Msg_PaintAfter()
  */
 bool dskGameInterface::Msg_LeftDown(const MouseCoords& mc)
 {
-	if(Coll(mc.x,mc.y,SETTINGS.width/2-GetImage(resource_dat, 29)->getWidth()/2+44,
-		SETTINGS.height-GetImage(resource_dat, 29)->getHeight()+4,37*4,32*4))
+	if(Coll(mc.x,mc.y,SETTINGS.width/2-LOADER.GetImageN("resource", 29)->getWidth()/2+44,
+		SETTINGS.height-LOADER.GetImageN("resource", 29)->getHeight()+4,37*4,32*4))
 		return false;
 
 	// Unterscheiden je nachdem Straäcnbaumodus an oder aus ist
@@ -989,9 +989,9 @@ void dskGameInterface::UpdatePostIcon(const unsigned postmessages_count)
 {
 	// Taube setzen oder nicht (Post) 
 	if (postmessages_count == 0)
-		GetCtrl<ctrlImageButton>(3)->SetImage(GetImage(io_dat, 62));
+		GetCtrl<ctrlImageButton>(3)->SetImage(LOADER.GetImageN("io", 62));
 	else
-		GetCtrl<ctrlImageButton>(3)->SetImage(GetImage(io_dat, 59));
+		GetCtrl<ctrlImageButton>(3)->SetImage(LOADER.GetImageN("io", 59));
 
 	// und Anzahl der Postnachrichten aktualisieren
 	std::stringstream ss;

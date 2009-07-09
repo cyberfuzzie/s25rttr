@@ -1,4 +1,4 @@
-// $Id: Loader.h 5201 2009-07-05 19:35:52Z FloSoft $
+// $Id: Loader.h 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -58,6 +58,7 @@ protected:
 	inline bool LoadSounds();
 
 private:
+	bool LoadFile(const char *pfad, const libsiedler2::ArchivItem_Palette *palette);
 	bool LoadFile(const char *pfad, const libsiedler2::ArchivItem_Palette *palette, libsiedler2::ArchivInfo *archiv);
 	void ExtractTexture(libsiedler2::ArchivInfo *source, libsiedler2::ArchivInfo *destination, Rect &rect);
 	void ExtractAnimatedTexture(libsiedler2::ArchivInfo *source, libsiedler2::ArchivInfo *destination, Rect &rect, unsigned char color_count, unsigned char start_index);
@@ -65,11 +66,17 @@ private:
 public:
 	static const unsigned int NATION_COUNT = 4;
 
-	libsiedler2::ArchivInfo io_dat;
-	libsiedler2::ArchivInfo resource_dat;
+	glArchivItem_Bitmap *GetImageN(std::string file, unsigned int nr) { return dynamic_cast<glArchivItem_Bitmap*>( files[file].get(nr) ); }
+	glArchivItem_Font *GetFontN(std::string file, unsigned int nr) { return dynamic_cast<glArchivItem_Font*>( files[file].get(nr) ); }
+
+	const std::map<std::string, libsiedler2::ArchivInfo> &GetFiles(void) const { return files; }
+
+private:
+	std::map<std::string, libsiedler2::ArchivInfo> files;
+
+public:
 	libsiedler2::ArchivInfo sound_lst;
 	libsiedler2::ArchivInfo sng_lst;
-	libsiedler2::ArchivInfo outline_fonts_lst;
 	libsiedler2::ArchivInfo rttr_lst;
 
 	libsiedler2::ArchivInfo palettes;

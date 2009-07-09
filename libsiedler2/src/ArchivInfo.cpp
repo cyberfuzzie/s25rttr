@@ -1,4 +1,4 @@
-// $Id: ArchivInfo.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: ArchivInfo.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -74,15 +74,22 @@ libsiedler2::ArchivInfo::ArchivInfo(void)
  *
  *  @author FloSoft
  */
-libsiedler2::ArchivInfo::ArchivInfo(const ArchivInfo *info)
+libsiedler2::ArchivInfo::ArchivInfo(const ArchivInfo &info)	: data(NULL), count(0)
 {
-	data = NULL;
-	count = 0;
+	set(&info);
+}
 
-	alloc(info->count);
-
-	for(unsigned long i = 0; i < count; ++i)
-		setC(i, info->get(i));
+///////////////////////////////////////////////////////////////////////////////
+/** 
+ *  Kopierkonstruktor von @p ArchivInfo.
+ *
+ *  @param[in] info Quellitem
+ *
+ *  @author FloSoft
+ */
+libsiedler2::ArchivInfo::ArchivInfo(const ArchivInfo *info)	: data(NULL), count(0)
+{
+	set(info);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -1,4 +1,4 @@
-// $Id: iwLobbyServerInfo.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: iwLobbyServerInfo.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -70,7 +70,7 @@ void iwLobbyServerInfo::UpdateServerInfo()
  *  @author Devil
  */
 iwLobbyServerInfo::iwLobbyServerInfo(void)
-	: IngameWindow(CGI_LOBBYSERVERINFO, 0xFFFF, 0xFFFF, 260, 260, _("Server Information"), GetImage(resource_dat, 41))
+	: IngameWindow(CGI_LOBBYSERVERINFO, 0xFFFF, 0xFFFF, 260, 260, _("Server Information"), LOADER.GetImageN("resource", 41))
 {
 	AddText(0, 30,  40, _("Map Name:"), COLOR_YELLOW, 0, NormalFont);
 	AddEdit(1, 30,  60, 200, 22, TC_GREEN2, NormalFont, 0, false, true);

@@ -1,4 +1,4 @@
-// $Id: noAnimal.cpp 5148 2009-06-30 21:02:09Z OLiver $
+// $Id: noAnimal.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -106,7 +106,7 @@ void noAnimal::Draw(int x, int y)
 
 	/*char str[255];
 	sprintf(str,"%u",obj_id);
-	GetFont(resource_dat,0)->Draw(x,y,str,0,0xFFFF0000);*/
+	LOADER.GetFontN("resource",0)->Draw(x,y,str,0,0xFFFF0000);*/
 
  	switch(state)
 	{

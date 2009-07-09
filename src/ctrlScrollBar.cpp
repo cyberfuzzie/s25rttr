@@ -1,4 +1,4 @@
-// $Id: ctrlScrollBar.cpp 4793 2009-05-04 15:37:10Z OLiver $
+// $Id: ctrlScrollBar.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -54,8 +54,8 @@ ctrlScrollBar::ctrlScrollBar(Window *parent,
 {
 	visible = false;
 
-	AddImageButton(0, 0, 0, width, button_height, tc, GetImage(io_dat, 33));
-	AddImageButton(1, 0, (height>button_height) ? height - button_height : 1, width, button_height, tc, GetImage(io_dat, 34));
+	AddImageButton(0, 0, 0, width, button_height, tc, LOADER.GetImageN("io", 33));
+	AddImageButton(1, 0, (height>button_height) ? height - button_height : 1, width, button_height, tc, LOADER.GetImageN("io", 34));
 
 	if(height > 2 * button_height)
 		scroll_height = height - 2 * button_height;

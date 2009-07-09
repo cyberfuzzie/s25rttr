@@ -1,4 +1,4 @@
-// $Id: ctrlCheck.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: ctrlCheck.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -94,7 +94,7 @@ bool ctrlCheck::Draw_(void)
 	Draw3D(GetX() + width - distance - box_size, GetY() + distance, box_size, box_size, tc, 2);
 
 	if(check)
-		GetImage(io_dat, 32)->Draw(GetX() + width - distance - box_size/2, GetY() + distance + box_size/2, 0, 0, 0, 0, 0, 0);
+		LOADER.GetImageN("io", 32)->Draw(GetX() + width - distance - box_size/2, GetY() + distance + box_size/2, 0, 0, 0, 0, 0, 0);
 
 	return true;
 }

@@ -1,4 +1,4 @@
-// $Id: Window.cpp 5070 2009-06-19 20:05:10Z OLiver $
+// $Id: Window.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -955,8 +955,8 @@ void Window::Draw3D(const unsigned short x,
 	if(type <= 1)
 	{
 		// Äußerer Rahmen
-		GetImage(io_dat, 12 + tc)->Draw(x, y, width, 2,      0, 0, width, 2);
-		GetImage(io_dat, 12 + tc)->Draw(x, y, 2,     height, 0, 0, 2,     height);
+		LOADER.GetImageN("io", 12 + tc)->Draw(x, y, width, 2,      0, 0, width, 2);
+		LOADER.GetImageN("io", 12 + tc)->Draw(x, y, 2,     height, 0, 0, 2,     height);
 
 		if(illuminated)
 		{
@@ -969,9 +969,9 @@ void Window::Draw3D(const unsigned short x,
 		if(draw_content)
 		{
 			if(type)
-				GetImage(io_dat, tc*2)->Draw(x+2,y+2,width-4,height-4,0, 0, width-4,height-4);
+				LOADER.GetImageN("io", tc*2)->Draw(x+2,y+2,width-4,height-4,0, 0, width-4,height-4);
 			else
-				GetImage(io_dat, tc*2+1)->Draw(x+2,y+2,width-4,height-4,0, 0, width-4,height-4);
+				LOADER.GetImageN("io", tc*2+1)->Draw(x+2,y+2,width-4,height-4,0, 0, width-4,height-4);
 		}
 
 		if(illuminated)
@@ -1010,8 +1010,8 @@ void Window::Draw3D(const unsigned short x,
 	}
 	else
 	{
-		GetImage(io_dat,12+tc)->Draw(x,y+height-2,width,2,0, 0, width,2);
-		GetImage(io_dat,12+tc)->Draw(x+width-2,y, 2,height,0, 0,2,height);
+		LOADER.GetImageN("io",12+tc)->Draw(x,y+height-2,width,2,0, 0, width,2);
+		LOADER.GetImageN("io",12+tc)->Draw(x+width-2,y, 2,height,0, 0,2,height);
 
 		if(illuminated)
 		{
@@ -1020,10 +1020,10 @@ void Window::Draw3D(const unsigned short x,
 			glTexEnvf(GL_TEXTURE_ENV, GL_RGB_SCALE_EXT, 2.0f);
 		}
 
-		GetImage(io_dat,tc*2+1)->Draw(x+2,y+2,width-4,2,0, 0, width-4,2);
-		GetImage(io_dat,tc*2+1)->Draw(x+2,y+2,2,height-4,0, 0, 2,height-4);
+		LOADER.GetImageN("io",tc*2+1)->Draw(x+2,y+2,width-4,2,0, 0, width-4,2);
+		LOADER.GetImageN("io",tc*2+1)->Draw(x+2,y+2,2,height-4,0, 0, 2,height-4);
 
-		GetImage(io_dat,tc*2+1)->Draw(x+4,y+4,width-6,height-6,0, 0, width-6,height-6);
+		LOADER.GetImageN("io",tc*2+1)->Draw(x+4,y+4,width-6,height-6,0, 0, width-6,height-6);
 
 		if(illuminated)
 		{

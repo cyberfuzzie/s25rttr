@@ -1,4 +1,4 @@
-// $Id: iwHelp.cpp 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: iwHelp.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -52,7 +52,7 @@ const unsigned MAX_LINES = 15;
  */
 
 iwHelp::iwHelp(const GUI_ID gui_id, const std::string& title, const std::string& content)
-	: IngameWindow(gui_id, 0xFFFE, 0xFFFE, HELP_WINDOW_WIDTH, 480, title, GetImage(resource_dat, 41))
+	: IngameWindow(gui_id, 0xFFFE, 0xFFFE, HELP_WINDOW_WIDTH, 480, title, LOADER.GetImageN("resource", 41))
 {
 	glArchivItem_Font::WrapInfo wi;
 	NormalFont->GetWrapInfo(content,HELP_WINDOW_WIDTH-28,HELP_WINDOW_WIDTH-28,wi);

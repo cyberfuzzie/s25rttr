@@ -1,4 +1,4 @@
-// $Id: iwBuildOrder.cpp 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: iwBuildOrder.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -42,7 +42,7 @@
  *  @author OLiver
  */
 iwBuildOrder::iwBuildOrder(void)
-	: IngameWindow(CGI_BUILDORDER, (unsigned short)-1, (unsigned short)-1, 320, 300, _("Series sequence"), GetImage(io_dat,5)),
+	: IngameWindow(CGI_BUILDORDER, (unsigned short)-1, (unsigned short)-1, 320, 300, _("Series sequence"), LOADER.GetImageN("io",5)),
 	settings_changed(false)
 {
 	ctrlList *list = AddList(0, 15, 60, 150, 220, TC_GREY, NormalFont);
@@ -53,13 +53,13 @@ iwBuildOrder::iwBuildOrder(void)
 	list->SetSelection(0);
 
 	// Nach ganz oben
-	AddImageButton(1, 250, 194, 48, 20, TC_GREY, GetImage(io_dat, 215), _("Top"));
+	AddImageButton(1, 250, 194, 48, 20, TC_GREY, LOADER.GetImageN("io", 215), _("Top"));
 	// Hoch
-	AddImageButton(2, 250, 216, 48, 20, TC_GREY, GetImage(io_dat,  33), _("Up"));
+	AddImageButton(2, 250, 216, 48, 20, TC_GREY, LOADER.GetImageN("io",  33), _("Up"));
 	// Runter
-	AddImageButton(3, 250, 238, 48, 20, TC_GREY, GetImage(io_dat,  34), _("Down"));
+	AddImageButton(3, 250, 238, 48, 20, TC_GREY, LOADER.GetImageN("io",  34), _("Down"));
 	// Nach ganz unten
-	AddImageButton(4, 250, 260, 48, 20, TC_GREY, GetImage(io_dat, 216), _("Bottom"));
+	AddImageButton(4, 250, 260, 48, 20, TC_GREY, LOADER.GetImageN("io", 216), _("Bottom"));
 
 	// Bild der Auswahl
 	AddImage(5, 240, 150, GetBobImage(GAMECLIENT.GetLocalPlayer()->nation, 250 + GAMECLIENT.visual_settings.build_order[0]*5));
@@ -72,7 +72,7 @@ iwBuildOrder::iwBuildOrder(void)
 	combo->SetSelection(GAMECLIENT.visual_settings.order_type);
 
 	// Standard
-	AddImageButton(10, 200, 250, 48, 30, TC_GREY, GetImage(io_dat, 191), _("Default"));
+	AddImageButton(10, 200, 250, 48, 30, TC_GREY, LOADER.GetImageN("io", 191), _("Default"));
 
 	// Absendetimer, in 2s-Abschnitten wird jeweils das ganze als Netzwerknachricht ggf. abgeschickt
 	AddTimer(11,2000);

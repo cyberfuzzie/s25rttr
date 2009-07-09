@@ -1,4 +1,4 @@
-// $Id: iwTools.cpp 5065 2009-06-18 17:25:27Z OLiver $
+// $Id: iwTools.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -43,7 +43,7 @@
  *  @author OLiver
  */
 iwTools::iwTools(void)
-	: IngameWindow(CGI_TOOLS, 0xFFFE, 0xFFFE, 166, 432, _("Tools"), GetImage(io_dat, 5)),
+	: IngameWindow(CGI_TOOLS, 0xFFFE, 0xFFFE, 166, 432, _("Tools"), LOADER.GetImageN("io", 5)),
 	settings_changed(false)
 {
 	// Einzelne Balken
@@ -61,9 +61,9 @@ iwTools::iwTools(void)
 	AddProgress(11, 17, 333, 132, 26, TC_GREY, 163, 162, 5, _("Bow"), 4,4, 0, _("Less often"), _("More often"));
 
 	// Info
-	AddImageButton(12,  18, 384, 30, 32, TC_GREY, GetImage(io_dat,  21), _("Help"));
+	AddImageButton(12,  18, 384, 30, 32, TC_GREY, LOADER.GetImageN("io",  21), _("Help"));
 	// Standard
-	AddImageButton(13, 118, 384, 30, 32, TC_GREY, GetImage(io_dat, 191), _("Default"));
+	AddImageButton(13, 118, 384, 30, 32, TC_GREY, LOADER.GetImageN("io", 191), _("Default"));
 
 	// Einstellungen festlegen
 	for(unsigned char i = 0; i < 12; ++i)

@@ -1,4 +1,4 @@
-// $Id: iwEndgame.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: iwEndgame.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -45,14 +45,14 @@
  *  @author OLiver
  */
 iwEndgame::iwEndgame(void)
-	: IngameWindow(CGI_ENDGAME, 0xFFFF, 0xFFFF, 240, 100, _("End game?"), GetImage(resource_dat, 41))
+	: IngameWindow(CGI_ENDGAME, 0xFFFF, 0xFFFF, 240, 100, _("End game?"), LOADER.GetImageN("resource", 41))
 {
 	// Ok
-	AddImageButton(0,  16, 24, 71, 57, TC_GREEN2, GetImage(io_dat, 32));
+	AddImageButton(0,  16, 24, 71, 57, TC_GREEN2, LOADER.GetImageN("io", 32));
 	// Abbrechen
-	AddImageButton(1,  88, 24, 71, 57, TC_RED1, GetImage(io_dat, 40));
+	AddImageButton(1,  88, 24, 71, 57, TC_RED1, LOADER.GetImageN("io", 40));
 	// Ok + Speichern
-	AddImageButton(2, 160, 24, 65, 57, TC_GREY, GetImage(io_dat, 47));
+	AddImageButton(2, 160, 24, 65, 57, TC_GREY, LOADER.GetImageN("io", 47));
 }
 
 

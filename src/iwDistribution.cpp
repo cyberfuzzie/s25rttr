@@ -1,4 +1,4 @@
-// $Id: iwDistribution.cpp 5153 2009-07-01 13:31:56Z Demophobie $
+// $Id: iwDistribution.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -51,7 +51,7 @@ const unsigned GROUP_SIZES[6] =
  *  @author OLiver
  */
 iwDistribution::iwDistribution(void)
-	: IngameWindow(CGI_DISTRIBUTION, 0xFFFF, 0xFFFF, 260, 272, _("Distribution of goods"), GetImage(resource_dat, 41)),
+	: IngameWindow(CGI_DISTRIBUTION, 0xFFFF, 0xFFFF, 260, 272, _("Distribution of goods"), LOADER.GetImageN("resource", 41)),
 	settings_changed(false)
 {
 	ctrlGroup *group;
@@ -64,7 +64,7 @@ iwDistribution::iwDistribution(void)
 	ctrlTab *tab = AddTabCtrl(0, 10, 20, 240);
 	
 	// Nahrungsgruppe
-	group = tab->AddTab(GetImage(io_dat, 80), _("Foodstuff"), TAB_FOOD);
+	group = tab->AddTab(LOADER.GetImageN("io", 80), _("Foodstuff"), TAB_FOOD);
 	// Granitbergwerk
 	group->AddText(11, 120,  60, _("Granite mine"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
 	progress = group->AddProgress(12, 20,  60, 200, 20, TC_GREY, 139, 138, 10);
@@ -79,7 +79,7 @@ iwDistribution::iwDistribution(void)
 	progress = group->AddProgress(18, 20, 180, 200, 20, TC_GREY, 139, 138, 10);
 
 	// Getreidegruppe
-	group = tab->AddTab(GetImage(io_dat, 90), _("Grain"), TAB_CORN);
+	group = tab->AddTab(LOADER.GetImageN("io", 90), _("Grain"), TAB_CORN);
 
 	// Mühle
 	group->AddText(21, 120,  60, _("Mill"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
@@ -95,7 +95,7 @@ iwDistribution::iwDistribution(void)
 	progress = group->AddProgress(28, 20, 180, 200, 20, TC_GREY, 139, 138, 10);
 
 	// Eisengruppe
-	group = tab->AddTab(GetImage(io_dat, 81), _("Iron"), TAB_IRON);
+	group = tab->AddTab(LOADER.GetImageN("io", 81), _("Iron"), TAB_IRON);
 
 	// Schmiede
 	group->AddText(31, 120,  60, _("Armory"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
@@ -105,7 +105,7 @@ iwDistribution::iwDistribution(void)
 	progress = group->AddProgress(34, 20, 100, 200, 20, TC_GREY, 139, 138, 10);
 
 	// Kohlegruppe
-	group = tab->AddTab(GetImage(io_dat, 91), _("Coal"), TAB_COAL);
+	group = tab->AddTab(LOADER.GetImageN("io", 91), _("Coal"), TAB_COAL);
 
 	// Schmiede
 	group->AddText(41, 120,  60, _("Armory"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
@@ -118,7 +118,7 @@ iwDistribution::iwDistribution(void)
 	progress = group->AddProgress(46, 20, 140, 200, 20, TC_GREY, 139, 138, 10);
 
 	// Brettergruppe
-	group = tab->AddTab(GetImage(io_dat, 82), _("Boards"), TAB_BOARD);
+	group = tab->AddTab(LOADER.GetImageN("io", 82), _("Boards"), TAB_BOARD);
 
 	// Baustellen
 	group->AddText(51, 120,  60, _("Construction"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
@@ -130,7 +130,7 @@ iwDistribution::iwDistribution(void)
 	group->AddText(55, 120, 140, _("Shipyard"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
 	progress = group->AddProgress(56, 20, 140, 200, 20, TC_GREY, 139, 138, 10);
 	// Wasserbüffel äh -gruppe ;-)
-	group = tab->AddTab(GetImage(io_dat, 92), _("Water"), TAB_WATER);
+	group = tab->AddTab(LOADER.GetImageN("io", 92), _("Water"), TAB_WATER);
 
 	// Bäckerei
 	group->AddText(61, 120,  60, _("Bakery"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
@@ -155,9 +155,9 @@ iwDistribution::iwDistribution(void)
 
 
 	// Hilfe
-	AddImageButton(2, 15, height-15-32, 32, 32,TC_GREY, GetImage(io_dat, 21), _("Help"));
+	AddImageButton(2, 15, height-15-32, 32, 32,TC_GREY, LOADER.GetImageN("io", 21), _("Help"));
 	// Standardbelegung
-	AddImageButton(10, width-15-32, height-15-32, 32, 32, TC_GREY, GetImage(io_dat, 191), _("Default"));
+	AddImageButton(10, width-15-32, height-15-32, 32, 32, TC_GREY, LOADER.GetImageN("io", 191), _("Default"));
 
 }
 

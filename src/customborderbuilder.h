@@ -1,4 +1,4 @@
-// $Id: customborderbuilder.h 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: customborderbuilder.h 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -28,7 +28,7 @@ class CustomBorderBuilder
 public:
 	CustomBorderBuilder(const libsiedler2::ArchivItem_Palette * const palette);
 	~CustomBorderBuilder();
-	int loadEdges(libsiedler2::ArchivInfo* archiveInfo);
+	int loadEdges(const libsiedler2::ArchivInfo* archiveInfo);
 	int buildBorder(const unsigned int width, const unsigned int height, libsiedler2::ArchivInfo* borderInfo);
 	const libsiedler2::ArchivItem_Palette* palette;
 
@@ -50,7 +50,7 @@ private:
 		unsigned char *value;
 	};
 
-	void BitmapRLE2BdrBitmap(glArchivItem_Bitmap_RLE* bitmapRLE, BdrBitmap* bdrBitmap);
+	void BitmapRLE2BdrBitmap(const glArchivItem_Bitmap_RLE* bitmapRLE, BdrBitmap* bdrBitmap);
 	void BdrBitmap2BitmapRLE2(BdrBitmap* bdrBitmap, glArchivItem_Bitmap_RLE* bitmapRLE);
 
 	void FindEdgeDistribution(unsigned int toFill, unsigned short lengths[3], unsigned char (counts)[3]);

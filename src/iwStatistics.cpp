@@ -43,7 +43,7 @@
  *  @author jh
  */
 iwStatistics::iwStatistics()
-	: IngameWindow(CGI_STATISTICS, 0xFFFE, 0xFFFE, 252, 336, _("Statistics"), GetImage(resource_dat, 41))
+	: IngameWindow(CGI_STATISTICS, 0xFFFE, 0xFFFE, 252, 336, _("Statistics"), LOADER.GetImageN("resource", 41))
 {
   activePlayers = std::vector<bool>(7);
 
@@ -69,13 +69,13 @@ iwStatistics::iwStatistics()
     }
     switch(GameClient::inst().GetPlayer(i)->nation)
     {
-    case NAT_AFRICANS: AddImageButton(1+i, startX + pos * 34 - 17, 45-23, 34, 47, TC_GREEN1, GetImage(io_dat, 257), GameClient::inst().GetPlayer(i)->name)->SetBorder(false);
+    case NAT_AFRICANS: AddImageButton(1+i, startX + pos * 34 - 17, 45-23, 34, 47, TC_GREEN1, LOADER.GetImageN("io", 257), GameClient::inst().GetPlayer(i)->name)->SetBorder(false);
       break;
-    case NAT_JAPANESES: AddImageButton(1+i, startX + pos * 34 - 17, 45-23, 34, 47, TC_GREEN1, GetImage(io_dat, 253), GameClient::inst().GetPlayer(i)->name)->SetBorder(false);
+    case NAT_JAPANESES: AddImageButton(1+i, startX + pos * 34 - 17, 45-23, 34, 47, TC_GREEN1, LOADER.GetImageN("io", 253), GameClient::inst().GetPlayer(i)->name)->SetBorder(false);
       break;
-    case NAT_ROMANS: AddImageButton(1+i, startX + pos * 34 - 17, 45-23, 34, 47, TC_GREEN1, GetImage(io_dat, 252), GameClient::inst().GetPlayer(i)->name)->SetBorder(false);
+    case NAT_ROMANS: AddImageButton(1+i, startX + pos * 34 - 17, 45-23, 34, 47, TC_GREEN1, LOADER.GetImageN("io", 252), GameClient::inst().GetPlayer(i)->name)->SetBorder(false);
       break;
-    case NAT_VIKINGS: AddImageButton(1+i, startX + pos * 34 - 17, 45-23, 34, 47, TC_GREEN1, GetImage(io_dat, 256), GameClient::inst().GetPlayer(i)->name)->SetBorder(false);
+    case NAT_VIKINGS: AddImageButton(1+i, startX + pos * 34 - 17, 45-23, 34, 47, TC_GREEN1, LOADER.GetImageN("io", 256), GameClient::inst().GetPlayer(i)->name)->SetBorder(false);
       break;
     case NAT_INVALID:
       break;
@@ -86,18 +86,18 @@ iwStatistics::iwStatistics()
   }
 
   // Statistikfeld
-  AddImage(10, 11+115, 84+81, GetImage(io_dat, 228));
+  AddImage(10, 11+115, 84+81, LOADER.GetImageN("io", 228));
 
   // Die Buttons zum Wechseln der Statistiken
   ctrlOptionGroup *statChanger = AddOptionGroup(19, ctrlOptionGroup::ILLUMINATE);
-  statChanger->AddImageButton(11, 18, 250, 26, 30, TC_GREY, GetImage(io_dat, 167), _("Size of country"));
-  statChanger->AddImageButton(12, 45, 250, 26, 30, TC_GREY, GetImage(io_dat, 168), _("Buildings"));
-  statChanger->AddImageButton(13, 72, 250, 26, 30, TC_GREY, GetImage(io_dat, 169), _("Inhabitants"));
-  statChanger->AddImageButton(14, 99, 250, 26, 30, TC_GREY, GetImage(io_dat, 170), _("Merchandise"));
-  statChanger->AddImageButton(15, 126, 250, 26, 30, TC_GREY, GetImage(io_dat, 171), _("Military strength"));
-  statChanger->AddImageButton(16, 153, 250, 26, 30, TC_GREY, GetImage(io_dat, 172), _("Gold"));
-  statChanger->AddImageButton(17, 180, 250, 26, 30, TC_GREY, GetImage(io_dat, 173), _("Productivity"));
-  statChanger->AddImageButton(18, 207, 250, 26, 30, TC_GREY, GetImage(io_dat, 217), _("Vanquished enemies"));
+  statChanger->AddImageButton(11, 18, 250, 26, 30, TC_GREY, LOADER.GetImageN("io", 167), _("Size of country"));
+  statChanger->AddImageButton(12, 45, 250, 26, 30, TC_GREY, LOADER.GetImageN("io", 168), _("Buildings"));
+  statChanger->AddImageButton(13, 72, 250, 26, 30, TC_GREY, LOADER.GetImageN("io", 169), _("Inhabitants"));
+  statChanger->AddImageButton(14, 99, 250, 26, 30, TC_GREY, LOADER.GetImageN("io", 170), _("Merchandise"));
+  statChanger->AddImageButton(15, 126, 250, 26, 30, TC_GREY, LOADER.GetImageN("io", 171), _("Military strength"));
+  statChanger->AddImageButton(16, 153, 250, 26, 30, TC_GREY, LOADER.GetImageN("io", 172), _("Gold"));
+  statChanger->AddImageButton(17, 180, 250, 26, 30, TC_GREY, LOADER.GetImageN("io", 173), _("Productivity"));
+  statChanger->AddImageButton(18, 207, 250, 26, 30, TC_GREY, LOADER.GetImageN("io", 217), _("Vanquished enemies"));
 
   // Zeit-Buttons
   ctrlOptionGroup *timeChanger = AddOptionGroup(20, ctrlOptionGroup::ILLUMINATE);
@@ -107,22 +107,22 @@ iwStatistics::iwStatistics()
   timeChanger->AddTextButton(24, 186, 288, 43, 28, TC_GREY, _("16 h"), NormalFont);
 
   // Hilfe-Button
-  AddImageButton(25, 18, 288, 30, 32, TC_GREY, GetImage(io_dat,21), _("Help"));
+  AddImageButton(25, 18, 288, 30, 32, TC_GREY, LOADER.GetImageN("io",21), _("Help"));
 
   // Aktuelle Überschrift über der Statistik
   headline = AddText(30, 130, 120, _("Size of country"), MakeColor(255,136,96,52), 
-    glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, GetFont(resource_dat, 0));
+    glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, LOADER.GetFontN("resource", 0));
 
   // Aktueller Maximalwert an der y-Achse
   maxValue = AddText(31, 211, 125, "1", MakeColor(255,136,96,52), 
-    glArchivItem_Font::DF_RIGHT|glArchivItem_Font::DF_VCENTER, GetFont(resource_dat, 0));
+    glArchivItem_Font::DF_RIGHT|glArchivItem_Font::DF_VCENTER, LOADER.GetFontN("resource", 0));
 
   // Zeit-Werte an der x-Achse
   timeAnnotations = std::vector<ctrlText*>(7); // TODO nach oben
   for (unsigned i=0; i<7; ++i)
   {
     timeAnnotations[i] = AddText(32+i, 211+i, 125+i, "", MakeColor(255,136,96,52), 
-      glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_TOP, GetFont(resource_dat, 0));
+      glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_TOP, LOADER.GetFontN("resource", 0));
   }
 
   // Standardansicht: 15min / Landesgröße

@@ -1,4 +1,4 @@
-// $Id: iwMainMenu.cpp 4996 2009-06-03 19:01:25Z OLiver $
+// $Id: iwMainMenu.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -52,39 +52,39 @@
  *  @author OLiver
 */
 iwMainMenu::iwMainMenu(void)
-	: IngameWindow(CGI_MAINSELECTION, 0xFFFF, 0xFFFF, 190, 286, _("Main selection"), GetImage(io_dat, 5))
+	: IngameWindow(CGI_MAINSELECTION, 0xFFFF, 0xFFFF, 190, 286, _("Main selection"), LOADER.GetImageN("io", 5))
 {
 	// Verteilung
-	AddImageButton( 0,  12,  22,  53, 44, TC_GREY, GetImage(io_dat, 134), _("Distribution of goods"));
+	AddImageButton( 0,  12,  22,  53, 44, TC_GREY, LOADER.GetImageN("io", 134), _("Distribution of goods"));
 	// Transport
-	AddImageButton( 1,  68,  22,  53, 44, TC_GREY, GetImage(io_dat, 198), _("Transport"));
+	AddImageButton( 1,  68,  22,  53, 44, TC_GREY, LOADER.GetImageN("io", 198), _("Transport"));
 	// Werkzeugproduktion
-	AddImageButton( 2, 124,  22,  53, 44, TC_GREY, GetImage(io_dat, 137), _("Tools"));
+	AddImageButton( 2, 124,  22,  53, 44, TC_GREY, LOADER.GetImageN("io", 137), _("Tools"));
 
 	// Statistiken
-	AddImageButton( 3,  12,  70,  39, 44, TC_GREY, GetImage(io_dat, 166), _("General statistics"));
-	AddImageButton( 4,  54,  70,  39, 44, TC_GREY, GetImage(io_dat, 135), _("Merchandise statistics"));
-	AddImageButton( 5,  96,  70,  39, 44, TC_GREY, GetImage(io_dat, 132), _("Buildings"));
+	AddImageButton( 3,  12,  70,  39, 44, TC_GREY, LOADER.GetImageN("io", 166), _("General statistics"));
+	AddImageButton( 4,  54,  70,  39, 44, TC_GREY, LOADER.GetImageN("io", 135), _("Merchandise statistics"));
+	AddImageButton( 5,  96,  70,  39, 44, TC_GREY, LOADER.GetImageN("io", 132), _("Buildings"));
 
 	// Inventur
-	AddImageButton( 6, 138,  70,  39, 44, TC_GREY, GetImage(io_dat, 214), _("Stock"));
+	AddImageButton( 6, 138,  70,  39, 44, TC_GREY, LOADER.GetImageN("io", 214), _("Stock"));
 
 	// Gebäude
-	AddImageButton( 7,  12, 118,  53, 44, TC_GREY, GetImage(io_dat, 136), _("Productivity"));
+	AddImageButton( 7,  12, 118,  53, 44, TC_GREY, LOADER.GetImageN("io", 136), _("Productivity"));
 	// Militär
-	AddImageButton( 8,  68, 118,  53, 44, TC_GREY, GetImage(io_dat, 133), _("Military"));
+	AddImageButton( 8,  68, 118,  53, 44, TC_GREY, LOADER.GetImageN("io", 133), _("Military"));
 	// Schiffe
-	AddImageButton( 9, 124, 118,  53, 44, TC_GREY, GetImage(io_dat, 175), _("Ship register"));
+	AddImageButton( 9, 124, 118,  53, 44, TC_GREY, LOADER.GetImageN("io", 175), _("Ship register"));
 
 	// Gebäude
-	AddImageButton( 10,  12, 166,  53, 44, TC_GREY, GetImage(io_dat, 24), _("Series sequence"));
+	AddImageButton( 10,  12, 166,  53, 44, TC_GREY, LOADER.GetImageN("io", 24), _("Series sequence"));
 	// Diplomatie (todo: besseres Bild suchen)
-	AddImageButton( 11,  68, 166,  53, 44, TC_GREY, GetImage(io_dat, 190), _("Diplomacy"));
+	AddImageButton( 11,  68, 166,  53, 44, TC_GREY, LOADER.GetImageN("io", 190), _("Diplomacy"));
 	//// Schiffe
-	//AddImageButton( 9, 124, 118,  53, 44, TC_GREY, GetImage(io_dat, 175), _("Ship register"));
+	//AddImageButton( 9, 124, 118,  53, 44, TC_GREY, LOADER.GetImageN("io", 175), _("Ship register"));
 
 	// Optionen
-	AddImageButton(30,  12, 231, 165, 32, TC_GREY, GetImage(io_dat,  37), _("Options"));
+	AddImageButton(30,  12, 231, 165, 32, TC_GREY, LOADER.GetImageN("io",  37), _("Options"));
 }
 
 

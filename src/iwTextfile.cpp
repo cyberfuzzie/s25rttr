@@ -1,4 +1,4 @@
-// $Id: iwTextfile.cpp 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: iwTextfile.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -51,7 +51,7 @@
  *  @author OLiver
  */
 iwTextfile::iwTextfile(const std::string& filename, const std::string& title)
-	: IngameWindow(CGI_README, 0xFFFF, 0xFFFF, 640, 480, title, GetImage(resource_dat, 41))
+	: IngameWindow(CGI_README, 0xFFFF, 0xFFFF, 640, 480, title, LOADER.GetImageN("resource", 41))
 {
 	// Pfad mit gewählter Sprache auswählen
 	std::string path = FILE_PATHS[88] + Settings::inst().language + "/" + filename;

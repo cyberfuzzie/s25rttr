@@ -1,4 +1,4 @@
-// $Id: iwLobbyConnect.cpp 4713 2009-04-25 16:53:04Z OLiver $
+// $Id: iwLobbyConnect.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -46,7 +46,7 @@
  *  @author FloSoft
  */
 iwLobbyConnect::iwLobbyConnect(void)
-	: IngameWindow(CGI_LOBBYCONNECT, 0xFFFF, 0xFFFF, 500, 230, _("Connecting to Lobby"), GetImage(resource_dat, 41))
+	: IngameWindow(CGI_LOBBYCONNECT, 0xFFFF, 0xFFFF, 500, 230, _("Connecting to Lobby"), LOADER.GetImageN("resource", 41))
 {
 	// Benutzername
 	AddText(0,  20, 40, _("Username:"), COLOR_YELLOW, 0, NormalFont);

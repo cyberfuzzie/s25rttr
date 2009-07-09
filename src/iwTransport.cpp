@@ -1,4 +1,4 @@
-// $Id: iwTransport.cpp 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: iwTransport.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -79,28 +79,28 @@ const std::string TOOLTIPS[14] =
  *  @author OLiver
  */
 iwTransport::iwTransport()
-	: IngameWindow(CGI_TRANSPORT, 0xFFFF, 0xFFFF, 166, 333, _("Transport"), GetImage(io_dat, 5)),
+	: IngameWindow(CGI_TRANSPORT, 0xFFFF, 0xFFFF, 166, 333, _("Transport"), LOADER.GetImageN("io", 5)),
 	settings_changed(false)
 {
-	AddImageButton(0, 18, 285, 30, 30, TC_GREY, GetImage(io_dat,  21), _("Help"));
+	AddImageButton(0, 18, 285, 30, 30, TC_GREY, LOADER.GetImageN("io",  21), _("Help"));
 
 	// Standard
-	AddImageButton(1, 60, 285, 48, 30, TC_GREY, GetImage(io_dat, 191), _("Default"));
+	AddImageButton(1, 60, 285, 48, 30, TC_GREY, LOADER.GetImageN("io", 191), _("Default"));
 	// ganz hoch
-	AddImageButton(2, 118, 235, 30, 20, TC_GREY, GetImage(io_dat, 215), _("Top"));
+	AddImageButton(2, 118, 235, 30, 20, TC_GREY, LOADER.GetImageN("io", 215), _("Top"));
 	// hoch
-	AddImageButton(3, 118, 255, 30, 20, TC_GREY, GetImage(io_dat,  33), _("Up"));
+	AddImageButton(3, 118, 255, 30, 20, TC_GREY, LOADER.GetImageN("io",  33), _("Up"));
 	// runter
-	AddImageButton(4, 118, 275, 30, 20, TC_GREY, GetImage(io_dat,  34), _("Down"));
+	AddImageButton(4, 118, 275, 30, 20, TC_GREY, LOADER.GetImageN("io",  34), _("Down"));
 	// ganz runter
-	AddImageButton(5, 118, 295, 30, 20, TC_GREY, GetImage(io_dat, 216), _("Bottom"));
+	AddImageButton(5, 118, 295, 30, 20, TC_GREY, LOADER.GetImageN("io", 216), _("Bottom"));
 
 	// Buttons der einzelnen Waren anlegen
 	ctrlOptionGroup *group = AddOptionGroup(6, ctrlOptionGroup::ILLUMINATE);
 
 	// Zeiger auf die Bilder für die einzelnen Waren in der Transportschlange
 	TRANSPORT_SPRITES[0] = GetImage(map_lst, 2250+GD_COINS);
-	TRANSPORT_SPRITES[1] = GetImage(io_dat,111);
+	TRANSPORT_SPRITES[1] = LOADER.GetImageN("io",111);
 	TRANSPORT_SPRITES[2] = GetImage(map_lst, 2250+GD_BEER);
 	TRANSPORT_SPRITES[3] = GetImage(map_lst, 2250+GD_IRON);
 	TRANSPORT_SPRITES[4] = GetImage(map_lst, 2250+GD_GOLD);
@@ -110,7 +110,7 @@ iwTransport::iwTransport()
 	TRANSPORT_SPRITES[8] = GetImage(map_lst, 2250+GD_STONES);
 	TRANSPORT_SPRITES[9] = GetImage(map_lst, 2250+GD_WOOD);
 	TRANSPORT_SPRITES[10] = GetImage(map_lst, 2250+GD_WATER);
-	TRANSPORT_SPRITES[11] = GetImage(io_dat,80);
+	TRANSPORT_SPRITES[11] = LOADER.GetImageN("io",80);
 	TRANSPORT_SPRITES[12] = GetImage(map_lst, 2250+GD_HAMMER);
 	TRANSPORT_SPRITES[13] = GetImage(map_lst, 2250+GD_BOAT);
 

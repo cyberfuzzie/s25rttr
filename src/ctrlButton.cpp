@@ -1,4 +1,4 @@
-// $Id: ctrlButton.cpp 4996 2009-06-03 19:01:25Z OLiver $
+// $Id: ctrlButton.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -179,9 +179,9 @@ bool ctrlButton::Draw_(void)
 		else
 		{
 			if(state == BUTTON_UP || state == BUTTON_PRESSED)
-				GetImage(io_dat, tc*2 + 1)->Draw(buttonrect.left, buttonrect.top, 0, 0, 0, 0, width, height);
+				LOADER.GetImageN("io", tc*2 + 1)->Draw(buttonrect.left, buttonrect.top, 0, 0, 0, 0, width, height);
 			else
-				GetImage(io_dat, tc*2)->Draw(buttonrect.left, buttonrect.top,  0, 0, 0, 0, width, height);
+				LOADER.GetImageN("io", tc*2)->Draw(buttonrect.left, buttonrect.top,  0, 0, 0, 0, width, height);
 		}
 	}
 

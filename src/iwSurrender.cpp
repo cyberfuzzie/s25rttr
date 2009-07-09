@@ -46,14 +46,14 @@
  *  @author jh
  */
 iwSurrender::iwSurrender(void)
-	: IngameWindow(CGI_ENDGAME, 0xFFFF, 0xFFFF, 240, 100, _("Surrender game?"), GetImage(resource_dat, 41))
+	: IngameWindow(CGI_ENDGAME, 0xFFFF, 0xFFFF, 240, 100, _("Surrender game?"), LOADER.GetImageN("resource", 41))
 {
 	// Ok
-	AddImageButton(0,  85, 24, 68, 57, TC_GREEN2, GetImage(io_dat, 32), _("Surrender"));
+	AddImageButton(0,  85, 24, 68, 57, TC_GREEN2, LOADER.GetImageN("io", 32), _("Surrender"));
 	// Ok + Abbrennen
-	AddImageButton(2,  16, 24, 68, 57, TC_GREEN2, GetImage(io_dat, 23), _("Destroy all buildings and surrender"));	
+	AddImageButton(2,  16, 24, 68, 57, TC_GREEN2, LOADER.GetImageN("io", 23), _("Destroy all buildings and surrender"));	
 	// Abbrechen
-	AddImageButton(1,  158, 24, 68, 57, TC_RED1, GetImage(io_dat, 40), _("Don't surrender"));
+	AddImageButton(1,  158, 24, 68, 57, TC_RED1, LOADER.GetImageN("io", 40), _("Don't surrender"));
 }
 
 

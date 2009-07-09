@@ -1,4 +1,4 @@
-// $Id: iwBuildingProductivities.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: iwBuildingProductivities.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -79,7 +79,7 @@ const unsigned short percent_height = 18;
 
 /// Konstruktor von @p iwBuildingProductivities.
 iwBuildingProductivities::iwBuildingProductivities()
-: IngameWindow(CGI_BUILDINGSPRODUCTIVITY, 0xFFFE, 0xFFFE, left_x+2*percent_width+2*image_percent_x+percent_image_x+right_x, top_y + (BUILDINGS_COUNT/2+BUILDINGS_COUNT%2) * (distance_y+1), _("Productivity"), GetImage(resource_dat, 41)),
+: IngameWindow(CGI_BUILDINGSPRODUCTIVITY, 0xFFFE, 0xFFFE, left_x+2*percent_width+2*image_percent_x+percent_image_x+right_x, top_y + (BUILDINGS_COUNT/2+BUILDINGS_COUNT%2) * (distance_y+1), _("Productivity"), LOADER.GetImageN("resource", 41)),
  percents(40,0)
 {
 	for(unsigned y = 0;y<BUILDINGS_COUNT/2+BUILDINGS_COUNT%2;++y)
@@ -100,7 +100,7 @@ iwBuildingProductivities::iwBuildingProductivities()
 	UpdatePercents();
 
 	// Hilfe-Button
-	AddImageButton(500,width-14-30,height-20-32,30,32,TC_GREY, GetImage(io_dat,21), _("Help"));
+	AddImageButton(500,width-14-30,height-20-32,30,32,TC_GREY, LOADER.GetImageN("io",21), _("Help"));
 }
 
 /// Aktualisieren der Prozente

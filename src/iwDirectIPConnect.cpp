@@ -1,4 +1,4 @@
-// $Id: iwDirectIPConnect.cpp 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: iwDirectIPConnect.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -45,7 +45,7 @@
  *  @author OLiver
  */
 iwDirectIPConnect::iwDirectIPConnect(unsigned int server_type)
-	: IngameWindow(CGI_DIRECTIPCONNECT, 0xFFFF, 0xFFFF, 300, 250, _("Join Game"), GetImage(resource_dat, 41), true),
+	: IngameWindow(CGI_DIRECTIPCONNECT, 0xFFFF, 0xFFFF, 300, 250, _("Join Game"), LOADER.GetImageN("resource", 41), true),
 	server_type(server_type)
 {
 	ctrlEdit *host, *port;

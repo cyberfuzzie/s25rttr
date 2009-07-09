@@ -1,4 +1,4 @@
-// $Id: ctrlBuildingIcon.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: ctrlBuildingIcon.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -60,7 +60,7 @@ bool ctrlBuildingIcon::Draw_(void)
 	TestMouseOver();
 
 	if(state == BUTTON_HOVER || state == BUTTON_PRESSED)
-		GetImage(io_dat, 0)->Draw(GetX(), GetY(), size, size, size, size, 0, 0);
+		LOADER.GetImageN("io", 0)->Draw(GetX(), GetY(), size, size, size, size, 0, 0);
 
 	GetImage(nation_icons[nation], type)->Draw(GetX() + size / 2, GetY() + size / 2, 0, 0, 0, 0, 0, 0, (state == BUTTON_PRESSED ? 0xFFFFFF00 : 0xFFFFFFFF));
 

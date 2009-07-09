@@ -1,4 +1,4 @@
-// $Id: iwAction.cpp 5139 2009-06-28 21:06:58Z OLiver $
+// $Id: iwAction.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -65,7 +65,7 @@ enum TabID
  *  @author OLiver
  */
 iwAction::iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, const Tabs& tabs, unsigned short selected_x, unsigned short selected_y, int mouse_x, int mouse_y, unsigned int params, bool military_buildings)
-	: IngameWindow(CGI_ACTION, mouse_x, mouse_y, 200, 254, _("Activity window"), GetImage(io_dat, 1)),
+	: IngameWindow(CGI_ACTION, mouse_x, mouse_y, 200, 254, _("Activity window"), LOADER.GetImageN("io", 1)),
 	gi(gi), gwv(gwv), selected_x(selected_x), selected_y(selected_y), last_x(mouse_x), last_y(mouse_y)
 {
 	/*
@@ -98,7 +98,7 @@ iwAction::iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, cons
 	// Bau-main_tab
 	if(tabs.build)
 	{
-		ctrlGroup *group = 	main_tab->AddTab(GetImage(io_dat, 18), _("-> Build house"), TAB_BUILD);
+		ctrlGroup *group = 	main_tab->AddTab(LOADER.GetImageN("io", 18), _("-> Build house"), TAB_BUILD);
 
 		ctrlTab *build_tab = group->AddTabCtrl(1, 0, 45, 180);
 
@@ -107,23 +107,23 @@ iwAction::iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, cons
 		{
 		case Tabs::BT_HUT:
 			{
-				build_tab->AddTab(GetImage(io_dat, 67), _("-> Build hut"), Tabs::BT_HUT);
+				build_tab->AddTab(LOADER.GetImageN("io", 67), _("-> Build hut"), Tabs::BT_HUT);
 			} break;
 		case Tabs::BT_HOUSE:
 			{
-				build_tab->AddTab(GetImage(io_dat, 67), _("-> Build hut"), Tabs::BT_HUT);
-				build_tab->AddTab(GetImage(io_dat, 68), _("-> Build house"), Tabs::BT_HOUSE);
+				build_tab->AddTab(LOADER.GetImageN("io", 67), _("-> Build hut"), Tabs::BT_HUT);
+				build_tab->AddTab(LOADER.GetImageN("io", 68), _("-> Build house"), Tabs::BT_HOUSE);
 			} break;
 		case Tabs::BT_CASTLE:
 		case Tabs::BT_HARBOR:
 			{
-				build_tab->AddTab(GetImage(io_dat, 67), _("-> Build hut"), Tabs::BT_HUT);
-				build_tab->AddTab(GetImage(io_dat, 68), _("-> Build house"), Tabs::BT_HOUSE);
-				build_tab->AddTab(GetImage(io_dat, 69), _("-> Build castle"), Tabs::BT_CASTLE);
+				build_tab->AddTab(LOADER.GetImageN("io", 67), _("-> Build hut"), Tabs::BT_HUT);
+				build_tab->AddTab(LOADER.GetImageN("io", 68), _("-> Build house"), Tabs::BT_HOUSE);
+				build_tab->AddTab(LOADER.GetImageN("io", 69), _("-> Build castle"), Tabs::BT_CASTLE);
 			} break;
 		case Tabs::BT_MINE:
 			{
-				build_tab->AddTab(GetImage(io_dat, 76), _("-> Dig mines"), Tabs::BT_MINE);
+				build_tab->AddTab(LOADER.GetImageN("io", 76), _("-> Dig mines"), Tabs::BT_MINE);
 			} break;
 		}
 
@@ -168,33 +168,33 @@ iwAction::iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, cons
 	// Wenn es einen Flaggen-main_tab gibt, dann entsprechend die Buttons anordnen, wie sie gebraucht werden
 	if(tabs.flag)
 	{
-		ctrlGroup *group = main_tab->AddTab(GetImage(io_dat, 70), _("Erect flag"), TAB_FLAG);
+		ctrlGroup *group = main_tab->AddTab(LOADER.GetImageN("io", 70), _("Erect flag"), TAB_FLAG);
 
 		switch(params)
 		{
 		case AWFT_NORMAL: // normale Flagge
 			{
-				group->AddImageButton(1,  0, 45, 45, 36, TC_GREY, GetImage(io_dat,  65), _("Build road"));
-				group->AddImageButton(3,  45, 45, 45, 36, TC_GREY, GetImage(io_dat, 118), _("Pull down flag"));
-				group->AddImageButton(4, 90, 45, 45, 36, TC_GREY, GetImage(io_dat,  20), _("Call in geologist"));
-				group->AddImageButton(5, 135, 45, 45, 36, TC_GREY, GetImage(io_dat,  96), _("Send out scout"));
+				group->AddImageButton(1,  0, 45, 45, 36, TC_GREY, LOADER.GetImageN("io",  65), _("Build road"));
+				group->AddImageButton(3,  45, 45, 45, 36, TC_GREY, LOADER.GetImageN("io", 118), _("Pull down flag"));
+				group->AddImageButton(4, 90, 45, 45, 36, TC_GREY, LOADER.GetImageN("io",  20), _("Call in geologist"));
+				group->AddImageButton(5, 135, 45, 45, 36, TC_GREY, LOADER.GetImageN("io",  96), _("Send out scout"));
 			} break;
 		case AWFT_WATERFLAG: // Wasserflagge
 			{
-				group->AddImageButton(1,  0, 45, 36, 36, TC_GREY, GetImage(io_dat,  65), _("Build road"));
-				group->AddImageButton(2,  36, 45, 36, 36, TC_GREY, GetImage(io_dat,  95), _("Build waterway"));
-				group->AddImageButton(3,  72, 45, 36, 36, TC_GREY, GetImage(io_dat, 118), _("Pull down flag"));
-				group->AddImageButton(4, 108, 45, 36, 36, TC_GREY, GetImage(io_dat,  20), _("Call in geologist"));
-				group->AddImageButton(5, 144, 45, 36, 36, TC_GREY, GetImage(io_dat,  96), _("Send out scout"));
+				group->AddImageButton(1,  0, 45, 36, 36, TC_GREY, LOADER.GetImageN("io",  65), _("Build road"));
+				group->AddImageButton(2,  36, 45, 36, 36, TC_GREY, LOADER.GetImageN("io",  95), _("Build waterway"));
+				group->AddImageButton(3,  72, 45, 36, 36, TC_GREY, LOADER.GetImageN("io", 118), _("Pull down flag"));
+				group->AddImageButton(4, 108, 45, 36, 36, TC_GREY, LOADER.GetImageN("io",  20), _("Call in geologist"));
+				group->AddImageButton(5, 144, 45, 36, 36, TC_GREY, LOADER.GetImageN("io",  96), _("Send out scout"));
 			} break;
 		case AWFT_HQ: // Haupthaus
 			{
-				group->AddImageButton(1, 0, 45, 180, 36, TC_GREY, GetImage(io_dat, 65), _("Build road"));
+				group->AddImageButton(1, 0, 45, 180, 36, TC_GREY, LOADER.GetImageN("io", 65), _("Build road"));
 			} break;
 		case AWFT_STOREHOUSE: // Lagerhaus
 			{
-				group->AddImageButton(1,0,45,90,36,TC_GREY, GetImage(io_dat, 65), _("Build road"));
-				group->AddImageButton(3,90,45,90,36,TC_GREY, GetImage(io_dat, 118), _("Demolish house"));
+				group->AddImageButton(1,0,45,90,36,TC_GREY, LOADER.GetImageN("io", 65), _("Build road"));
+				group->AddImageButton(3,90,45,90,36,TC_GREY, LOADER.GetImageN("io", 118), _("Demolish house"));
 			} break;
 		}
 	}
@@ -202,26 +202,26 @@ iwAction::iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, cons
 	// Flagge Setzen-main_tab
 	if(tabs.setflag)
 	{
-		ctrlGroup *group = main_tab->AddTab(GetImage(io_dat, 45), _("Erect flag"), TAB_SETFLAG);
+		ctrlGroup *group = main_tab->AddTab(LOADER.GetImageN("io", 45), _("Erect flag"), TAB_SETFLAG);
 
 		unsigned int nr = 70;
 		if(params == AWFT_WATERFLAG)
 			nr = 94;
 
-		group->AddImageButton(1, 0, 45, 180, 36, TC_GREY, GetImage(io_dat,  nr),_("Erect flag"));
+		group->AddImageButton(1, 0, 45, 180, 36, TC_GREY, LOADER.GetImageN("io",  nr),_("Erect flag"));
 	}
 
 	// Cut-main_tab
 	if(tabs.cutroad)
 	{
-		ctrlGroup *group = 	main_tab->AddTab(GetImage(io_dat, 19), _("Dig up road"), TAB_CUTROAD);
+		ctrlGroup *group = 	main_tab->AddTab(LOADER.GetImageN("io", 19), _("Dig up road"), TAB_CUTROAD);
 
-		group->AddImageButton(1, 0, 45, 180, 36, TC_GREY, GetImage(io_dat, 32), _("Dig up road"));
+		group->AddImageButton(1, 0, 45, 180, 36, TC_GREY, LOADER.GetImageN("io", 32), _("Dig up road"));
 	}
 
 	if(tabs.attack)
 	{
-		ctrlGroup *group = main_tab->AddTab(GetImage(io_dat, 98), _("Attack options"), TAB_ATTACK);
+		ctrlGroup *group = main_tab->AddTab(LOADER.GetImageN("io", 98), _("Attack options"), TAB_ATTACK);
 
 		available_soldiers_count = params;
 
@@ -236,13 +236,13 @@ iwAction::iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, cons
 			selected_soldiers_count = 1;
 
 			// Minus und Plus - Button
-			group->AddImageButton(1, 3, 49, 26, 32, TC_GREY, GetImage(io_dat, 139), _("Less attackers"));
-			group->AddImageButton(2, 89, 49, 26, 32, TC_GREY, GetImage(io_dat, 138), _("More attackers"));
+			group->AddImageButton(1, 3, 49, 26, 32, TC_GREY, LOADER.GetImageN("io", 139), _("Less attackers"));
+			group->AddImageButton(2, 89, 49, 26, 32, TC_GREY, LOADER.GetImageN("io", 138), _("More attackers"));
 
 			// Starke/Schwache Soldaten
 			ctrlOptionGroup *ogroup = group->AddOptionGroup(3, ctrlOptionGroup::ILLUMINATE);
-			ogroup->AddImageButton(0, 146, 49, 30, 33, TC_GREY, GetImage(io_dat, 31), _("Weak attackers"));
-			ogroup->AddImageButton(1, 117, 49, 30, 33, TC_GREY, GetImage(io_dat, 30), _("Strong attackers"));
+			ogroup->AddImageButton(0, 146, 49, 30, 33, TC_GREY, LOADER.GetImageN("io", 31), _("Weak attackers"));
+			ogroup->AddImageButton(1, 117, 49, 30, 33, TC_GREY, LOADER.GetImageN("io", 30), _("Strong attackers"));
 			// standardmäßig starke Soldaten
 			ogroup->SetSelection(1);
 
@@ -251,21 +251,21 @@ iwAction::iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, cons
 			unsigned short button_width = 112 / buttons_count;
 
 			for(unsigned i = 0;i < buttons_count; ++i)
-				group->AddImageButton(10+i, 3 + i*button_width, 83, button_width, 32, TC_GREY, GetImage(io_dat,204+i), _("Number of attackers"));
+				group->AddImageButton(10+i, 3 + i*button_width, 83, button_width, 32, TC_GREY, LOADER.GetImageN("io",204+i), _("Number of attackers"));
 
 			// Angriffsbutton
-			group->AddImageButton(4, 117, 83, 59, 32, TC_RED1, GetImage(io_dat, 25), _("Attack!"));
+			group->AddImageButton(4, 117, 83, 59, 32, TC_RED1, LOADER.GetImageN("io", 25), _("Attack!"));
 		}
 	}
 	
 	// Beobachten-main_tab
 	if(tabs.watch)
 	{
-		ctrlGroup *group = main_tab->AddTab(GetImage(io_dat, 36), _("Display options"), TAB_WATCH);
+		ctrlGroup *group = main_tab->AddTab(LOADER.GetImageN("io", 36), _("Display options"), TAB_WATCH);
 
-		group->AddImageButton(1, 0, 45,  60, 36, TC_GREY, GetImage(io_dat, 108), _("Observation window"));
-		group->AddImageButton(2,  60, 45,  60, 36, TC_GREY, GetImage(io_dat, 179), _("House names"));
-		group->AddImageButton(3, 120, 45,  60, 36, TC_GREY, GetImage(io_dat, 180), _("Go to headquarters"));
+		group->AddImageButton(1, 0, 45,  60, 36, TC_GREY, LOADER.GetImageN("io", 108), _("Observation window"));
+		group->AddImageButton(2,  60, 45,  60, 36, TC_GREY, LOADER.GetImageN("io", 179), _("House names"));
+		group->AddImageButton(3, 120, 45,  60, 36, TC_GREY, LOADER.GetImageN("io", 180), _("Go to headquarters"));
 	}
 
 	

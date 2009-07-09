@@ -1,4 +1,4 @@
-// $Id: iwPlayReplay.cpp 5201 2009-07-05 19:35:52Z FloSoft $
+// $Id: iwPlayReplay.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -58,7 +58,7 @@
  */
 
 iwPlayReplay::iwPlayReplay(void)
-	: IngameWindow(CGI_PLAYREPLAY, 0xFFFF, 0xFFFF, 600, 300, _("Play Replay"), GetImage(resource_dat, 41))
+	: IngameWindow(CGI_PLAYREPLAY, 0xFFFF, 0xFFFF, 600, 300, _("Play Replay"), LOADER.GetImageN("resource", 41))
 {
 	ctrlTable *table = AddTable(0, 20, 30, 560, 220, TC_GREEN2, NormalFont, 5, _("Filename"), 300, _("Stocktaking date"), 220, _("Player"), 360, _("Length"), 120, "", 0);
 

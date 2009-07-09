@@ -1,4 +1,4 @@
-// $Id: iwDirectIPCreate.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: iwDirectIPCreate.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -46,7 +46,7 @@
  *  @author OLiver
  */
 iwDirectIPCreate::iwDirectIPCreate(unsigned int server_type)
-	: IngameWindow(CGI_DIRECTIPCREATE, 0xFFFF, 0xFFFF, 300, 250, _("Create Game"), GetImage(resource_dat, 41), true),
+	: IngameWindow(CGI_DIRECTIPCREATE, 0xFFFF, 0xFFFF, 300, 250, _("Create Game"), LOADER.GetImageN("resource", 41), true),
 	server_type(server_type)
 {
 	ctrlEdit *name, *port;

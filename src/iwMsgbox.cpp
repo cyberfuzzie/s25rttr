@@ -1,4 +1,4 @@
-// $Id: iwMsgbox.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: iwMsgbox.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -42,9 +42,9 @@
  *  @author OLiver
  */
 iwMsgbox::iwMsgbox(const std::string& title, const std::string& text, Window *parent, MsgboxButton button, unsigned short icon, unsigned int msgboxid)
-	: IngameWindow(CGI_MSGBOX, 0xFFFF, 0xFFFF, 420, 140, title, GetImage(resource_dat, 41), true), parent(parent), button(button), msgboxid(msgboxid), text(text)
+	: IngameWindow(CGI_MSGBOX, 0xFFFF, 0xFFFF, 420, 140, title, LOADER.GetImageN("resource", 41), true), parent(parent), button(button), msgboxid(msgboxid), text(text)
 {
-	AddImage(0, 42, 42, GetImage(io_dat, icon));
+	AddImage(0, 42, 42, LOADER.GetImageN("io", icon));
 	//ctrlMultiline *multiline = AddMultiline(1, 77, 34, 400, 90, TC_GREEN2, NormalFont);
 	//multiline->AddText(text, COLOR_YELLOW);
 	/*AddText(1, 80, 30, text, COLOR_YELLOW, 0, NormalFont);*/

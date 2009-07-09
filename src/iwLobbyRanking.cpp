@@ -1,4 +1,4 @@
-// $Id: iwLobbyRanking.cpp 4940 2009-05-24 16:38:33Z FloSoft $
+// $Id: iwLobbyRanking.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -76,7 +76,7 @@ void iwLobbyRanking::UpdateRankings(bool first)
  *  @author Devil
  */
 iwLobbyRanking::iwLobbyRanking(void)
-	: IngameWindow(CGI_LOBBYRANKING, 0xFFFF, 0xFFFF, 440, 410, _("Internet Ranking"), GetImage(resource_dat, 41), true)
+	: IngameWindow(CGI_LOBBYRANKING, 0xFFFF, 0xFFFF, 440, 410, _("Internet Ranking"), LOADER.GetImageN("resource", 41), true)
 {
 	AddTable(0, 20, 25, 400, 340, TC_GREY, NormalFont, 4, _("Name"), 360, _("Points"), 185, _("Lost"), 215, _("Won"), 240);
 	AddTimer(1, 60000);

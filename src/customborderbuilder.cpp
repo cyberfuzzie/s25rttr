@@ -1,4 +1,4 @@
-// $Id: customborderbuilder.cpp 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: customborderbuilder.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -79,7 +79,7 @@ CustomBorderBuilder::~CustomBorderBuilder()
   }
 }
 
-int CustomBorderBuilder::loadEdges(ArchivInfo* archiveInfo)
+int CustomBorderBuilder::loadEdges(const ArchivInfo* archiveInfo)
 {
   // simples Fehlerabfangen
   if (archiveInfo->getCount() != 57)
@@ -93,7 +93,7 @@ int CustomBorderBuilder::loadEdges(ArchivInfo* archiveInfo)
   //palette = dynamic_cast<glArchivItem_Bitmap_RLE*>(archiveInfo->get(4))->getPalette();
   // 640x480
   {
-    BitmapRLE2BdrBitmap(dynamic_cast<glArchivItem_Bitmap_RLE*>(archiveInfo->get(4)), tempBMP);
+    BitmapRLE2BdrBitmap(dynamic_cast<const glArchivItem_Bitmap_RLE*>(archiveInfo->get(4)), tempBMP);
     corners[0] = tempBMP->get(0,0,584,12); 
     corners[1] = tempBMP->get(584,0,56,12); 
     corners[2] = tempBMP->get(0,468,202,12); 
@@ -110,7 +110,7 @@ int CustomBorderBuilder::loadEdges(ArchivInfo* archiveInfo)
   } 
   // 800x600
   {
-    BitmapRLE2BdrBitmap(dynamic_cast<glArchivItem_Bitmap_RLE*>(archiveInfo->get(7)), tempBMP);
+    BitmapRLE2BdrBitmap(dynamic_cast<const glArchivItem_Bitmap_RLE*>(archiveInfo->get(7)), tempBMP);
     edgesTop[0] = tempBMP->get(584,0,160,12);
     edgesBottom[0] = tempBMP->get(508,588,160,12);
     edgesLeft[0] = tempBMP->get(0,364,12,120);
@@ -119,7 +119,7 @@ int CustomBorderBuilder::loadEdges(ArchivInfo* archiveInfo)
   } 
   // 1024x768
   {
-    BitmapRLE2BdrBitmap(dynamic_cast<glArchivItem_Bitmap_RLE*>(archiveInfo->get(10)), tempBMP);
+    BitmapRLE2BdrBitmap(dynamic_cast<const glArchivItem_Bitmap_RLE*>(archiveInfo->get(10)), tempBMP);
     edgesTop[1] = tempBMP->get(644,0,224,12);
     edgesBottom[1] = tempBMP->get(668,756,224,12);
     edgesLeft[1] = tempBMP->get(0,484,12,168);
@@ -143,7 +143,7 @@ int CustomBorderBuilder::loadEdges(ArchivInfo* archiveInfo)
   {
     BdrBitmap *pic1;
     pic1 = new BdrBitmap(640,1024);
-    BitmapRLE2BdrBitmap(dynamic_cast<glArchivItem_Bitmap_RLE*>(archiveInfo->get(13)), pic1);
+    BitmapRLE2BdrBitmap(dynamic_cast<const glArchivItem_Bitmap_RLE*>(archiveInfo->get(13)), pic1);
     tempBMP->put(0,0,pic1);
     delete pic1;
   } 
@@ -151,7 +151,7 @@ int CustomBorderBuilder::loadEdges(ArchivInfo* archiveInfo)
   {
     BdrBitmap *pic2;
     pic2 = new BdrBitmap(640,1024);
-    BitmapRLE2BdrBitmap(dynamic_cast<glArchivItem_Bitmap_RLE*>(archiveInfo->get(14)), pic2);
+    BitmapRLE2BdrBitmap(dynamic_cast<const glArchivItem_Bitmap_RLE*>(archiveInfo->get(14)), pic2);
     tempBMP->put(640,0,pic2);
     delete pic2;
     edgesTop[2] = tempBMP->get(968,0,256,12);
@@ -270,7 +270,7 @@ int CustomBorderBuilder::buildBorder(const unsigned int width, const unsigned in
 }
 
 
-void CustomBorderBuilder::BitmapRLE2BdrBitmap(glArchivItem_Bitmap_RLE* bitmapRLE, BdrBitmap* bdrBitmap)
+void CustomBorderBuilder::BitmapRLE2BdrBitmap(const glArchivItem_Bitmap_RLE* bitmapRLE, BdrBitmap* bdrBitmap)
 {
   unsigned short x, y;
   for(y = 0; y < bitmapRLE->getHeight(); y++)

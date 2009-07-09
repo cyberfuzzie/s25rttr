@@ -1,4 +1,4 @@
-// $Id: iwBuilding.cpp 5125 2009-06-26 20:10:42Z OLiver $
+// $Id: iwBuilding.cpp 5238 2009-07-09 20:50:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -59,7 +59,7 @@ const unsigned IODAT_SHIP_ID = 218;
  *  @author OLiver
  */
 iwBuilding::iwBuilding(GameWorldViewer * const gwv,dskGameInterface *const gi,nobUsual *const building)
-: IngameWindow(building->CreateGUIID(),(unsigned short)-2, (unsigned short)-2, 226, 194, _(BUILDING_NAMES[building->GetBuildingType()]), GetImage(resource_dat, 41)),
+: IngameWindow(building->CreateGUIID(),(unsigned short)-2, (unsigned short)-2, 226, 194, _(BUILDING_NAMES[building->GetBuildingType()]), LOADER.GetImageN("resource", 41)),
 	gwv(gwv), gi(gi), building(building)
 {
 	// Arbeitersymbol
@@ -74,11 +74,11 @@ iwBuilding::iwBuilding(GameWorldViewer * const gwv,dskGameInterface *const gi,no
 	}
 
 	// Info
-	AddImageButton( 4,  16, 147, 30, 32, TC_GREY, GetImage(io_dat,  21), _("Help"));
+	AddImageButton( 4,  16, 147, 30, 32, TC_GREY, LOADER.GetImageN("io",  21), _("Help"));
 	// Abreißen
-	AddImageButton( 5,  50, 147, 34, 32, TC_GREY, GetImage(io_dat,  23), _("Demolish house"));
+	AddImageButton( 5,  50, 147, 34, 32, TC_GREY, LOADER.GetImageN("io",  23), _("Demolish house"));
 	// Produktivität einstellen (196,197) (bei Spähturm ausblenden)
-	Window * enable_productivity = AddImageButton( 6,  90, 147, 34, 32, TC_GREY, GetImage(io_dat, ((building->IsProductionDisabledVirtual())?197:196)));
+	Window * enable_productivity = AddImageButton( 6,  90, 147, 34, 32, TC_GREY, LOADER.GetImageN("io", ((building->IsProductionDisabledVirtual())?197:196)));
 	if(building->GetBuildingType() == BLD_LOOKOUTTOWER)
 		enable_productivity->SetVisible(false);
 	// Bei Bootsbauer Button zum Umwählen von Booten und Schiffen
@@ -87,17 +87,17 @@ iwBuilding::iwBuilding(GameWorldViewer * const gwv,dskGameInterface *const gi,no
 		// Jenachdem Boot oder Schiff anzeigen
 		unsigned io_dat_id = (static_cast<nobShipYard*>(building)->GetMode() == nobShipYard::BOATS) 
 			? IODAT_BOAT_ID : IODAT_SHIP_ID;
-		AddImageButton(11,130,147,43,32,TC_GREY,GetImage(io_dat,io_dat_id));
+		AddImageButton(11,130,147,43,32,TC_GREY,LOADER.GetImageN("io",io_dat_id));
 	}
 
 	// "Gehe Zum Ort"
-	AddImageButton( 7, 179, 147, 30, 32, TC_GREY, GetImage(io_dat, 107), _("Go to place"));
+	AddImageButton( 7, 179, 147, 30, 32, TC_GREY, LOADER.GetImageN("io", 107), _("Go to place"));
 
 	// Gebäudebild und dessen Schatten
 	AddImage( 8, 117, 114, GetBobImage(building->GetNation(), 250+5*building->GetBuildingType()));
 
 	// Produktivitätsanzeige (bei Katapulten und Spähtürmen ausblenden)
-	Window * productivity = AddPercent(9, 59, 31, 106, 16, TC_GREY, 0xFFFFFF00, GetFont(resource_dat, 2), building->GetProduktivityPointer());
+	Window * productivity = AddPercent(9, 59, 31, 106, 16, TC_GREY, 0xFFFFFF00, LOADER.GetFontN("resource", 2), building->GetProduktivityPointer());
 	if(building->GetBuildingType() == BLD_CATAPULT || building->GetBuildingType() == BLD_LOOKOUTTOWER)
 		productivity->SetVisible(false);
 
@@ -189,9 +189,9 @@ void iwBuilding::Msg_ButtonClick(const unsigned int ctrl_id)
 				
 				// anderes Bild auf dem Button
 				if(building->IsProductionDisabledVirtual())
-					GetCtrl<ctrlImageButton>(6)->SetImage(GetImage(io_dat, 197));
+					GetCtrl<ctrlImageButton>(6)->SetImage(LOADER.GetImageN("io", 197));
 				else
-					GetCtrl<ctrlImageButton>(6)->SetImage(GetImage(io_dat, 196));
+					GetCtrl<ctrlImageButton>(6)->SetImage(LOADER.GetImageN("io", 196));
 
 				ctrlText *text = GetCtrl<ctrlText>(10);
 				if(building->IsProductionDisabledVirtual() && building->HasWorker())
@@ -211,10 +211,10 @@ void iwBuilding::Msg_ButtonClick(const unsigned int ctrl_id)
 			{
 				// Auch optisch den Button umstellen
 				ctrlImageButton * button = GetCtrl<ctrlImageButton>(11);
-				if(button->GetButtonImage() == GetImage(io_dat,IODAT_BOAT_ID))
-					button->SetImage(GetImage(io_dat,IODAT_SHIP_ID));
+				if(button->GetButtonImage() == LOADER.GetImageN("io",IODAT_BOAT_ID))
+					button->SetImage(LOADER.GetImageN("io",IODAT_SHIP_ID));
 				else
-					button->SetImage(GetImage(io_dat,IODAT_BOAT_ID));
+					button->SetImage(LOADER.GetImageN("io",IODAT_BOAT_ID));
 			}
 
 		} break;

@@ -14,6 +14,8 @@ mkdir -vp s25client.app/Contents/{Frameworks,MacOS,Resources}
 # frameworks kopieren
 cp -rv /usr/i686-apple-darwin9/SDKs/MacOSX10.4u.sdk/Library/Frameworks/SDL.framework s25client.app/Contents/Frameworks/
 cp -rv /usr/i686-apple-darwin9/SDKs/MacOSX10.4u.sdk/Library/Frameworks/SDL_mixer.framework s25client.app/Contents/Frameworks/
+cp -rv /usr/i686-apple-darwin9/SDKs/MacOSX10.4u.sdk/Library/Frameworks/sndfile.framework s25client.app/Contents/Frameworks/
+cp -rv /usr/i686-apple-darwin9/SDKs/MacOSX10.4u.sdk/Library/Frameworks/samplerate.framework s25client.app/Contents/Frameworks/
 
 mkdir -vp s25client.app/Contents/MacOS/bin
 
@@ -25,6 +27,7 @@ cp -v ../../bin/macos/PkgInfo s25client.app/Contents/
 cp -v ../../bin/macos/Info.plist s25client.app/Contents/
 mv -v bin/* s25client.app/Contents/MacOS/bin
 
+rm -rf s25client.app/Contents/MacOS/share/s25rttr/RTTR/languages/*.po
 rm -rf bin
 rm -rf lib
 

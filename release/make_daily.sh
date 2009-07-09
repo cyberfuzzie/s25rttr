@@ -61,6 +61,8 @@ else
 	if [ -f $TARGET/$ARCH/music.tar.bz2 ] ; then
 		if [ -d  $TARGET/$ARCH/share/s25rttr ] ; then
 			tar -C $TARGET/$ARCH/share/s25rttr -xf $TARGET/$ARCH/music.tar.bz2 >> $TARGET/build_${ARCH}.log
+		elif [ -d $TARGET/$ARCH/s25client.app/Contents/MacOS/share/s25rttr ] ; then
+			tar -C $TARGET/$ARCH/s25client.app/Contents/MacOS/share/s25rttr -xf $TARGET/$ARCH/music.tar.bz2 >> $TARGET/build_${ARCH}.log
 		else
 			tar -C $TARGET/$ARCH -xf $TARGET/$ARCH/music.tar.bz2 >> $TARGET/build_${ARCH}.log
 		fi

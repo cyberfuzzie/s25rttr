@@ -11,5 +11,6 @@ Installed-Size: x
 Maintainer: Florian Doersch <sf-team@siedler25.org>
 Replaces: s25client
 Provides: s25rttr
-Description: The Settlers 2.5 RttR is a remake of the game The Settlers 2 of Bluebyte. It supports multiplayer games via ethernet and internet. Don't forget: The original game files of The Settlers 2 Gold must be copied to /usr/share/s25rttr/S2 and must be readably for the user to play this game.
+Description: Die Siedler 2.5 RttR ist eine Nachprogrammierung des bekannten Spieles "Die Siedler 2" von Bluebyte. Es unterstützt Multiplayer-Spiele im Internet und LAN. Nicht vergessen: Die Originaldateien von Siedler 2 Gold müssen nach /usr/share/s25rttr/S2 kopiert werden und müssen für den Nutzer lesbar sein.
+The Settlers 2.5 RttR is a remake of the game The Settlers 2 of Bluebyte. It supports multiplayer games via ethernet and internet. Don't forget: The original game files of The Settlers 2 Gold must be copied to /usr/share/s25rttr/S2 and must be readably for the user to play this game.
 

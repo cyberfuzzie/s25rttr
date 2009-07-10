@@ -1,4 +1,4 @@
-// $Id: Loader.cpp 5239 2009-07-09 21:15:45Z FloSoft $
+// $Id: Loader.cpp 5243 2009-07-10 05:59:07Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -368,7 +368,7 @@ bool Loader::LoadFile(const char *pfad, const libsiedler2::ArchivItem_Palette *p
 	std::string p = pfad;
 	transform ( p.begin(), p.end(), p.begin(), tolower );
 
-	unsigned int pp = p.find_last_of('.');
+	size_t pp = p.find_last_of('.');
 	if(pp != std::string::npos)
 		p = p.substr(0, pp);
 

@@ -1,4 +1,4 @@
-// $Id: dskLobby.cpp 5011 2009-06-07 12:40:05Z OLiver $
+// $Id: dskLobby.cpp 5247 2009-07-11 19:13:17Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -54,7 +54,7 @@
  *  @author FloSoft
  *  @author Devil
  */
-dskLobby::dskLobby() : Desktop(GetImage(backgrounds, 1)), serverinfo(NULL), servercreate(NULL)
+dskLobby::dskLobby() : Desktop(LOADER.GetImageN("setup013", 0)), serverinfo(NULL), servercreate(NULL)
 {
 	// Version
 	AddVarText(0, 0, 600, _("The Settlers II.5 RTTR, v%s-%s"), COLOR_YELLOW, 0 | glArchivItem_Font::DF_BOTTOM, NormalFont, 2, GetWindowVersion(), GetWindowRevision());

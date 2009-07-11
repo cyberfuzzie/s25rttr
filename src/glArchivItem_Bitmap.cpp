@@ -1,4 +1,4 @@
-// $Id: glArchivItem_Bitmap.cpp 5152 2009-07-01 06:33:32Z FloSoft $
+// $Id: glArchivItem_Bitmap.cpp 5247 2009-07-11 19:13:17Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -172,7 +172,7 @@ void glArchivItem_Bitmap::GenerateTexture(void)
 	texture = VideoDriverWrapper::inst().GenerateTexture();
 
 	if(!palette)
-		setPalette(GetPalette(0));
+		setPalette(LOADER.GetPaletteN("pal5"));
 	
 	glEnable(GL_TEXTURE_2D);
 

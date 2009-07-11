@@ -1,4 +1,4 @@
-// $Id: iwDirectIPConnect.cpp 5238 2009-07-09 20:50:28Z FloSoft $
+// $Id: iwDirectIPConnect.cpp 5247 2009-07-11 19:13:17Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -73,7 +73,7 @@ iwDirectIPConnect::iwDirectIPConnect(unsigned int server_type)
 
 	host->SetFocus();
 	host->SetText(Settings::inst().last_ip);
-	port->SetText(GetTxt(client_txt, 3));
+	port->SetText(LOADER.GetTextN("client", 3));
 
 	// Client unser Window geben, damit er uns benachrichtigen kann
 	GAMECLIENT.SetInterface(this);

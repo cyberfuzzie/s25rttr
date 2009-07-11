@@ -1,4 +1,4 @@
-// $Id: GameManager.cpp 5238 2009-07-09 20:50:28Z FloSoft $
+// $Id: GameManager.cpp 5247 2009-07-11 19:13:17Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -223,10 +223,6 @@ bool GameManager::StartMenu()
 
 		return false;
 	}
-
-	// Menüdaten laden
-	if(!LOADER.LoadMenu())
-		return false;
 
 	// Splash-Screen anzeigen
 	WindowManager::inst().Switch(new dskSplash);

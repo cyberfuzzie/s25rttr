@@ -1,4 +1,4 @@
-// $Id: dskSelectMap.cpp 5238 2009-07-09 20:50:28Z FloSoft $
+// $Id: dskSelectMap.cpp 5247 2009-07-11 19:13:17Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -105,7 +105,7 @@ iwPleaseWait::iwPleaseWait()
  *  @author FloSoft
  */
 dskSelectMap::dskSelectMap(const CreateServerInfo& csi)
-	: Desktop(GetImage(backgrounds, 2)), 
+	: Desktop(LOADER.GetImageN("setup015", 0)), 
 	csi(csi)
 {
 	// Die Tabelle für die Maps

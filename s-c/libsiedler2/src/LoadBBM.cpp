@@ -1,4 +1,4 @@
-// $Id: LoadBBM.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: LoadBBM.cpp 5247 2009-07-11 19:13:17Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -107,11 +107,9 @@ int libsiedler2::loader::LoadBBM(const char *file, ArchivInfo *items)
 				if(length != 256 * 3)
 					return 10;
 
-				items->alloc_inc(1);
-
 				// Daten von Item auswerten
 				ArchivItem_Palette *palette = (ArchivItem_Palette*)(*allocator)(BOBTYPE_PALETTE, 0, NULL);
-				items->set(i, palette);
+				items->push(palette);
 
 				const char *name = strrchr(file, '/');
 				if(name)

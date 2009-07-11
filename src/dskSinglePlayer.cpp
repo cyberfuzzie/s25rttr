@@ -1,4 +1,4 @@
-// $Id: dskSinglePlayer.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: dskSinglePlayer.cpp 5247 2009-07-11 19:13:17Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -53,7 +53,7 @@
  *  @author OLiver
  *  @author FloSoft
  */
-dskSinglePlayer::dskSinglePlayer(void) : Desktop(GetImage(backgrounds, 0))
+dskSinglePlayer::dskSinglePlayer(void) : Desktop(LOADER.GetImageN("menu", 0))
 {
 	// Version
 	AddVarText(0, 0, 600, _("The Settlers II.5 RTTR, v%s-%s"), COLOR_YELLOW, 0 | glArchivItem_Font::DF_BOTTOM, NormalFont, 2, GetWindowVersion(), GetWindowRevision());

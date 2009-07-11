@@ -1,4 +1,4 @@
-// $Id: dskCredits.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: dskCredits.cpp 5247 2009-07-11 19:13:17Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -49,7 +49,7 @@
  *
  *  @author FloSoft
  */
-dskCredits::dskCredits(void) : Desktop(GetImage(backgrounds, 1))
+dskCredits::dskCredits(void) : Desktop(LOADER.GetImageN("setup013", 0))
 {
 
 	// "Zurück"

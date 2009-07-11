@@ -1,4 +1,4 @@
-// $Id: GameWorld.cpp 5188 2009-07-04 09:39:31Z OLiver $
+// $Id: GameWorld.cpp 5247 2009-07-11 19:13:17Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -621,7 +621,7 @@ void GameWorld::MilitaryBuildingCaptured(const unsigned short x, const MapCoord 
 			{
 				if(this_x > GetFirstX() && this_x < GetLastX()
 					&& this_y > GetFirstY() && this_y < GetLastY())
-					GetSound(sound_lst,110)->Play(255,false);
+					LOADER.GetSoundN("sound", 110)->Play(255,false);
 			}
 		}
 		

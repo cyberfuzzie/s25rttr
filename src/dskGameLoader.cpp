@@ -1,4 +1,4 @@
-// $Id: dskGameLoader.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: dskGameLoader.cpp 5247 2009-07-11 19:13:17Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -52,7 +52,7 @@
  *  @author FloSoft
  */
 dskGameLoader::dskGameLoader(GameWorldViewer * gwv)
-	: Desktop(GetImage(pics, rand() % 20)), 
+	: Desktop(LOADER.GetImageN(FILE_LOAD_IDS[rand() % FILE_LOAD_IDS_COUNT], 0)), 
 	position(0), gwv(gwv)
 {
 	AddTimer(1, 50);

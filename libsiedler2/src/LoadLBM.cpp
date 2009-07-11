@@ -1,4 +1,4 @@
-// $Id: LoadLBM.cpp 5093 2009-06-23 19:45:20Z FloSoft $
+// $Id: LoadLBM.cpp 5247 2009-07-11 19:13:17Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -46,7 +46,6 @@ int libsiedler2::loader::LoadLBM(const char *file, ArchivInfo *items)
 	FILE *lbm;
 	char header[4], pbm[4];
 	unsigned int chunk;
-	unsigned int i = 0;
 	unsigned int length;
 	long size;
 
@@ -90,6 +89,10 @@ int libsiedler2::loader::LoadLBM(const char *file, ArchivInfo *items)
 	unsigned short compression;
 	unsigned short width, height;
 	unsigned short depth;
+
+	// lbm has normally 2 items, palette (1) and image (0), 
+	// i'll change position of those items to be compatible with LoadBMP
+	items->alloc(2);
 
 	// Chunks einlesen
 	while(!feof(lbm) && ftell(lbm) < size)
@@ -157,11 +160,9 @@ int libsiedler2::loader::LoadLBM(const char *file, ArchivInfo *items)
 				if(length != 256 * 3)
 					return 17;
 
-				items->alloc_inc(1);
-
 				// Daten von Item auswerten
 				palette = (ArchivItem_Palette*)(*allocator)(BOBTYPE_PALETTE, 0, NULL);
-				items->set(i, palette);
+				items->set(1, palette);
 
 				// Farbpalette lesen
 				unsigned char colors[256][3];
@@ -171,8 +172,6 @@ int libsiedler2::loader::LoadLBM(const char *file, ArchivInfo *items)
 				// Farbpalette zuweisen
 				for(unsigned int k = 0; k < 256; ++k)
 					palette->set(k, colors[k][0], colors[k][1], colors[k][2]);
-
-				++i;
 			} break;
 		case 0x424F4459: // "BODY"
 			{
@@ -255,8 +254,7 @@ int libsiedler2::loader::LoadLBM(const char *file, ArchivInfo *items)
 						}
 					} break;
 				}
-				items->alloc_inc(1);
-				items->set(i++, bitmap);
+				items->set(0, bitmap);
 			} break;
 		default:
 			{

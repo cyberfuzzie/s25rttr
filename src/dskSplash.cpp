@@ -1,4 +1,4 @@
-// $Id: dskSplash.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: dskSplash.cpp 5247 2009-07-11 19:13:17Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -51,7 +51,7 @@
  *  @author OLiver
  *  @author FloSoft
  */
-dskSplash::dskSplash() : Desktop(GetImage(backgrounds, 3))
+dskSplash::dskSplash() : Desktop(LOADER.GetImageN("splash", 0))
 {
 	AddTimer(0, 5000);
 }

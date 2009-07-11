@@ -1,4 +1,4 @@
-// $Id: dskAboutRTTR.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: dskAboutRTTR.cpp 5247 2009-07-11 19:13:17Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -49,7 +49,7 @@
  *
  *  @author FloSoft
  */
-dskAboutRTTR::dskAboutRTTR(void) : Desktop(GetImage(backgrounds, 0))
+dskAboutRTTR::dskAboutRTTR(void) : Desktop(LOADER.GetImageN("menu", 0))
 {
 	// "Zurück"
 	AddTextButton(0, 300, 550, 200, 22, TC_RED1, _("Back"),NormalFont);

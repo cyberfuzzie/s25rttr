@@ -1,4 +1,4 @@
-// $Id: Loader.h 5238 2009-07-09 20:50:28Z FloSoft $
+// $Id: Loader.h 5247 2009-07-11 19:13:17Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -35,14 +35,10 @@ public:
 
 	/// Lädt alle allgemeinen Dateien.
 	bool LoadFiles(void);
-	/// Lädt die Menüdateien.
-	bool LoadMenu(void);
 	/// Lädt die Spieldateien.
 	bool LoadGame(unsigned char gfxset, bool *nations);
 	/// Lädt das Terrain.
 	bool LoadTerrain(unsigned char gfxset);
-	/// Lädt alle Textfiles.
-	bool LoadTXTs();
 
 	/// Lädt die Settings.
 	bool LoadSettings();
@@ -50,42 +46,36 @@ public:
 	bool SaveSettings();
 
 protected:
-	/// Lädt die Paletten.
-	inline bool LoadPalettes();
-	/// Lädt die Hintergrunddateien.
-	inline bool LoadBackgrounds();
 	/// Lädt alle Sounds.
 	inline bool LoadSounds();
 
 private:
-	bool LoadFile(const char *pfad, const libsiedler2::ArchivItem_Palette *palette);
+	bool LoadFile(const char *pfad, const libsiedler2::ArchivItem_Palette *palette = NULL);
 	bool LoadFile(const char *pfad, const libsiedler2::ArchivItem_Palette *palette, libsiedler2::ArchivInfo *archiv);
 	void ExtractTexture(libsiedler2::ArchivInfo *source, libsiedler2::ArchivInfo *destination, Rect &rect);
 	void ExtractAnimatedTexture(libsiedler2::ArchivInfo *source, libsiedler2::ArchivInfo *destination, Rect &rect, unsigned char color_count, unsigned char start_index);
 
+	bool LoadFilesFromArray(const unsigned int files_count, const unsigned int *files);
+	bool LoadLsts(unsigned int dir);
+
 public:
 	static const unsigned int NATION_COUNT = 4;
 
-	glArchivItem_Bitmap *GetImageN(std::string file, unsigned int nr) { return dynamic_cast<glArchivItem_Bitmap*>( files[file].get(nr) ); }
-	glArchivItem_Font *GetFontN(std::string file, unsigned int nr) { return dynamic_cast<glArchivItem_Font*>( files[file].get(nr) ); }
+	inline glArchivItem_Bitmap *GetImageN(std::string file, unsigned int nr) { return dynamic_cast<glArchivItem_Bitmap*>( files[file].get(nr) ); }
+	inline glArchivItem_Font *GetFontN(std::string file, unsigned int nr) { return dynamic_cast<glArchivItem_Font*>( files[file].get(nr) ); }
+	inline libsiedler2::ArchivItem_Palette *GetPaletteN(std::string file, unsigned int nr = 0) { return dynamic_cast<libsiedler2::ArchivItem_Palette*>( files[file].get(nr) ); }
+	inline glArchivItem_Sound *GetSoundN(std::string file, unsigned int nr) { return dynamic_cast<glArchivItem_Sound*>( files[file].get(nr) ); }
+	inline const char *GetTextN(std::string file, unsigned int nr) { return dynamic_cast<libsiedler2::ArchivItem_Text*>( files[file].get(nr) ) ? dynamic_cast<libsiedler2::ArchivItem_Text*>( files[file].get(nr) )->getText() : "text missing"; }
+	inline libsiedler2::ArchivInfo *GetInfoN(std::string file) { return dynamic_cast<libsiedler2::ArchivInfo*>( &files[file] ); }
 
+	// should not use this!
 	const std::map<std::string, libsiedler2::ArchivInfo> &GetFiles(void) const { return files; }
 
 private:
 	std::map<std::string, libsiedler2::ArchivInfo> files;
 
 public:
-	libsiedler2::ArchivInfo sound_lst;
 	libsiedler2::ArchivInfo sng_lst;
-	libsiedler2::ArchivInfo rttr_lst;
-
-	libsiedler2::ArchivInfo palettes;
-	libsiedler2::ArchivInfo backgrounds;
-	libsiedler2::ArchivInfo pics;
-
-
-	libsiedler2::ArchivInfo client_txt;
-	libsiedler2::ArchivInfo lang_txt;
 
 	libsiedler2::ArchivInfo textures;
 	libsiedler2::ArchivInfo water;

@@ -1,4 +1,4 @@
-// $Id: nofPigbreeder.cpp 5167 2009-07-02 18:49:25Z FloSoft $
+// $Id: nofPigbreeder.cpp 5247 2009-07-11 19:13:17Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -99,7 +99,7 @@ void nofPigbreeder::MakePigSounds()
 		GameClient::inst().GetGFNumber() != last_id)
 	{
 		// "Oink"
-		GetSound(sound_lst,86)->Play(255,false);
+		LOADER.GetSoundN("sound", 86)->Play(255,false);
 
 		last_id = GameClient::inst().GetGFNumber();
 	}

@@ -1,4 +1,4 @@
-// $Id: WindowManager.cpp 4996 2009-06-03 19:01:25Z OLiver $
+// $Id: WindowManager.cpp 5247 2009-07-11 19:13:17Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -359,7 +359,7 @@ void WindowManager::Msg_LeftDown(const MouseCoords& mc)
 		return;
 
 	// Sound abspielen
-	GetSound(sound_lst,112)->Play(255,false);
+	LOADER.GetSoundN("sound", 112)->Play(255,false);
 
 	// haben wir überhaupt fenster?
 	if(!windows.size())

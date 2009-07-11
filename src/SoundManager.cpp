@@ -1,4 +1,4 @@
-// $Id: SoundManager.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: SoundManager.cpp 5247 2009-07-11 19:13:17Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -56,7 +56,7 @@ void SoundManager::PlayNOSound(const unsigned sound_lst_id,noBase * const obj,co
 	}
 
 	// Sound wird noch nicht gespielt --> hinzufügen und abspielen
-	unsigned play_id = GetSound(sound_lst,sound_lst_id)->Play(volume, false);
+	unsigned play_id = LOADER.GetSoundN("sound", sound_lst_id)->Play(volume, false);
 
 	// Konnte er auch abgespielt werden?
 
@@ -105,7 +105,7 @@ void SoundManager::PlayBirdSounds(const unsigned short tree_count)
 	{
 		// ohne baum - kein vogel
 		if(tree_count > 0)
-			GetSound(sound_lst, 87 + rand() % 5)->Play(80-rand()%30,false);
+			LOADER.GetSoundN("sound", 87 + rand() % 5)->Play(80-rand()%30,false);
 		last_bird = VideoDriverWrapper::inst().GetTickCount();
 		bird_interval = rand()%1000;
 	}
@@ -123,7 +123,7 @@ void SoundManager::PlayOceanBrawling(const unsigned water_percent)
 		if(!AudioDriverWrapper::inst().IsEffectPlaying(ocean_play_id))
 		{
 			// Wenn nicht --> neuen abspielen
-			ocean_play_id = GetSound(sound_lst,98+rand()%3)->Play(255,true);
+			ocean_play_id = LOADER.GetSoundN("sound", 98+rand()%3)->Play(255,true);
 		}
 
 		// Lautstärke setzen

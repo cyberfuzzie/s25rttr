@@ -1,4 +1,4 @@
-// $Id: dskOptions.cpp 5195 2009-07-05 09:44:30Z FloSoft $
+// $Id: dskOptions.cpp 5247 2009-07-11 19:13:17Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -64,7 +64,7 @@
  *  @author OLiver
  *  @author FloSoft
  */
-dskOptions::dskOptions(void) : Desktop(GetImage(backgrounds, 1))
+dskOptions::dskOptions(void) : Desktop(LOADER.GetImageN("setup013", 0))
 {
 	// Zurück
 	AddTextButton(0, 300, 550, 200, 22,   TC_RED1, _("Back"),NormalFont);

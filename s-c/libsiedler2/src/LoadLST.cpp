@@ -1,4 +1,4 @@
-// $Id: LoadLST.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: LoadLST.cpp 5247 2009-07-11 19:13:17Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -45,7 +45,7 @@
 int libsiedler2::loader::LoadLST(const char *file, const ArchivItem_Palette *palette, ArchivInfo *items)
 {
 	FILE *lst;
-	short header;
+	unsigned short header;
 	unsigned int count;
 
 	if(file == NULL || items == NULL)
@@ -59,8 +59,15 @@ int libsiedler2::loader::LoadLST(const char *file, const ArchivItem_Palette *pal
 		return 2;
 
 	// Header einlesen
-	if(libendian::be_read_s(&header, lst) != 0)
+	if(libendian::be_read_us(&header, lst) != 0)
 		return 3;
+
+	// ist es eine GER/ENG-File? (Header 0xE7FD)
+	if(header == 0xE7FD)
+	{
+		fclose(lst);
+		return LoadTXT(file, items);
+	}
 
 	// ist es eine LST-File? (Header 0x204E)
 	if(header != 0x204E)

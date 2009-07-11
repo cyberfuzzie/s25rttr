@@ -1,4 +1,4 @@
-// $Id: files.cpp 5201 2009-07-05 19:35:52Z FloSoft $
+// $Id: files.cpp 5247 2009-07-11 19:13:17Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -34,23 +34,85 @@ static char THIS_FILE[] = __FILE__;
 /**
  *  formt Pfade korrekt um.
  *
- *  @param[in] from
+ *  @param[in] file
  *
  *  @return liefert den umgeformten Pfad zurück
  *
  *  @author FloSoft
  */
-std::string GetFilePath(std::string from)
+std::string GetFilePath(std::string file)
 {
-	std::string to = from;
+	std::string to = file;
 
 	// ist der Pfad ein Home-Dir?
-	if(from.at(0) == '~') 
+	if(file.at(0) == '~') 
 	{
 		std::stringstream s;
-		s << getenv("HOME") << from.substr(1);
+		s << getenv("HOME") << file.substr(1);
 		to = s.str();
 	}
 
 	return to;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  prüft ob eine Datei existiert (bzw ob sie lesbar ist)
+ *
+ *  @param[in] file
+ *
+ *  @return liefert ja oder nein zurück
+ *
+ *  @author FloSoft
+ */
+bool FileExists(std::string file)
+{
+	FILE *test = fopen(GetFilePath(file).c_str(), "rb");
+	if(test)
+	{
+		fclose(test);
+		return true;
+	}
+	return false;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  prüft ob eine Verzeichnis existiert (bzw ob es ein Verzeichnis ist)
+ *
+ *  @param[in] dir
+ *
+ *  @return liefert ja oder nein zurück
+ *
+ *  @author FloSoft
+ */
+bool IsDir(std::string dir)
+{
+	if(dir.at(dir.size()-1) == '/')
+		dir.erase(dir.size()-1, 1);
+
+#ifdef _WIN32
+	std::string path = GetFilePath(dir).c_str();
+	std::replace(path.begin(), path.end(), '/', '\\');
+
+	HANDLE test;
+	WIN32_FIND_DATAA wfd;
+
+	test = FindFirstFileA(path.c_str(), &wfd);
+	if(test != INVALID_HANDLE_VALUE)
+	{
+		FindClose(test);
+		if( (wfd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) == FILE_ATTRIBUTE_DIRECTORY)
+			return true;
+	}
+#else
+	DIR *test = opendir(dir.c_str());
+	if(test)
+	{
+		closedir(test);
+		return true;
+	}
+#endif // !_WIN32
+
+	return false;
 }

@@ -1,4 +1,4 @@
-// $Id: iwLobbyConnect.cpp 5238 2009-07-09 20:50:28Z FloSoft $
+// $Id: iwLobbyConnect.cpp 5247 2009-07-11 19:13:17Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -201,7 +201,7 @@ void iwLobbyConnect::Msg_ButtonClick(const unsigned int ctrl_id)
 			LobbyForm(user, pass, email);
 
 			// Einloggen
-			if(LOBBYCLIENT.Login(GetTxt(client_txt, 0), atoi(GetTxt(client_txt, 1)), user, pass) == false)
+			if(LOBBYCLIENT.Login(LOADER.GetTextN("client", 0), atoi(LOADER.GetTextN("client", 1)), user, pass) == false)
 			{
 				SetText(_("Connection failed!"), COLOR_RED, true);
 				break;
@@ -223,7 +223,7 @@ void iwLobbyConnect::Msg_ButtonClick(const unsigned int ctrl_id)
 				break; // raus
 			}
 
-			if(LOBBYCLIENT.Register(GetTxt(client_txt, 0), atoi(GetTxt(client_txt, 1)), user, pass, email) == false)
+			if(LOBBYCLIENT.Register(LOADER.GetTextN("client", 0), atoi(LOADER.GetTextN("client", 1)), user, pass, email) == false)
 			{
 				SetText(_("Connection failed!"), COLOR_RED, true);
 				break;

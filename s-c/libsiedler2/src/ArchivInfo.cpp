@@ -1,4 +1,4 @@
-// $Id: ArchivInfo.cpp 5239 2009-07-09 21:15:45Z FloSoft $
+// $Id: ArchivInfo.cpp 5247 2009-07-11 19:13:17Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -60,10 +60,8 @@
  *
  *  @author FloSoft
  */
-libsiedler2::ArchivInfo::ArchivInfo(void)
+libsiedler2::ArchivInfo::ArchivInfo(void) : data(NULL), count(0)
 {
-	data = NULL;
-	count = 0;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -74,7 +72,7 @@ libsiedler2::ArchivInfo::ArchivInfo(void)
  *
  *  @author FloSoft
  */
-libsiedler2::ArchivInfo::ArchivInfo(const ArchivInfo &info)	: data(NULL), count(0)
+libsiedler2::ArchivInfo::ArchivInfo(const ArchivInfo &info) : data(NULL), count(0)
 {
 	set(&info);
 }
@@ -87,7 +85,7 @@ libsiedler2::ArchivInfo::ArchivInfo(const ArchivInfo &info)	: data(NULL), count(
  *
  *  @author FloSoft
  */
-libsiedler2::ArchivInfo::ArchivInfo(const ArchivInfo *info)	: data(NULL), count(0)
+libsiedler2::ArchivInfo::ArchivInfo(const ArchivInfo *info) : data(NULL), count(0)
 {
 	set(info);
 }

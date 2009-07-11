@@ -1,4 +1,4 @@
-// $Id: Loader.cpp 5243 2009-07-10 05:59:07Z FloSoft $
+// $Id: Loader.cpp 5247 2009-07-11 19:13:17Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -73,17 +73,23 @@ Loader::~Loader(void)
  */
 bool Loader::LoadFiles(void)
 {
-	if(!LoadPalettes())
+	const unsigned int files_count = 7 + 1 + 2 + 3 + 21;
+
+	const unsigned int files[] = { 
+		5, 6, 7, 8, 9, 10, 17, // Paletten:     pal5.bbm, pal6.bbm, pal7.bbm, paletti0.bbm, paletti1.bbm, paletti8.bbm, colors.act
+		104,                   // Splashimage:  splash.bmp
+		11, 12,                // Menüdateien:  resource.dat, io.dat
+		101, 102, 103,         // Hintergründe: menu.bmp, setup013.lbm, setup015.lbm
+		64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84 // Die ganzen Spielladescreens.
+	};
+
+	if(!LoadFilesFromArray(files_count, files))
 		return false;
-	if(!LoadBackgrounds())
-		return false;
-	if(!LoadTXTs())
-		return false;
+
 	if(!LoadSounds())
 		return false;
 
-	// rttr.lst laden
-	if(!LoadFile(FILE_PATHS[16], GetPalette(0), &rttr_lst))
+	if(!LoadLsts(95)) // lade systemweite und persönliche lst files
 		return false;
 
 	return true;
@@ -91,130 +97,48 @@ bool Loader::LoadFiles(void)
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  Lädt die Menüdateien.
+ *  Lädt Dateien aus FILE_PATHS bzw aus dem Verzeichnis.
  *
  *  @return @p true bei Erfolg, @p false bei Fehler.
  *
  *  @author FloSoft
- *  @author OLiver
  */
-bool Loader::LoadMenu(void)
+bool Loader::LoadFilesFromArray(const unsigned int files_count, const unsigned int *files)
 {
-	// resource.dat laden
-	if(!LoadFile(FILE_PATHS[11], GetPalette(0)))
-		return false;
-
-	// io.dat laden
-	if(!LoadFile(FILE_PATHS[12], GetPalette(0)))
-		return false;
-
-	// outline_fonts.lst laden
-	if(!LoadFile(FILE_PATHS[54], GetPalette(0)))
-		return false;
-
-	return true;
-}
-
-///////////////////////////////////////////////////////////////////////////////
-/**
- *  Lädt die Paletten.
- *
- *  @return @p true bei Erfolg, @p false bei Fehler.
- *
- *  @author FloSoft
- *  @author OLiver
- */
-bool Loader::LoadPalettes(void)
-{
-	palettes.alloc(6);
-
-	for(unsigned char i = 0; i < 6; ++i)
+	// load the files or directorys
+	for(unsigned int i = 0; i < files_count; ++i)
 	{
-		libsiedler2::ArchivInfo bbm;
-		if(!LoadFile(FILE_PATHS[ i + 5 ], NULL, &bbm ) )
-			return false;
-
-		palettes.setC(i, bbm.get(0));
-	}
-	libsiedler2::ArchivInfo bbm;
-	if(!LoadFile(FILE_PATHS[17], NULL, &bbm ) )
-		return false;
-	palettes.pushC(bbm.get(0));
-
-	return true;
-}
-
-///////////////////////////////////////////////////////////////////////////////
-/**
- *  Lädt die Hintergrunddateien.
- *
- *  @return @p true bei Erfolg, @p false bei Fehler.
- *
- *  @author FloSoft
- *  @author OLiver
- */
-bool Loader::LoadBackgrounds(void)
-{
-	backgrounds.alloc(4);
-
-	// Splash anzeigen
-	libsiedler2::ArchivInfo splash;
-	if(!LoadFile(FP_MENU_BACKGROUNDS[FILE_SPLASH_ID], NULL, &splash ) )
-		return false;
-
-	glArchivItem_Bitmap *image = dynamic_cast<glArchivItem_Bitmap*>(splash.get(0));
-	image->setFilter(GL_LINEAR);
-	image->Draw(0, 0, VideoDriverWrapper::inst().GetScreenWidth(), VideoDriverWrapper::inst().GetScreenHeight(), 0, 0, 0, 0);
-	VideoDriverWrapper::inst().SwapBuffers();
-
-	for(unsigned char i = 0; i < 4; ++i)
-	{
-		libsiedler2::ArchivInfo bgd;
-		if(i == FILE_SPLASH_ID)
+		// is the entry a directory?
+		if(IsDir(FILE_PATHS[ files[i] ]))
 		{
-			backgrounds.setC(i, splash.get(0));
+			// yes, load all files in the directory
+			LOG.lprintf("Lade LST Dateien aus \"%s\"\n", GetFilePath(FILE_PATHS[ files[i] ]).c_str());
+
+			std::list<std::string> lst;
+			ListDir(GetFilePath(FILE_PATHS[ files[i] ]) + "*.lst", NULL, NULL, &lst);
+
+			for(std::list<std::string>::iterator i = lst.begin(); i != lst.end(); ++i)
+			{
+				if(!LoadFile( i->c_str(), GetPaletteN("pal5") ) )
+					return false;
+			}
+			LOG.lprintf("Fertig\n");
 		}
 		else
 		{
-			if(!LoadFile(FP_MENU_BACKGROUNDS[i], NULL, &bgd ) )
+			// no, only single file specified
+			if(!LoadFile(FILE_PATHS[ files[i] ], GetPaletteN("pal5") ) )
 				return false;
 
-			if(bgd.get(0) == NULL || bgd.get(0)->getBobType() == libsiedler2::BOBTYPE_PALETTE)
-				image = dynamic_cast<glArchivItem_Bitmap*>(bgd.get(1));
-			else
-				image = dynamic_cast<glArchivItem_Bitmap*>(bgd.get(0));
-
-			if(image)
+			// ggf Splash anzeigen
+			if(files[i] == FILE_SPLASH_ID)
+			{
+				glArchivItem_Bitmap *image = GetImageN("splash", 0);
 				image->setFilter(GL_LINEAR);
-			backgrounds.setC(i, image);
+				image->Draw(0, 0, VideoDriverWrapper::inst().GetScreenWidth(), VideoDriverWrapper::inst().GetScreenHeight(), 0, 0, 0, 0);
+				VideoDriverWrapper::inst().SwapBuffers();
+			}
 		}
-	}
-
-	#ifndef OLIVER
-		pics.alloc(20);
-
-		for(unsigned char i = 0; i < 20; ++i)
-		{
-	#else
-		pics.alloc(1);
-
-		for(unsigned char i = 0; i < 1; ++i)
-		{
-	#endif
-
-		libsiedler2::ArchivInfo bgd;
-
-		if(!LoadFile(FILE_PATHS[ 64 + i ], NULL, &bgd ) )
-			return false;
-
-		if(bgd.get(0) == NULL || bgd.get(0)->getBobType() == libsiedler2::BOBTYPE_PALETTE)
-			image = dynamic_cast<glArchivItem_Bitmap*>(bgd.get(1));
-		else
-			image = dynamic_cast<glArchivItem_Bitmap*>(bgd.get(0));
-
-		if(image)
-			image->setFilter(GL_LINEAR);
-		pics.setC(i, image);
 	}
 
 	return true;
@@ -222,42 +146,39 @@ bool Loader::LoadBackgrounds(void)
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  Lädt alle Textfiles.
+ *  Lädt die "override" lst-files aus den systemweiten und persönlichen verzeichnissen
  *
  *  @return @p true bei Erfolg, @p false bei Fehler.
  *
  *  @author FloSoft
  */
-bool Loader::LoadTXTs(void)
+bool Loader::LoadLsts(unsigned int dir)
 {
-	// client.ger.local laden
-	LOG.lprintf("lade %s: ", FILE_PATHS[87]);
-	if(libsiedler2::loader::LoadTXT(GetFilePath( FILE_PATHS[87]).c_str(), &client_txt, false) == 0)
+	// systemweite lsts laden
+	unsigned int files_count = 0;
+	unsigned int *files = NULL;
+
+	if(GetFilePath(FILE_PATHS[dir]) == GetFilePath(FILE_PATHS[dir+3]))
 	{
-		LOG.lprintf("fertig\n");
-		LOG.lprintf("WARNUNG: Benutze lokale Debug-Konfiguration\n");
+		files_count = 1;
+		files = new unsigned int[1];
+		files[0] = dir;
 	}
 	else
 	{
-		LOG.lprintf("fehlgeschlagen\nKeine lokale Debug-Konfiguration gefunden\n");
-		// client.ger laden
-		LOG.lprintf("lade %s\n", FILE_PATHS[18]);
-		if(libsiedler2::loader::LoadTXT(GetFilePath(FILE_PATHS[18]).c_str(), &client_txt, false) != 0)
-			return false;
+		files_count = 2;
+		files = new unsigned int[2];
+		files[0] = dir;
+		files[1] = dir + 3;
 	}
 
-	// lang.ger laden
-	LOG.lprintf("lade %s: ", FILE_PATHS[89]);
-	if(libsiedler2::loader::LoadTXT(GetFilePath(FILE_PATHS[89]).c_str(), &lang_txt, false) == 0)
-		LOG.lprintf("fertig\n");
-	else
+	if(!LoadFilesFromArray(files_count, files) )
 	{
-		LOG.lprintf("fehlgeschlagen\n");
+		delete[] files;
 		return false;
 	}
 
-	
-
+	delete[] files;
 	return true;
 }
 
@@ -271,59 +192,47 @@ bool Loader::LoadTXTs(void)
  */
 bool Loader::LoadSounds(void)
 {
-	// konvertierte sound.lst laden
-	if(!LoadFile(FILE_PATHS[55], GetPalette(0), &sound_lst))
+	// ist die konvertierte sound.lst vorhanden?
+	if(!FileExists(FILE_PATHS[55]))
 	{
-		char cmd[4096];
-		char name[4096];
+		// nein, dann konvertieren
+
+		std::stringstream cmdss;
+		cmdss << GetFilePath(FILE_PATHS[57]); // pfad zum sound-converter hinzufügen
+
+		// name anhängen
 #ifdef _WIN32
-		strcpy(name, "\\sound-convert.exe");
+		cmdss << "\\sound-convert.exe";
 #else
-		strcpy(name, "/sound-convert");
+		cmdss << "/sound-convert";
 #endif
-		snprintf(cmd, 4096, "%s%s -s \"%s\" -f \"%s\" -t \"%s\"", GetFilePath(FILE_PATHS[57]).c_str(), name, GetFilePath(FILE_PATHS[56]).c_str(), GetFilePath(FILE_PATHS[49]).c_str(), GetFilePath(FILE_PATHS[55]).c_str());
-		//LOG.lprintf("%s\n", cmd);
+		
+		// parameter anhängen
+		cmdss << " -s \"";
+		cmdss << GetFilePath(FILE_PATHS[56]); // script
+		cmdss << "\" -f \"";
+		cmdss << GetFilePath(FILE_PATHS[49]); // quelle
+		cmdss << "\" -t \"";
+		cmdss << GetFilePath(FILE_PATHS[55]); // ziel
+		cmdss << "\"";
+
+		std::string cmd = cmdss.str();
 #ifdef _WIN32
-		for(unsigned int x = 0; x < 4096; ++x)
-		{
-			if(cmd[x] == '/')
-				cmd[x] = '\\';
-		}
-#endif // !_WIN32
-		if(system(cmd) == -1)
+		std::replace(cmd.begin(), cmd.end(), '/', '\\'); // Slash in Backslash verwandeln, sonst will "system" unter win nicht
+#endif // _WIN32
+
+		if(system(cmd.c_str()) == -1)
 			return false;
 
-		// 2ter versuch
-		if(!LoadFile(FILE_PATHS[55], GetPalette(0), &sound_lst))
-		{
-			// Datei kopieren, und zwar schön portabel :P ...
+		// die konvertierte muss nicht extra geladen werden, da sie im override-ordner landet
+	}
 
-			LOG.lprintf("Kopiere Datei %s nach %s: ", GetFilePath(FILE_PATHS[49]).c_str(), GetFilePath(FILE_PATHS[55]).c_str());
-
-			FILE *f = fopen(GetFilePath(FILE_PATHS[49]).c_str(), "rb");
-			FILE *t = fopen(GetFilePath(FILE_PATHS[55]).c_str(), "wb");
-			if(!f || !t)
-			{
-				LOG.lprintf("fehlgeschlagen\n");
-				return false;
-			}
-			LOG.lprintf("fertig\n");
-
-			while(!feof(f))
-			{
-				char buf[4096];
-				size_t read = fread(buf, 1, 4096, f);
-				if(read > 0)
-					fwrite(buf, 1, read, t);
-			}
-
-			fclose(f);
-			fclose(t);
-
-			// last chance
-			if(!LoadFile(FILE_PATHS[55], GetPalette(0), &sound_lst))
-				return false;
-		}
+	// ggf original laden, hier das overriding benutzen wär ladezeitverschwendung
+	if(!FileExists(FILE_PATHS[55]))
+	{
+		// existiert nicht 
+		if(!LoadFile(FILE_PATHS[49]))
+			return false;
 	}
 
 	std::list<std::string> liste;
@@ -368,13 +277,13 @@ bool Loader::LoadFile(const char *pfad, const libsiedler2::ArchivItem_Palette *p
 	std::string p = pfad;
 	transform ( p.begin(), p.end(), p.begin(), tolower );
 
-	size_t pp = p.find_last_of('.');
-	if(pp != std::string::npos)
-		p = p.substr(0, pp);
-
-	pp = p.find_last_of("/\\");
+	size_t pp = p.find_last_of("/\\");
 	if(pp != std::string::npos)
 		p = p.substr(pp+1);
+
+	pp = p.find_first_of('.');
+	if(pp != std::string::npos)
+		p = p.substr(0, pp);
 
 	// leeres Archiv in Map einfügen
 	libsiedler2::ArchivInfo archiv;
@@ -489,31 +398,26 @@ bool Loader::LoadGame(unsigned char gfxset, bool *nations)
 		{
 			// Völker-Grafiken laden
 			nation_bobs[i].clear();
-			if(!LoadFile(FILE_PATHS[27 + i + (gfxset == 2)*NATION_COUNT], GetPalette(0), &nation_bobs[i]))
+			if(!LoadFile(FILE_PATHS[27 + i + (gfxset == 2)*NATION_COUNT], GetPaletteN("pal5"), &nation_bobs[i]))
 				return false;
 	
 			nation_icons[i].clear();
-			if(!LoadFile(FILE_PATHS[35 + i], GetPalette(0), &nation_icons[i]))
+			if(!LoadFile(FILE_PATHS[35 + i], GetPaletteN("pal5"), &nation_icons[i]))
 				return false;
 		}
 	}
+
+	if(!LoadLsts(96)) // lade systemweite und persönliche lst files
+		return false;
 
 	// ab hier nur noch bei anderem gfxset laden
 	static unsigned char lastgfx = 0xFF;
 	if(lastgfx == gfxset)
 		return true;
 
-	// rttr.lst laden
-	rttr_lst.clear();
-	if(!LoadFile(FILE_PATHS[16], GetPalette(0), &rttr_lst))
-	{
-		lastgfx = 0xFF;
-		return false;
-	}
-
 	// map_?_z.lst laden
 	map_lst.clear();
-	if(!LoadFile(FILE_PATHS[23+gfxset], GetPalette(0), &map_lst))
+	if(!LoadFile(FILE_PATHS[23+gfxset], GetPaletteN("pal5"), &map_lst))
 	{
 		lastgfx = 0xFF;
 		return false;
@@ -523,7 +427,7 @@ bool Loader::LoadGame(unsigned char gfxset, bool *nations)
 	{
 		// mis?bobs.lst laden
 		misxbobs[i].clear();
-		if(!LoadFile(FILE_PATHS[58+i], GetPalette(0), &misxbobs[i]))
+		if(!LoadFile(FILE_PATHS[58+i], GetPaletteN("pal5"), &misxbobs[i]))
 		{
 			lastgfx = 0xFF;
 			return false;
@@ -532,7 +436,7 @@ bool Loader::LoadGame(unsigned char gfxset, bool *nations)
 
 	// rombobs.lst laden
 	rombobs_lst.clear();
-	if(!LoadFile(FILE_PATHS[26], GetPalette(0), &rombobs_lst))
+	if(!LoadFile(FILE_PATHS[26], GetPaletteN("pal5"), &rombobs_lst))
 	{
 		lastgfx = 0xFF;
 		return false;
@@ -540,7 +444,7 @@ bool Loader::LoadGame(unsigned char gfxset, bool *nations)
 
 	// carrier.bob laden
 	carrier_bob.clear();
-	if(!LoadFile(FILE_PATHS[44], GetPalette(0), &carrier_bob))
+	if(!LoadFile(FILE_PATHS[44], GetPaletteN("pal5"), &carrier_bob))
 	{
 		lastgfx = 0xFF;
 		return false;
@@ -548,7 +452,7 @@ bool Loader::LoadGame(unsigned char gfxset, bool *nations)
 
 	// jobs.bob laden
 	jobs_bob.clear();
-	if(!LoadFile(FILE_PATHS[45], GetPalette(0), &jobs_bob))
+	if(!LoadFile(FILE_PATHS[45], GetPaletteN("pal5"), &jobs_bob))
 	{
 		lastgfx = 0xFF;
 		return false;
@@ -556,7 +460,7 @@ bool Loader::LoadGame(unsigned char gfxset, bool *nations)
 
 	// BOOT.LST laden
 	boat_lst.clear();
-	if(!LoadFile(FILE_PATHS[86], GetPalette(0), &boat_lst))
+	if(!LoadFile(FILE_PATHS[86], GetPaletteN("pal5"), &boat_lst))
 	{
 		lastgfx = 0xFF;
 		return false;
@@ -564,7 +468,13 @@ bool Loader::LoadGame(unsigned char gfxset, bool *nations)
 
 	// BOOT.LST laden
 	boot_lst.clear();
-	if(!LoadFile(FILE_PATHS[92], GetPalette(0), &boot_lst))
+	if(!LoadFile(FILE_PATHS[92], GetPaletteN("pal5"), &boot_lst))
+	{
+		lastgfx = 0xFF;
+		return false;
+	}
+
+	if(!LoadLsts(97)) // lade systemweite und persönliche lst files
 	{
 		lastgfx = 0xFF;
 		return false;
@@ -599,7 +509,7 @@ bool Loader::LoadTerrain(unsigned char gfxset)
 	libsiedler2::ArchivInfo lbm;
 
 	// tex?.lbm laden
-	if(!LoadFile(FILE_PATHS[20 + gfxset], GetPalette(0), &lbm))
+	if(!LoadFile(FILE_PATHS[20 + gfxset], GetPaletteN("pal5"), &lbm))
 		return false;
 
 	// Unanimierte Texturen
@@ -689,8 +599,8 @@ bool Loader::LoadTerrain(unsigned char gfxset)
 void Loader::ExtractTexture(libsiedler2::ArchivInfo *source, libsiedler2::ArchivInfo *destination, Rect &rect)
 {
 	glArchivItem_Bitmap_Raw bitmap;
-	libsiedler2::ArchivItem_Palette *palette = dynamic_cast<libsiedler2::ArchivItem_Palette*>(source->get(0));
-	glArchivItem_Bitmap *image = dynamic_cast<glArchivItem_Bitmap*>(source->get(1));
+	libsiedler2::ArchivItem_Palette *palette = dynamic_cast<libsiedler2::ArchivItem_Palette*>(source->get(1));
+	glArchivItem_Bitmap *image = dynamic_cast<glArchivItem_Bitmap*>(source->get(0));
 
 	unsigned short width = rect.right - rect.left;
 	unsigned short height = rect.bottom - rect.top;
@@ -723,8 +633,8 @@ void Loader::ExtractTexture(libsiedler2::ArchivInfo *source, libsiedler2::Archiv
 void Loader::ExtractAnimatedTexture(libsiedler2::ArchivInfo *source, libsiedler2::ArchivInfo *destination, Rect &rect, unsigned char color_count, unsigned char start_index)
 {
 	glArchivItem_Bitmap_Raw bitmap;
-	libsiedler2::ArchivItem_Palette *palette = dynamic_cast<libsiedler2::ArchivItem_Palette*>(source->get(0));
-	glArchivItem_Bitmap *image = dynamic_cast<glArchivItem_Bitmap*>(source->get(1));
+	libsiedler2::ArchivItem_Palette *palette = dynamic_cast<libsiedler2::ArchivItem_Palette*>(source->get(1));
+	glArchivItem_Bitmap *image = dynamic_cast<glArchivItem_Bitmap*>(source->get(0));
 
 	bitmap.setPalette(palette);
 	bitmap.setFormat(libsiedler2::FORMAT_PALETTED);

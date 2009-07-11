@@ -1,4 +1,4 @@
-// $Id: noAnimal.cpp 5238 2009-07-09 20:50:28Z FloSoft $
+// $Id: noAnimal.cpp 5247 2009-07-11 19:13:17Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -144,7 +144,7 @@ void noAnimal::Draw(int x, int y)
 				{
 					// Wenns in dem jeweiligen Rahmen liegt, Sound abspielen
 					if(now < sound_moment + 1000)
-						GetSound(sound_lst,(species == SPEC_SHEEP)?94:95)->Play(50+rand()%70,false);
+						LOADER.GetSoundN("sound", (species == SPEC_SHEEP)?94:95)->Play(50+rand()%70,false);
 
 					// Neuen Zeitpunkt errechnen
 					sound_moment = now + 8000 + rand()%5000;

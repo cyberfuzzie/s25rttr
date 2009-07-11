@@ -1,4 +1,4 @@
-// $Id: dskHostGame.cpp 5171 2009-07-02 20:21:42Z FloSoft $
+// $Id: dskHostGame.cpp 5247 2009-07-11 19:13:17Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -50,7 +50,7 @@
  *  @author FloSoft
  */
 dskHostGame::dskHostGame() :
-	Desktop(GetImage(backgrounds, 2)), temppunkte(1000)
+	Desktop(LOADER.GetImageN("setup015", 0)), temppunkte(1000)
 {
 	// Kartenname
 	AddText(0, 400, 5,GAMECLIENT.GetGameName().c_str(), COLOR_YELLOW, glArchivItem_Font::DF_CENTER, LargeFont);
@@ -650,7 +650,7 @@ void dskHostGame::CreateMapPreview()
 
 	//preview.setFilter(4444);
 	//preview.setFilter(GL_LINEAR);
-	//preview.create(w*2, h*2, buffer, w*2, h*2, libsiedler2::FORMAT_PALETTED, GetPalette(0));
+	//preview.create(w*2, h*2, buffer, w*2, h*2, libsiedler2::FORMAT_PALETTED, LOADER.GetPaletteN("pal5"));
 
 	//delete[] buffer;
 

@@ -1,4 +1,4 @@
-// $Id: glArchivItem_Bitmap_Player.cpp 5238 2009-07-09 20:50:28Z FloSoft $
+// $Id: glArchivItem_Bitmap_Player.cpp 5247 2009-07-11 19:13:17Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -36,9 +36,9 @@
 
 void glArchivItem_Bitmap_Player::Draw(short dst_x, short dst_y, short dst_w, short dst_h, short src_x, short src_y, short src_w, short src_h, const unsigned int color, const unsigned int player_color)
 {
-	if(texture == 0 || ptexture == 0)
+	if(texture == 0)
 		GenerateTexture();
-	if(texture == 0 || ptexture == 0)
+	if(texture == 0)
 		return;
 
 	if(src_w == 0)
@@ -63,7 +63,6 @@ void glArchivItem_Bitmap_Player::Draw(short dst_x, short dst_y, short dst_w, sho
 	glEnd();
 
 	glColor4ub( GetRed(player_color), GetGreen(player_color), GetBlue(player_color),  GetAlpha(player_color));
-	//glBindTexture(GL_TEXTURE_2D, ptexture);
 
 	src_x += tex_width;
 
@@ -77,11 +76,10 @@ void glArchivItem_Bitmap_Player::Draw(short dst_x, short dst_y, short dst_w, sho
 
 void glArchivItem_Bitmap_Player::GenerateTexture(void)
 {
-	ptexture = texture = VideoDriverWrapper::inst().GenerateTexture();
-	//ptexture = VideoDriverWrapper::inst().GenerateTexture();
-	
-	//if(!palette)
-	setPalette(GetPalette(6));
+	texture = VideoDriverWrapper::inst().GenerateTexture();
+
+	// wieso nicht pal5???
+	setPalette(LOADER.GetPaletteN("colors"));
 
 	int iformat = GL_RGBA, dformat = GL_BGRA; //GL_BGRA_EXT;
 
@@ -97,41 +95,5 @@ void glArchivItem_Bitmap_Player::GenerateTexture(void)
 	printHelper(buffer, tex_width*2, tex_height, libsiedler2::FORMAT_RGBA, palette, 128, tex_width, 0, 0, 0, 0, 0, true);
 	glTexImage2D(GL_TEXTURE_2D, 0, iformat, tex_width*2, tex_height, 0, dformat, GL_UNSIGNED_BYTE, buffer);
 
-	/*libsiedler2::ArchivInfo bmp;
-	glArchivItem_Bitmap_Player bmpp;
-	bmpp.create(tex_width*2, tex_height, buffer, tex_width*2, tex_height, libsiedler2::FORMAT_RGBA, GetPalette(6), 128);
-	bmp.pushC(&bmpp);
-	libsiedler2::loader::WriteBMP("test.bmp", GetPalette(6), &bmp);*/
-
-	// Playertextur erzeugen
-	/*glBindTexture(GL_TEXTURE_2D, ptexture);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filter);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter);
-
-	memset(buffer, 0, tex_width*tex_height*4);
-	printHelper(buffer, tex_width, tex_height, libsiedler2::FORMAT_RGBA, palette, 128, 0, 0, 0, 0, 0, 0, true);
-	glTexImage2D(GL_TEXTURE_2D, 0, iformat, tex_width, tex_height, 0, dformat, GL_UNSIGNED_BYTE, buffer);*/
-
 	delete[] buffer;
-}
-
-void glArchivItem_Bitmap_Player::setFilter(unsigned int filter)
-{
-	if(this->filter == filter)
-		return;
-
-	this->filter = filter;
-
-	// neugenerierung der Textur anstoﬂen
-	if(texture != 0)
-	{
-		glDeleteTextures(1, (const GLuint*)&texture);
-		texture = 0;
-	}
-	if(ptexture != 0)
-	{
-		glDeleteTextures(1, (const GLuint*)&ptexture);
-		ptexture = 0;
-	}
 }

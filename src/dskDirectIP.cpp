@@ -1,4 +1,4 @@
-// $Id: dskDirectIP.cpp 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: dskDirectIP.cpp 5247 2009-07-11 19:13:17Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -45,7 +45,7 @@
  *
  *  @author FloSoft
  */
-dskDirectIP::dskDirectIP(void) : Desktop(GetImage(backgrounds, 0))
+dskDirectIP::dskDirectIP(void) : Desktop(LOADER.GetImageN("menu", 0))
 {
 	// Version
 	AddVarText(0, 0, 600, _("The Settlers II.5 RTTR, v%s-%s"), COLOR_YELLOW, 0 | glArchivItem_Font::DF_BOTTOM, NormalFont, 2, GetWindowVersion(), GetWindowRevision());

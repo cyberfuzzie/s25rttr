@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.cpp 5238 2009-07-09 20:50:28Z FloSoft $
+// $Id: dskGameInterface.cpp 5247 2009-07-11 19:13:17Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -83,7 +83,7 @@
  */
 dskGameInterface::dskGameInterface()
 	: Desktop(NULL), 
-	gwv(GameClient::inst().QueryGameWorldViewer()), cbb(GetPalette(0)),
+	gwv(GameClient::inst().QueryGameWorldViewer()), cbb(LOADER.GetPaletteN("pal5")),
 	actionwindow(NULL), roadwindow(NULL),
 	selected_x(0), selected_y(0), minimap(*gwv)
 {
@@ -217,7 +217,7 @@ void dskGameInterface::Msg_PaintAfter()
 	{
 		GameClientPlayer *player = GAMECLIENT.GetPlayer(i);
 		if(player->is_lagging)
-			GetPlayerImage(rttr_lst, 0)->Draw(SETTINGS.width-70-i*40, 35, 30, 30, 0, 0, 0, 0,  COLOR_WHITE, COLORS[player->color]);
+			LOADER.GetImageN("rttr", 0)->Draw(SETTINGS.width-70-i*40, 35, 30, 30, 0, 0, 0, 0,  COLOR_WHITE, COLORS[player->color]);
 	}
 }
 
@@ -1005,7 +1005,7 @@ void dskGameInterface::CI_NewPostMessage(const unsigned postmessages_count)
 	UpdatePostIcon(postmessages_count);
 
 	// Tauben-Sound abspielen
-	GetSound(sound_lst, 114)->Play(255,false);
+	LOADER.GetSoundN("sound", 114)->Play(255,false);
 }
 
 /// Es wurde eine Postnachricht vom Spieler gelöscht

@@ -1,4 +1,4 @@
-// $Id: glArchivItem_Font.cpp 5187 2009-07-04 07:36:56Z FloSoft $
+// $Id: glArchivItem_Font.cpp 5247 2009-07-11 19:13:17Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -441,12 +441,12 @@ void glArchivItem_Font::initFont()
 		const glArchivItem_Bitmap_Player *c = dynamic_cast<const glArchivItem_Bitmap_Player *>(get(i));
 		if(c)
 		{
-			c->print(buffer, w, h, libsiedler2::FORMAT_RGBA, GetPalette(6), 128, x, y);
+			c->print(buffer, w, h, libsiedler2::FORMAT_RGBA, LOADER.GetPaletteN("colors"), 128, x, y);
 			_charwidths[i] = c->getWidth();
 		}
 		x += dx+2;
 	}
 
-	_font->create(w, h, buffer, w, h, libsiedler2::FORMAT_RGBA, GetPalette(6), 128);
+	_font->create(w, h, buffer, w, h, libsiedler2::FORMAT_RGBA, LOADER.GetPaletteN("colors"), 128);
 	_font->setFilter(GL_LINEAR);
 }

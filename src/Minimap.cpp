@@ -1,4 +1,4 @@
-// $Id: Minimap.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: Minimap.cpp 5247 2009-07-11 19:13:17Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -63,7 +63,7 @@ void Minimap::CreateMapTexture(const void *param)
 
 	map.setFilter(GL_LINEAR);
 	map.create(map_width*2, map_height, buffer, map_width*2, map_height,
-				libsiedler2::FORMAT_RGBA, GetPalette(0));
+				libsiedler2::FORMAT_RGBA, LOADER.GetPaletteN("pal5"));
 
 	delete [] buffer;
 }

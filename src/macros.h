@@ -1,4 +1,4 @@
-// $Id: macros.h 5238 2009-07-09 20:50:28Z FloSoft $
+// $Id: macros.h 5247 2009-07-11 19:13:17Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -24,8 +24,6 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // diverse Makros
-
-#define GetPalette(nr) ( dynamic_cast<libsiedler2::ArchivItem_Palette*>( LOADER.palettes.get(nr) ) )
 
 #define GetBobImage(nation, nr) ( dynamic_cast<glArchivItem_Bitmap*>(LOADER.nation_bobs[nation].get(nr)) )
 #define GetBobPlayerImage(nation, nr) ( dynamic_cast<glArchivItem_Bitmap_Player*>(LOADER.nation_bobs[nation].get(nr)) )

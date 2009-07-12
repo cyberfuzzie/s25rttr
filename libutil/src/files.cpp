@@ -1,4 +1,4 @@
-// $Id: files.cpp 5247 2009-07-11 19:13:17Z FloSoft $
+// $Id: files.cpp 5252 2009-07-12 10:13:46Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -106,7 +106,7 @@ bool IsDir(std::string dir)
 			return true;
 	}
 #else
-	DIR *test = opendir(dir.c_str());
+	DIR *test = opendir(GetFilePath(dir).c_str());
 	if(test)
 	{
 		closedir(test);

@@ -1,4 +1,4 @@
-// $Id: languages.cpp 5247 2009-07-11 19:13:17Z FloSoft $
+// $Id: languages.cpp 5251 2009-07-12 10:09:58Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -41,15 +41,15 @@
  */
 void Languages::loadLanguages()
 {
-	unsigned int count = LOADER.GetInfoN("client")->getCount();
+	unsigned int count = LOADER.GetInfoN("lang")->getCount();
 
 	// abrunden
 	count -= (count % 2);
 
 	for(unsigned int i = 0; i < count; i += 2)
 	{
-		libsiedler2::ArchivItem_Text *n = dynamic_cast<libsiedler2::ArchivItem_Text*>(LOADER.GetInfoN("client")->get(i));
-		libsiedler2::ArchivItem_Text *c = dynamic_cast<libsiedler2::ArchivItem_Text*>(LOADER.GetInfoN("client")->get(i+1));
+		libsiedler2::ArchivItem_Text *n = dynamic_cast<libsiedler2::ArchivItem_Text*>(LOADER.GetInfoN("lang")->get(i));
+		libsiedler2::ArchivItem_Text *c = dynamic_cast<libsiedler2::ArchivItem_Text*>(LOADER.GetInfoN("lang")->get(i+1));
 
 		if(!n)
 			continue;

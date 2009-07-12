@@ -1,4 +1,4 @@
-// $Id: noFire.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: noFire.cpp 5254 2009-07-12 15:49:16Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -87,8 +87,8 @@ void noFire::Draw(int x, int y)
 	if(id < 666)
 	{
 		// Loderndes Feuer
-		GetImage(map_lst, 2500+size*8+id%8)->Draw(x,y,0,0,0,0,0,0);
-		GetImage(map_lst, 2530+size*8+id%8)->Draw(x,y,0,0,0,0,0,0,0xC0101010);
+		LOADER.GetMapImageN(2500+size*8+id%8)->Draw(x,y,0,0,0,0,0,0);
+		LOADER.GetMapImageN(2530+size*8+id%8)->Draw(x,y,0,0,0,0,0,0,0xC0101010);
 
 		// Feuersound abspielen in zufälligen Intervallen
 		if(VideoDriverWrapper::inst().GetTickCount() - last_sound > next_interval)
@@ -103,7 +103,7 @@ void noFire::Draw(int x, int y)
 	else
 	{
 		// Schutt
-		GetImage(map_lst, 2524+size)->Draw(x,y,0,0,0,0,0,0);
+		LOADER.GetMapImageN(2524+size)->Draw(x,y,0,0,0,0,0,0);
 	}
 }
 

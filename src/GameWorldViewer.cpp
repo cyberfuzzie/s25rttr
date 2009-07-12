@@ -1,4 +1,4 @@
-// $Id: GameWorldViewer.cpp 5167 2009-07-02 18:49:25Z FloSoft $
+// $Id: GameWorldViewer.cpp 5254 2009-07-12 15:49:16Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -102,7 +102,7 @@ void GameWorldViewer::Draw(const unsigned char player, unsigned * water, const b
 				////////////////////////////////////////////////
 
 				if(show_bq && GetNode(tx,ty).bq && GetNode(tx,ty).bq < 7)
-				GetImage(map_lst,  49+GetNode(tx,ty).bq)->Draw(static_cast<int>(xpos),static_cast<int>(ypos), 0, 0, 0, 0, 0, 0);
+				LOADER.GetMapImageN(49+GetNode(tx,ty).bq)->Draw(static_cast<int>(xpos),static_cast<int>(ypos), 0, 0, 0, 0, 0, 0);
 			}
 			// im Nebel die FOW-Objekte zeichnen
 			else if(visibility == VIS_FOW)
@@ -277,18 +277,18 @@ void GameWorldViewer::Draw(const unsigned char player, unsigned * water, const b
 				if(rb.mode)
 					mid = 22;
 
-				GetImage(map_lst,  mid)->Draw(xpos,ypos, 0, 0, 0, 0, 0, 0);
+				LOADER.GetMapImageN(mid)->Draw(xpos,ypos, 0, 0, 0, 0, 0, 0);
 			}
 
 			/// Aktuell selektierter Punkt
 			if(draw_selected && selected_x == tx && selected_y == ty)
-				GetImage(map_lst,  20)->Draw(xpos,ypos, 0, 0, 0, 0, 0, 0);
+				LOADER.GetMapImageN(20)->Draw(xpos,ypos, 0, 0, 0, 0, 0, 0);
 
 			// Wegbauzeug
 			if(rb.mode)
 			{
 				if(rb.point_x == tx && rb.point_y == ty)
-					GetImage(map_lst,  21)->Draw(xpos,ypos, 0, 0, 0, 0, 0, 0);
+					LOADER.GetMapImageN(21)->Draw(xpos,ypos, 0, 0, 0, 0, 0, 0);
 
 
 
@@ -312,20 +312,20 @@ void GameWorldViewer::Draw(const unsigned char player, unsigned * water, const b
 							case -4: case -5: id = 66; break;
 							}
 
-							GetImage(map_lst,  id)->Draw(xpos,ypos, 0, 0, 0, 0, 0, 0);
+							LOADER.GetMapImageN(id)->Draw(xpos,ypos, 0, 0, 0, 0, 0, 0);
 						}
 
 						if(GetNO(tx,ty))
 						{
 							// Flaggenanschluss? --> extra zeichnen
 							if(GetNO(tx,ty)->GetType() == NOP_FLAG && !(tx == rb.start_x && ty == rb.start_y))
-								GetImage(map_lst,  20)->Draw(xpos,ypos, 0, 0, 0, 0, 0, 0);
+								LOADER.GetMapImageN(20)->Draw(xpos,ypos, 0, 0, 0, 0, 0, 0);
 						}
 
 						if(rb.route.size())
 						{
 							if(unsigned(rb.route.back()+3) % 6 == i)
-								GetImage(map_lst,  67)->Draw(xpos,ypos, 0, 0, 0, 0, 0, 0);
+								LOADER.GetMapImageN(67)->Draw(xpos,ypos, 0, 0, 0, 0, 0, 0);
 						}
 					}
 				}
@@ -370,17 +370,17 @@ void GameWorldViewer::DrawBoundaryStone(const int x, const int y, const MapCoord
 	{
 		unsigned player_color = COLORS[GAMECLIENT.GetPlayer(owner-1)->color];
 
-		GetBobPlayerImage(GAMECLIENT.GetPlayer(owner-1)->nation, 0)->Draw(xpos,ypos,0,0,0,0,0,0,fow ? FOW_DRAW_COLOR : COLOR_WHITE, fow ? CalcPlayerFOWDrawColor(player_color) : player_color);
-		GetBobImage(GAMECLIENT.GetPlayer(owner-1)->nation, 1)->Draw(xpos,ypos,0,0,0,0,0,0,COLOR_SHADOW);
+		LOADER.GetNationImageN(GAMECLIENT.GetPlayer(owner-1)->nation, 0)->Draw(xpos,ypos,0,0,0,0,0,0,fow ? FOW_DRAW_COLOR : COLOR_WHITE, fow ? CalcPlayerFOWDrawColor(player_color) : player_color);
+		LOADER.GetNationImageN(GAMECLIENT.GetPlayer(owner-1)->nation, 1)->Draw(xpos,ypos,0,0,0,0,0,0,COLOR_SHADOW);
 
 		for(unsigned i = 0;i<3;++i)
 		{
 			if(fow ? GetNode(tx,ty).fow[viewing_player].boundary_stones[i+1] : GetNode(tx,ty).boundary_stones[i+1])
 			{
-				GetBobPlayerImage(GAMECLIENT.GetPlayer(owner-1)->nation, 0)->Draw(xpos-static_cast<int>((tr.GetTerrainX(tx,ty)-tr.GetTerrainXAround(tx,ty,3+i))/2.0f),
+				LOADER.GetNationImageN(GAMECLIENT.GetPlayer(owner-1)->nation, 0)->Draw(xpos-static_cast<int>((tr.GetTerrainX(tx,ty)-tr.GetTerrainXAround(tx,ty,3+i))/2.0f),
 					ypos-static_cast<int>((tr.GetTerrainY(tx,ty)-tr.GetTerrainYAround(tx,ty,3+i))/2.0f),0,0,0,0,0,0,
 					(vis == VIS_VISIBLE) ? COLOR_WHITE : FOW_DRAW_COLOR, (vis == VIS_VISIBLE) ? player_color : CalcPlayerFOWDrawColor(player_color));
-				GetBobImage(GAMECLIENT.GetPlayer(owner-1)->nation, 1)->Draw(xpos-static_cast<int>((tr.GetTerrainX(tx,ty)-tr.GetTerrainXAround(tx,ty,3+i))/2.0f),
+				LOADER.GetNationImageN(GAMECLIENT.GetPlayer(owner-1)->nation, 1)->Draw(xpos-static_cast<int>((tr.GetTerrainX(tx,ty)-tr.GetTerrainXAround(tx,ty,3+i))/2.0f),
 					ypos-static_cast<int>((tr.GetTerrainY(tx,ty)-tr.GetTerrainYAround(tx,ty,3+i))/2.0f),0,0,0,0,0,0,COLOR_SHADOW);
 			}
 		}

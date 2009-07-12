@@ -1,4 +1,4 @@
-// $Id: files.h 5253 2009-07-12 14:42:18Z FloSoft $
+// $Id: files.h 5254 2009-07-12 15:49:16Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -182,10 +182,10 @@ const char * const FILE_PATHS[] =
 	/* 94 */SETTINGSDIR,                              // Einstellungsordner
 	/* 95 */RTTRDIR "/LSTS/",                         // systemweite lstfiles (immer bei start geladen)
 	/* 96 */RTTRDIR "/LSTS/GAME/",                    // systemweite lstfiles (immer bei spielstart geladen)
-	/* 97 */RTTRDIR "/LSTS/GAME/GFX/",                // systemweite lstfiles (bei spielstart geladen, falls gfxset unterschiedlich zu vorherigem spiel)
+	/* 97 */RTTRDIR "",                               // unbenutzt
 	/* 98 */SETTINGSDIR "/LSTS/",                     // persönliche lstfiles (immer bei start geladen)
 	/* 99 */SETTINGSDIR "/LSTS/GAME/",                // persönliche lstfiles (immer bei spielstart geladen)
-	/*100 */SETTINGSDIR "/LSTS/GAME/GFX/",            // persönliche lstfiles (bei spielstart geladen, falls gfxset unterschiedlich zu vorherigem spiel)
+	/*100 */SETTINGSDIR "",                           // unbenutzt
 	/*101 */RTTRDIR "/pics/menu.bmp",                 // Hauptmenü
 	/*102 */GAMEDIR "/GFX/PICS/SETUP013.LBM",         // Optionen
 	/*103 */GAMEDIR "/GFX/PICS/SETUP015.LBM",         // Freies Spiel
@@ -203,9 +203,21 @@ const std::string FILE_LOAD_IDS[] = {
 	"africa", "austra", "europe", "green", "japan", "namerica", "nasia", "samerica", "sasia"
 };
 
+const unsigned int GFXSET_COUNT = 3;
 const unsigned int NATION_COUNT = 4;
-const std::string NATION_ICON_IDS[] = {
+
+const std::string NATION_ICON_IDS[NATION_COUNT] = {
 	"afr_icon", "jap_icon", "rom_icon", "vik_icon"
+};
+
+const std::string NATION_GFXSET_Z[GFXSET_COUNT][NATION_COUNT] = {
+	{"afr_z", "jap_z", "rom_z", "vik_z"},
+	{"afr_z", "jap_z", "rom_z", "vik_z"},
+	{"wafr_z", "wjap_z", "wrom_z", "wvik_z"}
+};
+
+const std::string MAP_GFXSET_Z[GFXSET_COUNT] = {
+	"map_0_z", "map_1_z", "map_2_z"
 };
 
 std::string GetFilePath(std::string file);

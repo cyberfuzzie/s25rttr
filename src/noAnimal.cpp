@@ -1,4 +1,4 @@
-// $Id: noAnimal.cpp 5247 2009-07-11 19:13:17Z FloSoft $
+// $Id: noAnimal.cpp 5254 2009-07-12 15:49:16Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -120,7 +120,7 @@ void noAnimal::Draw(int x, int y)
 			// Interpolieren zwischen beiden Knotenpunkten
 			CalcWalkingRelative(x,y);
 			// Zeichnen
-			GetImage(map_lst,ANIMALCONSTS[species].walking_id+ANIMALCONSTS[species].animation_steps*((dir+3)%6)
+			LOADER.GetMapImageN(ANIMALCONSTS[species].walking_id+ANIMALCONSTS[species].animation_steps*((dir+3)%6)
 				+GAMECLIENT.Interpolate(ASCENT_ANIMATION_STEPS[ascent],current_ev)%ANIMALCONSTS[species].animation_steps)
 				->Draw(x,y);
 
@@ -129,10 +129,10 @@ void noAnimal::Draw(int x, int y)
 			{
 				if(species == SPEC_DUCK)
 					// Ente Sonderfall, da gibts nur einen Schatten für jede Richtung!
-					GetImage(map_lst,ANIMALCONSTS[species].shadow_id)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
+					LOADER.GetMapImageN(ANIMALCONSTS[species].shadow_id)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
 				else
 					// ansonsten immer pro Richtung einen Schatten
-					GetImage(map_lst,ANIMALCONSTS[species].shadow_id+(dir+3)%6)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
+					LOADER.GetMapImageN(ANIMALCONSTS[species].shadow_id+(dir+3)%6)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
 			}
 
 			// Bei Enten und Schafen: Soll ein Sound gespielt werden?
@@ -156,26 +156,26 @@ void noAnimal::Draw(int x, int y)
 	case STATE_PAUSED:
 		{
 			// Stehend zeichnen
-			GetImage(map_lst,ANIMALCONSTS[species].walking_id+ANIMALCONSTS[species].animation_steps*((dir+3)%6))->Draw(x,y);
+			LOADER.GetMapImageN(ANIMALCONSTS[species].walking_id+ANIMALCONSTS[species].animation_steps*((dir+3)%6))->Draw(x,y);
 			// ggf. Schatten zeichnen, falls es einen gibt
 			if(ANIMALCONSTS[species].shadow_id)
 			{
 				if(species == SPEC_DUCK)
 					// Ente Sonderfall, da gibts nur einen Schatten für jede Richtung!
-					GetImage(map_lst,ANIMALCONSTS[species].shadow_id)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
+					LOADER.GetMapImageN(ANIMALCONSTS[species].shadow_id)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
 				else
 					// ansonsten immer pro Richtung einen Schatten
-					GetImage(map_lst,ANIMALCONSTS[species].shadow_id+(dir+3)%6)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
+					LOADER.GetMapImageN(ANIMALCONSTS[species].shadow_id+(dir+3)%6)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
 			}
 
 		} break;
 	case STATE_DEAD:
 		{
 			// Leiche zeichnen
-			GetImage(map_lst,ANIMALCONSTS[species].dead_id)->Draw(x,y);
+			LOADER.GetMapImageN(ANIMALCONSTS[species].dead_id)->Draw(x,y);
 			// ggf. Tot-Schatten zeichnen
 			if(ANIMALCONSTS[species].shadow_dead_id)
-				GetImage(map_lst,ANIMALCONSTS[species].shadow_dead_id)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
+				LOADER.GetMapImageN(ANIMALCONSTS[species].shadow_dead_id)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
 
 		} break;
 	case STATE_DISAPPEARING:
@@ -183,28 +183,28 @@ void noAnimal::Draw(int x, int y)
 			// Alpha-Wert ausrechnen
 			unsigned char alpha = 0xFF-GAMECLIENT.Interpolate(0xFF,current_ev);
 			// Gibts ein Leichenbild?
-			if(GetImage(map_lst,ANIMALCONSTS[species].dead_id))
+			if(LOADER.GetMapImageN(ANIMALCONSTS[species].dead_id))
 			{
 				// Leiche zeichnen
-				GetImage(map_lst,ANIMALCONSTS[species].dead_id)->Draw(x,y,0,0,0,0,0,0,SetAlpha(COLOR_WHITE, alpha));
+				LOADER.GetMapImageN(ANIMALCONSTS[species].dead_id)->Draw(x,y,0,0,0,0,0,0,SetAlpha(COLOR_WHITE, alpha));
 				// ggf. Tot-Schatten zeichnen
 				if(ANIMALCONSTS[species].shadow_dead_id)
-					GetImage(map_lst,ANIMALCONSTS[species].shadow_dead_id)->Draw(x,y,0,0,0,0,0,0,SetAlpha(COLOR_SHADOW, alpha));
+					LOADER.GetMapImageN(ANIMALCONSTS[species].shadow_dead_id)->Draw(x,y,0,0,0,0,0,0,SetAlpha(COLOR_SHADOW, alpha));
 
 			}
 			else
 			{
 				// Stehend zeichnen
-				GetImage(map_lst,ANIMALCONSTS[species].walking_id+ANIMALCONSTS[species].animation_steps*((dir+3)%6))->Draw(x,y,0,0,0,0,0,0,SetAlpha(COLOR_WHITE, alpha));
+				LOADER.GetMapImageN(ANIMALCONSTS[species].walking_id+ANIMALCONSTS[species].animation_steps*((dir+3)%6))->Draw(x,y,0,0,0,0,0,0,SetAlpha(COLOR_WHITE, alpha));
 				// ggf. Schatten zeichnen, falls es einen gibt
 				if(ANIMALCONSTS[species].shadow_id)
 				{
 					if(species == SPEC_DUCK)
 						// Ente Sonderfall, da gibts nur einen Schatten für jede Richtung!
-						GetImage(map_lst,ANIMALCONSTS[species].shadow_id)->Draw(x,y,0,0,0,0,0,0,SetAlpha(COLOR_SHADOW, alpha));
+						LOADER.GetMapImageN(ANIMALCONSTS[species].shadow_id)->Draw(x,y,0,0,0,0,0,0,SetAlpha(COLOR_SHADOW, alpha));
 					else
 						// ansonsten immer pro Richtung einen Schatten
-						GetImage(map_lst,ANIMALCONSTS[species].shadow_id+(dir+3)%6)->Draw(x,y,0,0,0,0,0,0,SetAlpha(COLOR_SHADOW, alpha));
+						LOADER.GetMapImageN(ANIMALCONSTS[species].shadow_id+(dir+3)%6)->Draw(x,y,0,0,0,0,0,0,SetAlpha(COLOR_SHADOW, alpha));
 				}
 			}
 

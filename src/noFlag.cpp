@@ -1,4 +1,4 @@
-// $Id: noFlag.cpp 5167 2009-07-02 18:49:25Z FloSoft $
+// $Id: noFlag.cpp 5254 2009-07-12 15:49:16Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -197,15 +197,15 @@ void noFlag::Draw(int x, int y)
 	}
 
 	// Flagge
-	GetBobPlayerImage(GAMECLIENT.GetPlayer(player)->nation, nr+GAMECLIENT.GetGlobalAnimation(8,80,40,ani_offset))->Draw(x,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
+	LOADER.GetNationImageN(GAMECLIENT.GetPlayer(player)->nation, nr+GAMECLIENT.GetGlobalAnimation(8,80,40,ani_offset))->Draw(x,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
 	// Schatten
-	GetBobImage(GAMECLIENT.GetPlayer(player)->nation, nr+10+GAMECLIENT.GetGlobalAnimation(8,80,40,ani_offset))->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
+	LOADER.GetNationImageN(GAMECLIENT.GetPlayer(player)->nation, nr+10+GAMECLIENT.GetGlobalAnimation(8,80,40,ani_offset))->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
 
 	// Waren (von hinten anfangen zu zeichnen)
 	for(unsigned i = 8;i;--i)
 	{
 		if(wares[i-1])
-			GetImage(map_lst, 2200+wares[i-1]->type)->Draw(x+WARES_POS[i-1][0],y+WARES_POS[i-1][1],0,0,0,0,0,0);
+			LOADER.GetMapImageN(2200+wares[i-1]->type)->Draw(x+WARES_POS[i-1][0],y+WARES_POS[i-1][1],0,0,0,0,0,0);
 	}
 
 	//char addresse[256];

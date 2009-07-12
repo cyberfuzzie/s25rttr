@@ -1,4 +1,4 @@
-// $Id: iwMilitaryBuilding.cpp 5238 2009-07-09 20:50:28Z FloSoft $
+// $Id: iwMilitaryBuilding.cpp 5254 2009-07-12 15:49:16Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -56,12 +56,12 @@ iwMilitaryBuilding::iwMilitaryBuilding(GameWorldViewer * const gwv,nobMilitary *
 	building(building), gwv(gwv) 
 {
 	// Schwert
-	AddImage(0, 28, 39, GetImage(map_lst, 2298));
-	AddImage(1, 28, 39, GetImage(map_lst, 2250 + GD_SWORD));
+	AddImage(0, 28, 39, LOADER.GetMapImageN(2298));
+	AddImage(1, 28, 39, LOADER.GetMapImageN(2250 + GD_SWORD));
 
 	// Schild
-	AddImage(2, 196, 39, GetImage(map_lst, 2298));
-	AddImage(3, 196, 39, GetImage(map_lst, 2250 + GD_SHIELDROMANS));
+	AddImage(2, 196, 39, LOADER.GetMapImageN(2298));
+	AddImage(3, 196, 39, LOADER.GetMapImageN(2250 + GD_SHIELDROMANS));
 
 	// Hilfe
 	AddImageButton(4,  16, 147, 30, 32, TC_GREY, LOADER.GetImageN("io",  21));
@@ -73,19 +73,19 @@ iwMilitaryBuilding::iwMilitaryBuilding(GameWorldViewer * const gwv,nobMilitary *
 	AddImageButton(7, 179, 147, 30, 32, TC_GREY, LOADER.GetImageN("io", 107), _("Go to place"));
 
 	// Gebäudebild
-	AddImage(8, 117, 114, GetBobImage(building->GetNation(), 250 + 5*building->GetBuildingType()));
+	AddImage(8, 117, 114, LOADER.GetNationImageN(building->GetNation(), 250 + 5*building->GetBuildingType()));
 }
 
 void iwMilitaryBuilding::Msg_PaintAfter()
 {
 	// Schatten des Gebäudes (muss hier gezeichnet werden wegen schwarz und halbdurchsichtig)
-	GetBobImage(building->GetNation(), 250 + 5 * building->GetBuildingType()+1)->Draw(GetX()+117, GetY()+114, 0, 0, 0, 0, 0, 0, COLOR_SHADOW);
+	LOADER.GetNationImageN(building->GetNation(), 250 + 5 * building->GetBuildingType()+1)->Draw(GetX()+117, GetY()+114, 0, 0, 0, 0, 0, 0, COLOR_SHADOW);
 
 	// Schwarzer Untergrund für Goldanzeige
 	DrawRectangle(GetX()+width/2-22*GOLD_COUNT[building->nation][building->size]/2,GetY()+60,22*GOLD_COUNT[building->nation][building->size],24,0x96000000);
 	// Gold
 	for(unsigned short i = 0; i < GOLD_COUNT[building->nation][building->size]; ++i)
-		GetImage(map_lst, 2278)->Draw(GetX() + width / 2 - 22 * GOLD_COUNT[building->nation][building->size] / 2 + 12 + i*22, GetY() + 72, 0, 0, 0, 0, 0, 0, ( i >= building->coins ? 0xFFA0A0A0 : 0xFFFFFFFF) );
+		LOADER.GetMapImageN(2278)->Draw(GetX() + width / 2 - 22 * GOLD_COUNT[building->nation][building->size] / 2 + 12 + i*22, GetY() + 72, 0, 0, 0, 0, 0, 0, ( i >= building->coins ? 0xFFA0A0A0 : 0xFFFFFFFF) );
 
 	// Schwarzer Untergrund für Soldatenanzeige
 	DrawRectangle(GetX() + width / 2 - 22 * TROOPS_COUNT[building->nation][building->size] / 2, GetY() + 98 , 22 * TROOPS_COUNT[building->nation][building->size], 24, 0x96000000);
@@ -109,7 +109,7 @@ void iwMilitaryBuilding::Msg_PaintAfter()
 	// Soldaten zeichnen
 	unsigned short i = 0;
 	for(list<unsigned>::iterator it = soldiers.begin();it.valid();++it,++i)
-		GetImage(map_lst, 2321 + *it)->Draw(GetX() + width / 2 - 22 * TROOPS_COUNT[building->nation][building->size] / 2 + 12 + i * 22, GetY() + 110, 0, 0, 0, 0, 0, 0);
+		LOADER.GetMapImageN(2321 + *it)->Draw(GetX() + width / 2 - 22 * TROOPS_COUNT[building->nation][building->size] / 2 + 12 + i * 22, GetY() + 110, 0, 0, 0, 0, 0, 0);
 } 
 
 

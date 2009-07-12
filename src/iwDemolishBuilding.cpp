@@ -1,4 +1,4 @@
-// $Id: iwDemolishBuilding.cpp 5238 2009-07-09 20:50:28Z FloSoft $
+// $Id: iwDemolishBuilding.cpp 5254 2009-07-12 15:49:16Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -52,7 +52,7 @@ iwDemolishBuilding::iwDemolishBuilding(GameWorldViewer * const gwv,const GO_Type
 	// Gehe zum Standort
 	AddImageButton(2,150,140,36,40,TC_GREY,LOADER.GetImageN("io", 107));
 	// Gebäudebild
-	AddImage(3, 104, 109, GetBobImage(nation, 250+5*building));
+	AddImage(3, 104, 109, LOADER.GetNationImageN(nation, 250+5*building));
 	// Gebäudename
 	AddText(4,100,125,_(BUILDING_NAMES[building]),0xFFFFFF00,glArchivItem_Font::DF_CENTER,NormalFont);
 }
@@ -90,7 +90,7 @@ void iwDemolishBuilding::Msg_ButtonClick(const unsigned int ctrl_id)
 void iwDemolishBuilding::Msg_PaintBefore()
 {
 	// Schatten des Gebäudes (muss hier gezeichnet werden wegen schwarz und halbdurchsichtig)
-	glArchivItem_Bitmap *bitmap = GetBobImage(nation, 250+5*building+1);
+	glArchivItem_Bitmap *bitmap = LOADER.GetNationImageN(nation, 250+5*building+1);
 
 	if(bitmap)
 		bitmap->Draw(GetX()+104, GetY()+109, 0, 0, 0, 0, 0, 0, COLOR_SHADOW);

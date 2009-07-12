@@ -1,4 +1,4 @@
-// $Id: noSkeleton.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: noSkeleton.cpp 5254 2009-07-12 15:49:16Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -75,7 +75,7 @@ current_event(sgd->PopObject<EventManager::Event>(GOT_EVENT))
 
 void noSkeleton::Draw(int x, int y)
 {
-	GetImage(map_lst, 547+type)->Draw(x,y,0,0,0,0,0,0);
+	LOADER.GetMapImageN(547+type)->Draw(x,y,0,0,0,0,0,0);
 }
 
 void noSkeleton::HandleEvent(const unsigned int id)

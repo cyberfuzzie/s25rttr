@@ -1,4 +1,4 @@
-// $Id: iwBuildOrder.cpp 5238 2009-07-09 20:50:28Z FloSoft $
+// $Id: iwBuildOrder.cpp 5254 2009-07-12 15:49:16Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -62,7 +62,7 @@ iwBuildOrder::iwBuildOrder(void)
 	AddImageButton(4, 250, 260, 48, 20, TC_GREY, LOADER.GetImageN("io", 216), _("Bottom"));
 
 	// Bild der Auswahl
-	AddImage(5, 240, 150, GetBobImage(GAMECLIENT.GetLocalPlayer()->nation, 250 + GAMECLIENT.visual_settings.build_order[0]*5));
+	AddImage(5, 240, 150, LOADER.GetNationImageN(GAMECLIENT.GetLocalPlayer()->nation, 250 + GAMECLIENT.visual_settings.build_order[0]*5));
 
 	ctrlComboBox *combo = AddComboBox(6, 15, 30, 290, 20, TC_GREY, NormalFont, 100);
 	combo->AddString(_("Sequence of given order")); // "Reihenfolge der Auftraggebung"
@@ -118,7 +118,7 @@ void iwBuildOrder::Msg_ListSelectItem(const unsigned int ctrl_id, const unsigned
 	case 0:
 		{
 			GetCtrl<ctrlImage>(5)->SetImage(
-				GetBobImage(GAMECLIENT.GetLocalPlayer()->nation,
+				LOADER.GetNationImageN(GAMECLIENT.GetLocalPlayer()->nation,
 				250 + GAMECLIENT.visual_settings.build_order[selection]*5));
 		} break;
 	}
@@ -192,7 +192,7 @@ void iwBuildOrder::Msg_ButtonClick(const unsigned int ctrl_id)
 				list->AddString(_(BUILDING_NAMES[GAMECLIENT.default_settings.build_order[i]]));
 			list->SetSelection(0);
 
-			GetCtrl<ctrlImage>(5)->SetImage(GetBobImage(GAMECLIENT.GetLocalPlayer()->nation, 250 + GAMECLIENT.visual_settings.build_order[0]*5));
+			GetCtrl<ctrlImage>(5)->SetImage(LOADER.GetNationImageN(GAMECLIENT.GetLocalPlayer()->nation, 250 + GAMECLIENT.visual_settings.build_order[0]*5));
 
 			settings_changed = true;
 		} break;

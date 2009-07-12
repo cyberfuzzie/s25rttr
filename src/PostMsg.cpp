@@ -79,7 +79,7 @@ glArchivItem_Bitmap *ImagePostMsgWithLocation::GetImage_() const
   {
     // mal sehen, nach messagetype bebildern?
   }
-  return GetBobImage(senderNation, 250+5*senderBuilding);
+  return LOADER.GetNationImageN(senderNation, 250+5*senderBuilding);
 }
 
 

@@ -1,4 +1,4 @@
-// $Id: noGranite.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: noGranite.cpp 5254 2009-07-12 15:49:16Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -55,8 +55,8 @@ state(sgd->PopUnsignedChar())
 
 void noGranite::Draw(int x, int y)
 {
-	GetImage(map_lst,  516 + type*6 + state)->Draw(x,y,0,0,0,0,0,0);
-	GetImage(map_lst,  616 + type*6 + state)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
+	LOADER.GetMapImageN(516 + type*6 + state)->Draw(x,y,0,0,0,0,0,0);
+	LOADER.GetMapImageN(616 + type*6 + state)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
 }
 
 FOWObject * noGranite::CreateFOWObject() const

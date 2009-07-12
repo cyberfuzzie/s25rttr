@@ -1,4 +1,4 @@
-// $Id: iwWares.cpp 5238 2009-07-09 20:50:28Z FloSoft $
+// $Id: iwWares.cpp 5254 2009-07-12 15:49:16Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -104,32 +104,32 @@ iwWares::iwWares(unsigned int id, unsigned short x , unsigned short y,
 		// Hintergrundbutton oder -bild hinter Ware, nur beim Auslagern ein Button
 		if(allow_outhousing)
 		{
-			ctrlButton * b =wares->AddImageButton(100+INVENTORY_IDS[0][ware_id], (four ? 27 : 13)+x*28, 21+y*42, 26, 26, TC_GREY, GetImage(map_lst,  2298), _(WARE_NAMES[INVENTORY_IDS[0][ware_id]]));
+			ctrlButton * b =wares->AddImageButton(100+INVENTORY_IDS[0][ware_id], (four ? 27 : 13)+x*28, 21+y*42, 26, 26, TC_GREY, LOADER.GetMapImageN(2298), _(WARE_NAMES[INVENTORY_IDS[0][ware_id]]));
 			b->SetBorder(false);
 		}
 		else
-			wares->AddImage(100+INVENTORY_IDS[0][ware_id], (four ? 27 : 13)+x*28+13, 21+y*42+13, GetImage(map_lst,  2298), _(WARE_NAMES[INVENTORY_IDS[0][ware_id]]));
+			wares->AddImage(100+INVENTORY_IDS[0][ware_id], (four ? 27 : 13)+x*28+13, 21+y*42+13, LOADER.GetMapImageN(2298), _(WARE_NAMES[INVENTORY_IDS[0][ware_id]]));
 
 		if(INVENTORY_IDS[1][ware_id] != 0xFFFF)
 		{
 			if(allow_outhousing)
 			{
-				ctrlButton * b = figures->AddImageButton(100+INVENTORY_IDS[1][ware_id], (four ? 27 : 13)+x*28, 21+y*42, 26, 26, TC_GREY, GetImage(map_lst,  2298), _(JOB_NAMES[INVENTORY_IDS[1][ware_id]]));
+				ctrlButton * b = figures->AddImageButton(100+INVENTORY_IDS[1][ware_id], (four ? 27 : 13)+x*28, 21+y*42, 26, 26, TC_GREY, LOADER.GetMapImageN(2298), _(JOB_NAMES[INVENTORY_IDS[1][ware_id]]));
 				b->SetBorder(false);
 			}
 			else
-				figures->AddImage(100+INVENTORY_IDS[1][ware_id], (four ? 27 : 13)+x*28+13, 21+y*42+13, GetImage(map_lst,  2298),_(JOB_NAMES[INVENTORY_IDS[1][ware_id]]));
+				figures->AddImage(100+INVENTORY_IDS[1][ware_id], (four ? 27 : 13)+x*28+13, 21+y*42+13, LOADER.GetMapImageN(2298),_(JOB_NAMES[INVENTORY_IDS[1][ware_id]]));
 		}
 
 		// Hintergrundbild hinter Anzahl
-		wares->AddImage(200+INVENTORY_IDS[0][ware_id], (four ? 40 : 26)+x*28, 53+y*42, GetImage(map_lst,  2299));
+		wares->AddImage(200+INVENTORY_IDS[0][ware_id], (four ? 40 : 26)+x*28, 53+y*42, LOADER.GetMapImageN(2299));
 		if(INVENTORY_IDS[1][ware_id] != 0xFFFF)
-			figures->AddImage(200+INVENTORY_IDS[1][ware_id], (four ? 40 : 26)+x*28, 53+y*42, GetImage(map_lst,  2299));
+			figures->AddImage(200+INVENTORY_IDS[1][ware_id], (four ? 40 : 26)+x*28, 53+y*42, LOADER.GetMapImageN(2299));
 
 		// die jeweilige Ware
-		wares->AddImage(300+INVENTORY_IDS[0][ware_id], (four ? 40 : 26)+x*28, 34+y*42, GetImage(map_lst, 2250 + (INVENTORY_IDS[0][ware_id] == GD_SHIELDROMANS ? shield_INVENTORY_IDS[player->nation] : INVENTORY_IDS[0][ware_id])));
+		wares->AddImage(300+INVENTORY_IDS[0][ware_id], (four ? 40 : 26)+x*28, 34+y*42, LOADER.GetMapImageN(2250 + (INVENTORY_IDS[0][ware_id] == GD_SHIELDROMANS ? shield_INVENTORY_IDS[player->nation] : INVENTORY_IDS[0][ware_id])));
 		if(INVENTORY_IDS[1][ware_id] != 0xFFFF)
-			figures->AddImage(300+INVENTORY_IDS[1][ware_id], (four ? 40 : 26)+x*28, 34+y*42, GetImage(map_lst,  2300 + INVENTORY_IDS[1][ware_id]));
+			figures->AddImage(300+INVENTORY_IDS[1][ware_id], (four ? 40 : 26)+x*28, 34+y*42, LOADER.GetMapImageN(2300 + INVENTORY_IDS[1][ware_id]));
 
 		// Overlay für "Nicht Einlagern"
 		

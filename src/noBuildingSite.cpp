@@ -1,4 +1,4 @@
-// $Id: noBuildingSite.cpp 5144 2009-06-30 07:45:36Z OLiver $
+// $Id: noBuildingSite.cpp 5254 2009-07-12 15:49:16Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -166,24 +166,24 @@ void noBuildingSite::Draw(int x, int y)
 	if(state == STATE_PLANING)
 	{
 		// Baustellenschild mit Schatten zeichnen
-		GetBobImage(GAMECLIENT.GetLocalPlayer()->nation, 450)->Draw(x,y);
-		GetBobImage(GAMECLIENT.GetLocalPlayer()->nation, 451)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
+		LOADER.GetNationImageN(GAMECLIENT.GetLocalPlayer()->nation, 450)->Draw(x,y);
+		LOADER.GetNationImageN(GAMECLIENT.GetLocalPlayer()->nation, 451)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
 	}
 	else
 	{
 		// Baustellenstein und -schatten zeichnen
-		GetBobImage(GAMECLIENT.GetLocalPlayer()->nation, 455)->Draw(x,y);
-		GetBobImage(GAMECLIENT.GetLocalPlayer()->nation, 456)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
+		LOADER.GetNationImageN(GAMECLIENT.GetLocalPlayer()->nation, 455)->Draw(x,y);
+		LOADER.GetNationImageN(GAMECLIENT.GetLocalPlayer()->nation, 456)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
 
 
 		// Waren auf der Baustelle
 
 		// Bretter
 		for(unsigned char i = 0;i<boards;++i)
-			GetImage(map_lst, 2200+GD_BOARDS)->Draw(x+GetDoorPointX()-5,y+GetDoorPointY()-10-i*4,0,0,0,0,0,0);
+			LOADER.GetMapImageN(2200+GD_BOARDS)->Draw(x+GetDoorPointX()-5,y+GetDoorPointY()-10-i*4,0,0,0,0,0,0);
 		// Steine
 		for(unsigned char i = 0;i<stones;++i)
-			GetImage(map_lst, 2200+GD_STONES)->Draw(x+GetDoorPointX()+8,y+GetDoorPointY()-12-i*4,0,0,0,0,0,0);
+			LOADER.GetMapImageN(2200+GD_STONES)->Draw(x+GetDoorPointX()+8,y+GetDoorPointY()-12-i*4,0,0,0,0,0,0);
 
 		// bis dahin gebautes Haus zeichnen
 
@@ -209,7 +209,7 @@ void noBuildingSite::Draw(int x, int y)
 		unsigned short progress, build_height;
 
 		// Normal
-		image = GetBobImage(nation,250 + 5*type + 2);
+		image = LOADER.GetNationImageN(nation,250 + 5*type + 2);
 		if(image)
 		{
 			progress = p1*image->getHeight() / p2;
@@ -220,7 +220,7 @@ void noBuildingSite::Draw(int x, int y)
 		}
 
 		// Schatten
-		image = GetBobImage(nation,250 + 5*type + 3);
+		image = LOADER.GetNationImageN(nation,250 + 5*type + 3);
 		if(image)
 		{
 			progress = p1*image->getHeight() / p2;
@@ -244,7 +244,7 @@ void noBuildingSite::Draw(int x, int y)
 		}
 
 		// Normal
-		image = GetBobImage(nation, 250 + 5*type);
+		image = LOADER.GetNationImageN(nation, 250 + 5*type);
 		if(image)
 		{
 			progress = p1*image->getHeight() / p2;
@@ -254,7 +254,7 @@ void noBuildingSite::Draw(int x, int y)
 		}
 
 
-		image = GetBobImage(nation, 250 + 5*type + 1);
+		image = LOADER.GetNationImageN(nation, 250 + 5*type + 1);
 		if(image)
 		{
 			progress = p1*image->getHeight() / p2;

@@ -1,4 +1,4 @@
-// $Id: Loader.h 5253 2009-07-12 14:42:18Z FloSoft $
+// $Id: Loader.h 5254 2009-07-12 15:49:16Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -66,12 +66,15 @@ public:
 	inline const char *GetTextN(std::string file, unsigned int nr) { return dynamic_cast<libsiedler2::ArchivItem_Text*>( files[file].get(nr) ) ? dynamic_cast<libsiedler2::ArchivItem_Text*>( files[file].get(nr) )->getText() : "text missing"; }
 	inline libsiedler2::ArchivInfo *GetInfoN(std::string file) { return dynamic_cast<libsiedler2::ArchivInfo*>( &files[file] ); }
 	inline glArchivItem_Bob *GetBobN(std::string file) { return dynamic_cast<glArchivItem_Bob*>( files[file].get(0) ); };
+	inline glArchivItem_Bitmap *GetNationImageN(unsigned int nation, unsigned int nr) { return GetImageN(NATION_GFXSET_Z[lastgfx][nation], nr); }
+	inline glArchivItem_Bitmap *GetMapImageN(unsigned int nr) { return GetImageN(MAP_GFXSET_Z[lastgfx], nr); }
 
 	// should not use this!
 	const std::map<std::string, libsiedler2::ArchivInfo> &GetFiles(void) const { return files; }
 
 private:
 	std::map<std::string, libsiedler2::ArchivInfo> files;
+	unsigned char lastgfx;
 
 public:
 	libsiedler2::ArchivInfo sng_lst;
@@ -82,9 +85,6 @@ public:
 	libsiedler2::ArchivInfo borders;
 	libsiedler2::ArchivInfo roads;
 	libsiedler2::ArchivInfo roads_points;
-
-	libsiedler2::ArchivInfo map_lst;
-	libsiedler2::ArchivInfo nation_bobs[NATION_COUNT];
 
 	libsiedler2::ArchivInfo settings;
 };

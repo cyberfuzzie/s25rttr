@@ -1,4 +1,4 @@
-// $Id: nobUsual.cpp 5253 2009-07-12 14:42:18Z FloSoft $
+// $Id: nobUsual.cpp 5254 2009-07-12 15:49:16Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -158,7 +158,7 @@ void nobUsual::Draw(int x,int y)
 
 	// Wenn Produktion gestoppt ist, Schild außen am Gebäude zeichnen zeichnen
 	if(disable_production_virtual)
-		GetMapBob(46)->Draw(x+BUILDING_SIGN_CONSTS[nation][type].x,y+BUILDING_SIGN_CONSTS[nation][type].y,0,0,0,0,0,0);
+		LOADER.GetMapImageN(46)->Draw(x+BUILDING_SIGN_CONSTS[nation][type].x,y+BUILDING_SIGN_CONSTS[nation][type].y,0,0,0,0,0,0);
 
 	// Rauch zeichnen
 
@@ -166,7 +166,7 @@ void nobUsual::Draw(int x,int y)
 	if(BUILDING_SMOKE_CONSTS[nation][type-10].type && is_working)
 	{
 		// Dann Qualm zeichnen (damit Qualm nicht synchron ist, x- und y- Koordinate als Unterscheidung
-		GetImage(map_lst, 692+BUILDING_SMOKE_CONSTS[nation][type-10].type*8+GAMECLIENT.GetGlobalAnimation(8,5,2,(this->x+this->y)*100))
+		LOADER.GetMapImageN(692+BUILDING_SMOKE_CONSTS[nation][type-10].type*8+GAMECLIENT.GetGlobalAnimation(8,5,2,(this->x+this->y)*100))
 			->Draw(x+BUILDING_SMOKE_CONSTS[nation][type-10].x,y+BUILDING_SMOKE_CONSTS[nation][type-10].y,0,0,0,0,0,0,0x99EEEEEE);
 
 
@@ -178,9 +178,9 @@ void nobUsual::Draw(int x,int y)
 	if(type == BLD_MILL && !is_working)
 	{
 		// Flügel der Mühle
-		GetBobImage(nation,250+5*49)->Draw(x,y,0,0,0,0,0,0);
+		LOADER.GetNationImageN(nation,250+5*49)->Draw(x,y,0,0,0,0,0,0);
 		// Schatten der Flügel
-		GetBobImage(nation,250+5*49+1)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
+		LOADER.GetNationImageN(nation,250+5*49+1)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
 	}
 	// Esel in den Kammer bei Eselzucht zeichnen
 	else if(type == BLD_DONKEYBREEDER)
@@ -200,9 +200,9 @@ void nobUsual::Draw(int x,int y)
 		// 30-60 - 1 Esel
 		// 60-90 - 2 Esel
 		// 90-100 - 3 Esel
-		if(productivity >= 30) GetImage(map_lst,2180+DONKEY_ANIMATION[GameClient::inst().GetGlobalAnimation(sizeof(DONKEY_ANIMATION),5,2,x*(player+2))])->Draw(x+DONKEY_X[nation][0],y+DONKEY_Y[nation]);
-		if(productivity >= 60) GetImage(map_lst,2180+DONKEY_ANIMATION[GameClient::inst().GetGlobalAnimation(sizeof(DONKEY_ANIMATION),5,2,y)])->Draw(x+DONKEY_X[nation][1],y+DONKEY_Y[nation]);
-		if(productivity >= 90) GetImage(map_lst,2180+DONKEY_ANIMATION[GameClient::inst().GetGlobalAnimation(sizeof(DONKEY_ANIMATION),5,2,x+y*(nation+1))])->Draw(x+DONKEY_X[nation][2],y+DONKEY_Y[nation]);
+		if(productivity >= 30) LOADER.GetMapImageN(2180+DONKEY_ANIMATION[GameClient::inst().GetGlobalAnimation(sizeof(DONKEY_ANIMATION),5,2,x*(player+2))])->Draw(x+DONKEY_X[nation][0],y+DONKEY_Y[nation]);
+		if(productivity >= 60) LOADER.GetMapImageN(2180+DONKEY_ANIMATION[GameClient::inst().GetGlobalAnimation(sizeof(DONKEY_ANIMATION),5,2,y)])->Draw(x+DONKEY_X[nation][1],y+DONKEY_Y[nation]);
+		if(productivity >= 90) LOADER.GetMapImageN(2180+DONKEY_ANIMATION[GameClient::inst().GetGlobalAnimation(sizeof(DONKEY_ANIMATION),5,2,x+y*(nation+1))])->Draw(x+DONKEY_X[nation][2],y+DONKEY_Y[nation]);
 	}
 	// Bei Katapulthaus Katapult oben auf dem Dach zeichnen, falls er nicht "arbeitet"
 	else if(type == BLD_CATAPULT && !is_working)
@@ -228,17 +228,17 @@ void nobUsual::Draw(int x,int y)
 
 
 		/// Großes Schwein zeichnen
-		GetImage(map_lst,2160)->Draw(
+		LOADER.GetMapImageN(2160)->Draw(
 			x+PIG_POSITIONS[nation][0][0],y+PIG_POSITIONS[nation][0][1],0,0,0,0,0,0,COLOR_SHADOW);
-		GetImage(map_lst,2100+GameClient::inst().GetGlobalAnimation(12,30,10,x+y+obj_id))->Draw(
+		LOADER.GetMapImageN(2100+GameClient::inst().GetGlobalAnimation(12,30,10,x+y+obj_id))->Draw(
 			x+PIG_POSITIONS[nation][0][0],y+PIG_POSITIONS[nation][0][1]);
 
 		// Die 4 kleinen Schweinchen, je nach Produktivität
 		for(unsigned i = 1;i<min<unsigned>(unsigned(productivity)/20+1,5);++i)
 		{
-			GetImage(map_lst,2160)->Draw(
+			LOADER.GetMapImageN(2160)->Draw(
 				x+PIG_POSITIONS[nation][i][0],y+PIG_POSITIONS[nation][i][1],0,0,0,0,0,0,COLOR_SHADOW);
-			GetImage(map_lst,2112+GameClient::inst().GetGlobalAnimation(48,30,10,obj_id*i+x/i+y*i))->Draw(
+			LOADER.GetMapImageN(2112+GameClient::inst().GetGlobalAnimation(48,30,10,obj_id*i+x/i+y*i))->Draw(
 				x+PIG_POSITIONS[nation][i][0],y+PIG_POSITIONS[nation][i][1]);
 		}
 
@@ -247,7 +247,7 @@ void nobUsual::Draw(int x,int y)
 	}
 	// Bei nubischen Bergwerken das Feuer vor dem Bergwerk zeichnen
 	else if(type >= BLD_GRANITEMINE && type <= BLD_GOLDMINE && worker && nation == NAT_AFRICANS)
-		GetImage(map_lst,740+GameClient::inst().GetGlobalAnimation(8,5,2,obj_id+x+y))->
+		LOADER.GetMapImageN(740+GameClient::inst().GetGlobalAnimation(8,5,2,obj_id+x+y))->
 		Draw(x+NUBIAN_MINE_FIRE[type-BLD_GRANITEMINE][0],y+NUBIAN_MINE_FIRE[type-BLD_GRANITEMINE][1]);
 }
 

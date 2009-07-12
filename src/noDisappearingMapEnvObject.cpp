@@ -1,4 +1,4 @@
-// $Id: noDisappearingMapEnvObject.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: noDisappearingMapEnvObject.cpp 5254 2009-07-12 15:49:16Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -74,9 +74,9 @@ noDisappearingMapEnvObject::noDisappearingMapEnvObject(SerializedGameData * sgd,
 void noDisappearingMapEnvObject::Draw(int x, int y)
 {
 	// Bild
-	GetImage(map_lst, map_id)->Draw(x, y, 0, 0, 0, 0, 0, 0, GetDrawColor());
+	LOADER.GetMapImageN(map_id)->Draw(x, y, 0, 0, 0, 0, 0, 0, GetDrawColor());
 	// Schatten
-	GetImage(map_lst, map_id+100)->Draw(x, y, 0, 0, 0, 0, 0, 0, GetDrawShadowColor());
+	LOADER.GetMapImageN(map_id+100)->Draw(x, y, 0, 0, 0, 0, 0, 0, GetDrawShadowColor());
 }
 
 void noDisappearingMapEnvObject::HandleEvent(const unsigned int id)

@@ -107,10 +107,10 @@ void nobHarborBuilding::Draw(int x,int y)
 
 		// Bretter
 		for(unsigned char i = 0;i<expedition.boards;++i)
-			GetImage(map_lst, 2200+GD_BOARDS)->Draw(x+BOARDS_POS[nation].x-5,y+BOARDS_POS[nation].y-i*4,0,0,0,0,0,0);
+			LOADER.GetMapImageN(2200+GD_BOARDS)->Draw(x+BOARDS_POS[nation].x-5,y+BOARDS_POS[nation].y-i*4,0,0,0,0,0,0);
 		// Steine
 		for(unsigned char i = 0;i<expedition.stones;++i)
-			GetImage(map_lst, 2200+GD_STONES)->Draw(x+BOARDS_POS[nation].x+8,y+BOARDS_POS[nation].y-i*4,0,0,0,0,0,0);
+			LOADER.GetMapImageN(2200+GD_STONES)->Draw(x+BOARDS_POS[nation].x+8,y+BOARDS_POS[nation].y-i*4,0,0,0,0,0,0);
 
 		// Und den Bauarbeiter, falls er schon da ist
 		if(expedition.builder)

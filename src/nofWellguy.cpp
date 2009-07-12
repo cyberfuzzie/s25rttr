@@ -1,4 +1,4 @@
-// $Id: nofWellguy.cpp 5253 2009-07-12 14:42:18Z FloSoft $
+// $Id: nofWellguy.cpp 5254 2009-07-12 15:49:16Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -75,11 +75,11 @@ void nofWellguy::DrawWorking(int x, int y)
     int walky_r = y+walkoffsets[wpNation][7-(now_id%8)][1];
 
     if(now_id<2){ //laufen 1
-        if(wpNation==2) GetBobImage(workplace->GetNation(),250+5*BLD_WELL+4)->Draw(x,y,0,0,0,0,0,0);
+        if(wpNation==2) LOADER.GetNationImageN(workplace->GetNation(),250+5*BLD_WELL+4)->Draw(x,y,0,0,0,0,0,0);
         LOADER.GetBobN("carrier")->Draw(10,walkdirection[wpNation][0],false,now_id%8,walkx,walky,COLORS[plColor]);
     }
 	else if( (now_id>=2)&&(now_id<4) ){ //laufen 2
-        if(wpNation==2)GetBobImage(workplace->GetNation(),250+5*BLD_WELL+4)->Draw(x,y,0,0,0,0,0,0);
+        if(wpNation==2)LOADER.GetNationImageN(workplace->GetNation(),250+5*BLD_WELL+4)->Draw(x,y,0,0,0,0,0,0);
         LOADER.GetBobN("carrier")->Draw(10,walkdirection[wpNation][1],false,now_id%8,walkx,walky,COLORS[plColor]);
     }
     else if( (now_id>=4)&&(now_id<8) ){ //laufen 3
@@ -106,11 +106,11 @@ void nofWellguy::DrawWorking(int x, int y)
         LOADER.GetBobN("carrier")->Draw(11,walkdirection[wpNation][3],false,now_id%8,walkx_r,walky_r,COLORS[plColor]);
     }
     else if( (now_id>=max_id-4)&&(now_id<max_id-2) ){ //laufen 2
-        if(wpNation==2) GetBobImage(workplace->GetNation(),250+5*BLD_WELL+4)->Draw(x,y,0,0,0,0,0,0);
+        if(wpNation==2) LOADER.GetNationImageN(workplace->GetNation(),250+5*BLD_WELL+4)->Draw(x,y,0,0,0,0,0,0);
         LOADER.GetBobN("carrier")->Draw(11,walkdirection[wpNation][4],false,now_id%8,walkx_r,walky_r,COLORS[plColor]);
     }
     else if(now_id>=max_id-2){ //laufen 1
-        if(wpNation==2) GetBobImage(workplace->GetNation(),250+5*BLD_WELL+4)->Draw(x,y,0,0,0,0,0,0);
+        if(wpNation==2) LOADER.GetNationImageN(workplace->GetNation(),250+5*BLD_WELL+4)->Draw(x,y,0,0,0,0,0,0);
         LOADER.GetBobN("carrier")->Draw(11,walkdirection[wpNation][5],false,now_id%8,walkx_r,walky_r,COLORS[plColor]);
     }
 

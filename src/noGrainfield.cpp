@@ -1,4 +1,4 @@
-// $Id: noGrainfield.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: noGrainfield.cpp 5254 2009-07-12 15:49:16Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -87,23 +87,23 @@ void noGrainfield::Draw( int x,	int y)
 	case STATE_GROWING_WAITING:
 	case STATE_NORMAL:
 		{
-			GetImage(map_lst,532+type*5+size)->Draw(x,y);
-			GetImage(map_lst,632+type*5+size)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
+			LOADER.GetMapImageN(532+type*5+size)->Draw(x,y);
+			LOADER.GetMapImageN(632+type*5+size)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
 		} break;
 	case STATE_GROWING:
 		{
 			unsigned alpha = GAMECLIENT.Interpolate(0xFF,event);
 
 			// altes Feld ausblenden
-			GetImage(map_lst,  532+type*5+size)->Draw(x,y,0,0,0,0,0,0,SetAlpha(COLOR_WHITE, 0xFF-alpha));
+			LOADER.GetMapImageN(532+type*5+size)->Draw(x,y,0,0,0,0,0,0,SetAlpha(COLOR_WHITE, 0xFF-alpha));
 			// neues Feld einblenden
-			GetImage(map_lst,  532+type*5+size+1)->Draw(x,y,0,0,0,0,0,0,SetAlpha(COLOR_WHITE, alpha));
+			LOADER.GetMapImageN(532+type*5+size+1)->Draw(x,y,0,0,0,0,0,0,SetAlpha(COLOR_WHITE, alpha));
 
 			// alten Schatten ausblenden
 			alpha = GAMECLIENT.Interpolate(0x40,event);
-			GetImage(map_lst,  632+type*5+size)->Draw(x,y,0,0,0,0,0,0,SetAlpha(0,0x40-alpha));
+			LOADER.GetMapImageN(632+type*5+size)->Draw(x,y,0,0,0,0,0,0,SetAlpha(0,0x40-alpha));
 			// neuen Schatten einblenden
-			GetImage(map_lst,  632+type*5+size+1)->Draw(x,y,0,0,0,0,0,0,SetAlpha(0,alpha));
+			LOADER.GetMapImageN(632+type*5+size+1)->Draw(x,y,0,0,0,0,0,0,SetAlpha(0,alpha));
 
 		} break;
 	case STATE_WITHERING:
@@ -111,10 +111,10 @@ void noGrainfield::Draw( int x,	int y)
 			unsigned alpha = GAMECLIENT.Interpolate(0xFF,event);
 
 			// Feld ausblenden
-			GetImage(map_lst,  532+type*5+size)->Draw(x,y,0,0,0,0,0,0,SetAlpha(0xFFFFFFFF,0xFF-alpha));
+			LOADER.GetMapImageN(532+type*5+size)->Draw(x,y,0,0,0,0,0,0,SetAlpha(0xFFFFFFFF,0xFF-alpha));
 			// Schatten ausblenden
 			alpha = GAMECLIENT.Interpolate(0x40,event);
-			GetImage(map_lst,  632+type*5+size)->Draw(x,y,0,0,0,0,0,0,SetAlpha(0,0x40-alpha));
+			LOADER.GetMapImageN(632+type*5+size)->Draw(x,y,0,0,0,0,0,0,SetAlpha(0,0x40-alpha));
 		} break;
 	}
 

@@ -1,4 +1,4 @@
-// $Id: nofCarrier.cpp 5253 2009-07-12 14:42:18Z FloSoft $
+// $Id: nofCarrier.cpp 5254 2009-07-12 15:49:16Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -274,9 +274,9 @@ void nofCarrier::Draw(int x, int y)
 				// Steht und wartet (ohne Ware)
 
 				// Esel
-				GetImage(map_lst,2000+((dir+3)%6)*8)->Draw(x,y);
+				LOADER.GetMapImageN(2000+((dir+3)%6)*8)->Draw(x,y);
 				// Schatten des Esels
-				GetImage(map_lst,2048+dir%3)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
+				LOADER.GetMapImageN(2048+dir%3)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
 			}
 			else if(state == CARRS_WAITFORWARESPACE || (waiting_for_free_node && !pause_walked_gf && carried_ware))
 			{
@@ -284,13 +284,13 @@ void nofCarrier::Draw(int x, int y)
 				//// Japaner-Schild-Animation existiert leider nicht --> Römerschild nehmen
 
 				// Esel
-				GetImage(map_lst,2000+(((dir)+3)%6)*8)->Draw(x,y);
+				LOADER.GetMapImageN(2000+(((dir)+3)%6)*8)->Draw(x,y);
 				// Schatten des Esels
-				GetImage(map_lst,2048+(dir)%3)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
+				LOADER.GetMapImageN(2048+(dir)%3)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
 
 		
 				// Ware im Korb zeichnen
-				GetImage(map_lst,2350+carried_ware->type)
+				LOADER.GetMapImageN(2350+carried_ware->type)
 					->Draw(x+WARE_POS_DONKEY[(dir)*16],y+WARE_POS_DONKEY[(dir)*16+1]);
 			}
 			else
@@ -304,14 +304,14 @@ void nofCarrier::Draw(int x, int y)
 				// Läuft normal mit oder ohne Ware
 			
 				// Esel
-				GetImage(map_lst,2000+((dir+3)%6)*8+ani_step)->Draw(x,y);
+				LOADER.GetMapImageN(2000+((dir+3)%6)*8+ani_step)->Draw(x,y);
 				// Schatten des Esels
-				GetImage(map_lst,2048+dir%3)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
+				LOADER.GetMapImageN(2048+dir%3)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
 
 				if(carried_ware)
 				{
 					// Ware im Korb zeichnen
-					GetImage(map_lst,2350+carried_ware->type)
+					LOADER.GetMapImageN(2350+carried_ware->type)
 						->Draw(x+WARE_POS_DONKEY[dir*16+ani_step*2],y+WARE_POS_DONKEY[dir*16+ani_step*2+1]);
 				}
 			}
@@ -333,17 +333,17 @@ void nofCarrier::Draw(int x, int y)
 				// Steht und wartet (ohne Ware)
 				LOADER.GetImageN("boat", ((dir+3)%6)*8)->Draw(x,y,0,0,0,0,0,0,COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
 				// Schatten des Boots (Eselschatten)
-				GetImage(map_lst,2048+dir%3)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
+				LOADER.GetMapImageN(2048+dir%3)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
 			}
 			else if(state == CARRS_WAITFORWARESPACE || (waiting_for_free_node && !pause_walked_gf && carried_ware))
 			{
 				// Steht und wartet (ohne Ware)
 				LOADER.GetImageN("boat", (((dir)+3)%6)*8)->Draw(x,y,0,0,0,0,0,0,COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
 				// Schatten des Boots (Eselschatten)
-				GetImage(map_lst,2048+(dir)%3)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
+				LOADER.GetMapImageN(2048+(dir)%3)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
 		
 				// Ware im Boot zeichnen
-				GetImage(map_lst,2350+carried_ware->type)
+				LOADER.GetMapImageN(2350+carried_ware->type)
 					->Draw(x+WARE_POS_BOAT[(dir)*2],y+WARE_POS_BOAT[(dir)*2+1]);
 			}
 			else
@@ -357,12 +357,12 @@ void nofCarrier::Draw(int x, int y)
 				// ruderndes Boot zeichnen
 				LOADER.GetImageN("boat", ((dir+3)%6)*8+ani_step)->Draw(x,y,0,0,0,0,0,0,COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
 				// Schatten des Boots (Eselschatten)
-				GetImage(map_lst,2048+dir%3)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
+				LOADER.GetMapImageN(2048+dir%3)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
 
 				// Läuft normal mit oder ohne Ware
 				if(carried_ware)
 					// Ware im Boot zeichnen
-					GetImage(map_lst,2350+carried_ware->type)
+					LOADER.GetMapImageN(2350+carried_ware->type)
 						->Draw(x+WARE_POS_BOAT[dir*2],y+WARE_POS_BOAT[dir*2+1]);
 
 				// Sound ggf. abspielen

@@ -1,4 +1,4 @@
-// $Id: nofBaker.cpp 5253 2009-07-12 14:42:18Z FloSoft $
+// $Id: nofBaker.cpp 5254 2009-07-12 15:49:16Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -75,11 +75,11 @@ void nofBaker::DrawWorking(int x, int y)
 
 
     if(now_id<2){  //hinauslaufen teil 1
-        GetBobImage(workplace->GetNation(),250+5*BLD_BAKERY+4)->Draw(x,y,0,0,0,0,0,0);
+        LOADER.GetNationImageN(workplace->GetNation(),250+5*BLD_BAKERY+4)->Draw(x,y,0,0,0,0,0,0);
         LOADER.GetBobN("jobs")->Draw(17,walkdirection[wpNation][0],true,now_id%8,walkx,walky,COLORS[plColor]);
     }
     if((now_id>=2) && (now_id<4) ){  //hinauslaufen teil 2
-        GetBobImage(workplace->GetNation(),250+5*BLD_BAKERY+4)->Draw(x,y,0,0,0,0,0,0);
+        LOADER.GetNationImageN(workplace->GetNation(),250+5*BLD_BAKERY+4)->Draw(x,y,0,0,0,0,0,0);
         LOADER.GetBobN("jobs")->Draw(17,walkdirection[wpNation][1],true,now_id%8,walkx,walky,COLORS[plColor]);
     }
     if((now_id>=4) && (now_id<8) ){  //hinauslaufen teil 3
@@ -115,11 +115,11 @@ void nofBaker::DrawWorking(int x, int y)
         LOADER.GetBobN("jobs")->Draw(17,walkdirection[wpNation][3],true,now_id%8,walkx_r,walky_r,COLORS[plColor]);
     }
     if((now_id>=max_id-4) && (now_id<max_id-2) ){ //reingehn teil 1
-        GetBobImage(workplace->GetNation(),250+5*BLD_BAKERY+4)->Draw(x,y,0,0,0,0,0,0);
+        LOADER.LOADER.GetNationImageN(workplace->GetNation(),250+5*BLD_BAKERY+4)->Draw(x,y,0,0,0,0,0,0);
         LOADER.GetBobN("jobs")->Draw(17,walkdirection[wpNation][4],true,now_id%8,walkx_r,walky_r,COLORS[plColor]);
     }
     if((now_id>=max_id-2) && (now_id<max_id) ){ //reingehn teil 2
-        GetBobImage(workplace->GetNation(),250+5*BLD_BAKERY+4)->Draw(x,y,0,0,0,0,0,0);
+        LOADER.LOADER.GetNationImageN(workplace->GetNation(),250+5*BLD_BAKERY+4)->Draw(x,y,0,0,0,0,0,0);
         LOADER.GetBobN("jobs")->Draw(17,walkdirection[wpNation][5],true,now_id%8,walkx_r,walky_r,COLORS[plColor]);
     }
 

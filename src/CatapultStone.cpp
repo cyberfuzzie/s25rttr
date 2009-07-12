@@ -1,4 +1,4 @@
-// $Id: CatapultStone.cpp 5166 2009-07-02 16:51:17Z FloSoft $
+// $Id: CatapultStone.cpp 5254 2009-07-12 15:49:16Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -96,7 +96,7 @@ void CatapultStone::Draw(const GameWorldViewer& gwv,const int xoffset, const int
 	if(explode)
 	{
 		// Stein explodierend am Ziel zeichnen
-		GetImage(map_lst,3102+GameClient::inst().Interpolate(4,event))->
+		LOADER.GetMapImageN(3102+GameClient::inst().Interpolate(4,event))->
 			Draw((dest_x-xoffset+world_width)%world_width,(dest_y-yoffset+world_height)%world_height);
 	}
 	else
@@ -118,9 +118,9 @@ void CatapultStone::Draw(const GameWorldViewer& gwv,const int xoffset, const int
 		int diff = int((dx*dx-y_diff)*200);
 
 		// Schatten auf linearer Linie zeichnen
-		GetImage(map_lst, 3101)->Draw((x-xoffset+world_width)%world_width,(y-yoffset+world_height)%world_height,0,0,0,0,0,0,COLOR_SHADOW);
+		LOADER.GetMapImageN(3101)->Draw((x-xoffset+world_width)%world_width,(y-yoffset+world_height)%world_height,0,0,0,0,0,0,COLOR_SHADOW);
 		// Stein auf Parabel zeichnen
-		GetImage(map_lst, 3100)->Draw((x-xoffset+world_width)%world_width,(y-yoffset+world_height+diff)%world_height);	
+		LOADER.GetMapImageN(3100)->Draw((x-xoffset+world_width)%world_width,(y-yoffset+world_height+diff)%world_height);	
 	}
 }
 

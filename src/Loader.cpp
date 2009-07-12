@@ -1,4 +1,4 @@
-// $Id: Loader.cpp 5253 2009-07-12 14:42:18Z FloSoft $
+// $Id: Loader.cpp 5254 2009-07-12 15:49:16Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -48,7 +48,7 @@
  *
  *  @author FloSoft
  */
-Loader::Loader(void)
+Loader::Loader(void) : lastgfx(0xFF)
 {
 }
 
@@ -108,6 +108,9 @@ bool Loader::LoadFilesFromArray(const unsigned int files_count, const unsigned i
 	// load the files or directorys
 	for(unsigned int i = 0; i < files_count; ++i)
 	{
+		if(files[i] == 0xFFFFFFFF)
+			continue;
+
 		// is the entry a directory?
 		if(IsDir(FILE_PATHS[ files[i] ]))
 		{
@@ -420,40 +423,22 @@ bool Loader::SaveSettings()
  */
 bool Loader::LoadGame(unsigned char gfxset, bool *nations)
 {
+	const unsigned int files_count = 4 + 5 + 6 + 4 + 1;
+
+	unsigned int files[files_count] = { 
+		0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, // ?afr_z.lst, ?jap_z.lst, ?rom_z.lst, ?vik_z.lst
+		26, 44, 45, 86, 92,                             // rom_bobs.lst, carrier.bob, jobs.bob, boat.lst, boot_z.lst
+		58, 59, 60, 61, 62, 63,                         // mis0bobs.lst, mis1bobs.lst, mis2bobs.lst, mis3bobs.lst, mis4bobs.lst, mis5bobs.lst
+		35, 36, 37, 38,                                 // afr_icon.lst, jap_icon.lst, rom_icon.lst, vik_icon.lst
+		23+gfxset                                       // map_?_z.lst
+	};
+
 	for(unsigned char i = 0; i < NATION_COUNT; ++i)
 	{
+		// ggf. Völker-Grafiken laden
 		if(nations[i])
-		{
-			// Völker-Grafiken laden
-			nation_bobs[i].clear();
-			if(!LoadFile(FILE_PATHS[27 + i + (gfxset == 2)*NATION_COUNT], GetPaletteN("pal5"), &nation_bobs[i]))
-				return false;
-		}
+			files[i] = 27 + i + (gfxset == 2)*NATION_COUNT;
 	}
-
-	if(!LoadLsts(96)) // lade systemweite und persönliche lst files
-		return false;
-
-	// ab hier nur noch bei anderem gfxset laden
-	static unsigned char lastgfx = 0xFF;
-	if(lastgfx == gfxset)
-		return true;
-
-	// map_?_z.lst laden
-	map_lst.clear();
-	if(!LoadFile(FILE_PATHS[23+gfxset], GetPaletteN("pal5"), &map_lst))
-	{
-		lastgfx = 0xFF;
-		return false;
-	}
-
-	const unsigned int files_count = 5 + 6 + 4;
-
-	const unsigned int files[files_count] = { 
-		26, 44, 45, 86, 92,      // rom_bobs.lst, carrier.bob, jobs.bob, boat.lst, boot_z.lst
-		58, 59, 60, 61, 62, 63,  // mis0bobs.lst, mis1bobs.lst, mis2bobs.lst, mis3bobs.lst, mis4bobs.lst, mis5bobs.lst
-		35, 36, 37, 38           // afr_icon.lst, jap_icon.lst, rom_icon.lst, vik_icon.lst
-	};
 
 	// dateien ggf nur einmal laden
 	if(!LoadFilesFromArray(files_count, files, false))
@@ -462,7 +447,7 @@ bool Loader::LoadGame(unsigned char gfxset, bool *nations)
 		return false;
 	}
 
-	if(!LoadLsts(97)) // lade systemweite und persönliche lst files
+	if(!LoadLsts(96)) // lade systemweite und persönliche lst files
 	{
 		lastgfx = 0xFF;
 		return false;

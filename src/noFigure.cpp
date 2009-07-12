@@ -1,4 +1,4 @@
-// $Id: noFigure.cpp 5253 2009-07-12 14:42:18Z FloSoft $
+// $Id: noFigure.cpp 5254 2009-07-12 15:49:16Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -273,7 +273,7 @@ void noFigure::StartWalking(const unsigned char dir)
 
 void noFigure::DrawShadow(const int x, const int y,const unsigned char anistep,unsigned char dir)
 {
-	glArchivItem_Bitmap *bitmap = GetImage(map_lst, 900 + ( (dir + 3) % 6 ) * 8 + anistep);
+	glArchivItem_Bitmap *bitmap = LOADER.GetMapImageN(900 + ( (dir + 3) % 6 ) * 8 + anistep);
 	if(bitmap)
 		bitmap->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
 }
@@ -887,9 +887,9 @@ void noFigure::DrawWalking(int x, int y)
 		CalcFigurRelative(x,y);
 
 		// Esel
-		GetImage(map_lst,2000+((dir+3)%6)*8+ani_step)->Draw(x,y);
+		LOADER.GetMapImageN(2000+((dir+3)%6)*8+ani_step)->Draw(x,y);
 		// Schatten des Esels
-		GetImage(map_lst,2048+dir%3)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
+		LOADER.GetMapImageN(2048+dir%3)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
 		
 		return;
 	}

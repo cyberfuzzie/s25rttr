@@ -1,4 +1,4 @@
-// $Id: nofDonkeybreeder.cpp 5253 2009-07-12 14:42:18Z FloSoft $
+// $Id: nofDonkeybreeder.cpp 5254 2009-07-12 15:49:16Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -77,7 +77,7 @@ void nofDonkeybreeder::DrawWorking(int x, int y)
 
 	if(now_id < 400)
 	{
-		GetBobImage(workplace->GetNation(),250+5*BLD_DONKEYBREEDER+4)->Draw(x,y,0,0,0,0,0,0);
+		LOADER.GetNationImageN(workplace->GetNation(),250+5*BLD_DONKEYBREEDER+4)->Draw(x,y,0,0,0,0,0,0);
 		LOADER.GetBobN("jobs")->Draw(24,4,false,(now_id/70)%8,x+walk_start[nation][0]+now_id/100,y+walk_start[nation][1]+now_id/100,color);
 	}
 	else if(now_id < 1200)
@@ -88,7 +88,7 @@ void nofDonkeybreeder::DrawWorking(int x, int y)
 		LOADER.GetBobN("jobs")->Draw(24,0,false,((now_id-2000)/70)%8,x+walk_start[nation][0]+4+walk_length[nation]*(800-(now_id-2000))/800,y+walk_start[nation][1]+4,color);
 	else if(now_id < 3200)
 	{
-		GetBobImage(workplace->GetNation(),250+5*BLD_DONKEYBREEDER+4)->Draw(x,y,0,0,0,0,0,0);
+		LOADER.GetNationImageN(workplace->GetNation(),250+5*BLD_DONKEYBREEDER+4)->Draw(x,y,0,0,0,0,0,0);
 		LOADER.GetBobN("jobs")->Draw(24,1,false,((now_id-2800)/70)%8,x+walk_start[nation][0]+(400-(now_id-2800))/100,y+walk_start[nation][1]+(400-(now_id-2800))/100,color);
 	}
 
@@ -106,7 +106,7 @@ void nofDonkeybreeder::DrawWorking(int x, int y)
 
     if(now_id < 8)
 	{
-        if (now_id<4) GetBobImage(workplace->GetNation(),250+5*BLD_PIGFARM+4)->Draw(x,y,0,0,0,0,0,0);
+        if (now_id<4) LOADER.LOADER.GetNationImageN(workplace->GetNation(),250+5*BLD_PIGFARM+4)->Draw(x,y,0,0,0,0,0,0);
         int walkx=x+walkstart[wpNation][0]+(((offsets[wpNation][0]-walkstart[wpNation][0])/walksteps)*(now_id));
         int walky=y+walkstart[wpNation][1]+(((offsets[wpNation][1]-walkstart[wpNation][1])/walksteps)*(now_id));
         LOADER.GetBobN("jobs")->Draw(14,4,false,now_id,walkx,walky,COLORS[plColor]);
@@ -123,7 +123,7 @@ void nofDonkeybreeder::DrawWorking(int x, int y)
 		}
     }
     if(now_id>=20 && now_id<28){
-        if(now_id>23) GetBobImage(workplace->GetNation(),250+5*BLD_PIGFARM+4)->Draw(x,y,0,0,0,0,0,0);
+        if(now_id>23) LOADER.LOADER.GetNationImageN(workplace->GetNation(),250+5*BLD_PIGFARM+4)->Draw(x,y,0,0,0,0,0,0);
         int walkx=x+offsets[wpNation][0]+(((walkstart[wpNation][0]-offsets[wpNation][0])/walksteps)*(now_id-20));
         int walky=y+offsets[wpNation][1]+(((walkstart[wpNation][1]-offsets[wpNation][1])/walksteps)*(now_id-20));
         LOADER.GetBobN("jobs")->Draw(14,1,false,now_id-20,walkx,walky,COLORS[plColor]);

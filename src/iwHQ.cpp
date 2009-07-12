@@ -1,4 +1,4 @@
-// $Id: iwHQ.cpp 5238 2009-07-09 20:50:28Z FloSoft $
+// $Id: iwHQ.cpp 5254 2009-07-12 15:49:16Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -57,9 +57,9 @@ iwHQ::iwHQ(GameWorldViewer * const gwv,nobHQ *hq)
 	for(unsigned i = 0;i<5;++i)
 	{
 		// Bildhintergrund
-		reserve->AddImage(1+i,34,107+Y_DISTANCE*i,GetImage(map_lst,  2298));
+		reserve->AddImage(1+i,34,107+Y_DISTANCE*i,LOADER.GetMapImageN(2298));
 		// Rang-Bild
-		reserve->AddImage(6+i,34,107+Y_DISTANCE*i,GetImage(map_lst,  2321+i));
+		reserve->AddImage(6+i,34,107+Y_DISTANCE*i,LOADER.GetMapImageN(2321+i));
 		// Minus-Button
 		reserve->AddImageButton(11+i,54,95+Y_DISTANCE*i,24,24,TC_RED1,LOADER.GetImageN("io",139),_("Less"));
 		// Plus-Button

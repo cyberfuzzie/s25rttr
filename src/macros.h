@@ -1,4 +1,4 @@
-// $Id: macros.h 5247 2009-07-11 19:13:17Z FloSoft $
+// $Id: macros.h 5254 2009-07-12 15:49:16Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -28,7 +28,7 @@
 #define GetBobImage(nation, nr) ( dynamic_cast<glArchivItem_Bitmap*>(LOADER.nation_bobs[nation].get(nr)) )
 #define GetBobPlayerImage(nation, nr) ( dynamic_cast<glArchivItem_Bitmap_Player*>(LOADER.nation_bobs[nation].get(nr)) )
 #define GetRomBob(nr) ( dynamic_cast<glArchivItem_Bitmap_Player*>(LOADER.rombobs_lst.get(nr)) )
-#define GetMapBob(nr) ( GetImage(map_lst, nr) )
+#define GetMapBob(nr) ( GetMapImageN(nr) )
 #define GetMapPlayerImage(nr) ( dynamic_cast<glArchivItem_Bitmap_Player*>(LOADER.map_lst.get(nr)) )
 
 #define SmallFont ( LOADER.GetFontN("resource", 2) )

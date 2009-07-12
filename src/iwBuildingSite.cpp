@@ -1,4 +1,4 @@
-// $Id: iwBuildingSite.cpp 5238 2009-07-09 20:50:28Z FloSoft $
+// $Id: iwBuildingSite.cpp 5254 2009-07-12 15:49:16Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -52,7 +52,7 @@ iwBuildingSite::iwBuildingSite(GameWorldViewer * const gwv,const noBuildingSite 
 	gwv(gwv),buildingsite(buildingsite)
 {
 	// Bild des Gebäudes
-	AddImage(0, 113, 130, GetBobImage(GAMECLIENT.GetLocalPlayer()->nation, 250+5*buildingsite->GetBuildingType()));
+	AddImage(0, 113, 130, LOADER.GetNationImageN(GAMECLIENT.GetLocalPlayer()->nation, 250+5*buildingsite->GetBuildingType()));
 	// Gebäudename 
 	AddText(1, 113, 44, _("Order of building site"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
 

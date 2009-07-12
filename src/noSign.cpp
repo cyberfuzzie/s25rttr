@@ -1,4 +1,4 @@
-// $Id: noSign.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: noSign.cpp 5254 2009-07-12 15:49:16Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -81,15 +81,15 @@ void noSign::Draw(int x, int y)
 		
 	// Schild selbst
 	if(type < 4)
-		GetMapBob(680 + type*3 + quantity)->Draw(x, y, 0, 0, 0, 0, 0, 0, color);
+		LOADER.GetMapImageN(680 + type*3 + quantity)->Draw(x, y, 0, 0, 0, 0, 0, 0, color);
 	else if(type == 4)
-		GetMapBob(692)->Draw(x, y, 0, 0, 0, 0, 0, 0, color);
+		LOADER.GetMapImageN(692)->Draw(x, y, 0, 0, 0, 0, 0, 0, color);
 	else
-		GetMapBob(695)->Draw(x, y, 0, 0, 0, 0, 0, 0, color);
+		LOADER.GetMapImageN(695)->Draw(x, y, 0, 0, 0, 0, 0, 0, color);
 
 
 	// Schatten des Schildes
-	GetImage(map_lst, 700)->Draw(x, y, 0, 0, 0, 0, 0, 0, GetDrawShadowColor());
+	LOADER.GetMapImageN(700)->Draw(x, y, 0, 0, 0, 0, 0, 0, GetDrawShadowColor());
 }
 
 void noSign::HandleEvent(const unsigned int id)

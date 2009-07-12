@@ -1,4 +1,4 @@
-// $Id: nofMiller.cpp 5253 2009-07-12 14:42:18Z FloSoft $
+// $Id: nofMiller.cpp 5254 2009-07-12 15:49:16Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -62,7 +62,7 @@ void nofMiller::DrawWorking(int x, int y)
 	bool rotate_sails=true;
 
     if(now_id<4){  //hinauslaufen teil 1
-        GetBobImage(workplace->GetNation(),250+5*BLD_MILL+4)->Draw(x,y,0,0,0,0,0,0);
+        LOADER.GetNationImageN(workplace->GetNation(),250+5*BLD_MILL+4)->Draw(x,y,0,0,0,0,0,0);
         LOADER.GetBobN("jobs")->Draw(16,4,true,now_id%8,x+walkoffsets[now_id%8][0],y+walkoffsets[now_id%8][1],COLORS[GAMECLIENT.GetPlayer(player)->color]);
         rotate_sails=false;
     }
@@ -85,16 +85,16 @@ void nofMiller::DrawWorking(int x, int y)
         LOADER.GetBobN("jobs")->Draw(16,0,true,now_id%8,x+walkoffsets[7-(now_id%8)][0],y+walkoffsets[7-(now_id%8)][1],COLORS[GAMECLIENT.GetPlayer(player)->color]);
     }
     if( (now_id>=max_id-4) && (now_id<max_id)){  //zurücklaufen teil 2
-        GetBobImage(workplace->GetNation(),250+5*BLD_MILL+4)->Draw(x,y,0,0,0,0,0,0);
+        LOADER.GetNationImageN(workplace->GetNation(),250+5*BLD_MILL+4)->Draw(x,y,0,0,0,0,0,0);
         LOADER.GetBobN("jobs")->Draw(16,1,true,now_id%8,x+walkoffsets[7-(now_id%8)][0],y+walkoffsets[7-(now_id%8)][1],COLORS[GAMECLIENT.GetPlayer(player)->color]);
         rotate_sails=false;
     }
 
     if (rotate_sails){
         // Flügel der Mühle
-        GetBobImage(workplace->GetNation(),250+5*(42+((now_id+4)%8)))->Draw(x,y,0,0,0,0,0,0);
+        LOADER.GetNationImageN(workplace->GetNation(),250+5*(42+((now_id+4)%8)))->Draw(x,y,0,0,0,0,0,0);
         // Schatten der Flügel
-        GetBobImage(workplace->GetNation(),250+(5*(42+((now_id+4)%8)))+1)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
+        LOADER.GetNationImageN(workplace->GetNation(),250+(5*(42+((now_id+4)%8)))+1)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
 
 		// Mühlensound abspielen in zufälligen Intervallen
 		if(VideoDriverWrapper::inst().GetTickCount() - last_sound > next_interval)
@@ -109,9 +109,9 @@ void nofMiller::DrawWorking(int x, int y)
 
     }else{
         // Flügel der Mühle
-        GetBobImage(workplace->GetNation(),250+5*49)->Draw(x,y,0,0,0,0,0,0);
+        LOADER.GetNationImageN(workplace->GetNation(),250+5*49)->Draw(x,y,0,0,0,0,0,0);
         // Schatten der Flügel
-        GetBobImage(workplace->GetNation(),250+5*49+1)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
+        LOADER.GetNationImageN(workplace->GetNation(),250+5*49+1)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
     }
 
 }

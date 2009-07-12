@@ -1,4 +1,4 @@
-// $Id: iwTransport.cpp 5238 2009-07-09 20:50:28Z FloSoft $
+// $Id: iwTransport.cpp 5254 2009-07-12 15:49:16Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -99,20 +99,20 @@ iwTransport::iwTransport()
 	ctrlOptionGroup *group = AddOptionGroup(6, ctrlOptionGroup::ILLUMINATE);
 
 	// Zeiger auf die Bilder für die einzelnen Waren in der Transportschlange
-	TRANSPORT_SPRITES[0] = GetImage(map_lst, 2250+GD_COINS);
+	TRANSPORT_SPRITES[0] = LOADER.GetMapImageN(2250+GD_COINS);
 	TRANSPORT_SPRITES[1] = LOADER.GetImageN("io",111);
-	TRANSPORT_SPRITES[2] = GetImage(map_lst, 2250+GD_BEER);
-	TRANSPORT_SPRITES[3] = GetImage(map_lst, 2250+GD_IRON);
-	TRANSPORT_SPRITES[4] = GetImage(map_lst, 2250+GD_GOLD);
-	TRANSPORT_SPRITES[5] = GetImage(map_lst, 2250+GD_IRONORE);
-	TRANSPORT_SPRITES[6] = GetImage(map_lst, 2250+GD_COAL);
-	TRANSPORT_SPRITES[7] = GetImage(map_lst, 2250+GD_BOARDS);
-	TRANSPORT_SPRITES[8] = GetImage(map_lst, 2250+GD_STONES);
-	TRANSPORT_SPRITES[9] = GetImage(map_lst, 2250+GD_WOOD);
-	TRANSPORT_SPRITES[10] = GetImage(map_lst, 2250+GD_WATER);
+	TRANSPORT_SPRITES[2] = LOADER.GetMapImageN(2250+GD_BEER);
+	TRANSPORT_SPRITES[3] = LOADER.GetMapImageN(2250+GD_IRON);
+	TRANSPORT_SPRITES[4] = LOADER.GetMapImageN(2250+GD_GOLD);
+	TRANSPORT_SPRITES[5] = LOADER.GetMapImageN(2250+GD_IRONORE);
+	TRANSPORT_SPRITES[6] = LOADER.GetMapImageN(2250+GD_COAL);
+	TRANSPORT_SPRITES[7] = LOADER.GetMapImageN(2250+GD_BOARDS);
+	TRANSPORT_SPRITES[8] = LOADER.GetMapImageN(2250+GD_STONES);
+	TRANSPORT_SPRITES[9] = LOADER.GetMapImageN(2250+GD_WOOD);
+	TRANSPORT_SPRITES[10] = LOADER.GetMapImageN(2250+GD_WATER);
 	TRANSPORT_SPRITES[11] = LOADER.GetImageN("io",80);
-	TRANSPORT_SPRITES[12] = GetImage(map_lst, 2250+GD_HAMMER);
-	TRANSPORT_SPRITES[13] = GetImage(map_lst, 2250+GD_BOAT);
+	TRANSPORT_SPRITES[12] = LOADER.GetMapImageN(2250+GD_HAMMER);
+	TRANSPORT_SPRITES[13] = LOADER.GetMapImageN(2250+GD_BOAT);
 
 	//// Tooltips festlegen
 	//for(unsigned i = 0;i<14;++i)

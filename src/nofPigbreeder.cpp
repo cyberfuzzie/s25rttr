@@ -1,4 +1,4 @@
-// $Id: nofPigbreeder.cpp 5253 2009-07-12 14:42:18Z FloSoft $
+// $Id: nofPigbreeder.cpp 5254 2009-07-12 15:49:16Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -61,7 +61,7 @@ void nofPigbreeder::DrawWorking(int x, int y)
 //		->Draw(x+offsets[workplace->GetNation()][0],y+offsets[workplace->GetNation()][1],COLORS[GAMECLIENT.GetPlayer(workplace->GetPlayer())->color]);
 
     if(now_id<16){
-        if (now_id<8) GetBobImage(workplace->GetNation(),250+5*BLD_PIGFARM+4)->Draw(x,y,0,0,0,0,0,0);
+        if (now_id<8) LOADER.GetNationImageN(workplace->GetNation(),250+5*BLD_PIGFARM+4)->Draw(x,y,0,0,0,0,0,0);
         int walkx=x+walkstart[wpNation][0]+(((offsets[wpNation][0]-walkstart[wpNation][0])*(now_id)/walksteps));
         int walky=y+walkstart[wpNation][1]+(((offsets[wpNation][1]-walkstart[wpNation][1]))*(now_id)/walksteps);
         LOADER.GetBobN("jobs")->Draw(14,4,false,now_id%8,walkx,walky,COLORS[plColor]);
@@ -78,7 +78,7 @@ void nofPigbreeder::DrawWorking(int x, int y)
 		}
     }
     if(now_id>=40 && now_id<56){
-        if(now_id>46) GetBobImage(workplace->GetNation(),250+5*BLD_PIGFARM+4)->Draw(x,y,0,0,0,0,0,0);
+        if(now_id>46) LOADER.GetNationImageN(workplace->GetNation(),250+5*BLD_PIGFARM+4)->Draw(x,y,0,0,0,0,0,0);
         int walkx=x+offsets[wpNation][0]+(((walkstart[wpNation][0]-offsets[wpNation][0]))*(now_id-40)/walksteps);
         int walky=y+offsets[wpNation][1]+(((walkstart[wpNation][1]-offsets[wpNation][1]))*(now_id-40)/walksteps);
         LOADER.GetBobN("jobs")->Draw(14,1,false,(now_id-40)%8,walkx,walky,COLORS[plColor]);

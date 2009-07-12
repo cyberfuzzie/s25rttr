@@ -1,4 +1,4 @@
-// $Id: noStaticObject.cpp 5253 2009-07-12 14:42:18Z FloSoft $
+// $Id: noStaticObject.cpp 5254 2009-07-12 15:49:16Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -101,8 +101,8 @@ void noStaticObject::Draw(int x, int y)
 
 	if(file == 0xFFFF)
 	{
-		bitmap = GetImage(map_lst, id);
-		shadow = GetImage(map_lst, id+100);
+		bitmap = LOADER.GetMapImageN(id);
+		shadow = LOADER.GetMapImageN(id+100);
 	}
 	else if(file < 6)
 	{

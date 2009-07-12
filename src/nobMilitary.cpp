@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 5167 2009-07-02 18:49:25Z FloSoft $
+// $Id: nobMilitary.cpp 5254 2009-07-12 15:49:16Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -168,15 +168,15 @@ void nobMilitary::Draw(int x, int y)
 	unsigned flags = min<unsigned>(troops.size()+this->leave_house.size(),4);
 
 	for(unsigned i = 0;i<flags;++i)
-		GetMapPlayerImage(3162+GAMECLIENT.GetGlobalAnimation(8,80,40,this->x*this->y*i))->Draw(x+TROOPS_FLAGS[nation][size][0],y+TROOPS_FLAGS[nation][size][1]+(i)*3,0,0,0,0,0,0,COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
+		LOADER.GetMapImageN(3162+GAMECLIENT.GetGlobalAnimation(8,80,40,this->x*this->y*i))->Draw(x+TROOPS_FLAGS[nation][size][0],y+TROOPS_FLAGS[nation][size][1]+(i)*3,0,0,0,0,0,0,COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
 
 	// Die Fahne, die anzeigt wie weit das Gebäude von der Grenze entfernt ist, zeichnen
-	GetMapBob(3150+frontier_distance*4+GAMECLIENT.GetGlobalAnimation(8,5,5,this->x*this->y*age)/2)
+	LOADER.GetMapImageN(3150+frontier_distance*4+GAMECLIENT.GetGlobalAnimation(8,5,5,this->x*this->y*age)/2)
 		->Draw(x+BORDER_FLAGS[nation][size][0],y+BORDER_FLAGS[nation][size][1],0,0,0,0,0,0);
 
 	// Wenn Goldzufuhr gestoppt ist, Schild außen am Gebäude zeichnen zeichnen
 	if(disable_coins_virtual)
-		GetMapBob(46)->Draw(x+BUILDING_SIGN_CONSTS[nation][type].x,y+BUILDING_SIGN_CONSTS[nation][type].y,0,0,0,0,0,0);
+		LOADER.GetMapImageN(46)->Draw(x+BUILDING_SIGN_CONSTS[nation][type].x,y+BUILDING_SIGN_CONSTS[nation][type].y,0,0,0,0,0,0);
 
 
 

@@ -1,4 +1,4 @@
-// $Id: ctrlIngameMinimap.cpp 5117 2009-06-26 14:35:48Z OLiver $
+// $Id: ctrlIngameMinimap.cpp 5254 2009-07-12 15:49:16Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -119,7 +119,7 @@ void ctrlIngameMinimap::Msg_PaintAfter()
 	gwv.ConvertCoords(middle_x,middle_y,&middle_corrected_x,&middle_corrected_y);
 
 	// Scroll-Auswahl-Bild holen
-	glArchivItem_Bitmap * image = GetImage(map_lst,23);
+	glArchivItem_Bitmap * image = LOADER.GetMapImageN(23);
 
 	// Position (relativ zum angezeigten Anfang der Karte) berechnen
 	short xpos = middle_corrected_x*width_show/minimap->GetMapWidth()+2;

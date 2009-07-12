@@ -1,4 +1,4 @@
-// $Id: iwBuilding.cpp 5238 2009-07-09 20:50:28Z FloSoft $
+// $Id: iwBuilding.cpp 5254 2009-07-12 15:49:16Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -63,14 +63,14 @@ iwBuilding::iwBuilding(GameWorldViewer * const gwv,dskGameInterface *const gi,no
 	gwv(gwv), gi(gi), building(building)
 {
 	// Arbeitersymbol
-	AddImage(0, 28, 39, GetImage(map_lst, 2298));
-	AddImage(1, 28, 39, GetImage(map_lst, 2300 + USUAL_BUILDING_CONSTS[building->GetBuildingType()-10].job));
+	AddImage(0, 28, 39, LOADER.GetMapImageN(2298));
+	AddImage(1, 28, 39, LOADER.GetMapImageN(2300 + USUAL_BUILDING_CONSTS[building->GetBuildingType()-10].job));
 
 	// Symbol der produzierten Ware (falls hier was produziert wird)
 	if(USUAL_BUILDING_CONSTS[building->GetBuildingType()-10].produced_ware != GD_NOTHING)
 	{
-		AddImage(2, 196, 39, GetImage(map_lst, 2298));
-		AddImage(3, 196, 39, GetImage(map_lst, 2250 + USUAL_BUILDING_CONSTS[building->GetBuildingType()-10].produced_ware));
+		AddImage(2, 196, 39, LOADER.GetMapImageN(2298));
+		AddImage(3, 196, 39, LOADER.GetMapImageN(2250 + USUAL_BUILDING_CONSTS[building->GetBuildingType()-10].produced_ware));
 	}
 
 	// Info
@@ -94,7 +94,7 @@ iwBuilding::iwBuilding(GameWorldViewer * const gwv,dskGameInterface *const gi,no
 	AddImageButton( 7, 179, 147, 30, 32, TC_GREY, LOADER.GetImageN("io", 107), _("Go to place"));
 
 	// Gebäudebild und dessen Schatten
-	AddImage( 8, 117, 114, GetBobImage(building->GetNation(), 250+5*building->GetBuildingType()));
+	AddImage( 8, 117, 114, LOADER.GetNationImageN(building->GetNation(), 250+5*building->GetBuildingType()));
 
 	// Produktivitätsanzeige (bei Katapulten und Spähtürmen ausblenden)
 	Window * productivity = AddPercent(9, 59, 31, 106, 16, TC_GREY, 0xFFFFFF00, LOADER.GetFontN("resource", 2), building->GetProduktivityPointer());
@@ -111,7 +111,7 @@ iwBuilding::iwBuilding(GameWorldViewer * const gwv,dskGameInterface *const gi,no
 void iwBuilding::Msg_PaintBefore()
 {
 	// Schatten des Gebäudes (muss hier gezeichnet werden wegen schwarz und halbdurchsichtig)
-	glArchivItem_Bitmap *bitmap = GetBobImage(building->GetNation(), 250+5*building->GetBuildingType()+1);
+	glArchivItem_Bitmap *bitmap = LOADER.GetNationImageN(building->GetNation(), 250+5*building->GetBuildingType()+1);
 
 	if(bitmap)
 		bitmap->Draw(GetX()+117, GetY()+114, 0, 0, 0, 0, 0, 0, COLOR_SHADOW);
@@ -130,7 +130,7 @@ void iwBuilding::Msg_PaintAfter()
 		{
 			for(unsigned char z = 0; z < 2; ++z)
 			{
-				glArchivItem_Bitmap *bitmap = GetImage(map_lst, 2250+USUAL_BUILDING_CONSTS[building->GetBuildingType()-10].wares_needed[i]);
+				glArchivItem_Bitmap *bitmap = LOADER.GetMapImageN(2250+USUAL_BUILDING_CONSTS[building->GetBuildingType()-10].wares_needed[i]);
 				bitmap->Draw(GetX()+52 + 24 * (i*2 + z), GetY()+72, 0, 0, 0, 0, 0, 0, (z < building->GetWares(i) ? 0xFFFFFFFF : 0xFFA0A0A0) );
 			}
 
@@ -155,7 +155,7 @@ void iwBuilding::Msg_PaintAfter()
 			
 			for(unsigned char z = 0; z < wares_count; ++z)
 			{
-				glArchivItem_Bitmap *bitmap = GetImage(map_lst, 2250+USUAL_BUILDING_CONSTS[building->GetBuildingType()-10].wares_needed[i]);
+				glArchivItem_Bitmap *bitmap = LOADER.GetMapImageN(2250+USUAL_BUILDING_CONSTS[building->GetBuildingType()-10].wares_needed[i]);
 				bitmap->Draw(GetX() + width/2 - 24 * wares_count / 2 + 24*z+12, GetY()+72 + i*28, 0, 0, 0, 0, 0, 0, (z < building->GetWares(i) ? 0xFFFFFFFF : 0xFFA0A0A0) );
 			}
 		}

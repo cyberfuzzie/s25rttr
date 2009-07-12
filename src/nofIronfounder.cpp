@@ -1,4 +1,4 @@
-// $Id: nofIronfounder.cpp 5167 2009-07-02 18:49:25Z FloSoft $
+// $Id: nofIronfounder.cpp 5253 2009-07-12 14:42:18Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -54,7 +54,7 @@ void nofIronfounder::DrawWorking(int x, int y)
 
 	if(now_id<182)
 	{
-		GetRomBob(100+(now_id%8))
+		LOADER.GetImageN("rom_bobs", 100+(now_id%8))
 			->Draw(x+offsets[workplace->GetNation()][0],y+offsets[workplace->GetNation()][1],0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(workplace->GetPlayer())->color]);
 
 		// Evtl Sound abspielen

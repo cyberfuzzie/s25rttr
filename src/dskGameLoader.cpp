@@ -1,4 +1,4 @@
-// $Id: dskGameLoader.cpp 5247 2009-07-11 19:13:17Z FloSoft $
+// $Id: dskGameLoader.cpp 5253 2009-07-12 14:42:18Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -104,7 +104,7 @@ void dskGameLoader::Msg_PaintBefore()
  */
 void dskGameLoader::Msg_Timer(const unsigned int ctrl_id)
 {
-	static bool load_nations[Loader::NATION_COUNT];
+	static bool load_nations[NATION_COUNT];
 
 	ctrlTimer *timer = GetCtrl<ctrlTimer>(1);
 	ctrlText *text = GetCtrl<ctrlText>(10+position);
@@ -128,7 +128,7 @@ void dskGameLoader::Msg_Timer(const unsigned int ctrl_id)
 
 	case 2: // Nationen ermitteln
 		{
-			memset(load_nations, 0, sizeof(bool) * Loader::NATION_COUNT);
+			memset(load_nations, 0, sizeof(bool) * NATION_COUNT);
 			for(unsigned char i = 0; i < GAMECLIENT.GetPlayerCount(); ++i)
 				load_nations[GAMECLIENT.GetPlayer(i)->nation] = true;
 

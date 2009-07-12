@@ -1,4 +1,4 @@
-// $Id: nofBaker.cpp 5167 2009-07-02 18:49:25Z FloSoft $
+// $Id: nofBaker.cpp 5253 2009-07-12 14:42:18Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -76,17 +76,17 @@ void nofBaker::DrawWorking(int x, int y)
 
     if(now_id<2){  //hinauslaufen teil 1
         GetBobImage(workplace->GetNation(),250+5*BLD_BAKERY+4)->Draw(x,y,0,0,0,0,0,0);
-        GetBobFile(jobs_bob)->Draw(17,walkdirection[wpNation][0],true,now_id%8,walkx,walky,COLORS[plColor]);
+        LOADER.GetBobN("jobs")->Draw(17,walkdirection[wpNation][0],true,now_id%8,walkx,walky,COLORS[plColor]);
     }
     if((now_id>=2) && (now_id<4) ){  //hinauslaufen teil 2
         GetBobImage(workplace->GetNation(),250+5*BLD_BAKERY+4)->Draw(x,y,0,0,0,0,0,0);
-        GetBobFile(jobs_bob)->Draw(17,walkdirection[wpNation][1],true,now_id%8,walkx,walky,COLORS[plColor]);
+        LOADER.GetBobN("jobs")->Draw(17,walkdirection[wpNation][1],true,now_id%8,walkx,walky,COLORS[plColor]);
     }
     if((now_id>=4) && (now_id<8) ){  //hinauslaufen teil 3
-        GetBobFile(jobs_bob)->Draw(17,walkdirection[wpNation][2],true,now_id%8,walkx,walky,COLORS[plColor]);
+        LOADER.GetBobN("jobs")->Draw(17,walkdirection[wpNation][2],true,now_id%8,walkx,walky,COLORS[plColor]);
     }
     if((now_id>=8) && (now_id<16) ){ //brot in den ofen schieben
-        GetRomBob(182+(now_id%8))
+        LOADER.GetImageN("rom_bobs", 182+(now_id%8))
             ->Draw(x+offsets[workplace->GetNation()][0],y+offsets[wpNation][1],0,0,0,0,0,0,COLOR_WHITE, COLORS[plColor]);
 
 		// "Brot-rein/raus"-Sound
@@ -97,11 +97,11 @@ void nofBaker::DrawWorking(int x, int y)
 		}
     }
     if((now_id>=16) && (now_id<max_id-16) ){ //warten
-        GetRomBob(189)
+        LOADER.GetImageN("rom_bobs", 189)
             ->Draw(x+offsets[workplace->GetNation()][0],y+offsets[wpNation][1],0,0,0,0,0,0,COLOR_WHITE, COLORS[plColor]);
     }
     if((now_id>=max_id-16) && (now_id<max_id-8) ){ //brot aus dem ofen holen
-        GetRomBob(182+7-(now_id%8))
+        LOADER.GetImageN("rom_bobs", 182+7-(now_id%8))
             ->Draw(x+offsets[workplace->GetNation()][0],y+offsets[wpNation][1],0,0,0,0,0,0,COLOR_WHITE, COLORS[plColor]);
 
 		// "Brot-rein/raus"-Sound
@@ -112,15 +112,15 @@ void nofBaker::DrawWorking(int x, int y)
 		}
     }
     if((now_id>=max_id-8) && (now_id<max_id-4) ){ //reingehn teil 1
-        GetBobFile(jobs_bob)->Draw(17,walkdirection[wpNation][3],true,now_id%8,walkx_r,walky_r,COLORS[plColor]);
+        LOADER.GetBobN("jobs")->Draw(17,walkdirection[wpNation][3],true,now_id%8,walkx_r,walky_r,COLORS[plColor]);
     }
     if((now_id>=max_id-4) && (now_id<max_id-2) ){ //reingehn teil 1
         GetBobImage(workplace->GetNation(),250+5*BLD_BAKERY+4)->Draw(x,y,0,0,0,0,0,0);
-        GetBobFile(jobs_bob)->Draw(17,walkdirection[wpNation][4],true,now_id%8,walkx_r,walky_r,COLORS[plColor]);
+        LOADER.GetBobN("jobs")->Draw(17,walkdirection[wpNation][4],true,now_id%8,walkx_r,walky_r,COLORS[plColor]);
     }
     if((now_id>=max_id-2) && (now_id<max_id) ){ //reingehn teil 2
         GetBobImage(workplace->GetNation(),250+5*BLD_BAKERY+4)->Draw(x,y,0,0,0,0,0,0);
-        GetBobFile(jobs_bob)->Draw(17,walkdirection[wpNation][5],true,now_id%8,walkx_r,walky_r,COLORS[plColor]);
+        LOADER.GetBobN("jobs")->Draw(17,walkdirection[wpNation][5],true,now_id%8,walkx_r,walky_r,COLORS[plColor]);
     }
 
 }

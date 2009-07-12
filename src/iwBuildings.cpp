@@ -1,4 +1,4 @@
-// $Id: iwBuildings.cpp 5238 2009-07-09 20:50:28Z FloSoft $
+// $Id: iwBuildings.cpp 5253 2009-07-12 14:42:18Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -81,7 +81,7 @@ iwBuildings::iwBuildings() : IngameWindow(CGI_BUILDINGS, 0xFFFE, 0xFFFE, 185, 43
 		for(unsigned short x = 0;x<((y==7)?3:4);++x)
 		{
 			AddImage(y*4+x,first_x+icon_distance_x*x,first_y+icon_distance_y*y,
-				GetImage(nation_icons[GameClient::inst().GetLocalPlayer()->nation],bts[y*4+x]),_(BUILDING_NAMES[bts[y*4+x]]));
+				LOADER.GetImageN(NATION_ICON_IDS[GameClient::inst().GetLocalPlayer()->nation],bts[y*4+x]),_(BUILDING_NAMES[bts[y*4+x]]));
 		}
 	}
 

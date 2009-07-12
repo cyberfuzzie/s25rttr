@@ -88,8 +88,8 @@ void noShip::Draw(int x, int y)
 		break;
 	case STATE_IDLE:
 		{
-			GetImage(boot_lst, 1)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
-			GetImage(boot_lst, 0)->Draw(x,y);
+			LOADER.GetImageN("boot_z",  1)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
+			LOADER.GetImageN("boot_z",  0)->Draw(x,y);
 		} break;
 	case STATE_GOTOHARBOR:
 		{
@@ -97,15 +97,15 @@ void noShip::Draw(int x, int y)
 		} break;
 	case STATE_EXPEDITION_LOADING:
 		{
-			GetImage(boot_lst, ((dir+3)%6)*2 + 1)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
-			GetImage(boot_lst, ((dir+3)%6)*2)->Draw(x,y);
+			LOADER.GetImageN("boot_z",  ((dir+3)%6)*2 + 1)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
+			LOADER.GetImageN("boot_z",  ((dir+3)%6)*2)->Draw(x,y);
 		} break;
 	case STATE_EXPEDITION_WAITING:
 		{
-			GetImage(boot_lst, ((dir+3)%6)*2 + 1)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
-			GetImage(boot_lst, ((dir+3)%6)*2)->Draw(x,y);
+			LOADER.GetImageN("boot_z",  ((dir+3)%6)*2 + 1)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
+			LOADER.GetImageN("boot_z",  ((dir+3)%6)*2)->Draw(x,y);
 			/// Waren zeichnen 
-			GetImage(boot_lst, 30+((dir+3)%6))->Draw(x,y);
+			LOADER.GetImageN("boot_z",  30+((dir+3)%6))->Draw(x,y);
 		} break;
 	}
 
@@ -116,8 +116,8 @@ void noShip::DrawDriving(int x, int y)
 	// Interpolieren zwischen beiden Knotenpunkten
 	CalcWalkingRelative(x,y);
 
-	GetImage(boot_lst,13+((dir+3)%6)*2)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
-	GetImage(boot_lst,12+((dir+3)%6)*2)->Draw(x,y);
+	LOADER.GetImageN("boot_z", 13+((dir+3)%6)*2)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
+	LOADER.GetImageN("boot_z", 12+((dir+3)%6)*2)->Draw(x,y);
 }
 
 

@@ -79,11 +79,11 @@ void noShipBuildingSite::Draw(int x, int y)
 {	
 	if(progress < PROGRESS_PARTS[0]+PROGRESS_PARTS[1])
 	{
-		glArchivItem_Bitmap * image = GetImage(boot_lst,24);
+		glArchivItem_Bitmap * image = LOADER.GetImageN("boot_z", 24);
 		unsigned height = min(image->getHeight() * unsigned(progress) / PROGRESS_PARTS[0],
 			unsigned(image->getHeight()));
 		image->Draw(x,y+(image->getHeight()-height),0,0,0,(image->getHeight()-height),0,height);
-		image =  GetImage(boot_lst,25);
+		image =  LOADER.GetImageN("boot_z", 25);
 		height = min(image->getHeight() * unsigned(progress) / PROGRESS_PARTS[0],
 			unsigned(image->getHeight()));
 		image->Draw(x,y+(image->getHeight()-height),0,0,0,(image->getHeight()-height),0,height,COLOR_SHADOW);
@@ -91,11 +91,11 @@ void noShipBuildingSite::Draw(int x, int y)
 	if(progress > PROGRESS_PARTS[0])
 	{
 		unsigned real_progress = progress - PROGRESS_PARTS[0];
-		glArchivItem_Bitmap * image =  GetImage(boot_lst,26);
+		glArchivItem_Bitmap * image =  LOADER.GetImageN("boot_z", 26);
 		unsigned height = min(image->getHeight() * unsigned(real_progress) / PROGRESS_PARTS[1],
 			unsigned(image->getHeight()));
 		image->Draw(x,y+(image->getHeight()-height),0,0,0,(image->getHeight()-height),0,height);
-		image =  GetImage(boot_lst,27);
+		image =  LOADER.GetImageN("boot_z", 27);
 		height = min(image->getHeight() * unsigned(real_progress) / PROGRESS_PARTS[1],
 			unsigned(image->getHeight()));
 		image->Draw(x,y+(image->getHeight()-height),0,0,0,(image->getHeight()-height),0,height,COLOR_SHADOW);
@@ -103,10 +103,10 @@ void noShipBuildingSite::Draw(int x, int y)
 	if(progress > PROGRESS_PARTS[0]+PROGRESS_PARTS[1])
 	{
 		unsigned real_progress = progress - PROGRESS_PARTS[0] - PROGRESS_PARTS[1];
-		glArchivItem_Bitmap * image =  GetImage(boot_lst,28);
+		glArchivItem_Bitmap * image =  LOADER.GetImageN("boot_z", 28);
 		unsigned height = image->getHeight() * unsigned(real_progress) / PROGRESS_PARTS[2];
 		image->Draw(x,y+(image->getHeight()-height),0,0,0,(image->getHeight()-height),0,height);
-		image =  GetImage(boot_lst,29);
+		image =  LOADER.GetImageN("boot_z", 29);
 		height = image->getHeight() * unsigned(real_progress) / PROGRESS_PARTS[2];
 		image->Draw(x,y+(image->getHeight()-height),0,0,0,(image->getHeight()-height),0,height,COLOR_SHADOW);
 

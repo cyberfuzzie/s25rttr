@@ -1,4 +1,4 @@
-// $Id: nofMiller.cpp 5167 2009-07-02 18:49:25Z FloSoft $
+// $Id: nofMiller.cpp 5253 2009-07-12 14:42:18Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -63,30 +63,30 @@ void nofMiller::DrawWorking(int x, int y)
 
     if(now_id<4){  //hinauslaufen teil 1
         GetBobImage(workplace->GetNation(),250+5*BLD_MILL+4)->Draw(x,y,0,0,0,0,0,0);
-        GetBobFile(jobs_bob)->Draw(16,4,true,now_id%8,x+walkoffsets[now_id%8][0],y+walkoffsets[now_id%8][1],COLORS[GAMECLIENT.GetPlayer(player)->color]);
+        LOADER.GetBobN("jobs")->Draw(16,4,true,now_id%8,x+walkoffsets[now_id%8][0],y+walkoffsets[now_id%8][1],COLORS[GAMECLIENT.GetPlayer(player)->color]);
         rotate_sails=false;
     }
     if( (now_id>=4) && (now_id<8) ){  //hinauslaufen teil 2
-        GetBobFile(jobs_bob)->Draw(16,3,true,now_id%8,x+walkoffsets[now_id%8][0],y+walkoffsets[now_id%8][1],COLORS[GAMECLIENT.GetPlayer(player)->color]);
+        LOADER.GetBobN("jobs")->Draw(16,3,true,now_id%8,x+walkoffsets[now_id%8][0],y+walkoffsets[now_id%8][1],COLORS[GAMECLIENT.GetPlayer(player)->color]);
     }
     if( (now_id>=8) && (now_id<16)){  //hinsetzen
-        GetRomBob(166+(now_id%8))
+        LOADER.GetImageN("rom_bobs", 166+(now_id%8))
             ->Draw(x+offsets_sitdown[workplace->GetNation()][0],y+offsets_sitdown[workplace->GetNation()][1],0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(workplace->GetPlayer())->color]);
     }
     if( (now_id>=16) && (now_id<max_id-16)){  //schlafen
-        GetRomBob(174+(now_id%8))
+        LOADER.GetImageN("rom_bobs", 174+(now_id%8))
             ->Draw(x+offsets[workplace->GetNation()][0],y+offsets[workplace->GetNation()][1],0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(workplace->GetPlayer())->color]);
     }
     if( (now_id>=max_id-16) && (now_id<max_id-8)){ //aufstehn
-        GetRomBob(166+7-(now_id%8))
+        LOADER.GetImageN("rom_bobs", 166+7-(now_id%8))
             ->Draw(x+offsets_sitdown[workplace->GetNation()][0],y+offsets_sitdown[workplace->GetNation()][1],0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(workplace->GetPlayer())->color]);
     }
     if( (now_id>=max_id-8) && (now_id<max_id-4)){  //zurücklaufen teil 1
-        GetBobFile(jobs_bob)->Draw(16,0,true,now_id%8,x+walkoffsets[7-(now_id%8)][0],y+walkoffsets[7-(now_id%8)][1],COLORS[GAMECLIENT.GetPlayer(player)->color]);
+        LOADER.GetBobN("jobs")->Draw(16,0,true,now_id%8,x+walkoffsets[7-(now_id%8)][0],y+walkoffsets[7-(now_id%8)][1],COLORS[GAMECLIENT.GetPlayer(player)->color]);
     }
     if( (now_id>=max_id-4) && (now_id<max_id)){  //zurücklaufen teil 2
         GetBobImage(workplace->GetNation(),250+5*BLD_MILL+4)->Draw(x,y,0,0,0,0,0,0);
-        GetBobFile(jobs_bob)->Draw(16,1,true,now_id%8,x+walkoffsets[7-(now_id%8)][0],y+walkoffsets[7-(now_id%8)][1],COLORS[GAMECLIENT.GetPlayer(player)->color]);
+        LOADER.GetBobN("jobs")->Draw(16,1,true,now_id%8,x+walkoffsets[7-(now_id%8)][0],y+walkoffsets[7-(now_id%8)][1],COLORS[GAMECLIENT.GetPlayer(player)->color]);
         rotate_sails=false;
     }
 

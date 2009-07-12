@@ -1,4 +1,4 @@
-// $Id: nofBuildingWorker.cpp 5133 2009-06-27 13:48:59Z OLiver $
+// $Id: nofBuildingWorker.cpp 5253 2009-07-12 14:42:18Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -119,16 +119,16 @@ void nofBuildingWorker::Draw(int x,int y)
 
 			// Über 100 bedeutet aus der carrier.bob nehmen, ansonsten aus der jobs.bob!
 			if(id>=100)
-				DrawWalking(x,y,GetBobFile(carrier_bob),GetCarryID()-100,JOB_CONSTS[job].fat);
+				DrawWalking(x,y,LOADER.GetBobN("carrier"),GetCarryID()-100,JOB_CONSTS[job].fat);
 			else
-				DrawWalking(x,y,GetBobFile(jobs_bob),GetCarryID(),JOB_CONSTS[job].fat);
+				DrawWalking(x,y,LOADER.GetBobN("jobs"),GetCarryID(),JOB_CONSTS[job].fat);
 		} break;
 	case STATE_WALKINGHOME:
 	case STATE_ENTERBUILDING:
 		{
 			// Beim Nachhausegehen (Landarbeiter) und beim Reingehen kann entweder eine Ware getragen werden oder nicht
 			if(ware != GD_NOTHING)
-				DrawWalking(x,y,GetBobFile(jobs_bob),GetCarryID(),JOB_CONSTS[job].fat);
+				DrawWalking(x,y,LOADER.GetBobN("jobs"),GetCarryID(),JOB_CONSTS[job].fat);
 			else
 				DrawWalking(x,y);
 		} break;

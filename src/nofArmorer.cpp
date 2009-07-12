@@ -1,4 +1,4 @@
-// $Id: nofArmorer.cpp 5167 2009-07-02 18:49:25Z FloSoft $
+// $Id: nofArmorer.cpp 5253 2009-07-12 14:42:18Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -65,7 +65,7 @@ void nofArmorer::DrawWorking(int x, int y)
 
 	if(now_id < 200)
 	{
-        GetRomBob(16+(now_id%8))
+        LOADER.GetImageN("rom_bobs", 16+(now_id%8))
             ->Draw(x+offsets[workplace->GetNation()][0],y+offsets[wpNation][1],0,0,0,0,0,0,COLOR_WHITE, COLORS[plColor]);
 
 		if((now_id%8) == 5)

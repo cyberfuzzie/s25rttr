@@ -1,4 +1,4 @@
-// $Id: nofDonkeybreeder.cpp 5167 2009-07-02 18:49:25Z FloSoft $
+// $Id: nofDonkeybreeder.cpp 5253 2009-07-12 14:42:18Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -78,18 +78,18 @@ void nofDonkeybreeder::DrawWorking(int x, int y)
 	if(now_id < 400)
 	{
 		GetBobImage(workplace->GetNation(),250+5*BLD_DONKEYBREEDER+4)->Draw(x,y,0,0,0,0,0,0);
-		GetBobFile(jobs_bob)->Draw(24,4,false,(now_id/70)%8,x+walk_start[nation][0]+now_id/100,y+walk_start[nation][1]+now_id/100,color);
+		LOADER.GetBobN("jobs")->Draw(24,4,false,(now_id/70)%8,x+walk_start[nation][0]+now_id/100,y+walk_start[nation][1]+now_id/100,color);
 	}
 	else if(now_id < 1200)
-		GetBobFile(jobs_bob)->Draw(24,3,false,((now_id-400)/70)%8,x+walk_start[nation][0]+4+walk_length[nation]*(now_id-400)/800,y+walk_start[nation][1]+4,color);
+		LOADER.GetBobN("jobs")->Draw(24,3,false,((now_id-400)/70)%8,x+walk_start[nation][0]+4+walk_length[nation]*(now_id-400)/800,y+walk_start[nation][1]+4,color);
 	else if(now_id < 2000)
-		GetRomBob(291+(now_id-1200)/100)->Draw(x+walk_start[nation][0]+4+walk_length[nation],y+walk_start[nation][1]+4,0,0,0,0,0,0, COLOR_WHITE, color);
+		LOADER.GetImageN("rom_bobs", 291+(now_id-1200)/100)->Draw(x+walk_start[nation][0]+4+walk_length[nation],y+walk_start[nation][1]+4,0,0,0,0,0,0, COLOR_WHITE, color);
 	else if(now_id < 2800)
-		GetBobFile(jobs_bob)->Draw(24,0,false,((now_id-2000)/70)%8,x+walk_start[nation][0]+4+walk_length[nation]*(800-(now_id-2000))/800,y+walk_start[nation][1]+4,color);
+		LOADER.GetBobN("jobs")->Draw(24,0,false,((now_id-2000)/70)%8,x+walk_start[nation][0]+4+walk_length[nation]*(800-(now_id-2000))/800,y+walk_start[nation][1]+4,color);
 	else if(now_id < 3200)
 	{
 		GetBobImage(workplace->GetNation(),250+5*BLD_DONKEYBREEDER+4)->Draw(x,y,0,0,0,0,0,0);
-		GetBobFile(jobs_bob)->Draw(24,1,false,((now_id-2800)/70)%8,x+walk_start[nation][0]+(400-(now_id-2800))/100,y+walk_start[nation][1]+(400-(now_id-2800))/100,color);
+		LOADER.GetBobN("jobs")->Draw(24,1,false,((now_id-2800)/70)%8,x+walk_start[nation][0]+(400-(now_id-2800))/100,y+walk_start[nation][1]+(400-(now_id-2800))/100,color);
 	}
 
 
@@ -109,10 +109,10 @@ void nofDonkeybreeder::DrawWorking(int x, int y)
         if (now_id<4) GetBobImage(workplace->GetNation(),250+5*BLD_PIGFARM+4)->Draw(x,y,0,0,0,0,0,0);
         int walkx=x+walkstart[wpNation][0]+(((offsets[wpNation][0]-walkstart[wpNation][0])/walksteps)*(now_id));
         int walky=y+walkstart[wpNation][1]+(((offsets[wpNation][1]-walkstart[wpNation][1])/walksteps)*(now_id));
-        GetBobFile(jobs_bob)->Draw(14,4,false,now_id,walkx,walky,COLORS[plColor]);
+        LOADER.GetBobN("jobs")->Draw(14,4,false,now_id,walkx,walky,COLORS[plColor]);
     }
     if(now_id>=8 && now_id<20){
-        GetRomBob(148+(now_id-8))
+        LOADER.GetImageN("rom_bobs", 148+(now_id-8))
             ->Draw(x+offsets[workplace->GetNation()][0],y+offsets[wpNation][1],0,0,0,0,0,0,COLORS[plColor]);
 
 		// Evtl Sound abspielen
@@ -126,7 +126,7 @@ void nofDonkeybreeder::DrawWorking(int x, int y)
         if(now_id>23) GetBobImage(workplace->GetNation(),250+5*BLD_PIGFARM+4)->Draw(x,y,0,0,0,0,0,0);
         int walkx=x+offsets[wpNation][0]+(((walkstart[wpNation][0]-offsets[wpNation][0])/walksteps)*(now_id-20));
         int walky=y+offsets[wpNation][1]+(((walkstart[wpNation][1]-offsets[wpNation][1])/walksteps)*(now_id-20));
-        GetBobFile(jobs_bob)->Draw(14,1,false,now_id-20,walkx,walky,COLORS[plColor]);
+        LOADER.GetBobN("jobs")->Draw(14,1,false,now_id-20,walkx,walky,COLORS[plColor]);
     }*/
 }
 

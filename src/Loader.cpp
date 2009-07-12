@@ -1,4 +1,4 @@
-// $Id: Loader.cpp 5247 2009-07-11 19:13:17Z FloSoft $
+// $Id: Loader.cpp 5253 2009-07-12 14:42:18Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -103,7 +103,7 @@ bool Loader::LoadFiles(void)
  *
  *  @author FloSoft
  */
-bool Loader::LoadFilesFromArray(const unsigned int files_count, const unsigned int *files)
+bool Loader::LoadFilesFromArray(const unsigned int files_count, const unsigned int *files, bool load_always)
 {
 	// load the files or directorys
 	for(unsigned int i = 0; i < files_count; ++i)
@@ -119,7 +119,7 @@ bool Loader::LoadFilesFromArray(const unsigned int files_count, const unsigned i
 
 			for(std::list<std::string>::iterator i = lst.begin(); i != lst.end(); ++i)
 			{
-				if(!LoadFile( i->c_str(), GetPaletteN("pal5") ) )
+				if(!LoadFile( i->c_str(), GetPaletteN("pal5"), load_always ) )
 					return false;
 			}
 			LOG.lprintf("Fertig\n");
@@ -127,7 +127,7 @@ bool Loader::LoadFilesFromArray(const unsigned int files_count, const unsigned i
 		else
 		{
 			// no, only single file specified
-			if(!LoadFile(FILE_PATHS[ files[i] ], GetPaletteN("pal5") ) )
+			if(!LoadFile(FILE_PATHS[ files[i] ], GetPaletteN("pal5"), load_always ) )
 				return false;
 
 			// ggf Splash anzeigen
@@ -267,12 +267,13 @@ bool Loader::LoadSounds(void)
  *
  *  @param[in] pfad    Der Dateipfad
  *  @param[in] palette (falls benötigt) die Palette.
+ *  @param[in] load_always bei @p true wird die datei immer geladen (und ggf überschrieben)
  *
  *  @return @p true bei Erfolg, @p false bei Fehler.
  *
  *  @author FloSoft
  */
-bool Loader::LoadFile(const char *pfad, const libsiedler2::ArchivItem_Palette *palette)
+bool Loader::LoadFile(const char *pfad, const libsiedler2::ArchivItem_Palette *palette, bool load_always)
 {
 	std::string p = pfad;
 	transform ( p.begin(), p.end(), p.begin(), tolower );
@@ -285,16 +286,43 @@ bool Loader::LoadFile(const char *pfad, const libsiedler2::ArchivItem_Palette *p
 	if(pp != std::string::npos)
 		p = p.substr(0, pp);
 
-	// leeres Archiv in Map einfügen
-	libsiedler2::ArchivInfo archiv;
-	files.insert(std::make_pair(p, archiv));
+	// bereits geladen und wir wollen kein nochmaliges laden
+	if(!load_always && files.find(p) != files.end() && files.find(p)->second.getCount() != 0)
+		return true;
 
-	// dann daten reinladen um kopieren zu vermeiden
-	if(!LoadFile(pfad, palette, &files.find(p)->second))
+	libsiedler2::ArchivInfo archiv;
+	libsiedler2::ArchivInfo *to = &archiv;
+
+	bool override_file = false;
+
+	if(files.find(p) == files.end() || files.find(p)->second.getCount() == 0)
+	{
+		// leeres Archiv in Map einfügen
+		files.insert(std::make_pair(p, archiv));
+		to = &files.find(p)->second;
+	}
+	else
+		override_file = true;
+
+	// dann daten reinladen um ggf. kopieren zu vermeiden
+	if(!LoadFile(pfad, palette, to))
 		return false;
 
-	/// @todo: ggf items nur überschreiben falls eintrag in map schon vorhanden, so könnte man "overrides" implementieren, 
-	/// das man einzelen originalbilder durch eigene dateien überschreibt
+	// haben wir eine override file? dann nicht-leere items überschreiben
+	if(override_file)
+	{
+		LOG.lprintf("Ersetze Daten der vorher geladenen Datei\n");
+		to = &files.find(p)->second;
+		for(unsigned int i = 0; i < archiv.getCount(); ++i)
+		{
+			if(archiv.get(i))
+			{
+				if(to->get(i))
+					delete to->get(i);
+				to->setC(i, archiv.get(i));
+			}
+		}
+	}
 
 	return true;
 }
@@ -400,10 +428,6 @@ bool Loader::LoadGame(unsigned char gfxset, bool *nations)
 			nation_bobs[i].clear();
 			if(!LoadFile(FILE_PATHS[27 + i + (gfxset == 2)*NATION_COUNT], GetPaletteN("pal5"), &nation_bobs[i]))
 				return false;
-	
-			nation_icons[i].clear();
-			if(!LoadFile(FILE_PATHS[35 + i], GetPaletteN("pal5"), &nation_icons[i]))
-				return false;
 		}
 	}
 
@@ -423,52 +447,16 @@ bool Loader::LoadGame(unsigned char gfxset, bool *nations)
 		return false;
 	}
 
-	for(unsigned char i = 0; i < 6; ++i)
-	{
-		// mis?bobs.lst laden
-		misxbobs[i].clear();
-		if(!LoadFile(FILE_PATHS[58+i], GetPaletteN("pal5"), &misxbobs[i]))
-		{
-			lastgfx = 0xFF;
-			return false;
-		}
-	}
+	const unsigned int files_count = 5 + 6 + 4;
 
-	// rombobs.lst laden
-	rombobs_lst.clear();
-	if(!LoadFile(FILE_PATHS[26], GetPaletteN("pal5"), &rombobs_lst))
-	{
-		lastgfx = 0xFF;
-		return false;
-	}
+	const unsigned int files[files_count] = { 
+		26, 44, 45, 86, 92,      // rom_bobs.lst, carrier.bob, jobs.bob, boat.lst, boot_z.lst
+		58, 59, 60, 61, 62, 63,  // mis0bobs.lst, mis1bobs.lst, mis2bobs.lst, mis3bobs.lst, mis4bobs.lst, mis5bobs.lst
+		35, 36, 37, 38           // afr_icon.lst, jap_icon.lst, rom_icon.lst, vik_icon.lst
+	};
 
-	// carrier.bob laden
-	carrier_bob.clear();
-	if(!LoadFile(FILE_PATHS[44], GetPaletteN("pal5"), &carrier_bob))
-	{
-		lastgfx = 0xFF;
-		return false;
-	}
-
-	// jobs.bob laden
-	jobs_bob.clear();
-	if(!LoadFile(FILE_PATHS[45], GetPaletteN("pal5"), &jobs_bob))
-	{
-		lastgfx = 0xFF;
-		return false;
-	}
-
-	// BOOT.LST laden
-	boat_lst.clear();
-	if(!LoadFile(FILE_PATHS[86], GetPaletteN("pal5"), &boat_lst))
-	{
-		lastgfx = 0xFF;
-		return false;
-	}
-
-	// BOOT.LST laden
-	boot_lst.clear();
-	if(!LoadFile(FILE_PATHS[92], GetPaletteN("pal5"), &boot_lst))
+	// dateien ggf nur einmal laden
+	if(!LoadFilesFromArray(files_count, files, false))
 	{
 		lastgfx = 0xFF;
 		return false;

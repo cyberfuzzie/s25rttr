@@ -1,4 +1,4 @@
-// $Id: nofSoldier.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: nofSoldier.cpp 5253 2009-07-12 14:42:18Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -73,7 +73,7 @@ nofSoldier::nofSoldier(SerializedGameData * sgd, const unsigned obj_id) : noFigu
 
 void nofSoldier::DrawSoldierWalking(int x, int y)
 {
-	DrawWalking(x,y,GetBobFile(jobs_bob),30+NATION_RTTR_TO_S2[GAMECLIENT.GetPlayer(player)->nation]*6+job-JOB_PRIVATE,false);
+	DrawWalking(x,y,LOADER.GetBobN("jobs"),30+NATION_RTTR_TO_S2[GAMECLIENT.GetPlayer(player)->nation]*6+job-JOB_PRIVATE,false);
 }
 
 void nofSoldier::AbrogateWorkplace()

@@ -1,4 +1,4 @@
-// $Id: nofWarehouseWorker.cpp 4854 2009-05-11 11:26:19Z OLiver $
+// $Id: nofWarehouseWorker.cpp 5253 2009-07-12 14:42:18Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -94,10 +94,10 @@ void nofWarehouseWorker::Draw(int x, int y)
 	// Trage ich ne Ware oder nicht?
 	if(carried_ware)
 		// Japaner-Schild-Animation existiert leider nicht --> Römerschild nehmen
-		DrawWalking(x,y,GetBobFile(carrier_bob),(carried_ware->type==GD_SHIELDJAPANESE)
+		DrawWalking(x,y,LOADER.GetBobN("carrier"),(carried_ware->type==GD_SHIELDJAPANESE)
 		?GD_SHIELDROMANS:carried_ware->type,fat);
 	else
-		DrawWalking(x,y,GetBobFile(jobs_bob),0,fat);
+		DrawWalking(x,y,LOADER.GetBobN("jobs"),0,fat);
 }
 
 void nofWarehouseWorker::GoalReached()

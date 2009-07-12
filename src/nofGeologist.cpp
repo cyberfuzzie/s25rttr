@@ -1,4 +1,4 @@
-// $Id: nofGeologist.cpp 5167 2009-07-02 18:49:25Z FloSoft $
+// $Id: nofGeologist.cpp 5253 2009-07-12 14:42:18Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -100,7 +100,7 @@ void nofGeologist::Draw(int x, int y)
 	case STATE_GOTOFLAG:
 		{
 			// normales Laufen zeichnen
-			DrawWalking(x,y,GetBobFile(jobs_bob),26,false);
+			DrawWalking(x,y,LOADER.GetBobN("jobs"),26,false);
 		} break;
 	case STATE_GEOLOGIST_DIG:
 		{
@@ -110,37 +110,37 @@ void nofGeologist::Draw(int x, int y)
 
 			if(i<6)
 			{
-				GetRomBob(324+i)->Draw(x,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
+				LOADER.GetImageN("rom_bobs", 324+i)->Draw(x,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
 				if(i == 4) { sound = 1; sound_id = 0; }
 			}
 			else if(i<16)
 			{
-				GetRomBob(314+i-6)->Draw(x,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
+				LOADER.GetImageN("rom_bobs", 314+i-6)->Draw(x,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
 				if(i == 14) { sound = 2; sound_id = 1; }
 			}
 			else if(i<28)
 			{
-				GetRomBob(324+(i-16)%6)->Draw(x,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
+				LOADER.GetImageN("rom_bobs", 324+(i-16)%6)->Draw(x,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
 				if(i == 20) { sound = 1; sound_id = 2; } else if(i == 26) { sound = 1; sound_id = 3; }
 			}
 			else if(i<38)
 			{
-				GetRomBob(314+i-28)->Draw(x,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
+				LOADER.GetImageN("rom_bobs", 314+i-28)->Draw(x,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
 				if(i == 36) { sound = 2; sound_id = 4; }
 			}
 			else if(i<50)
 			{
-				GetRomBob(324+(i-38)%6)->Draw(x,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
+				LOADER.GetImageN("rom_bobs", 324+(i-38)%6)->Draw(x,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
 				if(i == 42) { sound = 1; sound_id = 5; } else if(i == 48) { sound = 1; sound_id = 6; }
 			}
 			else if(i<60)
 			{
-				GetRomBob(314+i-50)->Draw(x,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
+				LOADER.GetImageN("rom_bobs", 314+i-50)->Draw(x,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
 				if(i == 58) { sound = 2; sound_id = 7; }
 			}
 			else
 			{
-				GetRomBob(324+(i-60)%6)->Draw(x,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
+				LOADER.GetImageN("rom_bobs", 324+(i-60)%6)->Draw(x,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
 				if(i == 64) { sound = 1; sound_id = 8; } else if(i == 70) { sound = 1; sound_id = 9; }
 				else if(i == 76) { sound = 1; sound_id = 10; } else if(i == 82) { sound = 1; sound_id = 11; }
 			}
@@ -155,13 +155,13 @@ void nofGeologist::Draw(int x, int y)
 
 			if(i<7)
 			{
-				GetRomBob(357+
+				LOADER.GetImageN("rom_bobs", 357+
 					i)->Draw(x,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
 			}
 			else
 			{
 				unsigned char ids[9] = { 1, 0, 1, 2, 1, 0, 1, 2, 1};
-				GetRomBob(361+ids[i-7])->Draw(x,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
+				LOADER.GetImageN("rom_bobs", 361+ids[i-7])->Draw(x,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
 			}
 
 			if(i == 4)

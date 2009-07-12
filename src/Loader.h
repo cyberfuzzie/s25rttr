@@ -1,4 +1,4 @@
-// $Id: Loader.h 5247 2009-07-11 19:13:17Z FloSoft $
+// $Id: Loader.h 5253 2009-07-12 14:42:18Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -50,23 +50,22 @@ protected:
 	inline bool LoadSounds();
 
 private:
-	bool LoadFile(const char *pfad, const libsiedler2::ArchivItem_Palette *palette = NULL);
+	bool LoadFile(const char *pfad, const libsiedler2::ArchivItem_Palette *palette = NULL, bool load_always = true);
 	bool LoadFile(const char *pfad, const libsiedler2::ArchivItem_Palette *palette, libsiedler2::ArchivInfo *archiv);
 	void ExtractTexture(libsiedler2::ArchivInfo *source, libsiedler2::ArchivInfo *destination, Rect &rect);
 	void ExtractAnimatedTexture(libsiedler2::ArchivInfo *source, libsiedler2::ArchivInfo *destination, Rect &rect, unsigned char color_count, unsigned char start_index);
 
-	bool LoadFilesFromArray(const unsigned int files_count, const unsigned int *files);
+	bool LoadFilesFromArray(const unsigned int files_count, const unsigned int *files, bool load_always = true);
 	bool LoadLsts(unsigned int dir);
 
 public:
-	static const unsigned int NATION_COUNT = 4;
-
 	inline glArchivItem_Bitmap *GetImageN(std::string file, unsigned int nr) { return dynamic_cast<glArchivItem_Bitmap*>( files[file].get(nr) ); }
 	inline glArchivItem_Font *GetFontN(std::string file, unsigned int nr) { return dynamic_cast<glArchivItem_Font*>( files[file].get(nr) ); }
 	inline libsiedler2::ArchivItem_Palette *GetPaletteN(std::string file, unsigned int nr = 0) { return dynamic_cast<libsiedler2::ArchivItem_Palette*>( files[file].get(nr) ); }
 	inline glArchivItem_Sound *GetSoundN(std::string file, unsigned int nr) { return dynamic_cast<glArchivItem_Sound*>( files[file].get(nr) ); }
 	inline const char *GetTextN(std::string file, unsigned int nr) { return dynamic_cast<libsiedler2::ArchivItem_Text*>( files[file].get(nr) ) ? dynamic_cast<libsiedler2::ArchivItem_Text*>( files[file].get(nr) )->getText() : "text missing"; }
 	inline libsiedler2::ArchivInfo *GetInfoN(std::string file) { return dynamic_cast<libsiedler2::ArchivInfo*>( &files[file] ); }
+	inline glArchivItem_Bob *GetBobN(std::string file) { return dynamic_cast<glArchivItem_Bob*>( files[file].get(0) ); };
 
 	// should not use this!
 	const std::map<std::string, libsiedler2::ArchivInfo> &GetFiles(void) const { return files; }
@@ -85,15 +84,7 @@ public:
 	libsiedler2::ArchivInfo roads_points;
 
 	libsiedler2::ArchivInfo map_lst;
-	libsiedler2::ArchivInfo rombobs_lst;
 	libsiedler2::ArchivInfo nation_bobs[NATION_COUNT];
-	libsiedler2::ArchivInfo nation_icons[NATION_COUNT];
-	libsiedler2::ArchivInfo misxbobs[6];
-	libsiedler2::ArchivInfo boat_lst;
-	libsiedler2::ArchivInfo boot_lst;
-
-	libsiedler2::ArchivInfo carrier_bob;
-	libsiedler2::ArchivInfo jobs_bob;
 
 	libsiedler2::ArchivInfo settings;
 };

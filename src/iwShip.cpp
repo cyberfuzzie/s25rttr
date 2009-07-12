@@ -112,7 +112,7 @@ void iwShip::Msg_PaintAfter()
 	sprintf(str,"%u/%u",ship_id+1,GameClient::inst().GetPlayer(ship->GetPlayer())->GetShipCount());
 	LOADER.GetFontN("resource", 0)->Draw(GetX()+208,GetY()+42,str,glArchivItem_Font::DF_RIGHT,COLOR_WINDOWBROWN);
 	// Das Schiffs-Bild
-	GetImage(boot_lst,12)->Draw(GetX()+138,GetY()+117);
+	LOADER.GetImageN("boot_z", 12)->Draw(GetX()+138,GetY()+117);
 
 	// Expeditions-Buttons malen?
 	if(ship->IsWaitingForExpeditionInstructions())

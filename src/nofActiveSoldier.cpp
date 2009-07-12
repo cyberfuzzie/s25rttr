@@ -1,4 +1,4 @@
-// $Id: nofActiveSoldier.cpp 5238 2009-07-09 20:50:28Z FloSoft $
+// $Id: nofActiveSoldier.cpp 5253 2009-07-12 14:42:18Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -143,7 +143,7 @@ void nofActiveSoldier::Draw(int x, int y)
 	case STATE_DEFENDING_WAITING:
 		{
 			// wenn er wartet, steht er nur rum
-			GetBobFile(jobs_bob)->Draw(30+NATION_RTTR_TO_S2[GAMECLIENT.GetPlayer(player)->nation]*6+job-JOB_PRIVATE,
+			LOADER.GetBobN("jobs")->Draw(30+NATION_RTTR_TO_S2[GAMECLIENT.GetPlayer(player)->nation]*6+job-JOB_PRIVATE,
 				dir,false,2,x,y,COLORS[GAMECLIENT.GetPlayer(player)->color]);
 			DrawShadow(x,y,2,dir);
 		} break;

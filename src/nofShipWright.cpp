@@ -324,7 +324,7 @@ void nofShipWright::DrawWorking(int x,int y)
 		{
 			unsigned id = GAMECLIENT.Interpolate(42,current_ev);
 			unsigned graphics_id = ANIMATION[id];
-			GetRomBob(graphics_id)->Draw(x,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
+			LOADER.GetImageN("rom_bobs", graphics_id)->Draw(x,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
 
 			// Steh-Hammer-Sound
 			if(graphics_id == 300)
@@ -351,7 +351,7 @@ void nofShipWright::DrawOtherStates(const int x, const int y)
 	case STATE_WALKTOWORKPOINT:
 		{
 			// Schiffsbauer mit Brett zeichnen
-			DrawWalking(x,y,GetBobFile(jobs_bob),92,false);
+			DrawWalking(x,y,LOADER.GetBobN("jobs"),92,false);
 		} break;
 	default: return;
 	}

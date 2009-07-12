@@ -1,4 +1,4 @@
-// $Id: GameConsts.h 5139 2009-06-28 21:06:58Z OLiver $
+// $Id: GameConsts.h 5253 2009-07-12 14:42:18Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -34,10 +34,6 @@ enum Nation
 	NAT_VIKINGS,
 	NAT_INVALID = 0xFFFFFFFF
 };
-
-/// Anzahl der Völker
-const unsigned NATION_COUNT = 4;
-
 
 /// Team
 enum Team

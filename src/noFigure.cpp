@@ -1,4 +1,4 @@
-// $Id: noFigure.cpp 5024 2009-06-09 20:02:17Z OLiver $
+// $Id: noFigure.cpp 5253 2009-07-12 14:42:18Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -902,7 +902,7 @@ void noFigure::DrawWalking(int x, int y)
 	else if(job >= JOB_PRIVATE && job <= JOB_GENERAL)
 		jobs_bob_id = 30+NATION_RTTR_TO_S2[GAMECLIENT.GetPlayer(player)->nation]*6+job-JOB_PRIVATE;
 
-	DrawWalking(x,y,GetBobFile(jobs_bob),jobs_bob_id,JOB_CONSTS[job].fat);
+	DrawWalking(x,y,LOADER.GetBobN("jobs"),jobs_bob_id,JOB_CONSTS[job].fat);
 }
 
 void noFigure::Die()

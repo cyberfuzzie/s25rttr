@@ -128,13 +128,13 @@ void nobHarborBuilding::Draw(int x,int y)
 
 			if(id < 500)
 			{
-				GetBobFile(jobs_bob)->Draw(23,0,false,walking_id,right_point-walking_distance,
+				LOADER.GetBobN("jobs")->Draw(23,0,false,walking_id,right_point-walking_distance,
 					y+BUILDER_POS[nation].y,COLORS[GAMECLIENT.GetPlayer(player)->color]);
 				//DrawShadow(right_point-walking_distance,y,walking_id,0);
 			}
 			else
 			{
-				GetBobFile(jobs_bob)->Draw(23,3,false,walking_id,
+				LOADER.GetBobN("jobs")->Draw(23,3,false,walking_id,
 					right_point-WALKING_DISTANCE+walking_distance,y+BUILDER_POS[nation].y,
 					COLORS[GAMECLIENT.GetPlayer(player)->color]);
 				//DrawShadow(right_point-WALKING_DISTANCE+walking_distance,y,walking_id,0);

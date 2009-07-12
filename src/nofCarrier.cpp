@@ -1,4 +1,4 @@
-// $Id: nofCarrier.cpp 5167 2009-07-02 18:49:25Z FloSoft $
+// $Id: nofCarrier.cpp 5253 2009-07-12 14:42:18Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -238,14 +238,14 @@ void nofCarrier::Draw(int x, int y)
 						animation = true;
 
 						// Nein, dann Animation abspielen
-						GetRomBob(ANIMATION[fat?1:0][animation_id][(current_gf-next_animation)/FRAME_GF])
+						LOADER.GetImageN("rom_bobs", ANIMATION[fat?1:0][animation_id][(current_gf-next_animation)/FRAME_GF])
 							->Draw(x,y,0,0,0,0,0,0,COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
 					}
 				}
 
 				if(!animation)
 					// Steht und wartet (ohne Ware)
-					GetBobFile(jobs_bob)->Draw(0,dir,fat,2,x,y,COLORS[GAMECLIENT.GetPlayer(player)->color]);
+					LOADER.GetBobN("jobs")->Draw(0,dir,fat,2,x,y,COLORS[GAMECLIENT.GetPlayer(player)->color]);
 
 				DrawShadow(x,y,0,dir);
 			}
@@ -253,7 +253,7 @@ void nofCarrier::Draw(int x, int y)
 			{
 				// Steht und wartet (mit Ware)
 				// Japaner-Schild-Animation existiert leider nicht --> Römerschild nehmen
-				GetBobFile(carrier_bob)->Draw((carried_ware->type==GD_SHIELDJAPANESE)?GD_SHIELDROMANS:carried_ware->type,
+				LOADER.GetBobN("carrier")->Draw((carried_ware->type==GD_SHIELDJAPANESE)?GD_SHIELDROMANS:carried_ware->type,
 					dir,fat,2,x,y,COLORS[GAMECLIENT.GetPlayer(player)->color]);
 				DrawShadow(x,y,0,dir);
 			}
@@ -261,9 +261,9 @@ void nofCarrier::Draw(int x, int y)
 			{
 				// Läuft normal mit oder ohne Ware
 				if(carried_ware)
-					DrawWalking(x,y,GetBobFile(carrier_bob),(carried_ware->type==GD_SHIELDJAPANESE)?GD_SHIELDROMANS:carried_ware->type,fat);
+					DrawWalking(x,y,LOADER.GetBobN("carrier"),(carried_ware->type==GD_SHIELDJAPANESE)?GD_SHIELDROMANS:carried_ware->type,fat);
 				else
-					DrawWalking(x,y,GetBobFile(jobs_bob),0,fat);
+					DrawWalking(x,y,LOADER.GetBobN("jobs"),0,fat);
 			}
 		} break;
 	case CT_DONKEY:
@@ -326,19 +326,19 @@ void nofCarrier::Draw(int x, int y)
 			if(state == CARRS_FIGUREWORK)
 			{
 				// Beim normalen Laufen Träger mit Boot über den Schultern zeichnen
-				DrawWalking(x,y,GetBobFile(carrier_bob),GD_BOAT,fat);
+				DrawWalking(x,y,LOADER.GetBobN("carrier"),GD_BOAT,fat);
 			}
 			else if(state == CARRS_WAITFORWARE || (waiting_for_free_node && !pause_walked_gf && !carried_ware))
 			{
 				// Steht und wartet (ohne Ware)
-				GetPlayerImage(boat_lst,((dir+3)%6)*8)->Draw(x,y,0,0,0,0,0,0,COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
+				LOADER.GetImageN("boat", ((dir+3)%6)*8)->Draw(x,y,0,0,0,0,0,0,COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
 				// Schatten des Boots (Eselschatten)
 				GetImage(map_lst,2048+dir%3)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
 			}
 			else if(state == CARRS_WAITFORWARESPACE || (waiting_for_free_node && !pause_walked_gf && carried_ware))
 			{
 				// Steht und wartet (ohne Ware)
-				GetPlayerImage(boat_lst,(((dir)+3)%6)*8)->Draw(x,y,0,0,0,0,0,0,COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
+				LOADER.GetImageN("boat", (((dir)+3)%6)*8)->Draw(x,y,0,0,0,0,0,0,COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
 				// Schatten des Boots (Eselschatten)
 				GetImage(map_lst,2048+(dir)%3)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
 		
@@ -355,7 +355,7 @@ void nofCarrier::Draw(int x, int y)
 				CalcFigurRelative(x,y);		
 
 				// ruderndes Boot zeichnen
-				GetPlayerImage(boat_lst,((dir+3)%6)*8+ani_step)->Draw(x,y,0,0,0,0,0,0,COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
+				LOADER.GetImageN("boat", ((dir+3)%6)*8+ani_step)->Draw(x,y,0,0,0,0,0,0,COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
 				// Schatten des Boots (Eselschatten)
 				GetImage(map_lst,2048+dir%3)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
 

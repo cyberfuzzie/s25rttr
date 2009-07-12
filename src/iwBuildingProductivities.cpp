@@ -1,4 +1,4 @@
-// $Id: iwBuildingProductivities.cpp 5238 2009-07-09 20:50:28Z FloSoft $
+// $Id: iwBuildingProductivities.cpp 5253 2009-07-12 14:42:18Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -89,7 +89,7 @@ iwBuildingProductivities::iwBuildingProductivities()
 			if(y*2+x < BUILDINGS_COUNT)
 			{
 				AddImage((y*2+x)*2, left_x + x*(percent_image_x+percent_width+image_percent_x),top_y + distance_y*y + percent_height/2,
-					GetImage(nation_icons[GameClient::inst().GetLocalPlayer()->nation],bts[y*2+x]),_(BUILDING_NAMES[bts[y*2+x]]));
+					LOADER.GetImageN(NATION_ICON_IDS[GameClient::inst().GetLocalPlayer()->nation],bts[y*2+x]),_(BUILDING_NAMES[bts[y*2+x]]));
 
 				AddPercent((y*2+x)*2+1, left_x + image_percent_x + x*(percent_image_x+percent_width+image_percent_x),top_y + distance_y*y,
 					percent_width, percent_height, TC_GREY, COLOR_YELLOW, SmallFont, &percents[bts[y*2+x]]);

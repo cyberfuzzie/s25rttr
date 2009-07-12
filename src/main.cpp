@@ -1,4 +1,4 @@
-// $Id: main.cpp 5250 2009-07-12 07:07:50Z FloSoft $
+// $Id: main.cpp 5256 2009-07-12 15:51:21Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -118,7 +118,7 @@ int main(int argc, char *argv[])
 
 	// diverse dirs anlegen
 	const unsigned int dir_count = 8;
-	unsigned int dirs[dir_count] = { 94, 47, 48, 51, 85, 98, 99, 100 }; // settingsdir muss zuerst angelegt werden (94)
+	unsigned int dirs[dir_count] = { 94, 47, 48, 51, 85, 98, 99 }; // settingsdir muss zuerst angelegt werden (94)
 
 	for(unsigned int i = 0; i < dir_count; ++i)
 	{

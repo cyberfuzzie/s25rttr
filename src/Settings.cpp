@@ -1,4 +1,4 @@
-// $Id: Settings.cpp 5260 2009-07-13 16:06:49Z FloSoft $
+// $Id: Settings.cpp 5262 2009-07-13 19:51:14Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -185,6 +185,7 @@ bool Settings::Load(void)
 		this->sound.musik_volume =   sound->getValueI("musik_volume");
 		this->sound.effekte =       (sound->getValueI("effekte") ? true : false);
 		this->sound.effekte_volume = sound->getValueI("effekte_volume");
+		this->sound.playlist =       sound->getValue("playlist");
 	// }
 
 	// lobby
@@ -280,6 +281,7 @@ void Settings::Save(void)
 		sound->setValue("musik_volume", this->sound.musik_volume);
 		sound->setValue("effekte", (this->sound.effekte ? 1 : 0) );
 		sound->setValue("effekte_volume", this->sound.effekte_volume);
+		sound->setValue("playlist", this->sound.playlist);
 	// }
 
 	// lobby

@@ -1,4 +1,4 @@
-// $Id: Settings.cpp 5259 2009-07-13 15:53:31Z FloSoft $
+// $Id: Settings.cpp 5260 2009-07-13 16:06:49Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -136,7 +136,7 @@ bool Settings::Load(void)
 	// ist eine der Kategorien nicht vorhanden?
 	if(!global || !video || !language || !driver || !sound || !lobby || !server || !savegames ||
 		// stimmt die Settingsversion?
-		(global->getValueI("version") != SETTINGS_VERSION)
+		((unsigned int)global->getValueI("version") != SETTINGS_VERSION)
 	  )
 	{
 		// nein, dann Standardeinstellungen laden

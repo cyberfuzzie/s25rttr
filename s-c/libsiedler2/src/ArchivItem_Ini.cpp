@@ -1,4 +1,4 @@
-// $Id: ArchivItem_Ini.cpp 5259 2009-07-13 15:53:31Z FloSoft $
+// $Id: ArchivItem_Ini.cpp 5260 2009-07-13 16:06:49Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -115,9 +115,9 @@ int libsiedler2::ArchivItem_Ini::load(FILE *file)
 
 		std::string entry(temp);
 
-		int lr = entry.find("\r");
+		unsigned int lr = entry.find("\r");
 		if (lr != std::string::npos) entry.erase(lr, 1); 
-		int ln = entry.find("\n");
+		unsigned int ln = entry.find("\n");
 		if (ln != std::string::npos) entry.erase(ln, 1); 
 
 		if(entry.length() == 0 || feof(file))

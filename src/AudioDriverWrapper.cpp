@@ -1,4 +1,4 @@
-// $Id: AudioDriverWrapper.cpp 4798 2009-05-04 17:30:57Z FloSoft $
+// $Id: AudioDriverWrapper.cpp 5259 2009-07-13 15:53:31Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -47,7 +47,7 @@ AudioDriverWrapper::~AudioDriverWrapper()
 bool AudioDriverWrapper::LoadDriver(void)
 {
 	// DLL laden
-	if(!driver_wrapper.Load(DriverWrapper::DT_AUDIO, Settings::inst().audio_driver))
+	if(!driver_wrapper.Load(DriverWrapper::DT_AUDIO, SETTINGS.driver.audio))
 		return false;
 
 	PDRIVER_CREATEAUDIOINSTANCE CreateAudioInstance = pto2ptf<PDRIVER_CREATEAUDIOINSTANCE>(driver_wrapper.GetDLLFunction("CreateAudioInstance"));

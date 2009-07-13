@@ -1,4 +1,4 @@
-// $Id: Loader.h 5254 2009-07-12 15:49:16Z FloSoft $
+// $Id: Loader.h 5259 2009-07-13 15:53:31Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -22,7 +22,7 @@
 #pragma once
 
 #include "Singleton.h"
-#include "../libsiedler2/src/libsiedler2.h"
+#include "libsiedler2.h"
 
 /// Loader Klasse.
 class Loader : public Singleton<Loader>
@@ -34,11 +34,11 @@ public:
 	~Loader(void);
 
 	/// Lädt alle allgemeinen Dateien.
-	bool LoadFiles(void);
+	bool LoadFilesAtStart(void);
 	/// Lädt die Spieldateien.
-	bool LoadGame(unsigned char gfxset, bool *nations);
+	bool LoadFilesAtGame(unsigned char gfxset, bool *nations);
 	/// Lädt das Terrain.
-	bool LoadTerrain(unsigned char gfxset);
+	bool CreateTerrainTextures(void);
 
 	/// Lädt die Settings.
 	bool LoadSettings();
@@ -52,8 +52,8 @@ protected:
 private:
 	bool LoadFile(const char *pfad, const libsiedler2::ArchivItem_Palette *palette = NULL, bool load_always = true);
 	bool LoadFile(const char *pfad, const libsiedler2::ArchivItem_Palette *palette, libsiedler2::ArchivInfo *archiv);
-	void ExtractTexture(libsiedler2::ArchivInfo *source, libsiedler2::ArchivInfo *destination, Rect &rect);
-	void ExtractAnimatedTexture(libsiedler2::ArchivInfo *source, libsiedler2::ArchivInfo *destination, Rect &rect, unsigned char color_count, unsigned char start_index);
+	void ExtractTexture(libsiedler2::ArchivInfo *destination, Rect &rect);
+	void ExtractAnimatedTexture(libsiedler2::ArchivInfo *destination, Rect &rect, unsigned char color_count, unsigned char start_index);
 
 	bool LoadFilesFromArray(const unsigned int files_count, const unsigned int *files, bool load_always = true);
 	bool LoadLsts(unsigned int dir);
@@ -68,6 +68,9 @@ public:
 	inline glArchivItem_Bob *GetBobN(std::string file) { return dynamic_cast<glArchivItem_Bob*>( files[file].get(0) ); };
 	inline glArchivItem_Bitmap *GetNationImageN(unsigned int nation, unsigned int nr) { return GetImageN(NATION_GFXSET_Z[lastgfx][nation], nr); }
 	inline glArchivItem_Bitmap *GetMapImageN(unsigned int nr) { return GetImageN(MAP_GFXSET_Z[lastgfx], nr); }
+	inline glArchivItem_Bitmap *GetTexImageN(unsigned int nr) { return GetImageN(TEX_GFXSET[lastgfx], nr); }
+	inline libsiedler2::ArchivItem_Palette *GetTexPaletteN(unsigned int nr) { return GetPaletteN(TEX_GFXSET[lastgfx], nr); }
+	inline libsiedler2::ArchivItem_Ini *GetSettingsIniN(std::string name) { return dynamic_cast<libsiedler2::ArchivItem_Ini*>( GetInfoN(CONFIG_NAME)->find(name.c_str()) ); }
 
 	// should not use this!
 	const std::map<std::string, libsiedler2::ArchivInfo> &GetFiles(void) const { return files; }
@@ -85,8 +88,6 @@ public:
 	libsiedler2::ArchivInfo borders;
 	libsiedler2::ArchivInfo roads;
 	libsiedler2::ArchivInfo roads_points;
-
-	libsiedler2::ArchivInfo settings;
 };
 
 ///////////////////////////////////////////////////////////////////////////////

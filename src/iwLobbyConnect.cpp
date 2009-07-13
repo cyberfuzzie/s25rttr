@@ -1,4 +1,4 @@
-// $Id: iwLobbyConnect.cpp 5247 2009-07-11 19:13:17Z FloSoft $
+// $Id: iwLobbyConnect.cpp 5259 2009-07-13 15:53:31Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -52,17 +52,17 @@ iwLobbyConnect::iwLobbyConnect(void)
 	AddText(0,  20, 40, _("Username:"), COLOR_YELLOW, 0, NormalFont);
 	ctrlEdit *user = AddEdit(1, 260, 40, 220, 22, TC_GREEN2, NormalFont, 15);
 	user->SetFocus();
-	user->SetText(SETTINGS.name);
+	user->SetText(SETTINGS.lobby.name);
 	
 	// Passwort
 	AddText(2,  20, 70, _("Password:"), COLOR_YELLOW, 0, NormalFont);
 	ctrlEdit *pass = AddEdit(3, 260, 70, 220, 22, TC_GREEN2, NormalFont, 0, true);
-	pass->SetText(SETTINGS.password);
+	pass->SetText(SETTINGS.lobby.password);
 	
 	// Emailadresse
 	AddText(4,  20, 100, _("Email Address:"), COLOR_YELLOW, 0, NormalFont);
 	ctrlEdit *email = AddEdit(5, 260, 100, 220, 22, TC_GREEN2, NormalFont);
-	email->SetText(SETTINGS.email);
+	email->SetText(SETTINGS.lobby.email);
 	
 	// Passwort speichern ja/nein
 	AddText(6, 20, 130, _("Save Password?"), COLOR_YELLOW, 0, NormalFont);
@@ -70,7 +70,7 @@ iwLobbyConnect::iwLobbyConnect(void)
 	ctrlOptionGroup *group = AddOptionGroup(10, ctrlOptionGroup::CHECK);
 	group->AddTextButton(0, 260, 130, 105,	22, TC_GREEN2, _("No"), NormalFont); // nein
 	group->AddTextButton(1, 375, 130, 105,	22, TC_GREEN2, _("Yes"), NormalFont); // ja
-	group->SetSelection( (SETTINGS.save_password ? 1 : 0) );
+	group->SetSelection( (SETTINGS.lobby.save_password ? 1 : 0) );
 
 	// Verbinden
 	AddTextButton(7, 20, 190, 220,  22, TC_RED1, _("Connect"),NormalFont);
@@ -118,21 +118,21 @@ void iwLobbyConnect::LobbyForm(std::string& user, std::string& pass, std::string
 	email =  GetCtrl<ctrlEdit>(5)->GetText();
 
 	// Name speichern
-	SETTINGS.name = user;
+	SETTINGS.lobby.name = user;
 
 	// Ist Passwort speichern an?
-	if(SETTINGS.save_password == true)
+	if(SETTINGS.lobby.save_password == true)
 	{
 		// ja, Passwort speichern
-		SETTINGS.password = pass;
+		SETTINGS.lobby.password = pass;
 
 		// Email speichern
-		SETTINGS.email = email;
+		SETTINGS.lobby.email = email;
 	}
 	else
 	{
-		SETTINGS.password = "";
-		SETTINGS.email = "";
+		SETTINGS.lobby.password = "";
+		SETTINGS.lobby.email = "";
 	}
 }
 
@@ -244,7 +244,7 @@ void iwLobbyConnect::Msg_OptionGroupChange(const unsigned int ctrl_id, const uns
 	{
 	case 10: // Passwort speichern Ja/Nein
 		{
-			SETTINGS.save_password = (selection == 1);
+			SETTINGS.lobby.save_password = (selection == 1);
 		} break;
 	}
 }

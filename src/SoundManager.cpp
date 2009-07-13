@@ -1,4 +1,4 @@
-// $Id: SoundManager.cpp 5247 2009-07-11 19:13:17Z FloSoft $
+// $Id: SoundManager.cpp 5259 2009-07-13 15:53:31Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -45,7 +45,7 @@ SoundManager::~SoundManager()
 
 void SoundManager::PlayNOSound(const unsigned sound_lst_id,noBase * const obj,const unsigned int id, unsigned char volume)
 {
-	if(SETTINGS.effekte == false)
+	if(SETTINGS.sound.effekte == false)
 		return;
 
 	// Wird Sound schon gespielt?
@@ -71,7 +71,7 @@ void SoundManager::PlayNOSound(const unsigned sound_lst_id,noBase * const obj,co
 
 void SoundManager::WorkingFinished(noBase * const obj)
 {
-	if(SETTINGS.effekte == false)
+	if(SETTINGS.sound.effekte == false)
 		return;
 
 	// Alle Sounds von diesem Objekt stoppen und löschen
@@ -88,7 +88,7 @@ void SoundManager::WorkingFinished(noBase * const obj)
 
 void SoundManager::PlayBirdSounds(const unsigned short tree_count)
 {
-	if(SETTINGS.effekte == false)
+	if(SETTINGS.sound.effekte == false)
 		return;
 
 	// Abstände zwischen den Vogelsounds berechnen (je nachdem wieviel Bäume) 
@@ -113,7 +113,7 @@ void SoundManager::PlayBirdSounds(const unsigned short tree_count)
 
 void SoundManager::PlayOceanBrawling(const unsigned water_percent)
 {
-	if(SETTINGS.effekte == false)
+	if(SETTINGS.sound.effekte == false)
 		return;
 
 	// Ist genug Wasser da zum Rauschen?

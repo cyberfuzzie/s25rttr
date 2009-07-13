@@ -232,6 +232,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\ArchivItem_Ini.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\ArchivItem_Map.cpp"
 					>
 				</File>
@@ -326,6 +330,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\LoadINI.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\LoadLBM.cpp"
 					>
 				</File>
@@ -375,6 +383,10 @@
 				</File>
 				<File
 					RelativePath="..\..\src\WriteDATIDX.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\WriteINI.cpp"
 					>
 				</File>
 				<File
@@ -445,6 +457,10 @@
 				</File>
 				<File
 					RelativePath="..\..\src\ArchivItem_Font.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\ArchivItem_Ini.h"
 					>
 				</File>
 				<File

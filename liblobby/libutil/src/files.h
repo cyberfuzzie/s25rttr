@@ -1,4 +1,4 @@
-// $Id: files.h 5254 2009-07-12 15:49:16Z FloSoft $
+// $Id: files.h 5259 2009-07-13 15:53:31Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -77,15 +77,11 @@
 #	endif
 #endif // !SETTINGSDIR
 
-#ifndef SETTINGSFILE
-#	define SETTINGSFILE SETTINGSDIR "/settings.ger"
-#endif // !SETTINGSFILE
-
 ///////////////////////////////////////////////////////////////////////////////
 // Konstanten
 const char * const FILE_PATHS[] =
 {
-	/*  0 */SETTINGSFILE,                             // die Einstellungsdatei
+	/*  0 */SETTINGSDIR "/CONFIG.INI",                // die Einstellungsdatei
 	/*  1 */RTTRDIR "",                               // unbenutzt
 	/*  2 */GAMEDIR "",                               // unbenutzt
 	/*  3 */GAMEDIR "",                               // unbenutzt
@@ -203,6 +199,7 @@ const std::string FILE_LOAD_IDS[] = {
 	"africa", "austra", "europe", "green", "japan", "namerica", "nasia", "samerica", "sasia"
 };
 
+const std::string CONFIG_NAME = "config";
 const unsigned int GFXSET_COUNT = 3;
 const unsigned int NATION_COUNT = 4;
 
@@ -218,6 +215,10 @@ const std::string NATION_GFXSET_Z[GFXSET_COUNT][NATION_COUNT] = {
 
 const std::string MAP_GFXSET_Z[GFXSET_COUNT] = {
 	"map_0_z", "map_1_z", "map_2_z"
+};
+
+const std::string TEX_GFXSET[GFXSET_COUNT] = {
+	"tex5", "tex6", "tex7"
 };
 
 std::string GetFilePath(std::string file);

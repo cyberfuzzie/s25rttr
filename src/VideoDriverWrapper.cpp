@@ -1,4 +1,4 @@
-// $Id: VideoDriverWrapper.cpp 5155 2009-07-01 15:37:53Z FloSoft $
+// $Id: VideoDriverWrapper.cpp 5259 2009-07-13 15:53:31Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -74,12 +74,12 @@ bool VideoDriverWrapper::LoadDriver(void)
 {
 #ifdef _WIN32
 	// unter Windows standardmäßig WinAPI präfarieren
-	if(Settings::inst().video_driver == "") 
-		Settings::inst().video_driver = "(WinAPI) OpenGL via the glorious WinAPI";
+	if(SETTINGS.driver.video == "") 
+		SETTINGS.driver.video = "(WinAPI) OpenGL via the glorious WinAPI";
 #endif
 
 	// DLL laden
-	if(!driver_wrapper.Load(DriverWrapper::DT_VIDEO, Settings::inst().video_driver))
+	if(!driver_wrapper.Load(DriverWrapper::DT_VIDEO, SETTINGS.driver.video))
 		return false;
 
 	PDRIVER_CREATEVIDEOINSTANCE CreateVideoInstance;
@@ -135,7 +135,7 @@ bool VideoDriverWrapper::CreateScreen(const unsigned short screen_width, const u
 
 	// VSYNC ggf abschalten/einschalten
 	if(GLOBALVARS.ext_swapcontrol)
-		wglSwapIntervalEXT(SETTINGS.vsync);
+		wglSwapIntervalEXT(SETTINGS.video.vsync);
 
 	return true;
 }
@@ -423,10 +423,7 @@ bool VideoDriverWrapper::LoadAllExtensions()
 unsigned int VideoDriverWrapper::GetTickCount()
 {
 	if(videodriver == NULL)
-	{
-		fatal_error("Kein Videotreiber ausgewaehlt!\n");
-		return false;
-	}
+		return (unsigned int)time(NULL);
 
 	return (unsigned int)videodriver->GetTickCount();
 }

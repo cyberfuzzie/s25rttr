@@ -1,4 +1,4 @@
-// $Id: ArchivItem.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: ArchivItem.cpp 5259 2009-07-13 15:53:31Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -99,10 +99,6 @@ libsiedler2::ArchivItem::~ArchivItem(void)
  *
  *  @author FloSoft
  */
-void libsiedler2::ArchivItem::setBobType(unsigned short bobtype)
-{
-	this->bobtype = bobtype;
-}
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
@@ -112,10 +108,6 @@ void libsiedler2::ArchivItem::setBobType(unsigned short bobtype)
  *
  *  @author FloSoft
  */
-unsigned short libsiedler2::ArchivItem::getBobType(void) const
-{
-	return bobtype;
-}
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
@@ -125,13 +117,6 @@ unsigned short libsiedler2::ArchivItem::getBobType(void) const
  *
  *  @author FloSoft
  */
-void libsiedler2::ArchivItem::setName(const char *name)
-{
-	if(name == NULL)
-		return;
-
-	strncpy(this->name, name, 16);
-}
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
@@ -141,10 +126,6 @@ void libsiedler2::ArchivItem::setName(const char *name)
  *
  *  @author FloSoft
  */
-const char *libsiedler2::ArchivItem::getName(void) const
-{
-	return name;
-}
 
 ///////////////////////////////////////////////////////////////////////////////
 /**

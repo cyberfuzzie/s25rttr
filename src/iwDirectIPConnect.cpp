@@ -1,4 +1,4 @@
-// $Id: iwDirectIPConnect.cpp 5247 2009-07-11 19:13:17Z FloSoft $
+// $Id: iwDirectIPConnect.cpp 5259 2009-07-13 15:53:31Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -72,7 +72,7 @@ iwDirectIPConnect::iwDirectIPConnect(unsigned int server_type)
 	AddTextButton(8, 155, 205, 125, 22, TC_RED1, _("Back"),NormalFont);
 
 	host->SetFocus();
-	host->SetText(Settings::inst().last_ip);
+	host->SetText(SETTINGS.server.last_ip);
 	port->SetText(LOADER.GetTextN("client", 3));
 
 	// Client unser Window geben, damit er uns benachrichtigen kann
@@ -128,7 +128,7 @@ void iwDirectIPConnect::Msg_ButtonClick(const unsigned int ctrl_id)
 			ctrlEdit *port = GetCtrl<ctrlEdit>(3);
 			ctrlEdit *pass = GetCtrl<ctrlEdit>(5);
 
-			Settings::inst().last_ip = host->GetText();
+			SETTINGS.server.last_ip = host->GetText();
 
 			if(atoi(port->GetText().c_str()) <= 0 || atoi(port->GetText().c_str()) >= 65535 || atoi(port->GetText().c_str()) == 3664)
 			{

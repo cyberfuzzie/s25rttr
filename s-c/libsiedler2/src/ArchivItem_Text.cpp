@@ -1,4 +1,4 @@
-// $Id: ArchivItem_Text.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: ArchivItem_Text.cpp 5259 2009-07-13 15:53:31Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -310,7 +310,8 @@ void libsiedler2::ArchivItem_Text::setText(const char *text, bool conversion, un
 		Ansi2Oem(this->text, this->length);
 
 	// Name setzen
-	setName(this->text);
+	if(strlen(getName()) == 0)
+		setName(this->text);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

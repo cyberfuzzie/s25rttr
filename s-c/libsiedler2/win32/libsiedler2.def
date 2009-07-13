@@ -37,3 +37,6 @@ EXPORTS
 
 	LoadSND
 	;WriteSND
+
+	LoadINI
+	WriteINI

@@ -1,4 +1,4 @@
-// $Id: typen.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: typen.h 5259 2009-07-13 15:53:31Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -46,5 +46,7 @@
 
 #include "ArchivItem_Map.h"
 #include "ArchivItem_Map_Header.h"
+
+#include "ArchivItem_Ini.h"
 
 #endif // !TYPEN_H_INCLUDED

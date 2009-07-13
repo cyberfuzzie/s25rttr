@@ -1,4 +1,4 @@
-// $Id: ArchivItem.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: ArchivItem.h 5259 2009-07-13 15:53:31Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -37,16 +37,28 @@ namespace libsiedler2
 		virtual ~ArchivItem();
 
 		/// setzt den Bobtype des Items.
-		void setBobType(unsigned short bobtype);
+		inline void setBobType(unsigned short bobtype)
+		{
+			this->bobtype = bobtype;
+		}
 
 		/// liefert den Bobtype des Items.
-		unsigned short getBobType(void) const;
+		inline unsigned short getBobType(void) const
+		{
+			return bobtype;
+		}
 
 		/// setzt den Namen des Items.
-		void setName(const char *name);
+		inline void setName(const char *name)
+		{
+			strncpy(this->name, name, 63);
+		}
 
 		/// liefert den Namen des Items.
-		const char *getName(void) const;
+		inline const char *getName(void) const
+		{
+			return name;
+		}
 
 		/// lädt die Daten aus einer Datei.
 		virtual int load(FILE *file);
@@ -56,7 +68,7 @@ namespace libsiedler2
 
 	protected:
 		unsigned short bobtype; ///< Bobtype des Elements.
-		char name[17];          ///< Name des Elements.
+		char name[64];          ///< Name des Elements.
 	};
 }
 

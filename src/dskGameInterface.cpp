@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.cpp 5247 2009-07-11 19:13:17Z FloSoft $
+// $Id: dskGameInterface.cpp 5259 2009-07-13 15:53:31Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -217,7 +217,7 @@ void dskGameInterface::Msg_PaintAfter()
 	{
 		GameClientPlayer *player = GAMECLIENT.GetPlayer(i);
 		if(player->is_lagging)
-			LOADER.GetImageN("rttr", 0)->Draw(SETTINGS.width-70-i*40, 35, 30, 30, 0, 0, 0, 0,  COLOR_WHITE, COLORS[player->color]);
+			LOADER.GetImageN("rttr", 0)->Draw(SETTINGS.video.width-70-i*40, 35, 30, 30, 0, 0, 0, 0,  COLOR_WHITE, COLORS[player->color]);
 	}
 }
 
@@ -229,8 +229,8 @@ void dskGameInterface::Msg_PaintAfter()
  */
 bool dskGameInterface::Msg_LeftDown(const MouseCoords& mc)
 {
-	if(Coll(mc.x,mc.y,SETTINGS.width/2-LOADER.GetImageN("resource", 29)->getWidth()/2+44,
-		SETTINGS.height-LOADER.GetImageN("resource", 29)->getHeight()+4,37*4,32*4))
+	if(Coll(mc.x,mc.y,SETTINGS.video.width/2-LOADER.GetImageN("resource", 29)->getWidth()/2+44,
+		SETTINGS.video.height-LOADER.GetImageN("resource", 29)->getHeight()+4,37*4,32*4))
 		return false;
 
 	// Unterscheiden je nachdem Straäcnbaumodus an oder aus ist

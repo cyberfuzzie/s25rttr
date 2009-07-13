@@ -1,4 +1,4 @@
-// $Id: dskOptions.cpp 5247 2009-07-11 19:13:17Z FloSoft $
+// $Id: dskOptions.cpp 5259 2009-07-13 15:53:31Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -97,14 +97,20 @@ dskOptions::dskOptions(void) : Desktop(LOADER.GetImageN("setup013", 0))
 
 	combo = groupAllgemein->AddComboBox(33, 280, 125, 190, 20, TC_GREY, NormalFont, 100);
 
+	bool selected = false;
 	for(unsigned i = 0 ; i < LANGUAGES.getCount(); ++i)
 	{
 		const Languages::Language l = LANGUAGES.getLanguage(i);
 
 		combo->AddString(_(l.name));
-		if(SETTINGS.language == l.code )
+		if(SETTINGS.language.language == l.code )
+		{
 			combo->SetSelection(static_cast<unsigned short>(i));
+			selected = true;
+		}
 	}
+	if(!selected)
+		combo->SetSelection(0);
 
 	groupAllgemein->AddText(34, 80, 180, _("Keyboard layout:"), COLOR_YELLOW, 0, NormalFont);
 	groupAllgemein->AddTextButton(35, 280, 175, 120, 22, TC_GREY, _("Readme"), NormalFont);
@@ -149,7 +155,7 @@ dskOptions::dskOptions(void) : Desktop(LOADER.GetImageN("setup013", 0))
 	for(list<DriverWrapper::DriverItem>::iterator it = video_drivers.begin(); it.valid(); ++it)
 	{
 		combo->AddString(it->GetName());
-		if(it->GetName() == SETTINGS.video_driver)
+		if(it->GetName() == SETTINGS.driver.video)
 			combo->SetSelection(combo->GetCount()-1);
 	}
 
@@ -163,7 +169,7 @@ dskOptions::dskOptions(void) : Desktop(LOADER.GetImageN("setup013", 0))
 	for(list<DriverWrapper::DriverItem>::iterator it = audio_drivers.begin(); it.valid(); ++it)
 	{
 		combo->AddString(it->GetName());
-		if(it->GetName() == SETTINGS.audio_driver)
+		if(it->GetName() == SETTINGS.driver.audio)
 			combo->SetSelection(combo->GetCount()-1);
 	}
 
@@ -174,7 +180,7 @@ dskOptions::dskOptions(void) : Desktop(LOADER.GetImageN("setup013", 0))
 	optiongroup->AddTextButton(65, 380, 75, 90, 22, TC_GREY, _("Off"),NormalFont);
 
 	ctrlProgress *Mvolume = groupSound->AddProgress(72, 480, 75, 190, 22, TC_GREY, 139, 138, 10);
-	Mvolume->SetPosition(SETTINGS.musik_volume*10/255);
+	Mvolume->SetPosition(SETTINGS.sound.musik_volume*10/255);
 	
 	// Effekte
 	groupSound->AddText(  66,  80, 130, _("Effects"), COLOR_YELLOW, 0, NormalFont);
@@ -183,7 +189,7 @@ dskOptions::dskOptions(void) : Desktop(LOADER.GetImageN("setup013", 0))
 	optiongroup->AddTextButton(69, 380, 125, 90, 22, TC_GREY, _("Off"),NormalFont);
 
 	ctrlProgress *FXvolume = groupSound->AddProgress(70, 480, 125, 190, 22, TC_GREY, 139, 138, 10);
-	FXvolume->SetPosition(SETTINGS.effekte_volume*10/255);
+	FXvolume->SetPosition(SETTINGS.sound.effekte_volume*10/255);
 
 	// Musicplayer-Button
 	groupSound->AddTextButton(71,280,175,190,22,TC_GREY,_("Music player"),NormalFont);
@@ -199,20 +205,20 @@ dskOptions::dskOptions(void) : Desktop(LOADER.GetImageN("setup013", 0))
 	group = GetCtrl<ctrlGroup>(21);
 
 	// Name setzen
-	group->GetCtrl<ctrlEdit>(31)->SetText(SETTINGS.name);
+	group->GetCtrl<ctrlEdit>(31)->SetText(SETTINGS.lobby.name);
 
 	// Gruppe "Grafik" holen
 	group = GetCtrl<ctrlGroup>(22);
 
 	// "Vollbild" setzen
 	optiongroup = group->GetCtrl<ctrlOptionGroup>(47);
-	optiongroup->SetSelection( (SETTINGS.fullscreen ? 48 : 49) );
+	optiongroup->SetSelection( (SETTINGS.video.fullscreen ? 48 : 49) );
 
 	// "VSync" setzen
 	optiongroup = group->GetCtrl<ctrlOptionGroup>(51);
 
 	if(GLOBALVARS.ext_swapcontrol)
-		optiongroup->SetSelection( (SETTINGS.vsync ? 52 : 53) );
+		optiongroup->SetSelection( (SETTINGS.video.vsync ? 52 : 53) );
 	else
 		optiongroup->SetSelection(53);
 
@@ -220,7 +226,7 @@ dskOptions::dskOptions(void) : Desktop(LOADER.GetImageN("setup013", 0))
 	optiongroup = group->GetCtrl<ctrlOptionGroup>(55);
 
 	if(GLOBALVARS.ext_vbo)
-		optiongroup->SetSelection( (SETTINGS.vbo ? 56 : 57) );
+		optiongroup->SetSelection( (SETTINGS.video.vbo ? 56 : 57) );
 	else
 		optiongroup->SetSelection(57);
 
@@ -229,11 +235,11 @@ dskOptions::dskOptions(void) : Desktop(LOADER.GetImageN("setup013", 0))
 
 	// "Musik" setzen
 	optiongroup = group->GetCtrl<ctrlOptionGroup>(63);
-	optiongroup->SetSelection( (SETTINGS.musik ? 64 : 65) );
+	optiongroup->SetSelection( (SETTINGS.sound.musik ? 64 : 65) );
 
 	// "Effekte" setzen
 	optiongroup = group->GetCtrl<ctrlOptionGroup>(67);
-	optiongroup->SetSelection( (SETTINGS.effekte ? 68 : 69) );
+	optiongroup->SetSelection( (SETTINGS.sound.effekte ? 68 : 69) );
 
 	// Videomodi auflisten
 	VideoDriverWrapper::inst().ListVideoModes(video_modes);
@@ -250,8 +256,8 @@ dskOptions::dskOptions(void) : Desktop(LOADER.GetImageN("setup013", 0))
 			groupGrafik->GetCtrl<ctrlComboBox>(41)->AddString(str);
 
 			// Ist das die aktuelle Auflösung? Dann selektieren
-			if(video_modes[i].width == SETTINGS.width && 
-				video_modes[i].height == SETTINGS.height)
+			if(video_modes[i].width == SETTINGS.video.width && 
+				video_modes[i].height == SETTINGS.video.height)
 				groupGrafik->GetCtrl<ctrlComboBox>(41)->SetSelection(i);
 		}
 		else
@@ -271,7 +277,7 @@ dskOptions::dskOptions(void) : Desktop(LOADER.GetImageN("setup013", 0))
 dskOptions::~dskOptions()
 {
 	// Name abspeichern
-	SETTINGS.name = GetCtrl<ctrlGroup>(21)->GetCtrl<ctrlEdit>(31)->GetText();
+	SETTINGS.lobby.name = GetCtrl<ctrlGroup>(21)->GetCtrl<ctrlEdit>(31)->GetText();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -286,13 +292,13 @@ void dskOptions::Msg_Group_ProgressChange(const unsigned int group_id, const uns
 	{
 	case 70:
 		{
-			SETTINGS.effekte_volume = (unsigned char)position*255/10 + (position<10 ? 1 : 0);
-			AudioDriverWrapper::inst().SetMasterEffectVolume(SETTINGS.effekte_volume);
+			SETTINGS.sound.effekte_volume = (unsigned char)position*255/10 + (position<10 ? 1 : 0);
+			AudioDriverWrapper::inst().SetMasterEffectVolume(SETTINGS.sound.effekte_volume);
 		} break;
 	case 72:
 		{
-			SETTINGS.musik_volume = (unsigned char)position*255/10 + (position<10 ? 1 : 0);
-			AudioDriverWrapper::inst().SetMasterMusicVolume(SETTINGS.musik_volume);
+			SETTINGS.sound.musik_volume = (unsigned char)position*255/10 + (position<10 ? 1 : 0);
+			AudioDriverWrapper::inst().SetMasterMusicVolume(SETTINGS.sound.musik_volume);
 		} break;
 	}
 }
@@ -312,21 +318,21 @@ void dskOptions::Msg_Group_ComboSelectItem(const unsigned int group_id, const un
 	{
 	case 33: // Sprache
 		{
-			SETTINGS.language = LANGUAGES.setLanguage(selection);
+			SETTINGS.language.language = LANGUAGES.setLanguage(selection);
 			WindowManager::inst().Switch(new dskOptions);
 		} break;
 	case 41: // Auflösung
 		{
-			SETTINGS.width = video_modes[selection].width;
-			SETTINGS.height = video_modes[selection].height;
+			SETTINGS.video.width = video_modes[selection].width;
+			SETTINGS.video.height = video_modes[selection].height;
 		} break;
 	case 59: // Videotreiber
 		{
-			SETTINGS.video_driver = combo->GetText(selection);
+			SETTINGS.driver.video = combo->GetText(selection);
 		} break;
 	case 61: // Audiotreiber
 		{
-			SETTINGS.audio_driver =  combo->GetText(selection);
+			SETTINGS.driver.audio =  combo->GetText(selection);
 		} break;
 	}
 }
@@ -345,34 +351,34 @@ void dskOptions::Msg_Group_OptionGroupChange(const unsigned int group_id, const 
 		{
 			switch(selection)
 			{
-			case 48: SETTINGS.fullscreen = true;  break;
-			case 49: SETTINGS.fullscreen = false; break;
+			case 48: SETTINGS.video.fullscreen = true;  break;
+			case 49: SETTINGS.video.fullscreen = false; break;
 			}
 		} break;
 	case 51: // VSync
 		{
 			switch(selection)
 			{
-			case 52: SETTINGS.vsync = true;  break;
-			case 53: SETTINGS.vsync = false; break;
+			case 52: SETTINGS.video.vsync = true;  break;
+			case 53: SETTINGS.video.vsync = false; break;
 			}
 		} break;
 	case 55: // VBO
 		{
 			switch(selection)
 			{
-			case 56: SETTINGS.vbo = true;  break;
-			case 57: SETTINGS.vbo = false; break;
+			case 56: SETTINGS.video.vbo = true;  break;
+			case 57: SETTINGS.video.vbo = false; break;
 			}
 		} break;
 	case 63: // Musik
 		{
 			switch(selection)
 			{
-			case 64: SETTINGS.musik = true;  break;
-			case 65: SETTINGS.musik = false; break;
+			case 64: SETTINGS.sound.musik = true;  break;
+			case 65: SETTINGS.sound.musik = false; break;
 			}
-			if(SETTINGS.musik)
+			if(SETTINGS.sound.musik)
 				MusicPlayer::inst().StartPlaying();
 			else
 				MusicPlayer::inst().Stop();
@@ -381,8 +387,8 @@ void dskOptions::Msg_Group_OptionGroupChange(const unsigned int group_id, const 
 		{
 			switch(selection)
 			{
-			case 68: SETTINGS.effekte = true;  break;
-			case 69: SETTINGS.effekte = false; break;
+			case 68: SETTINGS.sound.effekte = true;  break;
+			case 69: SETTINGS.sound.effekte = false; break;
 			}
 		} break;
 	}
@@ -421,19 +427,19 @@ void dskOptions::Msg_ButtonClick(const unsigned int ctrl_id)
 			SETTINGS.Save();
 			
 			// Auflösung/Vollbildmodus geändert?
-			if(SETTINGS.width != VideoDriverWrapper::inst().GetScreenWidth() ||
-				SETTINGS.height != VideoDriverWrapper::inst().GetScreenHeight() ||
-				SETTINGS.fullscreen != VideoDriverWrapper::inst().IsFullscreen())
+			if(SETTINGS.video.width != VideoDriverWrapper::inst().GetScreenWidth() ||
+				SETTINGS.video.height != VideoDriverWrapper::inst().GetScreenHeight() ||
+				SETTINGS.video.fullscreen != VideoDriverWrapper::inst().IsFullscreen())
 			{
-				if(!VideoDriverWrapper::inst().ResizeScreen(SETTINGS.width,SETTINGS.height,SETTINGS.fullscreen))
+				if(!VideoDriverWrapper::inst().ResizeScreen(SETTINGS.video.width,SETTINGS.video.height,SETTINGS.video.fullscreen))
 				{
 					WindowManager::inst().Show(new iwMsgbox(_("Sorry!"), _("You need to restart your game to change the screen resolution!"), this, MSB_OK, MSB_EXCLAMATIONGREEN, 1));
 					break;
 				}
 			}
 
-			if(SETTINGS.video_driver != VideoDriverWrapper::inst().GetName() || 
-				SETTINGS.audio_driver != AudioDriverWrapper::inst().GetName())
+			if(SETTINGS.driver.video != VideoDriverWrapper::inst().GetName() || 
+				SETTINGS.driver.audio != AudioDriverWrapper::inst().GetName())
 			{
 				WindowManager::inst().Show(new iwMsgbox(_("Sorry!"), _("You need to restart your game to change the video or audio driver!"), this, MSB_OK, MSB_EXCLAMATIONGREEN, 1));
 				break;

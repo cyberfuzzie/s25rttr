@@ -1,4 +1,4 @@
-// $Id: Loader.cpp 5254 2009-07-12 15:49:16Z FloSoft $
+// $Id: Loader.cpp 5259 2009-07-13 15:53:31Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -71,7 +71,7 @@ Loader::~Loader(void)
  *  @author FloSoft
  *  @author OLiver
  */
-bool Loader::LoadFiles(void)
+bool Loader::LoadFilesAtStart(void)
 {
 	const unsigned int files_count = 7 + 1 + 2 + 3 + 21;
 
@@ -115,6 +115,8 @@ bool Loader::LoadFilesFromArray(const unsigned int files_count, const unsigned i
 		if(IsDir(FILE_PATHS[ files[i] ]))
 		{
 			// yes, load all files in the directory
+			unsigned int ladezeit = VideoDriverWrapper::inst().GetTickCount();
+
 			LOG.lprintf("Lade LST Dateien aus \"%s\"\n", GetFilePath(FILE_PATHS[ files[i] ]).c_str());
 
 			std::list<std::string> lst;
@@ -125,7 +127,7 @@ bool Loader::LoadFilesFromArray(const unsigned int files_count, const unsigned i
 				if(!LoadFile( i->c_str(), GetPaletteN("pal5"), load_always ) )
 					return false;
 			}
-			LOG.lprintf("Fertig\n");
+			LOG.lprintf("fertig (%ums)\n", VideoDriverWrapper::inst().GetTickCount()-ladezeit);
 		}
 		else
 		{
@@ -372,17 +374,14 @@ bool Loader::LoadFile(const char *pfad, const libsiedler2::ArchivItem_Palette *p
  */
 bool Loader::LoadSettings()
 {
-	settings.clear();
+	const unsigned int files_count = 1;
 
-	std::string file = GetFilePath(FILE_PATHS[0]);
+	const unsigned int files[files_count] = {
+		0	// config.ini
+	};
 
-	LOG.lprintf("lade \"%s\": ", file.c_str());
-	fflush(stdout);
-
-	if(libsiedler2::Load(file.c_str(), &settings) != 0)
+	if(!LoadFilesFromArray(files_count, files))
 		return false;
-
-	LOG.lprintf("fertig\n");
 
 	return true;
 }
@@ -402,8 +401,12 @@ bool Loader::SaveSettings()
 	LOG.lprintf("schreibe \"%s\": ", file.c_str());
 	fflush(stdout);
 
-	if(libsiedler2::Write(file.c_str(), &settings) != 0)
+	if(libsiedler2::Write(file.c_str(), &files.find("config")->second) != 0)
 		return false;
+
+#ifndef _WIN32
+	chmod(file.c_str(), S_IRUSR|S_IWUSR);
+#endif // !_WIN32
 
 	LOG.lprintf("fertig\n");
 
@@ -421,16 +424,19 @@ bool Loader::SaveSettings()
  *
  *  @author OLiver
  */
-bool Loader::LoadGame(unsigned char gfxset, bool *nations)
+bool Loader::LoadFilesAtGame(unsigned char gfxset, bool *nations)
 {
-	const unsigned int files_count = 4 + 5 + 6 + 4 + 1;
+	assert(gfxset <= 2);
+
+	const unsigned int files_count = 4 + 5 + 6 + 4 + 1 + 1;
 
 	unsigned int files[files_count] = { 
 		0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, // ?afr_z.lst, ?jap_z.lst, ?rom_z.lst, ?vik_z.lst
 		26, 44, 45, 86, 92,                             // rom_bobs.lst, carrier.bob, jobs.bob, boat.lst, boot_z.lst
 		58, 59, 60, 61, 62, 63,                         // mis0bobs.lst, mis1bobs.lst, mis2bobs.lst, mis3bobs.lst, mis4bobs.lst, mis5bobs.lst
 		35, 36, 37, 38,                                 // afr_icon.lst, jap_icon.lst, rom_icon.lst, vik_icon.lst
-		23+gfxset                                       // map_?_z.lst
+		23 + gfxset,                                    // map_?_z.lst
+		20 + gfxset                                     // tex?.lbm
 	};
 
 	for(unsigned char i = 0; i < NATION_COUNT; ++i)
@@ -459,31 +465,15 @@ bool Loader::LoadGame(unsigned char gfxset, bool *nations)
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  Lädt das Terrain.
- *
- *  @param[in] gfxset  Das GFX-Set
+ *  zerschneidet die Terraintexturen.
  *
  *  @return @p true bei Erfolg, @p false bei Fehler.
  *
  *  @author OLiver
  */
-bool Loader::LoadTerrain(unsigned char gfxset)
+bool Loader::CreateTerrainTextures(void)
 {
-	if(gfxset > 2)
-	{
-		error("Loader::LoadTerrain: Invalid gfxset \"%d\"\n", gfxset);
-		return false;
-	}
-
-	static unsigned char lastgfx = 0xFF;
-	if(lastgfx == gfxset)
-		return true;
-
-	libsiedler2::ArchivInfo lbm;
-
-	// tex?.lbm laden
-	if(!LoadFile(FILE_PATHS[20 + gfxset], GetPaletteN("pal5"), &lbm))
-		return false;
+	assert(lastgfx <= 2);
 
 	// Unanimierte Texturen
 	Rect rects[16] = {
@@ -536,30 +526,29 @@ bool Loader::LoadTerrain(unsigned char gfxset)
 	textures.clear();
 	// (unanimiertes) Terrain
 	for(unsigned char i = 0; i < 14; ++i)
-		ExtractTexture(&lbm, &textures, rects[i]);
+		ExtractTexture(&textures, rects[i]);
 
 	// Wasser und Lava
 	water.clear();
-	ExtractAnimatedTexture(&lbm, &water, rects[14], 8, 240);
+	ExtractAnimatedTexture(&water, rects[14], 8, 240);
 
 	lava.clear();
-	ExtractAnimatedTexture(&lbm, &lava,  rects[15], 4, 248);
+	ExtractAnimatedTexture(&lava,  rects[15], 4, 248);
 
 	// die 5 Ränder
 	borders.clear();
 	for(unsigned char i = 0; i < 5; ++i)
-		ExtractTexture(&lbm, &borders, rec_raender[i]);
+		ExtractTexture(&borders, rec_raender[i]);
 
 	// Wege
 	roads.clear();
 	roads_points.clear();
 	for(unsigned char i = 0; i < 4; ++i)
 	{
-		ExtractTexture(&lbm, &roads, rec_roads[i]);
-		ExtractTexture(&lbm, &roads_points, rec_roads[4+i]);
+		ExtractTexture(&roads, rec_roads[i]);
+		ExtractTexture(&roads_points, rec_roads[4+i]);
 	}
 
-	lastgfx = gfxset;
 	return true;
 }
 
@@ -569,11 +558,11 @@ bool Loader::LoadTerrain(unsigned char gfxset)
  *
  *  @author OLiver
  */
-void Loader::ExtractTexture(libsiedler2::ArchivInfo *source, libsiedler2::ArchivInfo *destination, Rect &rect)
+void Loader::ExtractTexture(libsiedler2::ArchivInfo *destination, Rect &rect)
 {
 	glArchivItem_Bitmap_Raw bitmap;
-	libsiedler2::ArchivItem_Palette *palette = dynamic_cast<libsiedler2::ArchivItem_Palette*>(source->get(1));
-	glArchivItem_Bitmap *image = dynamic_cast<glArchivItem_Bitmap*>(source->get(0));
+	libsiedler2::ArchivItem_Palette *palette = GetTexPaletteN(1);
+	glArchivItem_Bitmap *image = GetTexImageN(0);
 
 	unsigned short width = rect.right - rect.left;
 	unsigned short height = rect.bottom - rect.top;
@@ -603,11 +592,11 @@ void Loader::ExtractTexture(libsiedler2::ArchivInfo *source, libsiedler2::Archiv
  *
  *  @author OLiver
  */
-void Loader::ExtractAnimatedTexture(libsiedler2::ArchivInfo *source, libsiedler2::ArchivInfo *destination, Rect &rect, unsigned char color_count, unsigned char start_index)
+void Loader::ExtractAnimatedTexture(libsiedler2::ArchivInfo *destination, Rect &rect, unsigned char color_count, unsigned char start_index)
 {
 	glArchivItem_Bitmap_Raw bitmap;
-	libsiedler2::ArchivItem_Palette *palette = dynamic_cast<libsiedler2::ArchivItem_Palette*>(source->get(1));
-	glArchivItem_Bitmap *image = dynamic_cast<glArchivItem_Bitmap*>(source->get(0));
+	libsiedler2::ArchivItem_Palette *palette = GetTexPaletteN(1);
+	glArchivItem_Bitmap *image = GetTexImageN(0);
 
 	bitmap.setPalette(palette);
 	bitmap.setFormat(libsiedler2::FORMAT_PALETTED);
@@ -640,8 +629,6 @@ void Loader::ExtractAnimatedTexture(libsiedler2::ArchivInfo *source, libsiedler2
 
 		destination->pushC(&bitmap);
 	}
-
-	//libsiedler2::loader::WriteLST("c:\\wasser.lst",palette,destination);
 
 	delete[] buffer;
 }

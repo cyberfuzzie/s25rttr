@@ -1,4 +1,4 @@
-// $Id: languages.cpp 5251 2009-07-12 10:09:58Z FloSoft $
+// $Id: languages.cpp 5259 2009-07-13 15:53:31Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -112,11 +112,11 @@ unsigned int Languages::getCount(void)
  */
 void Languages::setLanguage(const std::string& lang_code)
 {
-	Settings::inst().language = lang_code;
+	Settings::inst().language.language = lang_code;
 
 	std::string locale = mysetlocale(LC_ALL, lang_code.c_str());
-	if(Settings::inst().language.empty())
-		Settings::inst().language = locale;
+	if(Settings::inst().language.language.length() == 0)
+		Settings::inst().language.language = locale;
 
 	const char *domain = "rttr";
 	bind_textdomain_codeset(domain, "ISO-8859-1");

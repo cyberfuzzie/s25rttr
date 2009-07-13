@@ -1,4 +1,4 @@
-// $Id: iwRoadWindow.cpp 5238 2009-07-09 20:50:28Z FloSoft $
+// $Id: iwRoadWindow.cpp 5259 2009-07-13 15:53:31Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -58,14 +58,14 @@ iwRoadWindow::iwRoadWindow(dskGameInterface *const GameInterface, bool flagpossi
 		cancel->Move(46, 20);
 	}
 
-	if(x + GetWidth() > SETTINGS.width)
+	if(x + GetWidth() > SETTINGS.video.width)
 		x = mouse_x - GetWidth() - 40;
-	if(y + GetHeight() > SETTINGS.height)
+	if(y + GetHeight() > SETTINGS.video.height)
 		y = mouse_y - GetHeight() - 40;
 
-	if(x+GetWidth() > SETTINGS.width)
+	if(x+GetWidth() > SETTINGS.video.width)
 		x = mouse_x-GetWidth()-40;
-	if(y+GetHeight() > SETTINGS.height)
+	if(y+GetHeight() > SETTINGS.video.height)
 		y = mouse_y-GetHeight()-40;
 
 	VideoDriverWrapper::inst().SetMousePos(GetX()+20,GetY()+45);

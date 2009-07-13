@@ -1,4 +1,4 @@
-// $Id: dskGameLoader.cpp 5253 2009-07-12 14:42:18Z FloSoft $
+// $Id: dskGameLoader.cpp 5259 2009-07-13 15:53:31Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -138,7 +138,7 @@ void dskGameLoader::Msg_Timer(const unsigned int ctrl_id)
 
 	case 3: // Objekte laden
 		{
-			if(!LOADER.LoadGame(gwv->GetLandscapeType(), load_nations))
+			if(!LOADER.LoadFilesAtGame(gwv->GetLandscapeType(), load_nations))
 			{
 				LC_Status_Error(_("Failed to load map objects."));
 				return;
@@ -150,7 +150,7 @@ void dskGameLoader::Msg_Timer(const unsigned int ctrl_id)
 
 	case 4: // Welt erstellen
 		{
-			if(!LOADER.LoadTerrain(gwv->GetLandscapeType()))
+			if(!LOADER.CreateTerrainTextures())
 			{
 				LC_Status_Error(_("Failed to load terrain data."));
 				return;

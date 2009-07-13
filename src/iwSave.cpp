@@ -1,4 +1,4 @@
-// $Id: iwSave.cpp 5238 2009-07-09 20:50:28Z FloSoft $
+// $Id: iwSave.cpp 5259 2009-07-13 15:53:31Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -218,7 +218,7 @@ iwSave::iwSave() : iwSaveLoad(40,_("Save game!"))
 	bool found = false;
 	for(unsigned i = 0;i<AUTO_SAVE_INTERVALS_COUNT;++i)
 	{
-		if(SETTINGS.autosave_interval == AUTO_SAVE_INTERVALS[i])
+		if(SETTINGS.savegames.autosave_interval == AUTO_SAVE_INTERVALS[i])
 		{
 			combo->SetSelection(i+1);
 			found = true;
@@ -242,10 +242,10 @@ void iwSave::Msg_ComboSelectItem(const unsigned int ctrl_id, const unsigned shor
 
 	// Erster Eintrag --> deaktiviert
 	if(selection == 0)
-		SETTINGS.autosave_interval = 0;
+		SETTINGS.savegames.autosave_interval = 0;
 	else
 		// ansonsten jeweilige GF-Zahl eintragen
-		SETTINGS.autosave_interval = AUTO_SAVE_INTERVALS[selection-1];
+		SETTINGS.savegames.autosave_interval = AUTO_SAVE_INTERVALS[selection-1];
 }
 
 

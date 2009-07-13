@@ -1,4 +1,4 @@
-// $Id: main.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: main.h 5259 2009-07-13 15:53:31Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -37,10 +37,14 @@
 #	include "strlwr.h"
 #endif // !_WIN32
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 #include <cmath>
+
+#include <string>
+#include <sstream>
+#include <algorithm>
 
 #ifdef _WIN32
 #	define class class __declspec(dllexport)

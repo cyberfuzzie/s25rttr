@@ -1,4 +1,4 @@
-// $Id: ArchivItem_Font.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: ArchivItem_Font.h 5259 2009-07-13 15:53:31Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -37,12 +37,6 @@ public:
 	/// Kopierkonstruktor von @p ArchivItem_Font.
 	ArchivItem_Font(const ArchivItem_Font *item);
 
-	/// Konstruktor von @p ArchivItem_Font mit Laden der Font-Daten.
-	ArchivItem_Font(FILE *file, const ArchivItem_Palette *palette);
-
-	/// Destruktor von @p ArchivItem_Font.
-	~ArchivItem_Font(void);
-
 	/// lädt die Fontdaten aus einer Datei.
 	int load(FILE *file, const ArchivItem_Palette *palette);
 
@@ -50,16 +44,28 @@ public:
 	int write(FILE *file, const ArchivItem_Palette *palette) const;
 
 	/// liefert den X-Buchstabenabstand.
-	unsigned char getDx(void) const;
+	inline unsigned char getDx(void) const
+	{
+		return dx;
+	}
 
 	/// liefert den Y-Buchstabenabstand.
-	unsigned char getDy(void) const;
+	inline unsigned char getDy(void) const
+	{
+		return dy;
+	}
 
 	/// setzt den X-Buchstabenabstand.
-	void setDx(unsigned char dx);
+	inline void setDx(unsigned char dx)
+	{
+		this->dx = dx;
+	}
 
 	/// setzt den Y-Buchstabenabstand.
-	void setDy(unsigned char dy);
+	inline void setDy(unsigned char dy)
+	{
+		this->dy = dy;
+	}
 
 protected:
 	unsigned char dx; ///< X-Buchstabenabstand.

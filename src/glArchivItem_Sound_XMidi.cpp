@@ -1,4 +1,4 @@
-// $Id: glArchivItem_Sound_XMidi.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: glArchivItem_Sound_XMidi.cpp 5259 2009-07-13 15:53:31Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -45,7 +45,7 @@
  */
 void glArchivItem_Sound_XMidi::Play(const unsigned repeats)
 {
-	if(SETTINGS.musik == false)
+	if(SETTINGS.sound.musik == false)
 		return;
 
 	if(sound == NULL)

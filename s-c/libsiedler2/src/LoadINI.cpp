@@ -1,4 +1,4 @@
-// $Id: glArchivItem_Sound_Wave.cpp 5259 2009-07-13 15:53:31Z FloSoft $
+// $Id: LoadINI.cpp 5259 2009-07-13 15:53:31Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -20,11 +20,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Header
 #include "main.h"
-#include "glArchivItem_Sound_Wave.h"
-
-#include "AudioDriverWrapper.h"
-#include "Settings.h"
-#include "../driver/src/AudioDriver.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -36,20 +31,41 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  Spielt den Sound ab.
+ *  lädt eine INI-File in ein ArchivInfo.
  *
- *  @param[in] volume Lautstärke des Sounds.
- *  @param[in] loop   Endlosschleife ja/nein
+ *  @param[in]  file    Dateiname der INI-File
+ *  @param[out] items   ArchivInfo-Struktur, welche gefüllt wird
+ *
+ *  @return Null bei Erfolg, ein Wert ungleich Null bei Fehler
  *
  *  @author FloSoft
  */
-unsigned int glArchivItem_Sound_Wave::Play(unsigned char volume, bool loop)
+int libsiedler2::loader::LoadINI(const char *file, ArchivInfo *items)
 {
-	if(SETTINGS.sound.effekte == false/* || !VideoDriverWrapper::inst().audiodriver*/)
-		return 0xFFFFFFFF;
+	FILE *ini;
 
-	if(sound == NULL)
-		sound = AudioDriverWrapper::inst().LoadEffect(AudioDriver::AD_WAVE, data, length);
+	if(file == NULL || items == NULL)
+		return 1;
 
-	return AudioDriverWrapper::inst().PlayEffect(sound, volume, loop);
+	// Datei zum lesen öffnen
+	ini = fopen(file, "rb");
+
+	// hat das geklappt?
+	if(ini == NULL)
+		return 2;
+
+	while(!feof(ini))
+	{
+		ArchivItem_Ini item;
+
+		if(item.load(ini) != 0)
+			return 3;
+
+		items->pushC(&item);
+	}
+
+	// Datei schliessen
+	fclose(ini);
+
+	return 0;
 }

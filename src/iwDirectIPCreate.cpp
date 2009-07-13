@@ -1,4 +1,4 @@
-// $Id: iwDirectIPCreate.cpp 5247 2009-07-11 19:13:17Z FloSoft $
+// $Id: iwDirectIPCreate.cpp 5259 2009-07-13 15:53:31Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -72,7 +72,7 @@ iwDirectIPCreate::iwDirectIPCreate(unsigned int server_type)
 	// "Zurück"
 	AddTextButton(8, 155, 205, 125, 22, TC_RED1, _("Back"),NormalFont);
 
-	name->SetText(SETTINGS.name + _("'s Game"));
+	name->SetText(SETTINGS.lobby.name + _("'s Game"));
 	name->SetFocus();
 	port->SetText(LOADER.GetTextN("client", 3));
 }

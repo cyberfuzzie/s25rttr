@@ -1,4 +1,4 @@
-// $Id: libsiedler2.cpp 5090 2009-06-23 13:07:47Z FloSoft $
+// $Id: libsiedler2.cpp 5259 2009-07-13 15:53:31Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -258,6 +258,13 @@ libsiedler2::ArchivItem *libsiedler2::StandardAllocator(unsigned short type, uns
 			else
 				return new ArchivItem_Map_Header( dynamic_cast<const ArchivItem_Map_Header*>(item) );
 		} break;
+	case BOBTYPE_INI: // INI-Datei-Item
+		{
+			if(!item)
+				return new ArchivItem_Ini();
+			else
+				return new ArchivItem_Ini( dynamic_cast<const ArchivItem_Ini*>(item) );
+		} break;
 	case BOBTYPE_BITMAP_RAW: // unkomprimiertes Bitmap
 		{
 			if(!item)
@@ -321,6 +328,8 @@ int libsiedler2::Load(const char *file, libsiedler2::ArchivInfo *items, const li
 		ret = loader::LoadMAP(file, items);
 	else if(strncmp(endung, "ger", 3)==0 || strncmp(endung, "eng", 3)==0)
 		ret = loader::LoadTXT(file, items);
+	else if(strncmp(endung, "ini", 4)==0)
+		ret = loader::LoadINI(file, items);
 
 	free(filen);
 
@@ -374,6 +383,8 @@ int libsiedler2::Write(const char *file, const libsiedler2::ArchivInfo *items, c
 		ret = loader::WriteMAP(file, items);*/
 	else if(strncmp(endung, "ger", 3)==0 || strncmp(endung, "eng", 3)==0)
 		ret = loader::WriteTXT(file, items, false);
+	else if(strncmp(endung, "ini", 3)==0)
+		ret = loader::WriteINI(file, items);
 
 	free(filen);
 

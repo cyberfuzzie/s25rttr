@@ -1,4 +1,4 @@
-// $Id: GameManager.cpp 5247 2009-07-11 19:13:17Z FloSoft $
+// $Id: GameManager.cpp 5259 2009-07-13 15:53:31Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -82,7 +82,7 @@ bool GameManager::Start()
 	}
 
 	// Im Vollbildmodus überprüfen, ob Video-Mode überhaupt existiert
-	if(SETTINGS.fullscreen)
+	if(SETTINGS.video.fullscreen)
 	{
 		std::vector<VideoDriver::VideoMode> available_video_modes;
 		VideoDriverWrapper::inst().ListVideoModes(available_video_modes);
@@ -90,21 +90,21 @@ bool GameManager::Start()
 		bool found = false;
 		for(size_t i = 0;i<available_video_modes.size();++i)
 		{
-			if(available_video_modes[i].width == SETTINGS.width &&
-				available_video_modes[i].height == SETTINGS.height)
+			if(available_video_modes[i].width == SETTINGS.video.width &&
+				available_video_modes[i].height == SETTINGS.video.height)
 				found = true;
 		}
 
 		if(!found && available_video_modes.size())
 		{
 			// Nicht gefunden, erste gültige Auflösung nehmen
-			SETTINGS.width = available_video_modes[0].width;
-			SETTINGS.height = available_video_modes[0].height;
+			SETTINGS.video.width = available_video_modes[0].width;
+			SETTINGS.video.height = available_video_modes[0].height;
 		}
 	}
 
 	// Fenster erstellen
-	if(!VideoDriverWrapper::inst().CreateScreen(SETTINGS.width,SETTINGS.height,SETTINGS.fullscreen))
+	if(!VideoDriverWrapper::inst().CreateScreen(SETTINGS.video.width,SETTINGS.video.height,SETTINGS.video.fullscreen))
 		return false;
 
 	/// Audiodriver laden
@@ -115,8 +115,8 @@ bool GameManager::Start()
 	}
 
 	/// Lautstärken gleich mit setzen
-	AudioDriverWrapper::inst().SetMasterEffectVolume(SETTINGS.effekte_volume);
-	AudioDriverWrapper::inst().SetMasterMusicVolume(SETTINGS.musik_volume);
+	AudioDriverWrapper::inst().SetMasterEffectVolume(SETTINGS.sound.effekte_volume);
+	AudioDriverWrapper::inst().SetMasterMusicVolume(SETTINGS.sound.musik_volume);
 
 	// Treibereinstellungen abspeichern
 	SETTINGS.Save();
@@ -125,7 +125,7 @@ bool GameManager::Start()
 	if(!StartMenu())
 		return false;
 
-	MusicPlayer::inst().Load(iwMusicPlayer::GetFullPlaylistPath(SETTINGS.playlist));
+	MusicPlayer::inst().Load(iwMusicPlayer::GetFullPlaylistPath(SETTINGS.sound.playlist));
 	MusicPlayer::inst().StartPlaying();
 
 	return true;
@@ -211,7 +211,7 @@ bool GameManager::Run()
 bool GameManager::StartMenu()
 {
 	// generelle Daten laden
-	if(!LOADER.LoadFiles())
+	if(!LOADER.LoadFilesAtStart())
 	{
 		error("Einige Dateien konnten nicht geladen werden.\n"
 			"Stellen Sie sicher, dass die Siedler 2 Gold-Edition im gleichen \n"

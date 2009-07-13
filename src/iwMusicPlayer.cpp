@@ -1,4 +1,4 @@
-// $Id: iwMusicPlayer.cpp 5238 2009-07-09 20:50:28Z FloSoft $
+// $Id: iwMusicPlayer.cpp 5259 2009-07-13 15:53:31Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -90,7 +90,7 @@ iwMusicPlayer::iwMusicPlayer()
 
 	// Mit Werten füllen
 	MusicPlayer::inst().FillWindow(this);
-	UpdatePlaylistCombo(SETTINGS.playlist);
+	UpdatePlaylistCombo(SETTINGS.sound.playlist);
 }
 
 iwMusicPlayer::~iwMusicPlayer()
@@ -100,7 +100,7 @@ iwMusicPlayer::~iwMusicPlayer()
 
 	// Entsprechende Datei speichern
 	if(selection != 0xFFFF)
-		SETTINGS.playlist = GetCtrl<ctrlComboBox>(2)->GetText(selection);
+		SETTINGS.sound.playlist = GetCtrl<ctrlComboBox>(2)->GetText(selection);
 
 	// Werte in Musikplayer bringen
 	MusicPlayer::inst().ReadValuesOfWindow(this);
@@ -143,7 +143,7 @@ void iwMusicPlayer::Msg_ButtonClick(const unsigned int ctrl_id)
 				}
 
 				unlink(GetFullPlaylistPath(str).c_str());
-				this->UpdatePlaylistCombo(SETTINGS.playlist);
+				this->UpdatePlaylistCombo(SETTINGS.sound.playlist);
 			}
 		} break;
 	// Save Playlist

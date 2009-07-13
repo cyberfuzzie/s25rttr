@@ -1,4 +1,4 @@
-// $Id: ArchivItem_Font.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: ArchivItem_Font.cpp 5259 2009-07-13 15:53:31Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -60,11 +60,8 @@
  *
  *  @author FloSoft
  */
-libsiedler2::ArchivItem_Font::ArchivItem_Font(void) : ArchivItem(), ArchivInfo()
+libsiedler2::ArchivItem_Font::ArchivItem_Font(void) : ArchivItem(), ArchivInfo(), dx(0), dy(0)
 {
-	dx = 0;
-	dy = 0;
-
 	setBobType(BOBTYPE_FONT);
 }
 
@@ -76,39 +73,7 @@ libsiedler2::ArchivItem_Font::ArchivItem_Font(void) : ArchivItem(), ArchivInfo()
  *
  *  @author FloSoft
  */
-libsiedler2::ArchivItem_Font::ArchivItem_Font(const ArchivItem_Font *item) : ArchivItem( (ArchivItem*)item ), ArchivInfo( (ArchivInfo*)item )
-{
-	dx = item->dx;
-	dy = item->dy;
-}
-
-///////////////////////////////////////////////////////////////////////////////
-/**
- *  Konstruktor von @p ArchivItem_Font mit Laden der Font-Daten aus
- *  einer Datei.
- *
- *  @param[in] file    Dateihandle aus denen die Font-Daten geladen werden sollen
- *  @param[in] palette Grundpalette
- *
- *  @author FloSoft
- */
-libsiedler2::ArchivItem_Font::ArchivItem_Font(FILE *file, const ArchivItem_Palette *palette) : ArchivItem(), ArchivInfo()
-{
-	dx = 0;
-	dy = 0;
-
-	setBobType(BOBTYPE_FONT);
-
-	load(file, palette);
-}
-
-///////////////////////////////////////////////////////////////////////////////
-/**
- *  Destruktor von @p ArchivItem_Font.
- *
- *  @author FloSoft
- */
-libsiedler2::ArchivItem_Font::~ArchivItem_Font(void)
+libsiedler2::ArchivItem_Font::ArchivItem_Font(const ArchivItem_Font *item) : ArchivItem( item ), ArchivInfo( item ), dx(item->dx), dy(item->dy)
 {
 }
 
@@ -216,10 +181,6 @@ int libsiedler2::ArchivItem_Font::write(FILE *file, const ArchivItem_Palette *pa
  *
  *  @author FloSoft
  */
-unsigned char libsiedler2::ArchivItem_Font::getDx(void) const
-{
-	return dx;
-}
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
@@ -229,10 +190,6 @@ unsigned char libsiedler2::ArchivItem_Font::getDx(void) const
  *
  *  @author FloSoft
  */
-unsigned char libsiedler2::ArchivItem_Font::getDy(void) const
-{
-	return dy;
-}
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
@@ -242,10 +199,6 @@ unsigned char libsiedler2::ArchivItem_Font::getDy(void) const
  *
  *  @author FloSoft
  */
-void libsiedler2::ArchivItem_Font::setDx(unsigned char dx)
-{
-	this->dx = dx;
-}
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
@@ -255,7 +208,3 @@ void libsiedler2::ArchivItem_Font::setDx(unsigned char dx)
  *
  *  @author FloSoft
  */
-void libsiedler2::ArchivItem_Font::setDy(unsigned char dy)
-{
-	this->dy = dy;
-}

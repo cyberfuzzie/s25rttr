@@ -1,4 +1,4 @@
-// $Id: Settings.cpp 5201 2009-07-05 19:35:52Z FloSoft $
+// $Id: Settings.cpp 5259 2009-07-13 15:53:31Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -34,7 +34,11 @@
 	static char THIS_FILE[] = __FILE__;
 #endif
 
-const char *Settings::SETTINGS_VERSION = "7";
+const unsigned int Settings::SETTINGS_VERSION = 9;
+const unsigned int Settings::SETTINGS_SECTIONS = 8;
+const std::string Settings::SETTINGS_SECTION_NAMES[] = {
+	"global", "video", "language", "driver", "sound", "lobby", "server", "savegames"
+};
 
 ///////////////////////////////////////////////////////////////////////////////
 // Konstruktor
@@ -44,57 +48,69 @@ Settings::Settings(void)
 
 bool Settings::LoadDefaults()
 {
-	width		= 800;
-	height		= 600;
+	// global
+	// {
+	// }
 
-	language = "";
+	// video
+	// {
+		video.width       = 800;
+		video.height      = 600;
+		video.fullscreen  = false;
+		video.vsync       = false;
+		video.vbo         = false;
+	// }
 
-	fullscreen	= false;
-	vsync		= false;
-	vbo         = false;
+	// language
+	// {
+		language.language = "";
+	// }
 
-	password = "";
-	email = "";
-	save_password = false;
+	LANGUAGES.setLanguage(language.language);
 
-	char tmp_name[256];
+	// driver
+	// {
+		driver.audio = "";
+		driver.video = "";
+	// }
 
-#ifdef _WIN32
-	DWORD size = 256;
-	GetUserNameA(tmp_name, &size);
-#else
-	strncpy(tmp_name, getenv("USER"), 256);
-#endif // !_WIN32
+	// sound
+	// {
+		sound.musik          = false;
+		sound.musik_volume   = 30;
+		sound.effekte        = true;
+		sound.effekte_volume = 75;
+		sound.playlist       = "S2_Standard";
+	// }
 
-	name = tmp_name;
-
-	audio_driver = "";
-	video_driver = "";
-
-	musik = false;
-	musik_volume = 30;
-	effekte = true;
-	effekte_volume = 75;
-
-	std::string dir = GetFilePath(SETTINGSDIR);
+	// lobby
+	// {
+		char tmp_name[256];
 	#ifdef _WIN32
-		CreateDirectory(dir.c_str(), NULL);
+		DWORD size = 256;
+		GetUserNameA(tmp_name, &size);
 	#else
-		mkdir(dir.c_str(), 0750);
-	#endif
+		strncpy(tmp_name, getenv("USER"), 256);
+	#endif // !_WIN32
 
-	autosave_interval = 0;
+		lobby.name = tmp_name;
+		lobby.password = "";
+		lobby.email = "";
+		lobby.save_password = false;
+	// }
 
-	last_ip = "";
+	// server
+	// {
+		server.last_ip = "";
+	// }
 
-	playlist = "S2_Standard";
+	// savegames
+	// {
+		savegames.autosave_interval = 0;
+	// }
 
 	Save();
 
-	LANGUAGES.setLanguage(language);
-
-	// enhs loads the default in the constructor
-	
 	return true;
 }
 
@@ -102,64 +118,84 @@ bool Settings::LoadDefaults()
 // Routine zum Laden der Konfiguration
 bool Settings::Load(void)
 {
-	if(!LOADER.LoadSettings() && LOADER.settings.getCount() < 21)
+	if(!LOADER.LoadSettings() && LOADER.GetInfoN(CONFIG_NAME)->getCount() < 8)
 	{
-		warning("No or corrupt \"%s\" found, using default values.\n", FILE_PATHS[0]);
+		warning("No or corrupt \"%s\" found, using default values.\n", GetFilePath(FILE_PATHS[0]).c_str());
 		return LoadDefaults();
 	}
 
-	std::string version = GetTxt(settings, 0);
-	if(version != SETTINGS_VERSION)
+	const libsiedler2::ArchivItem_Ini *global = LOADER.GetSettingsIniN("global");
+	const libsiedler2::ArchivItem_Ini *video = LOADER.GetSettingsIniN("video");
+	const libsiedler2::ArchivItem_Ini *language = LOADER.GetSettingsIniN("language");
+	const libsiedler2::ArchivItem_Ini *driver = LOADER.GetSettingsIniN("driver");
+	const libsiedler2::ArchivItem_Ini *sound = LOADER.GetSettingsIniN("sound");
+	const libsiedler2::ArchivItem_Ini *lobby = LOADER.GetSettingsIniN("lobby");
+	const libsiedler2::ArchivItem_Ini *server = LOADER.GetSettingsIniN("server");
+	const libsiedler2::ArchivItem_Ini *savegames = LOADER.GetSettingsIniN("savegames");
+
+	// ist eine der Kategorien nicht vorhanden?
+	if(!global || !video || !language || !driver || !sound || !lobby || !server || !savegames ||
+		// stimmt die Settingsversion?
+		(global->getValueI("version") != SETTINGS_VERSION)
+	  )
 	{
-		warning("\"%s\" found, but wrong version: \"%s\" != \"%s\", using default values.\n", FILE_PATHS[0], version.c_str(), SETTINGS_VERSION);
+		// nein, dann Standardeinstellungen laden
+		warning("\"%s\" found, but its corrupted or has wrong version. Loading default values.\n", GetFilePath(FILE_PATHS[0]).c_str());
 		return LoadDefaults();
 	}
 
-	std::string gameversion = GetTxt(settings, 1);
-	if(gameversion != GetWindowRevision())
-		warning("Your Applicationversion has changed - please recheck your settings!\n");
+	// global
+	// {
+		// stimmt die Spielrevision überein?
+		if(strcmp(global->getValue("gameversion"), GetWindowRevision()) != 0)
+			warning("Your Applicationversion has changed - please recheck your settings!\n");
+	// };
 
+	// video
+	// {
+		this->video.width =       video->getValueI("width");
+		this->video.height =      video->getValueI("height");
+		this->video.fullscreen = (video->getValueI("fullscreen") ? true : false);
+		this->video.vsync =      (video->getValueI("vsync") ? true : false);
+		this->video.vbo =        (video->getValueI("vbo") ? true : false);
+	// };
 
-	width = atoi(GetTxt(settings, 2));
-	height = atoi(GetTxt(settings, 3));
-
-	if(width == 0 || height == 0)
+	if(this->video.width == 0 || this->video.height == 0)
 	{
-		warning("Corrupt \"%s\" found, reverting to default values.\n", FILE_PATHS[0]);
+		warning("Corrupted \"%s\" found, reverting to default values.\n", GetFilePath(FILE_PATHS[0]).c_str());
 		return LoadDefaults();
 	}
 
-	language = GetTxt(settings, 4) ? GetTxt(settings, 4)  : "";
+	// language
+	// {
+		this->language.language = language->getValue("language");
+	// }
 
-	fullscreen = (atoi(GetTxt(settings, 5)) ? true : false);
-	vsync = (atoi(GetTxt(settings, 6)) ? true : false);
-	vbo = (atoi(GetTxt(settings, 7)) ? true : false);
+	LANGUAGES.setLanguage(this->language.language);
 
-	if(GetTxtItem(settings, 8)->getLength() > 0)
-		name = GetTxt(settings, 8);
-	if(GetTxtItem(settings, 9)->getLength() > 0)
-		password = GetTxt(settings, 9);
-	save_password = (password.size() > 0);
+	// driver
+	// {
+		this->driver.video = driver->getValue("video");
+		this->driver.audio = driver->getValue("audio");
+	// }
 
-	if(GetTxtItem(settings, 10)->getLength() > 0)
-		email = GetTxt(settings, 10);
+	// sound
+	// {
+		this->sound.musik =         (sound->getValueI("musik") ? true : false);
+		this->sound.musik_volume =   sound->getValueI("musik_volume");
+		this->sound.effekte =       (sound->getValueI("effekte") ? true : false);
+		this->sound.effekte_volume = sound->getValueI("effekte_volume");
+	// }
 
-	if(GetTxtItem(settings, 11)->getLength() > 0)
-		audio_driver = GetTxt(settings, 11);
-	if(GetTxtItem(settings, 12)->getLength() > 0)
-		video_driver = GetTxt(settings, 12);
+	// lobby
+	// {
+		this->lobby.name =           lobby->getValue("name");
+		this->lobby.email =          lobby->getValue("email");
+		this->lobby.password =       lobby->getValue("password");
+		this->lobby.save_password = (lobby->getValueI("save_password") ? true : false);
+	// }
 
-	musik = (atoi(GetTxt(settings, 13)) ? true : false);
-	musik_volume = atoi(GetTxt(settings, 14));
-	effekte = (atoi(GetTxt(settings, 15)) ? true : false);
-	effekte_volume = atoi(GetTxt(settings, 16));
-	autosave_interval = atoi(GetTxt(settings, 17));
-	if(GetTxtItem(settings, 18)->getLength() > 0)
-		last_ip = GetTxt(settings, 18);
-	if(GetTxtItem(settings, 19)->getLength() > 0)
-		playlist = GetTxt(settings, 19);
-
-	if(name == "")
+	if(this->lobby.name.length() == 0)
 	{
 		char tmp_name[256];
 #ifdef _WIN32
@@ -169,10 +205,18 @@ bool Settings::Load(void)
 		strncpy(tmp_name, getenv("USER"), 256);
 #endif // !_WIN32
 
-		name = tmp_name;
+		this->lobby.name = tmp_name;
 	}
 
-	LANGUAGES.setLanguage(language);
+	// server
+	// {
+		this->server.last_ip = server->getValue("last_ip");
+	// }
+
+	// savegames
+	// {
+		this->savegames.autosave_interval = server->getValueI("autosave_interval");
+	// }
 
 	return true;
 }
@@ -181,56 +225,80 @@ bool Settings::Load(void)
 // Routine zum Speichern der Konfiguration
 void Settings::Save(void)
 {
-	if(LOADER.settings.getCount() < 21)
+	if(LOADER.GetInfoN(CONFIG_NAME)->getCount() != SETTINGS_SECTIONS)
 	{
-		LOADER.settings.clear();
-		LOADER.settings.alloc(21);
-		libsiedler2::ArchivItem_Text text;
-		for(unsigned int i = 0; i < 21; ++i)
-			LOADER.settings.setC(i, &text);
+		libsiedler2::ArchivItem_Ini item;
+		LOADER.GetInfoN(CONFIG_NAME)->alloc(SETTINGS_SECTIONS);
+		for(unsigned int i = 0; i < SETTINGS_SECTIONS; ++i)
+		{
+			item.setName(SETTINGS_SECTION_NAMES[i].c_str());
+			LOADER.GetInfoN(CONFIG_NAME)->setC(i, &item);
+		}
 	}
 
-	GetTxtItem(settings, 0)->setText(SETTINGS_VERSION);
-	GetTxtItem(settings, 1)->setText(GetWindowRevision());
+	libsiedler2::ArchivItem_Ini *global = LOADER.GetSettingsIniN("global");
+	libsiedler2::ArchivItem_Ini *video = LOADER.GetSettingsIniN("video");
+	libsiedler2::ArchivItem_Ini *language = LOADER.GetSettingsIniN("language");
+	libsiedler2::ArchivItem_Ini *driver = LOADER.GetSettingsIniN("driver");
+	libsiedler2::ArchivItem_Ini *sound = LOADER.GetSettingsIniN("sound");
+	libsiedler2::ArchivItem_Ini *lobby = LOADER.GetSettingsIniN("lobby");
+	libsiedler2::ArchivItem_Ini *server = LOADER.GetSettingsIniN("server");
+	libsiedler2::ArchivItem_Ini *savegames = LOADER.GetSettingsIniN("savegames");
 
-	char text[256];
+	// ist eine der Kategorien nicht vorhanden?
+	assert(global && video && language && driver && sound && lobby && server && savegames);
 
-	snprintf(text, 256, "%d", width);
-	GetTxtItem(settings, 2)->setText(text);
+	// global
+	// {
+		global->setValue("version", SETTINGS_VERSION);
+		global->setValue("gameversion", GetWindowRevision());
+	// };
 
-	snprintf(text, 256, "%d", height);
-	GetTxtItem(settings, 3)->setText(text);
+	// video
+	// {
+		video->setValue("width", this->video.width);
+		video->setValue("height", this->video.height);
+		video->setValue("fullscreen", (this->video.fullscreen ? 1 : 0) );
+		video->setValue("vsync", (this->video.vsync ? 1 : 0) );
+		video->setValue("vbo", (this->video.vbo ? 1 : 0) );
+	// };
 
-	GetTxtItem(settings, 4)->setText(language.c_str());
+	// language
+	// {
+		language->setValue("language", this->language.language.c_str());
+	// }
 
-	snprintf(text, 256, "%d", fullscreen);
-	GetTxtItem(settings, 5)->setText(text);
-	snprintf(text, 256, "%d", vsync);
-	GetTxtItem(settings, 6)->setText(text);
-	snprintf(text, 256, "%d", vbo);
-	GetTxtItem(settings, 7)->setText(text);
+	// driver
+	// {
+		driver->setValue("video", this->driver.video.c_str());
+		driver->setValue("audio", this->driver.audio.c_str());
+	// }
 
-	GetTxtItem(settings, 8)->setText(name.c_str());
-	GetTxtItem(settings, 9)->setText(password.c_str());
-	GetTxtItem(settings, 10)->setText(email.c_str());
+	// sound
+	// {
+		sound->setValue("musik", (this->sound.musik ? 1 : 0) );
+		sound->setValue("musik_volume", this->sound.musik_volume);
+		sound->setValue("effekte", (this->sound.effekte ? 1 : 0) );
+		sound->setValue("effekte_volume", this->sound.effekte_volume);
+	// }
 
-	GetTxtItem(settings, 11)->setText(audio_driver.c_str());
-	GetTxtItem(settings, 12)->setText(video_driver.c_str());
+	// lobby
+	// {
+		lobby->setValue("name", this->lobby.name.c_str());
+		lobby->setValue("email", this->lobby.email.c_str());
+		lobby->setValue("password", this->lobby.password.c_str());
+		lobby->setValue("save_password", (this->lobby.save_password ? 1 : 0));
+	// }
 
-	snprintf(text, 256, "%d", musik);
-	GetTxtItem(settings, 13)->setText(text);
-	snprintf(text, 256, "%d", musik_volume);
-	GetTxtItem(settings, 14)->setText(text);
-	snprintf(text, 256, "%d", effekte);
-	GetTxtItem(settings, 15)->setText(text);
-	snprintf(text, 256, "%d", effekte_volume);
-	GetTxtItem(settings, 16)->setText(text);
-	snprintf(text, 256, "%d", effekte_volume);
-	GetTxtItem(settings, 16)->setText(text);
-	snprintf(text, 256, "%u", autosave_interval);
-	GetTxtItem(settings, 17)->setText(text);
-	GetTxtItem(settings, 18)->setText(last_ip.c_str());
-	GetTxtItem(settings, 19)->setText(playlist.c_str());
+	// server
+	// {
+		server->setValue("last_ip", this->server.last_ip.c_str());
+	// }
+
+	// savegames
+	// {
+		server->setValue("autosave_interval", this->savegames.autosave_interval);
+	// }
 
 	LOADER.SaveSettings();
 }

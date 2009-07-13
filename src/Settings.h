@@ -1,4 +1,4 @@
-// $Id: Settings.h 5171 2009-07-02 20:21:42Z FloSoft $
+// $Id: Settings.h 5259 2009-07-13 15:53:31Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -29,39 +29,63 @@
 // Klasse für die Konfiguration
 class Settings : public Singleton<Settings>
 {
-	static const char *SETTINGS_VERSION;
 public:
 	Settings(void);
 
 	bool Load(void); // Lädt Einstellungen
 	void Save(void); // Speichert Einstellungen
 
-
 protected:
 	bool LoadDefaults();
 
 public:
-	unsigned short width;
-	unsigned short height;
-	std::string language;
-	std::string name;
-	std::string password;
-	std::string email;
-	bool fullscreen;
-	bool vsync;
-	bool vbo;
-	bool save_password;
-	std::string audio_driver;
-	std::string video_driver;
-	bool musik;
-	unsigned char musik_volume;
-	bool effekte;
-	unsigned char effekte_volume;
-	unsigned autosave_interval;
-	/// Zuletzt eingegebene IP merken
-	std::string last_ip;
-	/// Musicplayer playlist name
-	std::string playlist;
+	struct {
+	} global;
+
+	struct {
+		unsigned short width;
+		unsigned short height;
+		bool fullscreen;
+		bool vsync;
+		bool vbo;
+	} video;
+
+	struct {
+		std::string language;
+	} language;
+
+	struct {
+		std::string audio;
+		std::string video;
+	} driver;
+
+	struct {
+		bool musik;
+		unsigned char musik_volume;
+		bool effekte;
+		unsigned char effekte_volume;
+		std::string playlist; ///< musicplayer playlist name
+	} sound;
+
+	struct {
+		std::string name;
+		std::string password;
+		std::string email;
+		bool save_password;
+	} lobby;
+
+	struct {
+		std::string last_ip; ///< last entered ip or hostname
+	} server;
+
+	struct {
+		unsigned int autosave_interval;
+	} savegames;
+
+private:
+	static const unsigned int SETTINGS_VERSION;
+	static const unsigned int SETTINGS_SECTIONS;
+	static const std::string SETTINGS_SECTION_NAMES[];
 };
 
 ///////////////////////////////////////////////////////////////////////////////

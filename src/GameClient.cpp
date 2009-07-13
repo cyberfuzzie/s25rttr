@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 5201 2009-07-05 19:35:52Z FloSoft $
+// $Id: GameClient.cpp 5259 2009-07-13 15:53:31Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -752,7 +752,7 @@ void GameClient::OnNMSServerPassword(const GameMessage_Server_Password& msg)
 		return;
 	}
 	
-	send_queue.push(new GameMessage_Player_Name(SETTINGS.name));
+	send_queue.push(new GameMessage_Player_Name(SETTINGS.lobby.name));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1177,10 +1177,10 @@ void GameClient::ExecuteGameFrame(const bool skipping)
 		// Auto-Speichern ggf.
 
 		// Aktiviert?
-		if(SETTINGS.autosave_interval && !replay_mode)
+		if(SETTINGS.savegames.autosave_interval && !replay_mode)
 		{
 			// Alle .... GF
-			if(framesinfo.nr % SETTINGS.autosave_interval == 0)
+			if(framesinfo.nr % SETTINGS.savegames.autosave_interval == 0)
 			{
 				std::string tmp = GetFilePath(FILE_PATHS[85]).c_str();
 				tmp += _("Auto-Save");

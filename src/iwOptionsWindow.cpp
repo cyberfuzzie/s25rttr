@@ -1,4 +1,4 @@
-// $Id: iwOptionsWindow.cpp 5238 2009-07-09 20:50:28Z FloSoft $
+// $Id: iwOptionsWindow.cpp 5259 2009-07-13 15:53:31Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -84,18 +84,18 @@ iwOptionsWindow::iwOptionsWindow()
 	AddText(11, 85, 270, _("Save game!"), COLOR_YELLOW, 0 | glArchivItem_Font::DF_BOTTOM, NormalFont);
 
 	// Geräusche an/aus
-	AddImageButton(12, 35, 300, 35, 35, TC_GREEN2, LOADER.GetImageN("io", 114+!SETTINGS.effekte));
+	AddImageButton(12, 35, 300, 35, 35, TC_GREEN2, LOADER.GetImageN("io", 114+!SETTINGS.sound.effekte));
 
 	// Musik an/aus
-	AddImageButton(13, 35, 340, 35, 35, TC_GREEN2, LOADER.GetImageN("io", 116+!SETTINGS.musik));
+	AddImageButton(13, 35, 340, 35, 35, TC_GREEN2, LOADER.GetImageN("io", 116+!SETTINGS.sound.musik));
 
 	// Geräuschlautstärke
 	AddProgress(14, 100, 306, 160, 22, TC_GREEN2, 139, 138, 10)
-		->SetPosition(SETTINGS.effekte_volume*10/255);
+		->SetPosition(SETTINGS.sound.effekte_volume*10/255);
 
 	// Musiklautstärke
 	AddProgress(15, 100, 346, 160, 22, TC_GREEN2, 139, 138, 10)
-		->SetPosition(SETTINGS.musik_volume*10/255);
+		->SetPosition(SETTINGS.sound.musik_volume*10/255);
 
 	//// Music Player
 	AddTextButton(16,100,380,160,22,TC_GREEN2,_("Music player"),NormalFont);
@@ -132,18 +132,18 @@ void iwOptionsWindow::Msg_ButtonClick(const unsigned int ctrl_id)
 
 	case 12: // Geräusche an/aus
 		{
-			SETTINGS.effekte = !SETTINGS.effekte;
-			GetCtrl<ctrlImageButton>(12)->SetImage(LOADER.GetImageN("io", 114+!SETTINGS.effekte));
+			SETTINGS.sound.effekte = !SETTINGS.sound.effekte;
+			GetCtrl<ctrlImageButton>(12)->SetImage(LOADER.GetImageN("io", 114+!SETTINGS.sound.effekte));
 
-			if(!SETTINGS.effekte)
+			if(!SETTINGS.sound.effekte)
 				SoundManager::inst().StopAll();
 		} break;
 
 	case 13: // Musik an/aus
 		{
-			SETTINGS.musik = !SETTINGS.musik;
-			GetCtrl<ctrlImageButton>(13)->SetImage(LOADER.GetImageN("io", 116+!SETTINGS.musik));
-			if(SETTINGS.musik)
+			SETTINGS.sound.musik = !SETTINGS.sound.musik;
+			GetCtrl<ctrlImageButton>(13)->SetImage(LOADER.GetImageN("io", 116+!SETTINGS.sound.musik));
+			if(SETTINGS.sound.musik)
 				MusicPlayer::inst().StartPlaying();
 			else
 				MusicPlayer::inst().Stop();
@@ -166,13 +166,13 @@ void iwOptionsWindow::Msg_ProgressChange(const unsigned int ctrl_id, const unsig
 	{
 	case 14:
 		{
-			SETTINGS.effekte_volume = (unsigned char)position*255/10 + (position<10 ? 1 : 0);
-			AudioDriverWrapper::inst().SetMasterEffectVolume(SETTINGS.effekte_volume);
+			SETTINGS.sound.effekte_volume = (unsigned char)position*255/10 + (position<10 ? 1 : 0);
+			AudioDriverWrapper::inst().SetMasterEffectVolume(SETTINGS.sound.effekte_volume);
 		} break;
 	case 15:
 		{
-			SETTINGS.musik_volume = (unsigned char)position*255/10 + (position<10 ? 1 : 0);
-			AudioDriverWrapper::inst().SetMasterMusicVolume(SETTINGS.musik_volume);
+			SETTINGS.sound.musik_volume = (unsigned char)position*255/10 + (position<10 ? 1 : 0);
+			AudioDriverWrapper::inst().SetMasterMusicVolume(SETTINGS.sound.musik_volume);
 		} break;
 	}
 }

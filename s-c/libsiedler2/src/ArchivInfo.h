@@ -1,4 +1,4 @@
-// $Id: ArchivInfo.h 5240 2009-07-09 21:18:51Z FloSoft $
+// $Id: ArchivInfo.h 5259 2009-07-13 15:53:31Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -112,6 +112,30 @@ namespace libsiedler2
 
 			if( (unsigned long)index < count && index >= 0)
 				return &data[(unsigned long)index];
+
+			return NULL;
+		}
+
+		/// liefert das erste Item mit entsprechenden Namen
+		inline ArchivItem *find(const char *name)
+		{
+			for(unsigned long i = 0; i < getCount(); ++i)
+			{
+				if(strcmp(get(i)->getName(), name) == 0)
+					return get(i);
+			}
+
+			return NULL;
+		}
+
+		/// liefert das erste Item mit entsprechenden Namen
+		inline const ArchivItem *find(const char *name) const
+		{
+			for(unsigned long i = 0; i < getCount(); ++i)
+			{
+				if(strcmp(get(i)->getName(), name) == 0)
+					return get(i);
+			}
 
 			return NULL;
 		}

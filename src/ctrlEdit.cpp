@@ -1,4 +1,4 @@
-// $Id: ctrlEdit.cpp 5070 2009-06-19 20:05:10Z OLiver $
+// $Id: ctrlEdit.cpp 5266 2009-07-14 07:38:49Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -138,7 +138,7 @@ bool ctrlEdit::Draw_(void)
 		if(cursor_pos-start > 0)
 			cwidth = font->getWidth(&dtext[start],cursor_pos-start) + 4;
 
-		DrawRectangle(GetX() + cwidth , GetY() + 3, 1, font->getHeight()+2, 0xFFFFA000);
+		DrawRectangle(GetX() + cwidth , GetY() + ( height - (font->getHeight()+2) ) / 2, 1, font->getHeight()+2, 0xFFFFA000);
 	}
 
 	return true;

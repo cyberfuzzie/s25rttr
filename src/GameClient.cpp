@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 5259 2009-07-13 15:53:31Z FloSoft $
+// $Id: GameClient.cpp 5271 2009-07-15 11:58:16Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1458,7 +1458,30 @@ void GameClient::SkipGF(unsigned int gf)
 
 	// GFs überspringen
 	for(unsigned int i = framesinfo.nr; i < gf; ++i)
+	{
+		if(i % 1000 == 0)
+		{
+			unsigned int water_percent;
+			RoadsBuilding road;
+			char nwf_string[256];
+		
+			road.mode = RM_DISABLED;
+			road.point_x = 0;
+			road.point_y = 0;
+			road.start_x = 0;
+			road.start_y = 0;
+
+			// spiel aktualisieren
+			gw->Draw(GetPlayerID(), &water_percent, false, 0, 0, road);
+
+			// text oben noch hinschreiben
+			snprintf(nwf_string, 255, _("current GF: %u - still fast forwarding: %d GFs left (%d %%)"), GetGFNumber(), gf-i, (i*100/gf) );
+			LargeFont->Draw(VideoDriverWrapper::inst().GetScreenWidth()/2, VideoDriverWrapper::inst().GetScreenHeight()/2, nwf_string, glArchivItem_Font::DF_CENTER, 0xFFFFFF00);
+		
+			VideoDriverWrapper::inst().SwapBuffers();
+		}
 		ExecuteGameFrame(true);
+	}
 
 	// Spiel pausieren
 	SetReplayPause(true);

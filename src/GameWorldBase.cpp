@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 5178 2009-07-03 11:55:24Z OLiver $
+// $Id: GameWorldBase.cpp 5274 2009-07-15 21:12:50Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -366,7 +366,7 @@ bool GameWorldBase::RoadAvailable(const bool boat_road,const int x, const int y,
 }
 
 
-bool GameWorldBase::FlagNear(const int x, const int y)
+bool GameWorldBase::FlagNear(const int x, const int y) const
 {
 	for(unsigned char i = 0;i<6;++i)
 	{
@@ -567,7 +567,7 @@ void GameWorldBase::RemoveVisualRoad(unsigned short start_x, unsigned short star
 	}
 }
 
-BuildingQuality GameWorldBase::CalcBQ(const MapCoord x, const MapCoord y,const unsigned char player,const bool flagonly,const bool visual)
+BuildingQuality GameWorldBase::CalcBQ(const MapCoord x, const MapCoord y,const unsigned char player,const bool flagonly,const bool visual) const
 {
 
 	///////////////////////
@@ -706,7 +706,7 @@ BuildingQuality GameWorldBase::CalcBQ(const MapCoord x, const MapCoord y,const u
 			// StaticObject --> rundrum Flagge/Hütte
 			else if(GetNO(GetXA(x,y,i),GetYA(x,y,i))->GetType() == NOP_OBJECT)
 			{
-				noStaticObject *obj = GetSpecObj<noStaticObject>(GetXA(x,y,i),GetYA(x,y,i));
+				const noStaticObject *obj = GetSpecObj<noStaticObject>(GetXA(x,y,i),GetYA(x,y,i));
 				if(obj->GetSize() == 2)
 					val = BQ_FLAG;
 				else

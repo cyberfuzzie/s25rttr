@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.cpp 5273 2009-07-15 20:51:49Z jh $
+// $Id: AIPlayerJH.cpp 5274 2009-07-15 21:12:50Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -38,10 +38,6 @@ AIPlayerJH::AIPlayerJH(const unsigned char playerid, const GameWorldBase * const
 		const GameClientPlayerList * const players, const GlobalGameSettings * const ggs,
 		const AI::Level level) : AIBase(playerid, gwb, player, players, ggs, level)
 {
-//	lastX = 1;
-//	lastY = 1;
-
-	gwb_ = const_cast<GameWorldBase*>(gwb);
 }
 
 /// Wird jeden GF aufgerufen und die KI kann hier entsprechende Handlungen vollziehen
@@ -78,7 +74,7 @@ void AIPlayerJH::ExpandAroundHQ()
 		y = gwb->GetHeight()-1;
 
 	// Bauqualit‰t testen, wenn nicht gut, abbrechen
-	BuildingQuality bq = gwb_->CalcBQ(x, y, player->getPlayerID());
+	BuildingQuality bq = gwb->CalcBQ(x, y, player->getPlayerID());
 	if (bq != BQ_HUT && bq != BQ_HOUSE && bq != BQ_CASTLE)
 		return;
 
@@ -116,7 +112,7 @@ void AIPlayerJH::Expand()
 			y = gwb->GetHeight()-1;
 
 		// Bauqualit‰t testen, wenn nicht gut, abbrechen
-		BuildingQuality bq = gwb_->CalcBQ(x, y, player->getPlayerID());
+		BuildingQuality bq = gwb->CalcBQ(x, y, player->getPlayerID());
 		if (bq != BQ_HUT && bq != BQ_HOUSE && bq != BQ_CASTLE)
 			continue;
 
@@ -166,7 +162,7 @@ void AIPlayerJH::ConnectBuildingSites()
 	{
 		unsigned char first_dir = 0xFF;
 		// Kann die Baustelle vom HQ erreicht werden? Nein -> Weg bauen!
-		if (!gwb_->FindPathOnRoads((*it)->GetFlag(), targetFlag, false, NULL, NULL, &first_dir, NULL))
+		if (!gwb->FindPathOnRoads((*it)->GetFlag(), targetFlag, false, NULL, NULL, &first_dir, NULL))
 		{
 			// Versuchen Weg zu bauen, wenns nicht klappt, Baustelle abreiﬂen
 			if (!ConnectFlagToRoadSytem((*it)->GetFlag()))
@@ -206,7 +202,7 @@ bool AIPlayerJH::ConnectFlagToRoadSytem(const noFlag *flag)
 		Param_RoadPath prp = { false };
 		
 		// Gibts ¸berhaupt einen Pfad zu dieser Flagge
-		bool path_found = gwb_->FindFreePath(flag->GetX(),flag->GetY(),
+		bool path_found = gwb->FindFreePath(flag->GetX(),flag->GetY(),
 		                  flags[i]->GetX(),flags[i]->GetY(),false,100,&new_route,&length,NULL,NULL,IsPointOK_RoadPath,NULL, &prp);
 
 		// Wenn ja, dann gucken ob dieser Pfad mˆglichst kurz zum "hˆheren" Ziel (HQ im Moment) ist
@@ -215,7 +211,7 @@ bool AIPlayerJH::ConnectFlagToRoadSytem(const noFlag *flag)
 			unsigned char first_dir;
 			unsigned int hqlength = 0;
 			// Strecke von der potenziellen Zielfahne bis zum HQ
-			bool hq_path_found = gwb_->FindPathOnRoads(flags[i], targetFlag, false, NULL, &hqlength, &first_dir, NULL);
+			bool hq_path_found = gwb->FindPathOnRoads(flags[i], targetFlag, false, NULL, &hqlength, &first_dir, NULL);
 
 			// Gew‰hlte Fahne hat leider auch kein Anschluﬂ ans HQ, zu schade!
 			if (!hq_path_found)
@@ -248,7 +244,7 @@ bool AIPlayerJH::BuildRoad(const noRoadNode *start, const noRoadNode *target)
 	std::vector<unsigned char> route;
 	Param_RoadPath prp = { false };
 
-	bool foundPath = gwb_->FindFreePath(start->GetX(),start->GetY(),
+	bool foundPath = gwb->FindFreePath(start->GetX(),start->GetY(),
 	                  target->GetX(),target->GetY(),false,100,&route,NULL,NULL,NULL,IsPointOK_RoadPath,NULL, &prp);
 
 	// Wenn Pfad gefunden, Befehl zum Straﬂe bauen und Flagen setzen geben

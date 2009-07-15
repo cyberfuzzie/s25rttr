@@ -1,4 +1,4 @@
-// $Id: Pathfinding.cpp 5190 2009-07-04 21:18:10Z OLiver $
+// $Id: Pathfinding.cpp 5274 2009-07-15 21:12:50Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -142,7 +142,7 @@ std::vector<unsigned> clean_list;
 bool GameWorldBase::FindFreePath(const MapCoord x_start,const MapCoord y_start,
 				  const MapCoord x_dest, const MapCoord y_dest, const bool random_route, 
 				  const unsigned max_route, std::vector<unsigned char> * route, unsigned *length,
-				  unsigned char * first_dir, CrossBorders* cb,  FP_Node_OK_Callback IsNodeOK, FP_Node_OK_Callback IsNodeToDestOk, const void * param)
+				  unsigned char * first_dir, CrossBorders* cb,  FP_Node_OK_Callback IsNodeOK, FP_Node_OK_Callback IsNodeToDestOk, const void * param) const
 {
 	// Erst einmal wieder aufräumen
 	for(unsigned i = 0;i<clean_list.size();++i)
@@ -271,7 +271,7 @@ bool GameWorldBase::FindFreePath(const MapCoord x_start,const MapCoord y_start,
 /// Wegfinden ( A* ), O(v lg v) --> Wegfindung auf allgemeinen Terrain (ohne Straßen), für Wegbau und frei herumlaufende Berufe
 bool GameWorldBase::FindPathOnRoads(const noRoadNode * const start, const noRoadNode * const goal,
 									const bool ware_mode, std::vector<unsigned char> * route, unsigned * length,
-									unsigned char * first_dir, const RoadSegment * const forbidden)
+									unsigned char * first_dir, const RoadSegment * const forbidden) const
 {
 	// Irgendwelche Null-Anfänge oder Ziele? --> Kein Weg
 	if(!start || !goal)

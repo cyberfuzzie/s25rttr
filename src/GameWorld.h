@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 5190 2009-07-04 21:18:10Z OLiver $
+// $Id: GameWorld.h 5274 2009-07-15 21:12:50Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -261,7 +261,7 @@ public:
 	/// Kann dorthin eine Straße gebaut werden?
 	bool RoadAvailable(const bool boat_road,const int x, const int y,unsigned char to_dir,const bool visual = true) const;
 	/// Bauqualitäten berechnen, bei flagonly gibt er nur 1 zurück, wenn eine Flagge möglich ist
-	BuildingQuality CalcBQ(const MapCoord x, const MapCoord y,const unsigned char player,const bool flagonly = false,const bool visual = true);
+	BuildingQuality CalcBQ(const MapCoord x, const MapCoord y,const unsigned char player,const bool flagonly = false,const bool visual = true) const;
 	/// Setzt die errechnete BQ gleich mit
 	void SetBQ(const MapCoord x, const MapCoord y,const unsigned char player,const bool flagonly = false,const bool visual = true)
 	{ GetNode(x,y).bq = CalcBQ(x,y,player,flagonly,visual); }
@@ -271,7 +271,7 @@ public:
 	/// Berechnet BQ bei einer gebauten Straße
 	void CalcRoad(const int x, const int y,const unsigned char player);
 	/// Ist eine Flagge irgendwo um x,y ?
-	bool FlagNear(const int x, const int y);
+	bool FlagNear(const int x, const int y) const;
 	/// Prüft, ob sich in unmittelbarer Nähe (im Radius von 4) Militärgebäude befinden
 	bool IsMilitaryBuildingNearNode(const int nx, const int ny);
 
@@ -298,7 +298,7 @@ public:
 	bool FindFreePath(const MapCoord x_start,const MapCoord y_start,
 				  const MapCoord x_dest, const MapCoord y_dest, const bool random_route, const unsigned max_route, 
 				  std::vector<unsigned char> * route, unsigned *length, unsigned char * first_dir, CrossBorders* cb,
-				  FP_Node_OK_Callback IsNodeOK, FP_Node_OK_Callback IsNodeToDestOk, const void * param);
+				  FP_Node_OK_Callback IsNodeOK, FP_Node_OK_Callback IsNodeToDestOk, const void * param) const;
 	/// Ermittelt, ob eine freie Route noch passierbar ist und gibt den Endpunkt der Route zurück
 	bool CheckFreeRoute(const MapCoord x_start,const MapCoord y_start, const std::vector<unsigned char>& route,
 		const unsigned pos, FP_Node_OK_Callback IsNodeOK, FP_Node_OK_Callback IsNodeToDestOk,
@@ -306,7 +306,7 @@ public:
 	/// Wegfindung auf Straßen - Basisroutine
 	bool FindPathOnRoads(const noRoadNode * const start, const noRoadNode * const goal,
 									const bool ware_mode, std::vector<unsigned char> * route, unsigned * length,
-									unsigned char * first_dir, const RoadSegment * const forbidden);
+									unsigned char * first_dir, const RoadSegment * const forbidden) const;
 	/// Findet einen Weg für Figuren
 	unsigned char FindHumanPath(const MapCoord x_start,const MapCoord y_start,
 		  const MapCoord x_dest, const MapCoord y_dest, const unsigned max_route = 0xFFFFFFFF, const bool random_route = false, unsigned *length = NULL);

@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.h 5273 2009-07-15 20:51:49Z jh $
+// $Id: AIPlayerJH.h 5274 2009-07-15 21:12:50Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -43,9 +43,6 @@ private:
 		/// Straﬂenbaumodus erlaubt?
 		bool boat_road;
 	};
-
-	// Pathfinding-Kram und calcbq braucht was non-constes... TODO
-	GameWorldBase *gwb_;
 
 	void RunGF(const unsigned gf);
 

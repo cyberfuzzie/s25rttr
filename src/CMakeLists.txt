@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 5213 2009-07-07 13:28:04Z FloSoft $
+### $Id: CMakeLists.txt 5277 2009-07-15 22:08:25Z sicherha $
 ################################################################################
 
 INCLUDE(FindBZip2)
@@ -114,6 +114,7 @@ SET(SOURCES_INGAMEWINDOWS
 
 SET(SOURCES_OTHER
     AIPlayer.h  AIPlayer.cpp AIBase.h
+    AIPlayerJH.cpp            AIPlayerJH.h
     BinaryFile.cpp
     BuildingConsts.h
     BurnedWarehouse.cpp       BurnedWarehouse.h
@@ -287,9 +288,9 @@ SET(SOURCES_GL
 
 ################################################################################
 
-GETTEXT_CREATE_TRANSLATIONS( ../RTTR/languages/rttr.pot ALL ../RTTR/languages/de.po 
-                                ../RTTR/languages/es.po 
-                                ../RTTR/languages/sv.po 
+GETTEXT_CREATE_TRANSLATIONS( ../RTTR/languages/rttr.pot ALL ../RTTR/languages/de.po
+                                ../RTTR/languages/es.po
+                                ../RTTR/languages/sv.po
                                 ../RTTR/languages/fi.po
                                 ../RTTR/languages/fr.po
                                 ../RTTR/languages/ru.po

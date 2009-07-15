@@ -1,4 +1,4 @@
-// $Id: main.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: main.cpp 5269 2009-07-15 09:50:44Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -23,6 +23,9 @@
 #ifdef _WIN32
 #	include <windows.h>
 #	define unlink DeleteFile
+#	ifndef __CYGWIN__
+#		define snprintf _snprintf
+#	endif
 #endif
 
 #include <stdio.h>

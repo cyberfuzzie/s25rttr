@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 5271 2009-07-15 11:58:16Z FloSoft $
+// $Id: GameClient.cpp 5272 2009-07-15 16:38:14Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -47,8 +47,7 @@
 #include "ClientInterface.h"
 #include "GameCommands.h"
 #include "AIPlayer.h"
-
-#include <sstream>
+#include "AIPlayerJH.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -1633,9 +1632,20 @@ bool GameClient::AddGC(gc::GameCommand * gc)
 }
 
 /// Erzeugt einen KI-Player, der mit den Daten vom GameClient gefüttert werden muss (zusätzlich noch mit den GameServer)
-AIPlayer * GameClient::CreateAIPlayer(const unsigned playerid)
+AIBase * GameClient::CreateAIPlayer(const unsigned playerid)
 {
-	return new AIPlayer(playerid,gw,&players[playerid],&players,&ggs,AI::MEDIUM);
+	unsigned int level = AI::MEDIUM;
+	switch(level)
+	{
+	case AI::EASY:
+		{
+			return new AIPlayer(playerid, gw,&players[playerid],&players,&ggs, AI::EASY);
+		} break;
+	default:
+		{
+			return new AIPlayerJH(playerid, gw,&players[playerid],&players,&ggs, (AI::Level)level);
+		} break;
+	}
 }
 
 /// Wandelt eine GF-Angabe in eine Zeitangabe um (HH:MM:SS oder MM:SS wenn Stunden = 0)

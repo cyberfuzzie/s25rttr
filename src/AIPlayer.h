@@ -16,29 +16,17 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Siedler II.5 RTTR. If not, see <http://www.gnu.org/licenses/>.
+#ifndef AIPLAYER_H_INCLUDED
+#define AIPLAYER_H_INCLUDED
+
+#pragma once
 
 #include "AIBase.h"
-
-
-namespace AI
-{
-	enum Level
-	{
-		EASY = 0,
-		MEDIUM,
-		HARD
-	};
-}
-
 
 /// Klasse für die standardmäßige (vorerst) KI
 class AIPlayer : public AIBase
 {
-	/// Stärke der KI
-	const AI::Level level;
-
 public:
-
 	AIPlayer(const unsigned char playerid, const GameWorldBase * const gwb, const GameClientPlayer * const player,
 		const GameClientPlayerList * const players, const GlobalGameSettings * const ggs,
 		const AI::Level level);
@@ -47,3 +35,5 @@ public:
 	/// gf ist die GF-Zahl vom Spiel
 	void RunGF(const unsigned gf);
 };
+
+#endif //!AIPLAYER_H_INCLUDED

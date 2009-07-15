@@ -16,8 +16,10 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Siedler II.5 RTTR. If not, see <http://www.gnu.org/licenses/>.
+#ifndef AIBASE_H_INCLUDED
+#define AIBASE_H_INCLUDED
 
-#include <vector>
+#pragma once
 
 class GameWorldBase;
 class GameClientPlayer;
@@ -25,11 +27,20 @@ class GlobalGameSettings;
 class GameClientPlayerList;
 namespace gc { class GameCommand; }
 
+namespace AI
+{
+	enum Level
+	{
+		EASY = 0,
+		MEDIUM,
+		HARD
+	};
+}
+
 /// Basisklasse für sämtliche KI-Spieler
 class AIBase
 {
 protected:
-
 	/// Eigene PlayerID, die der KI-Spieler wissen sollte, z.B. wenn er die Karte untersucht
 	const unsigned char playerid;
 	/// Verweis auf die Spielwelt, um entsprechend Informationen daraus zu erhalten
@@ -43,12 +54,14 @@ protected:
 	const GlobalGameSettings * const ggs;
 	/// Queue der GameCommands, die noch bearbeitet werden müssen
 	std::vector<gc::GameCommand*> gcs;
+	/// Stärke der KI
+	const AI::Level level;
 
 public:
 
 	AIBase(const unsigned char playerid, const GameWorldBase * const gwb, const GameClientPlayer * const player,
-		const GameClientPlayerList * const players, const GlobalGameSettings * const ggs)
-		: playerid(playerid), gwb(gwb), player(player), players(players), ggs(ggs) {}
+		const GameClientPlayerList * const players, const GlobalGameSettings * const ggs, const AI::Level level)
+		: playerid(playerid), gwb(gwb), player(player), players(players), ggs(ggs), level(level) {}
 
 	virtual ~AIBase() {}
 
@@ -60,3 +73,5 @@ public:
 	/// Markiert die GameCommands als abgearbeitet
 	void FetchGameCommands() { gcs.clear(); }
 };
+
+#endif //!AIBASE_H_INCLUDED

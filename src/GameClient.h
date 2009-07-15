@@ -1,4 +1,4 @@
-// $Id: GameClient.h 5117 2009-06-26 14:35:48Z OLiver $
+// $Id: GameClient.h 5272 2009-07-15 16:38:14Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -36,7 +36,7 @@ class GameClientPlayer;
 class WorldManager;
 class ClientInterface;
 class GameMessage;
-class AIPlayer;
+class AIBase;
 
 namespace gc { class GameCommand; }
 
@@ -65,7 +65,7 @@ public:
 	GameClientPlayer * GetPlayer(const unsigned int id) { return players.getElement(id); }
 	GameClientPlayer * GetLocalPlayer(void) { return GetPlayer(playerid); }
 	/// Erzeugt einen KI-Player, der mit den Daten vom GameClient gefüttert werden muss (zusätzlich noch mit den GameServer)
-	AIPlayer * CreateAIPlayer(const unsigned playerid);
+	AIBase * CreateAIPlayer(const unsigned playerid);
 
 	/// Gibt GGS zurück
 	const GlobalGameSettings& GetGGS() const { return ggs; }

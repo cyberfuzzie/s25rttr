@@ -1868,11 +1868,11 @@
 							>
 						</File>
 						<File
-							RelativePath="..\..\src\noShipBuildingSite.h"
+							RelativePath=".\noShipBuildingSite.h"
 							>
 						</File>
 						<File
-							RelativePath=".\noShipBuildingSite.h"
+							RelativePath="..\..\src\noShipBuildingSite.h"
 							>
 						</File>
 						<File
@@ -1999,6 +1999,14 @@
 				</File>
 				<File
 					RelativePath="..\..\src\AIPlayer.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\AIPlayerJH.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\AIPlayerJH.h"
 					>
 				</File>
 			</Filter>

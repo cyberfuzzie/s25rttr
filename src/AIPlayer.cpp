@@ -23,10 +23,9 @@
 #include "GameWorld.h"
 #include "GameCommands.h"
 
-
 AIPlayer::AIPlayer(const unsigned char playerid, const GameWorldBase * const gwb, const GameClientPlayer * const player,
 		const GameClientPlayerList * const players, const GlobalGameSettings * const ggs,
-		const AI::Level level) : AIBase(playerid,gwb,player,players,ggs), level(level)
+		const AI::Level level) : AIBase(playerid, gwb, player, players, ggs, level)
 {
 }
 

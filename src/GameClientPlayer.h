@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.h 5178 2009-07-03 11:55:24Z OLiver $
+// $Id: GameClientPlayer.h 5272 2009-07-15 16:38:14Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -263,6 +263,10 @@ public:
 	/// Speichert Militärgebäude
 	void AddMilitaryBuilding(nobMilitary * building);
 	void RemoveMilitaryBuilding(nobMilitary * building);
+
+	const std::list<noBuildingSite*>& GetBuildingSites() const { return building_sites; }
+
+	const std::list<nobMilitary *>& GetMilitaryBuildings() const { return military_buildings; }
 
 	/// Gibt Liste von Gebäuden des Spieler zurück
 	const std::list<nobUsual*>& GetBuildings(const BuildingType type);

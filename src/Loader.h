@@ -1,4 +1,4 @@
-// $Id: Loader.h 5259 2009-07-13 15:53:31Z FloSoft $
+// $Id: Loader.h 5270 2009-07-15 11:21:38Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -70,7 +70,7 @@ public:
 	inline glArchivItem_Bitmap *GetMapImageN(unsigned int nr) { return GetImageN(MAP_GFXSET_Z[lastgfx], nr); }
 	inline glArchivItem_Bitmap *GetTexImageN(unsigned int nr) { return GetImageN(TEX_GFXSET[lastgfx], nr); }
 	inline libsiedler2::ArchivItem_Palette *GetTexPaletteN(unsigned int nr) { return GetPaletteN(TEX_GFXSET[lastgfx], nr); }
-	inline libsiedler2::ArchivItem_Ini *GetSettingsIniN(std::string name) { return dynamic_cast<libsiedler2::ArchivItem_Ini*>( GetInfoN(CONFIG_NAME)->find(name.c_str()) ); }
+	inline libsiedler2::ArchivItem_Ini *GetSettingsIniN(std::string name) { return static_cast<libsiedler2::ArchivItem_Ini*>( GetInfoN(CONFIG_NAME)->find(name.c_str()) ); }
 
 	// should not use this!
 	const std::map<std::string, libsiedler2::ArchivInfo> &GetFiles(void) const { return files; }

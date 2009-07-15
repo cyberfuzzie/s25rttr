@@ -1,4 +1,4 @@
-// $Id: ArchivInfo.h 5259 2009-07-13 15:53:31Z FloSoft $
+// $Id: ArchivInfo.h 5270 2009-07-15 11:21:38Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -121,7 +121,7 @@ namespace libsiedler2
 		{
 			for(unsigned long i = 0; i < getCount(); ++i)
 			{
-				if(strcmp(get(i)->getName(), name) == 0)
+				if(get(i) && strcmp(get(i)->getName(), name) == 0)
 					return get(i);
 			}
 
@@ -133,7 +133,7 @@ namespace libsiedler2
 		{
 			for(unsigned long i = 0; i < getCount(); ++i)
 			{
-				if(strcmp(get(i)->getName(), name) == 0)
+				if(get(i) && strcmp(get(i)->getName(), name) == 0)
 					return get(i);
 			}
 

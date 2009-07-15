@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.h 5272 2009-07-15 16:38:14Z FloSoft $
+// $Id: AIPlayerJH.h 5273 2009-07-15 20:51:49Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -24,27 +24,50 @@
 #include "AIBase.h"
 
 class noFlag;
+class noBaseBuilding;
+class noRoadNode;
 
 /// Klasse für die besser JH-KI
 class AIPlayerJH : public AIBase
 {
-	unsigned short lastX;
-	unsigned short lastY;
+public:
+	AIPlayerJH(const unsigned char playerid, const GameWorldBase * const gwb, const GameClientPlayer * const player,
+		const GameClientPlayerList * const players, const GlobalGameSettings * const ggs,
+		const AI::Level level);
 
+private:
+
+	// wofür isn das?
 	struct Param_RoadPath
 	{
 		/// Straßenbaumodus erlaubt?
 		bool boat_road;
 	};
 
-	void FindFlags(std::vector<const noFlag*>& flags, unsigned short x, unsigned short y, unsigned short radius);
-
-public:
-	AIPlayerJH(const unsigned char playerid, const GameWorldBase * const gwb, const GameClientPlayer * const player,
-		const GameClientPlayerList * const players, const GlobalGameSettings * const ggs,
-		const AI::Level level);
+	// Pathfinding-Kram und calcbq braucht was non-constes... TODO
+	GameWorldBase *gwb_;
 
 	void RunGF(const unsigned gf);
+
+  // Findet Flaggen in der Umgebung von x,y
+	void FindFlags(std::vector<const noFlag*>& flags, unsigned short x, unsigned short y, unsigned short radius);
+
+	// Expandiert ums HQ herum
+	void ExpandAroundHQ();
+
+	// Expandiert um andere Militärgebäude herum
+	void Expand();
+
+	// Verbindet Baustellen mit dem Wegenetz
+	void ConnectBuildingSites();
+
+	//bool ConnectBuildingToRoadSystem(const noBaseBuilding * building);
+
+	// Verbindet eine Flagge mit dem Wegenetz
+	bool ConnectFlagToRoadSytem(const noFlag *flag);
+
+	// Baut eine Straße mit Fahnen
+	bool BuildRoad(const noRoadNode *start, const noRoadNode *target);
 };
 
 #endif //!AIPLAYERJH_H_INCLUDED

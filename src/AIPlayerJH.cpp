@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.cpp 5272 2009-07-15 16:38:14Z FloSoft $
+// $Id: AIPlayerJH.cpp 5273 2009-07-15 20:51:49Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -29,6 +29,8 @@
 #include "nobHQ.h"
 #include "noBuildingSite.h"
 
+#include "MapGeometry.h"
+
 // from Pathfinding.cpp
 bool IsPointOK_RoadPath(const GameWorldBase& gwb, const MapCoord x, const MapCoord y, const unsigned char dir, const void *param);
 
@@ -36,119 +38,100 @@ AIPlayerJH::AIPlayerJH(const unsigned char playerid, const GameWorldBase * const
 		const GameClientPlayerList * const players, const GlobalGameSettings * const ggs,
 		const AI::Level level) : AIBase(playerid, gwb, player, players, ggs, level)
 {
-	lastX = 1;
-	lastY = 1;
+//	lastX = 1;
+//	lastY = 1;
+
+	gwb_ = const_cast<GameWorldBase*>(gwb);
 }
 
 /// Wird jeden GF aufgerufen und die KI kann hier entsprechende Handlungen vollziehen
 void AIPlayerJH::RunGF(const unsigned gf)
 {
 	// nach neuem Barrackenplatz suchen
-	if(gf % 10 == 0)
+	if(gf % 50 == 0)
 	{
-		int x = player->hqx - (rand()%16 -8);
+		if (gf < 5000)
+			ExpandAroundHQ();
+
+		Expand();
+	}
+
+	if (gf % 50 == 20)
+	{
+		ConnectBuildingSites();
+	}
+}
+
+void AIPlayerJH::ExpandAroundHQ()
+{
+	// TODO bissl stumpf noch :S
+	// Ums HQ testen...
+	int x = player->hqx - (rand()%16 -8);
+	if(x < 0)
+		x = 0;
+	if(x >= gwb->GetWidth())
+		x = gwb->GetWidth()-1;
+	int y = player->hqy - (rand()%16 -8);
+	if(y < 0)
+		y = 0;
+	if(y >= gwb->GetHeight())
+		y = gwb->GetHeight()-1;
+
+	// Bauqualität testen, wenn nicht gut, abbrechen
+	BuildingQuality bq = gwb_->CalcBQ(x, y, player->getPlayerID());
+	if (bq != BQ_HUT && bq != BQ_HOUSE && bq != BQ_CASTLE)
+		return;
+
+	// Militärgebäude in der Nähe suchen, wenn zu dicht, abbrechen
+	list<nobBaseMilitary*> military;
+	gwb->LookForMilitaryBuildings(military, x, y, 6); // TODO das liefert irgendwie viel zu viel :S
+	//if (military.size() != 0)	
+	//	return;
+	for(list<nobBaseMilitary*>::iterator it = military.begin();it.valid();++it)
+	{
+		if (CalcDistance((*it)->GetX(), (*it)->GetY(), x, y) <= 6)
+			return;
+	}
+
+
+	gcs.push_back(new gc::SetBuildingSite(x, y, BLD_BARRACKS));
+}
+
+void AIPlayerJH::Expand()
+{
+	// TODO stumpf
+	// Für jedes Militärgebäude einmal probieren einen Platz zu finden
+	const std::list<nobMilitary*> milbuildings = player->GetMilitaryBuildings();
+	for(std::list<nobMilitary*>::const_iterator it = milbuildings.begin(); it != milbuildings.end(); ++it)
+	{
+		int x = (*it)->GetX() - (rand()%14 -7);
 		if(x < 0)
 			x = 0;
 		if(x >= gwb->GetWidth())
 			x = gwb->GetWidth()-1;
-		int y = player->hqy - (rand()%16 -8);
+		int y = (*it)->GetY() - (rand()%14 -7);
 		if(y < 0)
 			y = 0;
 		if(y >= gwb->GetHeight())
 			y = gwb->GetHeight()-1;
 
+		// Bauqualität testen, wenn nicht gut, abbrechen
+		BuildingQuality bq = gwb_->CalcBQ(x, y, player->getPlayerID());
+		if (bq != BQ_HUT && bq != BQ_HOUSE && bq != BQ_CASTLE)
+			continue;
+
+		// Militärgebäude in der Nähe suchen, wenn zu dicht, abbrechen
+		list<nobBaseMilitary*> military;
+		gwb->LookForMilitaryBuildings(military, x, y, 5);
+		//if (military.size() != 0)	
+		//	continue;
+		for(list<nobBaseMilitary*>::iterator it = military.begin();it.valid();++it)
+		{
+			if (CalcDistance((*it)->GetX(), (*it)->GetY(), x, y) <= 5)
+				return;
+		}
+
 		gcs.push_back(new gc::SetBuildingSite(x, y, BLD_BARRACKS));
-		lastX = x;
-		lastY = y;
-		
-		const std::list<nobMilitary*> milbuildings = player->GetMilitaryBuildings();
-		for(std::list<nobMilitary*>::const_iterator it = milbuildings.begin(); it != milbuildings.end(); ++it)
-		{
-			int x = (*it)->GetX() - (rand()%14 -7);
-			if(x < 0)
-				x = 0;
-			if(x >= gwb->GetWidth())
-				x = gwb->GetWidth()-1;
-			int y = (*it)->GetY() - (rand()%14 -7);
-			if(y < 0)
-				y = 0;
-			if(y >= gwb->GetHeight())
-				y = gwb->GetHeight()-1;
-
-			//gcs.push_back(new gc::SetFlag(x,y));
-			gcs.push_back(new gc::SetBuildingSite(x, y, BLD_BARRACKS));
-		}
-	}
-
-	if (gf % 50 == 20)
-	{
-		GameWorldBase *gwb_ = const_cast<GameWorldBase*>(gwb);
-		const noBuildingSite *mil = gwb->GetSpecObj<noBuildingSite>(lastX, lastY);
-		if (false)
-		{
-			std::vector<unsigned char> new_route;
-			const nobHQ *hq = gwb->GetSpecObj<nobHQ>(player->hqx, player->hqy);
-			Param_RoadPath prp = { false };
-			
-			bool path_found = gwb_->FindFreePath(mil->GetFlag()->GetX(),mil->GetFlag()->GetY(),
-				hq->GetFlag()->GetX(),hq->GetFlag()->GetY(),false,100,&new_route,NULL,NULL,NULL,IsPointOK_RoadPath,NULL, &prp);
-				//gwv->FindRoadPath(mil->GetFlag()->GetX(),mil->GetFlag()->GetY(),
-				//hq->GetFlag()->GetX(),hq->GetFlag()->GetY(),new_route, false);
-			if (path_found)
-				gcs.push_back(new gc::BuildRoad(mil->GetFlag()->GetX(), mil->GetFlag()->GetY(), false, new_route));
-
-		}
-
-		noFlag *hqflag = gwb->GetSpecObj<nobHQ>(player->hqx, player->hqy)->GetFlag();
-		const std::list<noBuildingSite*> bs = player->GetBuildingSites();
-		for (std::list<noBuildingSite*>::const_iterator it = bs.begin(); it != bs.end(); ++it)
-		{
-			unsigned char first_dir = 0xFF;
-			if (!gwb_->FindPathOnRoads((*it)->GetFlag(), hqflag, false, NULL, NULL, &first_dir, NULL))
-			{
-				std::vector<const noFlag*> flags;
-				FindFlags(flags, (*it)->GetFlag()->GetX(), (*it)->GetFlag()->GetY(), 9);
-
-				unsigned shortest = 0;
-				unsigned int shortestLength = 99999;
-				bool found = false;
-				
-				for(unsigned i=0; i<flags.size(); ++i)
-				{
-					std::vector<unsigned char> new_route2;
-					unsigned int length;
-					Param_RoadPath prp = { false };
-					
-					bool path_found = gwb_->FindFreePath((*it)->GetFlag()->GetX(),(*it)->GetFlag()->GetY(),
-						flags[i]->GetX(),flags[i]->GetY(),false,100,&new_route2,&length,NULL,NULL,IsPointOK_RoadPath,NULL, &prp);
-					if (path_found)
-					{
-						unsigned char first_dir;
-						unsigned int hqlength = 0;
-						bool hq_path_found = gwb_->FindPathOnRoads(flags[i], hqflag, false, NULL, &hqlength, &first_dir, NULL);
-						found = true;
-						if (length+hqlength < shortestLength)
-						{
-							shortest = i;
-							shortestLength = length+hqlength;
-						}
-					}
-				}
-				if (found)
-				{
-					std::vector<unsigned char> new_route2;
-					Param_RoadPath prp = { false };
-					
-					bool path_found = gwb_->FindFreePath((*it)->GetFlag()->GetX(),(*it)->GetFlag()->GetY(),
-						flags[shortest]->GetX(),flags[shortest]->GetY(),false,100,&new_route2,NULL,NULL,NULL,IsPointOK_RoadPath,NULL, &prp);
-					gcs.push_back(new gc::BuildRoad((*it)->GetFlag()->GetX(), (*it)->GetFlag()->GetY(), false, new_route2));
-					break;
-				}
-
-				
-			}
-		}
-
 	}
 }
 
@@ -169,4 +152,124 @@ void AIPlayerJH::FindFlags(std::vector<const noFlag*>& flags, unsigned short x, 
 			}
 		}
 	}
+}
+
+void AIPlayerJH::ConnectBuildingSites()
+{
+	// Liste von Baustellen holen
+	const std::list<noBuildingSite*> sites = player->GetBuildingSites();
+
+	// Ziel, das möglichst schnell erreichbar sein soll (TODO müsste dann evtl. auch Lager/Hafen sein)
+	noFlag *targetFlag = gwb->GetSpecObj<nobHQ>(player->hqx, player->hqy)->GetFlag();
+
+	for (std::list<noBuildingSite*>::const_iterator it = sites.begin(); it != sites.end(); ++it)
+	{
+		unsigned char first_dir = 0xFF;
+		// Kann die Baustelle vom HQ erreicht werden? Nein -> Weg bauen!
+		if (!gwb_->FindPathOnRoads((*it)->GetFlag(), targetFlag, false, NULL, NULL, &first_dir, NULL))
+		{
+			// Versuchen Weg zu bauen, wenns nicht klappt, Baustelle abreißen
+			if (!ConnectFlagToRoadSytem((*it)->GetFlag()))
+			{
+				gcs.push_back(new gc::DestroyBuilding((*it)->GetX(), (*it)->GetY()));
+			}
+			else
+			{
+				// Besser immer nur ein Weg bauen (TODO Wenn berechnete Wege sich kreuzen, geht was kaputt)
+				return;
+			}
+		}
+	}
+}
+
+bool AIPlayerJH::ConnectFlagToRoadSytem(const noFlag *flag)
+{
+	// Radius in dem nach würdigen Fahnen gesucht wird
+	const unsigned short maxRoadLength = 10;
+
+	// Ziel, das möglichst schnell erreichbar sein soll (TODO müsste dann evtl. auch Lager/Hafen sein)
+	noFlag *targetFlag = gwb->GetSpecObj<nobHQ>(player->hqx, player->hqy)->GetFlag();
+
+	// Flaggen in der Umgebung holen
+	std::vector<const noFlag*> flags;
+	FindFlags(flags, flag->GetX(), flag->GetY(), maxRoadLength);
+
+	unsigned shortest = 0;
+	unsigned int shortestLength = 99999;
+	bool found = false;
+	
+	// Jede Flagge testen...
+	for(unsigned i=0; i<flags.size(); ++i)
+	{
+		std::vector<unsigned char> new_route;
+		unsigned int length;
+		Param_RoadPath prp = { false };
+		
+		// Gibts überhaupt einen Pfad zu dieser Flagge
+		bool path_found = gwb_->FindFreePath(flag->GetX(),flag->GetY(),
+		                  flags[i]->GetX(),flags[i]->GetY(),false,100,&new_route,&length,NULL,NULL,IsPointOK_RoadPath,NULL, &prp);
+
+		// Wenn ja, dann gucken ob dieser Pfad möglichst kurz zum "höheren" Ziel (HQ im Moment) ist
+		if (path_found)
+		{
+			unsigned char first_dir;
+			unsigned int hqlength = 0;
+			// Strecke von der potenziellen Zielfahne bis zum HQ
+			bool hq_path_found = gwb_->FindPathOnRoads(flags[i], targetFlag, false, NULL, &hqlength, &first_dir, NULL);
+
+			// Gewählte Fahne hat leider auch kein Anschluß ans HQ, zu schade!
+			if (!hq_path_found)
+				// Und ist auch nicht zufällig die HQ-Flagge selber...
+				if (flags[i]->GetX() != targetFlag->GetX() || flags[i]->GetY() != targetFlag->GetY())
+					continue;
+			
+			// Ansonsten haben wir einen Pfad!
+			found = true;
+			
+			// Kürzer als der letzte? Nehmen!
+			if (length + hqlength < shortestLength)
+			{
+				shortest = i;
+				shortestLength = length+hqlength;
+			}
+		}
+	}
+
+	if (found)
+	{
+		return BuildRoad(flag, flags[shortest]);
+	}
+	return false;
+}
+
+bool AIPlayerJH::BuildRoad(const noRoadNode *start, const noRoadNode *target)
+{
+	// Gucken obs einen Weg gibt
+	std::vector<unsigned char> route;
+	Param_RoadPath prp = { false };
+
+	bool foundPath = gwb_->FindFreePath(start->GetX(),start->GetY(),
+	                  target->GetX(),target->GetY(),false,100,&route,NULL,NULL,NULL,IsPointOK_RoadPath,NULL, &prp);
+
+	// Wenn Pfad gefunden, Befehl zum Straße bauen und Flagen setzen geben
+	if (foundPath)
+	{
+		MapCoord x = start->GetX();
+		MapCoord y = start->GetY();
+		gcs.push_back(new gc::BuildRoad(x, y, false, route));
+
+
+		// Flaggen auf der Straße setzen
+		for(unsigned i=0; i<route.size(); ++i)
+		{
+			gwb->GetPointA(x, y, route[i]);
+			// Alle zwei Teilstücke versuchen eine Flagge zu bauen
+			if (i % 2 == 1) //&& gwb->GetNode(x,y).bq >= BQ_FLAG) // TODO warum geht nicht mit bq-Abfrage?
+			{
+				gcs.push_back(new gc::SetFlag(x,y));
+			}
+		}
+		return true;
+	}
+	return false;
 }

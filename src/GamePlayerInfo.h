@@ -1,4 +1,4 @@
-// $Id: GamePlayerInfo.h 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: GamePlayerInfo.h 5273 2009-07-15 20:51:49Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -54,6 +54,8 @@ public:
 
 	/// serialisiert die Daten.
 	void serialize(Serializer * ser) const;
+
+	unsigned getPlayerID() const { return playerid; }
 
 protected:
 	/// Wechselt Spieler

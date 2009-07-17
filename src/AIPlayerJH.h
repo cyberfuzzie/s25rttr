@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.h 5274 2009-07-15 21:12:50Z jh $
+// $Id: AIPlayerJH.h 5285 2009-07-17 15:27:02Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -22,6 +22,8 @@
 #pragma once
 
 #include "AIBase.h"
+#include "MapConsts.h"
+#include "GameConsts.h"
 
 class noFlag;
 class noBaseBuilding;
@@ -65,6 +67,12 @@ private:
 
 	// Baut eine Straße mit Fahnen
 	bool BuildRoad(const noRoadNode *start, const noRoadNode *target);
+
+	// Sucht Bäume in der nähe von x,y und gibt Schwerpunkt des Waldes zurück
+	bool FindWood(MapCoord x, MapCoord y, MapCoord &wood_x, MapCoord &wood_y);
+
+	// Versucht in der Nähe von x,y zu bauen
+	bool BuildNear(MapCoord x, MapCoord y, BuildingType bld);
 };
 
 #endif //!AIPLAYERJH_H_INCLUDED

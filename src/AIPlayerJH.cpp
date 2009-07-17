@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.cpp 5274 2009-07-15 21:12:50Z jh $
+// $Id: AIPlayerJH.cpp 5285 2009-07-17 15:27:02Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -55,6 +55,16 @@ void AIPlayerJH::RunGF(const unsigned gf)
 	if (gf % 50 == 20)
 	{
 		ConnectBuildingSites();
+	}
+
+	if (gf == 310)
+	{
+		MapCoord wood_x, wood_y;
+		if (FindWood(player->hqx, player->hqy, wood_x, wood_y))
+		{
+			BuildNear(wood_x, wood_y, BLD_WOODCUTTER);
+		}
+		BuildNear(player->hqx, player->hqy, BLD_SAWMILL);
 	}
 }
 
@@ -268,4 +278,71 @@ bool AIPlayerJH::BuildRoad(const noRoadNode *start, const noRoadNode *target)
 		return true;
 	}
 	return false;
+}
+
+bool AIPlayerJH::FindWood(MapCoord x, MapCoord y, MapCoord &wood_x, MapCoord &wood_y)
+{
+	// Suchradius erstmal fix
+	const int radius = 10;
+
+	unsigned treeCount = 0;
+	unsigned tree_x = 0;
+	unsigned tree_y = 0;
+
+	for(MapCoord tx=gwb->GetXA(x,y,0), r=1;r<=radius;tx=gwb->GetXA(tx,y,0),++r)
+	{
+		MapCoord tx2 = tx, ty2 = y;
+		for(unsigned i = 2;i<8;++i)
+		{
+			for(MapCoord r2=0;r2<r;gwb->GetPointA(tx2,ty2,i%6),++r2)
+			{
+				if(gwb->GetNO(tx2,ty2)->GetType() == NOP_TREE)
+				{
+					treeCount++;
+					tree_x += tx2;
+					tree_y += ty2;
+				}
+			}
+		}
+	}
+	if (treeCount > 0)
+	{
+		wood_x = tree_x / treeCount;
+		wood_y = tree_y / treeCount;
+	}
+
+	return (treeCount > 0);
+}
+
+bool AIPlayerJH::BuildNear(MapCoord x, MapCoord y, BuildingType bld)
+{
+	const int radius = 10;
+	BuildingQuality req = BUILDING_SIZE[bld];
+
+	for(MapCoord tx=gwb->GetXA(x,y,0), r=1;r<=radius;tx=gwb->GetXA(tx,y,0),++r)
+	{
+		MapCoord tx2 = tx, ty2 = y;
+		for(unsigned i = 2;i<8;++i)
+		{
+			for(MapCoord r2=0;r2<r;gwb->GetPointA(tx2,ty2,i%6),++r2)
+			{
+				BuildingQuality bq = gwb->CalcBQ(tx2, ty2, player->getPlayerID());
+
+				switch(req)
+				{
+					case BQ_HUT: if(!((bq >= BQ_HUT && bq <= BQ_CASTLE) || bq == BQ_HARBOR)) continue; break;
+					case BQ_HOUSE: if(!((bq >= BQ_HOUSE && bq <= BQ_CASTLE) || bq == BQ_HARBOR)) continue; break;
+					case BQ_CASTLE: if(!( bq == BQ_CASTLE || bq == BQ_HARBOR)) continue; break;
+					case BQ_HARBOR: if(bq != BQ_HARBOR) continue; break;
+					case BQ_MINE: if(bq != BQ_MINE) continue; break;
+					default: break;
+				}
+
+				gcs.push_back(new gc::SetBuildingSite(tx2, ty2, bld));
+				return true;
+			}
+		}
+	}
+	return false;
+
 }

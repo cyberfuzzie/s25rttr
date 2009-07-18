@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.h 5285 2009-07-17 15:27:02Z jh $
+// $Id: AIPlayerJH.h 5290 2009-07-18 12:22:45Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -73,6 +73,18 @@ private:
 
 	// Versucht in der Nähe von x,y zu bauen
 	bool BuildNear(MapCoord x, MapCoord y, BuildingType bld);
+
+	// Erzeugt eine Karte mit Holzbeständen mit Radius radius um Punkt x,y 
+	void CreateWoodMap(std::vector<unsigned short>& woodMap, MapCoord x, MapCoord y, unsigned radius);
+
+	// Erhöht in einer (Wood-)map die Werte todo
+	void IncrementMap(std::vector<unsigned short>& map, int mapSize, unsigned short x, unsigned short y, unsigned short radius);
+
+	// Sucht besten Punkt in einer WoodMap, todo signatur doof - alle daten in der map speichern?
+	bool FindWood(std::vector<unsigned short>& woodMap, unsigned short radius, MapCoord& x, MapCoord& y);
+
+	// Tmp:
+	std::vector<unsigned short> woodMap;
 };
 
 #endif //!AIPLAYERJH_H_INCLUDED

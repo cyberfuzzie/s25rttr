@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.cpp 5285 2009-07-17 15:27:02Z jh $
+// $Id: AIPlayerJH.cpp 5290 2009-07-18 12:22:45Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -31,6 +31,8 @@
 
 #include "MapGeometry.h"
 
+#include <iostream>
+
 // from Pathfinding.cpp
 bool IsPointOK_RoadPath(const GameWorldBase& gwb, const MapCoord x, const MapCoord y, const unsigned char dir, const void *param);
 
@@ -59,12 +61,37 @@ void AIPlayerJH::RunGF(const unsigned gf)
 
 	if (gf == 310)
 	{
-		MapCoord wood_x, wood_y;
-		if (FindWood(player->hqx, player->hqy, wood_x, wood_y))
+		//MapCoord wood_x, wood_y;
+		//if (FindWood(player->hqx, player->hqy, wood_x, wood_y))
+		//{
+		//	BuildNear(wood_x, wood_y, BLD_WOODCUTTER);
+		//}
+		MapCoord x = player->hqx;
+		MapCoord y = player->hqy;
+		CreateWoodMap(woodMap, x, y, 10);
+		if (FindWood(woodMap, 10, x, y))
 		{
-			BuildNear(wood_x, wood_y, BLD_WOODCUTTER);
+			BuildNear(x, y, BLD_WOODCUTTER);
 		}
 		BuildNear(player->hqx, player->hqy, BLD_SAWMILL);
+	}
+	if (gf == 325)
+	{
+		MapCoord x = player->hqx;
+		MapCoord y = player->hqy;
+		if (FindWood(woodMap, 10, x, y))
+		{
+			BuildNear(x, y, BLD_WOODCUTTER);
+		}	
+	}
+	if (gf == 350)
+	{
+		MapCoord x = player->hqx;
+		MapCoord y = player->hqy;
+		if (FindWood(woodMap, 10, x, y))
+		{
+			BuildNear(x, y, BLD_FORESTER);
+		}	
 	}
 }
 
@@ -220,6 +247,9 @@ bool AIPlayerJH::ConnectFlagToRoadSytem(const noFlag *flag)
 		{
 			unsigned char first_dir;
 			unsigned int hqlength = 0;
+
+			/* Führt manchmal zu Problemen, temporär raus; TODO was anderes überlegen (ganz ohne ist auch doof)
+
 			// Strecke von der potenziellen Zielfahne bis zum HQ
 			bool hq_path_found = gwb->FindPathOnRoads(flags[i], targetFlag, false, NULL, &hqlength, &first_dir, NULL);
 
@@ -228,6 +258,12 @@ bool AIPlayerJH::ConnectFlagToRoadSytem(const noFlag *flag)
 				// Und ist auch nicht zufällig die HQ-Flagge selber...
 				if (flags[i]->GetX() != targetFlag->GetX() || flags[i]->GetY() != targetFlag->GetY())
 					continue;
+			*/
+
+			// Sind wir mit der Fahne schon verbunden? Einmal reicht!
+			bool alreadyConnected = gwb->FindPathOnRoads(flags[i], flag, false, NULL, NULL, &first_dir, NULL);
+			if (alreadyConnected)
+				continue;
 			
 			// Ansonsten haben wir einen Pfad!
 			found = true;
@@ -345,4 +381,77 @@ bool AIPlayerJH::BuildNear(MapCoord x, MapCoord y, BuildingType bld)
 	}
 	return false;
 
+}
+
+void AIPlayerJH::CreateWoodMap(std::vector<unsigned short>& woodMap, MapCoord x, MapCoord y, const unsigned radius)
+{
+	// todo: am rand gibts bestimmt probleme
+
+	//std::vector<unsigned short> map(2*(radius+1) * 2*(radius+1), 0);
+	woodMap.resize(2*(radius+1) * 2*(radius+1), 0);
+
+	for(MapCoord tx=gwb->GetXA(x,y,0), r=1;r<=radius;tx=gwb->GetXA(tx,y,0),++r)
+	{
+		MapCoord tx2 = tx, ty2 = y;
+		for(unsigned i = 2;i<8;++i)
+		{
+			for(MapCoord r2=0;r2<r;gwb->GetPointA(tx2,ty2,i%6),++r2)
+			{
+				if(gwb->GetNO(tx2,ty2)->GetType() == NOP_TREE)
+				{
+					IncrementMap(woodMap, 2*(radius+1), tx2 - x + radius, ty2 - y + radius, 5);
+				}
+			}
+		}
+	}
+}
+
+void AIPlayerJH::IncrementMap(std::vector<unsigned short>& map, int mapSize, unsigned short x, unsigned short y, unsigned short radius)
+{
+	int startX = x - radius;
+	if (startX < 0)
+		startX = 0;
+
+	int startY = y - radius;
+	if (startY < 0)
+		startY = 0;
+
+	int endX = x + radius;
+	if (endX >= mapSize)
+		endX = mapSize - 1;
+
+	int endY = y + radius;
+	if (endY >= mapSize)
+		endY = mapSize - 1;
+
+	for (int yi = startY; yi <= endY; yi++)
+	{
+		for (int xi = startX; xi <= endX; xi++)
+		{
+			int val = radius - abs(x - xi) - abs(y - yi);
+			if (val > 0)
+			  map[xi + yi * mapSize] += val;
+		}
+	}
+}
+
+bool AIPlayerJH::FindWood(std::vector<unsigned short>& woodMap, unsigned short radius, MapCoord& x, MapCoord& y)
+{
+	unsigned short max = 0;
+	unsigned maxIndex = 0;
+	for (unsigned i=0; i<woodMap.size(); ++i)
+	{
+		if (max < woodMap[i])
+		{
+			max = woodMap[i];
+			maxIndex = i;
+		}
+	}
+
+	if (max == 0)
+		return false;
+
+	x = maxIndex % (2*(radius+1)) - radius + x;
+	y = maxIndex / (2*(radius+1)) - radius + y;
+	return true;
 }

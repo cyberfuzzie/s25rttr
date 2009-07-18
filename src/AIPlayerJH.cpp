@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.cpp 5290 2009-07-18 12:22:45Z jh $
+// $Id: AIPlayerJH.cpp 5292 2009-07-18 17:55:04Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -40,6 +40,8 @@ AIPlayerJH::AIPlayerJH(const unsigned char playerid, const GameWorldBase * const
 		const GameClientPlayerList * const players, const GlobalGameSettings * const ggs,
 		const AI::Level level) : AIBase(playerid, gwb, player, players, ggs, level)
 {
+	bool BuildQueueWasEmpty = true;
+	buggyCounter = 0; // workaround
 }
 
 /// Wird jeden GF aufgerufen und die KI kann hier entsprechende Handlungen vollziehen
@@ -48,16 +50,40 @@ void AIPlayerJH::RunGF(const unsigned gf)
 	// nach neuem Barrackenplatz suchen
 	if(gf % 50 == 0)
 	{
-		if (gf < 5000)
+		if (player->GetMilitaryBuildings().size() < 6)
 			ExpandAroundHQ();
 
 		Expand();
 	}
 
+	if (gf % 20 == 0)
+	{
+		if (CheckBuildingQueue() || buggyCounter > 15)
+		{
+			BuildFromQueue();
+			buggyCounter = 0;
+		}
+		else
+		{
+			buggyCounter++;
+		}
+		if (buggyCounter > 15)
+		{
+			if (!buildingQueue.empty())
+			{
+				//std::cout << "Fehler in Gebäudequeue!" << std::endl;
+				buildingQueue.pop();
+			}
+		}
+
+	}
+
+	/*
 	if (gf % 50 == 20)
 	{
 		ConnectBuildingSites();
 	}
+	*/
 
 	if (gf == 310)
 	{
@@ -127,7 +153,8 @@ void AIPlayerJH::ExpandAroundHQ()
 	}
 
 
-	gcs.push_back(new gc::SetBuildingSite(x, y, BLD_BARRACKS));
+	//gcs.push_back(new gc::SetBuildingSite(x, y, BLD_BARRACKS));
+	AddBuilding(x, y, BLD_BARRACKS);
 }
 
 void AIPlayerJH::Expand()
@@ -164,7 +191,8 @@ void AIPlayerJH::Expand()
 				return;
 		}
 
-		gcs.push_back(new gc::SetBuildingSite(x, y, BLD_BARRACKS));
+		//gcs.push_back(new gc::SetBuildingSite(x, y, BLD_BARRACKS));
+		AddBuilding(x, y, BLD_BARRACKS);
 	}
 }
 
@@ -248,7 +276,7 @@ bool AIPlayerJH::ConnectFlagToRoadSytem(const noFlag *flag)
 			unsigned char first_dir;
 			unsigned int hqlength = 0;
 
-			/* Führt manchmal zu Problemen, temporär raus; TODO was anderes überlegen (ganz ohne ist auch doof)
+			// Führt manchmal zu Problemen, temporär raus; TODO was anderes überlegen (ganz ohne ist auch doof)
 
 			// Strecke von der potenziellen Zielfahne bis zum HQ
 			bool hq_path_found = gwb->FindPathOnRoads(flags[i], targetFlag, false, NULL, &hqlength, &first_dir, NULL);
@@ -258,7 +286,7 @@ bool AIPlayerJH::ConnectFlagToRoadSytem(const noFlag *flag)
 				// Und ist auch nicht zufällig die HQ-Flagge selber...
 				if (flags[i]->GetX() != targetFlag->GetX() || flags[i]->GetY() != targetFlag->GetY())
 					continue;
-			*/
+			
 
 			// Sind wir mit der Fahne schon verbunden? Einmal reicht!
 			bool alreadyConnected = gwb->FindPathOnRoads(flags[i], flag, false, NULL, NULL, &first_dir, NULL);
@@ -374,7 +402,8 @@ bool AIPlayerJH::BuildNear(MapCoord x, MapCoord y, BuildingType bld)
 					default: break;
 				}
 
-				gcs.push_back(new gc::SetBuildingSite(tx2, ty2, bld));
+				//gcs.push_back(new gc::SetBuildingSite(tx2, ty2, bld));
+				AddBuilding(tx2, ty2, bld);
 				return true;
 			}
 		}
@@ -454,4 +483,103 @@ bool AIPlayerJH::FindWood(std::vector<unsigned short>& woodMap, unsigned short r
 	x = maxIndex % (2*(radius+1)) - radius + x;
 	y = maxIndex / (2*(radius+1)) - radius + y;
 	return true;
+}
+
+void AIPlayerJH::AddBuilding(MapCoord x, MapCoord y, BuildingType bld)
+{
+	// TODO prüfen ob job schon drin bzw. extra methode zum prüfen
+	BuildJob bj = {x, y, bld};
+	buildingQueue.push(bj);
+}
+
+void AIPlayerJH::BuildFromQueue()
+{
+	if (buildingQueue.empty())
+		return;
+	BuildJob bj = buildingQueue.front();
+	BuildingQuality req = BUILDING_SIZE[bj.building];
+	BuildingQuality bq = gwb->CalcBQ(bj.x, bj.y, player->getPlayerID());
+
+	bool good = true;
+
+	switch(req)
+	{
+		case BQ_HUT: if(!((bq >= BQ_HUT && bq <= BQ_CASTLE) || bq == BQ_HARBOR)) good = false; break;
+		case BQ_HOUSE: if(!((bq >= BQ_HOUSE && bq <= BQ_CASTLE) || bq == BQ_HARBOR)) good = false; break;
+		case BQ_CASTLE: if(!( bq == BQ_CASTLE || bq == BQ_HARBOR)) good = false; break;
+		case BQ_HARBOR: if(bq != BQ_HARBOR) good = false; break;
+		case BQ_MINE: if(bq != BQ_MINE) good = false; break;
+		default: break;
+	}
+
+	if (good)
+	{
+		gcs.push_back(new gc::SetBuildingSite(bj.x, bj.y, bj.building));
+	}
+	else
+	{
+		// Geht nicht. Auftrag löschen und in der Nähe nochmal versuchen
+		buildingQueue.pop();
+		BuildNear(bj.x, bj.y, bj.building);
+		BuildFromQueue();
+	}
+}
+
+bool AIPlayerJH::CheckBuildingQueue()
+{
+	if (buildingQueue.empty())
+	{
+		BuildQueueWasEmpty = true;
+		return false;
+	}
+	if (!buildingQueue.empty() && BuildQueueWasEmpty)
+	{
+		BuildQueueWasEmpty = false;
+		return true;
+	}
+	// Ziel, das möglichst schnell erreichbar sein soll (TODO müsste dann evtl. auch Lager/Hafen sein)
+	noFlag *targetFlag = gwb->GetSpecObj<nobHQ>(player->hqx, player->hqy)->GetFlag();
+
+	BuildJob bj = buildingQueue.front();
+	const noBuildingSite *nbs;
+	// Schon was gebaut?
+	if (nbs = gwb->GetSpecObj<noBuildingSite>(bj.x, bj.y))
+	{
+		// ist es auch das richtige?
+		if (nbs->GetBuildingType() == bj.building)
+		{
+			// Kein Weg zum HQ/Target
+			if (!gwb->FindPathOnRoads(nbs->GetFlag(), targetFlag, false, NULL, NULL, NULL, NULL))
+			{
+				// Dann schließen wir es mal an. falls das nicht geht, woanders bauen (TODO abreißen+evil position markieren)
+				if (!ConnectFlagToRoadSytem(nbs->GetFlag()))
+				{
+					BuildNear(bj.x, bj.y, bj.building);
+					buildingQueue.pop();
+					return true;	// Nicht anschließbares Gebäude gebaut -> Weitermachen
+				}
+				else
+				{
+					return false;	// Weg in Auftrag gegeben -> Warten
+				}
+			}
+			else
+			{
+				buildingQueue.pop();
+				return true;	// Gebäude gebaut + angeschlossen -> Weitermachen
+			}
+		}
+		else
+		{
+			buildingQueue.pop();
+			std::cout << "Falsches Gebäude entdeckt an " << bj.x << "/" << bj.y << "entdeckt: "<< std::endl;
+			std::cout << "Sollte sein: " << bj.building << std::endl;
+			std::cout << "Ist: " << nbs->GetBuildingType() << std::endl;
+			return true;	// Gebäude an der Stelle, aber das falsche... sollte nicht passieren können -> Weitermachen	
+		}
+	}
+	else
+	{
+		return false; // Baut wohl noch -> Warten
+	}
 }

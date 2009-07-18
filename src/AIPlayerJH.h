@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.h 5290 2009-07-18 12:22:45Z jh $
+// $Id: AIPlayerJH.h 5292 2009-07-18 17:55:04Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -24,6 +24,8 @@
 #include "AIBase.h"
 #include "MapConsts.h"
 #include "GameConsts.h"
+
+#include <queue>
 
 class noFlag;
 class noBaseBuilding;
@@ -83,8 +85,42 @@ private:
 	// Sucht besten Punkt in einer WoodMap, todo signatur doof - alle daten in der map speichern?
 	bool FindWood(std::vector<unsigned short>& woodMap, unsigned short radius, MapCoord& x, MapCoord& y);
 
+	// Fügt ein Gebäude zur Bauwarteschlange hinzu
+	void AddBuilding(MapCoord x, MapCoord y, BuildingType bld);
+
+	// Baut das vorderste Gebäude in der Bauwarteschlange
+	void BuildFromQueue();
+
+	bool BuildQueueWasEmpty;
+
+	// Prüft ob das oberste Element der Queue schon platziert wurde und veranlasst Wegebau, gibt true zurück wenn Gebäude angeschlossen
+	bool CheckBuildingQueue();
+
+	/*
+	enum BuildJobStatus
+	{
+		BJ_WAITING,
+		BJ_BUILDING,
+		BJ_CONNECTING,
+		BJ_DONE,
+		BJ_ERROR
+	};
+	*/
+
+	struct BuildJob 
+	{
+		MapCoord x;
+		MapCoord y;
+		BuildingType building;
+	};
+
+	// Gebäude-Queue
+	std::queue<BuildJob> buildingQueue;
+
+
 	// Tmp:
 	std::vector<unsigned short> woodMap;
+	unsigned buggyCounter;
 };
 
 #endif //!AIPLAYERJH_H_INCLUDED

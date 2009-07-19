@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.cpp 5295 2009-07-19 08:28:07Z FloSoft $
+// $Id: AIPlayerJH.cpp 5299 2009-07-19 15:52:20Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -40,8 +40,6 @@ AIPlayerJH::AIPlayerJH(const unsigned char playerid, const GameWorldBase * const
 		const GameClientPlayerList * const players, const GlobalGameSettings * const ggs,
 		const AI::Level level) : AIBase(playerid, gwb, player, players, ggs, level)
 {
-	//bool BuildQueueWasEmpty = true;
-	buggyCounter = 0; // workaround
 }
 
 /// Wird jeden GF aufgerufen und die KI kann hier entsprechende Handlungen vollziehen
@@ -58,24 +56,7 @@ void AIPlayerJH::RunGF(const unsigned gf)
 
 	if (gf % 20 == 0)
 	{
-		if (CheckBuildingQueue() || buggyCounter > 15)
-		{
-			BuildFromQueue();
-			buggyCounter = 0;
-		}
-		else
-		{
-			buggyCounter++;
-		}
-		if (buggyCounter > 15)
-		{
-			if (!buildingQueue.empty())
-			{
-				//std::cout << "Fehler in Gebäudequeue!" << std::endl;
-				buildingQueue.pop();
-			}
-		}
-
+		CheckBuildingQueue();
 	}
 
 	/*
@@ -151,7 +132,9 @@ void AIPlayerJH::ExpandAroundHQ()
 		if (CalcDistance((*it)->GetX(), (*it)->GetY(), x, y) <= 6)
 			return;
 	}
-
+	
+	if (gwb->IsMilitaryBuildingNearNode(x,y))
+		return;
 
 	//gcs.push_back(new gc::SetBuildingSite(x, y, BLD_BARRACKS));
 	AddBuilding(x, y, BLD_BARRACKS);
@@ -190,6 +173,9 @@ void AIPlayerJH::Expand()
 			if (CalcDistance((*it)->GetX(), (*it)->GetY(), x, y) <= 5)
 				return;
 		}
+
+		if (gwb->IsMilitaryBuildingNearNode(x,y))
+			return;
 
 		//gcs.push_back(new gc::SetBuildingSite(x, y, BLD_BARRACKS));
 		AddBuilding(x, y, BLD_BARRACKS);
@@ -488,17 +474,37 @@ bool AIPlayerJH::FindWood(std::vector<unsigned short>& woodMap, unsigned short r
 void AIPlayerJH::AddBuilding(MapCoord x, MapCoord y, BuildingType bld)
 {
 	// TODO prüfen ob job schon drin bzw. extra methode zum prüfen
-	BuildJob bj = {x, y, bld};
+	BuildJob *bj = new BuildJob(x, y, bld, BJ_WAITING);
 	buildingQueue.push(bj);
+}
+
+void AIPlayerJH::RemoveFromBuildingQueue()
+{
+	// Fehlercheck, TODO kann weg
+	BuildJob *bj = buildingQueue.front();
+	if (bj->status != BJ_DONE)
+	{
+		std::cerr << "Fehler: BuildJob steht nicht auf DONE: " << bj->x << "/" << bj->y << " - " << bj->building << " " << bj->status << std::endl;
+	}
+
+	buildingQueue.pop();
+	delete bj;
 }
 
 void AIPlayerJH::BuildFromQueue()
 {
+	// Gibts was zu bauen?
 	if (buildingQueue.empty())
 		return;
-	BuildJob bj = buildingQueue.front();
-	BuildingQuality req = BUILDING_SIZE[bj.building];
-	BuildingQuality bq = gwb->CalcBQ(bj.x, bj.y, player->getPlayerID());
+
+	BuildJob *bj = buildingQueue.front();
+
+	// Wartet der BuildJob überhaupt aufs gebaut werden?
+	if (bj->status != BJ_WAITING)
+		return;
+
+	BuildingQuality req = BUILDING_SIZE[bj->building];
+	BuildingQuality bq = gwb->CalcBQ(bj->x, bj->y, player->getPlayerID());
 
 	bool good = true;
 
@@ -514,72 +520,84 @@ void AIPlayerJH::BuildFromQueue()
 
 	if (good)
 	{
-		gcs.push_back(new gc::SetBuildingSite(bj.x, bj.y, bj.building));
+		gcs.push_back(new gc::SetBuildingSite(bj->x, bj->y, bj->building));
+		bj->status = BJ_BUILDING;
 	}
 	else
 	{
 		// Geht nicht. Auftrag löschen und in der Nähe nochmal versuchen
-		buildingQueue.pop();
-		BuildNear(bj.x, bj.y, bj.building);
+		// In der Nähe bauen (TODO: immer sinnvoll?)
+		BuildNear(bj->x, bj->y, bj->building);
+		bj->status = BJ_DONE;
+		RemoveFromBuildingQueue();
+
 		BuildFromQueue();
 	}
 }
 
-bool AIPlayerJH::CheckBuildingQueue()
+void AIPlayerJH::CheckBuildingQueue()
 {
 	if (buildingQueue.empty())
-	{
-		BuildQueueWasEmpty = true;
-		return false;
-	}
-	if (!buildingQueue.empty() && BuildQueueWasEmpty)
-	{
-		BuildQueueWasEmpty = false;
-		return true;
-	}
+		return;
+
 	// Ziel, das möglichst schnell erreichbar sein soll (TODO müsste dann evtl. auch Lager/Hafen sein)
 	noFlag *targetFlag = gwb->GetSpecObj<nobHQ>(player->hqx, player->hqy)->GetFlag();
 
-	BuildJob bj = buildingQueue.front();
-	const noBuildingSite *nbs;
-	// Schon was gebaut?
-	if ( (nbs = gwb->GetSpecObj<noBuildingSite>(bj.x, bj.y)) )
+	BuildJob *bj = buildingQueue.front();
+
+	switch(bj->status)
 	{
-		// ist es auch das richtige?
-		if (nbs->GetBuildingType() == bj.building)
+	case BJ_WAITING: BuildFromQueue(); break;
+	case BJ_BUILDING: 
 		{
-			// Kein Weg zum HQ/Target
-			if (!gwb->FindPathOnRoads(nbs->GetFlag(), targetFlag, false, NULL, NULL, NULL, NULL))
+			const noBuildingSite *nbs; 
+			// Gucken ob schon eine Baustelle da ist
+			if ((nbs = gwb->GetSpecObj<noBuildingSite>(bj->x, bj->y)))
 			{
-				// Dann schließen wir es mal an. falls das nicht geht, woanders bauen (TODO abreißen+evil position markieren)
-				if (!ConnectFlagToRoadSytem(nbs->GetFlag()))
+				// Kein Weg zum HQ/Target vorhanden?
+				if (!gwb->FindPathOnRoads(nbs->GetFlag(), targetFlag, false, NULL, NULL, NULL, NULL))
 				{
-					BuildNear(bj.x, bj.y, bj.building);
-					buildingQueue.pop();
-					return true;	// Nicht anschließbares Gebäude gebaut -> Weitermachen
+					// Dann schließen wir es mal an. falls das nicht geht, woanders bauen (TODO abreißen+evil position markieren)
+					if (!ConnectFlagToRoadSytem(nbs->GetFlag()))
+					{
+						BuildNear(bj->x, bj->y, bj->building);
+						bj->status = BJ_DONE;
+						RemoveFromBuildingQueue();
+						BuildFromQueue();	// Nicht anschließbares Gebäude gebaut -> Weitermachen
+					}
+					else
+					{
+						bj->status = BJ_CONNECTING;	// Weg in Auftrag gegeben -> Warten
+					}
 				}
+				// Weg zum HQ/Target vorhanden
 				else
 				{
-					return false;	// Weg in Auftrag gegeben -> Warten
+					bj->status = BJ_DONE;
+					RemoveFromBuildingQueue();
+					BuildFromQueue();
 				}
 			}
-			else
+		}
+		break;
+
+	case BJ_CONNECTING: 
+		{
+			const noBuildingSite *nbs;
+			nbs = gwb->GetSpecObj<noBuildingSite>(bj->x, bj->y); // TODO bissl gefährlich
+			// Weg vorhanden?
+			if (gwb->FindPathOnRoads(nbs->GetFlag(), targetFlag, false, NULL, NULL, NULL, NULL))
 			{
-				buildingQueue.pop();
-				return true;	// Gebäude gebaut + angeschlossen -> Weitermachen
+				bj->status = BJ_DONE;
+				RemoveFromBuildingQueue();
+				BuildFromQueue();
 			}
 		}
-		else
-		{
-			buildingQueue.pop();
-			std::cout << "Falsches Gebäude entdeckt an " << bj.x << "/" << bj.y << "entdeckt: "<< std::endl;
-			std::cout << "Sollte sein: " << bj.building << std::endl;
-			std::cout << "Ist: " << nbs->GetBuildingType() << std::endl;
-			return true;	// Gebäude an der Stelle, aber das falsche... sollte nicht passieren können -> Weitermachen	
-		}
-	}
-	else
-	{
-		return false; // Baut wohl noch -> Warten
+		break;
+	case BJ_DONE: 
+		RemoveFromBuildingQueue();
+		BuildFromQueue();
+		break;
+	case BJ_ERROR: break;
 	}
 }

@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 5274 2009-07-15 21:12:50Z jh $
+// $Id: GameWorld.h 5299 2009-07-19 15:52:20Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -273,7 +273,7 @@ public:
 	/// Ist eine Flagge irgendwo um x,y ?
 	bool FlagNear(const int x, const int y) const;
 	/// Prüft, ob sich in unmittelbarer Nähe (im Radius von 4) Militärgebäude befinden
-	bool IsMilitaryBuildingNearNode(const int nx, const int ny);
+	bool IsMilitaryBuildingNearNode(const int nx, const int ny) const;
 
 	/// setzt den virtuellen Straßen-Wert an der Stelle X,Y (berichtigt).
 	void SetVirtualRoad(const MapCoord x, const MapCoord y, unsigned char dir, unsigned char type);
@@ -281,7 +281,7 @@ public:
 	void SetPointVirtualRoad(const MapCoord x, const MapCoord y, unsigned char dir, unsigned char type);
 
 	/// Test, ob auf dem besagten Punkt ein Militärgebäude steht
-	bool IsMilitaryBuilding(const MapCoord x, const MapCoord y);
+	bool IsMilitaryBuilding(const MapCoord x, const MapCoord y) const;
 
 	/// Erstellt eine Liste mit allen Militärgebäuden in der Umgebung, radius bestimmt wie viele Kästchen nach einer Richtung im Umkreis
 	void LookForMilitaryBuildings(list<nobBaseMilitary*>& buildings,const MapCoord x, const MapCoord y, const unsigned short radius) const;

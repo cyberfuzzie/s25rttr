@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.h 5292 2009-07-18 17:55:04Z jh $
+// $Id: AIPlayerJH.h 5299 2009-07-19 15:52:20Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -91,12 +91,12 @@ private:
 	// Baut das vorderste Gebäude in der Bauwarteschlange
 	void BuildFromQueue();
 
-	bool BuildQueueWasEmpty;
-
 	// Prüft ob das oberste Element der Queue schon platziert wurde und veranlasst Wegebau, gibt true zurück wenn Gebäude angeschlossen
-	bool CheckBuildingQueue();
+	void CheckBuildingQueue();
 
-	/*
+	// Entfernt das vorderste Element aus der Queue, prüft ob DONE
+	void RemoveFromBuildingQueue();
+
 	enum BuildJobStatus
 	{
 		BJ_WAITING,
@@ -105,22 +105,24 @@ private:
 		BJ_DONE,
 		BJ_ERROR
 	};
-	*/
 
+	// Ein Bauauftrag für die Queue
 	struct BuildJob 
 	{
 		MapCoord x;
 		MapCoord y;
 		BuildingType building;
+		BuildJobStatus status;
+
+		BuildJob(MapCoord x, MapCoord y, BuildingType building, BuildJobStatus status) : x(x), y(y), 
+			building(building), status(status) { }
 	};
 
 	// Gebäude-Queue
-	std::queue<BuildJob> buildingQueue;
+	std::queue<BuildJob*> buildingQueue;
 
-
-	// Tmp:
+	// Tmp zum spielen:
 	std::vector<unsigned short> woodMap;
-	unsigned buggyCounter;
 };
 
 #endif //!AIPLAYERJH_H_INCLUDED

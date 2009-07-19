@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 5274 2009-07-15 21:12:50Z jh $
+// $Id: GameWorldBase.cpp 5299 2009-07-19 15:52:20Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -389,7 +389,7 @@ void GameWorldBase::CalcRoad(const int x, const int y,const unsigned char player
 	SetBQ(x+ (y&1),y+1,GAMECLIENT.GetPlayerID());
 }
 
-bool GameWorldBase::IsMilitaryBuildingNearNode(const int nx, const int ny)
+bool GameWorldBase::IsMilitaryBuildingNearNode(const int nx, const int ny) const
 {
 	// Im Umkreis von 4 Punkten ein Militärgebäude suchen
 	int x,y;
@@ -509,7 +509,7 @@ void GameWorldBase::SetPointVirtualRoad(const MapCoord x, const MapCoord y, unsi
 
 
 
-bool GameWorldBase::IsMilitaryBuilding(const MapCoord x, const MapCoord y)
+bool GameWorldBase::IsMilitaryBuilding(const MapCoord x, const MapCoord y) const
 {
 	if(GetNO(x,y)->GetType() == NOP_BUILDING || GetNO(x,y)->GetType() == NOP_BUILDINGSITE)
 	{

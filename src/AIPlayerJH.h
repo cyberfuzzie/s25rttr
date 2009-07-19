@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.h 5299 2009-07-19 15:52:20Z jh $
+// $Id: AIPlayerJH.h 5300 2009-07-19 20:46:59Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -30,6 +30,7 @@
 class noFlag;
 class noBaseBuilding;
 class noRoadNode;
+class nobBaseMilitary;
 
 /// Klasse für die besser JH-KI
 class AIPlayerJH : public AIBase
@@ -58,6 +59,9 @@ private:
 
 	// Expandiert um andere Militärgebäude herum
 	void Expand();
+
+	// Expandiert allgemein ;)
+	void ExpandAround(const nobBaseMilitary *building);
 
 	// Verbindet Baustellen mit dem Wegenetz
 	void ConnectBuildingSites();

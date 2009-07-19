@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.cpp 5299 2009-07-19 15:52:20Z jh $
+// $Id: AIPlayerJH.cpp 5300 2009-07-19 20:46:59Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -102,42 +102,70 @@ void AIPlayerJH::RunGF(const unsigned gf)
 	}
 }
 
-void AIPlayerJH::ExpandAroundHQ()
+void AIPlayerJH::ExpandAround(const nobBaseMilitary *building)
 {
 	// TODO bissl stumpf noch :S
-	// Ums HQ testen...
-	int x = player->hqx - (rand()%16 -8);
+	unsigned radius = building->GetMilitaryRadius() - 1;
+
+	BuildingType toBuild = BLD_BARRACKS;
+	int randBuilding = rand();
+	if (randBuilding % 3 == 0)
+		toBuild = BLD_GUARDHOUSE;
+
+	int x = building->GetX() - (rand() % (2*radius) - radius);
 	if(x < 0)
 		x = 0;
 	if(x >= gwb->GetWidth())
-		x = gwb->GetWidth()-1;
-	int y = player->hqy - (rand()%16 -8);
+		x = gwb->GetWidth() - 1;
+	int y = building->GetY() - (rand()% (2*radius) - radius);
 	if(y < 0)
 		y = 0;
 	if(y >= gwb->GetHeight())
-		y = gwb->GetHeight()-1;
-
-	// Bauqualität testen, wenn nicht gut, abbrechen
-	BuildingQuality bq = gwb->CalcBQ(x, y, player->getPlayerID());
-	if (bq != BQ_HUT && bq != BQ_HOUSE && bq != BQ_CASTLE)
-		return;
+		y = gwb->GetHeight() - 1;
 
 	// Militärgebäude in der Nähe suchen, wenn zu dicht, abbrechen
 	list<nobBaseMilitary*> military;
-	gwb->LookForMilitaryBuildings(military, x, y, 6); // TODO das liefert irgendwie viel zu viel :S
-	//if (military.size() != 0)	
-	//	return;
+	gwb->LookForMilitaryBuildings(military, x, y, 4);
 	for(list<nobBaseMilitary*>::iterator it = military.begin();it.valid();++it)
 	{
-		if (CalcDistance((*it)->GetX(), (*it)->GetY(), x, y) <= 6)
+		unsigned distance = CalcDistance((*it)->GetX(), (*it)->GetY(), x, y);
+		if (distance <= (radius-2))
 			return;
+
+		// Prüfen ob Feind in der Nähe
+		if ((*it)->GetPlayer() != player->getPlayerID() && distance < 20)
+		{
+			if (randBuilding % 2 == 0)
+				toBuild = BLD_FORTRESS;
+			else
+				toBuild = BLD_WATCHTOWER;
+		}
 	}
 	
+	// Für Militärgebäudebaustellen, die sonst nicht erfasst werden
 	if (gwb->IsMilitaryBuildingNearNode(x,y))
 		return;
 
-	//gcs.push_back(new gc::SetBuildingSite(x, y, BLD_BARRACKS));
-	AddBuilding(x, y, BLD_BARRACKS);
+	BuildingQuality bq = gwb->CalcBQ(x, y, player->getPlayerID());
+
+	switch(BUILDING_SIZE[toBuild])
+	{
+		case BQ_HUT: if(!((bq >= BQ_HUT && bq <= BQ_CASTLE) || bq == BQ_HARBOR)) return; break;
+		case BQ_HOUSE: if(!((bq >= BQ_HOUSE && bq <= BQ_CASTLE) || bq == BQ_HARBOR)) return; break;
+		case BQ_CASTLE: if(!( bq == BQ_CASTLE || bq == BQ_HARBOR)) return; break;
+		case BQ_HARBOR: if(bq != BQ_HARBOR) return; break;
+		case BQ_MINE: if(bq != BQ_MINE) return; break;
+		default: break;
+	}
+
+	AddBuilding(x, y, toBuild);
+}
+
+void AIPlayerJH::ExpandAroundHQ()
+{
+	const nobHQ *hq = gwb->GetSpecObj<nobHQ>(player->hqx, player->hqy);
+	if (hq)
+		ExpandAround(hq);
 }
 
 void AIPlayerJH::Expand()
@@ -147,38 +175,7 @@ void AIPlayerJH::Expand()
 	const std::list<nobMilitary*> milbuildings = player->GetMilitaryBuildings();
 	for(std::list<nobMilitary*>::const_iterator it = milbuildings.begin(); it != milbuildings.end(); ++it)
 	{
-		int x = (*it)->GetX() - (rand()%14 -7);
-		if(x < 0)
-			x = 0;
-		if(x >= gwb->GetWidth())
-			x = gwb->GetWidth()-1;
-		int y = (*it)->GetY() - (rand()%14 -7);
-		if(y < 0)
-			y = 0;
-		if(y >= gwb->GetHeight())
-			y = gwb->GetHeight()-1;
-
-		// Bauqualität testen, wenn nicht gut, abbrechen
-		BuildingQuality bq = gwb->CalcBQ(x, y, player->getPlayerID());
-		if (bq != BQ_HUT && bq != BQ_HOUSE && bq != BQ_CASTLE)
-			continue;
-
-		// Militärgebäude in der Nähe suchen, wenn zu dicht, abbrechen
-		list<nobBaseMilitary*> military;
-		gwb->LookForMilitaryBuildings(military, x, y, 5);
-		//if (military.size() != 0)	
-		//	continue;
-		for(list<nobBaseMilitary*>::iterator it = military.begin();it.valid();++it)
-		{
-			if (CalcDistance((*it)->GetX(), (*it)->GetY(), x, y) <= 5)
-				return;
-		}
-
-		if (gwb->IsMilitaryBuildingNearNode(x,y))
-			return;
-
-		//gcs.push_back(new gc::SetBuildingSite(x, y, BLD_BARRACKS));
-		AddBuilding(x, y, BLD_BARRACKS);
+		ExpandAround((*it));
 	}
 }
 
@@ -366,6 +363,10 @@ bool AIPlayerJH::FindWood(MapCoord x, MapCoord y, MapCoord &wood_x, MapCoord &wo
 
 bool AIPlayerJH::BuildNear(MapCoord x, MapCoord y, BuildingType bld)
 {
+	// Militärgebäude nicht irgendwo in die Nähe bauen, könnte böse sein
+	if (bld >= BLD_BARRACKS && bld <= BLD_FORTRESS)
+		return false;
+
 	const int radius = 10;
 	BuildingQuality req = BUILDING_SIZE[bld];
 

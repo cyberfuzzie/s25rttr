@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.cpp 5292 2009-07-18 17:55:04Z jh $
+// $Id: AIPlayerJH.cpp 5295 2009-07-19 08:28:07Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -40,7 +40,7 @@ AIPlayerJH::AIPlayerJH(const unsigned char playerid, const GameWorldBase * const
 		const GameClientPlayerList * const players, const GlobalGameSettings * const ggs,
 		const AI::Level level) : AIBase(playerid, gwb, player, players, ggs, level)
 {
-	bool BuildQueueWasEmpty = true;
+	//bool BuildQueueWasEmpty = true;
 	buggyCounter = 0; // workaround
 }
 
@@ -543,7 +543,7 @@ bool AIPlayerJH::CheckBuildingQueue()
 	BuildJob bj = buildingQueue.front();
 	const noBuildingSite *nbs;
 	// Schon was gebaut?
-	if (nbs = gwb->GetSpecObj<noBuildingSite>(bj.x, bj.y))
+	if ( (nbs = gwb->GetSpecObj<noBuildingSite>(bj.x, bj.y)) )
 	{
 		// ist es auch das richtige?
 		if (nbs->GetBuildingType() == bj.building)

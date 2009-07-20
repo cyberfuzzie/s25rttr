@@ -1,4 +1,4 @@
-// $Id: nobUsual.h 5106 2009-06-25 20:43:46Z OLiver $
+// $Id: nobUsual.h 5304 2009-07-20 19:39:40Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -117,6 +117,8 @@ public: void Serialize(SerializedGameData *sgd) const { Serialize_nobUsual(sgd);
 	bool IsProductionDisabledVirtual() { return disable_production_virtual; }
 	/// Fragt ab, ob Produktion ausgeschaltet ist (real)
 	bool IsProductionDisabled() { return disable_production; }
+	/// Setzt Produktivität instant auf 0 (Keine Ressourcen mehr)
+	void SetProductivityToZero();
 
 };
 

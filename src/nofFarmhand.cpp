@@ -1,4 +1,4 @@
-// $Id: nofFarmhand.cpp 5180 2009-07-03 14:19:17Z FloSoft $
+// $Id: nofFarmhand.cpp 5304 2009-07-20 19:39:40Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -175,6 +175,8 @@ void nofFarmhand::HandleDerivedEvent(const unsigned int id)
 							break;
 						}
 						OutOfRessourcesMsgSent = true;
+						// Produktivitätsanzeige auf 0 setzen
+						workplace->SetProductivityToZero();
 					}
 				}
 

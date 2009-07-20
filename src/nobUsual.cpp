@@ -1,4 +1,4 @@
-// $Id: nobUsual.cpp 5254 2009-07-12 15:49:16Z FloSoft $
+// $Id: nobUsual.cpp 5304 2009-07-20 19:39:40Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -524,4 +524,13 @@ void nobUsual::StopProduction()
 bool nobUsual::HasWorker() const 
 { 
 	return ( (worker != NULL) ? (worker->GetState() != nofBuildingWorker::STATE_FIGUREWORK) : false);
+}
+
+void nobUsual::SetProductivityToZero()
+{
+	productivity = 0;
+	for (unsigned i=0; i<LAST_PRODUCTIVITIES_COUNT; ++i)
+	{
+		last_productivities[i] = 0;
+	}
 }

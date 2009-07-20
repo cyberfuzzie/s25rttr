@@ -1,4 +1,4 @@
-// $Id: nofBuildingWorker.cpp 5253 2009-07-12 14:42:18Z FloSoft $
+// $Id: nofBuildingWorker.cpp 5304 2009-07-20 19:39:40Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -375,6 +375,8 @@ bool nofBuildingWorker::GetResources(unsigned char type)
 			  new ImagePostMsgWithLocation(_("This mine is exhausted"), PMC_GENERAL, x, y, 
 			  workplace->GetBuildingType(), workplace->GetNation()));
 		OutOfRessourcesMsgSent = true;
+		// Produktivitätsanzeige auf 0 setzen
+		workplace->SetProductivityToZero();
 	}
 
 	// Hoffe das passt...
@@ -412,6 +414,8 @@ void nofBuildingWorker::StopNotWorking()
 
 unsigned short nofBuildingWorker::CalcProductivity()
 {
+	if (OutOfRessourcesMsgSent)
+		return 0;
 	// Gucken, ob bis jetzt gearbeitet wurde/wird oder nicht, je nachdem noch was dazuzählen
 	if(since_not_working != 0xFFFFFFFF)
 	{

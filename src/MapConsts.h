@@ -1,4 +1,4 @@
-// $Id: MapConsts.h 4841 2009-05-09 10:28:42Z OLiver $
+// $Id: MapConsts.h 5303 2009-07-20 15:53:33Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -29,7 +29,7 @@ static const int TR_W = 53;
 static const int TR_H = 29;
 
 /// Faktor fr die Höhen
-const int HEIGHT_FACTOR = 4;
+const int HEIGHT_FACTOR = 5;
 
 /// Terrainarten
 enum TerrainType

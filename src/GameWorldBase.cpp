@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 5299 2009-07-19 15:52:20Z jh $
+// $Id: GameWorldBase.cpp 5303 2009-07-20 15:53:33Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1118,7 +1118,7 @@ void GameWorldBase::ChangeAltitude(const MapCoord x, const MapCoord y, const uns
 
 void GameWorldBase::RecalcShadow(const MapCoord x, const MapCoord y)
 {
-	const int SHADOW_COEFFICIENT = 4;
+	const int SHADOW_COEFFICIENT = 6;
 
 	// Normale Ausleuchtung
 	int shadow = 0x40;
@@ -1134,10 +1134,10 @@ void GameWorldBase::RecalcShadow(const MapCoord x, const MapCoord y)
 	shadow-=(SHADOW_COEFFICIENT*(GetNode(x,y).altitude-GetNodeAround(x,y,3).altitude));
 
 	// Zu niedrig? Zu hoch? --> extreme Werte korrigieren
-	if(shadow < 0)
-		shadow = 0;
-	else if(shadow > 255)
-		shadow = 255;
+	if(shadow < 0x00)
+		shadow = 0x00;
+	else if(shadow > 0x60)
+		shadow = 0x60;
 
 	GetNode(x,y).shadow = static_cast<unsigned char>(shadow);
 }

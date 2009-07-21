@@ -1,4 +1,4 @@
-// $Id: ctrlTable.cpp 4830 2009-05-07 18:59:21Z FloSoft $
+// $Id: ctrlTable.cpp 5308 2009-07-21 11:28:33Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -210,14 +210,21 @@ void ctrlTable::SortRows(unsigned short column, bool *direction)
 	{
 		for(unsigned short r = 0; r < rows.size()-1; ++r)
 		{
+			std::string a = rows.at(r).columns.at(column);
+			std::string b = rows.at(r+1).columns.at(column);
+			
+			std::transform(a.begin(), a.end(), a.begin(), tolower);
+			std::transform(b.begin(), b.end(), b.begin(), tolower);
+
+			// in kleinbuchstaben vergleichen
 			if(sort_direction && sort_column == column)
 			{
-				if(rows.at(r).columns.at(column).compare(rows.at(r+1).columns.at(column)) < 0)
+				if(a.compare(b) < 0)
 					std::swap(rows.at(r), rows.at(r+1));
 			}
 			else
 			{
-				if(rows.at(r).columns.at(column).compare(rows.at(r+1).columns.at(column)) > 0)
+				if(a.compare(b) > 0)
 					std::swap(rows.at(r), rows.at(r+1));
 			}
 		}

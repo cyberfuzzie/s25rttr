@@ -1,4 +1,3 @@
-// $Id: noFigure.cpp 5254 2009-07-12 15:49:16Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -444,7 +443,7 @@ void noFigure::GoHome(noRoadNode *goal)
 			return;
 		}
 		else
-			this->goal = GAMECLIENT.GetPlayer(player)->FindWarehouse((rs_dir)?cur_rs->f1:cur_rs->f2,FW::Condition_StoreFigure,0,true,&job,false);
+			this->goal = gwg->GetPlayer(player)->FindWarehouse((rs_dir)?cur_rs->f1:cur_rs->f2,FW::Condition_StoreFigure,0,true,&job,false);
 	}
 	else
 		this->goal = goal;
@@ -547,7 +546,7 @@ void noFigure::Wander()
 					if((dir = gwg->FindHumanPath(x,y,(*it)->GetX(),(*it)->GetY(),10,false)) != 0xFF)
 					{
 						// gucken, ob ein Weg zu einem Warenhaus führt
-						if(GAMECLIENT.GetPlayer(player)->FindWarehouse(*it,FW::Condition_StoreFigure,0,true,&job,false))
+						if(gwg->GetPlayer(player)->FindWarehouse(*it,FW::Condition_StoreFigure,0,true,&job,false))
 						{
 							// dann nehmen wir die doch glatt
 							best_way = way;
@@ -642,7 +641,7 @@ void noFigure::WanderToFlag()
 	{
 		// Gibts noch nen Weg zu einem Lagerhaus?
 
-		if(nobBaseWarehouse * wh = GAMECLIENT.GetPlayer(player)->FindWarehouse(
+		if(nobBaseWarehouse * wh = gwg->GetPlayer(player)->FindWarehouse(
 			gwg->GetSpecObj<noRoadNode>(x,y),FW::Condition_StoreFigure,0,true,&job,false))
 		{
 			// ja, dann können wir ja hingehen
@@ -688,7 +687,7 @@ void noFigure::WanderToFlag()
 //	{
 //		// Geht ein Weg zu einem Lagerhaus?
 //		unsigned length;
-//		if(nobBaseWarehouse * wh = GAMECLIENT.GetPlayer(player)->FindWarehouse(gwg->GetSpecObj<noRoadNode>(x,y),GD_NOTHING,JOB_NOTHING,0,1,&length))
+//		if(nobBaseWarehouse * wh = gwg->GetPlayer(player)->FindWarehouse(gwg->GetSpecObj<noRoadNode>(x,y),GD_NOTHING,JOB_NOTHING,0,1,&length))
 //		{
 //			// ja, dann können wir ja hingehen
 //			fs = FS_GOTOGOAL;
@@ -711,7 +710,7 @@ void noFigure::WanderToFlag()
 //		{
 //			// ja, eine Flagge in der Nähe, gucken, ob ein Weg zu einem Warenhaus führt
 //			unsigned length;
-//			if(GAMECLIENT.GetPlayer(player)->FindWarehouse(gwg->GetSpecObj<noRoadNode>(gwg->GetXA(x,y,i),gwg->GetYA(x,y,i)),GD_NOTHING,JOB_NOTHING,0,1,&length))
+//			if(gwg->GetPlayer(player)->FindWarehouse(gwg->GetSpecObj<noRoadNode>(gwg->GetXA(x,y,i),gwg->GetYA(x,y,i)),GD_NOTHING,JOB_NOTHING,0,1,&length))
 //			{
 //				// ja, dann gehen wir mal zu der Flagge
 //				StartWalking(i);
@@ -869,7 +868,7 @@ void noFigure::DrawWalking(int x, int y, glArchivItem_Bob *file, unsigned int id
 	if(!waiting_for_free_node || pause_walked_gf)
 		CalcFigurRelative(x,y);
 	if(file)
-		file->Draw(id, dir, fat, ani_step, x, y, COLORS[GAMECLIENT.GetPlayer(player)->color]);
+		file->Draw(id, dir, fat, ani_step, x, y, COLORS[gwg->GetPlayer(player)->color]);
 	DrawShadow(x,y,ani_step,dir);
 
 
@@ -898,9 +897,9 @@ void noFigure::DrawWalking(int x, int y)
 	unsigned jobs_bob_id = JOB_CONSTS[job].jobs_bob_id;
 	// Späher völkerspezifisch zeichnen
 	if(job == JOB_SCOUT)
-		jobs_bob_id = 35+NATION_RTTR_TO_S2[GameClient::inst().GetPlayer(player)->nation]*6;
+		jobs_bob_id = 35+NATION_RTTR_TO_S2[gwg->GetPlayer(player)->nation]*6;
 	else if(job >= JOB_PRIVATE && job <= JOB_GENERAL)
-		jobs_bob_id = 30+NATION_RTTR_TO_S2[GAMECLIENT.GetPlayer(player)->nation]*6+job-JOB_PRIVATE;
+		jobs_bob_id = 30+NATION_RTTR_TO_S2[gwg->GetPlayer(player)->nation]*6+job-JOB_PRIVATE;
 
 	DrawWalking(x,y,LOADER.GetBobN("jobs"),jobs_bob_id,JOB_CONSTS[job].fat);
 }
@@ -917,11 +916,11 @@ void noFigure::Die()
 	// Wars ein Bootmann? Dann Boot und Träger abziehen
 	if(job == JOB_BOATCARRIER)
 	{
-		GAMECLIENT.GetPlayer(player)->DecreaseInventoryJob(JOB_HELPER,1);
-		GAMECLIENT.GetPlayer(player)->DecreaseInventoryWare(GD_BOAT,1);
+		gwg->GetPlayer(player)->DecreaseInventoryJob(JOB_HELPER,1);
+		gwg->GetPlayer(player)->DecreaseInventoryWare(GD_BOAT,1);
 	}
 	else
-		GAMECLIENT.GetPlayer(player)->DecreaseInventoryJob(job,1);
+		gwg->GetPlayer(player)->DecreaseInventoryJob(job,1);
 
 	// Sichtbarkeiten neu berechnen für Erkunder und Soldaten
 	CalcVisibilities(x,y);

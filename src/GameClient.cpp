@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 5272 2009-07-15 16:38:14Z FloSoft $
+// $Id: GameClient.cpp 5312 2009-07-22 18:02:04Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -331,6 +331,7 @@ void GameClient::StartGame(const unsigned int random_init)
 
 	// Spielwelt erzeugen
 	gw = new GameWorld();
+	gw->SetPlayers(&players);
 	em = new EventManager();
 	GameObject::SetPointers(gw,em, &players);
 	for(unsigned i = 0;i< players.getCount(); ++i)

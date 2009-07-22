@@ -1,4 +1,4 @@
-// $Id: noBuildingSite.cpp 5254 2009-07-12 15:49:16Z FloSoft $
+// $Id: noBuildingSite.cpp 5312 2009-07-22 18:02:04Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -68,13 +68,13 @@ noBuildingSite::noBuildingSite(const BuildingType type,const unsigned short x, c
 	}
 
 	// Wir hätten gerne einen Planierer/Bauarbeiter...
-	GAMECLIENT.GetPlayer(player)->AddJobWanted((state == STATE_PLANING) ? JOB_PLANER : JOB_BUILDER,this);
+	gwg->GetPlayer(player)->AddJobWanted((state == STATE_PLANING) ? JOB_PLANER : JOB_BUILDER,this);
 
 	// Bauwaren anfordern
 	OrderConstructionMaterial();
 
 	// Baustelle in den Index eintragen, damit die Wirtschaft auch Bescheid weiß
-	GAMECLIENT.GetPlayer(player)->AddBuildingSite(this);
+	gwg->GetPlayer(player)->AddBuildingSite(this);
 }
 
 noBuildingSite::~noBuildingSite()
@@ -89,7 +89,7 @@ void noBuildingSite::Destroy_noBuildingSite()
 	else if(planer)
 		planer->LostWork();
 	else
-		GAMECLIENT.GetPlayer(player)->JobNotWanted(this);
+		gwg->GetPlayer(player)->JobNotWanted(this);
 
 	// Bestellte Waren Bescheid sagen
 	for(list<Ware*>::iterator it = ordered_boards.begin();it.valid();++it)
@@ -105,7 +105,7 @@ void noBuildingSite::Destroy_noBuildingSite()
 	gwg->RecalcBQAroundPointBig(x,y);
 
 	// Baustelle wieder aus der Liste entfernen
-	GAMECLIENT.GetPlayer(player)->RemoveBuildingSite(this);
+	gwg->GetPlayer(player)->RemoveBuildingSite(this);
 
 	Destroy_noBaseBuilding();
 }
@@ -148,15 +148,15 @@ void noBuildingSite::OrderConstructionMaterial()
 
 	// Bretter
 	Ware * w;
-	for(unsigned char i = used_boards+boards+ordered_boards.size();i<BUILDING_COSTS[GAMECLIENT.GetPlayer(player)->nation][type].boards;++i)
+	for(unsigned char i = used_boards+boards+ordered_boards.size();i<BUILDING_COSTS[gwg->GetPlayer(player)->nation][type].boards;++i)
 	{
-		if( (w = GAMECLIENT.GetPlayer(player)->OrderWare(GD_BOARDS,this)) )
+		if( (w = gwg->GetPlayer(player)->OrderWare(GD_BOARDS,this)) )
 			ordered_boards.push_front(w);
 	}
 	// Steine
-	for(unsigned char i = used_stones+stones+ordered_stones.size();i<BUILDING_COSTS[GAMECLIENT.GetPlayer(player)->nation][type].stones;++i)
+	for(unsigned char i = used_stones+stones+ordered_stones.size();i<BUILDING_COSTS[gwg->GetPlayer(player)->nation][type].stones;++i)
 	{
-		if( (w = GAMECLIENT.GetPlayer(player)->OrderWare(GD_STONES,this)) )
+		if( (w = gwg->GetPlayer(player)->OrderWare(GD_STONES,this)) )
 			ordered_stones.push_back(w);
 	}
 }
@@ -296,7 +296,7 @@ void noBuildingSite::Abrogate()
 	planer = 0;
 	builder = 0;
 
-	GAMECLIENT.GetPlayer(player)->AddJobWanted((state == STATE_PLANING) ? JOB_PLANER : JOB_BUILDER,this);
+	gwg->GetPlayer(player)->AddJobWanted((state == STATE_PLANING) ? JOB_PLANER : JOB_BUILDER,this);
 }
 
 unsigned noBuildingSite::CalcDistributionPoints(noRoadNode * start,const GoodType type)
@@ -320,7 +320,7 @@ unsigned noBuildingSite::CalcDistributionPoints(noRoadNode * start,const GoodTyp
 
 
 	// Baupriorität mit einberechnen (niedriger = höhere Priorität, daher - !)
-	points -= GAMECLIENT.GetPlayer(player)->GetBuidingSitePriority(this)*30;
+	points -= gwg->GetPlayer(player)->GetBuidingSitePriority(this)*30;
 	return points;
 }
 
@@ -354,8 +354,8 @@ void noBuildingSite::AddWare(Ware * ware)
 	}
 
 	// Inventur entsprechend verringern
-	GAMECLIENT.GetPlayer(player)->DecreaseInventoryWare(ware->type,1);
-	GAMECLIENT.GetPlayer(player)->RemoveWare(ware);
+	gwg->GetPlayer(player)->DecreaseInventoryWare(ware->type,1);
+	gwg->GetPlayer(player)->RemoveWare(ware);
 	delete ware;
 }
 
@@ -421,7 +421,7 @@ void noBuildingSite::PlaningFinished()
 	planer = 0;
 
 	// Wir hätten gerne einen Bauarbeiter...
-	GAMECLIENT.GetPlayer(player)->AddJobWanted(JOB_BUILDER,this);
+	gwg->GetPlayer(player)->AddJobWanted(JOB_BUILDER,this);
 
 	// Bauwaren anfordern
 	OrderConstructionMaterial();

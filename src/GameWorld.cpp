@@ -1,4 +1,4 @@
-// $Id: GameWorld.cpp 5247 2009-07-11 19:13:17Z FloSoft $
+// $Id: GameWorld.cpp 5312 2009-07-22 18:02:04Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -55,9 +55,9 @@ bool GameWorld::LoadMap(const std::string& filename)
 
 	tr.GenerateOpenGL(this);
 
-	if(GameClient::inst().GetPlayer(GameClient::inst().GetPlayerID())->hqx != 0xFFFF)
-		this->MoveToMapObject(GameClient::inst().GetPlayer(GameClient::inst().GetPlayerID())->hqx,
-			GameClient::inst().GetPlayer(GameClient::inst().GetPlayerID())->hqy);
+	if(GetPlayer(GameClient::inst().GetPlayerID())->hqx != 0xFFFF)
+		this->MoveToMapObject(GetPlayer(GameClient::inst().GetPlayerID())->hqx,
+			GetPlayer(GameClient::inst().GetPlayerID())->hqy);
 
 	return true;
 }
@@ -159,8 +159,8 @@ void GameWorld::Scan(glArchivItem_Map *map)
 				{
 					if(lc < GameClient::inst().GetPlayerCount())
 					{
-						GAMECLIENT.GetPlayer(lc)->hqx = x;
-						GAMECLIENT.GetPlayer(lc)->hqy = y;
+						GetPlayer(lc)->hqx = x;
+						GetPlayer(lc)->hqy = y;
 						nodes[pos].obj = NULL;
 					}
 				} break;
@@ -339,16 +339,16 @@ void GameWorld::Scan(glArchivItem_Map *map)
 	for(unsigned i = 0;i<GAMECLIENT.GetPlayerCount();++i)
 	{
 		// Existiert überhaupt ein HQ?
-		if(GAMECLIENT.GetPlayer(i)->hqx != 0xFFFF)
+		if(GetPlayer(i)->hqx != 0xFFFF)
 		{
-			if(GAMECLIENT.GetPlayer(i)->ps == PS_OCCUPIED || GAMECLIENT.GetPlayer(i)->ps == PS_KI)
+			if(GetPlayer(i)->ps == PS_OCCUPIED || GetPlayer(i)->ps == PS_KI)
 			{
-				nobHQ * hq = new nobHQ(GAMECLIENT.GetPlayer(i)->hqx,GAMECLIENT.GetPlayer(i)->hqy,i,GAMECLIENT.GetPlayer(i)->nation);
-				SetNO(hq,GAMECLIENT.GetPlayer(i)->hqx,GAMECLIENT.GetPlayer(i)->hqy);
-				GAMECLIENT.GetPlayer(i)->AddWarehouse(reinterpret_cast<nobBaseWarehouse*>(hq));
+				nobHQ * hq = new nobHQ(GetPlayer(i)->hqx,GetPlayer(i)->hqy,i,GetPlayer(i)->nation);
+				SetNO(hq,GetPlayer(i)->hqx,GetPlayer(i)->hqy);
+				GetPlayer(i)->AddWarehouse(reinterpret_cast<nobBaseWarehouse*>(hq));
 			}
 			/*else
-				GetNode(GAMECLIENT.GetPlayer(i)->hqx,GAMECLIENT.GetPlayer(i)->hqy).obj = 0;*/
+				GetNode(GetPlayer(i)->hqx,GetPlayer(i)->hqy).obj = 0;*/
 		}
 	}
 
@@ -597,9 +597,9 @@ void GameWorld::Deserialize(SerializedGameData *sgd)
 	tr.GenerateOpenGL(this);
 
 	// Zum HQ am Anfang springen, falls dieses existiert
-	if(GameClient::inst().GetPlayer(GameClient::inst().GetPlayerID())->hqx != 0xFFFF)
-		this->MoveToMapObject(GameClient::inst().GetPlayer(GameClient::inst().GetPlayerID())->hqx,
-			GameClient::inst().GetPlayer(GameClient::inst().GetPlayerID())->hqy);
+	if(GetPlayer(GameClient::inst().GetPlayerID())->hqx != 0xFFFF)
+		this->MoveToMapObject(GetPlayer(GameClient::inst().GetPlayerID())->hqx,
+			GetPlayer(GameClient::inst().GetPlayerID())->hqy);
 }
 
 

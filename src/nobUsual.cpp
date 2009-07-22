@@ -1,4 +1,4 @@
-// $Id: nobUsual.cpp 5304 2009-07-20 19:39:40Z jh $
+// $Id: nobUsual.cpp 5312 2009-07-22 18:02:04Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -59,13 +59,13 @@ nobUsual::nobUsual(BuildingType type,
 		ordered_wares = 0;
 
 	// Arbeiter bestellen
-	GAMECLIENT.GetPlayer(player)->AddJobWanted(USUAL_BUILDING_CONSTS[type-10].job,this);
+	gwg->GetPlayer(player)->AddJobWanted(USUAL_BUILDING_CONSTS[type-10].job,this);
 
 	// Tür aufmachen,bis Gebäude besetzt ist
 	OpenDoor();
 
 	// Gebäude in den Index eintragen, damit die Wirtschaft auch Bescheid weiß
-	GAMECLIENT.GetPlayer(player)->AddUsualBuilding(this);
+	gwg->GetPlayer(player)->AddUsualBuilding(this);
 
 	// Keine Produktivitäten weiter
 	memset(last_productivities,0,sizeof(unsigned short)*LAST_PRODUCTIVITIES_COUNT);
@@ -82,7 +82,7 @@ void nobUsual::Destroy_nobUsual()
 	if(worker)
 		worker->LostWork();
 	else
-		GAMECLIENT.GetPlayer(player)->JobNotWanted(this);
+		gwg->GetPlayer(player)->JobNotWanted(this);
 
 	// Bestellte Waren Bescheid sagen
 	for(unsigned i = 0;i<USUAL_BUILDING_CONSTS[type-10].wares_needed_count;++i)
@@ -96,11 +96,11 @@ void nobUsual::Destroy_nobUsual()
 	productivity_ev = 0;
 
 	// Gebäude wieder aus der Liste entfernen
-	GAMECLIENT.GetPlayer(player)->RemoveUsualBuilding(this);
+	gwg->GetPlayer(player)->RemoveUsualBuilding(this);
 
 	// Inventur entsprechend verringern wegen den Waren, die vernichtetet werden
 	for(unsigned i = 0;i<USUAL_BUILDING_CONSTS[type-10].wares_needed_count;++i)
-		GAMECLIENT.GetPlayer(player)->DecreaseInventoryWare(USUAL_BUILDING_CONSTS[type-10].wares_needed[i],wares[i]);
+		gwg->GetPlayer(player)->DecreaseInventoryWare(USUAL_BUILDING_CONSTS[type-10].wares_needed[i],wares[i]);
 
 	Destroy_noBuilding();
 }
@@ -287,7 +287,7 @@ void nobUsual::HandleEvent(const unsigned int id)
 
 			if(wares[last_ordered_ware]+ordered_wares[last_ordered_ware].size() < wares_count)
 			{
-				Ware * w = GAMECLIENT.GetPlayer(player)->OrderWare(USUAL_BUILDING_CONSTS[type-10].wares_needed[last_ordered_ware],this);
+				Ware * w = gwg->GetPlayer(player)->OrderWare(USUAL_BUILDING_CONSTS[type-10].wares_needed[last_ordered_ware],this);
 				if(w)
 					ordered_wares[last_ordered_ware].push_back(w);
 			}
@@ -326,7 +326,7 @@ void nobUsual::AddWare(Ware * ware)
 	}
 
 	// Ware vernichten
-	GAMECLIENT.GetPlayer(player)->RemoveWare(ware);
+	gwg->GetPlayer(player)->RemoveWare(ware);
 	delete ware;
 
 	// Arbeiter Bescheid sagen, dass es neue Waren gibt
@@ -374,7 +374,7 @@ void nobUsual::WorkerLost()
 
 	// neuen Arbeiter bestellen
 	worker = 0;
-	GAMECLIENT.GetPlayer(player)->AddJobWanted(USUAL_BUILDING_CONSTS[type-10].job,this);
+	gwg->GetPlayer(player)->AddJobWanted(USUAL_BUILDING_CONSTS[type-10].job,this);
 
 }
 
@@ -427,15 +427,15 @@ void nobUsual::ConsumeWares()
 			--wares[0];
 			--wares[1];
 
-			GAMECLIENT.GetPlayer(player)->DecreaseInventoryWare(USUAL_BUILDING_CONSTS[type-10].wares_needed[0],1);
-			GAMECLIENT.GetPlayer(player)->DecreaseInventoryWare(USUAL_BUILDING_CONSTS[type-10].wares_needed[1],1);
+			gwg->GetPlayer(player)->DecreaseInventoryWare(USUAL_BUILDING_CONSTS[type-10].wares_needed[0],1);
+			gwg->GetPlayer(player)->DecreaseInventoryWare(USUAL_BUILDING_CONSTS[type-10].wares_needed[1],1);
 		}
 		else
 		{
 			// Bestand verringern
 			--wares[ware_type];
 			// Inventur entsprechend verringern
-			GAMECLIENT.GetPlayer(player)->DecreaseInventoryWare(USUAL_BUILDING_CONSTS[type-10].wares_needed[ware_type],1);
+			gwg->GetPlayer(player)->DecreaseInventoryWare(USUAL_BUILDING_CONSTS[type-10].wares_needed[ware_type],1);
 		}
 	}
 

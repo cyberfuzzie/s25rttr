@@ -1,4 +1,4 @@
-// $Id: Ware.cpp 5138 2009-06-28 19:29:38Z OLiver $
+// $Id: Ware.cpp 5312 2009-07-22 18:02:04Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -23,7 +23,6 @@
 #include "Ware.h"
 
 #include "GameWorld.h"
-#include "GameClient.h"
 #include "GameClientPlayer.h"
 #include "GameConsts.h"
 #include "nobBaseWarehouse.h"
@@ -42,15 +41,15 @@ Ware::Ware(const GoodType type, noBaseBuilding * goal, noRoadNode * location) :
 next_dir(255), state(STATE_WAITINWAREHOUSE), location(location), type(type), goal(goal)
 {
 	// Ware in den Index mit eintragen
-	GAMECLIENT.GetPlayer(location->GetPlayer())->RegisterWare(this);
+	gwg->GetPlayer(location->GetPlayer())->RegisterWare(this);
 	//assert(obj_id != 610542);
 }
 
 Ware::~Ware()
 {
-	/*assert(!GAMECLIENT.GetPlayer(location->GetPlayer()].IsWareRegistred(this));*/
+	/*assert(!gwg->GetPlayer((location->GetPlayer()].IsWareRegistred(this));*/
 	//if(location)
-	//	assert(!GameClient::inst().GetPlayer(location->GetPlayer())->IsWareDependent(this));
+	//	assert(!gwg->GetPlayer((location->GetPlayer())->IsWareDependent(this));
 }
 
 void Ware::Destroy(void)
@@ -94,7 +93,7 @@ void Ware::RecalcRoute()
 		// meinem Ziel Becheid sagen
 		goal->WareLost(this);
 
-		nobBaseWarehouse * wh = GAMECLIENT.GetPlayer(location->GetPlayer())->FindWarehouse(
+		nobBaseWarehouse * wh = gwg->GetPlayer(location->GetPlayer())->FindWarehouse(
 			location,FW::Condition_StoreWare,0,true,&type,true);
 		if(wh)
 		{
@@ -155,7 +154,7 @@ void Ware::GoalDestroyed()
 		// Wenn sie an einer Flagge liegt, muss der Weg neu berechnet werden und dem Träger Bescheid gesagt werden
 		else if(state == STATE_WAITATFLAG)
 		{
-			goal = GAMECLIENT.GetPlayer(location->GetPlayer())->FindWarehouse(location,FW::Condition_StoreWare,0,true,&type,true);
+			goal = gwg->GetPlayer(location->GetPlayer())->FindWarehouse(location,FW::Condition_StoreWare,0,true,&type,true);
 
 			unsigned char last_next_dir = next_dir;
 			next_dir = gwg->FindPathForWareOnRoads(location,goal);
@@ -166,8 +165,8 @@ void Ware::GoalDestroyed()
 			if(!goal || next_dir == 0xFF)
 			{
 				//// Mich aus der globalen Warenliste rausnehmen und in die WareLost Liste einfügen
-				//GAMECLIENT.GetPlayer(location->GetPlayer()].RemoveWare(this);
-				//GAMECLIENT.GetPlayer(location->GetPlayer()].RegisterLostWare(this);
+				//gwg->GetPlayer((location->GetPlayer()].RemoveWare(this);
+				//gwg->GetPlayer((location->GetPlayer()].RegisterLostWare(this);
 				return;
 			}
 
@@ -183,7 +182,7 @@ void Ware::GoalDestroyed()
 			// d.h. es ist sowieso zu spät
 			if(goal != location)
 			{
-				goal = GAMECLIENT.GetPlayer(location->GetPlayer())->FindWarehouse(location,FW::Condition_StoreWare,0,true,&type,true);
+				goal = gwg->GetPlayer(location->GetPlayer())->FindWarehouse(location,FW::Condition_StoreWare,0,true,&type,true);
 
 				if(goal)
 					// Lagerhaus ggf. Bescheid sagen
@@ -205,11 +204,11 @@ void Ware::NotifyGoalAboutLostWare()
 void Ware::WareLost(const unsigned char player)
 {
 	// Inventur verringern
-	GAMECLIENT.GetPlayer(player)->DecreaseInventoryWare(type,1);
+	gwg->GetPlayer(player)->DecreaseInventoryWare(type,1);
 	// Ziel der Ware Bescheid sagen
 	NotifyGoalAboutLostWare();
 	// Zentrale Registrierung der Ware löschen
-	GAMECLIENT.GetPlayer(player)->RemoveWare(this);
+	gwg->GetPlayer(player)->RemoveWare(this);
 }
 
 
@@ -260,13 +259,13 @@ void Ware::RemoveWareJobForCurrentDir(const unsigned char last_next_dir)
 
 void Ware::FindRouteToWarehouse()
 {
-	goal = GAMECLIENT.GetPlayer(location->GetPlayer())->FindWarehouse(location,FW::Condition_StoreWare,0,true,&type,true);
+	goal = gwg->GetPlayer(location->GetPlayer())->FindWarehouse(location,FW::Condition_StoreWare,0,true,&type,true);
 
 	if(goal && state == STATE_WAITATFLAG)
 	{
 		//// Bin nun keine LostWare mehr, sondern steige in die Liste der richtigen Waren auf, da ich nun in ein Lagerhaus komme
-		//GAMECLIENT.GetPlayer(location->GetPlayer()].RemoveLostWare(this);
-		//GAMECLIENT.GetPlayer(location->GetPlayer()].RegisterWare(this);
+		//gwg->GetPlayer(location->GetPlayer()].RemoveLostWare(this);
+		//gwg->GetPlayer(location->GetPlayer()].RegisterWare(this);
 
 		// Weg suchen
 		next_dir = gwg->FindPathForWareOnRoads(location,goal);

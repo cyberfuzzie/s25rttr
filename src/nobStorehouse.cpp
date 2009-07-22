@@ -1,4 +1,4 @@
-// $Id: nobStorehouse.cpp 5018 2009-06-08 18:24:25Z OLiver $
+// $Id: nobStorehouse.cpp 5312 2009-07-22 18:02:04Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -45,13 +45,13 @@ nobStorehouse::nobStorehouse(const unsigned short x, const unsigned short y,cons
 	memset(&real_goods,0,sizeof(real_goods));
 
 	// Der Wirtschaftsverwaltung Bescheid sagen
-	GAMECLIENT.GetPlayer(player)->AddWarehouse(this);
+	gwg->GetPlayer(player)->AddWarehouse(this);
 
 	// Aktuellen Warenbestand zur aktuellen Inventur dazu addieren
 	AddToInventory();
 
 	// Evtl gabs verlorene Waren, die jetzt in das HQ wieder reinkönnen
-	GAMECLIENT.GetPlayer(player)->FindClientForLostWares();
+	gwg->GetPlayer(player)->FindClientForLostWares();
 
 	// Post versenden
 	if(GameClient::inst().GetPlayerID() == this->player)
@@ -64,7 +64,7 @@ nobStorehouse::nobStorehouse(const unsigned short x, const unsigned short y,cons
 void nobStorehouse::Destroy_nobStorehouse()
 {
 	// Der Wirtschaftsverwaltung Bescheid sagen
-	GAMECLIENT.GetPlayer(player)->RemoveWarehouse(this);
+	gwg->GetPlayer(player)->RemoveWarehouse(this);
 
 	Destroy_nobBaseWarehouse();
 }

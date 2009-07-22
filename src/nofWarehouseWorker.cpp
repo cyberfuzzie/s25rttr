@@ -1,4 +1,4 @@
-// $Id: nofWarehouseWorker.cpp 5253 2009-07-12 14:42:18Z FloSoft $
+// $Id: nofWarehouseWorker.cpp 5312 2009-07-22 18:02:04Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -30,7 +30,6 @@
 #include "nobBaseWarehouse.h"
 #include "Random.h"
 #include "EventManager.h"
-#include "GameClient.h"
 #include "SerializedGameData.h"
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -45,7 +44,7 @@ nofWarehouseWorker::nofWarehouseWorker(const unsigned short x, const unsigned sh
 : noFigure(JOB_HELPER,x,y,player,gwg->GetSpecObj<noRoadNode>(x+(y&1),y+1)),carried_ware(ware), task(task), fat((RANDOM.Rand(__FILE__,__LINE__,obj_id,2))?true:false)
 {
 	// Zur Inventur hinzufügen, sind ja sonst nicht registriert
-	GameClient::inst().GetPlayer(player)->IncreaseInventoryJob(JOB_HELPER,1);
+	gwg->GetPlayer(player)->IncreaseInventoryJob(JOB_HELPER,1);
 	
 	/// Straße (also die 1-er-Straße vor dem Lagerhaus) setzen
 	assert(gwg->GetSpecObj<noFlag>(x+(y&1),y+1)->routes[1]->GetLength() == 1);
@@ -66,8 +65,8 @@ void nofWarehouseWorker::Destroy_nofWarehouseWorker()
 	
 	if(carried_ware)
 	{
-		GAMECLIENT.GetPlayer(player)->RemoveWare(carried_ware);
-		GAMECLIENT.GetPlayer(player)->DecreaseInventoryWare(carried_ware->type,1);
+		gwg->GetPlayer(player)->RemoveWare(carried_ware);
+		gwg->GetPlayer(player)->DecreaseInventoryWare(carried_ware->type,1);
 	}
 }
 
@@ -181,7 +180,7 @@ void nofWarehouseWorker::Walked()
 	em->AddToKillList(this);
 
 	// Von der Inventur wieder abziehen
-	GameClient::inst().GetPlayer(player)->DecreaseInventoryJob(JOB_HELPER,1);
+	gwg->GetPlayer(player)->DecreaseInventoryJob(JOB_HELPER,1);
 }
 
 void nofWarehouseWorker::AbrogateWorkplace()

@@ -1,4 +1,4 @@
-// $Id: noRoadNode.cpp 4854 2009-05-11 11:26:19Z OLiver $
+// $Id: noRoadNode.cpp 5312 2009-07-22 18:02:04Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -126,7 +126,7 @@ void noRoadNode::DestroyRoad(const unsigned char dir)
 		delete tmp;
 
 		// Spieler Bescheid sagen
-		GAMECLIENT.GetPlayer(player)->RoadDestroyed();
+		gwg->GetPlayer(player)->RoadDestroyed();
 	}
 
 	

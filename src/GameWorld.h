@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 5299 2009-07-19 15:52:20Z jh $
+// $Id: GameWorld.h 5312 2009-07-22 18:02:04Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -30,6 +30,7 @@
 #include "TerrainRenderer.h"
 #include "main.h"
 #include <vector>
+#include "GamePlayerList.h"
 
 class noEnvObject;
 class noGranite;
@@ -291,7 +292,7 @@ public:
 
 	/// Informationen, ob Grenzen überquert wurden
 	struct CrossBorders
-	{ bool x,y; };
+	{ bool left, top, right, bottom; };
 
 
 	/// Wegfindung in freiem Terrain - Basisroutine
@@ -359,6 +360,10 @@ public:
 										   const unsigned char player, const unsigned short sea_id) const;
 	
 
+	void SetPlayers(GameClientPlayerList *pls) { players = pls; }
+	/// Liefert einen Player zurück
+	inline GameClientPlayer * GetPlayer(const unsigned int id) const { return players->getElement(id); }
+
 protected:
 
 	/// Berechnet die Schattierung eines Punktes neu
@@ -373,6 +378,9 @@ protected:
 	unsigned GetNextHarborPoint(const unsigned origin_harbor_id, const unsigned char dir,
 										   const unsigned char player, const unsigned short sea_id,
 		bool (GameWorldBase::*IsPointOK)(const unsigned, const unsigned char, const unsigned short) const) const;
+
+private:
+	GameClientPlayerList *players;
 
 };
 

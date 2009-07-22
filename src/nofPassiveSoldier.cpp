@@ -1,4 +1,4 @@
-// $Id: nofPassiveSoldier.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: nofPassiveSoldier.cpp 5312 2009-07-22 18:02:04Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -24,7 +24,6 @@
 
 #include "nobMilitary.h"
 #include "Loader.h"
-#include "GameClient.h"
 #include "GameConsts.h"
 #include "Random.h"
 #include "GameWorld.h"
@@ -95,12 +94,12 @@ void nofPassiveSoldier::HandleDerivedEvent(const unsigned int id)
 			if(fs == FS_JOB)
 			{
 				// Dann uns heilen, wenn wir nicht schon gesund sind
-				if(hitpoints < HITPOINTS[GAMECLIENT.GetPlayer(player)->nation][job-JOB_PRIVATE])
+				if(hitpoints < HITPOINTS[gwg->GetPlayer(player)->nation][job-JOB_PRIVATE])
 				{
 					++hitpoints;
 
 					// Sind wir immer noch nicht gesund? Dann neues Event anmelden!
-					if(hitpoints < HITPOINTS[GAMECLIENT.GetPlayer(player)->nation][job-JOB_PRIVATE])
+					if(hitpoints < HITPOINTS[gwg->GetPlayer(player)->nation][job-JOB_PRIVATE])
 						healing_event = em->AddEvent(this,CONVALESCE_TIME+RANDOM.Rand(__FILE__,__LINE__,obj_id,CONVALESCE_TIME_RANDOM),1);
 				}
 			}
@@ -121,7 +120,7 @@ void nofPassiveSoldier::Heal()
 
 	// Ist er verletzt?
 	// Dann muss er geheilt werden
-	if(hitpoints < HITPOINTS[GAMECLIENT.GetPlayer(player)->nation][job-JOB_PRIVATE])
+	if(hitpoints < HITPOINTS[gwg->GetPlayer(player)->nation][job-JOB_PRIVATE])
 		healing_event = em->AddEvent(this,CONVALESCE_TIME+RANDOM.Rand(__FILE__,__LINE__,obj_id,CONVALESCE_TIME_RANDOM),1);
 }
 
@@ -167,11 +166,11 @@ void nofPassiveSoldier::Upgrade()
 	job = Job(unsigned(job)+1);
 
 	// wieder heilen bzw. Hitpoints anpasen
-	hitpoints = HITPOINTS[GAMECLIENT.GetPlayer(player)->nation][job-JOB_PRIVATE];
+	hitpoints = HITPOINTS[gwg->GetPlayer(player)->nation][job-JOB_PRIVATE];
 
 	// Inventur entsprechend erhöhen und verringern
-	GAMECLIENT.GetPlayer(player)->IncreaseInventoryJob(job,1);
-	GAMECLIENT.GetPlayer(player)->DecreaseInventoryJob(Job(unsigned(job)-1),1);
+	gwg->GetPlayer(player)->IncreaseInventoryJob(job,1);
+	gwg->GetPlayer(player)->DecreaseInventoryJob(Job(unsigned(job)-1),1);
 }
 
 void nofPassiveSoldier::Walked()

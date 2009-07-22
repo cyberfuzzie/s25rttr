@@ -1,4 +1,4 @@
-// $Id: noFlag.cpp 5254 2009-07-12 15:49:16Z FloSoft $
+// $Id: noFlag.cpp 5312 2009-07-22 18:02:04Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -105,7 +105,7 @@ void noFlag::Destroy_noFlag()
 
 	
 	// Den Flag-Workern Bescheid sagen, die hier ggf. arbeiten
-	GAMECLIENT.GetPlayer(player)->FlagDestroyed(this);
+	gwg->GetPlayer(player)->FlagDestroyed(this);
 
 	Destroy_noRoadNode();
 }
@@ -197,9 +197,9 @@ void noFlag::Draw(int x, int y)
 	}
 
 	// Flagge
-	LOADER.GetNationImageN(GAMECLIENT.GetPlayer(player)->nation, nr+GAMECLIENT.GetGlobalAnimation(8,80,40,ani_offset))->Draw(x,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
+	LOADER.GetNationImageN(gwg->GetPlayer(player)->nation, nr+GAMECLIENT.GetGlobalAnimation(8,80,40,ani_offset))->Draw(x,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[gwg->GetPlayer(player)->color]);
 	// Schatten
-	LOADER.GetNationImageN(GAMECLIENT.GetPlayer(player)->nation, nr+10+GAMECLIENT.GetGlobalAnimation(8,80,40,ani_offset))->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
+	LOADER.GetNationImageN(gwg->GetPlayer(player)->nation, nr+10+GAMECLIENT.GetGlobalAnimation(8,80,40,ani_offset))->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
 
 	// Waren (von hinten anfangen zu zeichnen)
 	for(unsigned i = 8;i;--i)
@@ -264,7 +264,7 @@ Ware * noFlag::SelectWare(const unsigned char dir,const bool swap_wares,const no
 			{
 				if(best_ware)
 				{
-					if(GAMECLIENT.GetPlayer(player)->transport[wares[i]->type] < GAMECLIENT.GetPlayer(player)->transport[best_ware->type])
+					if(gwg->GetPlayer(player)->transport[wares[i]->type] < gwg->GetPlayer(player)->transport[best_ware->type])
 					{
 						best_ware = wares[i];
 						best_ware_index = i;

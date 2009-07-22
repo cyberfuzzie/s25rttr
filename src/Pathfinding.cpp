@@ -1,4 +1,4 @@
-// $Id: Pathfinding.cpp 5274 2009-07-15 21:12:50Z jh $
+// $Id: Pathfinding.cpp 5312 2009-07-22 18:02:04Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -188,9 +188,47 @@ bool GameWorldBase::FindFreePath(const MapCoord x_start,const MapCoord y_start,
 			if(route)
 				route->resize(pf_nodes[best_id].way);
 
+			// Erstmal davon ausgehen, dass keine Grenzen überschritten werden
+			if(cb)
+			{
+				cb->left = false;
+				cb->top = false;
+				cb->right = false;
+				cb->bottom = false;
+			}
+
 			// Route rekonstruieren und ggf. die erste Richtung speichern, falls gewünscht
 			for(unsigned z = pf_nodes[best_id].way-1;best_id!=start_id;--z,best_id = pf_nodes[best_id].prev)
 			{
+				if(cb)
+				{
+					MapCoord x = best_id%width, y = best_id/width;
+					MapCoord px = pf_nodes[best_id].prev%width, py = pf_nodes[best_id].prev/width;
+
+					if(x == 0)
+					{
+						if(pf_nodes[best_id].dir == 3 || (
+						 (pf_nodes[best_id].dir == 2 || pf_nodes[best_id].dir == 4) && (py&1) == 1))
+						 cb->right = true;
+					}
+					else if(x == width-1)
+					{
+						if(pf_nodes[best_id].dir == 0 || (
+						 (pf_nodes[best_id].dir == 1 || pf_nodes[best_id].dir == 5) && (py&1) == 1))
+						 cb->left = true;
+					}
+					if(y == 0)
+					{
+						if(pf_nodes[best_id].dir == 4 || pf_nodes[best_id].dir == 5)
+						 cb->bottom = true;
+					}
+					else if(y == height-1)
+					{
+						if(pf_nodes[best_id].dir == 1 || pf_nodes[best_id].dir == 2)
+						 cb->top = true;
+					}
+				}
+
 				if(route)
 					route->at(z) = pf_nodes[best_id].dir;
 				if(first_dir && z == 0)

@@ -1,4 +1,4 @@
-// $Id: nofMinter.cpp 5253 2009-07-12 14:42:18Z FloSoft $
+// $Id: nofMinter.cpp 5312 2009-07-22 18:02:04Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -60,7 +60,7 @@ void nofMinter::DrawWorking(int x, int y)
 	if(now_id < 91)
 	{
 		LOADER.GetImageN("rom_bobs", 84+(now_id)%8)
-			->Draw(x+offsets[workplace->GetNation()][0],y+offsets[workplace->GetNation()][1],0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(workplace->GetPlayer())->color]);
+			->Draw(x+offsets[workplace->GetNation()][0],y+offsets[workplace->GetNation()][1],0,0,0,0,0,0, COLOR_WHITE, COLORS[gwg->GetPlayer(workplace->GetPlayer())->color]);
 
 		// Evtl Sound abspielen
 		if(now_id%8 == 3)
@@ -75,6 +75,6 @@ void nofMinter::DrawWorking(int x, int y)
 
 GoodType nofMinter::ProduceWare()
 {
-  GAMECLIENT.GetPlayer(player)->ChangeStatisticValue(STAT_GOLD, 1);
+	gwg->GetPlayer(player)->ChangeStatisticValue(STAT_GOLD, 1);
 	return GD_COINS;
 }

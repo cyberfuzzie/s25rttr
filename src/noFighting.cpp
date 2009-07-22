@@ -1,4 +1,4 @@
-// $Id: noFighting.cpp 5253 2009-07-12 14:42:18Z FloSoft $
+// $Id: noFighting.cpp 5312 2009-07-22 18:02:04Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -375,12 +375,12 @@ void noFighting::Draw(int x, int y)
 			if(animation < 4)
 			{
 				// Noch kurz dastehen und warten, bis man stirbt
-				glArchivItem_Bitmap *image = LOADER.GetImageN("rom_bobs", FIGHT_ANIMATIONS[GAMECLIENT.GetPlayer(soldiers[turn-3]->GetPlayer())->nation][soldiers[turn-3]->GetRank()][turn-3].defending[0][0]);
-				image->Draw(x,y,0,0,0,0,0,0,COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(soldiers[turn-3]->GetPlayer())->color]);
+				glArchivItem_Bitmap *image = LOADER.GetImageN("rom_bobs", FIGHT_ANIMATIONS[gwg->GetPlayer(soldiers[turn-3]->GetPlayer())->nation][soldiers[turn-3]->GetRank()][turn-3].defending[0][0]);
+				image->Draw(x,y,0,0,0,0,0,0,COLOR_WHITE, COLORS[gwg->GetPlayer(soldiers[turn-3]->GetPlayer())->color]);
 			}
 			else
 				// Sich in Luft auflösen
-				LOADER.GetImageN("rom_bobs", 903+animation-4)->Draw(x +((turn-3 == 0)?(-12):12),y,0,0,0,0,0,0,COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(soldiers[turn-3]->GetPlayer())->color]);
+				LOADER.GetImageN("rom_bobs", 903+animation-4)->Draw(x +((turn-3 == 0)?(-12):12),y,0,0,0,0,0,0,COLOR_WHITE, COLORS[gwg->GetPlayer(soldiers[turn-3]->GetPlayer())->color]);
 
 			// Sterbesound abspielen
 			if(animation == 6)
@@ -395,8 +395,8 @@ void noFighting::Draw(int x, int y)
 		
 			for(unsigned i = 0;i<2;++i)
 			{
-				LOADER.GetBobN("jobs")->Draw(30+NATION_RTTR_TO_S2[GAMECLIENT.GetPlayer(soldiers[i]->GetPlayer())->nation]*6+soldiers[i]->GetRank()
-					,(i==0)?0:3,false,GAMECLIENT.Interpolate(8,current_ev),x + ((i == 0)?(-x_diff):x_diff),y,COLORS[GAMECLIENT.GetPlayer(soldiers[i]->GetPlayer())->color]);
+				LOADER.GetBobN("jobs")->Draw(30+NATION_RTTR_TO_S2[gwg->GetPlayer(soldiers[i]->GetPlayer())->nation]*6+soldiers[i]->GetRank()
+					,(i==0)?0:3,false,GAMECLIENT.Interpolate(8,current_ev),x + ((i == 0)?(-x_diff):x_diff),y,COLORS[gwg->GetPlayer(soldiers[i]->GetPlayer())->color]);
 				soldiers[i]->DrawShadow(x + ((i == 0)?(-x_diff):x_diff),y,GAMECLIENT.Interpolate(8,current_ev),soldiers[i]->GetDir());
 			}
 
@@ -414,8 +414,8 @@ void noFighting::Draw(int x, int y)
 				{
 					// Angreifen
 					LOADER.GetImageN("rom_bobs", 
-					FIGHT_ANIMATIONS[GAMECLIENT.GetPlayer(soldiers[i]->GetPlayer())->nation][soldiers[i]->GetRank()][i].
-					attacking[animation])->Draw(x,y,0,0,0,0,0,0,COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(soldiers[i]->GetPlayer())->color]);
+					FIGHT_ANIMATIONS[gwg->GetPlayer(soldiers[i]->GetPlayer())->nation][soldiers[i]->GetRank()][i].
+					attacking[animation])->Draw(x,y,0,0,0,0,0,0,COLOR_WHITE, COLORS[gwg->GetPlayer(soldiers[i]->GetPlayer())->color]);
 				}
 				else
 				{
@@ -424,8 +424,8 @@ void noFighting::Draw(int x, int y)
 					{
 						// Verteidigungsanimation
 						LOADER.GetImageN("rom_bobs", 
-						FIGHT_ANIMATIONS[GAMECLIENT.GetPlayer(soldiers[i]->GetPlayer())->nation][soldiers[i]->GetRank()][i].
-						defending[defending_animation][animation])->Draw(x,y,0,0,0,0,0,0,COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(soldiers[i]->GetPlayer())->color]);
+						FIGHT_ANIMATIONS[gwg->GetPlayer(soldiers[i]->GetPlayer())->nation][soldiers[i]->GetRank()][i].
+						defending[defending_animation][animation])->Draw(x,y,0,0,0,0,0,0,COLOR_WHITE, COLORS[gwg->GetPlayer(soldiers[i]->GetPlayer())->color]);
 
 						// Wenn schwache Soldaten Schild hinhalten (Ani 0 und 1) und stärkere sich mit den Schwertern schützen (Ani 0)
 						// dann Schwert-aneinanderklirr-Sound abspielen
@@ -440,8 +440,8 @@ void noFighting::Draw(int x, int y)
 						{
 							// weiß aufblinken
 							LOADER.GetImageN("rom_bobs", 
-							HIT_SOLDIERS[GAMECLIENT.GetPlayer(soldiers[i]->GetPlayer())->nation][soldiers[i]->GetRank()]+i)
-							->Draw(x,y,0,0,0,0,0,0,COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(soldiers[i]->GetPlayer())->color]);
+							HIT_SOLDIERS[gwg->GetPlayer(soldiers[i]->GetPlayer())->nation][soldiers[i]->GetRank()]+i)
+							->Draw(x,y,0,0,0,0,0,0,COLOR_WHITE, COLORS[gwg->GetPlayer(soldiers[i]->GetPlayer())->color]);
 
 							// Treffersound
 							SoundManager::inst().PlayNOSound(105,this,1);
@@ -449,8 +449,8 @@ void noFighting::Draw(int x, int y)
 						else
 							// normal dastehen
 							LOADER.GetImageN("rom_bobs", 
-							FIGHT_ANIMATIONS[GAMECLIENT.GetPlayer(soldiers[i]->GetPlayer())->nation][soldiers[i]->GetRank()][i].
-							defending[0][0])->Draw(x,y,0,0,0,0,0,0,COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(soldiers[i]->GetPlayer())->color]);
+							FIGHT_ANIMATIONS[gwg->GetPlayer(soldiers[i]->GetPlayer())->nation][soldiers[i]->GetRank()][i].
+							defending[0][0])->Draw(x,y,0,0,0,0,0,0,COLOR_WHITE, COLORS[gwg->GetPlayer(soldiers[i]->GetPlayer())->color]);
 					}
 				}
 			}
@@ -510,7 +510,7 @@ void noFighting::HandleEvent(const unsigned int id)
 						gwg->RoadNodeAvailable(soldiers[turn-3]->GetX(),soldiers[turn-3]->GetY());
 
             // In die Statistik eintragen
-            GAMECLIENT.GetPlayer(player_won)->ChangeStatisticValue(STAT_VANQUISHED, 1);
+						gwg->GetPlayer(player_won)->ChangeStatisticValue(STAT_VANQUISHED, 1);
 						return;
 					}
 				}
@@ -552,7 +552,7 @@ void noFighting::HandleEvent(const unsigned int id)
 				gwg->RecalcVisibilitiesAroundPoint(x,y,VISUALRANGE_SOLDIER,player_won,NULL);
 
 				// Soldaten endgültig umbringen
-				GAMECLIENT.GetPlayer(soldiers[player_lost]->GetPlayer())->DecreaseInventoryJob(soldiers[player_lost]->GetJobType(),1);
+				gwg->GetPlayer(soldiers[player_lost]->GetPlayer())->DecreaseInventoryJob(soldiers[player_lost]->GetJobType(),1);
 				soldiers[player_lost]->Destroy();
 				delete soldiers[player_lost];
 

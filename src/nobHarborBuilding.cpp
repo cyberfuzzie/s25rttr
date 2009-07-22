@@ -48,13 +48,13 @@ nobHarborBuilding::nobHarborBuilding(const unsigned short x, const unsigned shor
 	memset(&real_goods,0,sizeof(real_goods));
 
 	// Der Wirtschaftsverwaltung Bescheid sagen
-	GAMECLIENT.GetPlayer(player)->AddWarehouse(this);
+	gwg->GetPlayer(player)->AddWarehouse(this);
 
 	// Aktuellen Warenbestand zur aktuellen Inventur dazu addieren
 	AddToInventory();
 
 	// Evtl gabs verlorene Waren, die jetzt in den Hafen wieder reinkönnen
-	GAMECLIENT.GetPlayer(player)->FindClientForLostWares();
+	gwg->GetPlayer(player)->FindClientForLostWares();
 
 	/// Die Meere herausfinden, an die dieser Hafen grenzt
 	for(unsigned i = 0;i<6;++i)
@@ -71,7 +71,7 @@ nobHarborBuilding::nobHarborBuilding(const unsigned short x, const unsigned shor
 void nobHarborBuilding::Destroy()
 {
 	// Der Wirtschaftsverwaltung Bescheid sagen
-	GAMECLIENT.GetPlayer(player)->RemoveWarehouse(this);
+	gwg->GetPlayer(player)->RemoveWarehouse(this);
 
 	Destroy_nobBaseWarehouse();
 }
@@ -129,14 +129,14 @@ void nobHarborBuilding::Draw(int x,int y)
 			if(id < 500)
 			{
 				LOADER.GetBobN("jobs")->Draw(23,0,false,walking_id,right_point-walking_distance,
-					y+BUILDER_POS[nation].y,COLORS[GAMECLIENT.GetPlayer(player)->color]);
+					y+BUILDER_POS[nation].y,COLORS[gwg->GetPlayer(player)->color]);
 				//DrawShadow(right_point-walking_distance,y,walking_id,0);
 			}
 			else
 			{
 				LOADER.GetBobN("jobs")->Draw(23,3,false,walking_id,
 					right_point-WALKING_DISTANCE+walking_distance,y+BUILDER_POS[nation].y,
-					COLORS[GAMECLIENT.GetPlayer(player)->color]);
+					COLORS[gwg->GetPlayer(player)->color]);
 				//DrawShadow(right_point-WALKING_DISTANCE+walking_distance,y,walking_id,0);
 			}		
 		}
@@ -179,7 +179,7 @@ void nobHarborBuilding::StartExpedition()
 			++real_goods.people[JOB_BUILDER];
 			++goods.people[JOB_BUILDER];
 			// Evtl. Abnehmer für die Figur wieder finden
-			GAMECLIENT.GetPlayer(player)->FindWarehouseForAllJobs(JOB_BUILDER);
+			gwg->GetPlayer(player)->FindWarehouseForAllJobs(JOB_BUILDER);
 		}
 
 		return;
@@ -207,7 +207,7 @@ void nobHarborBuilding::StartExpedition()
 	{
 		expedition.builder = false;
 		// Bauarbeiter bestellen
-		GameClient::inst().GetPlayer(player)->AddJobWanted(JOB_BUILDER,this);
+		gwg->GetPlayer(player)->AddJobWanted(JOB_BUILDER,this);
 	}
 
 	// Ggf. Waren bestellen, die noch fehlen
@@ -315,7 +315,7 @@ void nobHarborBuilding::AddWare(Ware * ware)
 			// Ware nicht mehr abhängig
 			RemoveDependentWare(ware);
 			// Dann zweigen wir die einfach mal für die Expedition ab
-			GAMECLIENT.GetPlayer(player)->RemoveWare(ware);
+			gwg->GetPlayer(player)->RemoveWare(ware);
 			delete ware;
 
 			// Ggf. ist jetzt alles benötigte da

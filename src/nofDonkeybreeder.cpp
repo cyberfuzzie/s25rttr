@@ -1,4 +1,4 @@
-// $Id: nofDonkeybreeder.cpp 5254 2009-07-12 15:49:16Z FloSoft $
+// $Id: nofDonkeybreeder.cpp 5312 2009-07-22 18:02:04Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -71,7 +71,7 @@ void nofDonkeybreeder::DrawWorking(int x, int y)
 	const Nation nation = workplace->GetNation();
 	const signed char walk_start[4][2] = { {2,2},{-6,-6},{-7,-7},{-7,-7} };
 	const signed char walk_length[4] = { 22,19,19,23 };
-	const unsigned int color = COLORS[GAMECLIENT.GetPlayer(player)->color];
+	const unsigned int color = COLORS[gwg->GetPlayer(player)->color];
 
 	unsigned now_id = GAMECLIENT.Interpolate(9600,current_ev);
 
@@ -101,7 +101,7 @@ void nofDonkeybreeder::DrawWorking(int x, int y)
     unsigned int max_id = 120;
 	unsigned now_id = GAMECLIENT.Interpolate(max_id,current_ev);
 	unsigned char wpNation = workplace->GetNation();
-	unsigned int plColor = GAMECLIENT.GetPlayer(player)->color;
+	unsigned int plColor = gwg->GetPlayer(player)->color;
 	int walksteps=8;
 
     if(now_id < 8)
@@ -146,11 +146,11 @@ void nofDonkeybreeder::WorkFinished()
 {
 	// Straße und Zielflagge für Esel suchen
 	noRoadNode * flag_goal;
-	RoadSegment * road = GameClient::inst().GetPlayer(player)->FindRoadForDonkey(workplace,&flag_goal);
+	RoadSegment * road = gwg->GetPlayer(player)->FindRoadForDonkey(workplace,&flag_goal);
 
 	// Esel erzeugen und zum Ziel beordern
 	nofCarrier * donkey = new nofCarrier(nofCarrier::CT_DONKEY,x,y,player,road,flag_goal);
-	GameClient::inst().GetPlayer(player)->IncreaseInventoryJob(JOB_PACKDONKEY,1);
+	gwg->GetPlayer(player)->IncreaseInventoryJob(JOB_PACKDONKEY,1);
 	donkey->InitializeRoadWalking(gwg->GetSpecObj<noRoadNode>(x,y)->routes[4],0,true);
 
 	// Wenn keine Straße gefunden wurde, muss er nach Hause gehen

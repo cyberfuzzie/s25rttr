@@ -1,4 +1,4 @@
-// $Id: RoadSegment.cpp 4854 2009-05-11 11:26:19Z OLiver $
+// $Id: RoadSegment.cpp 5312 2009-07-22 18:02:04Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -23,11 +23,11 @@
 #include "RoadSegment.h"
 
 #include "nofCarrier.h"
-#include "GameClient.h"
 #include "noRoadNode.h"
 #include "nobBaseWarehouse.h"
 #include "noFlag.h"
 #include "GameClientPlayer.h"
+#include "GameClient.h"
 #include "GameWorld.h"
 #include "SerializedGameData.h"
 #include "Random.h"
@@ -51,7 +51,7 @@ void RoadSegment::Destroy_RoadSegment()
 	assert(f1);
 
 	if(f1)
-		GAMECLIENT.GetPlayer(f1->GetPlayer())->DeleteRoad(this);
+		gwg->GetPlayer(f1->GetPlayer())->DeleteRoad(this);
 
 	if(carrier[0])
 		carrier[0]->LostWork();
@@ -199,7 +199,7 @@ void RoadSegment::SplitRoad(noFlag * splitflag)
 		}
 	}
 
-	GAMECLIENT.GetPlayer(f1->GetPlayer())->AddRoad(second);
+	gwg->GetPlayer(f1->GetPlayer())->AddRoad(second);
 
 	for(unsigned i = 0;i<2;++i)
 	{
@@ -208,7 +208,7 @@ void RoadSegment::SplitRoad(noFlag * splitflag)
 		else if(i == 0)
 			// Die Straße war vorher unbesetzt? Dann 2. Straßenteil zu den unoccupied rodes
 			// (1. ist ja schon drin)
-			GAMECLIENT.GetPlayer(f1->GetPlayer())->FindCarrierForRoad(second);
+			gwg->GetPlayer(f1->GetPlayer())->FindCarrierForRoad(second);
 	}
 }
 
@@ -271,7 +271,7 @@ void RoadSegment::AddWareJob(const noRoadNode * rn)
 				LOG.lprintf("RoadSegment::AddWareJob: WARNING: Ware in front of building!\n");
 		}
 		else
-			LOG.lprintf("RoadSegment::AddWareJob: WARNING: Ware in front of building site (gf: %u)!\n",GAMECLIENT.GetGFNumber());
+			LOG.lprintf("RoadSegment::AddWareJob: WARNING: Ware in front of building site (gf: %u)!\n", GAMECLIENT.GetGFNumber());
 	}
 
 	// Zufällig Esel oder Träger zuerst fragen, ob er Zeit hat
@@ -330,7 +330,7 @@ void RoadSegment::TryGetDonkey()
 {
 	// Nur rufen, falls es eine Eselstraße ist, noch kein Esel da ist, aber schon ein Träger da ist
 	if(rt == RT_DONKEY && !carrier[1] && carrier[0])
-		carrier[1] = GameClient::inst().GetPlayer(f1->GetPlayer())->OrderDonkey(this);
+		carrier[1] = gwg->GetPlayer(f1->GetPlayer())->OrderDonkey(this);
 }
 
 void RoadSegment::CarrierAbrogated(nofCarrier * carrier)
@@ -340,11 +340,11 @@ void RoadSegment::CarrierAbrogated(nofCarrier * carrier)
 	{
 		// Straße wieder unbesetzt, bzw. nur noch Esel
 		this->carrier[0] = 0;
-		GameClient::inst().GetPlayer(f1->GetPlayer())->FindCarrierForRoad(this);
+		gwg->GetPlayer(f1->GetPlayer())->FindCarrierForRoad(this);
 	}
 	else
 	{
 		// Kein Esel mehr da, versuchen, neuen zu bestellen
-		this->carrier[1] = GameClient::inst().GetPlayer(f1->GetPlayer())->OrderDonkey(this);
+		this->carrier[1] = gwg->GetPlayer(f1->GetPlayer())->OrderDonkey(this);
 	}
 }

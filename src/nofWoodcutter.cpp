@@ -1,4 +1,4 @@
-// $Id: nofWoodcutter.cpp 5253 2009-07-12 14:42:18Z FloSoft $
+// $Id: nofWoodcutter.cpp 5312 2009-07-22 18:02:04Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -57,13 +57,13 @@ void nofWoodcutter::DrawWorking(int x,int y)
 	if(i < 10)
 	{
 		// 1. Ein Stück vom Baum nach links laufen
-		LOADER.GetBobN("jobs")->Draw(5,0,false,i%8,x-i,y,COLORS[GAMECLIENT.GetPlayer(player)->color]);
+		LOADER.GetBobN("jobs")->Draw(5,0,false,i%8,x-i,y,COLORS[gwg->GetPlayer(player)->color]);
 		DrawShadow(x-i,y,static_cast<unsigned char>(i%8),dir);
 	}
 	else if(i < 82)
 	{
 		// 2. Hacken
-		LOADER.GetImageN("rom_bobs", 24+(i-10)%8)->Draw(x-9,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
+		LOADER.GetImageN("rom_bobs", 24+(i-10)%8)->Draw(x-9,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[gwg->GetPlayer(player)->color]);
 
 		if((i-10)%8 == 3)
 		{
@@ -75,7 +75,7 @@ void nofWoodcutter::DrawWorking(int x,int y)
 	else if(i<105)
 	{
 		// 3. Warten bis Baum umfällt
-		LOADER.GetImageN("rom_bobs", 24)->Draw(x-9,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
+		LOADER.GetImageN("rom_bobs", 24)->Draw(x-9,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[gwg->GetPlayer(player)->color]);
 
 		if(i == 90)
 		{
@@ -86,13 +86,13 @@ void nofWoodcutter::DrawWorking(int x,int y)
 	else if(i<115)
 	{
 		// 4. Wieder zurückgehen nach rechts
-		LOADER.GetBobN("jobs")->Draw(5,3,false,(i-105)%8,x-(9-(i-105)),y,COLORS[GAMECLIENT.GetPlayer(player)->color]);
+		LOADER.GetBobN("jobs")->Draw(5,3,false,(i-105)%8,x-(9-(i-105)),y,COLORS[gwg->GetPlayer(player)->color]);
 		DrawShadow(x-(9-(i-95)),y,static_cast<unsigned char>((i-105)%8),dir);
 	}
 	else
 	{
 		// 5. kurz am Baum warten (quasi Baumstamm in die Hand nehmen)
-		LOADER.GetBobN("jobs")->Draw(5,3,false,1,x,y,COLORS[GAMECLIENT.GetPlayer(player)->color]);
+		LOADER.GetBobN("jobs")->Draw(5,3,false,1,x,y,COLORS[gwg->GetPlayer(player)->color]);
 		DrawShadow(x,y,1,dir);
 
 	}

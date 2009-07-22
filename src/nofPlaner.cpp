@@ -1,4 +1,4 @@
-// $Id: nofPlaner.cpp 5253 2009-07-12 14:42:18Z FloSoft $
+// $Id: nofPlaner.cpp 5312 2009-07-22 18:02:04Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -176,13 +176,13 @@ void nofPlaner::Draw(int x, int y)
 			};
 
 			if(now_id < 20)
-				LOADER.GetImageN("rom_bobs", 253+now_id)->Draw(x,y, 0,0,0,0,0,0,  COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(building_site->GetPlayer())->color]);
+				LOADER.GetImageN("rom_bobs", 253+now_id)->Draw(x,y, 0,0,0,0,0,0,  COLOR_WHITE, COLORS[gwg->GetPlayer(building_site->GetPlayer())->color]);
 			else if(now_id < 41)
-				LOADER.GetImageN("rom_bobs", ANIMATION[now_id-20])->Draw(x,y, 0,0,0,0,0,0,  COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(building_site->GetPlayer())->color]);
+				LOADER.GetImageN("rom_bobs", ANIMATION[now_id-20])->Draw(x,y, 0,0,0,0,0,0,  COLOR_WHITE, COLORS[gwg->GetPlayer(building_site->GetPlayer())->color]);
 			else if(now_id < 55)
-				LOADER.GetImageN("rom_bobs", 253+now_id-41)->Draw(x,y, 0,0,0,0,0,0,  COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(building_site->GetPlayer())->color]);
+				LOADER.GetImageN("rom_bobs", 253+now_id-41)->Draw(x,y, 0,0,0,0,0,0,  COLOR_WHITE, COLORS[gwg->GetPlayer(building_site->GetPlayer())->color]);
 			else
-				LOADER.GetImageN("rom_bobs", 253+now_id-55)->Draw(x,y, 0,0,0,0,0,0,  COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(building_site->GetPlayer())->color]);
+				LOADER.GetImageN("rom_bobs", 253+now_id-55)->Draw(x,y, 0,0,0,0,0,0,  COLOR_WHITE, COLORS[gwg->GetPlayer(building_site->GetPlayer())->color]);
 
 			// Schaufel-Sound
 			if(now_id == 5 || now_id == 46 || now_id == 60)

@@ -1,4 +1,4 @@
-// $Id: GameWorldViewer.cpp 5254 2009-07-12 15:49:16Z FloSoft $
+// $Id: GameWorldViewer.cpp 5312 2009-07-22 18:02:04Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -368,19 +368,19 @@ void GameWorldViewer::DrawBoundaryStone(const int x, const int y, const MapCoord
 	unsigned char owner = fow ? GetNode(tx,ty).fow[viewing_player].boundary_stones[0] : GetNode(tx,ty).boundary_stones[0];
 	if(owner)
 	{
-		unsigned player_color = COLORS[GAMECLIENT.GetPlayer(owner-1)->color];
+		unsigned player_color = COLORS[GetPlayer(owner-1)->color];
 
-		LOADER.GetNationImageN(GAMECLIENT.GetPlayer(owner-1)->nation, 0)->Draw(xpos,ypos,0,0,0,0,0,0,fow ? FOW_DRAW_COLOR : COLOR_WHITE, fow ? CalcPlayerFOWDrawColor(player_color) : player_color);
-		LOADER.GetNationImageN(GAMECLIENT.GetPlayer(owner-1)->nation, 1)->Draw(xpos,ypos,0,0,0,0,0,0,COLOR_SHADOW);
+		LOADER.GetNationImageN(GetPlayer(owner-1)->nation, 0)->Draw(xpos,ypos,0,0,0,0,0,0,fow ? FOW_DRAW_COLOR : COLOR_WHITE, fow ? CalcPlayerFOWDrawColor(player_color) : player_color);
+		LOADER.GetNationImageN(GetPlayer(owner-1)->nation, 1)->Draw(xpos,ypos,0,0,0,0,0,0,COLOR_SHADOW);
 
 		for(unsigned i = 0;i<3;++i)
 		{
 			if(fow ? GetNode(tx,ty).fow[viewing_player].boundary_stones[i+1] : GetNode(tx,ty).boundary_stones[i+1])
 			{
-				LOADER.GetNationImageN(GAMECLIENT.GetPlayer(owner-1)->nation, 0)->Draw(xpos-static_cast<int>((tr.GetTerrainX(tx,ty)-tr.GetTerrainXAround(tx,ty,3+i))/2.0f),
+				LOADER.GetNationImageN(GetPlayer(owner-1)->nation, 0)->Draw(xpos-static_cast<int>((tr.GetTerrainX(tx,ty)-tr.GetTerrainXAround(tx,ty,3+i))/2.0f),
 					ypos-static_cast<int>((tr.GetTerrainY(tx,ty)-tr.GetTerrainYAround(tx,ty,3+i))/2.0f),0,0,0,0,0,0,
 					(vis == VIS_VISIBLE) ? COLOR_WHITE : FOW_DRAW_COLOR, (vis == VIS_VISIBLE) ? player_color : CalcPlayerFOWDrawColor(player_color));
-				LOADER.GetNationImageN(GAMECLIENT.GetPlayer(owner-1)->nation, 1)->Draw(xpos-static_cast<int>((tr.GetTerrainX(tx,ty)-tr.GetTerrainXAround(tx,ty,3+i))/2.0f),
+				LOADER.GetNationImageN(GetPlayer(owner-1)->nation, 1)->Draw(xpos-static_cast<int>((tr.GetTerrainX(tx,ty)-tr.GetTerrainXAround(tx,ty,3+i))/2.0f),
 					ypos-static_cast<int>((tr.GetTerrainY(tx,ty)-tr.GetTerrainYAround(tx,ty,3+i))/2.0f),0,0,0,0,0,0,COLOR_SHADOW);
 			}
 		}
@@ -423,7 +423,7 @@ unsigned GameWorldViewer::GetAvailableSoldiersForAttack(const unsigned char play
 			// Militäreinstellungen zum Angriff eingestellt wurden
 			unsigned short soldiers_count =
 				(static_cast<nobMilitary*>(*it)->GetTroopsCount()>1)?
-				((static_cast<nobMilitary*>(*it)->GetTroopsCount()-1)*GAMECLIENT.GetPlayer(player_attacker)->military_settings[3]/5):0;
+				((static_cast<nobMilitary*>(*it)->GetTroopsCount()-1)*GetPlayer(player_attacker)->military_settings[3]/5):0;
 
 		unsigned int distance = CalcDistance(x,y,(*it)->GetX(),(*it)->GetY());
 

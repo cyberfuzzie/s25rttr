@@ -1,4 +1,4 @@
-// $Id: nofFisher.cpp 5253 2009-07-12 14:42:18Z FloSoft $
+// $Id: nofFisher.cpp 5312 2009-07-22 18:02:04Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -104,7 +104,7 @@ void nofFisher::DrawWorking(int x,int y)
 		}
 	}
 
-	LOADER.GetImageN("rom_bobs", draw_id)->Draw(x,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
+	LOADER.GetImageN("rom_bobs", draw_id)->Draw(x,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[gwg->GetPlayer(player)->color]);
 	DrawShadow(x,y,0,fishing_dir);
 }
 

@@ -1,4 +1,4 @@
-// $Id: nofBuildingWorker.cpp 5304 2009-07-20 19:39:40Z jh $
+// $Id: nofBuildingWorker.cpp 5312 2009-07-22 18:02:04Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -191,9 +191,9 @@ void nofBuildingWorker::WorkingReady()
 			// Inventur entsprechend erhöhen, dabei Schilder unterscheiden!
 			GoodType ware_type = (real_ware->type == GD_SHIELDVIKINGS || real_ware->type == GD_SHIELDAFRICANS ||
 				real_ware->type == GD_SHIELDJAPANESE) ? GD_SHIELDROMANS : real_ware->type;
-			GAMECLIENT.GetPlayer(player)->IncreaseInventoryWare(ware_type,1);
+			gwg->GetPlayer(player)->IncreaseInventoryWare(ware_type,1);
 			// Abnehmer für Ware finden
-			real_ware->goal = GAMECLIENT.GetPlayer(player)->FindClientForWare(real_ware);
+			real_ware->goal = gwg->GetPlayer(player)->FindClientForWare(real_ware);
 			// Ware soll ihren weiteren Weg berechnen
 			real_ware->RecalcRoute();
 			// Ware ablegen

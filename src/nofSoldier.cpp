@@ -1,4 +1,4 @@
-// $Id: nofSoldier.cpp 5253 2009-07-12 14:42:18Z FloSoft $
+// $Id: nofSoldier.cpp 5312 2009-07-22 18:02:04Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -28,7 +28,6 @@
 #include "Random.h"
 #include "GameWorld.h"
 #include "noFighting.h"
-#include "GameClient.h"
 #include "SerializedGameData.h"
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -41,13 +40,13 @@
 
 nofSoldier::nofSoldier(const unsigned short x, const unsigned short y,const unsigned char player,
 					   nobBaseMilitary * const goal ,nobBaseMilitary * const home,const unsigned char rank)
-: noFigure(static_cast<Job>(JOB_PRIVATE+rank),x,y,player,goal), building(home), hitpoints(HITPOINTS[GAMECLIENT.GetPlayer(player)->nation][rank])
+: noFigure(static_cast<Job>(JOB_PRIVATE+rank),x,y,player,goal), building(home), hitpoints(HITPOINTS[gwg->GetPlayer(player)->nation][rank])
 {
 }
 
 nofSoldier::nofSoldier(const unsigned short x, const unsigned short y,const unsigned char player,
 		nobBaseMilitary * const home,const unsigned char rank)
-: noFigure(static_cast<Job>(JOB_PRIVATE+rank),x,y,player), building(home), hitpoints(HITPOINTS[GAMECLIENT.GetPlayer(player)->nation][rank])
+: noFigure(static_cast<Job>(JOB_PRIVATE+rank),x,y,player), building(home), hitpoints(HITPOINTS[gwg->GetPlayer(player)->nation][rank])
 {
 }
 
@@ -73,7 +72,7 @@ nofSoldier::nofSoldier(SerializedGameData * sgd, const unsigned obj_id) : noFigu
 
 void nofSoldier::DrawSoldierWalking(int x, int y)
 {
-	DrawWalking(x,y,LOADER.GetBobN("jobs"),30+NATION_RTTR_TO_S2[GAMECLIENT.GetPlayer(player)->nation]*6+job-JOB_PRIVATE,false);
+	DrawWalking(x,y,LOADER.GetBobN("jobs"),30+NATION_RTTR_TO_S2[gwg->GetPlayer(player)->nation]*6+job-JOB_PRIVATE,false);
 }
 
 void nofSoldier::AbrogateWorkplace()

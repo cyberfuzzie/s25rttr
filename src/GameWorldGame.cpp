@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 5191 2009-07-04 21:31:14Z Demophobie $
+// $Id: GameWorldGame.cpp 5312 2009-07-22 18:02:04Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -407,7 +407,7 @@ void GameWorldGame::BuildRoad(const unsigned char playerid,const bool boat_road,
 	GetSpecObj<noFlag>(start_x,start_y)->routes[(route.back()+3)%6] = rs;
 
 	// Der Wirtschaft mitteilen, dass eine neue Straße gebaut wurde, damit sie alles Näcige macht
-	GAMECLIENT.GetPlayer(playerid)->NewRoad(rs);
+	GetPlayer(playerid)->NewRoad(rs);
 
 }
 
@@ -538,7 +538,7 @@ void GameWorldGame::RecalcTerritory(const nobBaseMilitary * const building,const
 
 	for (unsigned i=0; i<GAMECLIENT.GetPlayerCount(); ++i)
 	{
-		GAMECLIENT.GetPlayer(i)->ChangeStatisticValue(STAT_COUNTRY, sizeChanges[i]);
+		GetPlayer(i)->ChangeStatisticValue(STAT_COUNTRY, sizeChanges[i]);
 
 		// Negatives Wachstum per Post dem/der jeweiligen Landesherren/dame melden, nur bei neugebauten Gebäuden
 		if (newBuilt && sizeChanges[i] < 0)
@@ -787,7 +787,7 @@ void GameWorldGame::Attack(const unsigned char player_attacker, const MapCoord x
 		return;
 
 	// Auch noch ein Gebäude von einem Feind (nicht inzwischen eingenommen)?
-	if(!GameClient::inst().GetPlayer(player_attacker)->IsPlayerAttackable(GetSpecObj<noBuilding>(x,y)->GetPlayer()))
+	if(!GetPlayer(player_attacker)->IsPlayerAttackable(GetSpecObj<noBuilding>(x,y)->GetPlayer()))
 		return;
 
 	// Prüfen, ob der angreifende Spieler das Gebäude überhaupt sieht (Cheatvorsorge)
@@ -822,7 +822,7 @@ void GameWorldGame::Attack(const unsigned char player_attacker, const MapCoord x
 			// Militäreinstellungen zum Angriff eingestellt wurden
 			unsigned short soldiers_count =
 				(static_cast<nobMilitary*>(*it)->GetTroopsCount()>1)?
-				((static_cast<nobMilitary*>(*it)->GetTroopsCount()-1)*GAMECLIENT.GetPlayer(player_attacker)->military_settings[3]/5):0;
+				((static_cast<nobMilitary*>(*it)->GetTroopsCount()-1)*GetPlayer(player_attacker)->military_settings[3]/5):0;
 
       unsigned int distance = CalcDistance(x,y,(*it)->GetX(),(*it)->GetY());
 
@@ -1102,8 +1102,8 @@ bool GameWorldGame::IsPointCompletelyVisible(const MapCoord x, const MapCoord y,
 
 	// Sichtbereich von Spähtürmen
 
-	for(std::list<nobUsual*>::const_iterator it = GameClient::inst().GetPlayer(player)->GetBuildings(BLD_LOOKOUTTOWER).begin();
-		it!=GameClient::inst().GetPlayer(player)->GetBuildings(BLD_LOOKOUTTOWER).end(); ++it)
+	for(std::list<nobUsual*>::const_iterator it = GetPlayer(player)->GetBuildings(BLD_LOOKOUTTOWER).begin();
+		it!=GetPlayer(player)->GetBuildings(BLD_LOOKOUTTOWER).end(); ++it)
 	{
 		// Ist Späturm überhaupt besetzt?
 		if(!(*it)->HasWorker())
@@ -1339,30 +1339,26 @@ bool GameWorldGame::IsBorderNode(const MapCoord x, const MapCoord y, const unsig
 /// über die Kartenränder hinweg
 void GameWorldGame::CalcHarborPosNeighbors()
 {
-//	Point<int> diffs[9] =
-//	{
-//		Point<int>(0,0),
-//		Point<int>(-width,0),
-//		Point<int>(width,0),
-//		Point<int>(0,height),
-//		Point<int>(-width,height),
-//		Point<int>(width,height),
-//		Point<int>(0,-height),
-//		Point<int>(width,-height)
-//	};
-
-
-	/*for(unsigned i = 0;i<harbor_pos.size();++i)
+	for(unsigned i = 0;i<harbor_pos.size();++i)
 	{
 		for(unsigned z = 0;z<harbor_pos.size();++z)
 		{
 			if(i == z)
 				continue;
 
-			// Sea-IDs vergleichen und wenn es hier schon keine Gemeinsamkeit gibt, 
-			harbor_pos[i].sea_ids[
+			// Sea-IDs vergleichen und wenn es hier schon keine Gemeinsamkeit gibt, brauchen wir gar keine weiteren Wege zu suchen
 
-			for(unsigned o = 0;o<9;++o)
+			for(unsigned si1 = 0;si1<6;++si1)
+			{
+				for(unsigned si2 = si1+1;si2<6;++si2)
+				{
+
+				}
+			}
+		}
+	}
+
+		/*	for(unsigned o = 0;o<9;++o)
 			{
 				int ox = harbor_pos[i].x + diffs[o].x,
 					oy = harbor_pos[i].y + diffs[o].y;

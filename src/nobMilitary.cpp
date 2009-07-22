@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 5254 2009-07-12 15:49:16Z FloSoft $
+// $Id: nobMilitary.cpp 5312 2009-07-22 18:02:04Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -54,7 +54,7 @@ nobMilitary::nobMilitary(const BuildingType type,const unsigned short x, const u
 : nobBaseMilitary(type,x,y,player,nation), new_built(true), coins(0), disable_coins(false), disable_coins_virtual(false), capturing(false), capturing_soldiers(0), goldorder_event(0), upgrade_event(0)
 {
 	// Gebäude entsprechend als Militärgebäude registrieren und in ein Militärquadrat eintragen
-	GAMECLIENT.GetPlayer(player)->AddMilitaryBuilding(this);
+	gwg->GetPlayer(player)->AddMilitaryBuilding(this);
 	gwg->GetMilitarySquare(x,y).push_back(this);
 
 	// Größe ermitteln
@@ -100,7 +100,7 @@ void nobMilitary::Destroy_nobMilitary()
 	em->RemoveEvent(upgrade_event);
 
 	// übriggebliebene Goldmünzen in der Inventur abmelden
-	GAMECLIENT.GetPlayer(player)->DecreaseInventoryWare(GD_COINS,coins);
+	gwg->GetPlayer(player)->DecreaseInventoryWare(GD_COINS,coins);
 
 	Destroy_nobBaseMilitary();
 
@@ -110,7 +110,7 @@ void nobMilitary::Destroy_nobMilitary()
 		gwg->RecalcTerritory(this,MILITARY_RADIUS[size],true, false);
 
 	// Wieder aus dem Militärquadrat rauswerfen
-	GAMECLIENT.GetPlayer(player)->RemoveMilitaryBuilding(this);
+	gwg->GetPlayer(player)->RemoveMilitaryBuilding(this);
 	gwg->GetMilitarySquare(x,y).erase(this);
 
 
@@ -168,7 +168,7 @@ void nobMilitary::Draw(int x, int y)
 	unsigned flags = min<unsigned>(troops.size()+this->leave_house.size(),4);
 
 	for(unsigned i = 0;i<flags;++i)
-		LOADER.GetMapImageN(3162+GAMECLIENT.GetGlobalAnimation(8,80,40,this->x*this->y*i))->Draw(x+TROOPS_FLAGS[nation][size][0],y+TROOPS_FLAGS[nation][size][1]+(i)*3,0,0,0,0,0,0,COLOR_WHITE, COLORS[GAMECLIENT.GetPlayer(player)->color]);
+		LOADER.GetMapImageN(3162+GAMECLIENT.GetGlobalAnimation(8,80,40,this->x*this->y*i))->Draw(x+TROOPS_FLAGS[nation][size][0],y+TROOPS_FLAGS[nation][size][1]+(i)*3,0,0,0,0,0,0,COLOR_WHITE, COLORS[gwg->GetPlayer(player)->color]);
 
 	// Die Fahne, die anzeigt wie weit das Gebäude von der Grenze entfernt ist, zeichnen
 	LOADER.GetMapImageN(3150+frontier_distance*4+GAMECLIENT.GetGlobalAnimation(8,5,5,this->x*this->y*age)/2)
@@ -255,7 +255,7 @@ void nobMilitary::HandleEvent(const unsigned int id)
 			{
 				// Goldmünze verbrauchen
 				--coins;
-				GAMECLIENT.GetPlayer(player)->DecreaseInventoryWare(GD_COINS,1);
+				gwg->GetPlayer(player)->DecreaseInventoryWare(GD_COINS,1);
 
 				// Evtl neues Beförderungsevent anmelden
 				PrepareUpgrading();
@@ -284,7 +284,7 @@ void nobMilitary::LookForEnemyBuildings(const nobBaseMilitary * const exception)
 	for(list<nobBaseMilitary*>::iterator it = buildings.begin();it.valid();++it)
 	{
 		// feindliches Militärgebäude?
-		if(*it != exception && (*it)->GetPlayer() != player && GAMECLIENT.GetPlayer((*it)->GetPlayer())->IsPlayerAttackable(player))
+		if(*it != exception && (*it)->GetPlayer() != player && gwg->GetPlayer((*it)->GetPlayer())->IsPlayerAttackable(player))
 		{
 			unsigned distance = CalcDistance(x,y,(*it)->GetX(),(*it)->GetY());
 
@@ -367,7 +367,7 @@ void nobMilitary::RegulateTroops()
 
 		// Zuerst die bestellten Soldaten wegschicken
 		// Schwache zuerst zurück
-		if (GameClient::inst().GetPlayer(player)->military_settings[1] > 2)
+		if (gwg->GetPlayer(player)->military_settings[1] > 2)
 		{
 			for(list<nofPassiveSoldier*>::iterator it = ordered_troops.begin();diff&&ordered_troops.size();++diff,++it)
 			{
@@ -393,11 +393,11 @@ void nobMilitary::RegulateTroops()
 		}
 
 		// Nur rausschicken, wenn es einen Weg zu einem Lagerhaus gibt!
-		if(GameClient::inst().GetPlayer(player)->FindWarehouse(this,FW::NoCondition,0,true,0,false))
+		if(gwg->GetPlayer(player)->FindWarehouse(this,FW::NoCondition,0,true,0,false))
 		{
 			// Dann den Rest (einer muss immer noch drinbleiben!)
 			// erst die schwachen Soldaten raus
-			if (GameClient::inst().GetPlayer(player)->military_settings[1] > 2)
+			if (gwg->GetPlayer(player)->military_settings[1] > 2)
 			{
 				for(list<nofPassiveSoldier*>::iterator it = troops.begin();diff&&troops.size()>1;++diff,++it)
 				{
@@ -429,14 +429,14 @@ void nobMilitary::RegulateTroops()
 	else if(diff)
 	{
 		// Zu wenig Truppen --> neue bestellen
-		GAMECLIENT.GetPlayer(player)->OrderTroops(this,diff);
+		gwg->GetPlayer(player)->OrderTroops(this,diff);
 
 	}
 }
 
 int nobMilitary::CalcTroopsCount()
 {
-	return (TROOPS_COUNT[nation][size]-1)*GAMECLIENT.GetPlayer(player)->military_settings[4+frontier_distance]/10 + 1;
+	return (TROOPS_COUNT[nation][size]-1)*gwg->GetPlayer(player)->military_settings[4+frontier_distance]/10 + 1;
 }
 
 void nobMilitary::TakeWare(Ware * ware)
@@ -454,7 +454,7 @@ void nobMilitary::AddWare(Ware * ware)
 	ordered_coins.erase(ware);
 
 	// Ware vernichten
-	GAMECLIENT.GetPlayer(player)->RemoveWare(ware);
+	gwg->GetPlayer(player)->RemoveWare(ware);
 	delete ware;
 
 	// Evtl. Soldaten befördern
@@ -616,7 +616,7 @@ list<nofPassiveSoldier*>::iterator nobMilitary::ChooseSoldier()
 	}
 
 	// ID ausrechnen
-	unsigned rank = ((rank_count-1)*GAMECLIENT.GetPlayer(player)->military_settings[1]+2)/5;
+	unsigned rank = ((rank_count-1)*gwg->GetPlayer(player)->military_settings[1]+2)/5;
 
 	unsigned r = 0;
 
@@ -692,8 +692,8 @@ nofDefender * nobMilitary::ProvideDefender(nofAttacker * const attacker)
 void nobMilitary::Capture(const unsigned char new_owner)
 {
 	// Goldmünzen in der Inventur vom alten Spieler abziehen und dem neuen hinzufügen
-	GAMECLIENT.GetPlayer(player)->DecreaseInventoryWare(GD_COINS,coins);
-	GAMECLIENT.GetPlayer(new_owner)->IncreaseInventoryWare(GD_COINS,coins);
+	gwg->GetPlayer(player)->DecreaseInventoryWare(GD_COINS,coins);
+	gwg->GetPlayer(new_owner)->IncreaseInventoryWare(GD_COINS,coins);
 
 	// Soldaten, die auf Mission sind, Bescheid sagen
 	for(list<nofActiveSoldier*>::iterator it = troops_on_mission.begin();it.valid();++it)
@@ -707,8 +707,8 @@ void nobMilitary::Capture(const unsigned char new_owner)
 	aggressive_defenders.clear();
 
 	// In der Wirtschaftsverwaltung dieses Gebäude jetzt zum neuen Spieler zählen und beim alten raushauen
-	GAMECLIENT.GetPlayer(player)->RemoveMilitaryBuilding(this);
-	GAMECLIENT.GetPlayer(new_owner)->AddMilitaryBuilding(this);
+	gwg->GetPlayer(player)->RemoveMilitaryBuilding(this);
+	gwg->GetPlayer(new_owner)->AddMilitaryBuilding(this);
 
 	// Alten Besitzer merken
 	unsigned char old_player = player;
@@ -734,7 +734,7 @@ void nobMilitary::Capture(const unsigned char new_owner)
 	for(list<nobBaseMilitary*>::iterator it = buildings.begin();it.valid();++it)
 	{
 		// verbündetes Gebäude?
-		if(GAMECLIENT.GetPlayer((*it)->GetPlayer())->IsPlayerAttackable(old_player)
+		if(gwg->GetPlayer((*it)->GetPlayer())->IsPlayerAttackable(old_player)
 			&& (*it)->GetBuildingType() >= BLD_BARRACKS && (*it)->GetBuildingType() <= BLD_FORTRESS)
 			// Grenzflaggen von dem neu berechnen
 			static_cast<nobMilitary*>(*it)->LookForEnemyBuildings();
@@ -927,7 +927,7 @@ void nobMilitary::SearchCoins()
 	{
 		// Lagerhaus mit Goldmünzen suchen
 		FW::Param_Ware p = {GD_COINS,1};
-		if(nobBaseWarehouse * wh = GAMECLIENT.GetPlayer(player)->FindWarehouse(this,FW::Condition_Ware,0,false,&p,false))
+		if(nobBaseWarehouse * wh = gwg->GetPlayer(player)->FindWarehouse(this,FW::Condition_Ware,0,false,&p,false))
 		{
 			// Wenns eins gibt, dort eine Goldmünze bestellen
 			Ware * ware = wh->OrderWare(GD_COINS,this);

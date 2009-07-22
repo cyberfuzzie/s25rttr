@@ -1,4 +1,4 @@
-// $Id: nofFarmhand.cpp 5304 2009-07-20 19:39:40Z jh $
+// $Id: nofFarmhand.cpp 5313 2009-07-22 20:20:53Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -166,17 +166,20 @@ void nofFarmhand::HandleDerivedEvent(const unsigned int id)
 						case JOB_STONEMASON:
 							GameClient::inst().SendPostMessage(
 							  new ImagePostMsgWithLocation(_("No more stones in range"), PMC_GENERAL, x, y, workplace->GetBuildingType(), workplace->GetNation()));
+							OutOfRessourcesMsgSent = true;
+							// Produktivitätsanzeige auf 0 setzen
+							workplace->SetProductivityToZero();
 							break;
 						case JOB_FISHER:
 							GameClient::inst().SendPostMessage(
 							  new ImagePostMsgWithLocation(_("No more fishes in range"), PMC_GENERAL, x, y, workplace->GetBuildingType(), workplace->GetNation()));
+							OutOfRessourcesMsgSent = true;
+							// Produktivitätsanzeige auf 0 setzen
+							workplace->SetProductivityToZero();
 							break;
 						default:
 							break;
 						}
-						OutOfRessourcesMsgSent = true;
-						// Produktivitätsanzeige auf 0 setzen
-						workplace->SetProductivityToZero();
 					}
 				}
 

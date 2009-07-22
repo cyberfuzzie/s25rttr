@@ -1,4 +1,4 @@
-// $Id: dskLobby.cpp 5247 2009-07-11 19:13:17Z FloSoft $
+// $Id: dskLobby.cpp 5311 2009-07-22 17:53:32Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -73,9 +73,9 @@ dskLobby::dskLobby() : Desktop(LOADER.GetImageN("setup013", 0)), serverinfo(NULL
 	AddTextButton(6, 530, 440, 250, 22, TC_GREEN2, _("Add Server"),NormalFont);
 
 	// Gameserver-Tabelle - "ID", "Server", "Karte", "Spieler", "Version", "Ping"
-	AddTable(10, 20, 20, 500, 262, TC_GREY, NormalFont, 6, _("ID"), 0, _("Server"), 300, _("Map"), 300, _("Player"), 200, _("Version"), 100, _("Ping"), 100);
+	AddTable(10, 20, 20, 500, 262, TC_GREY, NormalFont, 6, _("ID"), 0, ctrlTable::SRT_NUMBER, _("Server"), 300, ctrlTable::SRT_STRING, _("Map"), 300, ctrlTable::SRT_STRING, _("Player"), 200, ctrlTable::SRT_NUMBER, _("Version"), 100, ctrlTable::SRT_STRING, _("Ping"), 100, ctrlTable::SRT_NUMBER);
 	// Spieler-Tabelle - "Name", "Punkte", "Version"
-	AddTable(11, 530, 20, 250, 410, TC_GREY, NormalFont, 3, _("Name"), 500, _("Points"), 250, _("Version"), 250);
+	AddTable(11, 530, 20, 250, 410, TC_GREY, NormalFont, 3, _("Name"), 500, ctrlTable::SRT_STRING, _("Points"), 250, ctrlTable::SRT_STRING, _("Version"), 250, ctrlTable::SRT_STRING);
 
 	// Chatfenster
 	AddChatCtrl(20, 20, 290, 500, 238, TC_GREY, NormalFont);

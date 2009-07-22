@@ -1,4 +1,4 @@
-// $Id: ctrlTable.cpp 5308 2009-07-21 11:28:33Z FloSoft $
+// $Id: ctrlTable.cpp 5311 2009-07-22 17:53:32Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -23,6 +23,7 @@
 #include "ctrlTable.h"
 
 #include "ctrlButton.h"
+#include <sstream>
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -70,6 +71,8 @@ ctrlTable::ctrlTable(Window *parent,
 				c.title = title;
 
 			c.width = (unsigned short)va_arg(liste, int);
+
+			c.sortType = va_arg(liste, SortType);
 
 			// Button für die Spalte hinzufügen
 			AddTextButton(i+1, 0, 0, 0, header_height, tc, c.title, font);
@@ -219,12 +222,14 @@ void ctrlTable::SortRows(unsigned short column, bool *direction)
 			// in kleinbuchstaben vergleichen
 			if(sort_direction && sort_column == column)
 			{
-				if(a.compare(b) < 0)
+				//if(a.compare(b) < 0)
+				if (Compare(a, b, columns[column].sortType) < 0)
 					std::swap(rows.at(r), rows.at(r+1));
 			}
 			else
 			{
-				if(a.compare(b) > 0)
+				//if(a.compare(b) > 0)
+				if (Compare(a, b, columns[column].sortType) > 0)
 					std::swap(rows.at(r), rows.at(r+1));
 			}
 		}
@@ -468,3 +473,83 @@ void ctrlTable::ResetButtonWidths()
 	}
 }
 
+/// Verschiedene Sortiermöglichkeiten
+int ctrlTable::Compare(const std::string &a, const std::string &b, SortType sortType)
+{
+	switch (sortType)
+	{
+	case SRT_DEFAULT:
+	case SRT_STRING:
+		return a.compare(b);
+		break;
+	// Nach Mapgrößen-String sortieren: ZahlxZahl
+	case SRT_MAPSIZE:
+		{
+		std::stringstream ss_a(a);
+		std::stringstream ss_b(b);
+		char x;
+		int x_a, y_a, x_b, y_b;
+		ss_a >> x_a >> x >> y_a;
+		ss_b >> x_b >> x >> y_b;
+		if (x_a * y_a == x_b * y_b)
+			return 0;
+		else
+			return (x_a * y_a < x_b * y_b) ? 1 : -1;
+		}
+		break;
+	// Nach Zahl sortieren
+	case SRT_NUMBER:
+		{
+		std::stringstream ss_a(a);
+		std::stringstream ss_b(b);
+		int num_a, num_b;
+		ss_a >> num_a;
+		ss_b >> num_b;
+		if (num_a == num_b)
+			return 0;
+		else
+			return (num_a < num_b) ? 1 : -1;
+		}
+		break;
+	// Nach Datum im Format dd.mm.yyyy - hh:mm sortieren
+	case SRT_DATE:
+		{
+		std::stringstream ss_a(a);
+		std::stringstream ss_b(b);
+		int d_a, d_b, m_a, m_b, y_a, y_b;
+		char c;
+
+		// "dd.mm.yyyy"
+		ss_a >> d_a >> c >> m_a >> c >> y_a;
+		ss_b >> d_b >> c >> m_b >> c >> y_b;
+
+		if (y_a != y_b)
+			return (y_a < y_b) ? 1 : -1;
+
+		if (m_a != m_b)
+			return (m_a < m_b) ? 1 : -1;
+
+		if (d_a != d_b)
+			return (d_a < d_b) ? 1 : -1;
+
+		// " - "
+		ss_a >> c;
+		ss_b >> c;
+
+		int h_a, h_b, min_a, min_b;
+
+		// "hh:mm"
+		ss_a >> h_a >> c >> min_a;
+		ss_b >> h_b >> c >> min_b;
+
+		if (h_a != h_b)
+			return (h_a < h_b) ? 1 : -1;
+		if (min_a != min_b)
+			return (min_a < min_b) ? 1 : -1;
+
+		return 0;
+		}
+		break;
+	}
+	return 0;
+}

@@ -1,4 +1,4 @@
-// $Id: Window.cpp 5238 2009-07-09 20:50:28Z FloSoft $
+// $Id: Window.cpp 5311 2009-07-22 17:53:32Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -752,6 +752,7 @@ ctrlTab *Window::AddTabCtrl(unsigned int id,
 ///////////////////////////////////////////////////////////////////////////////
 /**
  *  fügt eine Tabelle hinzu.
+ *  ... sollte eine Menge von const char*, int und SortType sein
  *
  *  @author OLiver
  */

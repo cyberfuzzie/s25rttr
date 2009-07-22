@@ -1,4 +1,4 @@
-// $Id: dskSelectMap.cpp 5247 2009-07-11 19:13:17Z FloSoft $
+// $Id: dskSelectMap.cpp 5311 2009-07-22 17:53:32Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -109,7 +109,7 @@ dskSelectMap::dskSelectMap(const CreateServerInfo& csi)
 	csi(csi)
 {
 	// Die Tabelle für die Maps
-	AddTable( 1, 110,  35, 680, 400, TC_GREY, NormalFont, 6, _("Name"), 250, _("Author"), 216, _("Player"), 170, _("Type"), 180, _("Size"), 134, "", 0);
+	AddTable( 1, 110,  35, 680, 400, TC_GREY, NormalFont, 6, _("Name"), 250, ctrlTable::SRT_STRING, _("Author"), 216, ctrlTable::SRT_STRING, _("Player"), 170, ctrlTable::SRT_NUMBER, _("Type"), 180, ctrlTable::SRT_STRING, _("Size"), 134, ctrlTable::SRT_MAPSIZE, "", 0, ctrlTable::SRT_STRING);
 
 	// "Karten Auswahl"
 	AddText(  2, 400,   5, _("Selection of maps"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER, LargeFont);

@@ -1,4 +1,4 @@
-// $Id: ctrlTable.h 4830 2009-05-07 18:59:21Z FloSoft $
+// $Id: ctrlTable.h 5311 2009-07-22 17:53:32Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -54,6 +54,15 @@ public:
 	virtual void Msg_ButtonClick(const unsigned int ctrl_id);
 	virtual void Msg_ScrollShow(const unsigned int ctrl_id, const bool visible);
 
+	enum SortType
+	{
+		SRT_STRING,
+		SRT_MAPSIZE,
+		SRT_NUMBER,
+		SRT_DATE,
+		SRT_DEFAULT
+	};
+
 protected:
 
 	virtual bool Draw_(void);
@@ -74,6 +83,7 @@ private:
 		/// Breite der Spalten in Promille von der Tabellenlänge
 		unsigned short width;
 		std::string title;
+		SortType sortType;
 	};
 	std::vector<COLUMN> columns;
 
@@ -87,6 +97,8 @@ private:
 		std::vector<std::string> columns;
 	};
 	std::vector<ROW> rows;
+
+	int Compare(const std::string &a, const std::string &b, SortType sortType);
 };
 
 #endif // !CTRLTABLE_H_INCLUDED

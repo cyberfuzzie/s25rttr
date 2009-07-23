@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 5312 2009-07-22 18:02:04Z OLiver $
+// $Id: GameWorld.h 5319 2009-07-23 09:59:18Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -156,12 +156,27 @@ protected:
 		{
 			unsigned id;
 			unsigned distance;
+			unsigned char group_id;
 			
 			bool operator<(const Neighbor& two) const
 			{ return distance < two.distance; }
 		};
-		unsigned short sea_ids[6];
-		std::vector<Neighbor> neighbors[6];
+
+		struct CoastalPoint
+		{
+			unsigned short sea_id;
+			unsigned char cp_group;
+		} cps[6];
+
+		unsigned group_count;
+
+
+		struct CP_Group
+		{
+			unsigned char founder_dir;
+			std::vector<Neighbor> neighbors[6];
+		} cp_group[6];
+
 	};
 
 	std::vector< HarborPos > harbor_pos;
@@ -312,8 +327,8 @@ public:
 	unsigned char FindHumanPath(const MapCoord x_start,const MapCoord y_start,
 		  const MapCoord x_dest, const MapCoord y_dest, const unsigned max_route = 0xFFFFFFFF, const bool random_route = false, unsigned *length = NULL);
 	/// Wegfindung für Schiffe auf dem Wasser
-	bool FindShipPath(const MapCoord x_start,const MapCoord y_start, const MapCoord x_dest, const MapCoord y_dest, std::vector<unsigned char> * route, unsigned * length, 
-								 CrossBorders * cb);
+	bool FindShipPath(const MapCoord x_start,const MapCoord y_start, const MapCoord x_dest, const MapCoord y_dest, std::vector<unsigned char> * route, unsigned * length, const unsigned max_length = 200,
+								 CrossBorders * cb = NULL);
 
 
 	/// Baut eine (bisher noch visuell gebaute) Straße wieder zurück
@@ -356,8 +371,8 @@ public:
 	/// Gibt den Punkt eines bestimmtes Meeres um den Hafen herum an, sodass Schiffe diesen anfahren können
 	void GetCoastalPoint(const unsigned harbor_id, MapCoord * px, MapCoord * py, const unsigned short sea_id) const;
 	/// Sucht freie Hafenpunkte, also wo noch ein Hafen gebaut werden kann
-	unsigned GetNextFreeHarborPoint(const unsigned origin_harbor_id, const unsigned char dir,
-										   const unsigned char player, const unsigned short sea_id) const;
+	unsigned GetNextFreeHarborPoint(const MapCoord x, const MapCoord y, const unsigned origin_harbor_id, const unsigned char dir,
+										   const unsigned char player) const;
 	
 
 	void SetPlayers(GameClientPlayerList *pls) { players = pls; }
@@ -375,9 +390,8 @@ protected:
 	virtual void VisibilityChanged(const MapCoord x, const MapCoord y) = 0;
 
 	/// Gibt nächsten Hafenpunkt in einer bestimmten Richtung zurück, bzw. 0, wenn es keinen gibt 
-	unsigned GetNextHarborPoint(const unsigned origin_harbor_id, const unsigned char dir,
-										   const unsigned char player, const unsigned short sea_id,
-		bool (GameWorldBase::*IsPointOK)(const unsigned, const unsigned char, const unsigned short) const) const;
+	unsigned GetNextHarborPoint(const MapCoord x, const MapCoord y, const unsigned origin_harbor_id, const unsigned char dir,
+										   const unsigned char player, bool (GameWorldBase::*IsPointOK)(const unsigned, const unsigned char, const unsigned short) const) const;
 
 private:
 	GameClientPlayerList *players;

@@ -1,4 +1,4 @@
-// $Id: Pathfinding.cpp 5318 2009-07-23 06:42:38Z FloSoft $
+// $Id: Pathfinding.cpp 5319 2009-07-23 09:59:18Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -585,7 +585,7 @@ unsigned char GameWorldGame::FindPathForWareOnRoads(const noRoadNode * const sta
 
 /// Wegfindung für Schiffe auf dem Wasser
 bool GameWorldBase::FindShipPath(const MapCoord x_start,const MapCoord y_start, const MapCoord x_dest,
-								 const MapCoord y_dest, std::vector<unsigned char> * route, unsigned * length, 
+								 const MapCoord y_dest, std::vector<unsigned char> * route, unsigned * length, const unsigned max_length,
 								 GameWorldBase::CrossBorders * cb)
 {
 	return FindFreePath(x_start,y_start,x_dest,y_dest,true,200,route,length,NULL,cb,IsPointOK_ShipPath,

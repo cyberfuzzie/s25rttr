@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 5312 2009-07-22 18:02:04Z OLiver $
+// $Id: GameWorldGame.cpp 5319 2009-07-23 09:59:18Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1341,65 +1341,132 @@ void GameWorldGame::CalcHarborPosNeighbors()
 {
 	for(unsigned i = 0;i<harbor_pos.size();++i)
 	{
-		for(unsigned z = 0;z<harbor_pos.size();++z)
+		harbor_pos[i].group_count = 0;
+
+		for(unsigned d1 = 0;d1<6;++d1)
 		{
-			if(i == z)
-				continue;
+			bool found = false;
 
-			// Sea-IDs vergleichen und wenn es hier schon keine Gemeinsamkeit gibt, brauchen wir gar keine weiteren Wege zu suchen
-
-			for(unsigned si1 = 0;si1<6;++si1)
+			for(unsigned d2 = 0;d2<d1;++d2)
 			{
-				for(unsigned si2 = si1+1;si2<6;++si2)
+				// Weg zu diesem Punkt finden
+				if(FindShipPath(GetXA(harbor_pos[i].x,harbor_pos[i].y,d1),GetYA(harbor_pos[i].x,harbor_pos[i].y,d1),
+					GetXA(harbor_pos[i].x,harbor_pos[i].y,d1),GetYA(harbor_pos[i].x,harbor_pos[i].y,d2),NULL,NULL,5))
 				{
-
+					// Dann können wir uns in dieselbe Gruppe einordnen
+					harbor_pos[i].cps[d2].cp_group = harbor_pos[i].cps[d1].cp_group;
+					found = true;
+					break;
 				}
+			}
+
+			if(!found)
+			{
+				// Neue Gruppe aufmachen
+				harbor_pos[i].cps[d1].cp_group = harbor_pos[i].group_count;
+				harbor_pos[i].group_count++;
+				harbor_pos[i].cp_group[harbor_pos[i].cps[d1].cp_group].founder_dir = d1;
 			}
 		}
 	}
 
-		/*	for(unsigned o = 0;o<9;++o)
+
+
+	for(unsigned i = 0;i<harbor_pos.size();++i)
+	{
+		// Für jeden Anlegeplatz die anderen Häfen suchen
+		for(unsigned gi = 0;gi<harbor_pos[i].group_count;++gi)
+		{
+			unsigned char dir = harbor_pos[i].cp_group[gi].founder_dir;
+
+			for(unsigned z = 0;z<harbor_pos.size();++z)
 			{
-				int ox = harbor_pos[i].x + diffs[o].x,
-					oy = harbor_pos[i].y + diffs[o].y;
+				if(i == z)
+					continue;
+
+				unsigned char best_group_id = 0xff;
+				unsigned best_length = 0xFFFFFFFF;
+				GameWorldBase::CrossBorders best_cb;
+
+				// Für jeden Anlegeplatz die anderen Häfen suchen
+				for(unsigned gi2 = 0;gi2<harbor_pos[z].group_count;++gi2)
+				{
+					unsigned char dir2 = harbor_pos[z].cp_group[gi2].founder_dir;
+
+					// Selbe Sea-ID?
+					if(harbor_pos[i].cp_group[gi].founder_dir != harbor_pos[z].cp_group[gi2].founder_dir)
+						break;
+
+					GameWorldBase::CrossBorders cb;
+
+					unsigned length;
+					if(!FindShipPath(GetXA(harbor_pos[i].x,harbor_pos[i].y,dir),GetYA(harbor_pos[i].x,
+						harbor_pos[i].y,dir),GetXA(harbor_pos[z].x,harbor_pos[z].y,dir2),GetYA(harbor_pos[z].x,
+						harbor_pos[z].y,dir2),NULL,&length,200,&cb))
+						break;
+
+					if(length < best_length)
+					{
+						best_group_id = gi2;
+						best_length = length;
+						best_cb = cb;
+					}
+				}
+
+				if(best_group_id == 0xff)
+					continue;
+
+				int dx = harbor_pos[i].x, dy = harbor_pos[i].y;
+
+				if(best_cb.left)
+					dx -= width;
+				if(best_cb.top)
+					dx -= height;
+				if(best_cb.right)
+					dx += width;
+				if(best_cb.bottom)
+					dx += height;
+
+
 				// Richtung bestimmen, in der dieser Punkt relativ zum Ausgangspunkt steht
-				unsigned char dir;
+				unsigned char exp_dir;
 				
-				unsigned diff = SafeDiff<int>(oy,harbor_pos[z].y);
+				unsigned diff = SafeDiff<int>(harbor_pos[i].x,dx);
 				if(!diff)
 					diff = 1;
 				// Oben?
-				bool marginal_x = ((SafeDiff<int>(ox,harbor_pos[z].x) * 1000 / diff) < 87);
-				if(harbor_pos[z].y < oy)
+				bool marginal_x = ((SafeDiff<int>(harbor_pos[i].x,dx) * 1000 / diff) < 87);
+				if(dy < harbor_pos[i].y)
 				{
 					if(marginal_x)
-						dir = 0;
-					else if(harbor_pos[z].x < ox)
-						dir = 5;
-					else if(harbor_pos[z].x > ox)
-						dir = 1;
+						exp_dir = 0;
+					else if(dx < harbor_pos[i].x)
+						exp_dir = 5;
+					else if(dx > harbor_pos[i].x)
+						exp_dir = 1;
 				}
 				else
 				{
 					if(marginal_x)
-						dir = 3;
-					else if(harbor_pos[z].x < ox)
-						dir = 4;
-					else if(harbor_pos[z].x > ox)
-						dir = 2;
+						exp_dir = 3;
+					else if(dx < harbor_pos[i].x)
+						exp_dir = 4;
+					else if(dx > harbor_pos[i].x)
+						exp_dir = 2;
 				}
 
 				GameWorldBase::HarborPos::Neighbor nb 
-					= { z+1, CalcDistance(ox,oy,harbor_pos[z].x,harbor_pos[z].y) };
-				harbor_pos[i].neighbors[dir].push_back(nb);
+					= { z+1, CalcDistance(harbor_pos[i].x,harbor_pos[i].y,dx,dy), best_group_id };
+				harbor_pos[i].cp_group[gi].neighbors[dir].push_back(nb);
+
 			}
+
+			// Nach Entfernung sortieren
+			for(unsigned dir = 0;dir<6;++dir)
+				std::sort(harbor_pos[i].cp_group[gi].neighbors[dir].begin(),
+				harbor_pos[i].cp_group[gi].neighbors[dir].begin() + harbor_pos[i].cp_group[gi].neighbors[dir].size());
 		}
 
-		// Nach Entfernung sortieren
-		for(unsigned dir = 0;dir<6;++dir)
-			std::sort(harbor_pos[i].neighbors[dir].begin(),
-			harbor_pos[i].neighbors[dir].begin() + harbor_pos[i].neighbors[dir].size());
-
-
-	}*/
+		
+	}
 }

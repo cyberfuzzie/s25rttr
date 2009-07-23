@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 5303 2009-07-20 15:53:33Z FloSoft $
+// $Id: GameWorldBase.cpp 5319 2009-07-23 09:59:18Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1225,7 +1225,7 @@ bool GameWorldBase::IsAtThisSea(const unsigned harbor_id, const unsigned short s
 {
 	for(unsigned i = 0;i<6;++i)
 	{
-		if(sea_id == harbor_pos[harbor_id-1].sea_ids[i])
+		if(sea_id == harbor_pos[harbor_id-1].cps[i].sea_id)
 			return true;
 	}
 	return false;
@@ -1246,7 +1246,7 @@ void GameWorldBase::GetCoastalPoint(const unsigned harbor_id, MapCoord * px, Map
 
 	for(unsigned i = 0;i<6;++i)
 	{
-		if(harbor_pos[harbor_id-1].sea_ids[i] == sea_id)
+		if(harbor_pos[harbor_id-1].cps[i].sea_id == sea_id)
 		{
 			*px = GetXA(harbor_pos[harbor_id-1].x,harbor_pos[harbor_id-1].y,i);
 			*py = GetYA(harbor_pos[harbor_id-1].x,harbor_pos[harbor_id-1].y,i);
@@ -1261,18 +1261,41 @@ void GameWorldBase::GetCoastalPoint(const unsigned harbor_id, MapCoord * px, Map
 
 
 /// Gibt nächsten Hafenpunkt in einer bestimmten Richtung zurück, bzw. 0, wenn es keinen gibt 
-unsigned GameWorldBase::GetNextHarborPoint(const unsigned origin_harbor_id, const unsigned char dir,
-										   const unsigned char player, const unsigned short sea_id,
-		bool (GameWorldBase::*IsPointOK)(const unsigned, const unsigned char, const unsigned short) const) const
+unsigned GameWorldBase::GetNextHarborPoint(const MapCoord x, const MapCoord y, 
+											const unsigned origin_harbor_id, const unsigned char dir,  
+											const unsigned char player, 
+	bool (GameWorldBase::*IsPointOK)(const unsigned, const unsigned char, const unsigned short) const) const
 {
-	for(unsigned i = 0;i<harbor_pos[origin_harbor_id-1].neighbors[dir].size();++i)
+
+	//unsigned char group_id = harbor_pos[origin_harbor_id-1].cps[
+
+	// Herausfinden, in welcher Richtung sich dieser Punkt vom Ausgangspuknt unterscheidet
+	unsigned char coastal_point_dir = 0xFF;
+
+	for(unsigned char i = 0;i<6;++i)
+	{
+		if(GetXA(harbor_pos[origin_harbor_id-1].x,harbor_pos[origin_harbor_id-1].y,i) == x &&
+			GetYA(harbor_pos[origin_harbor_id-1].x,harbor_pos[origin_harbor_id-1].y,i) == y)
+		{
+			coastal_point_dir = i;
+			break;
+		}
+	}
+
+	assert(coastal_point_dir != 0xff);
+
+	unsigned char group_id = harbor_pos[origin_harbor_id-1].cps[coastal_point_dir].cp_group;
+	unsigned short sea_id = harbor_pos[origin_harbor_id-1].cps[coastal_point_dir].sea_id;
+
+
+	for(unsigned i = 0;i<harbor_pos[origin_harbor_id-1].cp_group[group_id].neighbors[dir].size();++i)
 	{
 		// Entspricht der Punkt meinen Erwartungen?
-		if((this->*IsPointOK)(harbor_pos[origin_harbor_id-1].neighbors[dir][i].id,player,sea_id))
+		if((this->*IsPointOK)(harbor_pos[origin_harbor_id-1].cp_group[group_id].neighbors[dir][i].id,player,sea_id))
 		{
 		
 			// Dann nehmen wir den doch
-			return harbor_pos[origin_harbor_id-1].neighbors[dir][i].id;
+			return harbor_pos[origin_harbor_id-1].cp_group[group_id].neighbors[dir][i].id;
 		}
 	}
 
@@ -1289,7 +1312,7 @@ bool GameWorldBase::IsHarborPointFree(const unsigned harbor_id, const unsigned c
 	bool at_sea = false;
 	for(unsigned i = 0;i<6;++i)
 	{
-		if(harbor_pos[harbor_id-1].sea_ids[i] == sea_id)
+		if(harbor_pos[harbor_id-1].cps[i].sea_id == sea_id)
 		{
 			at_sea = true;
 			break;
@@ -1305,9 +1328,9 @@ bool GameWorldBase::IsHarborPointFree(const unsigned harbor_id, const unsigned c
 }
 
 /// Sucht freie Hafenpunkte, also wo noch ein Hafen gebaut werden kann
-unsigned GameWorldBase::GetNextFreeHarborPoint(const unsigned origin_harbor_id, const unsigned char dir,
-										   const unsigned char player, const unsigned short sea_id) const
+unsigned GameWorldBase::GetNextFreeHarborPoint(const MapCoord x, const MapCoord y, const unsigned origin_harbor_id, const unsigned char dir,
+										   const unsigned char player) const
 {
-	return GetNextHarborPoint(origin_harbor_id,dir,player,sea_id,&GameWorldBase::IsHarborPointFree);
+	return GetNextHarborPoint(x,y,origin_harbor_id,dir,player,&GameWorldBase::IsHarborPointFree);
 }
 

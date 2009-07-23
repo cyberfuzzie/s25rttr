@@ -118,8 +118,8 @@ void iwShip::Msg_PaintAfter()
 	if(ship->IsWaitingForExpeditionInstructions())
 	{
 		for(unsigned char i = 0;i<6;++i)
-			GetCtrl<Window>(11+i)->SetVisible(gwv->GetNextFreeHarborPoint(ship->GetCurrentHarbor(),
-			i,ship->GetPlayer(),ship->GetSeaID()) > 0);
+			GetCtrl<Window>(11+i)->SetVisible(gwv->GetNextFreeHarborPoint(ship->GetX(),ship->GetY(),
+			ship->GetCurrentHarbor(),i,ship->GetPlayer()) > 0);
 	}
 	else
 	{

@@ -298,7 +298,7 @@ void noShip::ContinueExpedition(const unsigned char dir)
 	assert(state == STATE_EXPEDITION_WAITING);
 
 	// Nächsten Hafenpunkt in dieser Richtung suchen
-	unsigned new_goal = gwg->GetNextFreeHarborPoint(goal_harbor_id,dir,player,sea_id);
+	unsigned new_goal = gwg->GetNextFreeHarborPoint(x,y,goal_harbor_id,dir,player);
 
 	// Auch ein Ziel gefunden?
 	if(!new_goal)

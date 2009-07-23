@@ -1,4 +1,4 @@
-// $Id: GameWorld.cpp 5312 2009-07-22 18:02:04Z OLiver $
+// $Id: GameWorld.cpp 5319 2009-07-23 09:59:18Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -407,7 +407,7 @@ void GameWorld::Scan(glArchivItem_Map *map)
 	for(unsigned i = 0;i<harbor_pos.size();++i)
 	{
 		for(unsigned z = 0;z<6;++z)
-			harbor_pos[i].sea_ids[z] = IsCoastalPoint(GetXA(harbor_pos[i].x,harbor_pos[i].y,z),
+			harbor_pos[i].cps[z].sea_id = IsCoastalPoint(GetXA(harbor_pos[i].x,harbor_pos[i].y,z),
 			GetYA(harbor_pos[i].x,harbor_pos[i].y,z));
 	}
 

@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.cpp 5259 2009-07-13 15:53:31Z FloSoft $
+// $Id: dskGameInterface.cpp 5320 2009-07-23 19:45:30Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -121,6 +121,12 @@ dskGameInterface::dskGameInterface()
 	cbb.loadEdges( &LOADER.GetFiles().find("resource")->second );
 	cbb.buildBorder(VideoDriverWrapper::inst().GetScreenWidth(),
 		VideoDriverWrapper::inst().GetScreenHeight(),&borders);
+
+	// Kann passieren dass schon Nachrichten vorliegen, bevor es uns gab (insb. HQ-Landverlust)
+	if (GAMECLIENT.GetPostMessages().size() > 0)
+	{
+		CI_NewPostMessage(GAMECLIENT.GetPostMessages().size());
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////

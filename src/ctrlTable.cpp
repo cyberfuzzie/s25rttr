@@ -1,4 +1,4 @@
-// $Id: ctrlTable.cpp 5311 2009-07-22 17:53:32Z jh $
+// $Id: ctrlTable.cpp 5318 2009-07-23 06:42:38Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -71,8 +71,7 @@ ctrlTable::ctrlTable(Window *parent,
 				c.title = title;
 
 			c.width = (unsigned short)va_arg(liste, int);
-
-			c.sortType = va_arg(liste, SortType);
+			c.sortType = (SortType)va_arg(liste, int);
 
 			// Button für die Spalte hinzufügen
 			AddTextButton(i+1, 0, 0, 0, header_height, tc, c.title, font);

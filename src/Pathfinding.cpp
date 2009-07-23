@@ -1,4 +1,4 @@
-// $Id: Pathfinding.cpp 5312 2009-07-22 18:02:04Z OLiver $
+// $Id: Pathfinding.cpp 5318 2009-07-23 06:42:38Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -203,7 +203,8 @@ bool GameWorldBase::FindFreePath(const MapCoord x_start,const MapCoord y_start,
 				if(cb)
 				{
 					MapCoord x = best_id%width, y = best_id/width;
-					MapCoord px = pf_nodes[best_id].prev%width, py = pf_nodes[best_id].prev/width;
+					//MapCoord px = pf_nodes[best_id].prev%width;
+					MapCoord py = pf_nodes[best_id].prev/width;
 
 					if(x == 0)
 					{

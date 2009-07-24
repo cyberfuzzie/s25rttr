@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 5190 2009-07-04 21:18:10Z OLiver $
+// $Id: GameClientPlayer.cpp 5323 2009-07-24 09:26:05Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1625,7 +1625,7 @@ void GameClientPlayer::RegisterShip(noShip * ship)
 			gwg->GetCoastalPoint((*it)->GetHarborPosID(),&dest_x,&dest_y,ship->GetSeaID());
 			unsigned length;
 			std::vector<unsigned char> route;
-			if(gwg->FindShipPath(ship->GetX(),ship->GetY(),dest_x,dest_y,&route,&length,NULL))
+			if(gwg->FindShipPath(ship->GetX(),ship->GetY(),dest_x,dest_y,&route,&length))
 			{
 				if(length < best_length)
 				{
@@ -1667,7 +1667,7 @@ void GameClientPlayer::OrderShip(nobHarborBuilding * hb)
 				gwg->GetCoastalPoint(hb->GetHarborPosID(),&dest_x,&dest_y,ships[i]->GetSeaID());
 				unsigned length;
 				std::vector<unsigned char> route;
-				if(gwg->FindShipPath(ships[i]->GetX(),ships[i]->GetY(),dest_x,dest_y,&route,&length,NULL))
+				if(gwg->FindShipPath(ships[i]->GetX(),ships[i]->GetY(),dest_x,dest_y,&route,&length))
 				{
 					if(length < best_length)
 					{

@@ -249,7 +249,7 @@ noShip::Result noShip::DriveToHarbour()
 		if(!gwg->CheckShipRoute(x,y,route,pos,&goal_x_route,&goal_y_route))
 		{
 			// Route kann nicht mehr passiert werden --> neue Route suchen
-			if(!gwg->FindShipPath(x,y,coastal_x,coastal_y,&route,NULL,NULL))
+			if(!gwg->FindShipPath(x,y,coastal_x,coastal_y,&route,NULL))
 			{
 				// Wieder keine gefunden -> raus
 				return NO_ROUTE_FOUND;
@@ -265,7 +265,7 @@ noShip::Result noShip::DriveToHarbour()
 			// Nein, d.h. wenn wir schon nah dran sind, müssen wir die Route neu berechnen
 			if(route.size()-pos < 10)
 			{
-				if(!gwg->FindShipPath(x,y,coastal_x,coastal_y,&route,NULL,NULL))
+				if(!gwg->FindShipPath(x,y,coastal_x,coastal_y,&route,NULL))
 					// Keiner gefunden -> raus
 					return NO_ROUTE_FOUND;
 
@@ -307,7 +307,7 @@ void noShip::ContinueExpedition(const unsigned char dir)
 	Point<MapCoord> goal = gwg->GetHarborPoint(new_goal);
 
 	// Versuchen, Weg zu finden
-	if(!gwg->FindShipPath(x,y,goal.x,goal.y,&route,NULL,NULL))
+	if(!gwg->FindShipPath(x,y,goal.x,goal.y,&route,NULL))
 		return;
 
 	// Dann fahren wir da mal hin

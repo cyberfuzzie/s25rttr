@@ -1,4 +1,4 @@
-// $Id: nobBaseMilitary.cpp 5074 2009-06-20 14:31:41Z OLiver $
+// $Id: nobBaseMilitary.cpp 5327 2009-07-25 19:48:52Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -461,8 +461,10 @@ void nobBaseMilitary::CancelJobs()
 			as->InformTargetsAboutCancelling();
 			// Wieder in das Haus verfrachten
 			this->AddActiveSoldier(as);
+
+			leave_house.erase(it);
 		}
 	}
 
-	leave_house.clear();
+	//leave_house.clear();
 }

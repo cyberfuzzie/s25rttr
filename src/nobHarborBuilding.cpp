@@ -63,7 +63,7 @@ nobHarborBuilding::nobHarborBuilding(const unsigned short x, const unsigned shor
 	// Post versenden
 	if(GameClient::inst().GetPlayerID() == this->player)
 		GameClient::inst().SendPostMessage(new ImagePostMsgWithLocation(
-			_("New storehouse finished"), PMC_GENERAL, x, y, BLD_STOREHOUSE, nation));
+		_("New storehouse finished"), PMC_GENERAL, x, y, BLD_HARBORBUILDING, nation));
 }
 
 

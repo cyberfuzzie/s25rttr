@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.h 5078 2009-06-21 11:41:45Z OLiver $
+// $Id: dskGameInterface.h 5332 2009-07-26 13:06:22Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -135,7 +135,7 @@ private:
 	void DemolishRoad(const unsigned start_id);
 
 	/// Updatet das Post-Icon mit der Nachrichtenanzahl und der Taube
-	void UpdatePostIcon(const unsigned postmessages_count);
+	void UpdatePostIcon(const unsigned postmessages_count, bool showPigeon);
 
 	void Msg_ButtonClick(const unsigned int ctrl_id);
 	void Msg_PaintBefore();

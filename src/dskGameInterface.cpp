@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.cpp 5320 2009-07-23 19:45:30Z jh $
+// $Id: dskGameInterface.cpp 5332 2009-07-26 13:06:22Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -161,6 +161,7 @@ void dskGameInterface::Msg_ButtonClick(const unsigned int ctrl_id)
 	case 3: // Post
 		{
 			WindowManager::inst().Show(new iwPostWindow(*gwv));
+			UpdatePostIcon(GAMECLIENT.GetPostMessages().size(), false);
 		} break;
 	}
 }
@@ -991,10 +992,10 @@ void dskGameInterface::DemolishRoad(const unsigned start_id)
 }
 
 /// Updatet das Post-Icon mit der Nachrichtenanzahl und der Taube
-void dskGameInterface::UpdatePostIcon(const unsigned postmessages_count)
+void dskGameInterface::UpdatePostIcon(const unsigned postmessages_count, bool showPigeon)
 {
 	// Taube setzen oder nicht (Post) 
-	if (postmessages_count == 0)
+	if (postmessages_count == 0 || !showPigeon)
 		GetCtrl<ctrlImageButton>(3)->SetImage(LOADER.GetImageN("io", 62));
 	else
 		GetCtrl<ctrlImageButton>(3)->SetImage(LOADER.GetImageN("io", 59));
@@ -1008,7 +1009,7 @@ void dskGameInterface::UpdatePostIcon(const unsigned postmessages_count)
 /// Neue Post-Nachricht eingetroffen
 void dskGameInterface::CI_NewPostMessage(const unsigned postmessages_count)
 {
-	UpdatePostIcon(postmessages_count);
+	UpdatePostIcon(postmessages_count, true);
 
 	// Tauben-Sound abspielen
 	LOADER.GetSoundN("sound", 114)->Play(255,false);
@@ -1017,5 +1018,5 @@ void dskGameInterface::CI_NewPostMessage(const unsigned postmessages_count)
 /// Es wurde eine Postnachricht vom Spieler gelöscht
 void dskGameInterface::CI_PostMessageDeleted(const unsigned postmessages_count)
 {
-	UpdatePostIcon(postmessages_count);
+	UpdatePostIcon(postmessages_count, false);
 }

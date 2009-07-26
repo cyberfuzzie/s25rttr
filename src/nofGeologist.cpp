@@ -1,4 +1,4 @@
-// $Id: nofGeologist.cpp 5312 2009-07-22 18:02:04Z OLiver $
+// $Id: nofGeologist.cpp 5332 2009-07-26 13:06:22Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -493,7 +493,7 @@ void nofGeologist::SetSign(const unsigned char resources)
 			{
 				switch(type)
 				{
-					case 0: GameClient::inst().SendPostMessage(new PostMsgWithLocation(_("Found ironore"), PMC_GEOLOGIST, x, y));
+					case 0: GameClient::inst().SendPostMessage(new PostMsgWithLocation(_("Found iron ore"), PMC_GEOLOGIST, x, y));
 						break;
 					case 1: GameClient::inst().SendPostMessage(new PostMsgWithLocation(_("Found gold"), PMC_GEOLOGIST, x, y));
 						break;

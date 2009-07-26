@@ -1,4 +1,4 @@
-// $Id: iwMainMenu.cpp 5238 2009-07-09 20:50:28Z FloSoft $
+// $Id: iwMainMenu.cpp 5332 2009-07-26 13:06:22Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -77,7 +77,7 @@ iwMainMenu::iwMainMenu(void)
 	AddImageButton( 9, 124, 118,  53, 44, TC_GREY, LOADER.GetImageN("io", 175), _("Ship register"));
 
 	// Gebäude
-	AddImageButton( 10,  12, 166,  53, 44, TC_GREY, LOADER.GetImageN("io", 24), _("Series sequence"));
+	AddImageButton( 10,  12, 166,  53, 44, TC_GREY, LOADER.GetImageN("io", 24), _("Building sequence"));
 	// Diplomatie (todo: besseres Bild suchen)
 	AddImageButton( 11,  68, 166,  53, 44, TC_GREY, LOADER.GetImageN("io", 190), _("Diplomacy"));
 	//// Schiffe

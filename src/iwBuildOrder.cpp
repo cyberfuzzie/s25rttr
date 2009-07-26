@@ -1,4 +1,4 @@
-// $Id: iwBuildOrder.cpp 5254 2009-07-12 15:49:16Z FloSoft $
+// $Id: iwBuildOrder.cpp 5332 2009-07-26 13:06:22Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -42,7 +42,7 @@
  *  @author OLiver
  */
 iwBuildOrder::iwBuildOrder(void)
-	: IngameWindow(CGI_BUILDORDER, (unsigned short)-1, (unsigned short)-1, 320, 300, _("Series sequence"), LOADER.GetImageN("io",5)),
+	: IngameWindow(CGI_BUILDORDER, (unsigned short)-1, (unsigned short)-1, 320, 300, _("Building sequence"), LOADER.GetImageN("io",5)),
 	settings_changed(false)
 {
 	ctrlList *list = AddList(0, 15, 60, 150, 220, TC_GREY, NormalFont);

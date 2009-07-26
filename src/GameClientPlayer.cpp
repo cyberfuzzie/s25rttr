@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 5323 2009-07-24 09:26:05Z jh $
+// $Id: GameClientPlayer.cpp 5331 2009-07-26 12:29:50Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -148,7 +148,7 @@ GameClientPlayer::GameClientPlayer(const unsigned playerid) : GamePlayerInfo(pla
 	GAMECLIENT.visual_settings.transport_order[13] = STD_TRANSPORT[GD_BOAT];
 
 	// Militär- und Werkzeugeinstellungen
-	military_settings[0] = 5;
+	military_settings[0] = 10;
 	military_settings[1] = 3;
 	military_settings[2] = 5;
 	military_settings[3] = 3;

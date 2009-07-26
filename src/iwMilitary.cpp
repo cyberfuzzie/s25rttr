@@ -1,4 +1,4 @@
-// $Id: iwMilitary.cpp 5238 2009-07-09 20:50:28Z FloSoft $
+// $Id: iwMilitary.cpp 5331 2009-07-26 12:29:50Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -46,7 +46,7 @@ iwMilitary::iwMilitary(void)
 	settings_changed(false)
 {
 	// Einzelne Balken
-	AddProgress(0,17,25,132,26,TC_GREY,119,120,5,"",4,4,0,_("Fewer recruits"),_("More recruits")); /* pitch: 4, 4 */
+	AddProgress(0,17,25,132,26,TC_GREY,119,120,10,"",4,4,0,_("Fewer recruits"),_("More recruits")); /* pitch: 4, 4 */
 	AddProgress(1,17,57,132,26,TC_GREY,121,122,5,"",4,4,0,_("Weak defense"),_("Strong defense"));
 	AddProgress(2,17,89,132,26,TC_GREY,123,124,5,"",4,4,0,_("Fewer defenders"),_("More defenders"));
 	AddProgress(3,17,121,132,26,TC_GREY,209,210,5,"",4,4,0,_("Less attackers"),_("More attackers"));

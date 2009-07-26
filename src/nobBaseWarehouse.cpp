@@ -1,4 +1,4 @@
-// $Id: nobBaseWarehouse.cpp 5312 2009-07-22 18:02:04Z OLiver $
+// $Id: nobBaseWarehouse.cpp 5331 2009-07-26 12:29:50Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -40,6 +40,8 @@
 #include "SerializedGameData.h"
 #include "nofPassiveWorker.h"
 
+#include <algorithm>
+
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
 #if defined _WIN32 && defined _DEBUG && defined _MSC_VER
@@ -54,8 +56,8 @@ const unsigned EMPTY_INTERVAL = 100;
 const unsigned short PRODUCE_HELPERS_GF = 300;
 const unsigned short PRODUCE_HELPERS_RANDOM_GF = 20;
 /// Dauer für das Rekrutierung von Soldaten
-const unsigned short RECRUITE_GF = 400;
-const unsigned short RECRUITE_RANDOM_GF = 400;
+const unsigned short RECRUITE_GF = 200;
+const unsigned short RECRUITE_RANDOM_GF = 200;
 
 nobBaseWarehouse::nobBaseWarehouse(const BuildingType type,const unsigned short x, const unsigned short y,const unsigned char player,const Nation nation)
 : nobBaseMilitary(type,x,y,player,nation), fetch_double_protection(false), producinghelpers_event(em->AddEvent(this,PRODUCE_HELPERS_GF+RANDOM.Rand(__FILE__,__LINE__,obj_id,PRODUCE_HELPERS_RANDOM_GF),1)), recruiting_event(0),
@@ -378,35 +380,63 @@ void nobBaseWarehouse::HandleBaseEvent(const unsigned int id)
 	case 2:
 		{
 			recruiting_event = 0;
+			// Wir wollen so viele der Soldaten rekrutieren,
+			// wie in den military_settings angegeben.
+			// Wird evtl gerundet, dann fair nach Zufall ;) ).
 
-			// Ein Gefreiter mehr, dafür Träger, Waffen und Bier weniger
-			++real_goods.people[JOB_PRIVATE];
-			++goods.people[JOB_PRIVATE];
-			gwg->GetPlayer(player)->IncreaseInventoryJob(JOB_PRIVATE,1);
+			unsigned max_recruits;
+			max_recruits = std::min(
+				real_goods.goods[GD_SWORD],
+				real_goods.goods[GD_SHIELDROMANS]);
+			max_recruits = std::min(
+				real_goods.goods[GD_BEER],
+				max_recruits);
+			max_recruits = std::min(
+				real_goods.people[JOB_HELPER],
+				max_recruits);
 
-			--real_goods.people[JOB_HELPER];
-			--goods.people[JOB_HELPER];
-			gwg->GetPlayer(player)->DecreaseInventoryJob(JOB_HELPER,1);
+			const unsigned char recruiting_ratio 
+				= gwg->GetPlayer(player)->military_settings[0];
+			unsigned short real_recruits = 
+				max_recruits 
+				* recruiting_ratio
+				/ 10;
+			// Wurde abgerundet?
+			if (real_recruits * recruiting_ratio % 10 != 0)
+			if (RANDOM.Rand(__FILE__,__LINE__,obj_id,9) 
+			    < real_recruits * recruiting_ratio % 10)
+			{ 
+				++real_recruits;
+			}
+
+			real_goods.people[JOB_PRIVATE] += real_recruits;
+			goods.people[JOB_PRIVATE] += real_recruits;
+			gwg->GetPlayer(player)->IncreaseInventoryJob(JOB_PRIVATE, real_recruits);
+
+			real_goods.people[JOB_HELPER] -= real_recruits;
+			goods.people[JOB_HELPER] -= real_recruits;
+			gwg->GetPlayer(player)->DecreaseInventoryJob(JOB_HELPER, real_recruits);
 			
-			--real_goods.goods[GD_SWORD];
-			--goods.goods[GD_SWORD];
-			gwg->GetPlayer(player)->DecreaseInventoryWare(GD_SWORD,1);
+			real_goods.goods[GD_SWORD] -= real_recruits;
+			goods.goods[GD_SWORD] -= real_recruits;
+			gwg->GetPlayer(player)->DecreaseInventoryWare(GD_SWORD,real_recruits);
 
-			--real_goods.goods[GD_SHIELDROMANS];
-			--goods.goods[GD_SHIELDROMANS];
-			gwg->GetPlayer(player)->DecreaseInventoryWare(GD_SHIELDROMANS,1);
+			real_goods.goods[GD_SHIELDROMANS] -= real_recruits;
+			goods.goods[GD_SHIELDROMANS] -= real_recruits;
+			gwg->GetPlayer(player)->DecreaseInventoryWare(GD_SHIELDROMANS, real_recruits);
 
-			--real_goods.goods[GD_BEER];
-			--goods.goods[GD_BEER];
-			gwg->GetPlayer(player)->DecreaseInventoryWare(GD_BEER,1);
+			real_goods.goods[GD_BEER] -= real_recruits;
+			goods.goods[GD_BEER] -= real_recruits;
+			gwg->GetPlayer(player)->DecreaseInventoryWare(GD_BEER, real_recruits);
 
 
 			// Evtl. versuchen nächsten zu rekrutieren
 			TryRecruiting();
 
 			// Wenn vorher keine Soldaten hier waren, Militärgebäude prüfen (evtl kann der Soldat ja wieder in eins gehen)
-			if(real_goods.people[JOB_PRIVATE] == 1)
-				gwg->GetPlayer(player)->NewSoldierAvailable(real_goods.people[JOB_PRIVATE]);
+			if(real_goods.people[JOB_PRIVATE] == real_recruits)
+				for (unsigned short i = 0; i < real_recruits; ++i)
+					gwg->GetPlayer(player)->NewSoldierAvailable(real_goods.people[JOB_PRIVATE]);
 
 		} break;
 	// Auslagerevent
@@ -883,7 +913,7 @@ nofDefender * nobBaseWarehouse::ProvideDefender(nofAttacker * const attacker)
 bool nobBaseWarehouse::AreRecruitingConditionsComply()
 {
 	// Mindestanzahl der Gehilfen die vorhanden sein müssen anhand der 1. Militäreinstellung ausrechnen
-	unsigned needed_helpers = 100-20*gwg->GetPlayer(player)->military_settings[0];
+	unsigned needed_helpers = 100-10*gwg->GetPlayer(player)->military_settings[0];
 
 	// einer muss natürlich mindestens vorhanden sein!
 	if(!needed_helpers) needed_helpers = 1;

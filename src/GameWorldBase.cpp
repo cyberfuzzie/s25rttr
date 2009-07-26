@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 5319 2009-07-23 09:59:18Z OLiver $
+// $Id: GameWorldBase.cpp 5330 2009-07-26 00:16:09Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -362,6 +362,23 @@ bool GameWorldBase::RoadAvailable(const bool boat_road,const int x, const int y,
 				return false;
 	}
 
+	return true;
+}
+
+bool GameWorldBase::RoadAlreadyBuilt(const bool boat_road, unsigned short start_x, unsigned short start_y, const std::vector<unsigned char>& route)
+{
+	int tx = start_x;
+	int ty = start_y;
+	for(unsigned i = 0;i<route.size()-1;++i)
+	{
+		// Richtiger Weg auf diesem Punkt?
+		if(!GetPointRoad(tx,ty, route[i]))
+			return false;
+
+		int tmpx = tx;
+		tx = GetXA(tx,ty,route[i]);
+		ty = GetYA(tmpx,ty,route[i]);
+	}
 	return true;
 }
 

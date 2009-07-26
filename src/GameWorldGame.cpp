@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 5319 2009-07-23 09:59:18Z OLiver $
+// $Id: GameWorldGame.cpp 5330 2009-07-26 00:16:09Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -323,9 +323,16 @@ void GameWorldGame::BuildRoad(const unsigned char playerid,const bool boat_road,
 		// Feld bebaubar und auf unserem Gebiet
 		if(!RoadAvailable(boat_road,testx,testy,i,false) || !IsPlayerTerritory(testx,testy))
 		{
-			// Nein? Dann Weg nicht bauen und ggf. das visuelle wieder zurückbauen
-			RemoveVisualRoad(start_x,start_y,route);
-			return;
+			// Nein? Dann prüfen ob genau der gewünscht Weg schon da ist und ansonsten den visuellen wieder zurückbauen
+			if (RoadAlreadyBuilt(boat_road, start_x, start_y, route))
+			{
+				return;
+			}
+			else
+			{
+				RemoveVisualRoad(start_x,start_y,route);
+				return;
+			}
 		}
 	}
 

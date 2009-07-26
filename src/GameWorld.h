@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 5319 2009-07-23 09:59:18Z OLiver $
+// $Id: GameWorld.h 5330 2009-07-26 00:16:09Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -276,6 +276,8 @@ public:
 
 	/// Kann dorthin eine Straße gebaut werden?
 	bool RoadAvailable(const bool boat_road,const int x, const int y,unsigned char to_dir,const bool visual = true) const;
+	/// Prüft ob exakt die gleiche Straße schon gebaut wurde
+	bool RoadAlreadyBuilt(const bool boat_road, unsigned short start_x, unsigned short start_y, const std::vector<unsigned char>& route);
 	/// Bauqualitäten berechnen, bei flagonly gibt er nur 1 zurück, wenn eine Flagge möglich ist
 	BuildingQuality CalcBQ(const MapCoord x, const MapCoord y,const unsigned char player,const bool flagonly = false,const bool visual = true) const;
 	/// Setzt die errechnete BQ gleich mit

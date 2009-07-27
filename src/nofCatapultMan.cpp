@@ -1,4 +1,4 @@
-// $Id: nofCatapultMan.cpp 5253 2009-07-12 14:42:18Z FloSoft $
+// $Id: nofCatapultMan.cpp 5337 2009-07-27 18:22:36Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -167,18 +167,6 @@ void nofCatapultMan::HandleDerivedEvent(const unsigned int id)
 				current_ev = em->AddEvent(this,CATAPULT_WAIT1_LENGTH,1);
 				StartNotWorking();
 				return;
-			}
-			else
-			{
-				char str[512];
-				sprintf(str,"%u: obj_id=%u found %u targets!\n",GameClient::inst().GetGFNumber(),
-					obj_id,pts.size());
-				GameClient::inst().AddToGameLog(str);
-				for(list<PossibleTarget>::iterator it = pts.begin();it.valid();++it)
-				{
-					sprintf(str," - x=%u, y=%u, distance=%u\n",unsigned(it->x),unsigned(it->y),it->distance); 
-					GameClient::inst().AddToGameLog(str);
-				}
 			}
 
 			// Waren verbrauchen

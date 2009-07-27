@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 5312 2009-07-22 18:02:04Z OLiver $
+// $Id: GameClient.cpp 5337 2009-07-27 18:22:36Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1612,13 +1612,6 @@ void GameClient::SetReplayPause(bool pause)
 		framesinfo.pause = pause;
 		framesinfo.frame_time = 0;
 	}
-}
-
-
-void GameClient::AddToGameLog(const char * const str)
-{
-	if(!replay_mode)
-		fputs(str,game_log);
 }
 
 

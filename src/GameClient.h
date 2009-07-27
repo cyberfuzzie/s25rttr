@@ -1,4 +1,4 @@
-// $Id: GameClient.h 5272 2009-07-15 16:38:14Z FloSoft $
+// $Id: GameClient.h 5337 2009-07-27 18:22:36Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -150,8 +150,6 @@ public:
 	unsigned WriteSaveHeader(const std::string& filename);
 	/// Visuelle Einstellungen aus den richtigen ableiten
 	void GetVisualSettings();
-	/// Zum Log etwas hinzufügen
-	void AddToGameLog(const char * const str);
 
 
 

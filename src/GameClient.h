@@ -1,4 +1,4 @@
-// $Id: GameClient.h 5337 2009-07-27 18:22:36Z jh $
+// $Id: GameClient.h 5340 2009-07-28 19:13:03Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -42,6 +42,20 @@ namespace gc { class GameCommand; }
 
 class GameClient : public Singleton<GameClient>, public GameMessageInterface
 {
+//vars für avg fps berechnung
+private:
+	unsigned int total_frames;
+	unsigned int avg_fps;
+	unsigned int seconds;
+//sechs funktionen für avg fps berechnung (getter und setter)	
+public:
+	void set_total_frames(unsigned int);
+	unsigned int get_total_frames(void);
+	void set_avg_fps(unsigned int);
+	unsigned int get_avg_fps(void);
+	void set_seconds(unsigned int);
+	unsigned int get_seconds(void);
+
 public:
 	enum ClientState
 	{

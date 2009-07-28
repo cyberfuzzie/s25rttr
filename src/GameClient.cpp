@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 5337 2009-07-27 18:22:36Z jh $
+// $Id: GameClient.cpp 5340 2009-07-28 19:13:03Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -150,6 +150,12 @@ GameClient::GameClient(void)
 	clientconfig.Clear();
 	framesinfo.Clear();
 	randcheckinfo.Clear();
+	
+	//initialisierung der vars für avg fps berechnung
+	total_frames=0;
+	avg_fps=0;
+	seconds=0;
+	postMessages.clear();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -398,6 +404,9 @@ void GameClient::RealStart()
 	/// Wenn Replay, evtl erstes Command vom Start-Frame auslesen, was sonst ignoriert werden würde
 	if(replay_mode)
 		ExecuteGameFrame_Replay();
+	this->total_frames=0;
+	this->avg_fps=0;
+	this->seconds=0;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1700,4 +1709,37 @@ GameClientPlayer::Pact::Pact(Serializer * ser) :
 	duration(ser->PopUnsignedInt()),
 	start(ser->PopUnsignedInt())
 {
+}
+
+
+//sechs funktionen für avg fps berechnung (getter und setter)	
+unsigned int GameClient::get_total_frames(void)
+{
+	return this->total_frames;
+}
+
+void GameClient::set_total_frames(unsigned int tf)
+{
+	this->total_frames=tf;
+}
+
+
+void GameClient::set_avg_fps(unsigned int af)
+{
+	this->avg_fps=af;
+}
+
+unsigned int GameClient::get_avg_fps(void)
+{
+	return this->avg_fps;
+}
+
+void GameClient::set_seconds(unsigned int sec)
+{
+	this->seconds=sec;
+}
+
+unsigned int GameClient::get_seconds(void)
+{
+	return this->seconds;
 }

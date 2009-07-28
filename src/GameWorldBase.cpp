@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 5330 2009-07-26 00:16:09Z jh $
+// $Id: GameWorldBase.cpp 5340 2009-07-28 19:13:03Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -840,7 +840,7 @@ BuildingQuality GameWorldBase::CalcBQ(const MapCoord x, const MapCoord y,const u
 		// Dann machen wir einen Hafen draus
 		val = BQ_HARBOR;
 
-	if(val >= BQ_HUT && val <= BQ_MINE)
+	if(val >= BQ_HUT && val <= BQ_HARBOR)
 	{
 		if(GetNO(x+(y&1),y+1)->GetType() == NOP_FLAG)
 			return val;

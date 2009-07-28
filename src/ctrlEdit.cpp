@@ -1,4 +1,4 @@
-// $Id: ctrlEdit.cpp 5266 2009-07-14 07:38:49Z FloSoft $
+// $Id: ctrlEdit.cpp 5340 2009-07-28 19:13:03Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -253,14 +253,37 @@ bool ctrlEdit::Msg_KeyDown(const KeyEvent& ke)
 
 	case KT_LEFT: // Cursor nach Links
 		{
-			if(cursor_pos > 0)
-				CursorLeft();
+			// Blockweise nach links, falls Strg gedrückt
+			if(ke.ctrl)
+			{
+				// Erst über alle Trennzeichen hinweg
+				while (cursor_pos > 0 && std::string(" \t\n-+=").find(text[cursor_pos-1]) != std::string::npos)
+					CursorLeft();
+				// Und dann über alles, was kein Trenner ist
+				while (cursor_pos > 0 && std::string(" \t\n-+=").find(text[cursor_pos-1]) == std::string::npos)
+					CursorLeft();
+			}
+			// Sonst nur einen Schritt
+				if (cursor_pos > 0)
+					CursorLeft();
 		} break;
 
 	case KT_RIGHT: // Cursor nach Rechts
 		{
-			if(cursor_pos < text.length())
-				CursorRight();
+			// Blockweise nach rechts, falls Strg gedrückt
+			if(ke.ctrl)
+			{
+				// Erst über alle Trennzeichen hinweg
+				while (cursor_pos < text.length() && std::string(" \t\n-+=").find(text[cursor_pos+1]) != std::string::npos)
+					CursorRight();
+				// Und dann über alles, was kein Trenner ist
+				while (cursor_pos < text.length() && std::string(" \t\n-+=").find(text[cursor_pos+1]) == std::string::npos)
+					CursorRight();
+			}
+			else
+			// Sonst nur einen Schritt
+				if (cursor_pos < text.length())
+					CursorRight();
 		} break;
 
 	case KT_CHAR: // Zeichen eingegeben
@@ -273,6 +296,15 @@ bool ctrlEdit::Msg_KeyDown(const KeyEvent& ke)
 		{
 			if(!disabled)
 				RemoveChar();
+		} break;
+
+	case KT_DELETE: // Entfernen gedrückt
+		{
+			if(!disabled && cursor_pos < text.length())
+			{
+				CursorRight();
+				RemoveChar();
+			}
 		} break;
 
 	case KT_RETURN: // Enter gedrückt

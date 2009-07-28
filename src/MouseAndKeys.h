@@ -1,4 +1,4 @@
-// $Id: MouseAndKeys.h 4934 2009-05-24 12:47:58Z FloSoft $
+// $Id: MouseAndKeys.h 5340 2009-07-28 19:13:03Z jh $
 //
 // Copyright (c) 20052008 Settlers Freaks (sfteam at siedler25.org)
 //
@@ -54,6 +54,7 @@ enum KeyType
 	KT_RIGHT,
 	KT_DOWN,
 	KT_BACKSPACE,
+	KT_DELETE,
 	KT_SHIFT,
 	KT_TAB,
 	KT_F1, KT_F2, KT_F3, KT_F4, KT_F5, KT_F6, KT_F7, KT_F8, KT_F9, KT_F10, KT_F11, KT_F12,

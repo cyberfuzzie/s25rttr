@@ -1,4 +1,4 @@
-// $Id: ctrlChat.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: ctrlChat.cpp 5340 2009-07-28 19:13:03Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -263,3 +263,51 @@ bool ctrlChat::Msg_LeftUp(const MouseCoords& mc)
 {
 	return RelayMouseMessage(&Window::Msg_LeftUp, mc);
 }
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author Divan
+ */
+bool ctrlChat::Msg_WheelUp(const MouseCoords& mc)
+{
+	// Forward to ScrollBar, if mouse over control
+	ctrlScrollBar *scrollbar = GetCtrl<ctrlScrollBar>(0);
+
+	if(Coll(mc.x, mc.y, GetX() + 2, GetY() + 2, width - 2, height - 4))
+	{
+		// Simulate three Button Clicks
+		scrollbar->Msg_ButtonClick(0);
+		scrollbar->Msg_ButtonClick(0);
+		scrollbar->Msg_ButtonClick(0);
+		return true;
+	}
+	else
+		return false;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author Divan
+ */
+bool ctrlChat::Msg_WheelDown(const MouseCoords& mc)
+{
+	// Forward to ScrollBar, if mouse over control
+	ctrlScrollBar *scrollbar = GetCtrl<ctrlScrollBar>(0);
+
+	if(Coll(mc.x, mc.y, GetX() + 2, GetY() + 2, width - 2, height - 4))
+	{
+		// Simulate three Button Clicks
+		scrollbar->Msg_ButtonClick(1);
+		scrollbar->Msg_ButtonClick(1);
+		scrollbar->Msg_ButtonClick(1);
+		return true;
+	}
+	else
+		return false;
+}
+

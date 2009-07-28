@@ -1,4 +1,4 @@
-// $Id: GameManager.cpp 5259 2009-07-13 15:53:31Z FloSoft $
+// $Id: GameManager.cpp 5340 2009-07-28 19:13:03Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -177,6 +177,18 @@ bool GameManager::Run()
 	// Framerate berechnen
 	if(VideoDriverWrapper::inst().GetTickCount() - frame_time > 1000)
 	{
+		//Sekunden hochzählen wenn replay oder spiel gestartet wurde
+		GAMECLIENT.set_seconds(GAMECLIENT.get_seconds()+1);
+
+		
+		if(GAMECLIENT.get_seconds()>1)//div/0 verhindern und sicherstellen dass erst frames mitgenommen werden wenn das spiel läuft (quasi 2s delay)
+		{
+			//total frames berechnen und speichern
+			GAMECLIENT.set_total_frames(GAMECLIENT.get_total_frames()+frames);		 
+			//berechnen und speichern der avg fps
+			GAMECLIENT.set_avg_fps(GAMECLIENT.get_total_frames()/GAMECLIENT.get_seconds());
+		}
+		
 		framerate = frames;
 		frames = 0;
 		frame_time = VideoDriverWrapper::inst().GetTickCount();
@@ -184,7 +196,7 @@ bool GameManager::Run()
 
 	// und zeichnen
 	char frame_str[64];
-	sprintf(frame_str, "%d fps", framerate);
+	sprintf(frame_str, "%d fps (%u AVG)", framerate, GAMECLIENT.get_avg_fps());
 
 	SmallFont->Draw( VideoDriverWrapper::inst().GetScreenWidth(), 0, frame_str, glArchivItem_Font::DF_RIGHT, COLOR_YELLOW);
 

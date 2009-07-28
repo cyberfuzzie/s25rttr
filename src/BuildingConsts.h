@@ -1,4 +1,4 @@
-// $Id: BuildingConsts.h 5314 2009-07-22 21:08:48Z jh $
+// $Id: BuildingConsts.h 5340 2009-07-28 19:13:03Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -111,7 +111,7 @@ const BuildingQuality BUILDING_SIZE[40] =
 	BQ_HOUSE,
 	BQ_CASTLE,
 	BQ_CASTLE,
-	BQ_NOTHING
+	BQ_HARBOR
 };
 
 // Konstanten zu den "normalen Gebäuden" (Betrieben), beginnt erst mit Granitmine

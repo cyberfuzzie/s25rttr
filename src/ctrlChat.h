@@ -1,4 +1,4 @@
-// $Id: ctrlChat.h 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: ctrlChat.h 5340 2009-07-28 19:13:03Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -40,6 +40,8 @@ public:
 	virtual bool Msg_MouseMove(const MouseCoords& mc);
 	virtual bool Msg_LeftDown(const MouseCoords& mc);
 	virtual bool Msg_LeftUp(const MouseCoords& mc);
+	virtual bool Msg_WheelUp(const MouseCoords& mc);
+	virtual bool Msg_WheelDown(const MouseCoords& mc);
 
 protected:
 	/// Zeichnet das Chat-Control.

@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 5340 2009-07-28 19:13:03Z jh $
+// $Id: GameClient.cpp 5343 2009-07-29 15:03:57Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -150,12 +150,12 @@ GameClient::GameClient(void)
 	clientconfig.Clear();
 	framesinfo.Clear();
 	randcheckinfo.Clear();
-	
+	postMessages.clear();
+
 	//initialisierung der vars für avg fps berechnung
 	total_frames=0;
 	avg_fps=0;
 	seconds=0;
-	postMessages.clear();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -300,6 +300,7 @@ void GameClient::Stop()
 
 	clientconfig.Clear();
 	mapinfo.Clear();
+	postMessages.clear();
 
 	replayinfo.replay.StopRecording();
 

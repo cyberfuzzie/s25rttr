@@ -1,4 +1,4 @@
-// $Id: Random.cpp 4746 2009-04-30 20:10:46Z OLiver $
+// $Id: Random.cpp 5345 2009-07-29 20:46:07Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -75,7 +75,7 @@ int Random::Rand(const char * const src_name, const unsigned src_line,const unsi
 
 	/// Randomgenerator loggen
 	char log_str[512];
-	assert(counter != 7731970);
+	//assert(counter != 7731970); <- wtf?
 	sprintf(log_str,"%u:R(%d)=%d,z=%d | %s Z: %u|id=%u",counter,max,(zahl * max) / 32768,zahl,src_name,src_line,obj_id);
 	async_log.push_back(log_str);
 	if(async_log.size() > 10000)

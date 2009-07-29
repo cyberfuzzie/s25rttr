@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.h 5300 2009-07-19 20:46:59Z jh $
+// $Id: AIPlayerJH.h 5344 2009-07-29 16:23:40Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -127,6 +127,12 @@ private:
 
 	// Tmp zum spielen:
 	std::vector<unsigned short> woodMap;
+
+	// Prüft ob Aufgeben sinnvoll ist
+	bool TestDefeat();
+
+	// Aufgegeben
+	bool defeated;
 };
 
 #endif //!AIPLAYERJH_H_INCLUDED

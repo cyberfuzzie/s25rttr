@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.cpp 5300 2009-07-19 20:46:59Z jh $
+// $Id: AIPlayerJH.cpp 5344 2009-07-29 16:23:40Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -38,13 +38,19 @@ bool IsPointOK_RoadPath(const GameWorldBase& gwb, const MapCoord x, const MapCoo
 
 AIPlayerJH::AIPlayerJH(const unsigned char playerid, const GameWorldBase * const gwb, const GameClientPlayer * const player,
 		const GameClientPlayerList * const players, const GlobalGameSettings * const ggs,
-		const AI::Level level) : AIBase(playerid, gwb, player, players, ggs, level)
+		const AI::Level level) : AIBase(playerid, gwb, player, players, ggs, level), defeated(false)
 {
 }
 
 /// Wird jeden GF aufgerufen und die KI kann hier entsprechende Handlungen vollziehen
 void AIPlayerJH::RunGF(const unsigned gf)
 {
+	if (defeated)
+		return;
+
+	if (TestDefeat())
+		return;
+
 	// nach neuem Barrackenplatz suchen
 	if(gf % 50 == 0)
 	{
@@ -542,7 +548,10 @@ void AIPlayerJH::CheckBuildingQueue()
 		return;
 
 	// Ziel, das möglichst schnell erreichbar sein soll (TODO müsste dann evtl. auch Lager/Hafen sein)
-	noFlag *targetFlag = gwb->GetSpecObj<nobHQ>(player->hqx, player->hqy)->GetFlag();
+	const noBaseBuilding *targetBuilding = gwb->GetSpecObj<nobHQ>(player->hqx, player->hqy);
+	if (!targetBuilding)
+		return;
+	noFlag *targetFlag = targetBuilding->GetFlag();
 
 	BuildJob *bj = buildingQueue.front();
 
@@ -601,4 +610,16 @@ void AIPlayerJH::CheckBuildingQueue()
 		break;
 	case BJ_ERROR: break;
 	}
+}
+
+bool AIPlayerJH::TestDefeat()
+{
+	const nobHQ *hq = gwb->GetSpecObj<nobHQ>(player->hqx, player->hqy);
+	if (!hq)
+	{
+		defeated = true;
+		gcs.push_back(new gc::Surrender());
+		return true;
+	}
+	return false;
 }

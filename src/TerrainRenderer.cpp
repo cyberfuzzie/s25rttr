@@ -1,4 +1,4 @@
-// $Id: TerrainRenderer.cpp 5259 2009-07-13 15:53:31Z FloSoft $
+// $Id: TerrainRenderer.cpp 5349 2009-07-30 16:59:31Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -844,12 +844,17 @@ void TerrainRenderer::Draw(const GameWorldViewer * gwv,unsigned int *water)
 	{
 		if(sorted_textures[i].size())
 		{
-			if(i == 14)
+			switch(i)
+			{
+			case 14:
 				glBindTexture(GL_TEXTURE_2D, GetImage(water, GAMECLIENT.GetGlobalAnimation(8,5, 5, 0))->GetTexture());
-			else if(i == 15)
+				break;
+			case 15:
 				glBindTexture(GL_TEXTURE_2D, GetImage(lava, GAMECLIENT.GetGlobalAnimation(8,5, 5, 0) % 4)->GetTexture());
-			else
+				break;
+			default:
 				glBindTexture(GL_TEXTURE_2D, GetImage(textures, i)->GetTexture());
+			}
 
 			for(list<MapTile>::iterator it = sorted_textures[i].begin(); it.valid(); ++it)
 			{
@@ -987,8 +992,6 @@ void TerrainRenderer::DrawWays(const GameWorldViewer * gwv)
 
 			// Wegtypen für die drei Richtungen
 			unsigned char type;
-			// Ein gültiger Wegtyp für das Zeichnen der Knotenpunkte (0xFF = kein Weg)
-			unsigned char first_type = 0xFF;
 
 			Visibility visibility = gwv->GetVisibility(tx,ty);
 
@@ -1020,9 +1023,6 @@ void TerrainRenderer::DrawWays(const GameWorldViewer * gwv)
 						} break;
 					}
 
-					first_type = type;
-
-
 					glColor3f(1.0f,1.0f,1.0f);
 					glBindTexture(GL_TEXTURE_2D, GetImage(roads, type)->GetTexture());
 					glBegin(GL_QUADS);
@@ -1042,26 +1042,6 @@ void TerrainRenderer::DrawWays(const GameWorldViewer * gwv)
 
 					glEnd();
 				}
-			}
-
-
-			// Wegknotenpunkt zeichnen
-			// irgendeine Straße, die man als erstes findet, von der den Knotenpunkt zeichnen
-			if(first_type != 0xFF)	{
-				glColor3f(GetColor(tx,ty),GetColor(tx,ty),GetColor(tx,ty));
-				glBindTexture(GL_TEXTURE_2D, GetImage(roads_points, first_type)->GetTexture());
-				glBegin(GL_QUADS);
-
-				glTexCoord2f(0.0f,0.0f);
-				glVertex2f(xpos-3.0f,ypos-3.0f);
-				glTexCoord2f(0.0f,1.0f);
-				glVertex2f(xpos-3.0f,ypos+3.0f);
-				glTexCoord2f(0.875f,1.0f);
-				glVertex2f(xpos+3.0f,ypos+3.0f);
-				glTexCoord2f(0.875f,0.0f);
-				glVertex2f(xpos+3.0f,ypos-3.0f);
-
-				glEnd();
 			}
 		}
 	}

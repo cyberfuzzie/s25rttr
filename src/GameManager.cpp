@@ -1,4 +1,4 @@
-// $Id: GameManager.cpp 5340 2009-07-28 19:13:03Z jh $
+// $Id: GameManager.cpp 5349 2009-07-30 16:59:31Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -178,15 +178,15 @@ bool GameManager::Run()
 	if(VideoDriverWrapper::inst().GetTickCount() - frame_time > 1000)
 	{
 		//Sekunden hochzählen wenn replay oder spiel gestartet wurde
-		GAMECLIENT.set_seconds(GAMECLIENT.get_seconds()+1);
+		GAMECLIENT.AddToSeconds(1);
 
-		
-		if(GAMECLIENT.get_seconds()>1)//div/0 verhindern und sicherstellen dass erst frames mitgenommen werden wenn das spiel läuft (quasi 2s delay)
+		//div/0 verhindern und sicherstellen dass erst frames mitgenommen werden wenn das spiel läuft (quasi 2s delay)
+		if(GAMECLIENT.GetSeconds() > 1)
 		{
 			//total frames berechnen und speichern
-			GAMECLIENT.set_total_frames(GAMECLIENT.get_total_frames()+frames);		 
+			GAMECLIENT.AddToTotalFrames(frames);		 
 			//berechnen und speichern der avg fps
-			GAMECLIENT.set_avg_fps(GAMECLIENT.get_total_frames()/GAMECLIENT.get_seconds());
+			GAMECLIENT.SetAvgFps(GAMECLIENT.GetTotalFrames() / GAMECLIENT.GetSeconds());
 		}
 		
 		framerate = frames;
@@ -196,7 +196,7 @@ bool GameManager::Run()
 
 	// und zeichnen
 	char frame_str[64];
-	sprintf(frame_str, "%d fps (%u AVG)", framerate, GAMECLIENT.get_avg_fps());
+	sprintf(frame_str, "%d fps (%u AVG)", framerate, GAMECLIENT.GetAvgFps());
 
 	SmallFont->Draw( VideoDriverWrapper::inst().GetScreenWidth(), 0, frame_str, glArchivItem_Font::DF_RIGHT, COLOR_YELLOW);
 

@@ -1,4 +1,4 @@
-// $Id: GameObject.cpp 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: GameObject.cpp 5348 2009-07-30 16:04:54Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -65,9 +65,6 @@ GameObject::GameObject(SerializedGameData * sgd, const unsigned obj_id) : obj_id
 	// ein Objekt mehr
 	++obj_counter;
 	sgd->AddObject(this);
-
-	assert(obj_id != 1869869);
-	assert(obj_id != 1281673);
 }
 
 GameObject::GameObject(const GameObject& go) : obj_id(go.obj_id)

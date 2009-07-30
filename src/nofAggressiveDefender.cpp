@@ -148,6 +148,9 @@ void nofAggressiveDefender::HomeDestroyedAtBegin()
 
 	state = STATE_FIGUREWORK;
 
+	// Angreifer Bescheid sagen, dass wir nicht mehr kommen
+	attacker->AggressiveDefenderLost();
+
 	// Rumirren
 	StartWandering();
 	StartWalking(RANDOM.Rand(__FILE__,__LINE__,obj_id,6));

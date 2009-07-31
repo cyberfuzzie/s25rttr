@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.cpp 5344 2009-07-29 16:23:40Z jh $
+// $Id: AIPlayerJH.cpp 5353 2009-07-31 07:55:57Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -623,3 +623,4 @@ bool AIPlayerJH::TestDefeat()
 	}
 	return false;
 }
+

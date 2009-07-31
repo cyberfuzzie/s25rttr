@@ -1,4 +1,4 @@
-// $Id: dskSelectMap.cpp 5311 2009-07-22 17:53:32Z jh $
+// $Id: dskSelectMap.cpp 5354 2009-07-31 16:09:01Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -34,9 +34,11 @@
 #include "dskDirectIP.h"
 #include "dskHostGame.h"
 #include "dskLobby.h"
+
 #include "iwMsgbox.h"
 #include "iwSave.h"
 #include "iwDirectIPCreate.h"
+#include "iwPleaseWait.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -77,21 +79,6 @@
  *
  *  @author OLiver
  */
-
-/// Bitte-Warten Fenster, welches aufgerufen wird, nachdem der Server gestartet wurde bis zum Weitergehen
-/// modal damit man den "Weiter"-Button nicht 2x betätigt
-class iwPleaseWait : public IngameWindow
-{
-public:
-	iwPleaseWait();
-};
-
-iwPleaseWait::iwPleaseWait()
-: IngameWindow(CGI_PLEASEWAIT, 0xFFFF, 0xFFFF, 300, 60, _("Please wait..."), LOADER.GetImageN("resource", 41),true)
-{
-	AddText(0,GetWidth()/2,GetHeight()/2,_("Please wait..."),COLOR_YELLOW,
-		glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_VCENTER,NormalFont);
-}
 
 ///////////////////////////////////////////////////////////////////////////////
 /**

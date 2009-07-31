@@ -820,6 +820,14 @@
 							>
 						</File>
 						<File
+							RelativePath="..\..\src\iwPleaseWait.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\iwPleaseWait.h"
+							>
+						</File>
+						<File
 							RelativePath="..\..\src\iwPostWindow.cpp"
 							>
 						</File>
@@ -1868,11 +1876,11 @@
 							>
 						</File>
 						<File
-							RelativePath=".\noShipBuildingSite.h"
+							RelativePath="..\..\src\noShipBuildingSite.h"
 							>
 						</File>
 						<File
-							RelativePath="..\..\src\noShipBuildingSite.h"
+							RelativePath=".\noShipBuildingSite.h"
 							>
 						</File>
 						<File

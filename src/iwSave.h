@@ -1,4 +1,4 @@
-// $Id: iwSave.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: iwSave.h 5354 2009-07-31 16:09:01Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -19,22 +19,19 @@
 #ifndef iwSAVE_H_INCLUDED
 #define iwSAVE_H_INCLUDED
 
+#pragma once
+
 #include "IngameWindow.h"
 #include "iwDirectIPCreate.h"
-
 
 /// Fenster fürs Speichern UND(!) Laden von Spielständen
 class iwSaveLoad : public IngameWindow
 {
-	///// Fenster, das wieder den GameClient-Fokus beim Laden bekommen soll, wenn dieses Fenster geschlossen wird
-	//Window * focus_parent;
-
 public:
 	/// Konstruktor von @p iwSave.
 	iwSaveLoad(const unsigned short add_height, const std::string& window_title);
 
 protected:
-
 	/// Aktualisiert die Tabelle
 	void RefreshTable();
 
@@ -46,7 +43,6 @@ private:
 	void Msg_ButtonClick(const unsigned int ctrl_id);
 	void Msg_TableSelectItem(const unsigned int ctrl_id, const unsigned short selection);
 	
-
 	/// Callbackfunktion zum Eintragen eines Spielstandes in die Tabelle
 	static void FillSaveTable(const std::string& filename, void *param);
 };
@@ -54,7 +50,6 @@ private:
 class iwSave: public iwSaveLoad
 {
 public:
-
 	iwSave();
 
 private:
@@ -70,15 +65,11 @@ class iwLoad: public iwSaveLoad
 	/// Informationen zum Erstellen des Servers
 	const CreateServerInfo csi;
 public:
-
 	iwLoad(const CreateServerInfo& csi);
 
 private:
-
 	// Läd Datei
 	void SaveLoad();
 };
-
-
 
 #endif // !iwSAVE_H_INCLUDED

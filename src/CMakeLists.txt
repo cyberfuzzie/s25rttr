@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 5298 2009-07-19 12:44:19Z Demophobie $
+### $Id: CMakeLists.txt 5354 2009-07-31 16:09:01Z FloSoft $
 ################################################################################
 
 INCLUDE(FindBZip2)
@@ -69,52 +69,57 @@ SET(SOURCES_DESKTOPS
     dskGameLoader.cpp    dskGameLoader.h)
 
 SET(SOURCES_INGAMEWINDOWS
-    iwAction.cpp           iwAction.h
-    iwBaseWarehouse.cpp
-    iwBuilding.cpp         iwBuilding.h
+    iwAction.cpp                 iwAction.h
+    iwBaseWarehouse.cpp          iwBaseWarehouse.h
+    iwBuilding.cpp               iwBuilding.h
     iwBuildingProductivities.cpp iwBuildingProductivities.h
-    iwBuildings.cpp        iwBuildings.h
-    iwBuildingSite.cpp     iwBuildingSite.h
-    iwBuildOrder.cpp       iwBuildOrder.h
-    iwChat.cpp             iwChat.h
-    iwDirectIPConnect.cpp  iwDirectIPConnect.h
-    iwDemolishBuilding.cpp iwDemolishBuilding.h
-    iwDiplomacy.cpp	   iwDiplomacy.h
-    iwDirectIPCreate.cpp   iwDirectIPCreate.h
-    iwDistribution.cpp     iwDistribution.h
-    iwEndgame.cpp          iwEndgame.h
-    iwHelp.cpp             iwHelp.h
-    iwHQ.cpp               iwHQ.h
-    iwInventory.cpp        iwInventory.h
-    iwLobbyConnect.cpp     iwLobbyConnect.h
-    iwLobbyRanking.cpp     iwLobbyRanking.h
-    iwLobbyServerInfo.cpp  iwLobbyServerInfo.h
-    iwMainMenu.cpp         iwMainMenu.h
-    iwMilitaryBuilding.cpp iwMilitaryBuilding.h
-    iwMilitary.cpp         iwMilitary.h
-    iwMinimap.cpp          iwMinimap.h
-    iwMsgbox.cpp           iwMsgbox.h
-    iwMusicPlayer.cpp      iwMusicPlayer.h
-    iwOptionsWindow.cpp    iwOptionsWindow.h
-    iwPlayReplay.cpp       iwPlayReplay.h
-    iwPostWindow.cpp       iwPostWindow.h
-    iwTextfile.cpp         iwTextfile.h
-    iwRoadWindow.cpp       iwRoadWindow.h
-    iwSave.cpp             iwSave.h
-    iwShip.cpp iwShip.h
-    iwSkipGFs.cpp          iwSkipGFs.h
-    iwStorehouse.cpp
-    iwTools.cpp            iwTools.h
-    iwTransport.cpp        iwTransport.h
-    iwWares.cpp            iwWares.h
-    iwSurrender.cpp	   iwSurrender.h
-    iwStatistics.cpp	   iwStatistics.h
-    iwHarborBuilding.cpp   iwHarborBuilding.h
+    iwBuildings.cpp              iwBuildings.h
+    iwBuildingSite.cpp           iwBuildingSite.h
+    iwBuildOrder.cpp             iwBuildOrder.h
+    iwChat.cpp                   iwChat.h
+    iwDirectIPConnect.cpp        iwDirectIPConnect.h
+    iwDemolishBuilding.cpp       iwDemolishBuilding.h
+    iwDiplomacy.cpp              iwDiplomacy.h
+    iwDirectIPCreate.cpp         iwDirectIPCreate.h
+    iwDistribution.cpp           iwDistribution.h
+    iwEndgame.cpp                iwEndgame.h
+    iwHelp.cpp                   iwHelp.h
+    iwHQ.cpp                     iwHQ.h
+    iwInventory.cpp              iwInventory.h
+    iwLobbyConnect.cpp           iwLobbyConnect.h
+    iwLobbyRanking.cpp           iwLobbyRanking.h
+    iwLobbyServerInfo.cpp        iwLobbyServerInfo.h
+    iwMainMenu.cpp               iwMainMenu.h
+    iwMilitaryBuilding.cpp       iwMilitaryBuilding.h
+    iwMilitary.cpp               iwMilitary.h
+    iwMinimap.cpp                iwMinimap.h
+    iwMsgbox.cpp                 iwMsgbox.h
+    iwMusicPlayer.cpp            iwMusicPlayer.h
+    iwOptionsWindow.cpp          iwOptionsWindow.h
+    iwPlayReplay.cpp             iwPlayReplay.h
+    iwPostWindow.cpp             iwPostWindow.h
+    iwTextfile.cpp               iwTextfile.h
+    iwRoadWindow.cpp             iwRoadWindow.h
+    iwSave.cpp                   iwSave.h
+    iwShip.cpp                   iwShip.h
+    iwSkipGFs.cpp                iwSkipGFs.h
+    iwStorehouse.cpp             iwStorehouse.h
+    iwTools.cpp                  iwTools.h
+    iwTransport.cpp              iwTransport.h
+    iwWares.cpp                  iwWares.h
+    iwSurrender.cpp              iwSurrender.h
+    iwStatistics.cpp             iwStatistics.h
+    iwHarborBuilding.cpp         iwHarborBuilding.h
+    iwPleaseWait.cpp             iwPleaseWait.h
     )
 
+SET(SOURCES_AI
+    AIBase.h
+    AIPlayer.cpp   AIPlayer.h
+    AIPlayerJH.cpp AIPlayerJH.h
+    )   
+
 SET(SOURCES_OTHER
-    AIPlayer.h  AIPlayer.cpp AIBase.h
-    AIPlayerJH.cpp            AIPlayerJH.h
     BinaryFile.cpp
     BuildingConsts.h
     BurnedWarehouse.cpp       BurnedWarehouse.h
@@ -208,13 +213,13 @@ SET(SOURCES_OTHER
     noMovable.cpp             noMovable.h
     noNothing.cpp             noNothing.h
     noRoadNode.cpp            noRoadNode.h
-    noShipBuildingSite.cpp noShipBuildingSite.h
+    noShipBuildingSite.cpp    noShipBuildingSite.h
     noSign.cpp                noSign.h
     noShip.cpp                noShip.h
-    noSkeleton.cpp            noSkeleton.h
-    noStaticObject.cpp        noStaticObject.h
-    noTree.cpp                noTree.h
-    noDisappearingEnvObject.cpp noDisappearingEnvObject.h
+    noSkeleton.cpp                 noSkeleton.h
+    noStaticObject.cpp             noStaticObject.h
+    noTree.cpp                     noTree.h
+    noDisappearingEnvObject.cpp    noDisappearingEnvObject.h
     noDisappearingMapEnvObject.cpp noDisappearingMapEnvObject.h
     nobStorehouse.cpp
     noBaseBuilding.cpp
@@ -257,7 +262,7 @@ SET(SOURCES_OTHER
     nofPlaner.cpp             nofPlaner.h
     nofScout_Free.cpp         nofScout_Free.h
     nofScout_LookoutTower.cpp nofScout_LookoutTower.h
-    nofShipWright.cpp nofShipWright.h
+    nofShipWright.cpp         nofShipWright.h
     nofSoldier.cpp            nofSoldier.h
     nofStonemason.cpp         nofStonemason.h
     nofWarehouseWorker.cpp    nofWarehouseWorker.h
@@ -265,7 +270,7 @@ SET(SOURCES_OTHER
     nofWoodcutter.cpp         nofWoodcutter.h
     nofWorkman.cpp            nofWorkman.h
     FOWObjects.cpp            FOWObjects.h
-    PostMsg.cpp	              PostMsg.h
+    PostMsg.cpp               PostMsg.h
     )
 
 SET(SOURCES_GL
@@ -284,47 +289,66 @@ SET(SOURCES_GL
     glArchivItem_Sound_Midi.cpp    glArchivItem_Sound_Midi.h
     glArchivItem_Sound_Wave.cpp    glArchivItem_Sound_Wave.h
     glArchivItem_Sound_XMidi.cpp   glArchivItem_Sound_XMidi.h
-    glArchivItem_Sound_Other.cpp   glArchivItem_Sound_Other.h)
+    glArchivItem_Sound_Other.cpp   glArchivItem_Sound_Other.h
+    )
 
 ################################################################################
 
-GETTEXT_CREATE_TRANSLATIONS( ../RTTR/languages/rttr.pot ALL ../RTTR/languages/de.po
-                                ../RTTR/languages/es.po
-                                ../RTTR/languages/sv.po
-                                ../RTTR/languages/fi.po
-                                ../RTTR/languages/fr.po
-                                ../RTTR/languages/ru.po
-				../RTTR/languages/nl.po
-				../RTTR/languages/et.po
-				../RTTR/languages/en_GB.po
-				../RTTR/languages/sk.po
-				../RTTR/languages/nds.po
-				../RTTR/languages/tr.po
-				../RTTR/languages/pl.po
-				../RTTR/languages/he.po
-				../RTTR/languages/cs.po
-                                ../RTTR/languages/hu.po)
+GETTEXT_CREATE_TRANSLATIONS( ../RTTR/languages/rttr.pot ALL 
+                             ../RTTR/languages/de.po
+                             ../RTTR/languages/es.po
+                             ../RTTR/languages/sv.po
+                             ../RTTR/languages/fi.po
+                             ../RTTR/languages/fr.po
+                             ../RTTR/languages/ru.po
+                             ../RTTR/languages/nl.po
+                             ../RTTR/languages/et.po
+                             ../RTTR/languages/en_GB.po
+                             ../RTTR/languages/sk.po
+                             ../RTTR/languages/nds.po
+                             ../RTTR/languages/tr.po
+                             ../RTTR/languages/pl.po
+                             ../RTTR/languages/he.po
+                             ../RTTR/languages/cs.po
+                             ../RTTR/languages/hu.po
+                            )
 
 ################################################################################
 
 # bzip linkerbug-fix
 IF ( "${COMPILEFOR}" STREQUAL "win32" )
-    SET(SOURCES_BZIP ../contrib/bzip2-1.0.3/blocksort.c
-        ../contrib/bzip2-1.0.3/huffman.c ../contrib/bzip2-1.0.3/crctable.c
-        ../contrib/bzip2-1.0.3/randtable.c ../contrib/bzip2-1.0.3/compress.c
-        ../contrib/bzip2-1.0.3/decompress.c ../contrib/bzip2-1.0.3/bzlib.c)
+    SET(SOURCES_BZIP 
+        ../contrib/bzip2-1.0.3/blocksort.c
+        ../contrib/bzip2-1.0.3/huffman.c 
+        ../contrib/bzip2-1.0.3/crctable.c
+        ../contrib/bzip2-1.0.3/randtable.c
+        ../contrib/bzip2-1.0.3/compress.c
+        ../contrib/bzip2-1.0.3/decompress.c
+        ../contrib/bzip2-1.0.3/bzlib.c
+        )
 ELSE ( "${COMPILEFOR}" STREQUAL "win32" )
     SET(SOURCES_BZIP )
 ENDIF ( "${COMPILEFOR}" STREQUAL "win32" )
 
-SET(s25client_SRCS ${SOURCES_CONTROLS} ${SOURCES_DESKTOPS} ${SOURCES_GL}
-    ${SOURCES_BZIP} ${SOURCES_INGAMEWINDOWS} ${SOURCES_OTHER} ../version.cpp)
+SET(s25client_SRCS 
+    ../version.cpp
+    ${SOURCES_CONTROLS} 
+    ${SOURCES_DESKTOPS} 
+    ${SOURCES_GL}
+    ${SOURCES_BZIP} 
+    ${SOURCES_INGAMEWINDOWS} 
+    ${SOURCES_OTHER}
+    ${SOURCES_AI}
+	  )
 
 IF ( "${COMPILEFOR}" STREQUAL "win32" )
     ADD_DEFINITIONS("-DAFX_TARG_DEU")
 
     FIND_PROGRAM(WINDRES NAMES windres i686-mingw32-windres i586-mingw32msvc-windres DOC "path to mingw's windres executable")
-    ADD_CUSTOM_COMMAND(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/s25client.res.o COMMAND ${WINDRES} -I${CMAKE_CURRENT_SOURCE_DIR}/../win32/ -i${CMAKE_CURRENT_SOURCE_DIR}/../win32/s25client.rc -o ${CMAKE_CURRENT_BINARY_DIR}/s25client.res.o)
+    
+    # Add Icon to Application
+    ADD_CUSTOM_COMMAND(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/s25client.res.o 
+                       COMMAND ${WINDRES} -I${CMAKE_CURRENT_SOURCE_DIR}/../win32/ -i${CMAKE_CURRENT_SOURCE_DIR}/../win32/s25client.rc -o ${CMAKE_CURRENT_BINARY_DIR}/s25client.res.o)
 
     SET(s25client_SRCS ${s25client_SRCS} s25client.res.o)
 ENDIF ( "${COMPILEFOR}" STREQUAL "win32" )
@@ -333,7 +357,7 @@ ADD_EXECUTABLE(s25client ${s25client_SRCS})
 TARGET_LINK_LIBRARIES(s25client siedler2 lobby_c s25util mygettext ${BZIP2_LIBRARIES} ${OPENGL_gl_LIBRARY})
 
 IF ( "${COMPILEFOR}" STREQUAL "macos")
-	SET_TARGET_PROPERTIES(s25client PROPERTIES LINK_FLAGS "-framework SDL -framework Cocoa")
+  SET_TARGET_PROPERTIES(s25client PROPERTIES LINK_FLAGS "-framework SDL -framework Cocoa")
 ENDIF ( "${COMPILEFOR}" STREQUAL "macos")
 
 IF ( "${COMPILEFOR}" STREQUAL "win32" )

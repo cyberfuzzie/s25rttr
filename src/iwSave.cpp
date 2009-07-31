@@ -1,4 +1,4 @@
-// $Id: iwSave.cpp 5311 2009-07-22 17:53:32Z jh $
+// $Id: iwSave.cpp 5354 2009-07-31 16:09:01Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -35,6 +35,7 @@
 #include "dskHostGame.h"
 #include "GameFiles.h"
 
+#include "iwPleaseWait.h"
 #include "iwMsgbox.h"
 
 #include "Settings.h"
@@ -278,5 +279,14 @@ void iwLoad::SaveLoad(void)
 		if(LOBBYCLIENT.LoggedIn())
 			// Lobby zeigen, wenn wenn das nich ging und man im Lobby-Modus ist
 			WindowManager::inst().Switch(new dskLobby);
+		else
+			// Ansonsten schlieﬂen
+			Close();
 	}
+	else
+	{
+		// Verbindungsfenster anzeigen
+		WindowManager::inst().Show(new iwPleaseWait);
+	}
+	
 }

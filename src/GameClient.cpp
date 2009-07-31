@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 5349 2009-07-30 16:59:31Z jh $
+// $Id: GameClient.cpp 5355 2009-07-31 16:59:26Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -22,6 +22,7 @@
 #include "main.h"
 #include "GameClient.h"
 
+#include "GameManager.h"
 #include "GameMessages.h"
 
 #include "SocketSet.h"
@@ -151,11 +152,6 @@ GameClient::GameClient(void)
 	framesinfo.Clear();
 	randcheckinfo.Clear();
 	postMessages.clear();
-
-	//initialisierung der vars für avg fps berechnung
-	total_frames = 0;
-	avg_fps = 0;
-	seconds = 0;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -405,9 +401,8 @@ void GameClient::RealStart()
 	/// Wenn Replay, evtl erstes Command vom Start-Frame auslesen, was sonst ignoriert werden würde
 	if(replay_mode)
 		ExecuteGameFrame_Replay();
-	this->total_frames = 0;
-	this->avg_fps = 0;
-	this->seconds = 0;
+
+	GameManager::inst().ResetAverageFPS();
 }
 
 ///////////////////////////////////////////////////////////////////////////////

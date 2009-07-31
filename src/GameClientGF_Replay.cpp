@@ -1,4 +1,4 @@
-// $Id: GameClientGF_Replay.cpp 5340 2009-07-28 19:13:03Z jh $
+// $Id: GameClientGF_Replay.cpp 5355 2009-07-31 16:59:26Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -21,8 +21,10 @@
 // Header
 #include "main.h"
 #include "GameClient.h"
+
 #include "Loader.h"
 #include "Random.h"
+#include "GameManager.h"
 #include "dskGameInterface.h"
 #include "ClientInterface.h"
 #include "GameMessages.h"
@@ -112,7 +114,7 @@ void GameClient::ExecuteGameFrame_Replay()
 
 		// Meldung erzeugen
 		char msg[256];
-		sprintf(msg,_("Notice: The played replay has ended. (GF: %u, %dh %dmin %ds, TF: %u, AVG_FPS: %u)"), framesinfo.nr,(this->seconds)/3600, ((this->seconds)%3600)/60, (this->seconds)%3600%60, this->total_frames, this->avg_fps);
+		sprintf(msg,_("Notice: The played replay has ended. (GF: %u, %dh %dmin %ds, TF: %u, AVG_FPS: %u)"), framesinfo.nr, GameManager::inst().GetRuntime()/3600, ((GameManager::inst().GetRuntime())%3600)/60, (GameManager::inst().GetRuntime())%3600%60, GameManager::inst().GetFrameCount(), GameManager::inst().GetAverageFPS());
 		// Messenger im Game
 		if(ci && GLOBALVARS.ingame)
 			ci->CI_ReplayEndReached(msg);

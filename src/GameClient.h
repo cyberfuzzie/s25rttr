@@ -1,4 +1,4 @@
-// $Id: GameClient.h 5349 2009-07-30 16:59:31Z jh $
+// $Id: GameClient.h 5355 2009-07-31 16:59:26Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -244,21 +244,6 @@ public:
 		{}
 
 	} visual_settings, default_settings;
-
-// Variablen für durchschnittliche FPS Berechnung
-private:
-	unsigned int total_frames;
-	unsigned int avg_fps;
-	unsigned int seconds;
-
-// Funktionen für durchschnittliche FPS Berechnung (Getter und Setter)	
-public:
-	inline void AddToTotalFrames(unsigned int tf) { total_frames += tf; }
-	inline unsigned int GetTotalFrames(void) { return total_frames; }
-	inline void SetAvgFps(unsigned int af) { avg_fps = af; }
-	inline unsigned int GetAvgFps(void) { return avg_fps; }
-	inline void AddToSeconds(unsigned int sec) { seconds += sec; }
-	inline unsigned int GetSeconds(void) { return seconds; }
 
 private:
 	/// Spielwelt

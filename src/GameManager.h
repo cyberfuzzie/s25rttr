@@ -1,4 +1,4 @@
-// $Id: GameManager.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: GameManager.h 5355 2009-07-31 16:59:26Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -36,10 +36,36 @@ public:
 	bool StartMenu();
 	bool ShowMenu();
 
+	/// Average FPS Zähler zurücksetzen.
+	inline void ResetAverageFPS(void)
+	{
+		run_time = 0;
+		frame_count = 0;
+	}
+
+	inline unsigned int GetRuntime(void)
+	{ 
+		return run_time;
+	}
+
+	inline unsigned int GetFrameCount(void)
+	{ 
+		return frame_count;
+	}
+
+	inline unsigned int GetAverageFPS(void) 
+	{
+		if(run_time == 0) 
+			return 0;
+		return (frame_count / run_time);
+	}
+
 private:
 	unsigned int frames;
+	unsigned int frame_count;
 	unsigned int framerate;
 	unsigned int frame_time;
+	unsigned int run_time;
 };
 
 #define GAMEMANAGER GameManager::inst()

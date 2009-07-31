@@ -1,4 +1,4 @@
-// $Id: GameManager.cpp 5349 2009-07-30 16:59:31Z jh $
+// $Id: GameManager.cpp 5355 2009-07-31 16:59:26Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -55,11 +55,8 @@
  *
  *  @author OLiver
  */
-GameManager::GameManager(void)
+GameManager::GameManager(void) : frames(0), frame_count(0), framerate(0), frame_time(0), run_time(0)
 {
-	frames = 0;
-	framerate = 0;
-	frame_time = 0;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -177,26 +174,22 @@ bool GameManager::Run()
 	// Framerate berechnen
 	if(VideoDriverWrapper::inst().GetTickCount() - frame_time > 1000)
 	{
-		//Sekunden hochzählen wenn replay oder spiel gestartet wurde
-		GAMECLIENT.AddToSeconds(1);
+		// weitere Sekunde vergangen
+		++run_time;
 
-		//div/0 verhindern und sicherstellen dass erst frames mitgenommen werden wenn das spiel läuft (quasi 2s delay)
-		if(GAMECLIENT.GetSeconds() > 1)
-		{
-			//total frames berechnen und speichern
-			GAMECLIENT.AddToTotalFrames(frames);		 
-			//berechnen und speichern der avg fps
-			GAMECLIENT.SetAvgFps(GAMECLIENT.GetTotalFrames() / GAMECLIENT.GetSeconds());
-		}
-		
+		// Gesamtzahl der gezeichneten Frames erhöhen
+		frame_count += frames;
+
+		// normale Framerate berechnen
 		framerate = frames;
 		frames = 0;
+
 		frame_time = VideoDriverWrapper::inst().GetTickCount();
 	}
 
 	// und zeichnen
 	char frame_str[64];
-	sprintf(frame_str, "%d fps (%u AVG)", framerate, GAMECLIENT.GetAvgFps());
+	sprintf(frame_str, "%d fps (%u AVG)", framerate, GetAverageFPS());
 
 	SmallFont->Draw( VideoDriverWrapper::inst().GetScreenWidth(), 0, frame_str, glArchivItem_Font::DF_RIGHT, COLOR_YELLOW);
 
@@ -268,3 +261,10 @@ bool GameManager::ShowMenu()
 
 	return true;
 }
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Average FPS Zähler zurücksetzen.
+ *
+ *  @author FloSoft
+ */

@@ -1,4 +1,4 @@
-// $Id: dskSelectMap.h 5354 2009-07-31 16:09:01Z FloSoft $
+// $Id: dskSelectMap.h 5358 2009-08-01 07:57:45Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -62,3 +62,4 @@ private:
 };
 
 #endif //!dskSELECTMAP_H_INCLUDED
+

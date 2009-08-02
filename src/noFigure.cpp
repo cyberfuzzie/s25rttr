@@ -882,7 +882,8 @@ void noFigure::DrawWalking(int x, int y)
 	// Esel?
 	if(job == JOB_PACKDONKEY)
 	{
-		unsigned ani_step = GAMECLIENT.Interpolate(ASCENT_ANIMATION_STEPS[ascent],current_ev)%8;
+		// Wenn wir warten, ani-step 2 benutzen
+		unsigned ani_step = waiting_for_free_node?2:GAMECLIENT.Interpolate(ASCENT_ANIMATION_STEPS[ascent],current_ev)%8;
 		CalcFigurRelative(x,y);
 
 		// Esel

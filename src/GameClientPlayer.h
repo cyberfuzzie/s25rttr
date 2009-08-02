@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.h 5272 2009-07-15 16:38:14Z FloSoft $
+// $Id: GameClientPlayer.h 5365 2009-08-02 17:46:30Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -121,8 +121,8 @@ private:
 		bool want_cancel;
 
 		Pact() : accepted(false), duration(0), start(0), want_cancel(false) {}
-		Pact(Serializer * ser);
-		void Serialize(Serializer * ser);
+		Pact(SerializedGameData *ser);
+		void Serialize(SerializedGameData *ser);
 	};
 	/// Bündnisse dieses Spielers mit anderen Spielern
 	Pact pacts[MAX_PLAYERS][PACTS_COUNT];

@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 5331 2009-07-26 12:29:50Z jh $
+// $Id: GameClientPlayer.cpp 5365 2009-08-02 17:46:30Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -261,6 +261,14 @@ void GameClientPlayer::Serialize(SerializedGameData * sgd)
   for (unsigned i=0; i<STAT_TYPE_COUNT; ++i)
     sgd->PushUnsignedInt(statisticCurrentData[i]);
 
+	// Serialize Pacts:
+	for (unsigned i=0; i<MAX_PLAYERS; ++i)
+	{
+		for (unsigned u=0; u<PACTS_COUNT; ++u)
+		{
+			pacts[i][u].Serialize(sgd);
+		}
+	}
 }
 
 void GameClientPlayer::Deserialize(SerializedGameData * sgd)
@@ -361,6 +369,15 @@ void GameClientPlayer::Deserialize(SerializedGameData * sgd)
   }
   for (unsigned i=0; i<STAT_TYPE_COUNT; ++i)
     statisticCurrentData[i] = sgd->PopUnsignedInt();
+
+	// Deserialize Pacts:
+	for (unsigned i=0; i<MAX_PLAYERS; ++i)
+	{
+		for (unsigned u=0; u<PACTS_COUNT; ++u)
+		{
+			pacts[i][u] = GameClientPlayer::Pact(sgd);
+		}
+	}
 }
 
 void GameClientPlayer::SwapPlayer(GameClientPlayer& two)
@@ -1439,10 +1456,16 @@ void GameClientPlayer::StatisticStep()
   }
 }
 
-void GameClientPlayer::Pact::Serialize(Serializer * ser)
+GameClientPlayer::Pact::Pact(SerializedGameData *ser)
+: accepted(ser->PopBool()), duration(ser->PopUnsignedInt()),
+	start(ser->PopUnsignedInt()), want_cancel (ser->PopBool()) { }
+
+void GameClientPlayer::Pact::Serialize(SerializedGameData *ser)
 {
+	ser->PushBool(accepted);
 	ser->PushUnsignedInt(duration);
 	ser->PushUnsignedInt(start);
+	ser->PushBool(want_cancel);
 }
 
 /// Macht Bündnisvorschlag an diesen Spieler

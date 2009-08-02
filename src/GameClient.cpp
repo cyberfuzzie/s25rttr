@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 5355 2009-07-31 16:59:26Z FloSoft $
+// $Id: GameClient.cpp 5365 2009-08-02 17:46:30Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -352,15 +352,29 @@ void GameClient::StartGame(const unsigned int random_init)
 		em->Deserialize(&savegame->sgd);
 		for(unsigned i = 0;i<GAMECLIENT.GetPlayerCount();++i)
 			GetPlayer(i)->Deserialize(&savegame->sgd);
+
+		// TODO: schöner machen: 
+		// Die Fläche, die nur von einem Allierten des Spielers gesehen werden, müssen noch dem TerrainRenderer mitgeteilt werden
+		// oder entsprechende Flächen müssen vorher bekannt gemacht werden
+		// Die folgende Schleife aktualisiert einfach *alle* Punkt, ist also ziemlich ineffizient
+		unsigned short height = gw->GetHeight();
+		unsigned short width =  gw->GetWidth();
+		for (unsigned short y=0; y<height; ++y)
+		{
+			for (unsigned short x=0; x<width; ++x)
+			{
+				gw->VisibilityChanged(x, y);
+			}
+		}
 		// Visuelle Einstellungen ableiten
 		GetVisualSettings();
 	}
 	else
 	{
-		gw->LoadMap(clientconfig.mapfilepath);
 		/// Startbündnisse setzen
 		for(unsigned i = 0;i<GetPlayerCount();++i)
 			players[i].MakeStartPacts();
+		gw->LoadMap(clientconfig.mapfilepath);
 	}
 
 	// Zeit setzen
@@ -1699,11 +1713,5 @@ void GameClient::DeletePostMessage(PostMsg *msg)
 			break;
 		}
 	}
-}
-
-GameClientPlayer::Pact::Pact(Serializer * ser) :
-	duration(ser->PopUnsignedInt()),
-	start(ser->PopUnsignedInt())
-{
 }
 

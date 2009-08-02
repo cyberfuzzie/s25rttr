@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Siedler II.5 RttR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-06 20:27+0100\n"
+"POT-Creation-Date: 2009-07-19 14:39+0100\n"
 "PO-Revision-Date: 2009-07-06 23:50+0000\n"
 "Last-Translator: Siedler II.5 - Return To The Roots Team <sf-"
 "team@siedler25.de>\n"
@@ -10,7 +10,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-07-19 12:32+0000\n"
+"X-Launchpad-Export-Date: 2009-08-02 13:36+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: RUSSIAN FEDERATION\n"
 "X-Poedit-Language: Russian\n"
@@ -69,91 +69,91 @@ msgstr "Имя в игре:"
 msgid "Language:"
 msgstr "Язык:"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:109
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:115
 msgid "Keyboard layout:"
 msgstr "Горячие клавиши:"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:110
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:116
 msgid "Readme"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:113
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:119
 msgid "Resolution:"
 msgstr "Разрешение:"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:117
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:123
 msgid "Mode:"
 msgstr "Режим:"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:119
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:125
 msgid "Fullscreen"
 msgstr "Полноэкранный"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:120
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:126
 msgid "Windowed"
 msgstr "Оконный"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:123
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:129
 msgid "VSync:"
 msgstr "VSync:"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:127
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:137
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:133
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:143
 msgid "not supported"
 msgstr "не поддерживается"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:129
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:139
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:173
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:182
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:135
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:145
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:179
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:188
 msgid "On"
 msgstr "Вкл"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:130
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:140
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:174
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:183
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:136
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:146
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:180
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:189
 msgid "Off"
 msgstr "Выкл"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:133
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:139
 msgid "Vertex Buffer Objects:"
 msgstr "Vertex Buffer Objects:"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:143
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:149
 msgid "Graphics Driver"
 msgstr "Графический драйвер"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:157
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:163
 msgid "Sounddriver"
 msgstr "Звуковой драйвер"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:171
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:177
 msgid "Music"
 msgstr "Музыка"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:180
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:186
 msgid "Effects"
 msgstr "Эффекты"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:189
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:195
 msgid "Music player"
 msgstr "Проигрыватель"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:430
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:438
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:436
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:444
 msgid "Sorry!"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:430
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:436
 msgid "You need to restart your game to change the screen resolution!"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:438
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:444
 msgid "You need to restart your game to change the video or audio driver!"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:465
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:471
 msgid "Keyboard layout"
 msgstr "Горячие клавиши"
 
@@ -1107,22 +1107,27 @@ msgstr "Взорвать?"
 msgid "We are under attack!"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:565
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:564
 #, c-format
 msgid "Computer %u"
 msgstr "Компьютер %u"
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:567
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:566
 msgid " (AI)"
 msgstr " (ИИ)"
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:831
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:830
 msgid "The Game is not in sync. Checksums of some players don't match."
 msgstr "Игра не синхронизирована. Чексуммы некоторых игроков не совпадают."
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:1186
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:1185
 msgid "Auto-Save"
 msgstr "Автосохранение"
+
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:1477
+#, c-format
+msgid "current GF: %u - still fast forwarding: %d GFs left (%d %%)"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:101
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:115
@@ -2122,211 +2127,211 @@ msgstr ""
 "Вьючные ослы, выращенные здесь используются для транспортировки ваших "
 "товаров более эффективно. Им нуна вода и зерно."
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:157
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:153
 msgid "Boat"
 msgstr "Лодка"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:158
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:154
 msgid "Sword"
 msgstr "Меч"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:160
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:156
 msgid "Flour"
 msgstr "Мука"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:161
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:157
 msgid "Fish"
 msgstr "Рыба"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:162
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:158
 msgid "Bread"
 msgstr "Хлеб"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:163
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:159
 msgid "Shield"
 msgstr "Щит"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:174
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:170
 msgid "Meat"
 msgstr "Мясо"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:175
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:171
 msgid "Ham"
 msgstr "Ветчина"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:233
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:229
 msgid "Barracks"
 msgstr "Бараки"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:234
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:230
 msgid "Guardhouse"
 msgstr "Караульное помещение"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:236
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:232
 msgid "Watchtower"
 msgstr "Сторожевая вышка"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:241
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:237
 msgid "Fortress"
 msgstr "Крепость"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:246
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:242
 msgid "Lookout tower"
 msgstr "Обзорная башня"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:248
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:244
 msgid "Catapult"
 msgstr "Катапульта"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:249
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:245
 msgid "Woodcutter"
 msgstr "Дровосек"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:250
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:246
 msgid "Fishery"
 msgstr "Хижина рыбака"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:251
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:247
 msgid "Quarry"
 msgstr "Каменоломня"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:252
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:248
 msgid "Forester"
 msgstr "Хижина лесника"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:253
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:249
 msgid "Slaughterhouse"
 msgstr "Мясная лавка"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:254
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:250
 msgid "Hunter"
 msgstr "Хижина охотника"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:265
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:261
 msgid "Sawmill"
 msgstr "Пилорама"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:267
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:263
 msgid "Well"
 msgstr "Колодец"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:269
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:265
 msgid "Farm"
 msgstr "Ферма"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:317
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:313
 msgid "Helper"
 msgstr "Помощник"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:318
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:314
 msgid "Woodchopper"
 msgstr "Дровокол"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:319
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:315
 msgid "Fisher"
 msgstr "Рыбак"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:320
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:316
 msgid "Ranger"
 msgstr "Лесник"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:321
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:317
 msgid "Carpenter"
 msgstr "Плотник"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:322
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:318
 msgid "Stonemason"
 msgstr "Каменотес"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:323
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:319
 msgid "Huntsman"
 msgstr "Охотник"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:324
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:320
 msgid "Farmer"
 msgstr "Фермер"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:325
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:321
 msgid "Miller"
 msgstr "Мельник"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:326
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:322
 msgid "Baker"
 msgstr "Пекарь"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:327
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:323
 msgid "Butcher"
 msgstr "Мясник"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:328
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:324
 msgid "Miner"
 msgstr "Шахтер"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:329
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:325
 msgid "Brewer"
 msgstr "Пивовар"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:330
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:326
 msgid "Pig breeder"
 msgstr "Свиновод"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:331
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:327
 msgid "Donkey breeder"
 msgstr "Скотовод"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:332
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:328
 msgid "Iron founder"
 msgstr "Сталевар"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:333
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:329
 msgid "Minter"
 msgstr "Монетчик"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:335
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:331
 msgid "Armorer"
 msgstr "Оружейник"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:336
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:332
 msgid "Builder"
 msgstr "Строитель"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:337
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:333
 msgid "Planer"
 msgstr "Планировщик"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:338
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:334
 msgid "Private"
 msgstr "Рядовой"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:339
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:335
 msgid "Private first class"
 msgstr "Ефрейтор"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:340
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:336
 msgid "Sergeant"
 msgstr "Сержант"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:341
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:337
 msgid "Officer"
 msgstr "Офицер"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:342
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:338
 msgid "General"
 msgstr "Общие"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:343
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:339
 msgid "Geologist"
 msgstr "Геолог"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:344
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:340
 msgid "Shipwright"
 msgstr "Кораблестроитель"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:345
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:341
 msgid "Scout"
 msgstr "Разведчик"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:346
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:342
 msgid "Pack donkey"
 msgstr "Вьючный осел"
 

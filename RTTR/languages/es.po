@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Siedler II.5 RttR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-06 20:27+0100\n"
+"POT-Creation-Date: 2009-07-19 14:39+0100\n"
 "PO-Revision-Date: 2009-07-06 23:32+0000\n"
 "Last-Translator: Siedler II.5 - Return To The Roots Team <sf-"
 "team@siedler25.de>\n"
@@ -10,7 +10,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-07-19 12:32+0000\n"
+"X-Launchpad-Export-Date: 2009-08-02 13:36+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: SPAIN\n"
 "X-Poedit-Language: Spanish\n"
@@ -71,91 +71,91 @@ msgstr "Nombre en el juego:"
 msgid "Language:"
 msgstr "Idioma:"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:109
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:115
 msgid "Keyboard layout:"
 msgstr "Configuración del teclado:"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:110
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:116
 msgid "Readme"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:113
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:119
 msgid "Resolution:"
 msgstr "Resolución del juego:"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:117
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:123
 msgid "Mode:"
 msgstr "Modo:"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:119
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:125
 msgid "Fullscreen"
 msgstr "Pantalla completa"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:120
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:126
 msgid "Windowed"
 msgstr "Modo de pantalla"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:123
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:129
 msgid "VSync:"
 msgstr "VSync:"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:127
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:137
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:133
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:143
 msgid "not supported"
 msgstr "no soportado"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:129
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:139
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:173
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:182
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:135
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:145
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:179
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:188
 msgid "On"
 msgstr "Activado"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:130
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:140
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:174
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:183
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:136
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:146
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:180
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:189
 msgid "Off"
 msgstr "Desactivado"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:133
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:139
 msgid "Vertex Buffer Objects:"
 msgstr "Objetos de buffer vertex:"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:143
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:149
 msgid "Graphics Driver"
 msgstr "Controlador de gráficos"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:157
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:163
 msgid "Sounddriver"
 msgstr "Controlador de Sonido"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:171
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:177
 msgid "Music"
 msgstr "Música"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:180
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:186
 msgid "Effects"
 msgstr "Efectos"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:189
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:195
 msgid "Music player"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:430
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:438
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:436
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:444
 msgid "Sorry!"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:430
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:436
 msgid "You need to restart your game to change the screen resolution!"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:438
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:444
 msgid "You need to restart your game to change the video or audio driver!"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:465
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:471
 msgid "Keyboard layout"
 msgstr "Configuración del teclado"
 
@@ -1107,23 +1107,28 @@ msgstr "Demoler?"
 msgid "We are under attack!"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:565
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:564
 #, c-format
 msgid "Computer %u"
 msgstr "Computadora %u"
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:567
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:566
 msgid " (AI)"
 msgstr " (AI)"
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:831
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:830
 msgid "The Game is not in sync. Checksums of some players don't match."
 msgstr ""
 "El juego no está en sincronía. Checksums de algunos jugadores no concuerdan."
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:1186
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:1185
 msgid "Auto-Save"
 msgstr "Auto-Guardar"
+
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:1477
+#, c-format
+msgid "current GF: %u - still fast forwarding: %d GFs left (%d %%)"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:101
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:115
@@ -2140,211 +2145,211 @@ msgstr ""
 "La manada de burros criados aquí son utilizados para transportar tu "
 "mercancía mas eficientemente. Ellos son criados de agua y granos."
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:157
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:153
 msgid "Boat"
 msgstr "Barco"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:158
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:154
 msgid "Sword"
 msgstr "Espada"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:160
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:156
 msgid "Flour"
 msgstr "Harina"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:161
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:157
 msgid "Fish"
 msgstr "Pescado"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:162
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:158
 msgid "Bread"
 msgstr "Pan"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:163
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:159
 msgid "Shield"
 msgstr "Escudo"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:174
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:170
 msgid "Meat"
 msgstr "Carne"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:175
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:171
 msgid "Ham"
 msgstr "Jamón"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:233
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:229
 msgid "Barracks"
 msgstr "Cuartel"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:234
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:230
 msgid "Guardhouse"
 msgstr "Casa de guardia"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:236
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:232
 msgid "Watchtower"
 msgstr "Torre de vigilancia"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:241
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:237
 msgid "Fortress"
 msgstr "Fortaleza"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:246
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:242
 msgid "Lookout tower"
 msgstr "Torre de observación"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:248
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:244
 msgid "Catapult"
 msgstr "Catapulta"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:249
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:245
 msgid "Woodcutter"
 msgstr "Leñador"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:250
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:246
 msgid "Fishery"
 msgstr "Pesquería"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:251
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:247
 msgid "Quarry"
 msgstr "Cantera"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:252
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:248
 msgid "Forester"
 msgstr "Casa forestal"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:253
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:249
 msgid "Slaughterhouse"
 msgstr "Matadero"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:254
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:250
 msgid "Hunter"
 msgstr "Pabellón de caza"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:265
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:261
 msgid "Sawmill"
 msgstr "Aserradero"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:267
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:263
 msgid "Well"
 msgstr "Pozo"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:269
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:265
 msgid "Farm"
 msgstr "Granja"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:317
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:313
 msgid "Helper"
 msgstr "Ayudante"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:318
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:314
 msgid "Woodchopper"
 msgstr "Leñador"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:319
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:315
 msgid "Fisher"
 msgstr "Pescador"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:320
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:316
 msgid "Ranger"
 msgstr "Guardie forestal"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:321
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:317
 msgid "Carpenter"
 msgstr "Carpintero"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:322
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:318
 msgid "Stonemason"
 msgstr "Albañil"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:323
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:319
 msgid "Huntsman"
 msgstr "Cazador"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:324
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:320
 msgid "Farmer"
 msgstr "Granjero"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:325
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:321
 msgid "Miller"
 msgstr "Molinero"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:326
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:322
 msgid "Baker"
 msgstr "Panadero"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:327
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:323
 msgid "Butcher"
 msgstr "Carnicero"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:328
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:324
 msgid "Miner"
 msgstr "Minero"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:329
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:325
 msgid "Brewer"
 msgstr "Cervecero"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:330
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:326
 msgid "Pig breeder"
 msgstr "porquero"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:331
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:327
 msgid "Donkey breeder"
 msgstr "Criador de burros"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:332
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:328
 msgid "Iron founder"
 msgstr "Vertedor de hierro"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:333
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:329
 msgid "Minter"
 msgstr "Acuñador"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:335
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:331
 msgid "Armorer"
 msgstr "Herrero"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:336
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:332
 msgid "Builder"
 msgstr "Constructor"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:337
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:333
 msgid "Planer"
 msgstr "Planificador"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:338
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:334
 msgid "Private"
 msgstr "Privado"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:339
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:335
 msgid "Private first class"
 msgstr "Cadete"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:340
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:336
 msgid "Sergeant"
 msgstr "Sargento"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:341
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:337
 msgid "Officer"
 msgstr "Oficial"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:342
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:338
 msgid "General"
 msgstr "General"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:343
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:339
 msgid "Geologist"
 msgstr "Geólogo"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:344
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:340
 msgid "Shipwright"
 msgstr "Constructor naval"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:345
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:341
 msgid "Scout"
 msgstr "Explorador"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:346
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:342
 msgid "Pack donkey"
 msgstr "Burro de carga"
 

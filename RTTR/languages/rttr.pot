@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Siedler II.5 RttR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-19 14:39+0100\n"
-"PO-Revision-Date: 2009-07-19 14:39+0100\n"
+"POT-Creation-Date: 2009-08-02 15:46+0100\n"
+"PO-Revision-Date: 2009-08-02 15:46+0100\n"
 "Last-Translator: \n"
 "Language-Team: Siedler II.5 RttR <sf-team@siedler25.org>\n"
 "MIME-Version: 1.0\n"
@@ -721,93 +721,88 @@ msgstr ""
 msgid "Don't surrender"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:90
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:92
-msgid "Please wait..."
-msgstr ""
-
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:112
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:99
 msgid "Author"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:112
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:99
 msgid "Type"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:112
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:99
 msgid "Size"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:115
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:102
 msgid "Selection of maps"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:120
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:107
 msgid "Load game..."
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:122
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:109
 msgid "Continue"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:126
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:113
 msgid "Old maps"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:128
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:115
 msgid "New maps"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:130
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:117
 msgid "Own maps"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:132
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:119
 msgid "Continents"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:134
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:121
 msgid "Campaign"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:136
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:123
 msgid "RTTR"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:138
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:125
 msgid "Other"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:140
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:127
 msgid "Sea"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:142
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:129
 msgid "Played"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:146
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:133
 msgid "Mapfile: "
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:345
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:332
 msgid "Incomplete message was received!"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:406
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:393
 #, c-format
 msgid "%d Player"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:411
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:398
 msgid "Greenland"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:412
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:399
 msgid "Wasteland"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:413
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:400
 msgid "Winter world"
 msgstr ""
 
@@ -1059,6 +1054,11 @@ msgstr ""
 msgid "Enemies"
 msgstr ""
 
+#: /storage/RTTR/svn/trunk/src/iwPleaseWait.cpp:42
+#: /storage/RTTR/svn/trunk/src/iwPleaseWait.cpp:44
+msgid "Please wait..."
+msgstr ""
+
 #: /storage/RTTR/svn/trunk/src/iwRoadWindow.cpp:47
 msgid "Activity window"
 msgstr ""
@@ -1071,14 +1071,14 @@ msgstr ""
 msgid "Erect flag"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/GameClientGF_Replay.cpp:73
+#: /storage/RTTR/svn/trunk/src/GameClientGF_Replay.cpp:75
 #, c-format
 msgid "Warning: The played replay is not in sync with the original match. (GF: %u)"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/GameClientGF_Replay.cpp:115
+#: /storage/RTTR/svn/trunk/src/GameClientGF_Replay.cpp:117
 #, c-format
-msgid "Notice: The played replay has ended. (GF: %u)"
+msgid "Notice: The played replay has ended. (GF: %u, %dh %dmin %ds, TF: %u, AVG_FPS: %u)"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/nofBuildingWorker.cpp:375
@@ -1093,24 +1093,24 @@ msgstr ""
 msgid "We are under attack!"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:564
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:570
 #, c-format
 msgid "Computer %u"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:566
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:572
 msgid " (AI)"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:830
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:836
 msgid "The Game is not in sync. Checksums of some players don't match."
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:1185
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:1191
 msgid "Auto-Save"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:1477
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:1483
 #, c-format
 msgid "current GF: %u - still fast forwarding: %d GFs left (%d %%)"
 msgstr ""
@@ -1315,7 +1315,7 @@ msgid "Military"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:80
-msgid "Series sequence"
+msgid "Building sequence"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:82
@@ -1334,7 +1334,7 @@ msgstr ""
 msgid "No more stones in range"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/nofFarmhand.cpp:172
+#: /storage/RTTR/svn/trunk/src/nofFarmhand.cpp:175
 msgid "No more fishes in range"
 msgstr ""
 
@@ -1358,61 +1358,61 @@ msgstr ""
 msgid "Construction aid mode"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:187
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:194
 #, c-format
 msgid "(Replay-Mode) Current GF: %u (End at: %u) / GF length: %u ms / NWF length: %u gf (%u ms)"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:189
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:196
 #, c-format
 msgid "Current GF: %u / GF length: %u ms / NWF length: %u gf (%u ms) /  Ping: %u ms"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:808
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:815
 #, c-format
 msgid "Player '%s' left the game!"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:811
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:818
 #, c-format
 msgid "Player '%s' joined the game!"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:819
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:826
 #, c-format
 msgid "Note: Game settings changed by the server%s"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:826
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:852
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:875
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:833
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:859
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:882
 #, c-format
 msgid "<%s> "
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:835
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:842
 msgid "A auto-savegame is created..."
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:852
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:875
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:859
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:882
 msgid "SYSTEM"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:853
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:860
 msgid "Game was paused."
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:876
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:883
 msgid "Game was resumed."
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:922
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:929
 #, c-format
 msgid "Player '%s' switched to player '%s'"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:940
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:947
 #, c-format
 msgid "Player '%s' was defeated!"
 msgstr ""
@@ -1545,7 +1545,7 @@ msgstr ""
 msgid "Bottom"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/GameWorldGame.cpp:548
+#: /storage/RTTR/svn/trunk/src/GameWorldGame.cpp:555
 msgid "Lost land by this building"
 msgstr ""
 
@@ -1654,7 +1654,7 @@ msgid "Registration successful!"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:496
-msgid "Found ironore"
+msgid "Found iron ore"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:498
@@ -1807,19 +1807,19 @@ msgstr ""
 msgid "Direct IP"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwSave.cpp:67
+#: /storage/RTTR/svn/trunk/src/iwSave.cpp:68
 msgid "Time"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwSave.cpp:67
+#: /storage/RTTR/svn/trunk/src/iwSave.cpp:68
 msgid "Start GF"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwSave.cpp:203
+#: /storage/RTTR/svn/trunk/src/iwSave.cpp:204
 msgid "Auto-Save every:"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwSave.cpp:207
+#: /storage/RTTR/svn/trunk/src/iwSave.cpp:208
 msgid "Disabled"
 msgstr ""
 

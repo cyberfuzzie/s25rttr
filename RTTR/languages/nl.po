@@ -2,14 +2,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Siedler II.5 RttR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-06 20:27+0100\n"
-"PO-Revision-Date: 2009-07-12 17:25+0000\n"
-"Last-Translator: Yentl <y.v.t@scarlet.be>\n"
+"POT-Creation-Date: 2009-07-19 14:39+0100\n"
+"PO-Revision-Date: 2009-07-25 01:51+0000\n"
+"Last-Translator: arisos <Unknown>\n"
 "Language-Team: Siedler II.5 RttR <sf-team@siedler25.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-07-19 12:32+0000\n"
+"X-Launchpad-Export-Date: 2009-08-02 13:36+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: GERMANY\n"
 "X-Poedit-Language: German\n"
@@ -70,98 +70,98 @@ msgstr "Naam in het Spel:"
 msgid "Language:"
 msgstr "Taal:"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:109
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:115
 msgid "Keyboard layout:"
 msgstr "Toetsenbordlay-out:"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:110
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:116
 msgid "Readme"
 msgstr "Leesmij"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:113
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:119
 msgid "Resolution:"
 msgstr "Resolutie:"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:117
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:123
 msgid "Mode:"
 msgstr "Modus:"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:119
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:125
 msgid "Fullscreen"
 msgstr "Volledig beeld"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:120
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:126
 msgid "Windowed"
 msgstr "Venstermodus"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:123
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:129
 msgid "VSync:"
 msgstr "VSync:"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:127
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:137
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:133
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:143
 msgid "not supported"
 msgstr "niet ondersteund"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:129
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:139
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:173
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:182
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:135
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:145
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:179
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:188
 msgid "On"
 msgstr "Aan"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:130
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:140
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:174
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:183
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:136
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:146
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:180
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:189
 msgid "Off"
 msgstr "Uit"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:133
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:139
 msgid "Vertex Buffer Objects:"
 msgstr "Vertex Buffer Objects:"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:143
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:149
 msgid "Graphics Driver"
 msgstr "Grafische kaart"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:157
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:163
 msgid "Sounddriver"
 msgstr "Geluidskaart"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:171
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:177
 msgid "Music"
 msgstr "Muziek"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:180
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:186
 msgid "Effects"
 msgstr "Effecten"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:189
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:195
 msgid "Music player"
 msgstr "Muziekspeler"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:430
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:438
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:436
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:444
 msgid "Sorry!"
 msgstr "Sorry!"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:430
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:436
 msgid "You need to restart your game to change the screen resolution!"
 msgstr "Je moet jouw spel herstarten om de schermresolutie te wijzigen!"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:438
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:444
 msgid "You need to restart your game to change the video or audio driver!"
 msgstr ""
 "Je moet jouw spel herstarten om de video of audio driver te wijzigen!"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:465
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:471
 msgid "Keyboard layout"
 msgstr "Toetsenbordlay-out"
 
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:46
 msgid "Tools"
-msgstr "Werktuigen"
+msgstr "Gereedschappen"
 
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:50
 msgid "Tongs"
@@ -1109,26 +1109,31 @@ msgstr "Slopen?"
 
 #: /storage/RTTR/svn/trunk/src/nofAttacker.cpp:453
 msgid "We are under attack!"
-msgstr "We zijn onder aanval!"
+msgstr "We worden aangevallen!"
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:565
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:564
 #, c-format
 msgid "Computer %u"
 msgstr "Computer %u"
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:567
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:566
 msgid " (AI)"
 msgstr " (KI)"
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:831
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:830
 msgid "The Game is not in sync. Checksums of some players don't match."
 msgstr ""
 "Het spel loopt niet synchroon. De checksommen van sommige spelers komt niet "
 "overeen."
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:1186
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:1185
 msgid "Auto-Save"
 msgstr "Automatisch opslaan"
+
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:1477
+#, c-format
+msgid "current GF: %u - still fast forwarding: %d GFs left (%d %%)"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:101
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:115
@@ -1886,6 +1891,15 @@ msgid ""
 "indicates the current number of men, the second value indicates the desired "
 "number. "
 msgstr ""
+"Het hoofdkwartier is het centrum van je domein. De grote hoeveelheid "
+"opbergruimte beteent dat je heel veel dingen veilig kan opbergen. Je kunt "
+"bepaalde grondstoffen vrijgeven vanuit je hoofdkwartier, zodra dit nogdig is "
+"of je kunt de oplsag beeindigen. Om dit te doen, kies eerst het "
+"overeenkomstige pictogram gevolgd door het gewenste koopwaar of baansymbool. "
+"Voor de derde pagina, kunt u het aantal militairen uit de reserve aanpassen "
+"die voor het bewaken van het hoofdkwartier verantwoordelijk zijn. Er zijn "
+"twee gegeven waarden: de eerste waarde wijst op het huidige aantal mensen, "
+"wijst de tweede waarde op het gewenste aantal. "
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:275
 msgid ""
@@ -2061,6 +2075,9 @@ msgid ""
 "processed iron is then used to making weapons (in the Armory) and tools (in "
 "the metalworks)."
 msgstr ""
+"Onbewerkt ijzererts wordt omgezet naar ijzer in de hoogovens met behulp van "
+"steenkool. Het verwerkte ijzer wordt dan gebruikt om wapens te maken (in de "
+"Armory) en gereedschap (in de metalworks)."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:453
 msgid ""
@@ -2150,211 +2167,211 @@ msgstr ""
 "De pakezels die hier worden gefokt worden gebruikt om je goederen "
 "efficiënter te vervoeren. Ze worden gefokt met water en graan."
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:157
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:153
 msgid "Boat"
 msgstr "Boot"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:158
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:154
 msgid "Sword"
 msgstr "Zwaard"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:160
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:156
 msgid "Flour"
 msgstr "Meel"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:161
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:157
 msgid "Fish"
 msgstr "Vis"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:162
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:158
 msgid "Bread"
 msgstr "Brood"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:163
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:159
 msgid "Shield"
 msgstr "Schild"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:174
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:170
 msgid "Meat"
 msgstr "Vlees"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:175
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:171
 msgid "Ham"
 msgstr "Ham"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:233
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:229
 msgid "Barracks"
 msgstr "Barak"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:234
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:230
 msgid "Guardhouse"
 msgstr "Wachthuis"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:236
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:232
 msgid "Watchtower"
 msgstr "Wachttoren"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:241
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:237
 msgid "Fortress"
 msgstr "Vesting"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:246
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:242
 msgid "Lookout tower"
 msgstr "Uitkijktoren"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:248
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:244
 msgid "Catapult"
 msgstr "Katapult"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:249
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:245
 msgid "Woodcutter"
 msgstr "Houthakker"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:250
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:246
 msgid "Fishery"
 msgstr "Visserij"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:251
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:247
 msgid "Quarry"
 msgstr "Steengroeve"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:252
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:248
 msgid "Forester"
 msgstr "Houtvester"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:253
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:249
 msgid "Slaughterhouse"
 msgstr "Slachthuis"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:254
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:250
 msgid "Hunter"
 msgstr "Jagerij"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:265
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:261
 msgid "Sawmill"
 msgstr "Houtzagerij"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:267
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:263
 msgid "Well"
 msgstr "Waterput"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:269
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:265
 msgid "Farm"
 msgstr "Boerderij"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:317
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:313
 msgid "Helper"
 msgstr "Helper"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:318
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:314
 msgid "Woodchopper"
 msgstr "Houthakker"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:319
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:315
 msgid "Fisher"
 msgstr "Visser"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:320
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:316
 msgid "Ranger"
 msgstr "Houtvester"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:321
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:317
 msgid "Carpenter"
 msgstr "Timmerman"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:322
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:318
 msgid "Stonemason"
 msgstr "Steenhouwer"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:323
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:319
 msgid "Huntsman"
 msgstr "Jager"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:324
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:320
 msgid "Farmer"
 msgstr "Boer"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:325
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:321
 msgid "Miller"
 msgstr "Molenaar"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:326
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:322
 msgid "Baker"
 msgstr "Bakker"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:327
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:323
 msgid "Butcher"
 msgstr "Slager"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:328
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:324
 msgid "Miner"
 msgstr "Mijnwerker"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:329
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:325
 msgid "Brewer"
 msgstr "Bierbrouwer"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:330
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:326
 msgid "Pig breeder"
 msgstr "Varkensboer"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:331
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:327
 msgid "Donkey breeder"
 msgstr "Ezelsfokker"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:332
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:328
 msgid "Iron founder"
 msgstr "IJzersmelter"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:333
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:329
 msgid "Minter"
 msgstr "Muntenperser"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:335
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:331
 msgid "Armorer"
 msgstr "Wapensmid"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:336
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:332
 msgid "Builder"
 msgstr "Bouwer"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:337
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:333
 msgid "Planer"
 msgstr "Graver"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:338
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:334
 msgid "Private"
 msgstr "Soldaat"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:339
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:335
 msgid "Private first class"
 msgstr "Soldaat eerste klas"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:340
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:336
 msgid "Sergeant"
 msgstr "Sergeant"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:341
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:337
 msgid "Officer"
 msgstr "Officier"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:342
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:338
 msgid "General"
 msgstr "General"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:343
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:339
 msgid "Geologist"
 msgstr "Geoloog"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:344
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:340
 msgid "Shipwright"
 msgstr "Scheepsbouwer"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:345
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:341
 msgid "Scout"
 msgstr "Verkenner"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:346
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:342
 msgid "Pack donkey"
 msgstr "Pakezel"
 

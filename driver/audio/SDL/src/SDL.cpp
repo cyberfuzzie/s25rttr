@@ -1,4 +1,4 @@
-// $Id: SDL.cpp 5195 2009-07-05 09:44:30Z FloSoft $
+// $Id: SDL.cpp 5381 2009-08-08 22:27:27Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -299,7 +299,7 @@ unsigned int AudioSDL::PlayEffect(Sound * sound, const unsigned char volume, con
 
 	if(channel == -1)
 	{
-		fprintf(stderr, "%s\n", Mix_GetError());
+		//fprintf(stderr, "%s\n", Mix_GetError());
 		return 0xFFFFFFFF;
 	}
 

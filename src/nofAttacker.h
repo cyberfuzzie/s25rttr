@@ -1,4 +1,4 @@
-// $Id: nofAttacker.h 4842 2009-05-09 11:53:45Z OLiver $
+// $Id: nofAttacker.h 5383 2009-08-09 09:56:39Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -47,6 +47,10 @@ private:
 	/// Nach einer bestimmten Zeit, in der der Angreifer an der Flagge des Gebäudes steht, blockt er den Weg
 	/// nur benutzt bei STATE_ATTACKING_WAITINGFORDEFENDER
 	EventManager::EventPointer blocking_event;
+	/// Feind, der uns auf dem Weg zu Nahe gekommen ist und bekämpft werden muss //TODO maybe zusammen mit defender behandeln?
+	nofActiveSoldier *encounteredEnemy;
+	/// vereinbarter Treffpunkt um den encounteredEnemy zu bekämpfen
+	MapCoord fightSpot_x, fightSpot_y;
 
 private:
 
@@ -62,6 +66,24 @@ private:
 
 	/// Sagt den verschiedenen Zielen Bescheid, dass wir doch nicht mehr kommen können
 	void InformTargetsAboutCancelling();
+
+	/// Sucht nach feindlichen nofAttackern in der Nähe (gibt NULL zurück wenn keiner da)
+	nofActiveSoldier *FindValidEnemyNearby();
+
+	/// Geht zu einem anderen nofAttacker und kämpft mit ihm bzw. versucht das
+	bool GoToFightEncounteredAttacker(nofAttacker *enemy, MapCoord tx, MapCoord ty);
+
+	/// Gibt einen Platz zurück, an dem Kampf möglich ist (nur die 6 angrenzenden werden getestet)
+	bool GetFightSpotNear(MapCoord &x, MapCoord &y);
+
+	/// Lässt Soldaten zu einem Kampfplatz laufen, um mit einem anderen nofAttacker zu kämpfen
+	void WalkingToFightSpot();
+
+	/// Trifft auf anderen Attacker der in der Nähe rumläuft und vereinbart Kampf
+	bool EncounterEnemy();
+
+	/// Entfernt den encountered Enemy, setzt normale Tätigkeit fort
+	void LostEncounteredEnemy();
 
 public:
 

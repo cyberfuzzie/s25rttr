@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 5330 2009-07-26 00:16:09Z jh $
+// $Id: GameWorldGame.cpp 5383 2009-08-09 09:56:39Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1053,7 +1053,7 @@ bool GameWorldGame::ValidWaitingAroundBuildingPoint(const MapCoord x, const MapC
 	return true;
 }
 
-bool GameWorldGame::ValidPointForFighting(const MapCoord x, const MapCoord y)
+bool GameWorldGame::ValidPointForFighting(const MapCoord x, const MapCoord y, nofActiveSoldier *exception)
 {
 	// Objekte, die sich hier befinden durchgehen
 	for(list<noBase*>::iterator it = GetFigures(x,y).begin();it.valid();++it)
@@ -1062,6 +1062,8 @@ bool GameWorldGame::ValidPointForFighting(const MapCoord x, const MapCoord y)
 		if((*it)->GetGOT() == GOT_NOF_ATTACKER || (*it)->GetGOT() == GOT_NOF_AGGRESSIVEDEFENDER || 
 			(*it)->GetGOT() == GOT_NOF_DEFENDER)
 		{
+			if (static_cast<nofActiveSoldier*>(*it) == exception)
+				continue;
 			switch(static_cast<nofActiveSoldier*>(*it)->GetState())
 			{
 			default: break;
@@ -1080,6 +1082,22 @@ bool GameWorldGame::ValidPointForFighting(const MapCoord x, const MapCoord y)
 			return false;
 		}
 	}
+	// Liegt hier was rum auf dem man nicht kämpfen sollte?
+	noBase *obj = GetNode(x,y).obj;
+	if(obj)
+	{
+		if(obj->GetType() == NOP_BUILDING ||
+		obj->GetGOT() == GOT_BUILDINGSITE ||
+		obj->GetGOT() == GOT_EXTENSION ||
+		obj->GetGOT() == GOT_GRANITE || 
+		obj->GetType() == NOP_OBJECT ||
+		obj->GetGOT() == GOT_FIRE ||
+		obj->GetGOT() == GOT_GRANITE)
+		 return false;
+	}
+
+	if(GetNode(x,y).reserved)
+		return false;
 
 	return true;
 }

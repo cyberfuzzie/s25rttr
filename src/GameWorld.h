@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 5330 2009-07-26 00:16:09Z jh $
+// $Id: GameWorld.h 5383 2009-08-09 09:56:39Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -53,6 +53,7 @@ class GameInterface;
 class GameWorldBase;
 class glArchivItem_Map;
 class noShip;
+class nofActiveSoldier;
 
 struct RoadsBuilding;
 class FOWObject;
@@ -624,7 +625,7 @@ public:
 	/// Ist der Punkt ein geeigneter Platz zum Warten vor dem Militärgebäude
 	bool ValidWaitingAroundBuildingPoint(const MapCoord x, const MapCoord y, nofAttacker * attacker);
 	/// Geeigneter Punkt für Kämpfe?
-	bool ValidPointForFighting(const MapCoord x, const MapCoord y);
+	bool ValidPointForFighting(const MapCoord x, const MapCoord y, nofActiveSoldier *exception = NULL);
 
 	/// Berechnet die Sichtbarkeiten neu um einen Punkt mit radius
 	void RecalcVisibilitiesAroundPoint(const MapCoord x, const MapCoord y, const MapCoord radius, const unsigned char player, const noBuilding * const exception);

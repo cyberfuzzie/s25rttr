@@ -1,4 +1,4 @@
-// $Id: nofActiveSoldier.h 4842 2009-05-09 11:53:45Z OLiver $
+// $Id: nofActiveSoldier.h 5383 2009-08-09 09:56:39Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -51,7 +51,10 @@ public:
 		STATE_DEFENDING_WALKINGTO, // läuft VOR Verteidigung ZUR Flagge
 		STATE_DEFENDING_WALKINGFROM, // läuft NACH Verteidigung VON DER Flagge WEG
 		STATE_DEFENDING_WAITING, // wartet an der Flagge auf weitere Angreifer
-		STATE_DEFENDING_FIGHTING // kämpft mit dem Angreifer
+		STATE_DEFENDING_FIGHTING, // kämpft mit dem Angreifer
+
+		STATE_ATTACKING_WALKINGTOFIGHTSPOT, // Läuft zu einem Kampfplatz um dort mit einem anderen Attacker zu kämpfen
+		STATE_ATTACKING_FIGHTVSATTACKER // Kämpft gegen einen zufällig angetroffenen Attacker
 	};
 
 protected:

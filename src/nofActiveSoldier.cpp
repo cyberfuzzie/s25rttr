@@ -1,4 +1,4 @@
-// $Id: nofActiveSoldier.cpp 5253 2009-07-12 14:42:18Z FloSoft $
+// $Id: nofActiveSoldier.cpp 5383 2009-08-09 09:56:39Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -156,6 +156,7 @@ void nofActiveSoldier::Draw(int x, int y)
 	case STATE_ATTACKING_CAPTURINGFIRST:
 	case STATE_ATTACKING_CAPTURINGNEXT:
 	case STATE_ATTACKING_ATTACKINGFLAG:
+	case STATE_ATTACKING_WALKINGTOFIGHTSPOT:
 		{
 			DrawSoldierWalking(x,y);
 		} break;

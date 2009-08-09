@@ -2,14 +2,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Siedler II.5 RttR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-19 14:39+0100\n"
-"PO-Revision-Date: 2009-07-19 23:19+0000\n"
-"Last-Translator: FloSoft <Unknown>\n"
+"POT-Creation-Date: 2009-08-02 15:46+0100\n"
+"PO-Revision-Date: 2009-08-06 16:45+0000\n"
+"Last-Translator: Gergely Szarka <gszarka@invitel.hu>\n"
 "Language-Team: Siedler II.5 RttR <sf-team@siedler25.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-08-02 13:36+0000\n"
+"X-Launchpad-Export-Date: 2009-08-09 09:24+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: Hungary\n"
 "X-Poedit-Language: Hungarian\n"
@@ -144,15 +144,16 @@ msgstr "Zenelejátszó"
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:436
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:444
 msgid "Sorry!"
-msgstr ""
+msgstr "Elnézést!"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:436
 msgid "You need to restart your game to change the screen resolution!"
-msgstr ""
+msgstr "A felbontás megváltoztatásához újra kell indítani a játékot!"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:444
 msgid "You need to restart your game to change the video or audio driver!"
 msgstr ""
+"A videó- vagy hangeszköz megváltoztatásához újra kell indítania a játékot!"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:471
 msgid "Keyboard layout"
@@ -255,11 +256,11 @@ msgstr "Termelékenység"
 
 #: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:559
 msgid "Military building occupied"
-msgstr ""
+msgstr "Katonai épület elfoglalva"
 
 #: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:773
 msgid "Military building lost"
-msgstr ""
+msgstr "Katonai épület elvesztve"
 
 #: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:776
 msgid "Military building captured"
@@ -267,7 +268,7 @@ msgstr "Katonai épület elfoglalva"
 
 #: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:1000
 msgid "A catapult is firing upon us!"
-msgstr ""
+msgstr "Egy katapulttal lőnek ránk!"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:44
 #: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:65
@@ -356,11 +357,11 @@ msgstr "Nem változtathatod meg az alap listát!"
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:171
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:320
 msgid "The specified file couldn't be saved!"
-msgstr "A filet nem lehet menteni!"
+msgstr "A kiválasztott fájlt nem lehet menteni!"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:191
 msgid "The specified file couldn't be loaded!"
-msgstr "A filet nem lehet betölteni!"
+msgstr "A kiválasztott fájlt nem lehet betölteni!"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:257
 msgid "Random playback"
@@ -368,11 +369,11 @@ msgstr "Véletlenszerű lejátszás"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:305
 msgid "The specified file couldn't be opened!"
-msgstr "A file nem nyitható meg!"
+msgstr "A kiválasztott fájl nem nyitható meg!"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:59
 msgid "Player Name"
-msgstr "Játékos Neve"
+msgstr "Játékos neve"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:61
 msgid "Classification"
@@ -420,7 +421,7 @@ msgstr "Osztott csapatnézet"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:95
 msgid "Enhancements:"
-msgstr ""
+msgstr "Fejlesztések:"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:96
 msgid "Change Settings..."
@@ -428,7 +429,7 @@ msgstr "Beállítások módosítása..."
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:96
 msgid "View Settings..."
-msgstr ""
+msgstr "Beállítások megtekintése"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:102
 msgid "Demolition prohibition:"
@@ -489,7 +490,7 @@ msgstr "Nincs"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:127
 msgid "Conquer 3/4 of map"
-msgstr "A térkép 3/4 ének felderitése"
+msgstr "A térkép 3/4-ének elfoglalása"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:128
 msgid "Total domination"
@@ -687,8 +688,8 @@ msgid ""
 "Singleplayer mode and AI are not yet implemented. Please use the Multiplayer "
 "mode and 'Direct IP' to create a Singleplayer game."
 msgstr ""
-"A Singleplayer és az MI nincs kész. Használd a Multiplayert és a Direct "
-"IPben csinálhatsz Singleplayert."
+"Az egyjátékos mód és a mesterséges intelligencia még nincs kész. Használd a "
+"többjátékos módot és a 'Direct IP' módban csinálhatsz egyszemélyes játékot."
 
 #: /storage/RTTR/svn/trunk/src/iwBaseWarehouse.cpp:62
 msgid "do nothing"
@@ -716,108 +717,103 @@ msgstr "Ház lerombolása"
 
 #: /storage/RTTR/svn/trunk/src/iwSurrender.cpp:49
 msgid "Surrender game?"
-msgstr ""
+msgstr "Játék feladása?"
 
 #: /storage/RTTR/svn/trunk/src/iwSurrender.cpp:52
 #: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:104
 msgid "Surrender"
-msgstr ""
+msgstr "Feladás"
 
 #: /storage/RTTR/svn/trunk/src/iwSurrender.cpp:54
 msgid "Destroy all buildings and surrender"
-msgstr ""
+msgstr "Minden épület elpusztítása és abbahagyás"
 
 #: /storage/RTTR/svn/trunk/src/iwSurrender.cpp:56
 msgid "Don't surrender"
-msgstr ""
+msgstr "Ne add fel"
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:90
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:92
-msgid "Please wait..."
-msgstr "Kérem várjon..."
-
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:112
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:99
 msgid "Author"
 msgstr "Szerző"
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:112
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:99
 msgid "Type"
 msgstr "Típus"
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:112
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:99
 msgid "Size"
 msgstr "Méret"
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:115
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:102
 msgid "Selection of maps"
 msgstr "Térkép kiválasztása"
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:120
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:107
 msgid "Load game..."
 msgstr "Játék betöltése..."
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:122
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:109
 msgid "Continue"
 msgstr "Folytatás"
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:126
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:113
 msgid "Old maps"
 msgstr "Régi térképek"
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:128
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:115
 msgid "New maps"
 msgstr "Új térképek"
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:130
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:117
 msgid "Own maps"
 msgstr "Saját térképek"
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:132
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:119
 msgid "Continents"
 msgstr "Kontinens"
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:134
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:121
 msgid "Campaign"
 msgstr "Küldetés"
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:136
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:123
 msgid "RTTR"
 msgstr "RTTR"
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:138
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:125
 msgid "Other"
 msgstr "Egyéb"
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:140
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:127
 msgid "Sea"
-msgstr ""
+msgstr "Tenger"
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:142
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:129
 msgid "Played"
 msgstr "Játszott"
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:146
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:133
 msgid "Mapfile: "
-msgstr ""
+msgstr "Térképfájl : "
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:345
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:332
 msgid "Incomplete message was received!"
 msgstr "Bejezetlen levél érkezett!"
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:406
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:393
 #, c-format
 msgid "%d Player"
 msgstr "%d Játékos"
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:411
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:398
 msgid "Greenland"
 msgstr "Zöld vidék"
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:412
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:399
 msgid "Wasteland"
 msgstr "Sivatag"
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:413
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:400
 msgid "Winter world"
 msgstr "Havas világ"
 
@@ -851,25 +847,25 @@ msgstr "Vázlatos térkép"
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:97
 msgid "treaty of alliance"
-msgstr ""
+msgstr "szövetségi megállapodás"
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:98
 msgid "non-aggression pact"
-msgstr ""
+msgstr "megnem-támadási szerződés"
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:108
 #, c-format
 msgid "The player '%s' offers you a %s."
-msgstr ""
+msgstr "A '%s' játékos felajánl neked: %s"
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:113
 msgid "Duration: Forever"
-msgstr ""
+msgstr "Időtartam: örökre"
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:115
 #, c-format
 msgid "Duration: %u GF (%s)"
-msgstr ""
+msgstr "Időtartam: %u GF (%s)"
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:127
 #, c-format
@@ -881,12 +877,12 @@ msgstr ""
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:150
 #, c-format
 msgid "The %s between player '%s' and you has been concluded."
-msgstr ""
+msgstr "A %s a '%s' játékos és közted befejeződött."
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:153
 #, c-format
 msgid "The %s between player '%s' and you has been cancelled."
-msgstr ""
+msgstr "A %s a '%s' játékos és közted törlődött."
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:63
 msgid "Filename"
@@ -928,7 +924,7 @@ msgstr "Hiba: A visszajátszás túl régi!"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:96
 msgid "Program version is too old to play that replay!"
-msgstr "A program túl régi hogy lejátsza azt a visszajátszást!"
+msgstr "A program túl régi hogy lejátsza ezt a visszajátszást!"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:98
 msgid "Temporary map file was not found!"
@@ -944,11 +940,11 @@ msgstr "Hajónevek"
 
 #: /storage/RTTR/svn/trunk/src/iwShip.cpp:71
 msgid "Found colony"
-msgstr ""
+msgstr "Kolóniát találtam"
 
 #: /storage/RTTR/svn/trunk/src/iwShip.cpp:102
 msgid "No ships available"
-msgstr ""
+msgstr "Nincs használható hajó"
 
 #: /storage/RTTR/svn/trunk/src/iwTextfile.cpp:72
 msgid "The readme file was not found!"
@@ -984,15 +980,15 @@ msgstr "Térkép betöltve és kiszögelve a falra..."
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:135
 msgid "Tribal chiefs assembled around the table..."
-msgstr "Törzsfök gyültek ösze az asztal körül..."
+msgstr "A törzsfők összegyűltek az asztal körül..."
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:143
 msgid "Failed to load map objects."
-msgstr "Nem sikerült betölteni a térkép tárgyait."
+msgstr "Nem sikerült betölteni a térkép objektumait."
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:147
 msgid "Game crate was picked and spread out..."
-msgstr "Játékláda felvéve és szétterjesztve..."
+msgstr "Játék létrehozása kiválasztva és szétterítve..."
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:155
 msgid "Failed to load terrain data."
@@ -1071,6 +1067,11 @@ msgstr "Szövetségesek"
 msgid "Enemies"
 msgstr "Ellenségek"
 
+#: /storage/RTTR/svn/trunk/src/iwPleaseWait.cpp:42
+#: /storage/RTTR/svn/trunk/src/iwPleaseWait.cpp:44
+msgid "Please wait..."
+msgstr "Kérem várjon..."
+
 #: /storage/RTTR/svn/trunk/src/iwRoadWindow.cpp:47
 msgid "Activity window"
 msgstr "Tevékenység ablak"
@@ -1081,9 +1082,9 @@ msgstr "Útépítés megszakitása"
 
 #: /storage/RTTR/svn/trunk/src/iwRoadWindow.cpp:56
 msgid "Erect flag"
-msgstr "Zászló"
+msgstr "Zászló felállítása"
 
-#: /storage/RTTR/svn/trunk/src/GameClientGF_Replay.cpp:73
+#: /storage/RTTR/svn/trunk/src/GameClientGF_Replay.cpp:75
 #, c-format
 msgid ""
 "Warning: The played replay is not in sync with the original match. (GF: %u)"
@@ -1091,10 +1092,12 @@ msgstr ""
 "Figyelem: A lejátszott visszajátszás nincs szinkronban az eredeti matchal. "
 "(GF: %u)"
 
-#: /storage/RTTR/svn/trunk/src/GameClientGF_Replay.cpp:115
+#: /storage/RTTR/svn/trunk/src/GameClientGF_Replay.cpp:117
 #, c-format
-msgid "Notice: The played replay has ended. (GF: %u)"
-msgstr "A visszajátszás végetért. (GF: %u)"
+msgid ""
+"Notice: The played replay has ended. (GF: %u, %dh %dmin %ds, TF: %u, "
+"AVG_FPS: %u)"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/nofBuildingWorker.cpp:375
 msgid "This mine is exhausted"
@@ -1106,26 +1109,26 @@ msgstr "Lerombol?"
 
 #: /storage/RTTR/svn/trunk/src/nofAttacker.cpp:453
 msgid "We are under attack!"
-msgstr ""
+msgstr "Megtámadtak!"
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:564
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:570
 #, c-format
 msgid "Computer %u"
 msgstr "Számítógép %u"
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:566
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:572
 msgid " (AI)"
 msgstr " (MI)"
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:830
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:836
 msgid "The Game is not in sync. Checksums of some players don't match."
 msgstr "A játék nincs szinkronban. A játékosok ellenőrzőszámai nem egyeznek."
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:1185
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:1191
 msgid "Auto-Save"
-msgstr "Auto-Mentés"
+msgstr "Automatikus mentés"
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:1477
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:1483
 #, c-format
 msgid "current GF: %u - still fast forwarding: %d GFs left (%d %%)"
 msgstr ""
@@ -1140,7 +1143,7 @@ msgstr "-> Házépítés"
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:114
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:120
 msgid "-> Build hut"
-msgstr "-> Házikóépítés"
+msgstr "-> Kunyhóépítés"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:122
 msgid "-> Build castle"
@@ -1259,7 +1262,7 @@ msgstr "Csatlakozás sikertelen!"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:211
 msgid "This Server is full!"
-msgstr "Szerver tele!"
+msgstr "A szerver foglalt..."
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:212
 msgid "Wrong Password!"
@@ -1307,7 +1310,7 @@ msgstr "Fő kiválasztás"
 
 #: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:58
 msgid "Distribution of goods"
-msgstr "Az árucikkek elosztása"
+msgstr "Javak elosztása"
 
 #: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:60
 msgid "Transport"
@@ -1330,8 +1333,8 @@ msgid "Military"
 msgstr "Katonaság"
 
 #: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:80
-msgid "Series sequence"
-msgstr "Sorrendek"
+msgid "Building sequence"
+msgstr "Építési sorrend"
 
 #: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:82
 msgid "Diplomacy"
@@ -1347,11 +1350,11 @@ msgstr "Győzelem"
 
 #: /storage/RTTR/svn/trunk/src/nofFarmhand.cpp:168
 msgid "No more stones in range"
-msgstr ""
+msgstr "Nincs több kő"
 
-#: /storage/RTTR/svn/trunk/src/nofFarmhand.cpp:172
+#: /storage/RTTR/svn/trunk/src/nofFarmhand.cpp:175
 msgid "No more fishes in range"
-msgstr ""
+msgstr "Nincs több hal"
 
 #: /storage/RTTR/svn/trunk/src/iwWares.cpp:167
 msgid "Next page"
@@ -1374,7 +1377,7 @@ msgstr "A rombolás nem lehetséges"
 msgid "Construction aid mode"
 msgstr "Építkezést segítő mód"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:187
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:194
 #, c-format
 msgid ""
 "(Replay-Mode) Current GF: %u (End at: %u) / GF length: %u ms / NWF length: "
@@ -1383,65 +1386,65 @@ msgstr ""
 "(Visszajátszás-Mód) Éppen GF: %u (Vége: %u) / GF hossz: %u ms / NWF hossz: "
 "%u gf (%u ms)"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:189
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:196
 #, c-format
 msgid ""
 "Current GF: %u / GF length: %u ms / NWF length: %u gf (%u ms) /  Ping: %u ms"
 msgstr ""
 "Jelenlegi GF: %u / GF hossz: %u ms / NWF hossz: %u gf (%u ms) /  Ping: %u ms"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:808
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:815
 #, c-format
 msgid "Player '%s' left the game!"
 msgstr "'%s' elhagyta a játékot!"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:811
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:818
 #, c-format
 msgid "Player '%s' joined the game!"
 msgstr "'%s' csatlakozott a játékhoz!"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:819
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:826
 #, c-format
 msgid "Note: Game settings changed by the server%s"
-msgstr ""
+msgstr "Megjegyzés: A játék beállításai megváltoztatta a server%s"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:826
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:852
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:875
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:833
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:859
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:882
 #, c-format
 msgid "<%s> "
 msgstr "<%s> "
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:835
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:842
 msgid "A auto-savegame is created..."
 msgstr "Automatikus mentés létrehozva"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:852
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:875
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:859
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:882
 msgid "SYSTEM"
 msgstr "RENDSZER"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:853
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:860
 msgid "Game was paused."
 msgstr "Játék szüneteltetve"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:876
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:883
 msgid "Game was resumed."
 msgstr "Játék folytatása"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:922
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:929
 #, c-format
 msgid "Player '%s' switched to player '%s'"
 msgstr "'%s' átváltott '%s'"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:940
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:947
 #, c-format
 msgid "Player '%s' was defeated!"
 msgstr "'%s' Vesztett!"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:80
 msgid "Treaties"
-msgstr ""
+msgstr "Szerződések"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:105
 msgid "Treaty of alliance"
@@ -1453,19 +1456,19 @@ msgstr "Megnem-támadási szerződés"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:224
 msgid "Suggest treaty of alliance"
-msgstr ""
+msgstr "Szövetségi megállapodás felajánlása"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:225
 msgid "Suggest non-aggression pact"
-msgstr ""
+msgstr "Megnem-támadási szerződés felajánlása"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:243
 msgid "Short-run"
-msgstr ""
+msgstr "Rövidtávú"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:244
 msgid "Medium-term"
-msgstr ""
+msgstr "Középtávú"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:245
 msgid "Long-run"
@@ -1477,7 +1480,7 @@ msgstr "Szerződéstípus:"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:267
 msgid "To player:"
-msgstr ""
+msgstr "Játékosnak:"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:269
 msgid "Duration:"
@@ -1493,7 +1496,7 @@ msgstr "Megerősít"
 
 #: /storage/RTTR/svn/trunk/src/nofScout_LookoutTower.cpp:81
 msgid "Lookout-tower occupied"
-msgstr ""
+msgstr "Kilátó-torony elfoglalva"
 
 #: /storage/RTTR/svn/trunk/src/dskDirectIP.cpp:59
 msgid "Create Game"
@@ -1567,9 +1570,9 @@ msgstr "Le"
 msgid "Bottom"
 msgstr "Alja"
 
-#: /storage/RTTR/svn/trunk/src/GameWorldGame.cpp:548
+#: /storage/RTTR/svn/trunk/src/GameWorldGame.cpp:555
 msgid "Lost land by this building"
-msgstr ""
+msgstr "Elvesztett terület emiatt az épület miatt"
 
 #: /storage/RTTR/svn/trunk/src/iwBuildingSite.cpp:57
 msgid "Order of building site"
@@ -1676,8 +1679,8 @@ msgid "Registration successful!"
 msgstr "A regisztráció sikeres!"
 
 #: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:496
-msgid "Found ironore"
-msgstr "Vasércet találtunk"
+msgid "Found iron ore"
+msgstr "Vasércet találtam"
 
 #: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:498
 msgid "Found gold"
@@ -1713,7 +1716,7 @@ msgstr "Lakosok"
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:96
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:175
 msgid "Merchandise"
-msgstr ""
+msgstr "Kereskedelem"
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:97
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:179
@@ -1829,19 +1832,19 @@ msgstr "Hálózat/LAN"
 msgid "Direct IP"
 msgstr "Direct IP"
 
-#: /storage/RTTR/svn/trunk/src/iwSave.cpp:67
+#: /storage/RTTR/svn/trunk/src/iwSave.cpp:68
 msgid "Time"
 msgstr "Idő"
 
-#: /storage/RTTR/svn/trunk/src/iwSave.cpp:67
+#: /storage/RTTR/svn/trunk/src/iwSave.cpp:68
 msgid "Start GF"
 msgstr "GF indítása"
 
-#: /storage/RTTR/svn/trunk/src/iwSave.cpp:203
+#: /storage/RTTR/svn/trunk/src/iwSave.cpp:204
 msgid "Auto-Save every:"
-msgstr "Autó-Mentés minden:"
+msgstr "Automatikus mentés minden:"
 
-#: /storage/RTTR/svn/trunk/src/iwSave.cpp:207
+#: /storage/RTTR/svn/trunk/src/iwSave.cpp:208
 msgid "Disabled"
 msgstr "Kikapcsolva"
 
@@ -1851,11 +1854,11 @@ msgstr "Kikötő"
 
 #: /storage/RTTR/svn/trunk/src/iwHarborBuilding.cpp:53
 msgid "Expedition"
-msgstr ""
+msgstr "Felfedezés"
 
 #: /storage/RTTR/svn/trunk/src/iwHarborBuilding.cpp:55
 msgid "Start expedition"
-msgstr ""
+msgstr "Felfedezés indítása"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPCreate.cpp:55
 msgid "Game's Name:"
@@ -1885,6 +1888,13 @@ msgid ""
 "indicates the current number of men, the second value indicates the desired "
 "number. "
 msgstr ""
+"A főhadiszállás birodalmad központja. Javaid itt nagy mennyiségben és "
+"biztonságosan tárolhatók. Az egyes áruk kivehetők a főhadiszállásról, ha "
+"szükség van rájuk vagy ha nem akarod tovább raktározni őket. Ehhez először "
+"válaszd ki a megfelelő áru ikonját vagy munkás szimbólumát. A harmadik "
+"oldalon szabályozhatod a tartalékos katonák számát, akik a főhadiszállás "
+"védelmét látják el. Itt két érték található: az első érték mutatja az "
+"emberek aktuális számát, a második pedig a kívánt számot. "
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:275
 msgid ""
@@ -1893,9 +1903,9 @@ msgid ""
 "to the soldiers stationed here. However, without gold coins the soldiers "
 "here can not train and improve their skills."
 msgstr ""
-"Az örbódé egy nagyon kicsi ház, amiben katonák szállásolhatóak. Az aranyérme "
-"gombot használva megállithatod a szállitását. Erme nélkül azonban a katonák "
-"nem tudják fejleszteni képességeiket."
+"Az őrkunyhó egy nagyon kicsi ház, amiben katonák szállásolhatóak. Az "
+"aranyérme gombot használva megállíthatod az érmék szállítását. Érmék nélkül "
+"azonban a katonák nem tudják fejleszteni képességeiket."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:287
 msgid ""
@@ -1904,9 +1914,9 @@ msgid ""
 "delivery of gold coins to the soldiers stationed here. However, without gold "
 "coins the soldiers here can not train and improve their skills."
 msgstr ""
-"Az örház kényelmes hely a katonáknak, és erös köfallal van védve. Az "
-"aranyérme gombot használva megállithatod a szállitását. Erme nélkül azonban "
-"a katonák nem tudják fejleszteni képességeiket."
+"Az őrház kényelmes hely a katonáknak, és erős kőfallal van védve. Az "
+"aranyérme gombot használva megállíthatod az érmék szállítását. Érmék nélkül "
+"azonban a katonák nem tudják fejleszteni képességeiket."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:303
 msgid ""
@@ -1915,9 +1925,9 @@ msgid ""
 "delivery of gold coins to the soldiers stationed here. However, without gold "
 "coins the soldiers here can not train and improve their skills."
 msgstr ""
-"Az örtorony sok helyet biztosít a katonáknak. Az aranyérme gombot használva "
-"megállithatod a szállitását. Erme nélkül azonban a katonák nem tudják "
-"fejleszteni képességeiket."
+"Az őrtorony sok helyet biztosít a katonáknak. Az aranyérme gombot használva "
+"megállíthatod az érmék szállítását. Érmék nélkül azonban a katonák nem "
+"tudják fejleszteni képességeiket."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:319
 msgid ""
@@ -1927,33 +1937,41 @@ msgid ""
 "coins to the soldiers stationed here. However, without gold coins the "
 "soldiers here can not train and improve their skills."
 msgstr ""
-"Az eröd a legerösebb katonai épület. Megvédi a környezö épületeket. Az "
-"aranyérme gombot használva megállithatod a szállitását. Erme nélkül azonban "
-"a katonák nem tudják fejleszteni képességeiket."
+"Az erőd a legerősebb katonai épület. Megvédi a környező épületeket. Az "
+"aranyérme gombot használva megállíthatod az érmék szállítását. Érmék nélkül "
+"azonban a katonák nem tudják fejleszteni képességeiket."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:334
 msgid ""
 "The quarrying of stone in a granite mine guarantees the supply of stone for "
 "buildings. However, eben a granite mine has to feed its workers."
 msgstr ""
+"A gránitbányából kifejthető kövek szolgáltatják a követ az épületekhez. "
+"Azonban a bányászoknak élelemre van szükségük a munkához."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:342
 msgid ""
 "The mining of coal supports the metalworks and smithy. This hard work "
 "requires an adequate supply of food."
 msgstr ""
+"A szénbányában bányászott szénre a kohászoknak és kovácsoknak van szükségük. "
+"Ez a kemény munka viszont kielégítő élelem-ellátást kíván."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:349
 msgid ""
 "Deep within the mountains, miners dig for iron ore. They will obviously need "
 "a lot of food for the strenuous work."
 msgstr ""
+"A hegyek mélyén a bányászok vasércet bányásznak. Nyilvánvalóan nekik sok "
+"élelemre van szükségük a kimerítő munkához."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:356
 msgid ""
 "A gold mine allows you to prospect for valuable gold deposits. For this, it "
 "is necessary to ensure that the miners are provided with plenty of food."
 msgstr ""
+"Egy aranybánya lehetővé teszi, hogy értékes aranykészlet birtokába juss. "
+"Ezért szükséges, hogy biztosítsd a megfelelő élelembőséget a bányászoknak."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:365
 msgid ""
@@ -1964,7 +1982,7 @@ msgstr "A kilátótoronyból láthatod a felderítetlen területet."
 msgid ""
 "Thanks to its immense strength, the catapults represents an effective weapon "
 "against enemy military buildings."
-msgstr "A catapultok az ellenséges katonai épületek ellen erösek."
+msgstr "A katapultok az ellenséges katonai épületek ellen igen hasznosak."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:381
 msgid ""
@@ -1977,27 +1995,31 @@ msgstr ""
 msgid ""
 "The fish man is responsible for finding water rich in fish. His fish feed a "
 "great many miners."
-msgstr "A halász halat fog a bányászoknak."
+msgstr ""
+"A halász feladata átkutatni a halban bővelkedő vizeket és halat fogni a "
+"bányászoknak."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:394
 msgid ""
 "The stonemason works the stone near his quarry into bricks. These are needed "
 "mainly for building houses and as ammunition for catapults."
 msgstr ""
-"A köfejtö a sziklából kőtömböt készit. Ezek építkezésekhez és a "
+"A kőfejtő a sziklából kőtömböt készít. Ezek építkezésekhez és a "
 "katapultokhoz kellenek."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:402
 msgid ""
 "Within his area, the forester ensures the survival of the forest. He plants "
 "all types of trees."
-msgstr "A feültetö pótolja a favágó által kivágott fát."
+msgstr ""
+"A faültető pótolja a favágó által kivágott fát. Mindenféle típusú fát ültet."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:409
 msgid ""
 "The butcher processes the livestock delivered into nutritious ham on which "
 "you miners are fed."
-msgstr "A hentes a disznóból húst készít a bényészoknak."
+msgstr ""
+"A hentes feldolgozza a disznókat és tápláló húst készít a bányászoknak."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:416
 msgid "Meat the hunter acquires is used to feed the miners."
@@ -2014,7 +2036,9 @@ msgstr ""
 msgid ""
 "The armory produces swords and strong shields. This equipment is vital for "
 "your soldiers."
-msgstr "A kovács késziti a kardot és a pajzsot. Ezek kellenek a katonáknak."
+msgstr ""
+"A kovács készíti a kardokat és a pajzsokat. Ezekre a katonáknak lesz "
+"szükségük."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:434
 msgid ""
@@ -2045,7 +2069,11 @@ msgid ""
 "Alternatively, the storage function can be disabled. To do this, first "
 "choose the relevant icon followed by the desired merchandise or job symbol."
 msgstr ""
-"A raktárban tárolhatod az árukat és a munkásokat. Kitilthatsz árut inen."
+"A raktárak segítenek lerövidíteni a hosszú szállítási utakat, és megfelelőek "
+"az áruk és a lakosok ideiglenes raktározására. A javakat kiveheted innen "
+"amikor csak szükség van rájuk. Ideiglenesen a raktározás leállítható, vagy "
+"kitilthatsz árut is innen. Ehhez először válaszd ki az áru megfelelő ikonját "
+"vagy a munkás szimbólumát."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:479
 msgid ""
@@ -2058,8 +2086,8 @@ msgid ""
 "The flour produced at the windmill can be combined with water in the bakery "
 "to make oven-fresh bread. It's your miners' favorite!"
 msgstr ""
-"A liszt a malomban készül és ez a péknek kell és még vizböl kenyeret süt. A "
-"bányászok kedvence!"
+"A liszt a malomban készül, ez a péknek kell, aki vízből és lisztből kenyeret "
+"süt. A bányászok kedvence!"
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:494
 msgid ""
@@ -2272,7 +2300,7 @@ msgstr "Kovács"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:332
 msgid "Builder"
-msgstr "Epítö"
+msgstr "Építőmunkás"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:333
 msgid "Planer"
@@ -2316,6 +2344,13 @@ msgstr "Szamár"
 
 #~ msgid "File was not found!"
 #~ msgstr "File nem található!"
+
+#, c-format
+#~ msgid "Notice: The played replay has ended. (GF: %u)"
+#~ msgstr "A visszajátszás végetért. (GF: %u)"
+
+#~ msgid "Series sequence"
+#~ msgstr "Sorrendek"
 
 #~ msgid "About"
 #~ msgstr "Névjegy"
@@ -2373,3 +2408,6 @@ msgstr "Szamár"
 
 #~ msgid "Discard Changes"
 #~ msgstr "A módosítások eldobása"
+
+#~ msgid "Found ironore"
+#~ msgstr "Vasércet találtunk"

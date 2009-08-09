@@ -1,4 +1,4 @@
-// $Id: GameClient.h 5355 2009-07-31 16:59:26Z FloSoft $
+// $Id: GameClient.h 5385 2009-08-09 20:52:43Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -59,11 +59,11 @@ public:
 	bool IsSavegame() const { return mapinfo.map_type == MAPTYPE_SAVEGAME; }
 	std::string GetGameName() const { return clientconfig.gamename; }
 
-	unsigned char GetPlayerID() const { return playerid; }
-	unsigned GetPlayerCount() const { return players.getCount(); }
+	inline unsigned char GetPlayerID() const { return playerid; }
+	inline unsigned GetPlayerCount() const { return players.getCount(); }
 	/// Liefert einen Player zurück
-	GameClientPlayer * GetPlayer(const unsigned int id) { return players.getElement(id); }
-	GameClientPlayer * GetLocalPlayer(void) { return GetPlayer(playerid); }
+	inline GameClientPlayer * GetPlayer(const unsigned int id) { return players.getElement(id); }
+	inline GameClientPlayer * GetLocalPlayer(void) { return GetPlayer(playerid); }
 	/// Erzeugt einen KI-Player, der mit den Daten vom GameClient gefüttert werden muss (zusätzlich noch mit den GameServer)
 	AIBase * CreateAIPlayer(const unsigned playerid);
 

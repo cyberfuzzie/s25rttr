@@ -1220,7 +1220,7 @@ void nofAttacker::WalkingToFightSpot()
 						unsigned char walk_dir = gwg->FindHumanPath(x,y,fightSpot_x,fightSpot_y,10);
 
 						// Falls wir da mysteriöserweise nicht hinkönnen: absagen
-						if (walk_dir = 0xFF)
+						if (walk_dir == 0xFF)
 						{
 							static_cast<nofAttacker*>(encounteredEnemy)->LostEncounteredEnemy();
 							encounteredEnemy = 0;

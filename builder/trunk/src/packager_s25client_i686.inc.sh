@@ -19,8 +19,6 @@ if ! make_tarbz2 ; then
 	exit 1
 fi
 
-PKGARCH=i386
-
 ## deb-package dirs+files anlegen
 mkdir -vp usr
 mv -v bin usr/

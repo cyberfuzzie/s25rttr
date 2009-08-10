@@ -71,7 +71,7 @@ int main(void)
 	fdd3.arch = "win32";
 	fdd4.arch = "macos";
 
-	/*std::cout << "updating source tree" << std::endl;
+	std::cout << "updating source tree" << std::endl;
 	cmd = "./update.sh --client=s25client";
 	retval = system(cmd.c_str());
 	std::cout << "update done: " << retval << std::endl;
@@ -114,7 +114,7 @@ int main(void)
 	{
 		std::cout << "build had errors, do not package anything" << std::endl;
 		return 2;
-	}*/
+	}
 
 	std::cout << "starting packer threads" << std::endl;
 	if (pthread_create(&tid1, NULL, packer_helper, (void *)&fdd1) == -1)
@@ -164,7 +164,7 @@ int main(void)
 
 	std::cout << "sending message" << std::endl;
 
-	cmd = "./message.sh";
+	cmd = "./message.sh --client=s25client";
 	retval = system(cmd.c_str());
 
 	std::cout << "message sent: " << retval << std::endl;

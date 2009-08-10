@@ -22,10 +22,14 @@ make_zip()
 	sudo chmod -R 0755 ${NAME}
 
 	rm -f ${UPLOADDIR}/${NAME}-${REVISION}_${ARCH}.zip
+
+	echo "creating ${UPLOADDIR}/${NAME}-${REVISION}_${ARCH}.zip"
 	if ! zip -vr ${UPLOADDIR}/${NAME}-${REVISION}_${ARCH} ${NAME} -x .svn ; then
+		echo "failed"
 		cd ${NAME}
 		return 1
 	fi
+	echo "done"
 	
 	sudo chmod -R 0777 ${NAME}
 	cd ${NAME}
@@ -45,10 +49,21 @@ make_tarbz2()
 	sudo chmod -R 0755 ${NAME}
 
 	rm -f ${UPLOADDIR}/${NAME}-${REVISION}_${ARCH}.tar.bz2
-	if ! tar --exclude=.svn -cvjf ${UPLOADDIR}/${NAME}-${REVISION}_${ARCH}.tar.bz2 ${NAME} ; then
+	
+	PARAMS=
+	if [ ! -z "$SUBDIR" ] ; then
+		PARAMS="-C ${NAME}"
+	else
+		SUBDIR=${NAME}
+	fi
+
+	echo "creating ${UPLOADDIR}/${NAME}-${REVISION}_${ARCH}.tar.bz2"
+	if ! tar $PARAMS --exclude=.svn -cvjf ${UPLOADDIR}/${NAME}-${REVISION}_${ARCH}.tar.bz2 ${SUBDIR} ; then
+		echo "failed"
 		cd ${NAME}
 		return 1
 	fi
+	echo "done"
 	
 	sudo chmod -R 0777 ${NAME}
 	cd ${NAME}
@@ -72,10 +87,14 @@ make_deb()
 	sudo chmod -R 0755 ${NAME}
 
 	rm -f ${UPLOADDIR}/${NAME}-${REVISION}_${PKGARCH}.deb
+
+	echo "creating ${UPLOADDIR}/${NAME}-${REVISION}_${PKGARCH}.deb"
 	if ! sudo dpkg -b ${NAME} ${UPLOADDIR}/${NAME}-${REVISION}_${PKGARCH}.deb ; then
+		echo "failed"
 		cd ${NAME}
 		return 1
 	fi
+	echo "done"
 
 	sudo chmod -R 0777 ${NAME}
 	sudo chmod 0777 ${UPLOADDIR}/${NAME}-${REVISION}_${PKGARCH}.deb
@@ -89,15 +108,17 @@ make_deb()
 set	-- `getopt -n$0	-u -a --longoptions="arch: client:"	"h"	"$@"` || usage
 [ $# -eq 0 ] &&	usage
 
+BUILDER=FloSoft
 ARCH=
 CLIENT=
 BASEDIR=/srv/buildfarm
 UPLOADDIR=${BASEDIR}/uploads
 BASE=${BASEDIR}/builder/src
+WWWDIR=/www/ra-doersch.de/nightly/s25client
 
-export ARCH CLIENT BASEDIR UPLOADDIR BASE
+export BUILDER ARCH CLIENT BASEDIR UPLOADDIR BASE WWWDIR
 
-mkdir -vp $UPLOADDIR $BASEDIR $BASE
+mkdir -vp $UPLOADDIR $BASEDIR $BASE $WWWDIR
 
 while [	$# -gt 0 ]
 do
@@ -114,6 +135,20 @@ done
 
 [ -z "$CLIENT" ] && usage
 
+case "$ARCH" in
+	i686)
+		PKGARCH=i386
+	;;
+	x86_64)
+		PKGARCH=amd64
+	;;
+	*)
+		PKGARCH=
+	;;
+esac
+
+export PKGARCH
+
 BUILDDIR=${BASEDIR}/${CLIENT}/build_${ARCH}
 VERSION=$(grep WINDOW_VERSION ${BASEDIR}/${CLIENT}/version.h | cut -d ' ' -f 3 | cut -d \" -f 2)
 REVISION=$(grep WINDOW_REVISION ${BASEDIR}/${CLIENT}/version.h | cut -d ' ' -f 3 | cut -d \" -f 2)
@@ -122,5 +157,7 @@ REVISION=$(grep WINDOW_REVISION ${BASEDIR}/${CLIENT}/version.h | cut -d ' ' -f 3
 [ -z "$REVISION" ] && echo "failed to read revision" >&2
 
 export BUILDDIR VERSION REVISION
+
+. $BASE/config_${CLIENT}.inc.sh
 
 ## exit 0

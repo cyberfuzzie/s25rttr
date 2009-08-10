@@ -39,6 +39,8 @@ cp -v ${BASEDIR}/${CLIENT}/RTTR/texte/keyboardlayout.txt .
 rm -vf bin
 rm -vf share
 
+SUBDIR="s25client.app readme.txt keyboardlayout.txt"
+
 ## tar.bz2 erstellen
 if ! make_tarbz2 ; then
 	exit 1

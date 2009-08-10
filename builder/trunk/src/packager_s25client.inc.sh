@@ -2,8 +2,6 @@
 
 ## inside $ARCH
 
-NAME=s25rttr_${VERSION}
-
 sudo rm -rf ${NAME}
 mkdir -vp ${NAME}
 if ! cd ${NAME} ; then

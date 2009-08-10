@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 5385 2009-08-09 20:52:43Z FloSoft $
+// $Id: GameClient.cpp 5388 2009-08-10 10:24:54Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -859,7 +859,7 @@ void GameClient::OnNMSServerAsync(const GameMessage_Server_Async& msg)
 	unser_time_t temp = TIME.CurrentTime();
 	TIME.FormatTime(time_str, "async_%Y-%m-%d_%H-%i-%s", &temp);
 
-	sprintf(filename,"%s%s-%u.log",  GetFilePath(FILE_PATHS[47]), time_str, rand()%100);
+	sprintf(filename,"%s%s-%u.log",  GetFilePath(FILE_PATHS[47]).c_str(), time_str, rand()%100);
 
 	Random::inst().SaveLog(filename);
 

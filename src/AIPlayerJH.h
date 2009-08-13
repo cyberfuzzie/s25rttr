@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.h 5403 2009-08-13 20:06:32Z jh $
+// $Id: AIPlayerJH.h 5405 2009-08-13 21:23:32Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -42,7 +42,7 @@ class nobBaseMilitary;
 /// Klasse für die besser JH-KI
 class AIPlayerJH : public AIBase
 {
-	friend AIJH::BuildJob;
+	friend class AIJH::BuildJob;
 public:
 	AIPlayerJH(const unsigned char playerid, const GameWorldBase * const gwb, const GameClientPlayer * const player,
 		const GameClientPlayerList * const players, const GlobalGameSettings * const ggs,

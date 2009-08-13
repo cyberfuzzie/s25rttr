@@ -23,8 +23,10 @@
 
 //#define DEBUG_AI
 
+#include "main.h"
 #include "MapConsts.h"
 #include "GameConsts.h"
+
 
 #include <vector>
 
@@ -75,8 +77,8 @@ public:
 	virtual void ExecuteJob() { return; }
 	JobStatus GetStatus() { return status; }
 protected:
-	JobStatus status;
 	AIPlayerJH *aijh;
+	JobStatus status;
 };
 
 class BuildJob : public Job
@@ -88,8 +90,8 @@ public:
 	void ExecuteJob();
 private:
 	BuildingType type;
-	MapCoord around_x, around_y;
 	MapCoord target_x, target_y;
+	MapCoord around_x, around_y;
 	std::vector<unsigned char> route;
 };
 

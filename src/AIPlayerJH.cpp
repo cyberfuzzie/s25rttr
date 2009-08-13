@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.cpp 5403 2009-08-13 20:06:32Z jh $
+// $Id: AIPlayerJH.cpp 5405 2009-08-13 21:23:32Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -379,13 +379,13 @@ void AIPlayerJH::InitResourceMaps()
 			{
 				unsigned i = y * width + x;
 				//resourceMaps[res][i] = 0;
-				if (nodes[i].res == res && res != AIJH::BORDERLAND)
+				if (nodes[i].res == (AIJH::Resource)res && (AIJH::Resource)res != AIJH::BORDERLAND)
 				{
 					ChangeResourceMap(x, y, AIJH::RES_RADIUS[res], resourceMaps[res], 1);
 				}
 
 				// Grenzgebiet"ressource"
-				else if (nodes[i].border && res == AIJH::BORDERLAND)
+				else if (nodes[i].border && (AIJH::Resource)res == AIJH::BORDERLAND)
 				{
 					ChangeResourceMap(x, y, AIJH::RES_RADIUS[AIJH::BORDERLAND], resourceMaps[AIJH::BORDERLAND], 1);
 				}
@@ -397,7 +397,7 @@ void AIPlayerJH::InitResourceMaps()
 void AIPlayerJH::ChangeResourceMap(MapCoord x, MapCoord y, unsigned radius, std::vector<int> &resMap, int value)
 {
 	unsigned short width = gwb->GetWidth();
-	unsigned short height = gwb->GetHeight();
+	//unsigned short height = gwb->GetHeight();
 
 	/*
 	int startX = x - radius;
@@ -553,7 +553,7 @@ void AIPlayerJH::UpdateNodesAround(MapCoord x, MapCoord y, unsigned radius)
 			{
 				unsigned i = tx2 + ty2 * width;
 
-				unsigned distance = CalcDistance(tx2, ty2, x, y);
+				//unsigned distance = CalcDistance(tx2, ty2, x, y);
 				nodes[i].owned = (gwb->GetNode(tx2, ty2).owner == playerid + 1);
 
 				if (nodes[i].owned)

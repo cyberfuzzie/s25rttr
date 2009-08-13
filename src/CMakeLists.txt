@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 5354 2009-07-31 16:09:01Z FloSoft $
+### $Id: CMakeLists.txt 5403 2009-08-13 20:06:32Z jh $
 ################################################################################
 
 INCLUDE(FindBZip2)
@@ -117,6 +117,7 @@ SET(SOURCES_AI
     AIBase.h
     AIPlayer.cpp   AIPlayer.h
     AIPlayerJH.cpp AIPlayerJH.h
+    AIJHHelper.cpp AIJHHelper.h
     )   
 
 SET(SOURCES_OTHER

@@ -280,11 +280,7 @@ void nofAggressiveDefender::MissAggressiveDefendingWalk()
 	}
 
 	// Gibts den Angreifer überhaupt noch?
-	if(attacker)
-		// Zum Angreifer laufen
-		dir = gwg->FindHumanPath(x,y,attacker->GetX(),
-			attacker->GetY(),100,true);
-	else
+	if(!attacker)
 	{
 		// Ansonsten gehts wieder zurück nach Hause
 		ReturnHomeMissionAggressiveDefending();
@@ -304,6 +300,9 @@ void nofAggressiveDefender::MissAggressiveDefendingWalk()
 		return;
 	}
 
+	// Laufrichtung bestimmen
+	dir = gwg->FindHumanPath(x,y,attacker->GetX(),
+			attacker->GetY(),100,true);
 
 	if(dir == 0xFF)
 	{

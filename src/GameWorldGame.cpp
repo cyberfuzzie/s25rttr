@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 5383 2009-08-09 09:56:39Z jh $
+// $Id: GameWorldGame.cpp 5403 2009-08-13 20:06:32Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -808,6 +808,8 @@ void GameWorldGame::Attack(const unsigned char player_attacker, const MapCoord x
 		// Wird es gerade eingenommen?
 		if(static_cast<nobMilitary*>(attacked_building)->IsCaptured())
 			// Dann darf es nicht angegriffen werden
+			return;
+		if (static_cast<nobMilitary*>(attacked_building)->IsNewBuilt())
 			return;
 	}
 

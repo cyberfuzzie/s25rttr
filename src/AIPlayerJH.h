@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.h 5344 2009-07-29 16:23:40Z jh $
+// $Id: AIPlayerJH.h 5403 2009-08-13 20:06:32Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -24,115 +24,179 @@
 #include "AIBase.h"
 #include "MapConsts.h"
 #include "GameConsts.h"
+#include "GameClientPlayer.h"
+#include "AIJHHelper.h"
 
 #include <queue>
+#include <list>
 
 class noFlag;
 class noBaseBuilding;
 class noRoadNode;
 class nobBaseMilitary;
+class AIPlayerJH;
+class nobMilitary;
+class nobBaseMilitary;
+
 
 /// Klasse für die besser JH-KI
 class AIPlayerJH : public AIBase
 {
+	friend AIJH::BuildJob;
 public:
 	AIPlayerJH(const unsigned char playerid, const GameWorldBase * const gwb, const GameClientPlayer * const player,
 		const GameClientPlayerList * const players, const GlobalGameSettings * const ggs,
 		const AI::Level level);
 
-private:
+protected:
 
 	// wofür isn das?
 	struct Param_RoadPath
 	{
-		/// Straßenbaumodus erlaubt?
 		bool boat_road;
+	};
+
+	struct Coords
+	{
+		MapCoord x;
+		MapCoord y;
+		Coords(MapCoord x, MapCoord y) : x(x), y(y) { }
 	};
 
 	void RunGF(const unsigned gf);
 
-  // Findet Flaggen in der Umgebung von x,y
+  /// Finds flags in the area of y,y
 	void FindFlags(std::vector<const noFlag*>& flags, unsigned short x, unsigned short y, unsigned short radius);
 
-	// Expandiert ums HQ herum
-	void ExpandAroundHQ();
-
-	// Expandiert um andere Militärgebäude herum
-	void Expand();
-
-	// Expandiert allgemein ;)
-	void ExpandAround(const nobBaseMilitary *building);
-
-	// Verbindet Baustellen mit dem Wegenetz
+	/// Tests all building sites for road connection and connects them if necessary
+	// [currently not used]
 	void ConnectBuildingSites();
 
-	//bool ConnectBuildingToRoadSystem(const noBaseBuilding * building);
+	/// Connects a specific flag to a roadsystem nearby and returns true if succesful. Also returns the route of the future road.
+	bool ConnectFlagToRoadSytem(const noFlag *flag, std::vector<unsigned char>& route);
 
-	// Verbindet eine Flagge mit dem Wegenetz
-	bool ConnectFlagToRoadSytem(const noFlag *flag);
-
-	// Baut eine Straße mit Fahnen
+	/// Builds a street between two roadnodes and sets flags on it.
 	bool BuildRoad(const noRoadNode *start, const noRoadNode *target);
 
-	// Sucht Bäume in der nähe von x,y und gibt Schwerpunkt des Waldes zurück
-	bool FindWood(MapCoord x, MapCoord y, MapCoord &wood_x, MapCoord &wood_y);
-
-	// Versucht in der Nähe von x,y zu bauen
-	bool BuildNear(MapCoord x, MapCoord y, BuildingType bld);
-
-	// Erzeugt eine Karte mit Holzbeständen mit Radius radius um Punkt x,y 
-	void CreateWoodMap(std::vector<unsigned short>& woodMap, MapCoord x, MapCoord y, unsigned radius);
-
-	// Erhöht in einer (Wood-)map die Werte todo
-	void IncrementMap(std::vector<unsigned short>& map, int mapSize, unsigned short x, unsigned short y, unsigned short radius);
-
-	// Sucht besten Punkt in einer WoodMap, todo signatur doof - alle daten in der map speichern?
-	bool FindWood(std::vector<unsigned short>& woodMap, unsigned short radius, MapCoord& x, MapCoord& y);
-
-	// Fügt ein Gebäude zur Bauwarteschlange hinzu
-	void AddBuilding(MapCoord x, MapCoord y, BuildingType bld);
-
-	// Baut das vorderste Gebäude in der Bauwarteschlange
-	void BuildFromQueue();
-
-	// Prüft ob das oberste Element der Queue schon platziert wurde und veranlasst Wegebau, gibt true zurück wenn Gebäude angeschlossen
-	void CheckBuildingQueue();
-
-	// Entfernt das vorderste Element aus der Queue, prüft ob DONE
-	void RemoveFromBuildingQueue();
-
-	enum BuildJobStatus
-	{
-		BJ_WAITING,
-		BJ_BUILDING,
-		BJ_CONNECTING,
-		BJ_DONE,
-		BJ_ERROR
-	};
-
-	// Ein Bauauftrag für die Queue
-	struct BuildJob 
-	{
-		MapCoord x;
-		MapCoord y;
-		BuildingType building;
-		BuildJobStatus status;
-
-		BuildJob(MapCoord x, MapCoord y, BuildingType building, BuildJobStatus status) : x(x), y(y), 
-			building(building), status(status) { }
-	};
-
-	// Gebäude-Queue
-	std::queue<BuildJob*> buildingQueue;
-
-	// Tmp zum spielen:
-	std::vector<unsigned short> woodMap;
-
-	// Prüft ob Aufgeben sinnvoll ist
+	/// Test whether the player should resign or not
 	bool TestDefeat();
 
-	// Aufgegeben
+	/// resigned yes/no
 	bool defeated;
+
+
+	/// Refreshes the number of buildings by asking the GameClientPlayer and recalcs some wanted buildings
+	void RefreshBuildingCount();
+
+	/// Number of buildings and building sites of this player (refreshed by RefreshBuildingCount())
+	BuildingCount buildingCounts;
+
+	
+	/// Executes a job form the job queue
+	void ExecuteAIJob();
+
+	/// The current job the AI is working on
+	AIJH::Job *currentJob;
+
+	/// Contains the jobs the AI should try to execute, for example build jobs
+	std::queue<AIJH::Job*> aiJobs;
+
+	/// List of coordinates at which military buildings should be
+	std::list<Coords> milBuildings;
+
+	/// List of coordinates at which military buildingsites should be
+	std::list<Coords> milBuildingSites;
+
+	/// Checks the list of military buildingsites and puts the coordinates into the list of military buildings if building is finished
+	void CheckNewMilitaryBuildings();
+
+	/// Nodes containing some information about every map node
+	std::vector<AIJH::Node> nodes;
+
+	/// Initializes the nodes on start of the game
+	void InitNodes();
+
+	/// Updates the nodes around a position 
+	void UpdateNodesAround(MapCoord x, MapCoord y, unsigned radius);
+
+	/// Returns the resource on a specific point
+	AIJH::Resource CalcResource(MapCoord x, MapCoord y);
+
+	/// Resource maps, containing a rating for every map point concerning a resource
+	std::vector<std::vector<int> > resourceMaps;
+
+	/// Initialize the resource maps
+	void InitResourceMaps();
+
+	/// Changes a single resource map around point x,y in radius; to every point around x,y distanceFromCenter * value is added
+	void ChangeResourceMap(MapCoord x, MapCoord y, unsigned radius, std::vector<int> &resMap, int value);
+
+	/// Finds a good position for a specific resource in an area using the resource maps, 
+	/// first position satisfying threshold is returned, returns false if no such position found
+	bool FindGoodPosition(MapCoord &x, MapCoord &y, AIJH::Resource res, int threshold, BuildingQuality size, int radius = -1, bool inTerritory = true);
+
+	/// Finds the best position for a specific resource in an area using the resource maps, 
+	/// satisfying the minimum value, returns false if no such position is found
+	bool FindBestPosition(MapCoord &x, MapCoord &y, AIJH::Resource res, BuildingQuality size, int minimum, int radius = -1, bool inTerritory = true);
+	bool FindBestPosition(MapCoord &x, MapCoord &y, AIJH::Resource res, BuildingQuality size, int radius = -1, bool inTerritory = true) 
+	{ return FindBestPosition(x,y,res,size,1,radius,inTerritory); }
+
+	/// Finds a position for the desired building size
+	bool SimpleFindPosition(MapCoord &x, MapCoord &y, BuildingQuality size, int radius = -1);
+
+	/// Checks whether a flag is connected to the road system or not (connected = has path to HQ)
+	bool IsConnectedToRoadSystem(const noFlag *flag);
+
+	/// Recalculate the Buildingquality around a certain point
+	void RecalcBQAround(const MapCoord x, const MapCoord y);
+
+	/// Randomly chooses a military building, prefering bigger buildings if enemy nearby
+	BuildingType ChooseMilitaryBuilding(MapCoord x, MapCoord y);
+
+	/// Does some actions after a new military building is occupied
+	void HandleNewMilitaryBuilingOccupied(const Coords& coords);
+
+	/// Does some actions regulary on a military building
+	// [currently not used]
+	void HandleRetryMilitaryBuilding(const Coords& coords);
+
+	/// Returns the number of buildings and buildingsites of a specific typ
+	unsigned GetBuildingCount(BuildingType type);
+
+	/// Contains how many buildings of every type is wanted
+	std::vector<unsigned> buildingsWanted;
+
+	/// Checks whether a building type is wanted atm
+	bool Wanted(BuildingType type);
+
+	/// Initializes the wanted-buildings-vector
+	void InitBuildingsWanted();
+
+	/// Counter to remember which military building was last checked
+	// [currently not used]
+	unsigned militaryBuildingToCheck;
+
+	/// Used to check military buildings from time to time
+	// [currently not used]
+	void CheckExistingMilitaryBuildings();
+
+	/// Sends a chat messsage to all players
+	void Chat(std::string lala);
+
+	/// Tries to attack the enemy
+	void TryToAttack();
+
+
+protected:
+
+
+	// Required by the AIJobs:
+
+	std::vector<gc::GameCommand*> &GetGCS() { return gcs; }
+	const GameWorldBase *GetGWB() { return gwb; }
+	unsigned char GetPlayerID() { return playerid; }
+
 };
+
 
 #endif //!AIPLAYERJH_H_INCLUDED

@@ -1,4 +1,4 @@
-// $Id: GameServer.h 4951 2009-05-25 20:03:10Z OLiver $
+// $Id: GameServer.h 5403 2009-08-13 20:06:32Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -66,6 +66,8 @@ public:
 
 	/// Tauscht Spieler(positionen) bei Savegames in dskHostGame
 	void SwapPlayer(const unsigned char player1, const unsigned char player2);
+
+	void AIChat(const GameMessage &msg) { SendToAll(msg); }
 
 protected:
 

@@ -21,7 +21,7 @@
 
 #pragma once
 
-#define DEBUG_AI
+//#define DEBUG_AI
 
 #include "MapConsts.h"
 #include "GameConsts.h"

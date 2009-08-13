@@ -530,16 +530,19 @@ void nofAttacker::MissAttackingWalk()
 
 		if(defender)
 		{
-			// Wenn der Verteidiger in der Nähe ist, zu ihm laufen
-			// Achtung: nicht in die Hütte des Verteidigers laufen!!
-			if(CalcDistance(x,y,defender->GetX(),defender->GetY())<5
-				&& !(defender->GetX() == attacked_goal->GetX() &&
-				defender->GetY() == attacked_goal->GetY() ))
-				// zum Verteidiger laufen, falls er in der Nähe ist
-				dir = gwg->FindHumanPath(x,y,defender->GetX(),
+			if (x != defender->GetX() || y != defender->GetY())
+			{
+				// Wenn der Verteidiger in der Nähe ist, zu ihm laufen
+				// Achtung: nicht in die Hütte des Verteidigers laufen!!
+				if(CalcDistance(x,y,defender->GetX(),defender->GetY())<5
+					&& !(defender->GetX() == attacked_goal->GetX() &&
+					defender->GetY() == attacked_goal->GetY() ))
+					// zum Verteidiger laufen, falls er in der Nähe ist
+					dir = gwg->FindHumanPath(x,y,defender->GetX(),
 					defender->GetY(),100,true);
-			else
+				else
 					dir = gwg->FindHumanPath(x,y,goal_x,goal_y,100,true);
+			}
 		}
 		else
 			// Zur Flagge des angegriffenen Gebäudes laufen

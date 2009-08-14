@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.cpp 5405 2009-08-13 21:23:32Z jh $
+// $Id: AIPlayerJH.cpp 5408 2009-08-14 08:41:35Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -450,7 +450,7 @@ bool AIPlayerJH::FindGoodPosition(MapCoord &x, MapCoord &y, AIJH::Resource res, 
 	unsigned short width = gwb->GetWidth();
 	unsigned short height = gwb->GetHeight();
 
-	if (x < 0 || x >= width || y < 0 || y >= height)
+	if (x >= width || y >= height)
 	{
 		x = player->hqx;
 		y = player->hqy;
@@ -492,7 +492,7 @@ bool AIPlayerJH::FindBestPosition(MapCoord &x, MapCoord &y, AIJH::Resource res, 
 	unsigned short width = gwb->GetWidth();
 	unsigned short height = gwb->GetHeight();
 
-	if (x < 0 || x >= width || y < 0 || y >= height)
+	if (x >= width || y >= height)
 	{
 		x = player->hqx;
 		y = player->hqy;
@@ -732,7 +732,7 @@ bool AIPlayerJH::SimpleFindPosition(MapCoord &x, MapCoord &y, BuildingQuality si
 	unsigned short width = gwb->GetWidth();
 	unsigned short height = gwb->GetHeight();
 
-	if (x < 0 || x >= width || y < 0 || y >= height)
+	if (x >= width || y >= height)
 	{
 		x = player->hqx;
 		y = player->hqy;

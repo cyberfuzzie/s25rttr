@@ -73,7 +73,7 @@ class Job
 {
 public:
 	Job(AIPlayerJH *aijh) : aijh(aijh), status(AIJH::JOB_WAITING) { }
-	~Job() { }
+	virtual ~Job() { }
 	virtual void ExecuteJob() { return; }
 	JobStatus GetStatus() { return status; }
 protected:

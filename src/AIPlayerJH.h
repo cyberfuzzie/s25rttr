@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.h 5405 2009-08-13 21:23:32Z jh $
+// $Id: AIPlayerJH.h 5414 2009-08-15 22:04:14Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -75,8 +75,8 @@ protected:
 	/// Connects a specific flag to a roadsystem nearby and returns true if succesful. Also returns the route of the future road.
 	bool ConnectFlagToRoadSytem(const noFlag *flag, std::vector<unsigned char>& route);
 
-	/// Builds a street between two roadnodes and sets flags on it.
-	bool BuildRoad(const noRoadNode *start, const noRoadNode *target);
+	/// Builds a street between two roadnodes and sets flags on it, if route is empty, it will be calculated
+	bool BuildRoad(const noRoadNode *start, const noRoadNode *target, std::vector<unsigned char> &route);
 
 	/// Test whether the player should resign or not
 	bool TestDefeat();
@@ -185,6 +185,20 @@ protected:
 
 	/// Tries to attack the enemy
 	void TryToAttack();
+
+	/// Update BQ around new road
+	void RecalcBQAroundRoad(MapCoord xStart, MapCoord yStart, std::vector<unsigned char> &route);
+
+	/// Tries to build a second road to a flag, which is in any way better than the first one
+	bool BuildAlternativeRoad(const noFlag *flag, std::vector<unsigned char> &route);
+
+	bool FindStoreHousePosition(MapCoord &x, MapCoord &y, unsigned radius);
+	std::list<Coords> storeHouses;
+	void AddStoreHouse(MapCoord x, MapCoord y) { storeHouses.push_back(Coords(x, y)); }
+
+	noFlag *AIPlayerJH::FindTargetStoreHouseFlag(MapCoord x, MapCoord y);
+
+	void SaveResourceMapsToFile();
 
 
 protected:

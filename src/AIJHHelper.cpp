@@ -34,187 +34,57 @@
 
 void AIJH::BuildJob::ExecuteJob()
 {
-	status = AIJH::JOB_EXECUTING;
+	if (status == AIJH::JOB_WAITING)
+		status = AIJH::JOB_EXECUTING_START;
 
 	// todo wählbar machen
-	MapCoord bx = around_x;
-	MapCoord by = around_y;
 
-	if (target_x == 0xFFFF && target_y == 0xFFFF)
+
+	switch (status)
 	{
-		if (!aijh->Wanted(type))
+	case AIJH::JOB_EXECUTING_START:
 		{
+			TryToBuild();
+		}
+		break;
+
+	case AIJH::JOB_EXECUTING_ROAD1:
+		{
+			BuildMainRoad();
+		}
+		break;
+
+	case AIJH::JOB_EXECUTING_ROAD2:
+		{
+			TryToBuildSecondaryRoad();
+		}
+		break;
+	case AIJH::JOB_EXECUTING_ROAD2_2:
+		{
+			// evtl noch prüfen ob auch dieser Straßenbau erfolgreich war?
+			aijh->RecalcBQAroundRoad(aijh->GetGWB()->GetXA(target_x, target_y, 4),
+				aijh->GetGWB()->GetYA(target_x, target_y, 4), route);
 			status = AIJH::JOB_FINISHED;
-			return;
 		}
+		break;
 
-		bool foundPos = false;
+	default:
+		assert(false);
+		break;
 
-		switch(type)
-		{
-		case BLD_WOODCUTTER:
-		case BLD_FORESTER:
-			foundPos = aijh->FindBestPosition(bx, by, AIJH::WOOD, BQ_HUT, 80, 15);
-			break;
-		case BLD_QUARRY:
-			foundPos = aijh->FindBestPosition(bx, by, AIJH::STONES, BQ_HUT, 40, 15);
-			break;
-		case BLD_BARRACKS:
-		case BLD_GUARDHOUSE:
-		case BLD_WATCHTOWER:
-		case BLD_FORTRESS:
-			foundPos = aijh->FindBestPosition(bx, by, AIJH::BORDERLAND, BUILDING_SIZE[type], 15, true);
-			break;
-		case BLD_GOLDMINE:
-			foundPos = aijh->FindBestPosition(bx, by, AIJH::GOLD, BQ_MINE, 15, true);
-			break;
-		case BLD_COALMINE:
-			foundPos = aijh->FindBestPosition(bx, by, AIJH::COAL, BQ_MINE, 15, true);
-			break;
-		case BLD_IRONMINE:
-			foundPos = aijh->FindBestPosition(bx, by, AIJH::IRONORE, BQ_MINE, 15, true);
-			break;
-		case BLD_GRANITEMINE:
-			foundPos = aijh->FindBestPosition(bx, by, AIJH::GRANITE, BQ_MINE, 15, true);
-			break;
 
-		case BLD_FISHERY:
-			foundPos = aijh->FindBestPosition(bx, by, AIJH::FISH, BQ_HUT, 15, true);
-			break;
+	}
 
-		default:
-			foundPos = aijh->SimpleFindPosition(bx, by, BUILDING_SIZE[type], 15);
-			break;
-		}
-		
-		if (!foundPos)
-		{
-			status = JOB_FAILED;
-#ifdef DEBUG_AI
-			std::cout << "Player " << (unsigned)aijh->GetPlayerID() << ", Job failed: No Position found for " << BUILDING_NAMES[type] << " around " << bx << "/" << by << "." << std::endl;
-#endif
-			return;
-		}
-
-		aijh->GetGCS().push_back(new gc::SetBuildingSite(bx, by, type));
-		target_x = bx;
-		target_y = by;
+	// Fertig?
+	if (status == AIJH::JOB_FAILED || status == AIJH::JOB_FINISHED)
 		return;
-	}
 
-	const noBuildingSite *bld;
-	if ((bld = aijh->GetGWB()->GetSpecObj<noBuildingSite>(target_x, target_y)))
-	{
-		if (bld->GetBuildingType() != type)
-		{
-#ifdef DEBUG_AI
-			std::cout << "Player " << (unsigned)aijh->GetPlayerID() << ", Job failed: Wrong Builingsite found for " << BUILDING_NAMES[type] << " at " << target_x << "/" << target_y << "." << std::endl;
-#endif
-			status = AIJH::JOB_FAILED;
-			return;
-		}
+	//if (target_x == 0xFFFF && target_y == 0xFFFF)
+	//{
 
-		
-		const noFlag *houseFlag = aijh->GetGWB()->GetSpecObj<noFlag>(aijh->GetGWB()->GetXA(target_x, target_y, 4), 
-																																 aijh->GetGWB()->GetYA(target_x, target_y, 4));
-		// Gucken noch nicht ans Wegnetz angeschlossen
-		if (!aijh->IsConnectedToRoadSystem(houseFlag))
-		{
-			// Bau unmöglich?
-			if (!aijh->ConnectFlagToRoadSytem(houseFlag, route))
-			{
-				status = AIJH::JOB_FAILED;
-#ifdef DEBUG_AI
-				std::cout << "Player " << (unsigned)aijh->GetPlayerID() << ", Job failed: Cannot connect " << BUILDING_NAMES[type] << " at " << target_x << "/" << target_y << ". Retrying..." << std::endl;
-#endif
-				aijh->nodes[target_x + target_y * aijh->GetGWB()->GetWidth()].reachable = false;
-				aijh->GetGCS().push_back(new gc::DestroyBuilding(target_x, target_y));
-				aijh->GetGCS().push_back(new gc::DestroyFlag(houseFlag->GetX(), houseFlag->GetY()));
+	//}
 
-				aijh->aiJobs.push(new AIJH::BuildJob(aijh, type, around_x, around_y));
-				return;
-			}
-			else
-			{
-				// Warten bis Weg da ist...
-				return;
-			}
-		}
-		else
-		{
-			// BQ um den Weg aktualisieren
-			MapCoord xr = houseFlag->GetX();
-			MapCoord yr = houseFlag->GetY();
-			aijh->RecalcBQAround(target_x, target_y);
-			aijh->RecalcBQAround(xr, yr);
-			for (unsigned i=0; i<route.size(); ++i)
-			{
-				aijh->GetGWB()->GetPointA(xr, yr, route[i]);
-				aijh->RecalcBQAround(xr, yr);
-			}
 
-			status = AIJH::JOB_FINISHED;
-			switch(type)
-			{
-			case BLD_WOODCUTTER:
-				aijh->ChangeResourceMap(target_x, target_y, 7, aijh->resourceMaps[AIJH::WOOD], -15);
-				break;
-			case BLD_FORESTER:
-				aijh->ChangeResourceMap(target_x, target_y, 7, aijh->resourceMaps[AIJH::WOOD], 15);
-				break;
-			case BLD_QUARRY:
-				aijh->ChangeResourceMap(target_x, target_y, 7, aijh->resourceMaps[AIJH::STONES], -15);
-				break;
-			case BLD_BARRACKS:
-			case BLD_GUARDHOUSE:
-			case BLD_WATCHTOWER:
-			case BLD_FORTRESS:
-				aijh->ChangeResourceMap(target_x, target_y, 8, aijh->resourceMaps[AIJH::BORDERLAND], -8);
-				aijh->milBuildingSites.push_back(AIPlayerJH::Coords(target_x, target_y));
-			case BLD_GOLDMINE:
-				aijh->ChangeResourceMap(target_x, target_y, 4, aijh->resourceMaps[AIJH::GOLD], -30);
-				break;
-			case BLD_COALMINE:
-				aijh->ChangeResourceMap(target_x, target_y, 4, aijh->resourceMaps[AIJH::COAL], -30);
-				break;
-			case BLD_IRONMINE:
-				aijh->ChangeResourceMap(target_x, target_y, 4, aijh->resourceMaps[AIJH::IRONORE], -30);
-				break;
-			case BLD_GRANITEMINE:
-				aijh->ChangeResourceMap(target_x, target_y, 4, aijh->resourceMaps[AIJH::GRANITE], -30);
-				break;
-
-			case BLD_FISHERY:
-				aijh->ChangeResourceMap(target_x, target_y, 10, aijh->resourceMaps[AIJH::FISH], -30);
-				break;
-
-			default:
-				break;
-			}
-
-			// Just 4 Fun Gelehrten rufen
-			if (BUILDING_SIZE[type] == BQ_MINE)
-			{
-				aijh->GetGCS().push_back(new gc::CallGeologist(houseFlag->GetX(), houseFlag->GetY()));
-			}
-
-			return;
-		}
-	}
-
-	// Prüfen ob sich vielleicht die BQ geändert hat und damit Bau unmöglich ist
-	BuildingQuality bq = aijh->GetGWB()->CalcBQ(target_x, target_y, aijh->playerid);
-	if ( !(bq >= BUILDING_SIZE[type] && bq < BQ_MINE) // normales Gebäude
-						&& !(bq == BUILDING_SIZE[type]))	// auch Bergwerke
-	{
-		status = AIJH::JOB_FAILED;
-#ifdef DEBUG_AI
-		std::cout << "Player " << (unsigned)aijh->GetPlayerID() << ", Job failed: BQ changed for " << BUILDING_NAMES[type] << " at " << target_x << "/" << target_y << ". Retrying..." << std::endl;
-#endif
-		aijh->nodes[target_x + target_y * aijh->GetGWB()->GetWidth()].bq = bq;
-		aijh->aiJobs.push(new AIJH::BuildJob(aijh, type, around_x, around_y));
-		return;
-	}
 
 	if (aijh->GetGWB()->IsMilitaryBuildingNearNode(target_x, target_y) && type >= BLD_BARRACKS && type <= BLD_FORTRESS)
 	{
@@ -225,6 +95,197 @@ void AIJH::BuildJob::ExecuteJob()
 		//aijh->nodes[target_x + target_y * aijh->GetGWB()->GetWidth()].
 		return;
 	}
+}
+
+void AIJH::BuildJob::TryToBuild()
+{
+	MapCoord bx = around_x;
+	MapCoord by = around_y;
+
+	if (!aijh->Wanted(type))
+	{
+		status = AIJH::JOB_FINISHED;
+		return;
+	}
+
+	bool foundPos = false;
+
+	switch(type)
+	{
+	case BLD_WOODCUTTER:
+	case BLD_FORESTER:
+		foundPos = aijh->FindBestPosition(bx, by, AIJH::WOOD, BQ_HUT, 80, 15);
+		break;
+	case BLD_QUARRY:
+		foundPos = aijh->FindBestPosition(bx, by, AIJH::STONES, BQ_HUT, 40, 15);
+		break;
+	case BLD_BARRACKS:
+	case BLD_GUARDHOUSE:
+	case BLD_WATCHTOWER:
+	case BLD_FORTRESS:
+		foundPos = aijh->FindBestPosition(bx, by, AIJH::BORDERLAND, BUILDING_SIZE[type], 15, true);
+		break;
+	case BLD_GOLDMINE:
+		foundPos = aijh->FindBestPosition(bx, by, AIJH::GOLD, BQ_MINE, 15, true);
+		break;
+	case BLD_COALMINE:
+		foundPos = aijh->FindBestPosition(bx, by, AIJH::COAL, BQ_MINE, 15, true);
+		break;
+	case BLD_IRONMINE:
+		foundPos = aijh->FindBestPosition(bx, by, AIJH::IRONORE, BQ_MINE, 15, true);
+		break;
+	case BLD_GRANITEMINE:
+		foundPos = aijh->FindBestPosition(bx, by, AIJH::GRANITE, BQ_MINE, 15, true);
+		break;
+
+	case BLD_FISHERY:
+		foundPos = aijh->FindBestPosition(bx, by, AIJH::FISH, BQ_HUT, 15, true);
+		break;
+	case BLD_STOREHOUSE:
+		foundPos = aijh->FindStoreHousePosition(bx, by, 15);
+		break;
+
+	default:
+		foundPos = aijh->SimpleFindPosition(bx, by, BUILDING_SIZE[type], 15);
+		break;
+	}
+	
+	if (!foundPos)
+	{
+		status = JOB_FAILED;
+#ifdef DEBUG_AI
+		std::cout << "Player " << (unsigned)aijh->GetPlayerID() << ", Job failed: No Position found for " << BUILDING_NAMES[type] << " around " << bx << "/" << by << "." << std::endl;
+#endif
+		return;
+	}
+
+	aijh->GetGCS().push_back(new gc::SetBuildingSite(bx, by, type));
+	target_x = bx;
+	target_y = by;
+	status = AIJH::JOB_EXECUTING_ROAD1;
+	return;
+}
+
+void AIJH::BuildJob::BuildMainRoad()
+{
+	const noBuildingSite *bld;
+	if (!(bld = aijh->GetGWB()->GetSpecObj<noBuildingSite>(target_x, target_y)))
+	{
+		// Prüfen ob sich vielleicht die BQ geändert hat und damit Bau unmöglich ist
+		BuildingQuality bq = aijh->GetGWB()->CalcBQ(target_x, target_y, aijh->playerid);
+		if (!(bq >= BUILDING_SIZE[type] && bq < BQ_MINE) // normales Gebäude
+							&& !(bq == BUILDING_SIZE[type]))	// auch Bergwerke
+		{
+			status = AIJH::JOB_FAILED;
+#ifdef DEBUG_AI
+			std::cout << "Player " << (unsigned)aijh->GetPlayerID() << ", Job failed: BQ changed for " << BUILDING_NAMES[type] << " at " << target_x << "/" << target_y << ". Retrying..." << std::endl;
+#endif
+			aijh->nodes[target_x + target_y * aijh->GetGWB()->GetWidth()].bq = bq;
+			aijh->aiJobs.push(new AIJH::BuildJob(aijh, type, around_x, around_y));
+			return;
+		}
+		return;
+	}
+
+	if (bld->GetBuildingType() != type)
+	{
+#ifdef DEBUG_AI
+		std::cout << "Player " << (unsigned)aijh->GetPlayerID() << ", Job failed: Wrong Builingsite found for " << BUILDING_NAMES[type] << " at " << target_x << "/" << target_y << "." << std::endl;
+#endif
+		status = AIJH::JOB_FAILED;
+		return;
+	}
+	const noFlag *houseFlag = aijh->GetGWB()->GetSpecObj<noFlag>(aijh->GetGWB()->GetXA(target_x, target_y, 4), 
+		aijh->GetGWB()->GetYA(target_x, target_y, 4));
+	// Gucken noch nicht ans Wegnetz angeschlossen
+	if (!aijh->IsConnectedToRoadSystem(houseFlag))
+	{
+		// Bau unmöglich?
+		if (!aijh->ConnectFlagToRoadSytem(houseFlag, route))
+		{
+			status = AIJH::JOB_FAILED;
+#ifdef DEBUG_AI
+			std::cout << "Player " << (unsigned)aijh->GetPlayerID() << ", Job failed: Cannot connect " << BUILDING_NAMES[type] << " at " << target_x << "/" << target_y << ". Retrying..." << std::endl;
+#endif
+			aijh->nodes[target_x + target_y * aijh->GetGWB()->GetWidth()].reachable = false;
+			aijh->GetGCS().push_back(new gc::DestroyBuilding(target_x, target_y));
+			aijh->GetGCS().push_back(new gc::DestroyFlag(houseFlag->GetX(), houseFlag->GetY()));
+
+			aijh->aiJobs.push(new AIJH::BuildJob(aijh, type, around_x, around_y));
+			return;
+		}
+		else
+		{
+			// Warten bis Weg da ist...
+			return;
+		}
+	}
+	else
+	{
+		// Wir sind angeschlossen, BQ für den eben gebauten Weg aktualisieren
+		aijh->RecalcBQAround(target_x, target_y);
+		aijh->RecalcBQAroundRoad(houseFlag->GetX(), houseFlag->GetY(), route);
+
+		switch(type)
+		{
+		case BLD_WOODCUTTER:
+			aijh->ChangeResourceMap(target_x, target_y, 7, aijh->resourceMaps[AIJH::WOOD], -15);
+			break;
+		case BLD_FORESTER:
+			aijh->ChangeResourceMap(target_x, target_y, 7, aijh->resourceMaps[AIJH::WOOD], 15);
+			break;
+		case BLD_QUARRY:
+			aijh->ChangeResourceMap(target_x, target_y, 7, aijh->resourceMaps[AIJH::STONES], -15);
+			break;
+		case BLD_BARRACKS:
+		case BLD_GUARDHOUSE:
+		case BLD_WATCHTOWER:
+		case BLD_FORTRESS:
+			aijh->ChangeResourceMap(target_x, target_y, 8, aijh->resourceMaps[AIJH::BORDERLAND], -8);
+			aijh->milBuildingSites.push_back(AIPlayerJH::Coords(target_x, target_y));
+		case BLD_GOLDMINE:
+			aijh->ChangeResourceMap(target_x, target_y, 4, aijh->resourceMaps[AIJH::GOLD], -30);
+			break;
+		case BLD_COALMINE:
+			aijh->ChangeResourceMap(target_x, target_y, 4, aijh->resourceMaps[AIJH::COAL], -30);
+			break;
+		case BLD_IRONMINE:
+			aijh->ChangeResourceMap(target_x, target_y, 4, aijh->resourceMaps[AIJH::IRONORE], -30);
+			break;
+		case BLD_GRANITEMINE:
+			aijh->ChangeResourceMap(target_x, target_y, 4, aijh->resourceMaps[AIJH::GRANITE], -30);
+			break;
+
+		case BLD_FISHERY:
+			aijh->ChangeResourceMap(target_x, target_y, 10, aijh->resourceMaps[AIJH::FISH], -30);
+			break;
+		case BLD_STOREHOUSE:
+			aijh->AddStoreHouse(target_x, target_y);
+			break;
+
+		default:
+			break;
+		}
+
+		// Just 4 Fun Gelehrten rufen
+		if (BUILDING_SIZE[type] == BQ_MINE)
+		{
+			aijh->GetGCS().push_back(new gc::CallGeologist(houseFlag->GetX(), houseFlag->GetY()));
+		}
+
+		status = AIJH::JOB_EXECUTING_ROAD2;
+		return;
+	}
+}
+	
+void AIJH::BuildJob::TryToBuildSecondaryRoad()
+{
+	const noFlag *houseFlag = aijh->GetGWB()->GetSpecObj<noFlag>(aijh->GetGWB()->GetXA(target_x, target_y, 4), 
+		aijh->GetGWB()->GetYA(target_x, target_y, 4));
+	if (aijh->BuildAlternativeRoad(houseFlag, route))
+		status = AIJH::JOB_EXECUTING_ROAD2_2;
+	else
+		status = AIJH::JOB_FINISHED;
 }
 
 void AIJH::ExpandJob::ExecuteJob()

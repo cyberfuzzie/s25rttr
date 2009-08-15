@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.cpp 5408 2009-08-14 08:41:35Z jh $
+// $Id: AIPlayerJH.cpp 5414 2009-08-15 22:04:14Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -57,6 +57,8 @@ void AIPlayerJH::RunGF(const unsigned gf)
 		InitResourceMaps();
 		InitBuildingsWanted();
 		RefreshBuildingCount();
+		AddStoreHouse(player->hqx, player->hqy);
+		SaveResourceMapsToFile();
 	}
 
 	if (defeated)
@@ -164,20 +166,54 @@ void AIPlayerJH::ConnectBuildingSites()
 	}
 }
 
+noFlag *AIPlayerJH::FindTargetStoreHouseFlag(MapCoord x, MapCoord y)
+{
+	unsigned minDistance = 999;
+	Coords minTarget(0xFF,0xFF);
+	bool found = false;
+	const noBaseBuilding *bld;
+	for (std::list<Coords>::iterator it = storeHouses.begin(); it != storeHouses.end(); it++)
+	{
+		if ((bld = gwb->GetSpecObj<noBaseBuilding>((*it).x, (*it).y)))
+		{
+			if (bld->GetBuildingType() != BLD_STOREHOUSE && bld->GetBuildingType() != BLD_HEADQUARTERS)
+				continue;
+		}
+		
+		unsigned dist = CalcDistance(x, y, (*it).x, (*it).y);
+
+		if (dist < minDistance)
+		{
+			minDistance;
+			minTarget = *it;
+			found = true;
+		}
+	}
+	if (!found)
+		return NULL;
+	else
+	{
+		bld = gwb->GetSpecObj<noBaseBuilding>(minTarget.x, minTarget.y);
+		return bld->GetFlag();
+	}
+}
+
 bool AIPlayerJH::ConnectFlagToRoadSytem(const noFlag *flag, std::vector<unsigned char>& route)
 {
 	// Radius in dem nach würdigen Fahnen gesucht wird
-	const unsigned short maxRoadLength = 10;
+	const unsigned short maxSearchRadius = 10;
 
 	// Ziel, das möglichst schnell erreichbar sein soll (TODO müsste dann evtl. auch Lager/Hafen sein)
-	noFlag *targetFlag = gwb->GetSpecObj<nobHQ>(player->hqx, player->hqy)->GetFlag();
+	//noFlag *targetFlag = gwb->GetSpecObj<nobHQ>(player->hqx, player->hqy)->GetFlag();
+	noFlag *targetFlag = FindTargetStoreHouseFlag(flag->GetX(), flag->GetY());
 
 	// Flaggen in der Umgebung holen
 	std::vector<const noFlag*> flags;
-	FindFlags(flags, flag->GetX(), flag->GetY(), maxRoadLength);
+	FindFlags(flags, flag->GetX(), flag->GetY(), maxSearchRadius);
 
 	unsigned shortest = 0;
 	unsigned int shortestLength = 99999;
+	std::vector<unsigned char> shortestRoute;
 	bool found = false;
 	
 	// Jede Flagge testen...
@@ -219,29 +255,39 @@ bool AIPlayerJH::ConnectFlagToRoadSytem(const noFlag *flag, std::vector<unsigned
 			found = true;
 			
 			// Kürzer als der letzte? Nehmen!
-			if (length + hqlength < shortestLength)
+			if (2 * length + hqlength < shortestLength)
 			{
 				shortest = i;
-				shortestLength = length+hqlength;
+				shortestLength = 2 * length+hqlength;
+				shortestRoute = route;
 			}
 		}
 	}
 
 	if (found)
 	{
-		return BuildRoad(flag, flags[shortest]);
+		return BuildRoad(flag, flags[shortest], shortestRoute);
 	}
 	return false;
 }
 
-bool AIPlayerJH::BuildRoad(const noRoadNode *start, const noRoadNode *target)
+bool AIPlayerJH::BuildRoad(const noRoadNode *start, const noRoadNode *target, std::vector<unsigned char> &route)
 {
+	bool foundPath;
+		
 	// Gucken obs einen Weg gibt
-	std::vector<unsigned char> route;
-	Param_RoadPath prp = { false };
+	if (route.empty())
+	{
+		Param_RoadPath prp = { false };
 
-	bool foundPath = gwb->FindFreePath(start->GetX(),start->GetY(),
-	                  target->GetX(),target->GetY(),false,100,&route,NULL,NULL,NULL,IsPointOK_RoadPath,NULL, &prp);
+		foundPath = gwb->FindFreePath(start->GetX(),start->GetY(),
+											target->GetX(),target->GetY(),false,100,&route,NULL,NULL,NULL,IsPointOK_RoadPath,NULL, &prp);
+	}
+	else
+	{
+		// Wenn Route übergeben wurde, davon ausgehen dass diese auch existiert
+		foundPath = true;
+	}
 
 	// Wenn Pfad gefunden, Befehl zum Straße bauen und Flagen setzen geben
 	if (foundPath)
@@ -256,7 +302,7 @@ bool AIPlayerJH::BuildRoad(const noRoadNode *start, const noRoadNode *target)
 		{
 			gwb->GetPointA(x, y, route[i]);
 			// Alle zwei Teilstücke versuchen eine Flagge zu bauen
-			if (i % 2 == 1) //&& gwb->GetNode(x,y).bq >= BQ_FLAG) // TODO warum geht nicht mit bq-Abfrage?
+			if (i % 2 == 1)
 			{
 				gcs.push_back(new gc::SetFlag(x,y));
 			}
@@ -304,9 +350,28 @@ AIJH::Resource AIPlayerJH::CalcResource(MapCoord x, MapCoord y)
 		res = AIJH::WOOD;
 	else if(no == NOP_GRANITE)
 		res = AIJH::STONES;
-	else if(res == AIJH::NOTHING && (no == NOP_NOTHING || no == NOP_ENVIRONMENT)) // TODO getterain
-		res = AIJH::PLANTSPACE;
-
+	else if(res == AIJH::NOTHING && (no == NOP_NOTHING || no == NOP_ENVIRONMENT))
+	{
+		// Terrain prüfen
+		unsigned char t;
+		bool good = true;
+		for(unsigned char i = 0;i<6;++i)
+		{
+			if (gwb->GetPointRoad(x,y,i))
+			{
+				good = false;
+				break;
+			}
+			t = gwb->GetTerrainAround(x,y,i);
+			if(t != 3 && (t<8 || t>12))
+			{
+				good = false;
+				break;
+			}
+		}
+		if (good)
+			res = AIJH::PLANTSPACE;
+	}
 	return res;
 }
 
@@ -397,35 +462,6 @@ void AIPlayerJH::InitResourceMaps()
 void AIPlayerJH::ChangeResourceMap(MapCoord x, MapCoord y, unsigned radius, std::vector<int> &resMap, int value)
 {
 	unsigned short width = gwb->GetWidth();
-	//unsigned short height = gwb->GetHeight();
-
-	/*
-	int startX = x - radius;
-	if (startX < 0)
-		startX = 0;
-
-	int startY = y - radius;
-	if (startY < 0)
-		startY = 0;
-
-	int endX = x + radius;
-	if (endX >= width)
-		endX = width - 1;
-
-	int endY = y + radius;
-	if (endY >= height)
-		endY = height - 1;
-
-	for(int ty = startY; ty < endY; ++ty)
-	{
-		for(int tx = startX; tx < endX; ++tx)
-		{
-			int val = radius - abs(x - tx) - abs(y - ty);
-			if (val >= 0)
-			  resMap[tx + ty * width] += value;
-		}
-	}
-	*/
 
 	resMap[x + y * width] = value * radius;
 
@@ -652,7 +688,8 @@ void AIPlayerJH::ExecuteAIJob()
 bool AIPlayerJH::IsConnectedToRoadSystem(const noFlag *flag)
 {
 	// TODO target ist atm immer das HQ
-	const noFlag *targetFlag = gwb->GetSpecObj<noFlag>(gwb->GetXA(player->hqx, player->hqy, 4), gwb->GetYA(player->hqx, player->hqy, 4));
+	//const noFlag *targetFlag = gwb->GetSpecObj<noFlag>(gwb->GetXA(player->hqx, player->hqy, 4), gwb->GetYA(player->hqx, player->hqy, 4));
+	noFlag *targetFlag = this->FindTargetStoreHouseFlag(flag->GetX(), flag->GetY());
 	if (targetFlag)
 		return gwb->FindPathOnRoads(flag, targetFlag, false, NULL, NULL, NULL, NULL);
 	else 
@@ -797,6 +834,8 @@ void AIPlayerJH::HandleNewMilitaryBuilingOccupied(const Coords& coords)
 	aiJobs.push(new AIJH::BuildJob(this, BLD_FISHERY, x, y));
 
 	aiJobs.push(new AIJH::BuildJob(this, BLD_HUNTER, x, y));
+
+	aiJobs.push(new AIJH::BuildJob(this, BLD_STOREHOUSE, x, y));
 }
 
 void AIPlayerJH::HandleRetryMilitaryBuilding(const Coords& coords)
@@ -867,7 +906,7 @@ unsigned AIPlayerJH::GetBuildingCount(BuildingType type)
 
 bool AIPlayerJH::Wanted(BuildingType type)
 {
-	if (type >= BLD_BARRACKS && type <= BLD_FORTRESS)
+	if ((type >= BLD_BARRACKS && type <= BLD_FORTRESS) || type == BLD_STOREHOUSE)
 		return true;
 	return GetBuildingCount(type) < buildingsWanted[type];
 }
@@ -935,4 +974,118 @@ void AIPlayerJH::TryToAttack()
 			}
 		}
 	}
+}
+
+
+void AIPlayerJH::RecalcBQAroundRoad(MapCoord xStart, MapCoord yStart, std::vector<unsigned char> &route)
+{
+	RecalcBQAround(xStart, yStart);
+	for (unsigned i=0; i<route.size(); ++i)
+	{
+		gwb->GetPointA(xStart, yStart, route[i]);
+		RecalcBQAround(xStart, yStart);
+	}
+}
+
+bool AIPlayerJH::BuildAlternativeRoad(const noFlag *flag, std::vector<unsigned char> &route)
+{
+	// Radius in dem nach würdigen Fahnen gesucht wird
+	const unsigned short maxRoadLength = 10;
+	// Faktor um den der Weg kürzer sein muss als ein vorhander Pfad, um gebaut zu werden
+	const unsigned short lengthFactor = 5;
+
+
+	// Flaggen in der Umgebung holen
+	std::vector<const noFlag*> flags;
+	FindFlags(flags, flag->GetX(), flag->GetY(), maxRoadLength);
+
+	// Jede Flagge testen...
+	for(unsigned i=0; i<flags.size(); ++i)
+	{
+		//std::vector<unsigned char> new_route;
+		route.clear();
+		unsigned int newLength;
+		Param_RoadPath prp = { false };
+		
+		// Gibts überhaupt einen Pfad zu dieser Flagge
+		bool path_found = gwb->FindFreePath(flag->GetX(),flag->GetY(),
+		                  flags[i]->GetX(),flags[i]->GetY(),false,100,&route,&newLength,NULL,NULL,IsPointOK_RoadPath,NULL, &prp);
+
+		// Wenn ja, dann gucken ob unser momentaner Weg zu dieser Flagge vielleicht voll weit ist und sich eine Straße lohnt
+		if (path_found)
+		{
+			unsigned int oldLength = 0;
+
+			// Aktuelle Strecke zu der Flagge
+			bool pathAvailable = gwb->FindPathOnRoads(flags[i], flag, false, NULL, &oldLength, NULL, NULL);
+
+			// Lohnt sich die Straße?
+			if (!pathAvailable || newLength * lengthFactor < oldLength)
+			{
+				return BuildRoad(flag, flags[i], route);
+			}
+		}
+	}
+
+	return false;
+}
+
+bool AIPlayerJH::FindStoreHousePosition(MapCoord &x, MapCoord &y, unsigned radius)
+{
+	// max distance to warehouse/hq
+	const unsigned maxDistance = 20;
+
+	MapCoord fx = gwb->GetXA(x,y,4);
+	MapCoord fy = gwb->GetYA(x,y,4);
+
+	unsigned minDist = 999;
+	for (std::list<Coords>::iterator it = storeHouses.begin(); it != storeHouses.end(); it++)
+	{
+		const noBaseBuilding *bld;
+		if ((bld = gwb->GetSpecObj<noBaseBuilding>((*it).x, (*it).y)))
+		{
+			if (bld->GetBuildingType() != BLD_STOREHOUSE && bld->GetBuildingType() != BLD_HEADQUARTERS)
+				continue;
+
+			const noFlag *targetFlag = gwb->GetSpecObj<noFlag>(fx,fy);
+			unsigned dist;
+			bool pathAvailable = gwb->FindPathOnRoads(bld->GetFlag(), targetFlag, false, NULL, &dist, NULL, NULL);
+
+			if (!pathAvailable)
+				continue;
+
+			if (dist < minDist)
+			{
+				minDist = dist;
+			}
+			if (minDist <= maxDistance)
+			{
+				return false;
+			}
+		}
+	}
+	return SimpleFindPosition(x, y, BUILDING_SIZE[BLD_STOREHOUSE], radius);
+}
+
+void AIPlayerJH::SaveResourceMapsToFile()
+{
+#ifdef DEBUG_AI
+	for(unsigned i=0; i<AIJH::RES_TYPE_COUNT; ++i)
+	{
+		std::stringstream ss;
+		ss << "resmap-" << i << ".log";
+		FILE * file = fopen(ss.str().c_str(),"w");
+		for (unsigned y=0; y<gwb->GetHeight(); ++y)
+		{
+			if (y % 2 == 1)
+				fprintf(file,"  ");
+			for (unsigned x=0; x<gwb->GetWidth(); ++x)
+			{
+				fprintf(file,"%i   ",resourceMaps[i][x + y * gwb->GetWidth()]);		
+			}
+			fprintf(file,"\n");
+		}
+		fclose(file);
+	}
+#endif
 }

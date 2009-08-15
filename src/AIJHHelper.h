@@ -50,7 +50,7 @@ enum Resource
 };
 
 const unsigned RES_TYPE_COUNT = 9;
-const unsigned RES_RADIUS[RES_TYPE_COUNT] = {8, 8, 2, 2, 2, 2, 5, 5, 6};
+const unsigned RES_RADIUS[RES_TYPE_COUNT] = {8, 8, 2, 2, 2, 2, 5, 5, 4};
 
 struct Node
 {
@@ -64,7 +64,10 @@ struct Node
 enum JobStatus
 {
 	JOB_WAITING,
-	JOB_EXECUTING,
+	JOB_EXECUTING_START,
+	JOB_EXECUTING_ROAD1,
+	JOB_EXECUTING_ROAD2,
+	JOB_EXECUTING_ROAD2_2,
 	JOB_FINISHED,
 	JOB_FAILED
 };
@@ -93,6 +96,10 @@ private:
 	MapCoord target_x, target_y;
 	MapCoord around_x, around_y;
 	std::vector<unsigned char> route;
+
+	void TryToBuild();
+	void BuildMainRoad();
+	void TryToBuildSecondaryRoad();
 };
 
 class ExpandJob : public Job

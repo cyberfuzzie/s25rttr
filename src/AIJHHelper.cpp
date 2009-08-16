@@ -145,6 +145,9 @@ void AIJH::BuildJob::TryToBuild()
 		foundPos = aijh->FindStoreHousePosition(bx, by, 15);
 		break;
 
+	case BLD_FARM:
+		foundPos = aijh->FindBestPosition(bx, by, AIJH::PLANTSPACE, BQ_CASTLE, 50, true);
+
 	default:
 		foundPos = aijh->SimpleFindPosition(bx, by, BUILDING_SIZE[type], 15);
 		break;
@@ -262,6 +265,9 @@ void AIJH::BuildJob::BuildMainRoad()
 		case BLD_STOREHOUSE:
 			aijh->AddStoreHouse(target_x, target_y);
 			break;
+
+		case BLD_FARM:
+			aijh->ChangeResourceMap(target_x, target_y, 6, aijh->resourceMaps[AIJH::PLANTSPACE], -30);
 
 		default:
 			break;

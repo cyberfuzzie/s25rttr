@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.h 5414 2009-08-15 22:04:14Z jh $
+// $Id: AIPlayerJH.h 5415 2009-08-16 00:03:21Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -196,7 +196,7 @@ protected:
 	std::list<Coords> storeHouses;
 	void AddStoreHouse(MapCoord x, MapCoord y) { storeHouses.push_back(Coords(x, y)); }
 
-	noFlag *AIPlayerJH::FindTargetStoreHouseFlag(MapCoord x, MapCoord y);
+	noFlag *FindTargetStoreHouseFlag(MapCoord x, MapCoord y);
 
 	void SaveResourceMapsToFile();
 

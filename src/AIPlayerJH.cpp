@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.cpp 5414 2009-08-15 22:04:14Z jh $
+// $Id: AIPlayerJH.cpp 5415 2009-08-16 00:03:21Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -184,7 +184,7 @@ noFlag *AIPlayerJH::FindTargetStoreHouseFlag(MapCoord x, MapCoord y)
 
 		if (dist < minDistance)
 		{
-			minDistance;
+			minDistance = dist;
 			minTarget = *it;
 			found = true;
 		}
@@ -836,6 +836,33 @@ void AIPlayerJH::HandleNewMilitaryBuilingOccupied(const Coords& coords)
 	aiJobs.push(new AIJH::BuildJob(this, BLD_HUNTER, x, y));
 
 	aiJobs.push(new AIJH::BuildJob(this, BLD_STOREHOUSE, x, y));
+
+	/*
+	aiJobs.push(new AIJH::BuildJob(this, BLD_FARM, x, y));
+
+	unsigned food = rand() % 5;
+	switch(food)
+	{
+		case 0:
+			aiJobs.push(new AIJH::BuildJob(this, BLD_MILL, x, y));
+			break;
+		case 1:
+			aiJobs.push(new AIJH::BuildJob(this, BLD_BAKERY, x, y));
+			break;
+		case 2:
+			aiJobs.push(new AIJH::BuildJob(this, BLD_PIGFARM, x, y));
+			break;
+		case 3:
+			aiJobs.push(new AIJH::BuildJob(this, BLD_SLAUGHTERHOUSE, x, y));
+			break;
+		case 4:
+			aiJobs.push(new AIJH::BuildJob(this, BLD_WELL, x, y));
+			break;
+		default:
+			break;
+	}
+	*/
+
 }
 
 void AIPlayerJH::HandleRetryMilitaryBuilding(const Coords& coords)
@@ -874,9 +901,13 @@ void AIPlayerJH::RefreshBuildingCount()
 	buildingsWanted[BLD_IRONSMELTER] = GetBuildingCount(BLD_IRONMINE);
 	buildingsWanted[BLD_MINT] = GetBuildingCount(BLD_GOLDMINE);
 	buildingsWanted[BLD_ARMORY] = GetBuildingCount(BLD_IRONSMELTER);
+	buildingsWanted[BLD_BREWERY] = (GetBuildingCount(BLD_ARMORY) > 0 && GetBuildingCount(BLD_FARM) > 0) ? 1 : 0;
 
-	buildingsWanted[BLD_MILL] = GetBuildingCount(BLD_FARM) / 2;
+	buildingsWanted[BLD_MILL] = (GetBuildingCount(BLD_FARM) + 2) / 4;
 	buildingsWanted[BLD_BAKERY] = GetBuildingCount(BLD_MILL);
+
+	buildingsWanted[BLD_PIGFARM] = GetBuildingCount(BLD_FARM) / 4;
+	buildingsWanted[BLD_SLAUGHTERHOUSE] = GetBuildingCount(BLD_PIGFARM);
 
 	buildingsWanted[BLD_WELL] = GetBuildingCount(BLD_BAKERY) + GetBuildingCount(BLD_PIGFARM) 
 		+ GetBuildingCount(BLD_DONKEYBREEDER) + GetBuildingCount(BLD_BREWERY);
@@ -896,7 +927,7 @@ void AIPlayerJH::InitBuildingsWanted()
 	buildingsWanted[BLD_FISHERY] = 6;
 	buildingsWanted[BLD_QUARRY] = 6;
 	buildingsWanted[BLD_HUNTER] = 2;
-	buildingsWanted[BLD_FARM] = 8;
+	buildingsWanted[BLD_FARM] = 16;
 }
 
 unsigned AIPlayerJH::GetBuildingCount(BuildingType type)

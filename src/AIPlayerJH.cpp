@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.cpp 5415 2009-08-16 00:03:21Z jh $
+// $Id: AIPlayerJH.cpp 5418 2009-08-17 20:28:10Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -375,6 +375,101 @@ AIJH::Resource AIPlayerJH::CalcResource(MapCoord x, MapCoord y)
 	return res;
 }
 
+void AIPlayerJH::InitReachableNodes()
+{
+	unsigned short width = gwb->GetWidth();
+	unsigned short height = gwb->GetHeight();
+
+	std::queue<std::pair<MapCoord, MapCoord> > toCheck;
+
+	// Alle auf not reachable setzen
+	for (unsigned short y=0; y<height; ++y)
+	{
+		for (unsigned short x=0; x<width; ++x)
+		{
+			unsigned i = x + y * width;
+			nodes[i].reachable = false;
+			const noFlag *myFlag = 0;
+			if (( myFlag = gwb->GetSpecObj<noFlag>(x,y)))
+			{
+				if (myFlag->GetPlayer() == playerid)
+				{
+					nodes[i].reachable = true;
+					toCheck.push(std::make_pair(x,y));
+				}
+			}
+		}
+	}
+
+	IterativeReachableNodeChecker(toCheck);
+}
+
+void AIPlayerJH::IterativeReachableNodeChecker(std::queue<std::pair<MapCoord, MapCoord> >& toCheck)
+{
+	unsigned short width = gwb->GetWidth();
+
+	// TODO auch mal bootswege bauen können
+	Param_RoadPath prp = { false };
+
+	while(toCheck.size() > 0)
+	{
+		// Reachable coordinate
+		MapCoord rx = toCheck.front().first;
+		MapCoord ry = toCheck.front().second;
+
+		// Coordinates to test around this reachable coordinate
+		for (unsigned dir=0; dir<6; ++dir)
+		{
+			MapCoord nx = gwb->GetXA(rx, ry, dir);
+			MapCoord ny = gwb->GetYA(rx, ry, dir);
+			unsigned ni = nx + ny * width;
+
+			// already reached, don't test again
+			if (nodes[ni].reachable)
+				continue;
+
+			// Test whether point is reachable; yes->add to check list
+			if (IsPointOK_RoadPath(*gwb, nx, ny, (dir+3)%6, &prp))
+			{
+				nodes[ni].reachable = true;
+				toCheck.push(std::make_pair(nx, ny));
+			}
+		}
+		toCheck.pop();
+	}
+}
+
+
+void AIPlayerJH::UpdateReachableNodes(MapCoord x, MapCoord y, unsigned radius)
+{
+	unsigned short width = gwb->GetWidth();
+
+	std::queue<std::pair<MapCoord, MapCoord> > toCheck;
+
+	for(MapCoord tx=gwb->GetXA(x,y,0), r=1;r<=radius;tx=gwb->GetXA(tx,y,0),++r)
+	{
+		MapCoord tx2 = tx, ty2 = y;
+		for(unsigned i = 2;i<8;++i)
+		{
+			for(MapCoord r2=0;r2<r;gwb->GetPointA(tx2,ty2,i%6),++r2)
+			{
+				unsigned i = tx2 + ty2 * width;
+				nodes[i].reachable = false;
+				const noFlag *myFlag = 0;
+				if (( myFlag = gwb->GetSpecObj<noFlag>(tx2,ty2)))
+				{
+					if (myFlag->GetPlayer() == playerid)
+					{
+						nodes[i].reachable = true;
+						toCheck.push(std::make_pair(tx2,ty2));
+					}
+				}
+			}
+		}
+	}
+	IterativeReachableNodeChecker(toCheck);
+}
+
 void AIPlayerJH::InitNodes()
 {
 	unsigned short width = gwb->GetWidth();
@@ -383,51 +478,33 @@ void AIPlayerJH::InitNodes()
 
 	nodes.resize(width * height);
 
+	InitReachableNodes();
+
 	for (unsigned short y=0; y<height; ++y)
 	{
 		for (unsigned short x=0; x<width; ++x)
 		{
 			unsigned i = x + y * width;
 
-			// BuildingQuality + Owner-Kram + Borderland"resource"
-			assert(player->GetMilitaryBuildings().size() == 0); // TODO für savegame laden muss das weg
-
-			// Nur für HQ:
-			unsigned distance = CalcDistance(player->hqx, player->hqy, x, y);
-			if (distance < MILITARY_RADIUS[4])
+			// if reachable, we'll calc bq
+			if (nodes[i].reachable)
 			{
 				nodes[i].owned = true;
 				nodes[i].bq = gwb->CalcBQ(x, y, playerID);
-
-				Param_RoadPath prp;
-				prp.boat_road = false;
-
-				if (gwb->FindFreePath(x,y,
-					gwb->GetXA(player->hqx, player->hqy, 4),
-					gwb->GetYA(player->hqx, player->hqy, 4),					
-					false,50,NULL,NULL,NULL,NULL,IsPointOK_RoadPath,NULL, &prp))
-				{
-					nodes[i].reachable = true;
-				}
-				else
-				{
-					nodes[i].reachable = false;
-				}
 			}
 			else
 			{
 				nodes[i].owned = false;
 				nodes[i].bq = BQ_NOTHING;
-				nodes[i].reachable = false;
 			}
-			nodes[i].res = CalcResource(x, y);
 
-			nodes[i].border = (gwb->GetNode(x, y).boundary_stones[0] != 0);
-			//if (nodes[i].border)
-				//std::cout << x << " / " << y << " Border true" << std::endl;
+			nodes[i].res = CalcResource(x, y);
+			nodes[i].border = (gwb->GetNode(x, y).boundary_stones[0] == (playerid + 1));
 		}
 	}
 }
+
+
 
 void AIPlayerJH::InitResourceMaps()
 {
@@ -577,8 +654,8 @@ bool AIPlayerJH::FindBestPosition(MapCoord &x, MapCoord &y, AIJH::Resource res, 
 void AIPlayerJH::UpdateNodesAround(MapCoord x, MapCoord y, unsigned radius)
 {
 	unsigned width = gwb->GetWidth();
-	//const nobMilitary *mil = gwb->GetSpecObj<nobMilitary>(x,y);
-	//assert(mil);
+
+	UpdateReachableNodes(x, y, radius);
 
 	for(MapCoord tx=gwb->GetXA(x,y,0), r=1;r<=radius;tx=gwb->GetXA(tx,y,0),++r)
 	{
@@ -589,33 +666,16 @@ void AIPlayerJH::UpdateNodesAround(MapCoord x, MapCoord y, unsigned radius)
 			{
 				unsigned i = tx2 + ty2 * width;
 
-				//unsigned distance = CalcDistance(tx2, ty2, x, y);
 				nodes[i].owned = (gwb->GetNode(tx2, ty2).owner == playerid + 1);
 
 				if (nodes[i].owned)
 				{
 					nodes[i].bq = gwb->CalcBQ(tx2, ty2, playerid);
-
-					Param_RoadPath prp;
-					prp.boat_road = false;
-
-					if (gwb->FindFreePath(tx2,ty2,
-						gwb->GetXA(x, y, 4),
-						gwb->GetYA(x, y, 4),					
-						false,50,NULL,NULL,NULL,NULL,IsPointOK_RoadPath,NULL, &prp))
-					{
-						nodes[i].reachable = true;
-					}
-					else
-					{
-						nodes[i].reachable = false;
-					}
 				}
 				else
 				{
 					nodes[i].owned = false;
 					nodes[i].bq = BQ_NOTHING;
-					nodes[i].reachable = false;
 				}
 
 				AIJH::Resource res = CalcResource(tx2, ty2);

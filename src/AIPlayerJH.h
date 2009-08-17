@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.h 5415 2009-08-16 00:03:21Z jh $
+// $Id: AIPlayerJH.h 5418 2009-08-17 20:28:10Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -199,6 +199,10 @@ protected:
 	noFlag *FindTargetStoreHouseFlag(MapCoord x, MapCoord y);
 
 	void SaveResourceMapsToFile();
+
+	void InitReachableNodes();
+	void UpdateReachableNodes(MapCoord x, MapCoord y, unsigned radius);
+	void IterativeReachableNodeChecker(std::queue<std::pair<MapCoord, MapCoord> >& toCheck);
 
 
 protected:

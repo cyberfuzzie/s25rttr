@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.cpp 5428 2009-08-21 18:42:43Z jh $
+// $Id: AIPlayerJH.cpp 5429 2009-08-21 18:57:38Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -580,7 +580,7 @@ bool AIPlayerJH::FindGoodPosition(MapCoord &x, MapCoord &y, AIJH::Resource res, 
 				unsigned i = tx2 + ty2 * width;
 				if (resourceMaps[res][i] >= threshold)
 				{
-					if (inTerritory && !nodes[i].owned || nodes[i].farmed)
+					if ((inTerritory && !nodes[i].owned) || nodes[i].farmed)
 						continue;
 					if ( (nodes[i].bq >= size && nodes[i].bq < BQ_MINE) // normales Gebäude
 						|| (nodes[i].bq == size))	// auch Bergwerke

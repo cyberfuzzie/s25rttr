@@ -50,7 +50,18 @@ enum Resource
 };
 
 const unsigned RES_TYPE_COUNT = 9;
-const unsigned RES_RADIUS[RES_TYPE_COUNT] = {8, 8, 2, 2, 2, 2, 5, 5, 4};
+const unsigned RES_RADIUS[RES_TYPE_COUNT] = 
+{
+	8, // Wood
+	8, // Stones
+	2, // Gold
+	2, // Ironore
+	2, // Coal
+	2, // Granite
+	3, // Plantspace
+	5, // Borderland
+	5 // Fish
+};
 
 struct Node
 {
@@ -59,6 +70,7 @@ struct Node
 	BuildingQuality bq;
 	Resource res;
 	bool border;
+	bool farmed;
 };
 
 enum JobStatus
@@ -87,8 +99,10 @@ protected:
 class BuildJob : public Job
 {
 public:
-	BuildJob(AIPlayerJH *aijh, BuildingType type) : Job(aijh), type(type), target_x(0xFFFF), target_y(0xFFFF), around_x(0xFFFF), around_y(0xFFFF) { }
-	BuildJob(AIPlayerJH *aijh, BuildingType type, MapCoord around_x, MapCoord around_y) : Job(aijh), type(type), target_x(0xFFFF), target_y(0xFFFF), around_x(around_x), around_y(around_y) { }
+	BuildJob(AIPlayerJH *aijh, BuildingType type) 
+		: Job(aijh), type(type), target_x(0xFFFF), target_y(0xFFFF), around_x(0xFFFF), around_y(0xFFFF) { }
+	BuildJob(AIPlayerJH *aijh, BuildingType type, MapCoord around_x, MapCoord around_y) 
+		: Job(aijh), type(type), target_x(0xFFFF), target_y(0xFFFF), around_x(around_x), around_y(around_y) { }
 	~BuildJob() { }
 	void ExecuteJob();
 private:
@@ -117,11 +131,12 @@ private:
 class ConnectJob : public Job
 {
 public:
-	ConnectJob(AIPlayerJH *aijh, MapCoord x1, MapCoord y1, MapCoord x2, MapCoord y2);
+	ConnectJob(AIPlayerJH *aijh, MapCoord flag_x, MapCoord flag_y, MapCoord target_x, MapCoord target_y) 
+		: Job(aijh), flag_x(flag_x), flag_y(flag_y), target_x(target_x), target_y(target_y) { }
 	~ConnectJob() { }
 	void ExecuteJob();
 private:
-	MapCoord x1, y1, x2, y2;
+	MapCoord flag_x, flag_y, target_x, target_y;
 };
 
 }

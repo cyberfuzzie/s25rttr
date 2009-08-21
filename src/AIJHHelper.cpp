@@ -146,7 +146,8 @@ void AIJH::BuildJob::TryToBuild()
 		break;
 
 	case BLD_FARM:
-		foundPos = aijh->FindBestPosition(bx, by, AIJH::PLANTSPACE, BQ_CASTLE, 50, true);
+		foundPos = aijh->FindBestPosition(bx, by, AIJH::PLANTSPACE, BQ_CASTLE, 25, 12, true);
+		break;
 
 	default:
 		foundPos = aijh->SimpleFindPosition(bx, by, BUILDING_SIZE[type], 15);
@@ -161,6 +162,11 @@ void AIJH::BuildJob::TryToBuild()
 #endif
 		return;
 	}
+
+#ifdef DEBUG_AI
+	if (type == BLD_FARM)
+		std::cout << " Player " << (unsigned)aijh->GetPlayerID() << " built farm at " << bx << "/" << by << " on value of " << aijh->resourceMaps[AIJH::PLANTSPACE][bx+by*aijh->GetGWB()->GetWidth()] << std::endl;
+#endif
 
 	aijh->GetGCS().push_back(new gc::SetBuildingSite(bx, by, type));
 	target_x = bx;
@@ -267,7 +273,23 @@ void AIJH::BuildJob::BuildMainRoad()
 			break;
 
 		case BLD_FARM:
-			aijh->ChangeResourceMap(target_x, target_y, 6, aijh->resourceMaps[AIJH::PLANTSPACE], -30);
+			aijh->ChangeResourceMap(target_x, target_y, 5, aijh->resourceMaps[AIJH::PLANTSPACE], -30);
+			aijh->SetFarmedNodes(target_y, target_y);
+			break;
+
+		case BLD_MILL:
+			aijh->aiJobs.push(new AIJH::BuildJob(aijh, BLD_BAKERY, target_x, target_y));
+			break;
+
+		case BLD_PIGFARM:
+			aijh->aiJobs.push(new AIJH::BuildJob(aijh, BLD_SLAUGHTERHOUSE, target_x, target_y));
+			break;
+
+		case BLD_BAKERY:
+		case BLD_SLAUGHTERHOUSE:
+		case BLD_BREWERY:
+			aijh->aiJobs.push(new AIJH::BuildJob(aijh, BLD_WELL, target_x, target_y));
+			break;
 
 		default:
 			break;
@@ -288,6 +310,18 @@ void AIJH::BuildJob::TryToBuildSecondaryRoad()
 {
 	const noFlag *houseFlag = aijh->GetGWB()->GetSpecObj<noFlag>(aijh->GetGWB()->GetXA(target_x, target_y, 4), 
 		aijh->GetGWB()->GetYA(target_x, target_y, 4));
+
+	if (!houseFlag)
+	{
+		// Baustelle wurde wohl zerstört, oh schreck!
+		status = AIJH::JOB_FAILED;
+#ifdef DEBUG_AI
+			std::cout << "Player " << (unsigned)aijh->GetPlayerID() << ", Job failed: House flag is gone, " << BUILDING_NAMES[type] << " at " << target_x << "/" << target_y << ". Retrying..." << std::endl;
+#endif
+		aijh->aiJobs.push(new AIJH::BuildJob(aijh, type, around_x, around_y));
+		return;
+	}
+
 	if (aijh->BuildAlternativeRoad(houseFlag, route))
 		status = AIJH::JOB_EXECUTING_ROAD2_2;
 	else

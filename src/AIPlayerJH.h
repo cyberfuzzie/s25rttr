@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.h 5418 2009-08-17 20:28:10Z jh $
+// $Id: AIPlayerJH.h 5428 2009-08-21 18:42:43Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -48,6 +48,8 @@ public:
 		const GameClientPlayerList * const players, const GlobalGameSettings * const ggs,
 		const AI::Level level);
 
+
+	int GetResMapValue(MapCoord x, MapCoord y, AIJH::Resource res);
 protected:
 
 	// wofür isn das?
@@ -65,12 +67,8 @@ protected:
 
 	void RunGF(const unsigned gf);
 
-  /// Finds flags in the area of y,y
+  /// Finds flags in the area around x,y
 	void FindFlags(std::vector<const noFlag*>& flags, unsigned short x, unsigned short y, unsigned short radius);
-
-	/// Tests all building sites for road connection and connects them if necessary
-	// [currently not used]
-	void ConnectBuildingSites();
 
 	/// Connects a specific flag to a roadsystem nearby and returns true if succesful. Also returns the route of the future road.
 	bool ConnectFlagToRoadSytem(const noFlag *flag, std::vector<unsigned char>& route);
@@ -203,6 +201,8 @@ protected:
 	void InitReachableNodes();
 	void UpdateReachableNodes(MapCoord x, MapCoord y, unsigned radius);
 	void IterativeReachableNodeChecker(std::queue<std::pair<MapCoord, MapCoord> >& toCheck);
+
+	void SetFarmedNodes(MapCoord x, MapCoord y);
 
 
 protected:

@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.cpp 5418 2009-08-17 20:28:10Z jh $
+// $Id: AIPlayerJH.cpp 5428 2009-08-21 18:42:43Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -46,6 +46,12 @@ AIPlayerJH::AIPlayerJH(const unsigned char playerid, const GameWorldBase * const
 	currentJob = 0;
 	buildingsWanted.resize(BUILDING_TYPES_COUNT);
 	militaryBuildingToCheck = 0;
+	InitNodes();
+	InitResourceMaps();
+	InitBuildingsWanted();
+	RefreshBuildingCount();
+	AddStoreHouse(player->hqx, player->hqy);
+	SaveResourceMapsToFile();
 }
 
 /// Wird jeden GF aufgerufen und die KI kann hier entsprechende Handlungen vollziehen
@@ -53,12 +59,7 @@ void AIPlayerJH::RunGF(const unsigned gf)
 {
 	if (gf == 1)
 	{
-		InitNodes();
-		InitResourceMaps();
-		InitBuildingsWanted();
-		RefreshBuildingCount();
-		AddStoreHouse(player->hqx, player->hqy);
-		SaveResourceMapsToFile();
+
 	}
 
 	if (defeated)
@@ -137,34 +138,6 @@ void AIPlayerJH::FindFlags(std::vector<const noFlag*>& flags, unsigned short x, 
 	}
 }
 
-// DONT USE THIS METHOD
-void AIPlayerJH::ConnectBuildingSites()
-{
-	// Liste von Baustellen holen
-	const std::list<noBuildingSite*> sites = player->GetBuildingSites();
-
-	// Ziel, das möglichst schnell erreichbar sein soll (TODO müsste dann evtl. auch Lager/Hafen sein)
-	noFlag *targetFlag = gwb->GetSpecObj<nobHQ>(player->hqx, player->hqy)->GetFlag();
-
-	for (std::list<noBuildingSite*>::const_iterator it = sites.begin(); it != sites.end(); ++it)
-	{
-		unsigned char first_dir = 0xFF;
-		// Kann die Baustelle vom HQ erreicht werden? Nein -> Weg bauen!
-		if (!gwb->FindPathOnRoads((*it)->GetFlag(), targetFlag, false, NULL, NULL, &first_dir, NULL))
-		{
-			// Versuchen Weg zu bauen, wenns nicht klappt, Baustelle abreißen
-			//if (!ConnectFlagToRoadSytem((*it)->GetFlag()))
-			{
-				gcs.push_back(new gc::DestroyBuilding((*it)->GetX(), (*it)->GetY()));
-			}
-			//else
-			{
-				// Besser immer nur ein Weg bauen (TODO Wenn berechnete Wege sich kreuzen, geht was kaputt)
-				return;
-			}
-		}
-	}
-}
 
 noFlag *AIPlayerJH::FindTargetStoreHouseFlag(MapCoord x, MapCoord y)
 {
@@ -178,15 +151,15 @@ noFlag *AIPlayerJH::FindTargetStoreHouseFlag(MapCoord x, MapCoord y)
 		{
 			if (bld->GetBuildingType() != BLD_STOREHOUSE && bld->GetBuildingType() != BLD_HEADQUARTERS)
 				continue;
-		}
 		
-		unsigned dist = CalcDistance(x, y, (*it).x, (*it).y);
+			unsigned dist = CalcDistance(x, y, (*it).x, (*it).y);
 
-		if (dist < minDistance)
-		{
-			minDistance = dist;
-			minTarget = *it;
-			found = true;
+			if (dist < minDistance)
+			{
+				minDistance = dist;
+				minTarget = *it;
+				found = true;
+			}
 		}
 	}
 	if (!found)
@@ -500,6 +473,7 @@ void AIPlayerJH::InitNodes()
 
 			nodes[i].res = CalcResource(x, y);
 			nodes[i].border = (gwb->GetNode(x, y).boundary_stones[0] == (playerid + 1));
+			nodes[i].farmed = false;
 		}
 	}
 }
@@ -536,11 +510,34 @@ void AIPlayerJH::InitResourceMaps()
 	}
 }
 
+void AIPlayerJH::SetFarmedNodes(MapCoord x, MapCoord y)
+{
+	// Radius in dem Bausplatz für Felder blockiert wird
+	const unsigned radius = 3;
+
+	unsigned short width = gwb->GetWidth();
+	
+	nodes[x + y * width].farmed = true;
+
+	for(MapCoord tx=gwb->GetXA(x,y,0), r=1;r<=radius;tx=gwb->GetXA(tx,y,0),++r)
+	{
+		MapCoord tx2 = tx, ty2 = y;
+		for(unsigned i = 2;i<8;++i)
+		{
+			for(MapCoord r2=0;r2<r;gwb->GetPointA(tx2,ty2,i%6),++r2)
+			{
+				unsigned i = tx2 + ty2 * width;
+				nodes[i].farmed = true;;
+			}
+		}
+	}
+}
+
 void AIPlayerJH::ChangeResourceMap(MapCoord x, MapCoord y, unsigned radius, std::vector<int> &resMap, int value)
 {
 	unsigned short width = gwb->GetWidth();
 
-	resMap[x + y * width] = value * radius;
+	resMap[x + y * width] += value * radius;
 
 	for(MapCoord tx=gwb->GetXA(x,y,0), r=1;r<=radius;tx=gwb->GetXA(tx,y,0),++r)
 	{
@@ -583,7 +580,7 @@ bool AIPlayerJH::FindGoodPosition(MapCoord &x, MapCoord &y, AIJH::Resource res, 
 				unsigned i = tx2 + ty2 * width;
 				if (resourceMaps[res][i] >= threshold)
 				{
-					if (inTerritory && !nodes[i].owned)
+					if (inTerritory && !nodes[i].owned || nodes[i].farmed)
 						continue;
 					if ( (nodes[i].bq >= size && nodes[i].bq < BQ_MINE) // normales Gebäude
 						|| (nodes[i].bq == size))	// auch Bergwerke
@@ -628,7 +625,7 @@ bool AIPlayerJH::FindBestPosition(MapCoord &x, MapCoord &y, AIJH::Resource res, 
 				unsigned i = tx2 + ty2 * width;
 				if (resourceMaps[res][i] > best_value)
 				{
-					if (!nodes[i].reachable || (inTerritory && !nodes[i].owned))
+					if (!nodes[i].reachable || (inTerritory && !nodes[i].owned) || nodes[i].farmed)
 						continue;
 					if ( (nodes[i].bq >= size && nodes[i].bq < BQ_MINE) // normales Gebäude
 						|| (nodes[i].bq == size))	// auch Bergwerke
@@ -772,7 +769,6 @@ void AIPlayerJH::RecalcBQAround(const MapCoord x, const MapCoord y)
 		index = gwb->GetXA2(x,y,i) + gwb->GetYA2(x,y,i) * gwb->GetWidth();
 		nodes[index].bq = gwb->CalcBQ(gwb->GetXA2(x,y,i),gwb->GetYA2(x,y,i),playerid);
 	}
-
 }
 
 void AIPlayerJH::CheckNewMilitaryBuildings()
@@ -809,9 +805,11 @@ BuildingType AIPlayerJH::ChooseMilitaryBuilding(MapCoord x, MapCoord y)
 		// Prüfen ob Feind in der Nähe
 		if ((*it)->GetPlayer() != player->getPlayerID() && distance < 30)
 		{
-			if ((rand() % 10) == 0)
+			int randmil = rand();
+
+			if (randmil % 8 == 0)
 				bld = BLD_CATAPULT;
-			if ((rand() % 2) == 0)
+			else if (randmil % 2 == 0)
 				bld = BLD_FORTRESS;
 			else
 				bld = BLD_WATCHTOWER;
@@ -848,7 +846,7 @@ bool AIPlayerJH::SimpleFindPosition(MapCoord &x, MapCoord &y, BuildingQuality si
 			{
 				unsigned i = tx2 + ty2 * width;
 
-				if (!nodes[i].reachable || !nodes[i].owned)
+				if (!nodes[i].reachable || !nodes[i].owned || nodes[i].farmed)
 					continue;
 				if ( (nodes[i].bq >= size && nodes[i].bq < BQ_MINE) // normales Gebäude
 					|| (nodes[i].bq == size))	// auch Bergwerke
@@ -897,31 +895,13 @@ void AIPlayerJH::HandleNewMilitaryBuilingOccupied(const Coords& coords)
 
 	aiJobs.push(new AIJH::BuildJob(this, BLD_STOREHOUSE, x, y));
 
-	/*
+
 	aiJobs.push(new AIJH::BuildJob(this, BLD_FARM, x, y));
 
-	unsigned food = rand() % 5;
-	switch(food)
-	{
-		case 0:
-			aiJobs.push(new AIJH::BuildJob(this, BLD_MILL, x, y));
-			break;
-		case 1:
-			aiJobs.push(new AIJH::BuildJob(this, BLD_BAKERY, x, y));
-			break;
-		case 2:
-			aiJobs.push(new AIJH::BuildJob(this, BLD_PIGFARM, x, y));
-			break;
-		case 3:
-			aiJobs.push(new AIJH::BuildJob(this, BLD_SLAUGHTERHOUSE, x, y));
-			break;
-		case 4:
-			aiJobs.push(new AIJH::BuildJob(this, BLD_WELL, x, y));
-			break;
-		default:
-			break;
-	}
-	*/
+
+	aiJobs.push(new AIJH::BuildJob(this, BLD_BREWERY, x, y));
+	aiJobs.push(new AIJH::BuildJob(this, BLD_MILL, x, y));
+	aiJobs.push(new AIJH::BuildJob(this, BLD_PIGFARM, x, y));
 
 }
 
@@ -963,14 +943,14 @@ void AIPlayerJH::RefreshBuildingCount()
 	buildingsWanted[BLD_ARMORY] = GetBuildingCount(BLD_IRONSMELTER);
 	buildingsWanted[BLD_BREWERY] = (GetBuildingCount(BLD_ARMORY) > 0 && GetBuildingCount(BLD_FARM) > 0) ? 1 : 0;
 
-	buildingsWanted[BLD_MILL] = (GetBuildingCount(BLD_FARM) + 2) / 4;
-	buildingsWanted[BLD_BAKERY] = GetBuildingCount(BLD_MILL);
+	buildingsWanted[BLD_MILL] = (buildingCounts.building_counts[BLD_FARM] + 2) / 4;
+	buildingsWanted[BLD_BAKERY] = buildingsWanted[BLD_MILL];
 
-	buildingsWanted[BLD_PIGFARM] = GetBuildingCount(BLD_FARM) / 4;
-	buildingsWanted[BLD_SLAUGHTERHOUSE] = GetBuildingCount(BLD_PIGFARM);
+	buildingsWanted[BLD_PIGFARM] = buildingCounts.building_counts[BLD_FARM] / 4;
+	buildingsWanted[BLD_SLAUGHTERHOUSE] = buildingsWanted[BLD_PIGFARM];
 
-	buildingsWanted[BLD_WELL] = GetBuildingCount(BLD_BAKERY) + GetBuildingCount(BLD_PIGFARM) 
-		+ GetBuildingCount(BLD_DONKEYBREEDER) + GetBuildingCount(BLD_BREWERY);
+	buildingsWanted[BLD_WELL] = buildingsWanted[BLD_BAKERY] + buildingsWanted[BLD_PIGFARM]
+		+ buildingsWanted[BLD_DONKEYBREEDER] + buildingsWanted[BLD_BREWERY];
 }
 
 void AIPlayerJH::InitBuildingsWanted()
@@ -1075,6 +1055,12 @@ void AIPlayerJH::RecalcBQAroundRoad(MapCoord xStart, MapCoord yStart, std::vecto
 	{
 		gwb->GetPointA(xStart, yStart, route[i]);
 		RecalcBQAround(xStart, yStart);
+		// Auch Plantspace entsprechend anpassen:
+		if (nodes[xStart + yStart * gwb->GetWidth()].res == AIJH::PLANTSPACE)
+		{
+			ChangeResourceMap(xStart, yStart, AIJH::RES_RADIUS[AIJH::PLANTSPACE], resourceMaps[AIJH::PLANTSPACE], -1);
+			nodes[xStart + yStart * gwb->GetWidth()].res = AIJH::NOTHING;
+		}
 	}
 }
 
@@ -1180,3 +1166,10 @@ void AIPlayerJH::SaveResourceMapsToFile()
 	}
 #endif
 }
+
+int AIPlayerJH::GetResMapValue(MapCoord x, MapCoord y, AIJH::Resource res)
+{
+	return resourceMaps[res][x + y * gwb->GetWidth()];
+}
+
+

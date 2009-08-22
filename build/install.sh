@@ -116,7 +116,13 @@ mecho --blue "Installing binaries"
 cp -va ../release/bin/rttr.sh $BINDIR || exit 1
 
 mecho --blue "Installing RTTR directory"
-svn --force --non-interactive export ../RTTR $DATADIR/RTTR || exit 1
+if [ -d ../RTTR/.svn ] ; then
+	svn --force --non-interactive export ../RTTR $DATADIR/RTTR || exit 1
+elif [ -d ../RTTR/.bzr ] ; then
+	bzr export ../RTTR $DATADIR/RTTR || exit 1
+else
+	cp -rv ../RTTR/* $DATADIR/RTTR || exit 1
+fi
 rm -f $DATADIR/RTTR/languages/*.po
 
 mecho --blue "Installing language files"

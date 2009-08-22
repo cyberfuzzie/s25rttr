@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: CMakeLists.txt 5227 2009-07-09 12:09:54Z FloSoft $
+### $Id: CMakeLists.txt 5434 2009-08-22 11:19:56Z FloSoft $
 #################################################################################
 
 INCLUDE(FindSndfile)
@@ -34,7 +34,7 @@ IF (SNDFILE_FOUND)
 
 		ADD_CUSTOM_COMMAND(TARGET sound-convert POST_BUILD COMMAND cp -v sound-convert ../../RTTR/sound-convert)
 		
-		INSTALL(TARGETS sound-convert DESTINATION bin)
+		INSTALL(TARGETS sound-convert DESTINATION share/s25rttr/RTTR)
 
 	ELSE (SAMPLERATE_FOUND)
 		MESSAGE(WARNING ": libsamplerate not found: Will not build sound-convert binary")

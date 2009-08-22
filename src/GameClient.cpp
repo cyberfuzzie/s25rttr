@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 5388 2009-08-10 10:24:54Z FloSoft $
+// $Id: GameClient.cpp 5441 2009-08-22 22:21:52Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -579,13 +579,34 @@ void GameClient::OnNMSPlayerToggleState(const GameMessage_Player_Toggle_State& m
 			case PS_FREE:
 				{
 					player->ps = PS_KI;
+					player->aiType = AI_DUMMY;
 					// Baby mit einem Namen Taufen ("Name (KI)")
+					char str[512];
+					sprintf(str,_("Dummy %u"),unsigned(msg.player));
+					player->name = str;
+					player->name += _(" (AI)");
+				} break;
+		case PS_KI:
+			{
+				// Verschiedene KIs durchgehen
+				switch(player->aiType)
+				{
+				case AI_DUMMY:
+					player->aiType = AI_JH;
 					char str[512];
 					sprintf(str,_("Computer %u"),unsigned(msg.player));
 					player->name = str;
 					player->name += _(" (AI)");
-				} break;
-			case PS_KI:     player->ps = PS_LOCKED; break;
+					break;
+				case AI_JH:
+					player->ps = PS_LOCKED; 
+					break;
+				default:
+					player->ps = PS_LOCKED; 
+					break;
+				}
+				break;
+			}
 			case PS_LOCKED: player->ps = PS_FREE;   break;
 			default: break;
 			}
@@ -1647,7 +1668,9 @@ bool GameClient::AddGC(gc::GameCommand * gc)
 /// Erzeugt einen KI-Player, der mit den Daten vom GameClient gefüttert werden muss (zusätzlich noch mit den GameServer)
 AIBase * GameClient::CreateAIPlayer(const unsigned playerid)
 {
+	/*
 	unsigned int level = AI::MEDIUM;
+
 	switch(level)
 	{
 	case AI::EASY:
@@ -1659,6 +1682,24 @@ AIBase * GameClient::CreateAIPlayer(const unsigned playerid)
 			return new AIPlayerJH(playerid, gw,&players[playerid],&players,&ggs, (AI::Level)level);
 		} break;
 	}
+	*/
+
+	switch (players[playerid].aiType)
+	{
+	case AI_DUMMY:
+		{
+			return new AIPlayer(playerid, gw,&players[playerid],&players,&ggs, AI::EASY);
+		} break;
+	case AI_JH:
+		{
+			return new AIPlayerJH(playerid, gw,&players[playerid],&players,&ggs, AI::EASY);
+		} break;
+	default:
+		{
+			return new AIPlayer(playerid, gw,&players[playerid],&players,&ggs, AI::EASY);
+		} break;
+	}
+
 }
 
 /// Wandelt eine GF-Angabe in eine Zeitangabe um (HH:MM:SS oder MM:SS wenn Stunden = 0)

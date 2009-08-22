@@ -33,22 +33,4 @@ AIPlayer::AIPlayer(const unsigned char playerid, const GameWorldBase * const gwb
 /// Wird jeden GF aufgerufen und die KI kann hier entsprechende Handlungen vollziehen
 void AIPlayer::RunGF(const unsigned gf)
 {
-	// Testcode als Platzhalter:
-	// Alle 500 gf eine Fahne setzen
-	if(gf % 50 == 0)
-	{
-		int x = player->hqx - (rand()%16 -8);
-		if(x < 0)
-			x = 0;
-		if(x >= gwb->GetWidth())
-			x = gwb->GetWidth()-1;
-		int y = player->hqy - (rand()%16 -8);
-		if(y < 0)
-			y = 0;
-		if(y >= gwb->GetHeight())
-			y = gwb->GetHeight()-1;
-
-		gcs.push_back(new gc::SetFlag(x,y));
-
-	}
 }

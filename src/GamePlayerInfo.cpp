@@ -1,4 +1,4 @@
-// $Id: GamePlayerInfo.cpp 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: GamePlayerInfo.cpp 5441 2009-08-22 22:21:52Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -39,6 +39,7 @@ GamePlayerInfo::GamePlayerInfo(const unsigned playerid) :
 	playerid(playerid),
 	defeated(false),
 	ps(PS_FREE),
+	aiType(AI_DUMMY),
 	is_host(false),
 	nation(NAT_AFRICANS),
 	team(TM_NOTEAM),
@@ -53,6 +54,7 @@ GamePlayerInfo::GamePlayerInfo(const unsigned playerid) :
 GamePlayerInfo::GamePlayerInfo(const unsigned playerid, Serializer * ser) :
 	playerid(playerid),
 	ps(PlayerState(ser->PopUnsignedChar())),
+	aiType(AI_DUMMY),
 	name(ser->PopString()),
 	origin_name(ser->PopString()),
 	is_host(ser->PopBool()),

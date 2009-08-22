@@ -1,4 +1,4 @@
-// $Id: GameServer.cpp 5171 2009-07-02 20:21:42Z FloSoft $
+// $Id: GameServer.cpp 5441 2009-08-22 22:21:52Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -492,11 +492,31 @@ void GameServer::TogglePlayerState(unsigned char client)
 	default: break;
 	case PS_FREE: 
 		{
-			player->ps = PS_KI;  
+			player->ps = PS_KI; 
+			player->aiType = AI_DUMMY;
 			// Baby mit einem Namen Taufen ("Name (KI)")
 			SetAIName(client);
 		} break;
-	case PS_KI:     player->ps = PS_LOCKED; break;
+	case PS_KI:
+		{
+			// Verschiedene KIs durchgehen
+			switch(player->aiType)
+			{
+			case AI_DUMMY:
+				player->aiType = AI_JH;
+				SetAIName(client);
+				break;
+			case AI_JH:
+				player->ps = PS_LOCKED; 
+				break;
+			default:
+				player->ps = PS_LOCKED; 
+				break;
+			}
+			break;
+		}
+		
+
 	case PS_LOCKED: player->ps = PS_FREE;   break;
 	}
 	player->ready = (player->ps == PS_KI);
@@ -1275,7 +1295,11 @@ void GameServer::SetAIName(const unsigned player_id)
 {
 	// Baby mit einem Namen Taufen ("Name (KI)")
 	char str[128];
-	sprintf(str,_("Computer %u"),unsigned(player_id));
+	if (players[player_id].aiType == AI_DUMMY)
+		sprintf(str,_("Dummy %u"),unsigned(player_id));
+	else
+		sprintf(str,_("Computer %u"),unsigned(player_id));
+
 	players[player_id].name = str;
 	players[player_id].name += _(" (AI)");
 }

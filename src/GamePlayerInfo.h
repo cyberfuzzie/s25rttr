@@ -1,4 +1,4 @@
-// $Id: GamePlayerInfo.h 5273 2009-07-15 20:51:49Z jh $
+// $Id: GamePlayerInfo.h 5441 2009-08-22 22:21:52Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -33,6 +33,12 @@ enum PlayerState
 	PS_OCCUPIED,
 	PS_LOCKED,
 	PS_KI
+};
+
+enum AIType
+{
+	AI_DUMMY = 0,
+	AI_JH
 };
 
 class GamePlayerInfo
@@ -70,6 +76,8 @@ protected:
 public:
 	/// Spielertyp (Mensch, KI oder geschlossen..?)
 	PlayerState ps;
+	/// Wenn KI, was für eine?
+	AIType aiType;
 	
 	/// Spielername
 	std::string name;

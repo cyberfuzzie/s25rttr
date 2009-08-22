@@ -1,4 +1,4 @@
-// $Id: GameServer.h 5403 2009-08-13 20:06:32Z jh $
+// $Id: GameServer.h 5441 2009-08-22 22:21:52Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -166,6 +166,9 @@ private:
 
 	/// Alle KI-Spieler und ihre Daten (NULL, falls ein solcher Spieler nicht existiert)
 	std::vector<AIBase*> ai_players;
+
+	public:
+		AIBase *GetAIPlayer(unsigned playerID) { return ai_players[playerID]; }
 
 };
 

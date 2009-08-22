@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: CMakeLists.txt 5202 2009-07-05 19:45:08Z FloSoft $
+### $Id: CMakeLists.txt 5432 2009-08-22 11:18:14Z FloSoft $
 #################################################################################
 
 IF ( "${CROSSCOMPILE}" STREQUAL "1" )
@@ -25,8 +25,5 @@ IF ( "${COMPILEFOR}" STREQUAL "win32" )
 	
     TARGET_LINK_LIBRARIES(s25util ws2_32 ${TARGET_LINK_LIBRARIES} )
 ENDIF ( "${COMPILEFOR}" STREQUAL "win32" )
-
-INSTALL(TARGETS s25util DESTINATION lib)
-INSTALL(FILES DESTINATION /include/libs25util)
 
 #################################################################################

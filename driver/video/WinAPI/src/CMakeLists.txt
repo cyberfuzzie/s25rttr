@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: CMakeLists.txt 5211 2009-07-07 13:14:17Z FloSoft $
+### $Id: CMakeLists.txt 5432 2009-08-22 11:18:14Z FloSoft $
 #################################################################################
 
 IF ("${COMPILEFOR}" STREQUAL "win32" )
@@ -23,8 +23,6 @@ IF ("${COMPILEFOR}" STREQUAL "win32" )
 		ENDIF ( "${COMPILEFOR}" STREQUAL "win32")
 	
 		ADD_CUSTOM_COMMAND(TARGET videoWinAPI POST_BUILD COMMAND ln -fvs WinAPI/src/libvideoWinAPI${CMAKE_SHARED_LIBRARY_SUFFIX} ../../videoWinAPI${CMAKE_SHARED_LIBRARY_SUFFIX})
-	
-		INSTALL(TARGETS videoWinAPI DESTINATION lib)
 	#ENDIF (GDI32_LIBRARY AND OPENGL_LIBRARY AND USER32_LIBRARY)
 ENDIF ("${COMPILEFOR}" STREQUAL "win32" )
 

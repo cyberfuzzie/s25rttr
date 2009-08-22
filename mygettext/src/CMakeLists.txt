@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: CMakeLists.txt 5113 2009-06-26 08:23:54Z FloSoft $
+### $Id: CMakeLists.txt 5432 2009-08-22 11:18:14Z FloSoft $
 #################################################################################
 
 INCLUDE(../../cmake/FindIconv.cmake)
@@ -15,4 +15,4 @@ ADD_LIBRARY(mygettext mygettext.cpp mygettext.h gettext.cpp gettext.h)
 
 TARGET_LINK_LIBRARIES(mygettext endian ${ICONV_LIBRARY})
 
-INSTALL(TARGETS mygettext DESTINATION lib)
+#################################################################################

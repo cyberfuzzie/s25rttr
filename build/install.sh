@@ -1,6 +1,6 @@
 #!/bin/bash
 ###############################################################################
-## $Id: cmake.sh 5432 2009-08-22 11:18:14Z FloSoft $
+## $Id$
 ###############################################################################
 
 # Editable Variables
@@ -19,51 +19,6 @@ mecho()
 	shift
 	$CMAKE_COMMAND -E cmake_echo_color --bold $COLOR "$*"
 }
-
-###############################################################################
-
-if [ ! -e bin ] ; then
-	mecho --blue "Creating symlink «bin» ..."
-	ln -s . bin
-fi
-
-if [ ! -e RTTR ] ; then
-	if [ -e ../RTTR ] ; then
-		mecho --blue "Creating symlink «RTTR» ..."
-		ln -s ../RTTR RTTR
-	else
-		mecho --red "Directory «RTTR» missing!"
-		exit 1
-	fi
-fi
-
-if [ ! -e share ] ; then
-	mecho --blue "Creating symlink «share» ..."
-	ln -s . share
-fi
-
-if [ ! -e s25rttr ] ; then
-	mecho --blue "Creating symlink «s25rttr» ..."
-	ln -s . s25rttr
-fi
-
-if [ ! -e S2 ] ; then
-	if [ -e ../S2 ] ; then
-		mecho --blue "Creating symlink «S2» ..."
-	ln -s ../S2 S2
-	else
-		mecho --red "Directory «S2» missing!"
-		exit 1
-	fi
-fi
-
-if [ -z "$ARCH" ] ; then
-	if [ "$(uname -s)" = "Darwin" ] ; then
-		ARCH=macos.local
-	else
-		ARCH=local
-	fi
-fi
 
 ###############################################################################
 
@@ -148,44 +103,27 @@ fi
 
 ###############################################################################
 
-PARAMS=""
+mecho --blue "Creating directories"
+mkdir -vp $BINDIR || exit 1
+mkdir -vp $DATADIR || exit 1
+mkdir -vp $DATADIR/S2 || exit 1
+mkdir -vp $DATADIR/RTTR || exit 1
+mkdir -vp $DATADIR/driver/video || exit 1
+mkdir -vp $DATADIR/driver/audio || exit 1
+mkdir -vp $IPREFIX/lib || exit 1
 
-echo "Setting Path-Prefix to \"$PREFIX\""
-PARAMS="$PARAMS -DPREFIX=$PREFIX"
+mecho --blue "Installing binaries"
+cp -va ../release/bin/rttr.sh $BINDIR || exit 1
 
-echo "Setting Install-Prefix to \"$IPREFIX\""
-PARAMS="$PARAMS -DCMAKE_INSTALL_PREFIX=$IPREFIX"
+mecho --blue "Installing RTTR directory"
+svn --force --non-interactive export ../RTTR $DATADIR/RTTR || exit 1
+rm -f $DATADIR/RTTR/languages/*.po
 
-echo "Setting Architecture to \"$ARCH\""
-PARAMS="$PARAMS -DCOMPILEFOR_PLATFORM=$ARCH"
+mecho --blue "Installing language files"
+cp -v ../RTTR/languages/*.mo $DATADIR/RTTR/languages/ || exit 1
 
-echo "Setting Binary Dir to \"$BINDIR\""
-PARAMS="$PARAMS -DBINDIR=$BINDIR"
-
-echo "Setting Data Dir to \"$DATADIR\""
-PARAMS="$PARAMS -DDATADIR=$DATADIR"
-
-case "$enable_debug" in
-yes|YES|Yes)
-	mecho --magenta "Activating debug build"
-	PARAMS="$PARAMS -DCMAKE_BUILD_TYPE=Debug"
-;;
-*)
-	mecho --magenta "Activating release build"
-;;
-esac
-
-###############################################################################
-
-mecho --blue "Running \"cmake $PARAMS\""
-$CMAKE_COMMAND $PARAMS ..
-
-if [ $? != 0 ] ; then
-	mecho --red "An error occured - please check above!"
-	exit 1
-fi
-
-mecho --blue "Now type \"make\" to build project"
+mecho --blue "Installing S2 placeholder"
+touch $DATADIR/S2/put\ your\ S2-Installation\ in\ here || exit 1
 
 exit 0
 

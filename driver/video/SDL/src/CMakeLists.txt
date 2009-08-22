@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: CMakeLists.txt 5213 2009-07-07 13:28:04Z FloSoft $
+### $Id: CMakeLists.txt 5432 2009-08-22 11:18:14Z FloSoft $
 #################################################################################
 
 INCLUDE(FindSDL)
@@ -30,7 +30,7 @@ IF (SDL_FOUND)
 
 	ADD_CUSTOM_COMMAND(TARGET videoSDL POST_BUILD COMMAND ln -fvs SDL/src/libvideoSDL${CMAKE_SHARED_LIBRARY_SUFFIX} ../../videoSDL${CMAKE_SHARED_LIBRARY_SUFFIX})
 	
-	INSTALL(TARGETS videoSDL DESTINATION lib)
+	INSTALL(TARGETS videoSDL DESTINATION share/s25rttr/driver/video)
 ELSE (SDL_FOUND)
 	MESSAGE(WARNING ": SDL library not found: Not building SDL videodriver")
 ENDIF (SDL_FOUND)

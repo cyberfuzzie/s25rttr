@@ -1,3 +1,7 @@
+#################################################################################
+### $Id: CMakeLists.txt 5432 2009-08-22 11:18:14Z FloSoft $
+#################################################################################
+
 INCLUDE_DIRECTORIES(../libendian/src)
 LINK_DIRECTORIES(../libendian/src)
 
@@ -19,4 +23,5 @@ ADD_LIBRARY(siedler2 libsiedler2.cpp ArchivInfo.cpp ArchivItem.cpp
 
 TARGET_LINK_LIBRARIES(siedler2 endian)
 
-INSTALL(TARGETS siedler2 DESTINATION lib)
+#################################################################################
+

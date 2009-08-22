@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 5099 2009-06-24 17:10:59Z FloSoft $
+### $Id: CMakeLists.txt 5432 2009-08-22 11:18:14Z FloSoft $
 ################################################################################
 
 INCLUDE(CheckCXXCompilerFlag)
@@ -31,8 +31,6 @@ IF (LOBBY_C)
     ADD_LIBRARY(lobby_c STATIC ${SOURCES_LOBBY} LobbyClient.cpp LobbyClient.h)
     TARGET_LINK_LIBRARIES(lobby_c s25util mygettext)
     
-    INSTALL(TARGETS lobby_c DESTINATION lib)
-
 ENDIF (LOBBY_C)
 
 ################################################################################
@@ -41,8 +39,6 @@ IF (LOBBY_S)
 
     ADD_LIBRARY(lobby_s STATIC ${SOURCES_LOBBY} LobbyServer.cpp LobbyServer.h  LobbyPlayer.cpp LobbyPlayer.h MySQL.cpp MySQL.h)
     TARGET_LINK_LIBRARIES(lobby_s s25util mygettext mysqlclient)
-
-    INSTALL(TARGETS lobby_s DESTINATION lib)
 
 ENDIF (LOBBY_S)
 

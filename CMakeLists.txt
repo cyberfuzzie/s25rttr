@@ -1,15 +1,11 @@
 ################################################################################
-### $Id: CMakeLists.txt 5172 2009-07-02 20:35:05Z FloSoft $
+### $Id: CMakeLists.txt 5433 2009-08-22 11:19:05Z FloSoft $
 ################################################################################
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.4)
 CMAKE_POLICY(SET CMP0003 OLD)
 
 SET(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules)
-
-INCLUDE(MacroEnsureOutOfSourceBuild)
-
-macro_ensure_out_of_source_build("${PROJECT_NAME} requires an out of source build. Please go to the build directory and run './cmake.sh [options]' there.")
 
 ################################################################################
 
@@ -24,8 +20,12 @@ SET(BINDIR  CACHE PATH "Directory for the binaries")
 SET(DATADIR CACHE PATH "Data directory")
 
 IF (PREFIX AND NOT DATADIR)
-	SET(DATADIR ${PREFIX}/share)
+	SET(DATADIR ${PREFIX}/share/s25rttr)
 ENDIF (PREFIX AND NOT DATADIR)
+
+# ensure out of source build
+INCLUDE(MacroEnsureOutOfSourceBuild)
+macro_ensure_out_of_source_build("${PROJECT_NAME} requires an out of source build. Please go to the build directory and run './cmake.sh [options]' there.")
 
 # Build lobby client
 SET (LOBBY_C TRUE)
@@ -70,7 +70,13 @@ ADD_CUSTOM_TARGET(updateversion ALL
                   DEPENDS version
                   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
-ADD_CUSTOM_TARGET(mrproper ./cleanup.sh)
+ADD_CUSTOM_TARGET(mrproper
+		  COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/build/cleanup.sh
+		  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+
+
+# preinstall script
+INSTALL(SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/cmake/install.cmake)
 
 ################################################################################
 

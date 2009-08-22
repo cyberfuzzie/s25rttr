@@ -35,7 +35,7 @@
 
 //	set data directory (normal $(datadir)/s25rttr)
 //#define DATADIR "/usr/local/share/s25rttr"
-#cmakedefine DATADIR "${DATADIR}/s25rttr"
+#cmakedefine DATADIR "${DATADIR}"
 
 //	set game directory (normal $(datadir)/s25rttr/S2)
 //#define GAMEDIR DATADIR"/S2"

@@ -3,18 +3,18 @@ msgstr ""
 "Project-Id-Version: Siedler II.5 RttR\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-08-02 15:46+0100\n"
-"PO-Revision-Date: 2009-08-02 15:46+0100\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2009-08-24 12:06+0100\n"
+"Last-Translator: Oltre <lucaongaro@yahoo.com>\n"
 "Language-Team: Siedler II.5 RttR <sf-team@siedler25.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-08-21 20:04+0000\n"
+"X-Launchpad-Export-Date: 2009-08-24 09:48+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
-"X-Poedit-SearchPath-0: /storage/RTTR/svn/trunk/src\n"
 "X-Poedit-SourceCharset: iso-8859-15\n"
 "X-Poedit-Basepath: F:\\programmierung\\Projekte\\siedler15\\s25client"
 "\\trunk\n"
+"X-Poedit-SearchPath-0: /storage/RTTR/svn/trunk/src\n"
 
 #: /storage/RTTR/svn/trunk/src/GameClient.cpp:572
 msgid " (AI)"
@@ -29,7 +29,7 @@ msgstr "%d"
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:393
 #, c-format
 msgid "%d Player"
-msgstr "%d Player"
+msgstr "%d Giocatore"
 
 #: /storage/RTTR/svn/trunk/src/iwHQ.cpp:68
 #, c-format
@@ -73,7 +73,7 @@ msgstr "-"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:122
 msgid "-> Build castle"
-msgstr "-> Costruisci un castello "
+msgstr "-> Costruisci un castello"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:101
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:115
@@ -185,7 +185,7 @@ msgstr "Alleati"
 #: /storage/RTTR/svn/trunk/src/SerializedGameData.cpp:231
 msgid "An error occured while saving which was suppressed!"
 msgstr ""
-"Si e verificato un errore durante il salvataggio (che e stato annullato)!"
+"Si è verificato un errore durante il salvataggio (che è stato annullato)!"
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:167
 msgid "And let's go!"
@@ -493,15 +493,15 @@ msgstr "Demolire?"
 #: /storage/RTTR/svn/trunk/src/iwMilitaryBuilding.cpp:170
 msgid ""
 "Demolition ist not allowed because the building is located in border area!"
-msgstr "La demolizione non e permessa perche l'edificio e vicino al confine!"
+msgstr "La demolizione non è permessa perche l'edificio è vicino al confine!"
 
 #: /storage/RTTR/svn/trunk/src/iwMilitaryBuilding.cpp:169
 msgid "Demolition ist not allowed because the building is under attack!"
-msgstr "La demolizione non e permessa perche l'edificio e sotto attacco!"
+msgstr "La demolizione non è permessa perche l'edificio è sotto attacco!"
 
 #: /storage/RTTR/svn/trunk/src/iwMilitaryBuilding.cpp:173
 msgid "Demolition not possible"
-msgstr "La demolizione non e permessa"
+msgstr "La demolizione non è permessa"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:102
 msgid "Demolition prohibition:"
@@ -555,7 +555,7 @@ msgstr "Allevamento di asini"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:94
 msgid "Down"
-msgstr "Giu"
+msgstr "Giù"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:85
 msgid "Downwards"
@@ -629,7 +629,7 @@ msgstr "Errore durante il gioco replay"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:95
 msgid "Error: Replay is too old!"
-msgstr "Errore: il Replay e troppo vecchio!"
+msgstr "Errore: il Replay è troppo vecchio!"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:283
 msgid "Eternal"
@@ -753,12 +753,12 @@ msgid ""
 "Game can only be started as soon as everybody has a unique color,everyone is "
 "ready and all free slots are closed."
 msgstr ""
-"Il gioco puo iniziare appena ognuno ha il suo colore, tutti sono pronti e "
+"Il gioco può iniziare appena ognuno ha il suo colore, tutti sono pronti e "
 "tutti gli slot liberi sono chiusi."
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:147
 msgid "Game crate was picked and spread out..."
-msgstr "La cassa del gioco e stata presa e distribuita..."
+msgstr "La cassa del gioco è stata presa e distribuita..."
 
 #: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:58
 msgid "Game menu"
@@ -1079,7 +1079,7 @@ msgstr "Nome della mappa:"
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:125
 msgid "Map was loaded and pinned at the wall..."
-msgstr "La mappa e stata caricata e appesa al muro..."
+msgstr "La mappa è stata caricata e appesa al muro..."
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:152
 msgid "Map: "
@@ -1087,7 +1087,7 @@ msgstr "Mappa: "
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:133
 msgid "Mapfile: "
-msgstr "File di mappa:"
+msgstr "File di mappa: "
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:170
 msgid "Meat"
@@ -1165,7 +1165,7 @@ msgstr "Coniatore"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:123
 msgid "Mode:"
-msgstr "Modalita'"
+msgstr "Modalità"
 
 #: /storage/RTTR/svn/trunk/src/iwHQ.cpp:66
 msgid "More"
@@ -1192,7 +1192,7 @@ msgstr "Piu difensori"
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:60
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:61
 msgid "More often"
-msgstr "Piu' spesso"
+msgstr "Più spesso"
 
 #: /storage/RTTR/svn/trunk/src/iwMilitary.cpp:49
 msgid "More recruits"
@@ -1200,7 +1200,7 @@ msgstr "Piu reclutamento"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:88
 msgid "More repeats"
-msgstr "Piu ripetizioni"
+msgstr "Più ripetizioni"
 
 #: /storage/RTTR/svn/trunk/src/dskMainMenu.cpp:74
 msgid "Multiplayer"
@@ -1254,11 +1254,11 @@ msgstr "Nessun messaggio"
 
 #: /storage/RTTR/svn/trunk/src/nofFarmhand.cpp:175
 msgid "No more fishes in range"
-msgstr "Non ci sono piu pesci"
+msgstr "Non ci sono più pesci"
 
 #: /storage/RTTR/svn/trunk/src/nofFarmhand.cpp:168
 msgid "No more stones in range"
-msgstr "Non ci sono piu pietre"
+msgstr "Non ci sono più pietre"
 
 #: /storage/RTTR/svn/trunk/src/iwShip.cpp:102
 msgid "No ships available"
@@ -1292,7 +1292,7 @@ msgid ""
 "Notice: The played replay has ended. (GF: %u, %dh %dmin %ds, TF: %u, "
 "AVG_FPS: %u)"
 msgstr ""
-"Avviso: il Replay giocato e finito. (GF: %u, %dh %dmin %ds, TF: %u, AVG_FPS: "
+"Avviso: il Replay giocato è finito. (GF: %u, %dh %dmin %ds, TF: %u, AVG_FPS: "
 "%u)"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:254
@@ -1420,7 +1420,7 @@ msgstr "Giocatore"
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:818
 #, c-format
 msgid "Player '%s' joined the game!"
-msgstr "Il giocatore '%s' si e unito al gioco!"
+msgstr "Il giocatore '%s' si è unito al gioco!"
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:815
 #, c-format
@@ -1430,12 +1430,12 @@ msgstr "Il giocatore '%s' ha lasciato il gioco!"
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:929
 #, c-format
 msgid "Player '%s' switched to player '%s'"
-msgstr "Il Giocatore '%s' e diventato il Giocatore '%s'"
+msgstr "Il Giocatore '%s' è diventato il Giocatore '%s'"
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:947
 #, c-format
 msgid "Player '%s' was defeated!"
-msgstr "Il Giocatore '%s' e stato sconfitto!"
+msgstr "Il Giocatore '%s' è stato sconfitto!"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:59
 msgid "Player Name"
@@ -1476,11 +1476,11 @@ msgstr "Caporale"
 
 #: /storage/RTTR/svn/trunk/src/iwBuildingProductivities.cpp:82
 msgid "Productivity"
-msgstr "Produttivita"
+msgstr "Produttività"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:96
 msgid "Program version is too old to play that replay!"
-msgstr "La versione del programma a troppo vecchia per giocare questo Replay"
+msgstr "La versione del programma è troppo vecchia per giocare questo Replay"
 
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:67
 msgid "Programming"
@@ -1733,7 +1733,7 @@ msgstr "Specifica il nome della playlist"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:131
 msgid "Speed:"
-msgstr "Velocita:"
+msgstr "Velocità:"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:66
 msgid "Start"
@@ -1847,7 +1847,7 @@ msgstr "Il %s fra il giocatore '%s' e te e stato concluso."
 #: /storage/RTTR/svn/trunk/src/GameClient.cpp:836
 msgid "The Game is not in sync. Checksums of some players don't match."
 msgstr ""
-"La partita non e sincronizzata. Il checksum di alcuni giocatori non "
+"La partita non è sincronizzata. Il checksum di alcuni giocatori non "
 "corrisponde."
 
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:59
@@ -1992,20 +1992,20 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwTextfile.cpp:72
 msgid "The readme file was not found!"
-msgstr "Il file Leggimi non e stato trovato!"
+msgstr "Il file Leggimi non è stato trovato!"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:191
 msgid "The specified file couldn't be loaded!"
-msgstr "Non e stato possibile caricare il file specificato"
+msgstr "Non è stato possibile caricare il file specificato"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:305
 msgid "The specified file couldn't be opened!"
-msgstr "Non e stato possibile caricare il file specificato"
+msgstr "Non è stato possibile aprire  il file specificato"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:171
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:320
 msgid "The specified file couldn't be saved!"
-msgstr "Non e stato possibile salvare il file specificato"
+msgstr "Non è stato possibile salvare il file specificato"
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:394
 msgid ""
@@ -2032,11 +2032,11 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:211
 msgid "This Server is full!"
-msgstr "Il server e pieno!"
+msgstr "Il server è pieno!"
 
 #: /storage/RTTR/svn/trunk/src/nofBuildingWorker.cpp:375
 msgid "This mine is exhausted"
-msgstr "Questa miniera e esaurita"
+msgstr "Questa miniera è esaurita"
 
 #: /storage/RTTR/svn/trunk/src/iwSave.cpp:68
 msgid "Time"
@@ -2080,7 +2080,7 @@ msgstr "Trattato di alleanza"
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:135
 msgid "Tribal chiefs assembled around the table..."
-msgstr "I capi tribu si sono riuniti attorno al tavolo..."
+msgstr "I capi tribù si sono riuniti attorno al tavolo..."
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:99
 msgid "Type"
@@ -2149,12 +2149,12 @@ msgstr "In attesa di risposta..."
 msgid ""
 "Warning: The played replay is not in sync with the original match. (GF: %u)"
 msgstr ""
-"Attenzione: Il Replay giocato non e sincronizzato con la prtita originale. "
+"Attenzione: Il Replay giocato non è sincronizzato con la partita originale. "
 "(GF: %u);"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:399
 msgid "Wasteland"
-msgstr "Terra "
+msgstr "Terra"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:232
 msgid "Watchtower"
@@ -2220,7 +2220,7 @@ msgstr "Taglialegna"
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:161
 msgid "World was put together and glued..."
-msgstr "Il mondo e stato assemblato e incollato..."
+msgstr "Il mondo è stato assemblato e incollato..."
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:212
 msgid "Wrong Password!"
@@ -2259,7 +2259,7 @@ msgstr "Devi riavviare il gioco per cambiare il diver audio o video!"
 #, c-format
 msgid "current GF: %u - still fast forwarding: %d GFs left (%d %%)"
 msgstr ""
-"l'attuale GF: %u - sta ancor ainoltrando velocemente: %d GFs rimasti (%d %%)"
+"l'attuale GF: %u - sta ancora inoltrando velocemente: %d GFs rimasti (%d %%)"
 
 #: /storage/RTTR/svn/trunk/src/iwBaseWarehouse.cpp:62
 msgid "do nothing"

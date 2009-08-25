@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 5365 2009-08-02 17:46:30Z jh $
+// $Id: GameClientPlayer.cpp 5447 2009-08-25 17:54:20Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -683,7 +683,7 @@ Ware * GameClientPlayer::OrderWare(const GoodType ware,noBaseBuilding * goal)
 {
 	/// Gibt es ein Lagerhaus mit dieser Ware?
 	FW::Param_Ware p = { ware, 1 };
-	nobBaseWarehouse * wh = FindWarehouse(goal,FW::Condition_Ware,0,false,&p,true);
+	nobBaseWarehouse * wh = FindWarehouse(goal,FW::Condition_Ware,0,true,&p,true);
 
 	if(wh)
 		return wh->OrderWare(ware,goal);

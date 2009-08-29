@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 5459 2009-08-29 21:27:03Z jh $
+// $Id: nobMilitary.cpp 5460 2009-08-29 21:35:24Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -300,7 +300,7 @@ void nobMilitary::LookForEnemyBuildings(const nobBaseMilitary * const exception)
 			}
 				// in mittlerem Umkreis, also theoretisch angreifbar?
 			else if(distance < BASE_ATTACKING_DISTANCE 
-				+ TROOPS_COUNT[nation][size - 1] * EXTENDED_ATTACKING_DISTANCE)
+				+ (TROOPS_COUNT[nation][size] - 1) * EXTENDED_ATTACKING_DISTANCE)
 			{
 				// Grenznähe entsprechend setzen
 				if(!frontier_distance)
@@ -314,7 +314,7 @@ void nobMilitary::LookForEnemyBuildings(const nobBaseMilitary * const exception)
 			else if ((*it)->GetGOT() == GOT_NOB_MILITARY)
 			{
 				nobMilitary *mil = dynamic_cast<nobMilitary*>(*it);
-				if(distance < BASE_ATTACKING_DISTANCE + TROOPS_COUNT[mil->nation][mil->size - 1] * EXTENDED_ATTACKING_DISTANCE)
+				if(distance < BASE_ATTACKING_DISTANCE + (TROOPS_COUNT[mil->nation][mil->size] - 1) * EXTENDED_ATTACKING_DISTANCE)
 				{
 					// Grenznähe entsprechend setzen
 					if(!frontier_distance)

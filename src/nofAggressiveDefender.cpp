@@ -149,7 +149,11 @@ void nofAggressiveDefender::HomeDestroyedAtBegin()
 	state = STATE_FIGUREWORK;
 
 	// Angreifer Bescheid sagen, dass wir nicht mehr kommen
-	attacker->AggressiveDefenderLost();
+	if(attacker)
+	{
+		attacker->AggressiveDefenderLost();
+		attacker = 0;
+	}
 
 	// Rumirren
 	StartWandering();

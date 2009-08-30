@@ -1,4 +1,4 @@
-// $Id: glArchivItem_Font.h 5158 2009-07-01 20:13:00Z FloSoft $
+// $Id: glArchivItem_Font.h 5464 2009-08-30 16:05:54Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -44,16 +44,12 @@ public:
 	class WrapInfo 
 	{ 
 	public:
-		/// Konstruktor von @p WrapInfo.
-		WrapInfo();
 		/// Erzeugt ein Arrays aus eigenständigen Strings aus den Unterbrechungsinfos.
 		void CreateSingleStrings(const std::string& origin_text, std::string *dest_strings);
 
 	public:
-		/// Array von Positionen (max. 32), wo der Text umbrochen werden soll (jeweils der Anfang vom String)
-		unsigned int positions[32];
-		/// Anzahl der Positionen
-		unsigned int count;
+		/// Array von Positionen, wo der Text umbrochen werden soll (jeweils der Anfang vom String)
+		std::vector<unsigned int> positions;
 	};
 
 	/// Gibt Infos, über die Unterbrechungspunkte in einem Text, versucht Wörter nicht zu trennen, tut dies aber, falls

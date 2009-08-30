@@ -1,4 +1,4 @@
-// $Id: iwPostWindow.cpp 5238 2009-07-09 20:50:28Z FloSoft $
+// $Id: iwPostWindow.cpp 5464 2009-08-30 16:05:54Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -320,11 +320,11 @@ void iwPostWindow::SetMessageText(const std::string& message)
 	glArchivItem_Font::WrapInfo wi;
 
 	LOADER.GetFontN("resource", 0)->GetWrapInfo(message,190,190,wi);
-	std::string *lines = new std::string[wi.count];
+	std::string *lines = new std::string[wi.positions.size()];
 	wi.CreateSingleStrings(message,lines);
 	for(unsigned i = 0; i < 3; ++i)
 	{
-		if (i < wi.count)
+		if (i < wi.positions.size())
 			text->SetLine(i, lines[i], COLOR_WINDOWBROWN);
 		else
 			text->SetLine(i, "", COLOR_WINDOWBROWN);

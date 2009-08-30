@@ -1,4 +1,4 @@
-// $Id: Message.cpp 5003 2009-06-05 15:45:19Z FloSoft $
+// $Id: Message.cpp 5464 2009-08-30 16:05:54Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -195,14 +195,17 @@ Message *Message::recv(Socket *sock, int &error, bool wait, Message *(*createfun
 	
 	read = sock->BytesWaiting();
 
+	static unsigned int blocktimeout = 0;
 	if(read < (signed)((*length) + 6) )
 	{
+		++blocktimeout;
 		LOG.write("recv: block-waiting: not enough input (%d/%d) for message (0x%04X), waiting for next try\n", read, (*length)+6, *id);
-		if(read != -1)
+		if(blocktimeout < 120 && read != -1)
 			error = 4;
 		
 		return NULL;
 	}
+	blocktimeout = 0;
 
 	// Block nochmals abrufen (um ihn aus dem Cache zu entfernen)
 	read = sock->Recv(block, 6);

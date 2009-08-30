@@ -1,4 +1,4 @@
-// $Id: glArchivItem_Font.cpp 5247 2009-07-11 19:13:17Z FloSoft $
+// $Id: glArchivItem_Font.cpp 5464 2009-08-30 16:05:54Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -273,37 +273,31 @@ unsigned short glArchivItem_Font::getWidth(const std::string& text, unsigned len
 
 	return wm;
 }
-
-glArchivItem_Font::WrapInfo::WrapInfo() : count(0)
-{
-	memset(positions, 0, sizeof(unsigned int) * 32);
-}
-
 void glArchivItem_Font::WrapInfo::CreateSingleStrings(const std::string& origin_text,std::string * dest_strings)
 {
 	// Kopie des ursprünglichen Strings erstellen
 	std::string copy(origin_text);
 
-	for(unsigned i = 0;i<count;++i)
+	for(unsigned i = 0; i < positions.size(); ++i)
 	{
 		// Gibts noch weitere Teile danach?
 		char temp = 0; 
-		if(i+1 < count)
+		if(i + 1 < positions.size())
 		{
 			// dann muss statt des Leerzeichens o.Ä. ein Nullzeichen gesetzt werden, damit nur der Teilstring aufgenommen
 			// wird und nicht noch alles was danach kommt
 
 			// das Zeichen merken, was da vorher war
-			temp = origin_text[positions[i+1]];
+			temp = origin_text[positions.at(i+1)];
 			// Zeichen 0 setzen
-			copy[positions[i+1]] = 0;
+			copy[positions.at(i+1)] = 0;
 		}
 
-		dest_strings[i] = &copy[positions[i]];
+		dest_strings[i] = &copy[positions.at(i)];
 
 		// wieder ggf. zurücksetzen, siehe oben
-		if(i+1 < count)
-			copy[positions[i+1]] = temp;
+		if(i + 1 < positions.size())
+			copy[positions.at(i+1)] = temp;
 	}
 }
 
@@ -333,23 +327,24 @@ void glArchivItem_Font::GetWrapInfo(const std::string& text,
 	unsigned word_start = 0;
 
 	// Logischerweise fangen wir in der ersten Zeile an
-	wi.count = 1;
-	wi.positions[0] = 0;
+	//wi.positions.size() = 1;
+	wi.positions.push_back(0);
 
 	// Länge des Strings
 	unsigned length = unsigned(text.length());
 
-	for(unsigned i = 0;i<=length;++i)
+	for(unsigned i = 0; i <= length; ++i)
 	{
 		// Leerzeichen, Umbruch oder ende?
 		if(text[i] == '\n' || text[i] == ' ' || i == length)
 		{
 			// Passt das letzte Wort mit auf die Zeile? (bzw bei newline immer neue zeile anfangen)
-			if(text[i] != '\n' && word_width + line_width <= ((wi.count==1) ? primary_width : secondary_width))
+			if(text[i] != '\n' && word_width + line_width <= ( (wi.positions.size() == 1) ? primary_width : secondary_width))
 			{
 				// Länge des Leerzeichens mit draufaddieren
 				line_width += word_width;
 				line_width += _charwidths[(unsigned int)' '];
+
 				// neues Wort fängt dann nach dem Leerzeichen an (falls wir nicht schon am Ende vom Text sind)
 				if(i < length-1)
 				{
@@ -365,7 +360,7 @@ void glArchivItem_Font::GetWrapInfo(const std::string& text,
 				if(word_width <= secondary_width)
 				{
 					// neue Zeile anfangen mit diesem Wort
-					wi.positions[wi.count++] = word_start;
+					wi.positions.push_back(word_start);
 					// In der Zeile ist schon das Wort und das jetzige Leerzeichen mit drin
 					line_width = word_width + _charwidths[(unsigned int)' '];
 					// Neues Wort beginnen (falls wir nicht schon am Ende vom Text sind)
@@ -378,19 +373,19 @@ void glArchivItem_Font::GetWrapInfo(const std::string& text,
 				else
 				{
 					// ansonsten muss das Wort zwangsläufig auf mehrere Zeilen verteilt werden
-					for(size_t z = 0;text[word_start+z]!=' '&&text[word_start+z];++z)
+					for(size_t z = 0; text[word_start+z] != ' ' && text[word_start+z]; ++z)
 					{
 						unsigned short letter_width = _charwidths[ANSI_TO_OEM[(unsigned char)text[word_start+z]]];
 
 						// passt der neue Buchstabe noch mit drauf?
-						if(line_width + letter_width <= ((wi.count==1) ? primary_width : secondary_width))
+						if(line_width + letter_width <= ( (wi.positions.size() == 1) ? primary_width : secondary_width))
 							line_width += letter_width;
 						else
 						{
 							// wenn nicht, muss hier ein Umbruch erfolgen
 
 							// neue Zeile anfangen mit diesem Buchstaben
-							wi.positions[wi.count++] = word_start+z;
+							wi.positions.push_back(word_start+z);
 							line_width = letter_width;
 						}
 					}

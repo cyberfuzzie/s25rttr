@@ -1,4 +1,4 @@
-// $Id: ctrlChat.cpp 5340 2009-07-28 19:13:03Z jh $
+// $Id: ctrlChat.cpp 5464 2009-08-30 16:05:54Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -174,21 +174,21 @@ void ctrlChat::AddMessage(const std::string& time_string,const std::string& play
 	font->GetWrapInfo(msg, width - prefix_width - 2 - SCROLLBAR_WIDTH, width - SECONDARY_PUGGING - 2 - SCROLLBAR_WIDTH, wi);
 
 	//// Reicht der Speicher noch aus?
-	//if(cl_count + wi.count > allocated_cl_count)
+	//if(cl_count + wi.positions.size() > allocated_cl_count)
 	//	// wenn nicht, erweitern
 	//	ExtendMemory(allocated_cl_count * 2);
 
 
 	// Message-Strings erzeugen aus den WrapInfo
-	std::string * strings = new std::string[wi.count];
+	std::string * strings = new std::string[wi.positions.size()];
 
 	wi.CreateSingleStrings(msg, strings);
 
 	unsigned old_size = unsigned(chat_lines.size());
-	chat_lines.resize(old_size+wi.count);
+	chat_lines.resize(old_size+wi.positions.size());
 
 	// Zeilen hinzufügen
-	for(unsigned int i = 0; i < wi.count; ++i)
+	for(unsigned int i = 0; i < wi.positions.size(); ++i)
 	{
 		// Nur bei den ersten Zeilen müssen ja Zeit und Spielername mit angegeben werden
 		if(!(chat_lines[old_size+i].secondary = (i ? true : false)))
@@ -199,7 +199,7 @@ void ctrlChat::AddMessage(const std::string& time_string,const std::string& play
 		}
 		//// Gibts noch weitere Teile danach?
 		//char temp = 0; 
-		//if(i+1 < wi.count)
+		//if(i+1 < wi.positions.size())
 		//{
 		//	// dann muss statt des Leerzeichens o.Ä. ein Nullzeichen gesetzt werden, damit nur der Teilstring aufgenommen
 		//	// wird und nicht noch alles was danach kommt
@@ -213,7 +213,7 @@ void ctrlChat::AddMessage(const std::string& time_string,const std::string& play
 		//chat_lines[cl_count+i].msg = wi.positions[i];
 
 		//// wieder ggf. zurücksetzen, siehe oben
-		//if(i+1 < wi.count)
+		//if(i+1 < wi.positions.size())
 		//	*wi.positions[i+1] = temp;
 
 		chat_lines[old_size+i].msg = strings[i];
@@ -227,8 +227,8 @@ void ctrlChat::AddMessage(const std::string& time_string,const std::string& play
 	// Scrollbar Bescheid sagen
 	scrollbar->SetRange(unsigned(chat_lines.size()));
 	// Waren wir am Ende? Dann mit runterscrollen= 
-	if(scrollbar->GetPos() == (unsigned(chat_lines.size()) - wi.count) - page_size)
-		scrollbar->SetPos(scrollbar->GetPos() + wi.count);
+	if(scrollbar->GetPos() == (unsigned(chat_lines.size()) - wi.positions.size()) - page_size)
+		scrollbar->SetPos(scrollbar->GetPos() + wi.positions.size());
 }
 
 ///////////////////////////////////////////////////////////////////////////////

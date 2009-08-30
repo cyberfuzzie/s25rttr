@@ -1,4 +1,4 @@
-// $Id: iwHelp.cpp 5238 2009-07-09 20:50:28Z FloSoft $
+// $Id: iwHelp.cpp 5464 2009-08-30 16:05:54Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -59,11 +59,11 @@ iwHelp::iwHelp(const GUI_ID gui_id, const std::string& title, const std::string&
 
 	// Mehr Linien benötigt als die maximalen? Dann kommt ja noch die Scrollbar dran und der ganze Spaß muss
 	// umgebrochen werden, also nochmal mit geringerer Breite berechnen
-	if(wi.count > MAX_LINES)
+	if(wi.positions.size() > MAX_LINES)
 		NormalFont->GetWrapInfo(content,HELP_WINDOW_WIDTH-28-ctrlMultiline::SCROLLBAR_WIDTH,
 		HELP_WINDOW_WIDTH-24-ctrlMultiline::SCROLLBAR_WIDTH,wi);
 
-	unsigned show_lines = min(wi.count,MAX_LINES);
+	unsigned show_lines = min(wi.positions.size(),MAX_LINES);
 
 	unsigned short text_height=show_lines*NormalFont->getHeight();
 
@@ -76,9 +76,9 @@ iwHelp::iwHelp(const GUI_ID gui_id, const std::string& title, const std::string&
 	ctrlMultiline *text = AddMultiline(2, 10, 20, HELP_WINDOW_WIDTH-20, text_height+4, TC_GREEN1, NormalFont, glArchivItem_Font::DF_LEFT | glArchivItem_Font::DF_TOP);
 	text->EnableBox(false);
 
-	std::string * lines = new std::string[wi.count];
+	std::string * lines = new std::string[wi.positions.size()];
 	wi.CreateSingleStrings(content,lines);
-	for(unsigned i = 0;i<wi.count;++i)
+	for(unsigned i = 0;i<wi.positions.size();++i)
 		text->AddString(lines[i],COLOR_YELLOW,false);
 
 

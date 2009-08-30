@@ -1,4 +1,4 @@
-// $Id: Messenger.cpp 4834 2009-05-08 19:45:33Z FloSoft $
+// $Id: Messenger.cpp 5464 2009-08-30 16:05:54Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -178,11 +178,11 @@ void Messenger::AddMessage(const std::string& author, const unsigned color_autho
 		VideoDriverWrapper::inst().GetScreenWidth()-60,wi);
 
 	// Message-Strings erzeugen aus den WrapInfo
-	std::string * strings = new std::string[wi.count];
+	std::string * strings = new std::string[wi.positions.size()];
 
-	wi.CreateSingleStrings(msg.c_str(),strings);
+	wi.CreateSingleStrings(msg.c_str(), strings);
 	
-	for(unsigned i = 0;i<wi.count;++i)
+	for(unsigned i = 0; i < wi.positions.size(); ++i)
 	{
 		Messenger::Msg tmp;
 

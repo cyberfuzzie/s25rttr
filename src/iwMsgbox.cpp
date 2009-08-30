@@ -1,4 +1,4 @@
-// $Id: iwMsgbox.cpp 5238 2009-07-09 20:50:28Z FloSoft $
+// $Id: iwMsgbox.cpp 5464 2009-08-30 16:05:54Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -53,9 +53,9 @@ iwMsgbox::iwMsgbox(const std::string& title, const std::string& text, Window *pa
 	glArchivItem_Font::WrapInfo wi;
 	NormalFont->GetWrapInfo(text,330,330,wi);
 	// Einzelne Zeilen-Strings erzeugen
-	strings = new std::string[wi.count];
+	strings = new std::string[wi.positions.size()];
 	wi.CreateSingleStrings(text,strings);
-	lines_count = wi.count;
+	lines_count = wi.positions.size();
 
 	// Buttons erstellen
 	switch(button)

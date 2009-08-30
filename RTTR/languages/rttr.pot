@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Siedler II.5 RttR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-02 15:46+0100\n"
-"PO-Revision-Date: 2009-08-02 15:46+0100\n"
+"POT-Creation-Date: 2009-08-30 13:27+0100\n"
+"PO-Revision-Date: 2009-08-30 13:28+0100\n"
 "Last-Translator: \n"
 "Language-Team: Siedler II.5 RttR <sf-team@siedler25.org>\n"
 "MIME-Version: 1.0\n"
@@ -562,6 +562,18 @@ msgstr ""
 msgid "Lost connection to server!"
 msgstr ""
 
+#: /storage/RTTR/svn/trunk/src/AIPlayerJH.cpp:106
+msgid "Hi, I'm an artifical player and I'm not very good yet!"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/AIPlayerJH.cpp:110
+msgid "And I may crash your game sometimes..."
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/AIPlayerJH.cpp:295
+msgid "Oh, no, you destroyed my headquarter! I surrender!"
+msgstr ""
+
 #: /storage/RTTR/svn/trunk/src/iwHQ.cpp:46
 msgid "Headquarters"
 msgstr ""
@@ -1089,28 +1101,34 @@ msgstr ""
 msgid "Demolish?"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/nofAttacker.cpp:453
+#: /storage/RTTR/svn/trunk/src/nofAttacker.cpp:471
 msgid "We are under attack!"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:570
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:585
+#, c-format
+msgid "Dummy %u"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:587
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:599
+msgid " (AI)"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:597
 #, c-format
 msgid "Computer %u"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:572
-msgid " (AI)"
-msgstr ""
-
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:836
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:871
 msgid "The Game is not in sync. Checksums of some players don't match."
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:1191
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:1226
 msgid "Auto-Save"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:1483
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:1518
 #, c-format
 msgid "current GF: %u - still fast forwarding: %d GFs left (%d %%)"
 msgstr ""

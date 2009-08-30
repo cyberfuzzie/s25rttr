@@ -3,17 +3,18 @@ msgstr ""
 "Project-Id-Version: Siedler II.5 RttR\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-08-02 15:46+0100\n"
-"PO-Revision-Date: 2009-08-27 10:17+0100\n"
-"Last-Translator: Oltre <lucaongaro@yahoo.com>\n"
+"PO-Revision-Date: 2009-08-27 22:46+0000\n"
+"Last-Translator: Oltre <Unknown>\n"
 "Language-Team: Siedler II.5 RttR <sf-team@siedler25.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-08-24 09:48+0000\n"
+"X-Launchpad-Export-Date: 2009-08-30 11:20+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
-"X-Poedit-SourceCharset: iso-8859-15\n"
-"X-Poedit-Basepath: F:\\programmierung\\Projekte\\siedler15\\s25client\\trunk\n"
 "X-Poedit-SearchPath-0: /storage/RTTR/svn/trunk/src\n"
+"X-Poedit-SourceCharset: iso-8859-15\n"
+"X-Poedit-Basepath: F:\\programmierung\\Projekte\\siedler15\\s25client\\"
+"trunk\n"
 
 #: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:48
 msgid "Post office"
@@ -543,8 +544,12 @@ msgid "-"
 msgstr "-"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:449
-msgid "Game can only be started as soon as everybody has a unique color,everyone is ready and all free slots are closed."
-msgstr "Il gioco può iniziare appena ognuno ha il suo colore, tutti sono pronti e tutti gli slot liberi sono chiusi."
+msgid ""
+"Game can only be started as soon as everybody has a unique color,everyone is "
+"ready and all free slots are closed."
+msgstr ""
+"Il gioco può iniziare appena ognuno ha il suo colore, tutti sono pronti e "
+"tutti gli slot liberi sono chiusi."
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:552
 msgid "Japaneses"
@@ -677,8 +682,12 @@ msgid "Not available"
 msgstr "Non disponibile"
 
 #: /storage/RTTR/svn/trunk/src/dskSinglePlayer.cpp:97
-msgid "Singleplayer mode and AI are not yet implemented. Please use the Multiplayer mode and 'Direct IP' to create a Singleplayer game."
-msgstr "Le modalita Giocatore Singolo e AI non sono ancora implementate. Si prega di usare il Multiplayer e 'IP diretto per creare un gioco a Giocatore Singolo"
+msgid ""
+"Singleplayer mode and AI are not yet implemented. Please use the Multiplayer "
+"mode and 'Direct IP' to create a Singleplayer game."
+msgstr ""
+"Le modalita Giocatore Singolo e AI non sono ancora implementate. Si prega di "
+"usare il Multiplayer e 'IP diretto per creare un gioco a Giocatore Singolo"
 
 #: /storage/RTTR/svn/trunk/src/iwBaseWarehouse.cpp:62
 msgid "do nothing"
@@ -858,8 +867,12 @@ msgstr "Durata: %u GF (%s)"
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:127
 #, c-format
-msgid "The player '%s' want to cancel the '%s' between you both primaturely. Do you agree?"
-msgstr "Il giocatore '%s' vuole annullare prematuramente il '%s' fra di voi. Sei d'accordo?"
+msgid ""
+"The player '%s' want to cancel the '%s' between you both primaturely. Do you "
+"agree?"
+msgstr ""
+"Il giocatore '%s' vuole annullare prematuramente il '%s' fra di voi. Sei "
+"d'accordo?"
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:150
 #, c-format
@@ -1073,13 +1086,20 @@ msgstr "Alza la bandiera"
 
 #: /storage/RTTR/svn/trunk/src/GameClientGF_Replay.cpp:75
 #, c-format
-msgid "Warning: The played replay is not in sync with the original match. (GF: %u)"
-msgstr "Attenzione: Il Replay giocato non è sincronizzato con la partita originale. (GF: %u);"
+msgid ""
+"Warning: The played replay is not in sync with the original match. (GF: %u)"
+msgstr ""
+"Attenzione: Il Replay giocato non è sincronizzato con la partita originale. "
+"(GF: %u);"
 
 #: /storage/RTTR/svn/trunk/src/GameClientGF_Replay.cpp:117
 #, c-format
-msgid "Notice: The played replay has ended. (GF: %u, %dh %dmin %ds, TF: %u, AVG_FPS: %u)"
-msgstr "Avviso: il Replay giocato è finito. (GF: %u, %dh %dmin %ds, TF: %u, AVG_FPS: %u)"
+msgid ""
+"Notice: The played replay has ended. (GF: %u, %dh %dmin %ds, TF: %u, "
+"AVG_FPS: %u)"
+msgstr ""
+"Avviso: il Replay giocato è finito. (GF: %u, %dh %dmin %ds, TF: %u, AVG_FPS: "
+"%u)"
 
 #: /storage/RTTR/svn/trunk/src/nofBuildingWorker.cpp:375
 msgid "This mine is exhausted"
@@ -1104,7 +1124,9 @@ msgstr " (AI)"
 
 #: /storage/RTTR/svn/trunk/src/GameClient.cpp:836
 msgid "The Game is not in sync. Checksums of some players don't match."
-msgstr "La partita non è sincronizzata. Il checksum di alcuni giocatori non corrisponde."
+msgstr ""
+"La partita non è sincronizzata. Il checksum di alcuni giocatori non "
+"corrisponde."
 
 #: /storage/RTTR/svn/trunk/src/GameClient.cpp:1191
 msgid "Auto-Save"
@@ -1113,7 +1135,8 @@ msgstr "Salvataggio automatico"
 #: /storage/RTTR/svn/trunk/src/GameClient.cpp:1483
 #, c-format
 msgid "current GF: %u - still fast forwarding: %d GFs left (%d %%)"
-msgstr "l'attuale GF: %u - sta ancora inoltrando velocemente: %d GFs rimasti (%d %%)"
+msgstr ""
+"l'attuale GF: %u - sta ancora inoltrando velocemente: %d GFs rimasti (%d %%)"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:101
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:115
@@ -1284,7 +1307,8 @@ msgstr "In attesa delle informazioni del Giocatore..."
 
 #: /storage/RTTR/svn/trunk/src/SerializedGameData.cpp:231
 msgid "An error occured while saving which was suppressed!"
-msgstr "Si è verificato un errore durante il salvataggio (che è stato annullato)!"
+msgstr ""
+"Si è verificato un errore durante il salvataggio (che è stato annullato)!"
 
 #: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:55
 msgid "Main selection"
@@ -1347,7 +1371,8 @@ msgid "Demolition ist not allowed because the building is under attack!"
 msgstr "La demolizione non è permessa perche l'edificio è sotto attacco!"
 
 #: /storage/RTTR/svn/trunk/src/iwMilitaryBuilding.cpp:170
-msgid "Demolition ist not allowed because the building is located in border area!"
+msgid ""
+"Demolition ist not allowed because the building is located in border area!"
 msgstr "La demolizione non è permessa perche l'edificio è vicino al confine!"
 
 #: /storage/RTTR/svn/trunk/src/iwMilitaryBuilding.cpp:173
@@ -1360,13 +1385,20 @@ msgstr "Aiuto per le costruzioni"
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:194
 #, c-format
-msgid "(Replay-Mode) Current GF: %u (End at: %u) / GF length: %u ms / NWF length: %u gf (%u ms)"
-msgstr "(Modalita Replay) Attuale GF: %u (Fine a: %u) / GF lunghezza: %u ms / NWF lunghezza: %u gf (%u ms)"
+msgid ""
+"(Replay-Mode) Current GF: %u (End at: %u) / GF length: %u ms / NWF length: "
+"%u gf (%u ms)"
+msgstr ""
+"(Modalita Replay) Attuale GF: %u (Fine a: %u) / GF lunghezza: %u ms / NWF "
+"lunghezza: %u gf (%u ms)"
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:196
 #, c-format
-msgid "Current GF: %u / GF length: %u ms / NWF length: %u gf (%u ms) /  Ping: %u ms"
-msgstr "Attuale GF: %u / GF lunghezza: %u ms / NWF lunghezza: %u gf (%u ms) /  Ping: %u ms"
+msgid ""
+"Current GF: %u / GF length: %u ms / NWF length: %u gf (%u ms) /  Ping: %u ms"
+msgstr ""
+"Attuale GF: %u / GF lunghezza: %u ms / NWF lunghezza: %u gf (%u ms) /  Ping: "
+"%u ms"
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:815
 #, c-format
@@ -1852,128 +1884,292 @@ msgid "New storehouse finished"
 msgstr "Pronto un nuovo magazzino"
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:252
-msgid "The headquarters represents the center of your realm. The large amount of storage space available means a great many things can be safely stored here. You can release certain merchandise from the headquarters, as and when required or stop its storage. To do this, first choose the corresponding icon followed by the desired merchandise or job symbol. On the third page, you can adjust the number of reserve soldiers who are responsible for guarding the headquarters. There are two values given: the first value indicates the current number of men, the second value indicates the desired number. "
-msgstr "Il Quartier Generale è il centro del tuo territorio. Il grande magazzino significa che un sacco di cose possono essere tenute al sicuro qui. Puoi portar fuori alcune mercanzie dal Quartier Generale, come e quando necessario, oppure fermare l'immagazzinamento. Per fare questo, scegli prima l'icona corrispondente, seguita dal simbolo della mercanzia o del lavoratore richiesto. Nella terza pagina, puoi aggiustare il numero di soldati di riserva da lasciare di  guardia al Quartier Generale. Ci sono due valori: il primo indica il numero di uomini presenti attualmente, il secondo il numero richiesto."
+msgid ""
+"The headquarters represents the center of your realm. The large amount of "
+"storage space available means a great many things can be safely stored here. "
+"You can release certain merchandise from the headquarters, as and when "
+"required or stop its storage. To do this, first choose the corresponding "
+"icon followed by the desired merchandise or job symbol. On the third page, "
+"you can adjust the number of reserve soldiers who are responsible for "
+"guarding the headquarters. There are two values given: the first value "
+"indicates the current number of men, the second value indicates the desired "
+"number. "
+msgstr ""
+"Il Quartier Generale è il centro del tuo territorio. Il grande magazzino "
+"significa che un sacco di cose possono essere tenute al sicuro qui. Puoi "
+"portar fuori alcune mercanzie dal Quartier Generale, come e quando "
+"necessario, oppure fermare l'immagazzinamento. Per fare questo, scegli prima "
+"l'icona corrispondente, seguita dal simbolo della mercanzia o del lavoratore "
+"richiesto. Nella terza pagina, puoi aggiustare il numero di soldati di "
+"riserva da lasciare di  guardia al Quartier Generale. Ci sono due valori: il "
+"primo indica il numero di uomini presenti attualmente, il secondo il numero "
+"richiesto. "
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:275
-msgid "The barracks is a very small hut which can be used by your soldiers as quarters. Using the gold coin button you can stop the delivery of gold coins to the soldiers stationed here. However, without gold coins the soldiers here can not train and improve their skills."
-msgstr "La casermetta è un piccolo ricovero che può essere usato per acquartierare i tuoi soldati. Usando il pulsante delle monete d'oro puoi fermare la consegna delle monete ai soldati che stazionano qui. Comunque, senza monete d'oro i soldati non possono addestrarsi e migliorare le loro capacità."
+msgid ""
+"The barracks is a very small hut which can be used by your soldiers as "
+"quarters. Using the gold coin button you can stop the delivery of gold coins "
+"to the soldiers stationed here. However, without gold coins the soldiers "
+"here can not train and improve their skills."
+msgstr ""
+"La casermetta è un piccolo ricovero che può essere usato per acquartierare i "
+"tuoi soldati. Usando il pulsante delle monete d'oro puoi fermare la consegna "
+"delle monete ai soldati che stazionano qui. Comunque, senza monete d'oro i "
+"soldati non possono addestrarsi e migliorare le loro capacità."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:287
-msgid "The guardhouse is a comfortable place for the military which is also protected by solid stone walls. Using the gold coin button you can stop the delivery of gold coins to the soldiers stationed here. However, without gold coins the soldiers here can not train and improve their skills."
-msgstr "Il posto di guardia è una comoda costruzione per i militari, che sono anche protetti da solide mura di pietra. Usando il pulsante delle monete d'oro puoi fermare la consegna delle monete ai soldati che stazionano qui. Comunque, senza monete d'oro i soldati non possono addestrarsi e migliorare le loro capacità."
+msgid ""
+"The guardhouse is a comfortable place for the military which is also "
+"protected by solid stone walls. Using the gold coin button you can stop the "
+"delivery of gold coins to the soldiers stationed here. However, without gold "
+"coins the soldiers here can not train and improve their skills."
+msgstr ""
+"Il posto di guardia è una comoda costruzione per i militari, che sono anche "
+"protetti da solide mura di pietra. Usando il pulsante delle monete d'oro "
+"puoi fermare la consegna delle monete ai soldati che stazionano qui. "
+"Comunque, senza monete d'oro i soldati non possono addestrarsi e migliorare "
+"le loro capacità."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:303
-msgid "The watchtower with its large amount of space is best suited for stationing a large number of your troops. Using the gold coin button you can stop the delivery of gold coins to the soldiers stationed here. However, without gold coins the soldiers here can not train and improve their skills."
-msgstr "La torre di guardia, con il suo grande spazio, si adatta bene a ricevere un gran numero dei tuoi soldati. Usando il pulsante delle monete d'oro puoi fermare la consegna delle monete ai soldati che stazionano qui. Comunque, senza monete d'oro i soldati non possono addestrarsi e migliorare le loro capacità."
+msgid ""
+"The watchtower with its large amount of space is best suited for stationing "
+"a large number of your troops. Using the gold coin button you can stop the "
+"delivery of gold coins to the soldiers stationed here. However, without gold "
+"coins the soldiers here can not train and improve their skills."
+msgstr ""
+"La torre di guardia, con il suo grande spazio, si adatta bene a ricevere un "
+"gran numero dei tuoi soldati. Usando il pulsante delle monete d'oro puoi "
+"fermare la consegna delle monete ai soldati che stazionano qui. Comunque, "
+"senza monete d'oro i soldati non possono addestrarsi e migliorare le loro "
+"capacità."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:319
-msgid "The defensive capabilities and size of the fortress are unsurpassed. This stronghold ensures that other valuable buildings and commodities are protected. Using the gold coin button you can stop the delivery of gold coins to the soldiers stationed here. However, without gold coins the soldiers here can not train and improve their skills."
-msgstr "Le capacità difensive e le dimensioni della fortezza non hanno rivali. Questo caposaldo assicura protezione agli altri edifici di valore e alle materie prime. Usando il pulsante delle monete d'oro puoi fermare la consegna delle monete ai soldati che stazionano qui. Comunque, senza monete d'oro i soldati non possono addestrarsi e migliorare le loro capacità."
+msgid ""
+"The defensive capabilities and size of the fortress are unsurpassed. This "
+"stronghold ensures that other valuable buildings and commodities are "
+"protected. Using the gold coin button you can stop the delivery of gold "
+"coins to the soldiers stationed here. However, without gold coins the "
+"soldiers here can not train and improve their skills."
+msgstr ""
+"Le capacità difensive e le dimensioni della fortezza non hanno rivali. "
+"Questo caposaldo assicura protezione agli altri edifici di valore e alle "
+"materie prime. Usando il pulsante delle monete d'oro puoi fermare la "
+"consegna delle monete ai soldati che stazionano qui. Comunque, senza monete "
+"d'oro i soldati non possono addestrarsi e migliorare le loro capacità."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:334
-msgid "The quarrying of stone in a granite mine guarantees the supply of stone for buildings. However, eben a granite mine has to feed its workers."
-msgstr "L'estrazione di pietre dalla cava di granito assicura il rifornimento di materiale da costruzione. Comunque, anche i minatori di una cava di granito devono essere nutriti."
+msgid ""
+"The quarrying of stone in a granite mine guarantees the supply of stone for "
+"buildings. However, eben a granite mine has to feed its workers."
+msgstr ""
+"L'estrazione di pietre dalla cava di granito assicura il rifornimento di "
+"materiale da costruzione. Comunque, anche i minatori di una cava di granito "
+"devono essere nutriti."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:342
-msgid "The mining of coal supports the metalworks and smithy. This hard work requires an adequate supply of food."
-msgstr "La miniera di carbone alimenta i lavori della fonderia e dell'officina. Questo duro lavoro richiede un'alimentazione adeguata."
+msgid ""
+"The mining of coal supports the metalworks and smithy. This hard work "
+"requires an adequate supply of food."
+msgstr ""
+"La miniera di carbone alimenta i lavori della fonderia e dell'officina. "
+"Questo duro lavoro richiede un'alimentazione adeguata."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:349
-msgid "Deep within the mountains, miners dig for iron ore. They will obviously need a lot of food for the strenuous work."
-msgstr "Nella profondità delle montagne, i minatori scavano il ferro. Ovviamente per questo estenuante lavoro hanno bisogno di una gran quantità di cibo."
+msgid ""
+"Deep within the mountains, miners dig for iron ore. They will obviously need "
+"a lot of food for the strenuous work."
+msgstr ""
+"Nella profondità delle montagne, i minatori scavano il ferro. Ovviamente per "
+"questo estenuante lavoro hanno bisogno di una gran quantità di cibo."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:356
-msgid "A gold mine allows you to prospect for valuable gold deposits. For this, it is necessary to ensure that the miners are provided with plenty of food."
-msgstr "Una miniera d'oro ti permette di sfruttare preziosi giacimenti auriferi. Per questo, è necessario assicurare ai minatori abbondanza di alimenti."
+msgid ""
+"A gold mine allows you to prospect for valuable gold deposits. For this, it "
+"is necessary to ensure that the miners are provided with plenty of food."
+msgstr ""
+"Una miniera d'oro ti permette di sfruttare preziosi giacimenti auriferi. Per "
+"questo, è necessario assicurare ai minatori abbondanza di alimenti."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:365
-msgid "From the lookout tower you can see far into previously unexplored lands."
-msgstr "Dalla torre d'esplorazione puoi guardare lontano all'interno di  terre sconosciute."
+msgid ""
+"From the lookout tower you can see far into previously unexplored lands."
+msgstr ""
+"Dalla torre d'esplorazione puoi guardare lontano all'interno di  terre "
+"sconosciute."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:374
-msgid "Thanks to its immense strength, the catapults represents an effective weapon against enemy military buildings."
-msgstr "Grazie alla sua forza immensa, la catapulta rappresenta un'arma efficace contro gli edifici militari nemici."
+msgid ""
+"Thanks to its immense strength, the catapults represents an effective weapon "
+"against enemy military buildings."
+msgstr ""
+"Grazie alla sua forza immensa, la catapulta rappresenta un'arma efficace "
+"contro gli edifici militari nemici."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:381
-msgid "A woodcutter provides the sawmill with logs. A forester is able to replant the depleted forest."
-msgstr "Un taglialegna rifirnisce la segheria di tronchi. Un forestale può ripiantare la foresta tagliata."
+msgid ""
+"A woodcutter provides the sawmill with logs. A forester is able to replant "
+"the depleted forest."
+msgstr ""
+"Un taglialegna rifirnisce la segheria di tronchi. Un forestale può "
+"ripiantare la foresta tagliata."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:388
-msgid "The fish man is responsible for finding water rich in fish. His fish feed a great many miners."
-msgstr "Il pescatore è responsabile di cercare acque pescose. I suoi pesci sono un ottimo alimento per molti minatori."
+msgid ""
+"The fish man is responsible for finding water rich in fish. His fish feed a "
+"great many miners."
+msgstr ""
+"Il pescatore è responsabile di cercare acque pescose. I suoi pesci sono un "
+"ottimo alimento per molti minatori."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:394
-msgid "The stonemason works the stone near his quarry into bricks. These are needed mainly for building houses and as ammunition for catapults."
-msgstr "Il cavatore squadra le pietre vicino alla sua cava. Le pietre sono necessarie per le costruzioni e come proiettili per le catapulte."
+msgid ""
+"The stonemason works the stone near his quarry into bricks. These are needed "
+"mainly for building houses and as ammunition for catapults."
+msgstr ""
+"Il cavatore squadra le pietre vicino alla sua cava. Le pietre sono "
+"necessarie per le costruzioni e come proiettili per le catapulte."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:402
-msgid "Within his area, the forester ensures the survival of the forest. He plants all types of trees."
-msgstr "Dentro la sua zona, il forestale assicura la sopravvivenza della foresta. Egli pianta ogni tipo di alberi."
+msgid ""
+"Within his area, the forester ensures the survival of the forest. He plants "
+"all types of trees."
+msgstr ""
+"Dentro la sua zona, il forestale assicura la sopravvivenza della foresta. "
+"Egli pianta ogni tipo di alberi."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:409
-msgid "The butcher processes the livestock delivered into nutritious ham on which you miners are fed."
-msgstr "Il macellaio lavora la carne che gli viene consegnata e la trasforma in nutrienti prosciutti per i tuoi minatori."
+msgid ""
+"The butcher processes the livestock delivered into nutritious ham on which "
+"you miners are fed."
+msgstr ""
+"Il macellaio lavora la carne che gli viene consegnata e la trasforma in "
+"nutrienti prosciutti per i tuoi minatori."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:416
 msgid "Meat the hunter acquires is used to feed the miners."
 msgstr "La carne procurata dal cacciatore è usata per nutrire i minatori."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:421
-msgid "The brewer produces fine beer from grain and water. This drink is needed to fill the soldiers with courage."
-msgstr "Il birraio produce un'ottima birra usando grano e acqua. La bevanda è necessaria per infondere coraggio ai soldati."
+msgid ""
+"The brewer produces fine beer from grain and water. This drink is needed to "
+"fill the soldiers with courage."
+msgstr ""
+"Il birraio produce un'ottima birra usando grano e acqua. La bevanda è "
+"necessaria per infondere coraggio ai soldati."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:428
-msgid "The armory produces swords and strong shields. This equipment is vital for your soldiers."
-msgstr "L'armeria produce spade e robusti scudi. Questo equipaggiamento è vitale per i tuoi soldati."
+msgid ""
+"The armory produces swords and strong shields. This equipment is vital for "
+"your soldiers."
+msgstr ""
+"L'armeria produce spade e robusti scudi. Questo equipaggiamento è vitale per "
+"i tuoi soldati."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:434
-msgid "The countless tools which your workers need are made in the metalworks. This requires boards and iron."
-msgstr "Gli innumerevoli attrezzi di cui i tuoi lavoratori hanno bisogno vengono prodotti nell'officina. Questa richiede assi ed acciaio."
+msgid ""
+"The countless tools which your workers need are made in the metalworks. This "
+"requires boards and iron."
+msgstr ""
+"Gli innumerevoli attrezzi di cui i tuoi lavoratori hanno bisogno vengono "
+"prodotti nell'officina. Questa richiede assi ed acciaio."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:441
-msgid "Raw iron ore is smelted in the iron smelters with the help of coal. The processed iron is then used to making weapons (in the Armory) and tools (in the metalworks)."
-msgstr "Il ferro grezzo viene lavorato nella fonderia usando il carbone. L'acciaio ricavato viene usato per fabbricare armi (nell'armeria) e attrezzi (nell'officina)."
+msgid ""
+"Raw iron ore is smelted in the iron smelters with the help of coal. The "
+"processed iron is then used to making weapons (in the Armory) and tools (in "
+"the metalworks)."
+msgstr ""
+"Il ferro grezzo viene lavorato nella fonderia usando il carbone. L'acciaio "
+"ricavato viene usato per fabbricare armi (nell'armeria) e attrezzi "
+"(nell'officina)."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:453
-msgid "Grain and water are needed for rearing pigs. The meat thus obtained can then be processed by a butcher."
-msgstr "Grano e acqua sono necessari per l'allevamento dei maiali. La carne ottenuta può quindi essere lavorata dal macellaio."
+msgid ""
+"Grain and water are needed for rearing pigs. The meat thus obtained can then "
+"be processed by a butcher."
+msgstr ""
+"Grano e acqua sono necessari per l'allevamento dei maiali. La carne ottenuta "
+"può quindi essere lavorata dal macellaio."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:460
-msgid "The storehouse can help reduce long transportation journeys and is suited to the temporary storage of merchandise and inhabitants. You can release certain merchandise from the storehouse, as and when required. Alternatively, the storage function can be disabled. To do this, first choose the relevant icon followed by the desired merchandise or job symbol."
-msgstr "Il magazzino può aiutare a ridurre i lunghi viaggi per i trasporti, ad è adatto al ricovero temporaneo degli abitanti e delle mercanzie. Puoi far uscire alcune merci dal magazzino, come e quando richiesto. Alternativamente, la funzione di immagazzianmento può essere disabilitata. Per far ciò, scegli prima l'icona adatta, seguita dal simbolo della merce o del lavoratore richiesto."
+msgid ""
+"The storehouse can help reduce long transportation journeys and is suited to "
+"the temporary storage of merchandise and inhabitants. You can release "
+"certain merchandise from the storehouse, as and when required. "
+"Alternatively, the storage function can be disabled. To do this, first "
+"choose the relevant icon followed by the desired merchandise or job symbol."
+msgstr ""
+"Il magazzino può aiutare a ridurre i lunghi viaggi per i trasporti, ad è "
+"adatto al ricovero temporaneo degli abitanti e delle mercanzie. Puoi far "
+"uscire alcune merci dal magazzino, come e quando richiesto. "
+"Alternativamente, la funzione di immagazzianmento può essere disabilitata. "
+"Per far ciò, scegli prima l'icona adatta, seguita dal simbolo della merce o "
+"del lavoratore richiesto."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:479
-msgid "The grain is ground in the windmill. The flour from the windmill is later used at the bakery to bake bread."
-msgstr "Il grano viene macinato nel mulino. La farina del mulino viene quindi usata dal fornaio per fare il pane."
+msgid ""
+"The grain is ground in the windmill. The flour from the windmill is later "
+"used at the bakery to bake bread."
+msgstr ""
+"Il grano viene macinato nel mulino. La farina del mulino viene quindi usata "
+"dal fornaio per fare il pane."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:486
-msgid "The flour produced at the windmill can be combined with water in the bakery to make oven-fresh bread. It's your miners' favorite!"
-msgstr "La farina prodotta dal mulino viene impastata con l'acqua per sfornare pane fresco. E' il preferito dai tuoi minatori!"
+msgid ""
+"The flour produced at the windmill can be combined with water in the bakery "
+"to make oven-fresh bread. It's your miners' favorite!"
+msgstr ""
+"La farina prodotta dal mulino viene impastata con l'acqua per sfornare pane "
+"fresco. E' il preferito dai tuoi minatori!"
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:494
-msgid "The carpenter turns the woodcutter's logs into made-to-measure planks. These form the basic for building houses and ships."
-msgstr "Nella segheria i tronchi del taglialegna vengono trasformati in assi su misura. Queste sono fondamentali per costruire edifici e navi."
+msgid ""
+"The carpenter turns the woodcutter's logs into made-to-measure planks. These "
+"form the basic for building houses and ships."
+msgstr ""
+"Nella segheria i tronchi del taglialegna vengono trasformati in assi su "
+"misura. Queste sono fondamentali per costruire edifici e navi."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:502
-msgid "The mint is responsible for producing valuable gold coins. These precious objects are produced using coal and gold."
-msgstr "La zecca è responsabile del conio di monete d'oro. Questi preziosi oggetti sono prodotti utilizzando oro e carbone."
+msgid ""
+"The mint is responsible for producing valuable gold coins. These precious "
+"objects are produced using coal and gold."
+msgstr ""
+"La zecca è responsabile del conio di monete d'oro. Questi preziosi oggetti "
+"sono prodotti utilizzando oro e carbone."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:509
-msgid "A well supplies water to the bakery, brewery, donkey breeder and pig farm."
-msgstr "Un pozzo fornisce acqua al fornaio, alla birreria e agli allevamenti di asini e di maiali."
+msgid ""
+"A well supplies water to the bakery, brewery, donkey breeder and pig farm."
+msgstr ""
+"Un pozzo fornisce acqua al fornaio, alla birreria e agli allevamenti di "
+"asini e di maiali."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:515
-msgid "It is possible to build small rowing boats as well as huge cargo ships in a shipyard. The boards required for this are skillfully worked by shipwrights."
-msgstr "In un cantiere navale è possibile costruire sia piccole barche a remi che grandi navi da carico. Le assi richieste sono lavorate con competenza dai carpentieri navali."
+msgid ""
+"It is possible to build small rowing boats as well as huge cargo ships in a "
+"shipyard. The boards required for this are skillfully worked by shipwrights."
+msgstr ""
+"In un cantiere navale è possibile costruire sia piccole barche a remi che "
+"grandi navi da carico. Le assi richieste sono lavorate con competenza dai "
+"carpentieri navali."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:524
-msgid "The farmer plants and harvests grain in the surrounding fields. A windmill then processes the harvested grain into flour or can be used to feed the pigs."
-msgstr "Il contadino semina e raccoglie il grano nei campi circostanti. Il grano prodotto può essere macinato dal mulino, oppure usato per nutrire i maiali."
+msgid ""
+"The farmer plants and harvests grain in the surrounding fields. A windmill "
+"then processes the harvested grain into flour or can be used to feed the "
+"pigs."
+msgstr ""
+"Il contadino semina e raccoglie il grano nei campi circostanti. Il grano "
+"prodotto può essere macinato dal mulino, oppure usato per nutrire i maiali."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:532
-msgid "The pack donkeys bred here are used to transport your merchandise more efficiently. They are reared on water and grain."
-msgstr "Gli asini da soma allevati qui sono usati per trasportare le tue mercanzie in modo più efficace. Essi vengono nutriti con grano ed acqua."
+msgid ""
+"The pack donkeys bred here are used to transport your merchandise more "
+"efficiently. They are reared on water and grain."
+msgstr ""
+"Gli asini da soma allevati qui sono usati per trasportare le tue mercanzie "
+"in modo più efficace. Essi vengono nutriti con grano ed acqua."
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:153
 msgid "Boat"
@@ -2182,4 +2378,3 @@ msgstr "Esploratore"
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:342
 msgid "Pack donkey"
 msgstr "Asino da soma"
-

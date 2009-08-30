@@ -1,4 +1,4 @@
-// $Id: LobbyPlayer.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: LobbyPlayer.cpp 5465 2009-08-30 16:20:00Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -163,7 +163,7 @@ void LobbyPlayer::detach(void)
 
 bool LobbyPlayer::Receive(void)
 {
-	if(recv_queue.recv( &socket ) == -1)
+	if(!recv_queue.recv( &socket ))
 	{
 		LOG.lprintf("SERVER: Receiving message for player %d failed\n", playerid);
 		return false;

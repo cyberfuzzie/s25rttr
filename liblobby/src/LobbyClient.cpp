@@ -1,4 +1,4 @@
-// $Id: LobbyClient.cpp 4983 2009-06-01 07:33:02Z OLiver $
+// $Id: LobbyClient.cpp 5466 2009-08-30 16:20:24Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -81,6 +81,7 @@ void LobbyClient::Run(void)
 		{
 			LOG.lprintf("Receiving Message from server failed\n");
 			ServerLost();
+			return;
 		}
 	}
 
@@ -98,13 +99,16 @@ void LobbyClient::Run(void)
 			// Server ist weg
 			LOG.lprintf("Error on socket to server\n");
 			ServerLost();
+			return;
 		}
 	}
 
 	// maximal 10 Pakete verschicken
 	if(!send_queue.send(&socket, 10))
+	{
 		ServerLost();
-
+		return;
+	}
 
 	// recv-queue abarbeiten
 	while(recv_queue.count() > 0)

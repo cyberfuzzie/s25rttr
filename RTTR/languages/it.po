@@ -2,14 +2,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Siedler II.5 RttR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-02 15:46+0100\n"
+"POT-Creation-Date: 2009-08-30 13:27+0100\n"
 "PO-Revision-Date: 2009-08-27 22:46+0000\n"
 "Last-Translator: Oltre <Unknown>\n"
 "Language-Team: Siedler II.5 RttR <sf-team@siedler25.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-08-30 11:20+0000\n"
+"X-Launchpad-Export-Date: 2009-09-01 21:00+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-SearchPath-0: /storage/RTTR/svn/trunk/src\n"
 "X-Poedit-SourceCharset: iso-8859-15\n"
@@ -567,6 +567,18 @@ msgstr "Vichinghi"
 msgid "Lost connection to server!"
 msgstr "Persa la connessione con il server!"
 
+#: /storage/RTTR/svn/trunk/src/AIPlayerJH.cpp:106
+msgid "Hi, I'm an artifical player and I'm not very good yet!"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/AIPlayerJH.cpp:110
+msgid "And I may crash your game sometimes..."
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/AIPlayerJH.cpp:295
+msgid "Oh, no, you destroyed my headquarter! I surrender!"
+msgstr ""
+
 #: /storage/RTTR/svn/trunk/src/iwHQ.cpp:46
 msgid "Headquarters"
 msgstr "Quartier generale"
@@ -1109,30 +1121,36 @@ msgstr "Questa miniera è esaurita"
 msgid "Demolish?"
 msgstr "Demolire?"
 
-#: /storage/RTTR/svn/trunk/src/nofAttacker.cpp:453
+#: /storage/RTTR/svn/trunk/src/nofAttacker.cpp:471
 msgid "We are under attack!"
 msgstr "Siamo sotto attacco!"
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:570
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:585
+#, c-format
+msgid "Dummy %u"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:587
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:599
+msgid " (AI)"
+msgstr " (AI)"
+
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:597
 #, c-format
 msgid "Computer %u"
 msgstr "Computer %u"
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:572
-msgid " (AI)"
-msgstr " (AI)"
-
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:836
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:871
 msgid "The Game is not in sync. Checksums of some players don't match."
 msgstr ""
 "La partita non è sincronizzata. Il checksum di alcuni giocatori non "
 "corrisponde."
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:1191
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:1226
 msgid "Auto-Save"
 msgstr "Salvataggio automatico"
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:1483
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:1518
 #, c-format
 msgid "current GF: %u - still fast forwarding: %d GFs left (%d %%)"
 msgstr ""

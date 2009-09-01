@@ -1,4 +1,4 @@
-// $Id: iwHelp.cpp 5464 2009-08-30 16:05:54Z FloSoft $
+// $Id: iwHelp.cpp 5471 2009-09-01 09:39:43Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -63,7 +63,7 @@ iwHelp::iwHelp(const GUI_ID gui_id, const std::string& title, const std::string&
 		NormalFont->GetWrapInfo(content,HELP_WINDOW_WIDTH-28-ctrlMultiline::SCROLLBAR_WIDTH,
 		HELP_WINDOW_WIDTH-24-ctrlMultiline::SCROLLBAR_WIDTH,wi);
 
-	unsigned show_lines = min(wi.positions.size(),MAX_LINES);
+	unsigned int show_lines = min( (unsigned int)wi.positions.size(), MAX_LINES);
 
 	unsigned short text_height=show_lines*NormalFont->getHeight();
 

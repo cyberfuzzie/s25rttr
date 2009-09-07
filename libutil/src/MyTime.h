@@ -1,4 +1,4 @@
-// $Id: MyTime.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: MyTime.h 5487 2009-09-07 15:44:27Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -24,9 +24,8 @@
 #include "Singleton.h"
 
 #ifdef _WIN32
-	#ifdef __CYGWIN__
+	#if defined __CYGWIN__ || defined __CYGWIN32__ || defined __MINGW__
 		#include <sys/types.h>
-		typedef long long unsigned int unser_time_t;
 	#endif
 	typedef unsigned __int64 unser_time_t;
 #else

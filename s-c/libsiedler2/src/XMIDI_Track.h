@@ -1,4 +1,4 @@
-// $Id: XMIDI_Track.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: XMIDI_Track.h 5487 2009-09-07 15:44:27Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -21,7 +21,7 @@
 
 #pragma once
 
-class MIDI_Track;
+#include "MIDI_Track.h"
 
 class XMIDI_Track
 {

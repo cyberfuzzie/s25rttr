@@ -1,8 +1,8 @@
 #################################################################################
-### $Id: CMakeLists.txt 5432 2009-08-22 11:18:14Z FloSoft $
+### $Id: CMakeLists.txt 5487 2009-09-07 15:44:27Z FloSoft $
 #################################################################################
 
-INCLUDE(../../cmake/FindIconv.cmake)
+INCLUDE(FindIconv)
 
 IF (NOT Iconv_FOUND)
 	MESSAGE(FATAL_ERROR "libiconv not found")

@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: CMakeLists.txt 5434 2009-08-22 11:19:56Z FloSoft $
+### $Id: CMakeLists.txt 5487 2009-09-07 15:44:27Z FloSoft $
 #################################################################################
 
 INCLUDE(FindSndfile)
@@ -24,13 +24,13 @@ IF (SNDFILE_FOUND)
 		
 		TARGET_LINK_LIBRARIES(sound-convert siedler2 ${SAMPLERATE_LIBRARY} ${SNDFILE_LIBRARY})
 		
-		IF ( "${COMPILEFOR}" STREQUAL "win32")
+		IF ( "${COMPILEFOR}" STREQUAL "windows")
 			ADD_CUSTOM_COMMAND(TARGET sound-convert POST_BUILD COMMAND if [ -f sound-convert.exe ] \; then cp -v sound-convert.exe sound-convert \; fi)
-		ENDIF ( "${COMPILEFOR}" STREQUAL "win32")
+		ENDIF ( "${COMPILEFOR}" STREQUAL "windows")
 		
-		IF ( "${COMPILEFOR}" STREQUAL "macos")
+		IF ( "${COMPILEFOR}" STREQUAL "apple")
 			SET_TARGET_PROPERTIES(sound-convert PROPERTIES LINK_FLAGS "-framework sndfile -framework samplerate")
-		ENDIF ( "${COMPILEFOR}" STREQUAL "macos")
+		ENDIF ( "${COMPILEFOR}" STREQUAL "apple")
 
 		ADD_CUSTOM_COMMAND(TARGET sound-convert POST_BUILD COMMAND cp -v sound-convert ../../RTTR/sound-convert)
 		

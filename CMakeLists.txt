@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 5433 2009-08-22 11:19:05Z FloSoft $
+### $Id: CMakeLists.txt 5485 2009-09-07 12:36:27Z FloSoft $
 ################################################################################
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.4)
@@ -32,27 +32,12 @@ SET (LOBBY_C TRUE)
 
 ################################################################################
 
-# can't compile win32 with those pedantic flags ;)
-
 INCLUDE(CheckCXXCompilerFlag)
 
-IF (NOT "${COMPILEFOR}" STREQUAL "win32" )
-
-	CHECK_CXX_COMPILER_FLAG("-Wall -Werror -pedantic" WERROR_FLAGS)
-	IF (WERROR_FLAGS)
-		ADD_DEFINITIONS(-Wall -Werror -pedantic)
-	ENDIF (WERROR_FLAGS)
-
-ELSE (NOT "${COMPILEFOR}" STREQUAL "win32" )
-
-	CHECK_CXX_COMPILER_FLAG("-w" WNO_FLAGS)
-	IF (WNO_FLAGS)
-		ADD_DEFINITIONS(-w)
-	ENDIF (WNO_FLAGS)
-	
-	ADD_DEFINITIONS(-D_WIN32)
-
-ENDIF (NOT "${COMPILEFOR}" STREQUAL "win32" )
+CHECK_CXX_COMPILER_FLAG("-Wall -Werror -pedantic" WERROR_FLAGS)
+IF (WERROR_FLAGS)
+	ADD_DEFINITIONS(-Wall -Werror -pedantic)
+ENDIF (WERROR_FLAGS)
 
 ################################################################################
 
@@ -77,10 +62,6 @@ ADD_CUSTOM_TARGET(mrproper
 
 # preinstall script
 INSTALL(SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/cmake/install.cmake)
-
-################################################################################
-
-INCLUDE(cmake/crosscompile.cmake)
 
 ################################################################################
 

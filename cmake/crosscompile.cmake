@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: crosscompile.cmake 5120 2009-06-26 16:32:05Z FloSoft $
+### $Id: crosscompile.cmake 5485 2009-09-07 12:36:27Z FloSoft $
 #################################################################################
 
 # read host compiler machine triplet
@@ -73,25 +73,39 @@ ENDIF (NOT "${AD_HDM_OV}" STREQUAL "${AD_CDM_OV}")
 # set specific flags for target platform
 
 IF ( "${AD_CDM_OV}" MATCHES "linux" )
-  # Linux spezifische Parameter
-
+	# Linux spezifische Parameter
+	SET(COMPILEFOR "linux")
+	
 	IF ( "${AD_CDM_OV}" MATCHES "x86_64" )
-		SET(COMPILEFOR "64bit")
+		SET(COMPILEARCH "amd64")
 	ELSE ( "${AD_CDM_OV}" MATCHES "x86_64" )
-		SET(COMPILEFOR "32bit")
+		SET(COMPILEARCH "i686")
 	ENDIF ( "${AD_CDM_OV}" MATCHES "x86_64" )
 ENDIF ( "${AD_CDM_OV}" MATCHES "linux" )
 
 IF ( "${AD_CDM_OV}" MATCHES "apple" )
 	# Apple spezifische Parameter
+	SET(COMPILEFOR "apple")
 
-	SET(COMPILEFOR "macos")
+	IF ( "${AD_CDM_OV}" MATCHES "powerpc" )
+		SET(COMPILEARCH "ppc")
+	ELSE ( "${AD_CDM_OV}" MATCHES "powerpc" )
+		SET(COMPILEARCH "i686")
+	ENDIF ( "${AD_CDM_OV}" MATCHES "powerpc" )
 ENDIF ( "${AD_CDM_OV}" MATCHES "apple" )
 
 IF ( "${AD_CDM_OV}" MATCHES "mingw" )
 	# Cygwin/Mingw spezifische Parameter
+	SET(COMPILEFOR "windows")
 
-	SET(COMPILEFOR "win32")
+	SET(COMPILEARCH "i686")
 ENDIF ( "${AD_CDM_OV}" MATCHES "mingw" )
 
 #################################################################################
+
+SET(CROSSCOMPILE "${CROSSCOMPILE}" CACHE INT "Are we cross compiling?")
+SET(COMPILEFOR "${COMPILEFOR}" CACHE STRING "Target Platform")
+SET(COMPILEARCH "${COMPILEARCH}" CACHE STRING "Target Archictecure")
+
+#################################################################################
+

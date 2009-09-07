@@ -7,8 +7,9 @@ SET(CMAKE_C_COMPILER   i486-linux-gnu-gcc)
 SET(CMAKE_CXX_COMPILER i486-linux-gnu-g++)
 SET(CMAKE_RANLIB i486-linux-gnu-ranlib)
 
-SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mtune=generic -malign-double -ffast-math -mmmx -msse -mfpmath=sse -fomit-frame-pointer ")
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mtune=generic -malign-double -ffast-math -mmmx -msse -mfpmath=sse -fomit-frame-pointer ")
+# set compiler flags for i686
+SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mtune=generic -malign-double -ffast-math -mmmx -msse -mfpmath=sse -fomit-frame-pointer")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mtune=generic -malign-double -ffast-math -mmmx -msse -mfpmath=sse -fomit-frame-pointer")
 
 # search for programs in the build host directories
 SET(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)

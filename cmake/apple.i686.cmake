@@ -7,16 +7,19 @@ SET(CMAKE_C_COMPILER   i686-apple-darwin9-gcc)
 SET(CMAKE_CXX_COMPILER i686-apple-darwin9-g++)
 SET(CMAKE_RANLIB i686-apple-darwin9-ranlib)
 
+# set SDK
 SET(CMAKE_PREFIX_PATH "/usr/i686-apple-darwin9/SDKs/MacOSX10.4u.sdk")
 
+# set root path
+SET(CMAKE_FIND_ROOT_PATH "${CMAKE_PREFIX_PATH}")
+
+# set compiler flags for i686
 SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mtune=prescott -malign-double -ffast-math -mmmx -msse -mfpmath=sse -fomit-frame-pointer ")
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mtune=prescott -malign-double -ffast-math -mmmx -msse -mfpmath=sse -fomit-frame-pointer ")
 
-# set rpath correctly - fucking CMAKE!
+# set linker flags
 SET(CMAKE_C_LINK_FLAGS 	"${CMAKE_C_LINK_FLAGS} -framework OpenGL -L${CMAKE_SOURCE_DIR}/macos -lSDLmain")
 SET(CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -framework OpenGL -L${CMAKE_SOURCE_DIR}/macos -lSDLmain")
-
-SET(CMAKE_FIND_ROOT_PATH "/usr/i686-apple-darwin9/SDKs/MacOSX10.4u.sdk")
 
 # search for programs in the build host directories
 SET(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)

@@ -113,7 +113,7 @@ mkdir -vp $DATADIR/driver/audio || exit 1
 mkdir -vp $IPREFIX/lib || exit 1
 
 mecho --blue "Installing binaries"
-cp -va ../release/bin/rttr.sh $BINDIR || exit 1
+cp -v ../release/bin/rttr.sh $BINDIR || exit 1
 
 mecho --blue "Installing RTTR directory"
 if [ -d ../RTTR/.svn ] ; then

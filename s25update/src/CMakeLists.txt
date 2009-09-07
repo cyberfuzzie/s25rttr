@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 5487 2009-09-07 15:44:27Z FloSoft $
+### $Id: CMakeLists.txt 5495 2009-09-07 16:59:08Z FloSoft $
 ################################################################################
 
 INCLUDE(FindCURL)
@@ -38,13 +38,8 @@ ENDIF ( "${COMPILEFOR}" STREQUAL "windows" )
 
 ADD_EXECUTABLE(s25update ${s25update_SRCS} ${SOURCES_BZIP})
 
-IF ("${COMPILEFOR}" STREQUAL "linux")
-	IF ("${COMPILEARCH}" STREQUAL "amd64")
-		ADD_DEFINITIONS(-D_LINUX_x86_64)
-	ELSE ("${COMPILEARCH}" STREQUAL "amd64")
-		ADD_DEFINITIONS(-D_LINUX_i686)
-	ENDIF ("${COMPILEARCH}" STREQUAL "amd64")
-ENDIF ("${COMPILEFOR}" STREQUAL "linux")
+ADD_DEFINITIONS("-DTARGET=${COMPILEFOR}")
+ADD_DEFINITIONS("-DARCH=${COMPILEARCH}")
 
 TARGET_LINK_LIBRARIES(s25update ${CURL_LIBRARIES} ${BZIP2_LIBRARIES})
 

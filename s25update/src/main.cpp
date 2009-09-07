@@ -1,4 +1,4 @@
-// $Id: main.cpp 5224 2009-07-08 09:44:57Z FloSoft $
+// $Id: main.cpp 5494 2009-09-07 16:56:10Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -24,31 +24,27 @@
 
 using namespace std;
 
-#ifdef _LINUX_x86_64
-#	undef ARCH
-#	define ARCH "x86_64"
-#endif
-
-#ifdef _LINUX_i686
-#	undef ARCH
-#	define ARCH "i686"
-#endif
-
 #ifdef _WIN32
-#	undef ARCH
-#	define ARCH "win32"
+#	define TARGET "windows"
 #endif
 
 #ifdef __APPLE__
-#	undef ARCH
-#	define ARCH "macos"
+#	define TARGET "apple"
+#endif
+
+#ifdef __linux__
+#	define TARGET "linux"
+#endif
+
+#ifndef TARGET
+#	error You have to set TARGET to your platform (windows/linux/apple)
 #endif
 
 #ifndef ARCH
-#	error You have to set ARCH to your processor architecture
+#	error You have to set ARCH to your architecture (i686/amd64/ppc)
 #endif
 
-#define HTTPHOST "http://nightly.ra-doersch.de/s25client/" ARCH "/"
+#define HTTPHOST "http://nightly.ra-doersch.de/s25client/" TARGET "." ARCH "/"
 #define FILELIST HTTPHOST "files"
 
 #ifdef _WIN32

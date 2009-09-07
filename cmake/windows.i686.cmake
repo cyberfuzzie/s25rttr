@@ -8,6 +8,9 @@ SET(CMAKE_CXX_COMPILER i586-mingw32msvc-g++)
 SET(CMAKE_RANLIB i586-mingw32msvc-ranlib)
 SET(CMAKE_AR i586-mingw32msvc-ar)
 
+# set search prefix
+SET(CMAKE_PREFIX_PATH "/usr/x86_64-pc-linux-gnu")
+
 # where is the target environment 
 SET(CMAKE_FIND_ROOT_PATH "/usr/i586-mingw32msvc")
 

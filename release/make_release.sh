@@ -23,7 +23,7 @@ echo "Executing cmake -DPREFIX=. -DCMAKE_BUILD_TYPE=RelWithDebugInfo -DCOMPILEFO
 mkdir -vp $BUILDDIR
 OLDDIR=$PWD
 cd $BUILDDIR
-if ! cmake -DPREFIX=. -DCMAKE_BUILD_TYPE=RelWithDebugInfo -DCOMPILEFOR_PLATFORM=$ARCH ..  ; then
+if ! ../build/cmake.sh --prefix=. --arch=$ARCH --enable-reldeb  ; then
 	exit 1
 fi
 cd $OLDDIR
@@ -81,8 +81,8 @@ rm -vrf share/s25rttr/S2
 mkdir -vp share/s25rttr/S2
 touch share/s25rttr/S2/put\ your\ S2-Installation\ in\ here
 
-if [ -f ../../files_$ARCH.sh ] ; then
-	../../files_$ARCH.sh
+if [ -f ../../files.$ARCH.sh ] ; then
+	../../files.$ARCH.sh
 fi
 
 cd ..

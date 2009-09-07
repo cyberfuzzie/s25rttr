@@ -1,8 +1,8 @@
 #################################################################################
-### $Id: CMakeLists.txt 5432 2009-08-22 11:18:14Z FloSoft $
+### $Id: CMakeLists.txt 5486 2009-09-07 15:41:39Z FloSoft $
 #################################################################################
 
-IF ("${COMPILEFOR}" STREQUAL "i686" )
+IF ("${COMPILEFOR}/${COMPILEARCH}" STREQUAL "linux/i686" )
 	FIND_LIBRARY(GLFW_LIBRARY glfw) 
 	
 	IF (GLFW_LIBRARY)
@@ -12,17 +12,12 @@ IF ("${COMPILEFOR}" STREQUAL "i686" )
 	
 		TARGET_LINK_LIBRARIES(videoGLFW videodrv ${GLFW_LIBRARY})
 	
-		IF ( "${COMPILEFOR}" STREQUAL "win32")
-			ADD_DEFINITIONS(-DBUILD_DLL)
-			ADD_CUSTOM_COMMAND(TARGET videoGLFW POST_BUILD COMMAND cp -v libvideoGLFW.so videoGLFW.dll)
-		ENDIF ( "${COMPILEFOR}" STREQUAL "win32")
-	
 		ADD_CUSTOM_COMMAND(TARGET videoGLFW POST_BUILD COMMAND ln -fvs GLFW/src/libvideoGLFW${CMAKE_SHARED_LIBRARY_SUFFIX} ../../videoGLFW${CMAKE_SHARED_LIBRARY_SUFFIX})
 	
 		INSTALL(TARGETS videoGLFW DESTINATION share/s25rttr/driver/video)
 	ELSE (GLFW_LIBRARY)
 		MESSAGE(WARNING ": GLFW library not found: Not building GLFW videodriver")
 	ENDIF (GLFW_LIBRARY)
-ENDIF ("${COMPILEFOR}" STREQUAL "i686" )
+ENDIF ("${COMPILEFOR}/${COMPILEARCH}" STREQUAL "linux/i686" )
 
 #################################################################################

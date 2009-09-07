@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: crosscompile.cmake 5485 2009-09-07 12:36:27Z FloSoft $
+### $Id: crosscompile.cmake 5486 2009-09-07 15:41:39Z FloSoft $
 #################################################################################
 
 # read host compiler machine triplet
@@ -8,8 +8,23 @@ IF(NOT COMPILEFOR_PLATFORM)
 	SET(COMPILEFOR_PLATFORM "local")
 ENDIF(NOT COMPILEFOR_PLATFORM)
 
-MESSAGE(STATUS "Compiling for ${COMPILEFOR_PLATFORM}")
-INCLUDE(cmake/${COMPILEFOR_PLATFORM}.cmake)
+MESSAGE(STATUS "Checking for ${COMPILEFOR_PLATFORM}")
+
+INCLUDE(cmake/${COMPILEFOR_PLATFORM}.cmake OPTIONAL RESULT_VARIABLE FOUND_A)
+IF(FOUND_A)
+	MESSAGE(STATUS "Reading specifications from ${FOUND_A}")
+ENDIF(FOUND_A)
+
+INCLUDE(cmake/${COMPILEFOR_PLATFORM}.local.cmake OPTIONAL RESULT_VARIABLE FOUND_B)
+IF(FOUND_B)
+	MESSAGE(STATUS "Reading specifications from ${FOUND_A}")
+ENDIF(FOUND_B)
+
+IF (NOT FOUND_A AND NOT FOUND_B)
+	MESSAGE(FATAL_ERROR " Platform specific include file(s) not found")
+ENDIF (NOT FOUND_A AND NOT FOUND_B)
+
+#################################################################################
 
 EXECUTE_PROCESS(
   COMMAND "gcc" "-dumpmachine"
@@ -108,4 +123,31 @@ SET(COMPILEFOR "${COMPILEFOR}" CACHE STRING "Target Platform")
 SET(COMPILEARCH "${COMPILEARCH}" CACHE STRING "Target Archictecure")
 
 #################################################################################
+
+IF(NOT COMPILEFOR_PLATFORM)
+	IF ( "${COMPILEFOR}" STREQUAL "apple" )
+		SET(COMPILEFOR_PLATFORM "local")
+	ELSE ( "${COMPILEFOR}" STREQUAL "apple" )
+		SET(COMPILEFOR_PLATFORM "apple.local")
+	ENDIF ( "${COMPILEFOR}" STREQUAL "apple" )
+ENDIF(NOT COMPILEFOR_PLATFORM)
+
+MESSAGE(STATUS "Compiling for ${COMPILEFOR}/${COMPILEARCH}")
+
+INCLUDE(cmake/${COMPILEFOR}.cmake OPTIONAL RESULT_VARIABLE FOUND_A)
+IF(FOUND_A)
+	MESSAGE(STATUS "Reading specifications from ${FOUND_A}")
+ENDIF(FOUND_A)
+
+INCLUDE(cmake/${COMPILEFOR}.${COMPILEARCH}.cmake OPTIONAL RESULT_VARIABLE FOUND_B)
+IF(FOUND_B)
+	MESSAGE(STATUS "Reading specifications from ${FOUND_B}")
+ENDIF(FOUND_B)
+
+IF (NOT FOUND_A AND NOT FOUND_B)
+	MESSAGE(FATAL_ERROR " Architecture specific include file not found")
+ENDIF (NOT FOUND_A AND NOT FOUND_B)
+
+#################################################################################
+
 

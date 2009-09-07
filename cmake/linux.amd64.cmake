@@ -7,6 +7,9 @@ SET(CMAKE_C_COMPILER   x86_64-pc-linux-gnu-gcc)
 SET(CMAKE_CXX_COMPILER x86_64-pc-linux-gnu-g++)
 SET(CMAKE_RANLIB x86_64-pc-linux-gnu-ranlib)
 
+# set search prefix
+SET(CMAKE_PREFIX_PATH "/usr/x86_64-pc-linux-gnu")
+
 # where is the target environment 
 SET(CMAKE_FIND_ROOT_PATH "/usr/x86_64-pc-linux-gnu")
 

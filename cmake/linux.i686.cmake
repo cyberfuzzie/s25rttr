@@ -7,6 +7,10 @@ SET(CMAKE_C_COMPILER   i486-linux-gnu-gcc)
 SET(CMAKE_CXX_COMPILER i486-linux-gnu-g++)
 SET(CMAKE_RANLIB i486-linux-gnu-ranlib)
 
+# find AR program
+FIND_PROGRAM(LINUX_AR NAMES i486-linux-gnu-ar i686-linux-gnu-ar ar DOC "path to linux's ar executable")
+SET(CMAKE_AR "${LINUX_AR}" CACHE PATH "the AR" FORCE)
+
 # set compiler flags for i686
 SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mtune=generic -malign-double -ffast-math -mmmx -msse -mfpmath=sse -fomit-frame-pointer")
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mtune=generic -malign-double -ffast-math -mmmx -msse -mfpmath=sse -fomit-frame-pointer")

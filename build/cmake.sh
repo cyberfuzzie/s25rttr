@@ -1,6 +1,6 @@
 #!/bin/bash
 ###############################################################################
-## $Id: cmake.sh 5432 2009-08-22 11:18:14Z FloSoft $
+## $Id: cmake.sh 5486 2009-09-07 15:41:39Z FloSoft $
 ###############################################################################
 
 # Editable Variables
@@ -59,10 +59,18 @@ fi
 
 if [ -z "$ARCH" ] ; then
 	if [ "$(uname -s)" = "Darwin" ] ; then
-		ARCH=macos.local
+		ARCH=apple.local
 	else
 		ARCH=local
 	fi
+fi
+
+if ( [ ! -f cleanup.sh ] && [ -f ../build/cleanup.sh ] ) ; then
+	ln -s ../build/cleanup.sh cleanup.sh
+fi
+
+if ( [ ! -f cmake.sh ] && [ -f ../build/cmake.sh ] ) ; then
+	ln -s ../build/cmake.sh cmake.sh
 fi
 
 ###############################################################################
@@ -85,7 +93,7 @@ while test $# != 0 ; do
 	;;
 	*)
 		ac_option=$1
-		ac_optarg=$2
+		ac_optarg=yes
 		ac_shift=shift
 	;;
 	esac
@@ -107,7 +115,7 @@ while test $# != 0 ; do
 		$ac_shift
 		DATADIR=$ac_optarg
 	;;
-	-arch | --arch)
+	-arch | --arch | -target | --target)
 		$ac_shift
 		ARCH=$ac_optarg
 	;;
@@ -119,9 +127,11 @@ while test $# != 0 ; do
       		echo "error: invalid feature name: $ac_feature" >&2
    			{ (exit 1); exit 1; };
    		}
+   		echo $ac_feature $ac_optarg
     	ac_feature=`echo $ac_feature | sed 's/[-.]/_/g'`
     	if [ -z "$ac_optarg" ] ; then
     		ac_optarg="yes"
+    		echo foo
     	fi
     	eval enable_$ac_feature=\$ac_optarg
     ;;
@@ -171,7 +181,16 @@ yes|YES|Yes)
 	PARAMS="$PARAMS -DCMAKE_BUILD_TYPE=Debug"
 ;;
 *)
-	mecho --magenta "Activating release build"
+	case "$enable_reldeb" in
+	yes|YES|Yes)
+		mecho --magenta "Activating release build with debug information"
+		PARAMS="$PARAMS -DCMAKE_BUILD_TYPE=RelWithDebInfo"
+	;;
+	*)
+		mecho --magenta "Activating release build"
+		PARAMS="$PARAMS -DCMAKE_BUILD_TYPE=Release"
+	;;
+	esac
 ;;
 esac
 

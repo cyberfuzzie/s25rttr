@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.cpp 5429 2009-08-21 18:57:38Z jh $
+// $Id: AIPlayerJH.cpp 5486 2009-09-07 15:41:39Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -612,7 +612,7 @@ bool AIPlayerJH::FindBestPosition(MapCoord &x, MapCoord &y, AIJH::Resource res, 
 	if (radius == -1)
 		radius = 30;
 
-	int best_x, best_y, best_value;
+	int best_x = 0, best_y = 0, best_value;
 	best_value = -1;
 
 	for(MapCoord tx=gwb->GetXA(x,y,0), r=1;r<=radius;tx=gwb->GetXA(tx,y,0),++r)

@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 5383 2009-08-09 09:56:39Z jh $
+// $Id: GameWorld.h 5486 2009-09-07 15:41:39Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -310,7 +310,10 @@ public:
 
 	/// Informationen, ob Grenzen überquert wurden
 	struct CrossBorders
-	{ bool left, top, right, bottom; };
+	{
+		CrossBorders(void) : left(false), top(false), right(false), bottom(false) { }
+		bool left, top, right, bottom;
+	};
 
 
 	/// Wegfindung in freiem Terrain - Basisroutine

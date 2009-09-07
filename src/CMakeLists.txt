@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 5437 2009-08-22 18:44:43Z Demophobie $
+### $Id: CMakeLists.txt 5486 2009-09-07 15:41:39Z FloSoft $
 ################################################################################
 
 INCLUDE(FindBZip2)
@@ -13,7 +13,7 @@ IF (NOT OPENGL_FOUND)
     MESSAGE(FATAL_ERROR "FATAL ERROR: OpenGL library not found")
 ENDIF (NOT OPENGL_FOUND)
 
-INCLUDE(../cmake/FindGettext.cmake)
+INCLUDE(FindGettext)
 IF (NOT GETTEXT_FOUND)
     MESSAGE(FATAL_ERROR "FATAL ERROR: gettext library not found")
 ENDIF (NOT GETTEXT_FOUND)
@@ -318,7 +318,7 @@ GETTEXT_CREATE_TRANSLATIONS( ../RTTR/languages/rttr.pot ALL
 ################################################################################
 
 # bzip linkerbug-fix
-IF ( "${COMPILEFOR}" STREQUAL "win32" )
+IF ( "${COMPILEFOR}" STREQUAL "windows" )
     SET(SOURCES_BZIP 
         ../contrib/bzip2-1.0.3/blocksort.c
         ../contrib/bzip2-1.0.3/huffman.c 
@@ -328,9 +328,9 @@ IF ( "${COMPILEFOR}" STREQUAL "win32" )
         ../contrib/bzip2-1.0.3/decompress.c
         ../contrib/bzip2-1.0.3/bzlib.c
         )
-ELSE ( "${COMPILEFOR}" STREQUAL "win32" )
+ELSE ( "${COMPILEFOR}" STREQUAL "windows" )
     SET(SOURCES_BZIP )
-ENDIF ( "${COMPILEFOR}" STREQUAL "win32" )
+ENDIF ( "${COMPILEFOR}" STREQUAL "windows" )
 
 SET(s25client_SRCS 
     ../version.cpp
@@ -343,7 +343,7 @@ SET(s25client_SRCS
     ${SOURCES_AI}
 	  )
 
-IF ( "${COMPILEFOR}" STREQUAL "win32" )
+IF ( "${COMPILEFOR}" STREQUAL "windows" )
     ADD_DEFINITIONS("-DAFX_TARG_DEU")
 
     FIND_PROGRAM(WINDRES NAMES windres i686-mingw32-windres i586-mingw32msvc-windres DOC "path to mingw's windres executable")
@@ -353,18 +353,18 @@ IF ( "${COMPILEFOR}" STREQUAL "win32" )
                        COMMAND ${WINDRES} -I${CMAKE_CURRENT_SOURCE_DIR}/../win32/ -i${CMAKE_CURRENT_SOURCE_DIR}/../win32/s25client.rc -o ${CMAKE_CURRENT_BINARY_DIR}/s25client.res.o)
 
     SET(s25client_SRCS ${s25client_SRCS} s25client.res.o)
-ENDIF ( "${COMPILEFOR}" STREQUAL "win32" )
+ENDIF ( "${COMPILEFOR}" STREQUAL "windows" )
 
 ADD_EXECUTABLE(s25client ${s25client_SRCS})
 TARGET_LINK_LIBRARIES(s25client siedler2 lobby_c s25util mygettext ${BZIP2_LIBRARIES} ${OPENGL_gl_LIBRARY})
 
-IF ( "${COMPILEFOR}" STREQUAL "macos")
-  SET_TARGET_PROPERTIES(s25client PROPERTIES LINK_FLAGS "-framework SDL -framework Cocoa")
-ENDIF ( "${COMPILEFOR}" STREQUAL "macos")
+IF ( "${COMPILEFOR}" STREQUAL "apple")
+	SET_TARGET_PROPERTIES(s25client PROPERTIES LINK_FLAGS "-framework SDL -framework Cocoa")
+ENDIF ( "${COMPILEFOR}" STREQUAL "apple")
 
-IF ( "${COMPILEFOR}" STREQUAL "win32" )
+IF ( "${COMPILEFOR}" STREQUAL "windows" )
     TARGET_LINK_LIBRARIES(s25client wsock32 bz2 ${TARGET_LINK_LIBRARIES} )
-ENDIF ( "${COMPILEFOR}" STREQUAL "win32" )
+ENDIF ( "${COMPILEFOR}" STREQUAL "windows" )
 
 INSTALL(TARGETS s25client DESTINATION bin)
 

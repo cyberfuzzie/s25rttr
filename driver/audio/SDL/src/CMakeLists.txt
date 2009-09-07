@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: CMakeLists.txt 5432 2009-08-22 11:18:14Z FloSoft $
+### $Id: CMakeLists.txt 5486 2009-09-07 15:41:39Z FloSoft $
 #################################################################################
 
 INCLUDE(FindSDL)
@@ -21,14 +21,14 @@ IF (SDL_FOUND)
 		
 		TARGET_LINK_LIBRARIES(audioSDL audiodrv endian ${SDL_LIBRARY} ${SDLMIXER_LIBRARY})
 		
-		IF ( "${COMPILEFOR}" STREQUAL "win32")
+		IF ( "${COMPILEFOR}" STREQUAL "windows")
 			ADD_DEFINITIONS(-DBUILD_DLL)
 			ADD_CUSTOM_COMMAND(TARGET audioSDL POST_BUILD COMMAND if [ -f libaudioSDL.so ] \; then cp -v libaudioSDL.so audioSDL.dll \; else cp -v libaudioSDL.dll audioSDL.dll \; fi)
-		ENDIF ( "${COMPILEFOR}" STREQUAL "win32")
+		ENDIF ( "${COMPILEFOR}" STREQUAL "windows")
 			
-		IF ( "${COMPILEFOR}" STREQUAL "macos")
+		IF ( "${COMPILEFOR}" STREQUAL "apple")
 			SET_TARGET_PROPERTIES(audioSDL PROPERTIES LINK_FLAGS "-framework SDL -framework SDL_mixer")
-		ENDIF ( "${COMPILEFOR}" STREQUAL "macos")
+		ENDIF ( "${COMPILEFOR}" STREQUAL "apple")
 
 		ADD_CUSTOM_COMMAND(TARGET audioSDL POST_BUILD COMMAND ln -fvs SDL/src/libaudioSDL${CMAKE_SHARED_LIBRARY_SUFFIX} ../../audioSDL${CMAKE_SHARED_LIBRARY_SUFFIX})
 

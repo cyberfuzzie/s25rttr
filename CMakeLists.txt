@@ -1,8 +1,8 @@
 ################################################################################
-### $Id: CMakeLists.txt 5485 2009-09-07 12:36:27Z FloSoft $
+### $Id: CMakeLists.txt 5486 2009-09-07 15:41:39Z FloSoft $
 ################################################################################
 
-CMAKE_MINIMUM_REQUIRED(VERSION 2.4)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 CMAKE_POLICY(SET CMP0003 OLD)
 
 SET(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules)
@@ -34,10 +34,23 @@ SET (LOBBY_C TRUE)
 
 INCLUDE(CheckCXXCompilerFlag)
 
-CHECK_CXX_COMPILER_FLAG("-Wall -Werror -pedantic" WERROR_FLAGS)
+CHECK_CXX_COMPILER_FLAG("-Wall -Werror -pedantic -Wno-long-long" WERROR_FLAGS)
 IF (WERROR_FLAGS)
-	ADD_DEFINITIONS(-Wall -Werror -pedantic)
+	IF (NOT "${COMPILEFOR}" STREQUAL "windows" )
+		ADD_DEFINITIONS(-Wall -Werror -pedantic)
+	ELSE (NOT "${COMPILEFOR}" STREQUAL "windows" )
+		ADD_DEFINITIONS(-Wall -pedantic -Wno-long-long) # win32 cross build with -Werror does not work
+	ENDIF (NOT "${COMPILEFOR}" STREQUAL "windows" )
 ENDIF (WERROR_FLAGS)
+
+IF ("${COMPILEFOR}" STREQUAL "linux" )
+	CHECK_CXX_COMPILER_FLAG("-fPIC" FPIC_FLAGS)
+	IF (FPIC_FLAGS)
+		IF ("${COMPILEARCH}" STREQUAL "amd64" )
+			ADD_DEFINITIONS(-fPIC)
+		ENDIF ("${COMPILEARCH}" STREQUAL "amd64" )
+	ENDIF (FPIC_FLAGS)
+ENDIF ("${COMPILEFOR}" STREQUAL "linux" )
 
 ################################################################################
 
@@ -62,6 +75,10 @@ ADD_CUSTOM_TARGET(mrproper
 
 # preinstall script
 INSTALL(SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/cmake/install.cmake)
+
+################################################################################
+
+INCLUDE(cmake/crosscompile.cmake)
 
 ################################################################################
 

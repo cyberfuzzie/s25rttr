@@ -1,12 +1,12 @@
 #################################################################################
-### $Id: CMakeLists.txt 5432 2009-08-22 11:18:14Z FloSoft $
+### $Id: CMakeLists.txt 5490 2009-09-07 16:12:40Z FloSoft $
 #################################################################################
 
-INCLUDE(CheckCXXCompilerFlag)
-CHECK_CXX_COMPILER_FLAG(-fPIC PIC_FLAG)
-IF (PIC_FLAG)
-	ADD_DEFINITIONS(-fPIC)
-ENDIF (PIC_FLAG)
+IF ( NOT "${COMPILEFOR}" STREQUAL "windows" )
+	IF ("${CROSSCOMPILE}" STREQUAL "1" OR "${COMPILEARCH}" STREQUAL "amd64" )
+		ADD_DEFINITIONS(-fPIC)
+	ENDIF ("${CROSSCOMPILE}" STREQUAL "1" OR "${COMPILEARCH}" STREQUAL "amd64" )
+ENDIF ( NOT "${COMPILEFOR}" STREQUAL "windows" )
 
 #################################################################################
 

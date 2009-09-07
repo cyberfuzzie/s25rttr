@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: crosscompile.cmake 5488 2009-09-07 15:58:04Z FloSoft $
+### $Id: crosscompile.cmake 5490 2009-09-07 16:12:40Z FloSoft $
 #################################################################################
 
 # read host compiler machine triplet
@@ -15,14 +15,19 @@ IF(FOUND_A)
 	MESSAGE(STATUS "Reading specifications from ${FOUND_A}")
 ENDIF(FOUND_A)
 
-INCLUDE(cmake/${COMPILEFOR_PLATFORM}.local.cmake OPTIONAL RESULT_VARIABLE FOUND_B)
+INCLUDE(cmake/c.${COMPILEFOR_PLATFORM}.cmake OPTIONAL RESULT_VARIABLE FOUND_B)
 IF(FOUND_B)
-	MESSAGE(STATUS "Reading specifications from ${FOUND_A}")
+        MESSAGE(STATUS "Reading specifications from ${FOUND_B}")
 ENDIF(FOUND_B)
 
-IF (NOT FOUND_A AND NOT FOUND_B)
+INCLUDE(cmake/${COMPILEFOR_PLATFORM}.local.cmake OPTIONAL RESULT_VARIABLE FOUND_C)
+IF(FOUND_C)
+	MESSAGE(STATUS "Reading specifications from ${FOUND_C}")
+ENDIF(FOUND_C)
+
+IF (NOT FOUND_A AND NOT FOUND_B AND NOT FOUND_C)
 	MESSAGE(FATAL_ERROR " Platform specific include file(s) not found")
-ENDIF (NOT FOUND_A AND NOT FOUND_B)
+ENDIF (NOT FOUND_A AND NOT FOUND_B AND NOT FOUND_C)
 
 #################################################################################
 

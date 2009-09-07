@@ -1,11 +1,11 @@
 #################################################################################
-### $Id: crosscompile.cmake 5486 2009-09-07 15:41:39Z FloSoft $
+### $Id: crosscompile.cmake 5488 2009-09-07 15:58:04Z FloSoft $
 #################################################################################
 
 # read host compiler machine triplet
 
 IF(NOT COMPILEFOR_PLATFORM)
-	SET(COMPILEFOR_PLATFORM "local")
+	SET(COMPILEFOR_PLATFORM "unknown")
 ENDIF(NOT COMPILEFOR_PLATFORM)
 
 MESSAGE(STATUS "Checking for ${COMPILEFOR_PLATFORM}")
@@ -78,9 +78,11 @@ ENDIF(NOT "${AD_CDM_OV}" STREQUAL "${AD_CXXDM_OV}")
 
 IF (NOT "${AD_HDM_OV}" STREQUAL "${AD_CDM_OV}")
 	SET(CROSSCOMPILE "1")
+	SET(CROSS "c")
 	MESSAGE(STATUS "Configuring for cross-compiling to ${AD_CDM_OV}")
 ELSE (NOT "${AD_HDM_OV}" STREQUAL "${AD_CDM_OV}")
 	SET(CROSSCOMPILE "0")
+	SET(CROSS "")
 ENDIF (NOT "${AD_HDM_OV}" STREQUAL "${AD_CDM_OV}")
 
 #################################################################################
@@ -139,14 +141,19 @@ IF(FOUND_A)
 	MESSAGE(STATUS "Reading specifications from ${FOUND_A}")
 ENDIF(FOUND_A)
 
-INCLUDE(cmake/${COMPILEFOR}.${COMPILEARCH}.cmake OPTIONAL RESULT_VARIABLE FOUND_B)
+INCLUDE(cmake/${CROSS}.${COMPILEFOR}.${COMPILEARCH}.cmake OPTIONAL RESULT_VARIABLE FOUND_B)
 IF(FOUND_B)
 	MESSAGE(STATUS "Reading specifications from ${FOUND_B}")
 ENDIF(FOUND_B)
 
-IF (NOT FOUND_A AND NOT FOUND_B)
+INCLUDE(cmake/${COMPILEFOR}.local.cmake OPTIONAL RESULT_VARIABLE FOUND_C)
+IF(FOUND_C)
+	MESSAGE(STATUS "Reading specifications from ${FOUND_C}")
+ENDIF(FOUND_C)
+
+IF (NOT FOUND_A AND NOT FOUND_B AND NOT FOUND_C)
 	MESSAGE(FATAL_ERROR " Architecture specific include file not found")
-ENDIF (NOT FOUND_A AND NOT FOUND_B)
+ENDIF (NOT FOUND_A AND NOT FOUND_B AND NOT FOUND_C)
 
 #################################################################################
 

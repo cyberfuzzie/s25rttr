@@ -1,6 +1,6 @@
 #!/bin/bash
 ###############################################################################
-## $Id: cmake.sh 5486 2009-09-07 15:41:39Z FloSoft $
+## $Id: cmake.sh 5488 2009-09-07 15:58:04Z FloSoft $
 ###############################################################################
 
 # Editable Variables
@@ -61,7 +61,7 @@ if [ -z "$ARCH" ] ; then
 	if [ "$(uname -s)" = "Darwin" ] ; then
 		ARCH=apple.local
 	else
-		ARCH=local
+		ARCH=linux.local
 	fi
 fi
 

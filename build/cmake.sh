@@ -1,6 +1,6 @@
 #!/bin/bash
 ###############################################################################
-## $Id: cmake.sh 5488 2009-09-07 15:58:04Z FloSoft $
+## $Id: cmake.sh 5491 2009-09-07 16:40:47Z FloSoft $
 ###############################################################################
 
 # Editable Variables
@@ -127,7 +127,6 @@ while test $# != 0 ; do
       		echo "error: invalid feature name: $ac_feature" >&2
    			{ (exit 1); exit 1; };
    		}
-   		echo $ac_feature $ac_optarg
     	ac_feature=`echo $ac_feature | sed 's/[-.]/_/g'`
     	if [ -z "$ac_optarg" ] ; then
     		ac_optarg="yes"

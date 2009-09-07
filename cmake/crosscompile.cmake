@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: crosscompile.cmake 5490 2009-09-07 16:12:40Z FloSoft $
+### $Id: crosscompile.cmake 5491 2009-09-07 16:40:47Z FloSoft $
 #################################################################################
 
 # read host compiler machine triplet
@@ -151,10 +151,12 @@ IF(FOUND_B)
 	MESSAGE(STATUS "Reading specifications from ${FOUND_B}")
 ENDIF(FOUND_B)
 
-INCLUDE(cmake/${COMPILEFOR}.local.cmake OPTIONAL RESULT_VARIABLE FOUND_C)
-IF(FOUND_C)
-	MESSAGE(STATUS "Reading specifications from ${FOUND_C}")
-ENDIF(FOUND_C)
+IF (NOT FOUND_A AND NOT FOUND_B)
+	INCLUDE(cmake/${COMPILEFOR}.local.cmake OPTIONAL RESULT_VARIABLE FOUND_C)
+	IF(FOUND_C)
+		MESSAGE(STATUS "Reading specifications from ${FOUND_C}")
+	ENDIF(FOUND_C)
+ENDIF (NOT FOUND_A AND NOT FOUND_B)
 
 IF (NOT FOUND_A AND NOT FOUND_B AND NOT FOUND_C)
 	MESSAGE(FATAL_ERROR " Architecture specific include file not found")

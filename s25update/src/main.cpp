@@ -1,4 +1,4 @@
-// $Id: main.cpp 5494 2009-09-07 16:56:10Z FloSoft $
+// $Id: main.cpp 5496 2009-09-07 17:05:19Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -24,6 +24,7 @@
 
 using namespace std;
 
+#ifndef TARGET
 #ifdef _WIN32
 #	define TARGET "windows"
 #endif
@@ -34,6 +35,7 @@ using namespace std;
 
 #ifdef __linux__
 #	define TARGET "linux"
+#endif
 #endif
 
 #ifndef TARGET

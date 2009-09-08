@@ -1,4 +1,4 @@
-// $Id: BinaryFile.cpp 5501 2009-09-08 19:17:09Z FloSoft $
+// $Id: BinaryFile.cpp 5503 2009-09-08 19:22:35Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -30,14 +30,22 @@
 	static char THIS_FILE[] = __FILE__;
 #endif
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *
+ *  @author OLiver
+ */
 bool BinaryFile::Open(const char * const filename, const OpenFileMode of)
 {
-
 	static const char * modes[] = {"wb","rb"};
 	return ((file = fopen(filename,modes[of])) ? true : false);
 }
 
-
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *
+ *  @author OLiver
+ */
 bool BinaryFile::Close()
 {
 	bool result = false;
@@ -50,7 +58,11 @@ bool BinaryFile::Close()
 	return result;
 }
 
-
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *
+ *  @author OLiver
+ */
 void BinaryFile::WriteShortString(const std::string& str)
 {
 	assert(str.length() < 255);
@@ -59,6 +71,11 @@ void BinaryFile::WriteShortString(const std::string& str)
 	WriteRawData((unsigned char*)str.c_str(),length);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *
+ *  @author OLiver
+ */
 void BinaryFile::WriteLongString(const std::string& str)
 {
 	unsigned length = unsigned(str.length())+1;
@@ -66,6 +83,11 @@ void BinaryFile::WriteLongString(const std::string& str)
 	WriteRawData((unsigned char*)str.c_str(),length);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *
+ *  @author OLiver
+ */
 void BinaryFile::ReadShortString(std::string& str)
 {
 	unsigned char length;
@@ -76,6 +98,11 @@ void BinaryFile::ReadShortString(std::string& str)
 	delete [] tmp;
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *
+ *  @author OLiver
+ */
 void BinaryFile::ReadLongString(std::string& str)
 {
 	unsigned length;

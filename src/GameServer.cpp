@@ -1,4 +1,4 @@
-// $Id: GameServer.cpp 5501 2009-09-08 19:17:09Z FloSoft $
+// $Id: GameServer.cpp 5504 2009-09-08 19:34:35Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -203,7 +203,7 @@ bool GameServer::Start()
 
 	mapinfo.ziplength = mapinfo.length*2 + 600;
 
-	bool read_succeeded = (libendian::le_read_c(map_data, mapinfo.length, map_f) == mapinfo.length);
+	bool read_succeeded = ((unsigned int)libendian::le_read_c(map_data, mapinfo.length, map_f) == mapinfo.length);
 	fclose(map_f);
 	
 	if(!read_succeeded)

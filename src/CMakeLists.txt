@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 5486 2009-09-07 15:41:39Z FloSoft $
+### $Id: CMakeLists.txt 5504 2009-09-08 19:34:35Z FloSoft $
 ################################################################################
 
 INCLUDE(FindBZip2)
@@ -20,8 +20,8 @@ ENDIF (NOT GETTEXT_FOUND)
 
 ################################################################################
 
-INCLUDE_DIRECTORIES("../" "../liblobby/src/" "../libutil/src/" "../mygettext/src/" "../libsiedler2/src/")
-LINK_DIRECTORIES("../libsiedler2/src" "../mygettext/src" "../libutil/src" "../liblobby/src")
+INCLUDE_DIRECTORIES("../" "../liblobby/src/" "../libutil/src/" "../mygettext/src/" "../libsiedler2/src/" "../libendian/src")
+LINK_DIRECTORIES("../libsiedler2/src" "../mygettext/src" "../libutil/src" "../liblobby/src" "../libendian/src")
 
 ################################################################################
 

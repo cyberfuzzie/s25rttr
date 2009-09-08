@@ -1,4 +1,4 @@
-// $Id: main.cpp 5259 2009-07-13 15:53:31Z FloSoft $
+// $Id: main.cpp 5500 2009-09-08 18:37:11Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -90,7 +90,6 @@ void ExceptionHandler (unsigned int exception_type, _EXCEPTION_POINTERS* excepti
  *  @author FloSoft
  *  @author OLiver
  */
-
 int main(int argc, char *argv[])
 {
 #if defined _WIN32 && defined _DEBUG && defined _MSC_VER && !defined NOHWETRANS

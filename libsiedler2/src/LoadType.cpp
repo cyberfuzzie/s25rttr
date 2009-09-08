@@ -1,4 +1,4 @@
-// $Id: LoadType.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: LoadType.cpp 5500 2009-09-08 18:37:11Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -49,7 +49,11 @@ int libsiedler2::loader::LoadType(unsigned short bobtype, FILE *file, const Arch
 		return 1;
 
 	// ist das Item schon belegt?
-	delete *item;
+	if(*item)
+	{
+		delete *item;
+		*item = NULL;
+	}
 
 	switch(bobtype)
 	{

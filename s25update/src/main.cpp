@@ -1,4 +1,4 @@
-// $Id: main.cpp 5496 2009-09-07 17:05:19Z FloSoft $
+// $Id: main.cpp 5500 2009-09-08 18:37:11Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -40,6 +40,10 @@ using namespace std;
 
 #ifndef TARGET
 #	error You have to set TARGET to your platform (windows/linux/apple)
+#endif
+
+#ifdef _WIN32
+#	define ARCH "i686"
 #endif
 
 #ifndef ARCH

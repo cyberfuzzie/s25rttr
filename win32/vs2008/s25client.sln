@@ -3,6 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "s25client", "s25client.vcproj", "{3BE5D05B-EEDF-4B5E-BCC1-E7086D9D5A29}"
 	ProjectSection(ProjectDependencies) = postProject
+		{1C4D182C-4502-4A05-B1F3-9DD5214C3DEE} = {1C4D182C-4502-4A05-B1F3-9DD5214C3DEE}
 		{94BE9C74-5E13-404E-858B-2CBA20D8F5C9} = {94BE9C74-5E13-404E-858B-2CBA20D8F5C9}
 		{9AD068A1-1430-4CF2-A623-AB74DEE3ED28} = {9AD068A1-1430-4CF2-A623-AB74DEE3ED28}
 		{AAAAAAAA-B2B4-5FA6-AD79-642B33F3D480} = {AAAAAAAA-B2B4-5FA6-AD79-642B33F3D480}
@@ -39,8 +40,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libsiedler2", "..\..\libsie
 	ProjectSection(ProjectDependencies) = postProject
 		{1C4D182C-4502-4A05-B1F3-9DD5214C3DEE} = {1C4D182C-4502-4A05-B1F3-9DD5214C3DEE}
 	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libendian", "..\..\libsiedler2\libendian\win32\vs2008\libendian.vcproj", "{1C4D182C-4502-4A05-B1F3-9DD5214C3DEE}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "videoSDL", "..\..\driver\video\SDL\win32\vs2008\videoSDL.vcproj", "{0D246BC6-B2B4-4FA2-AD79-642B23F3D480}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -79,6 +78,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "liblobby_c", "..\..\liblobb
 		{74CE1CAB-7950-436F-8D27-48F9FB7E9F22} = {74CE1CAB-7950-436F-8D27-48F9FB7E9F22}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libendian", "..\..\libendian\win32\vs2008\libendian.vcproj", "{1C4D182C-4502-4A05-B1F3-9DD5214C3DEE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -109,10 +110,6 @@ Global
 		{290E94F7-C0BE-4950-87AA-D269467A82BF}.Debug|Win32.Build.0 = Debug|Win32
 		{290E94F7-C0BE-4950-87AA-D269467A82BF}.Release|Win32.ActiveCfg = Release|Win32
 		{290E94F7-C0BE-4950-87AA-D269467A82BF}.Release|Win32.Build.0 = Release|Win32
-		{1C4D182C-4502-4A05-B1F3-9DD5214C3DEE}.Debug|Win32.ActiveCfg = Debug|Win32
-		{1C4D182C-4502-4A05-B1F3-9DD5214C3DEE}.Debug|Win32.Build.0 = Debug|Win32
-		{1C4D182C-4502-4A05-B1F3-9DD5214C3DEE}.Release|Win32.ActiveCfg = Release|Win32
-		{1C4D182C-4502-4A05-B1F3-9DD5214C3DEE}.Release|Win32.Build.0 = Release|Win32
 		{0D246BC6-B2B4-4FA2-AD79-642B23F3D480}.Debug|Win32.ActiveCfg = Debug|Win32
 		{0D246BC6-B2B4-4FA2-AD79-642B23F3D480}.Debug|Win32.Build.0 = Debug|Win32
 		{0D246BC6-B2B4-4FA2-AD79-642B23F3D480}.Release|Win32.ActiveCfg = Release|Win32
@@ -145,6 +142,10 @@ Global
 		{23EBA5F4-45CC-45B1-8F8E-04337A6F7DA3}.Debug|Win32.Build.0 = Debug|Win32
 		{23EBA5F4-45CC-45B1-8F8E-04337A6F7DA3}.Release|Win32.ActiveCfg = Release|Win32
 		{23EBA5F4-45CC-45B1-8F8E-04337A6F7DA3}.Release|Win32.Build.0 = Release|Win32
+		{1C4D182C-4502-4A05-B1F3-9DD5214C3DEE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1C4D182C-4502-4A05-B1F3-9DD5214C3DEE}.Debug|Win32.Build.0 = Debug|Win32
+		{1C4D182C-4502-4A05-B1F3-9DD5214C3DEE}.Release|Win32.ActiveCfg = Release|Win32
+		{1C4D182C-4502-4A05-B1F3-9DD5214C3DEE}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

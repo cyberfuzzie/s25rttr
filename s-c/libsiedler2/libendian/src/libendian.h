@@ -1,4 +1,4 @@
-// $Id: libendian.h 4653 2009-03-29 10:17:28Z FloSoft $
+// $Id: libendian.h 5501 2009-09-08 19:17:09Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -38,29 +38,29 @@ namespace libendian
 
 
 	/// liest Little-Endian kodierte Chars aus einer Datei.
-	int le_read_c(char *to, unsigned int count, FILE *file);
+	int le_read_c(char *const to, unsigned int count, FILE *file);
 
 	/// liest Little-Endian kodierte Unsigned Chars aus einer Datei.
-	int le_read_uc(unsigned char *to, unsigned int count, FILE *file);
+	int le_read_uc(unsigned char *const to, unsigned int count, FILE *file);
 
 	/// schreibt Little-Endian kodierte Chars aus einer Datei.
-	int le_write_c(const char *from, unsigned int count, FILE *file);
+	int le_write_c(const char *const from, unsigned int count, FILE *file);
 
 	/// schreibt Little-Endian kodierte Unsigned Chars aus einer Datei.
-	int le_write_uc(const unsigned char *from, unsigned int count, FILE *file);
+	int le_write_uc(const unsigned char *const from, unsigned int count, FILE *file);
 
 
 	/// liest Big-Endian kodierte Chars aus einer Datei.
-	int be_read_c(char *to, unsigned int count, FILE *file);
+	int be_read_c(char *const to, unsigned int count, FILE *file);
 
 	/// liest Big-Endian kodierte Unsigned Chars aus einer Datei.
-	int be_read_uc(unsigned char *to, unsigned int count, FILE *file);
+	int be_read_uc(unsigned char *const to, unsigned int count, FILE *file);
 
 	/// schreibt Big-Endian kodierte Chars aus einer Datei.
-	int be_write_c(const char *from, unsigned int count, FILE *file);
+	int be_write_c(const char *const from, unsigned int count, FILE *file);
 
 	/// schreibt Big-Endian kodierte Unsigned Chars aus einer Datei.
-	int be_write_uc(const unsigned char *from, unsigned int count, FILE *file);
+	int be_write_uc(const unsigned char *const from, unsigned int count, FILE *file);
 
 
 	/// liest einen Little-Endian kodierten Integer aus einer Datei.

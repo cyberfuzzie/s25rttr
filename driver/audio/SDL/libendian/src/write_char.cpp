@@ -1,4 +1,4 @@
-// $Id: write_char.cpp 4653 2009-03-29 10:17:28Z FloSoft $
+// $Id: write_char.cpp 5501 2009-09-08 19:17:09Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -34,7 +34,7 @@
  *
  *  @author FloSoft
  */
-int libendian::le_write_c(const char *from, unsigned int count, FILE *file)
+int libendian::le_write_c(const char *const from, unsigned int count, FILE *file)
 {
 	return le_write_uc( (const unsigned char*)from, count, file);
 }
@@ -51,7 +51,7 @@ int libendian::le_write_c(const char *from, unsigned int count, FILE *file)
  *
  *  @author FloSoft
  */
-int libendian::le_write_uc(const unsigned char *from, unsigned int count, FILE *file)
+int libendian::le_write_uc(const unsigned char *const from, unsigned int count, FILE *file)
 {
 	if(from == NULL || file == NULL)
 		return -1;
@@ -72,7 +72,7 @@ int libendian::le_write_uc(const unsigned char *from, unsigned int count, FILE *
  *
  *  @author FloSoft
  */
-int libendian::be_write_c(const char *from, unsigned int count, FILE *file)
+int libendian::be_write_c(const char *const from, unsigned int count, FILE *file)
 {
 	return be_write_uc( (const unsigned char*)from, count, file);
 }
@@ -89,7 +89,7 @@ int libendian::be_write_c(const char *from, unsigned int count, FILE *file)
  *
  *  @author FloSoft
  */
-int libendian::be_write_uc(const unsigned char *from, unsigned int count, FILE *file)
+int libendian::be_write_uc(const unsigned char *const from, unsigned int count, FILE *file)
 {
 	if(from == NULL || file == NULL)
 		return -1;

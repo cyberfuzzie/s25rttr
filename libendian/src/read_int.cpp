@@ -1,4 +1,4 @@
-// $Id: read_char.cpp 5501 2009-09-08 19:17:09Z FloSoft $
+// $Id: read_int.cpp 4653 2009-03-29 10:17:28Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -24,76 +24,94 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 /** 
- *  liest Little-Endian kodierte Chars aus einer Datei.
+ *  liest einen Little-Endian kodierten Integer aus einer Datei.
  *
- *  @param[out] to    Zielpuffer
- *  @param[in]  count Anzahl gewünschter Zeichen
+ *  @param[out] to    Pointer auf Zielinteger
  *  @param[in]  file  Datei aus der gelesen werden soll
  *
- *  @return liefert Anzahl der gelesenen Bytes, -1 bei Fehler, 0 bei EOF
+ *  @return liefert Null bei Erfolg, ein Wert ungleich Null bei Fehler
  *
  *  @author FloSoft
  */
-int libendian::le_read_c(char *const to, unsigned int count, FILE *file)
+int libendian::le_read_i(int *to, FILE *file)
 {
-	return le_read_uc( (unsigned char*)to, count, file);
+	return le_read_ui( (unsigned int*)to, file);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 /** 
- *  liest Little-Endian kodierte Unsigned Chars aus einer Datei.
+ *  liest einen Little-Endian kodierten Unsigned Integer aus einer Datei.
  *
- *  @param[out] to    Zielpuffer
- *  @param[in]  count Anzahl gewünschter Zeichen
+ *  @param[out] to    Pointer auf Zielinteger
  *  @param[in]  file  Datei aus der gelesen werden soll
  *
- *  @return liefert Anzahl der gelesenen Bytes, -1 bei Fehler, 0 bei EOF
+ *  @return liefert Null bei Erfolg, ein Wert ungleich Null bei Fehler
  *
  *  @author FloSoft
  */
-int libendian::le_read_uc(unsigned char *const to, unsigned int count, FILE *file)
+int libendian::le_read_ui(unsigned int *to, FILE *file)
 {
 	if(to == NULL || file == NULL)
 		return -1;
 
-	// chars können wir ohne Konvertierung einlesen
-	return (int)fread(to, 1, count, file);
+	// Integer einlesen
+	if(fread(to, 1, 4, file) != 4)
+		return 1;
+
+	// müssen wir konvertieren?
+	if(BYTE_ORDER != LITTLE_ENDIAN)
+	{
+		// ja, dann tauschen
+		*to = swap_ui(*to);
+	}
+
+	// alles ok
+	return 0;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 /** 
- *  liest Big-Endian kodierte Chars aus einer Datei.
+ *  liest einen Big-Endian kodierten Integer aus einer Datei.
  *
- *  @param[out] to    Pointer auf Zielchar(s)
- *  @param[in]  count Anzahl gewünschter Zeichen
+ *  @param[out] to    Pointer auf Zielinteger
  *  @param[in]  file  Datei aus der gelesen werden soll
  *
- *  @return liefert Anzahl der gelesenen Bytes, -1 bei Fehler, 0 bei EOF
+ *  @return liefert Null bei Erfolg, ein Wert ungleich Null bei Fehler
  *
  *  @author FloSoft
  */
-int libendian::be_read_c(char *const to, unsigned int count, FILE *file)
+int libendian::be_read_i(int *to, FILE *file)
 {
-	return be_read_uc( (unsigned char*)to, count, file);
+	return be_read_ui( (unsigned int*)to, file);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 /** 
- *  liest Big-Endian kodierte Unsigned Chars aus einer Datei.
+ *  liest einen Big-Endian kodierten Unsigned Integer aus einer Datei.
  *
- *  @param[out] to    Pointer auf Zielchar(s)
- *  @param[in]  count Anzahl gewünschter Zeichen
+ *  @param[out] to    Pointer auf Zielinteger
  *  @param[in]  file  Datei aus der gelesen werden soll
  *
- *  @return liefert Anzahl der gelesenen Bytes, -1 bei Fehler, 0 bei EOF
+ *  @return liefert Null bei Erfolg, ein Wert ungleich Null bei Fehler
  *
  *  @author FloSoft
  */
-int libendian::be_read_uc(unsigned char *const to, unsigned int count, FILE *file)
+int libendian::be_read_ui(unsigned int *to, FILE *file)
 {
 	if(to == NULL || file == NULL)
 		return -1;
 
-	// chars können wir ohne Konvertierung einlesen
-	return (int)fread(to, 1, count, file);
+	// Integer einlesen
+	if(fread(to, 1, 4, file) != 4)
+		return 1;
+
+	// müssen wir konvertieren?
+	if(BYTE_ORDER != BIG_ENDIAN)
+	{
+		// ja, dann tauschen
+		*to = swap_ui(*to);
+	}
+
+	// alles ok
+	return 0;
 }

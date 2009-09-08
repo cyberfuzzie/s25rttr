@@ -1,4 +1,4 @@
-// $Id: read_char.cpp 4653 2009-03-29 10:17:28Z FloSoft $
+// $Id: read_char.cpp 5501 2009-09-08 19:17:09Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -34,7 +34,7 @@
  *
  *  @author FloSoft
  */
-int libendian::le_read_c(char *to, unsigned int count, FILE *file)
+int libendian::le_read_c(char *const to, unsigned int count, FILE *file)
 {
 	return le_read_uc( (unsigned char*)to, count, file);
 }
@@ -51,7 +51,7 @@ int libendian::le_read_c(char *to, unsigned int count, FILE *file)
  *
  *  @author FloSoft
  */
-int libendian::le_read_uc(unsigned char *to, unsigned int count, FILE *file)
+int libendian::le_read_uc(unsigned char *const to, unsigned int count, FILE *file)
 {
 	if(to == NULL || file == NULL)
 		return -1;
@@ -72,7 +72,7 @@ int libendian::le_read_uc(unsigned char *to, unsigned int count, FILE *file)
  *
  *  @author FloSoft
  */
-int libendian::be_read_c(char *to, unsigned int count, FILE *file)
+int libendian::be_read_c(char *const to, unsigned int count, FILE *file)
 {
 	return be_read_uc( (unsigned char*)to, count, file);
 }
@@ -89,7 +89,7 @@ int libendian::be_read_c(char *to, unsigned int count, FILE *file)
  *
  *  @author FloSoft
  */
-int libendian::be_read_uc(unsigned char *to, unsigned int count, FILE *file)
+int libendian::be_read_uc(unsigned char *const to, unsigned int count, FILE *file)
 {
 	if(to == NULL || file == NULL)
 		return -1;

@@ -1,4 +1,4 @@
-// $Id: main.h 5178 2009-07-03 11:55:24Z OLiver $
+// $Id: main.h 5501 2009-09-08 19:17:09Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -120,6 +120,7 @@
 #include "mygettext.h"
 #include "liblobby.h"
 #include "libsiedler2.h"
+#include "libendian.h"
 
 #include "macros.h"
 #include "colors.h"

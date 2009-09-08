@@ -1,4 +1,4 @@
-// $Id: BinaryFile.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: BinaryFile.cpp 5501 2009-09-08 19:17:09Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -56,14 +56,14 @@ void BinaryFile::WriteShortString(const std::string& str)
 	assert(str.length() < 255);
 	unsigned char length = static_cast<unsigned char>(str.length())+1;
 	WriteUnsignedChar(length);
-	WriteRawData(str.c_str(),length);
+	WriteRawData((unsigned char*)str.c_str(),length);
 }
 
 void BinaryFile::WriteLongString(const std::string& str)
 {
 	unsigned length = unsigned(str.length())+1;
 	WriteUnsignedInt(length);
-	WriteRawData(str.c_str(),length);
+	WriteRawData((unsigned char*)str.c_str(),length);
 }
 
 void BinaryFile::ReadShortString(std::string& str)
@@ -71,7 +71,7 @@ void BinaryFile::ReadShortString(std::string& str)
 	unsigned char length;
 	length = ReadUnsignedChar();
 	char * tmp = new char[length];
-	this->ReadRawData(tmp,length);
+	ReadRawData((unsigned char*)tmp,length);
 	str = tmp;
 	delete [] tmp;
 }
@@ -81,7 +81,7 @@ void BinaryFile::ReadLongString(std::string& str)
 	unsigned length;
 	length = ReadUnsignedInt();
 	char * tmp = new char[length];
-	this->ReadRawData(tmp,length);
+	ReadRawData((unsigned char*)tmp,length);
 	str = tmp;
 	delete [] tmp;
 }

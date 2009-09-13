@@ -2353,7 +2353,9 @@ msgstr "You need to restart your game to change the video or audio driver!"
 #: /storage/RTTR/svn/trunk/src/GameClient.cpp:1518
 #, c-format
 msgid "current GF: %u - still fast forwarding: %d GFs left (%d %%)"
-msgstr "current GF: %u - still fast forwarding: %d GFs left (%d %%)"
+msgstr ""
+"Copy text   \t\r\n"
+"current GF: %u - still fast forwarding: %d GFs left (%d %%)"
 
 #: /storage/RTTR/svn/trunk/src/iwBaseWarehouse.cpp:62
 msgid "do nothing"

@@ -1,4 +1,4 @@
-// $Id: iwPostWindow.cpp 5464 2009-08-30 16:05:54Z FloSoft $
+// $Id: iwPostWindow.cpp 5520 2009-09-13 12:43:00Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -255,8 +255,6 @@ void iwPostWindow::DisplayPostMessage()
 	postMsgInfos->SetText(ss.str());
 	postMsgInfos->SetVisible(true);
 
-
-
 	// Rest abhängig vom Nachrichten-Typ
 	switch (pm->GetType())
 	{
@@ -264,52 +262,55 @@ void iwPostWindow::DisplayPostMessage()
 		{
 			ImagePostMsgWithLocation *ipm = dynamic_cast<ImagePostMsgWithLocation*>(pm);
 			assert(ipm);
+
 			SetMessageText(pm->GetText());
 			GetCtrl<ctrlMultiline>(12)->Move(xTextTopCenter, yTextTopCenter);
+
 			postImage->SetImage(ipm->GetImage_());
 			postImage->Move(xImgBottomCenter + ipm->GetImage_()->getNx() - ipm->GetImage_()->getWidth()/2, 
 				yImgBottomCenter + ipm->GetImage_()->getNy() - ipm->GetImage_()->getHeight());
+			
 			postImage->SetVisible(true);
 			gotoButton->SetVisible(true);
 			acceptButton->SetVisible(false);
 			declineButton->SetVisible(false);
-		}
-		break;
+		} break;
 	case PMT_WITH_LOCATION:
 		{
-			PostMsgWithLocation *pml = dynamic_cast<PostMsgWithLocation*>(pm);
-			assert(pml);
+			assert(dynamic_cast<PostMsgWithLocation*>(pm));
+
 			SetMessageText(pm->GetText());
 			GetCtrl<ctrlMultiline>(12)->Move(xTextCenter, yTextCenter);
+
 			postImage->SetVisible(false);
 			gotoButton->SetVisible(true);
 			acceptButton->SetVisible(false);
 			declineButton->SetVisible(false);
-		}
-		break;
+		} break;
 	case PMT_DIPLOMACYQUESTION:
 		{
-			DiplomacyPostQuestion *dpm = dynamic_cast<DiplomacyPostQuestion*>(pm);
-			assert(dpm);
+			assert(dynamic_cast<DiplomacyPostQuestion*>(pm));
+
 			SetMessageText(pm->GetText());
 			GetCtrl<ctrlMultiline>(12)->Move(xTextTopCenter, yTextTopCenter);
-			//unsigned player = dpm->GetPlayerID();
+
 			// Zwei Buttons einblenden...
 			acceptButton->SetVisible(true);
 			declineButton->SetVisible(true);
 			gotoButton->SetVisible(false);
 			postImage->SetVisible(false);
-		}
-		break;
+		} break;
 	case PMT_NORMAL:
 	case PMT_DIPLOMACYINFO:
-		SetMessageText(pm->GetText());
-		GetCtrl<ctrlMultiline>(12)->Move(xTextCenter, yTextCenter);
-		postImage->SetVisible(false);
-		gotoButton->SetVisible(false);
-		acceptButton->SetVisible(false);
-		declineButton->SetVisible(false);
-		break;
+		{
+			SetMessageText(pm->GetText());
+			GetCtrl<ctrlMultiline>(12)->Move(xTextCenter, yTextCenter);
+			
+			postImage->SetVisible(false);
+			gotoButton->SetVisible(false);
+			acceptButton->SetVisible(false);
+			declineButton->SetVisible(false);
+		} break;
 	}
 }
 

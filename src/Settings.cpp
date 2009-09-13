@@ -1,4 +1,4 @@
-// $Id: Settings.cpp 5265 2009-07-14 07:10:29Z FloSoft $
+// $Id: Settings.cpp 5520 2009-09-13 12:43:00Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -216,7 +216,7 @@ bool Settings::Load(void)
 
 	// savegames
 	// {
-		this->savegames.autosave_interval = server->getValueI("autosave_interval");
+		this->savegames.autosave_interval = savegames->getValueI("autosave_interval");
 	// }
 
 	return true;
@@ -299,7 +299,7 @@ void Settings::Save(void)
 
 	// savegames
 	// {
-		server->setValue("autosave_interval", this->savegames.autosave_interval);
+		savegames->setValue("autosave_interval", this->savegames.autosave_interval);
 	// }
 
 	LOADER.SaveSettings();

@@ -1,9 +1,11 @@
 #################################################################################
-### $Id: CMakeLists.txt 5487 2009-09-07 15:44:27Z FloSoft $
+### $Id: CMakeLists.txt 5523 2009-09-14 15:47:16Z FloSoft $
 #################################################################################
 
 INCLUDE(FindSndfile)
 INCLUDE(FindSamplerate)
+
+INCLUDE(CheckCXXCompilerFlag)
 
 IF (SNDFILE_FOUND)
 	IF (SAMPLERATE_FOUND)
@@ -11,6 +13,12 @@ IF (SNDFILE_FOUND)
 		# Let the user choose the flags used for this directory.
 		SET(SC_C_FLAGS "-mno-align-double -I${SNDFILE_INCLUDE_DIR} -I${SAMPLERATE_INCLUDE_DIR}" CACHE STRING "CFLAGS to use for sound-convert")
 		SET(SC_CXX_FLAGS "-mno-align-double -I${SNDFILE_INCLUDE_DIR} -I${SAMPLERATE_INCLUDE_DIR}" CACHE STRING "CXXFLAGS to use for sound-convert")
+
+		CHECK_CXX_COMPILER_FLAG("-mno-align-double" NOALIGN_FLAGS)
+		IF (NOALIGN_FLAGS)
+			SET(SC_C_FLAGS "${SC_C_FLAGS} -mno-align-double");
+			SET(SC_CXX_FLAGS "${SC_CXX_FLAGS} -mno-align-double");
+		ENDIF (NOALIGN_FLAGS)
 		
 		# Add the user's chosen flags to the build for this directory.
 		SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${SC_C_FLAGS}")

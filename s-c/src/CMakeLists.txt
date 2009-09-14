@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: CMakeLists.txt 5523 2009-09-14 15:47:16Z FloSoft $
+### $Id: CMakeLists.txt 5524 2009-09-14 16:59:56Z FloSoft $
 #################################################################################
 
 INCLUDE(FindSndfile)
@@ -16,8 +16,8 @@ IF (SNDFILE_FOUND)
 
 		CHECK_CXX_COMPILER_FLAG("-mno-align-double" NOALIGN_FLAGS)
 		IF (NOALIGN_FLAGS)
-			SET(SC_C_FLAGS "${SC_C_FLAGS} -mno-align-double");
-			SET(SC_CXX_FLAGS "${SC_CXX_FLAGS} -mno-align-double");
+			SET(SC_C_FLAGS "${SC_C_FLAGS} -mno-align-double")
+			SET(SC_CXX_FLAGS "${SC_CXX_FLAGS} -mno-align-double")
 		ENDIF (NOALIGN_FLAGS)
 		
 		# Add the user's chosen flags to the build for this directory.

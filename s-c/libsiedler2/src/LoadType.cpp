@@ -1,4 +1,4 @@
-// $Id: LoadType.cpp 5500 2009-09-08 18:37:11Z FloSoft $
+// $Id: LoadType.cpp 5532 2009-09-17 16:28:47Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -79,7 +79,7 @@ int libsiedler2::loader::LoadType(unsigned short bobtype, FILE *file, const Arch
 		} break;
 	case BOBTYPE_FONT: // Font
 		{
-			ArchivItem_Font *nitem = (ArchivItem_Font*)(*allocator)(BOBTYPE_FONT, 0, NULL);
+			ArchivItem_Font *nitem = dynamic_cast<ArchivItem_Font*>((*allocator)(BOBTYPE_FONT, 0, NULL));
 			if(nitem->load(file, palette) != 0)
 				return 7;
 			*item = nitem;
@@ -93,7 +93,7 @@ int libsiedler2::loader::LoadType(unsigned short bobtype, FILE *file, const Arch
 		} break;
 	case BOBTYPE_PALETTE: // Palette
 		{
-			ArchivItem_Palette *nitem = (ArchivItem_Palette*)(*allocator)(BOBTYPE_PALETTE, 0, NULL);
+			ArchivItem_Palette *nitem =  dynamic_cast<ArchivItem_Palette*>((*allocator)(BOBTYPE_PALETTE, 0, NULL));
 			if(nitem->load(file) != 0)
 				return 9;
 			*item = nitem;
@@ -121,7 +121,7 @@ int libsiedler2::loader::LoadType(unsigned short bobtype, FILE *file, const Arch
 		} break;
 	case BOBTYPE_TEXT: // Textfile
 		{
-			ArchivItem_Text *nitem = (ArchivItem_Text*)(*allocator)(BOBTYPE_TEXT, 0, NULL);
+			ArchivItem_Text *nitem =  dynamic_cast<ArchivItem_Text*>((*allocator)(BOBTYPE_TEXT, 0, NULL));
 			if(nitem->load(file) != 0)
 				return 13;
 			*item = nitem;

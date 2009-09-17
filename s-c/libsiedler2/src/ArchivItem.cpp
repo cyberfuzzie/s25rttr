@@ -1,4 +1,4 @@
-// $Id: ArchivItem.cpp 5259 2009-07-13 15:53:31Z FloSoft $
+// $Id: ArchivItem.cpp 5532 2009-09-17 16:28:47Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -63,7 +63,7 @@
 libsiedler2::ArchivItem::ArchivItem(void)
 {
 	bobtype = 0;
-	memset(name, 0, 17);
+	memset(name, 0, 64);
 	setName("untitled");
 }
 
@@ -78,7 +78,7 @@ libsiedler2::ArchivItem::ArchivItem(void)
 libsiedler2::ArchivItem::ArchivItem(const ArchivItem *item)
 {
 	bobtype = item->bobtype;
-	memcpy(name, item->name, 17);
+	memcpy(name, item->name, 64);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

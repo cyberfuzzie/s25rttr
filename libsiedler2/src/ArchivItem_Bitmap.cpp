@@ -1,4 +1,4 @@
-// $Id: ArchivItem_Bitmap.cpp 5093 2009-06-23 19:45:20Z FloSoft $
+// $Id: ArchivItem_Bitmap.cpp 5532 2009-09-17 16:28:47Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -821,7 +821,7 @@ void libsiedler2::baseArchivItem_Bitmap::setPalette(const ArchivItem_Palette *pa
 	delete this->palette;
 
 	if(palette)
-		this->palette = (ArchivItem_Palette*)(*allocator)(BOBTYPE_PALETTE, 0, palette);
+		this->palette = dynamic_cast<ArchivItem_Palette*>((*allocator)(BOBTYPE_PALETTE, 0, palette));
 	else
 		this->palette = NULL;
 }

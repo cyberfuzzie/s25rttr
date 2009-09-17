@@ -1,4 +1,4 @@
-// $Id: iwBuilding.cpp 5254 2009-07-12 15:49:16Z FloSoft $
+// $Id: iwBuilding.cpp 5532 2009-09-17 16:28:47Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -101,7 +101,6 @@ iwBuilding::iwBuilding(GameWorldViewer * const gwv,dskGameInterface *const gi,no
 	if(building->GetBuildingType() == BLD_CATAPULT || building->GetBuildingType() == BLD_LOOKOUTTOWER)
 		productivity->SetVisible(false);
 
-
 	ctrlText *text = AddText(10, 113, 50, _("(House unoccupied)"), COLOR_RED, glArchivItem_Font::DF_CENTER, NormalFont); 
 
 	text->SetVisible(!building->HasWorker());
@@ -131,9 +130,8 @@ void iwBuilding::Msg_PaintAfter()
 			for(unsigned char z = 0; z < 2; ++z)
 			{
 				glArchivItem_Bitmap *bitmap = LOADER.GetMapImageN(2250+USUAL_BUILDING_CONSTS[building->GetBuildingType()-10].wares_needed[i]);
-				bitmap->Draw(GetX()+52 + 24 * (i*2 + z), GetY()+72, 0, 0, 0, 0, 0, 0, (z < building->GetWares(i) ? 0xFFFFFFFF : 0xFFA0A0A0) );
+				bitmap->Draw(GetX()+52 + 24 * (i*2 + z), GetY()+72, 0, 0, 0, 0, 0, 0, (z < building->GetWares(i) ? 0xFFFFFFFF : 0xFF404040) );
 			}
-
 		}
 	}
 	else
@@ -143,21 +141,22 @@ void iwBuilding::Msg_PaintAfter()
 			if(USUAL_BUILDING_CONSTS[building->GetBuildingType()-10].wares_needed[i] == GD_NOTHING)
 				break;
 
-
 			// 6x Waren, je nachdem ob sie da sind, bei Katapult 4!
 			unsigned wares_count = (building->GetBuildingType() == BLD_CATAPULT)?4:6;
-
-
 
 			// "Schwarzer Rahmen"
 			DrawRectangle(GetX() + width/2 - 24 * wares_count / 2, GetY()+60 + i*29, 24*wares_count, 24, 0x80000000);
 
-			
 			for(unsigned char z = 0; z < wares_count; ++z)
 			{
 				glArchivItem_Bitmap *bitmap = LOADER.GetMapImageN(2250+USUAL_BUILDING_CONSTS[building->GetBuildingType()-10].wares_needed[i]);
-				bitmap->Draw(GetX() + width/2 - 24 * wares_count / 2 + 24*z+12, GetY()+72 + i*28, 0, 0, 0, 0, 0, 0, (z < building->GetWares(i) ? 0xFFFFFFFF : 0xFFA0A0A0) );
+				bitmap->Draw(GetX() + width/2 - 24 * wares_count / 2 + 24*z+12, GetY()+72 + i*28, 0, 0, 0, 0, 0, 0, (z < building->GetWares(i) ? 0xFFFFFFFF : 0xFF404040) );
+				
 			}
+
+			std::stringstream text;
+			text << (unsigned int)building->GetWares(i) << "/" << wares_count;
+			NormalFont->Draw(GetX() + width/2, GetY()+60+12 + i*29, text.str(), glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_VCENTER);
 		}
 	}
 }

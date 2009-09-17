@@ -242,7 +242,6 @@ msgstr "Auto save every:"
 msgid "Axe"
 msgstr "Axe"
 
-
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:70
 msgid "Back"
 msgstr "Back"

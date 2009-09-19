@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 5486 2009-09-07 15:41:39Z FloSoft $
+### $Id: CMakeLists.txt 5538 2009-09-19 15:54:35Z FloSoft $
 ################################################################################
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
@@ -16,8 +16,8 @@ INCLUDE(cmake/crosscompile.cmake)
 PROJECT(s25client)
 
 SET(PREFIX  CACHE STRING "Path prefix")
-SET(BINDIR  CACHE PATH "Directory for the binaries")
-SET(DATADIR CACHE PATH "Data directory")
+SET(BINDIR  CACHE STRING "Directory for the binaries")
+SET(DATADIR CACHE STRING "Data directory")
 
 IF (PREFIX AND NOT DATADIR)
 	SET(DATADIR ${PREFIX}/share/s25rttr)

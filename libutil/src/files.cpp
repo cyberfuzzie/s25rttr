@@ -1,4 +1,4 @@
-// $Id: files.cpp 5546 2009-09-22 11:40:48Z FloSoft $
+// $Id: files.cpp 5547 2009-09-22 17:43:19Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -25,6 +25,47 @@
 #ifdef _WIN32
 #undef DATADIR
 #include <shlobj.h>
+#endif
+
+#ifdef __MINGW__
+
+typedef GUID KNOWNFOLDERID;
+#define REFKNOWNFOLDERID const KNOWNFOLDERID &
+
+#define DEFINE_KNOWN_FOLDER(name, l, w1, w2, b1, b2, b3, b4, b5, b6, b7, b8) \
+        EXTERN_C const GUID DECLSPEC_SELECTANY name \
+                = { l, w1, w2, { b1, b2,  b3,  b4,  b5,  b6,  b7,  b8 } }
+
+typedef HRESULT (WINAPI* nsGetKnownFolderPath)(REFKNOWNFOLDERID rfid, DWORD dwFlags, HANDLE hToken, PWSTR *ppszPath);
+
+static nsGetKnownFolderPath gGetKnownFolderPath = NULL;
+static HINSTANCE gShell32DLLInst = NULL;
+
+// make SHGetKnownFolderPath known
+HRESULT SHGetKnownFolderPath(REFKNOWNFOLDERID rfid, DWORD dwFlags, HANDLE hToken, PWSTR *ppszPath)
+{
+	if(!gShell32DLLInst)
+		gShell32DLLInst = LoadLibraryW(L"Shell32.dll");
+	
+	if(gShell32DLLInst)
+		gGetKnownFolderPath = (nsGetKnownFolderPath)GetProcAddress(gShell32DLLInst, "SHGetKnownFolderPath");
+
+	if(gGetKnownFolderPath)
+		return gGetKnownFolderPath(rfid, dwFlags, hToken, ppszPath);
+
+	return S_FALSE;
+}
+
+#define KF_FLAG_CREATE              0x00008000  // Make sure that the folder already exists or create it and apply security specified in folder definition
+                                                // If folder can not be created then function will return failure and no folder path (IDList) will be returned
+                                                // If folder is located on the network the function may take long time to execute
+
+// {4C5C32FF-BB9D-43b0-B5B4-2D72E54EAAA4}
+DEFINE_KNOWN_FOLDER(FOLDERID_SavedGames,          0x4c5c32ff, 0xbb9d, 0x43b0, 0xb5, 0xb4, 0x2d, 0x72, 0xe5, 0x4e, 0xaa, 0xa4);
+
+// {FDD39AD0-238F-46AF-ADB4-6C85480369C7}
+DEFINE_KNOWN_FOLDER(FOLDERID_Documents,           0xFDD39AD0, 0x238F, 0x46AF, 0xAD, 0xB4, 0x6C, 0x85, 0x48, 0x03, 0x69, 0xC7);
+
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////

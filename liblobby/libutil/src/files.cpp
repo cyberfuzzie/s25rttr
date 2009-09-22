@@ -1,4 +1,4 @@
-// $Id: files.cpp 5548 2009-09-22 18:57:11Z FloSoft $
+// $Id: files.cpp 5549 2009-09-22 20:57:19Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -25,47 +25,6 @@
 #ifdef _WIN32
 #undef DATADIR
 #include <shlobj.h>
-#endif
-
-#ifdef __MINGW__
-
-typedef GUID KNOWNFOLDERID;
-#define REFKNOWNFOLDERID const KNOWNFOLDERID &
-
-#define DEFINE_KNOWN_FOLDER(name, l, w1, w2, b1, b2, b3, b4, b5, b6, b7, b8) \
-        EXTERN_C const GUID DECLSPEC_SELECTANY name \
-                = { l, w1, w2, { b1, b2,  b3,  b4,  b5,  b6,  b7,  b8 } }
-
-typedef HRESULT (WINAPI* nsGetKnownFolderPath)(REFKNOWNFOLDERID rfid, DWORD dwFlags, HANDLE hToken, PWSTR *ppszPath);
-
-static nsGetKnownFolderPath gGetKnownFolderPath = NULL;
-static HINSTANCE gShell32DLLInst = NULL;
-
-// make SHGetKnownFolderPath known
-HRESULT SHGetKnownFolderPath(REFKNOWNFOLDERID rfid, DWORD dwFlags, HANDLE hToken, PWSTR *ppszPath)
-{
-	if(!gShell32DLLInst)
-		gShell32DLLInst = LoadLibraryW(L"Shell32.dll");
-	
-	if(gShell32DLLInst)
-		gGetKnownFolderPath = (nsGetKnownFolderPath)GetProcAddress(gShell32DLLInst, "SHGetKnownFolderPath");
-
-	if(gGetKnownFolderPath)
-		return gGetKnownFolderPath(rfid, dwFlags, hToken, ppszPath);
-
-	return S_FALSE;
-}
-
-#define KF_FLAG_CREATE              0x00008000  // Make sure that the folder already exists or create it and apply security specified in folder definition
-                                                // If folder can not be created then function will return failure and no folder path (IDList) will be returned
-                                                // If folder is located on the network the function may take long time to execute
-
-// {4C5C32FF-BB9D-43b0-B5B4-2D72E54EAAA4}
-DEFINE_KNOWN_FOLDER(FOLDERID_SavedGames,          0x4c5c32ff, 0xbb9d, 0x43b0, 0xb5, 0xb4, 0x2d, 0x72, 0xe5, 0x4e, 0xaa, 0xa4);
-
-// {FDD39AD0-238F-46AF-ADB4-6C85480369C7}
-DEFINE_KNOWN_FOLDER(FOLDERID_Documents,           0xFDD39AD0, 0x238F, 0x46AF, 0xAD, 0xB4, 0x6C, 0x85, 0x48, 0x03, 0x69, 0xC7);
-
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -128,46 +87,50 @@ std::string GetFilePath(std::string file)
 	{
 		std::stringstream s;
 #ifdef _WIN32
-		LPWSTR ppszPath = NULL;
-		int path = 0;
 
-		if(SHGetKnownFolderPath(FOLDERID_SavedGames, KF_FLAG_CREATE, NULL, &ppszPath) == S_OK)
+// >= Vista: "Saved Games"
+#	if (NTDDI_VERSION >= NTDDI_LONGHORN)
+		int path = 0;
+		LPWSTR ppszPath = NULL;
+		std::string append = "";
+
+		// "$User\Saved Games"
+		if(SHGetKnownFolderPath(FOLDERID_SavedGames, KF_FLAG_CREATE, NULL, &ppszPath) != S_OK)
 		{
-			path = 1;
-		}
-		// no savedgames, "use $Documents\My Games"
-		else if(SUCCEEDED(SHGetFolderPathW(NULL,CSIDL_PERSONAL|CSIDL_FLAG_CREATE, SHGFP_TYPE_CURRENT, &ppszPath))
-		{
-			path = 2;
-		}
-		// no documents, use %APPDATA%
-		else
-		{
-			path = 0;
+			// "$Documents\My Games"
+			if(SHGetKnownFolderPath(FOLDERID_Documents, KF_FLAG_CREATE, NULL, &ppszPath) == S_OK)
+			{
+				append = "\\My Games";
+			}
 		}
 
 		if(ppszPath)
 		{
 			LPSTR ppszPathA = UnicodeToAnsi(ppszPath);
-			s << ppszPathA;
+			s << ppszPathA << append;
 			CoTaskMemFree(ppszPath);
+			delete[] ppszPathA;
 		}
+// < Vista: "$Documents\My Games"
+#	else
+		WSTR ppszPath[MAX_PATH];
 
-		switch(path)
+		// "$Documents\My Games"
+		if(SUCCEEDED(SHGetFolderPathW(NULL, CSIDL_PERSONAL|CSIDL_FLAG_CREATE, SHGFP_TYPE_CURRENT, &ppszPath))
 		{
-		case 0: // AppData
-			{
-				s << getenv("APPDATA");
-			} break;
-		case 1: // Saved Games
-			{
-			} break;
-		case 2: // $Documents\My Games
-			{
-				s << "\\My Games";
-			} break;
+			LPSTR ppszPathA = UnicodeToAnsi(ppszPath);
+			s << ppszPathA << "\\My Games";
+			delete[] ppszPathA;
 		}
+#	endif
+
+		// Kein Pfad gefunden, $AppData verwenden
+		if(s.str() == "")
+			s << getenv("APPDATA");
+
+// linux, apple
 #else
+		// $Home verwenden
 		s << getenv("HOME");
 #endif
 

@@ -1,4 +1,4 @@
-// $Id: files.cpp 5545 2009-09-22 11:19:53Z FloSoft $
+// $Id: files.cpp 5546 2009-09-22 11:40:48Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -88,15 +88,21 @@ std::string GetFilePath(std::string file)
 		std::stringstream s;
 #ifdef _WIN32
 		LPWSTR ppszPath = NULL;
+		int path = 0;
 
-		if(SHGetKnownFolderPath(FOLDERID_SavedGames, KF_FLAG_CREATE, NULL, &ppszPath) != S_OK)
+		if(SHGetKnownFolderPath(FOLDERID_SavedGames, KF_FLAG_CREATE, NULL, &ppszPath) == S_OK)
 		{
-			// no savedgames
-
-			if(SHGetKnownFolderPath(FOLDERID_RoamingAppData, KF_FLAG_CREATE, NULL, &ppszPath) != S_OK)
-			{
-				// no appdata???
-			}
+			path = 1;
+		}
+		// no savedgames, "use $Documents\My Games"
+		else if(SHGetKnownFolderPath(FOLDERID_Documents, KF_FLAG_CREATE, NULL, &ppszPath) == S_OK)
+		{
+			path = 2;
+		}
+		// no documents, use %APPDATA%
+		else
+		{
+			path = 0;
 		}
 
 		if(ppszPath)
@@ -105,8 +111,21 @@ std::string GetFilePath(std::string file)
 			s << ppszPathA;
 			CoTaskMemFree(ppszPath);
 		}
-		else
-			s << getenv("APPDATA");
+
+		switch(path)
+		{
+		case 0: // AppData
+			{
+				s << getenv("APPDATA");
+			} break;
+		case 1: // Saved Games
+			{
+			} break;
+		case 2: // $Documents\My Games
+			{
+				s << "\\My Games";
+			} break;
+		}
 #else
 		s << getenv("HOME");
 #endif

@@ -1,4 +1,4 @@
-// $Id: files.cpp 5295 2009-07-19 08:28:07Z FloSoft $
+// $Id: files.cpp 5545 2009-09-22 11:19:53Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -22,12 +22,50 @@
 #include "main.h"
 #include "files.h"
 
+#ifdef _WIN32
+#undef DATADIR
+#include <shlobj.h>
+#endif
+
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
 #if defined _WIN32 && defined _DEBUG && defined _MSC_VER
 #define new new(_NORMAL_BLOCK, THIS_FILE, __LINE__)
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
+#endif
+
+#ifdef _WIN32
+LPSTR UnicodeToAnsi(LPCWSTR s)
+{
+	if (s==NULL) 
+		return NULL;
+
+	int cw = lstrlenW(s);
+	if (cw==0)
+	{
+		CHAR *psz = new CHAR[1];
+		*psz = '\0';
+		return psz;
+	}
+	
+	int cc = WideCharToMultiByte(CP_ACP, 0, s, cw, NULL, 0, NULL, NULL);
+
+	if (cc==0)
+		return NULL;
+
+	CHAR *psz = new CHAR[cc + 1];
+	
+	cc = WideCharToMultiByte(CP_ACP, 0, s, cw, psz, cc, NULL, NULL);
+	if (cc == 0) 
+	{
+		delete[] psz;
+		return NULL;
+	}
+	
+	psz[cc] = '\0';
+	return psz;
+}
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -48,10 +86,37 @@ std::string GetFilePath(std::string file)
 	if(file.at(0) == '~') 
 	{
 		std::stringstream s;
-		s << getenv("HOME") << file.substr(1);
+#ifdef _WIN32
+		LPWSTR ppszPath = NULL;
+
+		if(SHGetKnownFolderPath(FOLDERID_SavedGames, KF_FLAG_CREATE, NULL, &ppszPath) != S_OK)
+		{
+			// no savedgames
+
+			if(SHGetKnownFolderPath(FOLDERID_RoamingAppData, KF_FLAG_CREATE, NULL, &ppszPath) != S_OK)
+			{
+				// no appdata???
+			}
+		}
+
+		if(ppszPath)
+		{
+			LPSTR ppszPathA = UnicodeToAnsi(ppszPath);
+			s << ppszPathA;
+			CoTaskMemFree(ppszPath);
+		}
+		else
+			s << getenv("APPDATA");
+#else
+		s << getenv("HOME");
+#endif
+
+		s << file.substr(1);
+
 		to = s.str();
 	}
 
+	std::replace(to.begin(), to.end(), '\\', '/');
 	return to;
 }
 

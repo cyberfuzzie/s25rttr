@@ -1,4 +1,4 @@
-// $Id: main.cpp 5500 2009-09-08 18:37:11Z FloSoft $
+// $Id: main.cpp 5545 2009-09-22 11:19:53Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -130,7 +130,7 @@ int main(int argc, char *argv[])
 		#endif
 	}
 
-	libsiedler2::setTextureFormat(libsiedler2::FORMAT_PALETTED);
+	libsiedler2::setTextureFormat(libsiedler2::FORMAT_RGBA);
 	libsiedler2::setAllocator(glAllocator);
 
 	// Zufallsgenerator initialisieren (Achtung: nur für Animationens-Offsets interessant, für alles andere (spielentscheidende) wird unser Generator verwendet)

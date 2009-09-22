@@ -1,4 +1,4 @@
-// $Id: Loader.cpp 5259 2009-07-13 15:53:31Z FloSoft $
+// $Id: Loader.cpp 5545 2009-09-22 11:19:53Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -117,10 +117,15 @@ bool Loader::LoadFilesFromArray(const unsigned int files_count, const unsigned i
 			// yes, load all files in the directory
 			unsigned int ladezeit = VideoDriverWrapper::inst().GetTickCount();
 
-			LOG.lprintf("Lade LST Dateien aus \"%s\"\n", GetFilePath(FILE_PATHS[ files[i] ]).c_str());
+			LOG.lprintf("Lade LST,BMP,IDX,TXT Dateien aus \"%s\"\n", GetFilePath(FILE_PATHS[ files[i] ]).c_str());
 
 			std::list<std::string> lst;
 			ListDir(GetFilePath(FILE_PATHS[ files[i] ]) + "*.lst", NULL, NULL, &lst);
+			ListDir(GetFilePath(FILE_PATHS[ files[i] ]) + "*.idx", NULL, NULL, &lst);
+			ListDir(GetFilePath(FILE_PATHS[ files[i] ]) + "*.bmp", NULL, NULL, &lst);
+			ListDir(GetFilePath(FILE_PATHS[ files[i] ]) + "*.txt", NULL, NULL, &lst);
+			ListDir(GetFilePath(FILE_PATHS[ files[i] ]) + "*.ger", NULL, NULL, &lst);
+			ListDir(GetFilePath(FILE_PATHS[ files[i] ]) + "*.eng", NULL, NULL, &lst);
 
 			for(std::list<std::string>::iterator i = lst.begin(); i != lst.end(); ++i)
 			{

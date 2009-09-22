@@ -1,4 +1,4 @@
-// $Id: files.cpp 5547 2009-09-22 17:43:19Z FloSoft $
+// $Id: files.cpp 5548 2009-09-22 18:57:11Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -136,7 +136,7 @@ std::string GetFilePath(std::string file)
 			path = 1;
 		}
 		// no savedgames, "use $Documents\My Games"
-		else if(SHGetKnownFolderPath(FOLDERID_Documents, KF_FLAG_CREATE, NULL, &ppszPath) == S_OK)
+		else if(SUCCEEDED(SHGetFolderPathW(NULL,CSIDL_PERSONAL|CSIDL_FLAG_CREATE, SHGFP_TYPE_CURRENT, &ppszPath))
 		{
 			path = 2;
 		}

@@ -1,4 +1,4 @@
-// $Id: files.cpp 5549 2009-09-22 20:57:19Z FloSoft $
+// $Id: files.cpp 5552 2009-09-23 08:43:38Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -27,6 +27,23 @@
 #include <shlobj.h>
 #endif
 
+#ifdef __MINGW__
+
+typedef GUID KNOWNFOLDERID;
+#define REFKNOWNFOLDERID const KNOWNFOLDERID &
+
+#define DEFINE_KNOWN_FOLDER(name, l, w1, w2, b1, b2, b3, b4, b5, b6, b7, b8) \
+        EXTERN_C const GUID DECLSPEC_SELECTANY name = { l, w1, w2, { b1, b2,  b3,  b4,  b5,  b6,  b7,  b8 } }
+
+#define KF_FLAG_CREATE 0x00008000
+
+// {4C5C32FF-BB9D-43b0-B5B4-2D72E54EAAA4}
+DEFINE_KNOWN_FOLDER(FOLDERID_SavedGames, 0x4c5c32ff, 0xbb9d, 0x43b0, 0xb5, 0xb4, 0x2d, 0x72, 0xe5, 0x4e, 0xaa, 0xa4);
+// {FDD39AD0-238F-46AF-ADB4-6C85480369C7}
+DEFINE_KNOWN_FOLDER(FOLDERID_Documents,  0xFDD39AD0, 0x238F, 0x46AF, 0xAD, 0xB4, 0x6C, 0x85, 0x48, 0x03, 0x69, 0xC7);
+
+#endif // __MINGW__
+
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
 #if defined _WIN32 && defined _DEBUG && defined _MSC_VER
@@ -36,7 +53,13 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 #ifdef _WIN32
-LPSTR UnicodeToAnsi(LPCWSTR s)
+
+typedef HRESULT (WINAPI* LPSHGetKnownFolderPath)(REFKNOWNFOLDERID rfid, DWORD dwFlags, HANDLE hToken, PWSTR *ppszPath);
+
+static LPSHGetKnownFolderPath gSHGetKnownFolderPath = NULL;
+static HINSTANCE gShell32DLLInst = NULL;
+
+static LPSTR UnicodeToAnsi(LPCWSTR s)
 {
 	if (s==NULL) 
 		return NULL;
@@ -66,7 +89,51 @@ LPSTR UnicodeToAnsi(LPCWSTR s)
 	psz[cc] = '\0';
 	return psz;
 }
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Wrapper um SHGetKnownFolderPath, unter Vista und Größer benutzt es das 
+ *  originale SHGetKnownFolderPath, ansonsten SHGetFolderPath.
+ *
+ *  @param[in] rfid
+ *  @param[in] path
+ *
+ *  @return liefert den Status zurück (S_OK bei OK)
+ *
+ *  @author FloSoft
+ */
+static HRESULT mySHGetKnownFolderPath(REFKNOWNFOLDERID rfid, std::string &path)
+{
+	HRESULT retval = S_FALSE;
+	LPWSTR ppszPath = NULL;
+
+	if(!gShell32DLLInst)
+		gShell32DLLInst = LoadLibraryW(L"Shell32.dll");
+	
+	if(gShell32DLLInst && !gSHGetKnownFolderPath)
+		gSHGetKnownFolderPath = (LPSHGetKnownFolderPath)GetProcAddress(gShell32DLLInst, "SHGetKnownFolderPath");
+
+	if(gSHGetKnownFolderPath)
+		retval = gSHGetKnownFolderPath(rfid, KF_FLAG_CREATE, NULL, &ppszPath);
+	else if(rfid == FOLDERID_Documents)
+	{
+		ppszPath = (LPWSTR)CoTaskMemAlloc(MAX_PATH * sizeof(WCHAR));
+		if(SUCCEEDED(SHGetFolderPathW(NULL, CSIDL_PERSONAL|CSIDL_FLAG_CREATE, NULL, SHGFP_TYPE_CURRENT, ppszPath)))
+			retval = S_OK;
+	}
+
+	if(ppszPath)
+	{
+		LPSTR ppszPathA = UnicodeToAnsi(ppszPath);
+		path = ppszPathA;
+		CoTaskMemFree(ppszPath);
+		delete[] ppszPathA;
+	}
+
+	return retval;
+}
 #endif
+
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
@@ -87,42 +154,19 @@ std::string GetFilePath(std::string file)
 	{
 		std::stringstream s;
 #ifdef _WIN32
-
-// >= Vista: "Saved Games"
-#	if (NTDDI_VERSION >= NTDDI_LONGHORN)
-		int path = 0;
-		LPWSTR ppszPath = NULL;
-		std::string append = "";
+		std::string path = "";
 
 		// "$User\Saved Games"
-		if(SHGetKnownFolderPath(FOLDERID_SavedGames, KF_FLAG_CREATE, NULL, &ppszPath) != S_OK)
+		if(mySHGetKnownFolderPath(FOLDERID_SavedGames, path) != S_OK)
 		{
 			// "$Documents\My Games"
-			if(SHGetKnownFolderPath(FOLDERID_Documents, KF_FLAG_CREATE, NULL, &ppszPath) == S_OK)
+			if(mySHGetKnownFolderPath(FOLDERID_Documents, path) == S_OK)
 			{
-				append = "\\My Games";
+				path += "\\My Games";
 			}
 		}
 
-		if(ppszPath)
-		{
-			LPSTR ppszPathA = UnicodeToAnsi(ppszPath);
-			s << ppszPathA << append;
-			CoTaskMemFree(ppszPath);
-			delete[] ppszPathA;
-		}
-// < Vista: "$Documents\My Games"
-#	else
-		WSTR ppszPath[MAX_PATH];
-
-		// "$Documents\My Games"
-		if(SUCCEEDED(SHGetFolderPathW(NULL, CSIDL_PERSONAL|CSIDL_FLAG_CREATE, SHGFP_TYPE_CURRENT, &ppszPath))
-		{
-			LPSTR ppszPathA = UnicodeToAnsi(ppszPath);
-			s << ppszPathA << "\\My Games";
-			delete[] ppszPathA;
-		}
-#	endif
+		s << path;
 
 		// Kein Pfad gefunden, $AppData verwenden
 		if(s.str() == "")

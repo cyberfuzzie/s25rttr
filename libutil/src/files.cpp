@@ -1,4 +1,4 @@
-// $Id: files.cpp 5552 2009-09-23 08:43:38Z FloSoft $
+// $Id: files.cpp 5553 2009-09-23 08:58:53Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -118,7 +118,7 @@ static HRESULT mySHGetKnownFolderPath(REFKNOWNFOLDERID rfid, std::string &path)
 	else if(rfid == FOLDERID_Documents)
 	{
 		ppszPath = (LPWSTR)CoTaskMemAlloc(MAX_PATH * sizeof(WCHAR));
-		if(SUCCEEDED(SHGetFolderPathW(NULL, CSIDL_PERSONAL|CSIDL_FLAG_CREATE, NULL, SHGFP_TYPE_CURRENT, ppszPath)))
+		if(SUCCEEDED(SHGetFolderPathW(NULL, CSIDL_PERSONAL|CSIDL_FLAG_CREATE, NULL, 0, ppszPath)))
 			retval = S_OK;
 	}
 

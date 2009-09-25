@@ -35,8 +35,8 @@ else
 	cp -v ../../$BUILDDIR/s-c/src/sound-convert share/s25rttr/RTTR/sound-convert.exe
 fi
 
-#cp -v /usr/i586-mingw32msvc/bin/libsamplerate.dll share/s25rttr/RTTR
-#cp -v /usr/i586-mingw32msvc/bin/libsndfile-1.dll share/s25rttr/RTTR
+cp -v /usr/i586-mingw32msvc/bin/libsamplerate.dll share/s25rttr/RTTR
+cp -v /usr/i586-mingw32msvc/bin/libsndfile-1.dll share/s25rttr/RTTR
 
 cp -v /usr/i586-mingw32msvc/bin/libiconv2.dll .
 cp -v /usr/i586-mingw32msvc/bin/libintl3.dll .

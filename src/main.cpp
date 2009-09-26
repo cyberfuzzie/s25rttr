@@ -1,4 +1,4 @@
-// $Id: main.cpp 5545 2009-09-22 11:19:53Z FloSoft $
+// $Id: main.cpp 5561 2009-09-26 08:08:39Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -78,6 +78,36 @@ void ExceptionHandler (unsigned int exception_type, _EXCEPTION_POINTERS* excepti
 }
 #endif // _WIN32 && _DEBUG && !NOHWETRANS
 
+int mkdir_p(const std::string dir)
+{
+	if (
+#ifdef _WIN32
+		!CreateDirectory(dir.c_str(), NULL)
+#else
+		mkdir(dir.c_str(), 0750) < 0
+#endif
+	)
+	{
+		size_t slash = dir.rfind('/');
+		if (slash != std::string::npos) 
+		{
+			std::string prefix = dir.substr(0, slash);
+			if(mkdir_p(prefix) == 0)
+			{
+				return (
+#ifdef _WIN32
+					CreateDirectory(dir.c_str(), NULL) ? 0 : -1
+#else
+					mkdir(dir.c_str(), 0750)
+#endif
+				);
+			}
+		}
+		return -1;
+	}
+	return 0;
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 /**
  *  Hauptfunktion von Siedler II.5 Return to the Roots
@@ -122,12 +152,13 @@ int main(int argc, char *argv[])
 	for(unsigned int i = 0; i < dir_count; ++i)
 	{
 		std::string dir = GetFilePath(FILE_PATHS[dirs[i]]);
-		
-		#ifdef _WIN32
-			CreateDirectory(dir.c_str(), NULL);
-		#else
-			mkdir(dir.c_str(), 0750);
-		#endif
+
+		if(mkdir_p(dir) < 0)
+		{
+			error("Verzeichnis %s konnte nicht erstellt werden: ", dir.c_str());
+			error("Das Spiel konnte nicht gestartet werden");
+			return 1;
+		}
 	}
 
 	libsiedler2::setTextureFormat(libsiedler2::FORMAT_RGBA);
@@ -147,11 +178,12 @@ int main(int argc, char *argv[])
 	}
 
 	// Spiel starten
-	if(!GAMEMANAGER.Start()){
-
+	if(!GAMEMANAGER.Start())
+	{
         error("Das Spiel konnte nicht gestartet werden");
 		return 1;
 	}
+
 	// Hauptschleife
 	while(GAMEMANAGER.Run())
 	{

@@ -1,4 +1,4 @@
-// $Id: main.cpp 5561 2009-09-26 08:08:39Z FloSoft $
+// $Id: main.cpp 5564 2009-09-27 15:21:14Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -80,6 +80,9 @@ void ExceptionHandler (unsigned int exception_type, _EXCEPTION_POINTERS* excepti
 
 int mkdir_p(const std::string dir)
 {
+	if(IsDir(dir))
+		return 0;
+
 	if (
 #ifdef _WIN32
 		!CreateDirectory(dir.c_str(), NULL)

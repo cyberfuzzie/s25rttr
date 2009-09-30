@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: CMakeLists.txt 5486 2009-09-07 15:41:39Z FloSoft $
+### $Id: CMakeLists.txt 5571 2009-09-30 17:58:59Z FloSoft $
 #################################################################################
 
 IF ("${COMPILEFOR}/${COMPILEARCH}" STREQUAL "linux/i686" )
@@ -14,7 +14,7 @@ IF ("${COMPILEFOR}/${COMPILEARCH}" STREQUAL "linux/i686" )
 	
 		ADD_CUSTOM_COMMAND(TARGET videoGLFW POST_BUILD COMMAND ln -fvs GLFW/src/libvideoGLFW${CMAKE_SHARED_LIBRARY_SUFFIX} ../../videoGLFW${CMAKE_SHARED_LIBRARY_SUFFIX})
 	
-		INSTALL(TARGETS videoGLFW DESTINATION share/s25rttr/driver/video)
+		INSTALL(TARGETS videoGLFW DESTINATION ${DATADIR}/driver/video)
 	ELSE (GLFW_LIBRARY)
 		MESSAGE(WARNING ": GLFW library not found: Not building GLFW videodriver")
 	ENDIF (GLFW_LIBRARY)

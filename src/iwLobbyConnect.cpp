@@ -1,4 +1,4 @@
-// $Id: iwLobbyConnect.cpp 5259 2009-07-13 15:53:31Z FloSoft $
+// $Id: iwLobbyConnect.cpp 5575 2009-10-01 15:43:40Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -30,6 +30,7 @@
 #include "LobbyClient.h"
 
 #include "dskLobby.h"
+#include "iwMsgbox.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -209,6 +210,9 @@ void iwLobbyConnect::Msg_ButtonClick(const unsigned int ctrl_id)
 		} break;
 	case 8: // Registrieren
 		{
+			WindowManager::inst().Show(new iwMsgbox(_("Error"), _("To register, you have to create a valid board account at http://forum.siedler25.org at the moment.\n"), this, MSB_OK, MSB_EXCLAMATIONRED, 0));
+
+			/*
 			// Text auf "Verbinde mit Host..." setzen und Button deaktivieren
 			SetText( _("Connecting with Host..."), COLOR_RED, false);
 
@@ -217,7 +221,7 @@ void iwLobbyConnect::Msg_ButtonClick(const unsigned int ctrl_id)
 			LobbyForm(user, pass, email);
 
 			if( user == "" || pass == "" || email == "")
-		{
+			{
 				// Einige Felder nicht ausgefüllt
 				SetText(_("Please fill out all fields!"), COLOR_RED, true);
 				break; // raus
@@ -227,7 +231,7 @@ void iwLobbyConnect::Msg_ButtonClick(const unsigned int ctrl_id)
 			{
 				SetText(_("Connection failed!"), COLOR_RED, true);
 				break;
-			}
+			}*/
 		} break;
 	}
 }

@@ -1,4 +1,4 @@
-// $Id: LobbyServer.cpp 4936 2009-05-24 15:17:07Z FloSoft $
+// $Id: LobbyServer.cpp 5576 2009-10-01 15:44:10Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -391,7 +391,7 @@ void LobbyServer::OnNMSLobbyRegister(unsigned int id, const unsigned int revisio
 	}
 	else
 	{
-		if(MYSQLCLIENT.RegisterUser(user, pass, email))
+		/*if(MYSQLCLIENT.RegisterUser(user, pass, email))
 		{
 			LOG.lprintf("User %s registered\n", user.c_str());
 
@@ -404,7 +404,12 @@ void LobbyServer::OnNMSLobbyRegister(unsigned int id, const unsigned int revisio
 			player.Send(new LobbyMessage_Register_Error("Registrierung fehlgeschlagen: Datenbankfehler oder Benutzer existiert schon"));
 
 			Disconnect(player);
-		}
+		}*/
+		LOG.lprintf("User %s tried to register\n", user.c_str());
+
+		player.Send(new LobbyMessage_Register_Error("To register, you have to create a valid board account at\nhttp://forum.siedler25.org\nat the moment.\n"));
+
+		Disconnect(player);
 	}
 }
 

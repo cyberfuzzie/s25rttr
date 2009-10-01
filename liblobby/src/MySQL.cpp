@@ -1,4 +1,4 @@
-// $Id: MySQL.cpp 4988 2009-06-02 16:52:14Z FloSoft $
+// $Id: MySQL.cpp 5576 2009-10-01 15:44:10Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -124,7 +124,8 @@ bool MySQL::LoginUser(const std::string &user, const std::string &pass, std::str
 	mysql_real_escape_string(m_pMySQL, pass2, pass.c_str(), (unsigned long)pass.length());
 
 	char query[1024];
-	snprintf(query, 1024, "SELECT * FROM `lobby_users` WHERE `user` = '%s' AND `pass` = '%s' AND `email` IS NOT NULL LIMIT 1;", user2, pass2);
+	//snprintf(query, 1024, "SELECT * FROM `lobby_users` WHERE `user` = '%s' AND `pass` = DES_ENCRYPT('%s', '%s') AND `email` IS NOT NULL LIMIT 1;", user2, pass2, user2);
+	snprintf(query, 1024, "SELECT `username`,`useremail` FROM `tb_user` WHERE `username` = '%s' AND `userpassword` = MD5('%s') AND `userbanned` = 0 AND `useremail` IS NOT NULL LIMIT 1;", user2, pass2);
 
 	// LOG.lprintf("%s\n", query);
 
@@ -145,9 +146,9 @@ bool MySQL::LoginUser(const std::string &user, const std::string &pass, std::str
 
 	// LOG.lprintf("%s %s %s %s\n", Row[0], Row[1], Row[2], Row[3]);
 
-	if( (strcmp(Row[1], user2) == 0) && (strcmp(Row[2], pass2) == 0) && Row[3] )
+	if( (strcmp(Row[0], user2) == 0) && Row[1] )
 	{
-		email = Row[3];
+		email = Row[1];
 		mysql_free_result(pResult);
 		return true;
 	}
@@ -166,7 +167,10 @@ bool MySQL::RegisterUser(const std::string &user, const std::string &pass, const
 	mysql_real_escape_string(m_pMySQL, pass2, pass.c_str(), (unsigned long)pass.length());
 	mysql_real_escape_string(m_pMySQL, email2, email.c_str(), (unsigned long)email.length());
 
-	snprintf(query, 1024, "SELECT * FROM `lobby_users` WHERE `user` = '%s' LIMIT 1;", user2);
+	//snprintf(query, 1024, "SELECT * FROM `lobby_users` WHERE `user` = '%s' LIMIT 1;", user2);
+
+	// not implemented
+	return false;
 
 	if(!DoQuery(query))
 		return false;
@@ -184,7 +188,7 @@ bool MySQL::RegisterUser(const std::string &user, const std::string &pass, const
 
 	mysql_free_result(pResult);
 
-	snprintf(query, 1024, "INSERT INTO `lobby_users` VALUES ( '', '%s', '%s', '%s', '0', '0' )", user2, pass2, email2);
+	snprintf(query, 1024, "INSERT INTO `lobby_users` VALUES ( '', '%s', DES_ENCRYPT('%s', '%s'), '%s', '0', '0' )", user2, pass2, user2, email2);
 
 	if(!DoQuery(query))
 		return false;

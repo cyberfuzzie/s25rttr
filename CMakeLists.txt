@@ -1,6 +1,8 @@
 ################################################################################
-### $Id: CMakeLists.txt 5574 2009-10-01 10:57:54Z FloSoft $
+### $Id: CMakeLists.txt 5582 2009-10-02 13:32:10Z FloSoft $
 ################################################################################
+
+PROJECT(s25client)
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 CMAKE_POLICY(SET CMP0003 OLD)
@@ -12,8 +14,6 @@ SET(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules)
 INCLUDE(cmake/crosscompile.cmake)
 
 ################################################################################
-
-PROJECT(s25client)
 
 SET(PREFIX  CACHE STRING "Path prefix")
 SET(BINDIR  CACHE STRING "Directory for the binaries")

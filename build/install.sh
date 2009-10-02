@@ -22,7 +22,7 @@ mecho()
 
 ###############################################################################
 
-PREFIX=/usr/local
+PREFIX=
 BINDIR=
 DATADIR=
 as_cr_letters='abcdefghijklmnopqrstuvwxyz'
@@ -46,6 +46,10 @@ while test $# != 0 ; do
 	esac
 
 	case $ac_option in
+	-cache | --cache)
+		$ac_shift
+		CACHEFILE=$ac_optarg
+	;;
 	-prefix | --prefix)
 		$ac_shift
 		PREFIX=$ac_optarg
@@ -89,6 +93,26 @@ while test $# != 0 ; do
 	shift
 done
 
+echo $CACHEFILE
+if [ -f "$CACHEFILE" ] ; then
+	if [ -z "$PREFIX" ] ; then
+		PREFIX=$(grep "PREFIX:STRING=" ${CACHEFILE} | cut -d '=' -f 2)
+	fi
+	if [ -z "$IPREFIX" ] ; then
+		IPREFIX=$(grep "CMAKE_INSTALL_PREFIX:STRING=" ${CACHEFILE} | cut -d '=' -f 2)
+	fi
+	if [ -z "$BINDIR" ] ; then
+		BINDIR=$(grep "BINDIR:STRING=" ${CACHEFILE} | cut -d '=' -f 2)
+	fi
+	if [ -z "$DATADIR" ] ; then
+		DATADIR=$(grep "DATADIR:STRING=" ${CACHEFILE} | cut -d '=' -f 2)
+	fi
+fi
+
+if [ -z "$PREFIX" ] ; then
+	PREFIX=/usr/local
+fi
+
 if [ -z "$IPREFIX" ] ; then
 	IPREFIX=$PREFIX
 fi
@@ -101,35 +125,40 @@ if [ -z "$DATADIR" ] ; then
 	DATADIR=$IPREFIX/share/s25rttr
 fi
 
+echo "Setting Path-Prefix to \"$PREFIX\""
+echo "Setting Install-Prefix to \"$IPREFIX\""
+echo "Setting Binary Dir to \"$BINDIR\""
+echo "Setting Data Dir to \"$DATADIR\""
+
 ###############################################################################
 
 mecho --blue "Creating directories"
-mkdir -vp $BINDIR || exit 1
-mkdir -vp $DATADIR || exit 1
-mkdir -vp $DATADIR/S2 || exit 1
-mkdir -vp $DATADIR/RTTR || exit 1
-mkdir -vp $DATADIR/driver/video || exit 1
-mkdir -vp $DATADIR/driver/audio || exit 1
+mkdir -vp $IPREFIX/$BINDIR || exit 1
+mkdir -vp $IPREFIX/$DATADIR || exit 1
+mkdir -vp $IPREFIX/$DATADIR/S2 || exit 1
+mkdir -vp $IPREFIX/$DATADIR/RTTR || exit 1
+mkdir -vp $IPREFIX/$DATADIR/driver/video || exit 1
+mkdir -vp $IPREFIX/$DATADIR/driver/audio || exit 1
 mkdir -vp $IPREFIX/lib || exit 1
 
 mecho --blue "Installing binaries"
-cp -v ../release/bin/rttr.sh $BINDIR || exit 1
+cp -v ../release/bin/rttr.sh $IPREFIX/$BINDIR || exit 1
 
 mecho --blue "Installing RTTR directory"
 if [ -d ../RTTR/.svn ] ; then
-	svn --force --non-interactive export ../RTTR $DATADIR/RTTR || exit 1
+	svn --force --non-interactive export ../RTTR $IPREFIX/$DATADIR/RTTR || exit 1
 elif [ -d ../RTTR/.bzr ] ; then
-	bzr export ../RTTR $DATADIR/RTTR || exit 1
+	bzr export ../RTTR $IPREFIX/$DATADIR/RTTR || exit 1
 else
-	cp -rv ../RTTR/* $DATADIR/RTTR || exit 1
+	cp -rv ../RTTR/* $IPREFIX/$DATADIR/RTTR || exit 1
 fi
-rm -f $DATADIR/RTTR/languages/*.po
+rm -f $IPREFIX/$DATADIR/RTTR/languages/*.po
 
 mecho --blue "Installing language files"
-cp -v ../RTTR/languages/*.mo $DATADIR/RTTR/languages/ || exit 1
+cp -v ../RTTR/languages/*.mo $IPREFIX/$DATADIR/RTTR/languages/ || exit 1
 
 mecho --blue "Installing S2 placeholder"
-touch $DATADIR/S2/put\ your\ S2-Installation\ in\ here || exit 1
+touch $IPREFIX/$DATADIR/S2/put\ your\ S2-Installation\ in\ here || exit 1
 
 exit 0
 

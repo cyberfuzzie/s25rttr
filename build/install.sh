@@ -138,7 +138,7 @@ mkdir -vp $IPREFIX/$DATADIR/S2 || exit 1
 mkdir -vp $IPREFIX/$DATADIR/RTTR || exit 1
 mkdir -vp $IPREFIX/$DATADIR/driver/video || exit 1
 mkdir -vp $IPREFIX/$DATADIR/driver/audio || exit 1
-mkdir -vp $IPREFIX/lib || exit 1
+mkdir -vp $IPREFIX/$PREFIX/lib || exit 1
 
 mecho --blue "Installing binaries"
 cp -v ../release/bin/rttr.sh $IPREFIX/$BINDIR || exit 1

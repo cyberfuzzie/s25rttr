@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: CMakeLists.txt 5486 2009-09-07 15:41:39Z FloSoft $
+### $Id: CMakeLists.txt 5581 2009-10-02 12:48:08Z FloSoft $
 #################################################################################
 
 INCLUDE(FindSDL)
@@ -32,7 +32,7 @@ IF (SDL_FOUND)
 
 		ADD_CUSTOM_COMMAND(TARGET audioSDL POST_BUILD COMMAND ln -fvs SDL/src/libaudioSDL${CMAKE_SHARED_LIBRARY_SUFFIX} ../../audioSDL${CMAKE_SHARED_LIBRARY_SUFFIX})
 
-		INSTALL(TARGETS audioSDL DESTINATION share/s25rttr/driver/audio)
+		INSTALL(TARGETS audioSDL DESTINATION ${DATADIR}/driver/audio)
 	ELSE (SDLMIXER_FOUND)
 		MESSAGE(WARNING ": SDL_mixer library not found: Not building SDL audiodriver")
 	ENDIF (SDLMIXER_FOUND)

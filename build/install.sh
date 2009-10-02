@@ -93,7 +93,6 @@ while test $# != 0 ; do
 	shift
 done
 
-echo $CACHEFILE
 if [ -f "$CACHEFILE" ] ; then
 	if [ -z "$PREFIX" ] ; then
 		PREFIX=$(grep "PREFIX:STRING=" ${CACHEFILE} | cut -d '=' -f 2)

@@ -573,7 +573,7 @@ int mus_file_open_write(const char *arg)
 #ifdef MUS_WINDOZE
   if ((fd = OPEN(arg, O_RDWR | O_BINARY, 0)) == -1)
 #else
-  if ((fd = OPEN(arg, O_RDWR, 0)) == -1)
+  if ((fd = OPEN(arg, O_RDWR | O_BINARY, 0)) == -1)
 #endif
     fd = mus_file_create(arg);
   else lseek(fd, 0L, SEEK_END);
@@ -586,7 +586,7 @@ int mus_file_reopen_write(const char *arg)
 #ifdef MUS_WINDOZE
   fd = OPEN(arg, O_RDWR | O_BINARY, 0);
 #else
-  fd = OPEN(arg, O_RDWR, 0);
+  fd = OPEN(arg, O_RDWR | O_BINARY, 0);
 #endif
   return(fd);
 }

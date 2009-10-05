@@ -57,6 +57,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audioSDL", "..\..\driver\au
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sound-convert", "..\..\s-c\win32\vs2008\sound-convert.vcproj", "{084B75AB-01B7-4EF3-B4EF-D021AAA2EAA3}"
 	ProjectSection(ProjectDependencies) = postProject
+		{D1615B31-8DDB-4308-84D7-60C1EB576EA1} = {D1615B31-8DDB-4308-84D7-60C1EB576EA1}
 		{FED04AF3-3FE4-41CA-9DB9-6E0AD873183A} = {FED04AF3-3FE4-41CA-9DB9-6E0AD873183A}
 		{290E94F7-C0BE-4950-87AA-D269467A82BF} = {290E94F7-C0BE-4950-87AA-D269467A82BF}
 	EndProjectSection
@@ -79,6 +80,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "liblobby_c", "..\..\liblobb
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libendian", "..\..\libendian\win32\vs2008\libendian.vcproj", "{1C4D182C-4502-4A05-B1F3-9DD5214C3DEE}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "s-c_resample", "..\..\s-c\resample-1.8.1\win32\vs2008\resample-1.8.1.vcproj", "{D1615B31-8DDB-4308-84D7-60C1EB576EA1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -146,6 +149,10 @@ Global
 		{1C4D182C-4502-4A05-B1F3-9DD5214C3DEE}.Debug|Win32.Build.0 = Debug|Win32
 		{1C4D182C-4502-4A05-B1F3-9DD5214C3DEE}.Release|Win32.ActiveCfg = Release|Win32
 		{1C4D182C-4502-4A05-B1F3-9DD5214C3DEE}.Release|Win32.Build.0 = Release|Win32
+		{D1615B31-8DDB-4308-84D7-60C1EB576EA1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D1615B31-8DDB-4308-84D7-60C1EB576EA1}.Debug|Win32.Build.0 = Debug|Win32
+		{D1615B31-8DDB-4308-84D7-60C1EB576EA1}.Release|Win32.ActiveCfg = Release|Win32
+		{D1615B31-8DDB-4308-84D7-60C1EB576EA1}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,4 @@
-// $Id: prebuild-mutex.cpp 5032 2009-06-10 18:47:56Z OLiver $
+// $Id: prebuild-mutex.cpp 5595 2009-10-05 17:00:16Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -179,6 +179,7 @@ int main(int argc, char *argv[])
 					else
 					{
 						copyfile("sound-convert.exe", binary, working + "RTTR\\");
+						copyfile("s-c_resample.exe", binary, working + "RTTR\\");
 						copyfile("libsiedler2.dll", binary, working + "RTTR\\");
 					}
 				}

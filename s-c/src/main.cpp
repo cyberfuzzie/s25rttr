@@ -1,4 +1,4 @@
-// $Id: main.cpp 5596 2009-10-05 17:31:59Z FloSoft $
+// $Id: main.cpp 5598 2009-10-05 18:15:19Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -25,7 +25,7 @@
 #	endif
 #endif
 
-#include <string>
+#include <string.h>
 
 #include <cstdio>
 #include <cstdlib>

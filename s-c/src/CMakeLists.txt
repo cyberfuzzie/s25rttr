@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: CMakeLists.txt 5585 2009-10-02 13:41:03Z FloSoft $
+### $Id: CMakeLists.txt 5592 2009-10-05 15:10:09Z FloSoft $
 #################################################################################
 
 INCLUDE(FindSndfile)
@@ -21,16 +21,17 @@ IF (SNDFILE_FOUND)
 		ENDIF (NOALIGN_FLAGS)
 		
 		# Add the user's chosen flags to the build for this directory.
-		SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${SC_C_FLAGS}")
-		SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${SC_CXX_FLAGS}")
+		#SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${SC_C_FLAGS}")
+		#SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${SC_CXX_FLAGS}")
 		
 		#################################################################################
 		
-		#LINK_DIRECTORIES(../libsiedler2/src)
+		LINK_DIRECTORIES(${PROJECT_SOURCE_DIR}/lib/${CMAKE_SYSTEM_NAME})
 		
 		ADD_EXECUTABLE(sound-convert getopt.cpp getopt_long.cpp main.cpp sample_rate_convert.cpp tempname.cpp)
 		
-		TARGET_LINK_LIBRARIES(sound-convert siedler2 ${SAMPLERATE_LIBRARY} ${SNDFILE_LIBRARY})
+		#${SAMPLERATE_LIBRARY} ${SNDFILE_LIBRARY}
+		TARGET_LINK_LIBRARIES(sound-convert siedler2 libsamplerate.a libsndfile.a)
 		
 		IF ( "${COMPILEFOR}" STREQUAL "windows")
 			ADD_CUSTOM_COMMAND(TARGET sound-convert POST_BUILD COMMAND if [ -f sound-convert.exe ] \; then cp -v sound-convert.exe sound-convert \; fi)

@@ -406,14 +406,14 @@ static void display_sound_file_entry(FILE *fp, const char *name, sound_file *sf)
 #endif
     }
   else sprintf(timestr, "(date cleared)");
-  fprintf(fp, "  %s: %s, chans: %d, srate: %d, type: %s, format: %s, samps: " OFF_TD,
+  fprintf(fp, "  %s: %s, chans: %d, srate: %d, type: %s, format: %s, samps: %d" ,
 	  name,
 	  timestr,
 	  sf->chans,
 	  sf->srate,
 	  mus_header_type_name(sf->header_type),
 	  mus_data_format_name(sf->data_format),
-	  sf->samples);
+	  (int)sf->samples);
   if (sf->loop_modes)
     {
       if (sf->loop_modes[0] != 0)

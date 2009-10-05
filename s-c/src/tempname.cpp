@@ -1,4 +1,4 @@
-// $Id: tempname.cpp 5593 2009-10-05 16:05:20Z FloSoft $
+// $Id: tempname.cpp 5594 2009-10-05 16:48:02Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -41,43 +41,6 @@
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
 #endif
-
-///////////////////////////////////////////////////////////////////////////////
-/** @name mkdir_p
- *
- *  erzeugt rekursiv ein Verzeichnis
- *
- *  @author     FloSoft
- */
-int mkdir_p(const std::string dir)
-{
-	if (
-#ifdef _WIN32
-		!CreateDirectory(dir.c_str(), NULL)
-#else
-		mkdir(dir.c_str(), 0750) < 0
-#endif
-	)
-	{
-		size_t slash = dir.rfind('/');
-		if (slash != std::string::npos) 
-		{
-			std::string prefix = dir.substr(0, slash);
-			if(mkdir_p(prefix) == 0)
-			{
-				return (
-#ifdef _WIN32
-					CreateDirectory(dir.c_str(), NULL) ? 0 : -1
-#else
-					mkdir(dir.c_str(), 0750)
-#endif
-				);
-			}
-		}
-		return -1;
-	}
-	return 0;
-}
 
 ///////////////////////////////////////////////////////////////////////////////
 /** @name tempname
@@ -158,8 +121,6 @@ bool tempname(char *name, unsigned int length)
 
 		test = fopen(name, "r");
 	} while ( test != NULL);
-
-	mkdir_p(tempdir);
 
 	return true;
 }

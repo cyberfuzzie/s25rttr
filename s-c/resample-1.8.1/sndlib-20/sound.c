@@ -60,7 +60,7 @@ int mus_error(int error, const char *format, ...)
     (*mus_error_handler)(error, mus_error_buffer);
   else 
     {
-      fprintf(stderr, mus_error_buffer);
+      fprintf(stderr, "%s", mus_error_buffer);
       fputc('\n', stderr);
     }
   return(MUS_ERROR);
@@ -176,7 +176,7 @@ const char *mus_error_type_to_string(int err)
 static void default_mus_error(int ignore, char *msg)
 {
   /* default error handler simply prints the error message */
-  fprintf(stderr, msg);
+  fprintf(stderr, "%s", msg);
 }
 
 static time_t local_file_write_date(const char *filename)
@@ -770,6 +770,8 @@ int mus_sound_close_input(int fd)
   return(mus_file_close(fd)); /* this closes the clm file descriptors */
 }
 
+char *strdup(const char *s);
+
 int mus_sound_close_output(int fd, off_t bytes_of_data) 
 {
   char *name;
@@ -1031,7 +1033,7 @@ int mus_array_to_file(const char *filename, mus_sample_t *ddata, int len, int sr
   char *errmsg;
   errmsg = mus_array_to_file_with_error(filename, ddata, len, srate, channels);
   if (errmsg)
-    return(mus_error(MUS_CANT_OPEN_FILE, errmsg));
+    return(mus_error(MUS_CANT_OPEN_FILE, "%s", errmsg));
   return(MUS_NO_ERROR);
 }
 
@@ -1067,6 +1069,6 @@ int mus_float_array_to_file(const char *filename, Float *ddata, int len, int sra
   FREE(idata);
 #endif
   if (errmsg)
-    return(mus_error(MUS_CANT_OPEN_FILE, errmsg));
+    return(mus_error(MUS_CANT_OPEN_FILE, "%s", errmsg));
   return(MUS_NO_ERROR);
 }

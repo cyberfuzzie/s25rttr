@@ -124,7 +124,7 @@ char *strerror(int errnum)
 static char *version_name = NULL;
 static bool audio_initialized = false;
 
-static const char *mus_audio_device_names[] = {
+/*static const char *mus_audio_device_names[] = {
   S_mus_audio_default, S_mus_audio_duplex_default, S_mus_audio_adat_in, S_mus_audio_aes_in, S_mus_audio_line_out,
   S_mus_audio_line_in, S_mus_audio_microphone, S_mus_audio_speakers, S_mus_audio_digital_in, S_mus_audio_digital_out,
   S_mus_audio_dac_out, S_mus_audio_adat_out, S_mus_audio_aes_out, S_mus_audio_dac_filter, S_mus_audio_mixer,
@@ -134,28 +134,28 @@ static const char *mus_audio_device_names[] = {
   S_mus_audio_pcm, S_mus_audio_pcm2, S_mus_audio_ogain, S_mus_audio_line, S_mus_audio_synth,
   S_mus_audio_bass, S_mus_audio_treble, S_mus_audio_port, S_mus_audio_samples_per_channel,
   S_mus_audio_direction
-};
+};*/
 
-static const char *mus_audio_device_name(int dev)
+/*static const char *mus_audio_device_name(int dev)
 {
   if (MUS_AUDIO_DEVICE_OK(dev))
     return(mus_audio_device_names[dev]);
   return("invalid device");
-}
+}*/
 
 #if (!HAVE_OSS) || (HAVE_ALSA)
-static const char *mus_audio_format_names[] = {
+/*static const char *mus_audio_format_names[] = {
   "unknown", S_mus_bshort, S_mus_mulaw, S_mus_byte, S_mus_bfloat, S_mus_bint, S_mus_alaw, S_mus_ubyte, S_mus_b24int,
   S_mus_bdouble, S_mus_lshort, S_mus_lint, S_mus_lfloat, S_mus_ldouble, S_mus_ubshort, S_mus_ulshort, S_mus_l24int,
   S_mus_bintn, S_mus_lintn
-};
+};*/
 
-static const char *mus_audio_format_name(int fr)
+/*static const char *mus_audio_format_name(int fr)
 {
   if (MUS_DATA_FORMAT_OK(fr))
     return(mus_audio_format_names[fr]);
   return("invalid format");
-}
+}*/
 #endif
 
 static char *audio_strbuf = NULL; /* previous name "strbuf" collides with Mac OSX global! */
@@ -9747,7 +9747,7 @@ static void pprint(char *str)
     {
       if ((print_it) || (!(save_it)))
 	{
-	  mus_print(str);
+	  mus_print("%s", str);
 	}
       else
 	{

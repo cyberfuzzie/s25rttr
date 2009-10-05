@@ -5076,6 +5076,8 @@ static int local_error_type = MUS_NO_ERROR;
 static char *local_error_msg = NULL;
 static mus_error_handler_t *old_error_handler;
 
+char *strdup(const char *s);
+
 static void local_mus_error(int type, char *msg)
 {
   local_error_type = type;
@@ -5097,7 +5099,7 @@ int mus_header_read(const char *name)
   mus_error_set_handler(old_error_handler);
   CLOSE(chan, name);
   if (err != MUS_NO_ERROR)
-    return(mus_error(local_error_type, local_error_msg)); /* pass error info on up the chain now that we've cleaned up the open file descriptor */
+    return(mus_error(local_error_type, "%s", local_error_msg)); /* pass error info on up the chain now that we've cleaned up the open file descriptor */
   return(err);
 }
 

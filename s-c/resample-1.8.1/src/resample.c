@@ -122,7 +122,7 @@ int main(int argc, char *argv[])
 	    knowFactor = TRUE;
 	    break;
 	case 'v':			       /* -version */
-	    printf(resampleVersion);
+	    printf("%s", resampleVersion);
 	    if (argc == 1)
 		exit(0);
 	    break;

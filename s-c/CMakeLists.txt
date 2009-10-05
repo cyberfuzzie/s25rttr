@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: CMakeLists.txt 5592 2009-10-05 15:10:09Z FloSoft $
+### $Id: CMakeLists.txt 5594 2009-10-05 16:48:02Z FloSoft $
 #################################################################################
 
 PROJECT(sound-convert)
@@ -17,7 +17,8 @@ macro_ensure_out_of_source_build("${PROJECT_NAME} requires an out of source buil
 
 ################################################################################
 
-ADD_SUBDIRECTORY( libsiedler2 )
+#ADD_SUBDIRECTORY( libsiedler2 )
+ADD_SUBDIRECTORY( resample-1.8.1 )
 ADD_SUBDIRECTORY( src )
 
 #################################################################################

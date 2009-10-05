@@ -64,7 +64,8 @@ static void getstr(char *prompt, char *defaultAnswer, char *answer)
   *(++p) = '\0';
 
   /* gets(answer); */
-  fgets(answer,sizeof(answer),stdin);
+  if(fgets(answer,sizeof(answer),stdin));
+
   answer[strlen(answer)-1] = '\0';
 
   if (answer[0] == '\0') {
@@ -315,34 +316,34 @@ int readFilter(char *filterFile, HWORD **ImpP, HWORD **ImpDP, UHWORD *LpScl,
     if (fp == NULL)
       return(1);
     
-    fscanf(fp, "ScaleFactor ");
+    if(fscanf(fp, "ScaleFactor ") != 0);
     if (1 != fscanf(fp,"%d",&temp))
       return(2);
     *LpScl = temp;
     
-    fscanf(fp, "\nLength ");
+    if(fscanf(fp, "\nLength ") != 0);
     if (1 != fscanf(fp,"%d",&temp))
       return(3);
     *Nwing = temp;
     
-    fscanf(fp, "\nNmult ");
+    if(fscanf(fp, "\nNmult ") != 0);
     if (1 != fscanf(fp,"%d",&temp))
       return(4);
     *Nmult = temp;
     
     Imp = (HWORD *) malloc(*Nwing * sizeof(HWORD));
     
-    fscanf(fp, "\nCoeffs:\n");
+    if(fscanf(fp, "\nCoeffs:\n") != 0);
     for (i=0; i<*Nwing; i++)  { /* Get array of 16-bit filter coefficients */
-	fscanf(fp, "%d\n", &temp);
+	if(fscanf(fp, "%d\n", &temp) != 0);
 	Imp[i] = temp;
     }    
 
     ImpD = (HWORD *) malloc(*Nwing * sizeof(HWORD));
     
-    fscanf(fp, "\nDifferences:\n");
+    if(fscanf(fp, "\nDifferences:\n") != 0);
     for (i=0; i<*Nwing; i++)  { /* Get array of 16bit filter coeff differences */
-	fscanf(fp, "%d\n", &temp);
+	if(fscanf(fp, "%d\n", &temp) != 0);
 	ImpD[i] = temp;
     }    
     
@@ -559,7 +560,7 @@ BOOL Query(char *prompt, BOOL deflt, char *help)
       sprintf(s,"\n%s%s", prompt, (*help) ? " (Type ? for help)" : "");
       getstr(s,(deflt)?"yes":"no",s);
       if (*s=='?' && *help)
-         printf(help);
+         printf("%s", help);
       if (*s=='Y' || *s=='y')
          return(TRUE);
       if (*s=='N' || *s=='n')
@@ -577,7 +578,7 @@ char *GetString(char *prompt, char *deflt, char *help)
       sprintf(s,"\n%s%s",prompt, (*help) ? " (Type ? for Help)" : "");
       getstr(s,deflt,s);
       if (*s=='?' && *help)
-         printf(help);
+         printf("%s", help);
       else
          return(s);
       }
@@ -595,7 +596,7 @@ double GetDouble(char *title, double deflt, char *help)
       sprintf(sdeflt,"%g",deflt);
       getstr(s,sdeflt,s);
       if (*s=='?' && *help)
-         printf(help);
+         printf("%s", help);
       else
          {
          if (!sscanf(s,"%lf",&newval))
@@ -617,7 +618,7 @@ unsigned short GetUShort(char *title, unsigned short deflt, char *help)
       sprintf(sdeflt,"%d",deflt);
       getstr(s,sdeflt,s);
       if (*s=='?' && *help)
-         printf(help);
+         printf("%s", help);
       else
          {
          if (!sscanf(s,"%d",&newval))

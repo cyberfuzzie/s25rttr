@@ -1343,6 +1343,8 @@ char *mus_getcwd(void)
   return(pwd);
 }
 
+char *strdup(const char *s);
+
 char *mus_expand_filename(const char *filename)
 {
   /* fill out under-specified library pathnames etc */

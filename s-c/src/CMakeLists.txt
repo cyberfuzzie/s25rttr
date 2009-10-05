@@ -1,57 +1,15 @@
 #################################################################################
-### $Id: CMakeLists.txt 5592 2009-10-05 15:10:09Z FloSoft $
+### $Id: CMakeLists.txt 5593 2009-10-05 16:05:20Z FloSoft $
 #################################################################################
 
-INCLUDE(FindSndfile)
-INCLUDE(FindSamplerate)
-
-INCLUDE(CheckCXXCompilerFlag)
-
-IF (SNDFILE_FOUND)
-	IF (SAMPLERATE_FOUND)
-
-		# Let the user choose the flags used for this directory.
-		SET(SC_C_FLAGS "-mno-align-double -I${SNDFILE_INCLUDE_DIR} -I${SAMPLERATE_INCLUDE_DIR}" CACHE STRING "CFLAGS to use for sound-convert")
-		SET(SC_CXX_FLAGS "-mno-align-double -I${SNDFILE_INCLUDE_DIR} -I${SAMPLERATE_INCLUDE_DIR}" CACHE STRING "CXXFLAGS to use for sound-convert")
-
-		CHECK_CXX_COMPILER_FLAG("-mno-align-double" NOALIGN_FLAGS)
-		IF (NOALIGN_FLAGS)
-			SET(SC_C_FLAGS "${SC_C_FLAGS} -mno-align-double")
-			SET(SC_CXX_FLAGS "${SC_CXX_FLAGS} -mno-align-double")
-		ENDIF (NOALIGN_FLAGS)
+ADD_EXECUTABLE(sound-convert getopt.cpp getopt_long.cpp main.cpp tempname.cpp)
 		
-		# Add the user's chosen flags to the build for this directory.
-		#SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${SC_C_FLAGS}")
-		#SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${SC_CXX_FLAGS}")
+IF ( "${COMPILEFOR}" STREQUAL "windows")
+	ADD_CUSTOM_COMMAND(TARGET sound-convert POST_BUILD COMMAND if [ -f sound-convert.exe ] \; then cp -v sound-convert.exe sound-convert \; fi)
+ENDIF ( "${COMPILEFOR}" STREQUAL "windows")
 		
-		#################################################################################
+ADD_CUSTOM_COMMAND(TARGET sound-convert POST_BUILD COMMAND cp -v sound-convert ../../RTTR/sound-convert)
 		
-		LINK_DIRECTORIES(${PROJECT_SOURCE_DIR}/lib/${CMAKE_SYSTEM_NAME})
-		
-		ADD_EXECUTABLE(sound-convert getopt.cpp getopt_long.cpp main.cpp sample_rate_convert.cpp tempname.cpp)
-		
-		#${SAMPLERATE_LIBRARY} ${SNDFILE_LIBRARY}
-		TARGET_LINK_LIBRARIES(sound-convert siedler2 libsamplerate.a libsndfile.a)
-		
-		IF ( "${COMPILEFOR}" STREQUAL "windows")
-			ADD_CUSTOM_COMMAND(TARGET sound-convert POST_BUILD COMMAND if [ -f sound-convert.exe ] \; then cp -v sound-convert.exe sound-convert \; fi)
-		ENDIF ( "${COMPILEFOR}" STREQUAL "windows")
-		
-		IF ( "${COMPILEFOR}" STREQUAL "apple")
-			SET_TARGET_PROPERTIES(sound-convert PROPERTIES LINK_FLAGS "-framework sndfile -framework samplerate")
-		ENDIF ( "${COMPILEFOR}" STREQUAL "apple")
-
-		ADD_CUSTOM_COMMAND(TARGET sound-convert POST_BUILD COMMAND cp -v sound-convert ../../RTTR/sound-convert)
-		
-		INSTALL(TARGETS sound-convert DESTINATION ${DATADIR}/RTTR)
-
-	ELSE (SAMPLERATE_FOUND)
-		MESSAGE(WARNING ": libsamplerate not found: Will not build sound-convert binary")
-		MESSAGE(WARNING ": You won't have correct sound effects without this!")
-	ENDIF (SAMPLERATE_FOUND)
-ELSE (SNDFILE_FOUND)
-	MESSAGE(WARNING ": libsndfile not found: Will not build sound-convert binary")
-	MESSAGE(WARNING ": You won't have correct sound effects without this!")
-ENDIF (SNDFILE_FOUND)
+INSTALL(TARGETS sound-convert DESTINATION ${DATADIR}/RTTR)
 
 #################################################################################

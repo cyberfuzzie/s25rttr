@@ -1,4 +1,4 @@
-// $Id: main.cpp 5269 2009-07-15 09:50:44Z FloSoft $
+// $Id: main.cpp 5593 2009-10-05 16:05:20Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -32,12 +32,13 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+
 #include <fstream>
+#include <sstream>
 
 #include "getopt.h"
 #include "tempname.h"
 #include "tokenizer.hpp"
-#include "sample_rate_convert.h"
 
 #include "../libsiedler2/src/libsiedler2.h"
 
@@ -82,6 +83,11 @@ int main(int argc, char *argv[])
 
 	if(!scs || !to || !from)
 		return usage(argc, argv);
+
+	printf("Starting samplerate conversion");
+	printf("Input file: \"%s\"\n", from);
+	printf("Output file: \"%s\"\n", to);
+	printf("using Script: \"%s\"\n", scs);
 
 	libsiedler2::ArchivInfo input, output;
 	if(libsiedler2::Load(from, &input) != 0)
@@ -150,10 +156,18 @@ int main(int argc, char *argv[])
 		char file[256];
 		if(!tempname(file, 256))
 		{
-			printf("Can't find temporary filename for conversion - disk full?\n");
+			printf("Can't find first temporary filename for conversion?\n");
 			return EXIT_FAILURE;
 		}
-		strncat(file, ".wav", 256);
+		//strncat(file, ".wav", 256);
+
+		char file2[256];
+		if(!tempname(file2, 256))
+		{
+			printf("Can't find second temporary filename for conversion?\n");
+			return EXIT_FAILURE;
+		}
+		//strncat(file2, ".wav", 256);
 
 		FILE *tmp = fopen(file, "wb");
 		if(!tmp)
@@ -170,54 +184,32 @@ int main(int argc, char *argv[])
 		memcpy(&data[34], &bitrate, 2);
 
 		fwrite(data, 1, wave->getLength(), tmp);
+		fflush(tmp);
 		fclose(tmp);
 
-		SNDFILE	*infile, *outfile;
-		SF_INFO sfinfo;
+		std::stringstream cmd;
+		std::string path = argv[0];
+		size_t pos = path.find_last_of("/\\");
+		cmd << path.substr(0, pos);
 
-		infile = sf_open(file, SFM_READ, &sfinfo);
-		if(!infile)
+#ifdef _WIN32
+		cmd << "\\s-c_resample.exe ";
+#else
+		cmd << "/s-c_resample ";
+#endif
+
+		cmd << "-to 44100 ";
+		cmd << "\"" << file << "\" ";
+		cmd << "\"" << file2 << "\" ";
+
+		unlink(file2);
+
+		if(system(cmd.str().c_str()) != 0)
 		{
-			printf("Can't open temporary file \"%s\" for conversion - invalid type?\n", file);
-			return EXIT_FAILURE;
+			printf("Resampling failed, using original item\n");
+			strcpy(file2, file);
+			//return EXIT_FAILURE;
 		}
-
-		double src_ratio = (44100.0) / sfinfo.samplerate;
-		sfinfo.samplerate = 44100;
-		sfinfo.channels = 1;
-		sfinfo.format = SF_FORMAT_WAV | SF_FORMAT_PCM_16 | SF_ENDIAN_LITTLE;
-
-		char file2[256];
-		if(!tempname(file2, 256))
-		{
-			printf("Can't find temporary filename for conversion - disk full?\n");
-			return EXIT_FAILURE;
-		}
-		strncat(file2, "-out.wav", 256);
-
-		outfile = sf_open (file2, SFM_WRITE, &sfinfo);
-		if(!outfile)
-		{
-			printf("Can't write to temporary file \"%s\" for conversion - disk full?\n", file2);
-			return EXIT_FAILURE;
-		}
-		sf_command (outfile, SFC_SET_UPDATE_HEADER_AUTO, NULL, SF_TRUE);
-		sf_command (outfile, SFC_SET_CLIPPING, NULL, SF_TRUE);
-
-		sf_count_t count = 0;
-		double gain = 0.5;
-
-		do
-		{
-			count = sample_rate_convert (infile, outfile, SRC_SINC_BEST_QUALITY, src_ratio, sfinfo.channels, &gain);
-		}
-		while (count < 0);
-
-		sf_close (infile);
-		sf_close (outfile);
-
-		//exit(1);
-		unlink(file);
 
 		FILE *tmp2 = fopen(file2, "rb");
 		if(!tmp2)
@@ -236,6 +228,8 @@ int main(int argc, char *argv[])
 			return EXIT_FAILURE;
 		}
 		fclose(tmp2);
+
+		unlink(file);
 		unlink(file2);
 
 		output.pushC(&result);
@@ -247,6 +241,8 @@ int main(int argc, char *argv[])
 		printf("Conversion failed - was not able to save results to \"%s\"\n", to);
 		return EXIT_FAILURE;
 	}
-	
+
+	printf("Conversion successful\n\n");
+
 	return EXIT_SUCCESS;
 }

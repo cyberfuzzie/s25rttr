@@ -2,11 +2,11 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9,00"
-	Name="sound-convert"
-	ProjectGUID="{084B75AB-01B7-4EF3-B4EF-D021AAA2EAA3}"
-	RootNamespace="soundconvert"
+	Name="s-c_resample"
+	ProjectGUID="{D1615B31-8DDB-4308-84D7-60C1EB576EA1}"
+	RootNamespace="resample181"
 	Keyword="Win32Proj"
-	TargetFrameworkVersion="131072"
+	TargetFrameworkVersion="196613"
 	>
 	<Platforms>
 		<Platform
@@ -21,11 +21,10 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
-			CharacterSet="0"
+			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine=""
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -49,7 +48,7 @@
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="4"
-				DisableSpecificWarnings="4996;4355;4250"
+				DisableSpecificWarnings="4996;4244;4013;4047"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -62,12 +61,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libsndfile.lib libsamplerate.lib"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="1"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -90,7 +86,6 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -98,12 +93,11 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
-			CharacterSet="0"
+			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="&quot;$(OutDir)\prebuild-mutex.exe&quot; &quot;prebuild&quot; &quot;$(SolutionName)&quot; &quot;$(SolutionDir)..\..&quot; &quot;$(OutDir)&quot;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -119,14 +113,15 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="3"
+				Optimization="2"
+				EnableIntrinsicFunctions="true"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
-				RuntimeLibrary="0"
+				RuntimeLibrary="2"
+				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				WarnAsError="true"
-				DebugInformationFormat="0"
-				DisableSpecificWarnings="4996;4355;4250"
+				DebugInformationFormat="3"
+				DisableSpecificWarnings="4996;4244;4013;4047"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -139,14 +134,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libsndfile.lib libsamplerate.lib"
 				LinkIncremental="1"
-				GenerateDebugInformation="false"
+				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -169,7 +161,6 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="&quot;$(OutDir)\prebuild-mutex.exe&quot; &quot;prebuild&quot; &quot;$(SolutionName)&quot; &quot;$(SolutionDir)..\..&quot; &quot;$(OutDir)&quot;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -182,19 +173,75 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\src\getopt.cpp"
+				RelativePath="..\..\sndlib-20\_sndlib.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\getopt_long.cpp"
+				RelativePath="..\..\sndlib-20\audio.c"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\main.cpp"
+				RelativePath="..\..\src\filterkit.c"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\tempname.cpp"
+				RelativePath="..\..\src\filterkit.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\sndlib-20\headers.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\sndlib-20\io.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\largefilter.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\sndlib-20\mus-config.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\resample.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\resample.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\resamplesubs.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\smallfilter.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\sndlib-20\sndlib-strings.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\sndlib-20\sndlib.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\sndlibextra.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\sndlibextra.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\sndlib-20\sound.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\stdefs.h"
 				>
 			</File>
 		</Filter>
@@ -203,22 +250,12 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
-			<File
-				RelativePath="..\..\src\filter.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\getopt.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\tempname.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\tokenizer.hpp"
-				>
-			</File>
+		</Filter>
+		<Filter
+			Name="Ressourcendateien"
+			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
+			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
+			>
 		</Filter>
 	</Files>
 	<Globals>

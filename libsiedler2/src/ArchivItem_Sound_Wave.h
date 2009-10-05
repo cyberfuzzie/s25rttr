@@ -1,4 +1,4 @@
-// $Id: ArchivItem_Sound_Wave.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: ArchivItem_Sound_Wave.h 5593 2009-10-05 16:05:20Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -50,6 +50,12 @@ namespace libsiedler2
 
 		/// räumt den Soundspeicher auf.
 		void clear(void);
+
+		void setData(const unsigned char *data, unsigned int length)
+		{
+			alloc(length);
+			memcpy(this->data, data, sizeof(unsigned char)*length);
+		}
 
 		const unsigned char *getData() { return data; }
 		unsigned int getLength() { return length; }

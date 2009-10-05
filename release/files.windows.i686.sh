@@ -35,6 +35,12 @@ else
 	cp -v ../../$BUILDDIR/s-c/src/sound-convert share/s25rttr/RTTR/sound-convert.exe
 fi
 
+if [ -f ../../$BUILDDIR/s-c/src/s-c_resample.exe ] ; then
+        cp -v ../../$BUILDDIR/s-c/src/s-c_resample.exe share/s25rttr/RTTR/s-c_resample.exe
+else
+        cp -v ../../$BUILDDIR/s-c/src/s-c_resample share/s25rttr/RTTR/s-c_resample.exe
+fi
+
 cp -v /usr/i586-mingw32msvc/bin/libsamplerate.dll share/s25rttr/RTTR
 cp -v /usr/i586-mingw32msvc/bin/libsndfile-1.dll share/s25rttr/RTTR
 

@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: CMakeLists.txt 5594 2009-10-05 16:48:02Z FloSoft $
+### $Id: CMakeLists.txt 5596 2009-10-05 17:31:59Z FloSoft $
 #################################################################################
 
 ADD_EXECUTABLE(s-c_resample resample.c filterkit.c resamplesubs.c sndlibextra.c)
@@ -7,7 +7,7 @@ ADD_EXECUTABLE(s-c_resample resample.c filterkit.c resamplesubs.c sndlibextra.c)
 TARGET_LINK_LIBRARIES(s-c_resample resample-sndlib-20 m)
 
 IF ( "${COMPILEFOR}" STREQUAL "windows")
-	ADD_CUSTOM_COMMAND(TARGET sound-convert POST_BUILD COMMAND if [ -f s-c_resample.exe ] \; then cp -v s-c_resample.exe s-c_resample \; fi)
+	ADD_CUSTOM_COMMAND(TARGET s-c_resample POST_BUILD COMMAND if [ -f s-c_resample.exe ] \; then cp -v s-c_resample.exe s-c_resample \; fi)
 ENDIF ( "${COMPILEFOR}" STREQUAL "windows")
 		
 ADD_CUSTOM_COMMAND(TARGET s-c_resample POST_BUILD COMMAND cp -v s-c_resample ../../../RTTR/s-c_resample)

@@ -9,7 +9,7 @@ SET(CMAKE_RANLIB i586-mingw32msvc-ranlib)
 SET(CMAKE_AR i586-mingw32msvc-ar)
 
 # set search prefix
-SET(CMAKE_PREFIX_PATH "/usr/x86_64-pc-linux-gnu")
+SET(CMAKE_PREFIX_PATH "/usr/i586-mingw32msvc")
 
 # where is the target environment 
 SET(CMAKE_FIND_ROOT_PATH "/usr/i586-mingw32msvc")

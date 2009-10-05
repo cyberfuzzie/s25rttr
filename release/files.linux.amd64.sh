@@ -9,6 +9,7 @@ cp -v ../../$BUILDDIR/driver/audio/*.so share/s25rttr/driver/audio
 
 cp -v ../../$BUILDDIR/s25update/src/s25update share/s25rttr/RTTR
 cp -v ../../$BUILDDIR/s-c/src/sound-convert share/s25rttr/RTTR
+cp -v ../../$BUILDDIR/s-c/src/s-c_resample share/s25rttr/RTTR
 
 # make deb-package
 PKGARCH=amd64

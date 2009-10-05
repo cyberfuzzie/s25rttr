@@ -45,6 +45,10 @@
 
 #include "_sndlib.h"
 
+#ifndef O_BINARY
+#define O_BINARY 0
+#endif
+
 /* data translations for big/little endian machines
  *   the m_* forms are macros where possible for speed (dating back to 1991 -- probably not needed)
  */

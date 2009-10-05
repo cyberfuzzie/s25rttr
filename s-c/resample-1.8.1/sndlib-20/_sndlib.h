@@ -30,7 +30,7 @@
   #if (SIZEOF_OFF_T == SIZEOF_LONG)
     #define OFF_TD "%ld"
   #else
-    #define OFF_TD "%lld"
+    #define OFF_TD "%ld"
   #endif
 #else
   #define OFF_TD "%d"

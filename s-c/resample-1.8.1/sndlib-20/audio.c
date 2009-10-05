@@ -166,7 +166,7 @@ int device_gains(int dev);
 
 int device_channels(int dev)
 {
-  float val[4];
+  float val[4] = {0, 0, 0, 0};
 #if USE_SND && MUS_DEBUGGING
   XEN res;
   res = XEN_EVAL_C_STRING("(if (defined? 'debugging-device-channels) debugging-device-channels 0)");

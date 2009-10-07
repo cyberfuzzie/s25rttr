@@ -1,4 +1,4 @@
-// $Id: Socket.cpp 5606 2009-10-07 14:57:50Z FloSoft $
+// $Id: Socket.cpp 5608 2009-10-07 15:13:14Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -172,10 +172,6 @@ bool Socket::Listen(unsigned short port, bool use_ipv6)
 
 	// Adresse initialisieren
 	size_t size = 0;
-
-#ifdef USE_IPV6
-	ipv6 = true; // use ipv6 first
-#endif
 
 	do {
 		sockaddr_storage addrs;

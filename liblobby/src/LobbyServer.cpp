@@ -1,4 +1,4 @@
-// $Id: LobbyServer.cpp 5576 2009-10-01 15:44:10Z FloSoft $
+// $Id: LobbyServer.cpp 5608 2009-10-07 15:13:14Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -73,7 +73,13 @@ LobbyServer::~LobbyServer(void)
  */
 int LobbyServer::Start(unsigned short port, std::string mysql_host, std::string mysql_user, std::string mysql_pass, std::string mysql_db)
 {
-	if(!server.Listen(port))
+	bool use_ipv6 = false;
+
+#ifdef USE_IPV6
+	use_ipv6 = true;
+#endif
+
+	if(!server.Listen(port, use_ipv6))
 		return error("Fehler beim Starten des Server: %s\n", strerror(errno));
 
 	if(!MYSQLCLIENT.Connect(mysql_host, mysql_user, mysql_pass, mysql_db))

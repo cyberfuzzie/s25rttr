@@ -1,4 +1,4 @@
-// $Id: IngameWindow.cpp 5247 2009-07-11 19:13:17Z FloSoft $
+// $Id: IngameWindow.cpp 5607 2009-10-07 15:00:13Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -16,6 +16,9 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Siedler II.5 RTTR. If not, see <http://www.gnu.org/licenses/>.
+
+///////////////////////////////////////////////////////////////////////////////
+// Header
 #include "main.h"
 #include "IngameWindow.h"
 

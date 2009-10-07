@@ -1,4 +1,4 @@
-// $Id: main.cpp 5598 2009-10-05 18:15:19Z FloSoft $
+// $Id: main.cpp 5605 2009-10-07 14:56:21Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -17,27 +17,25 @@
 // You should have received a copy of the GNU General Public License
 // along with Siedler II.5 RTTR. If not, see <http://www.gnu.org/licenses/>.
 
-#ifdef _WIN32
-#	include <windows.h>
-#	define unlink DeleteFile
-#	ifdef _MSC_VER_
-#		define snprintf _snprintf
-#	endif
-#endif
-
-#include <string.h>
-
+///////////////////////////////////////////////////////////////////////////////
+// Systemheader
 #include <cstdio>
 #include <cstdlib>
 
 #include <fstream>
 #include <sstream>
 
+#ifdef _WIN32
+#	include <windows.h>
+#	define unlink DeleteFile
+#	ifdef _MSC_VER
+#		define snprintf _snprintf
+#	endif
+#endif
+
 #include "getopt.h"
 #include "tempname.h"
 #include "tokenizer.hpp"
-
-using namespace std;
 
 #include "../libsiedler2/src/libsiedler2.h"
 

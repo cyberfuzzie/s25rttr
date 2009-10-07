@@ -1,4 +1,4 @@
-// $Id: getopt.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: getopt.cpp 5605 2009-10-07 14:56:21Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -16,6 +16,9 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Siedler II.5 RTTR. If not, see <http://www.gnu.org/licenses/>.
+
+///////////////////////////////////////////////////////////////////////////////
+// Systemheader
 #include <stdio.h>
 #include <string.h>
 

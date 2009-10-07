@@ -1,4 +1,4 @@
-// $Id: Socket.cpp 4936 2009-05-24 15:17:07Z FloSoft $
+// $Id: Socket.cpp 5606 2009-10-07 14:57:50Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -164,9 +164,9 @@ void Socket::Close(void)
  *
  *  @author FloSoft
  */
-bool Socket::Listen(unsigned short port)
+bool Socket::Listen(unsigned short port, bool use_ipv6)
 {
-	bool ipv6 = false;
+	bool ipv6 = use_ipv6;
 	bool error = false;
 	int versuch = 0;
 
@@ -294,13 +294,18 @@ bool Socket::Accept(Socket& client)
  *
  *  @author FloSoft
  */
-bool Socket::Connect(const char *const hostname, unsigned short port)
+bool Socket::Connect(const char *const hostname, unsigned short port, bool use_ipv6)
 {
 	addrinfo hints;
 	memset(&hints, 0, sizeof(addrinfo));
 
 	hints.ai_flags = AI_ADDRCONFIG | AI_ALL;
 	hints.ai_socktype = SOCK_STREAM;
+
+	if(use_ipv6)
+		hints.ai_family = AF_INET6;
+	else
+		hints.ai_family = AF_INET;
 
 	addrinfo *res;
 	char dport[256];

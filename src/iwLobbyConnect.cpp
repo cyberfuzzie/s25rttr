@@ -1,4 +1,4 @@
-// $Id: iwLobbyConnect.cpp 5575 2009-10-01 15:43:40Z FloSoft $
+// $Id: iwLobbyConnect.cpp 5606 2009-10-07 14:57:50Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -47,7 +47,7 @@
  *  @author FloSoft
  */
 iwLobbyConnect::iwLobbyConnect(void)
-	: IngameWindow(CGI_LOBBYCONNECT, 0xFFFF, 0xFFFF, 500, 230, _("Connecting to Lobby"), LOADER.GetImageN("resource", 41))
+	: IngameWindow(CGI_LOBBYCONNECT, 0xFFFF, 0xFFFF, 500, 260, _("Connecting to Lobby"), LOADER.GetImageN("resource", 41))
 {
 	// Benutzername
 	AddText(0,  20, 40, _("Username:"), COLOR_YELLOW, 0, NormalFont);
@@ -68,22 +68,31 @@ iwLobbyConnect::iwLobbyConnect(void)
 	// Passwort speichern ja/nein
 	AddText(6, 20, 130, _("Save Password?"), COLOR_YELLOW, 0, NormalFont);
 
-	ctrlOptionGroup *group = AddOptionGroup(10, ctrlOptionGroup::CHECK);
-	group->AddTextButton(0, 260, 130, 105,	22, TC_GREEN2, _("No"), NormalFont); // nein
-	group->AddTextButton(1, 375, 130, 105,	22, TC_GREEN2, _("Yes"), NormalFont); // ja
-	group->SetSelection( (SETTINGS.lobby.save_password ? 1 : 0) );
+	ctrlOptionGroup *savepassword = AddOptionGroup(10, ctrlOptionGroup::CHECK);
+	savepassword->AddTextButton(0, 260, 130, 105,	22, TC_GREEN2, _("No"), NormalFont); // nein
+	savepassword->AddTextButton(1, 375, 130, 105,	22, TC_GREEN2, _("Yes"), NormalFont); // ja
+	savepassword->SetSelection( (SETTINGS.lobby.save_password ? 1 : 0) );
+
+	// ipv6 oder ipv4 benutzen
+	AddText(11, 20, 160, _("Use IPv6:"), COLOR_YELLOW, 0, NormalFont);
+
+	ctrlOptionGroup *ipv6 = AddOptionGroup(12, ctrlOptionGroup::CHECK);
+	ipv6->AddTextButton(0, 260, 160, 105,	22, TC_GREEN2, _("IPv4"), NormalFont);
+	ipv6->AddTextButton(1, 375, 160, 105,	22, TC_GREEN2, _("IPv6"), NormalFont);
+	ipv6->SetSelection( (SETTINGS.server.ipv6 ? 1 : 0) );
 
 	// Verbinden
-	AddTextButton(7, 20, 190, 220,  22, TC_RED1, _("Connect"),NormalFont);
+	AddTextButton(7, 20, 220, 220,  22, TC_RED1, _("Connect"),NormalFont);
 
 	// Registrieren
-	AddTextButton(8, 260, 190, 220,  22, TC_GREEN2, _("Register"),NormalFont);
+	AddTextButton(8, 260, 220, 220,  22, TC_GREEN2, _("Register"),NormalFont);
 	
 	// Status
-	AddText(9, 250, 165, "", COLOR_RED, glArchivItem_Font::DF_CENTER, NormalFont);
+	AddText(9, 250, 195, "", COLOR_RED, glArchivItem_Font::DF_CENTER, NormalFont);
 
 	// Lobby-Interface setzen
 	LOBBYCLIENT.SetInterface(this);
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -202,7 +211,7 @@ void iwLobbyConnect::Msg_ButtonClick(const unsigned int ctrl_id)
 			LobbyForm(user, pass, email);
 
 			// Einloggen
-			if(LOBBYCLIENT.Login(LOADER.GetTextN("client", 0), atoi(LOADER.GetTextN("client", 1)), user, pass) == false)
+			if(LOBBYCLIENT.Login(LOADER.GetTextN("client", 0), atoi(LOADER.GetTextN("client", 1)), user, pass, SETTINGS.server.ipv6) == false)
 			{
 				SetText(_("Connection failed!"), COLOR_RED, true);
 				break;
@@ -249,6 +258,10 @@ void iwLobbyConnect::Msg_OptionGroupChange(const unsigned int ctrl_id, const uns
 	case 10: // Passwort speichern Ja/Nein
 		{
 			SETTINGS.lobby.save_password = (selection == 1);
+		} break;
+	case 12: // IPv6 Ja/Nein
+		{
+			SETTINGS.server.ipv6 = (selection == 1);
 		} break;
 	}
 }

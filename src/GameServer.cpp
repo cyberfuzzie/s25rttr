@@ -1,4 +1,4 @@
-// $Id: GameServer.cpp 5504 2009-09-08 19:34:35Z FloSoft $
+// $Id: GameServer.cpp 5606 2009-10-07 14:57:50Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -128,6 +128,7 @@ bool GameServer::TryToStart(const CreateServerInfo& csi, const std::string& map_
 	serverconfig.mapname = map_path;
 	serverconfig.servertype = csi.type;
 	serverconfig.port = csi.port;
+	serverconfig.ipv6 = csi.ipv6;
 	mapinfo.map_type = map_type;
 
 	// Titel der Karte (nicht der Dateiname!)
@@ -293,7 +294,7 @@ bool GameServer::Start()
 	status = SS_CONFIG;
 
 	// und das socket in listen-modus schicken
-	if(!serversocket.Listen(serverconfig.port))
+	if(!serversocket.Listen(serverconfig.port, serverconfig.ipv6))
 	{
 		LOG.lprintf("GameServer::Start: ERROR: Listening on port %d failed!\n", serverconfig.port);
 		LOG.getlasterror("Fehler");
@@ -301,7 +302,7 @@ bool GameServer::Start()
 	}
 
 	// Zu sich selbst connecten als Host
-	GAMECLIENT.Connect("localhost", serverconfig.password, serverconfig.servertype, serverconfig.port, true);
+	GAMECLIENT.Connect("localhost", serverconfig.password, serverconfig.servertype, serverconfig.port, true, serverconfig.ipv6);
 
 	return true;
 }

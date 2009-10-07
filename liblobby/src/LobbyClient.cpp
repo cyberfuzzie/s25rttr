@@ -1,4 +1,4 @@
-// $Id: LobbyClient.cpp 5466 2009-08-30 16:20:24Z FloSoft $
+// $Id: LobbyClient.cpp 5606 2009-10-07 14:57:50Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -156,7 +156,7 @@ void LobbyClient::Stop()
  *
  *  @author FloSoft
  */
-bool LobbyClient::Login(const std::string &server, const unsigned int port, const std::string &user, const std::string &pass)
+bool LobbyClient::Login(const std::string &server, const unsigned int port, const std::string &user, const std::string &pass, const bool use_ipv6)
 {
 	// aufräumen
 	Stop();
@@ -167,7 +167,7 @@ bool LobbyClient::Login(const std::string &server, const unsigned int port, cons
 	userdata.pass =  pass;
 
 	// verbinden
-	return Connect( server, port );
+	return Connect( server, port, use_ipv6 );
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -179,7 +179,7 @@ bool LobbyClient::Login(const std::string &server, const unsigned int port, cons
  *
  *  @author FloSoft
  */
-bool LobbyClient::Register(const std::string &server, const unsigned int port, const std::string &user, const std::string &pass, const std::string &email)
+bool LobbyClient::Register(const std::string &server, const unsigned int port, const std::string &user, const std::string &pass, const std::string &email, const bool use_ipv6)
 {
 	// aufräumen
 	Stop();
@@ -191,7 +191,7 @@ bool LobbyClient::Register(const std::string &server, const unsigned int port, c
 	userdata.email = email;
 
 	// verbinden
-	return Connect( server, port );
+	return Connect( server, port, use_ipv6 );
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -341,10 +341,10 @@ void LobbyClient::UpdateServerPlayerCount(unsigned int curplayer, unsigned int m
  *
  *  @author FloSoft
  */
-bool LobbyClient::Connect(const std::string &server, const unsigned int port)
+bool LobbyClient::Connect(const std::string &server, const unsigned int port, const bool use_ipv6)
 {
 	// Verbinden
-	if(!socket.Connect( server.c_str(), port ))
+	if(!socket.Connect( server.c_str(), port, use_ipv6 ))
 	{
 		ServerLost();
 		return false;

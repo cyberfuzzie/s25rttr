@@ -1,4 +1,4 @@
-// $Id: iwDirectIPCreate.cpp 5259 2009-07-13 15:53:31Z FloSoft $
+// $Id: iwDirectIPCreate.cpp 5606 2009-10-07 14:57:50Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -46,7 +46,7 @@
  *  @author OLiver
  */
 iwDirectIPCreate::iwDirectIPCreate(unsigned int server_type)
-	: IngameWindow(CGI_DIRECTIPCREATE, 0xFFFF, 0xFFFF, 300, 250, _("Create Game"), LOADER.GetImageN("resource", 41), true),
+	: IngameWindow(CGI_DIRECTIPCREATE, 0xFFFF, 0xFFFF, 300, 285, _("Create Game"), LOADER.GetImageN("resource", 41), true),
 	server_type(server_type)
 {
 	ctrlEdit *name, *port;
@@ -63,14 +63,22 @@ iwDirectIPCreate::iwDirectIPCreate(unsigned int server_type)
 	AddText(4, 20, 130, _("Password:"), COLOR_YELLOW, 0, NormalFont);
 	AddEdit(5, 20, 145, 260, 22, TC_GREEN2, NormalFont, 0, false, false,  true);
 
+	// ipv6 oder ipv4 benutzen
+	AddText(11, 20, 185, _("Use IPv6:"), COLOR_YELLOW, 0, NormalFont);
+
+	ctrlOptionGroup *ipv6 = AddOptionGroup(12, ctrlOptionGroup::CHECK);
+	ipv6->AddTextButton(0, 120, 180, 75,	22, TC_GREEN2, _("IPv4"), NormalFont);
+	ipv6->AddTextButton(1, 205, 180, 75,	22, TC_GREEN2, _("IPv6"), NormalFont);
+	ipv6->SetSelection( (SETTINGS.server.ipv6 ? 1 : 0) );
+
 	// Status
-	AddText(6, 150, 180, "", COLOR_RED, glArchivItem_Font::DF_CENTER, NormalFont);
+	AddText(6, 150, 215, "", COLOR_RED, glArchivItem_Font::DF_CENTER, NormalFont);
 
 	// "Starten"
-	AddTextButton(7, 20, 205, 125, 22, TC_GREEN2, _("Start"),NormalFont);
+	AddTextButton(7, 20, 240, 125, 22, TC_GREEN2, _("Start"),NormalFont);
 
 	// "Zurück"
-	AddTextButton(8, 155, 205, 125, 22, TC_RED1, _("Back"),NormalFont);
+	AddTextButton(8, 155, 240, 125, 22, TC_RED1, _("Back"),NormalFont);
 
 	name->SetText(SETTINGS.lobby.name + _("'s Game"));
 	name->SetFocus();
@@ -113,12 +121,29 @@ void iwDirectIPCreate::Msg_EditEnter(const unsigned int ctrl_id)
 		{
 			name->SetFocus(false);
 			port->SetFocus(false);
-			pass->SetFocus(true);
+			pass->SetFocus(false);
 		} break;
 	case 5:
 		{
 			// Starten klicken
 			Msg_ButtonClick(7);
+		} break;
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author FloSoft
+ */
+void iwDirectIPCreate::Msg_OptionGroupChange(const unsigned int ctrl_id, const unsigned short selection)
+{
+	switch(ctrl_id)
+	{
+	case 12: // IPv6 Ja/Nein
+		{
+			SETTINGS.server.ipv6 = (selection == 1);
 		} break;
 	}
 }
@@ -138,6 +163,7 @@ void iwDirectIPCreate::Msg_ButtonClick(const unsigned int ctrl_id)
 			ctrlEdit *name = GetCtrl<ctrlEdit>(1);
 			ctrlEdit *port = GetCtrl<ctrlEdit>(3);
 			ctrlEdit *pass = GetCtrl<ctrlEdit>(5);
+			ctrlCheck *ipv6 = GetCtrl<ctrlCheck>(9);
 
 			if(name->GetText().length() < 1)
 			{
@@ -161,6 +187,7 @@ void iwDirectIPCreate::Msg_ButtonClick(const unsigned int ctrl_id)
 			csi.password = pass->GetText();
 			csi.port = static_cast<unsigned short>(atoi(port->GetText().c_str()));
 			csi.type = server_type;
+			csi.ipv6 = SETTINGS.server.ipv6;
 
 			// Map auswählen
 			WindowManager::inst().Switch(new dskSelectMap(csi));

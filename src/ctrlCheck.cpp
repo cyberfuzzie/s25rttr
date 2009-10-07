@@ -1,4 +1,4 @@
-// $Id: ctrlCheck.cpp 5238 2009-07-09 20:50:28Z FloSoft $
+// $Id: ctrlCheck.cpp 5606 2009-10-07 14:57:50Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -73,7 +73,6 @@ bool ctrlCheck::Msg_LeftDown(const MouseCoords& mc)
 
 	return false;
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////
 /**

@@ -1,4 +1,4 @@
-// $Id: iwDirectIPConnect.cpp 5259 2009-07-13 15:53:31Z FloSoft $
+// $Id: iwDirectIPConnect.cpp 5606 2009-10-07 14:57:50Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -43,9 +43,10 @@
  *  Konstruktor von @p iwDirectIPConnect.
  *
  *  @author OLiver
+ *  @author FloSoft
  */
 iwDirectIPConnect::iwDirectIPConnect(unsigned int server_type)
-	: IngameWindow(CGI_DIRECTIPCONNECT, 0xFFFF, 0xFFFF, 300, 250, _("Join Game"), LOADER.GetImageN("resource", 41), true),
+	: IngameWindow(CGI_DIRECTIPCONNECT, 0xFFFF, 0xFFFF, 300, 285, _("Join Game"), LOADER.GetImageN("resource", 41), true),
 	server_type(server_type)
 {
 	ctrlEdit *host, *port;
@@ -62,14 +63,22 @@ iwDirectIPConnect::iwDirectIPConnect(unsigned int server_type)
 	AddText(4, 20, 130, _("Password (if needed):"), COLOR_YELLOW, 0, NormalFont);
 	AddEdit(5, 20, 145, 260, 22, TC_GREEN2, NormalFont, 0, false, false,  true);
 
+	// ipv6 oder ipv4 benutzen
+	AddText(11, 20, 185, _("Use IPv6:"), COLOR_YELLOW, 0, NormalFont);
+
+	ctrlOptionGroup *ipv6 = AddOptionGroup(12, ctrlOptionGroup::CHECK);
+	ipv6->AddTextButton(0, 120, 180, 75,	22, TC_GREEN2, _("IPv4"), NormalFont);
+	ipv6->AddTextButton(1, 205, 180, 75,	22, TC_GREEN2, _("IPv6"), NormalFont);
+	ipv6->SetSelection( (SETTINGS.server.ipv6 ? 1 : 0) );
+
 	// Status
-	AddText(6, 150, 180, EMPTY_STRING, COLOR_RED, glArchivItem_Font::DF_CENTER, NormalFont);
+	AddText(6, 150, 215, EMPTY_STRING, COLOR_RED, glArchivItem_Font::DF_CENTER, NormalFont);
 
 	// "Verbinden"
-	AddTextButton(7, 20, 205, 125, 22, TC_GREEN2, _("Connect"),NormalFont);
+	AddTextButton(7, 20, 240, 125, 22, TC_GREEN2, _("Connect"),NormalFont);
 
 	// "Zurück"
-	AddTextButton(8, 155, 205, 125, 22, TC_RED1, _("Back"),NormalFont);
+	AddTextButton(8, 155, 240, 125, 22, TC_RED1, _("Back"),NormalFont);
 
 	host->SetFocus();
 	host->SetText(SETTINGS.server.last_ip);
@@ -79,13 +88,24 @@ iwDirectIPConnect::iwDirectIPConnect(unsigned int server_type)
 	GAMECLIENT.SetInterface(this);
 }
 
-
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author FloSoft
+ */
 void iwDirectIPConnect::Msg_EditChange(const unsigned int ctrl_id)
 {
 	// Statustext resetten
 	SetText(EMPTY_STRING, COLOR_RED, true);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author FloSoft
+ */
 void iwDirectIPConnect::Msg_EditEnter(const unsigned int ctrl_id)
 {
 	switch(ctrl_id)
@@ -115,9 +135,12 @@ void iwDirectIPConnect::Msg_EditEnter(const unsigned int ctrl_id)
 	}
 }
 
-
-
-
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author FloSoft
+ */
 void iwDirectIPConnect::Msg_ButtonClick(const unsigned int ctrl_id)
 {
 	switch(ctrl_id)
@@ -128,8 +151,6 @@ void iwDirectIPConnect::Msg_ButtonClick(const unsigned int ctrl_id)
 			ctrlEdit *port = GetCtrl<ctrlEdit>(3);
 			ctrlEdit *pass = GetCtrl<ctrlEdit>(5);
 
-			SETTINGS.server.last_ip = host->GetText();
-
 			if(atoi(port->GetText().c_str()) <= 0 || atoi(port->GetText().c_str()) >= 65535 || atoi(port->GetText().c_str()) == 3664)
 			{
 				SetText(_("Invalid port. The valid port-range is 1 to 65535!"), COLOR_RED, false);
@@ -139,11 +160,14 @@ void iwDirectIPConnect::Msg_ButtonClick(const unsigned int ctrl_id)
 				break;
 			}
 
+			// einstellung speichern
+			SETTINGS.server.last_ip = host->GetText();
+
 			// Text auf "Verbinde mit Host..." setzen und Button deaktivieren
 			SetText( _("Connecting with Host..."), COLOR_RED, false);
 
 			GAMECLIENT.Stop();
-			if(!GAMECLIENT.Connect(host->GetText(), pass->GetText(), server_type, (unsigned short)atoi(port->GetText().c_str()), false))
+			if(!GAMECLIENT.Connect(host->GetText(), pass->GetText(), server_type, (unsigned short)atoi(port->GetText().c_str()), false, SETTINGS.server.ipv6))
 			{
 				// Text auf "Verbindung fehlgeschlagen" setzen und Button aktivieren
 				SetText( _("Connection failed!"), COLOR_RED, true);
@@ -153,6 +177,23 @@ void iwDirectIPConnect::Msg_ButtonClick(const unsigned int ctrl_id)
 	case 8:
 		{
 			Close();
+		} break;
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author FloSoft
+ */
+void iwDirectIPConnect::Msg_OptionGroupChange(const unsigned int ctrl_id, const unsigned short selection)
+{
+	switch(ctrl_id)
+	{
+	case 12: // IPv6 Ja/Nein
+		{
+			SETTINGS.server.ipv6 = (selection == 1);
 		} break;
 	}
 }
@@ -204,6 +245,12 @@ void iwDirectIPConnect::SetPort(unsigned short port)
 	pp->SetText(p);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void iwDirectIPConnect::CI_Error(const ClientError ce)
 {
 	switch(ce)
@@ -219,6 +266,12 @@ void iwDirectIPConnect::CI_Error(const ClientError ce)
 	}
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void iwDirectIPConnect::CI_NextConnectState(const ConnectState cs)
 {
 	switch(cs)

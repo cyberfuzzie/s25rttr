@@ -1,4 +1,4 @@
-// $Id: iwDirectIPConnect.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: iwDirectIPConnect.h 5606 2009-10-07 14:57:50Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -40,6 +40,7 @@ private:
 	void Msg_EditChange(const unsigned int ctrl_id);
 	void Msg_EditEnter(const unsigned int ctrl_id);
 	void Msg_ButtonClick(const unsigned int ctrl_id);
+	void Msg_OptionGroupChange(const unsigned int ctrl_id, const unsigned short selection);
 
 	void CI_Error(const ClientError ce);
 	void CI_NextConnectState(const ConnectState cs);

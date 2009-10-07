@@ -1,4 +1,4 @@
-// $Id: Socket.h 4920 2009-05-22 20:47:07Z OLiver $
+// $Id: Socket.h 5606 2009-10-07 14:57:50Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -70,13 +70,13 @@ public:
 	void Close(void);
 
 	/// setzt das Socket auf Listen.
-	bool Listen(unsigned short port);
+	bool Listen(unsigned short port, bool use_ipv6);
 
 	/// akzeptiert eingehende Verbindungsversuche.
 	bool Accept(Socket& client);
 
 	/// versucht eine Verbindung mit einem externen Host aufzubauen.
-	bool Connect(const char *const hostname, const unsigned short port);
+	bool Connect(const char *const hostname, const unsigned short port, bool use_ipv6);
 
 	/// liest Daten vom Socket in einen Puffer.
 	int Recv(void *buffer, int length, bool block = true);

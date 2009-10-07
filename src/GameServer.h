@@ -1,4 +1,4 @@
-// $Id: GameServer.h 5441 2009-08-22 22:21:52Z jh $
+// $Id: GameServer.h 5606 2009-10-07 14:57:50Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -142,6 +142,7 @@ private:
 		std::string password;
 		std::string mapname;
 		unsigned short port;
+		bool ipv6;
 	} serverconfig;
 
 	class MapInfo

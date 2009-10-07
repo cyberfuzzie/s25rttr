@@ -1,4 +1,4 @@
-// $Id: LobbyClient.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: LobbyClient.h 5606 2009-10-07 14:57:50Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -54,9 +54,9 @@ public:
 	void Stop(void);
 
 	/// versucht einen Login in den LobbyServer.
-	bool Login(const std::string &server, const unsigned int port, const std::string &user, const std::string &pass);
+	bool Login(const std::string &server, const unsigned int port, const std::string &user, const std::string &pass, const bool use_ipv6);
 	///  versucht einen Nick auf dem LobbyServer zu registrieren.
-	bool Register(const std::string &server, const unsigned int port, const std::string &user, const std::string &pass, const std::string &email);
+	bool Register(const std::string &server, const unsigned int port, const std::string &user, const std::string &pass, const std::string &email, const bool use_ipv6);
 
 	/// schickt einen Request für die Server-Liste.
 	void SendServerListRequest(void);
@@ -130,7 +130,7 @@ public:
 
 protected:
 	/// verbindet mit dem LobbyServer.
-	bool Connect(const std::string &server, const unsigned int port);
+	bool Connect(const std::string &server, const unsigned int port, const bool use_ipv6);
 	/// Server verloren.
 	void ServerLost(bool message = true);
 

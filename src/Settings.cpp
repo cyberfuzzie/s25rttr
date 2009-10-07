@@ -1,4 +1,4 @@
-// $Id: Settings.cpp 5520 2009-09-13 12:43:00Z FloSoft $
+// $Id: Settings.cpp 5606 2009-10-07 14:57:50Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -102,6 +102,7 @@ bool Settings::LoadDefaults()
 	// server
 	// {
 		server.last_ip = "";
+		server.ipv6 = false;
 	// }
 
 	// savegames
@@ -212,6 +213,7 @@ bool Settings::Load(void)
 	// server
 	// {
 		this->server.last_ip = server->getValue("last_ip");
+		this->server.ipv6 = (server->getValueI("ipv6") ? true : false);
 	// }
 
 	// savegames
@@ -295,6 +297,7 @@ void Settings::Save(void)
 	// server
 	// {
 		server->setValue("last_ip", this->server.last_ip.c_str());
+		server->setValue("ipv6", (this->server.ipv6 ? 1 : 0));
 	// }
 
 	// savegames

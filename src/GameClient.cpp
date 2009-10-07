@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 5441 2009-08-22 22:21:52Z jh $
+// $Id: GameClient.cpp 5606 2009-10-07 14:57:50Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -180,7 +180,7 @@ GameClient::~GameClient(void)
  *  @author OLiver
  *  @author FloSoft
  */
-bool GameClient::Connect(const std::string& server, const std::string& password, unsigned char servertyp, unsigned short port, bool host)
+bool GameClient::Connect(const std::string& server, const std::string& password, unsigned char servertyp, unsigned short port, bool host, bool use_ipv6)
 {
 	Stop();
 
@@ -193,7 +193,7 @@ bool GameClient::Connect(const std::string& server, const std::string& password,
 	clientconfig.host = host;
 
 	// Verbinden
-	if(!socket.Connect(server.c_str(), port))
+	if(!socket.Connect(server.c_str(), port, use_ipv6))
 	{
 		LOG.lprintf("GameClient::Connect: ERROR: Connect failed!\n");
 		return false;

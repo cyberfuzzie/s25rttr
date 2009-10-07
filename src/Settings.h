@@ -1,4 +1,4 @@
-// $Id: Settings.h 5259 2009-07-13 15:53:31Z FloSoft $
+// $Id: Settings.h 5606 2009-10-07 14:57:50Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -76,6 +76,7 @@ public:
 
 	struct {
 		std::string last_ip; ///< last entered ip or hostname
+		bool ipv6;           ///< listen/connect on ipv6 as default or not
 	} server;
 
 	struct {

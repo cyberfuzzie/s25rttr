@@ -1,4 +1,4 @@
-// $Id: main.cpp 5605 2009-10-07 14:56:21Z FloSoft $
+// $Id: main.cpp 5609 2009-10-07 15:17:06Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -21,6 +21,7 @@
 // Systemheader
 #include <cstdio>
 #include <cstdlib>
+#include <cstring>
 
 #include <fstream>
 #include <sstream>

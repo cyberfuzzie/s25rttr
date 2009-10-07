@@ -1,4 +1,4 @@
-// $Id: iwDirectIPCreate.cpp 5606 2009-10-07 14:57:50Z FloSoft $
+// $Id: iwDirectIPCreate.cpp 5610 2009-10-07 15:22:19Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -163,7 +163,6 @@ void iwDirectIPCreate::Msg_ButtonClick(const unsigned int ctrl_id)
 			ctrlEdit *name = GetCtrl<ctrlEdit>(1);
 			ctrlEdit *port = GetCtrl<ctrlEdit>(3);
 			ctrlEdit *pass = GetCtrl<ctrlEdit>(5);
-			ctrlCheck *ipv6 = GetCtrl<ctrlCheck>(9);
 
 			if(name->GetText().length() < 1)
 			{

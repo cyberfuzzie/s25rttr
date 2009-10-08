@@ -1,8 +1,6 @@
 ################################################################################
-### $Id: CMakeLists.txt 5582 2009-10-02 13:32:10Z FloSoft $
+### $Id: CMakeLists.txt 5613 2009-10-08 17:07:10Z FloSoft $
 ################################################################################
-
-PROJECT(s25client)
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 CMAKE_POLICY(SET CMP0003 OLD)
@@ -13,15 +11,21 @@ SET(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules)
 
 INCLUDE(cmake/crosscompile.cmake)
 
+PROJECT(s25client)
+
 ################################################################################
 
-SET(PREFIX  CACHE STRING "Path prefix")
-SET(BINDIR  CACHE STRING "Directory for the binaries")
-SET(DATADIR CACHE STRING "Data directory")
+SET(PREFIX ${PREFIX} CACHE STRING "Path prefix")
+SET(BINDIR ${BINDIR} CACHE STRING "Directory for the binaries")
+SET(DATADIR ${DATADIR} CACHE STRING "Data directory")
 
 IF (PREFIX AND NOT DATADIR)
 	SET(DATADIR ${PREFIX}/share/s25rttr)
 ENDIF (PREFIX AND NOT DATADIR)
+
+IF (PREFIX AND NOT BINDIR)
+	SET(BINDIR ${PREFIX}/bin)
+ENDIF (PREFIX AND NOT BINDIR)
 
 # ensure out of source build
 INCLUDE(MacroEnsureOutOfSourceBuild)
@@ -75,10 +79,6 @@ ADD_CUSTOM_TARGET(mrproper
 
 # preinstall script
 INSTALL(SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/cmake/install.cmake)
-
-################################################################################
-
-INCLUDE(cmake/crosscompile.cmake)
 
 ################################################################################
 

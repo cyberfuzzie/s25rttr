@@ -1,10 +1,26 @@
 #################################################################################
-### $Id: CMakeLists.txt 5571 2009-09-30 17:58:59Z FloSoft $
+### $Id: CMakeLists.txt 5616 2009-10-09 19:55:02Z FloSoft $
 #################################################################################
 
 INCLUDE(FindSDL)
 
 IF (SDL_FOUND)
+	IF ( "${COMPILEFOR}" STREQUAL "apple")
+		SET(SPLIT "${SDL_LIBRARY}")
+		INCLUDE(FindSplitPath)
+
+		MESSAGE(STATUS "SDL-Library is a directory, searching for the Library")
+	        
+		FIND_FILE(SDL
+	                        SDL
+	               	        PATHS ${PATHS}
+		         )
+		IF(NOT SDL-NOTFOUND)
+			MESSAGE(STATUS "SDL-Library was directory, found ${SDL}")
+	        	SET(SDL_LIBRARY "${SDL}")
+		ENDIF(NOT SDL-NOTFOUND)
+	ENDIF ( "${COMPILEFOR}" STREQUAL "apple")
+
 	INCLUDE_DIRECTORIES(../../../src)
 
 	ADD_LIBRARY(videoSDL SHARED SDL.cpp SDL.h main.h oem.cpp oem.h ../../../../version.cpp ../../../src/DriverInterface.cpp)

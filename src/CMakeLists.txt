@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 5585 2009-10-02 13:41:03Z FloSoft $
+### $Id: CMakeLists.txt 5616 2009-10-09 19:55:02Z FloSoft $
 ################################################################################
 
 INCLUDE(FindBZip2)
@@ -20,7 +20,7 @@ ENDIF (NOT GETTEXT_FOUND)
 
 ################################################################################
 
-INCLUDE_DIRECTORIES("../" "../liblobby/src/" "../libutil/src/" "../mygettext/src/" "../libsiedler2/src/" "../libendian/src")
+INCLUDE_DIRECTORIES("../" "../liblobby/src/" "../libutil/src/" "../mygettext/src/" "../libsiedler2/src/" "../libendian/src/")
 LINK_DIRECTORIES("../libsiedler2/src" "../mygettext/src" "../libutil/src" "../liblobby/src" "../libendian/src")
 
 ################################################################################
@@ -355,11 +355,36 @@ IF ( "${COMPILEFOR}" STREQUAL "windows" )
     SET(s25client_SRCS ${s25client_SRCS} s25client.res.o)
 ENDIF ( "${COMPILEFOR}" STREQUAL "windows" )
 
+IF ( "${COMPILEFOR}" STREQUAL "apple")
+	IF(NOT EXISTS "${OpenGL_gl_LIBRARY}")
+ 	        SET(SPLIT "${OpenGL_gl_LIBRARY}")
+        	INCLUDE(FindSplitPath)
+		MESSAGE(STATUS ${PATHS} ${SPLIT})
+
+		MESSAGE(STATUS "OpenGL-Library is a directory, searching for the Library")
+		FIND_FILE(OpenGL
+				OpenGL
+				PATHS ${PATHS}
+			 )
+		IF(NOT OpenGL-NOTFOUND)
+			MESSAGE(STATUS "OpenGL-Library was directory, found ${OpenGL}")
+			SET(OPENGL_gl_LIBRARY "${OpenGL}")
+		ENDIF(NOT OpenGL-NOTFOUND)
+
+	ENDIF(NOT EXISTS "${OpenGL_gl_LIBRARY}")
+
+	IF( "${CROSSCOMPILE}" STREQUAL "1")
+		SET(CMAKE_C_LINK_FLAGS  "${CMAKE_C_LINK_FLAGS} -framework OpenGL -L${CMAKE_SOURCE_DIR}/macos -lSDLmain")
+		SET(CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -framework OpenGL -L${CMAKE_SOURCE_DIR}/macos -lSDLmain")
+	ENDIF( "${CROSSCOMPILE}" STREQUAL "1")
+ENDIF ( "${COMPILEFOR}" STREQUAL "apple")
+
 ADD_EXECUTABLE(s25client ${s25client_SRCS})
 TARGET_LINK_LIBRARIES(s25client siedler2 lobby_c s25util mygettext ${BZIP2_LIBRARIES} ${OPENGL_gl_LIBRARY})
 
 IF ( "${COMPILEFOR}" STREQUAL "apple")
 	SET_TARGET_PROPERTIES(s25client PROPERTIES LINK_FLAGS "-framework SDL -framework Cocoa")
+	
 ENDIF ( "${COMPILEFOR}" STREQUAL "apple")
 
 IF ( "${COMPILEFOR}" STREQUAL "windows" )

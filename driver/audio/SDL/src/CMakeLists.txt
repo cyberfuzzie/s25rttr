@@ -1,12 +1,45 @@
 #################################################################################
-### $Id: CMakeLists.txt 5581 2009-10-02 12:48:08Z FloSoft $
+### $Id: CMakeLists.txt 5616 2009-10-09 19:55:02Z FloSoft $
 #################################################################################
 
 INCLUDE(FindSDL)
 INCLUDE(FindSDL_mixer)
 
 IF (SDL_FOUND)
+        IF ( "${COMPILEFOR}" STREQUAL "apple")
+                SET(SPLIT "${SDL_LIBRARY}")
+                INCLUDE(FindSplitPath)
+
+                MESSAGE(STATUS "SDL-Library is a directory, searching for the Library")
+
+                FIND_FILE(SDL
+                                SDL
+                                PATHS ${PATHS}
+                         )
+                IF(NOT SDL-NOTFOUND)
+                        MESSAGE(STATUS "SDL-Library was directory, found ${SDL}")
+                        SET(SDL_LIBRARY "${SDL}")
+                ENDIF(NOT SDL-NOTFOUND)
+        ENDIF ( "${COMPILEFOR}" STREQUAL "apple")
+
 	IF (SDLMIXER_FOUND)
+
+	        IF ( "${COMPILEFOR}" STREQUAL "apple")
+	                SET(SPLIT "${SDLMIXER_LIBRARY}")
+        	        INCLUDE(FindSplitPath)
+	
+        	        MESSAGE(STATUS "SDLMIXER-Library is a directory, searching for the Library")
+
+                	FIND_FILE(SDLMIXER
+                                	SDL_mixer
+                        	        PATHS ${PATHS}
+	                         )
+        	        IF(NOT SDLMIXER-NOTFOUND)
+                	        MESSAGE(STATUS "SDLMIXER-Library was directory, found ${SDLMIXER}")
+                        	SET(SDLMIXER_LIBRARY "${SDLMIXER}")
+	                ENDIF(NOT SDLMIXER-NOTFOUND)
+        	ENDIF ( "${COMPILEFOR}" STREQUAL "apple")
+
 		INCLUDE_DIRECTORIES(../../../src ../libendian/src)
 		
 		ADD_LIBRARY(audioSDL SHARED SDL.cpp SDL.h main.h SoundSDL_Music.cpp SoundSDL_Music.h SoundSDL_Effect.cpp SoundSDL_Effect.h ../../../../version.cpp ../../../src/DriverInterface.cpp ../../../src/tempname.cpp ../../../src/tempname.h)

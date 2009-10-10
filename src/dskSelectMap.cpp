@@ -1,4 +1,4 @@
-// $Id: dskSelectMap.cpp 5619 2009-10-10 07:54:52Z FloSoft $
+// $Id: dskSelectMap.cpp 5620 2009-10-10 10:05:03Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -165,11 +165,11 @@ void dskSelectMap::Msg_OptionGroupChange(const unsigned int ctrl_id, const unsig
 	char path[4096];
 
 	// Und wieder füllen lassen
-	snprintf(path, 4096, "%s*.swd", GetFilePath(FILE_PATHS[ids[selection]]));
+	snprintf(path, 4096, "%s*.swd", GetFilePath(FILE_PATHS[ids[selection]]).c_str());
 	ListDir(path, FillTable, (void*)table );
 
 	// Nach beiden Kartentypen suchen
-	snprintf(path, 4096, "%s*.wld", GetFilePath(FILE_PATHS[ids[selection]]));
+	snprintf(path, 4096, "%s*.wld", GetFilePath(FILE_PATHS[ids[selection]]).c_str());
 	ListDir(path, FillTable, (void*)table );
 
 	// Dann noch sortieren

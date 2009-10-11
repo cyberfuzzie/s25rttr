@@ -45,6 +45,8 @@ class noShip : public noMovable
 	unsigned short sea_id;
 	/// Zielpunkt des Schiffes
 	unsigned goal_harbor_id;
+	/// Anlegepunkt am Zielhafen, d.h. die Richtung relativ zum Zielpunkt
+	unsigned char goal_dir;
 	/// Schiffsroute 
 	std::vector<unsigned char> route;
 	unsigned pos;

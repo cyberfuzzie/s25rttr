@@ -884,7 +884,10 @@ void noFigure::DrawWalking(int x, int y)
 	{
 		// Wenn wir warten, ani-step 2 benutzen
 		unsigned ani_step = waiting_for_free_node?2:GAMECLIENT.Interpolate(ASCENT_ANIMATION_STEPS[ascent],current_ev)%8;
-		CalcFigurRelative(x,y);
+		
+		// Wenn man wartet, stehend zeichnen, es sei denn man wartet mittem auf dem Weg!
+		if(!waiting_for_free_node || pause_walked_gf)
+			CalcFigurRelative(x,y);
 
 		// Esel
 		LOADER.GetMapImageN(2000+((dir+3)%6)*8+ani_step)->Draw(x,y);

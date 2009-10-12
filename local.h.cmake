@@ -21,20 +21,21 @@
 
 //
 ///////////////////////////////////////////////////////////////////////////////
-#else
+#endif
+
 ///////////////////////////////////////////////////////////////////////////////
-//	Other-OS Dependant-Configuration
+//	Other Configuration
 
 //	set global prefix (normal /usr/local)
 //#define PREFIX "/usr/local"
 #cmakedefine PREFIX "${PREFIX}"
 
 //	set binary directory (normal $(prefix)/bin)
-//#define BINDIR "/usr/local/bin"
+//#define BINDIR PREFIX"/bin"
 #cmakedefine BINDIR "${BINDIR}"
 
 //	set data directory (normal $(datadir)/s25rttr)
-//#define DATADIR "/usr/local/share/s25rttr"
+//#define DATADIR PREFIX"/share/s25rttr"
 #cmakedefine DATADIR "${DATADIR}"
 
 //	set game directory (normal $(datadir)/s25rttr/S2)
@@ -42,15 +43,12 @@
 
 //	set driver directory (normal $(datadir)/s25rttr/driver)
 //#define DRIVERDIR DATADIR"/driver"
+#cmakedefine DRIVERDIR "${LIBDIR}/driver"
 
 //	set settings directory (normal $HOME/.s25rttr)
-#define SETTINGSDIR "~/.s25rttr"
+//#define SETTINGSDIR "~/.s25rttr"
 
 //
 ///////////////////////////////////////////////////////////////////////////////
-#endif // !_WIN32
-
-// name of settings file (normal $HOME/.s25rttr/settings.bin)
-//#define SETTINGSFILE SETTINGSDIR"/settings.bin"
 
 #endif // !LOCAL_H_INCLUDED

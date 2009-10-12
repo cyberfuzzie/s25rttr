@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: CMakeLists.txt 5533 2009-09-17 17:59:10Z FloSoft $
+### $Id: CMakeLists.txt 5627 2009-10-12 17:17:06Z FloSoft $
 #################################################################################
 
 IF ("${COMPILEFOR}" STREQUAL "windows" )
@@ -19,10 +19,11 @@ IF ("${COMPILEFOR}" STREQUAL "windows" )
 	
 		IF ( "${COMPILEFOR}" STREQUAL "windows")
 			ADD_DEFINITIONS(-DBUILD_DLL)
-			ADD_CUSTOM_COMMAND(TARGET videoWinAPI POST_BUILD COMMAND if [ -f libvideoWinAPI.so ] \; then cp -v libvideoWinAPI.so videoWinAPI.dll \; else cp -v libvideoWinAPI.dll videoWinAPI.dll \; fi )
 		ENDIF ( "${COMPILEFOR}" STREQUAL "windows")
-	
-		ADD_CUSTOM_COMMAND(TARGET videoWinAPI POST_BUILD COMMAND ln -fvs WinAPI/src/libvideoWinAPI${CMAKE_SHARED_LIBRARY_SUFFIX} ../../videoWinAPI${CMAKE_SHARED_LIBRARY_SUFFIX})
+		
+		ADD_CUSTOM_COMMAND(TARGET videoWinAPI POST_BUILD COMMAND ln -fvs WinAPI/src/${CMAKE_SHARED_LIBRARY_PREFIX}videoWinAPI${CMAKE_SHARED_LIBRARY_SUFFIX} ../../videoWinAPI${CMAKE_SHARED_LIBRARY_SUFFIX})
+
+		INSTALL(TARGETS videoWinAPI DESTINATION ${LIBDIR}/driver/video)
 	#ENDIF (GDI32_LIBRARY AND OPENGL_LIBRARY AND USER32_LIBRARY)
 ENDIF ("${COMPILEFOR}" STREQUAL "windows" )
 

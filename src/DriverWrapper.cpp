@@ -1,4 +1,4 @@
-// $Id: DriverWrapper.cpp 5211 2009-07-07 13:14:17Z FloSoft $
+// $Id: DriverWrapper.cpp 5627 2009-10-12 17:17:06Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -148,19 +148,15 @@ void DriverWrapper::LoadDriverList(const DriverType dt, list<DriverItem>& driver
 
 	const std::string DIRECTORY[2] = { "video", "audio" };
 
+	std::string path = GetFilePath(FILE_PATHS[46]) + DIRECTORY[dt] + "/" + 
 #ifdef _WIN32
-#	ifdef _DEBUG
-		std::string path = FILE_PATHS[46] + DIRECTORY[dt] + "/" + "dbg_*.dll";
-#	else
-		std::string path = FILE_PATHS[46] + DIRECTORY[dt] + "/" + "rls_*.dll";
-#	endif
+		"*.dll";
 #else
-	std::string path = FILE_PATHS[46] + DIRECTORY[dt] + "/" + 
-#ifdef __APPLE__
+#	ifdef __APPLE__
 		"*.dylib";
-#else
+#	else
 		"*.so";
-#endif // !__APPLE__
+#	endif // !__APPLE__
 #endif // !_WIN32
 
 	ListDir(path, 0, 0, &driver_files);
@@ -169,10 +165,26 @@ void DriverWrapper::LoadDriverList(const DriverType dt, list<DriverItem>& driver
 	std::string choice;
 
 	HINSTANCE dll;
-	for(std::list<std::string>::iterator it = driver_files.begin();it!=driver_files.end();++it)
+	for(std::list<std::string>::iterator it = driver_files.begin(); it != driver_files.end(); ++it)
 	{
-		std::string test(*it);
-		if( (dll = LoadLibrary(it->c_str())) )
+		std::string path(*it);
+
+#ifdef _WIN32
+		// check filename to "rls_*" / "dbg_*", to allow not specialized drivers (for cygwin builds)
+		size_t filepos = path.find_last_of("/\\");
+		if(filepos != std::string::npos)
+		{
+			std::string file = path.substr(filepos+1);
+#ifdef _DEBUG
+			if(file.substr(0, 4) == "rls_")
+#else
+			if(file.substr(0, 4) == "dbg_")
+#endif
+				continue;
+		}
+#endif
+
+		if( (dll = LoadLibrary(path.c_str())) )
 		{
 			PDRIVER_GETDRIVERAPIVERSION GetDriverAPIVersion = pto2ptf<PDRIVER_GETDRIVERAPIVERSION>((void*)GetProcAddress(dll, "GetDriverAPIVersion"));
 

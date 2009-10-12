@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 5616 2009-10-09 19:55:02Z FloSoft $
+### $Id: CMakeLists.txt 5627 2009-10-12 17:17:06Z FloSoft $
 ################################################################################
 
 INCLUDE(FindBZip2)
@@ -318,18 +318,19 @@ GETTEXT_CREATE_TRANSLATIONS( ../RTTR/languages/rttr.pot ALL
 ################################################################################
 
 # bzip linkerbug-fix
+SET(SOURCES_BZIP "")
 IF ( "${COMPILEFOR}" STREQUAL "windows" )
-    SET(SOURCES_BZIP 
-        ../contrib/bzip2-1.0.3/blocksort.c
-        ../contrib/bzip2-1.0.3/huffman.c 
-        ../contrib/bzip2-1.0.3/crctable.c
-        ../contrib/bzip2-1.0.3/randtable.c
-        ../contrib/bzip2-1.0.3/compress.c
-        ../contrib/bzip2-1.0.3/decompress.c
-        ../contrib/bzip2-1.0.3/bzlib.c
-        )
-ELSE ( "${COMPILEFOR}" STREQUAL "windows" )
-    SET(SOURCES_BZIP )
+	IF( IS_DIRECTORY "${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3" )
+		SET(SOURCES_BZIP 
+			${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/blocksort.c
+		    ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/huffman.c 
+		    ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/crctable.c
+		    ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/randtable.c 
+		    ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/compress.c
+		    ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/decompress.c 
+		    ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/bzlib.c
+		   )
+	ENDIF( IS_DIRECTORY "${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3" )
 ENDIF ( "${COMPILEFOR}" STREQUAL "windows" )
 
 SET(s25client_SRCS 

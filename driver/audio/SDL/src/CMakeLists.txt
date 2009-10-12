@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: CMakeLists.txt 5616 2009-10-09 19:55:02Z FloSoft $
+### $Id: CMakeLists.txt 5627 2009-10-12 17:17:06Z FloSoft $
 #################################################################################
 
 INCLUDE(FindSDL)
@@ -56,16 +56,15 @@ IF (SDL_FOUND)
 		
 		IF ( "${COMPILEFOR}" STREQUAL "windows")
 			ADD_DEFINITIONS(-DBUILD_DLL)
-			ADD_CUSTOM_COMMAND(TARGET audioSDL POST_BUILD COMMAND if [ -f libaudioSDL.so ] \; then cp -v libaudioSDL.so audioSDL.dll \; else cp -v libaudioSDL.dll audioSDL.dll \; fi)
 		ENDIF ( "${COMPILEFOR}" STREQUAL "windows")
 			
 		IF ( "${COMPILEFOR}" STREQUAL "apple")
 			SET_TARGET_PROPERTIES(audioSDL PROPERTIES LINK_FLAGS "-framework SDL -framework SDL_mixer")
 		ENDIF ( "${COMPILEFOR}" STREQUAL "apple")
 
-		ADD_CUSTOM_COMMAND(TARGET audioSDL POST_BUILD COMMAND ln -fvs SDL/src/libaudioSDL${CMAKE_SHARED_LIBRARY_SUFFIX} ../../audioSDL${CMAKE_SHARED_LIBRARY_SUFFIX})
+		ADD_CUSTOM_COMMAND(TARGET audioSDL POST_BUILD COMMAND ln -fvs SDL/src/${CMAKE_SHARED_LIBRARY_PREFIX}audioSDL${CMAKE_SHARED_LIBRARY_SUFFIX} ../../audioSDL${CMAKE_SHARED_LIBRARY_SUFFIX})
 
-		INSTALL(TARGETS audioSDL DESTINATION ${DATADIR}/driver/audio)
+		INSTALL(TARGETS audioSDL DESTINATION ${LIBDIR}/driver/audio)
 	ELSE (SDLMIXER_FOUND)
 		MESSAGE(WARNING ": SDL_mixer library not found: Not building SDL audiodriver")
 	ENDIF (SDLMIXER_FOUND)

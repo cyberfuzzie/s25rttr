@@ -1,4 +1,4 @@
-// $Id: main.h 5247 2009-07-11 19:13:17Z FloSoft $
+// $Id: main.h 5627 2009-10-12 17:17:06Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -35,6 +35,16 @@
 	#endif
 
 	#include <ws2tcpip.h>
+	
+	#ifdef __CYGWIN__
+		#ifndef AI_ALL
+		#define AI_ALL            0x0010
+		#endif
+		
+		#ifndef AI_ADDRCONFIG
+		#define AI_ADDRCONFIG     0x0020
+		#endif
+	#endif
 
 #ifdef _MSC_VER
 	#include <crtdbg.h>

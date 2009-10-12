@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: CMakeLists.txt 5571 2009-09-30 17:58:59Z FloSoft $
+### $Id: CMakeLists.txt 5627 2009-10-12 17:17:06Z FloSoft $
 #################################################################################
 
 IF ("${COMPILEFOR}/${COMPILEARCH}" STREQUAL "linux/i686" )
@@ -12,9 +12,9 @@ IF ("${COMPILEFOR}/${COMPILEARCH}" STREQUAL "linux/i686" )
 	
 		TARGET_LINK_LIBRARIES(videoGLFW videodrv ${GLFW_LIBRARY})
 	
-		ADD_CUSTOM_COMMAND(TARGET videoGLFW POST_BUILD COMMAND ln -fvs GLFW/src/libvideoGLFW${CMAKE_SHARED_LIBRARY_SUFFIX} ../../videoGLFW${CMAKE_SHARED_LIBRARY_SUFFIX})
+		ADD_CUSTOM_COMMAND(TARGET videoGLFW POST_BUILD COMMAND ln -fvs GLFW/src/${CMAKE_SHARED_LIBRARY_PREFIX}videoGLFW${CMAKE_SHARED_LIBRARY_SUFFIX} ../../videoGLFW${CMAKE_SHARED_LIBRARY_SUFFIX})
 	
-		INSTALL(TARGETS videoGLFW DESTINATION ${DATADIR}/driver/video)
+		INSTALL(TARGETS videoGLFW DESTINATION ${LIBDIR}/driver/video)
 	ELSE (GLFW_LIBRARY)
 		MESSAGE(WARNING ": GLFW library not found: Not building GLFW videodriver")
 	ENDIF (GLFW_LIBRARY)

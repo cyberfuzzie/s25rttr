@@ -1,4 +1,4 @@
-// $Id: main.h 4777 2009-05-02 13:07:26Z FloSoft $
+// $Id: main.h 5627 2009-10-12 17:17:06Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -25,9 +25,12 @@
 #	include "../config.h"
 #endif // HAVE_CONFIG_H
 
-#include <stdio.h>
+#include <cstdio>
 
 #if defined _WIN32 || defined __CYGWIN__
+#	undef LITTLE_ENDIAN
+#	undef BIG_ENDIAN
+#	undef BYTE_ORDER
 #	define LITTLE_ENDIAN 1234
 #	define BIG_ENDIAN    4321
 #	define BYTE_ORDER    LITTLE_ENDIAN

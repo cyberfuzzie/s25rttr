@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 5496 2009-09-07 17:05:19Z FloSoft $
+### $Id: CMakeLists.txt 5627 2009-10-12 17:17:06Z FloSoft $
 ################################################################################
 
 INCLUDE(FindCURL)
@@ -14,13 +14,19 @@ ENDIF (NOT BZIP2_FOUND)
 ADD_DEFINITIONS(${BZIP2_DEFINITIONS})
 
 # bzip linkerbug-fix
+SET(SOURCES_BZIP "")
 IF ( "${COMPILEFOR}" STREQUAL "windows" )
-	SET(SOURCES_BZIP ../contrib/bzip2-1.0.3/blocksort.c
-	    ../contrib/bzip2-1.0.3/huffman.c ../contrib/bzip2-1.0.3/crctable.c
-	    ../contrib/bzip2-1.0.3/randtable.c ../contrib/bzip2-1.0.3/compress.c
-	    ../contrib/bzip2-1.0.3/decompress.c ../contrib/bzip2-1.0.3/bzlib.c)
-ELSE ( "${COMPILEFOR}" STREQUAL "windows" )
-	SET(SOURCES_BZIP )
+	IF( IS_DIRECTORY "${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3" )
+		SET(SOURCES_BZIP 
+			${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/blocksort.c
+		    ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/huffman.c 
+		    ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/crctable.c
+		    ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/randtable.c 
+		    ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/compress.c
+		    ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/decompress.c 
+		    ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/bzlib.c
+		   )
+	ENDIF( IS_DIRECTORY "${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3" )
 ENDIF ( "${COMPILEFOR}" STREQUAL "windows" )
 
 ################################################################################
@@ -29,6 +35,7 @@ SET(s25update_SRCS main.cpp md5.cpp md5sum.cpp)
 
 IF ( "${COMPILEFOR}" STREQUAL "windows" )
 	ADD_DEFINITIONS("-DAFX_TARG_DEU")
+	ADD_DEFINITIONS("-D_WIN32_WCE")
 
 	FIND_PROGRAM(WINDRES NAMES windres i686-mingw32-windres i586-mingw32msvc-windres DOC "path to mingw's windres executable")
 	ADD_CUSTOM_COMMAND(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/s25update.res.o COMMAND ${WINDRES} -I${CMAKE_CURRENT_SOURCE_DIR}/../win32/ -i${CMAKE_CURRENT_SOURCE_DIR}/../win32/s25update.rc -o ${CMAKE_CURRENT_BINARY_DIR}/s25update.res.o)

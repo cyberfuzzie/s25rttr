@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 5613 2009-10-08 17:07:10Z FloSoft $
+### $Id: CMakeLists.txt 5627 2009-10-12 17:17:06Z FloSoft $
 ################################################################################
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
@@ -62,6 +62,10 @@ CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/local.h.cmake
                ${CMAKE_CURRENT_SOURCE_DIR}/local.h)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/version.h.cmake
                ${CMAKE_CURRENT_SOURCE_DIR}/version.h)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/build/preinstall.sh.cmake
+               preinstall.sh @ONLY)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/build/postinstall.sh.cmake
+               postinstall.sh @ONLY)
 
 ################################################################################
 
@@ -78,7 +82,7 @@ ADD_CUSTOM_TARGET(mrproper
 
 
 # preinstall script
-INSTALL(SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/cmake/install.cmake)
+INSTALL(SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/cmake/preinstall.cmake)
 
 ################################################################################
 
@@ -93,3 +97,19 @@ ADD_SUBDIRECTORY(src)
 
 ################################################################################
 
+# postinstall script-bug workaround, including sub-install-scripts manually
+INSTALL(CODE "INCLUDE(driver/cmake_install.cmake)")
+INSTALL(CODE "INCLUDE(libsiedler2/cmake_install.cmake)")
+INSTALL(CODE "INCLUDE(s-c/cmake_install.cmake)")
+INSTALL(CODE "INCLUDE(s25update/cmake_install.cmake)")
+INSTALL(CODE "INCLUDE(src/cmake_install.cmake)")
+
+# and then dont let him install anything
+INSTALL(CODE "SET(CMAKE_INSTALL_LOCAL_ONLY 1)")
+  
+# postinstall script
+INSTALL(SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/cmake/postinstall.cmake)
+
+INSTALL(CODE "MESSAGE(STATUS \"Installation is now complete\")")
+
+################################################################################

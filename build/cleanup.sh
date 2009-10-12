@@ -8,8 +8,9 @@ if (test "${TOP_SRCDIR}err" = "err") || (test "${TOP_SRCDIR}" = ".") ; then
 fi
 
 echo "Cleaning up $PWD"
-rm -vf CMakeCache.txt cmake_install.cmake Makefile
+rm -vf CMakeCache.txt cmake_install.cmake Makefile install_manifest.txt
 rm -vrf CMakeFiles
+rm -vf *.bak *~
 
 # Unterverzeichnisse entfernen
 for I in `grep ADD_SUBDIRECTORY ../CMakeLists.txt | cut -d '(' -f 2 \

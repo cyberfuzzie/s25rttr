@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: CMakeLists.txt 5616 2009-10-09 19:55:02Z FloSoft $
+### $Id: CMakeLists.txt 5627 2009-10-12 17:17:06Z FloSoft $
 #################################################################################
 
 INCLUDE(FindSDL)
@@ -37,16 +37,15 @@ IF (SDL_FOUND)
 
 	IF ( "${COMPILEFOR}" STREQUAL "windows")
 		ADD_DEFINITIONS(-DBUILD_DLL)
-		ADD_CUSTOM_COMMAND(TARGET videoSDL POST_BUILD COMMAND if [ -f libvideoSDL.so ] \; then cp -v libvideoSDL.so videoSDL.dll \; else cp -v libvideoSDL.dll videoSDL.dll \; fi )
 	ENDIF ( "${COMPILEFOR}" STREQUAL "windows")
 
 	IF ( "${COMPILEFOR}" STREQUAL "apple")
 		SET_TARGET_PROPERTIES(videoSDL PROPERTIES LINK_FLAGS "-framework SDL")
 	ENDIF ( "${COMPILEFOR}" STREQUAL "apple")
 
-	ADD_CUSTOM_COMMAND(TARGET videoSDL POST_BUILD COMMAND ln -fvs SDL/src/libvideoSDL${CMAKE_SHARED_LIBRARY_SUFFIX} ../../videoSDL${CMAKE_SHARED_LIBRARY_SUFFIX})
+	ADD_CUSTOM_COMMAND(TARGET videoSDL POST_BUILD COMMAND ln -fvs SDL/src/${CMAKE_SHARED_LIBRARY_PREFIX}videoSDL${CMAKE_SHARED_LIBRARY_SUFFIX} ../../videoSDL${CMAKE_SHARED_LIBRARY_SUFFIX})
 	
-	INSTALL(TARGETS videoSDL DESTINATION ${DATADIR}/driver/video)
+	INSTALL(TARGETS videoSDL DESTINATION ${LIBDIR}/driver/video)
 ELSE (SDL_FOUND)
 	MESSAGE(WARNING ": SDL library not found: Not building SDL videodriver")
 ENDIF (SDL_FOUND)

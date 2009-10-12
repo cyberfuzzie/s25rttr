@@ -1,14 +1,18 @@
 ###############################################################################
-## $Id$
+## $Id: preinstall.cmake 5627 2009-10-12 17:17:06Z FloSoft $
 ###############################################################################
+
+MESSAGE(STATUS "Running preinstall script")
 
 # run install script
 EXECUTE_PROCESS(
-  COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/../build/install.sh" "--cache=${CMAKE_CURRENT_BINARY_DIR}/CMakeCache.txt" "--iprefix=${CMAKE_INSTALL_PREFIX}"
+  COMMAND bash "preinstall.sh"
   RESULT_VARIABLE AD_HDM_RV
   )
 IF(NOT "${AD_HDM_RV}" STREQUAL "0")
         MESSAGE(FATAL_ERROR "ERROR: Preinstallscript failed: Maybe you need administrative privileges?")
 ENDIF(NOT "${AD_HDM_RV}" STREQUAL "0")
+
+MESSAGE(STATUS "Done")
 
 ###############################################################################

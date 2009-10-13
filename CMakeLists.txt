@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 5627 2009-10-12 17:17:06Z FloSoft $
+### $Id: CMakeLists.txt 5631 2009-10-13 14:21:47Z FloSoft $
 ################################################################################
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
@@ -55,6 +55,13 @@ IF ("${COMPILEFOR}" STREQUAL "linux" )
 		ENDIF ("${COMPILEARCH}" STREQUAL "amd64" )
 	ENDIF (FPIC_FLAGS)
 ENDIF ("${COMPILEFOR}" STREQUAL "linux" )
+
+# avoid lhs-path bug in windows
+IF ("${COMPILEFOR}" STREQUAL "windows" )
+	SET(BINDIR ".")
+	SET(DATADIR ".")
+	SET(LIBDIR ".")
+ENDIF ("${COMPILEFOR}" STREQUAL "windows" )
 
 ################################################################################
 

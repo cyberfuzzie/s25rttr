@@ -1,4 +1,4 @@
-// $Id: dskOptions.cpp 5259 2009-07-13 15:53:31Z FloSoft $
+// $Id: dskOptions.cpp 5632 2009-10-13 20:55:05Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -88,13 +88,16 @@ dskOptions::dskOptions(void) : Desktop(LOADER.GetImageN("setup013", 0))
 	ctrlGroup *groupSound = AddGroup(23, scale);
 	ctrlComboBox *combo;
 
+	// Allgemein
+	// {
+
 	// "Name"
 	groupAllgemein->AddText(30, 80, 80, _("Name in Game:"), COLOR_YELLOW, 0, NormalFont);
-	groupAllgemein->AddEdit(31, 280, 75, 190, 22, TC_GREY, NormalFont, 15);
+	ctrlEdit *name = groupAllgemein->AddEdit(31, 280, 75, 190, 22, TC_GREY, NormalFont, 15);
+	name->SetText(SETTINGS.lobby.name);
 
 	// "Sprache"
 	groupAllgemein->AddText(32, 80, 130, _("Language:"), COLOR_YELLOW, 0, NormalFont);
-
 	combo = groupAllgemein->AddComboBox(33, 280, 125, 190, 20, TC_GREY, NormalFont, 100);
 
 	bool selected = false;
@@ -112,18 +115,56 @@ dskOptions::dskOptions(void) : Desktop(LOADER.GetImageN("setup013", 0))
 	if(!selected)
 		combo->SetSelection(0);
 
+	// Tastaturlayout
 	groupAllgemein->AddText(34, 80, 180, _("Keyboard layout:"), COLOR_YELLOW, 0, NormalFont);
 	groupAllgemein->AddTextButton(35, 280, 175, 120, 22, TC_GREY, _("Readme"), NormalFont);
 
+	// IPv4/6
+	groupAllgemein->AddText(300, 80, 230, _("Use IPv6:"), COLOR_YELLOW, 0, NormalFont);
+
+	ctrlOptionGroup *ipv6 = groupAllgemein->AddOptionGroup(301, ctrlOptionGroup::CHECK, scale);
+	ipv6->AddTextButton(302, 480, 225, 190, 22, TC_GREY, _("IPv6"), NormalFont);
+	ipv6->AddTextButton(303, 280, 225, 190, 22, TC_GREY, _("IPv4"), NormalFont);
+	ipv6->SetSelection( (SETTINGS.server.ipv6 ? 302 : 303) );
+
+	// ipv6-feld ggf (de-)aktivieren
+	ipv6->GetCtrl<ctrlTextButton>(302)->Enable( (SETTINGS.proxy.typ != 4) );
+
+	// Proxyserver
+	groupAllgemein->AddText(36, 80, 280, _("Proxyserver:"), COLOR_YELLOW, 0, NormalFont);
+	ctrlEdit *proxy = groupAllgemein->AddEdit(37, 280, 275, 190, 22, TC_GREY, NormalFont);
+	proxy->SetText(SETTINGS.proxy.proxy);
+
+	// Proxytyp
+	groupAllgemein->AddText(38, 80, 310, _("Proxytyp:"), COLOR_YELLOW, 0, NormalFont);
+	optiongroup = groupAllgemein->AddOptionGroup(39, ctrlOptionGroup::CHECK, scale);
+	ctrlTextButton *socksv5 = optiongroup->AddTextButton(393, 540, 305, 120, 22, TC_GREY, _("Socks v5"), NormalFont);
+	ctrlTextButton *socksv4 = optiongroup->AddTextButton(392, 410, 305, 120, 22, TC_GREY, _("Socks v4"), NormalFont);
+	optiongroup->AddTextButton(391, 280, 305, 120, 22, TC_GREY, _("No Proxy"), NormalFont);
+
+	// und auswählen
+	switch(SETTINGS.proxy.typ)
+	{
+	default:	{	optiongroup->SetSelection(391);	} break;
+	case 4:		{	optiongroup->SetSelection(392);	} break;
+	case 5:		{	optiongroup->SetSelection(393);	} break;
+	}
+
+	// TODO: not implemented
+	socksv5->Enable(false);
+	socksv4->Enable(false);
+
+	// }
+
 	// "Auflösung"
-	groupGrafik->AddText(  40,  80, 80, _("Resolution:"),COLOR_YELLOW,0,NormalFont);
+	groupGrafik->AddText(  40,  80, 80, _("Resolution:"), COLOR_YELLOW, 0, NormalFont);
 	groupGrafik->AddComboBox(41, 280, 75, 120, 22, TC_GREY, NormalFont, 150);
 
 	// "Vollbild"
 	groupGrafik->AddText(  46,  80, 130, _("Mode:"), COLOR_YELLOW, 0, NormalFont);
 	optiongroup = groupGrafik->AddOptionGroup(47, ctrlOptionGroup::CHECK, scale);
-	optiongroup->AddTextButton(48, 480, 125, 190, 22, TC_GREY, _("Fullscreen"),NormalFont);
-	optiongroup->AddTextButton(49, 280, 125, 190, 22, TC_GREY, _("Windowed"),NormalFont);
+	optiongroup->AddTextButton(48, 480, 125, 190, 22, TC_GREY, _("Fullscreen"), NormalFont);
+	optiongroup->AddTextButton(49, 280, 125, 190, 22, TC_GREY, _("Windowed"), NormalFont);
 
 	// "VSync"
 	groupGrafik->AddText(  50,  80, 180, _("VSync:"), COLOR_YELLOW, 0, NormalFont);
@@ -132,8 +173,8 @@ dskOptions::dskOptions(void) : Desktop(LOADER.GetImageN("setup013", 0))
 	if(GLOBALVARS.ext_swapcontrol == false) // VSync unterstützt?
 		optiongroup->AddText(  52, 280, 180, _("not supported"), COLOR_YELLOW, 0, NormalFont);
 	else
-		optiongroup->AddTextButton(52, 280, 175, 190, 22, TC_GREY,_("On"),NormalFont);
-	optiongroup->AddTextButton(53, 480, 175, 190, 22, TC_GREY, _("Off"),NormalFont);
+		optiongroup->AddTextButton(52, 280, 175, 190, 22, TC_GREY,_("On"), NormalFont);
+	optiongroup->AddTextButton(53, 480, 175, 190, 22, TC_GREY, _("Off"), NormalFont);
 
 	// "VBO"
 	groupGrafik->AddText(  54,  80, 230, _("Vertex Buffer Objects:"), COLOR_YELLOW, 0, NormalFont);
@@ -142,8 +183,8 @@ dskOptions::dskOptions(void) : Desktop(LOADER.GetImageN("setup013", 0))
 	if(GLOBALVARS.ext_vbo == false) // VBO unterstützt?
 		optiongroup->AddText(  56, 280, 230, _("not supported"), COLOR_YELLOW, 0, NormalFont);
 	else
-		optiongroup->AddTextButton(56, 280, 225, 190, 22, TC_GREY,_("On"),NormalFont);
-	optiongroup->AddTextButton(57, 480, 225, 190, 22, TC_GREY, _("Off"),NormalFont);
+		optiongroup->AddTextButton(56, 280, 225, 190, 22, TC_GREY,_("On"), NormalFont);
+	optiongroup->AddTextButton(57, 480, 225, 190, 22, TC_GREY, _("Off"), NormalFont);
 
 	// "Grafiktreiber"
 	groupGrafik->AddText(58, 80, 275, _("Graphics Driver"), COLOR_YELLOW, 0, NormalFont);
@@ -194,52 +235,13 @@ dskOptions::dskOptions(void) : Desktop(LOADER.GetImageN("setup013", 0))
 	// Musicplayer-Button
 	groupSound->AddTextButton(71,280,175,190,22,TC_GREY,_("Music player"),NormalFont);
 	
-
-	ctrlGroup *group;
-
 	// "Allgemein" auswählen
 	optiongroup = GetCtrl<ctrlOptionGroup>(10);
 	optiongroup->SetSelection(11, true);
 
-	// Gruppe "Allgemein" holen
-	group = GetCtrl<ctrlGroup>(21);
 
-	// Name setzen
-	group->GetCtrl<ctrlEdit>(31)->SetText(SETTINGS.lobby.name);
-
-	// Gruppe "Grafik" holen
-	group = GetCtrl<ctrlGroup>(22);
-
-	// "Vollbild" setzen
-	optiongroup = group->GetCtrl<ctrlOptionGroup>(47);
-	optiongroup->SetSelection( (SETTINGS.video.fullscreen ? 48 : 49) );
-
-	// "VSync" setzen
-	optiongroup = group->GetCtrl<ctrlOptionGroup>(51);
-
-	if(GLOBALVARS.ext_swapcontrol)
-		optiongroup->SetSelection( (SETTINGS.video.vsync ? 52 : 53) );
-	else
-		optiongroup->SetSelection(53);
-
-	// "VBO" setzen
-	optiongroup = group->GetCtrl<ctrlOptionGroup>(55);
-
-	if(GLOBALVARS.ext_vbo)
-		optiongroup->SetSelection( (SETTINGS.video.vbo ? 56 : 57) );
-	else
-		optiongroup->SetSelection(57);
-
-	// Gruppe "Sound" holen
-	group = GetCtrl<ctrlGroup>(23);
-
-	// "Musik" setzen
-	optiongroup = group->GetCtrl<ctrlOptionGroup>(63);
-	optiongroup->SetSelection( (SETTINGS.sound.musik ? 64 : 65) );
-
-	// "Effekte" setzen
-	optiongroup = group->GetCtrl<ctrlOptionGroup>(67);
-	optiongroup->SetSelection( (SETTINGS.sound.effekte ? 68 : 69) );
+	// Grafik
+	// {
 
 	// Videomodi auflisten
 	VideoDriverWrapper::inst().ListVideoModes(video_modes);
@@ -266,18 +268,39 @@ dskOptions::dskOptions(void) : Desktop(LOADER.GetImageN("setup013", 0))
 			--i;
 		}
 	}
-}
 
-///////////////////////////////////////////////////////////////////////////////
-/**
- *
- *
- *  @author FloSoft
- */
-dskOptions::~dskOptions()
-{
-	// Name abspeichern
-	SETTINGS.lobby.name = GetCtrl<ctrlGroup>(21)->GetCtrl<ctrlEdit>(31)->GetText();
+	// "Vollbild" setzen
+	optiongroup = groupGrafik->GetCtrl<ctrlOptionGroup>(47);
+	optiongroup->SetSelection( (SETTINGS.video.fullscreen ? 48 : 49) );
+
+	// "VSync" setzen
+	optiongroup = groupGrafik->GetCtrl<ctrlOptionGroup>(51);
+	if(GLOBALVARS.ext_swapcontrol)
+		optiongroup->SetSelection( (SETTINGS.video.vsync ? 52 : 53) );
+	else
+		optiongroup->SetSelection(53);
+
+	// "VBO" setzen
+	optiongroup = groupGrafik->GetCtrl<ctrlOptionGroup>(55);
+	if(GLOBALVARS.ext_vbo)
+		optiongroup->SetSelection( (SETTINGS.video.vbo ? 56 : 57) );
+	else
+		optiongroup->SetSelection(57);
+
+	// }
+
+	// Sound
+	// {
+
+	// "Musik" setzen
+	optiongroup = groupSound->GetCtrl<ctrlOptionGroup>(63);
+	optiongroup->SetSelection( (SETTINGS.sound.musik ? 64 : 65) );
+
+	// "Effekte" setzen
+	optiongroup = groupSound->GetCtrl<ctrlOptionGroup>(67);
+	optiongroup->SetSelection( (SETTINGS.sound.effekte ? 68 : 69) );
+
+	// }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -347,6 +370,34 @@ void dskOptions::Msg_Group_OptionGroupChange(const unsigned int group_id, const 
 {
 	switch(ctrl_id)
 	{
+	case 301: // IPv6 Ja/Nein
+		{
+			switch(selection)
+			{
+			case 302: SETTINGS.server.ipv6 = true;  break;
+			case 303: SETTINGS.server.ipv6 = false; break;
+			}
+		} break;
+	case 39: // Proxy
+		{
+			switch(selection)
+			{
+			case 391: SETTINGS.proxy.typ = 0; break;
+			case 392: SETTINGS.proxy.typ = 4; break;
+			case 393: SETTINGS.proxy.typ = 5; break;
+			}
+
+			// ipv6 gleich sichtbar deaktivieren
+			if(SETTINGS.proxy.typ == 4 && SETTINGS.server.ipv6)
+			{
+				GetCtrl<ctrlGroup>(21)->GetCtrl<ctrlOptionGroup>(301)->SetSelection(303);
+				GetCtrl<ctrlGroup>(21)->GetCtrl<ctrlOptionGroup>(301)->GetCtrl<ctrlTextButton>(302)->Enable(false);
+				SETTINGS.server.ipv6 = false;
+			}
+
+			if(SETTINGS.proxy.typ != 4)
+				GetCtrl<ctrlGroup>(21)->GetCtrl<ctrlOptionGroup>(301)->GetCtrl<ctrlTextButton>(302)->Enable(true);
+		} break;
 	case 47: // Vollbild
 		{
 			switch(selection)
@@ -424,6 +475,13 @@ void dskOptions::Msg_ButtonClick(const unsigned int ctrl_id)
 	{
 	case 0: // "Zurück"
 		{
+			ctrlGroup *groupAllgemein = GetCtrl<ctrlGroup>(21);
+
+			// Name abspeichern
+			SETTINGS.lobby.name = groupAllgemein->GetCtrl<ctrlEdit>(31)->GetText();
+			// Proxy abspeichern, überprüfung der einstellung übernimmt SETTINGS.Save()d	
+			SETTINGS.proxy.proxy = groupAllgemein->GetCtrl<ctrlEdit>(37)->GetText();
+
 			SETTINGS.Save();
 			
 			// Auflösung/Vollbildmodus geändert?

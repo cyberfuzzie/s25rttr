@@ -1,4 +1,4 @@
-// $Id: dskDirectIP.cpp 5247 2009-07-11 19:13:17Z FloSoft $
+// $Id: dskDirectIP.cpp 5632 2009-10-13 20:55:05Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -25,9 +25,11 @@
 #include "WindowManager.h"
 #include "Loader.h"
 #include "GameProtocol.h"
+#include "Settings.h"
 
 #include "dskMultiPlayer.h"
 
+#include "iwMsgbox.h"
 #include "iwDirectIPCreate.h"
 #include "iwDirectIPConnect.h"
 
@@ -70,7 +72,11 @@ void dskDirectIP::Msg_ButtonClick(const unsigned int ctrl_id)
 	{
 	case 3: // "Erstellen"
 		{
-			WindowManager::inst().Show(new iwDirectIPCreate(NP_DIRECT));
+			// Hosten geht nur ohne aktiven Proxy
+			if(SETTINGS.proxy.typ != 0)
+				WindowManager::inst().Show(new iwMsgbox(_("Sorry!"), _("You can't create a game while a proxy server is active\nDisable the use of a proxy server first!"), this, MSB_OK, MSB_EXCLAMATIONGREEN, 1));
+			else
+				WindowManager::inst().Show(new iwDirectIPCreate(NP_DIRECT));
 		} break;
 	case 4: // "Verbinden"
 		{

@@ -1,4 +1,4 @@
-// $Id: Settings.h 5606 2009-10-07 14:57:50Z FloSoft $
+// $Id: Settings.h 5632 2009-10-13 20:55:05Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -78,6 +78,11 @@ public:
 		std::string last_ip; ///< last entered ip or hostname
 		bool ipv6;           ///< listen/connect on ipv6 as default or not
 	} server;
+
+	struct {
+		std::string proxy; ///< Serveradresse / Hostname
+		unsigned char typ; ///< Socks 4 oder 5
+	} proxy;
 
 	struct {
 		unsigned int autosave_interval;

@@ -1,4 +1,4 @@
-// $Id: Settings.cpp 5606 2009-10-07 14:57:50Z FloSoft $
+// $Id: Settings.cpp 5632 2009-10-13 20:55:05Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -34,10 +34,10 @@
 	static char THIS_FILE[] = __FILE__;
 #endif
 
-const unsigned int Settings::SETTINGS_VERSION = 9;
-const unsigned int Settings::SETTINGS_SECTIONS = 8;
+const unsigned int Settings::SETTINGS_VERSION = 10;
+const unsigned int Settings::SETTINGS_SECTIONS = 9;
 const std::string Settings::SETTINGS_SECTION_NAMES[] = {
-	"global", "video", "language", "driver", "sound", "lobby", "server", "savegames"
+	"global", "video", "language", "driver", "sound", "lobby", "server", "proxy", "savegames"
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -48,6 +48,9 @@ Settings::Settings(void)
 
 bool Settings::LoadDefaults()
 {
+	// force deletion of old values
+	LOADER.GetInfoN(CONFIG_NAME)->clear();
+
 	// global
 	// {
 	// }
@@ -105,6 +108,12 @@ bool Settings::LoadDefaults()
 		server.ipv6 = false;
 	// }
 
+	// proxy
+	// {
+		proxy.proxy = "";
+		proxy.typ = 0;
+	// }
+
 	// savegames
 	// {
 		savegames.autosave_interval = 0;
@@ -119,7 +128,7 @@ bool Settings::LoadDefaults()
 // Routine zum Laden der Konfiguration
 bool Settings::Load(void)
 {
-	if(!LOADER.LoadSettings() && LOADER.GetInfoN(CONFIG_NAME)->getCount() < 8)
+	if(!LOADER.LoadSettings() && LOADER.GetInfoN(CONFIG_NAME)->getCount() != SETTINGS_SECTIONS)
 	{
 		warning("No or corrupt \"%s\" found, using default values.\n", GetFilePath(FILE_PATHS[0]).c_str());
 		return LoadDefaults();
@@ -132,10 +141,11 @@ bool Settings::Load(void)
 	const libsiedler2::ArchivItem_Ini *sound = LOADER.GetSettingsIniN("sound");
 	const libsiedler2::ArchivItem_Ini *lobby = LOADER.GetSettingsIniN("lobby");
 	const libsiedler2::ArchivItem_Ini *server = LOADER.GetSettingsIniN("server");
+	const libsiedler2::ArchivItem_Ini *proxy = LOADER.GetSettingsIniN("proxy");
 	const libsiedler2::ArchivItem_Ini *savegames = LOADER.GetSettingsIniN("savegames");
 
 	// ist eine der Kategorien nicht vorhanden?
-	if(!global || !video || !language || !driver || !sound || !lobby || !server || !savegames ||
+	if(!global || !video || !language || !driver || !sound || !lobby || !server || !proxy || !savegames ||
 		// stimmt die Settingsversion?
 		((unsigned int)global->getValueI("version") != SETTINGS_VERSION)
 	  )
@@ -216,6 +226,24 @@ bool Settings::Load(void)
 		this->server.ipv6 = (server->getValueI("ipv6") ? true : false);
 	// }
 
+	// proxy
+	// {
+		this->proxy.proxy = proxy->getValue("proxy");
+		this->proxy.typ = proxy->getValueI("typ");
+	// }
+
+	// leere proxyadresse deaktiviert proxy komplett
+	if(this->proxy.proxy == "")
+		this->proxy.typ = 0;
+
+	// deaktivierter proxy entfernt proxyadresse
+	if(this->proxy.typ == 0)
+		this->proxy.proxy = "";
+
+	// aktivierter Socks v4 deaktiviert ipv6
+	else if(this->proxy.typ == 4 && this->server.ipv6)
+		this->server.ipv6 = false;
+
 	// savegames
 	// {
 		this->savegames.autosave_interval = savegames->getValueI("autosave_interval");
@@ -246,10 +274,11 @@ void Settings::Save(void)
 	libsiedler2::ArchivItem_Ini *sound = LOADER.GetSettingsIniN("sound");
 	libsiedler2::ArchivItem_Ini *lobby = LOADER.GetSettingsIniN("lobby");
 	libsiedler2::ArchivItem_Ini *server = LOADER.GetSettingsIniN("server");
+	libsiedler2::ArchivItem_Ini *proxy = LOADER.GetSettingsIniN("proxy");
 	libsiedler2::ArchivItem_Ini *savegames = LOADER.GetSettingsIniN("savegames");
 
 	// ist eine der Kategorien nicht vorhanden?
-	assert(global && video && language && driver && sound && lobby && server && savegames);
+	assert(global && video && language && driver && sound && lobby && server && proxy && savegames);
 
 	// global
 	// {
@@ -298,6 +327,24 @@ void Settings::Save(void)
 	// {
 		server->setValue("last_ip", this->server.last_ip.c_str());
 		server->setValue("ipv6", (this->server.ipv6 ? 1 : 0));
+	// }
+
+	// leere proxyadresse deaktiviert proxy komplett
+	if(this->proxy.proxy == "")
+		this->proxy.typ = 0;
+
+	// deaktivierter proxy entfernt proxyadresse
+	if(this->proxy.typ == 0)
+		this->proxy.proxy = "";
+
+	// aktivierter Socks v4 deaktiviert ipv6
+	else if(this->proxy.typ == 4 && this->server.ipv6)
+		this->server.ipv6 = false;
+
+	// proxy
+	// {
+		proxy->setValue("proxy", this->proxy.proxy.c_str());
+		proxy->setValue("typ", this->proxy.typ);
 	// }
 
 	// savegames

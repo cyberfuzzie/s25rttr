@@ -1,4 +1,4 @@
-// $Id: dskLobby.cpp 5311 2009-07-22 17:53:32Z jh $
+// $Id: dskLobby.cpp 5632 2009-10-13 20:55:05Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -108,8 +108,9 @@ void dskLobby::Msg_PaintBefore()
 
 void dskLobby::Msg_MsgBoxResult(const unsigned msgbox_id, const MsgboxResult mbr)
 {
-	 // Verbindung verloren
-	WindowManager::inst().Switch(new dskMultiPlayer);
+	// Verbindung verloren
+	if(msgbox_id == 0)
+		WindowManager::inst().Switch(new dskMultiPlayer);
 }
 
 void dskLobby::Msg_ButtonClick(const unsigned int ctrl_id)
@@ -152,9 +153,14 @@ void dskLobby::Msg_ButtonClick(const unsigned int ctrl_id)
 		} break;
 	case 6: // GameServer hinzufügen
 		{
-			servercreate = new iwDirectIPCreate(NP_LOBBY);
-			servercreate->SetParent(this);
-			WindowManager::inst().Show(servercreate, true);
+			if(SETTINGS.proxy.typ != 0)
+				WindowManager::inst().Show(new iwMsgbox(_("Sorry!"), _("You can't create a game while a proxy server is active\nDisable the use of a proxy server first!"), this, MSB_OK, MSB_EXCLAMATIONGREEN, 1));
+			else
+			{
+				servercreate = new iwDirectIPCreate(NP_LOBBY);
+				servercreate->SetParent(this);
+				WindowManager::inst().Show(servercreate, true);
+			}
 		} break;
 	}
 }
@@ -312,7 +318,7 @@ void dskLobby::LC_Status_ConnectionLost()
  */
 void dskLobby::LC_Status_IncompleteMessage()
 {
-	WindowManager::inst().Show(new iwMsgbox(_("Error"), _("Lost connection to lobby!"), this, MSB_OK, MSB_EXCLAMATIONRED, id));
+	WindowManager::inst().Show(new iwMsgbox(_("Error"), _("Lost connection to lobby!"), this, MSB_OK, MSB_EXCLAMATIONRED, 0));
 }
 
 ///////////////////////////////////////////////////////////////////////////////

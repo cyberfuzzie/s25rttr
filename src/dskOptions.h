@@ -1,4 +1,4 @@
-// $Id: dskOptions.h 5195 2009-07-05 09:44:30Z FloSoft $
+// $Id: dskOptions.h 5632 2009-10-13 20:55:05Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -29,7 +29,6 @@ class dskOptions: public Desktop
 {
 public:
 	dskOptions(void);
-	~dskOptions(void);
 
 private:
 	void Msg_OptionGroupChange(const unsigned int ctrl_id, const unsigned short selection);

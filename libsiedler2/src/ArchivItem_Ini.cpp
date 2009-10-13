@@ -1,4 +1,4 @@
-// $Id: ArchivItem_Ini.cpp 5261 2009-07-13 16:20:41Z FloSoft $
+// $Id: ArchivItem_Ini.cpp 5632 2009-10-13 20:55:05Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -95,6 +95,11 @@ int libsiedler2::ArchivItem_Ini::load(FILE *file)
 		return 2;
 
 	std::string section(temp);
+
+	size_t lr = section.find("\r");
+	if (lr != std::string::npos) section.erase(lr, 1); 
+	size_t ln = section.find("\n");
+	if (ln != std::string::npos) section.erase(ln, 1); 
 
 	section = section.substr(section.find_first_of('[')+1);
 	section = section.substr(0, section.find_first_of(']'));

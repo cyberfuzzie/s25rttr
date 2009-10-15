@@ -1,4 +1,4 @@
-// $Id: ctrlEdit.cpp 5340 2009-07-28 19:13:03Z jh $
+// $Id: ctrlEdit.cpp 5637 2009-10-15 16:18:56Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -74,6 +74,20 @@ void ctrlEdit::SetText(const std::string& text)
 
 	for(unsigned i = 0; i < unsigned(text.length()); ++i)
 		AddChar(text.at(i));
+}
+
+void ctrlEdit::SetText(const unsigned int text)
+{
+	std::stringstream textt;
+	textt << text;
+
+	cursor_pos = 0;
+	view_start = 0;
+
+	this->text = "";
+
+	for(unsigned i = 0; i < unsigned(textt.str().length()); ++i)
+		AddChar(textt.str().at(i));
 }
 
 ///////////////////////////////////////////////////////////////////////////////

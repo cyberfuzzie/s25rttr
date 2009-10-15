@@ -1,4 +1,4 @@
-// $Id: dskOptions.cpp 5632 2009-10-13 20:55:05Z FloSoft $
+// $Id: dskOptions.cpp 5637 2009-10-15 16:18:56Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -128,31 +128,32 @@ dskOptions::dskOptions(void) : Desktop(LOADER.GetImageN("setup013", 0))
 	ipv6->SetSelection( (SETTINGS.server.ipv6 ? 302 : 303) );
 
 	// ipv6-feld ggf (de-)aktivieren
-	ipv6->GetCtrl<ctrlTextButton>(302)->Enable( (SETTINGS.proxy.typ != 4) );
+	ipv6->GetCtrl<ctrlTextButton>(302)->Enable( (SETTINGS.proxy.typ != 4 && SETTINGS.proxy.typ != 40) );
 
 	// Proxyserver
 	groupAllgemein->AddText(36, 80, 280, _("Proxyserver:"), COLOR_YELLOW, 0, NormalFont);
 	ctrlEdit *proxy = groupAllgemein->AddEdit(37, 280, 275, 190, 22, TC_GREY, NormalFont);
 	proxy->SetText(SETTINGS.proxy.proxy);
+	proxy = groupAllgemein->AddEdit(371, 480, 275, 50, 22, TC_GREY, NormalFont, 5);
+	proxy->SetText(SETTINGS.proxy.port);
 
 	// Proxytyp
 	groupAllgemein->AddText(38, 80, 310, _("Proxytyp:"), COLOR_YELLOW, 0, NormalFont);
-	optiongroup = groupAllgemein->AddOptionGroup(39, ctrlOptionGroup::CHECK, scale);
-	ctrlTextButton *socksv5 = optiongroup->AddTextButton(393, 540, 305, 120, 22, TC_GREY, _("Socks v5"), NormalFont);
-	ctrlTextButton *socksv4 = optiongroup->AddTextButton(392, 410, 305, 120, 22, TC_GREY, _("Socks v4"), NormalFont);
-	optiongroup->AddTextButton(391, 280, 305, 120, 22, TC_GREY, _("No Proxy"), NormalFont);
+	combo = groupAllgemein->AddComboBox(39, 280, 305, 390, 20, TC_GREY, NormalFont, 100);
+	combo->AddString(_("No Proxy"));
+	combo->AddString(_("Socks v4"));
+
+	// TODO: not implemented
+	//combo->AddString(_("Socks v5"));
 
 	// und auswählen
 	switch(SETTINGS.proxy.typ)
 	{
-	default:	{	optiongroup->SetSelection(391);	} break;
-	case 4:		{	optiongroup->SetSelection(392);	} break;
-	case 5:		{	optiongroup->SetSelection(393);	} break;
+	default:	{	combo->SetSelection(0);	} break;
+	case 4:		{	combo->SetSelection(1);	} break;
+	case 5:		{	combo->SetSelection(2);	} break;
 	}
 
-	// TODO: not implemented
-	socksv5->Enable(false);
-	socksv4->Enable(false);
 
 	// }
 
@@ -344,6 +345,26 @@ void dskOptions::Msg_Group_ComboSelectItem(const unsigned int group_id, const un
 			SETTINGS.language.language = LANGUAGES.setLanguage(selection);
 			WindowManager::inst().Switch(new dskOptions);
 		} break;
+	case 39: // Proxy
+		{
+			switch(selection)
+			{
+			case 0: SETTINGS.proxy.typ = 0; break;
+			case 1: SETTINGS.proxy.typ = 4; break;
+			case 2: SETTINGS.proxy.typ = 5; break;
+			}
+
+			// ipv6 gleich sichtbar deaktivieren
+			if(SETTINGS.proxy.typ == 4 && SETTINGS.server.ipv6)
+			{
+				GetCtrl<ctrlGroup>(21)->GetCtrl<ctrlOptionGroup>(301)->SetSelection(303);
+				GetCtrl<ctrlGroup>(21)->GetCtrl<ctrlOptionGroup>(301)->GetCtrl<ctrlTextButton>(302)->Enable(false);
+				SETTINGS.server.ipv6 = false;
+			}
+
+			if(SETTINGS.proxy.typ != 4)
+				GetCtrl<ctrlGroup>(21)->GetCtrl<ctrlOptionGroup>(301)->GetCtrl<ctrlTextButton>(302)->Enable(true);
+		} break;
 	case 41: // Auflösung
 		{
 			SETTINGS.video.width = video_modes[selection].width;
@@ -377,26 +398,6 @@ void dskOptions::Msg_Group_OptionGroupChange(const unsigned int group_id, const 
 			case 302: SETTINGS.server.ipv6 = true;  break;
 			case 303: SETTINGS.server.ipv6 = false; break;
 			}
-		} break;
-	case 39: // Proxy
-		{
-			switch(selection)
-			{
-			case 391: SETTINGS.proxy.typ = 0; break;
-			case 392: SETTINGS.proxy.typ = 4; break;
-			case 393: SETTINGS.proxy.typ = 5; break;
-			}
-
-			// ipv6 gleich sichtbar deaktivieren
-			if(SETTINGS.proxy.typ == 4 && SETTINGS.server.ipv6)
-			{
-				GetCtrl<ctrlGroup>(21)->GetCtrl<ctrlOptionGroup>(301)->SetSelection(303);
-				GetCtrl<ctrlGroup>(21)->GetCtrl<ctrlOptionGroup>(301)->GetCtrl<ctrlTextButton>(302)->Enable(false);
-				SETTINGS.server.ipv6 = false;
-			}
-
-			if(SETTINGS.proxy.typ != 4)
-				GetCtrl<ctrlGroup>(21)->GetCtrl<ctrlOptionGroup>(301)->GetCtrl<ctrlTextButton>(302)->Enable(true);
 		} break;
 	case 47: // Vollbild
 		{
@@ -481,6 +482,7 @@ void dskOptions::Msg_ButtonClick(const unsigned int ctrl_id)
 			SETTINGS.lobby.name = groupAllgemein->GetCtrl<ctrlEdit>(31)->GetText();
 			// Proxy abspeichern, überprüfung der einstellung übernimmt SETTINGS.Save()d	
 			SETTINGS.proxy.proxy = groupAllgemein->GetCtrl<ctrlEdit>(37)->GetText();
+			SETTINGS.proxy.port = atoi(groupAllgemein->GetCtrl<ctrlEdit>(371)->GetText().c_str());
 
 			SETTINGS.Save();
 			

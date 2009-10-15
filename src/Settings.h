@@ -1,4 +1,4 @@
-// $Id: Settings.h 5632 2009-10-13 20:55:05Z FloSoft $
+// $Id: Settings.h 5637 2009-10-15 16:18:56Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -81,6 +81,7 @@ public:
 
 	struct {
 		std::string proxy; ///< Serveradresse / Hostname
+		unsigned int port; ///< Port
 		unsigned char typ; ///< Socks 4 oder 5
 	} proxy;
 

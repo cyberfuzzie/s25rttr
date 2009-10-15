@@ -1,4 +1,4 @@
-// $Id: main.h 5501 2009-09-08 19:17:09Z FloSoft $
+// $Id: main.h 5637 2009-10-15 16:18:56Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -25,9 +25,11 @@
 // System-Header
 
 #define _CRTDBG_MAP_ALLOC
+#define _WINSOCKAPI_
 
 #ifdef _WIN32
 	#include <windows.h>
+	#include <ws2tcpip.h>
 	
 	#ifndef __CYGWIN__
 		#include <conio.h>

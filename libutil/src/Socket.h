@@ -1,4 +1,4 @@
-// $Id: Socket.h 5606 2009-10-07 14:57:50Z FloSoft $
+// $Id: Socket.h 5637 2009-10-15 16:18:56Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -22,7 +22,7 @@
 #pragma once
 
 #ifdef _WIN32
-	#include <winsock.h>
+	#include <ws2tcpip.h>
 	typedef int socklen_t;
 #else
 	#include <arpa/inet.h>
@@ -75,8 +75,14 @@ public:
 	/// akzeptiert eingehende Verbindungsversuche.
 	bool Accept(Socket& client);
 
+	enum PROXY_TYPE {
+		PROXY_NONE = 0,
+		PROXY_SOCKS4 = 4,
+		PROXY_SOCKS5 = 5
+	};
+
 	/// versucht eine Verbindung mit einem externen Host aufzubauen.
-	bool Connect(const char *const hostname, const unsigned short port, bool use_ipv6);
+	bool Connect(const std::string &hostname, const unsigned short port, bool use_ipv6, const PROXY_TYPE typ = PROXY_NONE, const std::string proxy_hostname = "", const unsigned int proxy_port = 0);
 
 	/// liest Daten vom Socket in einen Puffer.
 	int Recv(void *buffer, int length, bool block = true);
@@ -110,6 +116,48 @@ public:
 	
 	/// liefert einen Zeiger auf das Socket.
 	SOCKET* GetSocket(void);
+
+	void Sleep(unsigned int ms);
+
+	/// liefert Ip-Adresse(n) für einen Hostnamen.
+	struct HostAddr
+	{
+		HostAddr() : host(""), port("0"), addr(NULL), ipv6(false) { }
+
+		// copy
+		HostAddr(const HostAddr &ha) : host(ha.host), port(ha.port), addr(NULL), ipv6(ha.ipv6)
+		{
+			UpdateAddr();
+		}
+
+		~HostAddr()
+		{
+			freeaddrinfo(addr);
+		}
+
+		// set
+		void UpdateAddr()
+		{
+			addrinfo hints;
+			memset(&hints, 0, sizeof(addrinfo));
+			hints.ai_flags = AI_NUMERICHOST;
+			hints.ai_socktype = SOCK_STREAM;
+
+			if(ipv6)
+				hints.ai_family = AF_INET6;
+			else
+				hints.ai_family = AF_INET;
+
+			freeaddrinfo(addr);
+			getaddrinfo(host.c_str(), port.c_str(), &hints, &addr);
+		}
+
+		std::string host;
+		std::string port;
+		addrinfo *addr;
+		bool ipv6;
+	};
+	std::vector<HostAddr> HostToIp(const std::string &hostname, const unsigned int port, bool get_ipv6);
 
 	/// liefert einen string der übergebenen Ip.
 	std::string &IpToString(const sockaddr *addr, std::string &buffer);

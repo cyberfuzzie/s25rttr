@@ -1,4 +1,4 @@
-// $Id: ctrlEdit.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: ctrlEdit.h 5637 2009-10-15 16:18:56Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -30,6 +30,7 @@ public:
 	ctrlEdit(Window *parent, unsigned int id, unsigned short x, unsigned short y, unsigned short width, unsigned short height, TextureColor tc, glArchivItem_Font *font, unsigned short maxlength = 0, bool password = false, bool disabled = false, bool notify = false);
 	/// setzt den Text.
 	void SetText(const std::string& text);
+	void SetText(const unsigned int text);
 
 	const std::string& GetText(void) const { return text; }
 	void SetFocus(bool focus = true) { newfocus = focus; }

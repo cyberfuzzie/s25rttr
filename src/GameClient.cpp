@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 5606 2009-10-07 14:57:50Z FloSoft $
+// $Id: GameClient.cpp 5637 2009-10-15 16:18:56Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -193,7 +193,7 @@ bool GameClient::Connect(const std::string& server, const std::string& password,
 	clientconfig.host = host;
 
 	// Verbinden
-	if(!socket.Connect(server.c_str(), port, use_ipv6))
+	if(!socket.Connect(server.c_str(), port, use_ipv6, (Socket::PROXY_TYPE)SETTINGS.proxy.typ, SETTINGS.proxy.proxy, SETTINGS.proxy.port))
 	{
 		LOG.lprintf("GameClient::Connect: ERROR: Connect failed!\n");
 		return false;
@@ -237,7 +237,6 @@ void GameClient::Run()
 			ServerLost();
 		}
 	}
-
 
 	// nun auf Fehler prüfen
 	set.Clear();

@@ -1,4 +1,4 @@
-// $Id: Settings.cpp 5632 2009-10-13 20:55:05Z FloSoft $
+// $Id: Settings.cpp 5637 2009-10-15 16:18:56Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -111,6 +111,7 @@ bool Settings::LoadDefaults()
 	// proxy
 	// {
 		proxy.proxy = "";
+		proxy.port = 0;
 		proxy.typ = 0;
 	// }
 
@@ -229,6 +230,7 @@ bool Settings::Load(void)
 	// proxy
 	// {
 		this->proxy.proxy = proxy->getValue("proxy");
+		this->proxy.port = proxy->getValueI("port");
 		this->proxy.typ = proxy->getValueI("typ");
 	// }
 
@@ -344,6 +346,7 @@ void Settings::Save(void)
 	// proxy
 	// {
 		proxy->setValue("proxy", this->proxy.proxy.c_str());
+		proxy->setValue("port", this->proxy.port);
 		proxy->setValue("typ", this->proxy.typ);
 	// }
 

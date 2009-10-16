@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.h 5428 2009-08-21 18:42:43Z jh $
+// $Id: AIPlayerJH.h 5641 2009-10-16 17:57:39Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -26,6 +26,7 @@
 #include "GameConsts.h"
 #include "GameClientPlayer.h"
 #include "AIJHHelper.h"
+#include "GameWorld.h"
 
 #include <queue>
 #include <list>
@@ -50,6 +51,7 @@ public:
 
 
 	int GetResMapValue(MapCoord x, MapCoord y, AIJH::Resource res);
+
 protected:
 
 	// wofür isn das?
@@ -184,8 +186,8 @@ protected:
 	/// Tries to attack the enemy
 	void TryToAttack();
 
-	/// Update BQ around new road
-	void RecalcBQAroundRoad(MapCoord xStart, MapCoord yStart, std::vector<unsigned char> &route);
+	/// Update BQ and farming ground around new building site + road
+	void RecalcGround(MapCoord x_building, MapCoord y_building, std::vector<unsigned char> &route_road);
 
 	/// Tries to build a second road to a flag, which is in any way better than the first one
 	bool BuildAlternativeRoad(const noFlag *flag, std::vector<unsigned char> &route);
@@ -213,6 +215,10 @@ protected:
 	std::vector<gc::GameCommand*> &GetGCS() { return gcs; }
 	const GameWorldBase *GetGWB() { return gwb; }
 	unsigned char GetPlayerID() { return playerid; }
+
+public:
+	inline AIJH::Node &GetAINode(MapCoord x, MapCoord y) { return nodes[x + gwb->GetWidth() * y]; }
+
 
 };
 

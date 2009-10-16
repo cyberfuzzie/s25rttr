@@ -37,9 +37,6 @@ void AIJH::BuildJob::ExecuteJob()
 	if (status == AIJH::JOB_WAITING)
 		status = AIJH::JOB_EXECUTING_START;
 
-	// todo wählbar machen
-
-
 	switch (status)
 	{
 	case AIJH::JOB_EXECUTING_START:
@@ -62,8 +59,7 @@ void AIJH::BuildJob::ExecuteJob()
 	case AIJH::JOB_EXECUTING_ROAD2_2:
 		{
 			// evtl noch prüfen ob auch dieser Straßenbau erfolgreich war?
-			aijh->RecalcBQAroundRoad(aijh->GetGWB()->GetXA(target_x, target_y, 4),
-				aijh->GetGWB()->GetYA(target_x, target_y, 4), route);
+			aijh->RecalcGround(target_x, target_y, route);
 			status = AIJH::JOB_FINISHED;
 		}
 		break;
@@ -113,8 +109,10 @@ void AIJH::BuildJob::TryToBuild()
 	switch(type)
 	{
 	case BLD_WOODCUTTER:
+		foundPos = aijh->FindBestPosition(bx, by, AIJH::WOOD, BQ_HUT, 20, 15);
+		break;
 	case BLD_FORESTER:
-		foundPos = aijh->FindBestPosition(bx, by, AIJH::WOOD, BQ_HUT, 80, 15);
+		foundPos = aijh->FindBestPosition(bx, by, AIJH::WOOD, BQ_HUT, 1, 15);
 		break;
 	case BLD_QUARRY:
 		foundPos = aijh->FindBestPosition(bx, by, AIJH::STONES, BQ_HUT, 40, 15);
@@ -232,8 +230,8 @@ void AIJH::BuildJob::BuildMainRoad()
 	else
 	{
 		// Wir sind angeschlossen, BQ für den eben gebauten Weg aktualisieren
-		aijh->RecalcBQAround(target_x, target_y);
-		aijh->RecalcBQAroundRoad(houseFlag->GetX(), houseFlag->GetY(), route);
+		//aijh->RecalcBQAround(target_x, target_y);
+		aijh->RecalcGround(target_x, target_y, route);
 
 		switch(type)
 		{

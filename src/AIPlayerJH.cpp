@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.cpp 5486 2009-09-07 15:41:39Z FloSoft $
+// $Id: AIPlayerJH.cpp 5641 2009-10-16 17:57:39Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -186,20 +186,19 @@ bool AIPlayerJH::ConnectFlagToRoadSytem(const noFlag *flag, std::vector<unsigned
 
 	unsigned shortest = 0;
 	unsigned int shortestLength = 99999;
-	std::vector<unsigned char> shortestRoute;
+	std::vector<unsigned char> tmpRoute;
 	bool found = false;
 	
 	// Jede Flagge testen...
 	for(unsigned i=0; i<flags.size(); ++i)
 	{
-		//std::vector<unsigned char> new_route;
-		route.clear();
+		tmpRoute.clear();
 		unsigned int length;
 		Param_RoadPath prp = { false };
 		
 		// Gibts überhaupt einen Pfad zu dieser Flagge
 		bool path_found = gwb->FindFreePath(flag->GetX(),flag->GetY(),
-		                  flags[i]->GetX(),flags[i]->GetY(),false,100,&route,&length,NULL,NULL,IsPointOK_RoadPath,NULL, &prp);
+		                  flags[i]->GetX(),flags[i]->GetY(),false,100,&tmpRoute,&length,NULL,NULL,IsPointOK_RoadPath,NULL, &prp);
 
 		// Wenn ja, dann gucken ob dieser Pfad möglichst kurz zum "höheren" Ziel (HQ im Moment) ist
 		if (path_found)
@@ -232,14 +231,14 @@ bool AIPlayerJH::ConnectFlagToRoadSytem(const noFlag *flag, std::vector<unsigned
 			{
 				shortest = i;
 				shortestLength = 2 * length+hqlength;
-				shortestRoute = route;
+				route = tmpRoute;
 			}
 		}
 	}
 
 	if (found)
 	{
-		return BuildRoad(flag, flags[shortest], shortestRoute);
+		return BuildRoad(flag, flags[shortest], route);
 	}
 	return false;
 }
@@ -1048,21 +1047,43 @@ void AIPlayerJH::TryToAttack()
 }
 
 
-void AIPlayerJH::RecalcBQAroundRoad(MapCoord xStart, MapCoord yStart, std::vector<unsigned char> &route)
+void AIPlayerJH::RecalcGround(MapCoord x_building, MapCoord y_building, std::vector<unsigned char> &route_road)
 {
-	RecalcBQAround(xStart, yStart);
-	for (unsigned i=0; i<route.size(); ++i)
+	MapCoord x = x_building;
+	MapCoord y = y_building;
+
+	// building itself
+	RecalcBQAround(x, y);
+	if (GetAINode(x, y).res == AIJH::PLANTSPACE)
 	{
-		gwb->GetPointA(xStart, yStart, route[i]);
-		RecalcBQAround(xStart, yStart);
+		ChangeResourceMap(x, y, AIJH::RES_RADIUS[AIJH::PLANTSPACE], resourceMaps[AIJH::PLANTSPACE], -1);
+		GetAINode(x, y).res = AIJH::NOTHING;
+	}
+
+	// flag of building
+	gwb->GetPointA(x, y, 4);
+	RecalcBQAround(x, y);
+	if (GetAINode(x, y).res == AIJH::PLANTSPACE)
+	{
+		ChangeResourceMap(x, y, AIJH::RES_RADIUS[AIJH::PLANTSPACE], resourceMaps[AIJH::PLANTSPACE], -1);
+		GetAINode(x, y).res = AIJH::NOTHING;
+	}
+
+	// along the road
+	for (unsigned i=0; i<route_road.size(); ++i)
+	{
+		gwb->GetPointA(x, y, route_road[i]);
+		RecalcBQAround(x, y);
 		// Auch Plantspace entsprechend anpassen:
-		if (nodes[xStart + yStart * gwb->GetWidth()].res == AIJH::PLANTSPACE)
+		if (GetAINode(x, y).res == AIJH::PLANTSPACE)
 		{
-			ChangeResourceMap(xStart, yStart, AIJH::RES_RADIUS[AIJH::PLANTSPACE], resourceMaps[AIJH::PLANTSPACE], -1);
-			nodes[xStart + yStart * gwb->GetWidth()].res = AIJH::NOTHING;
+			ChangeResourceMap(x, y, AIJH::RES_RADIUS[AIJH::PLANTSPACE], resourceMaps[AIJH::PLANTSPACE], -1);
+			GetAINode(x, y).res = AIJH::NOTHING;
 		}
 	}
 }
+
+
 
 bool AIPlayerJH::BuildAlternativeRoad(const noFlag *flag, std::vector<unsigned char> &route)
 {

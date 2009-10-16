@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 5631 2009-10-13 14:21:47Z FloSoft $
+### $Id: CMakeLists.txt 5640 2009-10-16 07:15:10Z FloSoft $
 ################################################################################
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
@@ -61,6 +61,8 @@ IF ("${COMPILEFOR}" STREQUAL "windows" )
 	SET(BINDIR ".")
 	SET(DATADIR ".")
 	SET(LIBDIR ".")
+	ADD_DEFINITIONS(-D_WIN32_WINNT=0x0501)
+	ADD_DEFINITIONS(-D__CYGWIN__)
 ENDIF ("${COMPILEFOR}" STREQUAL "windows" )
 
 ################################################################################

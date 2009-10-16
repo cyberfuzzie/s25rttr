@@ -1,4 +1,4 @@
-// $Id: Socket.h 5637 2009-10-15 16:18:56Z FloSoft $
+// $Id: Socket.h 5640 2009-10-16 07:15:10Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -26,6 +26,9 @@
 	typedef int socklen_t;
 #else
 	#include <arpa/inet.h>
+	#include <sys/types.h>
+       	#include <sys/socket.h>
+       	#include <netdb.h>
 
 	#define SOCKET int
 	#define INVALID_SOCKET -1

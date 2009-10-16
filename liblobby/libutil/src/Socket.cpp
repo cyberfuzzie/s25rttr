@@ -1,4 +1,4 @@
-// $Id: Socket.cpp 5637 2009-10-15 16:18:56Z FloSoft $
+// $Id: Socket.cpp 5640 2009-10-16 07:15:10Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -450,7 +450,7 @@ bool Socket::Connect(const std::string &hostname, const unsigned short port, boo
 							for(std::vector<HostAddr>::const_iterator it = ips.begin(); it != ips.end(); ++it)
 							{
 								if(!it->ipv6)
-									sscanf(it->host.c_str(), "%d.%d.%d.%d", &proxyinit[4], &proxyinit[5], &proxyinit[6], &proxyinit[7]);
+									sscanf(it->host.c_str(), "%c.%c.%c.%c", &proxyinit[4], &proxyinit[5], &proxyinit[6], &proxyinit[7]);
 							}
 							strcpy(&proxyinit[8], "siedler25"); // userid 
 

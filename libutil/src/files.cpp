@@ -1,4 +1,4 @@
-// $Id: files.cpp 5553 2009-09-23 08:58:53Z FloSoft $
+// $Id: files.cpp 5640 2009-10-16 07:15:10Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -27,7 +27,7 @@
 #include <shlobj.h>
 #endif
 
-#ifdef __MINGW__
+#ifdef __CYGWIN__
 
 typedef GUID KNOWNFOLDERID;
 #define REFKNOWNFOLDERID const KNOWNFOLDERID &

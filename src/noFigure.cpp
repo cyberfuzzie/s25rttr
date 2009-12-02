@@ -95,14 +95,14 @@ const unsigned short WANDER_RADIUS = 10;
 
 noFigure::noFigure(const Job job,const unsigned short x, const unsigned short y,const unsigned char player, noRoadNode * const goal)
 :	noMovable(NOP_FIGURE,x,y), fs(FS_GOTOGOAL), job(job), player(player), cur_rs(0),
-	rs_pos(0),rs_dir(0), goal(goal), waiting_for_free_node(false), last_id(0xFFFFFFFF)
+	rs_pos(0),rs_dir(0), on_ship(false), goal(goal), waiting_for_free_node(false), last_id(0xFFFFFFFF)
 
 {
 }
 
 noFigure::noFigure(const Job job,const unsigned short x, const unsigned short y,const unsigned char player)
 :	noMovable(NOP_FIGURE,x,y), fs(FS_JOB), job(job), player(player), cur_rs(0),
-	rs_pos(0),rs_dir(0), goal(0), waiting_for_free_node(false), last_id(0xFFFFFFFF)
+	rs_pos(0),rs_dir(0), on_ship(false), goal(0), waiting_for_free_node(false), last_id(0xFFFFFFFF)
 {
 }
 
@@ -121,6 +121,7 @@ void noFigure::Serialize_noFigure(SerializedGameData * sgd) const
 	sgd->PushObject(cur_rs,true);
 	sgd->PushUnsignedShort(rs_pos);
 	sgd->PushBool(rs_dir);
+	sgd->PushBool(on_ship);
 
 	if(fs == FS_GOTOGOAL || fs == FS_GOHOME)
 		sgd->PushObject(goal,false);
@@ -145,6 +146,7 @@ player(sgd->PopUnsignedChar()),
 cur_rs(sgd->PopObject<RoadSegment>(GOT_ROADSEGMENT)),
 rs_pos(sgd->PopUnsignedShort()),
 rs_dir(sgd->PopBool()),
+on_ship(sgd->PopBool()),
 last_id(0xFFFFFFFF)
 {
 	if(fs == FS_GOTOGOAL || fs == FS_GOHOME)
@@ -464,14 +466,21 @@ void noFigure::HandleEvent(const unsigned int id)
 
 void noFigure::GoHome(noRoadNode *goal)
 {
+	if(on_ship)
+	{
+		// Wir befinden uns gerade an Deck, also einfach goal auf Null setzen und dann sehen wir, was so passiert
+		goal = NULL;
+		return;
+	}
 	// Nächstes Lagerhaus suchen
-	if(goal == NULL)
+	else if(goal == NULL)
 	{
 		// Wenn wir cur_rs == 0, dann hängen wir wahrscheinlich noch im Lagerhaus in der Warteschlange
 		if(cur_rs == 0)
 		{
 			assert(gwg->GetNO(x,y)->GetGOT() == GOT_NOB_HQ ||
-				gwg->GetNO(x,y)->GetGOT() == GOT_NOB_STOREHOUSE);
+				gwg->GetNO(x,y)->GetGOT() == GOT_NOB_STOREHOUSE
+				|| gwg->GetNO(x,y)->GetGOT() == GOT_NOB_HARBORBUILDING);
 
 			gwg->GetSpecObj<nobBaseWarehouse>(x,y)->CancelFigure(this);
 			em->AddToKillList(this);
@@ -1043,4 +1052,12 @@ void noFigure::StartShipJourney(const Point<MapCoord> goal)
 {
 	x = goal.x;
 	y = goal.y;
+	on_ship = true;
 }
+
+/// Informiert die Figur, wenn Kreuzfahrt beendet ist
+void noFigure::ShipJourneyEnded()
+{
+	on_ship = false;
+}
+

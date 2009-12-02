@@ -1,4 +1,4 @@
-// $Id: noFigure.h 5713 2009-11-28 11:17:21Z OLiver $
+// $Id: noFigure.h 5734 2009-12-02 19:49:10Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -56,6 +56,9 @@ protected:
 	const RoadSegment * cur_rs; /// Straße, auf der er gerade läuft
 	unsigned short rs_pos; /// Position auf der aktuellen Straße (Wegstück)
 	bool rs_dir; /// von welcher Seite er auf die Straße läuft
+
+	// Befindet sich die Figur gerade auf einem Schiff?
+	bool on_ship;
 
 private:
 
@@ -190,6 +193,11 @@ public:		void Destroy() { Destroy_noFigure(); }
 
 	/// Informiert die Figur, dass für sie eine Schiffsreise beginnt
 	void StartShipJourney(const Point<MapCoord> goal);
+	/// Informiert die Figur, wenn Kreuzfahrt beendet ist
+	void ShipJourneyEnded();
+	/// Gibt zurück, ob die Figur kein Ziel mehr hat und damit nach einer Schifffahrt im
+	/// Lagerhaus interniert werden muss
+	bool HasNoGoal() const { return (goal ==  NULL); }
 
 };
 

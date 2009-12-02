@@ -1,4 +1,4 @@
-// $Id: nobBaseWarehouse.h 5695 2009-11-25 18:58:51Z OLiver $
+// $Id: nobBaseWarehouse.h 5734 2009-12-02 19:49:10Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -178,7 +178,7 @@ public: void Serialize(SerializedGameData *sgd) const { Serialize_nobBaseWarehou
 	/// Bestellte Ware, die sich noch hier drin befindet, storniert ihre Auslieferung
 	void CancelWare(Ware * ware);
 	/// Bestellte Figur, die sich noch inder Warteschlange befindet, kommt nicht mehr und will rausgehauen werden
-	void CancelFigure(noFigure * figure);
+	virtual void CancelFigure(noFigure * figure);
 
 	/// Sowas ist bei Warenhäusern nicht nötig
 	unsigned CalcDistributionPoints(noRoadNode * start,const GoodType type) { return 0; }

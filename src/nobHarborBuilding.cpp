@@ -622,8 +622,21 @@ void nobHarborBuilding::ReceiveGoodsFromShip(const std::list<noFigure*> figures,
 	// Menschen zur Ausgehliste hinzufügen
 	for(std::list<noFigure*>::const_iterator it = figures.begin();it!=figures.end();++it)
 	{
-		AddLeavingFigure(*it);
 		++goods.people[(*it)->GetJobType()];
+
+		// Wenn es kein Ziel mehr hat, sprich keinen weiteren Weg, kann es direkt hier gelagert
+		// werden
+		if((*it)->HasNoGoal())
+		{
+			++real_goods.people[(*it)->GetJobType()];
+			em->AddToKillList(*it);
+		}
+		else
+		{
+			AddLeavingFigure(*it);
+			(*it)->ShipJourneyEnded();
+		}
+		
 	}
 
 	// Waren zur Warteliste hinzufügen
@@ -657,4 +670,33 @@ void nobHarborBuilding::CancelWareForShip(Ware* ware)
 	// Ware zur Inventur hinzufügen
 	// Anzahl davon wieder hochsetzen
 	++real_goods.goods[ConvertShields(ware->type)];
+}
+
+/// Bestellte Figur, die sich noch inder Warteschlange befindet, kommt nicht mehr und will rausgehauen werden
+void nobHarborBuilding::CancelFigure(noFigure * figure)
+{
+	// Merken, ob sie entfernt wurde
+	bool removed = false;
+	// Figur ggf. aus der List entfernen
+	for(std::list<FigureForShip>::iterator it = figures_for_ships.begin();it!=figures_for_ships.end();++it)
+	{
+		if(it->fig == figure)
+		{
+			figures_for_ships.erase(it);
+			removed = true;
+			break;
+		}
+	}
+
+	// Wurde sie entfernt?
+	if(removed)
+	{
+		// Dann zu unserem Inventar hinzufügen und anschließend vernichten
+		++real_goods.people[figure->GetJobType()];
+		em->AddToKillList(figure);
+	}
+	// An Basisklasse weiterdelegieren
+	else
+		nobBaseWarehouse::CancelFigure(figure);
+	
 }

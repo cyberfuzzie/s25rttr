@@ -69,6 +69,8 @@ private:
 	bool UseWareAtOnce(Ware * ware, noBaseBuilding* const goal);
 	/// Dasselbe für Menschen
 	bool UseFigureAtOnce(noFigure * fig, noRoadNode* const goal); 
+	/// Bestellte Figur, die sich noch inder Warteschlange befindet, kommt nicht mehr und will rausgehauen werden
+	void CancelFigure(noFigure * figure);
 
 public:
 

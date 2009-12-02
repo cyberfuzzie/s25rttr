@@ -1,4 +1,4 @@
-// $Id: Ware.cpp 5312 2009-07-22 18:02:04Z OLiver $
+// $Id: Ware.cpp 5729 2009-12-01 16:43:58Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -28,6 +28,8 @@
 #include "nobBaseWarehouse.h"
 #include "nofCarrier.h"
 #include "SerializedGameData.h"
+#include "nobHarborBuilding.h"
+#include "GameClient.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -65,6 +67,8 @@ void Ware::Serialize_Ware(SerializedGameData * sgd) const
 	sgd->PushObject(location,false);
 	sgd->PushUnsignedChar(static_cast<unsigned char>(type));
 	sgd->PushObject(goal,false);
+	sgd->PushUnsignedShort(next_harbor.x);
+	sgd->PushUnsignedShort(next_harbor.y);
 }
 
 Ware::Ware(SerializedGameData * sgd, const unsigned obj_id) : GameObject(sgd,obj_id),
@@ -73,21 +77,24 @@ state(State(sgd->PopUnsignedChar())),
 location(sgd->PopObject<noRoadNode>(GOT_UNKNOWN)),
 type(GoodType(sgd->PopUnsignedChar())),
 goal(sgd->PopObject<noBaseBuilding>(GOT_UNKNOWN))
+
 {
+	next_harbor.x = sgd->PopUnsignedShort();
+	next_harbor.y = sgd->PopUnsignedShort();
 }
 
 
 void Ware::RecalcRoute()
 {
-	// N‰chste Richtung nehmen
-	next_dir = gwg->FindPathForWareOnRoads(location,goal);
+	// N√§chste Richtung nehmen
+	next_dir = gwg->FindPathForWareOnRoads(location,goal,NULL,&next_harbor);
 
 	//char str[256];
 	//sprintf(str,"gf = %u, obj_id = %u, type = %u, next_dir = %u, goal = %u\n", 
 	//	GameClient::inst().GetGFNumber(), obj_id, type, unsigned(next_dir), goal->GetObjId());
 	//GameClient::inst().AddToGameLog(str);
 
-	// Evtl gibts keinen Weg mehr? Dann wieder zur¸ck ins Lagerhaus (wenns vorher ¸berhaupt zu nem Ziel ging)
+	// Evtl gibts keinen Weg mehr? Dann wieder zur√ºck ins Lagerhaus (wenns vorher √ºberhaupt zu nem Ziel ging)
 	if(next_dir == 0xFF && goal)
 	{
 		// meinem Ziel Becheid sagen
@@ -100,7 +107,7 @@ void Ware::RecalcRoute()
 			// Lagerhaus ist unser neues Ziel
 			goal = wh;
 			// Weg berechnen
-			next_dir = gwg->FindPathForWareOnRoads(location,goal);
+			next_dir = gwg->FindPathForWareOnRoads(location,goal,NULL,&next_harbor);
 
 			wh->TakeWare(this);
 		}
@@ -117,7 +124,7 @@ void Ware::RecalcRoute()
 
 	}
 
-	//// Es wurde ein g¸ltiger Weg gefunden! Dann muss aber noch dem n‰chsten Tr‰ger Bescheid gesagt werden
+	//// Es wurde ein g√ºltiger Weg gefunden! Dann muss aber noch dem n√§chsten Tr√§ger Bescheid gesagt werden
 	//location->routes[next_dir]->AddWareJob(location);
 }
 
@@ -127,6 +134,21 @@ void Ware::GoalDestroyed()
 	if(state == STATE_WAITINWAREHOUSE)
 	{
 		// Ware ist noch im Lagerhaus auf der Warteliste
+	}
+	// Ist sie evtl. gerade mit dem Schiff unterwegs?
+	else if(state == STATE_ONSHIP)
+	{
+		// Ziel zun√§chst auf NULL setzen, was dann vom Zielhafen erkannt wird,
+		// woraufhin dieser die Ware gleich in sein Inventar mit √ºbernimmt
+		goal = NULL;
+	}
+	// Oder wartet sie im Hafen noch auf ein Schiff
+	else if(state == STATE_WAITFORSHIP)
+	{
+		// Dann dem Hafen Bescheid sagen
+		dynamic_cast<nobHarborBuilding*>(location)->CancelWareForShip(this);
+		GAMECLIENT.GetPlayer(location->GetPlayer())->RemoveWare(this);
+		em->AddToKillList(this);
 	}
 	else
 	{
@@ -151,26 +173,26 @@ void Ware::GoalDestroyed()
 				next_dir = 0xFF;
 			}
 		}
-		// Wenn sie an einer Flagge liegt, muss der Weg neu berechnet werden und dem Tr‰ger Bescheid gesagt werden
+		// Wenn sie an einer Flagge liegt, muss der Weg neu berechnet werden und dem Tr√§ger Bescheid gesagt werden
 		else if(state == STATE_WAITATFLAG)
 		{
 			goal = gwg->GetPlayer(location->GetPlayer())->FindWarehouse(location,FW::Condition_StoreWare,0,true,&type,true);
 
 			unsigned char last_next_dir = next_dir;
-			next_dir = gwg->FindPathForWareOnRoads(location,goal);
+			next_dir = gwg->FindPathForWareOnRoads(location,goal,NULL,&next_harbor);
 			RemoveWareJobForCurrentDir(last_next_dir);
 
 
 			// Kein Lagerhaus gefunden bzw kein Weg dorthin?
 			if(!goal || next_dir == 0xFF)
 			{
-				//// Mich aus der globalen Warenliste rausnehmen und in die WareLost Liste einf¸gen
+				//// Mich aus der globalen Warenliste rausnehmen und in die WareLost Liste einf√ºgen
 				//gwg->GetPlayer((location->GetPlayer()].RemoveWare(this);
 				//gwg->GetPlayer((location->GetPlayer()].RegisterLostWare(this);
 				return;
 			}
 
-			// Es wurde ein g¸ltiger Weg gefunden! Dann muss aber noch dem n‰chsten Tr‰ger Bescheid gesagt werden
+			// Es wurde ein g√ºltiger Weg gefunden! Dann muss aber noch dem n√§chsten Tr√§ger Bescheid gesagt werden
 			location->routes[next_dir]->AddWareJob(location);
 
 			// Lagerhaus Bescheid sagen
@@ -178,8 +200,8 @@ void Ware::GoalDestroyed()
 		}
 		else if(state == STATE_CARRIED)
 		{
-			// Ziel = aktuelle Position, d.h. der Tr‰ger, der die Ware tr‰gt, geht gerade in das Zielgeb‰ude rein
-			// d.h. es ist sowieso zu sp‰t
+			// Ziel = aktuelle Position, d.h. der Tr√§ger, der die Ware tr√§gt, geht gerade in das Zielgeb√§ude rein
+			// d.h. es ist sowieso zu sp√§t
 			if(goal != location)
 			{
 				goal = gwg->GetPlayer(location->GetPlayer())->FindWarehouse(location,FW::Condition_StoreWare,0,true,&type,true);
@@ -207,7 +229,7 @@ void Ware::WareLost(const unsigned char player)
 	gwg->GetPlayer(player)->DecreaseInventoryWare(type,1);
 	// Ziel der Ware Bescheid sagen
 	NotifyGoalAboutLostWare();
-	// Zentrale Registrierung der Ware lˆschen
+	// Zentrale Registrierung der Ware l√∂schen
 	gwg->GetPlayer(player)->RemoveWare(this);
 }
 
@@ -215,17 +237,17 @@ void Ware::WareLost(const unsigned char player)
 void Ware::RemoveWareJobForCurrentDir(const unsigned char last_next_dir)
 {
 	// last_next_dir war die letzte Richtung, in die die Ware eigentlich wollte,
-	// aber nun nicht mehr will, deshalb muss dem Tr‰ger Bescheid gesagt werden
+	// aber nun nicht mehr will, deshalb muss dem Tr√§ger Bescheid gesagt werden
 
-	// War's ¸berhaupt ne richtige Richtung?
+	// War's √ºberhaupt ne richtige Richtung?
 	if(last_next_dir < 6)
 	{
-		// Existiert da noch ne Straﬂe?
+		// Existiert da noch ne Stra√üe?
 		if(location->routes[last_next_dir])
 		{
-			// Den Tr‰gern Bescheid sagen
+			// Den Tr√§gern Bescheid sagen
 			location->routes[last_next_dir]->WareJobRemoved(0);
-			// Wenn nicht, kˆnntes ja sein, dass die Straﬂe in ein Lagerhaus f¸hrt, dann muss dort Bescheid gesagt werden
+			// Wenn nicht, k√∂nntes ja sein, dass die Stra√üe in ein Lagerhaus f√ºhrt, dann muss dort Bescheid gesagt werden
 			if(location->routes[last_next_dir]->f2->GetType() == NOP_BUILDING)
 			{
 				if(static_cast<noBuilding*>(location->routes[1]->f2)->GetBuildingType() == BLD_HEADQUARTERS ||
@@ -236,10 +258,10 @@ void Ware::RemoveWareJobForCurrentDir(const unsigned char last_next_dir)
 		}
 
 		
-			//// Und stand ein Tr‰ger drauf?
+			//// Und stand ein Tr√§ger drauf?
 			//if(location->routes[last_next_dir]->carrier)
 			//	location->routes[last_next_dir]->carrier->RemoveWareJob();
-			//// Wenn nicht, kˆnntes ja sein, dass die Straﬂe in ein Lagerhaus f¸hrt, dann muss dort Bescheid gesagt werden
+			//// Wenn nicht, k√∂nntes ja sein, dass die Stra√üe in ein Lagerhaus f√ºhrt, dann muss dort Bescheid gesagt werden
 			//else if(location->routes[1])
 			//{
 			//	if(location->routes[1]->f2->GetType() == NOP_BUILDING)
@@ -270,7 +292,7 @@ void Ware::FindRouteToWarehouse()
 		// Weg suchen
 		next_dir = gwg->FindPathForWareOnRoads(location,goal);
 
-		// Es wurde ein g¸ltiger Weg gefunden! Dann muss aber noch dem n‰chsten Tr‰ger Bescheid gesagt werden
+		// Es wurde ein g√ºltiger Weg gefunden! Dann muss aber noch dem n√§chsten Tr√§ger Bescheid gesagt werden
 		location->routes[next_dir]->AddWareJob(location);
 
 		// Lagerhaus auch Bescheid sagen
@@ -283,4 +305,19 @@ bool Ware::FindRouteFromWarehouse()
 	if(type < 0) 
 		return 0;
 	return (gwg->FindPathForWareOnRoads(location,goal) != 0xFF);
+}
+
+/// Informiert Ware, dass eine Schiffsreise beginnt
+void Ware::StartShipJourney()
+{
+	state = STATE_ONSHIP;
+}
+
+/// Informiert Ware, dass Schiffsreise beendet ist und die Ware nun in einem Hafengeb√§ude liegt
+bool Ware::ShipJorneyEnded(nobHarborBuilding * hb)
+{
+	state = STATE_WAITINWAREHOUSE;
+	location = hb;
+	return (goal != NULL);
+	
 }

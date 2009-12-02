@@ -1,4 +1,4 @@
-// $Id: nobMilitary.h 5074 2009-06-20 14:31:41Z OLiver $
+// $Id: nobMilitary.h 5704 2009-11-27 08:57:26Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -170,9 +170,9 @@ public: void Serialize(SerializedGameData *sgd) const { Serialize_nobMilitary(sg
 	/// Stoppt/Erlaubt Goldzufuhr (real)
 	void StopGold();
 	/// Fragt ab, ob Goldzufuhr ausgeschaltet ist (visuell)
-	bool IsGoldDisabledVirtual() { return disable_coins_virtual; }
+	bool IsGoldDisabledVirtual() const { return disable_coins_virtual; }
 	/// Fragt ab, ob Goldzufuhr ausgeschaltet ist (real)
-	bool IsGoldDisabled() { return disable_coins; }
+	bool IsGoldDisabled() const { return disable_coins; }
 
 	/// Sucht sämtliche Lagerhäuser nach Goldmünzen ab und bestellt ggf. eine, falls eine gebraucht wird
 	void SearchCoins();

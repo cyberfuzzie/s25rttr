@@ -1,5 +1,5 @@
 -------------------------------------------------------------------------------
-$Id: INSTALL 4781 2009-05-02 18:22:51Z Demophobie $
+$Id: INSTALL 5719 2009-11-29 00:11:53Z Demophobie $
 -------------------------------------------------------------------------------
 
 Conditions:
@@ -8,10 +8,13 @@ You have to install at least libsdl1.2-dev and libsdl_mixer1.2-dev to
 be able to build the SDL video and SDL audio driver module. On not 
 debian-based systems this dev-packages will be named different.
 
+Please add the DATA and GFX folders of the original game to the
+following folder: ../trunk/build/S2/
+
 Installation:
 
 cd build
-./cmake.sh $optionen
+./cmake.sh $optionen	(see below)
 make
 make install            or rather ./start.sh
 

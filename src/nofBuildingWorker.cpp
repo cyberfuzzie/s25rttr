@@ -1,4 +1,4 @@
-// $Id: nofBuildingWorker.cpp 5312 2009-07-22 18:02:04Z OLiver $
+// $Id: nofBuildingWorker.cpp 5704 2009-11-27 08:57:26Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -34,6 +34,7 @@
 #include "nofHunter.h"
 #include "SoundManager.h"
 #include "SerializedGameData.h"
+#include "AIEventManager.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -56,7 +57,7 @@ void nofBuildingWorker::Serialize_nofBuildingWorker(SerializedGameData * sgd) co
 
 	if(fs != FS_GOHOME && fs != FS_WANDER)
 	{
-		sgd->PushObject(workplace,true);
+		sgd->PushObject(workplace,false);
 		sgd->PushUnsignedChar(static_cast<unsigned char>(ware));
 		sgd->PushUnsignedShort(not_working);
 		sgd->PushUnsignedInt(since_not_working);
@@ -70,7 +71,7 @@ state(State(sgd->PopUnsignedChar()))
 {
 	if(fs != FS_GOHOME && fs != FS_WANDER)
 	{
-		workplace = sgd->PopObject<nobUsual>(GOT_NOB_USUAL);
+		workplace = sgd->PopObject<nobUsual>(GOT_UNKNOWN);
 		ware = GoodType(sgd->PopUnsignedChar());
 		not_working = sgd->PopUnsignedShort();
 		since_not_working = sgd->PopUnsignedInt();
@@ -377,6 +378,10 @@ bool nofBuildingWorker::GetResources(unsigned char type)
 		OutOfRessourcesMsgSent = true;
 		// Produktivitätsanzeige auf 0 setzen
 		workplace->SetProductivityToZero();
+
+		// KI-Event erzeugen
+		GAMECLIENT.SendAIEvent(new AIEvent::Building(AIEvent::NoMoreResourcesReachable, workplace->GetX(), workplace->GetY(), 
+			workplace->GetBuildingType()), player);
 	}
 
 	// Hoffe das passt...

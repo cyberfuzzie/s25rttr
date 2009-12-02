@@ -1,4 +1,4 @@
-// $Id: BuildingConsts.h 5340 2009-07-28 19:13:03Z jh $
+// $Id: BuildingConsts.h 5688 2009-11-23 16:48:42Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -218,14 +218,14 @@ const BuildingSignConst BUILDING_SIGN_CONSTS[4][40] =
 	{	{0,0},{12,-10},{13,-10},{0,0},{25,-22},{0,0},{0,0},{0,0},{0,0},{10,-14},
 		{20,-2},{12,-14},{14,-13},{13,-14},{0,0},{0,0},{0,0},{-8,-6},{0,0},{-13,-7},
 		{14,-11},{15,-10},{-13,-7},{16,-11},{21,-3},{-6,-2},{14,-14},{0,0},{30,-25},{0,0},
-		{0,0},{0,-22},{-30,-13},{35,-20},{13,-34},{19,-15},{0,0},{37,-13},{0,0},{0,0}
+		{0,0},{0,-22},{-30,-13},{35,-20},{13,-34},{19,-15},{-22,-10},{37,-13},{0,0},{0,0}
 	},
 	// Römer
 	{
 		{0,0},{15,-3},{14,-2},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{20,-39},
 		{15,-2},{26,4},{21,4},{21,4},{0,0},{0,0},{0,0},{-29,-10},{0,0},{-4,4},
 		{7,-20},{3,-13},{0,0},{22,-8},{18,-11},{6,-14},{23,-10},{0,0},{35,-27},{0,0},
-		{0,0},{2,-21},{15,-13},{11,-30},{23,-5},{10,-9},{0,0},{41,-43},{0,0},{0,0}
+		{0,0},{2,-21},{15,-13},{11,-30},{23,-5},{10,-9},{0,-25},{41,-43},{0,0},{0,0}
 	},
 	// Wikinger
 	{
@@ -536,7 +536,18 @@ const char * const BUILDING_HELP_STRINGS[40] =
 	"grain."),
 
 	// Harbor building
-	"Todo"
+	gettext_noop(
+	"Ships can only be loaded and "
+	"unloaded in a harbor. "
+	"Expeditions can also be prepared "
+	"here. You can release certain "
+	"merchandise from the storehouse, "
+	"as and when required. "
+	"Alternatively, the storage "
+	"function can be disabled. To do "
+	"this, first choose the relevant "
+	"icon followed by the desired "
+	"merchandise or job symbol."),
 
 };
 

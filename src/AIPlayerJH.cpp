@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.cpp 5641 2009-10-16 17:57:39Z jh $
+// $Id: AIPlayerJH.cpp 5704 2009-11-27 08:57:26Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -108,6 +108,18 @@ void AIPlayerJH::RunGF(const unsigned gf)
 	if (gf == 120)
 	{
 		Chat(_("And I may crash your game sometimes..."));
+
+		// Set military settings to some nicer default values
+		std::vector<unsigned char> milSettings;
+		milSettings.resize(7);
+		milSettings[0] = 10;
+		milSettings[1] = 5;
+		milSettings[2] = 5;
+		milSettings[3] = 5;
+		milSettings[4] = 1;
+		milSettings[5] = 10;
+		milSettings[6] = 10;
+		gcs.push_back(new gc::ChangeMilitary(milSettings));
 	}
 
 	if ((gf % 1000) == 0)
@@ -198,7 +210,7 @@ bool AIPlayerJH::ConnectFlagToRoadSytem(const noFlag *flag, std::vector<unsigned
 		
 		// Gibts überhaupt einen Pfad zu dieser Flagge
 		bool path_found = gwb->FindFreePath(flag->GetX(),flag->GetY(),
-		                  flags[i]->GetX(),flags[i]->GetY(),false,100,&tmpRoute,&length,NULL,NULL,IsPointOK_RoadPath,NULL, &prp);
+		                  flags[i]->GetX(),flags[i]->GetY(),false,100,&tmpRoute,&length,NULL,IsPointOK_RoadPath,NULL, &prp);
 
 		// Wenn ja, dann gucken ob dieser Pfad möglichst kurz zum "höheren" Ziel (HQ im Moment) ist
 		if (path_found)
@@ -209,7 +221,7 @@ bool AIPlayerJH::ConnectFlagToRoadSytem(const noFlag *flag, std::vector<unsigned
 			// Führt manchmal zu Problemen, temporär raus; TODO was anderes überlegen (ganz ohne ist auch doof)
 
 			// Strecke von der potenziellen Zielfahne bis zum HQ
-			bool hq_path_found = gwb->FindPathOnRoads(flags[i], targetFlag, false, NULL, &hqlength, &first_dir, NULL);
+			bool hq_path_found = gwb->FindPathOnRoads(flags[i], targetFlag, false, &hqlength, &first_dir, NULL, NULL);
 
 			// Gewählte Fahne hat leider auch kein Anschluß ans HQ, zu schade!
 			if (!hq_path_found)
@@ -219,7 +231,7 @@ bool AIPlayerJH::ConnectFlagToRoadSytem(const noFlag *flag, std::vector<unsigned
 			
 
 			// Sind wir mit der Fahne schon verbunden? Einmal reicht!
-			bool alreadyConnected = gwb->FindPathOnRoads(flags[i], flag, false, NULL, NULL, &first_dir, NULL);
+			bool alreadyConnected = gwb->FindPathOnRoads(flags[i], flag, false, NULL, &first_dir, NULL, NULL);
 			if (alreadyConnected)
 				continue;
 			
@@ -253,7 +265,7 @@ bool AIPlayerJH::BuildRoad(const noRoadNode *start, const noRoadNode *target, st
 		Param_RoadPath prp = { false };
 
 		foundPath = gwb->FindFreePath(start->GetX(),start->GetY(),
-											target->GetX(),target->GetY(),false,100,&route,NULL,NULL,NULL,IsPointOK_RoadPath,NULL, &prp);
+											target->GetX(),target->GetY(),false,100,&route,NULL,NULL,IsPointOK_RoadPath,NULL, &prp);
 	}
 	else
 	{
@@ -735,6 +747,12 @@ void AIPlayerJH::ExecuteAIJob()
 			currentJob = aiJobs.front();
 			aiJobs.pop();
 		}
+		else
+		{
+			AIEvent::Base *ev = eventManager.GetEvent();
+			if (ev)
+				currentJob = new AIJH::EventJob(this, ev);
+		}
 	}
 
 	if (currentJob)
@@ -868,6 +886,15 @@ void AIPlayerJH::HandleNewMilitaryBuilingOccupied(const Coords& coords)
 	UpdateNodesAround(x, y, 11); // todo: fix radius
 	RefreshBuildingCount();
 
+	const nobMilitary *mil = gwb->GetSpecObj<nobMilitary>(x, y);
+	if (mil)
+	{
+		if ((mil->GetBuildingType() == BLD_BARRACKS || mil->GetBuildingType() == BLD_GUARDHOUSE) && mil->GetFrontierDistance() == 0 && !mil->IsGoldDisabled())
+		{
+			gcs.push_back(new gc::StopGold(x, y));
+		}
+	}
+
 	aiJobs.push(new AIJH::BuildJob(this, ChooseMilitaryBuilding(x, y), x, y));
 	aiJobs.push(new AIJH::BuildJob(this, ChooseMilitaryBuilding(x, y), x, y));
 	aiJobs.push(new AIJH::BuildJob(this, ChooseMilitaryBuilding(x, y), x, y));
@@ -902,6 +929,49 @@ void AIPlayerJH::HandleNewMilitaryBuilingOccupied(const Coords& coords)
 	aiJobs.push(new AIJH::BuildJob(this, BLD_MILL, x, y));
 	aiJobs.push(new AIJH::BuildJob(this, BLD_PIGFARM, x, y));
 
+}
+
+void AIPlayerJH::HandleNoMoreResourcesReachable(const Coords& coords, BuildingType bld)
+{
+	MapCoord x = coords.x;
+	MapCoord y = coords.y;
+	UpdateNodesAround(x, y, 11); // todo: fix radius
+
+	// Destroy old building (once)
+	if (gwb->GetNO(x,y)->GetType() == NOP_BUILDING)
+		gcs.push_back(new gc::DestroyBuilding(x, y));
+	else
+		return;
+	
+	// try to expand, maybe res blocked a passage
+	aiJobs.push(new AIJH::BuildJob(this, ChooseMilitaryBuilding(x, y), x, y));
+	aiJobs.push(new AIJH::BuildJob(this, ChooseMilitaryBuilding(x, y), x, y));
+
+	// and try to rebuild the same building
+	aiJobs.push(new AIJH::BuildJob(this, bld));
+
+	// farm is always good!
+	aiJobs.push(new AIJH::BuildJob(this, BLD_FARM, x, y));
+}
+
+void AIPlayerJH::HandleBorderChanged(const Coords& coords)
+{
+	MapCoord x = coords.x;
+	MapCoord y = coords.y;
+	UpdateNodesAround(x, y, 11); // todo: fix radius
+
+	const nobMilitary *mil = gwb->GetSpecObj<nobMilitary>(x, y);
+	if (mil)
+	{
+		if (mil->GetFrontierDistance() != 0 && mil->IsGoldDisabled())
+		{
+			gcs.push_back(new gc::StopGold(x, y));
+		}
+		if (mil->GetBuildingType() == BLD_BARRACKS || mil->GetBuildingType() == BLD_GUARDHOUSE)
+		{
+			aiJobs.push(new AIJH::BuildJob(this, ChooseMilitaryBuilding(x, y), x, y));
+		}
+	}
 }
 
 void AIPlayerJH::HandleRetryMilitaryBuilding(const Coords& coords)
@@ -1029,7 +1099,7 @@ void AIPlayerJH::TryToAttack()
 		const nobMilitary *mil;
 		if ((mil = gwb->GetSpecObj<nobMilitary>((*it).x, (*it).y)))
 		{
-			if (mil->GetFrontierDistance() != 2)
+			if (mil->GetFrontierDistance() == 0)
 				continue;
 
 			list<nobBaseMilitary *> buildings;
@@ -1107,7 +1177,7 @@ bool AIPlayerJH::BuildAlternativeRoad(const noFlag *flag, std::vector<unsigned c
 		
 		// Gibts überhaupt einen Pfad zu dieser Flagge
 		bool path_found = gwb->FindFreePath(flag->GetX(),flag->GetY(),
-		                  flags[i]->GetX(),flags[i]->GetY(),false,100,&route,&newLength,NULL,NULL,IsPointOK_RoadPath,NULL, &prp);
+		                  flags[i]->GetX(),flags[i]->GetY(),false,100,&route,&newLength,NULL,IsPointOK_RoadPath,NULL, &prp);
 
 		// Wenn ja, dann gucken ob unser momentaner Weg zu dieser Flagge vielleicht voll weit ist und sich eine Straße lohnt
 		if (path_found)
@@ -1115,7 +1185,7 @@ bool AIPlayerJH::BuildAlternativeRoad(const noFlag *flag, std::vector<unsigned c
 			unsigned int oldLength = 0;
 
 			// Aktuelle Strecke zu der Flagge
-			bool pathAvailable = gwb->FindPathOnRoads(flags[i], flag, false, NULL, &oldLength, NULL, NULL);
+			bool pathAvailable = gwb->FindPathOnRoads(flags[i], flag, false, &oldLength, NULL, NULL, NULL);
 
 			// Lohnt sich die Straße?
 			if (!pathAvailable || newLength * lengthFactor < oldLength)
@@ -1147,7 +1217,7 @@ bool AIPlayerJH::FindStoreHousePosition(MapCoord &x, MapCoord &y, unsigned radiu
 
 			const noFlag *targetFlag = gwb->GetSpecObj<noFlag>(fx,fy);
 			unsigned dist;
-			bool pathAvailable = gwb->FindPathOnRoads(bld->GetFlag(), targetFlag, false, NULL, &dist, NULL, NULL);
+			bool pathAvailable = gwb->FindPathOnRoads(bld->GetFlag(), targetFlag, false, &dist, NULL, NULL, NULL);
 
 			if (!pathAvailable)
 				continue;
@@ -1193,4 +1263,8 @@ int AIPlayerJH::GetResMapValue(MapCoord x, MapCoord y, AIJH::Resource res)
 	return resourceMaps[res][x + y * gwb->GetWidth()];
 }
 
+void AIPlayerJH::SendAIEvent(AIEvent::Base *ev) 
+{
+	eventManager.AddAIEvent(ev);
+}
 

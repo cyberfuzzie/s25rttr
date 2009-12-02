@@ -1,4 +1,4 @@
-// $Id: noBuildingSite.cpp 5312 2009-07-22 18:02:04Z OLiver $
+// $Id: noBuildingSite.cpp 5655 2009-11-01 21:05:27Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -77,6 +77,24 @@ noBuildingSite::noBuildingSite(const BuildingType type,const unsigned short x, c
 	gwg->GetPlayer(player)->AddBuildingSite(this);
 }
 
+/// Konstruktor für Hafenbaustellen vom Schiff aus
+noBuildingSite::noBuildingSite(const unsigned short x, const unsigned short y, const unsigned char player)
+: noBaseBuilding(NOP_BUILDINGSITE,BLD_HARBORBUILDING,x,y,player),
+state(STATE_BUILDING),
+planer(0),
+builder(new nofBuilder(x,y,player,this)),
+boards(BUILDING_COSTS[nation][BLD_HARBORBUILDING].boards), 
+stones(BUILDING_COSTS[nation][BLD_HARBORBUILDING].stones), 
+used_boards(0),
+used_stones(0),
+build_progress(0)
+{
+	// Baustelle in den Index eintragen, damit die Wirtschaft auch Bescheid weiß
+	gwg->GetPlayer(player)->AddBuildingSite(this);
+	// Bauarbeiter auch auf der Karte auftragen
+	gwg->AddFigure(builder,x,y);
+}
+
 noBuildingSite::~noBuildingSite()
 {
 }
@@ -106,6 +124,15 @@ void noBuildingSite::Destroy_noBuildingSite()
 
 	// Baustelle wieder aus der Liste entfernen
 	gwg->GetPlayer(player)->RemoveBuildingSite(this);
+
+	// Hafenbaustelle?
+	if(type == BLD_HARBORBUILDING)
+	{
+		// Ggf. aus der Liste mit den vom Schiff aus gegründeten Baustellen streichen
+		gwg->RemoveHarborBuildingSiteFromSea(this);
+		// Land neu berechnen
+		gwg->RecalcTerritory(this,HARBOR_ALONE_RADIUS,true,false);
+	}
 
 	Destroy_noBaseBuilding();
 }

@@ -1,4 +1,4 @@
-// $Id: colors.h 5178 2009-07-03 11:55:24Z OLiver $
+// $Id: colors.h 5670 2009-11-16 21:44:39Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -45,13 +45,13 @@ const unsigned COLOR_BLACK = 0xFF444444;
 const unsigned COLOR_WHITE = 0xFFFFFFFF;
 const unsigned COLOR_ORANGE = 0xFFFF8000;
 const unsigned COLOR_BROWN = 0xFF6C4337;
-const unsigned COLOR_GHOST = 0x05FFFFFF;
+/// const unsigned COLOR_GHOST = 0x05FFFFFF; Demos Ghost-Farbe
 const unsigned COLOR_SHADOW = 0x40000000;
 const unsigned COLOR_GREY = 0xFFCCCCCC;
 const unsigned COLOR_WINDOWBROWN = 0xFF886034;
 
 /// Spielerfarben
-const unsigned int PLAYER_COLORS_COUNT = 11;
+const unsigned int PLAYER_COLORS_COUNT = 10;
 
 const unsigned int COLORS[PLAYER_COLORS_COUNT] =
 {
@@ -65,7 +65,7 @@ const unsigned int COLORS[PLAYER_COLORS_COUNT] =
 	COLOR_WHITE, // Weiß
 	COLOR_ORANGE, // Orange
 	COLOR_BROWN, // Braun
-	COLOR_GHOST // Durchsichtig
+///	COLOR_GHOST // Durchsichtig
 };
 
 /// Liefert die transparente Farbkomponente zurück.

@@ -1,4 +1,4 @@
-// $Id: noBuildingSite.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: noBuildingSite.h 5655 2009-11-01 21:05:27Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -59,6 +59,8 @@ class noBuildingSite : public noBaseBuilding
 public:
 
 	noBuildingSite(const BuildingType type,const unsigned short x, const unsigned short y, const unsigned char player);
+	/// Konstruktor für Hafenbaustellen vom Schiff aus
+	noBuildingSite(const unsigned short x, const unsigned short y, const unsigned char player);
 	noBuildingSite(SerializedGameData * sgd, const unsigned obj_id);
 
 	~noBuildingSite();

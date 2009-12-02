@@ -31,7 +31,7 @@ public:
 	/// Modi für den Schiffsbauer
 	enum Mode
 	{
-		BOATS, // baut kleine Boote
+		BOATS = 0, // baut kleine Boote
 		SHIPS // baut große Schiffe
 	};
 

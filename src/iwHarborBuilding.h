@@ -30,9 +30,10 @@ public:
 	iwHarborBuilding(GameWorldViewer * const gwv,nobHarborBuilding *hb);
 
 protected:
-
 	void Msg_Group_ButtonClick(const unsigned int group_id, const unsigned int ctrl_id);
 
+private:
+	void AdjustExpeditionButton(bool flip);
 };
 
 #endif // !iwHQ_H_INCLUDED

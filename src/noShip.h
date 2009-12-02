@@ -22,8 +22,15 @@
 
 #include "noMovable.h"
 #include "MapConsts.h"
+#include <list>
 
 class nobHarborBuilding;
+
+/// Maximale Beladung eines Schiffs abhängig vom Volk des Spielers
+const unsigned SHIP_CAPACITY[NATION_COUNT] = { 40, 40, 40, 40 };
+
+class noFigure;
+class Ware;
 
 /// Klasse für die Schiffe
 class noShip : public noMovable
@@ -38,7 +45,11 @@ class noShip : public noMovable
 		STATE_GOTOHARBOR,
 		STATE_EXPEDITION_LOADING,
 		STATE_EXPEDITION_WAITING,
-		STATE_EXPEDITION_DRIVING
+		STATE_EXPEDITION_DRIVING,
+		STATE_TRANSPORT_LOADING, // Schiff wird mit Waren/Figuren erst noch beladen, bleibt also für kurze Zeit am Hafen
+		STATE_TRANSPORT_DRIVING, /// Schiff transportiert Waren/Figuren von einen Ort zum anderen
+		STATE_TRANSPORT_UNLOADING /// Entlädt Schiff am Zielhafen, kurze Zeit ankern, bevor Waren im Hafengebäude ankommen..
+
 	} state;
 
 	/// Das Meer, auf dem dieses Schiff fährt
@@ -47,12 +58,15 @@ class noShip : public noMovable
 	unsigned goal_harbor_id;
 	/// Anlegepunkt am Zielhafen, d.h. die Richtung relativ zum Zielpunkt
 	unsigned char goal_dir;
-	/// Schiffsroute 
-	std::vector<unsigned char> route;
-	unsigned pos;
 	/// Namen des Schiffs
 	std::string name;
-
+	/// Schiffsroute und Position
+	unsigned pos;
+	std::vector<unsigned char> route;
+	/// Ladung des Schiffes
+	std::list<noFigure*> figures;
+	std::list<Ware*> wares;
+	
 private:
 
 	/// entscheidet, was nach einem gefahrenen Abschnitt weiter zu tun ist
@@ -62,6 +76,7 @@ private:
 
 	void HandleState_GoToHarbor();
 	void HandleState_ExpeditionDriving();
+	void HandleState_TransportDriving();
 
 	enum Result
 	{
@@ -79,6 +94,11 @@ private:
 
 	/// Zeichnet normales Fahren auf dem Meer ohne irgendwelche Güter
 	void DrawDriving(int x, int y);
+	/// Zeichnet normales Fahren auf dem Meer mit Gütern
+	void DrawDrivingWithWares(int x, int y);
+
+	/// Startet die eigentliche Transportaktion, nachdem das Schiff beladen wurde
+	void StartTransport();
 
 public:
 
@@ -118,8 +138,17 @@ public:
 	void StartExpedition();
 	/// Weist das Schiff an, in einer bestimmten Richtung die Expedition fortzusetzen
 	void ContinueExpedition(const unsigned char dir);
+	/// Gibt zurück, ob das Schiff jetzt in der Lage wäre, eine Kolonie zu gründen
+	bool IsAbleToFoundColony() const;
 	/// Weist das Schiff an, an der aktuellen Position einen Hafen zu gründen
 	void FoundColony();
+	/// Gibt zurück, ob das Schiff einen bestimmten Hafen ansteuert
+	bool IsGoingToHarbor(nobHarborBuilding * hb) const;
+
+	/// Belädt das Schiff mit Waren und Figuren, um eine Transportfahrt zu starten
+	void PrepareTransport(Point<MapCoord> goal, const std::list<noFigure*>& figures, const std::list<Ware*>& wares);
+
+
 };
 
 

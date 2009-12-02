@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.h 5365 2009-08-02 17:46:30Z jh $
+// $Id: GameClientPlayer.h 5695 2009-11-25 18:58:51Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -65,6 +65,8 @@ private:
 	GameWorldGame * gwg;
 	/// Liste der Warenhäuser des Spielers
 	std::list<nobBaseWarehouse*> warehouses;
+	/// Liste von Häfen
+	std::list<nobHarborBuilding*> harbors;
 	///// Liste von unbesetzten Straßen (ohne Träger) von dem Spieler
 	//std::list<RoadSegment*> unoccupied_roads;
 	/// Lister aller Straßen von dem Spieler
@@ -97,8 +99,7 @@ private:
 	std::list<nofFlagWorker*> flagworkers;
 	/// Liste von Schiffen dieses Spielers
 	std::vector<noShip*> ships;
-	/// Liste von Häfen, die Schiffe haben wollen
-	std::list<nobHarborBuilding*> ships_needed;
+	
 
 
 	/// Liste, welchen nächsten 10 Angreifern Verteidiger entgegenlaufen sollen
@@ -223,6 +224,10 @@ public:
 	void AddWarehouse(nobBaseWarehouse * wh) { warehouses.push_back(wh); }
 	/// Warenhaus aus Warenhausliste entfernen
 	void RemoveWarehouse(nobBaseWarehouse * wh) { warehouses.remove(wh); TestDefeat(); }
+	/// Hafen zur Warenhausliste hinzufügen
+	void AddHarbor(nobHarborBuilding * hb) { harbors.push_back(hb); }
+	/// Hafen aus Warenhausliste entfernen
+	void RemoveHarbor(nobHarborBuilding * hb) { harbors.remove(hb); }
 	/// (Unbesetzte) Straße aus der Liste entfernen
 	void DeleteRoad(RoadSegment * rs) { roads.remove(rs); }
 	//bool TestRoads(RoadSegment * rs) { return roads.search(rs).valid(); }
@@ -347,16 +352,21 @@ public:
 	void RegisterShip(noShip * ship);
 	/// Meldet das Schiff wieder ab
 	void RemoveShip(noShip * ship);
-	/// Schiff für Hafen bestellen
+	/// Versucht, für ein untätiges Schiff eine Arbeit zu suchen
+	void GetJobForShip(noShip * ship);
+	/// Schiff für Hafen bestellen, zweiter Parameter gibt an, ob das Schiff in einer Jobliste
+	/// vermerkt werden soll, also unbedingt eins gebraucht wird 
 	void OrderShip(nobHarborBuilding * hb);
-	/// Meldet EIN bestelltes Schiff wieder ab
-	void RemoveOrderedShip(nobHarborBuilding * hb);
 	/// Gibt die ID eines Schiffes zurück
 	unsigned GetShipID(const noShip * const ship) const;
 	/// Gibt ein Schiff anhand der ID zurück bzw. NULL, wenn keines mit der ID existiert
 	noShip * GetShipByID(const unsigned ship_id) const;
 	/// Gibt die Gesamtanzahl von Schiffen zurück
 	unsigned GetShipCount() const { return ships.size(); }
+	/// Gibt eine Liste mit allen Häfen dieses Spieler zurück, die an ein bestimmtes Meer angrenzen
+	void GetHarborBuildings(std::vector<nobHarborBuilding*>& harbor_buildings, const unsigned short sea_id) const;
+	/// Gibt die Anzahl der Schiffe, die einen bestimmten Hafen ansteuern, zurück
+	unsigned GetShipsToHarbor(nobHarborBuilding * hb) const;
 
 
 	/// Er gibt auf

@@ -1,4 +1,4 @@
-// $Id: nobHQ.cpp 5254 2009-07-12 15:49:16Z FloSoft $
+// $Id: nobHQ.cpp 5655 2009-11-01 21:05:27Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -280,8 +280,6 @@ nobHQ::nobHQ(const unsigned short x, const unsigned short y,const unsigned char 
 
 void nobHQ::Destroy_nobHQ()
 {
-	
-
 	Destroy_nobBaseWarehouse();
 
 	// Land drumherum neu berechnen (nur wenn es schon besetzt wurde!)

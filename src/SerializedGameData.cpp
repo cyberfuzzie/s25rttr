@@ -1,4 +1,4 @@
-// $Id: SerializedGameData.cpp 5106 2009-06-25 20:43:46Z OLiver $
+// $Id: SerializedGameData.cpp 5653 2009-11-01 16:31:07Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -84,6 +84,9 @@
 #include "Ware.h"
 #include "CatapultStone.h"
 #include "FOWObjects.h"
+#include "nobHarborBuilding.h"
+#include "noShip.h"
+#include "noShipBuildingSite.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -103,6 +106,7 @@ GameObject * SerializedGameData::Create_GameObject(const GO_Type got, const unsi
 	case GOT_NOB_STOREHOUSE: return new nobStorehouse(this,obj_id);
 	case GOT_NOB_USUAL: return new nobUsual(this,obj_id);
 	case GOT_NOB_SHIPYARD: return new nobShipYard(this,obj_id);
+	case GOT_NOB_HARBORBUILDING: return new nobHarborBuilding(this,obj_id);
 	case GOT_NOF_AGGRESSIVEDEFENDER: return new nofAggressiveDefender(this,obj_id);
 	case GOT_NOF_ATTACKER: return new nofAttacker(this,obj_id);
 	case GOT_NOF_DEFENDER: return new nofDefender(this,obj_id);
@@ -154,6 +158,8 @@ GameObject * SerializedGameData::Create_GameObject(const GO_Type got, const unsi
 	case GOT_ROADSEGMENT: return new RoadSegment(this,obj_id);
 	case GOT_WARE: return new Ware(this,obj_id);
 	case GOT_CATAPULTSTONE: return new CatapultStone(this,obj_id);
+	case GOT_SHIP: return new noShip(this,obj_id);
+	case GOT_SHIPBUILDINGSITE: return new noShipBuildingSite(this,obj_id);
 	
 	}
 }

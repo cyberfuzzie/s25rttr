@@ -51,45 +51,74 @@ iwHarborBuilding::iwHarborBuilding(GameWorldViewer * const gwv,nobHarborBuilding
 
 	// "Expedition"-Überschrift
 	harbor_page->AddText(0,83,70,_("Expedition"),0xFFFFFF00,glArchivItem_Font::DF_CENTER,NormalFont);
-	// Button zum Expedition starten
-	ctrlImageButton * button = harbor_page->AddImageButton(1,65,100,30,30,TC_GREY,LOADER.GetImageN("io",176),_("Start expedition"));
 
-	// Visuelle Rückmeldung, grün einfärben, wenn Expedition gestartet wurde
-	if(static_cast<nobHarborBuilding*>(wh)->IsExpeditionActive())
-		button->SetModulationColor(COLOR_WHITE);
-	else
-		button->SetModulationColor(COLOR_RED);
+	// Button zum Expedition starten
+	harbor_page->AddImageButton(1,65,100,30,30,TC_GREY,LOADER.GetImageN("io",176),_("Start expedition"));
+	AdjustExpeditionButton(false);
 
 	harbor_page->SetVisible(false);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  setzt den Expeditionsknopf korrekt
+ *
+ *  falls @p flip gesetzt, dann umgekehrt einfärben
+ *
+ *  @author FloSoft
+ */
+void iwHarborBuilding::AdjustExpeditionButton(bool flip)
+{
+	ctrlImageButton *button = GetCtrl<ctrlGroup>(102)->GetCtrl<ctrlImageButton>(1);
+
+	// Visuelle Rückmeldung, grün einfärben, wenn Expedition gestartet wurde
+	// Jeweils umgekehrte Farbe nehmen, da die Änderung ja spielerisch noch nicht 
+	// in Kraft getreten ist!
+	bool exp = static_cast<nobHarborBuilding*>(wh)->IsExpeditionActive();
+
+	// "flip xor exp", damit korrekt geswitcht wird, falls expedition abgebrochen werden soll
+	// und dies direkt dargestellt werden soll (flip)
+	if( (flip || exp) && !(flip && exp))
+	{
+		button->SetModulationColor(COLOR_WHITE);
+		button->SetTooltip("Cancel expedition");
+	}
+	else
+	{
+		button->SetModulationColor(COLOR_RED);
+		button->SetTooltip("Start expedition");
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void iwHarborBuilding::Msg_Group_ButtonClick(const unsigned int group_id, const unsigned int ctrl_id)
 {
-	// Hafengruppe?
-	if(group_id == 102)
+	switch(group_id)
 	{
-		switch(ctrl_id)
+	default:
+		break;
+
+	case 102: // Hafengruppe?
 		{
-		// Expedition starten
-		case 1:
+			switch(ctrl_id)
 			{
-				ctrlImageButton * button = GetCtrl<ctrlGroup>(102)->GetCtrl<ctrlImageButton>(1);
-				// Entsprechenden GC senden
-				if(GameClient::inst().AddGC(new gc::StartExpedition(wh->GetX(),wh->GetY())))
+			default:
+				break;
+
+			case 1: // Expedition starten
 				{
-					// Visuelle Rückmeldung, grün einfärben, wenn Expedition gestartet wurde
-					// Jeweils umgekehrte Farbe nehmen, da die Änderung ja spielerisch noch nicht 
-					// in Kraft getreten ist!
-					if(static_cast<nobHarborBuilding*>(wh)->IsExpeditionActive())
-						button->SetModulationColor(COLOR_RED);
-					else
-						button->SetModulationColor(COLOR_WHITE);
-
-				}
-			} break;
-		}
+					// Entsprechenden GC senden
+					if(GameClient::inst().AddGC(new gc::StartExpedition(wh->GetX(),wh->GetY())))
+						AdjustExpeditionButton(true);
+				} break;
+			}
+		} break;
 	}
-
 
 	 // an Basis weiterleiten
 	iwBaseWarehouse::Msg_Group_ButtonClick(group_id,ctrl_id);

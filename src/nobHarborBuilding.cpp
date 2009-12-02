@@ -31,6 +31,7 @@
 #include "Ware.h"
 #include "EventManager.h"
 #include "noShip.h"
+#include "noFigure.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -41,19 +42,23 @@
 #endif
 
 nobHarborBuilding::nobHarborBuilding(const unsigned short x, const unsigned short y,const unsigned char player,const Nation nation) 
-: nobBaseWarehouse(BLD_HARBORBUILDING,x,y,player,nation)
+: nobBaseWarehouse(BLD_HARBORBUILDING,x,y,player,nation), orderware_ev(0)
 {
-	// Alle Waren 0, au�er 100 Tr�ger
+	// ins Militärquadrat einfügen
+	gwg->GetMilitarySquare(x,y).push_back(this);
+
+	// Alle Waren 0, außer 100 Träger
 	memset(&goods,0,sizeof(goods));
 	memset(&real_goods,0,sizeof(real_goods));
 
 	// Der Wirtschaftsverwaltung Bescheid sagen
 	gwg->GetPlayer(player)->AddWarehouse(this);
+	gwg->GetPlayer(player)->AddHarbor(this);
 
 	// Aktuellen Warenbestand zur aktuellen Inventur dazu addieren
 	AddToInventory();
 
-	// Evtl gabs verlorene Waren, die jetzt in den Hafen wieder reink�nnen
+	// Evtl gabs verlorene Waren, die jetzt in den Hafen wieder reinkönnen
 	gwg->GetPlayer(player)->FindClientForLostWares();
 
 	/// Die Meere herausfinden, an die dieser Hafen grenzt
@@ -72,38 +77,81 @@ void nobHarborBuilding::Destroy()
 {
 	// Der Wirtschaftsverwaltung Bescheid sagen
 	gwg->GetPlayer(player)->RemoveWarehouse(this);
+	gwg->GetPlayer(player)->RemoveHarbor(this);
 
 	Destroy_nobBaseWarehouse();
+
+	// Land drumherum neu berechnen (nur wenn es schon besetzt wurde!)
+	// Nach dem BaseDestroy erst, da in diesem erst das Feuer gesetzt, die Straße gelöscht wird usw.
+	gwg->RecalcTerritory(this,HARBOR_ALONE_RADIUS,true, false);
+
+	// Wieder aus dem Militärquadrat rauswerfen
+	gwg->GetMilitarySquare(x,y).erase(this);
 }
 
 void nobHarborBuilding::Serialize(SerializedGameData * sgd) const
 {
 	Serialize_nobBaseWarehouse(sgd);
+	sgd->PushBool(expedition.active);
+	sgd->PushUnsignedInt(expedition.boards);
+	sgd->PushUnsignedInt(expedition.stones);
+	sgd->PushBool(expedition.builder);
+	sgd->PushObject(orderware_ev,true);
+	for(unsigned i = 0;i<6;++i)
+		sgd->PushUnsignedShort(sea_ids[i]);
+	sgd->PushObjectList(wares_for_ships,true);
+	sgd->PushUnsignedInt(figures_for_ships.size());
+	for(std::list<FigureForShip>::const_iterator it = figures_for_ships.begin();it!=figures_for_ships.end();++it)
+	{
+		sgd->PushUnsignedShort(it->dest.x);
+		sgd->PushUnsignedShort(it->dest.y);
+		sgd->PushObject(it->fig,false);
+	}
+
 }
 
 nobHarborBuilding::nobHarborBuilding(SerializedGameData * sgd, const unsigned obj_id) 
-: nobBaseWarehouse(sgd,obj_id)
+: nobBaseWarehouse(sgd,obj_id),
+	expedition(sgd->PopBool(),
+	sgd->PopUnsignedInt(),
+	sgd->PopUnsignedInt(),
+	sgd->PopBool()),
+	orderware_ev(sgd->PopObject<EventManager::Event>(GOT_EVENT))
 {
-	
+	for(unsigned i = 0;i<6;++i)
+		sea_ids[i] = sgd->PopUnsignedShort();
+
+	sgd->PopObjectList<Ware>(wares_for_ships,GOT_WARE);
+
+	unsigned count = sgd->PopUnsignedInt();
+	for(unsigned i = 0;i<count;++i)
+	{
+		FigureForShip ffs;
+		ffs.dest.x = sgd->PopUnsignedShort();
+		ffs.dest.y = sgd->PopUnsignedShort();
+		ffs.fig = sgd->PopObject<noFigure>(GOT_UNKNOWN);
+		figures_for_ships.push_back(ffs);
+	}
+
 }
 
 // Relative Position des Bauarbeiters 
 const Point<int> BUILDER_POS[4] = { Point<int>(0,0), Point<int>(0,0), Point<int>(0,0), Point<int>(0,0) };
-/// Relative Position der Brettert�rme
+/// Relative Position der Brettertürme
 const Point<int> BOARDS_POS[4] = { Point<int>(0,0), Point<int>(0,0), Point<int>(0,0), Point<int>(0,0) };
-/// Relative Position der Steint�rme
+/// Relative Position der Steintürme
 const Point<int> STONES_POS[4] = { Point<int>(0,0), Point<int>(0,0), Point<int>(0,0), Point<int>(0,0) };
 
 
 void nobHarborBuilding::Draw(int x,int y)
 {
-	// Geb�ude an sich zeichnen
+	// Gebäude an sich zeichnen
   	DrawBaseBuilding(x,y);
 
-	// L�uft gerade eine Expedition?
+	// Läuft gerade eine Expedition?
 	if(expedition.active)
 	{
-		// Waren f�r die Expedition zeichnen
+		// Waren für die Expedition zeichnen
 
 		// Bretter
 		for(unsigned char i = 0;i<expedition.boards;++i)
@@ -152,7 +200,7 @@ void nobHarborBuilding::HandleEvent(const unsigned int id)
 	// Waren-Bestell-Event
 	case 10:
 		{
-			// Mal wieder schauen, ob es Waren f�r unsere Expedition gibt
+			// Mal wieder schauen, ob es Waren für unsere Expedition gibt
 			OrderExpeditionWares();
 		} break;
 	default: HandleBaseEvent(id);
@@ -168,7 +216,7 @@ void nobHarborBuilding::StartExpedition()
 		// Dann diese stoppen
 		expedition.active = false;
 
-		// Waren zur�cktransferieren
+		// Waren zurücktransferieren
 		real_goods.goods[GD_BOARDS] += expedition.boards;
 		goods.goods[GD_BOARDS] += expedition.boards;
 		real_goods.goods[GD_STONES] += expedition.stones;
@@ -178,7 +226,7 @@ void nobHarborBuilding::StartExpedition()
 		{
 			++real_goods.people[JOB_BUILDER];
 			++goods.people[JOB_BUILDER];
-			// Evtl. Abnehmer f�r die Figur wieder finden
+			// Evtl. Abnehmer für die Figur wieder finden
 			gwg->GetPlayer(player)->FindWarehouseForAllJobs(JOB_BUILDER);
 		}
 
@@ -216,7 +264,7 @@ void nobHarborBuilding::StartExpedition()
 }
 
 
-/// Bestellt die zus�tzlichen erforderlichen Waren f�r eine Expedition
+/// Bestellt die zusätzlichen erforderlichen Waren für eine Expedition
 void nobHarborBuilding::OrderExpeditionWares()
 {
 	// Waren in der Bestellungsliste mit beachten
@@ -229,7 +277,7 @@ void nobHarborBuilding::OrderExpeditionWares()
 			++stones;
 	}
 
-	// Pr�fen, ob jeweils noch weitere Waren bestellt werden m�ssen
+	// Prüfen, ob jeweils noch weitere Waren bestellt werden müssen
 	unsigned todo_boards = 0;
 	if(boards + expedition.boards < BUILDING_COSTS[nation][BLD_HARBORBUILDING].boards)
 	{
@@ -237,7 +285,7 @@ void nobHarborBuilding::OrderExpeditionWares()
 		Ware * ware;
 		do
 		{
-			ware = this->players[player].getElement(player)->OrderWare(GD_BOARDS,this);
+			ware = gwg->GetPlayer(player)->OrderWare(GD_BOARDS,this);
 			if(ware)
 			{
 				dependent_wares.push_back(ware);
@@ -253,7 +301,7 @@ void nobHarborBuilding::OrderExpeditionWares()
 		Ware * ware;
 		do
 		{
-			ware = this->players[player].getElement(player)->OrderWare(GD_STONES,this);
+			ware = gwg->GetPlayer(player)->OrderWare(GD_STONES,this);
 			if(ware)
 			{
 				dependent_wares.push_back(ware);
@@ -262,7 +310,7 @@ void nobHarborBuilding::OrderExpeditionWares()
 		} while(ware && todo_stones);
 	}
 
-	// Wenn immer noch nicht alles da ist, sp�ter noch einmal bestellen
+	// Wenn immer noch nicht alles da ist, später noch einmal bestellen
 	orderware_ev = em->AddEvent(this,210,10);
 
 }
@@ -271,7 +319,7 @@ void nobHarborBuilding::OrderExpeditionWares()
 /// Eine bestellte Ware konnte doch nicht kommen
 void nobHarborBuilding::WareLost(Ware * ware)
 {
-	// ggf. neue Waren f�r Expedition bestellen
+	// ggf. neue Waren für Expedition bestellen
 	if(expedition.active && (ware->type == GD_BOARDS || ware->type == GD_STONES))
 		OrderExpeditionWares();
 }
@@ -281,27 +329,79 @@ void nobHarborBuilding::WareLost(Ware * ware)
 /// Schiff ist angekommen
 void nobHarborBuilding::ShipArrived(noShip * ship)
 {
-	// Verf�gbare Aufgaben abklappern
+	// Verfügbare Aufgaben abklappern
 
 	// Steht Expedition zum Start bereit
 	if(expedition.active && expedition.builder 
 		&& expedition.boards == BUILDING_COSTS[nation][BLD_HARBORBUILDING].boards
 		&& expedition.stones == BUILDING_COSTS[nation][BLD_HARBORBUILDING].stones)
 	{
-		// Aufr�umen am Hafen
+		// Aufräumen am Hafen
 		expedition.active = false;
 		// Expedition starten
 		ship->StartExpedition();
 	}
-	else
+	// Gibt es Waren oder Figuren, die ein Schiff von hier aus nutzen wollen?
+	else if(wares_for_ships.size() || figures_for_ships.size())
 	{
-		assert(false);
+		// Das Ziel wird nach der ersten Figur bzw. ersten Ware gewählt
+		Point<MapCoord> dest;
+		if(figures_for_ships.size())
+			dest = figures_for_ships.begin()->dest;
+		else
+			dest = (*wares_for_ships.begin())->GetNextHarbor();
+
+
+		std::list<noFigure*> figures;
+
+		// Figuren auswählen, die zu diesem Ziel wollen
+		for(std::list<FigureForShip>::iterator it = figures_for_ships.begin();
+			it!=figures_for_ships.end() && figures.size() < SHIP_CAPACITY[players->getElement(player)->nation];)
+		{
+			if(it->dest == dest)
+			{
+				figures.push_back(it->fig);
+				it->fig->StartShipJourney(dest);
+				it = figures_for_ships.erase(it);
+			}
+			else
+				++it;
+		}
+
+		// Und noch die Waren auswählen
+		std::list<Ware*> wares;
+		for(std::list<Ware*>::iterator it = wares_for_ships.begin();
+			it!=wares_for_ships.end() && figures.size()+wares.size() < SHIP_CAPACITY[players->getElement(player)->nation];)
+		{
+			if((*it)->GetNextHarbor() == dest)
+			{
+				wares.push_back(*it);
+				(*it)->StartShipJourney();
+				it = wares_for_ships.erase(it);
+			}
+			else
+				++it;
+		}
+
+		// Und das Schiff starten lassen
+		ship->PrepareTransport(dest,figures,wares);
+		
 	}
 }
 
 /// Legt eine Ware im Lagerhaus ab
 void nobHarborBuilding::AddWare(Ware * ware)
 {
+	if(ware->goal != this)
+		ware->RecalcRoute();
+
+	// Will diese Ware mit dem Schiff irgendwo hin fahren?
+	if(ware->GetNextDir() == SHIP_DIR)
+	{
+		// Dann fügen wir die mal bei uns hinzu
+		AddWareForShip(ware);
+		return;
+	}
 
 	// Brauchen wir die Ware?
 	if(expedition.active)
@@ -312,13 +412,13 @@ void nobHarborBuilding::AddWare(Ware * ware)
 			if(ware->type == GD_BOARDS) ++expedition.boards;
 			else if(ware->type == GD_STONES) ++expedition.stones;
 
-			// Ware nicht mehr abh�ngig
+			// Ware nicht mehr abhängig
 			RemoveDependentWare(ware);
-			// Dann zweigen wir die einfach mal f�r die Expedition ab
+			// Dann zweigen wir die einfach mal für die Expedition ab
 			gwg->GetPlayer(player)->RemoveWare(ware);
 			delete ware;
 
-			// Ggf. ist jetzt alles ben�tigte da
+			// Ggf. ist jetzt alles benötigte da
 			CheckExpeditionReady();
 			return;
 		}
@@ -328,19 +428,48 @@ void nobHarborBuilding::AddWare(Ware * ware)
 
 }
 
-/// Pr�ft, ob eine Expedition von den Waren her vollst�ndig ist und ruft ggf. das Schiff
+/// Eine Figur geht ins Lagerhaus
+void nobHarborBuilding::AddFigure(noFigure * figure)
+{
+	// Brauchen wir einen Bauarbeiter für die Expedition?
+	if(figure->GetJobType() == JOB_BUILDER && expedition.active && !expedition.builder)
+	{
+		
+		RemoveDependentFigure(figure);
+		em->AddToKillList(figure);
+
+		expedition.builder = true;
+		// Ggf. ist jetzt alles benötigte da
+		CheckExpeditionReady();
+	}
+	else
+		// ansonsten weiterdelegieren
+		nobBaseWarehouse::AddFigure(figure);
+}
+
+/// Gibt zurück, ob Expedition vollständig ist
+bool nobHarborBuilding::IsExpeditionReady() const
+{
+	if(!expedition.active)
+		return false;
+	// Alles da?
+	if(expedition.boards < BUILDING_COSTS[nation][BLD_HARBORBUILDING].boards)
+		return false;
+	if(expedition.stones < BUILDING_COSTS[nation][BLD_HARBORBUILDING].stones)
+		return false;
+	if(!expedition.builder)
+		return false;
+
+	return true;
+}
+
+/// Prüft, ob eine Expedition von den Waren her vollständig ist und ruft ggf. das Schiff
 void nobHarborBuilding::CheckExpeditionReady()
 {
 	// Alles da?
-	if(expedition.boards < BUILDING_COSTS[nation][BLD_HARBORBUILDING].boards)
-		return;
-	if(expedition.stones < BUILDING_COSTS[nation][BLD_HARBORBUILDING].stones)
-		return;
-	if(!expedition.builder)
-		return;
-
 	// Dann bestellen wir mal das Schiff
-	players->getElement(player)->OrderShip(this);
+	if(IsExpeditionReady())
+		players->getElement(player)->OrderShip(this);
 }
 
 
@@ -352,9 +481,180 @@ void nobHarborBuilding::ShipLost(noShip * ship)
 	players->getElement(player)->OrderShip(this);
 }
 
-/// Gibt die Hafenplatz-ID zur�ck, auf der der Hafen steht
+/// Gibt die Hafenplatz-ID zurück, auf der der Hafen steht
 unsigned nobHarborBuilding::GetHarborPosID() const
 {
 	return gwg->GetHarborPointID(x,y);
 }
 
+/// Abfangen, wenn ein Mann nicht mehr kommen kann --> könnte ein Bauarbeiter sein und
+/// wenn wir einen benötigen, müssen wir einen neuen bestellen
+void nobHarborBuilding::RemoveDependentFigure(noFigure * figure)
+{
+	// Ist das ein Bauarbeiter und brauchen wir noch einen
+	if(figure->GetJobType() == JOB_BUILDER && expedition.active && !expedition.builder)
+	{
+		// Alle Figuren durchkommen, die noch hierher kommen wollen und gucken, ob ein 
+		// Bauarbeiter dabei ist
+		for(list<noFigure*>::iterator it = dependent_figures.begin();it.valid();++it)
+		{
+			if((*it)->GetJobType() == JOB_BUILDER)
+				// Brauchen keinen bestellen, also raus
+				return;
+		}
+
+		// Keinen gefunden, also müssen wir noch einen bestellen
+		players->getElement(player)->AddJobWanted(JOB_BUILDER,this);
+	}
+
+	nobBaseWarehouse::RemoveDependentFigure(figure);
+}
+
+/// Gibt eine Liste mit möglichen Verbindungen zurück
+void nobHarborBuilding::GetShipConnections(std::vector<ShipConnection>& connections) const
+{
+	std::vector<nobHarborBuilding*> harbor_buildings;
+	for(unsigned short sea_id = 0;sea_id<6;++sea_id)
+	{
+		if(sea_ids[sea_id] != 0)
+			players->getElement(player)->GetHarborBuildings(harbor_buildings,sea_ids[sea_id]);
+	}
+
+	for(unsigned i = 0;i<harbor_buildings.size();++i)
+	{
+		ShipConnection sc;
+		sc.dest = harbor_buildings[i];
+		sc.way_costs = 200; // todo
+		connections.push_back(sc);
+	}
+}
+
+
+/// Fügt einen Mensch hinzu, der mit dem Schiff irgendwo hin fahren will
+void nobHarborBuilding::AddFigureForShip(noFigure * fig, Point<MapCoord> dest)
+{
+	FigureForShip ffs = { fig, dest };
+	figures_for_ships.push_back(ffs);
+	players->getElement(player)->OrderShip(this);
+}
+
+/// Fügt eine Ware hinzu, die mit dem Schiff verschickt werden soll
+void nobHarborBuilding::AddWareForShip(Ware * ware)
+{
+	wares_for_ships.push_back(ware);
+	players->getElement(player)->OrderShip(this);
+}
+
+/// Gibt Anzahl der Schiffe zurück, die noch für ausstehende Aufgaben benötigt werden
+unsigned nobHarborBuilding::GetNeededShipsCount() const
+{
+	unsigned count = 0;
+
+	// Expedition -> 1 Schiff
+	if(IsExpeditionReady())
+		++count;
+	// Evtl. Waren und Figuren -> noch ein Schiff
+	if(figures_for_ships.size() > 0 || wares_for_ships.size() > 0)
+		++count;
+
+	return count;
+}
+
+/// Gibt die Wichtigkeit an, dass ein Schiff kommen muss (0 -> keine Bedürftigkeit)
+int nobHarborBuilding::GetNeedForShip(unsigned ships_coming) const
+{
+	int points = 0;
+
+	// Expedition -> 1 Schiff
+	if(IsExpeditionReady())
+	{
+		if(ships_coming == 0)
+			points += 100;
+		else
+			--ships_coming;
+	}
+	if((figures_for_ships.size() > 0 || wares_for_ships.size() > 0) && ships_coming == 0)
+		points += (figures_for_ships.size()+wares_for_ships.size())*5;
+
+	return points;
+}
+
+
+/// Abgeleitete kann eine gerade erzeugte Ware ggf. sofort verwenden 
+/// (muss in dem Fall true zurückgeben)
+bool nobHarborBuilding::UseWareAtOnce(Ware * ware, noBaseBuilding* const goal)
+{
+	// Evtl. muss die Ware gleich das Schiff nehmen -> 
+	// dann zum Schiffsreservoir hinzufügen
+	Point<MapCoord> next_harbor;
+	ware->RecalcRoute();
+	if(ware->GetNextDir() == SHIP_DIR)
+	{
+		// Dann fügen wir die mal bei uns hinzu
+		AddWareForShip(ware);
+
+		return true;
+	}
+
+	return false;
+}
+
+
+/// Dasselbe für Menschen
+bool nobHarborBuilding::UseFigureAtOnce(noFigure * fig, noRoadNode* const goal)
+{
+	// Evtl. muss die Ware gleich das Schiff nehmen -> 
+	// dann zum Schiffsreservoir hinzufügen
+	Point<MapCoord> next_harbor;
+	if(gwg->FindHumanPathOnRoads(this,goal,NULL,&next_harbor) == SHIP_DIR)
+	{
+		// Dann fügen wir die mal bei uns hinzu
+		AddFigureForShip(fig,next_harbor);
+		return true;
+	}
+
+	return false;
+}
+
+/// Erhält die Waren von einem Schiff und nimmt diese in den Warenbestand auf
+void nobHarborBuilding::ReceiveGoodsFromShip(const std::list<noFigure*> figures, const std::list<Ware*> wares)
+{
+	// Menschen zur Ausgehliste hinzufügen
+	for(std::list<noFigure*>::const_iterator it = figures.begin();it!=figures.end();++it)
+	{
+		AddLeavingFigure(*it);
+		++goods.people[(*it)->GetJobType()];
+	}
+
+	// Waren zur Warteliste hinzufügen
+	for(std::list<Ware*>::const_iterator it = wares.begin();it!=wares.end();++it)
+	{
+		
+		// Optische Warenwerte entsprechend erhöhen
+		++goods.goods[(*it)->type];
+		if((*it)->ShipJorneyEnded(this))
+		{
+			// Ware will die weitere Reise antreten, also muss sie zur Liste der rausgetragenen Waren
+			// hinzugefügt werden
+			waiting_wares.push_back(*it);
+		}
+		else
+		{
+			// Ansonsten fügen wir die Ware einfach zu unserem Inventar dazu
+			++real_goods.goods[(*it)->type];
+		}
+	}
+
+	// Ggf. neues Rausgeh-Event anmelden, was notwendig ist, wenn z.B. nur Waren zur Liste hinzugefügt wurden
+	AddLeavingEvent();
+}
+
+/// Storniert die Bestellung für eine bestimmte Ware, die mit einem Schiff transportiert werden soll
+void nobHarborBuilding::CancelWareForShip(Ware* ware)
+{
+	// Ware aus der Liste entfernen
+	wares_for_ships.remove(ware);
+	// Ware zur Inventur hinzufügen
+	// Anzahl davon wieder hochsetzen
+	++real_goods.goods[ConvertShields(ware->type)];
+}

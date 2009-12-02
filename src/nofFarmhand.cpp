@@ -1,4 +1,4 @@
-// $Id: nofFarmhand.cpp 5313 2009-07-22 20:20:53Z jh $
+// $Id: nofFarmhand.cpp 5720 2009-11-29 10:53:18Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -30,6 +30,7 @@
 #include "SoundManager.h"
 #include "SerializedGameData.h"
 #include "GameClient.h"
+#include "AIEventManager.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -181,6 +182,19 @@ void nofFarmhand::HandleDerivedEvent(const unsigned int id)
 							break;
 						}
 					}
+				}
+
+				// KI-Event erzeugen
+				switch(workplace->GetBuildingType())
+				{
+					case BLD_WOODCUTTER:
+					case BLD_QUARRY:
+					case BLD_FISHERY:
+						GAMECLIENT.SendAIEvent(new AIEvent::Building(AIEvent::NoMoreResourcesReachable, workplace->GetX(), workplace->GetY(), 
+							workplace->GetBuildingType()), player);
+						break;
+					default:
+						break;
 				}
 
 				// Weiter warten, vielleicht gibts ja später wieder mal was

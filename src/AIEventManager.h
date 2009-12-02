@@ -1,4 +1,4 @@
-// $Id: AIEventManager.h 5641 2009-10-16 17:57:39Z jh $
+// $Id: AIEventManager.h 5644 2009-10-17 12:22:53Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -21,8 +21,10 @@
 
 #pragma once
 
+#include "main.h"
 #include "MapConsts.h"
 #include "GameConsts.h"
+#include <queue>
 
 namespace AIEvent
 {
@@ -42,6 +44,8 @@ namespace AIEvent
 	{
 	public:
 		Base(AIEventType type) : type(type) { }
+		virtual ~Base() { }
+		AIEventType GetType() const { return type; }
 
 	protected:
 		AIEventType type;
@@ -52,6 +56,9 @@ namespace AIEvent
 	{
 	public:
 		Location(AIEventType type, MapCoord x, MapCoord y) : Base(type), x(x), y(y) { }
+		~Location() { }
+		MapCoord GetX() const { return x; }
+		MapCoord GetY() const { return y; }
 
 	protected:
 		MapCoord x, y;
@@ -62,6 +69,8 @@ namespace AIEvent
 	{
 	public:
 		Building(AIEventType type, MapCoord x, MapCoord y, BuildingType building) : Location(type, x, y), building(building) { }
+		~Building() { }
+		BuildingType GetBuildingType() const { return building; }
 
 	protected:
 		BuildingType building;
@@ -75,6 +84,11 @@ class AIEventManager
 public:
 	AIEventManager(void);
 	~AIEventManager(void);
+	void AddAIEvent(AIEvent::Base *ev) { events.push(ev); }
+	AIEvent::Base *GetEvent();
+
+protected:
+	std::queue<AIEvent::Base *> events;
 };
 
 

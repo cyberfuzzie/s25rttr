@@ -21,6 +21,8 @@
 #define NOB_HARBORBUILDING_H_
 
 #include "nobBaseWarehouse.h"
+#include "MilitaryConsts.h"
+#include <list>
 
 class noShip;
 
@@ -29,6 +31,8 @@ class nobHarborBuilding : public nobBaseWarehouse
 	struct ExpeditionInfo
 	{
 		ExpeditionInfo() : active(false), boards(0), stones(0), builder(false) {}
+		ExpeditionInfo(const bool active, const unsigned boards, const unsigned stones, const bool builder)
+			: active(active), boards(boards), stones(stones), builder(builder) {}
 
 		/// Expedition in Vorbereitung?
 		bool active;
@@ -40,22 +44,40 @@ class nobHarborBuilding : public nobBaseWarehouse
 
 	/// Bestell-Ware-Event
 	EventManager::EventPointer orderware_ev;
-	/// Die Meeres-IDs aller angrenzenden Meere (jeweils f�r die 6 drumherumliegenden K�stenpunkte)
+	/// Die Meeres-IDs aller angrenzenden Meere (jeweils für die 6 drumherumliegenden Küstenpunkte)
 	unsigned short sea_ids[6];
+	/// Liste von Waren, die weggeschifft werden sollen
+	std::list<Ware*> wares_for_ships;
+	/// Liste von Menschen, die weggeschifft werden sollen
+	struct FigureForShip
+	{
+		noFigure * fig;
+		Point<MapCoord> dest;
+	};
+	std::list<FigureForShip> figures_for_ships;
 
 private:
 
-	/// Bestellt die zus�tzlichen erforderlichen Waren f�r eine Expedition
+	/// Bestellt die zusätzlichen erforderlichen Waren für eine Expedition
 	void OrderExpeditionWares();
-	/// Pr�ft, ob eine Expedition von den Waren her vollst�ndig ist und ruft ggf. das Schiff
+	/// Prüft, ob eine Expedition von den Waren her vollständig ist und ruft ggf. das Schiff
 	void CheckExpeditionReady();
+	/// Gibt zurück, ob Expedition vollständig ist
+	bool IsExpeditionReady() const;
+	/// Abgeleitete kann eine gerade erzeugte Ware ggf. sofort verwenden 
+	/// (muss in dem Fall true zurückgeben)
+	bool UseWareAtOnce(Ware * ware, noBaseBuilding* const goal);
+	/// Dasselbe für Menschen
+	bool UseFigureAtOnce(noFigure * fig, noRoadNode* const goal); 
 
 public:
 
 	nobHarborBuilding(const unsigned short x, const unsigned short y,const unsigned char player,const Nation nation);
 	nobHarborBuilding(SerializedGameData * sgd, const unsigned obj_id);
 
-	/// Aufr�ummethoden
+	MapCoord GetMilitaryRadius() const { return HARBOR_ALONE_RADIUS; }
+
+	/// Aufräummethoden
 	void Destroy();
 	/// Serialisierung
 	void Serialize(SerializedGameData *sgd) const;
@@ -67,9 +89,14 @@ public:
 	void WareLost(Ware * ware);
 	/// Legt eine Ware im Lagerhaus ab
 	void AddWare(Ware * ware);
+	/// Eine Figur geht ins Lagerhaus
+	void AddFigure(noFigure * figure);
+	
+	/// Storniert die Bestellung für eine bestimmte Ware, die mit einem Schiff transportiert werden soll
+	void CancelWareForShip(Ware * ware);
 	
 	/// Startet eine Expedition oder stoppt sie, wenn bereits eine stattfindet
-	void StartExpedition();
+	void StartExpedition();	
 	/// Ist Expedition in Vorbereitung?
 	bool IsExpeditionActive() const { return expedition.active; }
 	/// Schiff ist angekommen
@@ -77,10 +104,35 @@ public:
 	/// Schiff konnte nicht mehr kommen
 	void ShipLost(noShip * ship);
 
-	/// Gibt die Hafenplatz-ID zur�ck, auf der der Hafen steht
+	/// Abfangen, wenn ein Mann nicht mehr kommen kann --> könnte ein Bauarbeiter sein und
+	/// wenn wir einen benötigen, müssen wir einen neuen bestellen
+	void RemoveDependentFigure(noFigure * figure);
+
+	/// Gibt die Hafenplatz-ID zurück, auf der der Hafen steht
 	unsigned GetHarborPosID() const;
 
-	
+	struct ShipConnection
+	{
+		/// Zielhafen
+		noRoadNode * dest;
+		/// Kosten für die Strecke in Weglänge eines einfachen Trägers
+		unsigned way_costs;
+	};
+	/// Gibt eine Liste mit möglichen Verbindungen zurück
+	void GetShipConnections(std::vector<ShipConnection>& connections) const;
+
+	/// Fügt einen Mensch hinzu, der mit dem Schiff irgendwo hin fahren will
+	void AddFigureForShip(noFigure * fig, Point<MapCoord> dest);
+	/// Fügt eine Ware hinzu, die mit dem Schiff verschickt werden soll
+	void AddWareForShip(Ware * ware);
+
+	/// Gibt Anzahl der Schiffe zurück, die noch für ausstehende Aufgaben benötigt werden
+	unsigned GetNeededShipsCount() const;
+	/// Gibt die Wichtigkeit an, dass ein Schiff kommen muss (0 -> keine Bedürftigkeit)
+	int GetNeedForShip(unsigned ships_coming) const;
+
+	/// Erhält die Waren von einem Schiff und nimmt diese in den Warenbestand auf
+	void ReceiveGoodsFromShip(const std::list<noFigure*> figures, const std::list<Ware*> wares);
 };
 
 

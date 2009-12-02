@@ -1,4 +1,4 @@
-// $Id: nofBuilder.cpp 5312 2009-07-22 18:02:04Z OLiver $
+// $Id: nofBuilder.cpp 5716 2009-11-28 19:11:51Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -51,6 +51,13 @@
 nofBuilder::nofBuilder(const unsigned short x, const unsigned short y,const unsigned char player,noRoadNode * building_site)
 : noFigure(JOB_BUILDER,x,y,player,building_site), state(STATE_FIGUREWORK), building_site(static_cast<noBuildingSite*>(building_site)), building_steps_available(0)
 {
+	// Sind wir schon an unsere Baustelle gleich hingesetzt worden (bei Häfen)?
+	if(building_site)
+	{
+		if(x == building_site->GetX() && y == building_site->GetY())
+			// Dann gleich mit dem Bauprozess beginnen
+			GoalReached();
+	}
 }
 
 void nofBuilder::Serialize_nofBuilder(SerializedGameData * sgd) const
@@ -79,13 +86,26 @@ building_steps_available(sgd->PopUnsignedChar())
 
 void nofBuilder::GoalReached()
 {
-	state = STATE_WAITINGFREEWALK;
+	// Sind wir ggf. in einem Hafen angekommen, um einer Expedition beizutreten?
+	noBase * rn;
+	if((rn = gwg->GetNO(x,y))->GetGOT() == GOT_NOB_HARBORBUILDING)
+	{
+		// Mich hier einquartieren
+		gwg->RemoveFigure(this,x,y);
+		static_cast<nobHarborBuilding*>(rn)->AddFigure(this);
+		
+	}
+	else
+	{
+		// Ansonsten an der Baustelle normal anfangen zu arbeiten
+		state = STATE_WAITINGFREEWALK;
 
-	// Sind jetzt an der Baustelle
-	rel_x = rel_y = 0;
+		// Sind jetzt an der Baustelle
+		rel_x = rel_y = 0;
 
-	// Anfangen um die Baustelle herumzulaufen
-	StartFreewalk();
+		// Anfangen um die Baustelle herumzulaufen
+		StartFreewalk();
+	}
 }
 
 void nofBuilder::Walked()

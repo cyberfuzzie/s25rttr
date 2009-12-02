@@ -1,4 +1,4 @@
-// $Id: nofCarrier.cpp 5312 2009-07-22 18:02:04Z OLiver $
+// $Id: nofCarrier.cpp 5714 2009-11-28 11:55:37Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -913,7 +913,7 @@ void nofCarrier::FetchWare(const bool swap_wares)
 	
 	if(carried_ware)
 	{
-		carried_ware->Carry((rs_dir)?workplace->f2:workplace->f2);
+		carried_ware->Carry((rs_dir)?workplace->f2:workplace->f1);
 		// Und zum anderen Ende laufen
 		state = CARRS_CARRYWARE;
 		rs_dir = !rs_dir;
@@ -955,14 +955,15 @@ bool nofCarrier::SpaceAtFlag(const bool flag)
 bool nofCarrier::WantInBuilding()
 {
 	RoadSegment * rs = static_cast<noFlag*>((rs_dir?cur_rs->f1:cur_rs->f2))->routes[1];
+	if(!rs)
+		return false;
 
-	if(rs)
-	{
-		if(static_cast<noBaseBuilding*>(rs->f2) == carried_ware->goal)
-			return true;
-	}
+	if(rs->GetLength() != 1)
+		return false;
 
-	return false;
+
+	carried_ware->RecalcRoute();
+	return (carried_ware->GetNextDir() == 1);
 }
 
 /// Für Produktivitätsmessungen: fängt an zu arbeiten

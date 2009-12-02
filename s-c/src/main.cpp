@@ -1,4 +1,4 @@
-// $Id: main.cpp 5609 2009-10-07 15:17:06Z FloSoft $
+// $Id: main.cpp 5707 2009-11-27 14:09:16Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -181,7 +181,11 @@ int main(int argc, char *argv[])
 		memcpy(&data[28], &frequency, 4);
 		memcpy(&data[34], &bitrate, 2);
 
-		fwrite(data, 1, wave->getLength(), tmp);
+		if(fwrite(data, 1, wave->getLength(), tmp) != wave->getLength())
+		{
+			printf("Can't write to temporary file \"%s\" - write failed\n", file);
+			return EXIT_FAILURE;
+		}
 		fflush(tmp);
 		fclose(tmp);
 

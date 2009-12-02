@@ -1,4 +1,4 @@
-// $Id: nobBaseWarehouse.cpp 5348 2009-07-30 16:04:54Z jh $
+// $Id: nobBaseWarehouse.cpp 5698 2009-11-25 20:55:48Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -184,8 +184,12 @@ nobBaseWarehouse::nobBaseWarehouse(SerializedGameData * sgd, const unsigned obj_
 
 void nobBaseWarehouse::OrderCarrier(noRoadNode* const goal, RoadSegment * workplace)
 {
-	AddLeavingFigure(workplace->carrier[0] = new nofCarrier(
-		(workplace->GetRoadType() == RoadSegment::RT_BOAT) ? nofCarrier::CT_BOAT : nofCarrier::CT_NORMAL,x,y,player,workplace,goal));
+	workplace->carrier[0] = new nofCarrier(
+		(workplace->GetRoadType() == RoadSegment::RT_BOAT) ? nofCarrier::CT_BOAT : nofCarrier::CT_NORMAL,x,y,player,workplace,goal);
+
+	if(!UseFigureAtOnce(workplace->carrier[0],goal))
+		AddLeavingFigure(workplace->carrier[0]);
+
 	--real_goods.people[JOB_HELPER];
 	if((workplace->GetRoadType() == RoadSegment::RT_BOAT))
 		--real_goods.goods[GD_BOAT];
@@ -210,7 +214,9 @@ void nobBaseWarehouse::OrderJob(const Job job, noRoadNode* const goal)
 	}
 
 	noFigure * fig = CreateJob(job,x,y,player,goal);
-	AddLeavingFigure(fig);
+	// Wenn Figur nicht sofort von abgeleiteter Klasse verwenet wird, fügen wir die zur Leave-Liste hinzu
+	if(!UseFigureAtOnce(fig,goal))
+		AddLeavingFigure(fig);
 
 		
 	// Ziel Bescheid sagen, dass dortin ein neuer Arbeiter kommt (bei Flaggen als das anders machen)
@@ -524,6 +530,19 @@ void nobBaseWarehouse::HandleBaseEvent(const unsigned int id)
 	}
 }
 
+/// Abgeleitete kann eine gerade erzeugte Ware ggf. sofort verwenden 
+/// (muss in dem Fall true zurückgeben)
+bool nobBaseWarehouse::UseWareAtOnce(Ware * ware, noBaseBuilding* const goal)
+{
+	return false;
+}
+
+/// Dasselbe für Menschen
+bool nobBaseWarehouse::UseFigureAtOnce(noFigure * fig, noRoadNode* const goal)
+{
+	return false;
+}
+
 Ware * nobBaseWarehouse::OrderWare(const GoodType good, noBaseBuilding* const goal)
 {
 	// Ware überhaupt hier vorhanden (Abfrage eigentlich nicht nötig, aber erstmal zur Sicherheit)
@@ -535,8 +554,10 @@ Ware * nobBaseWarehouse::OrderWare(const GoodType good, noBaseBuilding* const go
 
 	Ware * ware = new Ware(good,goal,this);
 
-	// Ware zur Liste hinzufügen, damit sie dann rausgetragen wird
-	waiting_wares.push_back(ware);
+	// Abgeleitete Klasse fragen, ob die irgnend etwas besonderes mit dieser Ware anfangen will
+	if(!UseWareAtOnce(ware,goal))
+		// Ware zur Liste hinzufügen, damit sie dann rausgetragen wird
+		waiting_wares.push_back(ware);
 
 	--real_goods.goods[good];
 

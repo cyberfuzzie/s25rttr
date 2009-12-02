@@ -1,4 +1,4 @@
-// $Id: MilitaryConsts.h 5013 2009-06-07 19:58:03Z OLiver $
+// $Id: MilitaryConsts.h 5655 2009-11-01 21:05:27Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -58,6 +58,9 @@ const unsigned short GOLD_COUNT[4][4] =
 const unsigned MILITARY_RADIUS[6] =
 { 8,9,10,11,9,4 };
 
+// Radius für einzelne Hafen(baustellen)
+const unsigned HARBOR_ALONE_RADIUS = 5;
+
 /// Fahnenpositionen bei den Militärgebäuden
 
 // Besatzungsflaggen (4 Völker x 4 Größen x 2 X+Y) - ab 3162
@@ -102,6 +105,8 @@ const unsigned VISUALRANGE_LOOKOUTTOWER = 20;
 const unsigned VISUALRANGE_SCOUT = 3;
 /// Sichtweite von Soldaten
 const unsigned VISUALRANGE_SOLDIER = 2;
+/// Sichtweite von Schiffen
+const unsigned VISUALRANGE_SHIP = 2;
 
 /// Beförderungszeit von Soldaten ( =UPGRADE_TIME + rand(UPGRADE_TIME_RANDOM) )
 const unsigned UPGRADE_TIME = 100;

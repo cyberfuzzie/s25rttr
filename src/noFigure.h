@@ -1,4 +1,4 @@
-// $Id: noFigure.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: noFigure.h 5713 2009-11-28 11:17:21Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -187,6 +187,9 @@ public:		void Destroy() { Destroy_noFigure(); }
 	bool DoJobWorks() const { return (fs == FS_JOB); }
 
 	void Abrogate(); // beim Arbeitsplatz "kündigen" soll, man das Laufen zum Ziel unterbrechen muss (warum auch immer)
+
+	/// Informiert die Figur, dass für sie eine Schiffsreise beginnt
+	void StartShipJourney(const Point<MapCoord> goal);
 
 };
 

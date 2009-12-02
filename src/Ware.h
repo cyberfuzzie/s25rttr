@@ -1,4 +1,4 @@
-// $Id: Ware.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: Ware.h 5729 2009-12-01 16:43:58Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -28,30 +28,36 @@ enum GoodType;
 #endif
 
 #include "GameObject.h"
+#include "MapConsts.h"
 
 class noRoadNode;
 class noBaseBuilding;
 class GameWorld;
+class nobHarborBuilding;
 
 
-// Die Klasse Ware kennzeichnet eine Ware, die von einem Tr‰ger transportiert wird bzw gerade an einer Flagge liegt
+// Die Klasse Ware kennzeichnet eine Ware, die von einem Tr√§ger transportiert wird bzw gerade an einer Flagge liegt
 class Ware : public GameObject
 {
-	/// Die Richtung von der Fahne auf dem Weg, auf dem die Ware transportiert werden will als n‰chstes
+	/// Die Richtung von der Fahne auf dem Weg, auf dem die Ware transportiert werden will als n√§chstes
 	unsigned char next_dir;
 	/// In welchem Status die Ware sich gerade befindet
 	enum State
 	{
 		STATE_WAITINWAREHOUSE = 0, // Ware wartet im Lagerhaus noch auf Auslagerun
-		STATE_WAITATFLAG, // Ware liegt an einer Fahne und wartet auf den Tr‰ger, der kommt
-		STATE_CARRIED // Ware wird von einem Tr‰ger getragen
+		STATE_WAITATFLAG, // Ware liegt an einer Fahne und wartet auf den Tr√§ger, der kommt
+		STATE_CARRIED, // Ware wird von einem Tr√§ger getragen
+		STATE_WAITFORSHIP, // Ware wartet im Hafengeb√§ude auf das Schiff, das sie abholt
+		STATE_ONSHIP // Ware befindet sich auf einem Schiff
 	} state;
-	/// Auf welcher Flagge, in welchem Geb‰ude die Ware gerade ist (bei STATE_CARRIED ist es die Flagge, zu der die Ware getragen wird!)
+	/// Auf welcher Flagge, in welchem Geb√§ude die Ware gerade ist (bei STATE_CARRIED ist es die Flagge, zu der die Ware getragen wird!)
 	noRoadNode * location;
+	/// N√§chster Hafenpunkt, der ggf. angesteuert werden soll
+	Point<MapCoord> next_harbor;
 
 public:
 
-	/// Was f¸r eine Ware
+	/// Was f√ºr eine Ware
 	const GoodType type;
 	/// Wo die Ware mal hin soll
 	noBaseBuilding * goal;
@@ -73,30 +79,38 @@ public:
 
 	/// siehe oben
 	unsigned char GetNextDir() const { return next_dir; }
+	/// Gibt n√§chsten Hafen zur√ºck, falls vorhanden
+	Point<MapCoord> GetNextHarbor() const { return  next_harbor; }
 	/// Berechnet den Weg neu zu ihrem Ziel
 	void RecalcRoute();
 	/// Wird aufgerufen, wenn es das Ziel der Ware nicht mehr gibt und sie wieder "nach Hause" getragen werden muss
 	void GoalDestroyed();
-	/// Ver‰ndert den Status der Ware
+	/// Ver√§ndert den Status der Ware
 	void LieAtFlag(noRoadNode * flag) { state = STATE_WAITATFLAG; location = flag; }
 	void Carry(noRoadNode * next_flag) { state = STATE_CARRIED; location = next_flag;  }
 	/// Gibt dem Ziel der Ware bekannt, dass diese nicht mehr kommen kann
 	void NotifyGoalAboutLostWare();
 	/// Wenn die Ware vernichtet werden muss
 	void WareLost(const unsigned char player);
-	/// Gibt Status der Ware zur¸ck
+	/// Gibt Status der Ware zur√ºck
 	bool LieAtFlag() const { return (state == STATE_WAITATFLAG); }
 	bool LieInWarehouse() const { return (state == STATE_WAITINWAREHOUSE); }
-	/// Sagt dem Tr‰ger Bescheid, dass sie in die aktuelle (next_dir) Richtung nicht mehr getragen werden will
+	/// Sagt dem Tr√§ger Bescheid, dass sie in die aktuelle (next_dir) Richtung nicht mehr getragen werden will
 	void RemoveWareJobForCurrentDir(const unsigned char last_next_dir);
-	/// ‹berpr¸ft, ob es noch ein Weg zum Ziel gibt f¸r Waren, die noch im Lagerhaus liegen
+	/// √úberpr√ºft, ob es noch ein Weg zum Ziel gibt f√ºr Waren, die noch im Lagerhaus liegen
 	bool FindRouteFromWarehouse();
-	/// Sagt der Ware, dass sie sich ein Lagerhaus nochmal suchen soll (f¸r LostWares gedacht, die kein Lagerhaus mehr gefunden haben)
+	/// Sagt der Ware, dass sie sich ein Lagerhaus nochmal suchen soll (f√ºr LostWares gedacht, die kein Lagerhaus mehr gefunden haben)
 	void FindRouteToWarehouse();
-	/// Gibt Ort der Ware zur¸ck
+	/// Gibt Ort der Ware zur√ºck
 	noRoadNode * GetLocation() { return location; }
 	/// Ist die Ware eine LostWare (Ware, die kein Ziel mehr hat und irgendwo sinnlos rumliegt)?
 	bool IsLostWare() const { return (goal?false:true); }
+	/// Informiert Ware, dass eine Schiffsreise beginnt
+	void StartShipJourney();
+	/// Informiert Ware, dass Schiffsreise beendet ist und die Ware nun in einem Hafengeb√§ude liegt
+	/// Gibt true zur√ºck, wenn die Ware rausgetragen will oder false, wenn sie kein Ziel mehr hat und ins Hafengeb√§ude
+	/// eingelagert werden will
+	bool ShipJorneyEnded(nobHarborBuilding * hb);
 
 };
 

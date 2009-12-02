@@ -1,4 +1,4 @@
-// $Id: AIEventManager.cpp 5641 2009-10-16 17:57:39Z jh $
+// $Id: AIEventManager.cpp 5644 2009-10-17 12:22:53Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -25,4 +25,14 @@ AIEventManager::AIEventManager(void)
 
 AIEventManager::~AIEventManager(void)
 {
+}
+
+AIEvent::Base *AIEventManager::GetEvent()
+{
+	if (events.empty())
+		return NULL;
+	
+	AIEvent::Base *ev = events.front();
+	events.pop();
+	return ev;
 }

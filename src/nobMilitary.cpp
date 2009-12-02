@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 5460 2009-08-29 21:35:24Z jh $
+// $Id: nobMilitary.cpp 5704 2009-11-27 08:57:26Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -41,6 +41,7 @@
 #include "WindowManager.h"
 #include "SerializedGameData.h"
 #include "MapGeometry.h"
+#include "AIEventManager.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -113,7 +114,7 @@ void nobMilitary::Destroy_nobMilitary()
 	gwg->GetPlayer(player)->RemoveMilitaryBuilding(this);
 	gwg->GetMilitarySquare(x,y).erase(this);
 
-
+	GAMECLIENT.SendAIEvent(new AIEvent::Building(AIEvent::BuildingDestroyed, x, y, type), player);
 	
 }
 
@@ -350,6 +351,9 @@ void nobMilitary::NewEnemyMilitaryBuilding(const unsigned short distance)
 	}
 
 	RegulateTroops();
+
+	// KI-Event senden
+	GameClient::inst().SendAIEvent(new AIEvent::Building(AIEvent::BorderChanged, x, y, type), player);
 }
 
 
@@ -777,6 +781,9 @@ void nobMilitary::Capture(const unsigned char new_owner)
 
 	// ggf. Fenster schließen vom alten Spieler
 	gwg->ImportantObjectDestroyed(x,y);
+
+	// evtl. AIEvent senden
+	GameClient::inst().SendAIEvent(new AIEvent::Building(AIEvent::BuildingConquered, x, y, type), player);
 
 }
 

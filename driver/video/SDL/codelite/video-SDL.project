@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CodeLite_Project Name="video-SDL">
+  <Plugins>
+    <Plugin Name="qmake">
+      <![CDATA[00010001N0005Debug000000000000]]>
+    </Plugin>
+  </Plugins>
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
@@ -18,10 +23,9 @@
     <File Name="../../../src/VideoInterface.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include"/>
-  <Dependencies Name="Debug"/>
   <Settings Type="Dynamic Library">
     <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Dynamic Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
-      <Compiler Options="-g" Required="yes"/>
+      <Compiler Options="-g;-fPIC" Required="yes"/>
       <Linker Options="" Required="yes">
         <LibraryPath Value="../../../codelite/Debug"/>
         <Library Value="SDL"/>
@@ -76,9 +80,7 @@
       </CustomBuild>
       <AdditionalRules>
         <CustomPostBuild></CustomPostBuild>
-        <CustomPreBuild>
-
-</CustomPreBuild>
+        <CustomPreBuild></CustomPreBuild>
       </AdditionalRules>
     </Configuration>
     <GlobalSettings>
@@ -93,5 +95,6 @@
       <ResourceCompiler Options=""/>
     </GlobalSettings>
   </Settings>
+  <Dependencies Name="Debug"/>
   <Dependencies Name="Release"/>
 </CodeLite_Project>

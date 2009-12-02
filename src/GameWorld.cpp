@@ -1,4 +1,4 @@
-// $Id: GameWorld.cpp 5319 2009-07-23 09:59:18Z OLiver $
+// $Id: GameWorld.cpp 5655 2009-11-01 21:05:27Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -33,6 +33,7 @@
 #include "nobUsual.h"
 #include "noAnimal.h"
 #include "CatapultStone.h"
+#include "noBuildingSite.h"
 #include "Random.h"
 #include <queue>
 
@@ -70,6 +71,9 @@ void GameWorld::Scan(glArchivItem_Map *map)
 
 	Init();
 
+	// Dummy-Hafenpos für Index 0 einfügen
+	harbor_pos.push_back(GameWorldBase::HarborPos());
+
 	// Andere Sachen setzen
 	for(unsigned y = 0;y<height;++y)
 	{
@@ -90,9 +94,8 @@ void GameWorld::Scan(glArchivItem_Map *map)
 				t1 -= 0x40;
 
 				GameWorldBase::HarborPos p = {x,y};
-				harbor_pos.push_back(p);
-
 				node.harbor_id = harbor_pos.size();
+				harbor_pos.push_back(p);
 			}
 			else
 				node.harbor_id = 0;
@@ -503,8 +506,27 @@ void GameWorld::Serialize(SerializedGameData *sgd) const
 	{
 		sgd->PushUnsignedInt(seas[i].nodes_count);
 	}
+	// Hafenpositionen serialisieren
+	sgd->PushUnsignedInt(harbor_pos.size());
+	for(unsigned i = 0;i<harbor_pos.size();++i)
+	{
+		sgd->PushUnsignedShort(harbor_pos[i].x);
+		sgd->PushUnsignedShort(harbor_pos[i].y);
+		for(unsigned z = 0;z<6;++z)
+			sgd->PushUnsignedShort(harbor_pos[i].cps[z].sea_id);
+		for(unsigned z = 0;z<6;++z)
+		{
+			sgd->PushUnsignedInt(harbor_pos[i].neighbors[z].size());
 
-
+			for(unsigned c = 0;c<harbor_pos[i].neighbors[z].size();++c)
+			{
+				sgd->PushUnsignedInt(harbor_pos[i].neighbors[z][c].id);
+				sgd->PushUnsignedInt(harbor_pos[i].neighbors[z][c].distance);
+			}
+		}
+	}
+	
+	sgd->PushObjectList(harbor_building_sites_from_sea,true);
 }
 
 void GameWorld::Deserialize(SerializedGameData *sgd)
@@ -584,6 +606,27 @@ void GameWorld::Deserialize(SerializedGameData *sgd)
 	{
 		seas[i].nodes_count = sgd->PopUnsignedInt();
 	}
+
+	// Hafenpositionen serialisieren
+	harbor_pos.resize(sgd->PopUnsignedInt());
+	for(unsigned i = 0;i<harbor_pos.size();++i)
+	{
+		harbor_pos[i].x = sgd->PopUnsignedShort();
+		harbor_pos[i].y = sgd->PopUnsignedShort();
+		for(unsigned z = 0;z<6;++z)
+			harbor_pos[i].cps[z].sea_id = sgd->PopUnsignedShort();
+		for(unsigned z = 0;z<6;++z)
+		{
+			harbor_pos[i].neighbors[z].resize(sgd->PopUnsignedInt());
+			for(unsigned c = 0;c<harbor_pos[i].neighbors[z].size();++c)
+			{
+				harbor_pos[i].neighbors[z][c].id = sgd->PopUnsignedInt();
+				harbor_pos[i].neighbors[z][c].distance = sgd->PopUnsignedInt();
+			}
+		}
+	}
+
+	sgd->PopObjectList<noBuildingSite>(harbor_building_sites_from_sea,GOT_BUILDINGSITE);
 
 	// BQ neu berechnen
 	for(unsigned y = 0;y<height;++y)

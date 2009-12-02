@@ -1,4 +1,4 @@
-// $Id: iwPostWindow.h 5136 2009-06-28 12:12:57Z OLiver $
+// $Id: iwPostWindow.h 5664 2009-11-14 22:28:16Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -49,6 +49,9 @@ private:
 
 	/// Passt Steuerelemente an, setzt Einstellung für diverse Controls passend für die aktuelle PostMessage
   void DisplayPostMessage();
+
+	/// Nachricht löschen
+	void DeletePostMessage(PostMsg *pm);
 
 	/// Setzt den Text mehrzeilig in das Postfenster
 	void SetMessageText(const std::string& message);

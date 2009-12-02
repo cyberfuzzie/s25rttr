@@ -1,4 +1,4 @@
-// $Id: main.h 5637 2009-10-15 16:18:56Z FloSoft $
+// $Id: main.h 5709 2009-11-27 22:52:04Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -175,7 +175,10 @@ template <typename T>
 struct Point
 {
 	T x,y;
+	Point() {}
 	Point(const T x, const T y) : x(x), y(y) {}
+	bool operator==(const Point<T> second) const
+	{ return (x == second.x && y == second.y); }
 };
 
 

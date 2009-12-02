@@ -80,8 +80,6 @@ void AIJH::BuildJob::ExecuteJob()
 
 	//}
 
-
-
 	if (aijh->GetGWB()->IsMilitaryBuildingNearNode(target_x, target_y) && type >= BLD_BARRACKS && type <= BLD_FORTRESS)
 	{
 		status = AIJH::JOB_FAILED;
@@ -329,4 +327,39 @@ void AIJH::BuildJob::TryToBuildSecondaryRoad()
 void AIJH::ExpandJob::ExecuteJob()
 {
 
+}
+
+
+void AIJH::EventJob::ExecuteJob()
+{
+	switch(ev->GetType())
+	{
+	case AIEvent::BuildingConquered:
+		{
+			AIEvent::Building *evb = dynamic_cast<AIEvent::Building *>(ev);
+			aijh->HandleNewMilitaryBuilingOccupied(AIPlayerJH::Coords(evb->GetX(), evb->GetY()));
+			status = AIJH::JOB_FINISHED;
+		}
+		break;
+	case AIEvent::NoMoreResourcesReachable:
+		{
+			AIEvent::Building *evb = dynamic_cast<AIEvent::Building *>(ev);
+			aijh->HandleNoMoreResourcesReachable(AIPlayerJH::Coords(evb->GetX(), evb->GetY()), evb->GetBuildingType());
+			status = AIJH::JOB_FINISHED;
+		}
+		break;
+	case AIEvent::BorderChanged:
+		{
+			AIEvent::Building *evb = dynamic_cast<AIEvent::Building *>(ev);
+			aijh->HandleBorderChanged(AIPlayerJH::Coords(evb->GetX(), evb->GetY()));
+			status = AIJH::JOB_FINISHED;
+		}
+		break;
+
+	default:
+		break;
+	}
+
+	//temp only:
+	status = AIJH::JOB_FINISHED;
 }

@@ -26,6 +26,7 @@
 #include "main.h"
 #include "MapConsts.h"
 #include "GameConsts.h"
+#include "AIEventManager.h"
 
 
 #include <vector>
@@ -137,6 +138,16 @@ public:
 	void ExecuteJob();
 private:
 	MapCoord flag_x, flag_y, target_x, target_y;
+};
+
+class EventJob : public Job
+{
+public:
+	EventJob(AIPlayerJH *aijh, AIEvent::Base *ev) : Job(aijh), ev(ev) { }
+	~EventJob() { delete ev; }
+	void ExecuteJob();
+private:
+	AIEvent::Base *ev;
 };
 
 }

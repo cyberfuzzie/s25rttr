@@ -1,4 +1,4 @@
-// $Id: GameConsts.h 5253 2009-07-12 14:42:18Z FloSoft $
+// $Id: GameConsts.h 5690 2009-11-23 21:07:09Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -449,5 +449,8 @@ enum PostMessageType
 
 /// Maximale Nachrichtenanzahl im Briefkasten
 const unsigned MAX_POST_MESSAGES = 20;
+
+/// Konstante für die Pfadrichtung bei einer Schiffsverbindung
+const unsigned char SHIP_DIR = 100;
 
 #endif

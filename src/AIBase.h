@@ -21,6 +21,8 @@
 
 #pragma once
 
+#include "AIEventManager.h"
+
 class GameWorldBase;
 class GameClientPlayer;
 class GlobalGameSettings;
@@ -72,6 +74,8 @@ public:
 	const std::vector<gc::GameCommand*>& GetGameCommands() const { return gcs; }
 	/// Markiert die GameCommands als abgearbeitet
 	void FetchGameCommands() { gcs.clear(); }
+
+	virtual void SendAIEvent(AIEvent::Base *ev) { delete ev; }
 };
 
 #endif //!AIBASE_H_INCLUDED

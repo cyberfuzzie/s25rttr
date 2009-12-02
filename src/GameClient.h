@@ -1,4 +1,4 @@
-// $Id: GameClient.h 5606 2009-10-07 14:57:50Z FloSoft $
+// $Id: GameClient.h 5642 2009-10-16 22:25:22Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -30,6 +30,7 @@
 #include "GameFiles.h"
 #include "GameWorld.h"
 #include "GlobalGameSettings.h"
+#include "AIEventManager.h"
 
 class Window;
 class GameClientPlayer;
@@ -218,6 +219,7 @@ public:
 	const std::list<PostMsg*>& GetPostMessages() { return postMessages; }
 	void DeletePostMessage(PostMsg *msg);
   
+	void SendAIEvent(AIEvent::Base *ev, unsigned receiver);
 
 private:
 	std::list<PostMsg*> postMessages;

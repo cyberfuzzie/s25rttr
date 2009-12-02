@@ -1,4 +1,4 @@
-// $Id: GameManager.cpp 5355 2009-07-31 16:59:26Z FloSoft $
+// $Id: GameManager.cpp 5670 2009-11-16 21:44:39Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -189,7 +189,7 @@ bool GameManager::Run()
 
 	// und zeichnen
 	char frame_str[64];
-	sprintf(frame_str, "%d fps (%u AVG)", framerate, GetAverageFPS());
+	sprintf(frame_str, "%d fps", framerate);
 
 	SmallFont->Draw( VideoDriverWrapper::inst().GetScreenWidth(), 0, frame_str, glArchivItem_Font::DF_RIGHT, COLOR_YELLOW);
 

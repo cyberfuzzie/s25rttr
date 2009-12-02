@@ -1,4 +1,4 @@
-// $Id: TerritoryRegion.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: TerritoryRegion.h 5655 2009-11-01 21:05:27Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -23,7 +23,7 @@
 /// TerritoryRegion ist ein Rechteck aus der Karte quasi "ausgeschnitten", die für die Berechnung bei Militärgebäuden-
 /// aktionen (Neubau, Übernahme, Abriss) benötigt wird von RecalcTerritory
 
-class nobBaseMilitary;
+class noBaseBuilding;
 
 class TerritoryRegion
 {
@@ -57,7 +57,7 @@ public:
 	~TerritoryRegion();
 
 	/// Berechnet ein Militärgebäude mit ein
-	void CalcTerritoryOfBuilding(const nobBaseMilitary * const building);
+	void CalcTerritoryOfBuilding(const noBaseBuilding * const building);
 
 	// Liefert den Besitzer eines Punktes (mit absoluten Koordinaten, werden automatisch in relative umgerechnet!)
 	unsigned char GetOwner(const unsigned short x, const unsigned short y)

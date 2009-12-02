@@ -1,4 +1,4 @@
-// $Id: nobBaseWarehouse.h 5159 2009-07-01 21:29:52Z OLiver $
+// $Id: nobBaseWarehouse.h 5695 2009-11-25 18:58:51Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -80,6 +80,11 @@ private:
 	nofDefender * ProvideDefender(nofAttacker * const attacker);
 	/// Prüft, ob alle Bedingungen zum Rekrutieren erfüllt sind
 	bool AreRecruitingConditionsComply();
+	/// Abgeleitete kann eine gerade erzeugte Ware ggf. sofort verwenden 
+	/// (muss in dem Fall true zurückgeben)
+	virtual bool UseWareAtOnce(Ware * ware, noBaseBuilding* const goal);
+	/// Dasselbe für Menschen
+	virtual bool UseFigureAtOnce(noFigure * fig, noRoadNode* const goal); 
 
 protected:
 
@@ -183,7 +188,10 @@ public: void Serialize(SerializedGameData *sgd) const { Serialize_nobBaseWarehou
 	/// Fügt eine Figur hinzu, die auf dem Weg zum Lagerhaus ist
 	void AddDependentFigure(noFigure * figure) { dependent_figures.push_back(figure); }
 	//// Entfernt eine abhängige Figur wieder aus der Liste
-	void RemoveDependentFigure(noFigure * figure) { dependent_figures.erase(figure); }
+	virtual void RemoveDependentFigure(noFigure * figure) { dependent_figures.erase(figure); }
+	/// Wird aufgerufen, wenn ein Arbeiter hierher kommt
+	void GotWorker(Job job, noFigure * worker)
+	{ dependent_figures.push_back(worker); }
 
 	//// Entfernt eine abhängige Ware wieder aus der Liste (wird mit TakeWare hinzugefügt)
 	void RemoveDependentWare(Ware * ware) { dependent_wares.erase(ware); }

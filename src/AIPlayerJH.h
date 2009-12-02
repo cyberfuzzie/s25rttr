@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.h 5641 2009-10-16 17:57:39Z jh $
+// $Id: AIPlayerJH.h 5704 2009-11-27 08:57:26Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -27,6 +27,7 @@
 #include "GameClientPlayer.h"
 #include "AIJHHelper.h"
 #include "GameWorld.h"
+#include "AIEventManager.h"
 
 #include <queue>
 #include <list>
@@ -44,6 +45,7 @@ class nobBaseMilitary;
 class AIPlayerJH : public AIBase
 {
 	friend class AIJH::BuildJob;
+	friend class AIJH::EventJob;
 public:
 	AIPlayerJH(const unsigned char playerid, const GameWorldBase * const gwb, const GameClientPlayer * const player,
 		const GameClientPlayerList * const players, const GlobalGameSettings * const ggs,
@@ -68,6 +70,8 @@ protected:
 	};
 
 	void RunGF(const unsigned gf);
+
+	void SendAIEvent(AIEvent::Base *ev);
 
   /// Finds flags in the area around x,y
 	void FindFlags(std::vector<const noFlag*>& flags, unsigned short x, unsigned short y, unsigned short radius);
@@ -160,6 +164,12 @@ protected:
 	// [currently not used]
 	void HandleRetryMilitaryBuilding(const Coords& coords);
 
+	// Handle event "no more resources"
+	void HandleNoMoreResourcesReachable(const Coords& coords, BuildingType bld);
+
+	// Handle border event
+	void HandleBorderChanged(const Coords& coords);
+
 	/// Returns the number of buildings and buildingsites of a specific typ
 	unsigned GetBuildingCount(BuildingType type);
 
@@ -218,6 +228,10 @@ protected:
 
 public:
 	inline AIJH::Node &GetAINode(MapCoord x, MapCoord y) { return nodes[x + gwb->GetWidth() * y]; }
+
+// Event...
+protected:
+	AIEventManager eventManager;
 
 
 };

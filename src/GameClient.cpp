@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 5637 2009-10-15 16:18:56Z FloSoft $
+// $Id: GameClient.cpp 5708 2009-11-27 14:18:04Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -958,7 +958,8 @@ inline void GameClient::OnNMSMapData(const GameMessage_Map_Data& msg)
 			Stop();
 			return;
 		}
-		fwrite(map_data, 1, mapinfo.length, map_f);
+		if(fwrite(map_data, 1, mapinfo.length, map_f) != mapinfo.length)
+			LOG.lprintf("ERROR: fwrite failed\n");
 
 		mapinfo.checksum = CalcChecksumOfBuffer((unsigned char*)map_data, mapinfo.length);
 		delete[] map_data;
@@ -1754,4 +1755,13 @@ void GameClient::DeletePostMessage(PostMsg *msg)
 		}
 	}
 }
+
+void GameClient::SendAIEvent(AIEvent::Base *ev, unsigned receiver)
+{
+	if (IsHost())
+		GAMESERVER.SendAIEvent(ev, receiver);
+	else
+		delete ev;
+}
+
 

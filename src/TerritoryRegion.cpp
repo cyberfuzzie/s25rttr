@@ -1,4 +1,4 @@
-// $Id: TerritoryRegion.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: TerritoryRegion.cpp 5655 2009-11-01 21:05:27Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -23,6 +23,7 @@
 #include "TerritoryRegion.h"
 
 #include "nobBaseMilitary.h"
+#include "MilitaryConsts.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -63,9 +64,14 @@ void TerritoryRegion::TestNode(const int x, const int y,const unsigned char play
 	}
 }
 
-void TerritoryRegion::CalcTerritoryOfBuilding(const nobBaseMilitary * const building)
+void TerritoryRegion::CalcTerritoryOfBuilding(const noBaseBuilding * const building)
 {
-	unsigned short radius = building->GetMilitaryRadius();
+	unsigned short radius;
+	
+	if(building->GetBuildingType() == BLD_HARBORBUILDING)
+		radius = HARBOR_ALONE_RADIUS;
+	else
+		radius = static_cast<const nobBaseMilitary*>(building)->GetMilitaryRadius();
 
 	// Punkt, auf dem das Militärgebäude steht
 	int x = building->GetX(),y = building->GetY();
@@ -74,43 +80,49 @@ void TerritoryRegion::CalcTerritoryOfBuilding(const nobBaseMilitary * const buil
 	for(unsigned char r = 1;r<=radius;++r)
 	{
 		x=building->GetX()-r;
+
+		// Bei Häfen bzw. Hafenbaustellen ist der Radius geringwertig, d.h. er wird von allen
+		// anderen Militärgebäuden ggf. "überschrieben"
+		unsigned char radius_value = 
+			(building->GetBuildingType() == BLD_HARBORBUILDING) ? 100 : r;
+
 		// links oben
 		for(unsigned short i = 0;i<r;++i)
 		{
-			TestNode(x,y,building->GetPlayer(),r);
+			TestNode(x,y,building->GetPlayer(),radius_value);
 			x+=(y&1);
 			--y;
 		}
 		// oben
 		for(unsigned short i = 0;i<r;++i)
 		{
-			TestNode(x,y,building->GetPlayer(),r);
+			TestNode(x,y,building->GetPlayer(),radius_value);
 			++x;
 		}
 		// rechts oben
 		for(unsigned short i = 0;i<r;++i)
 		{
-			TestNode(x,y,building->GetPlayer(),r);
+			TestNode(x,y,building->GetPlayer(),radius_value);
 			x+=(y&1);
 			++y;
 		}
 		// rechts unten
 		for(unsigned short i = 0;i<r;++i)
 		{
-			TestNode(x,y,building->GetPlayer(),r);
+			TestNode(x,y,building->GetPlayer(),radius_value);
 			x-=!(y&1);
 			++y;
 		}
 		// unten
 		for(unsigned short i = 0;i<r;++i)
 		{
-			TestNode(x,y,building->GetPlayer(),r);
+			TestNode(x,y,building->GetPlayer(),radius_value);
 			--x;
 		}
 		// links unten
 		for(unsigned short i = 0;i<r;++i)
 		{
-			TestNode(x,y,building->GetPlayer(),r);
+			TestNode(x,y,building->GetPlayer(),radius_value);
 			x-=!(y&1);
 			--y;
 		}

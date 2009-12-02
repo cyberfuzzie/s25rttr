@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CodeLite_Project Name="libsiedler2">
+  <Plugins>
+    <Plugin Name="qmake">
+      <![CDATA[00010001N0005Debug000000000000]]>
+    </Plugin>
+  </Plugins>
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
@@ -41,7 +46,6 @@
     <File Name="../src/ArchivItem_Sound_XMidi.h"/>
     <File Name="../src/ArchivItem_Text.cpp"/>
     <File Name="../src/ArchivItem_Text.h"/>
-    <File Name="../src/CMakeLists.txt"/>
     <File Name="../src/ConvertOemToAnsi.cpp"/>
     <File Name="../src/ConvertOemToAnsi.h"/>
     <File Name="../src/GammaTable.h"/>
@@ -76,24 +80,16 @@
     <File Name="../src/prototypen.h"/>
     <File Name="../src/strlwr.h"/>
     <File Name="../src/typen.h"/>
+    <File Name="../src/ArchivItem_Ini.cpp"/>
+    <File Name="../src/ArchivItem_Ini.h"/>
+    <File Name="../src/LoadINI.cpp"/>
+    <File Name="../src/LoadTLST.cpp"/>
+    <File Name="../src/WriteINI.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include"/>
-  <Dependencies Name="Debug">
-    <Project Name="libendian"/>
-  </Dependencies>
   <Settings Type="Dynamic Library">
-    <GlobalSettings>
-      <Compiler Options="">
-        <IncludePath Value="."/>
-        <IncludePath Value="../libendian/src/"/>
-      </Compiler>
-      <Linker Options="">
-        <LibraryPath Value="."/>
-      </Linker>
-      <ResourceCompiler Options=""/>
-    </GlobalSettings>
     <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Dynamic Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
-      <Compiler Options="-g" Required="yes"/>
+      <Compiler Options="-g;-fPIC" Required="yes"/>
       <Linker Options="" Required="yes">
         <LibraryPath Value="../libendian/codelite/"/>
         <Library Value="endian"/>
@@ -146,11 +142,22 @@
       </CustomBuild>
       <AdditionalRules>
         <CustomPostBuild></CustomPostBuild>
-        <CustomPreBuild>
-
-</CustomPreBuild>
+        <CustomPreBuild></CustomPreBuild>
       </AdditionalRules>
     </Configuration>
+    <GlobalSettings>
+      <Compiler Options="">
+        <IncludePath Value="."/>
+        <IncludePath Value="../libendian/src/"/>
+      </Compiler>
+      <Linker Options="">
+        <LibraryPath Value="."/>
+      </Linker>
+      <ResourceCompiler Options=""/>
+    </GlobalSettings>
   </Settings>
+  <Dependencies Name="Debug">
+    <Project Name="libendian"/>
+  </Dependencies>
   <Dependencies Name="Release"/>
 </CodeLite_Project>

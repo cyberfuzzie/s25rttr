@@ -25,7 +25,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="&quot;$(OutDir)\prebuild-mutex.exe&quot; &quot;prebuild&quot; &quot;$(SolutionName)&quot; &quot;$(SolutionDir)..\..&quot; &quot;$(OutDir)&quot;"
+				CommandLine=""
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -1880,10 +1880,6 @@
 							>
 						</File>
 						<File
-							RelativePath=".\noShipBuildingSite.h"
-							>
-						</File>
-						<File
 							RelativePath="..\..\src\noSign.cpp"
 							>
 						</File>
@@ -1999,6 +1995,14 @@
 				>
 				<File
 					RelativePath="..\..\src\AIBase.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\AIEventManager.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\AIEventManager.h"
 					>
 				</File>
 				<File

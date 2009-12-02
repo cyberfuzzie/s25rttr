@@ -1,4 +1,4 @@
-2008.06.08                 SETTLERS II.5 - RETURN TO THE ROOTS                0.7-dev
+2008.11.23                 SETTLERS II.5 - RETURN TO THE ROOTS                0.7-dev
 ------------------------------------------------------------------------------------
 
 A. Reference Note
@@ -33,10 +33,10 @@ B. Installation
       work.
 
       a) Zip-archiv's
-         To play the game you have to extract the archive with WinZip (for 
-         example) into the "The Settlers 2 Gold-Edition"-folder. (so that
-         s25client.exe is in the same folder as S2.exe)
-
+         To play the game search for the "DATA" und "GFX" directories in
+	 the original S2 Gold (or S2 + Mission CD) game. Copy them into the
+	 nightly folder (where u find the file "Put your S2-Files in here").
+	 
          To play RTTR, you simply have to run s25client.exe.
          
          (In Nightly's you can update with: START.bat)
@@ -203,13 +203,13 @@ D. Crash and bugs
    Thanks a lot
 
    Settlers Freaks
-   June 08th 2009
+   November 23th 2009
 
 ------------------------------------------------------------------------------------
 
 E. Summary: Updates and changelog
 
- * 0.7-dev - Seventh version - 08.06.2009 *
+ * 0.7-dev - Seventh version - 23.11.2009 *
    -------------------------------------------------------------------------
    - OpenSource!
    - Translation: Dutch
@@ -217,6 +217,8 @@ E. Summary: Updates and changelog
    - Statistics
    - Postoffice
    - Diplomacy - unfinished
+   - First AI (jh)
+   - Seafaring (not finished yet)
  
  * 0.6 - Sixth version - 25.01.2009 *
    -------------------------------------------------------------------------

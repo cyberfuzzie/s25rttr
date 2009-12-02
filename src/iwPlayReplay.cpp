@@ -1,4 +1,4 @@
-// $Id: iwPlayReplay.cpp 5311 2009-07-22 17:53:32Z jh $
+// $Id: iwPlayReplay.cpp 5650 2009-10-29 21:52:20Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -64,13 +64,16 @@ iwPlayReplay::iwPlayReplay(void)
 
 	// Starten
 	AddTextButton(1, 195, 260, 100, 22, TC_GREEN2, _("Start"),NormalFont);
-	// Aufräumen
+	// AufrÃ¤umen
 	AddTextButton(2, 305, 260, 100, 22, TC_RED1, _("Clear"),NormalFont);
 
 	// Verzeichnis auflisten
 	std::string tmp = GetFilePath(FILE_PATHS[51]);
 	tmp += "*.rpl";
 	ListDir(tmp, FillReplayTable, table);
+	
+	// Erst einmal nach Dateiname sortieren
+	table->SortRows(0);
 
 	GameClient::inst().SetInterface(NULL);
 }
@@ -106,7 +109,7 @@ void iwPlayReplay::Msg_ButtonClick(const unsigned int ctrl_id)
 		} break;
 	case 2:
 		{
-			// Sicherheitsabfrage, ob der Benutzer auch wirklich alle löschen möchte
+			// Sicherheitsabfrage, ob der Benutzer auch wirklich alle lÃ¶schen mÃ¶chte
 			WindowManager::inst().Show( new iwMsgbox(_("Clear"), _("Are you sure to remove all replays?"), this, MSB_YESNO, MSB_QUESTIONRED,1) );
 
 		} break;
@@ -115,10 +118,10 @@ void iwPlayReplay::Msg_ButtonClick(const unsigned int ctrl_id)
 
 void iwPlayReplay::Msg_MsgBoxResult(const unsigned msgbox_id, const MsgboxResult mbr)
 {
-	// Sollen alle Replays gelöscht werden?
+	// Sollen alle Replays gelÃ¶scht werden?
 	if(mbr == MSR_YES && msgbox_id == 1)
 	{
-		// Dateien löschen
+		// Dateien lÃ¶schen
 		std::string tmp = GetFilePath(FILE_PATHS[51]);
 		tmp += "*.rpl";
 		ListDir(tmp, RemoveReplay, 0);
@@ -137,7 +140,7 @@ void iwPlayReplay::Msg_MsgBoxResult(const unsigned msgbox_id, const MsgboxResult
  *  @param[in] filename Der Dateiname
  *  @param[in] param    Ein benutzerdefinierter Parameter
  *
- *  @todo Noch korrekt dokumentieren (was wird da so übersprungen usw)
+ *  @todo Noch korrekt dokumentieren (was wird da so Ã¼bersprungen usw)
  *  @todo Fehlerabfrage der freads!!!
  *
  *  @author OLiver
@@ -159,10 +162,10 @@ void iwPlayReplay::FillReplayTable(const std::string& filename, void *param)
 	unsigned char j = 0;
 	for(unsigned char i = 0; i < replay.player_count; ++i)
 	{
-		// Was für ein State, wenn es nen KI Spieler oder ein normaler ist, muss das Zeug ausgelesen werden
+		// Was fÃ¼r ein State, wenn es nen KI Spieler oder ein normaler ist, muss das Zeug ausgelesen werden
 		if(replay.players[i].ps == PS_OCCUPIED || replay.players[i].ps == PS_KI)
 		{
-			// und in unsere "Namensliste" hinzufügen (beim ersten Spieler muss kein Komma hin)
+			// und in unsere "Namensliste" hinzufÃ¼gen (beim ersten Spieler muss kein Komma hin)
 			if(j > 0)
 				tmp_players+=", ";
 
@@ -187,13 +190,13 @@ void iwPlayReplay::FillReplayTable(const std::string& filename, void *param)
 	char gfl[50];
 	snprintf(gfl, 50, "%u", replay.last_gf);
 
-	// Und das Zeug zur Tabelle hinzufügen
+	// Und das Zeug zur Tabelle hinzufÃ¼gen
 	static_cast<ctrlTable*>(param)->AddRow(0, extracted_filename.c_str(), datestring, tmp_players.c_str(), gfl, filename.c_str());
 }
 
 
 void iwPlayReplay::RemoveReplay(const std::string& filename,void *param)
 {
-	// und tschüss
+	// und tschÃ¼ss
 	unlink(filename.c_str());
 }

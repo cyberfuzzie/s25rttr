@@ -44,7 +44,7 @@
 	static char THIS_FILE[] = __FILE__;
 #endif
 
-/// IDs in der IO_DAT von Boot und Schiffs-Bild für den Umschaltebutton beim Schiffsbauer
+/// IDs in der IO_DAT von Boot und Schiffs-Bild fÃ¼r den Umschaltebutton beim Schiffsbauer
 const unsigned IODAT_BOAT_ID = 219;
 const unsigned IODAT_SHIP_ID = 218;
 
@@ -52,7 +52,7 @@ const unsigned IODAT_SHIP_ID = 218;
 /**
  *  Konstruktor von @p iwShip.
  *
- *  @todo überprüfen und die restlichen Steuerelemente zur Funktion bringen
+ *  @todo Ã¼berprÃ¼fen und die restlichen Steuerelemente zur Funktion bringen
  *
  *  @author OLiver
  */
@@ -62,13 +62,13 @@ gwv(gwv), gi(gi), ship_id(GameClient::inst().GetPlayer(ship->GetPlayer())->GetSh
 {
 	AddImage(  0,126,101, LOADER.GetImageN("io", 228));
 	AddImageButton( 2, 18,192, 30, 35,TC_GREY,LOADER.GetImageN("io", 225));		// Viewer: 226 - Hilfe
-	AddImageButton( 3, 51,196, 30, 26,TC_GREY,LOADER.GetImageN("io", 102));		// Viewer: 103 - Schnell zurück
-	AddImageButton( 4, 81,196, 30, 26,TC_GREY,LOADER.GetImageN("io", 103));		// Viewer: 104 - Zurück
+	AddImageButton( 3, 51,196, 30, 26,TC_GREY,LOADER.GetImageN("io", 102));		// Viewer: 103 - Schnell zurÃ¼ck
+	AddImageButton( 4, 81,196, 30, 26,TC_GREY,LOADER.GetImageN("io", 103));		// Viewer: 104 - ZurÃ¼ck
 	AddImageButton( 5,111,196, 30, 26,TC_GREY,LOADER.GetImageN("io", 104));		// Viewer: 105 - Vor
 	AddImageButton( 6,141,196, 30, 26,TC_GREY,LOADER.GetImageN("io", 105));		// Viewer: 106 - Schnell vor
 
 	// Die Expeditionsweiterfahrbuttons
-	AddImageButton(10,60,81,18,18,TC_GREY,LOADER.GetImageN("io",187),_("Found colony"));
+	AddImageButton(10,60,81,18,18,TC_GREY,LOADER.GetImageN("io",187),_("Found colony"))->SetVisible(false);
 	
 	const int BUTTON_POS[6][2] =
 	{
@@ -76,7 +76,7 @@ gwv(gwv), gi(gi), ship_id(GameClient::inst().GetPlayer(ship->GetPlayer())->GetSh
 	};
 
 	for(unsigned i = 0;i<6;++i)
-		AddImageButton(11+i,BUTTON_POS[i][0],BUTTON_POS[i][1],18,18,TC_GREY,LOADER.GetImageN("io",181+(i+4)%6));
+		AddImageButton(11+i,BUTTON_POS[i][0],BUTTON_POS[i][1],18,18,TC_GREY,LOADER.GetImageN("io",181+(i+4)%6))->SetVisible(false);
 }
 
 
@@ -117,6 +117,8 @@ void iwShip::Msg_PaintAfter()
 	// Expeditions-Buttons malen?
 	if(ship->IsWaitingForExpeditionInstructions())
 	{
+		GetCtrl<Window>(10)->SetVisible(ship->IsAbleToFoundColony());
+
 		for(unsigned char i = 0;i<6;++i)
 			GetCtrl<Window>(11+i)->SetVisible(gwv->GetNextFreeHarborPoint(ship->GetX(),ship->GetY(),
 			ship->GetCurrentHarbor(),i,ship->GetPlayer()) > 0);
@@ -132,6 +134,13 @@ void iwShip::Msg_PaintAfter()
 
 void iwShip::Msg_ButtonClick(const unsigned int ctrl_id)
 {
+	// Expeditionskommando? (Schiff weiterfahren lassen, Kolonie grÃ¼nden)
+	if(ctrl_id >= 10 && ctrl_id <= 16)
+	{
+		GameClient::inst().AddGC(new gc::ExpeditionCommand(gc::ExpeditionCommand::Action(ctrl_id-10),ship_id));
+		Close();
+	}
+
 	switch(ctrl_id)
 	{
 	case 4: // Hilfe

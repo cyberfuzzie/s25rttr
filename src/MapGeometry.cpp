@@ -16,6 +16,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Siedler II.5 RTTR. If not, see <http://www.gnu.org/licenses/>.
+#include "main.h"
 #include "MapGeometry.h"
 #include <cmath>
 #include <algorithm>
@@ -32,3 +33,18 @@ unsigned CalcDistance(const int x1, const int y1,
 	//int dx = std::abs(int(x1)-int(x2)), dy = std::abs(int(y1)-int(y2));
 	//return dy + std::max(0,dx+((dy&1)-dy)/2);
 }
+
+Point<int> GetPointAround(Point<int> p, unsigned dir) 
+{
+	switch(dir)
+	{
+	case 0: return Point<int>(p.x - 1, p.y);
+	case 1: return Point<int>(p.x - !(p.y&1), p.y-1);
+	case 2: return Point<int>(p.x + (p.y&1), p.y-1); break;
+	case 3: return Point<int>(p.x + 1, p.y); break;
+	case 4: return Point<int>(p.x + (p.y&1), p.y+1);break;
+	case 5: return Point<int>(p.x - !(p.y&1), p.y+1); break;
+	default: assert(false); return Point<int>(0xffffff,0xffffff); 
+	}
+}
+

@@ -1,4 +1,4 @@
-// $Id: Pathfinding.cpp 5319 2009-07-23 09:59:18Z OLiver $
+// $Id: Pathfinding.cpp 5713 2009-11-28 11:17:21Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -27,6 +27,7 @@
 #include "VideoDriverWrapper.h"
 #include "Random.h"
 #include "MapGeometry.h"
+#include "nobHarborBuilding.h"
 
 #include <set>
 #include <vector>
@@ -142,7 +143,7 @@ std::vector<unsigned> clean_list;
 bool GameWorldBase::FindFreePath(const MapCoord x_start,const MapCoord y_start,
 				  const MapCoord x_dest, const MapCoord y_dest, const bool random_route, 
 				  const unsigned max_route, std::vector<unsigned char> * route, unsigned *length,
-				  unsigned char * first_dir, CrossBorders* cb,  FP_Node_OK_Callback IsNodeOK, FP_Node_OK_Callback IsNodeToDestOk, const void * param) const
+				  unsigned char * first_dir,  FP_Node_OK_Callback IsNodeOK, FP_Node_OK_Callback IsNodeToDestOk, const void * param) const
 {
 	// Erst einmal wieder aufräumen
 	for(unsigned i = 0;i<clean_list.size();++i)
@@ -188,48 +189,9 @@ bool GameWorldBase::FindFreePath(const MapCoord x_start,const MapCoord y_start,
 			if(route)
 				route->resize(pf_nodes[best_id].way);
 
-			// Erstmal davon ausgehen, dass keine Grenzen überschritten werden
-			if(cb)
-			{
-				cb->left = false;
-				cb->top = false;
-				cb->right = false;
-				cb->bottom = false;
-			}
-
 			// Route rekonstruieren und ggf. die erste Richtung speichern, falls gewünscht
 			for(unsigned z = pf_nodes[best_id].way-1;best_id!=start_id;--z,best_id = pf_nodes[best_id].prev)
 			{
-				if(cb)
-				{
-					MapCoord x = best_id%width, y = best_id/width;
-					//MapCoord px = pf_nodes[best_id].prev%width;
-					MapCoord py = pf_nodes[best_id].prev/width;
-
-					if(x == 0)
-					{
-						if(pf_nodes[best_id].dir == 3 || (
-						 (pf_nodes[best_id].dir == 2 || pf_nodes[best_id].dir == 4) && (py&1) == 1))
-						 cb->right = true;
-					}
-					else if(x == width-1)
-					{
-						if(pf_nodes[best_id].dir == 0 || (
-						 (pf_nodes[best_id].dir == 1 || pf_nodes[best_id].dir == 5) && (py&1) == 1))
-						 cb->left = true;
-					}
-					if(y == 0)
-					{
-						if(pf_nodes[best_id].dir == 4 || pf_nodes[best_id].dir == 5)
-						 cb->bottom = true;
-					}
-					else if(y == height-1)
-					{
-						if(pf_nodes[best_id].dir == 1 || pf_nodes[best_id].dir == 2)
-						 cb->top = true;
-					}
-				}
-
 				if(route)
 					route->at(z) = pf_nodes[best_id].dir;
 				if(first_dir && z == 0)
@@ -309,8 +271,9 @@ bool GameWorldBase::FindFreePath(const MapCoord x_start,const MapCoord y_start,
 
 /// Wegfinden ( A* ), O(v lg v) --> Wegfindung auf allgemeinen Terrain (ohne Straßen), für Wegbau und frei herumlaufende Berufe
 bool GameWorldBase::FindPathOnRoads(const noRoadNode * const start, const noRoadNode * const goal,
-									const bool ware_mode, std::vector<unsigned char> * route, unsigned * length,
-									unsigned char * first_dir, const RoadSegment * const forbidden) const
+									const bool ware_mode, unsigned * length, 
+									unsigned char * first_dir,  Point<MapCoord> * next_harbor,
+									const RoadSegment * const forbidden) const
 {
 	// Irgendwelche Null-Anfänge oder Ziele? --> Kein Weg
 	if(!start || !goal)
@@ -360,16 +323,22 @@ bool GameWorldBase::FindPathOnRoads(const noRoadNode * const start, const noRoad
 			if(length)
 				*length = pf_nodes[best_id].way;
 
-			if(route)
-				route->resize(pf_nodes[best_id].count_nodes);
+			//if(route)
+			//	route->resize(pf_nodes[best_id].count_nodes);
 			
 			// Route rekonstruieren und ggf. die erste Richtung speichern, falls gewünscht
 			for(unsigned z = pf_nodes[best_id].count_nodes-1;best_id!=start_id;--z,best_id = pf_nodes[best_id].prev)
 			{
-				if(route)
-					route->at(z) = pf_nodes[best_id].dir;
+				//if(route)
+				//	route->at(z) = pf_nodes[best_id].dir;
 				if(first_dir && z == 0)
 					*first_dir = pf_nodes[best_id].dir;
+				if(next_harbor && z == 0)
+				{
+					next_harbor->x = best_id%width;
+					next_harbor->y = best_id/width;
+				}
+				
 			}
 				
 
@@ -389,7 +358,7 @@ bool GameWorldBase::FindPathOnRoads(const noRoadNode * const start, const noRoad
 			unsigned xaid = MakeCoordID(rna->GetX(),rna->GetY());
 
 			// Neuer Weg für diesen neuen Knoten berechnen
-			unsigned new_way = pf_nodes[best_id].way +best->routes[i]->route.size();
+			unsigned new_way = pf_nodes[best_id].way  +best->routes[i]->route.size();
 			// Im Warenmodus müssen wir Strafpunkte für überlastete Träger hinzuaddieren,
 			// damit der Algorithmus auch Ausweichrouten auswählt
 			if(ware_mode)
@@ -432,6 +401,52 @@ bool GameWorldBase::FindPathOnRoads(const noRoadNode * const start, const noRoad
 			ret = todo.insert(rna);
 			pf_nodes[xaid].it_rn = ret.first;
 		}
+
+		// Stehen wir hier auf einem Hafenplatz
+		if(best->GetGOT() == GOT_NOB_HARBORBUILDING)
+		{
+			std::vector<nobHarborBuilding::ShipConnection> scs;
+			static_cast<const nobHarborBuilding*>(best)->GetShipConnections(scs);
+
+			for(unsigned i = 0;i<scs.size();++i)
+			{
+				// ID des umliegenden Knotens bilden
+				unsigned xaid = MakeCoordID(scs[i].dest->GetX(),scs[i].dest->GetY());
+				// Neuer Weg für diesen neuen Knoten berechnen
+				unsigned new_way = pf_nodes[best_id].way  + scs[i].way_costs;
+
+				// Knoten schon auf dem Feld gebildet?
+				if(pf_nodes[xaid].visited)
+				{
+					// Dann nur ggf. Weg und Vorgänger korrigieren, falls der Weg kürzer ist
+					if(pf_nodes[xaid].it_rn != todo.end() && new_way < pf_nodes[xaid].way)
+					{
+						pf_nodes[xaid].way  = new_way;
+						pf_nodes[xaid].prev = best_id;
+						todo.erase(pf_nodes[xaid].it_rn);
+						ret = todo.insert(scs[i].dest);
+						pf_nodes[xaid].it_rn = ret.first;
+						pf_nodes[xaid].dir = 100;
+						pf_nodes[xaid].count_nodes = pf_nodes[best_id].count_nodes + 1;
+					}
+					continue;
+				}
+
+				// Alles in Ordnung, Knoten kann gebildet werden
+				pf_nodes[xaid].visited = true;
+				clean_list.push_back(xaid);
+				pf_nodes[xaid].count_nodes = pf_nodes[best_id].count_nodes + 1;
+				pf_nodes[xaid].way = new_way;
+				pf_nodes[xaid].dir = 100;
+				pf_nodes[xaid].prev = best_id;
+
+				ret = todo.insert(scs[i].dest);
+				pf_nodes[xaid].it_rn = ret.first;
+
+			}
+		}
+
+
 	}
 }
 
@@ -486,7 +501,7 @@ bool IsPointOK_RoadPath(const GameWorldBase& gwb, const MapCoord x, const MapCoo
 bool GameWorldViewer::FindRoadPath(const MapCoord x_start,const MapCoord y_start, const MapCoord x_dest, const MapCoord y_dest,std::vector<unsigned char>& route, const bool boat_road)
 {
 	Param_RoadPath prp = { boat_road };
-	return FindFreePath(x_start,y_start,x_dest,y_dest,false,100,&route,NULL,NULL,NULL,IsPointOK_RoadPath,NULL, &prp);
+	return FindFreePath(x_start,y_start,x_dest,y_dest,false,100,&route,NULL,NULL,IsPointOK_RoadPath,NULL, &prp);
 }
 
 /// Abbruch-Bedingungen für freien Pfad für Menschen
@@ -555,7 +570,7 @@ unsigned char GameWorldBase::FindHumanPath(const MapCoord x_start,const MapCoord
 			const MapCoord x_dest, const MapCoord y_dest, const unsigned max_route, const bool random_route, unsigned *length)
 {
 	unsigned char first_dir = 0xFF;
-	if(FindFreePath(x_start,y_start,x_dest,y_dest,random_route,max_route,NULL,length,&first_dir,NULL,IsPointOK_HumanPath,
+	if(FindFreePath(x_start,y_start,x_dest,y_dest,random_route,max_route,NULL,length,&first_dir,IsPointOK_HumanPath,
 		IsPointToDestOK_HumanPath,NULL))
 		return first_dir;
 	else
@@ -563,20 +578,20 @@ unsigned char GameWorldBase::FindHumanPath(const MapCoord x_start,const MapCoord
 }
 
 /// Wegfindung für Menschen im Straßennetz
-unsigned char GameWorldGame::FindHumanPathOnRoads(const noRoadNode * const start, const noRoadNode * const goal,unsigned * length,const RoadSegment * const forbidden)
+unsigned char GameWorldGame::FindHumanPathOnRoads(const noRoadNode * const start, const noRoadNode * const goal,unsigned * length, Point<MapCoord> * next_harbor, const RoadSegment * const forbidden)
 {
 	unsigned char first_dir = 0xFF;
-	if(FindPathOnRoads(start, goal, false, NULL, length, &first_dir,forbidden))
+	if(FindPathOnRoads(start, goal, false, length, &first_dir, next_harbor, forbidden))
 		return first_dir;
 	else
 		return 0xFF;
 }
 
 /// Wegfindung für Waren im Straßennetz
-unsigned char GameWorldGame::FindPathForWareOnRoads(const noRoadNode * const start, const noRoadNode * const goal,unsigned * length)
+unsigned char GameWorldGame::FindPathForWareOnRoads(const noRoadNode * const start, const noRoadNode * const goal,unsigned * length, Point<MapCoord> * next_harbor)
 {
 	unsigned char first_dir = 0xFF;
-	if(FindPathOnRoads(start, goal, true, NULL, length, &first_dir,NULL))
+	if(FindPathOnRoads(start, goal, true, length, &first_dir, next_harbor, NULL))
 		return first_dir;
 	else
 		return 0xFF;
@@ -588,7 +603,7 @@ bool GameWorldBase::FindShipPath(const MapCoord x_start,const MapCoord y_start, 
 								 const MapCoord y_dest, std::vector<unsigned char> * route, unsigned * length, const unsigned max_length,
 								 GameWorldBase::CrossBorders * cb)
 {
-	return FindFreePath(x_start,y_start,x_dest,y_dest,true,200,route,length,NULL,cb,IsPointOK_ShipPath,
+	return FindFreePath(x_start,y_start,x_dest,y_dest,true,200,route,length,NULL,IsPointOK_ShipPath,
 		IsPointToDestOK_ShipPath,NULL);
 }
 

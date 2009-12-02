@@ -1,4 +1,4 @@
-// $Id: ctrlPreviewMinimap.h 5065 2009-06-18 17:25:27Z OLiver $
+// $Id: ctrlPreviewMinimap.h 5670 2009-11-16 21:44:39Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -58,8 +58,8 @@ public:
 	{
 		players[id].color = color;
 
-		if (players[id].color == COLOR_GHOST)
-			players[id].color = MakeColor(255,150,150,150);	
+///		if (players[id].color == COLOR_GHOST)			Demo's Ghost Farbe
+///			players[id].color = MakeColor(255,150,150,150);	
 
 	}
 

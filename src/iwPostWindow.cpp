@@ -1,4 +1,4 @@
-// $Id: iwPostWindow.cpp 5520 2009-09-13 12:43:00Z FloSoft $
+// $Id: iwPostWindow.cpp 5664 2009-11-14 22:28:16Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -126,41 +126,38 @@ void iwPostWindow::Msg_ButtonClick(const unsigned int ctrl_id)
 
 		// Löschen
 	case 15:
-		{
-			PostMsg *pm = GetPostMsg(currentMessage);
-			GameClient::inst().DeletePostMessage(pm);
-			currentMessage = (currentMessage > 0) ? currentMessage - 1 : 0;
-		}
+		DeletePostMessage(GetPostMsg(currentMessage));
 		break;
 
-		// Vertrag annehmen
+		// Haken-Button ("Ja")
 	case 16:
 		{
 			PostMsg *pm = GetPostMsg(currentMessage);
 			DiplomacyPostQuestion *dpm = dynamic_cast<DiplomacyPostQuestion*>(pm);
 			if (dpm)
 			{
-				// Vertrag akzeptieren?
+				// Vertrag akzeptieren? Ja
 				if(dpm->dp_type == DiplomacyPostQuestion::ACCEPT)
 					GameClient::inst().AddGC(new gc::AcceptPact(true,dpm->id,dpm->pt,dpm->player));
+				// Vertrag beenden? Ja
 				else if(dpm->dp_type == DiplomacyPostQuestion::CANCEL)
-					GameClient::inst().AddGC(new gc::CancelPact(dpm->pt,dpm->player));
-
-				GameClient::inst().DeletePostMessage(pm);
-				currentMessage = (currentMessage > 0) ? currentMessage - 1 : 0;
+						GameClient::inst().AddGC(new gc::CancelPact(dpm->pt,dpm->player));
+				DeletePostMessage(pm);
 			}
 		} break;
 
-		// Vertrag ablehnen
+		// Kreuz-Button ("Nein")
 	case 17:
 		{
 			PostMsg *pm = GetPostMsg(currentMessage);
 			DiplomacyPostQuestion *dpm = dynamic_cast<DiplomacyPostQuestion*>(pm);
 			if (dpm)
 			{
-				//dpm->GetPlayerID();
-				// TODO Damit was tun
-				// GAMECLIENT.GetPlayer(dpm->GetPlayerID();)->MakeMeNotAlly(me);
+					// Vertrag annehmen? Nein
+					// TODO: Sinnvoll ne art reject schicken, damit der andere mitbekommmt dass man nich will
+					//if(dpm->dp_type == DiplomacyPostQuestion::ACCEPT)
+					//	GameClient::inst().AddGC(new gc::CancelPact(dpm->pt,dpm->player));
+					DeletePostMessage(pm);
 			}
 		}
 		break;
@@ -332,5 +329,11 @@ void iwPostWindow::SetMessageText(const std::string& message)
 	}
 
 	delete [] lines;
+}
+
+void iwPostWindow::DeletePostMessage(PostMsg *pm)
+{
+	GameClient::inst().DeletePostMessage(pm);
+	currentMessage = (currentMessage > 0) ? currentMessage - 1 : 0;
 }
 

@@ -1,4 +1,4 @@
-// $Id: SDL.cpp 5381 2009-08-08 22:27:27Z FloSoft $
+// $Id: SDL.cpp 5706 2009-11-27 13:30:54Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -184,7 +184,9 @@ Sound *AudioSDL::LoadEffect(unsigned int data_type, unsigned char *data, unsigne
 	if(!dat)
 		return false;
 
-	fwrite(data, 1, size, dat);
+	if(fwrite(data, 1, size, dat) != size)
+		return false;
+	
 	fclose(dat);
 
 	switch(data_type)
@@ -267,7 +269,9 @@ Sound *AudioSDL::LoadMusic(unsigned int data_type, unsigned char *data, unsigned
 	if(!dat)
 		return false;
 
-	fwrite(data, 1, size, dat);
+	if(fwrite(data, 1, size, dat) != size)
+		return false;
+
 	fclose(dat);
 
 	sd->music = Mix_LoadMUS(file);

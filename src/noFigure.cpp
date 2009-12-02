@@ -65,6 +65,8 @@
 #include "nofScout_LookoutTower.h"
 #include "nofScout_Free.h"
 
+#include "nobHarborBuilding.h"
+
 #include "Swap.h"
 #include "Random.h"
 
@@ -353,8 +355,9 @@ void noFigure::WalkToGoal()
 		}
 		else
 		{
+			Point<MapCoord> next_harbor;
 			// Neuen Weg berechnen
-			unsigned char route = gwg->FindHumanPathOnRoads(gwg->GetSpecObj<noRoadNode>(x,y),goal);
+			unsigned char route = gwg->FindHumanPathOnRoads(gwg->GetSpecObj<noRoadNode>(x,y),goal,NULL,&next_harbor);
 			// Kein Weg zum Ziel... nächstes Lagerhaus suchen
 			if(route == 0xFF)
 			{
@@ -373,6 +376,38 @@ void noFigure::WalkToGoal()
 				WalkToGoal();
 				return;
 			}
+			// Oder müssen wir das Schiff nehmen?
+			else if(route == SHIP_DIR)
+			{
+				// Uns in den Hafen einquartieren
+				noBase * nob;
+				if((nob=gwg->GetNO(x,y))->GetGOT() != GOT_NOB_HARBORBUILDING)
+				{
+					// Es gibt keinen Hafen mehr -> nach Hause gehen
+
+					// Arbeisplatz oder Laghaus Bescheid sagen
+					Abrogate();
+					// Wir gehen jetzt nach Hause
+					GoHome();
+					// Evtl wurde kein Lagerhaus gefunden und wir sollen rumirren, dann tun wir das gleich
+					if(fs == FS_WANDER)
+					{
+						Wander();
+						return;
+					}
+					
+					// Nach Hause laufen...
+					WalkToGoal();
+					return;
+				}
+
+				// Uns in den Hafen einquartieren
+				static_cast<nobHarborBuilding*>(nob)->AddFigureForShip(this,next_harbor);
+				gwg->RemoveFigure(this,x,y);
+				return;
+			}
+
+			
 			// Nächste Straße wollen, auf der man geht
 			cur_rs = gwg->GetSpecObj<noRoadNode>(x,y)->routes[route];
 			StartWalking(route);
@@ -1001,4 +1036,11 @@ void noFigure::CalcVisibilities(const MapCoord x, const MapCoord y)
 		// An alter Position neu berechnen
 		gwg->RecalcVisibilitiesAroundPoint(x,y,
 		(GetGOT() == GOT_NOF_SCOUT_FREE) ? VISUALRANGE_SCOUT : VISUALRANGE_SOLDIER,player,NULL);
+}
+
+/// Informiert die Figur, dass für sie eine Schiffsreise beginnt
+void noFigure::StartShipJourney(const Point<MapCoord> goal)
+{
+	x = goal.x;
+	y = goal.y;
 }

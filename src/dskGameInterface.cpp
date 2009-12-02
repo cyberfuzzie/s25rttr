@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.cpp 5441 2009-08-22 22:21:52Z jh $
+// $Id: dskGameInterface.cpp 5730 2009-12-01 16:54:17Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -527,8 +527,12 @@ bool dskGameInterface::Msg_KeyDown(const KeyEvent& ke)
 				GameClient::inst().ChangeReplayPlayer(ke.c-'1');
 			else
 			{
-				if(GameClient::inst().GetPlayer(ke.c-'1')->ps == PS_KI && GameClient::inst().GetPlayer(ke.c-'1')->aiType == AI_DUMMY)
-					GAMECLIENT.AddGC(new gc::SwitchPlayer(ke.c-'1'));
+				GameClientPlayer * player = GameClient::inst().GetPlayer(ke.c-'1');
+				if(player)
+				{
+					if(player->ps == PS_KI && player->aiType == AI_DUMMY)
+						GAMECLIENT.AddGC(new gc::SwitchPlayer(ke.c-'1'));
+				}
 			}
 		} return true;
 

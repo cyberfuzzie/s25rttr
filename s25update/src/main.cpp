@@ -1,4 +1,4 @@
-// $Id: main.cpp 5500 2009-09-08 18:37:11Z FloSoft $
+// $Id: main.cpp 5705 2009-11-27 13:04:42Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -357,8 +357,9 @@ int main(int argc, char *argv[])
 						while(bzerror == BZ_OK)
 						{
 							char buffer[1024];
-							int read = BZ2_bzRead ( &bzerror, bz2fp, buffer, 1024 );
-							fwrite(buffer, 1, read, fp);
+							unsigned int read = BZ2_bzRead ( &bzerror, bz2fp, buffer, 1024 );
+							if(fwrite(buffer, 1, read, fp) != read)
+								cout << "failed to write to disk";
 						
 						}
 						fclose(fp);

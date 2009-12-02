@@ -28,6 +28,7 @@
 #include "nobMilitary.h"
 #include "nobBaseWarehouse.h"
 #include "nobHarborBuilding.h"
+#include "noShip.h"
 
 using namespace gc;
 
@@ -62,6 +63,7 @@ GameCommand * GameCommand::CreateGameCommand(const Type gst, Serializer * ser)
 	case CANCELPACT: return new CancelPact(ser);
 	case CHANGESHIPYARDMODE: return new ChangeShipYardMode(ser);
 	case STARTEXPEDITION: return new StartExpedition(ser);
+	case EXPEDITION_COMMAND: return new ExpeditionCommand(ser);
 	case SURRENDER: return new Surrender(ser);
 	case CHEAT_ARMAGEDDON: return new CheatArmageddon(ser);
 	case DESTROYALL: return new DestroyAll(ser);
@@ -207,7 +209,13 @@ void StartExpedition::Execute(GameWorldGame& gwg, GameClientPlayer& player, cons
 
 void ExpeditionCommand::Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid)
 {
-	//if(gwg.GetNO(x,y)->GetGOT() == GOT_NOB_HARBORBUILDING)
-	//	gwg.GetSpecObj<nobHarborBuilding>(x,y)->StartExpedition();
+	if(this->action == FOUNDCOLONY)
+	{
+		player.GetShipByID(this->ship_id)->FoundColony();
+	}
+	else
+	{
+		player.GetShipByID(this->ship_id)->ContinueExpedition(action-1);
+	}
 }
 

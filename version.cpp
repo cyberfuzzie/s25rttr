@@ -1,4 +1,4 @@
-// $Id: version.cpp 4936 2009-05-24 15:17:07Z FloSoft $
+// $Id: version.cpp 5701 2009-11-26 16:02:15Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //

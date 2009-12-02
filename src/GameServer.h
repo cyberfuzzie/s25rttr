@@ -1,4 +1,4 @@
-// $Id: GameServer.h 5606 2009-10-07 14:57:50Z FloSoft $
+// $Id: GameServer.h 5642 2009-10-16 22:25:22Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -29,6 +29,8 @@
 
 #include "GlobalGameSettings.h"
 #include "GamePlayerList.h"
+
+#include "AIEventManager.h"
 
 
 class GameServerPlayer;
@@ -170,6 +172,7 @@ private:
 
 	public:
 		AIBase *GetAIPlayer(unsigned playerID) { return ai_players[playerID]; }
+		void SendAIEvent(AIEvent::Base *ev, unsigned receiver);
 
 };
 

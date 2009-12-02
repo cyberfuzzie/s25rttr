@@ -1,4 +1,4 @@
-2008.06.08                 SETTLERS II.5 - RETURN TO THE ROOTS                0.7-dev
+2008.11.23                 SETTLERS II.5 - RETURN TO THE ROOTS                0.7-dev
 ------------------------------------------------------------------------------------
 
 A. Allgemeine Hinweise
@@ -33,10 +33,10 @@ B. Installation
       aber eigentlich funktionieren.
 
       a) Zip-Archive
-         Zum Spielen muss man nur das Zip-Archiv mit z.B. WinZip in die
-         installierte "Siedler 2 Gold-Edition" entpacken
-         (so dass s25client.exe sich auf der selben Ebene wie S2.EXE 
-         befindet).
+         Zum Spielen sucht man die Verzeichnisse "DATA" und "GFX" im
+	 Original "Die Siedler 2 Gold" Spiel (oder S2 + Mission CD) und kopiert
+	 diese in das Nightly-Verzeichnis (so dass s25client.exe sich auf 
+         der selben Ebene wie S2.EXE befindet).
 
          Darin kann man dann s25client.exe zum Spielen von Siedler II.5 RTTR
          ausführen.
@@ -231,13 +231,13 @@ D. Abstürze und Fehler
    Vielen Dank!
 
    Settlers Freaks
-   08. Juni 2009
+   23. November 2009
 
 ------------------------------------------------------------------------------------
 
 E. Übersicht: Updates und Änderungen
 
- * 0.7-dev - Siebte Version - 08.06.2009 *
+ * 0.7-dev - Siebte Version - 23.11.2009 *
    -------------------------------------------------------------------------
    - OpenSource!
    - Übersetzung: Niederländisch
@@ -245,6 +245,8 @@ E. Übersicht: Updates und Änderungen
    - Statistik
    - Post
    - Diplomatie - noch nicht fertig
+   - Erste KI von jh
+   - Seefahrt (noch nicht fertig)
 
  * 0.6 - Sechste Version - 25.01.2009 *
    -------------------------------------------------------------------------

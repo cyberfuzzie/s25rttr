@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 5627 2009-10-12 17:17:06Z FloSoft $
+### $Id: CMakeLists.txt 5658 2009-11-04 14:31:18Z FloSoft $
 ################################################################################
 
 INCLUDE(FindBZip2)
@@ -118,6 +118,7 @@ SET(SOURCES_AI
     AIPlayer.cpp   AIPlayer.h
     AIPlayerJH.cpp AIPlayerJH.h
     AIJHHelper.cpp AIJHHelper.h
+    AIEventManager.cpp AIEventManager.h
     )   
 
 SET(SOURCES_OTHER
@@ -375,8 +376,8 @@ IF ( "${COMPILEFOR}" STREQUAL "apple")
 	ENDIF(NOT EXISTS "${OpenGL_gl_LIBRARY}")
 
 	IF( "${CROSSCOMPILE}" STREQUAL "1")
-		SET(CMAKE_C_LINK_FLAGS  "${CMAKE_C_LINK_FLAGS} -framework OpenGL -L${CMAKE_SOURCE_DIR}/macos -lSDLmain")
-		SET(CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -framework OpenGL -L${CMAKE_SOURCE_DIR}/macos -lSDLmain")
+		SET(CMAKE_C_LINK_FLAGS  "${CMAKE_C_LINK_FLAGS} -framework OpenGL -L${CMAKE_SOURCE_DIR}/macos")
+		SET(CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -framework OpenGL -L${CMAKE_SOURCE_DIR}/macos")
 	ENDIF( "${CROSSCOMPILE}" STREQUAL "1")
 ENDIF ( "${COMPILEFOR}" STREQUAL "apple")
 
@@ -384,8 +385,7 @@ ADD_EXECUTABLE(s25client ${s25client_SRCS})
 TARGET_LINK_LIBRARIES(s25client siedler2 lobby_c s25util mygettext ${BZIP2_LIBRARIES} ${OPENGL_gl_LIBRARY})
 
 IF ( "${COMPILEFOR}" STREQUAL "apple")
-	SET_TARGET_PROPERTIES(s25client PROPERTIES LINK_FLAGS "-framework SDL -framework Cocoa")
-	
+	SET_TARGET_PROPERTIES(s25client PROPERTIES LINK_FLAGS "-framework SDL -framework Cocoa -lSDLmain")
 ENDIF ( "${COMPILEFOR}" STREQUAL "apple")
 
 IF ( "${COMPILEFOR}" STREQUAL "windows" )

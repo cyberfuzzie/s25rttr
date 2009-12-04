@@ -1,5 +1,5 @@
 
-// $Id: GameClientPlayer.cpp 5739 2009-12-04 17:50:39Z OLiver $
+// $Id: GameClientPlayer.cpp 5741 2009-12-04 21:19:17Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1843,7 +1843,7 @@ void GameClientPlayer::HarborDestroyed(nobHarborBuilding * hb)
 bool GameClientPlayer::FindHarborForUnloading(noShip * ship, const MapCoord start_x, const MapCoord start_y, unsigned * goal_harbor_id,
 								std::vector<unsigned char> * route, nobHarborBuilding * exception)
 {
-	nobHarborBuilding * best;
+	nobHarborBuilding * best = NULL;
 	unsigned best_distance = 0xffffffff;
 
 	for(std::list<nobHarborBuilding*>::iterator it = harbors.begin();it!=harbors.end();++it)

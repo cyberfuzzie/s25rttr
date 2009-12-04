@@ -1,4 +1,5 @@
-// $Id: GameClientPlayer.cpp 5729 2009-12-01 16:43:58Z OLiver $
+
+// $Id: GameClientPlayer.cpp 5739 2009-12-04 17:50:39Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -39,6 +40,7 @@
 #include "nofCarrier.h"
 #include "noShip.h"
 #include "nobHarborBuilding.h"
+#include "MapGeometry.h"
 
 #include "GameInterface.h"
 
@@ -1824,4 +1826,65 @@ unsigned GameClientPlayer::GetShipsToHarbor(nobHarborBuilding * hb) const
 	}
 	
 	return count;
+}
+
+
+/// Gibt der Wirtschaft Bescheid, dass ein Hafen zerstört wurde
+void GameClientPlayer::HarborDestroyed(nobHarborBuilding * hb)
+{
+	// Schiffen Bescheid sagen
+	for(unsigned i = 0;i<ships.size();++i)
+		ships[i]->HarborDestroyed(hb);
+}
+
+
+/// Sucht einen Hafen in der Nähe, wo dieses Schiff seine Waren abladen kann
+/// gibt true zurück, falls erfolgreich
+bool GameClientPlayer::FindHarborForUnloading(noShip * ship, const MapCoord start_x, const MapCoord start_y, unsigned * goal_harbor_id,
+								std::vector<unsigned char> * route, nobHarborBuilding * exception)
+{
+	nobHarborBuilding * best;
+	unsigned best_distance = 0xffffffff;
+
+	for(std::list<nobHarborBuilding*>::iterator it = harbors.begin();it!=harbors.end();++it)
+	{
+		nobHarborBuilding * hb = *it;
+		// Bestimmten Hafen ausschließen
+		if(hb == exception)
+			continue;
+
+		// Prüfen, ob Hafen an das Meer, wo sich das Schiff gerade befindet, angrenzt
+		if(!gwg->IsAtThisSea(hb->GetHarborPosID(),ship->GetSeaID()))
+			continue;
+
+		// Distanz ermitteln zwischen Schiff und Hafen, Schiff kann natürlich auch über Kartenränder fahren
+		unsigned distance = CalcDistance(ship->GetX(), ship->GetY(), hb->GetX(), hb->GetY());
+		distance = min(distance,CalcDistance(ship->GetX() + gwg->GetWidth(), ship->GetY(), hb->GetX(), hb->GetY()));
+		distance = min(distance,CalcDistance(ship->GetX(), ship->GetY() + gwg->GetHeight(), hb->GetX(), hb->GetY()));
+		distance = min(distance,CalcDistance(ship->GetX() + gwg->GetWidth(), ship->GetY() + gwg->GetHeight(), hb->GetX(), hb->GetY()));
+
+		// Kürzerer Weg als bisher bestes Ziel?
+		if(distance < best_distance)
+		{
+			best_distance = distance;
+			best = hb;
+		}
+	}
+
+	// Hafen gefunden?
+	if(best)
+	{
+		// Weg dorthin suchen
+		MapCoord dx,dy;
+		gwg->GetCoastalPoint(best->GetHarborPosID(),&dx,&dy,ship->GetSeaID());
+		route->clear();
+		*goal_harbor_id = best->GetHarborPosID();
+		// Weg dorthin gefunden?
+		if(gwg->FindShipPath(start_x,start_y,dy,dy,route,NULL))
+			return true;
+		else
+			return false;
+	}
+	else
+		return false;
 }

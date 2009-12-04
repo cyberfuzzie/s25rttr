@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 5683 2009-11-22 21:05:49Z OLiver $
+// $Id: GameWorld.h 5739 2009-12-04 17:50:39Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -652,7 +652,6 @@ public:
 	/// Entfernt diese wieder
 	void RemoveHarborBuildingSiteFromSea(noBuildingSite * building_site)
 	{ this->harbor_building_sites_from_sea.remove(building_site); }
-
 };
 
 

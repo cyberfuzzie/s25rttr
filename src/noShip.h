@@ -100,6 +100,9 @@ private:
 	/// Startet die eigentliche Transportaktion, nachdem das Schiff beladen wurde
 	void StartTransport();
 
+	/// Fängt an mit idlen und setzt nötigen Sachen auf NULL
+	void StartIdling();
+
 public:
 
 	/// Konstruktor
@@ -147,6 +150,9 @@ public:
 
 	/// Belädt das Schiff mit Waren und Figuren, um eine Transportfahrt zu starten
 	void PrepareTransport(Point<MapCoord> goal, const std::list<noFigure*>& figures, const std::list<Ware*>& wares);
+
+	/// Sagt dem Schiff, das ein bestimmter Hafen zerstört wurde
+	void HarborDestroyed(nobHarborBuilding * hb);
 
 
 };

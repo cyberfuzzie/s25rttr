@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.h 5695 2009-11-25 18:58:51Z OLiver $
+// $Id: GameClientPlayer.h 5739 2009-12-04 17:50:39Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -367,6 +367,13 @@ public:
 	void GetHarborBuildings(std::vector<nobHarborBuilding*>& harbor_buildings, const unsigned short sea_id) const;
 	/// Gibt die Anzahl der Schiffe, die einen bestimmten Hafen ansteuern, zurück
 	unsigned GetShipsToHarbor(nobHarborBuilding * hb) const;
+	/// Gibt der Wirtschaft Bescheid, dass ein Hafen zerstört wurde
+	void HarborDestroyed(nobHarborBuilding * hb);
+	/// Sucht einen Hafen in der Nähe, wo dieses Schiff seine Waren abladen kann
+	/// gibt true zurück, falls erfolgreich
+	bool FindHarborForUnloading(noShip * ship, const MapCoord start_x, const MapCoord start_y, unsigned * goal_harbor_id, std::vector<unsigned char> * route,
+		nobHarborBuilding * exception);
+
 
 
 	/// Er gibt auf

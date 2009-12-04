@@ -1,4 +1,4 @@
-// $Id: noBuildingSite.cpp 5655 2009-11-01 21:05:27Z OLiver $
+// $Id: noBuildingSite.cpp 5739 2009-12-04 17:50:39Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -93,6 +93,12 @@ build_progress(0)
 	gwg->GetPlayer(player)->AddBuildingSite(this);
 	// Bauarbeiter auch auf der Karte auftragen
 	gwg->AddFigure(builder,x,y);
+
+	// Baumaterialien in der Inventur verbuchen
+	gwg->GetPlayer(player)->DecreaseInventoryWare(GD_BOARDS,boards);
+	gwg->GetPlayer(player)->DecreaseInventoryWare(GD_STONES,stones);
+
+	
 }
 
 noBuildingSite::~noBuildingSite()

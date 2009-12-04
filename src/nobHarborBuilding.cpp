@@ -32,6 +32,7 @@
 #include "EventManager.h"
 #include "noShip.h"
 #include "noFigure.h"
+#include "Random.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -79,6 +80,36 @@ void nobHarborBuilding::Destroy()
 	gwg->GetPlayer(player)->RemoveWarehouse(this);
 	gwg->GetPlayer(player)->RemoveHarbor(this);
 
+	// Baumaterialien in der Inventur verbuchen
+	if(expedition.active)
+	{
+		gwg->GetPlayer(player)->DecreaseInventoryWare(GD_BOARDS,expedition.boards);
+		gwg->GetPlayer(player)->DecreaseInventoryWare(GD_STONES,expedition.stones);
+
+		// Und Bauarbeiter (später) rausschicken
+		if(expedition.builder)
+			++real_goods.people[JOB_BUILDER];
+	}
+
+	// Waiting Wares löschen
+	for(std::list<Ware*>::iterator it = wares_for_ships.begin();it!=wares_for_ships.end();++it)
+	{
+		(*it)->WareLost(player);
+		delete (*it);
+	}
+	waiting_wares.clear();
+
+	// Leute, die noch aufs Schiff warten, rausschicken
+	for(std::list<FigureForShip>::iterator it = figures_for_ships.begin();it!=figures_for_ships.end();++it)
+	{
+		gwg->AddFigure(it->fig,x,y);
+
+		it->fig->Abrogate();
+		it->fig->StartWandering();
+		it->fig->StartWalking(RANDOM.Rand(__FILE__,__LINE__,obj_id,6));
+	}
+	figures_for_ships.clear();
+
 	Destroy_nobBaseWarehouse();
 
 	// Land drumherum neu berechnen (nur wenn es schon besetzt wurde!)
@@ -87,6 +118,8 @@ void nobHarborBuilding::Destroy()
 
 	// Wieder aus dem Militärquadrat rauswerfen
 	gwg->GetMilitarySquare(x,y).erase(this);
+
+
 }
 
 void nobHarborBuilding::Serialize(SerializedGameData * sgd) const

@@ -569,6 +569,8 @@ void nobHarborBuilding::AddFigureForShip(noFigure * fig, Point<MapCoord> dest)
 	FigureForShip ffs = { fig, dest };
 	figures_for_ships.push_back(ffs);
 	players->getElement(player)->OrderShip(this);
+	// Anzahl visuell erhöhen
+	++goods.people[fig->GetJobType()];
 }
 
 /// Fügt eine Ware hinzu, die mit dem Schiff verschickt werden soll
@@ -576,6 +578,8 @@ void nobHarborBuilding::AddWareForShip(Ware * ware)
 {
 	wares_for_ships.push_back(ware);
 	players->getElement(player)->OrderShip(this);
+	// Anzahl visuell erhöhen
+	++goods.goods[ConvertShields(ware->type)];
 }
 
 /// Gibt Anzahl der Schiffe zurück, die noch für ausstehende Aufgaben benötigt werden

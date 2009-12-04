@@ -273,14 +273,16 @@ void noShip::HandleState_GoToHarbor()
 		default: return;
 		case GOAL_REACHED:
 			{
-				// Erstmal nichts machen und idlen
-				StartIdling();
 
 				Point<MapCoord> goal(gwg->GetHarborPoint(goal_harbor_id));
+				// Erstmal nichts machen und idlen
+				StartIdling();
 				// Hafen Bescheid sagen, dass wir da sind (falls er überhaupt noch existiert)
 				noBase * nb = gwg->GetNO(goal.x,goal.y);
 				if(nb->GetGOT() == GOT_NOB_HARBORBUILDING)
 					static_cast<nobHarborBuilding*>(nb)->ShipArrived(this);
+
+				
 			} break;
 		case NO_ROUTE_FOUND:
 			{
@@ -601,6 +603,6 @@ void noShip::HarborDestroyed(nobHarborBuilding * hb)
 /// Fängt an mit idlen und setzt nötigen Sachen auf NULL
 void noShip::StartIdling()
 {
-	goal_harbor_id = 0;
+	//goal_harbor_id = 0;
 	state = STATE_IDLE;
 }

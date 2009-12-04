@@ -31,8 +31,8 @@ class nobHarborBuilding : public nobBaseWarehouse
 	struct ExpeditionInfo
 	{
 		ExpeditionInfo() : active(false), boards(0), stones(0), builder(false) {}
-		ExpeditionInfo(const bool active, const unsigned boards, const unsigned stones, const bool builder)
-			: active(active), boards(boards), stones(stones), builder(builder) {}
+		ExpeditionInfo(SerializedGameData *sgd);
+		void Serialize(SerializedGameData *sgd) const;
 
 		/// Expedition in Vorbereitung?
 		bool active;

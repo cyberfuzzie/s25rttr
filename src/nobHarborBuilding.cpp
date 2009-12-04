@@ -125,10 +125,7 @@ void nobHarborBuilding::Destroy()
 void nobHarborBuilding::Serialize(SerializedGameData * sgd) const
 {
 	Serialize_nobBaseWarehouse(sgd);
-	sgd->PushBool(expedition.active);
-	sgd->PushUnsignedInt(expedition.boards);
-	sgd->PushUnsignedInt(expedition.stones);
-	sgd->PushBool(expedition.builder);
+	expedition.Serialize(sgd);
 	sgd->PushObject(orderware_ev,true);
 	for(unsigned i = 0;i<6;++i)
 		sgd->PushUnsignedShort(sea_ids[i]);
@@ -145,10 +142,7 @@ void nobHarborBuilding::Serialize(SerializedGameData * sgd) const
 
 nobHarborBuilding::nobHarborBuilding(SerializedGameData * sgd, const unsigned obj_id) 
 : nobBaseWarehouse(sgd,obj_id),
-	expedition(sgd->PopBool(),
-	sgd->PopUnsignedInt(),
-	sgd->PopUnsignedInt(),
-	sgd->PopBool()),
+	expedition(sgd),
 	orderware_ev(sgd->PopObject<EventManager::Event>(GOT_EVENT))
 {
 	for(unsigned i = 0;i<6;++i)
@@ -395,7 +389,9 @@ void nobHarborBuilding::ShipArrived(noShip * ship)
 			{
 				figures.push_back(it->fig);
 				it->fig->StartShipJourney(dest);
+				--goods.people[it->fig->GetJobType()];
 				it = figures_for_ships.erase(it);
+				
 			}
 			else
 				++it;
@@ -410,7 +406,9 @@ void nobHarborBuilding::ShipArrived(noShip * ship)
 			{
 				wares.push_back(*it);
 				(*it)->StartShipJourney();
+				--goods.goods[(*it)->type];
 				it = wares_for_ships.erase(it);
+				
 			}
 			else
 				++it;
@@ -679,9 +677,10 @@ void nobHarborBuilding::ReceiveGoodsFromShip(const std::list<noFigure*> figures,
 	// Waren zur Warteliste hinzufügen
 	for(std::list<Ware*>::const_iterator it = wares.begin();it!=wares.end();++it)
 	{
+		Ware * w =*it;
 		
 		// Optische Warenwerte entsprechend erhöhen
-		++goods.goods[(*it)->type];
+		++goods.goods[ConvertShields((*it)->type)];
 		if((*it)->ShipJorneyEnded(this))
 		{
 			// Ware will die weitere Reise antreten, also muss sie zur Liste der rausgetragenen Waren
@@ -691,7 +690,8 @@ void nobHarborBuilding::ReceiveGoodsFromShip(const std::list<noFigure*> figures,
 		else
 		{
 			// Ansonsten fügen wir die Ware einfach zu unserem Inventar dazu
-			++real_goods.goods[(*it)->type];
+
+			++real_goods.goods[ConvertShields((*it)->type)];
 		}
 	}
 
@@ -736,4 +736,21 @@ void nobHarborBuilding::CancelFigure(noFigure * figure)
 	else
 		nobBaseWarehouse::CancelFigure(figure);
 	
+}
+
+
+nobHarborBuilding::ExpeditionInfo::ExpeditionInfo(SerializedGameData *sgd) :
+active(sgd->PopBool()),
+boards(sgd->PopUnsignedInt()),
+stones(sgd->PopUnsignedInt()),
+builder(sgd->PopBool())
+{
+}
+
+void nobHarborBuilding::ExpeditionInfo::Serialize(SerializedGameData *sgd) const
+{
+	sgd->PushBool(active);
+	sgd->PushUnsignedInt(boards);
+	sgd->PushUnsignedInt(stones);
+	sgd->PushBool(builder);
 }

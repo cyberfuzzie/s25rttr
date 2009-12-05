@@ -1,4 +1,4 @@
-// $Id: iwPostWindow.cpp 5664 2009-11-14 22:28:16Z jh $
+// $Id: iwPostWindow.cpp 5749 2009-12-05 20:08:21Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -305,6 +305,23 @@ void iwPostWindow::DisplayPostMessage()
 			
 			postImage->SetVisible(false);
 			gotoButton->SetVisible(false);
+			acceptButton->SetVisible(false);
+			declineButton->SetVisible(false);
+		} break;
+	case PMT_SHIP:
+		{
+			ShipPostMsg *ipm = dynamic_cast<ShipPostMsg*>(pm);
+			assert(ipm);
+
+			SetMessageText(pm->GetText());
+			GetCtrl<ctrlMultiline>(12)->Move(xTextTopCenter, yTextTopCenter);
+
+			postImage->SetImage(ipm->GetImage_());
+			postImage->Move(xImgBottomCenter + ipm->GetImage_()->getNx() - ipm->GetImage_()->getWidth()/2, 
+				yImgBottomCenter + ipm->GetImage_()->getNy() - ipm->GetImage_()->getHeight());
+			
+			postImage->SetVisible(true);
+			gotoButton->SetVisible(true);
 			acceptButton->SetVisible(false);
 			declineButton->SetVisible(false);
 		} break;

@@ -70,6 +70,13 @@ ImagePostMsgWithLocation::ImagePostMsgWithLocation(const std::string& text, Post
   type = PMT_IMAGE_WITH_LOCATION;
 }
 
+ImagePostMsgWithLocation::ImagePostMsgWithLocation(const std::string& text, PostMessageCategory cat, 
+                                                   MapCoord x, MapCoord y, Nation senderNation)
+: PostMsgWithLocation(text, cat, x, y), senderNation(senderNation) 
+{ 
+  type = PMT_IMAGE_WITH_LOCATION;
+}
+
 ImagePostMsgWithLocation::ImagePostMsgWithLocation(SerializedGameData *sgd)
 : PostMsgWithLocation(sgd), senderBuilding(BuildingType(sgd->PopUnsignedInt())), senderNation(Nation(sgd->PopUnsignedInt())) { }
 
@@ -165,4 +172,15 @@ DiplomacyPostInfo::DiplomacyPostInfo(SerializedGameData * sgd) : PostMsg(sgd)
 void DiplomacyPostInfo::Serialize(SerializedGameData *sgd)
 {
 	 PostMsg::Serialize(sgd);
+}
+
+
+ShipPostMsg::ShipPostMsg(const std::string& text, PostMessageCategory cat, Nation senderNation, MapCoord x, MapCoord y) 
+:	ImagePostMsgWithLocation(text, cat, x, y, senderNation) {
+	type = PMT_SHIP;
+}
+
+glArchivItem_Bitmap *ShipPostMsg::GetImage_() const
+{
+	return LOADER.GetImageN("boot_z", 12+((3+3)%6)*2);
 }

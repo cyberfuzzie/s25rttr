@@ -29,6 +29,8 @@
 #include "Random.h"
 #include "SerializedGameData.h"
 #include "noShip.h"
+#include "GameClient.h"
+#include "PostMsg.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -128,6 +130,9 @@ void noShipBuildingSite::MakeBuildStep()
 		gwg->SetNO(NULL,x,y);
 		// ein fertiges Schiff stattdessen hinsetzen
 		new noShip(x,y,player);
+
+		// Spieler über Fertigstellung benachrichtigen
+		GAMECLIENT.SendPostMessage(new ShipPostMsg(_("A new ship is ready"), PMC_GENERAL, GAMECLIENT.GetPlayer(player)->nation, x, y));
 	}
 		
 }

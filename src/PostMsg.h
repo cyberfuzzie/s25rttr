@@ -70,6 +70,7 @@ class ImagePostMsgWithLocation : public PostMsgWithLocation
 {
 public:
   ImagePostMsgWithLocation(const std::string& text, PostMessageCategory cat, MapCoord x, MapCoord y, BuildingType senderBuilding, Nation senderNation);
+	ImagePostMsgWithLocation(const std::string& text, PostMessageCategory cat, MapCoord x, MapCoord y, Nation senderNation);
   ImagePostMsgWithLocation(SerializedGameData * sgd);
 
   glArchivItem_Bitmap *GetImage_() const; 
@@ -133,6 +134,21 @@ public:
 
 	/// Typ der Diplomatienachricht
 	
+};
+
+class noShip;
+
+class ShipPostMsg : public ImagePostMsgWithLocation
+{
+public:
+	ShipPostMsg(const std::string& text, PostMessageCategory cat, Nation senderNation, MapCoord x, MapCoord y);
+	glArchivItem_Bitmap *GetImage_() const; 
+	MapCoord GetX() const;
+  MapCoord GetY() const;
+
+private:
+	noShip *ship;
+
 };
 
 #endif

@@ -1,4 +1,4 @@
-// $Id: GameConsts.h 5690 2009-11-23 21:07:09Z OLiver $
+// $Id: GameConsts.h 5749 2009-12-05 20:08:21Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -429,22 +429,23 @@ const std::string PACT_NAMES[32] =
 /// Post-Nachrichten-Kategorien
 enum PostMessageCategory
 {
-  PMC_MILITARY, // ImagePostMsgWithLocation
-  PMC_GEOLOGIST, // PostMsgWithLocation
-  PMC_GENERAL, // ImagePostMsgWithLocation
-  PMC_SAVEWARNING, // PostMsg
-  PMC_DIPLOMACY, // DiplomacyPostQuestion (man braucht vll noch verschiedene?)
-  PMC_OTHER  // PostMsg
+	PMC_MILITARY, // ImagePostMsgWithLocation
+	PMC_GEOLOGIST, // PostMsgWithLocation
+	PMC_GENERAL, // ImagePostMsgWithLocation
+	PMC_SAVEWARNING, // PostMsg
+	PMC_DIPLOMACY, // DiplomacyPostQuestion (man braucht vll noch verschiedene?)
+	PMC_OTHER  // PostMsg
 };
 
 /// Post-Nachrichten-Typen (entspricht den Klassen in PostMsg.h)
 enum PostMessageType
 {
-  PMT_NORMAL,               // PostMsg
-  PMT_WITH_LOCATION,        // PostMsgWithLocation
-  PMT_IMAGE_WITH_LOCATION,  // ImagePostMsgWithLocation
-  PMT_DIPLOMACYQUESTION,             // DiplomacyPostQuestion
-  PMT_DIPLOMACYINFO            // DiplomacyPostInfo
+	PMT_NORMAL,               // PostMsg
+	PMT_WITH_LOCATION,        // PostMsgWithLocation
+	PMT_IMAGE_WITH_LOCATION,  // ImagePostMsgWithLocation
+	PMT_DIPLOMACYQUESTION,             // DiplomacyPostQuestion
+	PMT_DIPLOMACYINFO,            // DiplomacyPostInfo
+	PMT_SHIP
 };
 
 /// Maximale Nachrichtenanzahl im Briefkasten

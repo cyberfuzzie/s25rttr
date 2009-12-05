@@ -165,17 +165,20 @@ nobHarborBuilding::nobHarborBuilding(SerializedGameData * sgd, const unsigned ob
 }
 
 // Relative Position des Bauarbeiters 
-const Point<int> BUILDER_POS[4] = { Point<int>(0,0), Point<int>(0,0), Point<int>(0,0), Point<int>(0,0) };
+const Point<int> BUILDER_POS[4] = { Point<int>(0,0), Point<int>(0,0), Point<int>(0,15), Point<int>(0,0) };
 /// Relative Position der Brettertürme
-const Point<int> BOARDS_POS[4] = { Point<int>(0,0), Point<int>(0,0), Point<int>(0,0), Point<int>(0,0) };
+const Point<int> BOARDS_POS[4] = { Point<int>(0,0), Point<int>(0,0), Point<int>(-50,-5), Point<int>(0,0) };
 /// Relative Position der Steintürme
-const Point<int> STONES_POS[4] = { Point<int>(0,0), Point<int>(0,0), Point<int>(0,0), Point<int>(0,0) };
-
+const Point<int> STONES_POS[4] = { Point<int>(0,0), Point<int>(0,0), Point<int>(-50,10), Point<int>(0,0) };
 
 void nobHarborBuilding::Draw(int x,int y)
 {
 	// Gebäude an sich zeichnen
-  	DrawBaseBuilding(x,y);
+	DrawBaseBuilding(x,y);
+
+	// Hafenfeuer zeichnen // TODO auch für nicht-römer machen
+	if (nation == NAT_ROMANS)
+		LOADER.GetNationImageN(nation, 500 + 5 * GameClient::inst().GetGlobalAnimation(8,10,2,obj_id+x+y))->Draw(x,y,0,0,0,0,0,0);
 
 	// Läuft gerade eine Expedition?
 	if(expedition.active)
@@ -187,7 +190,7 @@ void nobHarborBuilding::Draw(int x,int y)
 			LOADER.GetMapImageN(2200+GD_BOARDS)->Draw(x+BOARDS_POS[nation].x-5,y+BOARDS_POS[nation].y-i*4,0,0,0,0,0,0);
 		// Steine
 		for(unsigned char i = 0;i<expedition.stones;++i)
-			LOADER.GetMapImageN(2200+GD_STONES)->Draw(x+BOARDS_POS[nation].x+8,y+BOARDS_POS[nation].y-i*4,0,0,0,0,0,0);
+			LOADER.GetMapImageN(2200+GD_STONES)->Draw(x+STONES_POS[nation].x+8,y+STONES_POS[nation].y-i*4,0,0,0,0,0,0);
 
 		// Und den Bauarbeiter, falls er schon da ist
 		if(expedition.builder)

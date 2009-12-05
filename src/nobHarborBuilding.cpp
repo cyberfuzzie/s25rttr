@@ -677,8 +677,6 @@ void nobHarborBuilding::ReceiveGoodsFromShip(const std::list<noFigure*> figures,
 	// Waren zur Warteliste hinzufügen
 	for(std::list<Ware*>::const_iterator it = wares.begin();it!=wares.end();++it)
 	{
-		Ware * w =*it;
-		
 		// Optische Warenwerte entsprechend erhöhen
 		++goods.goods[ConvertShields((*it)->type)];
 		if((*it)->ShipJorneyEnded(this))

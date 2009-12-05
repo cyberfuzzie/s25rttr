@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: CMakeLists.txt 5627 2009-10-12 17:17:06Z FloSoft $
+### $Id: CMakeLists.txt 5745 2009-12-05 08:14:09Z FloSoft $
 #################################################################################
 
 IF ("${COMPILEFOR}" STREQUAL "windows" )
@@ -23,7 +23,7 @@ IF ("${COMPILEFOR}" STREQUAL "windows" )
 		
 		ADD_CUSTOM_COMMAND(TARGET videoWinAPI POST_BUILD COMMAND ln -fvs WinAPI/src/${CMAKE_SHARED_LIBRARY_PREFIX}videoWinAPI${CMAKE_SHARED_LIBRARY_SUFFIX} ../../videoWinAPI${CMAKE_SHARED_LIBRARY_SUFFIX})
 
-		INSTALL(TARGETS videoWinAPI DESTINATION ${LIBDIR}/driver/video)
+		INSTALL(TARGETS videoWinAPI RUNTIME DESTINATION ${LIBDIR}/driver/video)
 	#ENDIF (GDI32_LIBRARY AND OPENGL_LIBRARY AND USER32_LIBRARY)
 ENDIF ("${COMPILEFOR}" STREQUAL "windows" )
 

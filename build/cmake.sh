@@ -1,6 +1,6 @@
 #!/bin/bash
 ###############################################################################
-## $Id: cmake.sh 5627 2009-10-12 17:17:06Z FloSoft $
+## $Id: cmake.sh 5745 2009-12-05 08:14:09Z FloSoft $
 ###############################################################################
 
 # Editable Variables
@@ -171,7 +171,7 @@ fi
 PARAMS=""
 
 echo "Setting Path-Prefix to \"$PREFIX\""
-PARAMS="$PARAMS -DPREFIX=$PREFIX"
+PARAMS="$PARAMS -DPREFIX=$PREFIX -DCMAKE_INSTALL_PREFIX=$PREFIX"
 
 echo "Setting Architecture to \"$ARCH\""
 PARAMS="$PARAMS -DCOMPILEFOR_PLATFORM=$ARCH"

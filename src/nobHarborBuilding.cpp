@@ -224,6 +224,8 @@ void nobHarborBuilding::Draw(int x,int y)
 
 void nobHarborBuilding::HandleEvent(const unsigned int id)
 {
+	this->orderware_ev = NULL;
+
 	switch(id)
 	{
 	// Waren-Bestell-Event

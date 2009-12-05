@@ -491,7 +491,9 @@ bool noShip::IsAbleToFoundColony() const
 /// Gibt zurück, ob das Schiff einen bestimmten Hafen ansteuert
 bool noShip::IsGoingToHarbor(nobHarborBuilding * hb) const
 {
-	return (goal_harbor_id == hb->GetHarborPosID());
+	return (goal_harbor_id == hb->GetHarborPosID() && 
+		(state == STATE_GOTOHARBOR || state == STATE_TRANSPORT_DRIVING
+		|| state == STATE_TRANSPORT_LOADING || state == STATE_TRANSPORT_UNLOADING));
 }
 
 /// Belädt das Schiff mit Waren und Figuren, um eine Transportfahrt zu starten

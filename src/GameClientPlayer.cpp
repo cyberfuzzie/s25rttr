@@ -1,5 +1,5 @@
 
-// $Id: GameClientPlayer.cpp 5746 2009-12-05 12:29:23Z OLiver $
+// $Id: GameClientPlayer.cpp 5747 2009-12-05 15:16:01Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1659,6 +1659,15 @@ void GameClientPlayer::OrderShip(nobHarborBuilding * hb)
 			{
 				MapCoord dest_x,dest_y;
 				gwg->GetCoastalPoint(hb->GetHarborPosID(),&dest_x,&dest_y,ships[i]->GetSeaID());
+
+				// Steht das Schiff vielleicht schon genau an der gewünschten Stelle?
+				if(ships[i]->GetX() == dest_x && ships[i]->GetY() == dest_y)
+				{
+					// Dann nehmen wir das gleich
+					hb->ShipArrived(ships[i]);
+					return;
+				}
+
 				unsigned length;
 				std::vector<unsigned char> route;
 				if(gwg->FindShipPath(ships[i]->GetX(),ships[i]->GetY(),dest_x,dest_y,&route,&length))
@@ -1742,8 +1751,17 @@ void GameClientPlayer::GetJobForShip(noShip * ship)
 		{
 			MapCoord dest_x,dest_y;
 			gwg->GetCoastalPoint((*it)->GetHarborPosID(),&dest_x,&dest_y,ship->GetSeaID());
+
+			// Evtl. sind wir schon da?
+			if(ship->GetX() == dest_x && ship->GetY() == dest_y)
+			{
+				(*it)->ShipArrived(ship);
+				return;
+			}
+
 			unsigned length;
 			std::vector<unsigned char> route;
+
 			if(gwg->FindShipPath(ship->GetX(),ship->GetY(),dest_x,dest_y,&route,&length))
 			{
 				// Punkte ausrechnen

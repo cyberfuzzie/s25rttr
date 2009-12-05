@@ -1,4 +1,4 @@
-// $Id: SerializedGameData.cpp 5653 2009-11-01 16:31:07Z OLiver $
+// $Id: SerializedGameData.cpp 5747 2009-12-05 15:16:01Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -87,6 +87,7 @@
 #include "nobHarborBuilding.h"
 #include "noShip.h"
 #include "noShipBuildingSite.h"
+#include "BurnedWarehouse.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -144,6 +145,7 @@ GameObject * SerializedGameData::Create_GameObject(const GO_Type got, const unsi
 	case GOT_BUILDINGSITE: return new noBuildingSite(this,obj_id);
 	case GOT_ENVOBJECT: return new noEnvObject(this,obj_id);
 	case GOT_FIRE: return new noFire(this,obj_id);
+	case GOT_BURNEDWAREHOUSE: return new BurnedWarehouse(this,obj_id);
 	case GOT_FLAG: return new noFlag(this,obj_id);
 	case GOT_GRAINFIELD: return new noGrainfield(this,obj_id);
 	case GOT_GRANITE: return new noGranite(this,obj_id);

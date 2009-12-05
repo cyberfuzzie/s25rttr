@@ -99,7 +99,7 @@ void nobHarborBuilding::Destroy()
 		(*it)->WareLost(player);
 		delete (*it);
 	}
-	waiting_wares.clear();
+	wares_for_ships.clear();
 
 	// Leute, die noch aufs Schiff warten, rausschicken
 	for(std::list<FigureForShip>::iterator it = figures_for_ships.begin();it!=figures_for_ships.end();++it)
@@ -585,6 +585,7 @@ void nobHarborBuilding::AddWareForShip(Ware * ware)
 	players->getElement(player)->OrderShip(this);
 	// Anzahl visuell erhöhen
 	++goods.goods[ConvertShields(ware->type)];
+	ware->WaitForShip(this);
 }
 
 /// Gibt Anzahl der Schiffe zurück, die noch für ausstehende Aufgaben benötigt werden

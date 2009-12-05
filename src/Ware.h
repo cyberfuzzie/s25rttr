@@ -1,4 +1,4 @@
-// $Id: Ware.h 5746 2009-12-05 12:29:23Z OLiver $
+// $Id: Ware.h 5753 2009-12-05 23:09:36Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -111,6 +111,8 @@ public:
 	/// Gibt true zurück, wenn die Ware rausgetragen will oder false, wenn sie kein Ziel mehr hat und ins Hafengebäude
 	/// eingelagert werden will
 	bool ShipJorneyEnded(nobHarborBuilding * hb);
+	/// Beginnt damit auf ein Schiff im Hafen zu warten
+	void WaitForShip(nobHarborBuilding * hb);
 
 };
 

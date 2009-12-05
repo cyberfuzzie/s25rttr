@@ -1,4 +1,4 @@
-// $Id: Ware.cpp 5729 2009-12-01 16:43:58Z OLiver $
+// $Id: Ware.cpp 5753 2009-12-05 23:09:36Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -320,4 +320,11 @@ bool Ware::ShipJorneyEnded(nobHarborBuilding * hb)
 	location = hb;
 	return (goal != NULL);
 	
+}
+
+/// Beginnt damit auf ein Schiff im Hafen zu warten
+void Ware::WaitForShip(nobHarborBuilding * hb)
+{
+	state = STATE_WAITFORSHIP;
+	location = hb;
 }

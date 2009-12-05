@@ -1,4 +1,4 @@
-// $Id: Ware.h 5729 2009-12-01 16:43:58Z OLiver $
+// $Id: Ware.h 5746 2009-12-05 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -104,7 +104,7 @@ public:
 	/// Gibt Ort der Ware zurück
 	noRoadNode * GetLocation() { return location; }
 	/// Ist die Ware eine LostWare (Ware, die kein Ziel mehr hat und irgendwo sinnlos rumliegt)?
-	bool IsLostWare() const { return (goal?false:true); }
+	bool IsLostWare() const { return ((goal?false:true)&& state != STATE_ONSHIP); }
 	/// Informiert Ware, dass eine Schiffsreise beginnt
 	void StartShipJourney();
 	/// Informiert Ware, dass Schiffsreise beendet ist und die Ware nun in einem Hafengebäude liegt

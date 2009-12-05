@@ -1,5 +1,5 @@
 
-// $Id: GameClientPlayer.cpp 5741 2009-12-04 21:19:17Z OLiver $
+// $Id: GameClientPlayer.cpp 5746 2009-12-05 12:29:23Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1880,7 +1880,7 @@ bool GameClientPlayer::FindHarborForUnloading(noShip * ship, const MapCoord star
 		route->clear();
 		*goal_harbor_id = best->GetHarborPosID();
 		// Weg dorthin gefunden?
-		if(gwg->FindShipPath(start_x,start_y,dy,dy,route,NULL))
+		if(gwg->FindShipPath(start_x,start_y,dx,dy,route,NULL))
 			return true;
 		else
 			return false;

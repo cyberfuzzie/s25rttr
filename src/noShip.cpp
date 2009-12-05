@@ -463,7 +463,11 @@ void noShip::HandleState_TransportDriving()
 		} break;
 	case NO_ROUTE_FOUND:
 		{
-			Point<MapCoord> goal(gwg->GetHarborPoint(goal_harbor_id));
+			// Nichts machen und idlen
+			StartIdling();
+		} break;
+	case HARBOR_DOESNT_EXIST:
+		{
 			// Nichts machen und idlen
 			StartIdling();
 		} break;
@@ -572,6 +576,7 @@ void noShip::HarborDestroyed(nobHarborBuilding * hb)
 				{
 					// Route wird wieder von vorne abgearbeitet
 					pos = 0;
+
 				} break;
 			case STATE_TRANSPORT_UNLOADING: /// Entlädt Schiff am Zielhafen, kurze Zeit ankern, bevor Waren im Hafengebäude ankommen..
 				{
@@ -584,6 +589,10 @@ void noShip::HarborDestroyed(nobHarborBuilding * hb)
 				} break;
 
 			}
+
+			// Waren und Figure über verändertes Ziel informieren
+			for(std::list<noFigure*>::iterator it = figures.begin();it!=figures.end();++it)
+				(*it)->StartShipJourney(gwg->GetHarborPoint(goal_harbor_id));
 		}
 		else
 		{

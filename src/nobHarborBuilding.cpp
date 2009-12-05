@@ -76,6 +76,8 @@ nobHarborBuilding::nobHarborBuilding(const unsigned short x, const unsigned shor
 
 void nobHarborBuilding::Destroy()
 {
+	players->getElement(player)->HarborDestroyed(this);
+
 	// Der Wirtschaftsverwaltung Bescheid sagen
 	gwg->GetPlayer(player)->RemoveWarehouse(this);
 	gwg->GetPlayer(player)->RemoveHarbor(this);

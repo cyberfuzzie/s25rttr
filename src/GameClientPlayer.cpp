@@ -1,5 +1,5 @@
 
-// $Id: GameClientPlayer.cpp 5754 2009-12-06 04:20:05Z jh $
+// $Id: GameClientPlayer.cpp 5760 2009-12-06 15:01:17Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1947,7 +1947,8 @@ void GameClientPlayer::TestForEmergencyProgramm()
 		if (!emergency)
 		{
 			emergency = true;
-			GAMECLIENT.SendPostMessage(new PostMsg(_("The emergency program has been activated."), PMC_GENERAL));
+			if(GameClient::inst().GetPlayerID() == this->playerid)
+				GAMECLIENT.SendPostMessage(new PostMsg(_("The emergency program has been activated."), PMC_GENERAL));
 		}
 	}
 	else
@@ -1956,7 +1957,8 @@ void GameClientPlayer::TestForEmergencyProgramm()
 		if (emergency)
 		{
 			emergency = false;
-			GAMECLIENT.SendPostMessage(new PostMsg(_("The emergency program has been deactivated."), PMC_GENERAL));
+			if(GameClient::inst().GetPlayerID() == this->playerid)
+				GAMECLIENT.SendPostMessage(new PostMsg(_("The emergency program has been deactivated."), PMC_GENERAL));
 			FindMaterialForBuildingSites();
 		}
 	}

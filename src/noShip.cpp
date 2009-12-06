@@ -190,7 +190,8 @@ void noShip::HandleEvent(const unsigned int id)
 					state = STATE_EXPEDITION_WAITING;
 
 					// Spieler benachrichtigen
-					GAMECLIENT.SendPostMessage(new ShipPostMsg(_("A ship is ready for an expedition."), PMC_GENERAL, GAMECLIENT.GetPlayer(player)->nation, x, y));
+					if(GameClient::inst().GetPlayerID() == this->player)
+						GAMECLIENT.SendPostMessage(new ShipPostMsg(_("A ship is ready for an expedition."), PMC_GENERAL, GAMECLIENT.GetPlayer(player)->nation, x, y));
 				} break;
 			case STATE_TRANSPORT_LOADING:
 				{
@@ -444,7 +445,8 @@ void noShip::HandleState_ExpeditionDriving()
 			state = STATE_EXPEDITION_WAITING;
 
 			// Spieler benachrichtigen
-			GAMECLIENT.SendPostMessage(new ShipPostMsg(_("A ship has reached the destination of its expedition."), PMC_GENERAL, GAMECLIENT.GetPlayer(player)->nation, x, y));
+			if(GameClient::inst().GetPlayerID() == this->player)
+				GAMECLIENT.SendPostMessage(new ShipPostMsg(_("A ship has reached the destination of its expedition."), PMC_GENERAL, GAMECLIENT.GetPlayer(player)->nation, x, y));
 		} break;
 	case NO_ROUTE_FOUND:
 		{

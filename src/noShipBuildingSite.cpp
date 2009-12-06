@@ -132,7 +132,8 @@ void noShipBuildingSite::MakeBuildStep()
 		new noShip(x,y,player);
 
 		// Spieler über Fertigstellung benachrichtigen
-		GAMECLIENT.SendPostMessage(new ShipPostMsg(_("A new ship is ready"), PMC_GENERAL, GAMECLIENT.GetPlayer(player)->nation, x, y));
+		if(GameClient::inst().GetPlayerID() == this->player)
+			GAMECLIENT.SendPostMessage(new ShipPostMsg(_("A new ship is ready"), PMC_GENERAL, GAMECLIENT.GetPlayer(player)->nation, x, y));
 	}
 		
 }

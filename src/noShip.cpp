@@ -232,8 +232,8 @@ void noShip::StartDriving(const unsigned char dir)
 void noShip::Driven()
 {
 	gwg->RecalcVisibilitiesAroundPoint(gwg->GetXA(x,y,(dir+3)%6),gwg->GetYA(x,y,(dir+3)%6),
-		VISUALRANGE_SHIP,player,NULL);
-	gwg->RecalcVisibilitiesAroundPoint(x,y,VISUALRANGE_SHIP,player,NULL);
+		VISUALRANGE_SHIP+2,player,NULL);
+	gwg->RecalcVisibilitiesAroundPoint(x,y,VISUALRANGE_SHIP+2,player,NULL);
 
 
 	switch(state)

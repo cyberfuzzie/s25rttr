@@ -93,9 +93,9 @@ private:
 	Result DriveToHarbourPlace();
 
 	/// Zeichnet normales Fahren auf dem Meer ohne irgendwelche Güter
-	void DrawDriving(int x, int y);
+	void DrawDriving(int& x, int& y);
 	/// Zeichnet normales Fahren auf dem Meer mit Gütern
-	void DrawDrivingWithWares(int x, int y);
+	void DrawDrivingWithWares(int& x, int& y);
 
 	/// Startet die eigentliche Transportaktion, nachdem das Schiff beladen wurde
 	void StartTransport();

@@ -156,7 +156,7 @@ void noShip::Draw(int x, int y)
 
 }
 /// Zeichnet normales Fahren auf dem Meer ohne irgendwelche Güter
-void noShip::DrawDriving(int x, int y)
+void noShip::DrawDriving(int& x, int& y)
 {
 	// Interpolieren zwischen beiden Knotenpunkten
 	CalcWalkingRelative(x,y);
@@ -166,7 +166,7 @@ void noShip::DrawDriving(int x, int y)
 }
 
 /// Zeichnet normales Fahren auf dem Meer mit Gütern
-void noShip::DrawDrivingWithWares(int x, int y)
+void noShip::DrawDrivingWithWares(int& x, int& y)
 {
 	// Interpolieren zwischen beiden Knotenpunkten
 	CalcWalkingRelative(x,y);

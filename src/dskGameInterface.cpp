@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.cpp 5730 2009-12-01 16:54:17Z OLiver $
+// $Id: dskGameInterface.cpp 5763 2009-12-06 17:37:44Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -151,7 +151,7 @@ void dskGameInterface::Msg_ButtonClick(const unsigned int ctrl_id)
 		} break;
 	case 1: // Optionen
 		{
-			WindowManager::inst().Show(new iwMainMenu);
+			WindowManager::inst().Show(new iwMainMenu(gwv,this));
 		} break;
 	case 2: // Baukosten
 		{
@@ -588,7 +588,7 @@ bool dskGameInterface::Msg_KeyDown(const KeyEvent& ke)
 		} return true;
 	case 'm': // Hauptauswahl
 		{
-			WindowManager::inst().Show(new iwMainMenu);
+			WindowManager::inst().Show(new iwMainMenu(gwv,this));
 		} return true;
 	case 'q': // Spiel verlassen
 		{

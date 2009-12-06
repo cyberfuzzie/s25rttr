@@ -66,7 +66,7 @@ gwv(gwv), gi(gi), ship_id(GameClient::inst().GetPlayer(ship->GetPlayer())->GetSh
 	AddImageButton( 4, 81,196, 30, 26,TC_GREY,LOADER.GetImageN("io", 103));		// Viewer: 104 - Zurück
 	AddImageButton( 5,111,196, 30, 26,TC_GREY,LOADER.GetImageN("io", 104));		// Viewer: 105 - Vor
 	AddImageButton( 6,141,196, 30, 26,TC_GREY,LOADER.GetImageN("io", 105));		// Viewer: 106 - Schnell vor
-	AddImageButton( 7, 181, 196, 30, 32, TC_GREY, LOADER.GetImageN("io", 107), _("Go to place")); // "Gehe Zu Ort"
+	AddImageButton( 7, 181, 196, 30, 26, TC_GREY, LOADER.GetImageN("io", 107), _("Go to place")); // "Gehe Zu Ort"
 
 	// Die Expeditionsweiterfahrbuttons
 	AddImageButton(10,60,81,18,18,TC_GREY,LOADER.GetImageN("io",187),_("Found colony"))->SetVisible(false);

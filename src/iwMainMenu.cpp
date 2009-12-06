@@ -1,4 +1,4 @@
-// $Id: iwMainMenu.cpp 5332 2009-07-26 13:06:22Z jh $
+// $Id: iwMainMenu.cpp 5763 2009-12-06 17:37:44Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -36,6 +36,10 @@
 #include "iwBuildingProductivities.h"
 #include "iwStatistics.h"
 #include "iwDiplomacy.h"
+#include "iwShip.h"
+
+#include "GameClient.h"
+#include "GameClientPlayer.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -51,8 +55,9 @@
  *
  *  @author OLiver
 */
-iwMainMenu::iwMainMenu(void)
-	: IngameWindow(CGI_MAINSELECTION, 0xFFFF, 0xFFFF, 190, 286, _("Main selection"), LOADER.GetImageN("io", 5))
+iwMainMenu::iwMainMenu(GameWorldViewer * const gwv, dskGameInterface * const gi)
+	: IngameWindow(CGI_MAINSELECTION, 0xFFFF, 0xFFFF, 190, 286, _("Main selection"), LOADER.GetImageN("io", 5)),
+	gwv(gwv), gi(gi)
 {
 	// Verteilung
 	AddImageButton( 0,  12,  22,  53, 44, TC_GREY, LOADER.GetImageN("io", 134), _("Distribution of goods"));
@@ -126,6 +131,10 @@ void iwMainMenu::Msg_ButtonClick(const unsigned int ctrl_id)
 	case 8: // Militär
 		{
 			WindowManager::inst().Show(new iwMilitary);
+		} break;
+	case 9: // Schiffe
+		{
+			WindowManager::inst().Show(new iwShip(gwv,gi,GameClient::inst().GetLocalPlayer()->GetShipByID(0)));
 		} break;
 	case 10: // Baureihenfolge
 		{

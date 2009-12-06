@@ -582,9 +582,9 @@ void nobHarborBuilding::AddFigureForShip(noFigure * fig, Point<MapCoord> dest)
 void nobHarborBuilding::AddWareForShip(Ware * ware)
 {
 	wares_for_ships.push_back(ware);
-	players->getElement(player)->OrderShip(this);
 	// Anzahl visuell erhöhen
 	++goods.goods[ConvertShields(ware->type)];
+	players->getElement(player)->OrderShip(this);
 	ware->WaitForShip(this);
 }
 
@@ -698,6 +698,8 @@ void nobHarborBuilding::ReceiveGoodsFromShip(const std::list<noFigure*> figures,
 			// Ansonsten fügen wir die Ware einfach zu unserem Inventar dazu
 
 			++real_goods.goods[ConvertShields((*it)->type)];
+			players->getElement(player)->RemoveWare(*it);
+			delete *it;
 		}
 	}
 

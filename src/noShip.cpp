@@ -39,14 +39,14 @@ const unsigned int ship_count = 5;
 const std::string ship_names[ship_count] = {"FloSoftius", "Demophobius", "Olivianus", "Spikeonius", "Nastius"};
 
 /// Positionen der Flaggen am Schiff für die 6 unterschiedlichen Richtungen jeweils#
-const Point<MapCoord> SHIPS_FLAG_POS[6] =
+const Point<int> SHIPS_FLAG_POS[6] =
 {
-	Point<MapCoord>(0,0),
-	Point<MapCoord>(0,0),
-	Point<MapCoord>(0,0),
-	Point<MapCoord>(0,0),
-	Point<MapCoord>(0,0),
-	Point<MapCoord>(0,0)
+	Point<int>(0,0),
+	Point<int>(0,0),
+	Point<int>(0,0),
+	Point<int>(0,0),
+	Point<int>(0,0),
+	Point<int>(0,0)
 };
 
 /// Konstruktor

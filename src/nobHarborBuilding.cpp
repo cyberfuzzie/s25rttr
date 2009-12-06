@@ -76,6 +76,7 @@ nobHarborBuilding::nobHarborBuilding(const unsigned short x, const unsigned shor
 
 void nobHarborBuilding::Destroy()
 {
+	em->RemoveEvent(orderware_ev);
 	players->getElement(player)->HarborDestroyed(this);
 
 	// Der Wirtschaftsverwaltung Bescheid sagen
@@ -147,6 +148,9 @@ nobHarborBuilding::nobHarborBuilding(SerializedGameData * sgd, const unsigned ob
 	expedition(sgd),
 	orderware_ev(sgd->PopObject<EventManager::Event>(GOT_EVENT))
 {
+	// ins Militärquadrat einfügen
+	gwg->GetMilitarySquare(x,y).push_back(this);
+
 	for(unsigned i = 0;i<6;++i)
 		sea_ids[i] = sgd->PopUnsignedShort();
 
@@ -227,13 +231,12 @@ void nobHarborBuilding::Draw(int x,int y)
 
 void nobHarborBuilding::HandleEvent(const unsigned int id)
 {
-	this->orderware_ev = NULL;
-
 	switch(id)
 	{
 	// Waren-Bestell-Event
 	case 10:
 		{
+			this->orderware_ev = NULL;
 			// Mal wieder schauen, ob es Waren für unsere Expedition gibt
 			OrderExpeditionWares();
 		} break;
@@ -356,6 +359,7 @@ void nobHarborBuilding::WareLost(Ware * ware)
 	// ggf. neue Waren für Expedition bestellen
 	if(expedition.active && (ware->type == GD_BOARDS || ware->type == GD_STONES))
 		OrderExpeditionWares();
+	RemoveDependentWare(ware);
 }
 
 
@@ -529,6 +533,7 @@ unsigned nobHarborBuilding::GetHarborPosID() const
 /// wenn wir einen benötigen, müssen wir einen neuen bestellen
 void nobHarborBuilding::RemoveDependentFigure(noFigure * figure)
 {
+	nobBaseWarehouse::RemoveDependentFigure(figure);
 	// Ist das ein Bauarbeiter und brauchen wir noch einen
 	if(figure->GetJobType() == JOB_BUILDER && expedition.active && !expedition.builder)
 	{
@@ -545,7 +550,7 @@ void nobHarborBuilding::RemoveDependentFigure(noFigure * figure)
 		players->getElement(player)->AddJobWanted(JOB_BUILDER,this);
 	}
 
-	nobBaseWarehouse::RemoveDependentFigure(figure);
+	
 }
 
 /// Gibt eine Liste mit möglichen Verbindungen zurück
@@ -671,6 +676,7 @@ void nobHarborBuilding::ReceiveGoodsFromShip(const std::list<noFigure*> figures,
 		// werden
 		if((*it)->HasNoGoal())
 		{
+			RemoveDependentFigure(*it);
 			++real_goods.people[(*it)->GetJobType()];
 			em->AddToKillList(*it);
 		}
@@ -689,6 +695,7 @@ void nobHarborBuilding::ReceiveGoodsFromShip(const std::list<noFigure*> figures,
 		++goods.goods[ConvertShields((*it)->type)];
 		if((*it)->ShipJorneyEnded(this))
 		{
+			
 			// Ware will die weitere Reise antreten, also muss sie zur Liste der rausgetragenen Waren
 			// hinzugefügt werden
 			waiting_wares.push_back(*it);
@@ -696,7 +703,7 @@ void nobHarborBuilding::ReceiveGoodsFromShip(const std::list<noFigure*> figures,
 		else
 		{
 			// Ansonsten fügen wir die Ware einfach zu unserem Inventar dazu
-
+			RemoveDependentWare(*it);
 			++real_goods.goods[ConvertShields((*it)->type)];
 			players->getElement(player)->RemoveWare(*it);
 			delete *it;

@@ -35,8 +35,8 @@
 #include "PostMsg.h"
 
 const unsigned SHIP_SPEED = 20;
-const unsigned int ship_count = 4;
-const std::string ship_names[ship_count] = {"FloSoftius", "Demophobius", "Olivianus", "Spikeonius"};
+const unsigned int ship_count = 5;
+const std::string ship_names[ship_count] = {"FloSoftius", "Demophobius", "Olivianus", "Spikeonius", "Nastius"};
 
 /// Konstruktor
 noShip::noShip(const unsigned short x, const unsigned short y, const unsigned char player) 

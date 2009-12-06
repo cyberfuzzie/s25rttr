@@ -245,7 +245,7 @@ void iwShip::DrawCargo()
 				y += yStep;
 			}
 			orderedFigures[i]--;
-			LOADER.GetBobN("jobs")->Draw(JOB_CONSTS[i].jobs_bob_id, 5, JOB_CONSTS[i].fat, 0, x, y, COLORS[0]);
+			LOADER.GetBobN("jobs")->Draw(JOB_CONSTS[i].jobs_bob_id, 5, JOB_CONSTS[i].fat, 0, x, y, COLORS[gwv->GetPlayer(ship->GetPlayer())->color]);
 			x += xStep;
 			lineCounter++;
 		}

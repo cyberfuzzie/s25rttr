@@ -21,9 +21,7 @@
 // Header
 #include "main.h"
 #include "iwShip.h"
-
 #include "dskGameInterface.h"
-
 #include "Loader.h"
 #include "VideoDriverWrapper.h"
 #include "GameClient.h"
@@ -31,8 +29,10 @@
 #include "WindowManager.h"
 #include "GameCommands.h"
 #include "noShip.h"
-
 #include "iwMsgbox.h"
+#include "noFigure.h"
+#include "Ware.h"
+#include "JobConsts.h"
 
 
 
@@ -130,6 +130,8 @@ void iwShip::Msg_PaintAfter()
 		for(unsigned i = 0;i<7;++i)
 			GetCtrl<Window>(10+i)->SetVisible(false);
 	}
+
+	DrawCargo();
 }
 
 
@@ -183,4 +185,90 @@ void iwShip::Msg_ButtonClick(const unsigned int ctrl_id)
 		//		_(BUILDING_HELP_STRINGS[ship->GetShipType()])));
 		} break;*/
 	}
+}
+
+void iwShip::DrawCargo()
+{
+	noShip * ship = GameClient::inst().GetPlayer(player)->GetShipByID(ship_id);
+	
+	std::vector<unsigned short> orderedWares = std::vector<unsigned short>(WARE_TYPES_COUNT);
+	std::vector<unsigned short> orderedFigures = std::vector<unsigned short>(JOB_TYPES_COUNT);
+
+	// Alle Figuren in Gruppen zählen
+	const std::list<noFigure *> figures = ship->GetFigures();
+	for(std::list<noFigure*>::const_iterator it = figures.begin(); it != figures.end(); ++it)
+	{
+		orderedFigures[(*it)->GetJobType()]++;
+	}
+
+	// Alle Waren in Gruppen zählen
+	const std::list<Ware *> wares = ship->GetWares();
+	for(std::list<Ware*>::const_iterator it = wares.begin(); it != wares.end(); ++it)
+	{
+		orderedWares[(*it)->type]++;
+	}
+
+	// Spezialfall Expedition:
+	if (ship->IsOnExpedition())
+	{
+		orderedFigures[JOB_BUILDER] = 1;
+		orderedWares[GD_BOARDS] = 4;
+		orderedWares[GD_STONES] = 6;
+	}
+
+	// Start Offset zum malen
+	const int xStart = 40 + this->x;
+	const int yStart = 130 + this->y;
+
+	// Step pro Ware/Figur
+	const int xStep = 10;
+
+	// Step pro Zeile
+	const int yStep = 15;
+
+	// Elemente pro Zeile
+	const unsigned elementsPerLine = 17;
+
+	int x = xStart;
+	int y = yStart;
+
+	unsigned lineCounter = 0;
+
+	// Leute zeichnen
+	for (unsigned i=0; i<orderedFigures.size(); ++i)
+	{
+		while (orderedFigures[i] > 0)
+		{
+			if (lineCounter > elementsPerLine)
+			{
+				x = xStart;
+				y += yStep;
+			}
+			orderedFigures[i]--;
+			LOADER.GetBobN("jobs")->Draw(JOB_CONSTS[i].jobs_bob_id, 5, JOB_CONSTS[i].fat, 0, x, y, COLORS[0]);
+			x += xStep;
+			lineCounter++;
+		}
+	}
+
+	// Waren zeichnen
+	for (unsigned i=0; i<orderedWares.size(); ++i)
+	{
+		while (orderedWares[i] > 0)
+		{
+			if (lineCounter > elementsPerLine)
+			{
+				x = xStart;
+				y += yStep;
+			}
+			orderedWares[i]--;
+			LOADER.GetMapImageN(2200+i)->Draw(x,y,0,0,0,0,0,0);
+			x += xStep;
+			lineCounter++;
+		}
+	}
+
+
+
+
 }

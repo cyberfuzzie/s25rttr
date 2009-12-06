@@ -43,6 +43,8 @@ private:
 	void Msg_PaintBefore();
 	void Msg_PaintAfter();
 	void Msg_ButtonClick(const unsigned int ctrl_id);
+
+	void DrawCargo();
 };
 
 #endif // !iwSHIP_H_INCLUDED

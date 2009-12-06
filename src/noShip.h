@@ -132,6 +132,11 @@ public:
 	/// Führt das Schiff gerade eine Expedition durch und wartet auf weitere Befehle?
 	bool IsWaitingForExpeditionInstructions() const 
 	{ return (state == STATE_EXPEDITION_WAITING); }
+	/// Ist das Schiff gerade irgendwie am Expeditionieren und hat entsprechenden Kram an Bord?
+	bool IsOnExpedition() const
+	{ return (state == STATE_EXPEDITION_LOADING || state == STATE_EXPEDITION_WAITING 
+	|| state ==	STATE_EXPEDITION_DRIVING); }
+
 	/// Beim Warten bei der Expedition: Gibt die Hafenpunkt-ID zurück, wo es sich gerade befindet
 	unsigned GetCurrentHarbor() const;
 
@@ -153,6 +158,12 @@ public:
 
 	/// Sagt dem Schiff, das ein bestimmter Hafen zerstört wurde
 	void HarborDestroyed(nobHarborBuilding * hb);
+
+	/// Gibt Liste der Waren an Bord zurück
+	const std::list<Ware *> &GetWares() const { return wares; }
+
+	/// Gibt Liste der Menschen an Bord zurück
+	const std::list<noFigure *> &GetFigures() const { return figures; }
 
 
 };

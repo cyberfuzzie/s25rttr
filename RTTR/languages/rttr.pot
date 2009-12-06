@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Siedler II.5 RttR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-11-25 20:33+0100\n"
-"PO-Revision-Date: 2009-11-25 20:33+0100\n"
+"POT-Creation-Date: 2009-12-06 19:23+0100\n"
+"PO-Revision-Date: 2009-12-06 19:24+0100\n"
 "Last-Translator: \n"
 "Language-Team: Siedler II.5 RttR <sf-team@siedler25.org>\n"
 "MIME-Version: 1.0\n"
@@ -279,19 +279,19 @@ msgstr ""
 msgid "Productivity"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:560
+#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:563
 msgid "Military building occupied"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:774
+#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:777
 msgid "Military building lost"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:777
+#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:780
 msgid "Military building captured"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:1004
+#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:1007
 msgid "A catapult is firing upon us!"
 msgstr ""
 
@@ -598,7 +598,7 @@ msgstr ""
 msgid "And I may crash your game sometimes..."
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/AIPlayerJH.cpp:294
+#: /storage/RTTR/svn/trunk/src/AIPlayerJH.cpp:306
 msgid "Oh, no, you destroyed my headquarter! I surrender!"
 msgstr ""
 
@@ -621,6 +621,14 @@ msgstr ""
 #: /storage/RTTR/svn/trunk/src/iwHQ.cpp:68
 #, c-format
 msgid "%u/%u"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/GameClientPlayer.cpp:1951
+msgid "The emergency program has been activated."
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/GameClientPlayer.cpp:1961
+msgid "The emergency program has been deactivated."
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwEndgame.cpp:48
@@ -880,39 +888,39 @@ msgstr ""
 msgid "Outline map"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:97
+#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:104
 msgid "treaty of alliance"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:98
+#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:105
 msgid "non-aggression pact"
-msgstr ""
-
-#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:108
-#, c-format
-msgid "The player '%s' offers you a %s."
-msgstr ""
-
-#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:113
-msgid "Duration: Forever"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:115
 #, c-format
+msgid "The player '%s' offers you a %s."
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:120
+msgid "Duration: Forever"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:122
+#, c-format
 msgid "Duration: %u GF (%s)"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:127
+#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:134
 #, c-format
 msgid "The player '%s' want to cancel the '%s' between you both primaturely. Do you agree?"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:150
+#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:157
 #, c-format
 msgid "The %s between player '%s' and you has been concluded."
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:153
+#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:160
 #, c-format
 msgid "The %s between player '%s' and you has been cancelled."
 msgstr ""
@@ -971,11 +979,11 @@ msgstr ""
 msgid "Ship register"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwShip.cpp:71
+#: /storage/RTTR/svn/trunk/src/iwShip.cpp:72
 msgid "Found colony"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwShip.cpp:102
+#: /storage/RTTR/svn/trunk/src/iwShip.cpp:103
 msgid "No ships available"
 msgstr ""
 
@@ -1033,6 +1041,10 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:167
 msgid "And let's go!"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/noShipBuildingSite.cpp:136
+msgid "A new ship is ready"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:59
@@ -1105,6 +1117,14 @@ msgstr ""
 msgid "Please wait..."
 msgstr ""
 
+#: /storage/RTTR/svn/trunk/src/noShip.cpp:208
+msgid "A ship is ready for an expedition."
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/noShip.cpp:463
+msgid "A ship has reached the destination of its expedition."
+msgstr ""
+
 #: /storage/RTTR/svn/trunk/src/iwRoadWindow.cpp:47
 msgid "Activity window"
 msgstr ""
@@ -1127,7 +1147,7 @@ msgstr ""
 msgid "Notice: The played replay has ended. (GF: %u, %dh %dmin %ds, TF: %u, AVG_FPS: %u)"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/nofBuildingWorker.cpp:375
+#: /storage/RTTR/svn/trunk/src/nofBuildingWorker.cpp:376
 msgid "This mine is exhausted"
 msgstr ""
 
@@ -1158,11 +1178,11 @@ msgstr ""
 msgid "The Game is not in sync. Checksums of some players don't match."
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:1225
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:1219
 msgid "Auto-Save"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:1517
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:1528
 #, c-format
 msgid "current GF: %u - still fast forwarding: %d GFs left (%d %%)"
 msgstr ""
@@ -1334,43 +1354,43 @@ msgstr ""
 msgid "Waiting for Playerinfo..."
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/SerializedGameData.cpp:237
+#: /storage/RTTR/svn/trunk/src/SerializedGameData.cpp:239
 msgid "An error occured while saving which was suppressed!"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:55
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:59
 msgid "Main selection"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:58
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:63
 msgid "Distribution of goods"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:60
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:65
 msgid "Transport"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:65
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:70
 msgid "General statistics"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:66
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:71
 msgid "Merchandise statistics"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:70
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:75
 msgid "Stock"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:75
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:80
 msgid "Military"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:80
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:85
 msgid "Building sequence"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:82
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:87
 msgid "Diplomacy"
 msgstr ""
 
@@ -1382,11 +1402,11 @@ msgstr ""
 msgid "Won"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/nofFarmhand.cpp:168
+#: /storage/RTTR/svn/trunk/src/nofFarmhand.cpp:169
 msgid "No more stones in range"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/nofFarmhand.cpp:175
+#: /storage/RTTR/svn/trunk/src/nofFarmhand.cpp:176
 msgid "No more fishes in range"
 msgstr ""
 
@@ -1420,51 +1440,51 @@ msgstr ""
 msgid "Current GF: %u / GF length: %u ms / NWF length: %u gf (%u ms) /  Ping: %u ms"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:815
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:819
 #, c-format
 msgid "Player '%s' left the game!"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:818
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:822
 #, c-format
 msgid "Player '%s' joined the game!"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:826
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:830
 #, c-format
 msgid "Note: Game settings changed by the server%s"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:833
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:859
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:882
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:837
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:863
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:886
 #, c-format
 msgid "<%s> "
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:842
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:846
 msgid "A auto-savegame is created..."
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:859
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:882
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:863
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:886
 msgid "SYSTEM"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:860
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:864
 msgid "Game was paused."
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:883
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:887
 msgid "Game was resumed."
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:929
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:933
 #, c-format
 msgid "Player '%s' switched to player '%s'"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:947
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:951
 #, c-format
 msgid "Player '%s' was defeated!"
 msgstr ""
@@ -1883,7 +1903,7 @@ msgstr ""
 msgid "Expedition"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwHarborBuilding.cpp:55
+#: /storage/RTTR/svn/trunk/src/iwHarborBuilding.cpp:56
 msgid "Start expedition"
 msgstr ""
 

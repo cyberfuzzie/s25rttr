@@ -1,4 +1,4 @@
-// $Id: GameClientGF_Game.cpp 4940 2009-05-24 16:38:33Z FloSoft $
+// $Id: GameClientGF_Game.cpp 5754 2009-12-06 04:20:05Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -53,6 +53,9 @@ void GameClient::ExecuteGameFrame_Game()
 
 			// Nachricht abwerfen :)
 			players[i].gc_queue.pop_front();
+
+			// Auf Notfall testen (Wenige Bretter/Steine und keine Holzindustrie)
+			players[i].TestForEmergencyProgramm();
 		}
 	}
 

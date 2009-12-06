@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.h 5739 2009-12-04 17:50:39Z OLiver $
+// $Id: GameClientPlayer.h 5754 2009-12-06 04:20:05Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -420,6 +420,9 @@ public:
 
   const Statistic& GetStatistic(StatisticTime time) { return statistic[time]; };
 
+	// Testet ob Notfallprogramm aktiviert werden muss und tut dies dann
+	void TestForEmergencyProgramm();
+
 private:
   // Statistikdaten
   Statistic statistic[STAT_TIME_COUNT];
@@ -429,6 +432,9 @@ private:
 
   unsigned short incrStatIndex(unsigned short i) { return (i==STAT_STEP_COUNT-1) ? 0 : ++i; }
   unsigned short decrStatIndex(unsigned short i) { return (i==0) ? STAT_STEP_COUNT-1 : --i; }
+
+	// Notfall-Programm aktiviert ja/nein (Es gehen nur noch Res an Holzfäller- und Sägewerk-Baustellen raus)
+	bool emergency;
 
 };
 

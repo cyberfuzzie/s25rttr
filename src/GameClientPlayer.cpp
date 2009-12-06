@@ -1,5 +1,5 @@
 
-// $Id: GameClientPlayer.cpp 5747 2009-12-05 15:16:01Z OLiver $
+// $Id: GameClientPlayer.cpp 5754 2009-12-06 04:20:05Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -178,6 +178,9 @@ GameClientPlayer::GameClientPlayer(const unsigned playerid) : GamePlayerInfo(pla
 	memset(&statistic[STAT_4H], 0, sizeof(statistic[STAT_4H]));
 	memset(&statistic[STAT_16H], 0, sizeof(statistic[STAT_16H]));
 	memset(&statisticCurrentData, 0, sizeof(statisticCurrentData));
+
+	// Initial kein Notfallprogramm
+	emergency = false;
 }
 
 void GameClientPlayer::Serialize(SerializedGameData * sgd)
@@ -272,6 +275,8 @@ void GameClientPlayer::Serialize(SerializedGameData * sgd)
 			pacts[i][u].Serialize(sgd);
 		}
 	}
+
+	sgd->PushBool(emergency);
 }
 
 void GameClientPlayer::Deserialize(SerializedGameData * sgd)
@@ -382,6 +387,8 @@ void GameClientPlayer::Deserialize(SerializedGameData * sgd)
 			pacts[i][u] = GameClientPlayer::Pact(sgd);
 		}
 	}
+
+	emergency = sgd->PopBool();
 }
 
 void GameClientPlayer::SwapPlayer(GameClientPlayer& two)
@@ -690,7 +697,19 @@ Ware * GameClientPlayer::OrderWare(const GoodType ware,noBaseBuilding * goal)
 	nobBaseWarehouse * wh = FindWarehouse(goal,FW::Condition_Ware,0,true,&p,true);
 
 	if(wh)
-		return wh->OrderWare(ware,goal);
+	{
+		// Prüfe ob Notfallprogramm aktiv
+		if (!emergency)
+			return wh->OrderWare(ware,goal);
+		else
+		{
+			// Wenn Notfallprogramm aktiv nur an Holzfäller und Sägewerke Bretter/Steine liefern
+			if ((ware != GD_BOARDS && ware != GD_STONES) || goal->GetBuildingType() == BLD_WOODCUTTER || goal->GetBuildingType() == BLD_SAWMILL)
+				return wh->OrderWare(ware,goal);
+			else
+				return 0;
+		}
+	}
 	else
 		return 0;
 }
@@ -1906,3 +1925,40 @@ bool GameClientPlayer::FindHarborForUnloading(noShip * ship, const MapCoord star
 	else
 		return false;
 }
+
+void GameClientPlayer::TestForEmergencyProgramm()
+{
+	// In Lagern vorhandene Bretter und Steine zählen
+	unsigned boards = 0;
+	unsigned stones = 0;
+	for(std::list<nobBaseWarehouse*>::iterator w = warehouses.begin(); w!=warehouses.end(); ++w)
+	{
+		boards += (*w)->GetInventory()->goods[GD_BOARDS];
+		stones += (*w)->GetInventory()->goods[GD_STONES];
+	}
+
+	// Holzfäller und Sägewerke zählen, -10 ftw
+	unsigned woodcutter = buildings[BLD_WOODCUTTER-10].size();
+	unsigned sawmills = buildings[BLD_SAWMILL-10].size();
+	
+	// Wenn nötig, Notfallprogramm auslösen
+	if ((boards <= 10 || stones <= 10) && (woodcutter == 0 || sawmills == 0))
+	{
+		if (!emergency)
+		{
+			emergency = true;
+			GAMECLIENT.SendPostMessage(new PostMsg(_("The emergency program has been activated."), PMC_GENERAL));
+		}
+	}
+	else
+	{
+		// Sobald Notfall vorbei, Notfallprogramm beenden, evtl. Baustellen wieder mit Kram versorgen
+		if (emergency)
+		{
+			emergency = false;
+			GAMECLIENT.SendPostMessage(new PostMsg(_("The emergency program has been deactivated."), PMC_GENERAL));
+			FindMaterialForBuildingSites();
+		}
+	}
+}
+

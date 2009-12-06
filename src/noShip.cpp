@@ -38,6 +38,17 @@ const unsigned SHIP_SPEED = 20;
 const unsigned int ship_count = 5;
 const std::string ship_names[ship_count] = {"FloSoftius", "Demophobius", "Olivianus", "Spikeonius", "Nastius"};
 
+/// Positionen der Flaggen am Schiff für die 6 unterschiedlichen Richtungen jeweils#
+const Point<MapCoord> SHIPS_FLAG_POS[6] =
+{
+	Point<MapCoord>(0,0),
+	Point<MapCoord>(0,0),
+	Point<MapCoord>(0,0),
+	Point<MapCoord>(0,0),
+	Point<MapCoord>(0,0),
+	Point<MapCoord>(0,0)
+};
+
 /// Konstruktor
 noShip::noShip(const unsigned short x, const unsigned short y, const unsigned char player) 
 : noMovable(NOP_SHIP,x,y), player(player), state(STATE_IDLE), sea_id(0), name(ship_names[Random::inst().Rand(__FILE__,__LINE__,this->obj_id, ship_count)])
@@ -139,6 +150,9 @@ void noShip::Draw(int x, int y)
 			DrawDrivingWithWares(x,y);
 		} break;
 	}
+
+	LOADER.GetMapImageN(3162+GAMECLIENT.GetGlobalAnimation(8,80,40,obj_id))->
+		Draw(x+SHIPS_FLAG_POS[dir].x,y+SHIPS_FLAG_POS[dir].y,0,0,0,0,0,0,COLOR_WHITE, COLORS[gwg->GetPlayer(player)->color]);
 
 }
 /// Zeichnet normales Fahren auf dem Meer ohne irgendwelche Güter

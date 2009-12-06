@@ -745,7 +745,7 @@ void nobHarborBuilding::CancelFigure(noFigure * figure)
 	{
 		// Dann zu unserem Inventar hinzufügen und anschließend vernichten
 		++real_goods.people[figure->GetJobType()];
-		em->AddToKillList(figure);
+		//em->AddToKillList(figure);
 	}
 	// An Basisklasse weiterdelegieren
 	else

@@ -1,4 +1,4 @@
-// $Id: EventManager.cpp 5764 2009-12-06 18:15:47Z OLiver $
+// $Id: EventManager.cpp 5765 2009-12-06 18:17:47Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -62,7 +62,7 @@ EventManager::EventPointer EventManager::AddEvent(GameObject *obj, const unsigne
 	// Event eintragen
 	Event * event = new Event(obj, GAMECLIENT.GetGFNumber(), gf_length, id);
 	eis.push_back(event);
-	assert(event->GetObjId() != 209359 );
+	//assert(event->GetObjId() != 209359 );
 	//assert(event->GetObjId() != 1560584 );
 	return event;
 }

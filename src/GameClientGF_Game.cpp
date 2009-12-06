@@ -1,4 +1,4 @@
-// $Id: GameClientGF_Game.cpp 5754 2009-12-06 04:20:05Z jh $
+// $Id: GameClientGF_Game.cpp 5759 2009-12-06 14:07:09Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -54,13 +54,11 @@ void GameClient::ExecuteGameFrame_Game()
 			// Nachricht abwerfen :)
 			players[i].gc_queue.pop_front();
 
-			// Auf Notfall testen (Wenige Bretter/Steine und keine Holzindustrie)
-			players[i].TestForEmergencyProgramm();
 		}
 	}
 
 	// Frame ausführen
-	em->NextGF();
+	NextGF();
 
 	//LOG.lprintf("%d = %d - %d\n", framesinfo.nr / framesinfo.nwf_length, checksum, Random::inst().GetCurrentRandomValue());
 

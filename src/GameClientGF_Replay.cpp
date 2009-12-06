@@ -1,4 +1,4 @@
-// $Id: GameClientGF_Replay.cpp 5355 2009-07-31 16:59:26Z FloSoft $
+// $Id: GameClientGF_Replay.cpp 5759 2009-12-06 14:07:09Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -105,7 +105,7 @@ void GameClient::ExecuteGameFrame_Replay()
 	
 
 	// Frame ausführen
-	em->NextGF();
+	NextGF();
 
 	// Replay zu Ende?
 	if(framesinfo.nr == replayinfo.replay.last_gf)

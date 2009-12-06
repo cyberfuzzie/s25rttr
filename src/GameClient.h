@@ -1,4 +1,4 @@
-// $Id: GameClient.h 5642 2009-10-16 22:25:22Z jh $
+// $Id: GameClient.h 5759 2009-12-06 14:07:09Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -166,6 +166,10 @@ private:
 	void SendNothingNC(int checksum = -1);
 	/// Findet heraus, ob ein Spieler laggt und setzt bei diesen Spieler den entsprechenden flag
 	bool IsPlayerLagging();
+
+	/// Führt notwendige Dinge für nächsten GF aus
+	void NextGF();
+
 	/// Führt für alle Spieler einen Statistikschritt aus, wenn die Zeit es verlangt
 	void StatisticStep();
 

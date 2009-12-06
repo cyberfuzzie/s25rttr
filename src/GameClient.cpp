@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 5708 2009-11-27 14:18:04Z FloSoft $
+// $Id: GameClient.cpp 5759 2009-12-06 14:07:09Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1116,7 +1116,7 @@ bool GameClient::IsPlayerLagging()
 void GameClient::StatisticStep()
 {
 	// Soll alle 750 GFs (30 Sekunden auf 'Schnell') aufgerufen werden
-	if (framesinfo.nr % 750 == 0)
+	if ((framesinfo.nr-1) % 750 == 0)
 	{
 		for (unsigned int i=0; i<players.getCount(); ++i)
 			players[i].StatisticStep();
@@ -1151,8 +1151,6 @@ void GameClient::ExecuteGameFrame(const bool skipping)
 		//LOG.lprintf("%d = %d\n", framesinfo.nr / framesinfo.nwf_length, Random::inst().GetCurrentRandomValue());
 		if(replay_mode)
 		{
-			// Statistik-Step
-			StatisticStep();
 		
 			// Diesen Zeitpunkt merken
 			framesinfo.lasttime = currenttime - ( currenttime - framesinfo.lasttime - framesinfo.gf_length);
@@ -1180,8 +1178,6 @@ void GameClient::ExecuteGameFrame(const bool skipping)
 			{
 				// Kein Lag, normal weitermachen
 
-				StatisticStep();
-
 				// Diesen Zeitpunkt merken
 				framesinfo.lasttime = currenttime;
 				// Nächster Game-Frame erreicht
@@ -1199,16 +1195,13 @@ void GameClient::ExecuteGameFrame(const bool skipping)
 		{
 			// Nähster GameFrame zwischen framesinfos
 
-			// Statistik-Step
-			StatisticStep();
-
 			// Diesen Zeitpunkt merken
 			framesinfo.lasttime = currenttime;
 			// Nächster Game-Frame erreicht
 			++framesinfo.nr;
 
 			// Frame ausführen
-			em->NextGF();
+			NextGF();
 
 			// Frame-Time setzen zum Zeichnen, (immer außer bei Lags)
 			framesinfo.frame_time = currenttime - framesinfo.lasttime;
@@ -1241,6 +1234,23 @@ void GameClient::ExecuteGameFrame(const bool skipping)
 		framesinfo.frame_time = currenttime - framesinfo.lasttime;
 	}
 }
+
+/// Führt notwendige Dinge für nächsten GF aus
+void GameClient::NextGF()
+{
+	// Statistiken aktualisieren
+	StatisticStep();
+	//  EventManager Bescheid sagen
+	em->NextGF();
+	// Notfallprogramm durchlaufen lassen
+	for(unsigned char i = 0; i < players.getCount(); ++i)
+	{
+		if(players[i].ps == PS_OCCUPIED || players[i].ps == PS_KI)
+		// Auf Notfall testen (Wenige Bretter/Steine und keine Holzindustrie)
+			players[i].TestForEmergencyProgramm();
+	}
+}
+
 
 void GameClient::ExecuteAllGCs(const GameMessage_GameCommand& gcs, unsigned char * player_switch_old_id,unsigned char * player_switch_new_id)
 {

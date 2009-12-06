@@ -621,16 +621,11 @@ void noShip::HarborDestroyed(nobHarborBuilding * hb)
 		}
 		else
 		{
-			// Kein Ziel gefunden, also erstmal idlen
+			/*// Kein Ziel gefunden, also erstmal idlen
 			StartIdling();
 			em->RemoveEvent(current_ev);
-			current_ev = NULL;
+			current_ev = NULL;*/
 		}
-	}
-	else if(state == STATE_GOTOHARBOR)
-	{
-		// Wenn er zum Hafen fährt Bescheid sagen, dass er idlen soll
-		StartIdling();
 	}
 }
 

@@ -243,6 +243,7 @@ void iwShip::DrawCargo()
 			{
 				x = xStart;
 				y += yStep;
+				lineCounter = 0;
 			}
 			orderedFigures[i]--;
 			LOADER.GetBobN("jobs")->Draw(JOB_CONSTS[i].jobs_bob_id, 5, JOB_CONSTS[i].fat, 0, x, y, COLORS[gwv->GetPlayer(ship->GetPlayer())->color]);
@@ -260,6 +261,7 @@ void iwShip::DrawCargo()
 			{
 				x = xStart;
 				y += yStep;
+				lineCounter = 0;
 			}
 			orderedWares[i]--;
 			LOADER.GetMapImageN(2200+i)->Draw(x,y,0,0,0,0,0,0);

@@ -33,6 +33,7 @@
 #include "noFigure.h"
 #include "Ware.h"
 #include "PostMsg.h"
+#include "AIEventManager.h"
 
 const unsigned SHIP_SPEED = 20;
 const unsigned int ship_count = 5;
@@ -206,6 +207,9 @@ void noShip::HandleEvent(const unsigned int id)
 					// Spieler benachrichtigen
 					if(GameClient::inst().GetPlayerID() == this->player)
 						GAMECLIENT.SendPostMessage(new ShipPostMsg(_("A ship is ready for an expedition."), PMC_GENERAL, GAMECLIENT.GetPlayer(player)->nation, x, y));
+
+					// KI Event senden
+					GAMECLIENT.SendAIEvent(new AIEvent::Location(AIEvent::ExpeditionWaiting, x, y), player);
 				} break;
 			case STATE_TRANSPORT_LOADING:
 				{
@@ -461,6 +465,9 @@ void noShip::HandleState_ExpeditionDriving()
 			// Spieler benachrichtigen
 			if(GameClient::inst().GetPlayerID() == this->player)
 				GAMECLIENT.SendPostMessage(new ShipPostMsg(_("A ship has reached the destination of its expedition."), PMC_GENERAL, GAMECLIENT.GetPlayer(player)->nation, x, y));
+
+			// KI Event senden
+			GAMECLIENT.SendAIEvent(new AIEvent::Location(AIEvent::ExpeditionWaiting, x, y), player);
 		} break;
 	case NO_ROUTE_FOUND:
 		{

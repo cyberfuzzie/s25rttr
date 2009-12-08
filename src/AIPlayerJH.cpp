@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.cpp 5776 2009-12-08 20:37:54Z jh $
+// $Id: AIPlayerJH.cpp 5780 2009-12-08 23:13:44Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -28,6 +28,7 @@
 #include "nobMilitary.h"
 #include "nobHQ.h"
 #include "noBuildingSite.h"
+#include "noShip.h"
 
 #include "MapGeometry.h"
 
@@ -942,10 +943,14 @@ void AIPlayerJH::HandleBuildingFinished(const Coords& coords, BuildingType bld)
 	switch(bld)
 	{
 	case BLD_HARBORBUILDING:
+		UpdateNodesAround(coords.x, coords.y, 8); // todo: fix radius
+
 		aiJobs.push_back(new AIJH::BuildJob(this, BLD_BARRACKS, coords.x, coords.y));
 		aiJobs.push_back(new AIJH::BuildJob(this, BLD_WOODCUTTER, coords.x, coords.y));
 		aiJobs.push_back(new AIJH::BuildJob(this, BLD_SAWMILL, coords.x, coords.y));
 		aiJobs.push_back(new AIJH::BuildJob(this, BLD_QUARRY, coords.x, coords.y));
+
+		gcs.push_back(new gc::StartExpedition(coords.x, coords.y));
 		break;
 
 	case BLD_SHIPYARD:
@@ -954,6 +959,49 @@ void AIPlayerJH::HandleBuildingFinished(const Coords& coords, BuildingType bld)
 		
 	default:
 		break;
+	}
+
+}
+
+void AIPlayerJH::HandleExpedition(const Coords& coords)
+{
+	list<noBase*> objs;
+	gwb->GetDynamicObjectsFrom(coords.x, coords.y, objs);
+	const noShip *ship = NULL;
+
+	for(list<noBase*>::iterator it = objs.begin();it.valid();++it)
+	{
+		if((*it)->GetGOT() == GOT_SHIP)
+		{
+			if(static_cast<noShip*>(*it)->GetPlayer() == playerid)
+			{
+				if (static_cast<noShip*>(*it)->IsOnExpedition())
+					ship = static_cast<noShip*>(*it);
+			}
+		}
+	}
+
+
+	//const noShip *ship = gwb->GetSpecObj<noShip>(coords.x, coords.y);
+	if (ship)
+	{
+		if (ship->IsAbleToFoundColony())
+			gcs.push_back(new gc::ExpeditionCommand(gc::ExpeditionCommand::FOUNDCOLONY, player->GetShipID(ship)));
+		else
+		{
+			unsigned char start = rand() % 6;
+
+			for(unsigned char i = start; i < start + 6; ++i)
+			{
+				if (gwb->GetNextFreeHarborPoint(coords.x, coords.y, ship->GetCurrentHarbor(), i%6, playerid) > 0)
+				{
+					gcs.push_back(new gc::ExpeditionCommand(gc::ExpeditionCommand::Action((i%6)+1), player->GetShipID(ship)));
+					break;
+				}
+			}
+		}
+		
+			
 	}
 
 }

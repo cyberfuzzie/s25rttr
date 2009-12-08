@@ -369,6 +369,12 @@ void AIJH::EventJob::ExecuteJob()
 			status = AIJH::JOB_FINISHED;
 		}
 		break;
+	case AIEvent::ExpeditionWaiting:
+		{
+			AIEvent::Location *lvb = dynamic_cast<AIEvent::Location *>(ev);
+			aijh->HandleExpedition(AIPlayerJH::Coords(lvb->GetX(), lvb->GetY()));
+			status = AIJH::JOB_FINISHED;
+		}
 	default:
 		break;
 	}

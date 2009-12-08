@@ -71,6 +71,13 @@ void AIJH::BuildJob::ExecuteJob()
 
 	}
 
+	// Evil harbour-hack
+	if (type == BLD_HARBORBUILDING && status == AIJH::JOB_FINISHED && target_x != 0xFFFF)
+	{
+		aijh->aiJobs.push_front(new AIJH::BuildJob(aijh, BLD_SHIPYARD, target_x, target_y));
+	}
+
+
 	// Fertig?
 	if (status == AIJH::JOB_FAILED || status == AIJH::JOB_FINISHED)
 		return;
@@ -186,7 +193,7 @@ void AIJH::BuildJob::BuildMainRoad()
 			std::cout << "Player " << (unsigned)aijh->GetPlayerID() << ", Job failed: BQ changed for " << BUILDING_NAMES[type] << " at " << target_x << "/" << target_y << ". Retrying..." << std::endl;
 #endif
 			aijh->nodes[target_x + target_y * aijh->GetGWB()->GetWidth()].bq = bq;
-			aijh->aiJobs.push(new AIJH::BuildJob(aijh, type, around_x, around_y));
+			aijh->aiJobs.push_back(new AIJH::BuildJob(aijh, type, around_x, around_y));
 			return;
 		}
 		return;
@@ -216,7 +223,7 @@ void AIJH::BuildJob::BuildMainRoad()
 			aijh->GetGCS().push_back(new gc::DestroyBuilding(target_x, target_y));
 			aijh->GetGCS().push_back(new gc::DestroyFlag(houseFlag->GetX(), houseFlag->GetY()));
 
-			aijh->aiJobs.push(new AIJH::BuildJob(aijh, type, around_x, around_y));
+			aijh->aiJobs.push_back(new AIJH::BuildJob(aijh, type, around_x, around_y));
 			return;
 		}
 		else
@@ -274,17 +281,17 @@ void AIJH::BuildJob::BuildMainRoad()
 			break;
 
 		case BLD_MILL:
-			aijh->aiJobs.push(new AIJH::BuildJob(aijh, BLD_BAKERY, target_x, target_y));
+			aijh->aiJobs.push_back(new AIJH::BuildJob(aijh, BLD_BAKERY, target_x, target_y));
 			break;
 
 		case BLD_PIGFARM:
-			aijh->aiJobs.push(new AIJH::BuildJob(aijh, BLD_SLAUGHTERHOUSE, target_x, target_y));
+			aijh->aiJobs.push_back(new AIJH::BuildJob(aijh, BLD_SLAUGHTERHOUSE, target_x, target_y));
 			break;
 
 		case BLD_BAKERY:
 		case BLD_SLAUGHTERHOUSE:
 		case BLD_BREWERY:
-			aijh->aiJobs.push(new AIJH::BuildJob(aijh, BLD_WELL, target_x, target_y));
+			aijh->aiJobs.push_back(new AIJH::BuildJob(aijh, BLD_WELL, target_x, target_y));
 			break;
 
 		default:
@@ -314,7 +321,7 @@ void AIJH::BuildJob::TryToBuildSecondaryRoad()
 #ifdef DEBUG_AI
 			std::cout << "Player " << (unsigned)aijh->GetPlayerID() << ", Job failed: House flag is gone, " << BUILDING_NAMES[type] << " at " << target_x << "/" << target_y << ". Retrying..." << std::endl;
 #endif
-		aijh->aiJobs.push(new AIJH::BuildJob(aijh, type, around_x, around_y));
+		aijh->aiJobs.push_back(new AIJH::BuildJob(aijh, type, around_x, around_y));
 		return;
 	}
 
@@ -355,7 +362,13 @@ void AIJH::EventJob::ExecuteJob()
 			status = AIJH::JOB_FINISHED;
 		}
 		break;
-
+	case AIEvent::BuildingFinished:
+		{
+			AIEvent::Building *evb = dynamic_cast<AIEvent::Building *>(ev);
+			aijh->HandleBuildingFinished(AIPlayerJH::Coords(evb->GetX(), evb->GetY()), evb->GetBuildingType());
+			status = AIJH::JOB_FINISHED;
+		}
+		break;
 	default:
 		break;
 	}

@@ -1,4 +1,4 @@
-// $Id: nofBuilder.cpp 5716 2009-11-28 19:11:51Z OLiver $
+// $Id: nofBuilder.cpp 5776 2009-12-08 20:37:54Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -37,6 +37,7 @@
 #include "nobHarborBuilding.h"
 #include "SoundManager.h"
 #include "SerializedGameData.h"
+#include "AIEventManager.h"
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -191,6 +192,9 @@ void nofBuilder::HandleDerivedEvent(const unsigned int id)
 
 				// Baustelle kommt in den Bytehimmel
 				delete building_site;
+
+				// KI-Event schicken
+				GAMECLIENT.SendAIEvent(new AIEvent::Building(AIEvent::BuildingFinished, x, y, building_type), player);
 
 				// Art des Gebäudes unterscheiden (Lagerhäuser,Militär,normal)
 				if(building_type == BLD_STOREHOUSE || building_type== BLD_HARBORBUILDING)

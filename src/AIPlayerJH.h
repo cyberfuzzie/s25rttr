@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.h 5704 2009-11-27 08:57:26Z FloSoft $
+// $Id: AIPlayerJH.h 5776 2009-12-08 20:37:54Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -30,6 +30,7 @@
 #include "AIEventManager.h"
 
 #include <queue>
+#include <deque>
 #include <list>
 
 class noFlag;
@@ -103,7 +104,7 @@ protected:
 	AIJH::Job *currentJob;
 
 	/// Contains the jobs the AI should try to execute, for example build jobs
-	std::queue<AIJH::Job*> aiJobs;
+	std::deque<AIJH::Job*> aiJobs;
 
 	/// List of coordinates at which military buildings should be
 	std::list<Coords> milBuildings;
@@ -169,6 +170,9 @@ protected:
 
 	// Handle border event
 	void HandleBorderChanged(const Coords& coords);
+
+	// Handle usual building finished
+	void HandleBuildingFinished(const Coords& coords, BuildingType bld);
 
 	/// Returns the number of buildings and buildingsites of a specific typ
 	unsigned GetBuildingCount(BuildingType type);

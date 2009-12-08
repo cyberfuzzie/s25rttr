@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.cpp 5704 2009-11-27 08:57:26Z FloSoft $
+// $Id: AIPlayerJH.cpp 5776 2009-12-08 20:37:54Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -89,15 +89,17 @@ void AIPlayerJH::RunGF(const unsigned gf)
 
 	if (gf == 5)
 	{
-		aiJobs.push(new AIJH::BuildJob(this, ChooseMilitaryBuilding(player->hqx, player->hqy)));
-		aiJobs.push(new AIJH::BuildJob(this, ChooseMilitaryBuilding(player->hqx, player->hqy)));
-		aiJobs.push(new AIJH::BuildJob(this, ChooseMilitaryBuilding(player->hqx, player->hqy)));
-		aiJobs.push(new AIJH::BuildJob(this, ChooseMilitaryBuilding(player->hqx, player->hqy)));
-		aiJobs.push(new AIJH::BuildJob(this, BLD_FORESTER));
-		aiJobs.push(new AIJH::BuildJob(this, BLD_WOODCUTTER));
-		aiJobs.push(new AIJH::BuildJob(this, BLD_WOODCUTTER));
-		aiJobs.push(new AIJH::BuildJob(this, BLD_QUARRY));
-		aiJobs.push(new AIJH::BuildJob(this, BLD_FISHERY));
+		aiJobs.push_back(new AIJH::BuildJob(this, BLD_HARBORBUILDING, player->hqx, player->hqy));
+		aiJobs.push_back(new AIJH::BuildJob(this, BLD_SAWMILL));
+		aiJobs.push_back(new AIJH::BuildJob(this, BLD_FORESTER));
+		aiJobs.push_back(new AIJH::BuildJob(this, BLD_WOODCUTTER));
+		aiJobs.push_back(new AIJH::BuildJob(this, BLD_WOODCUTTER));
+		aiJobs.push_back(new AIJH::BuildJob(this, ChooseMilitaryBuilding(player->hqx, player->hqy)));
+		aiJobs.push_back(new AIJH::BuildJob(this, ChooseMilitaryBuilding(player->hqx, player->hqy)));
+		aiJobs.push_back(new AIJH::BuildJob(this, ChooseMilitaryBuilding(player->hqx, player->hqy)));
+		aiJobs.push_back(new AIJH::BuildJob(this, ChooseMilitaryBuilding(player->hqx, player->hqy)));
+		aiJobs.push_back(new AIJH::BuildJob(this, BLD_QUARRY));
+		aiJobs.push_back(new AIJH::BuildJob(this, BLD_FISHERY));
 		
 	}
 
@@ -126,7 +128,7 @@ void AIPlayerJH::RunGF(const unsigned gf)
 	{
 		if (Wanted(BLD_SAWMILL))
 		{
-			aiJobs.push(new AIJH::BuildJob(this, BLD_SAWMILL));
+			aiJobs.push_back(new AIJH::BuildJob(this, BLD_SAWMILL));
 		}
 	}
 }
@@ -745,7 +747,7 @@ void AIPlayerJH::ExecuteAIJob()
 		if (aiJobs.size() > 0)
 		{
 			currentJob = aiJobs.front();
-			aiJobs.pop();
+			aiJobs.pop_front();
 		}
 		else
 		{
@@ -895,41 +897,67 @@ void AIPlayerJH::HandleNewMilitaryBuilingOccupied(const Coords& coords)
 		}
 	}
 
-	aiJobs.push(new AIJH::BuildJob(this, ChooseMilitaryBuilding(x, y), x, y));
-	aiJobs.push(new AIJH::BuildJob(this, ChooseMilitaryBuilding(x, y), x, y));
-	aiJobs.push(new AIJH::BuildJob(this, ChooseMilitaryBuilding(x, y), x, y));
+	aiJobs.push_back(new AIJH::BuildJob(this, BLD_HARBORBUILDING, x, y));
+
+	aiJobs.push_back(new AIJH::BuildJob(this, ChooseMilitaryBuilding(x, y), x, y));
+	aiJobs.push_back(new AIJH::BuildJob(this, ChooseMilitaryBuilding(x, y), x, y));
+	aiJobs.push_back(new AIJH::BuildJob(this, ChooseMilitaryBuilding(x, y), x, y));
 
 	// Temporär only
-	aiJobs.push(new AIJH::BuildJob(this, BLD_FORESTER, x, y));
-	aiJobs.push(new AIJH::BuildJob(this, BLD_WOODCUTTER, x, y));
+	aiJobs.push_back(new AIJH::BuildJob(this, BLD_FORESTER, x, y));
+	aiJobs.push_back(new AIJH::BuildJob(this, BLD_WOODCUTTER, x, y));
 
-	aiJobs.push(new AIJH::BuildJob(this, BLD_QUARRY, x, y));
+	aiJobs.push_back(new AIJH::BuildJob(this, BLD_QUARRY, x, y));
 
-	aiJobs.push(new AIJH::BuildJob(this, BLD_GOLDMINE, x, y));
-	aiJobs.push(new AIJH::BuildJob(this, BLD_COALMINE, x, y));
-	aiJobs.push(new AIJH::BuildJob(this, BLD_IRONMINE, x, y));
+	aiJobs.push_back(new AIJH::BuildJob(this, BLD_GOLDMINE, x, y));
+	aiJobs.push_back(new AIJH::BuildJob(this, BLD_COALMINE, x, y));
+	aiJobs.push_back(new AIJH::BuildJob(this, BLD_IRONMINE, x, y));
 
-	aiJobs.push(new AIJH::BuildJob(this, BLD_SAWMILL, x, y));
+	aiJobs.push_back(new AIJH::BuildJob(this, BLD_SAWMILL, x, y));
 
-	aiJobs.push(new AIJH::BuildJob(this, BLD_IRONSMELTER, x, y));
-	aiJobs.push(new AIJH::BuildJob(this, BLD_MINT, x, y));
-	aiJobs.push(new AIJH::BuildJob(this, BLD_ARMORY, x, y));
+	aiJobs.push_back(new AIJH::BuildJob(this, BLD_IRONSMELTER, x, y));
+	aiJobs.push_back(new AIJH::BuildJob(this, BLD_MINT, x, y));
+	aiJobs.push_back(new AIJH::BuildJob(this, BLD_ARMORY, x, y));
 
-	aiJobs.push(new AIJH::BuildJob(this, BLD_FISHERY, x, y));
+	aiJobs.push_back(new AIJH::BuildJob(this, BLD_FISHERY, x, y));
 
-	aiJobs.push(new AIJH::BuildJob(this, BLD_HUNTER, x, y));
+	aiJobs.push_back(new AIJH::BuildJob(this, BLD_HUNTER, x, y));
 
-	aiJobs.push(new AIJH::BuildJob(this, BLD_STOREHOUSE, x, y));
-
-
-	aiJobs.push(new AIJH::BuildJob(this, BLD_FARM, x, y));
+	aiJobs.push_back(new AIJH::BuildJob(this, BLD_STOREHOUSE, x, y));
 
 
-	aiJobs.push(new AIJH::BuildJob(this, BLD_BREWERY, x, y));
-	aiJobs.push(new AIJH::BuildJob(this, BLD_MILL, x, y));
-	aiJobs.push(new AIJH::BuildJob(this, BLD_PIGFARM, x, y));
+	aiJobs.push_back(new AIJH::BuildJob(this, BLD_FARM, x, y));
+
+
+	aiJobs.push_back(new AIJH::BuildJob(this, BLD_BREWERY, x, y));
+	aiJobs.push_back(new AIJH::BuildJob(this, BLD_MILL, x, y));
+	aiJobs.push_back(new AIJH::BuildJob(this, BLD_PIGFARM, x, y));
+
+	
 
 }
+
+void AIPlayerJH::HandleBuildingFinished(const Coords& coords, BuildingType bld)
+{
+	switch(bld)
+	{
+	case BLD_HARBORBUILDING:
+		aiJobs.push_back(new AIJH::BuildJob(this, BLD_BARRACKS, coords.x, coords.y));
+		aiJobs.push_back(new AIJH::BuildJob(this, BLD_WOODCUTTER, coords.x, coords.y));
+		aiJobs.push_back(new AIJH::BuildJob(this, BLD_SAWMILL, coords.x, coords.y));
+		aiJobs.push_back(new AIJH::BuildJob(this, BLD_QUARRY, coords.x, coords.y));
+		break;
+
+	case BLD_SHIPYARD:
+		gcs.push_back(new gc::ChangeShipYardMode(coords.x, coords.y));
+		break;
+		
+	default:
+		break;
+	}
+
+}
+
 
 void AIPlayerJH::HandleNoMoreResourcesReachable(const Coords& coords, BuildingType bld)
 {
@@ -944,14 +972,14 @@ void AIPlayerJH::HandleNoMoreResourcesReachable(const Coords& coords, BuildingTy
 		return;
 	
 	// try to expand, maybe res blocked a passage
-	aiJobs.push(new AIJH::BuildJob(this, ChooseMilitaryBuilding(x, y), x, y));
-	aiJobs.push(new AIJH::BuildJob(this, ChooseMilitaryBuilding(x, y), x, y));
+	aiJobs.push_back(new AIJH::BuildJob(this, ChooseMilitaryBuilding(x, y), x, y));
+	aiJobs.push_back(new AIJH::BuildJob(this, ChooseMilitaryBuilding(x, y), x, y));
 
 	// and try to rebuild the same building
-	aiJobs.push(new AIJH::BuildJob(this, bld));
+	aiJobs.push_back(new AIJH::BuildJob(this, bld));
 
 	// farm is always good!
-	aiJobs.push(new AIJH::BuildJob(this, BLD_FARM, x, y));
+	aiJobs.push_back(new AIJH::BuildJob(this, BLD_FARM, x, y));
 }
 
 void AIPlayerJH::HandleBorderChanged(const Coords& coords)
@@ -969,7 +997,7 @@ void AIPlayerJH::HandleBorderChanged(const Coords& coords)
 		}
 		if (mil->GetBuildingType() == BLD_BARRACKS || mil->GetBuildingType() == BLD_GUARDHOUSE)
 		{
-			aiJobs.push(new AIJH::BuildJob(this, ChooseMilitaryBuilding(x, y), x, y));
+			aiJobs.push_back(new AIJH::BuildJob(this, ChooseMilitaryBuilding(x, y), x, y));
 		}
 	}
 }
@@ -981,24 +1009,24 @@ void AIPlayerJH::HandleRetryMilitaryBuilding(const Coords& coords)
 	UpdateNodesAround(x, y, 11); // todo: fix radius
 	RefreshBuildingCount();
 
-	aiJobs.push(new AIJH::BuildJob(this, ChooseMilitaryBuilding(x, y), x, y));
-	aiJobs.push(new AIJH::BuildJob(this, ChooseMilitaryBuilding(x, y), x, y));
-	aiJobs.push(new AIJH::BuildJob(this, ChooseMilitaryBuilding(x, y), x, y));
+	aiJobs.push_back(new AIJH::BuildJob(this, ChooseMilitaryBuilding(x, y), x, y));
+	aiJobs.push_back(new AIJH::BuildJob(this, ChooseMilitaryBuilding(x, y), x, y));
+	aiJobs.push_back(new AIJH::BuildJob(this, ChooseMilitaryBuilding(x, y), x, y));
 
 	// Temporär only
-	aiJobs.push(new AIJH::BuildJob(this, BLD_WOODCUTTER, x, y));
+	aiJobs.push_back(new AIJH::BuildJob(this, BLD_WOODCUTTER, x, y));
 
-	aiJobs.push(new AIJH::BuildJob(this, BLD_QUARRY, x, y));
+	aiJobs.push_back(new AIJH::BuildJob(this, BLD_QUARRY, x, y));
 
-	aiJobs.push(new AIJH::BuildJob(this, BLD_GOLDMINE, x, y));
-	aiJobs.push(new AIJH::BuildJob(this, BLD_COALMINE, x, y));
-	aiJobs.push(new AIJH::BuildJob(this, BLD_IRONMINE, x, y));
+	aiJobs.push_back(new AIJH::BuildJob(this, BLD_GOLDMINE, x, y));
+	aiJobs.push_back(new AIJH::BuildJob(this, BLD_COALMINE, x, y));
+	aiJobs.push_back(new AIJH::BuildJob(this, BLD_IRONMINE, x, y));
 
-	aiJobs.push(new AIJH::BuildJob(this, BLD_SAWMILL, x, y));
+	aiJobs.push_back(new AIJH::BuildJob(this, BLD_SAWMILL, x, y));
 
-	aiJobs.push(new AIJH::BuildJob(this, BLD_IRONSMELTER, x, y));
-	aiJobs.push(new AIJH::BuildJob(this, BLD_MINT, x, y));
-	aiJobs.push(new AIJH::BuildJob(this, BLD_ARMORY, x, y));
+	aiJobs.push_back(new AIJH::BuildJob(this, BLD_IRONSMELTER, x, y));
+	aiJobs.push_back(new AIJH::BuildJob(this, BLD_MINT, x, y));
+	aiJobs.push_back(new AIJH::BuildJob(this, BLD_ARMORY, x, y));
 }
 
 
@@ -1037,6 +1065,8 @@ void AIPlayerJH::InitBuildingsWanted()
 	buildingsWanted[BLD_QUARRY] = 6;
 	buildingsWanted[BLD_HUNTER] = 2;
 	buildingsWanted[BLD_FARM] = 16;
+	buildingsWanted[BLD_HARBORBUILDING] = 99;
+	buildingsWanted[BLD_SHIPYARD] = 1;
 }
 
 unsigned AIPlayerJH::GetBuildingCount(BuildingType type)

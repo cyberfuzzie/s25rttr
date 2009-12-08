@@ -1,4 +1,4 @@
-// $Id: AIEventManager.h 5644 2009-10-17 12:22:53Z jh $
+// $Id: AIEventManager.h 5776 2009-12-08 20:37:54Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -36,7 +36,8 @@ namespace AIEvent
 		BuildingOccupied,
 		BorderChanged,
 		TerritoryLost,
-		NoMoreResourcesReachable
+		NoMoreResourcesReachable,
+		BuildingFinished
 	};
 
 

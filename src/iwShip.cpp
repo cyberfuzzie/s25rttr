@@ -246,7 +246,16 @@ void iwShip::DrawCargo()
 				lineCounter = 0;
 			}
 			orderedFigures[i]--;
-			LOADER.GetBobN("jobs")->Draw(JOB_CONSTS[i].jobs_bob_id, 5, JOB_CONSTS[i].fat, 0, x, y, COLORS[gwv->GetPlayer(ship->GetPlayer())->color]);
+
+			unsigned job_bobs_id = JOB_CONSTS[i].jobs_bob_id;
+			if(i >= JOB_PRIVATE && i <= JOB_GENERAL)
+				job_bobs_id = 30+NATION_RTTR_TO_S2[GameClient::inst().GetPlayer(player)->nation]*6+i-JOB_PRIVATE;
+			else if(i == JOB_SCOUT)
+				job_bobs_id = 35+NATION_RTTR_TO_S2[GameClient::inst().GetPlayer(player)->nation]*6;
+
+
+			// Soldaten
+			LOADER.GetBobN("jobs")->Draw(job_bobs_id, 5, JOB_CONSTS[i].fat, 0, x, y, COLORS[gwv->GetPlayer(ship->GetPlayer())->color]);
 			x += xStep;
 			lineCounter++;
 		}

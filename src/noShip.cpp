@@ -564,7 +564,7 @@ void noShip::HarborDestroyed(nobHarborBuilding * hb)
 		// allderdings der nächste Punkt, wenn das Schiff gerade am fahren ist (der Zielpunkt der aktuellen
 		// Bewegung
 		MapCoord current_x = x, current_y = y;
-		if(state == STATE_TRANSPORT_DRIVING || state == STATE_GOTOHARBOR)
+		if(state == STATE_TRANSPORT_DRIVING)
 		{
 			current_x = gwg->GetXA(x,y,dir);
 			current_y = gwg->GetYA(x,y,dir);

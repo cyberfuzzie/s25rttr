@@ -404,6 +404,7 @@ void noFigure::WalkToGoal()
 				}
 
 				// Uns in den Hafen einquartieren
+				cur_rs = NULL; // wir laufen nicht mehr auf einer Straße
 				static_cast<nobHarborBuilding*>(nob)->AddFigureForShip(this,next_harbor);
 				gwg->RemoveFigure(this,x,y);
 				return;

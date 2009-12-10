@@ -33,6 +33,7 @@
 #include "noShip.h"
 #include "noFigure.h"
 #include "Random.h"
+#include "nobMilitary.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -41,6 +42,24 @@
 	#undef THIS_FILE
 	static char THIS_FILE[] = __FILE__;
 #endif
+
+
+nobHarborBuilding::ExpeditionInfo::ExpeditionInfo(SerializedGameData *sgd) :
+active(sgd->PopBool()),
+boards(sgd->PopUnsignedInt()),
+stones(sgd->PopUnsignedInt()),
+builder(sgd->PopBool())
+{
+}
+
+void nobHarborBuilding::ExpeditionInfo::Serialize(SerializedGameData *sgd) const
+{
+	sgd->PushBool(active);
+	sgd->PushUnsignedInt(boards);
+	sgd->PushUnsignedInt(stones);
+	sgd->PushBool(builder);
+}
+
 
 nobHarborBuilding::nobHarborBuilding(const unsigned short x, const unsigned short y,const unsigned char player,const Nation nation) 
 : nobBaseWarehouse(BLD_HARBORBUILDING,x,y,player,nation), orderware_ev(0)
@@ -755,18 +774,21 @@ void nobHarborBuilding::CancelFigure(noFigure * figure)
 }
 
 
-nobHarborBuilding::ExpeditionInfo::ExpeditionInfo(SerializedGameData *sgd) :
-active(sgd->PopBool()),
-boards(sgd->PopUnsignedInt()),
-stones(sgd->PopUnsignedInt()),
-builder(sgd->PopBool())
+/// Gibt die Anzahl der Angreifer zurück, die dieser Hafen für einen Seeangriff zur Verfügung stellen kann
+unsigned nobHarborBuilding::GetAttackersForSeaAttack() const
 {
+	list<nobBaseMilitary*> buildings;
+	gwg->LookForMilitaryBuildings(buildings,x,y,3);
+
+	// Und zählen
+	unsigned soldiers_count = 0;
+	for(list<nobBaseMilitary*>::iterator it = buildings.begin();it.valid();++it)
+	{
+		if((*it)->GetGOT() == GOT_NOB_MILITARY)
+			soldiers_count += static_cast<nobMilitary*>(*it)->GetSoldiersForAttack(x,y,player);
+	}
+
+	return soldiers_count;
 }
 
-void nobHarborBuilding::ExpeditionInfo::Serialize(SerializedGameData *sgd) const
-{
-	sgd->PushBool(active);
-	sgd->PushUnsignedInt(boards);
-	sgd->PushUnsignedInt(stones);
-	sgd->PushBool(builder);
-}
+

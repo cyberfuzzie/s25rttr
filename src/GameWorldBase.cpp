@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 5713 2009-11-28 11:17:21Z OLiver $
+// $Id: GameWorldBase.cpp 5787 2009-12-10 22:20:45Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1361,5 +1361,14 @@ unsigned GameWorldBase::GetNextFreeHarborPoint(const MapCoord x, const MapCoord 
 										   const unsigned char player) const
 {
 	return GetNextHarborPoint(x,y,origin_harbor_id,dir,player,&GameWorldBase::IsHarborPointFree);
+}
+
+/// Gibt die angrenzenden Sea-IDs eines Hafenpunktes zurück
+void GameWorldBase::GetSeaIDs(const unsigned harbor_id, unsigned short * sea_ids) const
+{
+	for(unsigned i = 0;i<6;++i)
+	{
+		sea_ids[i] = harbor_pos[harbor_id].cps[i].sea_id;
+	}
 }
 

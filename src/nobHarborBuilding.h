@@ -135,6 +135,9 @@ public:
 
 	/// Erhält die Waren von einem Schiff und nimmt diese in den Warenbestand auf
 	void ReceiveGoodsFromShip(const std::list<noFigure*> figures, const std::list<Ware*> wares);
+
+	/// Gibt die Anzahl der Angreifer zurück, die dieser Hafen für einen Seeangriff zur Verfügung stellen kann
+	unsigned GetAttackersForSeaAttack() const;
 };
 
 

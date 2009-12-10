@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 5739 2009-12-04 17:50:39Z OLiver $
+// $Id: GameWorld.h 5787 2009-12-10 22:20:45Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -377,6 +377,8 @@ public:
 	/// Sucht freie Hafenpunkte, also wo noch ein Hafen gebaut werden kann
 	unsigned GetNextFreeHarborPoint(const MapCoord x, const MapCoord y, const unsigned origin_harbor_id, const unsigned char dir,
 										   const unsigned char player) const;
+	/// Gibt die angrenzenden Sea-IDs eines Hafenpunktes zurück
+	void GetSeaIDs(const unsigned harbor_id, unsigned short * sea_ids) const;
 	
 
 	void SetPlayers(GameClientPlayerList *pls) { players = pls; }
@@ -448,6 +450,7 @@ public:
 	bool FindRoadPath(const MapCoord x_start,const MapCoord y_start, const MapCoord x_dest, const MapCoord y_dest,std::vector<unsigned char>& route, const bool boat_road);
 	/// Sucht die Anzahl der verfügbaren Soldaten, um das Militärgebäude an diesem Punkt anzugreifen
 	unsigned GetAvailableSoldiersForAttack(const unsigned char player_attacker,const MapCoord x, const MapCoord y);
+
 	/// Zeichnet die Objekte
 	void Draw(const unsigned char player, unsigned * water, const bool draw_selected, const MapCoord selected_x, const MapCoord selected_y,const RoadsBuilding& rb);
 

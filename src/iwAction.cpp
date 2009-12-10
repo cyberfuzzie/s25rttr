@@ -1,4 +1,4 @@
-// $Id: iwAction.cpp 5259 2009-07-13 15:53:31Z FloSoft $
+// $Id: iwAction.cpp 5787 2009-12-10 22:20:45Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -55,7 +55,8 @@ enum TabID
 	 TAB_WATCH ,
 	 TAB_FLAG,
 	 TAB_CUTROAD,
-	 TAB_ATTACK 
+	 TAB_ATTACK,
+	 TAB_SEAATTACK
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -222,40 +223,9 @@ iwAction::iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, cons
 	if(tabs.attack)
 	{
 		ctrlGroup *group = main_tab->AddTab(LOADER.GetImageN("io", 98), _("Attack options"), TAB_ATTACK);
-
 		available_soldiers_count = params;
-
-		// Verfügbare Soldatenzahl steht in params, wenns keine gibt, einfach Meldung anzeigen: "Angriff nicht möglich!"
-		if(available_soldiers_count == 0)
-		{
-			// Angriff nicht  möglich!
-			group->AddText(1, 90, 56, _("Attack not possible."), COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
-		}
-		else
-		{
-			selected_soldiers_count = 1;
-
-			// Minus und Plus - Button
-			group->AddImageButton(1, 3, 49, 26, 32, TC_GREY, LOADER.GetImageN("io", 139), _("Less attackers"));
-			group->AddImageButton(2, 89, 49, 26, 32, TC_GREY, LOADER.GetImageN("io", 138), _("More attackers"));
-
-			// Starke/Schwache Soldaten
-			ctrlOptionGroup *ogroup = group->AddOptionGroup(3, ctrlOptionGroup::ILLUMINATE);
-			ogroup->AddImageButton(0, 146, 49, 30, 33, TC_GREY, LOADER.GetImageN("io", 31), _("Weak attackers"));
-			ogroup->AddImageButton(1, 117, 49, 30, 33, TC_GREY, LOADER.GetImageN("io", 30), _("Strong attackers"));
-			// standardmäßig starke Soldaten
-			ogroup->SetSelection(1);
-
-			// Schnellauswahl-Buttons
-			unsigned int buttons_count = (available_soldiers_count > 3) ? 4 : available_soldiers_count;
-			unsigned short button_width = 112 / buttons_count;
-
-			for(unsigned i = 0;i < buttons_count; ++i)
-				group->AddImageButton(10+i, 3 + i*button_width, 83, button_width, 32, TC_GREY, LOADER.GetImageN("io",204+i), _("Number of attackers"));
-
-			// Angriffsbutton
-			group->AddImageButton(4, 117, 83, 59, 32, TC_RED1, LOADER.GetImageN("io", 25), _("Attack!"));
-		}
+		AddAttackControls(group,params);
+		selected_soldiers_count = 1;
 	}
 	
 	// Beobachten-main_tab
@@ -268,6 +238,16 @@ iwAction::iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, cons
 		group->AddImageButton(3, 120, 45,  60, 36, TC_GREY, LOADER.GetImageN("io", 180), _("Go to headquarters"));
 	}
 
+	if(tabs.sea_attack)
+	{
+		ctrlGroup *group = main_tab->AddTab(LOADER.GetImageN("io", 177), _("Attack options"), TAB_SEAATTACK);
+
+		selected_soldiers_count_sea = 1;
+		available_soldiers_count_sea = GameClient::inst().GetLocalPlayer()->GetAvailableSoldiersForSeaAttack(selected_x,selected_y);
+
+		AddAttackControls(group,available_soldiers_count_sea);
+	}
+
 	
 	main_tab->SetSelection(0, true);
 
@@ -278,6 +258,43 @@ iwAction::iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, cons
 
 	VideoDriverWrapper::inst().SetMousePos(GetX()+20,GetY()+75);
 }
+
+/// Fügt Angriffs-Steuerelemente für bestimmte Gruppe hinzu
+void iwAction::AddAttackControls(ctrlGroup * group, const unsigned attackers_count)
+{
+	// Verfügbare Soldatenzahl steht in params, wenns keine gibt, einfach Meldung anzeigen: "Angriff nicht möglich!"
+	if(attackers_count == 0)
+	{
+		// Angriff nicht  möglich!
+		group->AddText(1, 90, 56, _("Attack not possible."), COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
+	}
+	else
+	{
+		selected_soldiers_count = 1;
+
+		// Minus und Plus - Button
+		group->AddImageButton(1, 3, 49, 26, 32, TC_GREY, LOADER.GetImageN("io", 139), _("Less attackers"));
+		group->AddImageButton(2, 89, 49, 26, 32, TC_GREY, LOADER.GetImageN("io", 138), _("More attackers"));
+
+		// Starke/Schwache Soldaten
+		ctrlOptionGroup *ogroup = group->AddOptionGroup(3, ctrlOptionGroup::ILLUMINATE);
+		ogroup->AddImageButton(0, 146, 49, 30, 33, TC_GREY, LOADER.GetImageN("io", 31), _("Weak attackers"));
+		ogroup->AddImageButton(1, 117, 49, 30, 33, TC_GREY, LOADER.GetImageN("io", 30), _("Strong attackers"));
+		// standardmäßig starke Soldaten
+		ogroup->SetSelection(1);
+
+		// Schnellauswahl-Buttons
+		unsigned int buttons_count = (attackers_count > 3) ? 4 : attackers_count;
+		unsigned short button_width = 112 / buttons_count;
+
+		for(unsigned i = 0;i < buttons_count; ++i)
+			group->AddImageButton(10+i, 3 + i*button_width, 83, button_width, 32, TC_GREY, LOADER.GetImageN("io",204+i), _("Number of attackers"));
+
+		// Angriffsbutton
+		group->AddImageButton(4, 117, 83, 59, 32, TC_RED1, LOADER.GetImageN("io", 25), _("Attack!"));
+	}
+}
+
 
 iwAction::~iwAction()
 {

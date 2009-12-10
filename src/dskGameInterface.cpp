@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.cpp 5786 2009-12-10 19:50:43Z OLiver $
+// $Id: dskGameInterface.cpp 5787 2009-12-10 22:20:45Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -390,21 +390,31 @@ bool dskGameInterface::Msg_LeftDown(const MouseCoords& mc)
 				action_tabs.cutroad = true;
 		}
 		// evtl ists ein feindliches Milit‰rgeb‰ude, welches NICHT im Nebel liegt?
-		else if(gwv->GetNO(cselx,csely)->GetType() == NOP_BUILDING && gwv->GetVisibility(cselx,csely) == VIS_VISIBLE)
+		else if(gwv->GetVisibility(cselx,csely) == VIS_VISIBLE)
 		{
-			// Ist es ein gewˆhnliches Milit‰rgeb‰ude?
-			BuildingType bt = gwv->GetSpecObj<noBuilding>(cselx,csely)->GetBuildingType();
-			if(bt >= BLD_BARRACKS && bt <= BLD_FORTRESS)
+			if(gwv->GetNO(cselx,csely)->GetType() == NOP_BUILDING)
 			{
-				// Dann darf es nicht neu gebaut sein!
-				if(!gwv->GetSpecObj<nobMilitary>(cselx,csely)->IsNewBuilt())
+				// Ist es ein gewˆhnliches Milit‰rgeb‰ude?
+				BuildingType bt = gwv->GetSpecObj<noBuilding>(cselx,csely)->GetBuildingType();
+				if(bt >= BLD_BARRACKS && bt <= BLD_FORTRESS)
+				{
+					// Dann darf es nicht neu gebaut sein!
+					if(!gwv->GetSpecObj<nobMilitary>(cselx,csely)->IsNewBuilt())
+						action_tabs.attack = true;
+				}
+				// oder ein HQ oder Hafen?
+				else if(bt == BLD_HEADQUARTERS || bt == BLD_HARBORBUILDING)
 					action_tabs.attack = true;
 			}
-			// oder ein HQ oder Hafen?
-			else if(bt == BLD_HEADQUARTERS || bt == BLD_HARBORBUILDING)
-				action_tabs.attack = true;
+
+			// Evtl. ist das hier ein Hafenpunkt, dann kˆnnen wir ein Angriffsschiff entsenden
+			if(gwv->GetNode(cselx,csely).harbor_id)
+				action_tabs.sea_attack = true;
+
+
 
 		}
+
 
 		// Bisheriges Actionfenster schlieﬂen, falls es eins gab
 		// aktuelle Mausposition merken, da diese durch das Schlieﬂen ver‰ndert werden kann

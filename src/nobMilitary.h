@@ -1,4 +1,4 @@
-// $Id: nobMilitary.h 5704 2009-11-27 08:57:26Z FloSoft $
+// $Id: nobMilitary.h 5787 2009-12-10 22:20:45Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -147,6 +147,9 @@ public: void Serialize(SerializedGameData *sgd) const { Serialize_nobMilitary(sg
 
 	/// Schickt einen Verteidiger raus, der einem Angreifer in den Weg rennt
 	nofAggressiveDefender * SendDefender(nofAttacker * attacker);
+
+	/// Gibt die Anzahl der Soldaten zurück, die für einen Angriff auf ein bestimmtes Ziel zur Verfügung stehen
+	unsigned GetSoldiersForAttack(const MapCoord dest_x, const MapCoord dest_y, const unsigned char player_attacker) const;
 
 	/// Gebäude wird vom Gegner eingenommen, player ist die neue Spieler-ID
 	void Capture(const unsigned char new_owner);

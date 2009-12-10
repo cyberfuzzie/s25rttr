@@ -1,4 +1,4 @@
-// $Id: iwAction.h 5139 2009-06-28 21:06:58Z OLiver $
+// $Id: iwAction.h 5787 2009-12-10 22:20:45Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -46,11 +46,11 @@ public:
 	public:
 
 		/// Haupttabs
-		bool build, setflag, watch, flag, cutroad, attack;
+		bool build, setflag, watch, flag, cutroad, attack, sea_attack;
 		/// Gebäude-Bau-Tabs
 		enum BuildTab { BT_HUT = 0, BT_HOUSE, BT_CASTLE, BT_MINE, BT_HARBOR } build_tabs;
 
-		Tabs() : build(false), setflag(false), watch(false), flag(false), cutroad(false), attack(false),
+		Tabs() : build(false), setflag(false), watch(false), flag(false), cutroad(false), attack(false), sea_attack(false),
 			build_tabs(BT_HUT) {}
 	};
 
@@ -64,8 +64,12 @@ private:
 	unsigned short last_x;
 	unsigned short last_y;
 
+	/// Anzahl gewählter Soldaten für den Angriff und die Maximalanzahl
 	unsigned int selected_soldiers_count;
 	unsigned int available_soldiers_count;
+	/// Dasselbe für Schiffsangriffe
+	unsigned selected_soldiers_count_sea;
+	unsigned int available_soldiers_count_sea;
 
 public:
 	iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, const Tabs& tabs, unsigned short selected_x, unsigned short selected_y, int mouse_x, int mouse_y, unsigned int params, bool military_buildings);
@@ -88,6 +92,9 @@ private:
 	inline void Msg_ButtonClick_TabAttack(const unsigned int ctrl_id);
 	inline void Msg_ButtonClick_TabSetFlag(const unsigned int ctrl_id);
 	inline void Msg_ButtonClick_TabWatch(const unsigned int ctrl_id);
+
+	/// Fügt Angriffs-Steuerelemente für bestimmte Gruppe hinzu
+	void AddAttackControls(ctrlGroup * group, const unsigned attackers_count);
 
 };
 

@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 5704 2009-11-27 08:57:26Z FloSoft $
+// $Id: nobMilitary.cpp 5787 2009-12-10 22:20:45Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -664,6 +664,37 @@ nofAggressiveDefender * nobMilitary::SendDefender(nofAttacker * attacker)
 	else
 		return 0;
 }
+
+/// Gibt die Anzahl der Soldaten zurück, die für einen Angriff auf ein bestimmtes Ziel zur Verfügung stehen
+unsigned nobMilitary::GetSoldiersForAttack(const MapCoord dest_x, const MapCoord dest_y, const unsigned char player_attacker) const
+{
+	// Soldaten ausrechnen, wie viel man davon nehmen könnte, je nachdem wie viele in den
+	// Militäreinstellungen zum Angriff eingestellt wurden
+	unsigned short soldiers_count =
+		(GetTroopsCount()>1)?
+		((GetTroopsCount()-1)*players->getElement(player_attacker)->military_settings[3]/5):0;
+
+	unsigned int distance = CalcDistance(x,y,dest_x,dest_y);
+
+	// Falls Entfernung größer als Basisreichweite, Soldaten subtrahieren
+	if (distance > BASE_ATTACKING_DISTANCE)
+	{
+		// je einen soldaten zum entfernen vormerken für jeden EXTENDED_ATTACKING_DISTANCE großen Schritt
+		unsigned short soldiers_to_remove = ((distance - BASE_ATTACKING_DISTANCE + EXTENDED_ATTACKING_DISTANCE - 1) / EXTENDED_ATTACKING_DISTANCE);
+		if (soldiers_to_remove < soldiers_count)
+			soldiers_count -= soldiers_to_remove;
+		else
+			return 0;
+	}
+
+	// und auch der Weg zu Fuß darf dann nicht so weit sein, wenn das alles bestanden ist, können wir ihn nehmen..
+	if(soldiers_count && gwg->FindHumanPath(x,y,dest_x,dest_y,MAX_ATTACKING_RUN_DISTANCE,false) != 0xFF)
+		// Soldaten davon nehmen
+		return soldiers_count;
+	else
+		return 0;
+}
+
 
 nofDefender * nobMilitary::ProvideDefender(nofAttacker * const attacker)
 {

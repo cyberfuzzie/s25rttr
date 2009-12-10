@@ -19,11 +19,11 @@
 #ifndef iwHARBORBUILDING_H_INCLUDED
 #define iwHARBORBUILDING_H_INCLUDED
 
-#include "iwBaseWarehouse.h"
+#include "iwHQ.h"
 
 class nobHarborBuilding;
 
-class iwHarborBuilding : public iwBaseWarehouse
+class iwHarborBuilding : public iwHQ
 {
 public:
 	/// Konstruktor von @p nobHarborBuilding.

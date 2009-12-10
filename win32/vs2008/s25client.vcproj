@@ -704,10 +704,6 @@
 							>
 						</File>
 						<File
-							RelativePath=".\iwHarbourBuilding.h"
-							>
-						</File>
-						<File
 							RelativePath="..\..\src\iwHelp.cpp"
 							>
 						</File>

@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.cpp 5763 2009-12-06 17:37:44Z OLiver $
+// $Id: dskGameInterface.cpp 5786 2009-12-10 19:50:43Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -319,7 +319,7 @@ bool dskGameInterface::Msg_LeftDown(const MouseCoords& mc)
 			BuildingType bt = static_cast<noBuilding*>(gwv->GetNO(cselx,csely))->GetBuildingType();
 			// HQ
 			if(bt == BLD_HEADQUARTERS)
-				WindowManager::inst().Show(new iwHQ(gwv,gwv->GetSpecObj<nobHQ>(cselx,csely)));
+				WindowManager::inst().Show(new iwHQ(gwv,gwv->GetSpecObj<nobHQ>(cselx,csely),_("Headquarters"),3));
 			// Lagerhäuser
 			else if(bt == BLD_STOREHOUSE)
 				WindowManager::inst().Show(new iwStorehouse(gwv,gwv->GetSpecObj<nobStorehouse>(cselx,csely)));
@@ -393,15 +393,15 @@ bool dskGameInterface::Msg_LeftDown(const MouseCoords& mc)
 		else if(gwv->GetNO(cselx,csely)->GetType() == NOP_BUILDING && gwv->GetVisibility(cselx,csely) == VIS_VISIBLE)
 		{
 			// Ist es ein gewöhnliches Militärgebäude?
-			if(gwv->GetSpecObj<noBuilding>(cselx,csely)->GetBuildingType() >= BLD_BARRACKS &&
-				gwv->GetSpecObj<noBuilding>(cselx,csely)->GetBuildingType() <= BLD_FORTRESS)
+			BuildingType bt = gwv->GetSpecObj<noBuilding>(cselx,csely)->GetBuildingType();
+			if(bt >= BLD_BARRACKS && bt <= BLD_FORTRESS)
 			{
 				// Dann darf es nicht neu gebaut sein!
 				if(!gwv->GetSpecObj<nobMilitary>(cselx,csely)->IsNewBuilt())
 					action_tabs.attack = true;
 			}
-			// oder ein HQ?
-			else if(gwv->GetSpecObj<noBuilding>(cselx,csely)->GetBuildingType() == BLD_HEADQUARTERS)
+			// oder ein HQ oder Hafen?
+			else if(bt == BLD_HEADQUARTERS || bt == BLD_HARBORBUILDING)
 				action_tabs.attack = true;
 
 		}

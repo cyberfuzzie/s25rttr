@@ -1,4 +1,4 @@
-// $Id: iwHQ.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: iwHQ.h 5786 2009-12-10 19:50:43Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -29,11 +29,11 @@ class iwHQ : public iwBaseWarehouse
 {
 public:
 	/// Konstruktor von @p iwHQ.
-	iwHQ(GameWorldViewer * const gwv,nobHQ *hq);
+	iwHQ(GameWorldViewer * const gwv,nobBaseWarehouse *wh,  const char * const title, const unsigned pages_count);
 
 protected:
 
-	void Msg_Group_ButtonClick(const unsigned int group_id, const unsigned int ctrl_id);
+	virtual void Msg_Group_ButtonClick(const unsigned int group_id, const unsigned int ctrl_id);
 
 };
 

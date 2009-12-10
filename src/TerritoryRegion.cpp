@@ -1,4 +1,4 @@
-// $Id: TerritoryRegion.cpp 5655 2009-11-01 21:05:27Z OLiver $
+// $Id: TerritoryRegion.cpp 5786 2009-12-10 19:50:43Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -81,10 +81,10 @@ void TerritoryRegion::CalcTerritoryOfBuilding(const noBaseBuilding * const build
 	{
 		x=building->GetX()-r;
 
-		// Bei Häfen bzw. Hafenbaustellen ist der Radius geringwertig, d.h. er wird von allen
+		// Bei Hafenbaustellen ist der Radius geringwertig, d.h. er wird von allen
 		// anderen Militärgebäuden ggf. "überschrieben"
 		unsigned char radius_value = 
-			(building->GetBuildingType() == BLD_HARBORBUILDING) ? 100 : r;
+			(building->GetBuildingType() == BLD_HARBORBUILDING && building->GetGOT() == GOT_BUILDINGSITE) ? 100 : r;
 
 		// links oben
 		for(unsigned short i = 0;i<r;++i)

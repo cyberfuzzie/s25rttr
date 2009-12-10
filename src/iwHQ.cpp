@@ -1,4 +1,4 @@
-// $Id: iwHQ.cpp 5254 2009-07-12 15:49:16Z FloSoft $
+// $Id: iwHQ.cpp 5786 2009-12-10 19:50:43Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -42,8 +42,8 @@
  *
  *  @author OLiver
  */
-iwHQ::iwHQ(GameWorldViewer * const gwv,nobHQ *hq)
-	: iwBaseWarehouse(gwv,_("Headquarters"), 3, hq)
+iwHQ::iwHQ(GameWorldViewer * const gwv, nobBaseWarehouse *wh, const char * const title, const unsigned pages_count)
+	: iwBaseWarehouse(gwv,title, pages_count, wh)
 {
 	// Soldaten Reservierungsseite
 	ctrlGroup * reserve = AddGroup(102);
@@ -66,7 +66,7 @@ iwHQ::iwHQ(GameWorldViewer * const gwv,nobHQ *hq)
 		reserve->AddImageButton(16+i,118,95+Y_DISTANCE*i,24,24,TC_GREEN2,LOADER.GetImageN("io",138),_("More"));
 		// Anzahl-Text
 		reserve->AddVarText(21+i,100,100+Y_DISTANCE*i,_("%u/%u"),0xFFFFFF00,glArchivItem_Font::DF_CENTER,NormalFont,2,
-			hq->GetReservePointerAvailable(i),hq->GetReservePointerClaimed(i));
+			wh->GetReservePointerAvailable(i),wh->GetReservePointerClaimed(i));
 	}
 
 	reserve->SetVisible(false);
@@ -74,17 +74,20 @@ iwHQ::iwHQ(GameWorldViewer * const gwv,nobHQ *hq)
 
 void iwHQ::Msg_Group_ButtonClick(const unsigned int group_id, const unsigned int ctrl_id)
 {
-	// Minus-Button
-	if(ctrl_id >= 11 && ctrl_id < 16)
+	if(group_id == 102)
 	{
-		// Netzwerk-Nachricht generieren
-		GameClient::inst().AddGC(new gc::ChangeReserve(wh->GetX(),wh->GetY(),ctrl_id-11,wh->DecreaseReserveVisual(ctrl_id-11)));
-	}
-	// Plus-Button
-	else if(ctrl_id >= 16 && ctrl_id < 21)
-	{
-		// Netzwerk-Nachricht generieren
-		GameClient::inst().AddGC(new gc::ChangeReserve(wh->GetX(),wh->GetY(),ctrl_id-16,wh->IncreaseReserveVisual(ctrl_id-16)));
+		// Minus-Button
+		if(ctrl_id >= 11 && ctrl_id < 16)
+		{
+			// Netzwerk-Nachricht generieren
+			GameClient::inst().AddGC(new gc::ChangeReserve(wh->GetX(),wh->GetY(),ctrl_id-11,wh->DecreaseReserveVisual(ctrl_id-11)));
+		}
+		// Plus-Button
+		else if(ctrl_id >= 16 && ctrl_id < 21)
+		{
+			// Netzwerk-Nachricht generieren
+			GameClient::inst().AddGC(new gc::ChangeReserve(wh->GetX(),wh->GetY(),ctrl_id-16,wh->IncreaseReserveVisual(ctrl_id-16)));
+		}
 	}
 
 	

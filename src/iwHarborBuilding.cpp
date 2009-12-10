@@ -44,10 +44,10 @@
  *  @author OLiver
  */
 iwHarborBuilding::iwHarborBuilding(GameWorldViewer * const gwv,nobHarborBuilding *hb)
-	: iwBaseWarehouse(gwv,_("Harbor building"), 3, hb)
+	: iwHQ(gwv,hb, _("Harbor building"), 4)
 {
 	// Zusätzliche Hafenseite
-	ctrlGroup * harbor_page = AddGroup(102);
+	ctrlGroup * harbor_page = AddGroup(103);
 
 	// "Expedition"-Überschrift
 	harbor_page->AddText(0,83,70,_("Expedition"),0xFFFFFF00,glArchivItem_Font::DF_CENTER,NormalFont);
@@ -69,7 +69,7 @@ iwHarborBuilding::iwHarborBuilding(GameWorldViewer * const gwv,nobHarborBuilding
  */
 void iwHarborBuilding::AdjustExpeditionButton(bool flip)
 {
-	ctrlImageButton *button = GetCtrl<ctrlGroup>(102)->GetCtrl<ctrlImageButton>(1);
+	ctrlImageButton *button = GetCtrl<ctrlGroup>(103)->GetCtrl<ctrlImageButton>(1);
 
 	// Visuelle Rückmeldung, grün einfärben, wenn Expedition gestartet wurde
 	// Jeweils umgekehrte Farbe nehmen, da die Änderung ja spielerisch noch nicht 
@@ -103,7 +103,7 @@ void iwHarborBuilding::Msg_Group_ButtonClick(const unsigned int group_id, const 
 	default:
 		break;
 
-	case 102: // Hafengruppe?
+	case 103: // Hafengruppe?
 		{
 			switch(ctrl_id)
 			{
@@ -121,6 +121,6 @@ void iwHarborBuilding::Msg_Group_ButtonClick(const unsigned int group_id, const 
 	}
 
 	 // an Basis weiterleiten
-	iwBaseWarehouse::Msg_Group_ButtonClick(group_id,ctrl_id);
+	iwHQ::Msg_Group_ButtonClick(group_id,ctrl_id);
 }
 

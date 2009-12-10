@@ -1,5 +1,5 @@
 
-// $Id: GameClientPlayer.cpp 5785 2009-12-10 13:29:26Z jh $
+// $Id: GameClientPlayer.cpp 5786 2009-12-10 19:50:43Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1942,7 +1942,7 @@ void GameClientPlayer::TestForEmergencyProgramm()
 	unsigned sawmills = buildings[BLD_SAWMILL-10].size();
 	
 	// Wenn nötig, Notfallprogramm auslösen
-	if ((boards <= 10 || stones <= 10) && (woodcutter == 0 || sawmills == 0) && (!isDefeated())
+	if ((boards <= 10 || stones <= 10) && (woodcutter == 0 || sawmills == 0) && (!isDefeated()))
 	{
 		if (!emergency)
 		{

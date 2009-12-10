@@ -40,14 +40,25 @@ const unsigned int ship_count = 5;
 const std::string ship_names[ship_count] = {"FloSoftius", "Demophobius", "Olivianus", "Spikeonius", "Nastius"};
 
 /// Positionen der Flaggen am Schiff für die 6 unterschiedlichen Richtungen jeweils#
-const Point<int> SHIPS_FLAG_POS[6] =
+const Point<int> SHIPS_FLAG_POS[12] =
 {
+	// Und wenn das Schiff steht und Segel nicht gehisst hat
+	Point<int>(2,-70),
+	Point<int>(-1,-64),
+	Point<int>(2,-64),
+	Point<int>(-2,-70),
+	Point<int>(4,-63),
+	Point<int>(4,-63),
+
+	// Und wenn es fährt
 	Point<int>(2,-70),
 	Point<int>(-1,-64),
 	Point<int>(2,-64),
 	Point<int>(-2,-70),
 	Point<int>(4,-63),
 	Point<int>(4,-63)
+
+
 };
 
 /// Konstruktor
@@ -116,6 +127,8 @@ void noShip::Destroy()
 
 void noShip::Draw(int x, int y)
 {
+	unsigned flag_drawing_type = 0;
+
  	switch(state)
 	{
 	default:
@@ -129,6 +142,7 @@ void noShip::Draw(int x, int y)
 	case STATE_GOTOHARBOR:
 		{
 			DrawDriving(x,y);
+			flag_drawing_type = 1;
 		} break;
 	case STATE_EXPEDITION_LOADING:
 	case STATE_TRANSPORT_LOADING:
@@ -149,11 +163,12 @@ void noShip::Draw(int x, int y)
 	case STATE_TRANSPORT_DRIVING:
 		{
 			DrawDrivingWithWares(x,y);
+			flag_drawing_type = 1;
 		} break;
 	}
 
 	LOADER.GetMapImageN(3162+GAMECLIENT.GetGlobalAnimation(8,80,40,obj_id))->
-		Draw(x+SHIPS_FLAG_POS[dir].x,y+SHIPS_FLAG_POS[dir].y,0,0,0,0,0,0,COLOR_WHITE, COLORS[gwg->GetPlayer(player)->color]);
+		Draw(x+SHIPS_FLAG_POS[dir+flag_drawing_type*6].x,y+SHIPS_FLAG_POS[dir+flag_drawing_type*6].y,0,0,0,0,0,0,COLOR_WHITE, COLORS[gwg->GetPlayer(player)->color]);
 
 }
 /// Zeichnet normales Fahren auf dem Meer ohne irgendwelche Güter

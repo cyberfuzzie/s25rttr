@@ -1,4 +1,4 @@
-// $Id: iwAction.cpp 5787 2009-12-10 22:20:45Z OLiver $
+// $Id: iwAction.cpp 5790 2009-12-11 16:48:13Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -227,6 +227,16 @@ iwAction::iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, cons
 		AddAttackControls(group,params);
 		selected_soldiers_count = 1;
 	}
+
+	if(tabs.sea_attack)
+	{
+		ctrlGroup *group = main_tab->AddTab(LOADER.GetImageN("io", 177), _("Attack options"), TAB_SEAATTACK);
+
+		selected_soldiers_count_sea = 1;
+		available_soldiers_count_sea = GameClient::inst().GetLocalPlayer()->GetAvailableSoldiersForSeaAttack(selected_x,selected_y);
+
+		AddAttackControls(group,available_soldiers_count_sea);
+	}
 	
 	// Beobachten-main_tab
 	if(tabs.watch)
@@ -238,15 +248,7 @@ iwAction::iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, cons
 		group->AddImageButton(3, 120, 45,  60, 36, TC_GREY, LOADER.GetImageN("io", 180), _("Go to headquarters"));
 	}
 
-	if(tabs.sea_attack)
-	{
-		ctrlGroup *group = main_tab->AddTab(LOADER.GetImageN("io", 177), _("Attack options"), TAB_SEAATTACK);
 
-		selected_soldiers_count_sea = 1;
-		available_soldiers_count_sea = GameClient::inst().GetLocalPlayer()->GetAvailableSoldiersForSeaAttack(selected_x,selected_y);
-
-		AddAttackControls(group,available_soldiers_count_sea);
-	}
 
 	
 	main_tab->SetSelection(0, true);
@@ -368,6 +370,13 @@ void iwAction::Msg_TabChange(const unsigned int ctrl_id, const unsigned short ta
 			case TAB_ATTACK:
 				{
 					if(available_soldiers_count > 0)
+						height = 178;
+					else
+						height = 130;
+				} break;
+			case TAB_SEAATTACK:
+				{
+					if(available_soldiers_count_sea > 0)
 						height = 178;
 					else
 						height = 130;

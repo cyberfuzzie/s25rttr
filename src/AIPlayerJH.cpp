@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.cpp 5780 2009-12-08 23:13:44Z jh $
+// $Id: AIPlayerJH.cpp 5795 2009-12-13 15:24:39Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -745,19 +745,18 @@ void AIPlayerJH::ExecuteAIJob()
 
 	if (!currentJob)
 	{
-		if (aiJobs.size() > 0)
+		AIEvent::Base *ev;
+		ev = eventManager.GetEvent();
+		if (ev)
+			currentJob = new AIJH::EventJob(this, ev);
+		else if (aiJobs.size() > 0)
 		{
 			currentJob = aiJobs.front();
 			aiJobs.pop_front();
 		}
-		else
-		{
-			AIEvent::Base *ev = eventManager.GetEvent();
-			if (ev)
-				currentJob = new AIJH::EventJob(this, ev);
-		}
 	}
 
+	// Irgendwas zu tun? Tu es!
 	if (currentJob)
 		currentJob->ExecuteJob();
 }

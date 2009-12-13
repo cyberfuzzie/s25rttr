@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.h 5780 2009-12-08 23:13:44Z jh $
+// $Id: AIPlayerJH.h 5795 2009-12-13 15:24:39Z jh $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -229,6 +229,7 @@ protected:
 	// Required by the AIJobs:
 
 	std::vector<gc::GameCommand*> &GetGCS() { return gcs; }
+	const GameClientPlayer * const GetPlayer() const { return player; }
 	const GameWorldBase *GetGWB() { return gwb; }
 	unsigned char GetPlayerID() { return playerid; }
 

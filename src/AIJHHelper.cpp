@@ -103,6 +103,12 @@ void AIJH::BuildJob::TryToBuild()
 	MapCoord bx = around_x;
 	MapCoord by = around_y;
 
+
+	if (aijh->GetPlayer()->GetBuildingSites().size() > 15)
+	{
+		return;
+	}
+
 	if (!aijh->Wanted(type))
 	{
 		status = AIJH::JOB_FINISHED;

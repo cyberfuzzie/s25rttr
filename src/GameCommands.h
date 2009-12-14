@@ -46,6 +46,8 @@ enum Type
 	STARTEXPEDITION,
 	STARTATTACKINGEXPEDITION,
 	EXPEDITION_COMMAND,
+	SEAATTACK,
+	SEAATTACKFALLBACK,
 	SURRENDER,
 	CHEAT_ARMAGEDDON,
 	DESTROYALL
@@ -391,9 +393,10 @@ public:
 	void Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid);
 };
 
-/// Angriff starten
-class Attack : public Coords
+/// Basisklasse für beide Angriffstypen
+class BaseAttack : public Coords
 {
+protected:
 	friend class GameClient;
 	/// Anzahl der Soldaten
 	const unsigned soldiers_count;
@@ -401,9 +404,9 @@ class Attack : public Coords
 	const bool strong_soldiers;
 	
 public:
-	Attack(const MapCoord x, const MapCoord y, const unsigned soldiers_count, const bool strong_soldiers)
+	BaseAttack(const Type gst, const MapCoord x, const MapCoord y, const unsigned soldiers_count, const bool strong_soldiers)
 		: Coords(ATTACK,x,y), soldiers_count(soldiers_count), strong_soldiers(strong_soldiers) {}
-	Attack(Serializer * ser)
+	BaseAttack(const Type gst, Serializer * ser)
 		: Coords(ATTACK,ser),
 		soldiers_count(ser->PopUnsignedInt()), strong_soldiers(ser->PopBool()) {}
 
@@ -415,9 +418,48 @@ public:
 		ser->PushBool(strong_soldiers);
 	}
 
+};
+
+
+/// Angriff starten
+class Attack : public BaseAttack
+{
+public:
+	Attack(const MapCoord x, const MapCoord y, const unsigned soldiers_count, const bool strong_soldiers)
+		: BaseAttack(ATTACK,x,y,soldiers_count,strong_soldiers) {}
+	Attack(Serializer * ser)
+		: BaseAttack(ATTACK,ser) {}
+
 	/// Führt das GameCommand aus
 	void Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid);
 };
+
+/// See-Angriff starten
+class SeaAttack : public BaseAttack
+{
+public:
+	SeaAttack(const MapCoord x, const MapCoord y, const unsigned soldiers_count, const bool strong_soldiers)
+		: BaseAttack(SEAATTACK,x,y,soldiers_count,strong_soldiers) {}
+	SeaAttack(Serializer * ser)
+		: BaseAttack(SEAATTACK,ser) {}
+
+	/// Führt das GameCommand aus
+	void Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid);
+};
+
+/// Späher rufen
+class SeaAttackFallback : public Coords
+{
+public:
+	SeaAttackFallback(const MapCoord x, const MapCoord y)
+		: Coords(SEAATTACKFALLBACK,x,y) {}
+	SeaAttackFallback(Serializer * ser)
+		: Coords(SEAATTACKFALLBACK,ser) {}
+
+	/// Führt das GameCommand aus
+	void Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid);
+};
+
 
 /// Spielerwechsel
 class SwitchPlayer : public GameCommand

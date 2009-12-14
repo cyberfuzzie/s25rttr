@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 5656 2009-11-02 15:57:18Z jh $
+// $Id: GameWorldGame.cpp 5798 2009-12-14 21:30:06Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -919,7 +919,11 @@ void GameWorldGame::Attack(const unsigned char player_attacker, const MapCoord x
 	}
 
 	/*if(!soldiers.size())
-		LOG.lprintf("GameWorldGame::Attack: WARNING: Attack failed. No Soldiers available!\n");*/
+		LOG.lprintfS("GameWorldGame::Attack: WARNING: Attack failed. No Soldiers available!\n");*/
+}
+
+void  GameWorldGame::AttackViaSea(const unsigned char player_attacker, const MapCoord x, const MapCoord y, const unsigned short soldiers_count, const bool strong_soldiers)
+{
 }
 
 

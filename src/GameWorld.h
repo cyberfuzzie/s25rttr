@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 5787 2009-12-10 22:20:45Z OLiver $
+// $Id: GameWorld.h 5798 2009-12-14 21:30:06Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -611,7 +611,8 @@ public:
 	void RecalcTerritory(const noBaseBuilding * const building,const unsigned short radius, const bool destroyed, const bool newBuilt);
 	/// Greift ein Militärgebäude auf x,y an (entsendet dafür die Soldaten etc.)
 	void Attack(const unsigned char player_attacker, const MapCoord x, const MapCoord y, const unsigned short soldiers_count, const bool strong_soldiers);
-
+	/// Greift ein Militäregebäude mit Schiffen an 
+	void AttackViaSea(const unsigned char player_attacker, const MapCoord x, const MapCoord y, const unsigned short soldiers_count, const bool strong_soldiers);
 	// Liefert das entsprechende Militärquadrat für einen bestimmten Punkt auf der Karte zurück (normale Koordinaten)
 	list<nobBaseMilitary*>& GetMilitarySquare(const MapCoord x, const MapCoord y)
 	{ return military_squares[(y/MILITARY_SQUARE_SIZE)*(width/MILITARY_SQUARE_SIZE+1)+x/MILITARY_SQUARE_SIZE]; }

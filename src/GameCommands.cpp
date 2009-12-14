@@ -131,6 +131,16 @@ void Attack::Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigne
 {
 	gwg.Attack(playerid,x,y,soldiers_count,strong_soldiers);
 }
+
+void SeaAttack::Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid)
+{
+	gwg.AttackViaSea(playerid,x,y,soldiers_count,strong_soldiers);
+}
+
+void SeaAttackFallback::Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid)
+{
+	
+}
 void SwitchPlayer::Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid)
 {
 }

@@ -1,4 +1,4 @@
-// $Id: iwAction.cpp 5790 2009-12-11 16:48:13Z OLiver $
+// $Id: iwAction.cpp 5798 2009-12-14 21:30:06Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -315,6 +315,11 @@ void iwAction::Msg_Group_ButtonClick(const unsigned int group_id, const unsigned
 		{
 			Msg_ButtonClick_TabAttack(ctrl_id);
 		} break;
+	case TAB_SEAATTACK:
+		{
+			Msg_ButtonClick_TabSeaAttack(ctrl_id);
+		} break;
+
 
 	case TAB_FLAG:
 		{
@@ -462,6 +467,43 @@ void iwAction::Msg_ButtonClick_TabAttack(const unsigned int ctrl_id)
 		} break;
 	}
 }
+
+
+void iwAction::Msg_ButtonClick_TabSeaAttack(const unsigned int ctrl_id)
+{
+	switch(ctrl_id)
+	{
+	case 1: // 1 Soldat weniger
+		{
+			if(selected_soldiers_count_sea > 1)
+				--selected_soldiers_count_sea;
+		} break;
+	case 2: // 1 Soldat mehr
+		{
+			if(selected_soldiers_count_sea < available_soldiers_count_sea)
+				++selected_soldiers_count_sea;
+		} break;
+	case 10: // auf bestimmte Anzahl setzen
+	case 11:
+	case 12:
+	case 13:
+		{
+			if(available_soldiers_count_sea > 4)
+				selected_soldiers_count_sea = (ctrl_id-9) * available_soldiers_count_sea / 4;
+			else
+				selected_soldiers_count_sea = ctrl_id-9;
+		} break;
+	case 4: // Angriff!
+		{
+			ctrlOptionGroup *ogroup = GetCtrl<ctrlTab>(0)->GetGroup(TAB_SEAATTACK)->GetCtrl<ctrlOptionGroup>(3);
+
+			GAMECLIENT.AddGC(new gc::SeaAttack(selected_x, selected_y, selected_soldiers_count_sea, (ogroup->GetSelection() == 1)));
+
+			Close();
+		} break;
+	}
+}
+
 
 void iwAction::Msg_ButtonClick_TabFlag(const unsigned int ctrl_id)
 {

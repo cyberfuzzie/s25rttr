@@ -1,4 +1,4 @@
-// $Id: iwAction.h 5787 2009-12-10 22:20:45Z OLiver $
+// $Id: iwAction.h 5798 2009-12-14 21:30:06Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -90,6 +90,7 @@ private:
 	inline void Msg_ButtonClick_TabCutRoad(const unsigned int ctrl_id);
 	inline void Msg_ButtonClick_TabFlag(const unsigned int ctrl_id);
 	inline void Msg_ButtonClick_TabAttack(const unsigned int ctrl_id);
+	inline void Msg_ButtonClick_TabSeaAttack(const unsigned int ctrl_id);
 	inline void Msg_ButtonClick_TabSetFlag(const unsigned int ctrl_id);
 	inline void Msg_ButtonClick_TabWatch(const unsigned int ctrl_id);
 

@@ -1,4 +1,4 @@
-// $Id: iwOptionsWindow.cpp 5259 2009-07-13 15:53:31Z FloSoft $
+// $Id: iwOptionsWindow.cpp 5841 2010-01-03 18:47:04Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -33,6 +33,7 @@
 #include "iwSurrender.h"
 #include "iwTextfile.h"
 #include "iwSave.h"
+#include "iwSettings.h"
 
 #include "SoundManager.h"
 #include "AudioDriverWrapper.h"
@@ -54,10 +55,10 @@
  *
  *  @author OLiver
  */
-iwOptionsWindow::iwOptionsWindow()
-	: IngameWindow(CGI_OPTIONSWINDOW, 0xFFFF, 0xFFFF, 300, 505, _("Game menu"), LOADER.GetImageN("resource", 41))
+iwOptionsWindow::iwOptionsWindow(dskGameInterface *gameDesktop)
+	: IngameWindow(CGI_OPTIONSWINDOW, 0xFFFF, 0xFFFF, 300, 515, _("Game menu"), LOADER.GetImageN("resource", 41))
 {
-	
+	this->gameDesktop = gameDesktop;
 
 	// Der Soldat oben
 	AddImage(1, 150, 36, LOADER.GetImageN("io", 30));
@@ -100,10 +101,13 @@ iwOptionsWindow::iwOptionsWindow()
 	//// Music Player
 	AddTextButton(16,100,380,160,22,TC_GREEN2,_("Music player"),NormalFont);
 
+	// Advanced Options
+	AddTextButton(18, 67, 412, 168, 24, TC_GREEN2, _("Advanced"),NormalFont);	
+
 	// "Spiel aufgeben"
-	AddTextButton(17, 67, 425, 168, 24, TC_RED1, _("Surrender"),NormalFont);
+	AddTextButton(17, 67, 443, 168, 24, TC_RED1, _("Surrender"),NormalFont);
 	// "Spiel beenden"
-	AddTextButton(0, 67, 460, 168, 24, TC_RED1, _("End game"),NormalFont);
+	AddTextButton(0, 67, 474, 168, 24, TC_RED1, _("End game"),NormalFont);
 	
 }
 
@@ -157,6 +161,12 @@ void iwOptionsWindow::Msg_ButtonClick(const unsigned int ctrl_id)
 			WindowManager::inst().Show(new iwSurrender);
 			Close();
 		} break;
+	case 18: // Advanced
+		{
+			WindowManager::inst().Show(new iwSettings(this->gameDesktop));
+			Close();
+		} break;
+
 	}
 }
 

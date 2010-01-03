@@ -1,4 +1,4 @@
-// $Id: Settings.h 5637 2009-10-15 16:18:56Z FloSoft $
+// $Id: Settings.h 5841 2010-01-03 18:47:04Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -88,6 +88,10 @@ public:
 	struct {
 		unsigned int autosave_interval;
 	} savegames;
+	
+	struct {
+		bool StatScale;
+	}ingame;
 
 private:
 	static const unsigned int SETTINGS_VERSION;

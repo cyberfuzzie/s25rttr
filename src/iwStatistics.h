@@ -39,6 +39,7 @@ private:
   StatisticTime currentTime;
   ctrlText *headline;
   ctrlText *maxValue;
+  ctrlText *minValue;
   std::vector<ctrlText*> timeAnnotations;
   std::vector<bool> activePlayers;
   unsigned numPlayingPlayers;

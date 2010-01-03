@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 5787 2009-12-10 22:20:45Z OLiver $
+// $Id: GameWorldBase.cpp 5841 2010-01-03 18:47:04Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -225,15 +225,18 @@ MapCoord GameWorldBase::CalcDistanceAroundBorderY(const MapCoord y1, const MapCo
  */
 unsigned char GameWorldBase::GetRoad(const MapCoord x, const MapCoord y, unsigned char dir, bool all) const
 {
-	assert(dir < 6);
+	assert(dir < 3);
 
 	assert(x < width && y < height);
 
 	unsigned pos = width * unsigned(y) + unsigned(x);
 
 	// Entweder muss es eine richtige Straße sein oder es müssen auch visuelle Straßen erlaubt sein
-	if(nodes[pos].roads_real[dir] || all)
-		return nodes[pos].roads[dir];
+	if(dir < 3)
+	{
+		if(nodes[pos].roads_real[(unsigned)dir] || all)
+			return nodes[pos].roads[(unsigned)dir];
+	}
 
 	return 0;
 }
@@ -249,7 +252,7 @@ unsigned char GameWorldBase::GetPointRoad(const MapCoord x, const MapCoord y, un
 	assert(dir < 6);
 
 	if(dir >= 3)
-		return GetRoad(x, y, dir - 3, all);
+		return GetRoad(x, y, dir % 3, all);
 	else
 		return GetRoad(GetXA(x, y, dir), GetYA(x, y, dir), dir, all);
 }

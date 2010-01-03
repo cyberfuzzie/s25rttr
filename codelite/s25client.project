@@ -414,6 +414,8 @@
         <File Name="../src/iwPleaseWait.h"/>
         <File Name="../src/iwShip.cpp"/>
         <File Name="../src/iwShip.h"/>
+        <File Name="../src/iwSettings.cpp"/>
+        <File Name="../src/iwSettings.h"/>
       </VirtualDirectory>
       <File Name="../src/PostMsg.cpp"/>
       <File Name="../src/PostMsg.h"/>

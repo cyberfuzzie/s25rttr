@@ -1,4 +1,4 @@
-// $Id: ctrlRectangle.h 5098 2009-06-24 17:09:39Z FloSoft $
+// $Id: ctrlRectangle.h 5838 2010-01-03 12:27:38Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -34,8 +34,8 @@ public:
 	virtual void SetHeight(const unsigned short height) { this->height = height; }
 
 	/// Liefert Breite und Höhe zurück
-	unsigned short GetWidth() const { return width; }
-	unsigned short GetHeight() const { return height; }
+	unsigned short GetWidth(const bool scale = false) const { return (scale) ? ScaleX(width) : width; }
+	unsigned short GetHeight(const bool scale = false) const { return (scale) ? ScaleY(height) : height; }
 
 protected:
 

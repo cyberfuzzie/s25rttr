@@ -1,4 +1,4 @@
-// $Id: const_gui_ids.h 5178 2009-07-03 11:55:24Z OLiver $
+// $Id: const_gui_ids.h 5841 2010-01-03 18:47:04Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -59,6 +59,7 @@ enum GUI_ID
 	CGI_SUGGESTPACT,
 	CGI_SHIP,
 	CGI_HELPBUILDING,
+	CGI_SETTINGS,
 	CGI_NEXT = CGI_HELPBUILDING+40
  
 };

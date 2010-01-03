@@ -1,4 +1,4 @@
-// $Id: iwMainMenu.cpp 5763 2009-12-06 17:37:44Z OLiver $
+// $Id: iwMainMenu.cpp 5841 2010-01-03 18:47:04Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -35,6 +35,7 @@
 #include "iwBuildings.h"
 #include "iwBuildingProductivities.h"
 #include "iwStatistics.h"
+#include "iwSettings.h"
 #include "iwDiplomacy.h"
 #include "iwShip.h"
 
@@ -148,7 +149,7 @@ void iwMainMenu::Msg_ButtonClick(const unsigned int ctrl_id)
 	
 	case 30: // Optionen
 		{
-			WindowManager::inst().Show(new iwOptionsWindow);
+			WindowManager::inst().Show(new iwOptionsWindow(this->gi));
 		} break;
 	}
 } 

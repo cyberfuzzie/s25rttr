@@ -1,4 +1,4 @@
-// $Id: dskSelectMap.cpp 5620 2009-10-10 10:05:03Z FloSoft $
+// $Id: dskSelectMap.cpp 5838 2010-01-03 12:27:38Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -131,7 +131,7 @@ dskSelectMap::dskSelectMap(const CreateServerInfo& csi)
 	AddPreviewMinimap(11, 110, 445, 140, 140, NULL);
 	AddText(12, 260, 470, _("Map: "), COLOR_YELLOW, glArchivItem_Font::DF_LEFT, NormalFont);
 	AddText(13, 260, 490, _("Mapfile: "), COLOR_YELLOW, glArchivItem_Font::DF_LEFT, NormalFont);
-
+	
 	// "Eigene" auswählen
 	optiongroup->SetSelection(5, true);
 
@@ -181,7 +181,7 @@ void dskSelectMap::Msg_OptionGroupChange(const unsigned int ctrl_id, const unsig
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  
+ *  Occurs when user changes the selection in the table of maps.
  *
  *  @author FloSoft
  */
@@ -193,14 +193,14 @@ void dskSelectMap::Msg_TableSelectItem(const unsigned int ctrl_id, const unsigne
 		{
 			ctrlTable *table = GetCtrl<ctrlTable>(1);
 
-			// Ist die Auswahl gültig?
+			// is the selection valid?
 			if(selection < table->GetRowCount())
 			{
-				// Kartenpfad aus Tabelle holen
+				// get path to map from table
 				std::string path = table->GetItemText(selection, 5);
 
 				libsiedler2::ArchivInfo ai;
-				// Karteninformationen laden
+				// load map data
 				if(libsiedler2::loader::LoadMAP(path.c_str(), &ai) == 0)
 				{
 					glArchivItem_Map *map = dynamic_cast<glArchivItem_Map*>(ai.get(0));
@@ -211,10 +211,11 @@ void dskSelectMap::Msg_TableSelectItem(const unsigned int ctrl_id, const unsigne
 
 						ctrlText *text = GetCtrl<ctrlText>(12);
 						text->SetText(std::string(map->getHeader().getName()) );
-						text->Move(110 + preview->GetWidth() + 10, text->GetY(true), true);
+						text->Move(preview->GetX(true) + preview->GetWidth() + 10, text->GetY(true), true);
+
 						text = GetCtrl<ctrlText>(13);
 						text->SetText(path.c_str());
-						text->Move(110 + preview->GetWidth() + 10, text->GetY(true), true);
+						text->Move(preview->GetX(true) + preview->GetWidth() + 10, text->GetY(true), true);
 					}
 				}
 			}

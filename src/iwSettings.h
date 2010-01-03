@@ -1,4 +1,4 @@
-// $Id: iwOptionsWindow.h 5841 2010-01-03 18:47:04Z OLiver $
+// $Id: iwSettings.h 
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -16,25 +16,31 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Siedler II.5 RTTR. If not, see <http://www.gnu.org/licenses/>.
+#ifndef iwSETTINGS_H_INCLUDED
+#define iwSETTINGS_H_INCLUDED
 
-#ifndef iwOPTIONSWINDOW_H_INCLUDED
-#define iwOPTIONSWINDOW_H_INCLUDED
+#pragma once
 
 #include "IngameWindow.h"
+#include "../driver/src/VideoDriver.h"
 
-class dskGameInterface;
+#include "dskGameInterface.h"
 
-class iwOptionsWindow : public IngameWindow
+/// Fenster mit den Statistiken.
+class iwSettings : public IngameWindow
 {
 
 public:
 
-	iwOptionsWindow(dskGameInterface *gameDesktop);
+	/// Konstruktor von @p iwStatistics.
+	iwSettings(dskGameInterface *gameDesktop);
+	~iwSettings();
 
 private:
+	std::vector<VideoDriver::VideoMode> video_modes; ///< Vector für die Auflösungen
+	void Msg_OptionGroupChange(const unsigned int ctrl_id, const unsigned short selection);
+	void Msg_CheckboxChange(const unsigned int ctrl_id, const bool checked);
 	dskGameInterface *gameDesktop;
-	void Msg_ButtonClick(const unsigned int ctrl_id);
-	void Msg_ProgressChange(const unsigned int ctrl_id, const unsigned short position);
 };
 
-#endif
+#endif // !iwSETTINGS_H_INCLUDED

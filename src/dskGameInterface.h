@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.h 5332 2009-07-26 13:06:22Z jh $
+// $Id: dskGameInterface.h 5841 2010-01-03 18:47:04Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -94,6 +94,8 @@ public:
 
 	void LC_Status_ConnectionLost(void);
 	void LC_Status_Error(const std::string &error);
+	/// Called whenever Settings are changed ingame
+  	void SettingsChanged(void);
 
 	/// Lässt das Spiel laufen (zeichnen)
 	void Run();

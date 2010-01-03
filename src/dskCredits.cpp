@@ -1,4 +1,4 @@
-// $Id: dskCredits.cpp 5247 2009-07-11 19:13:17Z FloSoft $
+// $Id: dskCredits.cpp 5839 2010-01-03 13:10:52Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -69,47 +69,49 @@ dskCredits::dskCredits(void) : Desktop(LOADER.GetImageN("setup013", 0))
 	AddText(4, 400, 120, "Oliver Siebert (OLiver)", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
 	// "FloSoft"
 	AddText(5, 400, 140, "Florian Doersch (FloSoft)", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
+	// "jh"
+	AddText(6, 400, 160, "Jan-Henrik Kluth (jh)", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
 
-	// "Spieletester"
-	AddText( 6, 400, 180, _("Game testers"), COLOR_RED, glArchivItem_Font::DF_CENTER, LargeFont);
+	// "Qualitätssicherung"
+	AddText( 7, 400, 200, _("Quality assurance"), COLOR_RED, glArchivItem_Font::DF_CENTER, LargeFont);
 	// "Demophobie"
-	AddText(7, 400, 210, "Patrick Haak (Demophobie)", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
+	AddText(8, 400, 230, "Patrick Haak (Demophobie)", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
 	// "NastX"
-	AddText(8, 400, 230, "Jonas Trampe (NastX)", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
+	AddText(9, 400, 250, "Jonas Trampe (NastX)", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
 
 
 	// "Sonstige Unterstützung"
-	AddText( 9, 400, 270, _("Other Support"), COLOR_RED, glArchivItem_Font::DF_CENTER, LargeFont);
+	AddText(10, 400, 290, _("Other Support"), COLOR_RED, glArchivItem_Font::DF_CENTER, LargeFont);
 	// "muhahahaha"
-	AddText(10, 330, 300, "muhahahaha", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
+	AddText(11, 330, 320, "muhahahaha", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
 	// "Zwoks-Stef"
-	AddText(11, 470, 300, "Zwoks-Stef", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
+	AddText(12, 470, 320, "Zwoks-Stef", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
 	// "Devil"
-	AddText(12, 330, 320, "Devil", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
+	AddText(13, 330, 340, "Devil", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
 	// "Cat666"
-	AddText(13, 470, 320, "Cat666", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
+	AddText(14, 470, 340, "Cat666", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
 	// "Sotham"
-	AddText(14, 330, 340, "Sotham", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
+	AddText(15, 330, 360, "Sotham", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
 	// "liwo"
-	AddText(15, 470, 340, "liwo", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
+	AddText(16, 470, 360, "liwo", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
 	// "Airhardt"
-	AddText(16, 330, 360, "Airhardt", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
-    // "Divan"
-    AddText(17, 470, 360, "Divan", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
-    // "Fenan"
-    AddText(18, 330, 380, "Fenan", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
+	AddText(17, 330, 380, "Airhardt", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
+    	// "Divan"
+    	AddText(18, 470, 380, "Divan", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
+    	// "Fenan"
+    	AddText(19, 330, 400, "Fenan", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
 
 	// "Spender:"
-	AddText( 19, 400, 420, _("Donators"), COLOR_RED, glArchivItem_Font::DF_CENTER, LargeFont);
+	AddText( 20, 400, 440, _("Donators"), COLOR_RED, glArchivItem_Font::DF_CENTER, LargeFont);
 	// "diverse anonyme Spenden"
-	AddText(20, 400, 450, _("various anonymous donators"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
+	AddText(21, 400, 470, _("various anonymous donators"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
 	// "morlock"
-	AddText(21, 400, 470, "morlock", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
+	AddText(22, 400, 490, "morlock", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
 	// "Jan Montag"
-	AddText(22, 400, 490, "Jan Montag", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
+	AddText(23, 400, 510, "Jan Montag", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
 
 	// "Vielen Dank an alle Spender!"
-	AddText(23, 400, 520, _("Thank you for your donations!"), COLOR_RED, glArchivItem_Font::DF_CENTER, NormalFont);
+	AddText(24, 400, 530, _("Thank you for your donations!"), COLOR_RED, glArchivItem_Font::DF_CENTER, NormalFont);
 }
 
 void dskCredits::Msg_ButtonClick(const unsigned int ctrl_id)

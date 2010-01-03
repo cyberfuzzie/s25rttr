@@ -1,4 +1,4 @@
-// $Id: Window.cpp 5311 2009-07-22 17:53:32Z jh $
+// $Id: Window.cpp 5838 2010-01-03 12:27:38Z Demophobie $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1163,12 +1163,12 @@ bool Window::TestWindowInRegion(Window *window, const MouseCoords& mc)
  *
  *  @author FloSoft
  */
-unsigned short Window::ScaleX(const unsigned short val)
+unsigned short Window::ScaleX(unsigned short val) const
 {
 	return  val*VideoDriverWrapper::inst().GetScreenWidth()/800;
 }
 
-unsigned short Window::ScaleY(const unsigned short val)
+unsigned short Window::ScaleY(unsigned short val) const
 {
 	return val*VideoDriverWrapper::inst().GetScreenHeight()/600;
 }

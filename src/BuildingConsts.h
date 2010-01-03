@@ -1,4 +1,4 @@
-// $Id: BuildingConsts.h 5688 2009-11-23 16:48:42Z Demophobie $
+// $Id: BuildingConsts.h 5843 2010-01-03 21:22:44Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -61,6 +61,7 @@ const BuildingCost BUILDING_COSTS[4][40] =
 	}
 };
 
+// Größe der Gebäude
 enum BuildingSize
 {
 	BZ_HUT = 0,
@@ -69,7 +70,7 @@ enum BuildingSize
 	BZ_MINE
 };
 
-// Größe der Gebäude
+// Bauqualitäten der Gebäude
 const BuildingQuality BUILDING_SIZE[40] =
 {
 	BQ_CASTLE,

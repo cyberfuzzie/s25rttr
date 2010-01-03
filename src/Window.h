@@ -1,4 +1,4 @@
-// $Id: Window.h 4959 2009-05-26 16:17:23Z Demophobie $
+// $Id: Window.h 5842 2010-01-03 21:18:57Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -256,9 +256,9 @@ public:
 
 protected:
 
-	/// Skaliert X- und Y Werte
-	unsigned short ScaleX(const unsigned short val);
-	unsigned short ScaleY(const unsigned short val);
+	/// scales X- und Y values to fit the screen
+	unsigned short ScaleX(const unsigned short val) const;
+	unsigned short ScaleY(const unsigned short val) const;
 	/// setzt Scale-Wert, ob neue Controls skaliert werden sollen oder nicht.
 	void SetScale(bool scale = true) { this->scale = scale; }
 	/// zeichnet die Steuerelemente.

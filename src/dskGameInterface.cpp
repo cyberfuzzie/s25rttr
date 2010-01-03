@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.cpp 5787 2009-12-10 22:20:45Z OLiver $
+// $Id: dskGameInterface.cpp 5841 2010-01-03 18:47:04Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -140,6 +140,31 @@ dskGameInterface::~dskGameInterface()
 {
 	GLOBALVARS.ingame = false;
 }
+void dskGameInterface::SettingsChanged(void)
+ {
+ 	// recreate borders
+ 	cbb.buildBorder(VideoDriverWrapper::inst().GetScreenWidth(),
+ 		VideoDriverWrapper::inst().GetScreenHeight(),&borders);
+ 
+ 	// move buttons
+ 	int barx = (VideoDriverWrapper::inst().GetScreenWidth() - LOADER.GetImageN("resource", 29)->getWidth()) / 2 + 44;
+ 	int bary = VideoDriverWrapper::inst().GetScreenHeight() - LOADER.GetImageN("resource", 29)->getHeight() + 4;
+ 
+ 	ctrlImageButton *button = GetCtrl<ctrlImageButton>(0);
+ 	button->Move(barx, bary, true);
+ 
+ 	button = GetCtrl<ctrlImageButton>(1);
+ 	button->Move(barx + 37, bary, true);
+ 
+ 	button = GetCtrl<ctrlImageButton>(2);
+ 	button->Move(barx + 37 * 2, bary, true);
+ 
+ 	button = GetCtrl<ctrlImageButton>(3);
+ 	button->Move(barx + 37 * 3, bary, true);
+ 
+ 	// refresh view (does not change position)
+ 	this->gwv->MoveTo(0, 0);
+ }
 
 void dskGameInterface::Msg_ButtonClick(const unsigned int ctrl_id)
 {
@@ -511,7 +536,7 @@ bool dskGameInterface::Msg_KeyDown(const KeyEvent& ke)
 		} return true;
 	case KT_F12: // Optionsfenster
 		{
-			WindowManager::inst().Show(new iwOptionsWindow);
+			WindowManager::inst().Show(new iwOptionsWindow(this));
 		} return true;
 
 

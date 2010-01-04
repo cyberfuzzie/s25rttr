@@ -38,9 +38,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
 #if defined _WIN32 && defined _DEBUG && defined _MSC_VER
-	#define new new(_NORMAL_BLOCK, THIS_FILE, __LINE__)
-	#undef THIS_FILE
-	static char THIS_FILE[] = __FILE__;
+#define new new(_NORMAL_BLOCK, THIS_FILE, __LINE__)
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -50,26 +50,26 @@
  *  @author NastX
  */
 iwSettings::iwSettings(dskGameInterface *gameDesktop)
-	: IngameWindow(CGI_SETTINGS, 0xFFFF, 0xFFFF, 300, 300, _("Settings"), LOADER.GetImageN("resource", 41))
+	: IngameWindow(CGI_SETTINGS, 0xFFFF, 0xFFFF, 300, 300, _("Settings"), LOADER.GetImageN("resource", 41),
+	gameDesktop(gameDesktop)
 {
-	this->gameDesktop = gameDesktop;
+	AddText(  46,  15,  40, _("Resolution :"), COLOR_YELLOW, 0, NormalFont);
+	AddText(  47,  15,  85, _("Mode :"), COLOR_YELLOW, 0, NormalFont);
+	AddCheckBox(4, 110, 120, 150, 26, TC_GREY, _("Statistic Scale"), NormalFont, false);
 
-  AddText(  46,  15,  40, _("Resolution :"), COLOR_YELLOW, 0, NormalFont);
-  AddText(  47,  15,  85, _("Mode :"), COLOR_YELLOW, 0, NormalFont);
-  AddCheckBox(4, 110, 120, 150, 26, TC_GREY, _("Statistic Scale"), NormalFont, false);
-  
-  // "Vollbild"
-  ctrlOptionGroup *optiongroup = AddOptionGroup(10, ctrlOptionGroup::CHECK, scale);
-  optiongroup = AddOptionGroup(3, ctrlOptionGroup::CHECK, scale);
-  optiongroup->AddTextButton(1, 110, 70, 150, 22, TC_GREY, _("Fullscreen"), NormalFont);
-  optiongroup->AddTextButton(2, 110, 95, 150, 22, TC_GREY, _("Windowed"), NormalFont);
-  // "Vollbild" setzen
-  optiongroup = GetCtrl<ctrlOptionGroup>(3);
-  optiongroup->SetSelection( (SETTINGS.video.fullscreen ? 1 : 2) );
-  VideoDriverWrapper::inst().ListVideoModes(video_modes);
-	
+	// "Vollbild"
+	ctrlOptionGroup *optiongroup = AddOptionGroup(10, ctrlOptionGroup::CHECK, scale);
+	optiongroup = AddOptionGroup(3, ctrlOptionGroup::CHECK, scale);
+	optiongroup->AddTextButton(1, 110, 70, 150, 22, TC_GREY, _("Fullscreen"), NormalFont);
+	optiongroup->AddTextButton(2, 110, 95, 150, 22, TC_GREY, _("Windowed"), NormalFont);
+
+	// "Vollbild" setzen
+	optiongroup = GetCtrl<ctrlOptionGroup>(3);
+	optiongroup->SetSelection( (SETTINGS.video.fullscreen ? 1 : 2) );
+	VideoDriverWrapper::inst().ListVideoModes(video_modes);
+
 	// "Auflösung"
-  AddComboBox(0, 110, 35, 150, 22, TC_GREY, NormalFont, 150);
+	AddComboBox(0, 110, 35, 150, 22, TC_GREY, NormalFont, 150);
 
 	// Und zu der Combobox hinzufügen
 	for(unsigned i = 0;i<video_modes.size();++i)
@@ -93,58 +93,76 @@ iwSettings::iwSettings(dskGameInterface *gameDesktop)
 			--i;
 		}
 	}
-  
 }
 
-void iwSettings::Msg_OptionGroupChange(const unsigned int ctrl_id, const unsigned short selection)
-{
-  switch(ctrl_id)
-  {
-  case 3:
-  	switch(selection)
- 	{
-  	 case 1:
-  	  SETTINGS.video.fullscreen = true;
-  	  break;
-  	 case 2:
-  	  SETTINGS.video.fullscreen = false;
-  	  break;
-        }
-  break;
-  }  
-}
-
-void iwSettings::Msg_CheckboxChange(const unsigned int ctrl_id, const bool checked)
-{
-  switch(ctrl_id)
-  {
-    case 4:
-    {
-      SETTINGS.ingame.StatScale = checked;
-      break;
-    }
-    case 5:
-    {
-      break;
-    }
-  }
-}
-
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author NastX
+ */
 iwSettings::~iwSettings()
 { 
-  ctrlComboBox *SizeCombo = GetCtrl<ctrlComboBox>(42);
-  SETTINGS.video.width = video_modes[SizeCombo->GetSelection()].width;
-  SETTINGS.video.height = video_modes[SizeCombo->GetSelection()].height;
-  // Auflösung/Vollbildmodus geändert?
-  if(SETTINGS.video.width != VideoDriverWrapper::inst().GetScreenWidth() ||
-  SETTINGS.video.height != VideoDriverWrapper::inst().GetScreenHeight() ||
-  SETTINGS.video.fullscreen != VideoDriverWrapper::inst().IsFullscreen())
-  {
-      if(!VideoDriverWrapper::inst().ResizeScreen(SETTINGS.video.width,SETTINGS.video.height,SETTINGS.video.fullscreen)){
-	 // WindowManager::inst().Show(new iwMsgbox(_("Sorry!"), _("You need to restart your game to change the screen resolution!"), this, MSB_OK, MSB_EXCLAMATIONGREEN, 1));
-	} else {
-		// notify that settings where changed
-		this->gameDesktop->SettingsChanged();
+	ctrlComboBox *SizeCombo = GetCtrl<ctrlComboBox>(42);
+	SETTINGS.video.width = video_modes[SizeCombo->GetSelection()].width;
+	SETTINGS.video.height = video_modes[SizeCombo->GetSelection()].height;
+
+	// Auflösung/Vollbildmodus geändert?
+	if(SETTINGS.video.width != VideoDriverWrapper::inst().GetScreenWidth() ||
+		SETTINGS.video.height != VideoDriverWrapper::inst().GetScreenHeight() ||
+		SETTINGS.video.fullscreen != VideoDriverWrapper::inst().IsFullscreen())
+	{
+		if(!VideoDriverWrapper::inst().ResizeScreen(SETTINGS.video.width,SETTINGS.video.height,SETTINGS.video.fullscreen)){
+			// WindowManager::inst().Show(new iwMsgbox(_("Sorry!"), _("You need to restart your game to change the screen resolution!"), this, MSB_OK, MSB_EXCLAMATIONGREEN, 1));
+		} else {
+			// notify that settings where changed
+			this->gameDesktop->SettingsChanged();
+		}
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author NastX
+ */
+void iwSettings::Msg_OptionGroupChange(const unsigned int ctrl_id, const unsigned short selection)
+{
+	switch(ctrl_id)
+	{
+	case 3:
+		switch(selection)
+		{
+		case 1:
+			SETTINGS.video.fullscreen = true;
+			break;
+		case 2:
+			SETTINGS.video.fullscreen = false;
+			break;
+		}
+		break;
+	}  
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author NastX
+ */
+void iwSettings::Msg_CheckboxChange(const unsigned int ctrl_id, const bool checked)
+{
+	switch(ctrl_id)
+	{
+	case 4:
+		{
+			SETTINGS.ingame.StatScale = checked;
+			break;
+		}
+	case 5:
+		{
+			break;
 		}
 	}
 }

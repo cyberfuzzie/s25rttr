@@ -29,9 +29,7 @@
 /// Fenster mit den Statistiken.
 class iwSettings : public IngameWindow
 {
-
 public:
-
 	/// Konstruktor von @p iwStatistics.
 	iwSettings(dskGameInterface *gameDesktop);
 	~iwSettings();

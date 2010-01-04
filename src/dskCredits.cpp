@@ -1,4 +1,4 @@
-// $Id: dskCredits.cpp 5851 2010-01-04 15:28:21Z FloSoft $
+// $Id: dskCredits.cpp 5852 2010-01-04 16:02:39Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -53,7 +53,7 @@
 /**
  *  Konstruktor von @p dskCredits.
  *
- *  @author Siegi4
+ *  @author siegi44
  */
 dskCredits::dskCredits(void) : Desktop(LOADER.GetImageN("setup013", 0))
 {
@@ -70,8 +70,8 @@ dskCredits::dskCredits(void) : Desktop(LOADER.GetImageN("setup013", 0))
 	entry.title = "Florian Doersch (FloSoft):";
 	entry.picId = 2;
 	entry.lastLine = "";
-	entry.lines.push_back(_("Project management"));
-	entry.lines.push_back(_("Programming"));
+	entry.lines.push_back(CreditsEntry::Line(_("Project management")));
+	entry.lines.push_back(CreditsEntry::Line(_("Programming")));
 
 	this->entries.push_back(entry);
 	entry.lines.clear();
@@ -79,8 +79,8 @@ dskCredits::dskCredits(void) : Desktop(LOADER.GetImageN("setup013", 0))
 	entry.title = "Oliver Siebert (Oliverr):";
 	entry.picId = 8;
 	entry.lastLine = "";
-	entry.lines.push_back(_("Project management"));
-	entry.lines.push_back(_("Programming"));
+	entry.lines.push_back(CreditsEntry::Line(_("Project management")));
+	entry.lines.push_back(CreditsEntry::Line(_("Programming")));
 
 	this->entries.push_back(entry);
 	entry.lines.clear();
@@ -88,8 +88,8 @@ dskCredits::dskCredits(void) : Desktop(LOADER.GetImageN("setup013", 0))
 	entry.title = "Patrick Haak (Demophobie):";
 	entry.picId = 0;
 	entry.lastLine = "";
-	entry.lines.push_back(_("Administration"));
-	entry.lines.push_back(_("Quality Assurance"));
+	entry.lines.push_back(CreditsEntry::Line(_("Administration")));
+	entry.lines.push_back(CreditsEntry::Line(_("Quality Assurance")));
 
 	this->entries.push_back(entry);
 	entry.lines.clear();
@@ -97,8 +97,8 @@ dskCredits::dskCredits(void) : Desktop(LOADER.GetImageN("setup013", 0))
 	entry.title = "Jonas Trampe (NastX):";
 	entry.picId = 6;
 	entry.lastLine = "";
-	entry.lines.push_back(_("Quality Assurance"));
-	entry.lines.push_back(_("Mapping"));
+	entry.lines.push_back(CreditsEntry::Line(_("Quality Assurance")));
+	entry.lines.push_back(CreditsEntry::Line(_("Mapping")));
 
 	this->entries.push_back(entry);
 	entry.lines.clear();
@@ -106,8 +106,8 @@ dskCredits::dskCredits(void) : Desktop(LOADER.GetImageN("setup013", 0))
 	entry.title = "Jan-Henrik Kluth (jh):";
 	entry.picId = 4;
 	entry.lastLine = "";
-	entry.lines.push_back(_("Programming"));
-	entry.lines.push_back(_("Artificial Intelligence (AI)"));
+	entry.lines.push_back(CreditsEntry::Line(_("Programming")));
+	entry.lines.push_back(CreditsEntry::Line(_("Artificial Intelligence (AI)")));
 
 	this->entries.push_back(entry);
 	entry.lines.clear();
@@ -115,12 +115,12 @@ dskCredits::dskCredits(void) : Desktop(LOADER.GetImageN("setup013", 0))
 	entry.title = _("Additional Programming:");
 	entry.picId = -1;
 	entry.lastLine = "";
-	entry.lines.push_back("Siegfried Oleg Pammer (siegi44)");
-	entry.lines.push_back("Devil");
-	entry.lines.push_back("Cat666");
-	entry.lines.push_back("liwo");
-	entry.lines.push_back("Airhardt");
-	entry.lines.push_back("Divan");
+	entry.lines.push_back(CreditsEntry::Line("Siegfried Oleg Pammer (siegi44)"));
+	entry.lines.push_back(CreditsEntry::Line("Lienhart Woitok (liwo)"));
+	entry.lines.push_back(CreditsEntry::Line("Christoph Erhardt (Airhardt)"));
+	entry.lines.push_back(CreditsEntry::Line("Divan"));
+	entry.lines.push_back(CreditsEntry::Line("Cat666"));
+	entry.lines.push_back(CreditsEntry::Line("Devil"));
 
 	this->entries.push_back(entry);
 	entry.lines.clear();
@@ -128,32 +128,33 @@ dskCredits::dskCredits(void) : Desktop(LOADER.GetImageN("setup013", 0))
 	entry.title = _("Other Support:");
 	entry.picId = -1;
 	entry.lastLine = "";
-	entry.lines.push_back("Sotham");
-	entry.lines.push_back("muhahahaha");
-	entry.lines.push_back("Zwoks-Stef");
-	entry.lines.push_back("Fenan");
+	entry.lines.push_back(CreditsEntry::Line("muhahahaha"));
+	entry.lines.push_back(CreditsEntry::Line("Sotham"));
+	entry.lines.push_back(CreditsEntry::Line("Z-Stef"));
+	entry.lines.push_back(CreditsEntry::Line("Fenan"));
 
 	this->entries.push_back(entry);
 	entry.lines.clear();
 
 	entry.title = _("Donators");
 	entry.picId = -1;
-	entry.lines.push_back(_("various anonymous donators"));
-	entry.lines.push_back("Markus Becker");
-	entry.lines.push_back("K-Duke (Karsten Backhaus)");
-	entry.lines.push_back("Demophobie (Patrick Haak)");
-	entry.lines.push_back("Gilles Bordelais");
-	entry.lines.push_back("Rene Hopf");
-	entry.lines.push_back("Philipp Strathausen");
-	entry.lines.push_back("Dominic Jonas");
-	entry.lines.push_back("Max Skuratov");
-	entry.lines.push_back("Marius Loewe");
-	entry.lines.push_back("Bob Kromonos Achten");
-	entry.lines.push_back("Eric Lutter");
-	entry.lines.push_back("morlock");
-	entry.lines.push_back("Hans Gabathuler");
-	entry.lines.push_back("Jan Montag");
-	entry.lines.push_back("Patrick Schefczyk");
+	entry.lines.push_back(CreditsEntry::Line(_("various anonymous donators")));
+	entry.lines.push_back(CreditsEntry::Line("Markus Becker"));
+	entry.lines.push_back(CreditsEntry::Line("K-Duke (Karsten Backhaus)"));
+	entry.lines.push_back(CreditsEntry::Line("Demophobie (Patrick Haak)"));
+	entry.lines.push_back(CreditsEntry::Line("Gilles Bordelais"));
+	entry.lines.push_back(CreditsEntry::Line("Rene Hopf"));
+	entry.lines.push_back(CreditsEntry::Line("Philipp Strathausen"));
+	entry.lines.push_back(CreditsEntry::Line("Dominic Jonas"));
+	entry.lines.push_back(CreditsEntry::Line("Max Skuratov"));
+
+	entry.lines.push_back(CreditsEntry::Line("Marius Loewe", 1));
+	entry.lines.push_back(CreditsEntry::Line("Eric Lutter", 1));
+	entry.lines.push_back(CreditsEntry::Line("Bob Kromonos Achten", 1));
+	entry.lines.push_back(CreditsEntry::Line("morlock", 1));
+	entry.lines.push_back(CreditsEntry::Line("Hans Gabathuler", 1));
+	entry.lines.push_back(CreditsEntry::Line("Jan Montag", 1));
+	entry.lines.push_back(CreditsEntry::Line("Patrick Schefczyk", 1));
 	entry.lastLine = _("Thank you for your donations!");
 
 	this->entries.push_back(entry);
@@ -161,7 +162,7 @@ dskCredits::dskCredits(void) : Desktop(LOADER.GetImageN("setup013", 0))
 
 	entry.title = _("We hope you enjoy playing Return To The Roots!");
 	entry.picId = -1;
-	entry.lines.push_back(_("Thank you!"));
+	entry.lines.push_back(CreditsEntry::Line(_("Thank you!")));
 	entry.lastLine = _("THE END");
 
 	this->entries.push_back(entry);
@@ -189,7 +190,7 @@ dskCredits::~dskCredits()
 /**
  *  
  *
- *  @author Siegi4
+ *  @author siegi44
  */
 void dskCredits::Msg_PaintAfter()
 {
@@ -263,12 +264,15 @@ void dskCredits::Msg_PaintAfter()
 	// draw text
 	LargeFont->Draw(40, 100, it->title, 0, (COLOR_RED & 0x00FFFFFF) | transparency);
 
-	unsigned int y = 150;
+	unsigned int y[2] = {150, 150};
 
-	for(std::list<std::string>::iterator line = this->it->lines.begin(); line != it->lines.end(); ++line, y+=LargeFont->getHeight() + 15)
-		LargeFont->Draw(60, y, line->c_str(), 0, (COLOR_YELLOW & 0x00FFFFFF) | transparency);
+	for(std::list<CreditsEntry::Line>::iterator line = this->it->lines.begin(); line != it->lines.end(); ++line)
+	{
+		LargeFont->Draw(60 + line->column * 350, y[line->column], line->line.c_str(), 0, (COLOR_YELLOW & 0x00FFFFFF) | transparency);
+		y[line->column] += LargeFont->getHeight() + 5;
+	}
 	
-	LargeFont->Draw(40, y + 20, it->lastLine, 0, (COLOR_RED & 0x00FFFFFF) | transparency);
+	LargeFont->Draw(40, y[0] + 20, it->lastLine, 0, (COLOR_RED & 0x00FFFFFF) | transparency);
 
 	// draw picture
 	// @todo: add pictures to credits.lst ...
@@ -282,7 +286,7 @@ void dskCredits::Msg_PaintAfter()
 /**
  *  
  *
- *  @author Siegi4
+ *  @author siegi44
  */
 bool dskCredits::Close(void)
 {
@@ -294,7 +298,7 @@ bool dskCredits::Close(void)
 /**
  *  
  *
- *  @author Siegi4
+ *  @author siegi44
  */
 bool dskCredits::Msg_LeftUp(const MouseCoords& mc)
 {
@@ -305,7 +309,7 @@ bool dskCredits::Msg_LeftUp(const MouseCoords& mc)
 /**
  *  
  *
- *  @author Siegi4
+ *  @author siegi44
  */
 bool dskCredits::Msg_RightUp(const MouseCoords& mc)
 {
@@ -316,7 +320,7 @@ bool dskCredits::Msg_RightUp(const MouseCoords& mc)
 /**
  *  
  *
- *  @author Siegi4
+ *  @author siegi44
  */
 bool dskCredits::Msg_KeyDown(const KeyEvent& ke)
 {

@@ -1,4 +1,4 @@
-// $Id: dskCredits.h 5851 2010-01-04 15:28:21Z FloSoft $
+// $Id: dskCredits.h 5852 2010-01-04 16:02:39Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -45,7 +45,12 @@ private:
 		std::string title;
 		std::string lastLine;
 		int picId;
-		std::list<std::string> lines;
+		struct Line {
+			Line(std::string l, unsigned int c = 0) : line(l), column(c) { }
+			std::string line;
+			unsigned int column;
+		};
+		std::list<Line> lines;
 	};
 
 	std::list<CreditsEntry> entries;

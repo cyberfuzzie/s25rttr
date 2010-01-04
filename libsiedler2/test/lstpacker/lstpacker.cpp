@@ -1,4 +1,4 @@
-// $Id: lstpacker.cpp 5163 2009-07-02 09:39:35Z FloSoft $
+// $Id: lstpacker.cpp 5854 2010-01-04 16:30:33Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //

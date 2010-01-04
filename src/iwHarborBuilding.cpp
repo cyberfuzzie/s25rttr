@@ -1,4 +1,4 @@
-// $Id: iwHarborBuilding.cpp 5041 2009-06-13 11:52:29Z OLiver $
+// $Id: iwHarborBuilding.cpp 5854 2010-01-04 16:30:33Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

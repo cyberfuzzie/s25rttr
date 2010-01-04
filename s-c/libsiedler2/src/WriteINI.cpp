@@ -1,4 +1,4 @@
-// $Id: WriteINI.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: WriteINI.cpp 5854 2010-01-04 16:30:33Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

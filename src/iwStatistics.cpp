@@ -1,4 +1,4 @@
-// $Id: iwMilitary.cpp 4792 2009-05-04 15:26:33Z Demophobie $
+// $Id: iwStatistics.cpp 5854 2010-01-04 16:30:33Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

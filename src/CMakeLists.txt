@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 5848 2010-01-04 12:38:12Z Demophobie $
+### $Id: CMakeLists.txt 5849 2010-01-04 13:01:30Z Demophobie $
 ################################################################################
 
 INCLUDE(FindBZip2)
@@ -111,6 +111,7 @@ SET(SOURCES_INGAMEWINDOWS
     iwStatistics.cpp             iwStatistics.h
     iwHarborBuilding.cpp         iwHarborBuilding.h
     iwPleaseWait.cpp             iwPleaseWait.h
+    iwSettings.cpp               iwSettings.h
     )
 
 SET(SOURCES_AI

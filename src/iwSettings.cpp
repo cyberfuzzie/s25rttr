@@ -57,8 +57,7 @@ iwSettings::iwSettings(dskGameInterface *gameDesktop)
   AddText(  46,  15,  40, _("Resolution :"), COLOR_YELLOW, 0, NormalFont);
   AddText(  47,  15,  85, _("Mode :"), COLOR_YELLOW, 0, NormalFont);
   AddCheckBox(4, 110, 120, 150, 26, TC_GREY, _("Statistic Scale"), NormalFont, false);
-  // "Auflösung"
-  AddComboBox(42, 110, 35, 150, 22, TC_GREY, NormalFont, 150);
+  
   // "Vollbild"
   ctrlOptionGroup *optiongroup = AddOptionGroup(10, ctrlOptionGroup::CHECK, scale);
   optiongroup = AddOptionGroup(3, ctrlOptionGroup::CHECK, scale);
@@ -68,6 +67,9 @@ iwSettings::iwSettings(dskGameInterface *gameDesktop)
   optiongroup = GetCtrl<ctrlOptionGroup>(3);
   optiongroup->SetSelection( (SETTINGS.video.fullscreen ? 1 : 2) );
   VideoDriverWrapper::inst().ListVideoModes(video_modes);
+	
+	// "Auflösung"
+  AddComboBox(0, 110, 35, 150, 22, TC_GREY, NormalFont, 150);
 
 	// Und zu der Combobox hinzufügen
 	for(unsigned i = 0;i<video_modes.size();++i)
@@ -78,12 +80,12 @@ iwSettings::iwSettings(dskGameInterface *gameDesktop)
 			char str[64];
 			sprintf(str,"%ux%u",video_modes[i].width,video_modes[i].height);
 
-			GetCtrl<ctrlComboBox>(42)->AddString(str);
+			GetCtrl<ctrlComboBox>(0)->AddString(str);
 
 			// Ist das die aktuelle Auflösung? Dann selektieren
 			if(video_modes[i].width == SETTINGS.video.width && 
 				video_modes[i].height == SETTINGS.video.height)
-				GetCtrl<ctrlComboBox>(42)->SetSelection(i);
+				GetCtrl<ctrlComboBox>(0)->SetSelection(i);
 		}
 		else
 		{

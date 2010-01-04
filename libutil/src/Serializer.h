@@ -1,4 +1,4 @@
-// $Id: MessageQueue.h 4910 2009-05-21 19:38:04Z OLiver $
+// $Id: Serializer.h 5855 2010-01-04 16:44:38Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

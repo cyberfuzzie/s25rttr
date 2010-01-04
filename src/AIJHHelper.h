@@ -1,4 +1,4 @@
-// $Id: AIJHHelper.h 5344 2009-07-29 16:23:40Z jh $
+// $Id: AIJHHelper.h 5855 2010-01-04 16:44:38Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

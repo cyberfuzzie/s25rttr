@@ -1,4 +1,4 @@
-// $Id: iwStatistics.h 4784 2009-05-02 20:43:44Z OLiver $
+// $Id: iwStatistics.h 5855 2010-01-04 16:44:38Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

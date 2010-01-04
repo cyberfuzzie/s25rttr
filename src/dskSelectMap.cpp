@@ -1,4 +1,4 @@
-// $Id: dskSelectMap.cpp 5838 2010-01-03 12:27:38Z Demophobie $
+// $Id: dskSelectMap.cpp 5850 2010-01-04 13:33:09Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -166,11 +166,11 @@ void dskSelectMap::Msg_OptionGroupChange(const unsigned int ctrl_id, const unsig
 
 	// Und wieder füllen lassen
 	snprintf(path, 4096, "%s*.swd", GetFilePath(FILE_PATHS[ids[selection]]).c_str());
-	ListDir(path, FillTable, (void*)table );
+	ListDir(path, false, FillTable, (void*)table );
 
 	// Nach beiden Kartentypen suchen
 	snprintf(path, 4096, "%s*.wld", GetFilePath(FILE_PATHS[ids[selection]]).c_str());
-	ListDir(path, FillTable, (void*)table );
+	ListDir(path, false, FillTable, (void*)table );
 
 	// Dann noch sortieren
 	table->SortRows(0);

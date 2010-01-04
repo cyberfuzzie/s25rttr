@@ -1,4 +1,4 @@
-// $Id: ListDir.h 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: ListDir.h 5850 2010-01-04 13:33:09Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -26,6 +26,6 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // Funktionsprototypen
-void ListDir(const std::string& path, void (*CallBack)(const std::string& filename,void * param),void * param, std::list<std::string> * liste = 0);
+void ListDir(const std::string& path, bool directories, void (*CallBack)(const std::string& filename,void * param),void * param, std::list<std::string> * liste = 0);
 
 #endif // LISTDIR_H_INCLUDED

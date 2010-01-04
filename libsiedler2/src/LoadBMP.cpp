@@ -1,4 +1,4 @@
-// $Id: LoadBMP.cpp 5091 2009-06-23 18:27:10Z FloSoft $
+// $Id: LoadBMP.cpp 5850 2010-01-04 13:33:09Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -178,6 +178,7 @@ int libsiedler2::loader::LoadBMP(const char *file, ArchivItem **image, ArchivIte
 		} break;
 	default:
 		{
+			fprintf(stderr, "unknown bitmap depth: %d ", bmih.bbp);
 			delete bitmap;
 			return 7;
 		} break;

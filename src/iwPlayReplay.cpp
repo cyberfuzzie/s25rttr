@@ -1,4 +1,4 @@
-// $Id: iwPlayReplay.cpp 5650 2009-10-29 21:52:20Z OLiver $
+// $Id: iwPlayReplay.cpp 5850 2010-01-04 13:33:09Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -70,7 +70,7 @@ iwPlayReplay::iwPlayReplay(void)
 	// Verzeichnis auflisten
 	std::string tmp = GetFilePath(FILE_PATHS[51]);
 	tmp += "*.rpl";
-	ListDir(tmp, FillReplayTable, table);
+	ListDir(tmp, false, FillReplayTable, table);
 	
 	// Erst einmal nach Dateiname sortieren
 	table->SortRows(0);
@@ -124,7 +124,7 @@ void iwPlayReplay::Msg_MsgBoxResult(const unsigned msgbox_id, const MsgboxResult
 		// Dateien löschen
 		std::string tmp = GetFilePath(FILE_PATHS[51]);
 		tmp += "*.rpl";
-		ListDir(tmp, RemoveReplay, 0);
+		ListDir(tmp, false, RemoveReplay, 0);
 
 		// Tabelle leeren
 		GetCtrl<ctrlTable>(0)->DeleteAllItems();

@@ -1,4 +1,4 @@
-// $Id: ListDir.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: ListDir.cpp 5850 2010-01-04 13:33:09Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -35,7 +35,7 @@
 // lists the files of a directory
 //void ListDir(const std::string& path, void (*CallBack)(const std::string& filename, void * param), void *param, StringList *liste)
 
-void ListDir(const std::string& path, void (*CallBack)(const std::string& filename, void * param), void *param, std::list<std::string> *liste)
+void ListDir(const std::string& path, bool directories, void (*CallBack)(const std::string& filename, void * param), void *param, std::list<std::string> *liste)
 {
 	// Pfad zum Ordner, wo die Dateien gesucht werden sollen
 	std::string rpath = path.substr(0, path.find_last_of('/') +1);
@@ -63,20 +63,17 @@ void ListDir(const std::string& path, void (*CallBack)(const std::string& filena
 		{
 			std::string whole_path = rpath + wfd.cFileName;
 
-			// TODO: Muss das hier unbedingt sein???
-			//const char *ende = strrchr(strlwr(wfd.cFileName), '.');
-			//if(!ende)
-			//	continue;
-			//++ende;
-			//
-			////LOG.lprintf("%s == %s\n", endung, ende);
-			//
-			//if(strcmp(endung, ende) != 0)
-			//	continue;
-			if(CallBack)
-				CallBack(whole_path.c_str(),param);
-			if(liste)
-   				liste->push_back(whole_path);
+			bool push = true;
+			if(!directories && ( (wfd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) == FILE_ATTRIBUTE_DIRECTORY) )
+				push = false;
+
+			if(push)
+			{
+				if(CallBack)
+					CallBack(whole_path.c_str(),param);
+				if(liste)
+   					liste->push_back(whole_path);
+			}
 		} while(FindNextFileA(hFile,&wfd));
 
 		FindClose(hFile);
@@ -92,7 +89,12 @@ void ListDir(const std::string& path, void (*CallBack)(const std::string& filena
 			std::string whole_path = rpath + dir->d_name;
 
 			stat(whole_path.c_str(), &file_stat);
-			if(!S_ISDIR(file_stat.st_mode))
+
+			bool push = true;
+			if(!directories && S_ISDIR(file_stat.st_mode))
+				push = false;
+
+			if(push)
 			{
 				std::string ende = dir->d_name;
 				size_t pos = ende.find_last_of('.');

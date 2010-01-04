@@ -848,6 +848,14 @@
 							>
 						</File>
 						<File
+							RelativePath="..\..\src\iwSettings.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\iwSettings.h"
+							>
+						</File>
+						<File
 							RelativePath="..\..\src\iwShip.cpp"
 							>
 						</File>

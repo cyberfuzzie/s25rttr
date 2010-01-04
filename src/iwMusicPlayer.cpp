@@ -1,4 +1,4 @@
-// $Id: iwMusicPlayer.cpp 5259 2009-07-13 15:53:31Z FloSoft $
+// $Id: iwMusicPlayer.cpp 5850 2010-01-04 13:33:09Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -369,7 +369,7 @@ void iwMusicPlayer::UpdatePlaylistCombo(const std::string& highlight_entry)
 	GetCtrl<ctrlComboBox>(2)->DeleteAllItems();
 
 	std::list<std::string> segments;
-	ListDir(std::string(FILE_PATHS[90]) + "*.pll",NULL,NULL,&segments);
+	ListDir(std::string(FILE_PATHS[90]) + "*.pll", false, NULL,NULL,&segments);
 
 	unsigned i = 0;
 	for(std::list<std::string>::iterator it = segments.begin();it!=segments.end();++it,++i)

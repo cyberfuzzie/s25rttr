@@ -1,4 +1,4 @@
-// $Id: files.h 5545 2009-09-22 11:19:53Z FloSoft $
+// $Id: files.h 5850 2010-01-04 13:33:09Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -182,10 +182,10 @@ const char * const FILE_PATHS[] =
 	/* 98 */SETTINGSDIR "/LSTS/",                     // persönliche lstfiles (immer bei start geladen)
 	/* 99 */SETTINGSDIR "/LSTS/GAME/",                // persönliche lstfiles (immer bei spielstart geladen)
 	/*100 */SETTINGSDIR "",                           // unbenutzt
-	/*101 */RTTRDIR "/pics/menu.bmp",                 // Hauptmenü
+	/*101 */RTTRDIR "",                               // unbenutzt
 	/*102 */GAMEDIR "/GFX/PICS/SETUP013.LBM",         // Optionen
 	/*103 */GAMEDIR "/GFX/PICS/SETUP015.LBM",         // Freies Spiel
-	/*104 */RTTRDIR "/pics/splash.bmp"                // Splash
+	/*104 */RTTRDIR "/LSTS/splash.bmp"                // Splash
 };
 
 const unsigned int FILE_SPLASH_ID = 104;

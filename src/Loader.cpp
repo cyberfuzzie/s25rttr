@@ -1,4 +1,4 @@
-// $Id: Loader.cpp 5545 2009-09-22 11:19:53Z FloSoft $
+// $Id: Loader.cpp 5850 2010-01-04 13:33:09Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -73,13 +73,13 @@ Loader::~Loader(void)
  */
 bool Loader::LoadFilesAtStart(void)
 {
-	const unsigned int files_count = 7 + 1 + 2 + 3 + 21;
+	const unsigned int files_count = 7 + 1 + 2 + 2 + 21;
 
 	const unsigned int files[] = { 
 		5, 6, 7, 8, 9, 10, 17, // Paletten:     pal5.bbm, pal6.bbm, pal7.bbm, paletti0.bbm, paletti1.bbm, paletti8.bbm, colors.act
-		104,                   // Splashimage:  splash.bmp
+		FILE_SPLASH_ID,	       // Splashscreen: splash.bmp
 		11, 12,                // Menüdateien:  resource.dat, io.dat
-		101, 102, 103,         // Hintergründe: menu.bmp, setup013.lbm, setup015.lbm
+		102, 103,              // Hintergründe: setup013.lbm, setup015.lbm
 		64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84 // Die ganzen Spielladescreens.
 	};
 
@@ -120,12 +120,12 @@ bool Loader::LoadFilesFromArray(const unsigned int files_count, const unsigned i
 			LOG.lprintf("Lade LST,BMP,IDX,TXT Dateien aus \"%s\"\n", GetFilePath(FILE_PATHS[ files[i] ]).c_str());
 
 			std::list<std::string> lst;
-			ListDir(GetFilePath(FILE_PATHS[ files[i] ]) + "*.lst", NULL, NULL, &lst);
-			ListDir(GetFilePath(FILE_PATHS[ files[i] ]) + "*.idx", NULL, NULL, &lst);
-			ListDir(GetFilePath(FILE_PATHS[ files[i] ]) + "*.bmp", NULL, NULL, &lst);
-			ListDir(GetFilePath(FILE_PATHS[ files[i] ]) + "*.txt", NULL, NULL, &lst);
-			ListDir(GetFilePath(FILE_PATHS[ files[i] ]) + "*.ger", NULL, NULL, &lst);
-			ListDir(GetFilePath(FILE_PATHS[ files[i] ]) + "*.eng", NULL, NULL, &lst);
+			ListDir(GetFilePath(FILE_PATHS[ files[i] ]) + "*.lst", true, NULL, NULL, &lst);
+			ListDir(GetFilePath(FILE_PATHS[ files[i] ]) + "*.idx", true, NULL, NULL, &lst);
+			ListDir(GetFilePath(FILE_PATHS[ files[i] ]) + "*.bmp", true, NULL, NULL, &lst);
+			ListDir(GetFilePath(FILE_PATHS[ files[i] ]) + "*.txt", true, NULL, NULL, &lst);
+			ListDir(GetFilePath(FILE_PATHS[ files[i] ]) + "*.ger", true, NULL, NULL, &lst);
+			ListDir(GetFilePath(FILE_PATHS[ files[i] ]) + "*.eng", true, NULL, NULL, &lst);
 
 			for(std::list<std::string>::iterator i = lst.begin(); i != lst.end(); ++i)
 			{
@@ -246,7 +246,7 @@ bool Loader::LoadSounds(void)
 	}
 
 	std::list<std::string> liste;
-	ListDir(GetFilePath(FILE_PATHS[50]), NULL, NULL, &liste);
+	ListDir(GetFilePath(FILE_PATHS[50]), false, NULL, NULL, &liste);
 
 	unsigned int i = 0;
 	sng_lst.alloc(unsigned(liste.size()));
@@ -300,6 +300,17 @@ bool Loader::LoadFile(const char *pfad, const libsiedler2::ArchivItem_Palette *p
 	if(!load_always && files.find(p) != files.end() && files.find(p)->second.getCount() != 0)
 		return true;
 
+	bool directory = false;
+#ifdef _WIN32
+	if ( (GetFileAttributes(GetFilePath(pfad).c_str()) & FILE_ATTRIBUTE_DIRECTORY) == FILE_ATTRIBUTE_DIRECTORY)
+		directory = true;
+#else
+	struct stat file_stat;
+	stat(GetFilePath(pfad).c_str(), &file_stat);
+	if(S_ISDIR(file_stat.st_mode))
+		directory = true;
+#endif
+
 	libsiedler2::ArchivInfo archiv;
 	libsiedler2::ArchivInfo *to = &archiv;
 
@@ -315,8 +326,30 @@ bool Loader::LoadFile(const char *pfad, const libsiedler2::ArchivItem_Palette *p
 		override_file = true;
 
 	// dann daten reinladen um ggf. kopieren zu vermeiden
-	if(!LoadFile(pfad, palette, to))
-		return false;
+	if(directory)
+	{
+		std::list<std::string> lst;
+		ListDir(GetFilePath(pfad) + "/*.bmp", false, NULL, NULL, &lst);
+		ListDir(GetFilePath(pfad) + "/*.txt", false, NULL, NULL, &lst);
+		ListDir(GetFilePath(pfad) + "/*.ger", false, NULL, NULL, &lst);
+		ListDir(GetFilePath(pfad) + "/*.eng", false, NULL, NULL, &lst);
+		for(std::list<std::string>::iterator i = lst.begin(); i != lst.end(); ++i)
+		{
+			libsiedler2::ArchivInfo toto;
+			if(!LoadFile( i->c_str(), palette, &toto ) )
+				return false;
+
+			unsigned int offset = to->getCount();
+			to->alloc_inc(toto.getCount());
+			for(unsigned int ii = 0; ii < toto.getCount(); ++ii)
+				to->setC(offset+ii, toto.get(ii));
+		}
+	}
+	else
+	{
+		if(!LoadFile(pfad, palette, to))
+			return false;
+	}
 
 	// haben wir eine override file? dann nicht-leere items überschreiben
 	if(override_file)

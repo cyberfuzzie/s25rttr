@@ -1,6 +1,6 @@
-// $Id: glArchivItem_Bitmap.h 5167 2009-07-02 18:49:25Z FloSoft $
+// $Id: glArchivItem_Bitmap.h 5853 2010-01-04 16:14:16Z FloSoft $
 //
-// Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
+// Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
 // This file is part of Siedler II.5 RTTR.
 //

@@ -1,6 +1,6 @@
-// $Id: Window.h 5842 2010-01-03 21:18:57Z FloSoft $
+// $Id: Window.h 5853 2010-01-04 16:14:16Z FloSoft $
 //
-// Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
+// Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
 // This file is part of Siedler II.5 RTTR.
 //

@@ -1,6 +1,6 @@
-// $Id: GameProtocol.h 4985 2009-06-01 13:05:27Z OLiver $
+// $Id: GameProtocol.h 5853 2010-01-04 16:14:16Z FloSoft $
 //
-// Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
+// Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
 // This file is part of Siedler II.5 RTTR.
 //

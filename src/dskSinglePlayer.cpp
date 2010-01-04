@@ -1,6 +1,6 @@
-// $Id: dskSinglePlayer.cpp 5247 2009-07-11 19:13:17Z FloSoft $
+// $Id: dskSinglePlayer.cpp 5853 2010-01-04 16:14:16Z FloSoft $
 //
-// Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
+// Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
 // This file is part of Siedler II.5 RTTR.
 //
@@ -56,11 +56,11 @@
 dskSinglePlayer::dskSinglePlayer(void) : Desktop(LOADER.GetImageN("menu", 0))
 {
 	// Version
-	AddVarText(0, 0, 600, _("The Settlers II.5 RTTR, v%s-%s"), COLOR_YELLOW, 0 | glArchivItem_Font::DF_BOTTOM, NormalFont, 2, GetWindowVersion(), GetWindowRevision());
+	AddVarText(0, 0, 600, _("Return To The Roots - v%s-%s"), COLOR_YELLOW, 0 | glArchivItem_Font::DF_BOTTOM, NormalFont, 2, GetWindowVersion(), GetWindowRevision());
 	// URL
 	AddText(1, 400, 600, _("http://www.siedler25.org"), COLOR_GREEN, glArchivItem_Font::DF_CENTER | glArchivItem_Font::DF_BOTTOM, NormalFont);
 	// Copyright
-	AddText(2, 800, 600, "° 2005 - 2009 Settlers Freaks", COLOR_YELLOW, glArchivItem_Font::DF_RIGHT | glArchivItem_Font::DF_BOTTOM, NormalFont);
+	AddText(2, 800, 600, "° 2005 - 2010 Settlers Freaks", COLOR_YELLOW, glArchivItem_Font::DF_RIGHT | glArchivItem_Font::DF_BOTTOM, NormalFont);
 
 	// "Letztes Spiel fortsetzen"
 	AddTextButton(3, 115, 180, 220, 22, TC_GREEN2, _("Resume last game"),NormalFont);

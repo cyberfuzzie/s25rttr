@@ -1,6 +1,6 @@
-// $Id: iwOptionsWindow.cpp 5841 2010-01-03 18:47:04Z OLiver $
+// $Id: iwOptionsWindow.cpp 5853 2010-01-04 16:14:16Z FloSoft $
 //
-// Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
+// Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
 // This file is part of Siedler II.5 RTTR.
 //
@@ -64,9 +64,9 @@ iwOptionsWindow::iwOptionsWindow(dskGameInterface *gameDesktop)
 	AddImage(1, 150, 36, LOADER.GetImageN("io", 30));
 
 	// Versionszeile
-	AddVarText(2, 150, 76, _("The Settlers II.5 RTTR, v%s-%s"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER | glArchivItem_Font::DF_BOTTOM, NormalFont, 2, GetWindowVersion(), GetWindowRevision());
+	AddVarText(2, 150, 76, _("Return To The Roots - v%s-%s"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER | glArchivItem_Font::DF_BOTTOM, NormalFont, 2, GetWindowVersion(), GetWindowRevision());
 	// Copyright
-	AddText(3, 150, 96, "° 2005 - 2009 Settlers Freaks", COLOR_YELLOW, glArchivItem_Font::DF_CENTER | glArchivItem_Font::DF_BOTTOM, NormalFont);
+	AddText(3, 150, 96, "° 2005 - 2010 Settlers Freaks", COLOR_YELLOW, glArchivItem_Font::DF_CENTER | glArchivItem_Font::DF_BOTTOM, NormalFont);
 
 	// "Tastaturbelegung"
 	AddImageButton(4, 35, 120, 35, 35,TC_GREEN2, LOADER.GetImageN("io", 79));

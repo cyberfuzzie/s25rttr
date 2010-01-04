@@ -1,6 +1,6 @@
-// $Id: ArchivItem.h 5259 2009-07-13 15:53:31Z FloSoft $
+// $Id: ArchivItem.h 5853 2010-01-04 16:14:16Z FloSoft $
 //
-// Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
+// Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
 // This file is part of Siedler II.5 RTTR.
 //

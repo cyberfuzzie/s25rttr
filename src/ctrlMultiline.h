@@ -1,6 +1,6 @@
-// $Id: ctrlMultiline.h 5136 2009-06-28 12:12:57Z OLiver $
+// $Id: ctrlMultiline.h 5853 2010-01-04 16:14:16Z FloSoft $
 //
-// Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
+// Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
 // This file is part of Siedler II.5 RTTR.
 //

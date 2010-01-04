@@ -1,4 +1,4 @@
-// $Id: dskCredits.cpp 5839 2010-01-03 13:10:52Z Demophobie $
+// $Id: dskCredits.cpp 5851 2010-01-04 15:28:21Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -27,6 +27,12 @@
 
 #include "dskMainMenu.h"
 
+#include "VideoDriverWrapper.h"
+#include "JobConsts.h"
+
+#include <cstdlib>
+#include <ctime> 
+
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
 #if defined _WIN32 && defined _DEBUG && defined _MSC_VER
@@ -47,80 +53,272 @@
 /**
  *  Konstruktor von @p dskCredits.
  *
- *  @author FloSoft
+ *  @author Siegi4
  */
 dskCredits::dskCredits(void) : Desktop(LOADER.GetImageN("setup013", 0))
 {
-
-	// "Zurück"
-	AddTextButton(0, 300, 560, 200, 22, TC_RED1, _("Back"),NormalFont);
+	// Zurück
+	AddTextButton(0, 300, 550, 200, 22,   TC_RED1, _("Back"),NormalFont);
 
 	// "Die Siedler II.5 RTTR"
-	AddText(1, 400, 10, _("The Settlers II.5 RTTR"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER, LargeFont);
+	AddText(1, 400, 10, _("Return To The Roots"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER, LargeFont);
 
 	// "Credits"
 	AddText(2, 400, 33, _("Credits"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER, LargeFont);
 	
-	/// @todo Bilder von uns + Siedler laufen unten am Bildschirmrand
+	CreditsEntry entry = CreditsEntry();
+	entry.title = "Florian Doersch (FloSoft):";
+	entry.picId = 2;
+	entry.lastLine = "";
+	entry.lines.push_back(_("Project management"));
+	entry.lines.push_back(_("Programming"));
 
-	// "Programmiert von:"
-	AddText(3, 400, 90, _("Programming"), COLOR_RED, glArchivItem_Font::DF_CENTER, LargeFont);
-	// "OLiver"
-	AddText(4, 400, 120, "Oliver Siebert (OLiver)", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
-	// "FloSoft"
-	AddText(5, 400, 140, "Florian Doersch (FloSoft)", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
-	// "jh"
-	AddText(6, 400, 160, "Jan-Henrik Kluth (jh)", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
+	this->entries.push_back(entry);
+	entry.lines.clear();
 
-	// "Qualitätssicherung"
-	AddText( 7, 400, 200, _("Quality assurance"), COLOR_RED, glArchivItem_Font::DF_CENTER, LargeFont);
-	// "Demophobie"
-	AddText(8, 400, 230, "Patrick Haak (Demophobie)", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
-	// "NastX"
-	AddText(9, 400, 250, "Jonas Trampe (NastX)", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
+	entry.title = "Oliver Siebert (Oliverr):";
+	entry.picId = 8;
+	entry.lastLine = "";
+	entry.lines.push_back(_("Project management"));
+	entry.lines.push_back(_("Programming"));
 
+	this->entries.push_back(entry);
+	entry.lines.clear();
 
-	// "Sonstige Unterstützung"
-	AddText(10, 400, 290, _("Other Support"), COLOR_RED, glArchivItem_Font::DF_CENTER, LargeFont);
-	// "muhahahaha"
-	AddText(11, 330, 320, "muhahahaha", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
-	// "Zwoks-Stef"
-	AddText(12, 470, 320, "Zwoks-Stef", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
-	// "Devil"
-	AddText(13, 330, 340, "Devil", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
-	// "Cat666"
-	AddText(14, 470, 340, "Cat666", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
-	// "Sotham"
-	AddText(15, 330, 360, "Sotham", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
-	// "liwo"
-	AddText(16, 470, 360, "liwo", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
-	// "Airhardt"
-	AddText(17, 330, 380, "Airhardt", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
-    	// "Divan"
-    	AddText(18, 470, 380, "Divan", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
-    	// "Fenan"
-    	AddText(19, 330, 400, "Fenan", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
+	entry.title = "Patrick Haak (Demophobie):";
+	entry.picId = 0;
+	entry.lastLine = "";
+	entry.lines.push_back(_("Administration"));
+	entry.lines.push_back(_("Quality Assurance"));
 
-	// "Spender:"
-	AddText( 20, 400, 440, _("Donators"), COLOR_RED, glArchivItem_Font::DF_CENTER, LargeFont);
-	// "diverse anonyme Spenden"
-	AddText(21, 400, 470, _("various anonymous donators"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
-	// "morlock"
-	AddText(22, 400, 490, "morlock", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
-	// "Jan Montag"
-	AddText(23, 400, 510, "Jan Montag", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
+	this->entries.push_back(entry);
+	entry.lines.clear();
 
-	// "Vielen Dank an alle Spender!"
-	AddText(24, 400, 530, _("Thank you for your donations!"), COLOR_RED, glArchivItem_Font::DF_CENTER, NormalFont);
+	entry.title = "Jonas Trampe (NastX):";
+	entry.picId = 6;
+	entry.lastLine = "";
+	entry.lines.push_back(_("Quality Assurance"));
+	entry.lines.push_back(_("Mapping"));
+
+	this->entries.push_back(entry);
+	entry.lines.clear();
+
+	entry.title = "Jan-Henrik Kluth (jh):";
+	entry.picId = 4;
+	entry.lastLine = "";
+	entry.lines.push_back(_("Programming"));
+	entry.lines.push_back(_("Artificial Intelligence (AI)"));
+
+	this->entries.push_back(entry);
+	entry.lines.clear();
+
+	entry.title = _("Additional Programming:");
+	entry.picId = -1;
+	entry.lastLine = "";
+	entry.lines.push_back("Siegfried Oleg Pammer (siegi44)");
+	entry.lines.push_back("Devil");
+	entry.lines.push_back("Cat666");
+	entry.lines.push_back("liwo");
+	entry.lines.push_back("Airhardt");
+	entry.lines.push_back("Divan");
+
+	this->entries.push_back(entry);
+	entry.lines.clear();
+
+	entry.title = _("Other Support:");
+	entry.picId = -1;
+	entry.lastLine = "";
+	entry.lines.push_back("Sotham");
+	entry.lines.push_back("muhahahaha");
+	entry.lines.push_back("Zwoks-Stef");
+	entry.lines.push_back("Fenan");
+
+	this->entries.push_back(entry);
+	entry.lines.clear();
+
+	entry.title = _("Donators");
+	entry.picId = -1;
+	entry.lines.push_back(_("various anonymous donators"));
+	entry.lines.push_back("Markus Becker");
+	entry.lines.push_back("K-Duke (Karsten Backhaus)");
+	entry.lines.push_back("Demophobie (Patrick Haak)");
+	entry.lines.push_back("Gilles Bordelais");
+	entry.lines.push_back("Rene Hopf");
+	entry.lines.push_back("Philipp Strathausen");
+	entry.lines.push_back("Dominic Jonas");
+	entry.lines.push_back("Max Skuratov");
+	entry.lines.push_back("Marius Loewe");
+	entry.lines.push_back("Bob Kromonos Achten");
+	entry.lines.push_back("Eric Lutter");
+	entry.lines.push_back("morlock");
+	entry.lines.push_back("Hans Gabathuler");
+	entry.lines.push_back("Jan Montag");
+	entry.lines.push_back("Patrick Schefczyk");
+	entry.lastLine = _("Thank you for your donations!");
+
+	this->entries.push_back(entry);
+	entry.lines.clear();
+
+	entry.title = _("We hope you enjoy playing Return To The Roots!");
+	entry.picId = -1;
+	entry.lines.push_back(_("Thank you!"));
+	entry.lastLine = _("THE END");
+
+	this->entries.push_back(entry);
+	entry.lines.clear();
+
+	bool nations[] = { true, true, true, true };
+
+	LOADER.LoadFilesAtGame(0, nations);
+
+	this->it = entries.begin();
+	this->startTime = VideoDriverWrapper::inst().GetTickCount();
 }
 
-void dskCredits::Msg_ButtonClick(const unsigned int ctrl_id)
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author FloSoft
+ */
+dskCredits::~dskCredits()
 {
-	switch(ctrl_id)
-	{
-	case 0: // "Zurück"
-		{
-			WindowManager::inst().Switch(new dskMainMenu);
-		} break;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author Siegi4
+ */
+void dskCredits::Msg_PaintAfter()
+{
+	unsigned int time = VideoDriverWrapper::inst().GetTickCount() - startTime;
+
+	if (time > 5000) {
+		++this->it;
+		if (this->it == entries.end())
+			this->it = entries.begin();
+		this->startTime = VideoDriverWrapper::inst().GetTickCount();
 	}
+		
+	// add new bob
+	if (time % 5 == 0 && (int)bobs.size() < (int)(50 + VideoDriverWrapper::inst().GetScreenWidth() / 2)) {
+		Bob b = Bob();
+		b.animationStep = 0;
+		b.speed = 2 + rand() % 4;
+		b.direction = 3;
+		b.color = COLORS[rand() % PLAYER_COLORS_COUNT];
+		unsigned int job = rand() % 29;
+		// exclude "headless" bobs
+		if (job == 8 || job == 9 || job == 12 || job == 18) {
+			job = rand() % (WARE_TYPES_COUNT - 1);
+			b.hasWare = true;
+		} else {
+			if(job == JOB_SCOUT)
+				job = 35+NATION_RTTR_TO_S2[rand() % 4]*6;
+			else if(job >= JOB_PRIVATE && job <= JOB_GENERAL)
+				job = 30+NATION_RTTR_TO_S2[rand() % 4]*6+job-JOB_PRIVATE;
+			else
+				job = JOB_CONSTS[job].jobs_bob_id;
+			b.hasWare = false;
+		}
+		b.id = job;
+		b.x = 0;
+		b.y = VideoDriverWrapper::inst().GetScreenHeight() - 170 + rand() % 150;
+		bobs.push_back(b);
+	}
+	
+	// draw bobs
+	for (std::list<Bob>::iterator bob = bobs.begin(); bob != bobs.end(); ++bob) {
+		if (!bob->hasWare)
+			Loader::inst().GetBobN("jobs")->Draw(bob->id, bob->direction, bob->isFat, bob->animationStep, bob->x, bob->y, bob->color);
+		else
+			Loader::inst().GetBobN("carrier")->Draw(bob->id, bob->direction, bob->isFat, bob->animationStep, bob->x, bob->y, bob->color);
+		bob->animationStep++;
+		if (bob->animationStep > 7)
+			bob->animationStep = 0;
+		if (bob->direction == 3) {
+			bob->x += bob->speed;
+			if (bob->x > VideoDriverWrapper::inst().GetScreenWidth())
+				bob->direction = 6;
+		} else if (bob->direction == 6) {
+			bob->x -= bob->speed;
+			if (bob->x < 0)
+				bob->direction = 3;
+		}
+	}
+	
+	// calculate text transparency
+	unsigned transparency = 0xFF;
+
+	if (time > 4000)
+		transparency = (transparency - transparency*(time-4000)/1000);
+
+	if (time < 500 || time > 5000)
+		transparency = 0;
+
+	transparency=transparency<<24;
+
+	// draw text
+	LargeFont->Draw(40, 100, it->title, 0, (COLOR_RED & 0x00FFFFFF) | transparency);
+
+	unsigned int y = 150;
+
+	for(std::list<std::string>::iterator line = this->it->lines.begin(); line != it->lines.end(); ++line, y+=LargeFont->getHeight() + 15)
+		LargeFont->Draw(60, y, line->c_str(), 0, (COLOR_YELLOW & 0x00FFFFFF) | transparency);
+	
+	LargeFont->Draw(40, y + 20, it->lastLine, 0, (COLOR_RED & 0x00FFFFFF) | transparency);
+
+	// draw picture
+	// @todo: add pictures to credits.lst ...
+	glArchivItem_Bitmap *item = LOADER.GetImageN("credits", it->picId);
+	
+	if (item)
+		item->Draw(VideoDriverWrapper::inst().GetScreenWidth() - 300, 70, 0, 0, 0, 0, 0, 0, (COLOR_WHITE & 0x00FFFFFF) | transparency);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author Siegi4
+ */
+bool dskCredits::Close(void)
+{
+	WindowManager::inst().Switch(new dskMainMenu());
+	return true;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author Siegi4
+ */
+bool dskCredits::Msg_LeftUp(const MouseCoords& mc)
+{
+	return Close();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author Siegi4
+ */
+bool dskCredits::Msg_RightUp(const MouseCoords& mc)
+{
+	return Close();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author Siegi4
+ */
+bool dskCredits::Msg_KeyDown(const KeyEvent& ke)
+{
+	return Close();
 }

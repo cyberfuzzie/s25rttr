@@ -1,4 +1,4 @@
-// $Id: dskCredits.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: dskCredits.h 5851 2010-01-04 15:28:21Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -23,16 +23,49 @@
 
 #include "Desktop.h"
 
+#include <list>
+
 /// Klasse des Credits Desktops.
 class dskCredits : public Desktop
 {
 public:
 	/// Konstruktor von @p dskCredits.
 	dskCredits();
+	~dskCredits();
 
 private:
+	bool Msg_LeftUp(const MouseCoords& mc);
+	bool Msg_RightUp(const MouseCoords& mc);
+	bool Msg_KeyDown(const KeyEvent& ke);
+	void Msg_PaintAfter();
 
-	void Msg_ButtonClick(const unsigned int ctrl_id);
+	bool Close(void);
+
+	struct CreditsEntry {
+		std::string title;
+		std::string lastLine;
+		int picId;
+		std::list<std::string> lines;
+	};
+
+	std::list<CreditsEntry> entries;
+	std::list<dskCredits::CreditsEntry>::iterator it;
+
+	struct Bob {
+		unsigned int id;
+		bool hasWare;
+		bool isFat;
+		unsigned int direction;
+		unsigned char speed;
+		unsigned int animationStep;
+		short x;
+		short y;
+		unsigned int color;
+	};
+
+	std::list<Bob> bobs;
+
+	unsigned int startTime;
 };
 
 #endif // !dskCREDITS_H_INCLUDED

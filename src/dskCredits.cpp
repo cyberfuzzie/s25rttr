@@ -1,4 +1,4 @@
-// $Id: dskCredits.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: dskCredits.cpp 5866 2010-01-05 15:08:23Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -132,6 +132,7 @@ dskCredits::dskCredits(void) : Desktop(LOADER.GetImageN("setup013", 0))
 	entry.lines.push_back(CreditsEntry::Line("Sotham"));
 	entry.lines.push_back(CreditsEntry::Line("Z-Stef"));
 	entry.lines.push_back(CreditsEntry::Line("Fenan"));
+	entry.lines.push_back(CreditsEntry::Line("Spike(one)"));
 
 	this->entries.push_back(entry);
 	entry.lines.clear();

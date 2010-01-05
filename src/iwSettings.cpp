@@ -50,7 +50,7 @@ static char THIS_FILE[] = __FILE__;
  *  @author NastX
  */
 iwSettings::iwSettings(dskGameInterface *gameDesktop)
-	: IngameWindow(CGI_SETTINGS, 0xFFFF, 0xFFFF, 300, 300, _("Settings"), LOADER.GetImageN("resource", 41),
+	: IngameWindow(CGI_SETTINGS, 0xFFFF, 0xFFFF, 300, 300, _("Settings"), LOADER.GetImageN("resource", 41)),
 	gameDesktop(gameDesktop)
 {
 	AddText(  46,  15,  40, _("Resolution :"), COLOR_YELLOW, 0, NormalFont);

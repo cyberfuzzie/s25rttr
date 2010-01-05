@@ -56,6 +56,7 @@ iwSettings::iwSettings(dskGameInterface *gameDesktop)
 	AddText(  46,  15,  40, _("Resolution :"), COLOR_YELLOW, 0, NormalFont);
 	AddText(  47,  15,  85, _("Mode :"), COLOR_YELLOW, 0, NormalFont);
 	AddCheckBox(4, 110, 120, 150, 26, TC_GREY, _("Statistic Scale"), NormalFont, false);
+	GetCtrl<ctrlCheck>(4)->SetCheck(Settings::inst().ingame.StatScale);
 
 	// "Vollbild"
 	ctrlOptionGroup *optiongroup = AddOptionGroup(10, ctrlOptionGroup::CHECK, scale);

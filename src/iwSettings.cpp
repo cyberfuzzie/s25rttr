@@ -103,7 +103,7 @@ iwSettings::iwSettings(dskGameInterface *gameDesktop)
  */
 iwSettings::~iwSettings()
 { 
-	ctrlComboBox *SizeCombo = GetCtrl<ctrlComboBox>(42);
+	ctrlComboBox *SizeCombo = GetCtrl<ctrlComboBox>(0);
 	SETTINGS.video.width = video_modes[SizeCombo->GetSelection()].width;
 	SETTINGS.video.height = video_modes[SizeCombo->GetSelection()].height;
 

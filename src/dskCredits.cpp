@@ -1,4 +1,4 @@
-// $Id: dskCredits.cpp 5866 2010-01-05 15:08:23Z FloSoft $
+// $Id: dskCredits.cpp 5867 2010-01-05 16:33:51Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -71,7 +71,11 @@ dskCredits::dskCredits(void) : Desktop(LOADER.GetImageN("setup013", 0))
 	entry.picId = 2;
 	entry.lastLine = "";
 	entry.lines.push_back(CreditsEntry::Line(_("Project management")));
+	entry.lines.push_back(CreditsEntry::Line(_("Server management")));
 	entry.lines.push_back(CreditsEntry::Line(_("Programming")));
+	entry.lines.push_back(CreditsEntry::Line(_("Website Administration")));
+	entry.lines.push_back(CreditsEntry::Line(_("Website Programming")));
+	entry.lines.push_back(CreditsEntry::Line(_("Quality Assurance")));
 
 	this->entries.push_back(entry);
 	entry.lines.clear();
@@ -81,6 +85,7 @@ dskCredits::dskCredits(void) : Desktop(LOADER.GetImageN("setup013", 0))
 	entry.lastLine = "";
 	entry.lines.push_back(CreditsEntry::Line(_("Project management")));
 	entry.lines.push_back(CreditsEntry::Line(_("Programming")));
+	entry.lines.push_back(CreditsEntry::Line(_("Quality Assurance")));
 
 	this->entries.push_back(entry);
 	entry.lines.clear();
@@ -88,7 +93,7 @@ dskCredits::dskCredits(void) : Desktop(LOADER.GetImageN("setup013", 0))
 	entry.title = "Patrick Haak (Demophobie):";
 	entry.picId = 0;
 	entry.lastLine = "";
-	entry.lines.push_back(CreditsEntry::Line(_("Administration")));
+	entry.lines.push_back(CreditsEntry::Line(_("Website Administration")));
 	entry.lines.push_back(CreditsEntry::Line(_("Quality Assurance")));
 
 	this->entries.push_back(entry);

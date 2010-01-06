@@ -1,6 +1,6 @@
-// $Id: iwStatistics.cpp 5854 2010-01-04 16:30:33Z FloSoft $
+// $Id: iwStatistics.cpp 5872 2010-01-06 18:13:07Z jh $
 //
-// Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
+// Copyright (c) 2005-2010 Settlers Freaks (sf-team at siedler25.org)
 //
 // This file is part of Siedler II.5 RTTR.
 //
@@ -23,6 +23,7 @@
 #include "iwStatistics.h"
 
 #include "Loader.h"
+#include "Settings.h"
 #include "controls.h"
 #include "GameClient.h"
 
@@ -55,7 +56,7 @@ iwStatistics::iwStatistics()
       numPlayingPlayers++;
   }
 
-  // Bilder für die spielenden Spieler malen (nur vier in Gebrauch, da kein einzelner Führer auswählbar)
+  // Bilder für die spielenden Spieler malen (nur vier in Gebrauch, da kein einzelner Anführer auswählbar)
   unsigned short startX = 126 - (numPlayingPlayers - 1) * 17;
   unsigned pos = 0;
   
@@ -116,6 +117,10 @@ iwStatistics::iwStatistics()
   // Aktueller Maximalwert an der y-Achse
   maxValue = AddText(31, 211, 125, "1", MakeColor(255,136,96,52), 
     glArchivItem_Font::DF_RIGHT|glArchivItem_Font::DF_VCENTER, LOADER.GetFontN("resource", 0));
+  
+  // Aktueller Minimalwert an der y-Achse
+  minValue = AddText(40, 211, 200, "0", MakeColor(255,136,96,52),
+    glArchivItem_Font::DF_RIGHT|glArchivItem_Font::DF_VCENTER, LOADER.GetFontN("resource", 0));
 
   // Zeit-Werte an der x-Achse
   timeAnnotations = std::vector<ctrlText*>(7); // TODO nach oben
@@ -130,6 +135,9 @@ iwStatistics::iwStatistics()
   currentView = STAT_COUNTRY;
   timeChanger->SetSelection(21);
   currentTime = STAT_15M;
+
+	if (!SETTINGS.ingame.StatScale)
+		minValue->SetVisible(false);
 }
 
 iwStatistics::~iwStatistics()
@@ -248,8 +256,9 @@ void iwStatistics::DrawStatistic(StatisticType type)
 
   unsigned short currentIndex;
   unsigned int max = 1;
+  unsigned int min = 65000;
 
-  // Maximalwert suchen
+  // Maximal- und Minimalwert suchen
   for (unsigned int p=0; p<GAMECLIENT.GetPlayerCount(); ++p)
   {
     if (!activePlayers[p])
@@ -263,13 +272,31 @@ void iwStatistics::DrawStatistic(StatisticType type)
       {
         max = stat.data[type][(currentIndex >= i)?(currentIndex-i):(STAT_STEP_COUNT-i+currentIndex)];
       }
+      if (SETTINGS.ingame.StatScale && min > stat.data[type][(currentIndex >= i)?(currentIndex-i):(STAT_STEP_COUNT-i+currentIndex)])
+      {
+        min = stat.data[type][(currentIndex >= i)?(currentIndex-i):(STAT_STEP_COUNT-i+currentIndex)];
+      }
     }
   }
 
-  // Maximalen Wert an die Achse schreiben
+  // Maximalen/Minimalen Wert an die Achse schreiben
   std::stringstream ss;
+  if (SETTINGS.ingame.StatScale)
+  {
+   if (max-min == 0) 
+    {
+     --min;
+     ++max;
+    };
+  }
   ss << max;
   maxValue->SetText(ss.str());
+  if(SETTINGS.ingame.StatScale)
+  {
+		ss.str("");
+		ss << min;
+		minValue->SetText(ss.str());
+  }
 
   // Statistiklinien zeichnen
   unsigned short previousX=0, previousY=0;
@@ -284,21 +311,28 @@ void iwStatistics::DrawStatistic(StatisticType type)
     {
       if (i != 0)
       {	  	 
-	/// if (COLORS[GAMECLIENT.GetPlayer(p)->color] == COLOR_GHOST)	// Und noch abfragen ob die Farbe durchsichtig ist
-	/// {
-	///	DrawLine(topLeftX + (STAT_STEP_COUNT-i) * stepX,
-	/// 	topLeftY + sizeY - (stat.data[type][(currentIndex >= i)?(currentIndex-i):(STAT_STEP_COUNT-i+currentIndex)]*sizeY)/max,       
-	///	previousX, previousY, 2, MakeColor(255,150,150,150));
-	///  }
-	///  else
-	///  {	
-		DrawLine(topLeftX + (STAT_STEP_COUNT-i) * stepX,
-	  	topLeftY + sizeY - (stat.data[type][(currentIndex >= i)?(currentIndex-i):(STAT_STEP_COUNT-i+currentIndex)]*sizeY)/max,       
-		previousX, previousY, 2, COLORS[GAMECLIENT.GetPlayer(p)->color]);
-	///  }
+ 				if(SETTINGS.ingame.StatScale)
+  			{
+					DrawLine(topLeftX + (STAT_STEP_COUNT-i) * stepX,
+	  				topLeftY + sizeY - ((stat.data[type][(currentIndex >= i)?(currentIndex-i):(STAT_STEP_COUNT-i+currentIndex)]-min)*sizeY)/(max-min),       
+						previousX, previousY, 2, COLORS[GAMECLIENT.GetPlayer(p)->color]);
+				}
+				else
+				{
+					DrawLine(topLeftX + (STAT_STEP_COUNT-i) * stepX,
+						topLeftY + sizeY - ((stat.data[type][(currentIndex >= i)?(currentIndex-i):(STAT_STEP_COUNT-i+currentIndex)])*sizeY)/max,       
+						previousX, previousY, 2, COLORS[GAMECLIENT.GetPlayer(p)->color]);
+				}
       }
       previousX = topLeftX + (STAT_STEP_COUNT-i) * stepX;
-      previousY = topLeftY + sizeY - (stat.data[type][(currentIndex >= i)?(currentIndex-i):(STAT_STEP_COUNT-i+currentIndex)]*sizeY)/max;
+      if(SETTINGS.ingame.StatScale)
+      {
+				previousY = topLeftY + sizeY - ((stat.data[type][(currentIndex >= i)?(currentIndex-i):(STAT_STEP_COUNT-i+currentIndex)]-min)*sizeY)/(max-min);
+      }
+      else
+      {
+				previousY = topLeftY + sizeY - ((stat.data[type][(currentIndex >= i)?(currentIndex-i):(STAT_STEP_COUNT-i+currentIndex)])*sizeY)/max;
+      }
     }
   }
 }

@@ -1,4 +1,4 @@
-// $Id: AIJHHelper.h 5855 2010-01-04 16:44:38Z FloSoft $
+// $Id: AIJHHelper.h 5882 2010-01-10 16:41:12Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -35,6 +35,12 @@ class AIPlayerJH;
 
 namespace AIJH
 {
+struct Coords
+{
+	MapCoord x;
+	MapCoord y;
+	Coords(MapCoord x, MapCoord y) : x(x), y(y) { }
+};
 
 enum Resource
 {

@@ -1,4 +1,4 @@
-// $Id: AIConstruction.h 5881 2010-01-10 02:06:52Z jh $
+// $Id: AIConstruction.h 5882 2010-01-10 16:41:12Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -21,13 +21,27 @@
 
 #pragma once
 
+#include <limits>
+#include <vector>
+#include "list.h"
+#include "AIJHHelper.h"
+#include "GameWorld.h"
+#include "noFlag.h"
+
+namespace gc { class GameCommand; }
+
 class AIConstruction
 {
 public:
-	AIConstruction(void);
+	AIConstruction(const GameWorldBase * const gwb, std::vector<gc::GameCommand*> &gcs, unsigned char playerid);
 	~AIConstruction(void);
 
-	  /// Finds flags in the area around x,y
+	/// Adds a build job to the queue
+	void AddBuildJob(AIJH::BuildJob *job);
+
+	void ExecuteBuildJob();
+
+	/// Finds flags in the area around x,y
 	void FindFlags(std::vector<const noFlag*>& flags, unsigned short x, unsigned short y, unsigned short radius);
 
 	/// Connects a specific flag to a roadsystem nearby and returns true if succesful. Also returns the route of the future road.
@@ -45,29 +59,44 @@ public:
 	/// Returns the number of buildings and buildingsites of a specific typ
 	unsigned GetBuildingCount(BuildingType type);
 
-
-
 	/// Checks whether a building type is wanted atm
 	bool Wanted(BuildingType type);
 
-		/// Initializes the wanted-buildings-vector
+	/// Initializes the wanted-buildings-vector
 	void InitBuildingsWanted();
 
-		/// Update BQ and farming ground around new building site + road
-	void RecalcGround(MapCoord x_building, MapCoord y_building, std::vector<unsigned char> &route_road);
+	/// Update BQ and farming ground around new building site + road
+	/// HIer oder in AIPlayerJH?
+	//void RecalcGround(MapCoord x_building, MapCoord y_building, std::vector<unsigned char> &route_road);
 
-		/// Tries to build a second road to a flag, which is in any way better than the first one
+	/// Tries to build a second road to a flag, which is in any way better than the first one
 	bool BuildAlternativeRoad(const noFlag *flag, std::vector<unsigned char> &route);
 
 	bool FindStoreHousePosition(MapCoord &x, MapCoord &y, unsigned radius);
-	std::list<Coords> storeHouses;
-	void AddStoreHouse(MapCoord x, MapCoord y) { storeHouses.push_back(Coords(x, y)); }
+	
+	void AddStoreHouse(MapCoord x, MapCoord y) { storeHouses.push_back(AIJH::Coords(x, y)); }
 
 	noFlag *FindTargetStoreHouseFlag(MapCoord x, MapCoord y);
 
 private:
-		/// Contains how many buildings of every type is wanted
+	/// Contains how many buildings of every type is wanted
 	std::vector<unsigned> buildingsWanted;
+
+	/// The current job the AI is working on
+	AIJH::Job *currentJob;
+
+	/// Contains the jobs the AI should try to execute, for example build jobs
+	std::deque<AIJH::BuildJob*> buildJobs;
+
+	const GameWorldBase * const gwb;
+	std::vector<gc::GameCommand*> &gcs;
+
+	/// Number of buildings and building sites of this player (refreshed by RefreshBuildingCount())
+	BuildingCount buildingCounts;
+
+	std::list<AIJH::Coords> storeHouses;
+
+	unsigned char playerid;
 };
 
 #endif //! AICONSTRUCTION_H_INCLUDED

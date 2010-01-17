@@ -1,4 +1,4 @@
-// $Id: MilitaryConsts.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: MilitaryConsts.h 5898 2010-01-17 10:25:54Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -59,7 +59,7 @@ const unsigned MILITARY_RADIUS[6] =
 { 8,9,10,11,9,4 };
 
 // Radius für einzelne Hafen(baustellen)
-const unsigned HARBOR_ALONE_RADIUS = 5;
+const unsigned HARBOR_ALONE_RADIUS = 8;
 
 /// Fahnenpositionen bei den Militärgebäuden
 

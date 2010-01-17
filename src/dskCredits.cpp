@@ -1,4 +1,4 @@
-// $Id: dskCredits.cpp 5867 2010-01-05 16:33:51Z FloSoft $
+// $Id: dskCredits.cpp 5898 2010-01-17 10:25:54Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -57,7 +57,7 @@
  */
 dskCredits::dskCredits(void) : Desktop(LOADER.GetImageN("setup013", 0))
 {
-	// Zurück
+	// ZurÃ¼ck
 	AddTextButton(0, 300, 550, 200, 22,   TC_RED1, _("Back"),NormalFont);
 
 	// "Die Siedler II.5 RTTR"
@@ -180,6 +180,8 @@ dskCredits::dskCredits(void) : Desktop(LOADER.GetImageN("setup013", 0))
 
 	this->it = entries.begin();
 	this->startTime = VideoDriverWrapper::inst().GetTickCount();
+	
+	GetMusic(sng_lst, 13)->Play(0);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

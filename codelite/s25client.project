@@ -444,6 +444,7 @@
       <VirtualDirectory Name="Konstanten">
         <File Name="../src/BuildingConsts.h"/>
         <File Name="../src/DoorConsts.h"/>
+        <File Name="../src/GameConsts.h"/>
       </VirtualDirectory>
       <File Name="../src/EventManager.cpp"/>
       <File Name="../src/EventManager.h"/>
@@ -456,7 +457,6 @@
       <File Name="../src/GameClientGF_Replay.cpp"/>
       <File Name="../src/GameClientPlayer.cpp"/>
       <File Name="../src/GameClientPlayer.h"/>
-      <File Name="../src/GameConsts.h"/>
       <File Name="../src/GameFiles.cpp"/>
       <File Name="../src/GameFiles.h"/>
       <File Name="../src/GameInterface.cpp"/>
@@ -470,6 +470,7 @@
       <File Name="../src/GameWorldBase.cpp"/>
       <File Name="../src/GameWorldGame.cpp"/>
       <File Name="../src/GameWorldViewer.cpp"/>
+      <File Name="../src/nobHarborBuilding.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="libutil">
       <File Name="../libutil/src/Serializer.cpp"/>
@@ -562,7 +563,6 @@
       <File Name="../src/glArchivItem_Sound_XMidi.cpp"/>
       <File Name="../src/glArchivItem_Sound_XMidi.h"/>
     </VirtualDirectory>
-    <File Name="../src/nobHarborBuilding.cpp"/>
   </VirtualDirectory>
   <Settings Type="Executable">
     <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
@@ -647,5 +647,6 @@
     <Project Name="video-SDL"/>
     <Project Name="libendian"/>
     <Project Name="libsiedler2"/>
+    <Project Name="mygettext"/>
   </Dependencies>
 </CodeLite_Project>

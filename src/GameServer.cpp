@@ -1,4 +1,4 @@
-// $Id: GameServer.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: GameServer.cpp 5903 2010-01-17 19:59:49Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -508,17 +508,30 @@ void GameServer::TogglePlayerState(unsigned char client)
 				SetAIName(client);
 				break;
 			case AI_JH:
-				player->ps = PS_LOCKED; 
+				if(mapinfo.map_type != MAPTYPE_SAVEGAME)
+					player->ps = PS_LOCKED;
+				else
+					player->ps = PS_FREE;
 				break;
 			default:
-				player->ps = PS_LOCKED; 
+				if(mapinfo.map_type != MAPTYPE_SAVEGAME)
+					player->ps = PS_LOCKED;
+				else
+					player->ps = PS_FREE;
 				break;
 			}
 			break;
 		}
 		
 
-	case PS_LOCKED: player->ps = PS_FREE;   break;
+	case PS_LOCKED: 
+		{
+			// Im Savegame können auf geschlossene Slots keine Spieler
+			// gesetzt werden, der entsprechende Spieler existierte ja gar nicht auf 
+			// der Karte!
+			if(mapinfo.map_type != MAPTYPE_SAVEGAME)
+				player->ps = PS_FREE;  
+		} break;
 	}
 	player->ready = (player->ps == PS_KI);
 

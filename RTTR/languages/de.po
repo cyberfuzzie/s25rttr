@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Siedler II.5 RttR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-03 14:12+0100\n"
+"POT-Creation-Date: 2010-01-11 21:15+0100\n"
 "PO-Revision-Date: 2009-12-06 20:36+0000\n"
 "Last-Translator: Demophobie <Unknown>\n"
 "Language-Team: Siedler II.5 RttR <sf-team@siedler25.org>\n"
@@ -55,7 +55,7 @@ msgstr "(1 Soldat)"
 msgid "(House unoccupied)"
 msgstr "(Haus nicht besetzt)"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:194
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:219
 #, c-format
 msgid ""
 "(Replay-Mode) Current GF: %u (End at: %u) / GF length: %u ms / NWF length: %"
@@ -93,30 +93,30 @@ msgstr "-> Hütte bauen"
 msgid "-> Dig mines"
 msgstr "-> Minen bauen"
 
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:105
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:106
 msgid "1 h"
 msgstr "1 h"
 
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:104
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:105
 msgid "15 m"
 msgstr "15 m"
 
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:107
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:108
 msgid "16 h"
 msgstr "16 h"
 
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:106
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:107
 msgid "4 h"
 msgstr "4 h"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:847
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:873
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:896
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:872
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:898
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:921
 #, c-format
 msgid "<%s> "
 msgstr "<%s> "
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:856
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:881
 msgid "A auto-savegame is created..."
 msgstr "Ein Auto-Save wird angelegt..."
 
@@ -124,7 +124,7 @@ msgstr "Ein Auto-Save wird angelegt..."
 msgid "A catapult is firing upon us!"
 msgstr "Wir werden von einem Katapult beschossen!"
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:356
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:357
 msgid ""
 "A gold mine allows you to prospect for valuable gold deposits. For this, it "
 "is necessary to ensure that the miners are provided with plenty of food."
@@ -148,14 +148,14 @@ msgstr "Eine Expedition ist gelandet."
 msgid "A ship is ready for an expedition."
 msgstr "Ein Schiff ist bereit zum Auslaufen."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:509
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:510
 msgid ""
 "A well supplies water to the bakery, brewery, donkey breeder and pig farm."
 msgstr ""
 "Mit dem Wasser eines Brunnens können Bäckerei, Brauerei, Eselzucht und die "
 "Schweinezucht beliefert werden."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:381
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:382
 msgid ""
 "A woodcutter provides the sawmill with logs. A forester is able to replant "
 "the depleted forest."
@@ -183,6 +183,15 @@ msgstr "Server hinzufügen"
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:199
 msgid "Add track"
 msgstr "Titel hinzufügen"
+
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:120
+#, fuzzy
+msgid "Additional Programming:"
+msgstr "Programmierung"
+
+#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:105
+msgid "Advanced"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:247
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:257
@@ -226,6 +235,10 @@ msgstr "Schmied"
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:111
 msgid "Armory"
 msgstr "Schmiede"
+
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:115
+msgid "Artificial Intelligence (AI)"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:271
 msgid "Attack not possible."
@@ -328,7 +341,7 @@ msgstr "Wasserweg bauen"
 msgid "Builder"
 msgstr "Bauarbeiter"
 
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:85
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:86
 msgid "Building sequence"
 msgstr "Baureihenfolge"
 
@@ -480,7 +493,7 @@ msgstr "Vertragstyp:"
 msgid "Create Game"
 msgstr "Spiel erstellen"
 
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:62
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:67
 msgid "Credits"
 msgstr "Credits"
 
@@ -488,14 +501,14 @@ msgstr "Credits"
 msgid "Crucible"
 msgstr "Schmelztiegel"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:196
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:221
 #, c-format
 msgid ""
 "Current GF: %u / GF length: %u ms / NWF length: %u gf (%u ms) /  Ping: %u ms"
 msgstr ""
 "Aktueller GF: %u / GF-Länge: %u ms / NWF-Länge: %u gf (%u ms) / Ping: %u ms"
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:349
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:350
 msgid ""
 "Deep within the mountains, miners dig for iron ore. They will obviously need "
 "a lot of food for the strenuous work."
@@ -542,7 +555,7 @@ msgstr "Alle Gebäude zerstören und aufgeben"
 msgid "Dig up road"
 msgstr "Weg abreißen"
 
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:87
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:88
 msgid "Diplomacy"
 msgstr "Diplomatie"
 
@@ -558,7 +571,7 @@ msgstr "Deaktiviert"
 msgid "Display options"
 msgstr "Darstellungsmodus"
 
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:63
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:64
 msgid "Distribution of goods"
 msgstr "Verteilung"
 
@@ -566,7 +579,7 @@ msgstr "Verteilung"
 msgid "Don't surrender"
 msgstr "Nicht aufgeben"
 
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:105
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:145
 msgid "Donators"
 msgstr "Spender"
 
@@ -613,7 +626,7 @@ msgstr "Effekte"
 msgid "Email Address:"
 msgstr "Emailadresse:"
 
-#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:106
+#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:110
 msgid "End game"
 msgstr "Spiel beenden"
 
@@ -770,7 +783,7 @@ msgstr "Eisen gefunden"
 msgid "Found water"
 msgstr "Wasser gefunden"
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:365
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:366
 msgid ""
 "From the lookout tower you can see far into previously unexplored lands."
 msgstr "Für eine weite Aussicht in unerforschte Gebiete sorgt der Spähturm."
@@ -791,15 +804,15 @@ msgstr ""
 msgid "Game crate was picked and spread out..."
 msgstr "Spielkiste herausgesucht und ausgebreitet..."
 
-#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:58
+#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:59
 msgid "Game menu"
 msgstr "Kontrollfenster"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:874
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:899
 msgid "Game was paused."
 msgstr "Spiel wurde pausiert."
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:897
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:922
 msgid "Game was resumed."
 msgstr "Spiel wurde fortgesetzt."
 
@@ -811,7 +824,7 @@ msgstr "Name des Spiels:"
 msgid "General"
 msgstr "General"
 
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:70
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:71
 msgid "General statistics"
 msgstr "Statistik"
 
@@ -847,7 +860,7 @@ msgstr "Waren zu Beginn:"
 msgid "Grain"
 msgstr "Getreide"
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:453
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:454
 msgid ""
 "Grain and water are needed for rearing pigs. The meat thus obtained can then "
 "be processed by a butcher."
@@ -887,7 +900,7 @@ msgstr "Hammer"
 msgid "Harbor building"
 msgstr "Hafengebäude"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:322
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:347
 msgid "Headquarters"
 msgstr "Hauptquartier"
 
@@ -940,8 +953,8 @@ msgstr "IPv6"
 msgid "Incomplete message was received!"
 msgstr "Unvollständige Nachricht wurde empfangen!"
 
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:95
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:171
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:96
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:179
 msgid "Inhabitants"
 msgstr "Einwohner"
 
@@ -993,7 +1006,7 @@ msgstr "Eisenerz"
 msgid "Iron smelter"
 msgstr "Eisenschmelze"
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:515
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:516
 msgid ""
 "It is possible to build small rowing boats as well as huge cargo ships in a "
 "shipyard. The boards required for this are skillfully worked by shipwrights."
@@ -1057,7 +1070,7 @@ msgstr "Weniger Wiederholungen"
 msgid "Load"
 msgstr "Laden"
 
-#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:76
+#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:77
 msgid "Load 'ReadMe' file"
 msgstr "'Lies mich'-Datei laden"
 
@@ -1065,7 +1078,7 @@ msgstr "'Lies mich'-Datei laden"
 msgid "Load game"
 msgstr "Spiel laden"
 
-#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:80
+#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:81
 msgid "Load game!"
 msgstr "Spiel laden!"
 
@@ -1109,7 +1122,7 @@ msgstr "Sie haben Land durch dieses Gebäude verloren"
 msgid "Low"
 msgstr "Wenig"
 
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:59
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:60
 msgid "Main selection"
 msgstr "Hauptauswahl"
 
@@ -1133,11 +1146,16 @@ msgstr "Karte: "
 msgid "Mapfile: "
 msgstr "Dateiname der Karte: "
 
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:106
+#, fuzzy
+msgid "Mapping"
+msgstr "Karte"
+
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:170
 msgid "Meat"
 msgstr "Fleisch"
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:416
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:417
 msgid "Meat the hunter acquires is used to feed the miners."
 msgstr "Das Fleisch des erlegten Wildes dient der Ernährung der Bergarbeiter."
 
@@ -1145,12 +1163,12 @@ msgstr "Das Fleisch des erlegten Wildes dient der Ernährung der Bergarbeiter."
 msgid "Medium-term"
 msgstr "Mittelfristig"
 
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:96
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:175
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:97
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:183
 msgid "Merchandise"
 msgstr "Waren"
 
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:71
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:72
 msgid "Merchandise statistics"
 msgstr "Warenproduktion"
 
@@ -1166,7 +1184,7 @@ msgstr "Schlosser"
 msgid "Metalworks"
 msgstr "Schlosserei"
 
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:80
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:81
 msgid "Military"
 msgstr "Militär"
 
@@ -1182,8 +1200,8 @@ msgstr "Militärgebäude verloren"
 msgid "Military building occupied"
 msgstr "Militärgebäude besetzt"
 
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:97
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:179
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:98
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:187
 msgid "Military strength"
 msgstr "Militärmacht"
 
@@ -1206,6 +1224,11 @@ msgstr "Münzprägerei"
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:329
 msgid "Minter"
 msgstr "Münzpräger"
+
+#: /storage/RTTR/svn/trunk/src/iwSettings.cpp:57
+#, fuzzy
+msgid "Mode :"
+msgstr "Modus:"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:165
 msgid "Mode:"
@@ -1329,7 +1352,7 @@ msgstr "Normal"
 msgid "Not available"
 msgstr "Nicht verfügbar"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:840
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:865
 #, c-format
 msgid "Note: Game settings changed by the server%s"
 msgstr "Achtung: Spiel Optionen vom Server %s geändert."
@@ -1403,8 +1426,9 @@ msgstr "Auftrag der Baustelle"
 msgid "Other"
 msgstr "Andere"
 
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:84
-msgid "Other Support"
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:133
+#, fuzzy
+msgid "Other Support:"
 msgstr "Sonstige Unterstützung"
 
 #: /storage/RTTR/svn/trunk/src/iwMinimap.cpp:53
@@ -1469,22 +1493,22 @@ msgstr "Gespielte"
 msgid "Player"
 msgstr "Spieler"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:832
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:857
 #, c-format
 msgid "Player '%s' joined the game!"
 msgstr "Spieler '%s' hat das Spiel betreten!"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:829
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:854
 #, c-format
 msgid "Player '%s' left the game!"
 msgstr "Spieler '%s' hat das Spiel verlassen!"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:943
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:968
 #, c-format
 msgid "Player '%s' switched to player '%s'"
 msgstr "Spieler '%s' ist zu Spieler '%s' gewechselt"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:961
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:986
 #, c-format
 msgid "Player '%s' was defeated!"
 msgstr "Spieler '%s' wurde besiegt!"
@@ -1530,9 +1554,16 @@ msgstr "Produktivität"
 msgid "Program version is too old to play that replay!"
 msgstr "Die Version des Programmes ist zu alt, um dieses Replay abzuspielen!"
 
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:67
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:75
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:87
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:114
 msgid "Programming"
 msgstr "Programmierung"
+
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:73
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:86
+msgid "Project management"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:134
 msgid "Proxyserver:"
@@ -1547,8 +1578,11 @@ msgstr "Proxytyp:"
 msgid "Pull down flag"
 msgstr "Fahne abreißen"
 
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:76
-msgid "Quality assurance"
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:78
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:88
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:97
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:105
+msgid "Quality Assurance"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:247
@@ -1575,7 +1609,7 @@ msgstr "Zufällige Wiedergabe"
 msgid "Ranger"
 msgstr "Förster"
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:441
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:442
 msgid ""
 "Raw iron ore is smelted in the iron smelters with the help of coal. The "
 "processed iron is then used to making weapons (in the Armory) and tools (in "
@@ -1589,7 +1623,7 @@ msgstr ""
 msgid "Readme"
 msgstr "Liesmich"
 
-#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:126
+#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:130
 msgid "Readme!"
 msgstr "Lies mich!"
 
@@ -1617,6 +1651,11 @@ msgstr "Titel entfernen"
 msgid "Reserve"
 msgstr "Reserve"
 
+#: /storage/RTTR/svn/trunk/src/iwSettings.cpp:56
+#, fuzzy
+msgid "Resolution :"
+msgstr "Auflösung im Spiel:"
+
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:161
 msgid "Resolution:"
 msgstr "Auflösung im Spiel:"
@@ -1628,6 +1667,15 @@ msgstr "Letztes Spiel fortsetzen"
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:87
 msgid "Return"
 msgstr "Zurück"
+
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:64
+msgid "Return To The Roots"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/dskLobby.cpp:60
+#, c-format
+msgid "Return To The Roots - v%s-%s"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:57
 msgid "Rod and line"
@@ -1641,8 +1689,8 @@ msgstr "Nudelrolle"
 msgid "Romans"
 msgstr "Römer"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:873
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:896
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:898
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:921
 msgid "SYSTEM"
 msgstr "SYSTEM"
 
@@ -1654,7 +1702,7 @@ msgstr "Speichern"
 msgid "Save Password?"
 msgstr "Passwort speichern?"
 
-#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:84
+#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:85
 msgid "Save game!"
 msgstr "Spiel speichern!"
 
@@ -1711,9 +1759,19 @@ msgstr "Serverinformationen"
 msgid "Server Name:"
 msgstr "Servername:"
 
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:74
+#, fuzzy
+msgid "Server management"
+msgstr "Servername:"
+
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:59
 msgid "Server-Port:"
 msgstr "Server-Port:"
+
+#: /storage/RTTR/svn/trunk/src/iwSettings.cpp:53
+#, fuzzy
+msgid "Settings"
+msgstr "Einstellungen anzeigen..."
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:92
 msgid "Shared team view"
@@ -1727,7 +1785,7 @@ msgstr "Schild"
 msgid "Ship register"
 msgstr "Schiffsregister"
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:540
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:541
 msgid ""
 "Ships can only be loaded and unloaded in a harbor. Expeditions can also be "
 "prepared here. You can release certain merchandise from the storehouse, as "
@@ -1774,9 +1832,9 @@ msgstr ""
 msgid "Size"
 msgstr "Größe"
 
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:93
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:113
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:163
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:94
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:114
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:171
 msgid "Size of country"
 msgstr "Landesgröße"
 
@@ -1833,11 +1891,16 @@ msgstr "Expedition starten"
 msgid "Start game"
 msgstr "Spiel starten"
 
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:46
+#: /storage/RTTR/svn/trunk/src/iwSettings.cpp:58
+#, fuzzy
+msgid "Statistic Scale"
+msgstr "Statistik"
+
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:47
 msgid "Statistics"
 msgstr "Statistik"
 
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:75
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:76
 msgid "Stock"
 msgstr "Inventur"
 
@@ -1878,7 +1941,7 @@ msgid "Suggest treaty of alliance"
 msgstr "Friedensvertrag vorschlagen"
 
 #: /storage/RTTR/svn/trunk/src/iwSurrender.cpp:52
-#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:104
+#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:108
 msgid "Surrender"
 msgstr "Aufgeben"
 
@@ -1894,6 +1957,10 @@ msgstr "Schwert"
 msgid "System language"
 msgstr "Systemsprache"
 
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:172
+msgid "THE END"
+msgstr ""
+
 #: /storage/RTTR/svn/trunk/src/iwBaseWarehouse.cpp:64
 msgid "Take out of store"
 msgstr "Auslagern"
@@ -1906,11 +1973,15 @@ msgstr "Team"
 msgid "Temporary map file was not found!"
 msgstr "Temporäre Map-Datei konnte nicht gefunden werden!"
 
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:114
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:164
 msgid "Thank you for your donations!"
 msgstr "Vielen Dank an alle Spender!"
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:374
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:171
+msgid "Thank you!"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:375
 msgid ""
 "Thanks to its immense strength, the catapults represents an effective weapon "
 "against enemy military buildings."
@@ -1934,16 +2005,7 @@ msgstr ""
 "Das Spiel ist nicht synchron. Die Checksummen einiger Spieler stimmen nicht "
 "miteinander überein."
 
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:59
-msgid "The Settlers II.5 RTTR"
-msgstr "Die Siedler II.5 RTTR"
-
-#: /storage/RTTR/svn/trunk/src/dskLobby.cpp:60
-#, c-format
-msgid "The Settlers II.5 RTTR, v%s-%s"
-msgstr "Die Siedler II.5 RTTR, v%s-%s"
-
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:428
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:429
 msgid ""
 "The armory produces swords and strong shields. This equipment is vital for "
 "your soldiers."
@@ -1951,7 +2013,7 @@ msgstr ""
 "Die Schmiede stellt Schwerter und stabile Schilde her. Diese Ausrüstung ist "
 "für Ihre Soldaten lebensnotwendig."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:275
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:276
 msgid ""
 "The barracks is a very small hut which can be used by your soldiers as "
 "quarters. Using the gold coin button you can stop the delivery of gold coins "
@@ -1962,7 +2024,7 @@ msgstr ""
 "Quartier genutzt werden kann. Mit dem \"Goldmünze\"-Button können Sie die "
 "Lieferung von Goldmünzen an die hier stationierten Soldaten stoppen."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:421
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:422
 msgid ""
 "The brewer produces fine beer from grain and water. This drink is needed to "
 "fill the soldiers with courage."
@@ -1970,7 +2032,7 @@ msgstr ""
 "Der Braumeister erzeugt aus Korn und Wasser wohlschmeckendes Bier. Dieses "
 "Getränk wird benötigt, um den Soldaten Mut einzuflössen."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:409
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:410
 msgid ""
 "The butcher processes the livestock delivered into nutritious ham on which "
 "you miners are fed."
@@ -1978,7 +2040,7 @@ msgstr ""
 "Die Fleischerei verarbeitet das angelieferte Vieh zu nahrhaftem Schinken, "
 "von dem sich Ihre Bergarbeiter ernähren."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:494
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:495
 msgid ""
 "The carpenter turns the woodcutter's logs into made-to-measure planks. These "
 "form the basic for building houses and ships."
@@ -1986,7 +2048,7 @@ msgstr ""
 "Der Sägewerker verwandelt die Stämme vom Holzfeller zu maßgefertigten "
 "Brettern. Diese bilden die Grundlage zum Erstellen von Häusern und Schiffen."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:434
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:435
 msgid ""
 "The countless tools which your workers need are made in the metalworks. This "
 "requires boards and iron."
@@ -1994,7 +2056,7 @@ msgstr ""
 "Die unzähligen Werkzeuge, die Ihre Arbeiter benötigen, werden in der "
 "Schlosserei gefertigt. Dafür werden Bretter und Eisen benötigt."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:319
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:320
 msgid ""
 "The defensive capabilities and size of the fortress are unsurpassed. This "
 "stronghold ensures that other valuable buildings and commodities are "
@@ -2015,7 +2077,7 @@ msgstr "Das Notprogramm wurde aktiviert."
 msgid "The emergency program has been deactivated."
 msgstr "Das Notprogramm wurde deaktiviert."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:524
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:525
 msgid ""
 "The farmer plants and harvests grain in the surrounding fields. A windmill "
 "then processes the harvested grain into flour or can be used to feed the "
@@ -2024,7 +2086,7 @@ msgstr ""
 "Der Bauer pflanzt und erntet Getreide auf den umliegenden Äckern. Eine "
 "Windmühle kann dann das geerntete Korn zu Mehl verarbeiten."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:388
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:389
 msgid ""
 "The fish man is responsible for finding water rich in fish. His fish feed a "
 "great many miners."
@@ -2032,7 +2094,7 @@ msgstr ""
 "Die Suche nach fischreichen Gewässern ist die Aufgabe des Fischers. Mit "
 "seinem Fisch wird mancher Bergarbeiter ernährt."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:486
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:487
 msgid ""
 "The flour produced at the windmill can be combined with water in the bakery "
 "to make oven-fresh bread. It's your miners' favorite!"
@@ -2041,7 +2103,7 @@ msgstr ""
 "zu ofenfrischem Brot verarbeitet werden. Es ist bei Ihren Bergarbeitern sehr "
 "beliebt."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:479
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:480
 msgid ""
 "The grain is ground in the windmill. The flour from the windmill is later "
 "used at the bakery to bake bread."
@@ -2049,7 +2111,7 @@ msgstr ""
 "Das Korn wird in der Windmühle gemahlen. Das so erzeugte Mehl wird später "
 "von einer Bäckerei zu Brot verarbeitet."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:287
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:288
 msgid ""
 "The guardhouse is a comfortable place for the military which is also "
 "protected by solid stone walls. Using the gold coin button you can stop the "
@@ -2061,7 +2123,7 @@ msgstr ""
 "können Sie die Lieferung von Goldmünzen an die hier stationierten Soldaten "
 "stoppen."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:252
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:253
 msgid ""
 "The headquarters represents the center of your realm. The large amount of "
 "storage space available means a great many things can be safely stored here. "
@@ -2082,7 +2144,7 @@ msgstr ""
 "sollen. Der erste Wert gibt die momentane, der zweite Wert die gewünschte "
 "Besetzung an. "
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:342
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:343
 msgid ""
 "The mining of coal supports the metalworks and smithy. This hard work "
 "requires an adequate supply of food."
@@ -2090,7 +2152,7 @@ msgstr ""
 "Der Kohleabbau unterstützt die Metallarbeiten und das Schmieden. Diese harte "
 "Arbeit benötigt eine entsprechend gute Nahrungsversorgung."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:502
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:503
 msgid ""
 "The mint is responsible for producing valuable gold coins. These precious "
 "objects are produced using coal and gold."
@@ -2098,7 +2160,7 @@ msgstr ""
 "Die Erzeugung wertvoller Goldmünzen wird von der Münzprägerei übernommen. "
 "Mit Hilfe von Kohle und Gold lassen sich diese Kostbarkeiten herstellen."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:532
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:533
 msgid ""
 "The pack donkeys bred here are used to transport your merchandise more "
 "efficiently. They are reared on water and grain."
@@ -2118,7 +2180,7 @@ msgid ""
 "agree?"
 msgstr "%s möchte euren %s vor Ablauf beenden. Einverstanden?"
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:334
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:335
 msgid ""
 "The quarrying of stone in a granite mine guarantees the supply of stone for "
 "buildings. However, eben a granite mine has to feed its workers."
@@ -2144,7 +2206,7 @@ msgstr "Die angegebene Datei konnte nicht geöffnet werden!"
 msgid "The specified file couldn't be saved!"
 msgstr "Die angegebene Datei konnte nicht gespeichert werden!"
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:394
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:395
 msgid ""
 "The stonemason works the stone near his quarry into bricks. These are needed "
 "mainly for building houses and as ammunition for catapults."
@@ -2153,7 +2215,7 @@ msgstr ""
 "Steinziegeln. Diese werden vorrangig für den Hausbau und als Munition für "
 "Katapulte benötigt."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:460
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:461
 msgid ""
 "The storehouse can help reduce long transportation journeys and is suited to "
 "the temporary storage of merchandise and inhabitants. You can release "
@@ -2167,7 +2229,7 @@ msgstr ""
 "Sie dazu zuerst den entsprechenden Button, dann das gewünschte Waren- oder "
 "Berufssymbol."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:303
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:304
 msgid ""
 "The watchtower with its large amount of space is best suited for stationing "
 "a large number of your troops. Using the gold coin button you can stop the "
@@ -2222,7 +2284,7 @@ msgstr "Anfang"
 msgid "Total domination"
 msgstr "Alleinherrschaft"
 
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:65
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:66
 msgid "Transport"
 msgstr "Transport"
 
@@ -2262,8 +2324,8 @@ msgstr "Benutzername:"
 msgid "VSync:"
 msgstr "VSync:"
 
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:100
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:191
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:101
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:199
 msgid "Vanquished enemies"
 msgstr "Besiegte Gegner"
 
@@ -2328,6 +2390,10 @@ msgstr "Wasser"
 msgid "We are under attack!"
 msgstr "Wir werden angegriffen!"
 
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:169
+msgid "We hope you enjoy playing Return To The Roots!"
+msgstr ""
+
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:283
 msgid "Weak attackers"
 msgstr "Schwache Angreifer"
@@ -2339,6 +2405,16 @@ msgstr "Schwache Verteidigung"
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:60
 msgid "Weapons"
 msgstr "Waffen"
+
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:76
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:96
+msgid "Website Administration"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:77
+#, fuzzy
+msgid "Website Programming"
+msgstr "Programmierung"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:263
 msgid "Well"
@@ -2356,7 +2432,7 @@ msgstr "Fenstermodus"
 msgid "Winter world"
 msgstr "Winterwelt"
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:402
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:403
 msgid ""
 "Within his area, the forester ensures the survival of the forest. He plants "
 "all types of trees."
@@ -2461,7 +2537,7 @@ msgstr "zu GF:"
 msgid "treaty of alliance"
 msgstr "Allianz Vertrag"
 
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:107
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:147
 msgid "various anonymous donators"
 msgstr "diverse anonyme Spenden"
 
@@ -2536,6 +2612,12 @@ msgstr "diverse anonyme Spenden"
 
 #~ msgid "Sotham"
 #~ msgstr "Sotham"
+
+#~ msgid "The Settlers II.5 RTTR"
+#~ msgstr "Die Siedler II.5 RTTR"
+
+#~ msgid "The Settlers II.5 RTTR, v%s-%s"
+#~ msgstr "Die Siedler II.5 RTTR, v%s-%s"
 
 #~ msgid "Waterway's maximum length"
 #~ msgstr "Maximale Länge von Wasserwegen"

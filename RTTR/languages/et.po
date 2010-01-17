@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: s25rttr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-03 14:12+0100\n"
+"POT-Creation-Date: 2010-01-11 21:15+0100\n"
 "PO-Revision-Date: 2009-12-20 11:11+0000\n"
 "Last-Translator: rm87 <Unknown>\n"
 "Language-Team: Estonian <et@li.org>\n"
@@ -55,7 +55,7 @@ msgstr "(1 sõdur)"
 msgid "(House unoccupied)"
 msgstr "(Maja on asustamata)"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:194
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:219
 #, c-format
 msgid ""
 "(Replay-Mode) Current GF: %u (End at: %u) / GF length: %u ms / NWF length: %"
@@ -93,30 +93,30 @@ msgstr "-> Ehita hütt"
 msgid "-> Dig mines"
 msgstr "-> Kaeva kaevandusi"
 
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:105
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:106
 msgid "1 h"
 msgstr "1 t"
 
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:104
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:105
 msgid "15 m"
 msgstr "15 m"
 
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:107
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:108
 msgid "16 h"
 msgstr "16 t"
 
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:106
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:107
 msgid "4 h"
 msgstr "4 t"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:847
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:873
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:896
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:872
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:898
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:921
 #, c-format
 msgid "<%s> "
 msgstr "<%s> "
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:856
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:881
 msgid "A auto-savegame is created..."
 msgstr "Automaatse mängusalvestuse tegemine..."
 
@@ -124,7 +124,7 @@ msgstr "Automaatse mängusalvestuse tegemine..."
 msgid "A catapult is firing upon us!"
 msgstr "Katapult tulistab meie suunas!"
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:356
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:357
 msgid ""
 "A gold mine allows you to prospect for valuable gold deposits. For this, it "
 "is necessary to ensure that the miners are provided with plenty of food."
@@ -149,14 +149,14 @@ msgstr "Laev on jõudnud ekspeditsiooni lõpp punkti."
 msgid "A ship is ready for an expedition."
 msgstr "Laev on valmis ekspeditsiooniks."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:509
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:510
 msgid ""
 "A well supplies water to the bakery, brewery, donkey breeder and pig farm."
 msgstr ""
 "Kaev varustab veega pagaritöökodasid, pruulikodasid, eeslikasvatajaid ja "
 "seakasvatajaid."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:381
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:382
 msgid ""
 "A woodcutter provides the sawmill with logs. A forester is able to replant "
 "the depleted forest."
@@ -184,6 +184,15 @@ msgstr "Lisa server"
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:199
 msgid "Add track"
 msgstr "Lisa lugu"
+
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:120
+#, fuzzy
+msgid "Additional Programming:"
+msgstr "Programmeerimine"
+
+#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:105
+msgid "Advanced"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:247
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:257
@@ -227,6 +236,10 @@ msgstr "Relvameister"
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:111
 msgid "Armory"
 msgstr "Relvatöökoda"
+
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:115
+msgid "Artificial Intelligence (AI)"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:271
 msgid "Attack not possible."
@@ -329,7 +342,7 @@ msgstr "Ehita veetee"
 msgid "Builder"
 msgstr "Ehitaja"
 
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:85
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:86
 msgid "Building sequence"
 msgstr "Ehitiste ehitamise järjekord"
 
@@ -481,7 +494,7 @@ msgstr "Lepingu tüüp:"
 msgid "Create Game"
 msgstr "Loo mäng"
 
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:62
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:67
 msgid "Credits"
 msgstr "Tiitelinfo"
 
@@ -489,14 +502,14 @@ msgstr "Tiitelinfo"
 msgid "Crucible"
 msgstr "Tiigel"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:196
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:221
 #, c-format
 msgid ""
 "Current GF: %u / GF length: %u ms / NWF length: %u gf (%u ms) /  Ping: %u ms"
 msgstr ""
 "Praegune GF: %u / GF pikkus: %u ms / NWF pikkus: %u gf (%u ms) /  Ping: %u ms"
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:349
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:350
 msgid ""
 "Deep within the mountains, miners dig for iron ore. They will obviously need "
 "a lot of food for the strenuous work."
@@ -542,7 +555,7 @@ msgstr "Lammuta kõik ehitised ja alistu"
 msgid "Dig up road"
 msgstr "Kaeva tee ülesse"
 
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:87
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:88
 msgid "Diplomacy"
 msgstr "Diplomaatia"
 
@@ -558,7 +571,7 @@ msgstr "Väljas"
 msgid "Display options"
 msgstr "Ekraani seaded"
 
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:63
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:64
 msgid "Distribution of goods"
 msgstr "Kaupade jaotus"
 
@@ -566,7 +579,7 @@ msgstr "Kaupade jaotus"
 msgid "Don't surrender"
 msgstr "Ära alistu"
 
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:105
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:145
 msgid "Donators"
 msgstr "Annetajad"
 
@@ -613,7 +626,7 @@ msgstr "Efektid"
 msgid "Email Address:"
 msgstr "E-posti aadress:"
 
-#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:106
+#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:110
 msgid "End game"
 msgstr "Lõpeta mäng"
 
@@ -770,7 +783,7 @@ msgstr "Leiti rauamaaki"
 msgid "Found water"
 msgstr "Leiti vett"
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:365
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:366
 msgid ""
 "From the lookout tower you can see far into previously unexplored lands."
 msgstr "Vaatetornist näed sa kaugele seni avastamata maadele."
@@ -791,15 +804,15 @@ msgstr ""
 msgid "Game crate was picked and spread out..."
 msgstr "Mäng kasti pakitud ja laiali saadetud..."
 
-#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:58
+#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:59
 msgid "Game menu"
 msgstr "Menüü"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:874
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:899
 msgid "Game was paused."
 msgstr "Mäng peatati."
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:897
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:922
 msgid "Game was resumed."
 msgstr "Mängu jätkati."
 
@@ -811,7 +824,7 @@ msgstr "Mängu nimi:"
 msgid "General"
 msgstr "Kindral"
 
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:70
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:71
 msgid "General statistics"
 msgstr "Üldine statistika"
 
@@ -847,7 +860,7 @@ msgstr "Kaupasid alustades:"
 msgid "Grain"
 msgstr "Vili"
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:453
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:454
 msgid ""
 "Grain and water are needed for rearing pigs. The meat thus obtained can then "
 "be processed by a butcher."
@@ -887,7 +900,7 @@ msgstr "Haamer"
 msgid "Harbor building"
 msgstr "Sadam"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:322
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:347
 msgid "Headquarters"
 msgstr "Peakorter"
 
@@ -940,8 +953,8 @@ msgstr "IPv6"
 msgid "Incomplete message was received!"
 msgstr "Poolik sõnum võeti vastu!"
 
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:95
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:171
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:96
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:179
 msgid "Inhabitants"
 msgstr "Elanikke"
 
@@ -993,7 +1006,7 @@ msgstr "Raua maak"
 msgid "Iron smelter"
 msgstr "Raua sulatuskoda"
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:515
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:516
 msgid ""
 "It is possible to build small rowing boats as well as huge cargo ships in a "
 "shipyard. The boards required for this are skillfully worked by shipwrights."
@@ -1056,7 +1069,7 @@ msgstr "Vähem kordusi"
 msgid "Load"
 msgstr "Laadi"
 
-#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:76
+#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:77
 msgid "Load 'ReadMe' file"
 msgstr "Ava 'Loe mind' fail"
 
@@ -1064,7 +1077,7 @@ msgstr "Ava 'Loe mind' fail"
 msgid "Load game"
 msgstr "Laadi mäng"
 
-#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:80
+#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:81
 msgid "Load game!"
 msgstr "Laadi mäng!"
 
@@ -1108,7 +1121,7 @@ msgstr "Kaotati maad sellele ehitisele"
 msgid "Low"
 msgstr "Vähe"
 
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:59
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:60
 msgid "Main selection"
 msgstr "Põhi valikud"
 
@@ -1132,11 +1145,16 @@ msgstr "Kaart: "
 msgid "Mapfile: "
 msgstr "Kaardifail: "
 
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:106
+#, fuzzy
+msgid "Mapping"
+msgstr "Kaart"
+
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:170
 msgid "Meat"
 msgstr "Liha"
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:416
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:417
 msgid "Meat the hunter acquires is used to feed the miners."
 msgstr "Liha, mida jahimees muretseb, kasutatakse kaevurite toitmiseks."
 
@@ -1144,12 +1162,12 @@ msgstr "Liha, mida jahimees muretseb, kasutatakse kaevurite toitmiseks."
 msgid "Medium-term"
 msgstr "Keskmise ajaline"
 
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:96
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:175
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:97
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:183
 msgid "Merchandise"
 msgstr "Kaupasid"
 
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:71
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:72
 msgid "Merchandise statistics"
 msgstr "Kaupade statistika"
 
@@ -1165,7 +1183,7 @@ msgstr "Metallitööline"
 msgid "Metalworks"
 msgstr "Metallitöökoda"
 
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:80
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:81
 msgid "Military"
 msgstr "Sõjavägi"
 
@@ -1181,8 +1199,8 @@ msgstr "Sõjaline ehitis kaotatud"
 msgid "Military building occupied"
 msgstr "Sõjaline ehitis asustatud"
 
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:97
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:179
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:98
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:187
 msgid "Military strength"
 msgstr "Sõjaväe tugevus"
 
@@ -1205,6 +1223,11 @@ msgstr "Mündivalukoda"
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:329
 msgid "Minter"
 msgstr "Vermija"
+
+#: /storage/RTTR/svn/trunk/src/iwSettings.cpp:57
+#, fuzzy
+msgid "Mode :"
+msgstr "Ekraan:"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:165
 msgid "Mode:"
@@ -1328,7 +1351,7 @@ msgstr "Normaalselt"
 msgid "Not available"
 msgstr "Pole saadaval"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:840
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:865
 #, c-format
 msgid "Note: Game settings changed by the server%s"
 msgstr "Märkus: Mängu seaded muudetud serveri%s poolt"
@@ -1402,8 +1425,9 @@ msgstr "Ehitusplatsi korraldus"
 msgid "Other"
 msgstr "Muu"
 
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:84
-msgid "Other Support"
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:133
+#, fuzzy
+msgid "Other Support:"
 msgstr "Muu tugi"
 
 #: /storage/RTTR/svn/trunk/src/iwMinimap.cpp:53
@@ -1468,22 +1492,22 @@ msgstr "Mängitud"
 msgid "Player"
 msgstr "Mängijaid"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:832
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:857
 #, c-format
 msgid "Player '%s' joined the game!"
 msgstr "Mängija '%s' liitus mänguga!"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:829
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:854
 #, c-format
 msgid "Player '%s' left the game!"
 msgstr "Mängija '%s' lahkus mängust!"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:943
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:968
 #, c-format
 msgid "Player '%s' switched to player '%s'"
 msgstr "Mängija '%s' on nüüd mängija '%s'"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:961
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:986
 #, c-format
 msgid "Player '%s' was defeated!"
 msgstr "Mängija '%s' on kaotanud!"
@@ -1529,9 +1553,16 @@ msgstr "Tootlikkus"
 msgid "Program version is too old to play that replay!"
 msgstr "Programmi versioon on liiga vana selle tagasimängu mängimiseks!"
 
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:67
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:75
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:87
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:114
 msgid "Programming"
 msgstr "Programmeerimine"
+
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:73
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:86
+msgid "Project management"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:134
 msgid "Proxyserver:"
@@ -1546,8 +1577,11 @@ msgstr "Tüüp:"
 msgid "Pull down flag"
 msgstr "Murra lipp maha"
 
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:76
-msgid "Quality assurance"
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:78
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:88
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:97
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:105
+msgid "Quality Assurance"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:247
@@ -1574,7 +1608,7 @@ msgstr "Suvalises järjekorras mahamängimine"
 msgid "Ranger"
 msgstr "Metsaistutaja"
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:441
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:442
 msgid ""
 "Raw iron ore is smelted in the iron smelters with the help of coal. The "
 "processed iron is then used to making weapons (in the Armory) and tools (in "
@@ -1588,7 +1622,7 @@ msgstr ""
 msgid "Readme"
 msgstr "Loe mind"
 
-#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:126
+#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:130
 msgid "Readme!"
 msgstr "Loe mind!"
 
@@ -1616,6 +1650,11 @@ msgstr "Eemalda lugu"
 msgid "Reserve"
 msgstr "Reserv"
 
+#: /storage/RTTR/svn/trunk/src/iwSettings.cpp:56
+#, fuzzy
+msgid "Resolution :"
+msgstr "Resolutsioon:"
+
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:161
 msgid "Resolution:"
 msgstr "Resolutsioon:"
@@ -1627,6 +1666,15 @@ msgstr "Taasta eelmine mäng"
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:87
 msgid "Return"
 msgstr "Tagasi"
+
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:64
+msgid "Return To The Roots"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/dskLobby.cpp:60
+#, c-format
+msgid "Return To The Roots - v%s-%s"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:57
 msgid "Rod and line"
@@ -1640,8 +1688,8 @@ msgstr "Taignarull"
 msgid "Romans"
 msgstr "Roomlased"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:873
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:896
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:898
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:921
 msgid "SYSTEM"
 msgstr "SÜSTEEM"
 
@@ -1653,7 +1701,7 @@ msgstr "Salvesta"
 msgid "Save Password?"
 msgstr "Salvestan parooli?"
 
-#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:84
+#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:85
 msgid "Save game!"
 msgstr "Salvesta mäng!"
 
@@ -1710,9 +1758,19 @@ msgstr "Serveri informatsioon"
 msgid "Server Name:"
 msgstr "Serveri nimetus:"
 
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:74
+#, fuzzy
+msgid "Server management"
+msgstr "Serveri nimetus:"
+
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:59
 msgid "Server-Port:"
 msgstr "Serveri port:"
+
+#: /storage/RTTR/svn/trunk/src/iwSettings.cpp:53
+#, fuzzy
+msgid "Settings"
+msgstr "Vaata seadeid..."
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:92
 msgid "Shared team view"
@@ -1726,7 +1784,7 @@ msgstr "Kilp"
 msgid "Ship register"
 msgstr "Laevaregister"
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:540
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:541
 msgid ""
 "Ships can only be loaded and unloaded in a harbor. Expeditions can also be "
 "prepared here. You can release certain merchandise from the storehouse, as "
@@ -1767,9 +1825,9 @@ msgstr ""
 msgid "Size"
 msgstr "Mõõtmed"
 
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:93
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:113
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:163
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:94
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:114
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:171
 msgid "Size of country"
 msgstr "Maa suurus"
 
@@ -1826,11 +1884,16 @@ msgstr "Alusta ekspeditsiooni"
 msgid "Start game"
 msgstr "Alusta mänguga"
 
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:46
+#: /storage/RTTR/svn/trunk/src/iwSettings.cpp:58
+#, fuzzy
+msgid "Statistic Scale"
+msgstr "Statistika"
+
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:47
 msgid "Statistics"
 msgstr "Statistika"
 
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:75
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:76
 msgid "Stock"
 msgstr "Laoseis"
 
@@ -1871,7 +1934,7 @@ msgid "Suggest treaty of alliance"
 msgstr "Paku liidulepingut"
 
 #: /storage/RTTR/svn/trunk/src/iwSurrender.cpp:52
-#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:104
+#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:108
 msgid "Surrender"
 msgstr "Alistu"
 
@@ -1887,6 +1950,10 @@ msgstr "Mõõk"
 msgid "System language"
 msgstr "OP. Süsteemi keel"
 
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:172
+msgid "THE END"
+msgstr ""
+
 #: /storage/RTTR/svn/trunk/src/iwBaseWarehouse.cpp:64
 msgid "Take out of store"
 msgstr "Väljasta laost"
@@ -1899,11 +1966,15 @@ msgstr "Tiim"
 msgid "Temporary map file was not found!"
 msgstr "Ajutist kaardi faili ei leitud!"
 
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:114
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:164
 msgid "Thank you for your donations!"
 msgstr "Täname teid annetuste eest!"
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:374
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:171
+msgid "Thank you!"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:375
 msgid ""
 "Thanks to its immense strength, the catapults represents an effective weapon "
 "against enemy military buildings."
@@ -1925,16 +1996,7 @@ msgstr "%s mängija '%s' ja sinu vahel on lõppenud."
 msgid "The Game is not in sync. Checksums of some players don't match."
 msgstr "Mäng ei ole sünkroonis. Mõnede mängijate kontrollsumma ei sobi."
 
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:59
-msgid "The Settlers II.5 RTTR"
-msgstr "The Settlers II.5 RTTR"
-
-#: /storage/RTTR/svn/trunk/src/dskLobby.cpp:60
-#, c-format
-msgid "The Settlers II.5 RTTR, v%s-%s"
-msgstr "The Settlers II.5 RTTR, v%s-%s"
-
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:428
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:429
 msgid ""
 "The armory produces swords and strong shields. This equipment is vital for "
 "your soldiers."
@@ -1942,7 +2004,7 @@ msgstr ""
 "Relvatöökoda valmistab mõõku ja tugevaid kilpe. See varustus on elutähtis "
 "sinu sõduritele."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:275
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:276
 msgid ""
 "The barracks is a very small hut which can be used by your soldiers as "
 "quarters. Using the gold coin button you can stop the delivery of gold coins "
@@ -1954,7 +2016,7 @@ msgstr ""
 "sõduritele. Samas, ilma kuldmüntideta ei saa siinsed sõdurid treenida ja oma "
 "oskusi arendada."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:421
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:422
 msgid ""
 "The brewer produces fine beer from grain and water. This drink is needed to "
 "fill the soldiers with courage."
@@ -1962,7 +2024,7 @@ msgstr ""
 "Pruulija valmistab suurepärast õlu viljast ja veest. See jook on vajalik "
 "sõduritel julguse saavutamiseks."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:409
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:410
 msgid ""
 "The butcher processes the livestock delivered into nutritious ham on which "
 "you miners are fed."
@@ -1970,7 +2032,7 @@ msgstr ""
 "Lihunik töötleb saabunud elusloomad toitvaks singiks, millest sinu kaevurid "
 "toituvad."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:494
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:495
 msgid ""
 "The carpenter turns the woodcutter's logs into made-to-measure planks. These "
 "form the basic for building houses and ships."
@@ -1978,7 +2040,7 @@ msgstr ""
 "Saagija muudab puuraiduri palgid \"tehtud, et sobida\" laudadeks. Need "
 "moodustavad põhilise majade ja laevade ehitamisel."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:434
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:435
 msgid ""
 "The countless tools which your workers need are made in the metalworks. This "
 "requires boards and iron."
@@ -1986,7 +2048,7 @@ msgstr ""
 "Loendamatud tööriistad, mida sinu töölised vajavad, on valmistatud "
 "metallitöökojas. Selleks vajatakse laudu ja rauda."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:319
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:320
 msgid ""
 "The defensive capabilities and size of the fortress are unsurpassed. This "
 "stronghold ensures that other valuable buildings and commodities are "
@@ -2007,7 +2069,7 @@ msgstr ""
 msgid "The emergency program has been deactivated."
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:524
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:525
 msgid ""
 "The farmer plants and harvests grain in the surrounding fields. A windmill "
 "then processes the harvested grain into flour or can be used to feed the "
@@ -2016,7 +2078,7 @@ msgstr ""
 "Talupidaja külvab ja lõikab vilja ümbritsevatel põldudel. Tuuleveski töötleb "
 "siis lõigatud vilja jahuks või seda võib kasutada sigade söötmiseks."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:388
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:389
 msgid ""
 "The fish man is responsible for finding water rich in fish. His fish feed a "
 "great many miners."
@@ -2024,7 +2086,7 @@ msgstr ""
 "Kalamees vastutab kalarikaste vete leidmise eest. Tema püütud kalad toidavad "
 "paljusid kaevureid."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:486
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:487
 msgid ""
 "The flour produced at the windmill can be combined with water in the bakery "
 "to make oven-fresh bread. It's your miners' favorite!"
@@ -2032,7 +2094,7 @@ msgstr ""
 "Tuuleveskis toodetud jahust saab pagari töökojas veega kombineerituna teha "
 "ahjusooja leiba. See on sinu kaevurite lemmik!"
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:479
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:480
 msgid ""
 "The grain is ground in the windmill. The flour from the windmill is later "
 "used at the bakery to bake bread."
@@ -2040,7 +2102,7 @@ msgstr ""
 "Vili jahvatatakse tuuleveskis. Saadud jahu kasutatakse hiljem pagaritöökojas "
 "leiva küpsetamiseks."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:287
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:288
 msgid ""
 "The guardhouse is a comfortable place for the military which is also "
 "protected by solid stone walls. Using the gold coin button you can stop the "
@@ -2052,7 +2114,7 @@ msgstr ""
 "andmise siin majutatud sõduritele. Samas, ilma kuldmüntideta ei saa siinsed "
 "sõdurid treenida ja oma oskusi arendada."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:252
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:253
 msgid ""
 "The headquarters represents the center of your realm. The large amount of "
 "storage space available means a great many things can be safely stored here. "
@@ -2073,7 +2135,7 @@ msgstr ""
 "kaks väärtust antud: esimene neist näitab praegust meeste arvu, teine n-itab "
 "soovitud arvu. "
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:342
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:343
 msgid ""
 "The mining of coal supports the metalworks and smithy. This hard work "
 "requires an adequate supply of food."
@@ -2081,7 +2143,7 @@ msgstr ""
 "Söe kaevandamine toetab metallitöökoda ja sepikoda. See raske töö nõuab ka "
 "vastavat toiduga varustamist."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:502
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:503
 msgid ""
 "The mint is responsible for producing valuable gold coins. These precious "
 "objects are produced using coal and gold."
@@ -2089,7 +2151,7 @@ msgstr ""
 "Mündivalukoda vastutab väärtuslike kuldmüntide tootmise eest. Need "
 "hinnalised objektid toodetakse kasutades sütt ja kulda."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:532
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:533
 msgid ""
 "The pack donkeys bred here are used to transport your merchandise more "
 "efficiently. They are reared on water and grain."
@@ -2111,7 +2173,7 @@ msgstr ""
 "Mängija '%s'  soovib tühistada teie vahelise '%s'u ennetähtaegselt . Kas sa "
 "nõustud?"
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:334
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:335
 msgid ""
 "The quarrying of stone in a granite mine guarantees the supply of stone for "
 "buildings. However, eben a granite mine has to feed its workers."
@@ -2136,7 +2198,7 @@ msgstr "Antud faili ei saanud avada!"
 msgid "The specified file couldn't be saved!"
 msgstr "Antud faili ei saanud salvestada!"
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:394
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:395
 msgid ""
 "The stonemason works the stone near his quarry into bricks. These are needed "
 "mainly for building houses and as ammunition for catapults."
@@ -2144,7 +2206,7 @@ msgstr ""
 "Kiviraidur töötleb oma hüti lähedal asuvad kivid tükkideks. Need on "
 "vajalikud põhiliselt majade ehitamiseks ja kui laskemoon katapultidele"
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:460
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:461
 msgid ""
 "The storehouse can help reduce long transportation journeys and is suited to "
 "the temporary storage of merchandise and inhabitants. You can release "
@@ -2157,7 +2219,7 @@ msgstr ""
 "millal vaja. Lisaks võib ladustamise funktsiooni keelata. Et seda teha, "
 "esiteks vali asjasse puutuv ikoon seejärel soovitud kauba või töö sümbol."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:303
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:304
 msgid ""
 "The watchtower with its large amount of space is best suited for stationing "
 "a large number of your troops. Using the gold coin button you can stop the "
@@ -2213,7 +2275,7 @@ msgstr "Ülemiseks"
 msgid "Total domination"
 msgstr "Täielik allutamine"
 
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:65
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:66
 msgid "Transport"
 msgstr "Transport"
 
@@ -2253,8 +2315,8 @@ msgstr "Kasutajanimi:"
 msgid "VSync:"
 msgstr "VSync:"
 
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:100
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:191
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:101
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:199
 msgid "Vanquished enemies"
 msgstr "Vaenlasi võidetud"
 
@@ -2317,6 +2379,10 @@ msgstr "Vesi"
 msgid "We are under attack!"
 msgstr "Me oleme rünnaku all!"
 
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:169
+msgid "We hope you enjoy playing Return To The Roots!"
+msgstr ""
+
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:283
 msgid "Weak attackers"
 msgstr "Nõrgad ründajad"
@@ -2328,6 +2394,16 @@ msgstr "Nõrk kaitse"
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:60
 msgid "Weapons"
 msgstr "Relvad"
+
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:76
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:96
+msgid "Website Administration"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:77
+#, fuzzy
+msgid "Website Programming"
+msgstr "Programmeerimine"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:263
 msgid "Well"
@@ -2345,7 +2421,7 @@ msgstr "Akendatult"
 msgid "Winter world"
 msgstr "Talvemaa"
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:402
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:403
 msgid ""
 "Within his area, the forester ensures the survival of the forest. He plants "
 "all types of trees."
@@ -2449,7 +2525,7 @@ msgstr "Mängu kaadrini:"
 msgid "treaty of alliance"
 msgstr "liiduleping"
 
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:107
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:147
 msgid "various anonymous donators"
 msgstr "mitmed anonüümsed annetajad"
 
@@ -2470,6 +2546,12 @@ msgstr "mitmed anonüümsed annetajad"
 
 #~ msgid "Series sequence"
 #~ msgstr "Ehitamise järjekord"
+
+#~ msgid "The Settlers II.5 RTTR"
+#~ msgstr "The Settlers II.5 RTTR"
+
+#~ msgid "The Settlers II.5 RTTR, v%s-%s"
+#~ msgstr "The Settlers II.5 RTTR, v%s-%s"
 
 #~ msgid "Waterway's maximum length"
 #~ msgstr "Veetee maksimaalne pikkus"

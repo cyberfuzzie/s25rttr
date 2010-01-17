@@ -81,6 +81,9 @@
     <ClInclude Include="..\..\src\AIBase.h">
       <Filter>Quelldateien\KI</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\AIConstruction.h">
+      <Filter>Quelldateien\KI</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\src\AIEventManager.h">
       <Filter>Quelldateien\KI</Filter>
     </ClInclude>
@@ -91,6 +94,9 @@
       <Filter>Quelldateien\KI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\AIPlayerJH.h">
+      <Filter>Quelldateien\KI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\AIResourceMap.h">
       <Filter>Quelldateien\KI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\AudioDriverWrapper.h">
@@ -818,6 +824,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\AIConstruction.cpp">
+      <Filter>Quelldateien\KI</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\AIEventManager.cpp">
       <Filter>Quelldateien\KI</Filter>
     </ClCompile>
@@ -828,6 +837,9 @@
       <Filter>Quelldateien\KI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\AIPlayerJH.cpp">
+      <Filter>Quelldateien\KI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\AIResourceMap.cpp">
       <Filter>Quelldateien\KI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\AudioDriverWrapper.cpp">

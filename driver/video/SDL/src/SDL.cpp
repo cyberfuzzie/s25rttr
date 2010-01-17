@@ -1,4 +1,4 @@
-// $Id: SDL.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: SDL.cpp 5900 2010-01-17 13:38:53Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -250,9 +250,7 @@ bool VideoSDL::ResizeScreen(unsigned short width, unsigned short height, const b
 	if ( SDL_GetWMInfo(&info) )
 	{
 		if(this->fullscreen && !fullscreen)
-		{
 			ChangeDisplaySettings(NULL, 0);
-		}
 
 		ShowWindow(info.window, SW_HIDE);
 
@@ -290,6 +288,8 @@ bool VideoSDL::ResizeScreen(unsigned short width, unsigned short height, const b
 		this->fullscreen = fullscreen;
 
 		ShowWindow(info.window, SW_SHOW);
+		SetForegroundWindow(info.window);
+		SetFocus(info.window);
 	}
 #else // unter anderen Platformen kann SDL das ohne den OpenGL-Kontext zu killen
 	// Videomodus setzen

@@ -1,4 +1,4 @@
-// $Id: WinAPI.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: WinAPI.cpp 5900 2010-01-17 13:38:53Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -400,6 +400,8 @@ bool VideoWinAPI::ResizeScreen(unsigned short width, unsigned short height, cons
 	this->fullscreen = fullscreen;
 
 	ShowWindow(screen,SW_SHOW);
+	SetForegroundWindow(screen);
+	SetFocus(screen);
 
 	return true;
 }

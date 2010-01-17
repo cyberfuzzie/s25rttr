@@ -123,6 +123,13 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\AIBase.h" />
+    <ClInclude Include="..\..\src\AIConstruction.h" />
+    <ClInclude Include="..\..\src\AIEventManager.h" />
+    <ClInclude Include="..\..\src\AIJHHelper.h" />
+    <ClInclude Include="..\..\src\AIPlayer.h" />
+    <ClInclude Include="..\..\src\AIPlayerJH.h" />
+    <ClInclude Include="..\..\src\AIResourceMap.h" />
     <ClInclude Include="..\..\src\const_gui_ids.h" />
     <ClInclude Include="..\..\src\Desktop.h" />
     <ClInclude Include="..\..\src\IngameWindow.h" />
@@ -344,11 +351,6 @@
     <ClInclude Include="..\..\src\DriverWrapper.h" />
     <ClInclude Include="..\..\src\ExtensionList.h" />
     <ClInclude Include="..\..\src\VideoDriverWrapper.h" />
-    <ClInclude Include="..\..\src\AIBase.h" />
-    <ClInclude Include="..\..\src\AIEventManager.h" />
-    <ClInclude Include="..\..\src\AIJHHelper.h" />
-    <ClInclude Include="..\..\src\AIPlayer.h" />
-    <ClInclude Include="..\..\src\AIPlayerJH.h" />
     <ClInclude Include="..\..\src\ClientInterface.h" />
     <ClInclude Include="..\..\src\GameClient.h" />
     <ClInclude Include="..\..\src\GameCommands.h" />
@@ -372,6 +374,12 @@
     <ClInclude Include="..\resource.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\AIConstruction.cpp" />
+    <ClCompile Include="..\..\src\AIEventManager.cpp" />
+    <ClCompile Include="..\..\src\AIJHHelper.cpp" />
+    <ClCompile Include="..\..\src\AIPlayer.cpp" />
+    <ClCompile Include="..\..\src\AIPlayerJH.cpp" />
+    <ClCompile Include="..\..\src\AIResourceMap.cpp" />
     <ClCompile Include="..\..\src\Desktop.cpp" />
     <ClCompile Include="..\..\src\IngameWindow.cpp" />
     <ClCompile Include="..\..\src\PostMsg.cpp" />
@@ -582,10 +590,6 @@
     <ClCompile Include="..\..\src\DriverWrapper.cpp" />
     <ClCompile Include="..\..\src\ExtensionList.cpp" />
     <ClCompile Include="..\..\src\VideoDriverWrapper.cpp" />
-    <ClCompile Include="..\..\src\AIEventManager.cpp" />
-    <ClCompile Include="..\..\src\AIJHHelper.cpp" />
-    <ClCompile Include="..\..\src\AIPlayer.cpp" />
-    <ClCompile Include="..\..\src\AIPlayerJH.cpp" />
     <ClCompile Include="..\..\src\ClientInterface.cpp" />
     <ClCompile Include="..\..\src\GameClient.cpp" />
     <ClCompile Include="..\..\src\GameClientCommands.cpp" />

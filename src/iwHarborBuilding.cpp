@@ -1,4 +1,4 @@
-// $Id: iwHarborBuilding.cpp 5854 2010-01-04 16:30:33Z FloSoft $
+// $Id: iwHarborBuilding.cpp 5899 2010-01-17 10:36:56Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -46,10 +46,10 @@
 iwHarborBuilding::iwHarborBuilding(GameWorldViewer * const gwv,nobHarborBuilding *hb)
 	: iwHQ(gwv,hb, _("Harbor building"), 4)
 {
-	// Zusätzliche Hafenseite
+	// ZusÃ¤tzliche Hafenseite
 	ctrlGroup * harbor_page = AddGroup(103);
 
-	// "Expedition"-Überschrift
+	// "Expedition"-Ãœberschrift
 	harbor_page->AddText(0,83,70,_("Expedition"),0xFFFFFF00,glArchivItem_Font::DF_CENTER,NormalFont);
 
 	// Button zum Expedition starten
@@ -63,7 +63,7 @@ iwHarborBuilding::iwHarborBuilding(GameWorldViewer * const gwv,nobHarborBuilding
 /**
  *  setzt den Expeditionsknopf korrekt
  *
- *  falls @p flip gesetzt, dann umgekehrt einfärben
+ *  falls @p flip gesetzt, dann umgekehrt einfÃ¤rben
  *
  *  @author FloSoft
  */
@@ -71,8 +71,8 @@ void iwHarborBuilding::AdjustExpeditionButton(bool flip)
 {
 	ctrlImageButton *button = GetCtrl<ctrlGroup>(103)->GetCtrl<ctrlImageButton>(1);
 
-	// Visuelle Rückmeldung, grün einfärben, wenn Expedition gestartet wurde
-	// Jeweils umgekehrte Farbe nehmen, da die Änderung ja spielerisch noch nicht 
+	// Visuelle RÃ¼ckmeldung, grÃ¼n einfÃ¤rben, wenn Expedition gestartet wurde
+	// Jeweils umgekehrte Farbe nehmen, da die Ã„nderung ja spielerisch noch nicht 
 	// in Kraft getreten ist!
 	bool exp = static_cast<nobHarborBuilding*>(wh)->IsExpeditionActive();
 
@@ -81,12 +81,12 @@ void iwHarborBuilding::AdjustExpeditionButton(bool flip)
 	if( (flip || exp) && !(flip && exp))
 	{
 		button->SetModulationColor(COLOR_WHITE);
-		button->SetTooltip("Cancel expedition");
+		button->SetTooltip(_("Cancel expedition"));
 	}
 	else
 	{
 		button->SetModulationColor(COLOR_RED);
-		button->SetTooltip("Start expedition");
+		button->SetTooltip(_("Start expedition"));
 	}
 }
 

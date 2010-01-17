@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: GameWorldBase.cpp 5899 2010-01-17 10:36:56Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -535,7 +535,8 @@ bool GameWorldBase::IsMilitaryBuilding(const MapCoord x, const MapCoord y) const
 	{
 		if( (GetSpecObj<noBaseBuilding>(x,y)->GetBuildingType() >= BLD_BARRACKS &&
 			GetSpecObj<noBaseBuilding>(x,y)->GetBuildingType() <= BLD_FORTRESS) ||
-			GetSpecObj<noBaseBuilding>(x,y)->GetBuildingType() == BLD_HEADQUARTERS )
+			GetSpecObj<noBaseBuilding>(x,y)->GetBuildingType() == BLD_HEADQUARTERS ||
+			GetSpecObj<noBaseBuilding>(x,y)->GetBuildingType() == BLD_HARBORBUILDING)
 			return true;
 	}
 

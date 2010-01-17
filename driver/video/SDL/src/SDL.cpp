@@ -1,4 +1,4 @@
-// $Id: SDL.cpp 5900 2010-01-17 13:38:53Z FloSoft $
+// $Id: SDL.cpp 5901 2010-01-17 13:45:34Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -287,9 +287,12 @@ bool VideoSDL::ResizeScreen(unsigned short width, unsigned short height, const b
 
 		this->fullscreen = fullscreen;
 
-		ShowWindow(info.window, SW_SHOW);
-		SetForegroundWindow(info.window);
-		SetFocus(info.window);
+		// Das Fenster anzeigen
+		ShowWindow(screen, SW_SHOW);
+		// Das Fenster in den Vordergrund rcken
+		SetForegroundWindow(screen);
+		// Dem Fenster den Eingabefokus geben
+		SetFocus(screen);
 	}
 #else // unter anderen Platformen kann SDL das ohne den OpenGL-Kontext zu killen
 	// Videomodus setzen

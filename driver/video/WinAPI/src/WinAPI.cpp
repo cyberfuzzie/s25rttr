@@ -1,4 +1,4 @@
-// $Id: WinAPI.cpp 5900 2010-01-17 13:38:53Z FloSoft $
+// $Id: WinAPI.cpp 5901 2010-01-17 13:45:34Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -305,15 +305,6 @@ bool VideoWinAPI::CreateScreen(unsigned short width, unsigned short height, cons
 	if(!wglMakeCurrent(screen_dc, screen_rc))
 		return false;
 
-	// Das Fenster anzeigen
-	ShowWindow(screen, SW_SHOW);
-
-	// Das Fenster in den Vordergrund rcken
-	SetForegroundWindow(screen);
-
-	// Dem Fenster den Eingabefokus geben
-	SetFocus(screen);
-
 	// Mauscursor ausblenden
 	ShowCursor(FALSE);
 
@@ -337,8 +328,12 @@ bool VideoWinAPI::CreateScreen(unsigned short width, unsigned short height, cons
 
 	this->fullscreen = fullscreen;
 
-	// buggy
-	//glfwDisable(GLFW_MOUSE_CURSOR);
+	// Das Fenster anzeigen
+	ShowWindow(screen, SW_SHOW);
+	// Das Fenster in den Vordergrund rcken
+	SetForegroundWindow(screen);
+	// Dem Fenster den Eingabefokus geben
+	SetFocus(screen);
 
 	return true;
 }
@@ -363,9 +358,7 @@ bool VideoWinAPI::ResizeScreen(unsigned short width, unsigned short height, cons
 		return false;
 
 	if(this->fullscreen && !fullscreen)
-	{
 		ChangeDisplaySettings(NULL, 0);
-	}
 
 	ShowWindow(screen,SW_HIDE);
 
@@ -399,8 +392,11 @@ bool VideoWinAPI::ResizeScreen(unsigned short width, unsigned short height, cons
 
 	this->fullscreen = fullscreen;
 
-	ShowWindow(screen,SW_SHOW);
+	// Das Fenster anzeigen
+	ShowWindow(screen, SW_SHOW);
+	// Das Fenster in den Vordergrund rcken
 	SetForegroundWindow(screen);
+	// Dem Fenster den Eingabefokus geben
 	SetFocus(screen);
 
 	return true;

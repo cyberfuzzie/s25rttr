@@ -1,5 +1,5 @@
 
-// $Id: GameClientPlayer.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: GameClientPlayer.cpp 5905 2010-01-17 20:57:38Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1605,6 +1605,14 @@ void GameClientPlayer::CancelPact(const PactType pt, const unsigned char other_p
 				unsigned char client_other_player = (GameClient::inst().GetPlayerID() == playerid) ? other_player : playerid;
 				GameClient::inst().SendPostMessage(new DiplomacyPostInfo(client_other_player,DiplomacyPostInfo::CANCEL,pt));
 			}
+			
+			// Ggf. den GUI Bescheid sagen, um Sichtbarkeiten etc. neu zu berechnen
+			if(pt == TREATY_OF_ALLIANCE && (GameClient::inst().GetPlayerID() == playerid 
+			|| GameClient::inst().GetPlayerID() == other_player))
+			{
+				if(gwg->GetGameInterface())
+					gwg->GetGameInterface()->GI_TreatyOfAllianceChanged();
+			}
 		}
 		// Ansonsten den anderen Spieler fragen, ob der das auch so sieht
 		else if(other_player == GameClient::inst().GetPlayerID())
@@ -1997,4 +2005,24 @@ unsigned GameClientPlayer::GetAvailableSoldiersForSeaAttack(const MapCoord x, co
 	return soldiers_count;
 
 
+}
+
+/// Testet die Bündnisse, ob sie nicht schon abgelaufen sind
+void GameClientPlayer::TestPacts()
+{
+	for(unsigned i = 0;i<GameClient::inst().GetPlayerCount();++i)
+	{
+		// Wenn wir merken, dass der Friedensvertrag abgelaufen ist, berechnen wir die Sichtbarkeiten neu
+		if(GetPactState(TREATY_OF_ALLIANCE,i) == NO_PACT && pacts[i][TREATY_OF_ALLIANCE].duration != 0)
+		{
+			pacts[i][TREATY_OF_ALLIANCE].duration = 0;
+			if(GameClient::inst().GetPlayerID() == playerid)
+			{
+				// Ggf. den GUI Bescheid sagen, um Sichtbarkeiten etc. neu zu berechnen
+				if(gwg->GetGameInterface())
+					gwg->GetGameInterface()->GI_TreatyOfAllianceChanged();
+			}
+		}
+	}
+	
 }

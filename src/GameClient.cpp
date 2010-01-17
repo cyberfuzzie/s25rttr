@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 5903 2010-01-17 19:59:49Z OLiver $
+// $Id: GameClient.cpp 5905 2010-01-17 20:57:38Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1261,6 +1261,11 @@ void GameClient::NextGF()
 		if(players[i].ps == PS_OCCUPIED || players[i].ps == PS_KI)
 		// Auf Notfall testen (Wenige Bretter/Steine und keine Holzindustrie)
 			players[i].TestForEmergencyProgramm();
+		if(players[i].ps == PS_OCCUPIED || players[i].ps == PS_KI)
+		{
+			// Bündnisse auf Aktualität überprüfen
+			players[i].TestPacts();
+		}
 	}
 }
 

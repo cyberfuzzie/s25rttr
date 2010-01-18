@@ -1,4 +1,4 @@
-// $Id: dskMainMenu.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: dskMainMenu.cpp 5908 2010-01-18 20:24:01Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -82,6 +82,8 @@ dskMainMenu::dskMainMenu(void) : Desktop(LOADER.GetImageN("menu", 0))
 	AddTextButton(8, 115, 340, 220, 22, TC_GREEN2, _("Credits"), NormalFont);
 	// "Programm verlassen"
 	AddTextButton(9, 115, 390, 220, 22, TC_RED1, _("Quit program"), NormalFont);
+
+	AddImage(11, 20, 20, LOADER.GetImageN("logo", 0));
 }
 
 ///////////////////////////////////////////////////////////////////////////////

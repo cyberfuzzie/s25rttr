@@ -4,7 +4,7 @@ Priority: optional
 Bugs: <https://bugs.siedler25.org/>
 Homepage: <https://www.siedler25.org>
 Maintainer: Siedler II.5 Team <sf-team@siedler25.org>
-Build-Depends: debhelper (>= 7), cmake, libsdl1.2-dev, libsdl-mixer1.2-dev, libsndfile1-dev (>=0.1.17), libsamplerate0-dev (>= 0.1.2), gettext
+Build-Depends: debhelper (>= 7), cmake (>=2.6), libsdl1.2-dev, libsdl-mixer1.2-dev, libsndfile1-dev (>=0.1.17), gettext
 Standards-Version: 3.8.0
 
 Package: s25rttr

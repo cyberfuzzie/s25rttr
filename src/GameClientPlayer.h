@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.h 5905 2010-01-17 20:57:38Z OLiver $
+// $Id: GameClientPlayer.h 5910 2010-01-18 20:43:44Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -442,7 +442,6 @@ private:
 	bool emergency;
 
 };
-
 
 #endif
 

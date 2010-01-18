@@ -1,4 +1,4 @@
-// $Id: dskMultiPlayer.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: dskMultiPlayer.cpp 5909 2010-01-18 20:31:52Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -69,6 +69,8 @@ dskMultiPlayer::dskMultiPlayer(void) : Desktop(LOADER.GetImageN("menu", 0))
 	AddTextButton(5, 115, 250, 220, 22, TC_GREEN2, _("Direct IP"),NormalFont);
 	// "Zurück"
 	AddTextButton(6, 115, 290, 220, 22, TC_RED1, _("Back"),NormalFont);
+
+	AddImage(11, 20, 20, LOADER.GetImageN("logo", 0));
 }
 
 

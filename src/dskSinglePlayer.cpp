@@ -1,4 +1,4 @@
-// $Id: dskSinglePlayer.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: dskSinglePlayer.cpp 5909 2010-01-18 20:31:52Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -64,18 +64,16 @@ dskSinglePlayer::dskSinglePlayer(void) : Desktop(LOADER.GetImageN("menu", 0))
 
 	// "Letztes Spiel fortsetzen"
 	AddTextButton(3, 115, 180, 220, 22, TC_GREEN2, _("Resume last game"),NormalFont);
-
 	// "Replay abspielen"
 	AddTextButton(4, 115, 220, 220, 22, TC_GREEN2, _("Play Replay"),NormalFont);
-
 	// "Spiel starten"
 	AddTextButton(5, 115, 260, 220, 22, TC_GREEN2, _("Start game"),NormalFont);
-
 	// "Spiel laden"
 	AddTextButton(6, 115, 290, 220, 22, TC_GREEN2, _("Load game"),NormalFont);
-
 	// "Zurück"
 	AddTextButton(7, 115, 330, 220, 22, TC_RED1, _("Back"),NormalFont);
+
+	AddImage(11, 20, 20, LOADER.GetImageN("logo", 0));
 }
 
 

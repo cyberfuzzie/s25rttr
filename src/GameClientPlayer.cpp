@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 5910 2010-01-18 20:43:44Z FloSoft $
+// $Id: GameClientPlayer.cpp 5913 2010-01-19 07:28:10Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -2025,3 +2025,4 @@ void GameClientPlayer::TestPacts()
 	}
 	
 }
+

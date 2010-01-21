@@ -1,4 +1,4 @@
-// $Id: dskIntro.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: dskIntro.cpp 5918 2010-01-21 20:59:19Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -53,6 +53,8 @@ dskIntro::dskIntro(void) : Desktop(LOADER.GetImageN("menu", 0))
 {
 	// "Zurück"
 	AddTextButton(0, 300, 550, 200, 22, TC_RED1, _("Back"),NormalFont);
+
+	AddImage(11, 20, 20, LOADER.GetImageN("logo", 0));
 }
 
 void dskIntro::Msg_ButtonClick(const unsigned int ctrl_id)

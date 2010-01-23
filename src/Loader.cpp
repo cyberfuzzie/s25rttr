@@ -1,4 +1,4 @@
-// $Id: Loader.cpp 5923 2010-01-23 16:56:39Z FloSoft $
+// $Id: Loader.cpp 5924 2010-01-23 17:12:17Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -281,11 +281,14 @@ bool Loader::LoadSounds(void)
 bool Loader::SortFilesHelper(const std::string& lhs, const std::string& rhs)
 {
 	int a, b;
+	
+	std::string lf = lhs.substr(lhs.find_last_of('/')+1);
+	std::string rf = rhs.substr(rhs.find_last_of('/')+1);
 
 	std::stringstream aa;
-	aa << lhs;
+	aa << lf;
 	std::stringstream bb;
-	bb << rhs;
+	bb << rf;
 
 	if( !(aa >> a) || !(bb >> b) )
 	{

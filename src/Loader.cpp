@@ -1,4 +1,4 @@
-// $Id: Loader.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: Loader.cpp 5923 2010-01-23 16:56:39Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -272,6 +272,41 @@ bool Loader::LoadSounds(void)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+/** 
+ *  sortiert einen string nach Startzahl, Namen oder Länge (in dieser Reihenfolge).
+ *  Wird für das Sortieren der Dateien benutzt.
+ *
+ *  @author FloSoft
+ */
+bool Loader::SortFilesHelper(const std::string& lhs, const std::string& rhs)
+{
+	int a, b;
+
+	std::stringstream aa;
+	aa << lhs;
+	std::stringstream bb;
+	bb << rhs;
+
+	if( !(aa >> a) || !(bb >> b) )
+	{
+		for( std::string::const_iterator lit = lhs.begin(), rit = rhs.begin(); lit != lhs.end() && rit != rhs.end(); ++lit, ++rit )
+			if( tolower( *lit ) < tolower( *rit ) )
+				return true;
+			else if( tolower( *lit ) > tolower( *rit ) )
+				return false;
+		if( lhs.size() < rhs.size() )
+			return true;
+	}
+	else
+	{
+		if(a < b)
+			return true;
+	}
+
+	return false;
+}
+
+///////////////////////////////////////////////////////////////////////////////
 /**
  *  Lädt eine Datei in ein ArchivInfo in @p files auf Basis des Dateinames.
  *
@@ -328,13 +363,25 @@ bool Loader::LoadFile(const char *pfad, const libsiedler2::ArchivItem_Palette *p
 	// dann daten reinladen um ggf. kopieren zu vermeiden
 	if(directory)
 	{
+		LOG.lprintf("lade Verzeichnis %s\n", GetFilePath(pfad).c_str());
 		std::list<std::string> lst;
 		ListDir(GetFilePath(pfad) + "/*.bmp", false, NULL, NULL, &lst);
 		ListDir(GetFilePath(pfad) + "/*.txt", false, NULL, NULL, &lst);
 		ListDir(GetFilePath(pfad) + "/*.ger", false, NULL, NULL, &lst);
 		ListDir(GetFilePath(pfad) + "/*.eng", false, NULL, NULL, &lst);
+		ListDir(GetFilePath(pfad) + "/*.empty", false, NULL, NULL, &lst);
+
+		lst.sort(SortFilesHelper);
+
 		for(std::list<std::string>::iterator i = lst.begin(); i != lst.end(); ++i)
 		{
+			if( i->substr(i->length()-6, 6) == ".empty")
+			{
+				LOG.lprintf("ueberspringe %s\n", i->c_str());
+				to->alloc_inc(1);
+				continue;
+			}
+
 			libsiedler2::ArchivInfo toto;
 			if(!LoadFile( i->c_str(), palette, &toto ) )
 				return false;

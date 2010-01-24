@@ -1,4 +1,4 @@
-// $Id: AIJHHelper.h 5882 2010-01-10 16:41:12Z jh $
+// $Id: AIJHHelper.h 5928 2010-01-24 21:14:42Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -29,9 +29,13 @@
 #include "AIEventManager.h"
 
 
+
 #include <vector>
 
 class AIPlayerJH;
+class AIConstruction;
+class GameWorldBase;
+namespace gc { class GameCommand; }
 
 namespace AIJH
 {
@@ -106,12 +110,13 @@ protected:
 class BuildJob : public Job
 {
 public:
-	BuildJob(AIPlayerJH *aijh, BuildingType type) 
-		: Job(aijh), type(type), target_x(0xFFFF), target_y(0xFFFF), around_x(0xFFFF), around_y(0xFFFF) { }
 	BuildJob(AIPlayerJH *aijh, BuildingType type, MapCoord around_x, MapCoord around_y) 
 		: Job(aijh), type(type), target_x(0xFFFF), target_y(0xFFFF), around_x(around_x), around_y(around_y) { }
+	BuildJob(AIPlayerJH *aijh, BuildingType type) 
+		: Job(aijh), type(type), target_x(0xFFFF), target_y(0xFFFF), around_x(0xFFFF), around_y(0xFFFF) { }
+
 	~BuildJob() { }
-	void ExecuteJob();
+	virtual void ExecuteJob();
 private:
 	BuildingType type;
 	MapCoord target_x, target_y;
@@ -135,15 +140,17 @@ private:
 	std::vector<unsigned char> route;
 };
 
+
 class ConnectJob : public Job
 {
 public:
-	ConnectJob(AIPlayerJH *aijh, MapCoord flag_x, MapCoord flag_y, MapCoord target_x, MapCoord target_y) 
-		: Job(aijh), flag_x(flag_x), flag_y(flag_y), target_x(target_x), target_y(target_y) { }
+	ConnectJob(AIPlayerJH *aijh, MapCoord flag_x, MapCoord flag_y) 
+		: Job(aijh), flag_x(flag_x), flag_y(flag_y), target_x(0xFFFF), target_y(0xFFFF) { }
 	~ConnectJob() { }
-	void ExecuteJob();
+	virtual void ExecuteJob();
 private:
 	MapCoord flag_x, flag_y, target_x, target_y;
+	std::vector<unsigned char> route;
 };
 
 class EventJob : public Job

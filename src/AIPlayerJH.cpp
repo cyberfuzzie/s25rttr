@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.cpp 5854 2010-01-04 16:30:33Z FloSoft $
+// $Id: AIPlayerJH.cpp 5928 2010-01-24 21:14:42Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -42,27 +42,18 @@ bool IsPointOK_RoadPath(const GameWorldBase& gwb, const MapCoord x, const MapCoo
 
 AIPlayerJH::AIPlayerJH(const unsigned char playerid, const GameWorldBase * const gwb, const GameClientPlayer * const player,
 		const GameClientPlayerList * const players, const GlobalGameSettings * const ggs,
-		const AI::Level level) : AIBase(playerid, gwb, player, players, ggs, level), defeated(false)
+		const AI::Level level) : AIBase(playerid, gwb, player, players, ggs, level), defeated(false), 
+		construction(AIConstruction(gwb, gcs, player, playerid))
 {
 	currentJob = 0;
-	buildingsWanted.resize(BUILDING_TYPES_COUNT);
-	militaryBuildingToCheck = 0;
 	InitNodes();
 	InitResourceMaps();
-	InitBuildingsWanted();
-	RefreshBuildingCount();
-	AddStoreHouse(player->hqx, player->hqy);
 	SaveResourceMapsToFile();
 }
 
 /// Wird jeden GF aufgerufen und die KI kann hier entsprechende Handlungen vollziehen
 void AIPlayerJH::RunGF(const unsigned gf)
 {
-	if (gf == 1)
-	{
-
-	}
-
 	if (defeated)
 		return;
 
@@ -71,11 +62,11 @@ void AIPlayerJH::RunGF(const unsigned gf)
 
 	if ((gf + (playerid * 2)) % 20 == 0)
 	{
-		RefreshBuildingCount();
+		construction.RefreshBuildingCount();
 		ExecuteAIJob();
 	}
 
-	if ((gf + playerid * 10) % 1000 == 0)
+	if ((gf + playerid * 1000) % 3000 == 0)
 	{
 		//CheckExistingMilitaryBuildings();
 		TryToAttack();
@@ -90,17 +81,17 @@ void AIPlayerJH::RunGF(const unsigned gf)
 
 	if (gf == 5)
 	{
-		aiJobs.push_back(new AIJH::BuildJob(this, BLD_HARBORBUILDING, player->hqx, player->hqy));
-		aiJobs.push_back(new AIJH::BuildJob(this, BLD_SAWMILL));
-		aiJobs.push_back(new AIJH::BuildJob(this, BLD_FORESTER));
-		aiJobs.push_back(new AIJH::BuildJob(this, BLD_WOODCUTTER));
-		aiJobs.push_back(new AIJH::BuildJob(this, BLD_WOODCUTTER));
-		aiJobs.push_back(new AIJH::BuildJob(this, ChooseMilitaryBuilding(player->hqx, player->hqy)));
-		aiJobs.push_back(new AIJH::BuildJob(this, ChooseMilitaryBuilding(player->hqx, player->hqy)));
-		aiJobs.push_back(new AIJH::BuildJob(this, ChooseMilitaryBuilding(player->hqx, player->hqy)));
-		aiJobs.push_back(new AIJH::BuildJob(this, ChooseMilitaryBuilding(player->hqx, player->hqy)));
-		aiJobs.push_back(new AIJH::BuildJob(this, BLD_QUARRY));
-		aiJobs.push_back(new AIJH::BuildJob(this, BLD_FISHERY));
+		AddBuildJob(new AIJH::BuildJob(this, BLD_HARBORBUILDING, player->hqx, player->hqy));
+		AddBuildJob(new AIJH::BuildJob(this, BLD_SAWMILL));
+		AddBuildJob(new AIJH::BuildJob(this, BLD_FORESTER));
+		AddBuildJob(new AIJH::BuildJob(this, BLD_WOODCUTTER));
+		AddBuildJob(new AIJH::BuildJob(this, BLD_WOODCUTTER));
+		AddBuildJob(new AIJH::BuildJob(this, construction.ChooseMilitaryBuilding(player->hqx, player->hqy)));
+		AddBuildJob(new AIJH::BuildJob(this, construction.ChooseMilitaryBuilding(player->hqx, player->hqy)));
+		AddBuildJob(new AIJH::BuildJob(this, construction.ChooseMilitaryBuilding(player->hqx, player->hqy)));
+		AddBuildJob(new AIJH::BuildJob(this, construction.ChooseMilitaryBuilding(player->hqx, player->hqy)));
+		AddBuildJob(new AIJH::BuildJob(this, BLD_QUARRY));
+		AddBuildJob(new AIJH::BuildJob(this, BLD_FISHERY));
 		
 	}
 
@@ -127,176 +118,11 @@ void AIPlayerJH::RunGF(const unsigned gf)
 
 	if ((gf % 1000) == 0)
 	{
-		if (Wanted(BLD_SAWMILL))
+		if (construction.Wanted(BLD_SAWMILL))
 		{
-			aiJobs.push_back(new AIJH::BuildJob(this, BLD_SAWMILL));
+			AddBuildJob(new AIJH::BuildJob(this, BLD_SAWMILL));
 		}
 	}
-}
-
-void AIPlayerJH::FindFlags(std::vector<const noFlag*>& flags, unsigned short x, unsigned short y, unsigned short radius)
-{
-	flags.clear();
-	for(MapCoord tx=gwb->GetXA(x,y,0), r=1;r<=radius;tx=gwb->GetXA(tx,y,0),++r)
-	{
-		MapCoord tx2 = tx, ty2 = y;
-		for(unsigned i = 2;i<8;++i)
-		{
-			for(MapCoord r2=0;r2<r;gwb->GetPointA(tx2,ty2,i%6),++r2)
-			{
-				if(gwb->GetSpecObj<noFlag>(tx2,ty2))
-				{
-					flags.push_back(gwb->GetSpecObj<noFlag>(tx2,ty2));
-				}
-			}
-		}
-	}
-}
-
-
-noFlag *AIPlayerJH::FindTargetStoreHouseFlag(MapCoord x, MapCoord y)
-{
-	unsigned minDistance = 999;
-	Coords minTarget(0xFF,0xFF);
-	bool found = false;
-	const noBaseBuilding *bld;
-	for (std::list<Coords>::iterator it = storeHouses.begin(); it != storeHouses.end(); it++)
-	{
-		if ((bld = gwb->GetSpecObj<noBaseBuilding>((*it).x, (*it).y)))
-		{
-			if (bld->GetBuildingType() != BLD_STOREHOUSE && bld->GetBuildingType() != BLD_HEADQUARTERS)
-				continue;
-		
-			unsigned dist = CalcDistance(x, y, (*it).x, (*it).y);
-
-			if (dist < minDistance)
-			{
-				minDistance = dist;
-				minTarget = *it;
-				found = true;
-			}
-		}
-	}
-	if (!found)
-		return NULL;
-	else
-	{
-		bld = gwb->GetSpecObj<noBaseBuilding>(minTarget.x, minTarget.y);
-		return bld->GetFlag();
-	}
-}
-
-bool AIPlayerJH::ConnectFlagToRoadSytem(const noFlag *flag, std::vector<unsigned char>& route)
-{
-	// Radius in dem nach würdigen Fahnen gesucht wird
-	const unsigned short maxSearchRadius = 10;
-
-	// Ziel, das möglichst schnell erreichbar sein soll (TODO müsste dann evtl. auch Lager/Hafen sein)
-	//noFlag *targetFlag = gwb->GetSpecObj<nobHQ>(player->hqx, player->hqy)->GetFlag();
-	noFlag *targetFlag = FindTargetStoreHouseFlag(flag->GetX(), flag->GetY());
-
-	// Flaggen in der Umgebung holen
-	std::vector<const noFlag*> flags;
-	FindFlags(flags, flag->GetX(), flag->GetY(), maxSearchRadius);
-
-	unsigned shortest = 0;
-	unsigned int shortestLength = 99999;
-	std::vector<unsigned char> tmpRoute;
-	bool found = false;
-	
-	// Jede Flagge testen...
-	for(unsigned i=0; i<flags.size(); ++i)
-	{
-		tmpRoute.clear();
-		unsigned int length;
-		Param_RoadPath prp = { false };
-		
-		// Gibts überhaupt einen Pfad zu dieser Flagge
-		bool path_found = gwb->FindFreePath(flag->GetX(),flag->GetY(),
-		                  flags[i]->GetX(),flags[i]->GetY(),false,100,&tmpRoute,&length,NULL,IsPointOK_RoadPath,NULL, &prp);
-
-		// Wenn ja, dann gucken ob dieser Pfad möglichst kurz zum "höheren" Ziel (HQ im Moment) ist
-		if (path_found)
-		{
-			unsigned char first_dir;
-			unsigned int hqlength = 0;
-
-			// Führt manchmal zu Problemen, temporär raus; TODO was anderes überlegen (ganz ohne ist auch doof)
-
-			// Strecke von der potenziellen Zielfahne bis zum HQ
-			bool hq_path_found = gwb->FindPathOnRoads(flags[i], targetFlag, false, &hqlength, &first_dir, NULL, NULL);
-
-			// Gewählte Fahne hat leider auch kein Anschluß ans HQ, zu schade!
-			if (!hq_path_found)
-				// Und ist auch nicht zufällig die HQ-Flagge selber...
-				if (flags[i]->GetX() != targetFlag->GetX() || flags[i]->GetY() != targetFlag->GetY())
-					continue;
-			
-
-			// Sind wir mit der Fahne schon verbunden? Einmal reicht!
-			bool alreadyConnected = gwb->FindPathOnRoads(flags[i], flag, false, NULL, &first_dir, NULL, NULL);
-			if (alreadyConnected)
-				continue;
-			
-			// Ansonsten haben wir einen Pfad!
-			found = true;
-			
-			// Kürzer als der letzte? Nehmen!
-			if (2 * length + hqlength < shortestLength)
-			{
-				shortest = i;
-				shortestLength = 2 * length+hqlength;
-				route = tmpRoute;
-			}
-		}
-	}
-
-	if (found)
-	{
-		return BuildRoad(flag, flags[shortest], route);
-	}
-	return false;
-}
-
-bool AIPlayerJH::BuildRoad(const noRoadNode *start, const noRoadNode *target, std::vector<unsigned char> &route)
-{
-	bool foundPath;
-		
-	// Gucken obs einen Weg gibt
-	if (route.empty())
-	{
-		Param_RoadPath prp = { false };
-
-		foundPath = gwb->FindFreePath(start->GetX(),start->GetY(),
-											target->GetX(),target->GetY(),false,100,&route,NULL,NULL,IsPointOK_RoadPath,NULL, &prp);
-	}
-	else
-	{
-		// Wenn Route übergeben wurde, davon ausgehen dass diese auch existiert
-		foundPath = true;
-	}
-
-	// Wenn Pfad gefunden, Befehl zum Straße bauen und Flagen setzen geben
-	if (foundPath)
-	{
-		MapCoord x = start->GetX();
-		MapCoord y = start->GetY();
-		gcs.push_back(new gc::BuildRoad(x, y, false, route));
-
-
-		// Flaggen auf der Straße setzen
-		for(unsigned i=0; i<route.size(); ++i)
-		{
-			gwb->GetPointA(x, y, route[i]);
-			// Alle zwei Teilstücke versuchen eine Flagge zu bauen
-			if (i % 2 == 1)
-			{
-				gcs.push_back(new gc::SetFlag(x,y));
-			}
-		}
-		return true;
-	}
-	return false;
 }
 
 bool AIPlayerJH::TestDefeat()
@@ -396,7 +222,7 @@ void AIPlayerJH::IterativeReachableNodeChecker(std::queue<std::pair<MapCoord, Ma
 	unsigned short width = gwb->GetWidth();
 
 	// TODO auch mal bootswege bauen können
-	Param_RoadPath prp = { false };
+	//Param_RoadPath prp = { false };
 
 	while(toCheck.size() > 0)
 	{
@@ -415,8 +241,9 @@ void AIPlayerJH::IterativeReachableNodeChecker(std::queue<std::pair<MapCoord, Ma
 			if (nodes[ni].reachable)
 				continue;
 
+			bool boat = false;
 			// Test whether point is reachable; yes->add to check list
-			if (IsPointOK_RoadPath(*gwb, nx, ny, (dir+3)%6, &prp))
+			if (IsPointOK_RoadPath(*gwb, nx, ny, (dir+3)%6, (void *) &boat))
 			{
 				nodes[ni].reachable = true;
 				toCheck.push(std::make_pair(nx, ny));
@@ -724,6 +551,7 @@ void AIPlayerJH::UpdateNodesAround(MapCoord x, MapCoord y, unsigned radius)
 
 void AIPlayerJH::ExecuteAIJob()
 {
+	// Check whether current job is finished...
 	if (currentJob)
 	{
 		if (currentJob->GetStatus() == AIJH::JOB_FINISHED)
@@ -732,6 +560,8 @@ void AIPlayerJH::ExecuteAIJob()
 			currentJob = 0;
 		}
 	}
+
+	// ... or it failed
 	if (currentJob)
 	{
 		if (currentJob->GetStatus() == AIJH::JOB_FAILED)
@@ -743,33 +573,22 @@ void AIPlayerJH::ExecuteAIJob()
 		}
 	}
 
+	// if no current job available, take next one! events first, then constructions
 	if (!currentJob)
 	{
-		AIEvent::Base *ev;
-		ev = eventManager.GetEvent();
-		if (ev)
-			currentJob = new AIJH::EventJob(this, ev);
-		else if (aiJobs.size() > 0)
+		if (eventManager.EventAvailable())
 		{
-			currentJob = aiJobs.front();
-			aiJobs.pop_front();
+			currentJob = new AIJH::EventJob(this, eventManager.GetEvent());
+		}
+		else if (construction.BuildJobAvailable())
+		{
+			currentJob = construction.GetBuildJob();
 		}
 	}
 
-	// Irgendwas zu tun? Tu es!
+	// Something to do? Do it!
 	if (currentJob)
 		currentJob->ExecuteJob();
-}
-
-bool AIPlayerJH::IsConnectedToRoadSystem(const noFlag *flag)
-{
-	// TODO target ist atm immer das HQ
-	//const noFlag *targetFlag = gwb->GetSpecObj<noFlag>(gwb->GetXA(player->hqx, player->hqy, 4), gwb->GetYA(player->hqx, player->hqy, 4));
-	noFlag *targetFlag = this->FindTargetStoreHouseFlag(flag->GetX(), flag->GetY());
-	if (targetFlag)
-		return gwb->FindPathOnRoads(flag, targetFlag, false, NULL, NULL, NULL, NULL);
-	else 
-		return false;
 }
 
 void AIPlayerJH::RecalcBQAround(const MapCoord x, const MapCoord y)
@@ -807,39 +626,6 @@ void AIPlayerJH::CheckNewMilitaryBuildings()
 		}
 	}
 }
-
-BuildingType AIPlayerJH::ChooseMilitaryBuilding(MapCoord x, MapCoord y)
-{
-	BuildingType bld = BLD_BARRACKS;
-
-	if ((rand() % 3) == 0)
-		bld = BLD_GUARDHOUSE;
-
-	list<nobBaseMilitary*> military;
-	gwb->LookForMilitaryBuildings(military, x, y, 2);
-	for(list<nobBaseMilitary*>::iterator it = military.begin();it.valid();++it)
-	{
-		unsigned distance = CalcDistance((*it)->GetX(), (*it)->GetY(), x, y);
-
-		// Prüfen ob Feind in der Nähe
-		if ((*it)->GetPlayer() != player->getPlayerID() && distance < 30)
-		{
-			int randmil = rand();
-
-			if (randmil % 8 == 0)
-				bld = BLD_CATAPULT;
-			else if (randmil % 2 == 0)
-				bld = BLD_FORTRESS;
-			else
-				bld = BLD_WATCHTOWER;
-
-			break;
-		}
-	}
-
-	return bld;
-}
-
 
 bool AIPlayerJH::SimpleFindPosition(MapCoord &x, MapCoord &y, BuildingQuality size, int radius)
 {
@@ -886,7 +672,7 @@ void AIPlayerJH::HandleNewMilitaryBuilingOccupied(const Coords& coords)
 	MapCoord x = coords.x;
 	MapCoord y = coords.y;
 	UpdateNodesAround(x, y, 11); // todo: fix radius
-	RefreshBuildingCount();
+	construction.RefreshBuildingCount();
 
 	const nobMilitary *mil = gwb->GetSpecObj<nobMilitary>(x, y);
 	if (mil)
@@ -895,46 +681,49 @@ void AIPlayerJH::HandleNewMilitaryBuilingOccupied(const Coords& coords)
 		{
 			gcs.push_back(new gc::StopGold(x, y));
 		}
+
+
+		if (!construction.IsConnectedToRoadSystem(mil->GetFlag()))
+		{
+			construction.AddConnectFlagJob(this, mil->GetFlag());
+		}
 	}
 
-	aiJobs.push_back(new AIJH::BuildJob(this, BLD_HARBORBUILDING, x, y));
+	AddBuildJob(new AIJH::BuildJob(this, BLD_HARBORBUILDING, x, y));
 
-	aiJobs.push_back(new AIJH::BuildJob(this, ChooseMilitaryBuilding(x, y), x, y));
-	aiJobs.push_back(new AIJH::BuildJob(this, ChooseMilitaryBuilding(x, y), x, y));
-	aiJobs.push_back(new AIJH::BuildJob(this, ChooseMilitaryBuilding(x, y), x, y));
+	AddBuildJob(new AIJH::BuildJob(this, construction.ChooseMilitaryBuilding(x, y), x, y));
+	AddBuildJob(new AIJH::BuildJob(this, construction.ChooseMilitaryBuilding(x, y), x, y));
+	AddBuildJob(new AIJH::BuildJob(this, construction.ChooseMilitaryBuilding(x, y), x, y));
 
 	// Temporär only
-	aiJobs.push_back(new AIJH::BuildJob(this, BLD_FORESTER, x, y));
-	aiJobs.push_back(new AIJH::BuildJob(this, BLD_WOODCUTTER, x, y));
+	AddBuildJob(new AIJH::BuildJob(this, BLD_FORESTER, x, y));
+	AddBuildJob(new AIJH::BuildJob(this, BLD_WOODCUTTER, x, y));
 
-	aiJobs.push_back(new AIJH::BuildJob(this, BLD_QUARRY, x, y));
+	AddBuildJob(new AIJH::BuildJob(this, BLD_QUARRY, x, y));
 
-	aiJobs.push_back(new AIJH::BuildJob(this, BLD_GOLDMINE, x, y));
-	aiJobs.push_back(new AIJH::BuildJob(this, BLD_COALMINE, x, y));
-	aiJobs.push_back(new AIJH::BuildJob(this, BLD_IRONMINE, x, y));
+	AddBuildJob(new AIJH::BuildJob(this, BLD_GOLDMINE, x, y));
+	AddBuildJob(new AIJH::BuildJob(this, BLD_COALMINE, x, y));
+	AddBuildJob(new AIJH::BuildJob(this, BLD_IRONMINE, x, y));
 
-	aiJobs.push_back(new AIJH::BuildJob(this, BLD_SAWMILL, x, y));
+	AddBuildJob(new AIJH::BuildJob(this, BLD_SAWMILL, x, y));
 
-	aiJobs.push_back(new AIJH::BuildJob(this, BLD_IRONSMELTER, x, y));
-	aiJobs.push_back(new AIJH::BuildJob(this, BLD_MINT, x, y));
-	aiJobs.push_back(new AIJH::BuildJob(this, BLD_ARMORY, x, y));
+	AddBuildJob(new AIJH::BuildJob(this, BLD_IRONSMELTER, x, y));
+	AddBuildJob(new AIJH::BuildJob(this, BLD_MINT, x, y));
+	AddBuildJob(new AIJH::BuildJob(this, BLD_ARMORY, x, y));
 
-	aiJobs.push_back(new AIJH::BuildJob(this, BLD_FISHERY, x, y));
+	AddBuildJob(new AIJH::BuildJob(this, BLD_FISHERY, x, y));
 
-	aiJobs.push_back(new AIJH::BuildJob(this, BLD_HUNTER, x, y));
+	AddBuildJob(new AIJH::BuildJob(this, BLD_HUNTER, x, y));
 
-	aiJobs.push_back(new AIJH::BuildJob(this, BLD_STOREHOUSE, x, y));
-
-
-	aiJobs.push_back(new AIJH::BuildJob(this, BLD_FARM, x, y));
+	AddBuildJob(new AIJH::BuildJob(this, BLD_STOREHOUSE, x, y));
 
 
-	aiJobs.push_back(new AIJH::BuildJob(this, BLD_BREWERY, x, y));
-	aiJobs.push_back(new AIJH::BuildJob(this, BLD_MILL, x, y));
-	aiJobs.push_back(new AIJH::BuildJob(this, BLD_PIGFARM, x, y));
+	AddBuildJob(new AIJH::BuildJob(this, BLD_FARM, x, y));
 
-	
 
+	AddBuildJob(new AIJH::BuildJob(this, BLD_BREWERY, x, y));
+	AddBuildJob(new AIJH::BuildJob(this, BLD_MILL, x, y));
+	AddBuildJob(new AIJH::BuildJob(this, BLD_PIGFARM, x, y));
 }
 
 void AIPlayerJH::HandleBuildingFinished(const Coords& coords, BuildingType bld)
@@ -944,10 +733,16 @@ void AIPlayerJH::HandleBuildingFinished(const Coords& coords, BuildingType bld)
 	case BLD_HARBORBUILDING:
 		UpdateNodesAround(coords.x, coords.y, 8); // todo: fix radius
 
-		aiJobs.push_back(new AIJH::BuildJob(this, BLD_BARRACKS, coords.x, coords.y));
-		aiJobs.push_back(new AIJH::BuildJob(this, BLD_WOODCUTTER, coords.x, coords.y));
-		aiJobs.push_back(new AIJH::BuildJob(this, BLD_SAWMILL, coords.x, coords.y));
-		aiJobs.push_back(new AIJH::BuildJob(this, BLD_QUARRY, coords.x, coords.y));
+		AddBuildJob(new AIJH::BuildJob(this, BLD_BARRACKS, coords.x, coords.y));
+		AddBuildJob(new AIJH::BuildJob(this, BLD_WOODCUTTER, coords.x, coords.y));
+		AddBuildJob(new AIJH::BuildJob(this, BLD_SAWMILL, coords.x, coords.y));
+		AddBuildJob(new AIJH::BuildJob(this, BLD_QUARRY, coords.x, coords.y));
+
+		// stop beer, swords and shields -> hq only (todo: hq destroyed -> use another storehouse)
+		// can't do that on harbors... maybe production is on an island which is not the hq's
+		//gcs.push_back(new gc::ChangeInventorySetting(coords.x, coords.y, 0, 2, 0));
+		//gcs.push_back(new gc::ChangeInventorySetting(coords.x, coords.y, 0, 2, 16));
+		//gcs.push_back(new gc::ChangeInventorySetting(coords.x, coords.y, 0, 2, 21));
 
 		gcs.push_back(new gc::StartExpedition(coords.x, coords.y));
 		break;
@@ -955,6 +750,12 @@ void AIPlayerJH::HandleBuildingFinished(const Coords& coords, BuildingType bld)
 	case BLD_SHIPYARD:
 		gcs.push_back(new gc::ChangeShipYardMode(coords.x, coords.y));
 		break;
+
+	case BLD_STOREHOUSE:
+		// stop beer, swords and shields -> hq only (todo: hq destroyed -> use another storehouse)
+		gcs.push_back(new gc::ChangeInventorySetting(coords.x, coords.y, 0, 2, 0));
+		gcs.push_back(new gc::ChangeInventorySetting(coords.x, coords.y, 0, 2, 16));
+		gcs.push_back(new gc::ChangeInventorySetting(coords.x, coords.y, 0, 2, 21));
 		
 	default:
 		break;
@@ -1019,14 +820,14 @@ void AIPlayerJH::HandleNoMoreResourcesReachable(const Coords& coords, BuildingTy
 		return;
 	
 	// try to expand, maybe res blocked a passage
-	aiJobs.push_back(new AIJH::BuildJob(this, ChooseMilitaryBuilding(x, y), x, y));
-	aiJobs.push_back(new AIJH::BuildJob(this, ChooseMilitaryBuilding(x, y), x, y));
+	AddBuildJob(new AIJH::BuildJob(this, construction.ChooseMilitaryBuilding(x, y), x, y));
+	AddBuildJob(new AIJH::BuildJob(this, construction.ChooseMilitaryBuilding(x, y), x, y));
 
 	// and try to rebuild the same building
-	aiJobs.push_back(new AIJH::BuildJob(this, bld));
+	AddBuildJob(new AIJH::BuildJob(this, bld));
 
 	// farm is always good!
-	aiJobs.push_back(new AIJH::BuildJob(this, BLD_FARM, x, y));
+	AddBuildJob(new AIJH::BuildJob(this, BLD_FARM, x, y));
 }
 
 void AIPlayerJH::HandleBorderChanged(const Coords& coords)
@@ -1044,122 +845,9 @@ void AIPlayerJH::HandleBorderChanged(const Coords& coords)
 		}
 		if (mil->GetBuildingType() == BLD_BARRACKS || mil->GetBuildingType() == BLD_GUARDHOUSE)
 		{
-			aiJobs.push_back(new AIJH::BuildJob(this, ChooseMilitaryBuilding(x, y), x, y));
+			AddBuildJob(new AIJH::BuildJob(this, construction.ChooseMilitaryBuilding(x, y), x, y));
 		}
 	}
-}
-
-void AIPlayerJH::HandleRetryMilitaryBuilding(const Coords& coords)
-{
-	MapCoord x = coords.x;
-	MapCoord y = coords.y;
-	UpdateNodesAround(x, y, 11); // todo: fix radius
-	RefreshBuildingCount();
-
-	aiJobs.push_back(new AIJH::BuildJob(this, ChooseMilitaryBuilding(x, y), x, y));
-	aiJobs.push_back(new AIJH::BuildJob(this, ChooseMilitaryBuilding(x, y), x, y));
-	aiJobs.push_back(new AIJH::BuildJob(this, ChooseMilitaryBuilding(x, y), x, y));
-
-	// Temporär only
-	aiJobs.push_back(new AIJH::BuildJob(this, BLD_WOODCUTTER, x, y));
-
-	aiJobs.push_back(new AIJH::BuildJob(this, BLD_QUARRY, x, y));
-
-	aiJobs.push_back(new AIJH::BuildJob(this, BLD_GOLDMINE, x, y));
-	aiJobs.push_back(new AIJH::BuildJob(this, BLD_COALMINE, x, y));
-	aiJobs.push_back(new AIJH::BuildJob(this, BLD_IRONMINE, x, y));
-
-	aiJobs.push_back(new AIJH::BuildJob(this, BLD_SAWMILL, x, y));
-
-	aiJobs.push_back(new AIJH::BuildJob(this, BLD_IRONSMELTER, x, y));
-	aiJobs.push_back(new AIJH::BuildJob(this, BLD_MINT, x, y));
-	aiJobs.push_back(new AIJH::BuildJob(this, BLD_ARMORY, x, y));
-}
-
-
-void AIPlayerJH::RefreshBuildingCount()
-{
-	player->GetBuildingCount(buildingCounts);
-
-	buildingsWanted[BLD_SAWMILL] = 1 + GetBuildingCount(BLD_WOODCUTTER) / 2;
-	buildingsWanted[BLD_IRONSMELTER] = GetBuildingCount(BLD_IRONMINE);
-	buildingsWanted[BLD_MINT] = GetBuildingCount(BLD_GOLDMINE);
-	buildingsWanted[BLD_ARMORY] = GetBuildingCount(BLD_IRONSMELTER);
-	buildingsWanted[BLD_BREWERY] = (GetBuildingCount(BLD_ARMORY) > 0 && GetBuildingCount(BLD_FARM) > 0) ? 1 : 0;
-
-	buildingsWanted[BLD_MILL] = (buildingCounts.building_counts[BLD_FARM] + 2) / 4;
-	buildingsWanted[BLD_BAKERY] = buildingsWanted[BLD_MILL];
-
-	buildingsWanted[BLD_PIGFARM] = buildingCounts.building_counts[BLD_FARM] / 4;
-	buildingsWanted[BLD_SLAUGHTERHOUSE] = buildingsWanted[BLD_PIGFARM];
-
-	buildingsWanted[BLD_WELL] = buildingsWanted[BLD_BAKERY] + buildingsWanted[BLD_PIGFARM]
-		+ buildingsWanted[BLD_DONKEYBREEDER] + buildingsWanted[BLD_BREWERY];
-}
-
-void AIPlayerJH::InitBuildingsWanted()
-{
-	buildingsWanted[BLD_FORESTER] = 1;
-	buildingsWanted[BLD_SAWMILL] = 1;
-	buildingsWanted[BLD_WOODCUTTER] = 12;
-	buildingsWanted[BLD_QUARRY] = 6;
-	buildingsWanted[BLD_GRANITEMINE] = 0;
-	buildingsWanted[BLD_COALMINE] = 3;
-	buildingsWanted[BLD_IRONMINE] = 1;
-	buildingsWanted[BLD_GOLDMINE] = 1;
-	buildingsWanted[BLD_CATAPULT] = 5;
-	buildingsWanted[BLD_FISHERY] = 6;
-	buildingsWanted[BLD_QUARRY] = 6;
-	buildingsWanted[BLD_HUNTER] = 2;
-	buildingsWanted[BLD_FARM] = 16;
-	buildingsWanted[BLD_HARBORBUILDING] = 99;
-	buildingsWanted[BLD_SHIPYARD] = 1;
-}
-
-unsigned AIPlayerJH::GetBuildingCount(BuildingType type)
-{
-	return buildingCounts.building_counts[type] + buildingCounts.building_site_counts[type];
-}
-
-bool AIPlayerJH::Wanted(BuildingType type)
-{
-	if ((type >= BLD_BARRACKS && type <= BLD_FORTRESS) || type == BLD_STOREHOUSE)
-		return true;
-	return GetBuildingCount(type) < buildingsWanted[type];
-}
-
-void AIPlayerJH::CheckExistingMilitaryBuildings()
-{
-	if (milBuildings.size() == 0)
-		return;
-	std::list<Coords>::iterator it = milBuildings.begin();
-
-	if (militaryBuildingToCheck >= milBuildings.size())
-		militaryBuildingToCheck = 0;
-
-	std::advance(it,militaryBuildingToCheck);
-
-	assert(it != milBuildings.end());
-
-	HandleRetryMilitaryBuilding(*it);
-
-	const nobBaseMilitary *mil;
-
-	if (!(mil = gwb->GetSpecObj<nobBaseMilitary>((*it).x, (*it).y)))
-	{
-		// Gebäude wurde wohl zerstört
-		milBuildings.erase(it);
-		return;
-	}
-
-	if (mil->GetPlayer() != playerid)
-	{
-		// Gebäude gehört nicht mehr uns O_o
-		milBuildings.erase(it);
-		return;
-	}
-
-	militaryBuildingToCheck++;	
 }
 
 
@@ -1171,24 +859,73 @@ void AIPlayerJH::Chat(std::string message)
 
 void AIPlayerJH::TryToAttack() 
 {
+	std::vector<std::pair<const nobBaseMilitary *, unsigned> > potentialTargets;
+
 	for (std::list<Coords>::iterator it = milBuildings.begin(); it != milBuildings.end(); it++)
 	{
 		const nobMilitary *mil;
-		if ((mil = gwb->GetSpecObj<nobMilitary>((*it).x, (*it).y)))
-		{
-			if (mil->GetFrontierDistance() == 0)
-				continue;
+		if (!(mil = gwb->GetSpecObj<nobMilitary>((*it).x, (*it).y)))
+			continue;
 
-			list<nobBaseMilitary *> buildings;
-			gwb->LookForMilitaryBuildings(buildings,(*it).x, (*it).y,2);
-			for(list<nobBaseMilitary*>::iterator it2 = buildings.begin();it2.valid();++it2)
+		if (mil->GetFrontierDistance() == 0)
+			continue;
+
+		list<nobBaseMilitary *> buildings;
+		gwb->LookForMilitaryBuildings(buildings,(*it).x, (*it).y, 2);
+		for(list<nobBaseMilitary*>::iterator it2 = buildings.begin(); it2.valid(); ++it2)
+		{
+			MapCoord dest_x = (*it2)->GetX();
+			MapCoord dest_y = (*it2)->GetY();
+			if (CalcDistance((*it).x, (*it).y, dest_x, dest_y) < BASE_ATTACKING_DISTANCE 
+				&& player->IsPlayerAttackable((*it2)->GetPlayer()) && gwb->GetNode(dest_x, dest_y).fow[playerid].visibility == VIS_VISIBLE)
 			{
-				if (CalcDistance((*it).x, (*it).y, (*it2)->GetX(), (*it2)->GetY()) < BASE_ATTACKING_DISTANCE 
-					&& player->IsPlayerAttackable((*it2)->GetPlayer()) && gwb->GetNode((*it2)->GetX(), (*it2)->GetY()).fow[playerid].visibility == VIS_VISIBLE)
+				potentialTargets.push_back(std::make_pair((*it2), 0));
+
+				list<nobBaseMilitary *> myBuildings;
+				gwb->LookForMilitaryBuildings(myBuildings,dest_x, dest_y, 2);
+				for(list<nobBaseMilitary*>::iterator it3 = myBuildings.begin(); it3.valid(); ++it3)
 				{
-					gcs.push_back(new gc::Attack((*it2)->GetX(), (*it2)->GetY(), mil->GetTroopsCount() - 1, true));
+					if ((*it3)->GetPlayer() == playerid)
+					{
+						const nobMilitary *myMil;
+						myMil = dynamic_cast<const nobMilitary *>(*it3);
+						if (!myMil)
+							continue;
+
+						potentialTargets[potentialTargets.size() - 1].second += myMil->GetSoldiersForAttack(dest_x, dest_y, playerid);
+					}
 				}
 			}
+		}
+	}
+	
+	unsigned max = 0;
+	unsigned maxIndex = 0;
+
+	for (unsigned i=0; i<potentialTargets.size(); ++i)
+	{
+		if (potentialTargets[i].second > max)
+		{
+			max = potentialTargets[i].second;
+			maxIndex = i;
+		}
+	}
+
+	if (max > 0)
+	{
+		const nobMilitary *enemyTarget;
+		enemyTarget = dynamic_cast<const nobMilitary *>(potentialTargets[maxIndex].first);
+		if (enemyTarget)
+		{
+			if (potentialTargets[maxIndex].second > enemyTarget->GetTroopsCount() && enemyTarget->GetTroopsCount() > 0)
+				gcs.push_back(new gc::Attack(potentialTargets[maxIndex].first->GetX(), potentialTargets[maxIndex].first->GetY(), 
+					potentialTargets[maxIndex].second, true));
+		}
+		else
+		{
+			// is wohl HQ?
+			gcs.push_back(new gc::Attack(potentialTargets[maxIndex].first->GetX(), potentialTargets[maxIndex].first->GetY(), 
+				potentialTargets[maxIndex].second, true));
 		}
 	}
 }
@@ -1228,88 +965,6 @@ void AIPlayerJH::RecalcGround(MapCoord x_building, MapCoord y_building, std::vec
 			GetAINode(x, y).res = AIJH::NOTHING;
 		}
 	}
-}
-
-
-
-bool AIPlayerJH::BuildAlternativeRoad(const noFlag *flag, std::vector<unsigned char> &route)
-{
-	// Radius in dem nach würdigen Fahnen gesucht wird
-	const unsigned short maxRoadLength = 10;
-	// Faktor um den der Weg kürzer sein muss als ein vorhander Pfad, um gebaut zu werden
-	const unsigned short lengthFactor = 5;
-
-
-	// Flaggen in der Umgebung holen
-	std::vector<const noFlag*> flags;
-	FindFlags(flags, flag->GetX(), flag->GetY(), maxRoadLength);
-
-	// Jede Flagge testen...
-	for(unsigned i=0; i<flags.size(); ++i)
-	{
-		//std::vector<unsigned char> new_route;
-		route.clear();
-		unsigned int newLength;
-		Param_RoadPath prp = { false };
-		
-		// Gibts überhaupt einen Pfad zu dieser Flagge
-		bool path_found = gwb->FindFreePath(flag->GetX(),flag->GetY(),
-		                  flags[i]->GetX(),flags[i]->GetY(),false,100,&route,&newLength,NULL,IsPointOK_RoadPath,NULL, &prp);
-
-		// Wenn ja, dann gucken ob unser momentaner Weg zu dieser Flagge vielleicht voll weit ist und sich eine Straße lohnt
-		if (path_found)
-		{
-			unsigned int oldLength = 0;
-
-			// Aktuelle Strecke zu der Flagge
-			bool pathAvailable = gwb->FindPathOnRoads(flags[i], flag, false, &oldLength, NULL, NULL, NULL);
-
-			// Lohnt sich die Straße?
-			if (!pathAvailable || newLength * lengthFactor < oldLength)
-			{
-				return BuildRoad(flag, flags[i], route);
-			}
-		}
-	}
-
-	return false;
-}
-
-bool AIPlayerJH::FindStoreHousePosition(MapCoord &x, MapCoord &y, unsigned radius)
-{
-	// max distance to warehouse/hq
-	const unsigned maxDistance = 20;
-
-	MapCoord fx = gwb->GetXA(x,y,4);
-	MapCoord fy = gwb->GetYA(x,y,4);
-
-	unsigned minDist = 999;
-	for (std::list<Coords>::iterator it = storeHouses.begin(); it != storeHouses.end(); it++)
-	{
-		const noBaseBuilding *bld;
-		if ((bld = gwb->GetSpecObj<noBaseBuilding>((*it).x, (*it).y)))
-		{
-			if (bld->GetBuildingType() != BLD_STOREHOUSE && bld->GetBuildingType() != BLD_HEADQUARTERS)
-				continue;
-
-			const noFlag *targetFlag = gwb->GetSpecObj<noFlag>(fx,fy);
-			unsigned dist;
-			bool pathAvailable = gwb->FindPathOnRoads(bld->GetFlag(), targetFlag, false, &dist, NULL, NULL, NULL);
-
-			if (!pathAvailable)
-				continue;
-
-			if (dist < minDist)
-			{
-				minDist = dist;
-			}
-			if (minDist <= maxDistance)
-			{
-				return false;
-			}
-		}
-	}
-	return SimpleFindPosition(x, y, BUILDING_SIZE[BLD_STOREHOUSE], radius);
 }
 
 void AIPlayerJH::SaveResourceMapsToFile()

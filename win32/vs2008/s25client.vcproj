@@ -2002,6 +2002,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\AIConstruction.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\AIConstruction.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\AIEventManager.cpp"
 					>
 				</File>
@@ -2031,6 +2039,14 @@
 				</File>
 				<File
 					RelativePath="..\..\src\AIPlayerJH.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\AIResourceMap.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\AIResourceMap.h"
 					>
 				</File>
 			</Filter>

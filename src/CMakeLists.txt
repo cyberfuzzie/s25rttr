@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 5849 2010-01-04 13:01:30Z Demophobie $
+### $Id: CMakeLists.txt 5928 2010-01-24 21:14:42Z jh $
 ################################################################################
 
 INCLUDE(FindBZip2)
@@ -120,6 +120,7 @@ SET(SOURCES_AI
     AIPlayerJH.cpp AIPlayerJH.h
     AIJHHelper.cpp AIJHHelper.h
     AIEventManager.cpp AIEventManager.h
+    AIConstruction.cpp AIConstruction.h
     )   
 
 SET(SOURCES_OTHER

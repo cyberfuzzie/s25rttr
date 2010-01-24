@@ -1,4 +1,4 @@
-// $Id: AIConstruction.h 5882 2010-01-10 16:41:12Z jh $
+// $Id: AIConstruction.h 5928 2010-01-24 21:14:42Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -33,19 +33,26 @@ namespace gc { class GameCommand; }
 class AIConstruction
 {
 public:
-	AIConstruction(const GameWorldBase * const gwb, std::vector<gc::GameCommand*> &gcs, unsigned char playerid);
+	AIConstruction(const GameWorldBase * const gwb, std::vector<gc::GameCommand*> &gcs, const GameClientPlayer * const player, unsigned char playerid);
 	~AIConstruction(void);
 
 	/// Adds a build job to the queue
 	void AddBuildJob(AIJH::BuildJob *job);
 
-	void ExecuteBuildJob();
+	AIJH::Job *GetBuildJob();
+
+	void AddConnectFlagJob(AIPlayerJH *aijh, const noFlag *flag); // todo aijh als param suckt
+
+	bool BuildJobAvailable() const { return buildJobs.size() > 0;}
 
 	/// Finds flags in the area around x,y
-	void FindFlags(std::vector<const noFlag*>& flags, unsigned short x, unsigned short y, unsigned short radius);
+	void FindFlags(std::vector<const noFlag*>& flags, unsigned short x, unsigned short y, unsigned short radius, bool clear = true);
+
+	void FindFlags(std::vector<const noFlag*>& flags, unsigned short x, unsigned short y, unsigned short radius, 
+															 unsigned short real_x, unsigned short real_y, unsigned short real_radius, bool clear = true);
 
 	/// Connects a specific flag to a roadsystem nearby and returns true if succesful. Also returns the route of the future road.
-	bool ConnectFlagToRoadSytem(const noFlag *flag, std::vector<unsigned char>& route);
+	bool ConnectFlagToRoadSytem(const noFlag *flag, std::vector<unsigned char>& route, unsigned int maxSearchRadius = 10);
 
 	/// Builds a street between two roadnodes and sets flags on it, if route is empty, it will be calculated
 	bool BuildRoad(const noRoadNode *start, const noRoadNode *target, std::vector<unsigned char> &route);
@@ -58,6 +65,10 @@ public:
 
 	/// Returns the number of buildings and buildingsites of a specific typ
 	unsigned GetBuildingCount(BuildingType type);
+
+	/// Refreshes the number of buildings by asking the GameClientPlayer and recalcs some wanted buildings
+	void RefreshBuildingCount();
+
 
 	/// Checks whether a building type is wanted atm
 	bool Wanted(BuildingType type);
@@ -86,9 +97,10 @@ private:
 	AIJH::Job *currentJob;
 
 	/// Contains the jobs the AI should try to execute, for example build jobs
-	std::deque<AIJH::BuildJob*> buildJobs;
+	std::deque<AIJH::Job*> buildJobs;
 
 	const GameWorldBase * const gwb;
+	const GameClientPlayer * const player;
 	std::vector<gc::GameCommand*> &gcs;
 
 	/// Number of buildings and building sites of this player (refreshed by RefreshBuildingCount())

@@ -1,4 +1,4 @@
-// $Id: AIJHHelper.cpp 5854 2010-01-04 16:30:33Z FloSoft $
+// $Id: AIJHHelper.cpp 5928 2010-01-24 21:14:42Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -20,6 +20,7 @@
 #include "AIJHHelper.h"
 #include "main.h"
 #include "AIPlayerJH.h"
+#include "AIConstruction.h"
 
 #include "GameClientPlayer.h"
 #include "GameWorld.h"
@@ -74,18 +75,12 @@ void AIJH::BuildJob::ExecuteJob()
 	// Evil harbour-hack
 	if (type == BLD_HARBORBUILDING && status == AIJH::JOB_FINISHED && target_x != 0xFFFF)
 	{
-		aijh->aiJobs.push_front(new AIJH::BuildJob(aijh, BLD_SHIPYARD, target_x, target_y));
+		aijh->AddBuildJob(new AIJH::BuildJob(aijh, BLD_SHIPYARD, target_x, target_y));
 	}
-
 
 	// Fertig?
 	if (status == AIJH::JOB_FAILED || status == AIJH::JOB_FINISHED)
 		return;
-
-	//if (target_x == 0xFFFF && target_y == 0xFFFF)
-	//{
-
-	//}
 
 	if (aijh->GetGWB()->IsMilitaryBuildingNearNode(target_x, target_y) && type >= BLD_BARRACKS && type <= BLD_FORTRESS)
 	{
@@ -109,7 +104,7 @@ void AIJH::BuildJob::TryToBuild()
 		return;
 	}
 
-	if (!aijh->Wanted(type))
+	if (!aijh->GetConstruction()->Wanted(type))
 	{
 		status = AIJH::JOB_FINISHED;
 		return;
@@ -151,7 +146,8 @@ void AIJH::BuildJob::TryToBuild()
 		foundPos = aijh->FindBestPosition(bx, by, AIJH::FISH, BQ_HUT, 15, true);
 		break;
 	case BLD_STOREHOUSE:
-		foundPos = aijh->FindStoreHousePosition(bx, by, 15);
+		if(aijh->GetConstruction()->FindStoreHousePosition(bx, by, 15))
+			foundPos = aijh->SimpleFindPosition(bx, by, BUILDING_SIZE[BLD_STOREHOUSE], 15);
 		break;
 
 	case BLD_FARM:
@@ -199,7 +195,7 @@ void AIJH::BuildJob::BuildMainRoad()
 			std::cout << "Player " << (unsigned)aijh->GetPlayerID() << ", Job failed: BQ changed for " << BUILDING_NAMES[type] << " at " << target_x << "/" << target_y << ". Retrying..." << std::endl;
 #endif
 			aijh->nodes[target_x + target_y * aijh->GetGWB()->GetWidth()].bq = bq;
-			aijh->aiJobs.push_back(new AIJH::BuildJob(aijh, type, around_x, around_y));
+			aijh->GetConstruction()->AddBuildJob(new AIJH::BuildJob(aijh, type, around_x, around_y));
 			return;
 		}
 		return;
@@ -216,10 +212,10 @@ void AIJH::BuildJob::BuildMainRoad()
 	const noFlag *houseFlag = aijh->GetGWB()->GetSpecObj<noFlag>(aijh->GetGWB()->GetXA(target_x, target_y, 4), 
 		aijh->GetGWB()->GetYA(target_x, target_y, 4));
 	// Gucken noch nicht ans Wegnetz angeschlossen
-	if (!aijh->IsConnectedToRoadSystem(houseFlag))
+	if (!aijh->GetConstruction()->IsConnectedToRoadSystem(houseFlag))
 	{
 		// Bau unmöglich?
-		if (!aijh->ConnectFlagToRoadSytem(houseFlag, route))
+		if (!aijh->GetConstruction()->ConnectFlagToRoadSytem(houseFlag, route))
 		{
 			status = AIJH::JOB_FAILED;
 #ifdef DEBUG_AI
@@ -229,7 +225,7 @@ void AIJH::BuildJob::BuildMainRoad()
 			aijh->GetGCS().push_back(new gc::DestroyBuilding(target_x, target_y));
 			aijh->GetGCS().push_back(new gc::DestroyFlag(houseFlag->GetX(), houseFlag->GetY()));
 
-			aijh->aiJobs.push_back(new AIJH::BuildJob(aijh, type, around_x, around_y));
+			aijh->AddBuildJob(new AIJH::BuildJob(aijh, type, around_x, around_y));
 			return;
 		}
 		else
@@ -278,7 +274,7 @@ void AIJH::BuildJob::BuildMainRoad()
 			aijh->ChangeResourceMap(target_x, target_y, 10, aijh->resourceMaps[AIJH::FISH], -30);
 			break;
 		case BLD_STOREHOUSE:
-			aijh->AddStoreHouse(target_x, target_y);
+			aijh->GetConstruction()->AddStoreHouse(target_x, target_y);
 			break;
 
 		case BLD_FARM:
@@ -287,17 +283,17 @@ void AIJH::BuildJob::BuildMainRoad()
 			break;
 
 		case BLD_MILL:
-			aijh->aiJobs.push_back(new AIJH::BuildJob(aijh, BLD_BAKERY, target_x, target_y));
+			aijh->GetConstruction()->AddBuildJob(new AIJH::BuildJob(aijh, BLD_BAKERY, target_x, target_y));
 			break;
 
 		case BLD_PIGFARM:
-			aijh->aiJobs.push_back(new AIJH::BuildJob(aijh, BLD_SLAUGHTERHOUSE, target_x, target_y));
+			aijh->GetConstruction()->AddBuildJob(new AIJH::BuildJob(aijh, BLD_SLAUGHTERHOUSE, target_x, target_y));
 			break;
 
 		case BLD_BAKERY:
 		case BLD_SLAUGHTERHOUSE:
 		case BLD_BREWERY:
-			aijh->aiJobs.push_back(new AIJH::BuildJob(aijh, BLD_WELL, target_x, target_y));
+			aijh->GetConstruction()->AddBuildJob(new AIJH::BuildJob(aijh, BLD_WELL, target_x, target_y));
 			break;
 
 		default:
@@ -327,11 +323,11 @@ void AIJH::BuildJob::TryToBuildSecondaryRoad()
 #ifdef DEBUG_AI
 			std::cout << "Player " << (unsigned)aijh->GetPlayerID() << ", Job failed: House flag is gone, " << BUILDING_NAMES[type] << " at " << target_x << "/" << target_y << ". Retrying..." << std::endl;
 #endif
-		aijh->aiJobs.push_back(new AIJH::BuildJob(aijh, type, around_x, around_y));
+		aijh->GetConstruction()->AddBuildJob(new AIJH::BuildJob(aijh, type, around_x, around_y));
 		return;
 	}
 
-	if (aijh->BuildAlternativeRoad(houseFlag, route))
+	if (aijh->GetConstruction()->BuildAlternativeRoad(houseFlag, route))
 		status = AIJH::JOB_EXECUTING_ROAD2_2;
 	else
 		status = AIJH::JOB_FINISHED;
@@ -387,4 +383,56 @@ void AIJH::EventJob::ExecuteJob()
 
 	//temp only:
 	status = AIJH::JOB_FINISHED;
+}
+
+
+void AIJH::ConnectJob::ExecuteJob()
+{
+#ifdef DEBUG_AI
+			std::cout << "Player " << (unsigned)aijh->GetPlayerID() << ", ConnectJob executed..." << std::endl;
+#endif
+	const noFlag *flag = aijh->GetGWB()->GetSpecObj<noFlag>(flag_x, flag_y);
+
+	if (!flag)
+	{
+#ifdef DEBUG_AI
+			std::cout << "Flag is gone." << std::endl;
+#endif
+		status = AIJH::JOB_FAILED;
+		return;
+	}
+
+	// already connected?
+	if (!aijh->GetConstruction()->IsConnectedToRoadSystem(flag))
+	{
+#ifdef DEBUG_AI
+			std::cout << "Flag is not connected..." << std::endl;
+#endif
+		// building road possible?
+		if (!aijh->GetConstruction()->ConnectFlagToRoadSytem(flag, route, 24))
+		{
+#ifdef DEBUG_AI
+			std::cout << "Flag is not connectable." << std::endl;
+#endif
+			status = AIJH::JOB_FAILED;
+			return;
+		}
+		else
+		{
+#ifdef DEBUG_AI
+			std::cout << "Connecting flag..." << std::endl;
+#endif
+			// wait...
+			return;
+		}
+	}
+	else
+	{
+#ifdef DEBUG_AI
+			std::cout << "Flag is connected." << std::endl;
+#endif
+		aijh->RecalcGround(flag_x, flag_y, route);
+		status = AIJH::JOB_FINISHED;
+		return;
+	}
 }

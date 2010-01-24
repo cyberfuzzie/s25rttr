@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.h 5855 2010-01-04 16:44:38Z FloSoft $
+// $Id: AIPlayerJH.h 5928 2010-01-24 21:14:42Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -28,6 +28,7 @@
 #include "AIJHHelper.h"
 #include "GameWorld.h"
 #include "AIEventManager.h"
+#include "AIConstruction.h"
 
 #include <queue>
 #include <deque>
@@ -47,6 +48,7 @@ class AIPlayerJH : public AIBase
 {
 	friend class AIJH::BuildJob;
 	friend class AIJH::EventJob;
+	friend class AIJH::ConnectJob;
 public:
 	AIPlayerJH(const unsigned char playerid, const GameWorldBase * const gwb, const GameClientPlayer * const player,
 		const GameClientPlayerList * const players, const GlobalGameSettings * const ggs,
@@ -56,13 +58,6 @@ public:
 	int GetResMapValue(MapCoord x, MapCoord y, AIJH::Resource res);
 
 protected:
-
-	// wofür isn das?
-	struct Param_RoadPath
-	{
-		bool boat_road;
-	};
-
 	struct Coords
 	{
 		MapCoord x;
@@ -74,14 +69,6 @@ protected:
 
 	void SendAIEvent(AIEvent::Base *ev);
 
-  /// Finds flags in the area around x,y
-	void FindFlags(std::vector<const noFlag*>& flags, unsigned short x, unsigned short y, unsigned short radius);
-
-	/// Connects a specific flag to a roadsystem nearby and returns true if succesful. Also returns the route of the future road.
-	bool ConnectFlagToRoadSytem(const noFlag *flag, std::vector<unsigned char>& route);
-
-	/// Builds a street between two roadnodes and sets flags on it, if route is empty, it will be calculated
-	bool BuildRoad(const noRoadNode *start, const noRoadNode *target, std::vector<unsigned char> &route);
 
 	/// Test whether the player should resign or not
 	bool TestDefeat();
@@ -89,34 +76,12 @@ protected:
 	/// resigned yes/no
 	bool defeated;
 
-
-	/// Refreshes the number of buildings by asking the GameClientPlayer and recalcs some wanted buildings
-	void RefreshBuildingCount();
-
-	/// Number of buildings and building sites of this player (refreshed by RefreshBuildingCount())
-	BuildingCount buildingCounts;
-
-	
 	/// Executes a job form the job queue
 	void ExecuteAIJob();
-
-	/// The current job the AI is working on
-	AIJH::Job *currentJob;
-
-	/// Contains the jobs the AI should try to execute, for example build jobs
-	std::deque<AIJH::Job*> aiJobs;
-
-	/// List of coordinates at which military buildings should be
-	std::list<Coords> milBuildings;
-
-	/// List of coordinates at which military buildingsites should be
-	std::list<Coords> milBuildingSites;
+	void AddBuildJob(AIJH::BuildJob *job) { construction.AddBuildJob(job); }
 
 	/// Checks the list of military buildingsites and puts the coordinates into the list of military buildings if building is finished
 	void CheckNewMilitaryBuildings();
-
-	/// Nodes containing some information about every map node
-	std::vector<AIJH::Node> nodes;
 
 	/// Initializes the nodes on start of the game
 	void InitNodes();
@@ -126,9 +91,6 @@ protected:
 
 	/// Returns the resource on a specific point
 	AIJH::Resource CalcResource(MapCoord x, MapCoord y);
-
-	/// Resource maps, containing a rating for every map point concerning a resource
-	std::vector<std::vector<int> > resourceMaps;
 
 	/// Initialize the resource maps
 	void InitResourceMaps();
@@ -149,21 +111,11 @@ protected:
 	/// Finds a position for the desired building size
 	bool SimpleFindPosition(MapCoord &x, MapCoord &y, BuildingQuality size, int radius = -1);
 
-	/// Checks whether a flag is connected to the road system or not (connected = has path to HQ)
-	bool IsConnectedToRoadSystem(const noFlag *flag);
-
 	/// Recalculate the Buildingquality around a certain point
 	void RecalcBQAround(const MapCoord x, const MapCoord y);
 
-	/// Randomly chooses a military building, prefering bigger buildings if enemy nearby
-	BuildingType ChooseMilitaryBuilding(MapCoord x, MapCoord y);
-
 	/// Does some actions after a new military building is occupied
 	void HandleNewMilitaryBuilingOccupied(const Coords& coords);
-
-	/// Does some actions regulary on a military building
-	// [currently not used]
-	void HandleRetryMilitaryBuilding(const Coords& coords);
 
 	// Handle event "no more resources"
 	void HandleNoMoreResourcesReachable(const Coords& coords, BuildingType bld);
@@ -176,43 +128,14 @@ protected:
 
 	void HandleExpedition(const Coords& coords);
 
-	/// Returns the number of buildings and buildingsites of a specific typ
-	unsigned GetBuildingCount(BuildingType type);
-
-	/// Contains how many buildings of every type is wanted
-	std::vector<unsigned> buildingsWanted;
-
-	/// Checks whether a building type is wanted atm
-	bool Wanted(BuildingType type);
-
-	/// Initializes the wanted-buildings-vector
-	void InitBuildingsWanted();
-
-	/// Counter to remember which military building was last checked
-	// [currently not used]
-	unsigned militaryBuildingToCheck;
-
-	/// Used to check military buildings from time to time
-	// [currently not used]
-	void CheckExistingMilitaryBuildings();
-
 	/// Sends a chat messsage to all players
-	void Chat(std::string lala);
+	void Chat(std::string message);
 
 	/// Tries to attack the enemy
 	void TryToAttack();
 
 	/// Update BQ and farming ground around new building site + road
 	void RecalcGround(MapCoord x_building, MapCoord y_building, std::vector<unsigned char> &route_road);
-
-	/// Tries to build a second road to a flag, which is in any way better than the first one
-	bool BuildAlternativeRoad(const noFlag *flag, std::vector<unsigned char> &route);
-
-	bool FindStoreHousePosition(MapCoord &x, MapCoord &y, unsigned radius);
-	std::list<Coords> storeHouses;
-	void AddStoreHouse(MapCoord x, MapCoord y) { storeHouses.push_back(Coords(x, y)); }
-
-	noFlag *FindTargetStoreHouseFlag(MapCoord x, MapCoord y);
 
 	void SaveResourceMapsToFile();
 
@@ -224,7 +147,23 @@ protected:
 
 
 protected:
+	/// The current job the AI is working on
+	AIJH::Job *currentJob;
 
+	/// Contains the jobs the AI should try to execute, for example build jobs
+	/// std::deque<AIJH::Job*> aiJobs;
+
+	/// List of coordinates at which military buildings should be
+	std::list<Coords> milBuildings;
+
+	/// List of coordinates at which military buildingsites should be
+	std::list<Coords> milBuildingSites;
+
+	/// Nodes containing some information about every map node
+	std::vector<AIJH::Node> nodes;
+
+	/// Resource maps, containing a rating for every map point concerning a resource
+	std::vector<std::vector<int> > resourceMaps;
 
 	// Required by the AIJobs:
 
@@ -232,6 +171,7 @@ protected:
 	const GameClientPlayer * const GetPlayer() const { return player; }
 	const GameWorldBase *GetGWB() { return gwb; }
 	unsigned char GetPlayerID() { return playerid; }
+	AIConstruction *GetConstruction() { return &construction; }
 
 public:
 	inline AIJH::Node &GetAINode(MapCoord x, MapCoord y) { return nodes[x + gwb->GetWidth() * y]; }
@@ -239,6 +179,7 @@ public:
 // Event...
 protected:
 	AIEventManager eventManager;
+	AIConstruction construction;
 
 
 };

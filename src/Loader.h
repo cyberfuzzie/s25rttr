@@ -1,4 +1,4 @@
-// $Id: Loader.h 5923 2010-01-23 16:56:39Z FloSoft $
+// $Id: Loader.h 5927 2010-01-24 10:08:58Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -59,6 +59,7 @@ private:
 	bool LoadLsts(unsigned int dir);
 
 	static bool SortFilesHelper(const std::string& lhs, const std::string& rhs);
+	static std::vector<std::string> ExplodeString(std::string const &line, const char delim, const unsigned int max = 0xFFFFFFFF);
 
 public:
 	inline glArchivItem_Bitmap *GetImageN(std::string file, unsigned int nr) { return dynamic_cast<glArchivItem_Bitmap*>( files[file].get(nr) ); }

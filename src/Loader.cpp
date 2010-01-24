@@ -1,4 +1,4 @@
-// $Id: Loader.cpp 5924 2010-01-23 17:12:17Z FloSoft $
+// $Id: Loader.cpp 5927 2010-01-24 10:08:58Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -310,6 +310,31 @@ bool Loader::SortFilesHelper(const std::string& lhs, const std::string& rhs)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+/** 
+ *  zerlegt einen String in Einzelteile
+ *  Wird für das richtige Laden der Dateien benutzt.
+ *
+ *  @author FloSoft
+ */
+std::vector<std::string> Loader::ExplodeString(std::string const &line, const char delim, const unsigned int max) 
+{
+	std::istringstream in(line);
+	std::vector<std::string> result;
+	std::string token;
+
+	unsigned int len = 0;
+	while(std::getline(in, token, delim) && result.size() < max-1) {
+		len += token.size() + 1;
+		result.push_back(token);
+	}
+
+	if(len < in.str().length())
+		result.push_back(in.str().substr(len));
+
+	return result;
+}
+
+///////////////////////////////////////////////////////////////////////////////
 /**
  *  Lädt eine Datei in ein ArchivInfo in @p files auf Basis des Dateinames.
  *
@@ -376,8 +401,57 @@ bool Loader::LoadFile(const char *pfad, const libsiedler2::ArchivItem_Palette *p
 
 		lst.sort(SortFilesHelper);
 
+		int a = 0, b = 0;
+		unsigned char *buffer = new unsigned char[1000*1000*4];
 		for(std::list<std::string>::iterator i = lst.begin(); i != lst.end(); ++i)
 		{
+			// empty-file filler
+			/*std::string lf = i->substr(i->find_last_of('/')+1);
+			std::stringstream aa;
+			aa << lf;
+			if(aa >> a)
+			{
+				for(; b < a; ++b)
+				{
+					std::stringstream file;
+					file << GetFilePath(pfad) << "/" << b << ".empty";
+					std::ofstream out(file.str());
+					out.close();
+				}
+				b = a + 1;
+			}*/
+
+			std::string filetype = "empty";
+			unsigned int bobtype = 0;
+			short nx = 0, ny = 0;
+
+			// Dateiname zerlegen
+			std::vector<std::string> wf = ExplodeString(*i, '.');
+
+			for(std::vector<std::string>::iterator it = wf.begin(); it != wf.end(); ++it)
+			{
+				if(*it == "rle")
+					bobtype = libsiedler2::BOBTYPE_BITMAP_RLE;
+				else if(*it == "player")
+					bobtype = libsiedler2::BOBTYPE_BITMAP_PLAYER;
+				else if(*it == "shadow")
+					bobtype = libsiedler2::BOBTYPE_BITMAP_SHADOW;
+
+				else if(it->substr(0, 2) == "nx" || it->substr(0, 2) == "dx")
+					nx = atoi(it->substr(2).c_str());
+				else if(it->substr(0, 2) == "ny" || it->substr(0, 2) == "dy")
+					ny = atoi(it->substr(2).c_str());
+			}
+
+			if((wf.back()) == "bmp")
+				filetype = "bitmap";
+			else if((wf.back()) == "bbm" || (wf.back()) == "act")
+			{
+				bobtype = libsiedler2::BOBTYPE_PALETTE;
+				filetype = "palette";
+			}
+
+			// Empty-Dateien überspringen
 			if( i->substr(i->length()-6, 6) == ".empty")
 			{
 				LOG.lprintf("ueberspringe %s\n", i->c_str());
@@ -385,15 +459,69 @@ bool Loader::LoadFile(const char *pfad, const libsiedler2::ArchivItem_Palette *p
 				continue;
 			}
 
+			// Datei laden
 			libsiedler2::ArchivInfo toto;
 			if(!LoadFile( i->c_str(), palette, &toto ) )
 				return false;
 
-			unsigned int offset = to->getCount();
-			to->alloc_inc(toto.getCount());
-			for(unsigned int ii = 0; ii < toto.getCount(); ++ii)
-				to->setC(offset+ii, toto.get(ii));
+			// Nun Daten abhängig der Typen erstellen, nur erstes Element wird bei Bitmaps konvertiert
+
+			libsiedler2::ArchivItem *neu = toto.get(0);
+			if(filetype == "bitmap")
+			{
+				glArchivItem_Bitmap *in = dynamic_cast<glArchivItem_Bitmap*>(neu);
+				glArchivItem_Bitmap *out = in;
+				
+				switch(bobtype)
+				{
+				case libsiedler2::BOBTYPE_BITMAP_RLE:
+				case libsiedler2::BOBTYPE_BITMAP_PLAYER:
+				case libsiedler2::BOBTYPE_BITMAP_SHADOW:
+					{
+						out = dynamic_cast<glArchivItem_Bitmap*>(glAllocator(bobtype, 0, NULL));
+					} break;
+				}
+
+				out->setName(i->c_str());
+				out->setNx(nx);
+				out->setNy(ny);
+
+				if(out != in)
+				{
+					memset(buffer, 0, 1000*1000*4);
+					in->print(buffer, 1000, 1000, libsiedler2::FORMAT_RGBA, palette);
+				}
+
+				switch(bobtype)
+				{
+				case libsiedler2::BOBTYPE_BITMAP_RLE:
+				case libsiedler2::BOBTYPE_BITMAP_SHADOW:
+					{
+						out->create(in->getWidth(), in->getHeight(), buffer, 1000, 1000, libsiedler2::FORMAT_RGBA, palette);
+					} break;
+				case libsiedler2::BOBTYPE_BITMAP_PLAYER:
+					{
+						dynamic_cast<glArchivItem_Bitmap_Player*>(out)->create(in->getWidth(), in->getHeight(), buffer, 1000, 1000, libsiedler2::FORMAT_RGBA, palette, 128);
+					} break;
+				}
+
+				neu = out;
+
+				to->pushC(neu);
+			}
+			else // Paletten der Bitmaps nicht mitladen
+			{
+				unsigned int offset = to->getCount();
+				to->alloc_inc(toto.getCount());
+
+				to->setC(offset, neu);
+
+				
+				for(unsigned int ii = 0; ii < toto.getCount(); ++ii)
+					to->setC(offset+ii, toto.get(ii));
+			}
 		}
+		delete[] buffer;
 	}
 	else
 	{

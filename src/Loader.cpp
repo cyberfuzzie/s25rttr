@@ -1,4 +1,4 @@
-// $Id: Loader.cpp 5927 2010-01-24 10:08:58Z FloSoft $
+// $Id: Loader.cpp 5929 2010-01-24 21:28:37Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -400,8 +400,7 @@ bool Loader::LoadFile(const char *pfad, const libsiedler2::ArchivItem_Palette *p
 		ListDir(GetFilePath(pfad) + "/*.empty", false, NULL, NULL, &lst);
 
 		lst.sort(SortFilesHelper);
-
-		int a = 0, b = 0;
+		
 		unsigned char *buffer = new unsigned char[1000*1000*4];
 		for(std::list<std::string>::iterator i = lst.begin(); i != lst.end(); ++i)
 		{

@@ -1,4 +1,4 @@
-// $Id: AIConstruction.h 5928 2010-01-24 21:14:42Z jh $
+// $Id: AIConstruction.h 5929 2010-01-24 21:28:37Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -100,8 +100,8 @@ private:
 	std::deque<AIJH::Job*> buildJobs;
 
 	const GameWorldBase * const gwb;
-	const GameClientPlayer * const player;
 	std::vector<gc::GameCommand*> &gcs;
+	const GameClientPlayer * const player;
 
 	/// Number of buildings and building sites of this player (refreshed by RefreshBuildingCount())
 	BuildingCount buildingCounts;

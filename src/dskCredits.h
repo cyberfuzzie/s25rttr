@@ -1,4 +1,4 @@
-// $Id: dskCredits.h 5933 2010-01-25 16:34:59Z FloSoft $
+// $Id: dskCredits.h 5934 2010-01-25 16:54:21Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -72,6 +72,7 @@ private:
 
 	unsigned int startTime;
 	unsigned int bobTime;
+	unsigned int bobSpawnTime;
 };
 
 #endif // !dskCREDITS_H_INCLUDED

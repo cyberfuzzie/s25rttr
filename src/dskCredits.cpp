@@ -1,4 +1,4 @@
-// $Id: dskCredits.cpp 5933 2010-01-25 16:34:59Z FloSoft $
+// $Id: dskCredits.cpp 5934 2010-01-25 16:54:21Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -180,7 +180,7 @@ dskCredits::dskCredits(void) : Desktop(LOADER.GetImageN("setup013", 0))
 	LOADER.LoadFilesAtGame(0, nations);
 
 	this->it = entries.begin();
-	this->startTime = VideoDriverWrapper::inst().GetTickCount();
+	startTime = bobTime = bobSpawnTime = VideoDriverWrapper::inst().GetTickCount();
 	
 	GetMusic(sng_lst, 13)->Play(0);
 }
@@ -212,14 +212,44 @@ void dskCredits::Msg_PaintAfter()
 		this->startTime = VideoDriverWrapper::inst().GetTickCount();
 	}
 
+	// Frameratebegrenzer
+	int bob_time = VideoDriverWrapper::inst().GetTickCount() - bobTime;
+	int bob_prosec = 25;
+
+	int bob_spawntime = VideoDriverWrapper::inst().GetTickCount() - bobSpawnTime;
+	int bob_spawnprosec = 5;
+
+	if(GAMEMANAGER.GetAverageFPS() < 30)
+		bob_spawnprosec = 0;
+	else if(GAMEMANAGER.GetAverageFPS() < 60)
+		bob_spawnprosec = 1;
+	else if(GAMEMANAGER.GetAverageFPS() < 200)
+		bob_spawnprosec = 2;
+
 	// add new bob
-	if (time % 1000 == 0 && (int)bobs.size() < (int)(50 + VideoDriverWrapper::inst().GetScreenWidth() / 2)) {
+	if ( bob_spawnprosec > 0 && bob_spawntime > (1000/bob_spawnprosec) && (int)bobs.size() < (int)(50 + VideoDriverWrapper::inst().GetScreenWidth() / 2)) 
+	{
+		bobSpawnTime = VideoDriverWrapper::inst().GetTickCount();
+
 		Bob b = Bob();
 		b.animationStep = 0;
 		b.speed = 1 + rand() % 4;
-		b.direction = 3;
+
+		// links oder rechts spawnen
+		if(rand() % 2 == 0)
+		{
+			b.x = 0;
+			b.direction = 3;
+		}
+		else
+		{
+			b.x = VideoDriverWrapper::inst().GetScreenWidth();
+			b.direction = 6;
+		}
+
 		b.color = COLORS[rand() % PLAYER_COLORS_COUNT];
 		unsigned int job = rand() % 29;
+
 		// exclude "headless" bobs
 		if (job == 8 || job == 9 || job == 12 || job == 18) {
 			job = rand() % (WARE_TYPES_COUNT - 1);
@@ -233,16 +263,12 @@ void dskCredits::Msg_PaintAfter()
 				job = JOB_CONSTS[job].jobs_bob_id;
 			b.hasWare = false;
 		}
+
 		b.id = job;
-		b.x = 0;
 		b.y = VideoDriverWrapper::inst().GetScreenHeight() - 170 + rand() % 150;
 		bobs.push_back(b);
 	}
 	
-	// Frameratebegrenzer
-	int bob_time = VideoDriverWrapper::inst().GetTickCount() - bobTime;
-	int bobs_ps = 25;
-
 	// draw bobs
 	for (std::list<Bob>::iterator bob = bobs.begin(); bob != bobs.end(); ++bob) {
 		if (!bob->hasWare)
@@ -250,7 +276,7 @@ void dskCredits::Msg_PaintAfter()
 		else
 			Loader::inst().GetBobN("carrier")->Draw(bob->id, bob->direction, bob->isFat, bob->animationStep, bob->x, bob->y, bob->color);
 		
-		if( bob_time > (1000/bobs_ps) )
+		if( bob_time > (1000/bob_prosec) )
 		{
 			bobTime = VideoDriverWrapper::inst().GetTickCount();
 
@@ -270,7 +296,7 @@ void dskCredits::Msg_PaintAfter()
 	}
 
 	// Frameratebegrenzer aktualisieren
-	if( bob_time > (1000/bobs_ps) )
+	if( bob_time > (1000/bob_prosec) )
 		bobTime = VideoDriverWrapper::inst().GetTickCount();
 
 	// calculate text transparency

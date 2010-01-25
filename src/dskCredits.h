@@ -1,4 +1,4 @@
-// $Id: dskCredits.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: dskCredits.h 5933 2010-01-25 16:34:59Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -71,6 +71,7 @@ private:
 	std::list<Bob> bobs;
 
 	unsigned int startTime;
+	unsigned int bobTime;
 };
 
 #endif // !dskCREDITS_H_INCLUDED

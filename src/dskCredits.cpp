@@ -1,4 +1,4 @@
-// $Id: dskCredits.cpp 5898 2010-01-17 10:25:54Z OLiver $
+// $Id: dskCredits.cpp 5933 2010-01-25 16:34:59Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -22,6 +22,7 @@
 #include "main.h"
 #include "dskCredits.h"
 
+#include "GameManager.h"
 #include "WindowManager.h"
 #include "Loader.h"
 
@@ -210,12 +211,12 @@ void dskCredits::Msg_PaintAfter()
 			this->it = entries.begin();
 		this->startTime = VideoDriverWrapper::inst().GetTickCount();
 	}
-		
+
 	// add new bob
-	if (time % 5 == 0 && (int)bobs.size() < (int)(50 + VideoDriverWrapper::inst().GetScreenWidth() / 2)) {
+	if (time % 1000 == 0 && (int)bobs.size() < (int)(50 + VideoDriverWrapper::inst().GetScreenWidth() / 2)) {
 		Bob b = Bob();
 		b.animationStep = 0;
-		b.speed = 2 + rand() % 4;
+		b.speed = 1 + rand() % 4;
 		b.direction = 3;
 		b.color = COLORS[rand() % PLAYER_COLORS_COUNT];
 		unsigned int job = rand() % 29;
@@ -238,26 +239,40 @@ void dskCredits::Msg_PaintAfter()
 		bobs.push_back(b);
 	}
 	
+	// Frameratebegrenzer
+	int bob_time = VideoDriverWrapper::inst().GetTickCount() - bobTime;
+	int bobs_ps = 25;
+
 	// draw bobs
 	for (std::list<Bob>::iterator bob = bobs.begin(); bob != bobs.end(); ++bob) {
 		if (!bob->hasWare)
 			Loader::inst().GetBobN("jobs")->Draw(bob->id, bob->direction, bob->isFat, bob->animationStep, bob->x, bob->y, bob->color);
 		else
 			Loader::inst().GetBobN("carrier")->Draw(bob->id, bob->direction, bob->isFat, bob->animationStep, bob->x, bob->y, bob->color);
-		bob->animationStep++;
-		if (bob->animationStep > 7)
-			bob->animationStep = 0;
-		if (bob->direction == 3) {
-			bob->x += bob->speed;
-			if (bob->x > VideoDriverWrapper::inst().GetScreenWidth())
-				bob->direction = 6;
-		} else if (bob->direction == 6) {
-			bob->x -= bob->speed;
-			if (bob->x < 0)
-				bob->direction = 3;
+		
+		if( bob_time > (1000/bobs_ps) )
+		{
+			bobTime = VideoDriverWrapper::inst().GetTickCount();
+
+			bob->animationStep++;
+			if (bob->animationStep > 7)
+				bob->animationStep = 0;
+			if (bob->direction == 3) {
+				bob->x += bob->speed;
+				if (bob->x > VideoDriverWrapper::inst().GetScreenWidth())
+					bob->direction = 6;
+			} else if (bob->direction == 6) {
+				bob->x -= bob->speed;
+				if (bob->x < 0)
+					bob->direction = 3;
+			}
 		}
 	}
-	
+
+	// Frameratebegrenzer aktualisieren
+	if( bob_time > (1000/bobs_ps) )
+		bobTime = VideoDriverWrapper::inst().GetTickCount();
+
 	// calculate text transparency
 	unsigned transparency = 0xFF;
 
@@ -283,7 +298,6 @@ void dskCredits::Msg_PaintAfter()
 	LargeFont->Draw(40, y[0] + 20, it->lastLine, 0, (COLOR_RED & 0x00FFFFFF) | transparency);
 
 	// draw picture
-	// @todo: add pictures to credits.lst ...
 	glArchivItem_Bitmap *item = LOADER.GetImageN("credits", it->picId);
 	
 	if (item)

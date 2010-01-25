@@ -1,4 +1,4 @@
-// $Id: Loader.cpp 5929 2010-01-24 21:28:37Z jh $
+// $Id: Loader.cpp 5933 2010-01-25 16:34:59Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -457,7 +457,7 @@ bool Loader::LoadFile(const char *pfad, const libsiedler2::ArchivItem_Palette *p
 				to->alloc_inc(1);
 				continue;
 			}
-
+			
 			// Datei laden
 			libsiedler2::ArchivInfo toto;
 			if(!LoadFile( i->c_str(), palette, &toto ) )
@@ -514,8 +514,7 @@ bool Loader::LoadFile(const char *pfad, const libsiedler2::ArchivItem_Palette *p
 				to->alloc_inc(toto.getCount());
 
 				to->setC(offset, neu);
-
-				
+							
 				for(unsigned int ii = 0; ii < toto.getCount(); ++ii)
 					to->setC(offset+ii, toto.get(ii));
 			}

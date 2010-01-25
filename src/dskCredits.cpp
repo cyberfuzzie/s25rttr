@@ -1,4 +1,4 @@
-// $Id: dskCredits.cpp 5934 2010-01-25 16:54:21Z FloSoft $
+// $Id: dskCredits.cpp 5935 2010-01-25 16:59:04Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -219,11 +219,11 @@ void dskCredits::Msg_PaintAfter()
 	int bob_spawntime = VideoDriverWrapper::inst().GetTickCount() - bobSpawnTime;
 	int bob_spawnprosec = 5;
 
-	if(GAMEMANAGER.GetAverageFPS() < 30)
+	if(GAMEMANAGER.GetFPS() < 30)
 		bob_spawnprosec = 0;
-	else if(GAMEMANAGER.GetAverageFPS() < 60)
+	else if(GAMEMANAGER.GetFPS() < 60)
 		bob_spawnprosec = 1;
-	else if(GAMEMANAGER.GetAverageFPS() < 200)
+	else if(GAMEMANAGER.GetFPS() < 200)
 		bob_spawnprosec = 2;
 
 	// add new bob

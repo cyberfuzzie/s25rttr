@@ -1,4 +1,4 @@
-// $Id: GameManager.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: GameManager.h 5935 2010-01-25 16:59:04Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -58,6 +58,11 @@ public:
 		if(run_time == 0) 
 			return 0;
 		return (frame_count / run_time);
+	}
+
+	inline unsigned int GetFPS(void) 
+	{
+		return framerate;
 	}
 
 private:

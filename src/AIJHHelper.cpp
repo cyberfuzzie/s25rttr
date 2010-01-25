@@ -1,4 +1,4 @@
-// $Id: AIJHHelper.cpp 5928 2010-01-24 21:14:42Z jh $
+// $Id: AIJHHelper.cpp 5932 2010-01-25 07:28:56Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -436,3 +436,4 @@ void AIJH::ConnectJob::ExecuteJob()
 		return;
 	}
 }
+

@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.cpp 5928 2010-01-24 21:14:42Z jh $
+// $Id: AIPlayerJH.cpp 5946 2010-01-30 22:13:17Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -29,6 +29,7 @@
 #include "nobHQ.h"
 #include "noBuildingSite.h"
 #include "noShip.h"
+#include "noFlag.h"
 
 #include "MapGeometry.h"
 
@@ -819,6 +820,8 @@ void AIPlayerJH::HandleNoMoreResourcesReachable(const Coords& coords, BuildingTy
 	else
 		return;
 	
+	RemoveUnusedRoad(gwb->GetSpecObj<noFlag>(x + (y&1),y+1), 1);
+
 	// try to expand, maybe res blocked a passage
 	AddBuildJob(new AIJH::BuildJob(this, construction.ChooseMilitaryBuilding(x, y), x, y));
 	AddBuildJob(new AIJH::BuildJob(this, construction.ChooseMilitaryBuilding(x, y), x, y));
@@ -1000,3 +1003,58 @@ void AIPlayerJH::SendAIEvent(AIEvent::Base *ev)
 	eventManager.AddAIEvent(ev);
 }
 
+void AIPlayerJH::RemoveUnusedRoad(const noFlag *startFlag, unsigned char excludeDir)
+{
+	unsigned char foundDir = 0xFF;
+	unsigned char finds = 0;
+
+	// Count roads from this flag...
+	for (unsigned char dir=0; dir < 6; ++dir)
+	{
+		if (dir == excludeDir)
+			continue;
+		if (gwb->GetPointRoad(startFlag->GetX(), startFlag->GetY(), dir, false))
+		{
+			finds++;
+			foundDir = dir;
+		}
+	}
+
+	// if its not equal to 1, it's not an useless flag
+	if (finds != 1)
+		return;
+
+	// kill it
+	gcs.push_back(new gc::DestroyFlag(startFlag->GetX(), startFlag->GetY()));
+
+	MapCoord x = gwb->GetXA(startFlag->GetX(), startFlag->GetY(), foundDir);
+	MapCoord y = gwb->GetYA(startFlag->GetX(), startFlag->GetY(), foundDir);
+
+	unsigned char prevDir = (foundDir + 3) % 6;
+	// follow the (only) road to next flag and test it also
+	while(true)
+	{
+		const noFlag *flag;
+
+		// flag found?
+		if ((flag = gwb->GetSpecObj<noFlag>(x, y)))
+		{
+			RemoveUnusedRoad(flag, prevDir);
+			break;
+		}
+		else
+		{
+			// continue to follow the road
+			for (unsigned char nextDir = 0; nextDir < 6; ++nextDir)
+			{
+				if (gwb->GetPointRoad(x, y, nextDir) && nextDir != prevDir)
+				{
+					x = gwb->GetXA(x, y, nextDir);
+					y = gwb->GetYA(x, y, nextDir);
+					prevDir = (nextDir + 3) % 6;
+					break;
+				}
+			}
+		}
+	}
+}

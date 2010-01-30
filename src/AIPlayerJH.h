@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.h 5928 2010-01-24 21:14:42Z jh $
+// $Id: AIPlayerJH.h 5946 2010-01-30 22:13:17Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -144,6 +144,8 @@ protected:
 	void IterativeReachableNodeChecker(std::queue<std::pair<MapCoord, MapCoord> >& toCheck);
 
 	void SetFarmedNodes(MapCoord x, MapCoord y);
+
+	void RemoveUnusedRoad(const noFlag *startFlag, unsigned char excludeDir = 0xFF);
 
 
 protected:

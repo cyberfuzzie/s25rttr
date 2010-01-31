@@ -13,11 +13,11 @@ cp -v ../../$BUILDDIR/s-c/src/s-c_resample share/s25rttr/RTTR
 mkdir -vp s25client.app/Contents/{Frameworks,MacOS,Resources}
 
 # frameworks kopieren (da updater nicht mit symlinks umgehen kann, nur lib kopieren
-mkdir -vp s25client.app/Contents/Frameworks/{SDL,SDL_mixer,sndfile,samplerate}.framework
-cp -v /usr/i686-apple-darwin9/SDKs/MacOSX10.4u.sdk/Library/Frameworks/SDL.framework/SDL s25client.app/Contents/Frameworks/SDL.framework/SDL
-cp -v /usr/i686-apple-darwin9/SDKs/MacOSX10.4u.sdk/Library/Frameworks/SDL_mixer.framework/SDL_mixer s25client.app/Contents/Frameworks/SDL_mixer.framework/SDL_mixer
-cp -v /usr/i686-apple-darwin9/SDKs/MacOSX10.4u.sdk/Library/Frameworks/sndfile.framework/sndfile s25client.app/Contents/Frameworks/sndfile.framework/sndfile
-cp -v /usr/i686-apple-darwin9/SDKs/MacOSX10.4u.sdk/Library/Frameworks/samplerate.framework/samplerate s25client.app/Contents/Frameworks/samplerate.framework/samplerate
+mkdir -vp s25client.app/Contents/Frameworks/{SDL,SDL_mixer}.framework/Versions/A
+cp -v /usr/i686-apple-darwin9/SDKs/MacOSX10.4u.sdk/Library/Frameworks/SDL.framework/SDL s25client.app/Contents/Frameworks/SDL.framework/Versions/A/SDL
+cp -v /usr/i686-apple-darwin9/SDKs/MacOSX10.4u.sdk/Library/Frameworks/SDL_mixer.framework/SDL_mixer s25client.app/Contents/Frameworks/SDL_mixer.framework/Versions/A/SDL_mixer
+#cp -v /usr/i686-apple-darwin9/SDKs/MacOSX10.4u.sdk/Library/Frameworks/sndfile.framework/sndfile s25client.app/Contents/Frameworks/sndfile.framework/sndfile
+#cp -v /usr/i686-apple-darwin9/SDKs/MacOSX10.4u.sdk/Library/Frameworks/samplerate.framework/samplerate s25client.app/Contents/Frameworks/samplerate.framework/samplerate
 
 mkdir -vp s25client.app/Contents/MacOS/bin
 

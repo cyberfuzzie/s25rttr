@@ -1,4 +1,4 @@
-// $Id: LobbyServer.cpp 5608 2009-10-07 15:13:14Z FloSoft $
+// $Id: LobbyServer.cpp 5956 2010-02-03 13:33:22Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -633,6 +633,7 @@ void LobbyServer::Disconnect(LobbyPlayer &p)
 	}
 
 	// schlieﬂen
+	p.NoHost();
 	p.detach();
 
 	SendServerList(0xFFFFFFFF);

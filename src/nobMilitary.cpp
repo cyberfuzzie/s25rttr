@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: nobMilitary.cpp 5965 2010-02-07 14:54:42Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -734,6 +734,9 @@ void nobMilitary::Capture(const unsigned char new_owner)
 	for(list<nofActiveSoldier*>::iterator it = troops_on_mission.begin();it.valid();++it)
 		(*it)->HomeDestroyed();
 
+	// Bestellungen die hierher unterwegs sind canceln
+	CancelOrders();
+
 	// Aggressiv-Verteidigenden Soldaten Bescheid sagen, dass sie nach Hause gehen können
 	for(list<nofAggressiveDefender*>::iterator it = aggressive_defenders.begin();it.valid();++it)
 		(*it)->AttackedGoalDestroyed();
@@ -828,7 +831,7 @@ void nobMilitary::NeedOccupyingTroops(const unsigned char new_owner)
 	nofAttacker * best_attacker = 0;
 	unsigned best_radius = 0xFFFFFFFF;
 
-	if(unsigned(CalcTroopsCount()) > troops.size()+capturing_soldiers)
+	if(unsigned(CalcTroopsCount()) > troops.size() + capturing_soldiers + troops_on_mission.size() + ordered_troops.size())
 	{
 		// Soldaten absuchen
 		for(list<nofAttacker*>::iterator it = aggressors.begin();it.valid();++it)

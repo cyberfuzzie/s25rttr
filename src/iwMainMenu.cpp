@@ -1,4 +1,4 @@
-// $Id: iwMainMenu.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: iwMainMenu.cpp 5971 2010-02-08 18:21:58Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -24,6 +24,7 @@
 
 #include "Loader.h"
 #include "WindowManager.h"
+#include "AddonManager.h"
 
 #include "iwDistribution.h"
 #include "iwTransport.h"
@@ -82,11 +83,13 @@ iwMainMenu::iwMainMenu(GameWorldViewer * const gwv, dskGameInterface * const gi)
 	// Schiffe
 	AddImageButton( 9, 124, 118,  53, 44, TC_GREY, LOADER.GetImageN("io", 175), _("Ship register"));
 
-	// Gebäude
-	AddImageButton( 10,  12, 166,  53, 44, TC_GREY, LOADER.GetImageN("io", 24), _("Building sequence"));
+	// Baureihenfolge
+	if(ADDONMANAGER.isEnabled(ADDON_CUSTOM_BUILD_SEQUENCE))
+		AddImageButton( 10,  12, 166,  53, 44, TC_GREY, LOADER.GetImageN("io", 24), _("Building sequence"));
+	
 	// Diplomatie (todo: besseres Bild suchen)
 	AddImageButton( 11,  68, 166,  53, 44, TC_GREY, LOADER.GetImageN("io", 190), _("Diplomacy"));
-	//// Schiffe
+	// Schiffe
 	//AddImageButton( 9, 124, 118,  53, 44, TC_GREY, LOADER.GetImageN("io", 175), _("Ship register"));
 
 	// Optionen
@@ -127,7 +130,6 @@ void iwMainMenu::Msg_ButtonClick(const unsigned int ctrl_id)
 	case 7: // Produktivitäten
 		{
 			WindowManager::inst().Show(new iwBuildingProductivities);
-			//WindowManager::inst().Show(new iwBuildOrder);
 		} break;
 	case 8: // Militär
 		{
@@ -145,8 +147,7 @@ void iwMainMenu::Msg_ButtonClick(const unsigned int ctrl_id)
 		{
 			WindowManager::inst().Show(new iwDiplomacy);
 		} break;
-	
-	
+		
 	case 30: // Optionen
 		{
 			WindowManager::inst().Show(new iwOptionsWindow(this->gi));

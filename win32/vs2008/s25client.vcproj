@@ -620,6 +620,14 @@
 							>
 						</File>
 						<File
+							RelativePath="..\..\src\iwAIDebug.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\iwAIDebug.h"
+							>
+						</File>
+						<File
 							RelativePath="..\..\src\iwBaseWarehouse.cpp"
 							>
 						</File>

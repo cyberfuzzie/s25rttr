@@ -1,4 +1,4 @@
-// $Id: AIConstruction.cpp 5928 2010-01-24 21:14:42Z jh $
+// $Id: AIConstruction.cpp 5976 2010-02-08 23:05:33Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -313,6 +313,13 @@ void AIConstruction::RefreshBuildingCount()
 
 	buildingsWanted[BLD_WELL] = buildingsWanted[BLD_BAKERY] + buildingsWanted[BLD_PIGFARM]
 		+ buildingsWanted[BLD_DONKEYBREEDER] + buildingsWanted[BLD_BREWERY];
+
+	if (GetBuildingCount(BLD_FARM) > 8)
+	{
+		buildingsWanted[BLD_COALMINE] = 6;
+		buildingsWanted[BLD_IRONMINE] = 2;
+		buildingsWanted[BLD_GOLDMINE] = 2;
+	}
 }
 
 void AIConstruction::InitBuildingsWanted()
@@ -329,7 +336,7 @@ void AIConstruction::InitBuildingsWanted()
 	buildingsWanted[BLD_FISHERY] = 6;
 	buildingsWanted[BLD_QUARRY] = 6;
 	buildingsWanted[BLD_HUNTER] = 2;
-	buildingsWanted[BLD_FARM] = 16;
+	buildingsWanted[BLD_FARM] = player->GetInventory()->goods[GD_SCYTHE] + player->GetInventory()->people[JOB_FARMER];
 	buildingsWanted[BLD_HARBORBUILDING] = 99;
 	buildingsWanted[BLD_SHIPYARD] = 1;
 }

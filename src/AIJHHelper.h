@@ -1,4 +1,4 @@
-// $Id: AIJHHelper.h 5928 2010-01-24 21:14:42Z jh $
+// $Id: AIJHHelper.h 5976 2010-02-08 23:05:33Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -97,6 +97,7 @@ enum JobStatus
 
 class Job
 {
+	friend class iwAIDebug;
 public:
 	Job(AIPlayerJH *aijh) : aijh(aijh), status(AIJH::JOB_WAITING) { }
 	virtual ~Job() { }
@@ -109,6 +110,7 @@ protected:
 
 class BuildJob : public Job
 {
+	friend class iwAIDebug;
 public:
 	BuildJob(AIPlayerJH *aijh, BuildingType type, MapCoord around_x, MapCoord around_y) 
 		: Job(aijh), type(type), target_x(0xFFFF), target_y(0xFFFF), around_x(around_x), around_y(around_y) { }
@@ -130,6 +132,7 @@ private:
 
 class ExpandJob : public Job
 {
+	friend class iwAIDebug;
 public:
 	ExpandJob(AIPlayerJH *aijh) : Job(aijh) { }
 	~ExpandJob() { }
@@ -143,6 +146,7 @@ private:
 
 class ConnectJob : public Job
 {
+	friend class iwAIDebug;
 public:
 	ConnectJob(AIPlayerJH *aijh, MapCoord flag_x, MapCoord flag_y) 
 		: Job(aijh), flag_x(flag_x), flag_y(flag_y), target_x(0xFFFF), target_y(0xFFFF) { }
@@ -155,6 +159,7 @@ private:
 
 class EventJob : public Job
 {
+	friend class iwAIDebug;
 public:
 	EventJob(AIPlayerJH *aijh, AIEvent::Base *ev) : Job(aijh), ev(ev) { }
 	~EventJob() { delete ev; }

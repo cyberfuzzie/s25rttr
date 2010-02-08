@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 5970 2010-02-08 17:57:10Z FloSoft $
+// $Id: GameWorld.h 5976 2010-02-08 23:05:33Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -507,6 +507,21 @@ public:
 	/// Gibt das erste Schiff, was gefunden wird von diesem Spieler, zurück, ansonsten NULL, falls es nicht
 	/// existiert
 	noShip * GetShip(const MapCoord x, const MapCoord y, const unsigned char player) const;
+
+
+	// debug ai
+	private:
+		unsigned d_what;
+		unsigned d_player;
+		bool d_active;
+	public:
+		void SetAIDebug(unsigned what, unsigned player, bool active) 
+		{
+			d_what = what; d_player = player; d_active = active; 
+		}
+
+
+
 };
 
 /// "Interface-Klasse" für das Spiel

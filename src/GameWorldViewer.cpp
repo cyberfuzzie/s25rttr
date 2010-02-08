@@ -1,4 +1,4 @@
-// $Id: GameWorldViewer.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: GameWorldViewer.cpp 5976 2010-02-08 23:05:33Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -36,8 +36,16 @@
 #include "FOWObjects.h"
 #include "noShip.h"
 
+
+// Wird nur für das AI-Debug-Fenster benötigt
+#ifdef ENABLE_AI_DEBUG_WINDOW
+#include "GameServer.h"
+#include "AIPlayerJH.h"
+#include <sstream>
+#endif
+
 GameWorldViewer::GameWorldViewer() : show_bq(false), show_names(false), show_productivity(false),
-xoffset(0), yoffset(0), selx(0), sely(0), sx(0), sy(0), scroll(false), last_xoffset(0), last_yoffset(0), show_coordinates(false)
+xoffset(0), yoffset(0), selx(0), sely(0), sx(0), sy(0), scroll(false), last_xoffset(0), last_yoffset(0), show_coordinates(false), d_active(false), d_player(0), d_what(0)
 {
 }
 
@@ -122,8 +130,45 @@ void GameWorldViewer::Draw(const unsigned char player, unsigned * water, const b
 				//sprintf(high,"%u",GetNode(tx,ty)).reserved;
 				NormalFont->Draw(static_cast<int>(xpos),static_cast<int>(ypos),high,0,0xFFFFFF00);
 			}
+
+#ifdef ENABLE_AI_DEBUG_WINDOW
+			if (d_active)
+			{
+				std::stringstream ss;
+				AIPlayerJH *ai = dynamic_cast<AIPlayerJH *>(GameServer::inst().GetAIPlayer(d_player));
+				if (ai)
+				{
+					if (d_what == 1)
+					{
+						if(ai->GetAINode(tx, ty).bq && ai->GetAINode(tx, ty).bq  < 7)
+							LOADER.GetMapImageN(49+ai->GetAINode(tx, ty).bq)->Draw(static_cast<int>(xpos),static_cast<int>(ypos), 0, 0, 0, 0, 0, 0);
+					}
+					else if (d_what == 2)
+					{
+						if (ai->GetAINode(tx, ty).reachable)
+							LOADER.GetImageN("io", 32)->Draw(static_cast<int>(xpos),static_cast<int>(ypos), 0, 0, 0, 0, 0, 0);
+						else
+							LOADER.GetImageN("io", 40)->Draw(static_cast<int>(xpos),static_cast<int>(ypos), 0, 0, 0, 0, 0, 0);
+					}
+					else if (d_what == 3)
+					{
+						if (ai->GetAINode(tx, ty).farmed)
+						LOADER.GetImageN("io", 32)->Draw(static_cast<int>(xpos),static_cast<int>(ypos), 0, 0, 0, 0, 0, 0);
+					else
+						LOADER.GetImageN("io", 40)->Draw(static_cast<int>(xpos),static_cast<int>(ypos), 0, 0, 0, 0, 0, 0);
+					}
+					else if (d_what > 3 && d_what < 13)
+					{
+						ss << ai->GetResMapValue(tx, ty, AIJH::Resource(d_what-4));
+						NormalFont->Draw(static_cast<int>(xpos),static_cast<int>(ypos),ss.str().c_str(),0,0xFFFFFF00);
+					}
+				}
+			}
+#endif
+
 		}
 	}
+
 
 	if(show_names || show_productivity)
 	{

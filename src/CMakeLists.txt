@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 5969 2010-02-08 16:08:49Z FloSoft $
+### $Id: CMakeLists.txt 5976 2010-02-08 23:05:33Z jh $
 ################################################################################
 
 INCLUDE(FindBZip2)
@@ -113,6 +113,7 @@ SET(SOURCES_INGAMEWINDOWS
     iwPleaseWait.cpp             iwPleaseWait.h
     iwSettings.cpp               iwSettings.h
     iwAddons.cpp                 iwAddons.h
+    iwAIDebug.cpp                iwAIDebug.h
     )
 
 SET(SOURCES_AI

@@ -1,4 +1,4 @@
-// $Id: AIJHHelper.cpp 5932 2010-01-25 07:28:56Z FloSoft $
+// $Id: AIJHHelper.cpp 5976 2010-02-08 23:05:33Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -279,7 +279,7 @@ void AIJH::BuildJob::BuildMainRoad()
 
 		case BLD_FARM:
 			aijh->ChangeResourceMap(target_x, target_y, 5, aijh->resourceMaps[AIJH::PLANTSPACE], -30);
-			aijh->SetFarmedNodes(target_y, target_y);
+			aijh->SetFarmedNodes(target_x, target_y);
 			break;
 
 		case BLD_MILL:

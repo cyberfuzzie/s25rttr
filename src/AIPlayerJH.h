@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.h 5946 2010-01-30 22:13:17Z jh $
+// $Id: AIPlayerJH.h 5976 2010-02-08 23:05:33Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -49,6 +49,7 @@ class AIPlayerJH : public AIBase
 	friend class AIJH::BuildJob;
 	friend class AIJH::EventJob;
 	friend class AIJH::ConnectJob;
+	friend class iwAIDebug;
 public:
 	AIPlayerJH(const unsigned char playerid, const GameWorldBase * const gwb, const GameClientPlayer * const player,
 		const GameClientPlayerList * const players, const GlobalGameSettings * const ggs,
@@ -174,7 +175,7 @@ protected:
 	const GameWorldBase *GetGWB() { return gwb; }
 	unsigned char GetPlayerID() { return playerid; }
 	AIConstruction *GetConstruction() { return &construction; }
-
+	AIJH::Job *GetCurrentJob() { return currentJob; }
 public:
 	inline AIJH::Node &GetAINode(MapCoord x, MapCoord y) { return nodes[x + gwb->GetWidth() * y]; }
 

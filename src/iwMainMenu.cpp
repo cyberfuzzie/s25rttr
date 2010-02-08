@@ -1,4 +1,4 @@
-// $Id: iwMainMenu.cpp 5971 2010-02-08 18:21:58Z FloSoft $
+// $Id: iwMainMenu.cpp 5976 2010-02-08 23:05:33Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -39,6 +39,7 @@
 #include "iwSettings.h"
 #include "iwDiplomacy.h"
 #include "iwShip.h"
+#include "iwAIDebug.h"
 
 #include "GameClient.h"
 #include "GameClientPlayer.h"
@@ -92,6 +93,10 @@ iwMainMenu::iwMainMenu(GameWorldViewer * const gwv, dskGameInterface * const gi)
 	// Schiffe
 	//AddImageButton( 9, 124, 118,  53, 44, TC_GREY, LOADER.GetImageN("io", 175), _("Ship register"));
 
+	// AI-Debug
+#ifdef ENABLE_AI_DEBUG_WINDOW
+	AddImageButton( 13,  80, 210,  20, 20, TC_GREY, NULL, _("AI Debug Window"));
+#endif
 	// Optionen
 	AddImageButton(30,  12, 231, 165, 32, TC_GREY, LOADER.GetImageN("io",  37), _("Options"));
 }
@@ -147,7 +152,13 @@ void iwMainMenu::Msg_ButtonClick(const unsigned int ctrl_id)
 		{
 			WindowManager::inst().Show(new iwDiplomacy);
 		} break;
+#ifdef ENABLE_AI_DEBUG_WINDOW
+	case 13: // AI Debug
 		
+		{
+			WindowManager::inst().Show(new iwAIDebug(gwv));
+		} break;	
+#endif	
 	case 30: // Optionen
 		{
 			WindowManager::inst().Show(new iwOptionsWindow(this->gi));

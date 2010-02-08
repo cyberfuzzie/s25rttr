@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: GameWorldGame.cpp 5970 2010-02-08 17:57:10Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1401,6 +1401,36 @@ bool GameWorldGame::IsBorderNode(const MapCoord x, const MapCoord y, const unsig
 {
 	// Wenn ich Besitzer des Punktes bin, dieser mir aber nicht gehört
 	return (GetNode(x,y).owner == player && !IsPlayerTerritory(x,y));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Konvertiert Ressourcen zwischen Typen hin und her oder löscht sie.
+ *  Für Spiele ohne Gold.
+ *
+ *  @author Divan
+ */
+void GameWorldGame::ConvertMineResourceTypes(unsigned char from, unsigned char to)
+{
+	// to == 0xFF heißt löschen
+	// in Map-Resource-Koordinaten konvertieren
+	from = RESOURCES_MINE_TO_MAP[from];
+	to = ((to != 0xFF) ? RESOURCES_MINE_TO_MAP[to] : 0xFF);
+
+	// Zeiger auf zu veränderte Daten
+	unsigned char *resources;
+	
+	//LOG.lprintf("Convert map resources from %i to %i\n", from, to);
+	// Alle Punkte durchgehen
+	for (unsigned short x = 0; x < width; ++x)	
+	for (unsigned short y = 0; y < height; ++y)
+	{
+		resources = &(GetNode(x,y).resources);
+		// Gibt es Ressourcen dieses Typs?
+		// Wenn ja, dann umwandeln bzw löschen
+		if (*resources >= 0x40+from*8 && *resources < 0x48+from*8)
+			*resources -= ((to != 0xFF) ?  from*8-to*8 : *resources);
+	}
 }
 
 /// Prüfen, ob zu einem bestimmten Küsenpunkt ein Hafenpunkt gehört und wenn ja, wird dieser zurückgegeben

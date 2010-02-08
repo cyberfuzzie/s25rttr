@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 5905 2010-01-17 20:57:38Z OLiver $
+// $Id: GameClient.cpp 5970 2010-02-08 17:57:10Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -373,7 +373,20 @@ void GameClient::StartGame(const unsigned int random_init)
 		/// Startbündnisse setzen
 		for(unsigned i = 0;i<GetPlayerCount();++i)
 			players[i].MakeStartPacts();
+
 		gw->LoadMap(clientconfig.mapfilepath);
+
+		/// Evtl. Goldvorkommen ändern
+		unsigned char target = 0xFF; // löschen
+		switch(ADDONMANAGER.getSelection(ADDON_CHANGE_GOLD_DEPOSITS))
+		{
+		case 0: target = 3; break; //in Gold   konvertieren bzw. nichts tun
+		case 1: target = 2; break; //in Eisen  konvertieren
+		case 2: target = 1; break; //in Kohle  konvertieren
+		case 3: target = 0; break; //in Granit konvertieren
+		}
+		if (target != 3)
+			gw->ConvertMineResourceTypes(3, target);
 	}
 
 	// Zeit setzen
@@ -524,8 +537,6 @@ void GameClient::OnNMSPlayerList(const GameMessage_Player_List& msg)
 /// @param message	Nachricht, welche ausgeführt wird
 inline void GameClient::OnNMSPlayerNew(const GameMessage_Player_New& msg)
 {
-
-
 	LOG.write("<<< NMS_PLAYER_NEW(%d)\n", msg.player );
 
 	if(msg.player != 0xFF)
@@ -545,7 +556,7 @@ inline void GameClient::OnNMSPlayerNew(const GameMessage_Player_New& msg)
 ///////////////////////////////////////////////////////////////////////////////
 /// player joined
 /// @param message	Nachricht, welche ausgeführt wird
-inline void GameClient::OnNMSPlayerPing(const GameMessage_Player_Ping& msg)
+void GameClient::OnNMSPlayerPing(const GameMessage_Player_Ping& msg)
 {
 	if(msg.player != 0xFF)
 	{

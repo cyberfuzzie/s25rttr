@@ -95,8 +95,40 @@ void AddonManager::LoadDefaults()
  */
 void AddonManager::SetDefaults()
 {
+	SETTINGS.addons.configuration.clear();
+	for( std::vector<item>::iterator it = addons.begin(); it != addons.end(); ++it)
+		SETTINGS.addons.configuration.insert(std::make_pair(it->addon->getId(), it->status));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  saves the current addon configuration to a serializer object.
+ *
+ *  @author FloSoft
+ */
+void AddonManager::Serialize(Serializer *ser) const
+{
+	ser->PushUnsignedInt(addons.size());
+	for( std::vector<item>::const_iterator it = addons.begin(); it != addons.end(); ++it)
+	{
+		ser->PushUnsignedInt(it->addon->getId());
+		ser->PushUnsignedInt(it->status);
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  reads the current addon configuration from a serializer object.
+ *
+ *  @author FloSoft
+ */
+void AddonManager::Deserialize(Serializer *ser)
+{
+	unsigned int count = ser->PopUnsignedInt();
+	assert(count == addons.size());
+
 	for( std::vector<item>::iterator it = addons.begin(); it != addons.end(); ++it)
 	{
-		SETTINGS.addons.configuration.insert(std::make_pair(it->addon->getId(), it->status));
+		setSelection(Addons(ser->PopUnsignedInt()), ser->PopUnsignedInt());
 	}
 }

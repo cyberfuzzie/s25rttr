@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: GameWorld.h 5970 2010-02-08 17:57:10Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -647,6 +647,10 @@ public:
 
 	/// Stellt fest, ob auf diesem Punkt ein Grenzstein steht (ob das Grenzgebiet ist)
 	bool IsBorderNode(const MapCoord x, const MapCoord y, const unsigned char player) const;
+	
+	// Konvertiert Ressourcen zwischen Typen hin und her oder löscht sie.
+	// Für Spiele ohne Gold.
+	void ConvertMineResourceTypes(unsigned char from, unsigned char to);
 
 	/// Gründet vom Schiff aus eine neue Kolonie, gibt true zurück bei Erfolg
 	bool FoundColony(const unsigned harbor_point, const unsigned char player, const unsigned short sea_id);

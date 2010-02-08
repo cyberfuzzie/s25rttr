@@ -64,7 +64,7 @@ iwAddons::iwAddons(ChangePolicy policy)
 		const AddonList *addonl = dynamic_cast<const AddonList *>(addon);
 		const AddonBool *addonb = dynamic_cast<const AddonBool *>(addon);
 
-		ctrlComboBox *c = AddComboBox(10 + 5*i + 2, 400, y, 250, 20,  TC_GREY, NormalFont, 100, (policy == READONLY) );
+		ctrlComboBox *c = AddComboBox(10 + 5*i + 2, 430, y, 250, 20,  TC_GREY, NormalFont, 100, (policy == READONLY) );
 
 		if(addonl)
 		{
@@ -136,7 +136,9 @@ void iwAddons::Msg_ButtonClick(const unsigned int ctrl_id)
 				} break;
 			case HOSTGAME:
 				{
-					// todo
+					// send message via msgboxresult
+					MsgboxResult mbr = MSR_YES;
+					parent->Msg_MsgBoxResult(GetID(), mbr);
 				} break;
 			}
 			Close();

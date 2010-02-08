@@ -1,4 +1,4 @@
-// $Id: GameClient.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: GameClient.h 5970 2010-02-08 17:57:10Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -84,7 +84,6 @@ public:
 	/// Gibt Map-Typ zurück
 	const MapType GetMapType() const { return mapinfo.map_type; }
 
-
 	// Initialisiert und startet das Spiel
 	void StartGame(const unsigned random_init);
 	/// Wird aufgerufen, wenn das GUI fertig mit Laden ist und es losgehen kann
@@ -106,14 +105,12 @@ public:
 	/// Fügt ein GameCommand für den Spieler hinzu und gibt bei Erfolg true zurück, ansonstn false (in der Pause oder wenn Spieler besiegt ist)
 	bool AddGC(gc::GameCommand * gc);
 
-
 	void Command_SetFlag2(int x, int y, unsigned char player);
 	void Command_Chat(const std::string& text, const ChatDestination cd );
 	void Command_ToggleNation();
 	void Command_ToggleTeam();
 	void Command_ToggleColor();
 	void Command_ToggleReady();
-
 
 	/// Lädt ein Replay und startet dementsprechend das Spiel (0 = alles OK, alles andere entsprechende Fehler-ID!)
 	unsigned StartReplay(const std::string &path, GameWorldViewer * &gwv);
@@ -152,8 +149,6 @@ public:
 	/// Visuelle Einstellungen aus den richtigen ableiten
 	void GetVisualSettings();
 
-
-
 private:
 	/// Versucht einen neuen GameFrame auszuführen, falls die Zeit dafür gekommen ist
 	void ExecuteGameFrame(const bool skipping = false);
@@ -172,7 +167,6 @@ private:
 
 	/// Führt für alle Spieler einen Statistikschritt aus, wenn die Zeit es verlangt
 	void StatisticStep();
-
 
 	//  Netzwerknachrichten
 	virtual void OnNMSDeadMsg(unsigned int id);

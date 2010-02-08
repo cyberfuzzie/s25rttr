@@ -1,4 +1,4 @@
-// $Id: GameFiles.cpp 5969 2010-02-08 16:08:49Z FloSoft $
+// $Id: GameFiles.cpp 5970 2010-02-08 17:57:10Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -26,6 +26,7 @@
 #include "Log.h"
 #include "GamePlayerInfo.h"
 #include "SerializedGameData.h"
+#include "AddonManager.h"
 
 SavedGameFile::SavedGameFile() : save_time(0), player_count(0), players(0)
 {}
@@ -125,6 +126,7 @@ void SavedGameFile::WriteGGS(BinaryFile& file)
 	// GGS
 	Serializer ser;
 	ggs.Serialize(&ser);
+	ADDONMANAGER.Serialize(&ser);
 	file.WriteUnsignedInt(ser.GetLength());
 	file.WriteRawData(ser.GetData(),ser.GetLength());
 }
@@ -138,13 +140,14 @@ void SavedGameFile::ReadGGS(BinaryFile& file)
 	file.ReadRawData(buffer,length);
 	Serializer ser(buffer,length);
 	ggs.Deserialize(&ser);
+	ADDONMANAGER.Deserialize(&ser);
 	delete [] buffer;
 }
 	
 // Kleine Signatur am Anfang "RTTRSAVE", die ein gültiges S25 RTTR Savegame kennzeichnet
 const char Savegame::SAVE_SIGNATURE[8] = {'R','T','T','R','S','A','V','E'};
 /// Version des Save-Formates
-const unsigned short Savegame::SAVE_VERSION = 7;
+const unsigned short Savegame::SAVE_VERSION = 8;
 
 Savegame::Savegame() : SavedGameFile(), start_gf(0)
 {

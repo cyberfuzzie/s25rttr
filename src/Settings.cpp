@@ -1,4 +1,4 @@
-// $Id: Settings.cpp 5969 2010-02-08 16:08:49Z FloSoft $
+// $Id: Settings.cpp 5970 2010-02-08 17:57:10Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -172,7 +172,7 @@ bool Settings::Load(void)
 	// {
 		// stimmt die Spielrevision überein?
 		if(strcmp(global->getValue("gameversion"), GetWindowRevision()) != 0)
-			warning("Your Applicationversion has changed - please recheck your settings!\n");
+			warning("Your application version has changed - please recheck your settings!\n");
 	// };
 
 	// video

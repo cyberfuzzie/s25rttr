@@ -29,6 +29,9 @@ public:
 	AddonManager();
 	~AddonManager();
 
+	void Serialize(Serializer *ser) const;
+	void Deserialize(Serializer *ser);
+
 	/// clears the addon memory.
 	void reset(bool recreate = true);
 

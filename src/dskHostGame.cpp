@@ -1,4 +1,4 @@
-// $Id: dskHostGame.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: dskHostGame.cpp 5970 2010-02-08 17:57:10Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -33,6 +33,7 @@
 #include "dskDirectIP.h"
 #include "dskLobby.h"
 #include "iwMsgbox.h"
+#include "iwAddons.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -92,7 +93,7 @@ dskHostGame::dskHostGame() :
 	AddCheckBox(19, 600, 460, 180, 26, TC_GREY, _("Shared team view"), NormalFont, !GAMECLIENT.IsHost()||GAMECLIENT.IsSavegame());
 
 	// "Enhancements"
-	AddText(21, 400, 499, _("Enhancements:"), COLOR_YELLOW, 0, NormalFont);
+	AddText(21, 400, 499, _("Addons:"), COLOR_YELLOW, 0, NormalFont);
 	AddTextButton(22, 600, 495, 180, 22, TC_GREEN1, (GAMECLIENT.IsHost() ? _("Change Settings...") : _("View Settings...")),NormalFont);
 
 	ctrlComboBox *combo;
@@ -425,34 +426,39 @@ void dskHostGame::Msg_ButtonClick(const unsigned int ctrl_id)
 {
 	switch(ctrl_id)
 	{
-	// Zurück
-	case 3:
-	{
-		if(GAMECLIENT.IsHost())
-			GAMESERVER.Stop();
-
-		GAMECLIENT.Stop();
-
-		if(LOBBYCLIENT.LoggedIn())
-			WindowManager::inst().Switch(new dskLobby);
-		else
-			// Hauptmenü zeigen
-			WindowManager::inst().Switch(new dskDirectIP);
-
-	} break;
-	// Starten
-	case 2:
-	{
-		if(GAMECLIENT.IsHost())
+	case 3: // Zurück
 		{
-			if(!GAMESERVER.StartGame())
-				WindowManager::inst().Show(new iwMsgbox(_("Error"), _("Game can only be started as soon as everybody has a unique color,everyone is ready and all free slots are closed."), this, MSB_OK, MSB_EXCLAMATIONRED, 10));
-		}
-	} break;
+			if(GAMECLIENT.IsHost())
+				GAMESERVER.Stop();
+
+			GAMECLIENT.Stop();
+
+			if(LOBBYCLIENT.LoggedIn())
+				WindowManager::inst().Switch(new dskLobby);
+			else
+				// Hauptmenü zeigen
+				WindowManager::inst().Switch(new dskDirectIP);
+
+		} break;
+	
+	case 2: // Starten
+		{
+			if(GAMECLIENT.IsHost())
+			{
+				if(!GAMESERVER.StartGame())
+					WindowManager::inst().Show(new iwMsgbox(_("Error"), _("Game can only be started as soon as everybody has a unique color,everyone is ready and all free slots are closed."), this, MSB_OK, MSB_EXCLAMATIONRED, 10));
+			}
+		} break;
+	case 22: // Addons
+		{
+			iwAddons *w = new iwAddons(GAMECLIENT.IsHost() ? iwAddons::HOSTGAME : iwAddons::READONLY);
+			w->SetParent(this);
+			WindowManager::inst().Show(w);
+		} break;
 	case 102:
-	{
-		CreateMapPreview();
-	} break;
+		{
+			CreateMapPreview();
+		} break;
 	}
 }
 
@@ -464,14 +470,22 @@ void dskHostGame::Msg_EditEnter(const unsigned int ctrl_id)
 
 void dskHostGame::Msg_MsgBoxResult(const unsigned msgbox_id, const MsgboxResult mbr)
 {
-	if(msgbox_id == 0) // Verbindung zu Server verloren?
-	{
-		GAMECLIENT.Stop();
+	switch(msgbox_id)
+	{ 
+	case 0: // Verbindung zu Server verloren?
+		{
+			GAMECLIENT.Stop();
 
-		if(LOBBYCLIENT.LoggedIn()) // steht die Lobbyverbindung noch?
-			WindowManager::inst().Switch(new dskLobby);
-		else
-			WindowManager::inst().Switch(new dskDirectIP);
+			if(LOBBYCLIENT.LoggedIn()) // steht die Lobbyverbindung noch?
+				WindowManager::inst().Switch(new dskLobby);
+			else
+				WindowManager::inst().Switch(new dskDirectIP);
+		} break;
+	case CGI_ADDONS: // addon-window applied settings?
+		{
+			if(mbr == MSR_YES)
+				UpdateGGS();
+		} break;
 	}
 }
 

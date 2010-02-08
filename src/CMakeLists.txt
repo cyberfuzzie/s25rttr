@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 5928 2010-01-24 21:14:42Z jh $
+### $Id: CMakeLists.txt 5969 2010-02-08 16:08:49Z FloSoft $
 ################################################################################
 
 INCLUDE(FindBZip2)
@@ -112,6 +112,7 @@ SET(SOURCES_INGAMEWINDOWS
     iwHarborBuilding.cpp         iwHarborBuilding.h
     iwPleaseWait.cpp             iwPleaseWait.h
     iwSettings.cpp               iwSettings.h
+    iwAddons.cpp                 iwAddons.h
     )
 
 SET(SOURCES_AI
@@ -275,6 +276,9 @@ SET(SOURCES_OTHER
     nofWorkman.cpp            nofWorkman.h
     FOWObjects.cpp            FOWObjects.h
     PostMsg.cpp               PostMsg.h
+    AddonManager.cpp          AddonManager.h
+    Addons.cpp                Addons.h
+    const_addons.h
     )
 
 SET(SOURCES_GL
@@ -316,8 +320,8 @@ GETTEXT_CREATE_TRANSLATIONS( ../RTTR/languages/rttr.pot ALL
                              ../RTTR/languages/cs.po
                              ../RTTR/languages/hu.po
                              ../RTTR/languages/it.po
-			     ../RTTR/languages/sl.po
-			     ../RTTR/languages/nb.po
+           ../RTTR/languages/sl.po
+           ../RTTR/languages/nb.po
                             )
 
 ################################################################################
@@ -325,17 +329,17 @@ GETTEXT_CREATE_TRANSLATIONS( ../RTTR/languages/rttr.pot ALL
 # bzip linkerbug-fix
 SET(SOURCES_BZIP "")
 IF ( "${COMPILEFOR}" STREQUAL "windows" )
-	IF( IS_DIRECTORY "${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3" )
-		SET(SOURCES_BZIP 
-			${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/blocksort.c
-		    ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/huffman.c 
-		    ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/crctable.c
-		    ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/randtable.c 
-		    ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/compress.c
-		    ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/decompress.c 
-		    ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/bzlib.c
-		   )
-	ENDIF( IS_DIRECTORY "${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3" )
+  IF( IS_DIRECTORY "${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3" )
+    SET(SOURCES_BZIP 
+      ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/blocksort.c
+        ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/huffman.c 
+        ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/crctable.c
+        ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/randtable.c 
+        ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/compress.c
+        ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/decompress.c 
+        ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/bzlib.c
+       )
+  ENDIF( IS_DIRECTORY "${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3" )
 ENDIF ( "${COMPILEFOR}" STREQUAL "windows" )
 
 SET(s25client_SRCS 
@@ -347,7 +351,7 @@ SET(s25client_SRCS
     ${SOURCES_INGAMEWINDOWS} 
     ${SOURCES_OTHER}
     ${SOURCES_AI}
-	  )
+    )
 
 IF ( "${COMPILEFOR}" STREQUAL "windows" )
     ADD_DEFINITIONS("-DAFX_TARG_DEU")
@@ -362,34 +366,34 @@ IF ( "${COMPILEFOR}" STREQUAL "windows" )
 ENDIF ( "${COMPILEFOR}" STREQUAL "windows" )
 
 IF ( "${COMPILEFOR}" STREQUAL "apple")
-	IF(NOT EXISTS "${OpenGL_gl_LIBRARY}")
- 	        SET(SPLIT "${OpenGL_gl_LIBRARY}")
-        	INCLUDE(FindSplitPath)
-		MESSAGE(STATUS ${PATHS} ${SPLIT})
+  IF(NOT EXISTS "${OpenGL_gl_LIBRARY}")
+          SET(SPLIT "${OpenGL_gl_LIBRARY}")
+          INCLUDE(FindSplitPath)
+    MESSAGE(STATUS ${PATHS} ${SPLIT})
 
-		MESSAGE(STATUS "OpenGL-Library is a directory, searching for the Library")
-		FIND_FILE(OpenGL
-				OpenGL
-				PATHS ${PATHS}
-			 )
-		IF(NOT OpenGL-NOTFOUND)
-			MESSAGE(STATUS "OpenGL-Library was directory, found ${OpenGL}")
-			SET(OPENGL_gl_LIBRARY "${OpenGL}")
-		ENDIF(NOT OpenGL-NOTFOUND)
+    MESSAGE(STATUS "OpenGL-Library is a directory, searching for the Library")
+    FIND_FILE(OpenGL
+        OpenGL
+        PATHS ${PATHS}
+       )
+    IF(NOT OpenGL-NOTFOUND)
+      MESSAGE(STATUS "OpenGL-Library was directory, found ${OpenGL}")
+      SET(OPENGL_gl_LIBRARY "${OpenGL}")
+    ENDIF(NOT OpenGL-NOTFOUND)
 
-	ENDIF(NOT EXISTS "${OpenGL_gl_LIBRARY}")
+  ENDIF(NOT EXISTS "${OpenGL_gl_LIBRARY}")
 
-	IF( "${CROSSCOMPILE}" STREQUAL "1")
-		SET(CMAKE_C_LINK_FLAGS  "${CMAKE_C_LINK_FLAGS} -framework OpenGL -L${CMAKE_SOURCE_DIR}/macos")
-		SET(CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -framework OpenGL -L${CMAKE_SOURCE_DIR}/macos")
-	ENDIF( "${CROSSCOMPILE}" STREQUAL "1")
+  IF( "${CROSSCOMPILE}" STREQUAL "1")
+    SET(CMAKE_C_LINK_FLAGS  "${CMAKE_C_LINK_FLAGS} -framework OpenGL -L${CMAKE_SOURCE_DIR}/macos")
+    SET(CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -framework OpenGL -L${CMAKE_SOURCE_DIR}/macos")
+  ENDIF( "${CROSSCOMPILE}" STREQUAL "1")
 ENDIF ( "${COMPILEFOR}" STREQUAL "apple")
 
 ADD_EXECUTABLE(s25client ${s25client_SRCS})
 TARGET_LINK_LIBRARIES(s25client siedler2 lobby_c s25util mygettext ${BZIP2_LIBRARIES} ${OPENGL_gl_LIBRARY})
 
 IF ( "${COMPILEFOR}" STREQUAL "apple")
-	SET_TARGET_PROPERTIES(s25client PROPERTIES LINK_FLAGS "-framework SDL -framework Cocoa -lSDLmain")
+  SET_TARGET_PROPERTIES(s25client PROPERTIES LINK_FLAGS "-framework SDL -framework Cocoa -lSDLmain")
 ENDIF ( "${COMPILEFOR}" STREQUAL "apple")
 
 IF ( "${COMPILEFOR}" STREQUAL "windows" )

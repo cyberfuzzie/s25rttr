@@ -1,4 +1,4 @@
-// $Id: Settings.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: Settings.h 5969 2010-02-08 16:08:49Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -90,8 +90,12 @@ public:
 	} savegames;
 	
 	struct {
-		bool StatScale;
-	}ingame;
+		bool scale_statistics;
+	} ingame;
+
+	struct {
+		std::map<unsigned int, unsigned int> configuration;
+	} addons;
 
 private:
 	static const unsigned int SETTINGS_VERSION;

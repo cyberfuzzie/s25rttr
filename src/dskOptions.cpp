@@ -1,4 +1,4 @@
-// $Id: dskOptions.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: dskOptions.cpp 5969 2010-02-08 16:08:49Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -22,6 +22,7 @@
 #include "main.h"
 #include "dskOptions.h"
 
+#include "AddonManager.h"
 #include "WindowManager.h"
 #include "Loader.h"
 
@@ -38,6 +39,7 @@
 #include "AudioDriverWrapper.h"
 #include "MusicPlayer.h"
 
+#include "iwAddons.h"
 #include "iwTextfile.h"
 #include "iwMsgbox.h"
 
@@ -74,14 +76,14 @@ dskOptions::dskOptions(void) : Desktop(LOADER.GetImageN("setup013", 0))
 
 	ctrlOptionGroup *optiongroup = AddOptionGroup(10, ctrlOptionGroup::CHECK, scale);
 
-	AddTextButton(14, 520, 550, 200, 22, TC_GREEN2,     _("Enhancements"),NormalFont);
+	AddTextButton(14, 520, 550, 200, 22, TC_GREEN2, _("Addons"), NormalFont);
 
 	// "Allgemein"
-	optiongroup->AddTextButton(11,  80, 510, 200, 22, TC_GREEN2,     _("Common"),NormalFont);
+	optiongroup->AddTextButton(11,  80, 510, 200, 22, TC_GREEN2, _("Common"), NormalFont);
 	// "Grafik"
-	optiongroup->AddTextButton(12, 300, 510, 200, 22, TC_GREEN2,     _("Graphics"),NormalFont);
+	optiongroup->AddTextButton(12, 300, 510, 200, 22, TC_GREEN2, _("Graphics"), NormalFont);
 	// "Sound"
-	optiongroup->AddTextButton(13, 520, 510, 200, 22, TC_GREEN2,     _("Sound/Music"),NormalFont);
+	optiongroup->AddTextButton(13, 520, 510, 200, 22, TC_GREEN2, _("Sound/Music"), NormalFont);
 
 	ctrlGroup *groupAllgemein = AddGroup(21, scale);
 	ctrlGroup *groupGrafik = AddGroup(22, scale);
@@ -506,6 +508,11 @@ void dskOptions::Msg_ButtonClick(const unsigned int ctrl_id)
 			}
 
 			WindowManager::inst().Switch(new dskMainMenu);
+		} break;
+	case 14: // Addons
+		{
+			ADDONMANAGER.LoadDefaults();
+			WindowManager::inst().Show(new iwAddons());
 		} break;
 	}
 }

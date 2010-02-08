@@ -210,6 +210,26 @@
 				Name="GUI"
 				>
 				<File
+					RelativePath="..\..\src\AddonManager.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\AddonManager.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\Addons.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\Addons.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\const_addons.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\const_gui_ids.h"
 					>
 				</File>
@@ -589,6 +609,14 @@
 						</File>
 						<File
 							RelativePath="..\..\src\iwAction.h"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\iwAddons.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\iwAddons.h"
 							>
 						</File>
 						<File

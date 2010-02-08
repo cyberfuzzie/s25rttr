@@ -1,4 +1,4 @@
-// $Id: iwAction.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: iwAction.cpp 5969 2010-02-08 16:08:49Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -26,6 +26,7 @@
 #include "iwDemolishBuilding.h"
 #include "iwMilitaryBuilding.h"
 
+#include "AddonManager.h"
 #include "Loader.h"
 #include "controls.h"
 #include "Settings.h"
@@ -129,43 +130,103 @@ iwAction::iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, cons
 		}
 
 		// Gebäudeicons dem TabCtrl hinzufügen
-		const unsigned building_count[4] = { 9, 13, 4, 4 };
-		const BuildingType building_icons[4][13] =
+		const unsigned char building_count_max = 13;
+		const unsigned building_count[4] = { 9, 13, 5, 4 };
+		const BuildingType building_icons[4][building_count_max] =
 		{
-			{ BLD_WOODCUTTER, BLD_FORESTER, BLD_QUARRY, BLD_FISHERY, BLD_HUNTER, BLD_BARRACKS, BLD_GUARDHOUSE, BLD_LOOKOUTTOWER, BLD_WELL },
-			{ BLD_SAWMILL, BLD_SLAUGHTERHOUSE, BLD_MILL, BLD_BAKERY, BLD_IRONSMELTER, BLD_METALWORKS, BLD_ARMORY, BLD_MINT, BLD_SHIPYARD, BLD_BREWERY, BLD_STOREHOUSE, BLD_WATCHTOWER, BLD_CATAPULT },
-			{ BLD_FARM, BLD_PIGFARM, BLD_DONKEYBREEDER, BLD_FORTRESS, BLD_HARBORBUILDING},
-			{ BLD_GOLDMINE, BLD_IRONMINE, BLD_COALMINE, BLD_GRANITEMINE}
+			{ /* 0 */
+				/* 0 */ BLD_WOODCUTTER,
+				/* 1 */ BLD_FORESTER,
+				/* 2 */ BLD_QUARRY,
+				/* 3 */ BLD_FISHERY,
+				/* 4 */ BLD_HUNTER,
+				/* 5 */ BLD_BARRACKS,
+				/* 6 */ BLD_GUARDHOUSE,
+				/* 7 */ BLD_LOOKOUTTOWER,
+				/* 8 */ BLD_WELL
+			},
+			{ /* 1 */
+				/*  0 */ BLD_SAWMILL,
+				/*  1 */ BLD_SLAUGHTERHOUSE,
+				/*  2 */ BLD_MILL,
+				/*  3 */ BLD_BAKERY, 
+				/*  4 */ BLD_IRONSMELTER, 
+				/*  5 */ BLD_METALWORKS, 
+				/*  6 */ BLD_ARMORY, 
+				/*  7 */ BLD_MINT, 
+				/*  8 */ BLD_SHIPYARD, 
+				/*  9 */ BLD_BREWERY, 
+				/* 10 */ BLD_STOREHOUSE, 
+				/* 11 */ BLD_WATCHTOWER, 
+				/* 12 */ BLD_CATAPULT
+			},
+			{ /* 2 */
+				/* 0 */ BLD_FARM, 
+				/* 1 */ BLD_PIGFARM, 
+				/* 2 */ BLD_DONKEYBREEDER, 
+				/* 3 */ BLD_FORTRESS, 
+				/* 4 */ BLD_HARBORBUILDING
+			},
+			{ /* 3 */
+				/* 0 */ BLD_GOLDMINE, 
+				/* 1 */ BLD_IRONMINE, 
+				/* 2 */ BLD_COALMINE, 
+				/* 3 */ BLD_GRANITEMINE
+			}
 		};
 
-		const unsigned TABS_COUNT[5] = {1,2,3,1,3};
+		const unsigned TABS_COUNT[5] = {1, 2, 3, 1, 3};
 
+		/// Flexible what-buildings-are-available handling
+		bool building_available[4][building_count_max] ;
+
+		// First enable all buildings 	
+		for (unsigned char i = 0; i < 4; ++i)
+		{
+			for(unsigned char j = 0; j < building_count_max; ++j)
+				building_available[i][j] = ( j < building_count[i]);
+		}
+		
+		// Now deactivate those we don't want
+		
+		// Harbor
+		if (tabs.build_tabs != Tabs::BT_HARBOR)
+			building_available[2][4] = false;
+		
+		// Military buildings
+		if (!military_buildings)
+		{
+			building_available[0][5] = false;
+			building_available[0][6] = false;
+			building_available[1][11] = false;
+			building_available[2][3] = false;
+		}
+		
+		// Mint and Goldmine
+		if(ADDONMANAGER.isEnabled(ADDON_CHANGE_GOLD_DEPOSITS))
+		{
+			building_available[1][7] = false;
+			building_available[3][0] = false;
+		}
+		
 		for(unsigned char i = 0; i < TABS_COUNT[tabs.build_tabs]; ++i)
 		{
 			unsigned char k = 0;
 			Tabs::BuildTab bt = (tabs.build_tabs == Tabs::BT_MINE) ? Tabs::BT_MINE : Tabs::BuildTab(i);
 		
-			// Anzahl der Gebäude-Icons in dieser Tab-Gruppe ermiteln
-			unsigned count = building_count[bt];
-			// Ggf. noch den Hafen dazurechnen
-			if(tabs.build_tabs == Tabs::BT_HARBOR && bt == Tabs::BT_CASTLE)
-				++count;
-			for(unsigned char j = 0; j < count; ++j)
+			for(unsigned char j = 0; j < building_count_max; ++j)
 			{
-				// Wenn Militärgebäude an der Stelle nicht erlaubt sind, überspringen
-				if(!military_buildings && building_icons[bt][j] >= BLD_BARRACKS && 
-					building_icons[i][j] <= BLD_FORTRESS)
+				if (!building_available[bt][j])
 					continue;
 
-				build_tab->GetGroup(bt)->AddBuildingIcon(j, (k%5)*36, (k/5)*36 + 45, building_icons[bt][j], GameClient::inst().GetLocalPlayer()->nation, 36, _(BUILDING_NAMES[building_icons[bt][j]]));
+				build_tab->GetGroup(bt)->AddBuildingIcon(j, (k % 5) * 36, (k / 5) * 36 + 45, building_icons[bt][j], GAMECLIENT.GetLocalPlayer()->nation, 36, _(BUILDING_NAMES[building_icons[bt][j]]));
 				++k;
 			}
 		}
-
+		
 		build_tab->SetSelection(0, true);
 	}
-
-
+	
 	// Wenn es einen Flaggen-main_tab gibt, dann entsprechend die Buttons anordnen, wie sie gebraucht werden
 	if(tabs.flag)
 	{
@@ -199,7 +260,7 @@ iwAction::iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, cons
 			} break;
 		}
 	}
-
+	
 	// Flagge Setzen-main_tab
 	if(tabs.setflag)
 	{
@@ -211,7 +272,7 @@ iwAction::iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, cons
 
 		group->AddImageButton(1, 0, 45, 180, 36, TC_GREY, LOADER.GetImageN("io",  nr),_("Erect flag"));
 	}
-
+	
 	// Cut-main_tab
 	if(tabs.cutroad)
 	{
@@ -219,7 +280,7 @@ iwAction::iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, cons
 
 		group->AddImageButton(1, 0, 45, 180, 36, TC_GREY, LOADER.GetImageN("io", 32), _("Dig up road"));
 	}
-
+	
 	if(tabs.attack)
 	{
 		ctrlGroup *group = main_tab->AddTab(LOADER.GetImageN("io", 98), _("Attack options"), TAB_ATTACK);
@@ -227,7 +288,7 @@ iwAction::iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, cons
 		AddAttackControls(group,params);
 		selected_soldiers_count = 1;
 	}
-
+	
 	if(tabs.sea_attack)
 	{
 		ctrlGroup *group = main_tab->AddTab(LOADER.GetImageN("io", 177), _("Attack options"), TAB_SEAATTACK);
@@ -247,17 +308,14 @@ iwAction::iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, cons
 		group->AddImageButton(2,  60, 45,  60, 36, TC_GREY, LOADER.GetImageN("io", 179), _("House names"));
 		group->AddImageButton(3, 120, 45,  60, 36, TC_GREY, LOADER.GetImageN("io", 180), _("Go to headquarters"));
 	}
-
-
-
 	
 	main_tab->SetSelection(0, true);
-
+	
 	if(x+GetWidth() > SETTINGS.video.width)
 		x = mouse_x-GetWidth()-40;
 	if(y+GetHeight() > SETTINGS.video.height)
 		y = mouse_y-GetHeight()-40;
-
+	
 	VideoDriverWrapper::inst().SetMousePos(GetX()+20,GetY()+75);
 }
 

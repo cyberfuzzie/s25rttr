@@ -1,4 +1,4 @@
-// $Id: Settings.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: Settings.cpp 5969 2010-02-08 16:08:49Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -34,10 +34,10 @@
 	static char THIS_FILE[] = __FILE__;
 #endif
 
-const unsigned int Settings::SETTINGS_VERSION = 10;
-const unsigned int Settings::SETTINGS_SECTIONS = 9;
+const unsigned int Settings::SETTINGS_VERSION = 11;
+const unsigned int Settings::SETTINGS_SECTIONS = 11;
 const std::string Settings::SETTINGS_SECTION_NAMES[] = {
-	"global", "video", "language", "driver", "sound", "lobby", "server", "proxy", "savegames"
+	"global", "video", "language", "driver", "sound", "lobby", "server", "proxy", "savegames", "ingame", "addons"
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -120,6 +120,16 @@ bool Settings::LoadDefaults()
 		savegames.autosave_interval = 0;
 	// }
 
+	// ingame
+	// {
+		ingame.scale_statistics = false;
+	// }
+
+	// addons
+	// {
+		addons.configuration.clear();
+	// }
+
 	Save();
 
 	return true;
@@ -144,9 +154,11 @@ bool Settings::Load(void)
 	const libsiedler2::ArchivItem_Ini *server = LOADER.GetSettingsIniN("server");
 	const libsiedler2::ArchivItem_Ini *proxy = LOADER.GetSettingsIniN("proxy");
 	const libsiedler2::ArchivItem_Ini *savegames = LOADER.GetSettingsIniN("savegames");
+	const libsiedler2::ArchivItem_Ini *ingame = LOADER.GetSettingsIniN("ingame");
+	const libsiedler2::ArchivItem_Ini *addons = LOADER.GetSettingsIniN("addons");
 
 	// ist eine der Kategorien nicht vorhanden?
-	if(!global || !video || !language || !driver || !sound || !lobby || !server || !proxy || !savegames ||
+	if(!global || !video || !language || !driver || !sound || !lobby || !server || !proxy || !savegames || !ingame || !addons ||
 		// stimmt die Settingsversion?
 		((unsigned int)global->getValueI("version") != SETTINGS_VERSION)
 	  )
@@ -251,6 +263,22 @@ bool Settings::Load(void)
 		this->savegames.autosave_interval = savegames->getValueI("autosave_interval");
 	// }
 
+	// ingame
+	// {
+		this->ingame.scale_statistics = (ingame->getValueI("scale_statistics") ? true : false);
+	// }
+
+	// addons
+	// {
+		for(unsigned int addon = 0; addon < addons->getCount(); ++addon)
+		{
+			const libsiedler2::ArchivItem_Text *item = dynamic_cast<const libsiedler2::ArchivItem_Text *>(addons->get(addon));
+
+			if(item)
+				this->addons.configuration.insert(std::make_pair(atoi(item->getName()), atoi(item->getText())));
+		}
+	// }
+
 	return true;
 }
 
@@ -278,9 +306,11 @@ void Settings::Save(void)
 	libsiedler2::ArchivItem_Ini *server = LOADER.GetSettingsIniN("server");
 	libsiedler2::ArchivItem_Ini *proxy = LOADER.GetSettingsIniN("proxy");
 	libsiedler2::ArchivItem_Ini *savegames = LOADER.GetSettingsIniN("savegames");
+	libsiedler2::ArchivItem_Ini *ingame = LOADER.GetSettingsIniN("ingame");
+	libsiedler2::ArchivItem_Ini *addons = LOADER.GetSettingsIniN("addons");
 
 	// ist eine der Kategorien nicht vorhanden?
-	assert(global && video && language && driver && sound && lobby && server && proxy && savegames);
+	assert(global && video && language && driver && sound && lobby && server && proxy && savegames && ingame && addons);
 
 	// global
 	// {
@@ -355,5 +385,22 @@ void Settings::Save(void)
 		savegames->setValue("autosave_interval", this->savegames.autosave_interval);
 	// }
 
+	// ingame
+	// {
+		ingame->setValue("scale_statistics", (this->ingame.scale_statistics ? 1 : 0));
+	// }
+
+	// addons
+	// {
+		addons->clear();
+		for(std::map<unsigned int, unsigned int>::const_iterator it = this->addons.configuration.begin(); it != this->addons.configuration.end(); ++it)
+		{
+			std::stringstream name, value;
+			name << it->first;
+			value << it->second;
+			addons->addValue(name.str().c_str(), value.str().c_str());
+		}
+	// }
+		
 	LOADER.SaveSettings();
 }

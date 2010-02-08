@@ -1,4 +1,4 @@
-// $Id: BuildingConsts.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: BuildingConsts.h 5969 2010-02-08 16:08:49Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -335,7 +335,7 @@ const char * const BUILDING_HELP_STRINGS[40] =
 	"The quarrying of stone in a "
 	"granite mine guarantees the "
 	"supply of stone for buildings. "
-	"However, eben a granite mine has " 
+	"However, even a granite mine has " 
 	"to feed its workers."),
 
 	// Coal mine

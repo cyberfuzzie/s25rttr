@@ -1,4 +1,4 @@
-// $Id: ArchivItem_Ini.h 5855 2010-01-04 16:44:38Z FloSoft $
+// $Id: ArchivItem_Ini.h 5969 2010-02-08 16:08:49Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -83,7 +83,7 @@ public:
 		}
 	}
 
-	inline void setValue(const char *name, unsigned int value)
+	inline void setValue(const char *name, int value)
 	{
 		char temp[512];
 		snprintf(temp, 256, "%d", value);

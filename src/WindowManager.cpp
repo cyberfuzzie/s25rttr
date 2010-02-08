@@ -1,4 +1,4 @@
-// $Id: WindowManager.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: WindowManager.cpp 5969 2010-02-08 16:08:49Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -990,7 +990,15 @@ void WindowManager::DrawToolTip()
 	// Tooltip zeichnen
 	if(tooltip.length() && mc)
 	{
-		Window::DrawRectangle(mc->x + 30 - 2, mc->y-2, NormalFont->getWidth(tooltip.c_str())+4, NormalFont->getDy()+4, 0x9F000000);
+		unsigned int count = 0;
+		std::string::size_type pos = 0;
+		do {
+			count++;
+			if(pos != 0)
+				pos++;
+		} while( (pos = tooltip.find('\n', pos)) != std::string::npos);
+
+		Window::DrawRectangle(mc->x + 30 - 2, mc->y - 2, NormalFont->getWidth(tooltip.c_str()) + 4, 4 + count * NormalFont->getDy(), 0x9F000000);
 		NormalFont->Draw(mc->x + 30, mc->y + NormalFont->getDy() / 2, tooltip.c_str(), glArchivItem_Font::DF_VCENTER, COLOR_YELLOW);
 	}
 }

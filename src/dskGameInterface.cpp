@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: dskGameInterface.cpp 5972 2010-02-08 18:47:05Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -269,7 +269,9 @@ bool dskGameInterface::Msg_LeftDown(const MouseCoords& mc)
 	if(road.mode)
 	{
 		// in "richtige" Map-Koordinaten Konvertieren, den aktuellen selektierten Punkt
-		unsigned short cselx=gwv->GetSelX(),csely = gwv->GetSelY();
+		int cselx=gwv->GetSelX(),csely = gwv->GetSelY();
+		// Um auf Wasserweglängenbegrenzun reagieren zu können:
+		int cselx2 = cselx, csely2 = csely;
 
 		if(cselx == road.point_x && csely == road.point_y)
 		{
@@ -297,18 +299,27 @@ bool dskGameInterface::Msg_LeftDown(const MouseCoords& mc)
 				else
 				{
 					if(BuildRoadPart(cselx,csely,1))
-						CommandBuildRoad();
+					{
+					// Ist der Zielpunkt der gleiche geblieben?
+						if (cselx2==cselx && csely2==csely)
+							CommandBuildRoad();
+					}
 					else
-						ShowRoadWindow(mc.x,mc.y);
+						if (cselx2==cselx && csely2==csely)
+							ShowRoadWindow(mc.x,mc.y);
 				}
 			}
 			// Wurde auf eine Flagge geklickt und ist diese Flagge nicht der Weganfangspunkt?
 			else if(gwv->GetNO(cselx,csely)->GetType() == NOP_FLAG && !(cselx == road.start_x && csely == road.start_y))
 			{
 				if(BuildRoadPart(cselx,csely,1))
-					CommandBuildRoad();
+				{
+					if (cselx2==cselx && csely2==csely)
+						CommandBuildRoad();
+				}
 				else
-					ShowRoadWindow(mc.x,mc.y);
+					if (cselx2==cselx && csely2==csely)
+						ShowRoadWindow(mc.x,mc.y);
 			}
 
 			else
@@ -704,7 +715,7 @@ void dskGameInterface::ActivateRoadMode(const RoadMode rm)
  *
  *  @author OLiver
  */
-bool dskGameInterface::BuildRoadPart(const int cselx, const int csely,bool end)
+bool dskGameInterface::BuildRoadPart(int &cselx, int &csely,bool end)
 {
 	std::vector<unsigned char> new_route;
 	bool path_found = gwv->FindRoadPath(road.point_x,road.point_y,cselx,csely,new_route, road.mode == RM_BOAT);
@@ -712,14 +723,40 @@ bool dskGameInterface::BuildRoadPart(const int cselx, const int csely,bool end)
 	// Weg gefunden?
 	if(!path_found)
 		return false;
+	
+	// Test on water way length
+	if(road.mode == RM_BOAT)
+	{
+		unsigned char waterway_lengthes[] =	{5, 3, 9, 13, 21, 0};
+		unsigned char index = ADDONMANAGER.getSelection(ADDON_MAX_WATERWAY_LENGTH);
+
+		assert(index <= sizeof(waterway_lengthes) - 1);
+		const unsigned char max_length = waterway_lengthes[index];
+
+		unsigned short length = road.route.size() + new_route.size();
+
+		// max_length == 0 heißt beliebig lang, ansonsten 
+		// Weg zurechtstutzen.
+		if (max_length > 0) 
+		{
+			while(length > max_length) 
+			{
+				new_route.pop_back();
+				--length;
+			}
+		}
+	}
 
 	// Weg (visuell) bauen
-	for(unsigned i = 0;i<new_route.size();++i)
+	for(unsigned i = 0;i < new_route.size(); ++i)
 	{
 		gwv->SetPointVirtualRoad(road.point_x,road.point_y, new_route[i], (road.mode==RM_BOAT)?3:1);
 		gwv->GetPointA(road.point_x,road.point_y, new_route[i]);
 		gwv->CalcRoad(road.point_x,road.point_y,GAMECLIENT.GetPlayerID());
 	}
+	// Zielpunkt updaten (für Wasserweg)
+	cselx = road.point_x;
+	csely = road.point_y;
 
 	road.route.insert(road.route.end(), new_route.begin(), new_route.end());
 

@@ -1,4 +1,4 @@
-// $Id: iwStatistics.cpp 5969 2010-02-08 16:08:49Z FloSoft $
+// $Id: iwStatistics.cpp 5972 2010-02-08 18:47:05Z FloSoft $
 //
 // Copyright (c) 2005-2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -26,8 +26,7 @@
 #include "Settings.h"
 #include "controls.h"
 #include "GameClient.h"
-
-#include <sstream>
+#include "AddonManager.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -82,7 +81,30 @@ iwStatistics::iwStatistics()
 			break;
 		}
 
-		activePlayers[i] = true;
+		// Statistik-Sichtbarkeit abhängig von Auswahl
+		switch (ADDONMANAGER.getSelection(ADDON_STATISTICS_VISIBILITY))
+		{
+		default: // Passiert eh nicht, nur zur Sicherheit
+			activePlayers[i] = false;
+
+		case 0: // Alle sehen alles
+			{
+				activePlayers[i] = true;
+			} break;
+		case 1: // Nur Verbündete teilen Sicht
+			{
+				const bool visible = GAMECLIENT.GetLocalPlayer()->IsAlly(i);
+				activePlayers[i] = visible;
+				GetCtrl<ctrlImageButton>(1+i)->Enable(visible);
+			} break;
+		case 2: // Nur man selber
+			{
+				const bool visible = (GAMECLIENT.GetPlayerID() == i);
+				activePlayers[i] = visible;
+				GetCtrl<ctrlImageButton>(1+i)->Enable(visible);
+			} break;
+		}
+
 		pos++;
 	}
 
@@ -140,11 +162,23 @@ iwStatistics::iwStatistics()
 		minValue->SetVisible(false);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author jh
+ */
 iwStatistics::~iwStatistics()
 {
 
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author jh
+ */
 void iwStatistics::Msg_ButtonClick(const unsigned int ctrl_id)
 {
 	switch (ctrl_id)
@@ -159,6 +193,12 @@ void iwStatistics::Msg_ButtonClick(const unsigned int ctrl_id)
 	}
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author jh
+ */
 void iwStatistics::Msg_OptionGroupChange(const unsigned int ctrl_id, const unsigned short selection)
 {
 	switch(ctrl_id)
@@ -220,6 +260,12 @@ void iwStatistics::Msg_OptionGroupChange(const unsigned int ctrl_id, const unsig
 	} 
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author jh
+ */
 void iwStatistics::Msg_PaintAfter()
 {
 	// Die farbigen Boxen unter den Spielerportraits malen
@@ -245,6 +291,12 @@ void iwStatistics::Msg_PaintAfter()
 	DrawStatistic(currentView);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author jh
+ */
 void iwStatistics::DrawStatistic(StatisticType type)
 {
 	// Ein paar benötigte Werte...
@@ -337,6 +389,12 @@ void iwStatistics::DrawStatistic(StatisticType type)
 	}
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author jh
+ */
 void iwStatistics::DrawAxis()
 {
 	// Ein paar benötigte Werte...

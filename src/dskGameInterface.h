@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: dskGameInterface.h 5972 2010-02-08 18:47:05Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -121,7 +121,10 @@ public:
 	friend class RoadSegment;
 
 	// Sucht einen Weg von road_point_x/y zu cselx/y und baut ihn ( nur visuell )
-	bool BuildRoadPart(const int cselx, const int csely,bool end);
+	// Bei Wasserwegen kann die Reichweite nicht bis zum gewünschten 
+	// Punkt reichen. Dann werden die Zielkoordinaten geändert, daher
+	// call-by-reference
+	bool BuildRoadPart(int &cselx, int &csely, bool end);
 	// Prft, ob x;y auf der bereits gebauten Strecke liegt und gibt die Position+1 zurck vom Startpunkt der Strecke aus
 	// wenn der Punkt nicht draufliegt, kommt 0 zurck
 	unsigned TestBuiltRoad(const int x, const int y);

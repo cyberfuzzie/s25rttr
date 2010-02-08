@@ -131,6 +131,8 @@ void AddonManager::Deserialize(Serializer *ser)
 
 	for( std::vector<item>::iterator it = addons.begin(); it != addons.end(); ++it)
 	{
-		setSelection(Addons(ser->PopUnsignedInt()), ser->PopUnsignedInt());
+		Addons addon = Addons(ser->PopUnsignedInt());
+		unsigned int status = ser->PopUnsignedInt();
+		setSelection(addon, status);
 	}
 }

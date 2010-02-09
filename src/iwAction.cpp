@@ -1,4 +1,4 @@
-// $Id: iwAction.cpp 5982 2010-02-09 16:28:12Z FloSoft $
+// $Id: iwAction.cpp 5983 2010-02-09 16:49:38Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -223,11 +223,11 @@ iwAction::iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, cons
 				max = int(bc.building_counts[BLD_BARRACKS] * 0.125 +
 					  bc.building_counts[BLD_GUARDHOUSE] * 0.25 +
 					  bc.building_counts[BLD_WATCHTOWER] * 0.5 +
-					  bc.building_counts[BLD_FORTRESS]);
+					  bc.building_counts[BLD_FORTRESS] + 0.111); // to avoid rounding errors
 			}
 			else
 			{
-				const unsigned int limits[5] = { 0, 10, 20, 30, 40, 50 };
+				const unsigned int limits[6] = { 0, 10, 20, 30, 40, 50 };
 				max = limits[ADDONMANAGER.getSelection(ADDON_LIMIT_CATAPULTS) - 2];
 			}
 

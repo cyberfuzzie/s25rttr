@@ -28,6 +28,7 @@
 // 002 Divan
 //
 
+// Do not forget to add your Addon to AddonManager::reset!
 // Never use a number twice!
 
 enum AddonId
@@ -38,7 +39,9 @@ enum AddonId
 	ADDON_CHANGE_GOLD_DEPOSITS  = 0x00200000,
 	ADDON_MAX_WATERWAY_LENGTH   = 0x00200001,
 	ADDON_CUSTOM_BUILD_SEQUENCE = 0x00200002,
-	ADDON_STATISTICS_VISIBILITY = 0x00200003
+	ADDON_STATISTICS_VISIBILITY = 0x00200003,
+
+	ADDON_LIMIT_CATAPULTS		= 0x00000001
 };
 
 enum AddonGroup

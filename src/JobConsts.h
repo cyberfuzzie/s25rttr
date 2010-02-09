@@ -1,4 +1,4 @@
-// $Id: JobConsts.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: JobConsts.h 5980 2010-02-09 16:14:40Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -70,7 +70,7 @@ const JobConst JOB_CONSTS[] =
 	{GD_NOTHING,false,33,0,0,0},     //JOB_OFFICER
 	{GD_NOTHING,false,34,0,0,0},     //JOB_GENERAL
 	{GD_HAMMER,false,26,0,0,0},      //JOB_GEOLOGIST
-	{GD_HAMMER,false,25,1250,100,5},      //JOB_SHIPWRIGHT, Todo: Timing wenn Schiffe bauen mÃ¶glich
+	{GD_HAMMER,false,25,1250,100,5},      //JOB_SHIPWRIGHT, Todo: Timing wenn Schiffe bauen möglich
 	{GD_BOW,false,35,0,0,0},         //JOB_SCOUT
 	{GD_NOTHING,false,37,0,0,0}      //JOB_PACKDONKEY
 };

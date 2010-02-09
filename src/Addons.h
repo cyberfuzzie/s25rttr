@@ -202,4 +202,29 @@ public:
 	}
 };
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Addon for limiting the count of catapults
+ *
+ *  @author FloSoft
+ */
+class AddonLimitCatapults : public AddonList
+{
+public:
+	AddonLimitCatapults() : AddonList(ADDON_LIMIT_CATAPULTS, 
+									  ADDONGROUP_MILITARY,
+									  gettext_noop("Limit count of catapults"), 
+									  gettext_noop("Limits the count of catapults per player.\n\n"),
+									  0
+									 )
+	{
+		addOption(gettext_noop("Unlimited"));
+		addOption(gettext_noop("No catapults"));
+		addOption(gettext_noop("10 catapults"));
+		addOption(gettext_noop("20 catapults"));
+		addOption(gettext_noop("30 catapults"));
+		addOption(gettext_noop("40 catapults"));
+	}
+};
+
 #endif // !ADDONS_H_INCLUDED

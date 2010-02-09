@@ -68,6 +68,7 @@ void AddonManager::reset(bool recreate)
 		registerAddon(new AddonMaxWaterwayLength);
 		registerAddon(new AddonCustomBuildSequence);
 		registerAddon(new AddonStatisticsVisibility);
+		registerAddon(new AddonLimitCatapults);
 	}
 }
 

@@ -1,4 +1,4 @@
-// $Id: iwAction.cpp 5969 2010-02-08 16:08:49Z FloSoft $
+// $Id: iwAction.cpp 5980 2010-02-09 16:14:40Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -207,6 +207,20 @@ iwAction::iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, cons
 		{
 			building_available[1][7] = false;
 			building_available[3][0] = false;
+		}
+
+		// Catapult
+		if(ADDONMANAGER.isEnabled(ADDON_LIMIT_CATAPULTS))
+		{
+			BuildingCount bc;
+			GAMECLIENT.GetLocalPlayer()->GetBuildingCount(bc);
+
+			const unsigned int limits[5] = { 0, 10, 20, 30, 40 };
+
+			unsigned int max = limits[ADDONMANAGER.getSelection(ADDON_LIMIT_CATAPULTS) - 1];
+
+			if(bc.building_counts[BLD_CATAPULT] + bc.building_site_counts[BLD_CATAPULT] >= max)
+				building_available[1][12] = false;
 		}
 		
 		for(unsigned char i = 0; i < TABS_COUNT[tabs.build_tabs]; ++i)

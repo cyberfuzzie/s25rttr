@@ -126,11 +126,12 @@ void AddonManager::Serialize(Serializer *ser) const
 void AddonManager::Deserialize(Serializer *ser)
 {
 	unsigned int count = ser->PopUnsignedInt();
+
 	assert(count == addons.size());
 
 	reset();
 
-	for( std::vector<item>::iterator it = addons.begin(); it != addons.end(); ++it)
+	for(unsigned int i = 0; i < count; ++i)
 	{
 		AddonId addon = AddonId(ser->PopUnsignedInt());
 		unsigned int status = ser->PopUnsignedInt();

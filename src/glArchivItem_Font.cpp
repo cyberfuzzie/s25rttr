@@ -1,4 +1,4 @@
-// $Id: glArchivItem_Font.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: glArchivItem_Font.cpp 5978 2010-02-09 14:34:10Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -265,7 +265,7 @@ unsigned short glArchivItem_Font::getWidth(const std::string& text, unsigned len
 		w += cw;
 	}
 
-	if(wm == 0)
+	if((wm == 0) || (wm < w)) // Letzte Zeile kann auch die längste sein und hat kein \n am Ende
 		wm = w;
 
 	if(max)

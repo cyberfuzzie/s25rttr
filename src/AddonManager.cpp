@@ -77,13 +77,13 @@ void AddonManager::reset(bool recreate)
  *
  *  @author FloSoft
  */
-void AddonManager::LoadDefaults()
+void AddonManager::LoadSettings()
 {
 	reset();
 
 	for( std::map<unsigned int, unsigned int>::iterator it = SETTINGS.addons.configuration.begin(); it != SETTINGS.addons.configuration.end(); ++it)
 	{
-		setSelection((Addons)it->first, it->second);
+		setSelection((AddonId)it->first, it->second);
 	}
 }
 
@@ -93,10 +93,10 @@ void AddonManager::LoadDefaults()
  *
  *  @author FloSoft
  */
-void AddonManager::SetDefaults()
+void AddonManager::SaveSettings() const
 {
 	SETTINGS.addons.configuration.clear();
-	for( std::vector<item>::iterator it = addons.begin(); it != addons.end(); ++it)
+	for( std::vector<item>::const_iterator it = addons.begin(); it != addons.end(); ++it)
 		SETTINGS.addons.configuration.insert(std::make_pair(it->addon->getId(), it->status));
 }
 
@@ -131,7 +131,7 @@ void AddonManager::Deserialize(Serializer *ser)
 
 	for( std::vector<item>::iterator it = addons.begin(); it != addons.end(); ++it)
 	{
-		Addons addon = Addons(ser->PopUnsignedInt());
+		AddonId addon = AddonId(ser->PopUnsignedInt());
 		unsigned int status = ser->PopUnsignedInt();
 		setSelection(addon, status);
 	}

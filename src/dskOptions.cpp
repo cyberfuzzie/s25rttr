@@ -1,4 +1,4 @@
-// $Id: dskOptions.cpp 5969 2010-02-08 16:08:49Z FloSoft $
+// $Id: dskOptions.cpp 5978 2010-02-09 14:34:10Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -511,7 +511,7 @@ void dskOptions::Msg_ButtonClick(const unsigned int ctrl_id)
 		} break;
 	case 14: // Addons
 		{
-			ADDONMANAGER.LoadDefaults();
+			ADDONMANAGER.LoadSettings();
 			WindowManager::inst().Show(new iwAddons());
 		} break;
 	}

@@ -45,8 +45,13 @@ iwAddons::iwAddons(ChangePolicy policy)
 {
 	AddText(0, 20, 30, _("Additional features:"), COLOR_YELLOW, 0, NormalFont);
 
-	AddTextButton(1, 20, height-40, 200, 22, TC_RED1, _("Apply Changes"), NormalFont);
-	AddTextButton(2, 230, height-40, 200, 22, TC_GREY, _("Discard Changes"), NormalFont);
+	if(policy != READONLY)
+		AddTextButton(1,  20, height-40, 200, 22, TC_GREY, _("Apply Changes"), NormalFont);
+	
+	AddTextButton(2, 250, height-40, 200, 22, TC_RED1, _("Close Without Saving"), NormalFont);
+	
+	if(policy != READONLY)
+		AddTextButton(3, 480, height-40, 200, 22, TC_GREY, _("Use S2 Defaults"), NormalFont);
 
 	int y = 70;
 
@@ -132,7 +137,7 @@ void iwAddons::Msg_ButtonClick(const unsigned int ctrl_id)
 				break;
 			case SETDEFAULTS:
 				{
-					ADDONMANAGER.SetDefaults();
+					ADDONMANAGER.SaveSettings();
 				} break;
 			case HOSTGAME:
 				{
@@ -147,6 +152,25 @@ void iwAddons::Msg_ButtonClick(const unsigned int ctrl_id)
 	case 2: // Discard changes
 		{
 			Close();
+		} break;
+
+	case 3: // Load S2 Defaults
+		{
+			// Standardeinstellungen aufs Fenster übertragen
+			for(unsigned int i = 0; i < ADDONMANAGER.getCount(); ++i)
+			{
+				unsigned int status;
+				const Addon *addon = ADDONMANAGER.getAddon(i, status);
+
+				if(!addon)
+					continue;
+
+				ctrlComboBox *c = GetCtrl<ctrlComboBox>(10 + 5*i + 2);
+				if(!c)
+					continue;
+
+				c->SetSelection(addon->getDefaultStatus());
+			}
 		} break;
 	}
 }

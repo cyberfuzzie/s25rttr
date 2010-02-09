@@ -51,7 +51,7 @@ public:
 
 	unsigned int getCount() const { return addons.size(); }
 
-	bool isEnabled(Addons id) const
+	bool isEnabled(AddonId id) const
 	{
 		std::vector<item>::const_iterator it = std::find(addons.begin(), addons.end(), id);
 		if(it == addons.end() || it->status == 0)
@@ -59,7 +59,7 @@ public:
 		return true;
 	}
 
-	unsigned int getSelection(Addons id) const
+	unsigned int getSelection(AddonId id) const
 	{
 		std::vector<item>::const_iterator it = std::find(addons.begin(), addons.end(), id);
 		if(it == addons.end())
@@ -67,7 +67,7 @@ public:
 		return it->status;
 	}
 
-	void setSelection(Addons id, unsigned int selection)
+	void setSelection(AddonId id, unsigned int selection)
 	{
 		std::vector<item>::iterator it = std::find(addons.begin(), addons.end(), id);
 		if(it == addons.end())
@@ -77,9 +77,9 @@ public:
 	}
 
 	/// loads the saved addon configuration from the SETTINGS.
-	void LoadDefaults();
+	void LoadSettings();
 	/// saves the current addon configuration to the SETTINGS.
-	void SetDefaults();
+	void SaveSettings() const;
 
 private:
 	void registerAddon(Addon *addon)
@@ -94,12 +94,12 @@ private:
 	struct item
 	{
 		item(void) : addon(NULL), status(0) {}
-		item(Addon *addon) : addon(addon), status(0) {}
+		item(Addon *addon) : addon(addon), status(addon->getDefaultStatus()) {}
 
 		Addon *addon;
 		unsigned int status;
 
-		bool operator==(const Addons &o) const { return (addon ? addon->getId() == o : false); }
+		bool operator==(const AddonId &o) const { return (addon ? addon->getId() == o : false); }
 	};
 
 	std::vector<item> addons;

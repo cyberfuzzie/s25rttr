@@ -1,4 +1,4 @@
-// $Id: iwOptionsWindow.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id$
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -28,7 +28,7 @@
 #include "GameClient.h"
 #include "GameServer.h"
 #include "AIPlayerJH.h"
-#include <sstream>
+
 #include "GameWorld.h"
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -41,12 +41,13 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  Konstruktor von @p iwOptionsWindow.
+ *  Konstruktor von @p iwAIDebug.
  *
  *  @author jh
  */
-	iwAIDebug::iwAIDebug(GameWorldViewer * const gwv)
-	: IngameWindow(CGI_OPTIONSWINDOW, 0xFFFF, 0xFFFF, 300, 515, _("AI Debug"), LOADER.GetImageN("resource", 41)), gwv(gwv)
+iwAIDebug::iwAIDebug(GameWorldViewer * const gwv)
+	: IngameWindow(CGI_OPTIONSWINDOW, 0xFFFF, 0xFFFF, 300, 515, _("AI Debug"), LOADER.GetImageN("resource", 41)), 
+	gwv(gwv)
 {
 	// Nur Host hat Zugriff auf die Daten über die KI-Spieler
 	if (!GameClient::inst().IsHost())
@@ -60,9 +61,7 @@
 	{
 		AIPlayerJH *ai = dynamic_cast<AIPlayerJH *>(GameServer::inst().GetAIPlayer(i));
 		if (ai)
-		{
 			ais.push_back(ai);
-		}
 	}
 
 	// Wenn keine KI-Spieler, schließen
@@ -77,6 +76,7 @@
 	{
 		players->AddString(_((*it)->GetPlayer()->name));
 	}
+
 	selection = 0;
 	players->SetSelection(selection);
 
@@ -107,6 +107,12 @@
 	//list->SetSelection(0);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author jh
+ */
 void iwAIDebug::Msg_ComboSelectItem(const unsigned int ctrl_id, const unsigned short select)
 {
 	switch(ctrl_id)
@@ -127,6 +133,12 @@ void iwAIDebug::Msg_ComboSelectItem(const unsigned int ctrl_id, const unsigned s
 	}
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author jh
+ */
 void iwAIDebug::Msg_PaintBefore()
 {
 	std::stringstream ss;

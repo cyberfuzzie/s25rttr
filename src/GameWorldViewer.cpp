@@ -1,4 +1,4 @@
-// $Id: GameWorldViewer.cpp 5976 2010-02-08 23:05:33Z jh $
+// $Id: GameWorldViewer.cpp 5978 2010-02-09 14:34:10Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -36,13 +36,8 @@
 #include "FOWObjects.h"
 #include "noShip.h"
 
-
-// Wird nur für das AI-Debug-Fenster benötigt
-#ifdef ENABLE_AI_DEBUG_WINDOW
 #include "GameServer.h"
 #include "AIPlayerJH.h"
-#include <sstream>
-#endif
 
 GameWorldViewer::GameWorldViewer() : show_bq(false), show_names(false), show_productivity(false),
 xoffset(0), yoffset(0), selx(0), sely(0), sx(0), sy(0), scroll(false), last_xoffset(0), last_yoffset(0), show_coordinates(false), d_active(false), d_player(0), d_what(0)
@@ -131,7 +126,6 @@ void GameWorldViewer::Draw(const unsigned char player, unsigned * water, const b
 				NormalFont->Draw(static_cast<int>(xpos),static_cast<int>(ypos),high,0,0xFFFFFF00);
 			}
 
-#ifdef ENABLE_AI_DEBUG_WINDOW
 			if (d_active)
 			{
 				std::stringstream ss;
@@ -164,11 +158,8 @@ void GameWorldViewer::Draw(const unsigned char player, unsigned * water, const b
 					}
 				}
 			}
-#endif
-
 		}
 	}
-
 
 	if(show_names || show_productivity)
 	{

@@ -22,7 +22,6 @@
 
 #include "iwAIDebug.h"
 #include "IngameWindow.h"
-#include <vector>
 
 class AIPlayerJH;
 class ctrlList;
@@ -31,9 +30,7 @@ class GameWorldViewer;
 
 class iwAIDebug : public IngameWindow
 {
-
 public:
-
 	iwAIDebug(GameWorldViewer * const gwv);
 
 private:
@@ -41,6 +38,8 @@ private:
 	//void Msg_ButtonClick(const unsigned int ctrl_id);
 	//void Msg_ProgressChange(const unsigned int ctrl_id, const unsigned short position);
 	void Msg_PaintBefore();
+
+private:
 	std::vector<AIPlayerJH *> ais;
 	ctrlList *jobs;
 	unsigned selection;

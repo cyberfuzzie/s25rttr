@@ -33,17 +33,20 @@
 class Addon
 {
 public:
-	Addon(const Addons id, const std::string &name, const std::string &description) : id(id), name(name), description(description)	{	}
-	virtual ~Addon()	{	}
+	Addon(const AddonId id, const std::string &name, const std::string &description, const unsigned int default_status)
+		: id(id), name(name), description(description), default_status(default_status)	{	}
+	virtual ~Addon() {	}
 
-	Addons getId() const { return id; }
+	AddonId getId() const { return id; }
 	std::string getName() const { return name; }
 	std::string getDescription() const { return description; }
+	unsigned int getDefaultStatus() const { return default_status; }
 
 private:
-	Addons id;
+	AddonId id;
 	std::string name;
 	std::string description;
+	unsigned int default_status;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -56,7 +59,8 @@ private:
 class AddonList : public Addon
 {
 public:
-	AddonList(const Addons id, const std::string &name, const std::string &description) : Addon(id, name, description) { }
+	AddonList(const AddonId id, const std::string &name, const std::string &description, const unsigned int default_status)
+		: Addon(id, name, description, default_status) { }
 
 	void fillComboBox(ctrlComboBox *c) const
 	{
@@ -89,7 +93,8 @@ private:
 class AddonBool : public Addon
 {
 public:
-	AddonBool(const Addons id, const std::string &name, const std::string &description) : Addon(id, name, description) { }
+	AddonBool(const AddonId id, const std::string &name, const std::string &description, const unsigned int default_status)
+		: Addon(id, name, description, default_status) { }
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -103,12 +108,13 @@ class AddonChangeGoldDeposits : public AddonList
 {
 public:
 	AddonChangeGoldDeposits() : AddonList(ADDON_CHANGE_GOLD_DEPOSITS, 
-									  gettext_noop("Change gold deposits"), 
-									  gettext_noop("Allows to play games without gold.\n\n"
-												   "You can choose to remove gold resources completely,\n"
-												   "to convert them into iron ore, coal or granite.\n\n"
-												   "You'll probably want to convert gold to iron ore, as this (on most maps)\n"
-												   "allows you to utilize the additional coal not needed for minting anymore.")
+											gettext_noop("Change gold deposits"), 
+											gettext_noop("Allows to play games without gold.\n\n"
+														 "You can choose to remove gold resources completely,\n"
+														 "to convert them into iron ore, coal or granite.\n\n"
+														 "You'll probably want to convert gold to iron ore, as this (on most maps)\n"
+														 "allows you to utilize the additional coal not needed for minting anymore."),
+											0
 										 )
 	{
 		addOption(gettext_noop("No change"));
@@ -129,15 +135,16 @@ class AddonMaxWaterwayLength : public AddonList
 {
 public:
 	AddonMaxWaterwayLength() : AddonList(ADDON_MAX_WATERWAY_LENGTH, 
-									  gettext_noop("Set maximum waterway length"), 
-									  gettext_noop("Limits the distance settlers may travel per boat.\n\n"
-												   "Possible values are:\nShort: 3 tiles\n"
-												   "Default: 5 tiles\nLong: 9 tiles\nLonger: 13 tiles\n"
-												   "Very long: 21 tiles\nand Unlimited")
+											gettext_noop("Set maximum waterway length"), 
+											gettext_noop("Limits the distance settlers may travel per boat.\n\n"
+														 "Possible values are:\nShort: 3 tiles\n"
+														 "Default: 5 tiles\nLong: 9 tiles\nLonger: 13 tiles\n"
+														 "Very long: 21 tiles\nand Unlimited"),
+											1
 										 )
 	{
-		addOption(gettext_noop("Default"));
 		addOption(gettext_noop("Short"));
+		addOption(gettext_noop("Default"));
 		addOption(gettext_noop("Long"));
 		addOption(gettext_noop("Longer"));
 		addOption(gettext_noop("Very long"));	
@@ -155,10 +162,11 @@ class AddonCustomBuildSequence : public AddonBool
 {
 public:
 	AddonCustomBuildSequence() : AddonBool(ADDON_CUSTOM_BUILD_SEQUENCE,
-									  gettext_noop("Custom build sequence"), 
-									  gettext_noop("Allows every player to control whether building sites\n"
-												   "should be supplied in sequence of given order or in a definable\n"
-												   "sequence based on the building type.")
+											gettext_noop("Custom build sequence"), 
+											gettext_noop("Allows every player to control whether building sites\n"
+														 "should be supplied in sequence of given order or in a definable\n"
+														 "sequence based on the building type."),
+											0
 										   )
 	{
 	}
@@ -175,10 +183,11 @@ class AddonStatisticsVisibility : public AddonList
 {
 public:
 	AddonStatisticsVisibility() : AddonList(ADDON_STATISTICS_VISIBILITY, 
-									  gettext_noop("Change the visibility of your ingame statistics"), 
-									  gettext_noop("Decides to whom your statistics is visible.\n\n"
+											gettext_noop("Change the visibility of your ingame statistics"), 
+											gettext_noop("Decides to whom your statistics is visible.\n\n"
 												   "\"Allies\" applies to team members as well as "
-												   "to allies by treaty.")
+												   "to allies by treaty."),
+											0
 										 )
 	{
 		addOption(gettext_noop("Everyone"));

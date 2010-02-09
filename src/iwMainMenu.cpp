@@ -1,4 +1,4 @@
-// $Id: iwMainMenu.cpp 5976 2010-02-08 23:05:33Z jh $
+// $Id: iwMainMenu.cpp 5978 2010-02-09 14:34:10Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -90,18 +90,21 @@ iwMainMenu::iwMainMenu(GameWorldViewer * const gwv, dskGameInterface * const gi)
 	
 	// Diplomatie (todo: besseres Bild suchen)
 	AddImageButton( 11,  68, 166,  53, 44, TC_GREY, LOADER.GetImageN("io", 190), _("Diplomacy"));
-	// Schiffe
-	//AddImageButton( 9, 124, 118,  53, 44, TC_GREY, LOADER.GetImageN("io", 175), _("Ship register"));
 
 	// AI-Debug
-#ifdef ENABLE_AI_DEBUG_WINDOW
-	AddImageButton( 13,  80, 210,  20, 20, TC_GREY, NULL, _("AI Debug Window"));
-#endif
+	if(GameClient::inst().IsHost())
+		AddImageButton( 13,  80, 210,  20, 20, TC_GREY, NULL, _("AI Debug Window"));
+
 	// Optionen
 	AddImageButton(30,  12, 231, 165, 32, TC_GREY, LOADER.GetImageN("io",  37), _("Options"));
 }
 
-
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Button-Click-Handler.
+ *
+ *  @author OLiver
+*/
 void iwMainMenu::Msg_ButtonClick(const unsigned int ctrl_id)
 {
 	switch(ctrl_id)
@@ -126,12 +129,10 @@ void iwMainMenu::Msg_ButtonClick(const unsigned int ctrl_id)
 		{
 			WindowManager::inst().Show(new iwBuildings);
 		} break;
-
 	case 6: // Inventur
 		{
 			WindowManager::inst().Show(new iwInventory);
 		} break;
-
 	case 7: // Produktivitäten
 		{
 			WindowManager::inst().Show(new iwBuildingProductivities);
@@ -142,7 +143,7 @@ void iwMainMenu::Msg_ButtonClick(const unsigned int ctrl_id)
 		} break;
 	case 9: // Schiffe
 		{
-			WindowManager::inst().Show(new iwShip(gwv,gi,GameClient::inst().GetLocalPlayer()->GetShipByID(0)));
+			WindowManager::inst().Show(new iwShip(gwv, gi, GAMECLIENT.GetLocalPlayer()->GetShipByID(0)));
 		} break;
 	case 10: // Baureihenfolge
 		{
@@ -152,13 +153,11 @@ void iwMainMenu::Msg_ButtonClick(const unsigned int ctrl_id)
 		{
 			WindowManager::inst().Show(new iwDiplomacy);
 		} break;
-#ifdef ENABLE_AI_DEBUG_WINDOW
 	case 13: // AI Debug
-		
 		{
-			WindowManager::inst().Show(new iwAIDebug(gwv));
+			if(GAMECLIENT.IsHost())
+				WindowManager::inst().Show(new iwAIDebug(gwv));
 		} break;	
-#endif	
 	case 30: // Optionen
 		{
 			WindowManager::inst().Show(new iwOptionsWindow(this->gi));

@@ -1,4 +1,4 @@
-// $Id: ctrlComboBox.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: ctrlComboBox.cpp 5978 2010-02-09 14:34:10Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -63,8 +63,8 @@ ctrlComboBox::ctrlComboBox(Window *parent,
 
 void ctrlComboBox::Msg_PaintAfter()
 {
-	// Button und Liste malen
-	DrawControls();
+	// Liste erst jetzt malen, damit sie den Rest überdeckt
+	GetCtrl<ctrlList>(0)->Draw();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -297,6 +297,10 @@ bool ctrlComboBox::Draw_(void)
 	// Namen des selektierten Strings in der Box anzeigen
 	if(liste->GetLineCount() > 0)
 		font->Draw(GetX() + 2, GetY() + height / 2, liste->GetSelItemText(), glArchivItem_Font::DF_VCENTER, COLOR_YELLOW, 0, width-2-height, "");
+
+	// Male restliche Controls per Hand, denn ein einfaches DrawControls() würde 
+	// auch die Liste malen, die bei Msg_PaintAfter() sowieso gemalt wird.
+	GetCtrl<ctrlImageButton>(1)->Draw();
 
 	return true;
 }

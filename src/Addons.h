@@ -214,16 +214,22 @@ public:
 	AddonLimitCatapults() : AddonList(ADDON_LIMIT_CATAPULTS, 
 									  ADDONGROUP_MILITARY,
 									  gettext_noop("Limit count of catapults"), 
-									  gettext_noop("Limits the count of catapults per player.\n\n"),
+									  gettext_noop("Limits the count of catapults per player.\n\n"
+												   "Proportional uses 0.125 catapult per barrack (you need 8 baracks for one catapult)\n"
+												   "                  0.25           per guardhouse (4 guardhouses per catapult)\n"
+												   "                  0.5            per watchtower (2 watchtower per catapult)\n"
+												   "                  1              per fortress (1 fortress per catapult)\n"),
 									  0
 									 )
 	{
 		addOption(gettext_noop("Unlimited"));
+		addOption(gettext_noop("Proportional"));
 		addOption(gettext_noop("No catapults"));
 		addOption(gettext_noop("10 catapults"));
 		addOption(gettext_noop("20 catapults"));
 		addOption(gettext_noop("30 catapults"));
 		addOption(gettext_noop("40 catapults"));
+		addOption(gettext_noop("50 catapults"));
 	}
 };
 

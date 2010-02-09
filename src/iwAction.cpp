@@ -1,4 +1,4 @@
-// $Id: iwAction.cpp 5980 2010-02-09 16:14:40Z FloSoft $
+// $Id: iwAction.cpp 5982 2010-02-09 16:28:12Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -215,9 +215,21 @@ iwAction::iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, cons
 			BuildingCount bc;
 			GAMECLIENT.GetLocalPlayer()->GetBuildingCount(bc);
 
-			const unsigned int limits[5] = { 0, 10, 20, 30, 40 };
+			unsigned int max = 0;
 
-			unsigned int max = limits[ADDONMANAGER.getSelection(ADDON_LIMIT_CATAPULTS) - 1];
+			// proportional?
+			if(ADDONMANAGER.getSelection(ADDON_LIMIT_CATAPULTS) == 1)
+			{
+				max = int(bc.building_counts[BLD_BARRACKS] * 0.125 +
+					  bc.building_counts[BLD_GUARDHOUSE] * 0.25 +
+					  bc.building_counts[BLD_WATCHTOWER] * 0.5 +
+					  bc.building_counts[BLD_FORTRESS]);
+			}
+			else
+			{
+				const unsigned int limits[5] = { 0, 10, 20, 30, 40, 50 };
+				max = limits[ADDONMANAGER.getSelection(ADDON_LIMIT_CATAPULTS) - 2];
+			}
 
 			if(bc.building_counts[BLD_CATAPULT] + bc.building_site_counts[BLD_CATAPULT] >= max)
 				building_available[1][12] = false;

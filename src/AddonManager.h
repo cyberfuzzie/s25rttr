@@ -54,7 +54,7 @@ public:
 	bool isEnabled(AddonId id) const
 	{
 		std::vector<item>::const_iterator it = std::find(addons.begin(), addons.end(), id);
-		if(it == addons.end() || it->status == 0)
+		if(it == addons.end() || it->status == it->addon->getDefaultStatus())
 			return false;
 		return true;
 	}

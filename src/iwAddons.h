@@ -39,6 +39,7 @@ public:
 
 protected:
 	void Msg_ButtonClick(const unsigned int ctrl_id);
+	void Msg_OptionGroupChange(const unsigned int ctrl_id, const unsigned short selection);
 
 private:
 	ChangePolicy policy;

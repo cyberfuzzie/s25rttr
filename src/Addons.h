@@ -33,17 +33,19 @@
 class Addon
 {
 public:
-	Addon(const AddonId id, const std::string &name, const std::string &description, const unsigned int default_status)
-		: id(id), name(name), description(description), default_status(default_status)	{	}
+	Addon(const AddonId id, const unsigned int groups, const std::string &name, const std::string &description, const unsigned int default_status)
+		: id(id), groups(groups), name(name), description(description), default_status(default_status)	{	}
 	virtual ~Addon() {	}
 
 	AddonId getId() const { return id; }
+	unsigned int getGroups() const { return (ADDONGROUP_ALL|groups); }
 	std::string getName() const { return name; }
 	std::string getDescription() const { return description; }
 	unsigned int getDefaultStatus() const { return default_status; }
 
 private:
 	AddonId id;
+	unsigned int groups;
 	std::string name;
 	std::string description;
 	unsigned int default_status;
@@ -59,8 +61,8 @@ private:
 class AddonList : public Addon
 {
 public:
-	AddonList(const AddonId id, const std::string &name, const std::string &description, const unsigned int default_status)
-		: Addon(id, name, description, default_status) { }
+	AddonList(const AddonId id, const unsigned int groups, const std::string &name, const std::string &description, const unsigned int default_status)
+		: Addon(id, groups, name, description, default_status) { }
 
 	void fillComboBox(ctrlComboBox *c) const
 	{
@@ -93,8 +95,8 @@ private:
 class AddonBool : public Addon
 {
 public:
-	AddonBool(const AddonId id, const std::string &name, const std::string &description, const unsigned int default_status)
-		: Addon(id, name, description, default_status) { }
+	AddonBool(const AddonId id, const unsigned int groups, const std::string &name, const std::string &description, const unsigned int default_status)
+		: Addon(id, groups, name, description, default_status) { }
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -108,6 +110,7 @@ class AddonChangeGoldDeposits : public AddonList
 {
 public:
 	AddonChangeGoldDeposits() : AddonList(ADDON_CHANGE_GOLD_DEPOSITS, 
+										  ADDONGROUP_MILITARY|ADDONGROUP_ECONOMY,
 											gettext_noop("Change gold deposits"), 
 											gettext_noop("Allows to play games without gold.\n\n"
 														 "You can choose to remove gold resources completely,\n"
@@ -135,6 +138,7 @@ class AddonMaxWaterwayLength : public AddonList
 {
 public:
 	AddonMaxWaterwayLength() : AddonList(ADDON_MAX_WATERWAY_LENGTH, 
+										 ADDONGROUP_GAMEPLAY,
 											gettext_noop("Set maximum waterway length"), 
 											gettext_noop("Limits the distance settlers may travel per boat.\n\n"
 														 "Possible values are:\nShort: 3 tiles\n"
@@ -162,6 +166,7 @@ class AddonCustomBuildSequence : public AddonBool
 {
 public:
 	AddonCustomBuildSequence() : AddonBool(ADDON_CUSTOM_BUILD_SEQUENCE,
+										   ADDONGROUP_ECONOMY|ADDONGROUP_GAMEPLAY,
 											gettext_noop("Custom build sequence"), 
 											gettext_noop("Allows every player to control whether building sites\n"
 														 "should be supplied in sequence of given order or in a definable\n"
@@ -183,6 +188,7 @@ class AddonStatisticsVisibility : public AddonList
 {
 public:
 	AddonStatisticsVisibility() : AddonList(ADDON_STATISTICS_VISIBILITY, 
+											ADDONGROUP_OTHER,
 											gettext_noop("Change the visibility of your ingame statistics"), 
 											gettext_noop("Decides to whom your statistics is visible.\n\n"
 												   "\"Allies\" applies to team members as well as "

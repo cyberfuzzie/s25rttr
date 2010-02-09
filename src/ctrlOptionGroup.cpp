@@ -1,4 +1,4 @@
-// $Id: ctrlOptionGroup.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: ctrlOptionGroup.cpp 5979 2010-02-09 15:37:16Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -70,6 +70,7 @@ void ctrlOptionGroup::SetSelection(unsigned short selection, bool notify)
 	if(this->selection != 0xFFFF)
 	{
 		ctrlButton *button = GetCtrl<ctrlButton>(this->selection);
+		assert(button);
 		switch(select_type)
 		{
 		case ILLUMINATE: button->SetIlluminated(false); break;
@@ -82,6 +83,7 @@ void ctrlOptionGroup::SetSelection(unsigned short selection, bool notify)
 	if(selection != 0xFFFF)
 	{
 		ctrlButton *button = GetCtrl<ctrlButton>(selection);
+		assert(button);
 		switch(select_type)
 		{
 		case ILLUMINATE: button->SetIlluminated(true); break;

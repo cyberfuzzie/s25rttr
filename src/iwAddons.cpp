@@ -53,38 +53,20 @@ iwAddons::iwAddons(ChangePolicy policy)
 	if(policy != READONLY)
 		AddTextButton(3, 480, height-40, 200, 22, TC_GREY, _("Use S2 Defaults"), NormalFont);
 
-	int y = 70;
+	// Kategorien
+	ctrlOptionGroup *optiongroup = AddOptionGroup(5, ctrlOptionGroup::CHECK, scale);
+	// "Alle"
+	optiongroup->AddTextButton(ADDONGROUP_ALL,  20, 50, 120, 22, TC_GREEN2, _("All"), NormalFont);
+	// "Militär"
+	optiongroup->AddTextButton(ADDONGROUP_MILITARY, 150, 50, 120, 22, TC_GREEN2, _("Military"), NormalFont);
+	// "Wirtschaft"
+	optiongroup->AddTextButton(ADDONGROUP_ECONOMY, 290, 50, 120, 22, TC_GREEN2, _("Economy"), NormalFont);
+	// "Spielverhalten"
+	optiongroup->AddTextButton(ADDONGROUP_GAMEPLAY, 430, 50, 120, 22, TC_GREEN2, _("Gameplay"), NormalFont);
+	// "Sonstiges"
+	optiongroup->AddTextButton(ADDONGROUP_OTHER, 560, 50, 120, 22, TC_GREEN2, _("Other"), NormalFont);
 
-	for(unsigned int i = 0; i < ADDONMANAGER.getCount(); ++i)
-	{
-		unsigned int status;
-		const Addon *addon = ADDONMANAGER.getAddon(i, status);
-
-		if(!addon)
-			continue;
-
-		AddText(10 + 5*i, 52, y+4, _(addon->getName()), COLOR_YELLOW, 0, NormalFont);
-		AddImageButton(10 + 5*i + 1, 20, y, 22, 22, TC_GREY, LOADER.GetImageN("io", 21), addon->getDescription());
-
-		const AddonList *addonl = dynamic_cast<const AddonList *>(addon);
-		const AddonBool *addonb = dynamic_cast<const AddonBool *>(addon);
-
-		ctrlComboBox *c = AddComboBox(10 + 5*i + 2, 430, y, 250, 20,  TC_GREY, NormalFont, 100, (policy == READONLY) );
-
-		if(addonl)
-		{
-			addonl->fillComboBox(c);
-		}
-		else if(addonb)
-		{
-			c->AddString(_("Disabled"));
-			c->AddString(_("Use"));
-		}
-		c->SetSelection(status);
-
-		y += 30;
-	}
-
+	optiongroup->SetSelection(ADDONGROUP_ALL, true);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -171,6 +153,85 @@ void iwAddons::Msg_ButtonClick(const unsigned int ctrl_id)
 
 				c->SetSelection(addon->getDefaultStatus());
 			}
+		} break;
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *
+ *
+ *  @author FloSoft
+ */
+void iwAddons::Msg_OptionGroupChange(const unsigned int ctrl_id, const unsigned short selection)
+{
+	switch(ctrl_id)
+	{
+	case 5: // richtige Kategorie anzeigen
+		{
+			int y = 90;
+			for(unsigned int i = 0; i < ADDONMANAGER.getCount(); ++i)
+			{
+				unsigned int status;
+				const Addon *addon = ADDONMANAGER.getAddon(i, status);
+
+				if(!addon)
+					continue;
+
+				ctrlText *text = GetCtrl<ctrlText>(10 + 5*i);
+				ctrlImageButton *button = GetCtrl<ctrlImageButton>(10 + 5*i + 1);
+				ctrlComboBox *combo = GetCtrl<ctrlComboBox>(10 + 5*i +2);
+
+				unsigned int groups = addon->getGroups();
+				if( (groups & selection) != selection)
+				{
+					// ggf unsichtbar machen
+					if(text)	text->SetVisible(false);
+					if(button)	button->SetVisible(false);
+					if(combo)	combo->SetVisible(false);
+					continue;
+				}
+
+				// ggf buttons usw erzeugen
+				if(!text)
+					text = AddText(10 + 5*i, 52, y+4, "", COLOR_YELLOW, 0, NormalFont);
+				if(!button)
+					button = AddImageButton(10 + 5*i + 1, 20, y, 22, 22, TC_GREY, LOADER.GetImageN("io", 21));
+				if(!combo)
+					combo = AddComboBox(10 + 5*i + 2, 430, y, 250, 20,  TC_GREY, NormalFont, 100, (policy == READONLY) );
+
+				// ggf an richtige Stelle schieben
+				text->Move(52, y + 4);
+				button->Move(20, y);
+				combo->Move(430, y); 
+
+				// und sichtbar machen
+				text->SetVisible(true);
+				button->SetVisible(true);
+				combo->SetVisible(true);
+
+				text->SetText(_(addon->getName()));
+				button->SetTooltip(addon->getDescription());
+
+				const AddonList *addonl = dynamic_cast<const AddonList *>(addon);
+				const AddonBool *addonb = dynamic_cast<const AddonBool *>(addon);
+				
+
+				combo->DeleteAllItems();
+
+				if(addonl)
+				{
+					addonl->fillComboBox(combo);
+				}
+				else if(addonb)
+				{
+					combo->AddString(_("Disabled"));
+					combo->AddString(_("Use"));
+				}
+				combo->SetSelection(status);
+
+				y += 30;
+			}		
 		} break;
 	}
 }

@@ -1,4 +1,4 @@
-// $Id: iwAIDebug.cpp 5991 2010-02-10 15:44:37Z FloSoft $
+// $Id: iwAIDebug.cpp 5995 2010-02-10 22:57:41Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -123,7 +123,7 @@ void iwAIDebug::Msg_ComboSelectItem(const unsigned int ctrl_id, const unsigned s
 	case 0:
 		{
 			selection = select;
-			gwv->SetAIDebug(overlay, ais[selection]->GetPlayerID(), true);
+			gwv->SetAIDebug(overlay, ais[selection]->GetPlayerID(), false);
 		} break;
 	case 1:
 		{
@@ -148,6 +148,8 @@ void iwAIDebug::Msg_PaintBefore()
 		text->SetText(_("No current job"));
 		return;
 	}
+
+	ss << "Jobs to do: " << ais[selection]->GetJobNum() << std::endl << std::endl;
 
 	AIJH::BuildJob *bj = dynamic_cast<AIJH::BuildJob *>(currentJob);
 	AIJH::EventJob *ej = dynamic_cast<AIJH::EventJob *>(currentJob);

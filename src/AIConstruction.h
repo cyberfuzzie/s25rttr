@@ -1,4 +1,4 @@
-// $Id: AIConstruction.h 5991 2010-02-10 15:44:37Z FloSoft $
+// $Id: AIConstruction.h 5995 2010-02-10 22:57:41Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -40,6 +40,7 @@ public:
 	void AddBuildJob(AIJH::BuildJob *job);
 
 	AIJH::Job *GetBuildJob();
+	unsigned GetBuildJobNum() const { return buildJobs.size(); }
 
 	void AddConnectFlagJob(AIPlayerJH *aijh, const noFlag *flag); // todo aijh als param suckt
 

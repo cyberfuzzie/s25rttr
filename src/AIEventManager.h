@@ -1,4 +1,4 @@
-// $Id: AIEventManager.h 5928 2010-01-24 21:14:42Z jh $
+// $Id: AIEventManager.h 5995 2010-02-10 22:57:41Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -89,6 +89,7 @@ public:
 	void AddAIEvent(AIEvent::Base *ev) { events.push(ev); }
 	AIEvent::Base *GetEvent();
 	bool EventAvailable() const { return events.size() > 0; }
+	unsigned GetEventNum() const { return events.size(); }
 
 protected:
 	std::queue<AIEvent::Base *> events;

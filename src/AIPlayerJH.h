@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.h 5976 2010-02-08 23:05:33Z jh $
+// $Id: AIPlayerJH.h 5995 2010-02-10 22:57:41Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -178,6 +178,7 @@ protected:
 	AIJH::Job *GetCurrentJob() { return currentJob; }
 public:
 	inline AIJH::Node &GetAINode(MapCoord x, MapCoord y) { return nodes[x + gwb->GetWidth() * y]; }
+	inline unsigned GetJobNum() const { return eventManager.GetEventNum() + construction.GetBuildJobNum(); }
 
 // Event...
 protected:

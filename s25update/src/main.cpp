@@ -1,4 +1,4 @@
-// $Id: main.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: main.cpp 5990 2010-02-10 15:28:42Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -252,6 +252,16 @@ string md5sum(string file)
  */
 int main(int argc, char *argv[])
 {
+	bool verbose = false;
+	if(argc > 1)
+	{
+		for(int i = 1; i < argc; ++i)
+		{
+			if(strcmp(argv[i], "--verbose") == 0 || strcmp(argv[i], "-v") == 0 )
+			   verbose = true;
+		}
+	}
+
 	// initialize curl
 	curl_global_init(CURL_GLOBAL_ALL);
 	atexit(curl_global_cleanup);
@@ -263,7 +273,14 @@ int main(int argc, char *argv[])
 
 	// download filelist
 	if(!DownloadFile(FILELIST, filelist))
+	{
+		cout << "Update Failed: Downloading the masterfile was unsuccessful!" << endl;
+#if defined _DEBUG && defined _MSC_VER
+		cout << "Press return to continue . . ." << flush;
+		cin.get();
+#endif
 		return 1;
+	}
 
 	stringstream flstream(filelist);
 
@@ -315,7 +332,12 @@ int main(int argc, char *argv[])
 			CreateDirRecursive(path);
 
 			stringstream progress;
-			progress << "Downloading file \"" << setw(longestname) << setiosflags(ios::left) << name << "\" to \"" << setw(longestpath) << path << "\": ";
+			progress << "Downloading file \"" << setw(longestname) << setiosflags(ios::left) << name << "\"";
+			
+			if(verbose)
+				progress << " to \"" << setw(longestpath) << path << "\"";
+			
+			progress << ": ";
 			string url = HTTPHOST + bzfile;
 			string fdata = "";
 

@@ -36,21 +36,21 @@ rm -rf lib
 mv -v share s25client.app/Contents/MacOS/
 
 if [ ! -z "$TARGET" ] ; then
-	mkdir -p $TARGET/$ARCH
+	mkdir -p $TARGET/$ARCH.new
 	
 	BINARIES="s25client.app"
-	rm -rv $TARGET/$ARCH/binaries.tar.bz2
-	tar --exclude=.svn -cvjf $TARGET/$ARCH/binaries.tar.bz2 $BINARIES
+	rm -rv $TARGET/$ARCH.new/binaries.tar.bz2
+	tar --exclude=.svn -cvjf $TARGET/$ARCH.new/binaries.tar.bz2 $BINARIES
 	
 	#LIBRARIES="lib/libsiedler2.dylib"
-	#rm -rv $TARGET/$ARCH/libraries.tar.bz2
-	#tar --exclude=.svn -cvjf $TARGET/$ARCH/libraries.tar.bz2 $LIBRARIES
+	#rm -rv $TARGET/$ARCH.new/libraries.tar.bz2
+	#tar --exclude=.svn -cvjf $TARGET/$ARCH.new/libraries.tar.bz2 $LIBRARIES
 
-	#rm -rv $TARGET/$ARCH/RTTR.tar.bz2
-	#tar --exclude=.svn --exclude=share/s25rttr/RTTR/sound-convert -cvjf $TARGET/$ARCH/RTTR.tar.bz2 share/s25rttr/RTTR
+	#rm -rv $TARGET/$ARCH.new/RTTR.tar.bz2
+	#tar --exclude=.svn --exclude=share/s25rttr/RTTR/sound-convert -cvjf $TARGET/$ARCH.new/RTTR.tar.bz2 share/s25rttr/RTTR
 
-	#rm -rv $TARGET/$ARCH/drivers.tar.bz2
-	#tar --exclude=.svn -cvjf $TARGET/$ARCH/drivers.tar.bz2 share/s25rttr/driver
+	#rm -rv $TARGET/$ARCH.new/drivers.tar.bz2
+	#tar --exclude=.svn -cvjf $TARGET/$ARCH.new/drivers.tar.bz2 share/s25rttr/driver
 	
-	cp -v readme.txt $TARGET/$ARCH
+	cp -v readme.txt $TARGET/$ARCH.new
 fi

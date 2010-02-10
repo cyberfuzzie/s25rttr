@@ -16,9 +16,10 @@ else
 	rm -f /tmp/version.$$
 fi
 
-rm -fr $TARGET/$ARCH
+rm -fr $TARGET/$ARCH.new
 mkdir -p $TARGET
 mkdir -p $TARGET/$ARCH
+mkdir -p $TARGET/$ARCH.new
 
 mv $TARGET/build_${ARCH}.log $TARGET/build_${ARCH}_old.log
 
@@ -38,59 +39,64 @@ else
 	cp -v s25rttr_$VERSION.tar.bz2 $TARGET/s25rttr_${VERSION}-${REVISION}_${ARCH}.tar.bz2 >> $TARGET/build_${ARCH}.log
 	rm -f s25rttr_$VERSION.tar.bz2
 
-	rm -f $TARGET/$ARCH/music.tar.bz2
-	cp -v s25rttr_music.tar.bz2 $TARGET/$ARCH/music.tar.bz2 >> $TARGET/build_${ARCH}.log
+	rm -f $TARGET/$ARCH.new/music.tar.bz2
+	cp -v s25rttr_music.tar.bz2 $TARGET/$ARCH.new/music.tar.bz2 >> $TARGET/build_${ARCH}.log
 	rm -f s25rttr_music.tar.bz2
 
-	if [ -f $TARGET/$ARCH/binaries.tar.bz2 ] ; then
-		tar -C $TARGET/$ARCH -xf $TARGET/$ARCH/binaries.tar.bz2 >> $TARGET/build_${ARCH}.log
+	if [ -f $TARGET/$ARCH.new/binaries.tar.bz2 ] ; then
+		tar -C $TARGET/$ARCH.new -xf $TARGET/$ARCH.new/binaries.tar.bz2 >> $TARGET/build_${ARCH}.log
 	fi
 	
-	if [ -f $TARGET/$ARCH/drivers.tar.bz2 ] ; then
-		tar -C $TARGET/$ARCH -xf $TARGET/$ARCH/drivers.tar.bz2 >> $TARGET/build_${ARCH}.log
+	if [ -f $TARGET/$ARCH.new/drivers.tar.bz2 ] ; then
+		tar -C $TARGET/$ARCH.new -xf $TARGET/$ARCH.new/drivers.tar.bz2 >> $TARGET/build_${ARCH}.log
 	fi
 
-	if [ -f $TARGET/$ARCH/libraries.tar.bz2 ] ; then
-		tar -C $TARGET/$ARCH -xf $TARGET/$ARCH/libraries.tar.bz2 >> $TARGET/build_${ARCH}.log
+	if [ -f $TARGET/$ARCH.new/libraries.tar.bz2 ] ; then
+		tar -C $TARGET/$ARCH.new -xf $TARGET/$ARCH.new/libraries.tar.bz2 >> $TARGET/build_${ARCH}.log
 	fi
 
-	if [ -f $TARGET/$ARCH/RTTR.tar.bz2 ] ; then
-		tar -C $TARGET/$ARCH -xf $TARGET/$ARCH/RTTR.tar.bz2 >> $TARGET/build_${ARCH}.log
+	if [ -f $TARGET/$ARCH.new/RTTR.tar.bz2 ] ; then
+		tar -C $TARGET/$ARCH.new -xf $TARGET/$ARCH.new/RTTR.tar.bz2 >> $TARGET/build_${ARCH}.log
 	fi
 
-	if [ -f $TARGET/$ARCH/music.tar.bz2 ] ; then
-		if [ -d  $TARGET/$ARCH/share/s25rttr ] ; then
-			tar -C $TARGET/$ARCH/share/s25rttr -xf $TARGET/$ARCH/music.tar.bz2 >> $TARGET/build_${ARCH}.log
-		elif [ -d $TARGET/$ARCH/s25client.app/Contents/MacOS/share/s25rttr ] ; then
-			tar -C $TARGET/$ARCH/s25client.app/Contents/MacOS/share/s25rttr -xf $TARGET/$ARCH/music.tar.bz2 >> $TARGET/build_${ARCH}.log
+	if [ -f $TARGET/$ARCH.new/music.tar.bz2 ] ; then
+		if [ -d  $TARGET/$ARCH.new/share/s25rttr ] ; then
+			tar -C $TARGET/$ARCH.new/share/s25rttr -xf $TARGET/$ARCH.new/music.tar.bz2 >> $TARGET/build_${ARCH}.log
+		elif [ -d $TARGET/$ARCH.new/s25client.app/Contents/MacOS/share/s25rttr ] ; then
+			tar -C $TARGET/$ARCH.new/s25client.app/Contents/MacOS/share/s25rttr -xf $TARGET/$ARCH.new/music.tar.bz2 >> $TARGET/build_${ARCH}.log
 		else
-			tar -C $TARGET/$ARCH -xf $TARGET/$ARCH/music.tar.bz2 >> $TARGET/build_${ARCH}.log
+			tar -C $TARGET/$ARCH.new -xf $TARGET/$ARCH.new/music.tar.bz2 >> $TARGET/build_${ARCH}.log
 		fi
 	fi
 
-	rm -f $TARGET/$ARCH/*.tar.bz2
+	rm -f $TARGET/$ARCH.new/*.tar.bz2
 
  	echo "${REVISION}" > $TARGET/.revision
 	echo "${VERSION}" > $TARGET/.version
 	echo "s25rttr_${VERSION}-${REVISION}_${ARCH}.tar.bz2" >> $TARGET/.files
 	
 	OPWD=$PWD
-	cd $TARGET/$ARCH
+	cd $TARGET/$ARCH.new
 	md5deep -r -l . > /tmp/files.$$
 	cd $OPWD
 
-	find $TARGET/$ARCH -type f -exec bzip2 -v {} >> $TARGET/build_${ARCH}.log 2>&1 \;
+	find $TARGET/$ARCH.new -type f -exec bzip2 -v {} >> $TARGET/build_${ARCH}.log 2>&1 \;
 
-	mv /tmp/files.$$ $TARGET/$ARCH/files
+	mv /tmp/files.$$ $TARGET/$ARCH.new/files
 	
-	touch $TARGET/$ARCH/revision-$REVISION
-	touch $TARGET/$ARCH/version-$VERSION
+	touch $TARGET/$ARCH.new/revision-$REVISION
+	touch $TARGET/$ARCH.new/version-$VERSION
+
+	# swap old & new ARCH-Tree
+	rm -fr $TARGET/$ARCH.old
+	mv $TARGET/$ARCH $TARGET/$ARCH.old
+	mv $TARGET/$ARCH.new $TARGET/$ARCH
 
 	if [ -z "$NORS" ] ; then
 		/srv/buildfarm/uploadrs.sh $TARGET/s25rttr_${VERSION}-${REVISION}_${ARCH}.tar.bz2 >> $TARGET/build_${ARCH}.log
 		rm -f $TARGET/s25rttr_${VERSION}-${REVISION}_${ARCH}.tar.bz2 >> $TARGET/build_${ARCH}.log
 	fi
-
+	
 	EXIT=0
 fi
 

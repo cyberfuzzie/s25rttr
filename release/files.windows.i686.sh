@@ -61,24 +61,24 @@ mv -v share/s25rttr/RTTR .
 rm -vrf share
 
 if [ ! -z "$TARGET" ] ; then
-	mkdir -p $TARGET/$ARCH
+	mkdir -p $TARGET/$ARCH.new
 	
 	BINARIES="start.bat RTTR/s25update.exe s25client.exe RTTR/sound-convert.exe"
-	rm -v $TARGET/$ARCH/binaries.tar.bz2
-	tar --exclude=.svn -cvjf $TARGET/$ARCH/binaries.tar.bz2 $BINARIES
+	rm -v $TARGET/$ARCH.new/binaries.tar.bz2
+	tar --exclude=.svn -cvjf $TARGET/$ARCH.new/binaries.tar.bz2 $BINARIES
 
 	LIBRARIES="libiconv2.dll libintl3.dll SDL_mixer.dll SDL.dll RTTR/libcurl-4.dll RTTR/zlib1.dll libvorbisfile-3.dll libvorbis-0.dll libogg-0.dll"
 	# RTTR/libsamplerate.dll RTTR/libsndfile-1.dll"
-	rm -v $TARGET/$ARCH/libraries.tar.bz2
-	tar --exclude=.svn -cvjf $TARGET/$ARCH/libraries.tar.bz2 $LIBRARIES
+	rm -v $TARGET/$ARCH.new/libraries.tar.bz2
+	tar --exclude=.svn -cvjf $TARGET/$ARCH.new/libraries.tar.bz2 $LIBRARIES
 
-	rm -v $TARGET/$ARCH/RTTR.tar.bz2
+	rm -v $TARGET/$ARCH.new/RTTR.tar.bz2
 	tar --exclude=.svn --exclude=RTTR/libsamplerate.dll --exclude=RTTR/libsndfile-1.dll \
 	    --exclude=RTTR/s25update.exe --exclude=RTTR/libcurl-4.dll --exclude=RTTR/zlib1.dll \
-	    --exclude=RTTR/sound-convert.exe -cvjf $TARGET/$ARCH/RTTR.tar.bz2 RTTR
+	    --exclude=RTTR/sound-convert.exe -cvjf $TARGET/$ARCH.new/RTTR.tar.bz2 RTTR
 	
-	rm -v $TARGET/$ARCH/drivers.tar.bz2
-	tar --exclude=.svn -cvjf $TARGET/$ARCH/drivers.tar.bz2 driver
+	rm -v $TARGET/$ARCH.new/drivers.tar.bz2
+	tar --exclude=.svn -cvjf $TARGET/$ARCH.new/drivers.tar.bz2 driver
 	
-	cp -v readme.txt $TARGET/$ARCH
+	cp -v readme.txt $TARGET/$ARCH.new
 fi

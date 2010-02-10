@@ -47,24 +47,24 @@ dpkg-sig -v -k 6D09334C -s builder ../../deb/s25rttr_${VERSION}_${PKGARCH}.deb
 
 # copy to target
 if [ ! -z "$TARGET" ] ; then
-        #reprepro -Vb $TARGET/deb remove sid s25rttr
-        reprepro -Vb $TARGET/deb includedeb sid ../../deb/s25rttr_${VERSION}_${PKGARCH}.deb
-
-	mkdir -p $TARGET/$ARCH
+	#reprepro -Vb $TARGET/deb remove sid s25rttr
+	reprepro -Vb $TARGET/deb includedeb sid ../../deb/s25rttr_${VERSION}_${PKGARCH}.deb
+	
+	mkdir -p $TARGET/$ARCH.new
 	
 	BINARIES="bin/rttr.sh share/s25rttr/RTTR/s25update bin/s25client share/s25rttr/RTTR/sound-convert"
-	rm -rv $TARGET/$ARCH/binaries.tar.bz2
-	tar --exclude=.svn -cvjf $TARGET/$ARCH/binaries.tar.bz2 $BINARIES
+	rm -rv $TARGET/$ARCH.new/binaries.tar.bz2
+	tar --exclude=.svn -cvjf $TARGET/$ARCH.new/binaries.tar.bz2 $BINARIES
 	
 	#LIBRARIES="lib/libsiedler2.so"
-	#rm -rv $TARGET/$ARCH/libraries.tar.bz2
-	#tar --exclude=.svn -cvjf $TARGET/$ARCH/libraries.tar.bz2 $LIBRARIES
-
-	rm -rv $TARGET/$ARCH/drivers.tar.bz2
-	tar --exclude=.svn --exclude=share/s25rttr/RTTR/sound-convert -cvjf $TARGET/$ARCH/RTTR.tar.bz2 share/s25rttr/RTTR
-
-	rm -rv $TARGET/$ARCH/drivers.tar.bz2
-	tar --exclude=.svn -cvjf $TARGET/$ARCH/drivers.tar.bz2 share/s25rttr/driver
+	#rm -rv $TARGET/$ARCH.new/libraries.tar.bz2
+	#tar --exclude=.svn -cvjf $TARGET/$ARCH.new/libraries.tar.bz2 $LIBRARIES
 	
-	cp -v readme.txt $TARGET/$ARCH
+	rm -rv $TARGET/$ARCH.new/drivers.tar.bz2
+	tar --exclude=.svn --exclude=share/s25rttr/RTTR/sound-convert -cvjf $TARGET/$ARCH.new/RTTR.tar.bz2 share/s25rttr/RTTR
+	
+	rm -rv $TARGET/$ARCH.new/drivers.tar.bz2
+	tar --exclude=.svn -cvjf $TARGET/$ARCH.new/drivers.tar.bz2 share/s25rttr/driver
+	
+	cp -v readme.txt $TARGET/$ARCH.new
 fi

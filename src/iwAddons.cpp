@@ -1,4 +1,4 @@
-// $Id: iwAddons.cpp 5991 2010-02-10 15:44:37Z FloSoft $
+// $Id: iwAddons.cpp 5992 2010-02-10 17:16:10Z FloSoft $
 //
 // Copyright (c) 2005-2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -106,11 +106,10 @@ void iwAddons::Msg_ButtonClick(const unsigned int ctrl_id)
 				if(!addon)
 					continue;
 
-				ctrlComboBox *c = GetCtrl<ctrlComboBox>(10 + 5*i + 2);
-				if(!c)
-					continue;
-
-				ADDONMANAGER.setSelection(addon->getId(), c->GetSelection());
+				bool failed = false;
+				status = addon->getGuiStatus(this, 20 + 5*i, failed);
+				if(!failed)
+					ADDONMANAGER.setSelection(addon->getId(), status);
 			}
 
 			switch(policy)
@@ -147,11 +146,7 @@ void iwAddons::Msg_ButtonClick(const unsigned int ctrl_id)
 				if(!addon)
 					continue;
 
-				ctrlComboBox *c = GetCtrl<ctrlComboBox>(10 + 5*i + 2);
-				if(!c)
-					continue;
-
-				c->SetSelection(addon->getDefaultStatus());
+				addon->setGuiStatus(this, 10 + 20*i, addon->getDefaultStatus());
 			}
 		} break;
 	}
@@ -169,68 +164,24 @@ void iwAddons::Msg_OptionGroupChange(const unsigned int ctrl_id, const unsigned 
 	{
 	case 5: // richtige Kategorie anzeigen
 		{
-			int y = 90;
+			unsigned short y = 90;
 			for(unsigned int i = 0; i < ADDONMANAGER.getCount(); ++i)
 			{
+				unsigned int id = 10 + 20*i;
 				unsigned int status;
 				const Addon *addon = ADDONMANAGER.getAddon(i, status);
 
 				if(!addon)
 					continue;
 
-				ctrlText *text = GetCtrl<ctrlText>(10 + 5*i);
-				ctrlImageButton *button = GetCtrl<ctrlImageButton>(10 + 5*i + 1);
-				ctrlComboBox *combo = GetCtrl<ctrlComboBox>(10 + 5*i +2);
-
 				unsigned int groups = addon->getGroups();
 				if( (groups & selection) != selection)
 				{
-					// ggf unsichtbar machen
-					if(text)	text->SetVisible(false);
-					if(button)	button->SetVisible(false);
-					if(combo)	combo->SetVisible(false);
+					addon->hideGui(this, id);
 					continue;
 				}
 
-				// ggf buttons usw erzeugen
-				if(!text)
-					text = AddText(10 + 5*i, 52, y+4, "", COLOR_YELLOW, 0, NormalFont);
-				if(!button)
-					button = AddImageButton(10 + 5*i + 1, 20, y, 22, 22, TC_GREY, LOADER.GetImageN("io", 21));
-				if(!combo)
-					combo = AddComboBox(10 + 5*i + 2, 430, y, 250, 20,  TC_GREY, NormalFont, 100, (policy == READONLY) );
-
-				// ggf an richtige Stelle schieben
-				text->Move(52, y + 4);
-				button->Move(20, y);
-				combo->Move(430, y); 
-
-				// und sichtbar machen
-				text->SetVisible(true);
-				button->SetVisible(true);
-				combo->SetVisible(true);
-
-				text->SetText(_(addon->getName()));
-				button->SetTooltip(addon->getDescription());
-
-				const AddonList *addonl = dynamic_cast<const AddonList *>(addon);
-				const AddonBool *addonb = dynamic_cast<const AddonBool *>(addon);
-				
-
-				combo->DeleteAllItems();
-
-				if(addonl)
-				{
-					addonl->fillComboBox(combo);
-				}
-				else if(addonb)
-				{
-					combo->AddString(_("Disabled"));
-					combo->AddString(_("Use"));
-				}
-				combo->SetSelection(status);
-
-				y += 30;
+				addon->createGui(this, id, y, (policy == READONLY), status);
 			}		
 		} break;
 	}

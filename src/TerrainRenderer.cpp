@@ -1,4 +1,4 @@
-// $Id: TerrainRenderer.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: TerrainRenderer.cpp 5992 2010-02-10 17:16:10Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -847,10 +847,10 @@ void TerrainRenderer::Draw(const GameWorldViewer * gwv,unsigned int *water)
 			switch(i)
 			{
 			case 14:
-				glBindTexture(GL_TEXTURE_2D, GetImage(water, GAMECLIENT.GetGlobalAnimation(8,5, 5, 0))->GetTexture());
+				glBindTexture(GL_TEXTURE_2D, GetImage(water, GAMECLIENT.GetGlobalAnimation(8, 20, 5, 0))->GetTexture());
 				break;
 			case 15:
-				glBindTexture(GL_TEXTURE_2D, GetImage(lava, GAMECLIENT.GetGlobalAnimation(8,5, 5, 0) % 4)->GetTexture());
+				glBindTexture(GL_TEXTURE_2D, GetImage(lava, GAMECLIENT.GetGlobalAnimation(8, 20, 5, 0) % 4)->GetTexture());
 				break;
 			default:
 				glBindTexture(GL_TEXTURE_2D, GetImage(textures, i)->GetTexture());

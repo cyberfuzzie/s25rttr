@@ -1,4 +1,4 @@
-// $Id: Addons.h 5991 2010-02-10 15:44:37Z FloSoft $
+// $Id: Addons.h 5992 2010-02-10 17:16:10Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -22,7 +22,8 @@
 #pragma once
 
 #include "const_addons.h"
-#include "ctrlComboBox.h"
+
+class Window;
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
@@ -36,6 +37,16 @@ public:
 	Addon(const AddonId id, const unsigned int groups, const std::string &name, const std::string &description, const unsigned int default_status)
 		: id(id), groups(groups), name(name), description(description), default_status(default_status)	{	}
 	virtual ~Addon() {	}
+
+	virtual void hideGui(Window *window, unsigned int id) const;
+	virtual void createGui(Window *window, unsigned int id, unsigned short& y, bool readonly, unsigned int status) const;
+	virtual void setGuiStatus(Window *window, unsigned int id, unsigned int status) const {	}
+
+	virtual unsigned int getGuiStatus(Window *window, unsigned int id, bool& failed) const 
+	{
+		failed = false; 
+		return getDefaultStatus();
+	}
 
 	AddonId getId() const { return id; }
 	unsigned int getGroups() const { return (ADDONGROUP_ALL|groups); }
@@ -64,11 +75,10 @@ public:
 	AddonList(const AddonId id, const unsigned int groups, const std::string &name, const std::string &description, const unsigned int default_status)
 		: Addon(id, groups, name, description, default_status) { }
 
-	void fillComboBox(ctrlComboBox *c) const
-	{
-		for(std::vector<std::string>::const_iterator it = options.begin(); it != options.end(); ++it)
-			c->AddString(*it);
-	}
+	virtual void hideGui(Window *window, unsigned int id) const;
+	virtual void createGui(Window *window, unsigned int id, unsigned short& y, bool readonly, unsigned int status) const;
+	virtual void setGuiStatus(Window *window, unsigned int id, unsigned int status) const;
+	virtual unsigned int getGuiStatus(Window *window, unsigned int id, bool& failed) const;
 
 protected:
 	void removeOptions()
@@ -97,6 +107,11 @@ class AddonBool : public Addon
 public:
 	AddonBool(const AddonId id, const unsigned int groups, const std::string &name, const std::string &description, const unsigned int default_status)
 		: Addon(id, groups, name, description, default_status) { }
+
+	virtual void hideGui(Window *window, unsigned int id) const;
+	virtual void createGui(Window *window, unsigned int id, unsigned short& y, bool readonly, unsigned int status) const;
+	virtual void setGuiStatus(Window *window, unsigned int id, unsigned int status) const;
+	virtual unsigned int getGuiStatus(Window *window, unsigned int id, bool& failed) const;
 };
 
 ///////////////////////////////////////////////////////////////////////////////

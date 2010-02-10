@@ -1,4 +1,4 @@
-// $Id: dskOptions.cpp 5978 2010-02-09 14:34:10Z FloSoft $
+// $Id: dskOptions.cpp 5989 2010-02-10 14:13:58Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -156,7 +156,6 @@ dskOptions::dskOptions(void) : Desktop(LOADER.GetImageN("setup013", 0))
 	case 5:		{	combo->SetSelection(2);	} break;
 	}
 
-
 	// }
 
 	// "Auflösung"
@@ -170,14 +169,8 @@ dskOptions::dskOptions(void) : Desktop(LOADER.GetImageN("setup013", 0))
 	optiongroup->AddTextButton(49, 280, 125, 190, 22, TC_GREY, _("Windowed"), NormalFont);
 
 	// "VSync"
-	groupGrafik->AddText(  50,  80, 180, _("VSync:"), COLOR_YELLOW, 0, NormalFont);
-	optiongroup = groupGrafik->AddOptionGroup(51, ctrlOptionGroup::CHECK, scale);
-
-	if(GLOBALVARS.ext_swapcontrol == false) // VSync unterstützt?
-		optiongroup->AddText(  52, 280, 180, _("not supported"), COLOR_YELLOW, 0, NormalFont);
-	else
-		optiongroup->AddTextButton(52, 280, 175, 190, 22, TC_GREY,_("On"), NormalFont);
-	optiongroup->AddTextButton(53, 480, 175, 190, 22, TC_GREY, _("Off"), NormalFont);
+	groupGrafik->AddText(  50,  80, 180, _("Limit Framerate:"), COLOR_YELLOW, 0, NormalFont);
+	groupGrafik->AddComboBox(51, 280, 175, 390, 22, TC_GREY, NormalFont, 150);
 
 	// "VBO"
 	groupGrafik->AddText(  54,  80, 230, _("Vertex Buffer Objects:"), COLOR_YELLOW, 0, NormalFont);
@@ -276,12 +269,42 @@ dskOptions::dskOptions(void) : Desktop(LOADER.GetImageN("setup013", 0))
 	optiongroup = groupGrafik->GetCtrl<ctrlOptionGroup>(47);
 	optiongroup->SetSelection( (SETTINGS.video.fullscreen ? 48 : 49) );
 
-	// "VSync" setzen
+	// "Limit Framerate" füllen
 	optiongroup = groupGrafik->GetCtrl<ctrlOptionGroup>(51);
-	if(GLOBALVARS.ext_swapcontrol)
-		optiongroup->SetSelection( (SETTINGS.video.vsync ? 52 : 53) );
-	else
-		optiongroup->SetSelection(53);
+	for(unsigned char i=0; i < Settings::SCREEN_REFRESH_RATES_COUNT; ++i)
+	{
+		switch(Settings::SCREEN_REFRESH_RATES[i])
+		{
+		case 0: 
+			{
+				groupGrafik->GetCtrl<ctrlComboBox>(51)->AddString(_("Disabled"));
+				groupGrafik->GetCtrl<ctrlComboBox>(51)->SetSelection(0);
+			} break;
+		case 1: 
+			{
+				if(GLOBALVARS.ext_swapcontrol)
+					groupGrafik->GetCtrl<ctrlComboBox>(51)->AddString(_("Dynamic (Limits to display refresh rate, works with most drivers)"));
+				if(SETTINGS.video.vsync == 1)
+					groupGrafik->GetCtrl<ctrlComboBox>(51)->SetSelection(1);
+			} break;
+		default:
+			{
+				// frameratebegrenzungen mit Bildabstand kleiner 13ms 
+				// wird unter windows nicht mehr aufgelöst
+#ifdef _WIN32
+				if(960 / Settings::SCREEN_REFRESH_RATES[i] > 13)
+#endif // _WIN32
+				{
+					std::stringstream rrate;
+					rrate << Settings::SCREEN_REFRESH_RATES[i] << " fps";
+					groupGrafik->GetCtrl<ctrlComboBox>(51)->AddString(rrate.str());
+				}
+
+				if(SETTINGS.video.vsync == Settings::SCREEN_REFRESH_RATES[i])
+					groupGrafik->GetCtrl<ctrlComboBox>(51)->SetSelection(i - (GLOBALVARS.ext_swapcontrol ? 0 : 1));
+			} break;
+		}
+	}
 
 	// "VBO" setzen
 	optiongroup = groupGrafik->GetCtrl<ctrlOptionGroup>(55);
@@ -372,6 +395,30 @@ void dskOptions::Msg_Group_ComboSelectItem(const unsigned int group_id, const un
 			SETTINGS.video.width = video_modes[selection].width;
 			SETTINGS.video.height = video_modes[selection].height;
 		} break;
+	case 51: // Limit Framerate
+		{
+			// 0: aus
+			// 1: vsync, wenn verfügbar, ansonsten schon eine Framerate
+			// 2: Framerates
+			switch(selection)
+			{
+			case 0: 
+				{
+					SETTINGS.video.vsync = 0;
+				} break;
+			case 1:
+				{
+					SETTINGS.video.vsync = (GLOBALVARS.ext_swapcontrol ? 1 : Settings::SCREEN_REFRESH_RATES[2]);
+				}	break;
+			default:
+				{
+					SETTINGS.video.vsync = Settings::SCREEN_REFRESH_RATES[selection + (GLOBALVARS.ext_swapcontrol ? 0 : 1)];
+				}	break;
+			}
+
+			if(GLOBALVARS.ext_swapcontrol)
+				wglSwapIntervalEXT((SETTINGS.video.vsync == 1));
+		} break;
 	case 59: // Videotreiber
 		{
 			SETTINGS.driver.video = combo->GetText(selection);
@@ -407,14 +454,6 @@ void dskOptions::Msg_Group_OptionGroupChange(const unsigned int group_id, const 
 			{
 			case 48: SETTINGS.video.fullscreen = true;  break;
 			case 49: SETTINGS.video.fullscreen = false; break;
-			}
-		} break;
-	case 51: // VSync
-		{
-			switch(selection)
-			{
-			case 52: SETTINGS.video.vsync = true;  break;
-			case 53: SETTINGS.video.vsync = false; break;
 			}
 		} break;
 	case 55: // VBO

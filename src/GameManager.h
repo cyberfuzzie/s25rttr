@@ -1,4 +1,4 @@
-// $Id: GameManager.h 5935 2010-01-25 16:59:04Z FloSoft $
+// $Id: GameManager.h 5989 2010-02-10 14:13:58Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -71,6 +71,7 @@ private:
 	unsigned int framerate;
 	unsigned int frame_time;
 	unsigned int run_time;
+	unsigned int last_time;
 };
 
 #define GAMEMANAGER GameManager::inst()

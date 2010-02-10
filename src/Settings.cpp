@@ -1,4 +1,4 @@
-// $Id: Settings.cpp 5970 2010-02-08 17:57:10Z FloSoft $
+// $Id: Settings.cpp 5989 2010-02-10 14:13:58Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -40,6 +40,11 @@ const std::string Settings::SETTINGS_SECTION_NAMES[] = {
 	"global", "video", "language", "driver", "sound", "lobby", "server", "proxy", "savegames", "ingame", "addons"
 };
 
+const unsigned char Settings::SCREEN_REFRESH_RATES_COUNT = 14;
+const unsigned short Settings::SCREEN_REFRESH_RATES[] = { 
+	0, 1, 25, 30, 50, 60, 75, 80, 100, 120, 150, 180, 200, 240
+};
+
 ///////////////////////////////////////////////////////////////////////////////
 // Konstruktor
 Settings::Settings(void)
@@ -60,7 +65,7 @@ bool Settings::LoadDefaults()
 		video.width       = 800;
 		video.height      = 600;
 		video.fullscreen  = false;
-		video.vsync       = false;
+		video.vsync       = 0;
 		video.vbo         = false;
 	// }
 
@@ -180,7 +185,7 @@ bool Settings::Load(void)
 		this->video.width =       video->getValueI("width");
 		this->video.height =      video->getValueI("height");
 		this->video.fullscreen = (video->getValueI("fullscreen") ? true : false);
-		this->video.vsync =      (video->getValueI("vsync") ? true : false);
+		this->video.vsync =       video->getValueI("vsync");
 		this->video.vbo =        (video->getValueI("vbo") ? true : false);
 	// };
 
@@ -323,7 +328,7 @@ void Settings::Save(void)
 		video->setValue("width", this->video.width);
 		video->setValue("height", this->video.height);
 		video->setValue("fullscreen", (this->video.fullscreen ? 1 : 0) );
-		video->setValue("vsync", (this->video.vsync ? 1 : 0) );
+		video->setValue("vsync", this->video.vsync);
 		video->setValue("vbo", (this->video.vbo ? 1 : 0) );
 	// };
 

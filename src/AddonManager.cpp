@@ -83,9 +83,7 @@ void AddonManager::LoadSettings()
 	reset();
 
 	for( std::map<unsigned int, unsigned int>::iterator it = SETTINGS.addons.configuration.begin(); it != SETTINGS.addons.configuration.end(); ++it)
-	{
 		setSelection((AddonId)it->first, it->second);
-	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////

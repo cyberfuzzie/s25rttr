@@ -1,4 +1,4 @@
-// $Id: VideoDriverWrapper.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: VideoDriverWrapper.cpp 5989 2010-02-10 14:13:58Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -135,13 +135,23 @@ bool VideoDriverWrapper::CreateScreen(const unsigned short screen_width, const u
 
 	// VSYNC ggf abschalten/einschalten
 	if(GLOBALVARS.ext_swapcontrol)
-		wglSwapIntervalEXT(SETTINGS.video.vsync);
+		wglSwapIntervalEXT((SETTINGS.video.vsync == 1));
 
 	return true;
 }
 
-
-/// Verändert Auflösung, Fenster/Fullscreen
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Verändert Auflösung, Fenster/Fullscreen
+ *
+ *  @param[in] screen_width neue Breite des Fensters
+ *  @param[in] screen_height neue Höhe des Fensters
+ *  @param[in] fullscreen Vollbild oder nicht
+ *
+ *  @return Bei Erfolg @p true ansonsten @p false
+ *
+ *  @author FloSoft
+ */
 bool VideoDriverWrapper::ResizeScreen(const unsigned short screen_width, const unsigned short screen_height, const bool fullscreen)
 {
 	if(!videodriver->ResizeScreen(screen_width, screen_height, fullscreen))
@@ -154,7 +164,7 @@ bool VideoDriverWrapper::ResizeScreen(const unsigned short screen_width, const u
 	// Viewport mit widthxheight setzen
 	glViewport(0, 0, screen_width, screen_height);
 
-		// Orthogonale Matrix erstellen
+	// Orthogonale Matrix erstellen
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 

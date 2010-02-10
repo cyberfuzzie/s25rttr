@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 5976 2010-02-08 23:05:33Z jh $
+### $Id: CMakeLists.txt 5989 2010-02-10 14:13:58Z FloSoft $
 ################################################################################
 
 INCLUDE(FindBZip2)
@@ -50,7 +50,8 @@ SET(SOURCES_CONTROLS
     ctrlText.cpp            ctrlText.h
     ctrlTimer.cpp           ctrlTimer.h
     ctrlVarDeepening.cpp    ctrlVarDeepening.h
-    ctrlVarText.cpp         ctrlVarText.h)
+    ctrlVarText.cpp         ctrlVarText.h
+   )
 
 SET(SOURCES_DESKTOPS
     dskAboutRTTR.cpp     dskAboutRTTR.h
@@ -66,7 +67,8 @@ SET(SOURCES_DESKTOPS
     dskSelectMap.cpp     dskSelectMap.h
     dskSinglePlayer.cpp  dskSinglePlayer.h
     dskSplash.cpp        dskSplash.h
-    dskGameLoader.cpp    dskGameLoader.h)
+    dskGameLoader.cpp    dskGameLoader.h
+   )
 
 SET(SOURCES_INGAMEWINDOWS
     iwAction.cpp                 iwAction.h
@@ -114,16 +116,97 @@ SET(SOURCES_INGAMEWINDOWS
     iwSettings.cpp               iwSettings.h
     iwAddons.cpp                 iwAddons.h
     iwAIDebug.cpp                iwAIDebug.h
-    )
+   )
 
 SET(SOURCES_AI
     AIBase.h
-    AIPlayer.cpp   AIPlayer.h
-    AIPlayerJH.cpp AIPlayerJH.h
-    AIJHHelper.cpp AIJHHelper.h
-    AIEventManager.cpp AIEventManager.h
-    AIConstruction.cpp AIConstruction.h
-    )   
+    AIPlayer.cpp            AIPlayer.h
+    AIPlayerJH.cpp          AIPlayerJH.h
+    AIJHHelper.cpp          AIJHHelper.h
+    AIEventManager.cpp      AIEventManager.h
+    AIConstruction.cpp      AIConstruction.h
+   )
+   
+SET(SOURCES_NO
+    noAnimal.cpp										noAnimal.h
+    noBase.cpp                      noBase.h
+    noBaseBuilding.cpp							noBaseBuilding.h
+    noCoordBase.cpp                 noCoordBase.h
+    noBuilding.cpp                  noBuilding.h
+    noBuildingSite.cpp              noBuildingSite.h
+    noDisappearingEnvObject.cpp     noDisappearingEnvObject.h
+    noDisappearingMapEnvObject.cpp  noDisappearingMapEnvObject.h
+    noEnvObject.cpp                 noEnvObject.h
+    noExtension.cpp									noExtension.h
+    noFighting.cpp                  noFighting.h
+    noFigure.cpp                    noFigure.h
+    noFire.cpp                      noFire.h
+    noFlag.cpp                      noFlag.h
+    noGrainfield.cpp                noGrainfield.h
+    noGranite.cpp                   noGranite.h
+    noMovable.cpp                   noMovable.h
+    noNothing.cpp                   noNothing.h
+    noRoadNode.cpp                  noRoadNode.h
+    noShipBuildingSite.cpp          noShipBuildingSite.h
+    noSign.cpp                      noSign.h
+    noShip.cpp                      noShip.h
+    noSkeleton.cpp                  noSkeleton.h
+    noStaticObject.cpp              noStaticObject.h
+    noTree.cpp                      noTree.h
+   )
+   
+SET(SOURCES_NOB
+    nobBaseMilitary.cpp       nobBaseMilitary.h
+    nobBaseWarehouse.cpp      nobBaseWarehouse.h
+    nobHarborBuilding.cpp     nobHarborBuilding.h
+    nobHQ.cpp                 nobHQ.h
+    nobMilitary.cpp           nobMilitary.h
+    nobShipYard.cpp           nobShipYard.h
+    nobStorehouse.cpp					nobStorehouse.h
+    nobUsual.cpp              nobUsual.h
+   )
+   
+SET(SOURCES_NOF
+    nofActiveSoldier.cpp      nofActiveSoldier.h
+    nofAggressiveDefender.cpp nofAggressiveDefender.h
+    nofArmorer.cpp            nofArmorer.h
+    nofAttacker.cpp           nofAttacker.h
+    nofBaker.cpp              nofBaker.h
+    nofBrewer.cpp             nofBrewer.h
+    nofBuilder.cpp            nofBuilder.h
+    nofBuildingWorker.cpp     nofBuildingWorker.h
+    nofButcher.cpp            nofButcher.h
+    nofCarpenter.cpp          nofCarpenter.h
+    nofCarrier.cpp            nofCarrier.h
+    nofCatapultMan.cpp        nofCatapultMan.h
+    nofDefender.cpp           nofDefender.h
+    nofFarmer.cpp             nofFarmer.h
+    nofFarmhand.cpp           nofFarmhand.h
+    nofFisher.cpp							nofFisher.h
+    nofFlagWorker.cpp         nofFlagWorker.h
+    nofForester.cpp           nofForester.h
+    nofGeologist.cpp          nofGeologist.h
+    nofDonkeybreeder.cpp			nofDonkeybreeder.h
+    nofHunter.cpp							nofHunter.h
+    nofIronfounder.cpp        nofIronfounder.h
+    nofMetalworker.cpp        nofMetalworker.h
+    nofMiller.cpp             nofMiller.h
+    nofMiner.cpp              nofMiner.h
+    nofMinter.cpp             nofMinter.h
+    nofPassiveSoldier.cpp     nofPassiveSoldier.h
+    nofPassiveWorker.cpp      nofPassiveWorker.h
+    nofPigbreeder.cpp         nofPigbreeder.h
+    nofPlaner.cpp             nofPlaner.h
+    nofScout_Free.cpp         nofScout_Free.h
+    nofScout_LookoutTower.cpp nofScout_LookoutTower.h
+    nofShipWright.cpp         nofShipWright.h
+    nofSoldier.cpp            nofSoldier.h
+    nofStonemason.cpp         nofStonemason.h
+    nofWarehouseWorker.cpp    nofWarehouseWorker.h
+    nofWellguy.cpp            nofWellguy.h
+    nofWoodcutter.cpp         nofWoodcutter.h
+    nofWorkman.cpp            nofWorkman.h
+	 )
 
 SET(SOURCES_OTHER
     BinaryFile.cpp
@@ -202,85 +285,13 @@ SET(SOURCES_OTHER
     Ware.cpp                  Ware.h
     Window.cpp                Window.h
     WindowManager.cpp         WindowManager.h
-    noAnimal.cpp
-    noBase.cpp                noBase.h
-    noBaseBuilding.h
-    noBuilding.cpp            noBuilding.h
-    noBuildingSite.cpp        noBuildingSite.h
-    noCoordBase.cpp           noCoordBase.h
-    noEnvObject.cpp           noEnvObject.h
-    noExtension.cpp
-    noFighting.cpp            noFighting.h
-    noFigure.cpp              noFigure.h
-    noFire.cpp                noFire.h
-    noFlag.cpp                noFlag.h
-    noGrainfield.cpp          noGrainfield.h
-    noGranite.cpp             noGranite.h
-    noMovable.cpp             noMovable.h
-    noNothing.cpp             noNothing.h
-    noRoadNode.cpp            noRoadNode.h
-    noShipBuildingSite.cpp    noShipBuildingSite.h
-    noSign.cpp                noSign.h
-    noShip.cpp                noShip.h
-    noSkeleton.cpp                 noSkeleton.h
-    noStaticObject.cpp             noStaticObject.h
-    noTree.cpp                     noTree.h
-    noDisappearingEnvObject.cpp    noDisappearingEnvObject.h
-    noDisappearingMapEnvObject.cpp noDisappearingMapEnvObject.h
-    nobStorehouse.cpp
-    noBaseBuilding.cpp
-    nobHarborBuilding.cpp     nobHarborBuilding.h
-    nobBaseMilitary.cpp       nobBaseMilitary.h
-    nobBaseWarehouse.cpp      nobBaseWarehouse.h
-    nobHQ.cpp                 nobHQ.h
-    nobMilitary.cpp           nobMilitary.h
-    nobUsual.cpp              nobUsual.h
-    nobShipYard.cpp           nobShipYard.h
-    nofActiveSoldier.cpp      nofActiveSoldier.h
-    nofAggressiveDefender.cpp nofAggressiveDefender.h
-    nofArmorer.cpp            nofArmorer.h
-    nofAttacker.cpp           nofAttacker.h
-    nofBaker.cpp              nofBaker.h
-    nofBrewer.cpp             nofBrewer.h
-    nofBuilder.cpp            nofBuilder.h
-    nofBuildingWorker.cpp     nofBuildingWorker.h
-    nofButcher.cpp            nofButcher.h
-    nofCarpenter.cpp          nofCarpenter.h
-    nofCarrier.cpp            nofCarrier.h
-    nofCatapultMan.cpp        nofCatapultMan.h
-    nofDefender.cpp           nofDefender.h
-    nofFarmer.cpp             nofFarmer.h
-    nofFarmhand.cpp           nofFarmhand.h
-    nofFisher.cpp
-    nofFlagWorker.cpp         nofFlagWorker.h
-    nofForester.cpp           nofForester.h
-    nofGeologist.cpp          nofGeologist.h
-    nofDonkeybreeder.cpp
-    nofHunter.cpp
-    nofIronfounder.cpp        nofIronfounder.h
-    nofMetalworker.cpp        nofMetalworker.h
-    nofMiller.cpp             nofMiller.h
-    nofMiner.cpp              nofMiner.h
-    nofMinter.cpp             nofMinter.h
-    nofPassiveSoldier.cpp     nofPassiveSoldier.h
-    nofPassiveWorker.cpp      nofPassiveWorker.h
-    nofPigbreeder.cpp         nofPigbreeder.h
-    nofPlaner.cpp             nofPlaner.h
-    nofScout_Free.cpp         nofScout_Free.h
-    nofScout_LookoutTower.cpp nofScout_LookoutTower.h
-    nofShipWright.cpp         nofShipWright.h
-    nofSoldier.cpp            nofSoldier.h
-    nofStonemason.cpp         nofStonemason.h
-    nofWarehouseWorker.cpp    nofWarehouseWorker.h
-    nofWellguy.cpp            nofWellguy.h
-    nofWoodcutter.cpp         nofWoodcutter.h
-    nofWorkman.cpp            nofWorkman.h
     FOWObjects.cpp            FOWObjects.h
     PostMsg.cpp               PostMsg.h
     AddonManager.cpp          AddonManager.h
     Addons.cpp                Addons.h
     const_addons.h
-    )
+    win32_nanosleep.cpp       win32_nanosleep.h
+   )
 
 SET(SOURCES_GL
     glAllocator.cpp                glAllocator.h
@@ -299,48 +310,48 @@ SET(SOURCES_GL
     glArchivItem_Sound_Wave.cpp    glArchivItem_Sound_Wave.h
     glArchivItem_Sound_XMidi.cpp   glArchivItem_Sound_XMidi.h
     glArchivItem_Sound_Other.cpp   glArchivItem_Sound_Other.h
-    )
+   )
 
 ################################################################################
 
-GETTEXT_CREATE_TRANSLATIONS( ../RTTR/languages/rttr.pot ALL 
-                             ../RTTR/languages/de.po
-                             ../RTTR/languages/es.po
-                             ../RTTR/languages/sv.po
-                             ../RTTR/languages/fi.po
-                             ../RTTR/languages/fr.po
-                             ../RTTR/languages/ru.po
-                             ../RTTR/languages/nl.po
-                             ../RTTR/languages/et.po
-                             ../RTTR/languages/en_GB.po
-                             ../RTTR/languages/sk.po
-                             ../RTTR/languages/nds.po
-                             ../RTTR/languages/tr.po
-                             ../RTTR/languages/pl.po
-                             ../RTTR/languages/he.po
-                             ../RTTR/languages/cs.po
-                             ../RTTR/languages/hu.po
-                             ../RTTR/languages/it.po
-           ../RTTR/languages/sl.po
-           ../RTTR/languages/nb.po
-                            )
+GETTEXT_CREATE_TRANSLATIONS(../RTTR/languages/rttr.pot ALL 
+                            ../RTTR/languages/de.po
+                            ../RTTR/languages/es.po
+                            ../RTTR/languages/sv.po
+                            ../RTTR/languages/fi.po
+                            ../RTTR/languages/fr.po
+                            ../RTTR/languages/ru.po
+                            ../RTTR/languages/nl.po
+                            ../RTTR/languages/et.po
+                            ../RTTR/languages/en_GB.po
+                            ../RTTR/languages/sk.po
+                            ../RTTR/languages/nds.po
+                            ../RTTR/languages/tr.po
+                            ../RTTR/languages/pl.po
+                            ../RTTR/languages/he.po
+                            ../RTTR/languages/cs.po
+                            ../RTTR/languages/hu.po
+                            ../RTTR/languages/it.po
+                            ../RTTR/languages/sl.po
+                            ../RTTR/languages/nb.po
+                           )
 
 ################################################################################
 
 # bzip linkerbug-fix
 SET(SOURCES_BZIP "")
 IF ( "${COMPILEFOR}" STREQUAL "windows" )
-  IF( IS_DIRECTORY "${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3" )
-    SET(SOURCES_BZIP 
-      ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/blocksort.c
-        ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/huffman.c 
-        ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/crctable.c
-        ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/randtable.c 
-        ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/compress.c
-        ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/decompress.c 
-        ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/bzlib.c
-       )
-  ENDIF( IS_DIRECTORY "${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3" )
+    IF( IS_DIRECTORY "${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3" )
+        SET(SOURCES_BZIP 
+            ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/blocksort.c
+            ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/huffman.c 
+            ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/crctable.c
+            ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/randtable.c 
+            ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/compress.c
+            ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/decompress.c 
+            ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/bzlib.c
+           )
+    ENDIF( IS_DIRECTORY "${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3" )
 ENDIF ( "${COMPILEFOR}" STREQUAL "windows" )
 
 SET(s25client_SRCS 
@@ -352,7 +363,10 @@ SET(s25client_SRCS
     ${SOURCES_INGAMEWINDOWS} 
     ${SOURCES_OTHER}
     ${SOURCES_AI}
-    )
+    ${SOURCES_NO}
+    ${SOURCES_NOB}
+    ${SOURCES_NOF}
+   )
 
 IF ( "${COMPILEFOR}" STREQUAL "windows" )
     ADD_DEFINITIONS("-DAFX_TARG_DEU")
@@ -367,34 +381,33 @@ IF ( "${COMPILEFOR}" STREQUAL "windows" )
 ENDIF ( "${COMPILEFOR}" STREQUAL "windows" )
 
 IF ( "${COMPILEFOR}" STREQUAL "apple")
-  IF(NOT EXISTS "${OpenGL_gl_LIBRARY}")
-          SET(SPLIT "${OpenGL_gl_LIBRARY}")
-          INCLUDE(FindSplitPath)
-    MESSAGE(STATUS ${PATHS} ${SPLIT})
-
-    MESSAGE(STATUS "OpenGL-Library is a directory, searching for the Library")
-    FIND_FILE(OpenGL
-        OpenGL
-        PATHS ${PATHS}
-       )
-    IF(NOT OpenGL-NOTFOUND)
-      MESSAGE(STATUS "OpenGL-Library was directory, found ${OpenGL}")
-      SET(OPENGL_gl_LIBRARY "${OpenGL}")
-    ENDIF(NOT OpenGL-NOTFOUND)
-
-  ENDIF(NOT EXISTS "${OpenGL_gl_LIBRARY}")
-
-  IF( "${CROSSCOMPILE}" STREQUAL "1")
-    SET(CMAKE_C_LINK_FLAGS  "${CMAKE_C_LINK_FLAGS} -framework OpenGL -L${CMAKE_SOURCE_DIR}/macos")
-    SET(CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -framework OpenGL -L${CMAKE_SOURCE_DIR}/macos")
-  ENDIF( "${CROSSCOMPILE}" STREQUAL "1")
+    IF(NOT EXISTS "${OpenGL_gl_LIBRARY}")
+        SET(SPLIT "${OpenGL_gl_LIBRARY}")
+        INCLUDE(FindSplitPath)
+        MESSAGE(STATUS ${PATHS} ${SPLIT})
+    
+        MESSAGE(STATUS "OpenGL-Library is a directory, searching for the Library")
+        FIND_FILE(OpenGL
+            OpenGL
+            PATHS ${PATHS}
+           )
+        IF(NOT OpenGL-NOTFOUND)
+          MESSAGE(STATUS "OpenGL-Library was directory, found ${OpenGL}")
+          SET(OPENGL_gl_LIBRARY "${OpenGL}")
+        ENDIF(NOT OpenGL-NOTFOUND)
+    ENDIF(NOT EXISTS "${OpenGL_gl_LIBRARY}")
+  
+    IF( "${CROSSCOMPILE}" STREQUAL "1")
+        SET(CMAKE_C_LINK_FLAGS  "${CMAKE_C_LINK_FLAGS} -framework OpenGL -L${CMAKE_SOURCE_DIR}/macos")
+        SET(CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -framework OpenGL -L${CMAKE_SOURCE_DIR}/macos")
+    ENDIF( "${CROSSCOMPILE}" STREQUAL "1")
 ENDIF ( "${COMPILEFOR}" STREQUAL "apple")
 
 ADD_EXECUTABLE(s25client ${s25client_SRCS})
 TARGET_LINK_LIBRARIES(s25client siedler2 lobby_c s25util mygettext ${BZIP2_LIBRARIES} ${OPENGL_gl_LIBRARY})
 
 IF ( "${COMPILEFOR}" STREQUAL "apple")
-  SET_TARGET_PROPERTIES(s25client PROPERTIES LINK_FLAGS "-framework SDL -framework Cocoa -lSDLmain")
+    SET_TARGET_PROPERTIES(s25client PROPERTIES LINK_FLAGS "-framework SDL -framework Cocoa -lSDLmain")
 ENDIF ( "${COMPILEFOR}" STREQUAL "apple")
 
 IF ( "${COMPILEFOR}" STREQUAL "windows" )

@@ -2253,6 +2253,14 @@
 					RelativePath="..\..\version.h"
 					>
 				</File>
+				<File
+					RelativePath="..\..\src\win32_nanosleep.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\win32_nanosleep.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter

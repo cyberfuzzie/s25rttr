@@ -1,4 +1,4 @@
-// $Id: Settings.h 5969 2010-02-08 16:08:49Z FloSoft $
+// $Id: Settings.h 5989 2010-02-10 14:13:58Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -46,7 +46,7 @@ public:
 		unsigned short width;
 		unsigned short height;
 		bool fullscreen;
-		bool vsync;
+		unsigned short vsync;
 		bool vbo;
 	} video;
 
@@ -96,6 +96,9 @@ public:
 	struct {
 		std::map<unsigned int, unsigned int> configuration;
 	} addons;
+
+	static const unsigned char SCREEN_REFRESH_RATES_COUNT;
+	static const unsigned short SCREEN_REFRESH_RATES[];
 
 private:
 	static const unsigned int SETTINGS_VERSION;

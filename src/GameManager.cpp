@@ -1,4 +1,4 @@
-// $Id: GameManager.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: GameManager.cpp 5989 2010-02-10 14:13:58Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -55,7 +55,7 @@
  *
  *  @author OLiver
  */
-GameManager::GameManager(void) : frames(0), frame_count(0), framerate(0), frame_time(0), run_time(0)
+GameManager::GameManager(void) : frames(0), frame_count(0), framerate(0), frame_time(0), run_time(0), last_time(0)
 {
 }
 
@@ -160,7 +160,37 @@ bool GameManager::Run()
 	GAMECLIENT.Run();
 	GAMESERVER.Run();
 
+	unsigned int current_time = VideoDriverWrapper::inst().GetTickCount();
+
+	// Evtl. Soft-VSync machen 
+	// Schleifenrate auf 104% der Refreshrate begrenzen: Falls der Grafiktreiber
+	// VSync kann bleibt dafür noch genug Platz.
+	// Windows kann kein nanosleep - Dafür können die Windows-Treiber aber alle VSync.
+
+	if(SETTINGS.video.vsync > 1)
+	{
+		unsigned long goal_ticks = 960*1000*1000 / SETTINGS.video.vsync;
+#ifdef _WIN32
+		if(goal_ticks < 13 * 1000 * 1000) // timer resolutions < 13ms do not work for windows correctly
+			goal_ticks = 0;
+#endif // !_WIN32
+
+		if(goal_ticks > 0 && (current_time - last_time)*1000*1000 < goal_ticks && (current_time >= last_time))
+		{
+			struct timespec req;
+			req.tv_sec  = 0; 
+			req.tv_nsec = goal_ticks - (current_time - last_time)*1000*1000 ;
+
+			while(nanosleep(&req, &req) == -1)  
+				continue;  
+
+			current_time = VideoDriverWrapper::inst().GetTickCount();
+		}
+	}
+
 	WindowManager::inst().Draw();
+		
+	last_time = current_time;
 
 	if(!GLOBALVARS.ingame)
 	{
@@ -172,7 +202,7 @@ bool GameManager::Run()
 	}
 
 	// Framerate berechnen
-	if(VideoDriverWrapper::inst().GetTickCount() - frame_time > 1000)
+	if(current_time - frame_time >= 1000)
 	{
 		// weitere Sekunde vergangen
 		++run_time;
@@ -184,7 +214,7 @@ bool GameManager::Run()
 		framerate = frames;
 		frames = 0;
 
-		frame_time = VideoDriverWrapper::inst().GetTickCount();
+		frame_time = current_time;
 	}
 
 	// und zeichnen
@@ -200,9 +230,7 @@ bool GameManager::Run()
 
 	// Fenstermanager aufräumen
 	if(GLOBALVARS.notdone == false)
-	{
 		WindowManager::inst().CleanUp();
-	}
 
 	return GLOBALVARS.notdone;
 }

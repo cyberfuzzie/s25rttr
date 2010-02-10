@@ -1,4 +1,4 @@
-// $Id: GameWorldViewer.cpp 5978 2010-02-09 14:34:10Z FloSoft $
+// $Id: GameWorldViewer.cpp 5988 2010-02-10 11:18:48Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -40,7 +40,7 @@
 #include "AIPlayerJH.h"
 
 GameWorldViewer::GameWorldViewer() : show_bq(false), show_names(false), show_productivity(false),
-xoffset(0), yoffset(0), selx(0), sely(0), sx(0), sy(0), scroll(false), last_xoffset(0), last_yoffset(0), show_coordinates(false), d_active(false), d_player(0), d_what(0)
+xoffset(0), yoffset(0), selx(0), sely(0), sx(0), sy(0), scroll(false), last_xoffset(0), last_yoffset(0), show_coordinates(false), d_what(0), d_player(0), d_active(false) 
 {
 }
 

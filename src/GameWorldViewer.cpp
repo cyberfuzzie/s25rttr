@@ -1,4 +1,4 @@
-// $Id: GameWorldViewer.cpp 5988 2010-02-10 11:18:48Z jh $
+// $Id: GameWorldViewer.cpp 5994 2010-02-10 18:24:55Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -35,6 +35,7 @@
 #include "dskGameInterface.h"
 #include "FOWObjects.h"
 #include "noShip.h"
+#include "AddonManager.h"
 
 #include "GameServer.h"
 #include "AIPlayerJH.h"
@@ -330,32 +331,43 @@ void GameWorldViewer::Draw(const unsigned char player, unsigned * water, const b
 
 				int altitude = GetNode(rb.point_x,rb.point_y).altitude;
 
+				const unsigned char waterway_lengthes[] = {3, 5, 9, 13, 21, 0}; // these are written into dskGameInterface.cpp, too
+				const unsigned char index = ADDONMANAGER.getSelection(ADDON_MAX_WATERWAY_LENGTH);
+				assert(index <= sizeof(waterway_lengthes) - 1);
+				const unsigned char max_length = waterway_lengthes[index];
+
 				for(unsigned i = 0;i<6;++i)
 				{
 					if(road_points[i*2] == tx  && road_points[i*2+1] == ty)
 					{
-						if(RoadAvailable(rb.mode == RM_BOAT,tx,ty,i) && GetNode(tx,ty).owner-1 == (signed)GAMECLIENT.GetPlayerID()
-							&& IsPlayerTerritory(tx,ty))
+						// test on maximal water way length
+						if(rb.mode != RM_BOAT || rb.route.size() < max_length || max_length == 0 )
 						{
-							unsigned short id = 60;
-							switch(int(GetNode(tx,ty).altitude)-altitude)
+							if( ( (RoadAvailable(rb.mode == RM_BOAT,tx,ty,i) 
+							       && GetNode(tx,ty).owner-1 == (signed)GAMECLIENT.GetPlayerID())
+							     || (GetNode(tx,ty).bq == BQ_FLAG) )
+							   && IsPlayerTerritory(tx,ty) )
 							{
-							case 1: id = 61; break;
-							case 2: case 3: id = 62; break;
-							case 4: case 5: id = 63; break;
-							case -1: id = 64; break;
-							case -2: case -3: id = 65; break;
-							case -4: case -5: id = 66; break;
+								unsigned short id = 60;
+								switch(int(GetNode(tx,ty).altitude)-altitude)
+								{
+								case 1: id = 61; break;
+								case 2: case 3: id = 62; break;
+								case 4: case 5: id = 63; break;
+								case -1: id = 64; break;
+								case -2: case -3: id = 65; break;
+								case -4: case -5: id = 66; break;
+								}
+
+								LOADER.GetMapImageN(id)->Draw(xpos,ypos, 0, 0, 0, 0, 0, 0);
 							}
 
-							LOADER.GetMapImageN(id)->Draw(xpos,ypos, 0, 0, 0, 0, 0, 0);
-						}
-
-						if(GetNO(tx,ty))
-						{
-							// Flaggenanschluss? --> extra zeichnen
-							if(GetNO(tx,ty)->GetType() == NOP_FLAG && !(tx == rb.start_x && ty == rb.start_y))
-								LOADER.GetMapImageN(20)->Draw(xpos,ypos, 0, 0, 0, 0, 0, 0);
+							if(GetNO(tx,ty))
+							{
+								// Flaggenanschluss? --> extra zeichnen
+								if(GetNO(tx,ty)->GetType() == NOP_FLAG && !(tx == rb.start_x && ty == rb.start_y))
+									LOADER.GetMapImageN(20)->Draw(xpos,ypos, 0, 0, 0, 0, 0, 0);
+							}
 						}
 
 						if(rb.route.size())

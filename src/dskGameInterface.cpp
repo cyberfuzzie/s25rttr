@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.cpp 5978 2010-02-09 14:34:10Z FloSoft $
+// $Id: dskGameInterface.cpp 5994 2010-02-10 18:24:55Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -727,7 +727,7 @@ bool dskGameInterface::BuildRoadPart(int &cselx, int &csely,bool end)
 	// Test on water way length
 	if(road.mode == RM_BOAT)
 	{
-		unsigned char waterway_lengthes[] =	{3, 5, 9, 13, 21, 0};
+		unsigned char waterway_lengthes[] = {3, 5, 9, 13, 21, 0}; // these are written into GameWorldViewer.cpp, too
 		unsigned char index = ADDONMANAGER.getSelection(ADDON_MAX_WATERWAY_LENGTH);
 
 		assert(index <= sizeof(waterway_lengthes) - 1);

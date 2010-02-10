@@ -155,13 +155,13 @@ void iwAIDebug::Msg_PaintBefore()
 	if (bj)
 	{
 		ss << "BuildJob:" << std::endl;
-		ss << BUILDING_NAMES[bj->type] << std::endl;
-		ss << bj->target_x << " / " << bj->target_y << std::endl;
+		ss << BUILDING_NAMES[bj->GetType()] << std::endl;
+		ss << bj->GetTargetX() << " / " << bj->GetTargetY() << std::endl;
 	}
 	else if (ej)
 	{
 		ss << "EventJob:" << std::endl;
-		switch(ej->ev->GetType())
+		switch(ej->GetEvent()->GetType())
 		{
 		case AIEvent::BuildingDestroyed: ss << "BuildingDestroyed" << std::endl; break;
 		case AIEvent::BuildingConquered: ss << "BuildingConquered" << std::endl; break;
@@ -175,7 +175,7 @@ void iwAIDebug::Msg_PaintBefore()
 		default: ss << "Unknown Event" << std::endl; break;
 		}
 
-		AIEvent::Building *evb = dynamic_cast<AIEvent::Building *>(ej->ev);
+		AIEvent::Building *evb = dynamic_cast<AIEvent::Building *>(ej->GetEvent());
 		if (evb)
 		{
 			ss << evb->GetX() << " / " << evb->GetY() << std::endl;
@@ -183,7 +183,7 @@ void iwAIDebug::Msg_PaintBefore()
 		}
 	}
 
-	switch(currentJob->status)
+	switch(currentJob->GetStatus())
 	{
 	case AIJH::JOB_WAITING: ss << "JOB_WAITING"; break;
 	case AIJH::JOB_EXECUTING_START: ss << "JOB_EXECUTING_START"; break;

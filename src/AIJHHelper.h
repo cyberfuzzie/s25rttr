@@ -1,4 +1,4 @@
-// $Id: AIJHHelper.h 5976 2010-02-08 23:05:33Z jh $
+// $Id: AIJHHelper.h 5987 2010-02-10 11:12:56Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -119,6 +119,9 @@ public:
 
 	~BuildJob() { }
 	virtual void ExecuteJob();
+	inline BuildingType GetType() const { return type; }
+	inline MapCoord GetTargetX() const { return target_x; }
+	inline MapCoord GetTargetY() const { return target_y; }
 private:
 	BuildingType type;
 	MapCoord target_x, target_y;
@@ -164,6 +167,7 @@ public:
 	EventJob(AIPlayerJH *aijh, AIEvent::Base *ev) : Job(aijh), ev(ev) { }
 	~EventJob() { delete ev; }
 	void ExecuteJob();
+	inline AIEvent::Base *GetEvent() const { return ev; }
 private:
 	AIEvent::Base *ev;
 };

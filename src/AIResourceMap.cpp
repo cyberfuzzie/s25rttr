@@ -1,4 +1,4 @@
-// $Id: AIResourceMap.cpp 5881 2010-01-10 02:06:52Z jh $
+// $Id: AIResourceMap.cpp 5991 2010-02-10 15:44:37Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

@@ -1,4 +1,4 @@
-// $Id$
+// $Id: Addons.h 5991 2010-02-10 15:44:37Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

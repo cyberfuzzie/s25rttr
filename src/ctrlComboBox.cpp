@@ -1,4 +1,4 @@
-// $Id: ctrlComboBox.cpp 5978 2010-02-09 14:34:10Z FloSoft $
+// $Id: ctrlComboBox.cpp 5993 2010-02-10 17:39:18Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -300,7 +300,9 @@ bool ctrlComboBox::Draw_(void)
 
 	// Male restliche Controls per Hand, denn ein einfaches DrawControls() würde 
 	// auch die Liste malen, die bei Msg_PaintAfter() sowieso gemalt wird.
-	GetCtrl<ctrlImageButton>(1)->Draw();
+	ctrlImageButton *button = GetCtrl<ctrlImageButton>(1);
+	if(button)
+		button->Draw();
 
 	return true;
 }

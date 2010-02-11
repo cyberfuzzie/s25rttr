@@ -1,4 +1,4 @@
-// $Id: const_addons.h 6000 2010-02-11 17:19:50Z FloSoft $
+// $Id: AddonInexhaustibleMines.h 6000 2010-02-11 17:19:50Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -16,42 +16,31 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Siedler II.5 RTTR. If not, see <http://www.gnu.org/licenses/>.
-#ifndef CONST_ADDONS_H_INCLUDED
-#define CONST_ADDONS_H_INCLUDED
+#ifndef ADDONINEXHAUSTIBLEMINES_H_INCLUDED
+#define ADDONINEXHAUSTIBLEMINES_H_INCLUDED
 
 #pragma once
 
-// Addon Author List
-// 
-// 000 FloSoft
-// 001 OLiver
-// 002 Divan
-//
+#include "Addons.h"
 
-// Do not forget to add your Addon to AddonManager::reset!
-// Never use a number twice!
-
-enum AddonId
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Addon for allowing to have unlimited resources.
+ *
+ *  @author Divan
+ */
+class AddonInexhaustibleMines : public AddonBool
 {
-	// AAA = Author
-	// NNNNN = Number
-	//                              AAANNNNN
-	ADDON_CHANGE_GOLD_DEPOSITS  = 0x00200000,
-	ADDON_MAX_WATERWAY_LENGTH   = 0x00200001,
-	ADDON_CUSTOM_BUILD_SEQUENCE = 0x00200002,
-	ADDON_STATISTICS_VISIBILITY = 0x00200003,
-
-	ADDON_LIMIT_CATAPULTS		= 0x00000000,
-	ADDON_INEXHAUSTIBLE_MINES	= 0x00000001
+public:
+	AddonInexhaustibleMines() : AddonBool(ADDON_INEXHAUSTIBLE_MINES,
+										  ADDONGROUP_ECONOMY,
+										  gettext_noop("Inexhaustible Mines"), 
+										  gettext_noop("Allows to have unlimited resources\n\n"
+													   "Mines will never be depleted"),
+										  0
+										 )
+	{
+	}
 };
 
-enum AddonGroup
-{
-	ADDONGROUP_ALL = 1,
-	ADDONGROUP_MILITARY = 2,
-	ADDONGROUP_ECONOMY = 4,
-	ADDONGROUP_GAMEPLAY = 8,
-	ADDONGROUP_OTHER = 16
-};
-
-#endif // !CONST_ADDONS_H_INCLUDED
+#endif // !ADDONINEXHAUSTIBLEMINES_H_INCLUDED

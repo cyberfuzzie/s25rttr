@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 5999 2010-02-11 09:53:02Z FloSoft $
+### $Id: CMakeLists.txt 6000 2010-02-11 17:19:50Z FloSoft $
 ################################################################################
 
 INCLUDE(FindBZip2)
@@ -291,6 +291,12 @@ SET(SOURCES_OTHER
     PostMsg.cpp                         PostMsg.h
     AddonManager.cpp                    AddonManager.h
     Addons.cpp                          Addons.h
+                                        AddonChangeGoldDeposits.h
+                                        AddonMaxWaterwayLength.h
+                                        AddonCustomBuildSequence.h
+                                        AddonStatisticsVisibility.h
+                                        AddonLimitCatapults.h
+                                        AddonInexhaustibleMines.h
                                         const_addons.h
     win32_nanosleep.cpp                 win32_nanosleep.h
    )

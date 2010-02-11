@@ -1,4 +1,4 @@
-// $Id: nofBuildingWorker.cpp 5969 2010-02-08 16:08:49Z FloSoft $
+// $Id: nofBuildingWorker.cpp 6000 2010-02-11 17:19:50Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -35,6 +35,8 @@
 #include "SoundManager.h"
 #include "SerializedGameData.h"
 #include "AIEventManager.h"
+
+#include "AddonManager.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -340,48 +342,73 @@ void nofBuildingWorker::LostWork()
 	workplace = 0;
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  verbraucht einen Rohstoff einer Mine an einer (umliegenden) Stelle.
+ *
+ *  @author OLiver
+ */
 bool nofBuildingWorker::GetResources(unsigned char type)
 {
 	// in Map-Resource-Koordinaten konvertieren
 	type = RESOURCES_MINE_TO_MAP[type];
 
+	MapCoord mx, my;
+	bool found = false;
+
 	// Alle Punkte durchgehen, bis man einen findet, wo man graben kann
 	if(GetResourcesOfNode(x,y,type))
 	{
-		--gwg->GetNode(x,y).resources;
-		return true;
+		mx = x;
+		my = y;
+		found = true;
 	}
 
-	for(MapCoord tx=gwg->GetXA(x,y,0), r=1;r<=MINER_RADIUS;tx=gwg->GetXA(tx,y,0),++r)
+	for(MapCoord tx = gwg->GetXA(x, y, 0), r = 1; !found && r <= MINER_RADIUS; tx = gwg->GetXA(tx, y, 0), ++r)
 	{
 		MapCoord tx2 = tx, ty2 = y;
-		for(unsigned i = 2;i<8;++i)
+		for(unsigned int i = 2; !found && i < 8; ++i)
 		{
-			for(MapCoord r2=0;r2<r;gwg->GetPointA(tx2,ty2,i%6),++r2)
+			for(MapCoord r2 = 0; !found && r2 < r; gwg->GetPointA(tx2, ty2, i%6), ++r2)
 			{
-				if(GetResourcesOfNode(tx2,ty2,type))
+				if(GetResourcesOfNode(tx2, ty2, type))
 				{
-					--gwg->GetNode(tx2,ty2).resources;
-					return true;
+					mx = tx2;
+					my = ty2;
+					found = true;
 				}
 			}
 		}
+	}
+
+	if(found)
+	{
+		// Minen unerschöpflich?
+		if(!ADDONMANAGER.isEnabled(ADDON_INEXHAUSTIBLE_MINES))
+			--gwg->GetNode(mx, my).resources;
+		return true;
 	}
 
 	// Hoffe das passt auch, Post verschicken, keine Rohstoffe mehr da
 	if (!OutOfRessourcesMsgSent)
 	{
 		if(GameClient::inst().GetPlayerID() == this->player)
+		{
 			GameClient::inst().SendPostMessage(
-			  new ImagePostMsgWithLocation(_("This mine is exhausted"), PMC_GENERAL, x, y, 
-			  workplace->GetBuildingType(), workplace->GetNation()));
+				new ImagePostMsgWithLocation(_("This mine is exhausted"), PMC_GENERAL, x, y, 
+				workplace->GetBuildingType(), workplace->GetNation())
+			);
+		}
+
 		OutOfRessourcesMsgSent = true;
 		// Produktivitätsanzeige auf 0 setzen
 		workplace->SetProductivityToZero();
 
 		// KI-Event erzeugen
-		GAMECLIENT.SendAIEvent(new AIEvent::Building(AIEvent::NoMoreResourcesReachable, workplace->GetX(), workplace->GetY(), 
-			workplace->GetBuildingType()), player);
+		GAMECLIENT.SendAIEvent(
+			new AIEvent::Building(AIEvent::NoMoreResourcesReachable, workplace->GetX(), workplace->GetY(), 
+			workplace->GetBuildingType()), player
+		);
 	}
 
 	// Hoffe das passt...

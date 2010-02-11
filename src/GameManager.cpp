@@ -1,4 +1,4 @@
-// $Id: GameManager.cpp 5989 2010-02-10 14:13:58Z FloSoft $
+// $Id: GameManager.cpp 6001 2010-02-11 17:30:01Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -169,7 +169,12 @@ bool GameManager::Run()
 
 	if(SETTINGS.video.vsync > 1)
 	{
-		unsigned long goal_ticks = 960*1000*1000 / SETTINGS.video.vsync;
+		unsigned long vsync = SETTINGS.video.vsync;
+
+		if(1000 * framerate < 960 * SETTINGS.video.vsync )
+			vsync = (1100 * SETTINGS.video.vsync) / 1000;
+
+		unsigned long goal_ticks = 960*1000*1000 / vsync;
 #ifdef _WIN32
 		if(goal_ticks < 13 * 1000 * 1000) // timer resolutions < 13ms do not work for windows correctly
 			goal_ticks = 0;

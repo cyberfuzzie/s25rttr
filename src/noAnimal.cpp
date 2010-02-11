@@ -1,4 +1,4 @@
-// $Id: noAnimal.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: noAnimal.cpp 5998 2010-02-11 08:19:47Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -120,8 +120,9 @@ void noAnimal::Draw(int x, int y)
 			// Interpolieren zwischen beiden Knotenpunkten
 			CalcWalkingRelative(x,y);
 			// Zeichnen
-			LOADER.GetMapImageN(ANIMALCONSTS[species].walking_id+ANIMALCONSTS[species].animation_steps*((dir+3)%6)
-				+GAMECLIENT.Interpolate(ASCENT_ANIMATION_STEPS[ascent],current_ev)%ANIMALCONSTS[species].animation_steps)
+			LOADER.GetMapImageN(ANIMALCONSTS[species].walking_id + 
+								ANIMALCONSTS[species].animation_steps * ( (dir + 3) % 6) +
+								GAMECLIENT.Interpolate(ASCENT_ANIMATION_STEPS[ascent], current_ev) % ANIMALCONSTS[species].animation_steps)
 				->Draw(x,y);
 
 			// ggf. Schatten zeichnen, falls es einen gibt

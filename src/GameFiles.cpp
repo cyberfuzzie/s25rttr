@@ -1,4 +1,4 @@
-// $Id: GameFiles.cpp 5970 2010-02-08 17:57:10Z FloSoft $
+// $Id: GameFiles.cpp 5998 2010-02-11 08:19:47Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -279,7 +279,7 @@ bool Savegame::Load(BinaryFile& file,const bool load_players,const bool load_sgd
 // Kleine Signatur am Anfang "RTTRRP", die ein gültiges S25 RTTR Replay kennzeichnet
 const char Replay::REPLAY_SIGNATURE[6] = {'R','T','T','R','R','P'};
 /// Version des Save-Formates
-const unsigned short Replay::REPLAY_VERSION = 10;
+const unsigned short Replay::REPLAY_VERSION = 11;
 
 Replay::Replay() : nwf_length(0), random_init(0), map_length(0), map_zip_length(0), map_data(0), savegame(0), last_gf(0),
 last_gf_file_pos(0)

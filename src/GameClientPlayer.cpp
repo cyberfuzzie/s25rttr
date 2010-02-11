@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 5980 2010-02-09 16:14:40Z FloSoft $
+// $Id: GameClientPlayer.cpp 5998 2010-02-11 08:19:47Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -411,7 +411,7 @@ nobBaseWarehouse * GameClientPlayer::FindWarehouse(const noRoadNode * const star
 		// Lagerhaus geeignet?
 		if(IsWarehouseGood(*w,param))
 		{
-			// Bei der erlaubten Benutzung von BootsstraÃen Waren-Pathfinding benutzen
+			// Bei der erlaubten Benutzung von Bootsstraßen Waren-Pathfinding benutzen
 			if(gwg->FindPathOnRoads(to_wh ? start : *w, to_wh ? *w : start,use_boat_roads,&tlength,NULL, NULL,forbidden))
 			{
 				if(tlength < best_length || !best)
@@ -432,20 +432,20 @@ nobBaseWarehouse * GameClientPlayer::FindWarehouse(const noRoadNode * const star
 
 void GameClientPlayer::NewRoad(RoadSegment * const rs)
 {
-	// Zu den StraÃen hinzufgen, da's ja ne neue ist
+	// Zu den Straßen hinzufgen, da's ja ne neue ist
 	roads.push_back(rs);
 
-	// Alle StraÃen müssen nun gucken, ob sie einen Weg zu einem Warehouse finden
+	// Alle Straßen müssen nun gucken, ob sie einen Weg zu einem Warehouse finden
 	FindWarehouseForAllRoads();
 
-	// Alle StraÃen müssen gucken, ob sie einen Esel bekommen können
+	// Alle Straßen müssen gucken, ob sie einen Esel bekommen können
 	for(std::list<RoadSegment*>::iterator it = roads.begin();it!=roads.end();++it)
 		(*it)->TryGetDonkey();
 
 	// Alle Arbeitsplätze müssen nun gucken, ob sie einen Weg zu einem Lagerhaus mit entsprechender Arbeitskraft finden
 	FindWarehouseForAllJobs(JOB_NOTHING);
 
-	// Alle Baustellen müssen nun gucken, ob sie ihr benötigtes Baumaterial bekommen (evtl war vorher die StraÃe zum Lagerhaus unterbrochen
+	// Alle Baustellen müssen nun gucken, ob sie ihr benötigtes Baumaterial bekommen (evtl war vorher die Straße zum Lagerhaus unterbrochen
 	FindMaterialForBuildingSites();
 
 	// Alle Lost-Wares müssen gucken, ob sie ein Lagerhaus finden
@@ -476,7 +476,7 @@ void GameClientPlayer::FindClientForLostWares()
 
 void GameClientPlayer::RoadDestroyed()
 {
-	// Alle Waren, die an Flagge liegen und in Lagerhäusern, müssen gucken, ob sie ihr Ziel noch erreichen können, jetzt wo eine StraÃe fehlt
+	// Alle Waren, die an Flagge liegen und in Lagerhäusern, müssen gucken, ob sie ihr Ziel noch erreichen können, jetzt wo eine Straße fehlt
 	for(std::list<Ware*>::iterator it = ware_list.begin(); it!=ware_list.end(); )
 	{
 		if((*it)->LieAtFlag())
@@ -596,7 +596,7 @@ void GameClientPlayer::RecalcDistributionOfWare(const GoodType ware)
 		// Distanz zwischen zwei gleichen Gebäuden
 		float dist = float(goal_count) / float(it->count);
 
-		// Möglichst gleichmäÃige Verteilung der Gebäude auf das Array berechnen
+		// Möglichst gleichmäßige Verteilung der Gebäude auf das Array berechnen
 		for(unsigned char i = 0; i < it->count; ++i, position = std::fmod(position + dist, float(goal_count)) )
 		{
 			for(pos = unsigned(position + .5f); distribution[ware].goals[pos] != 0; pos = (pos + 1) % goal_count);
@@ -733,15 +733,15 @@ nofCarrier * GameClientPlayer::OrderDonkey(RoadSegment * road)
 
 RoadSegment * GameClientPlayer::FindRoadForDonkey(noRoadNode * start,noRoadNode ** goal)
 {
-	// Bisher höchste Trägerproduktivität und die entsprechende StraÃe dazu
+	// Bisher höchste Trägerproduktivität und die entsprechende Straße dazu
 	unsigned best_productivity = 0;
 	RoadSegment * best_road = 0;
-	// Beste Flagge dieser StraÃe
+	// Beste Flagge dieser Straße
 	*goal = 0;
 
 	for(std::list<RoadSegment*>::iterator it = roads.begin();it!=roads.end();++it)
 	{
-		// Braucht die StraÃe einen Esel?
+		// Braucht die Straße einen Esel?
 		if((*it)->NeedDonkey())
 		{
 			// Beste Flagge von diesem Weg, und beste Wegstrecke
@@ -762,7 +762,7 @@ RoadSegment * GameClientPlayer::FindRoadForDonkey(noRoadNode * start,noRoadNode 
 				current_best_goal = (length1 < length2) ? (*it)->f1 : (*it)->f2;
 			}
 
-			// Kein Weg führt hin, nächste StraÃe bitte
+			// Kein Weg führt hin, nächste Straße bitte
 			if(!current_best_goal)
 				continue;
 
@@ -776,7 +776,7 @@ RoadSegment * GameClientPlayer::FindRoadForDonkey(noRoadNode * start,noRoadNode 
 			// Besser als der bisher beste?
 			if(current_productivity > best_productivity)
 			{
-				// Dann wird der vom Thron gestoÃen
+				// Dann wird der vom Thron gestoßen
 				best_productivity = current_productivity;
 				best_road = (*it);
 				*goal = current_best_goal;
@@ -1518,7 +1518,7 @@ void GameClientPlayer::AcceptPact(const unsigned id, const PactType pt, const un
 	}
 }
 
-/// Bündnis (real, d.h. spielentscheidend) abschlieÃen
+/// Bündnis (real, d.h. spielentscheidend) abschließen
 void GameClientPlayer::MakePact(const PactType pt, const unsigned char other_player, const unsigned duration)
 {
 	pacts[other_player][pt].accepted = true;

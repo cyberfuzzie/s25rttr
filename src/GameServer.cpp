@@ -1,4 +1,4 @@
-// $Id: GameServer.cpp 5980 2010-02-09 16:14:40Z FloSoft $
+// $Id: GameServer.cpp 5998 2010-02-11 08:19:47Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -194,7 +194,7 @@ bool GameServer::Start()
 	// mapinfo einlesen
 	FILE *map_f = fopen(serverconfig.mapname.c_str(), "rb");
 
-	// gröÃe der map
+	// größe der map
 	fseek(map_f, 0, SEEK_END);
 	mapinfo.length = ftell(map_f);
 	fseek(map_f, 0, SEEK_SET);
@@ -1262,7 +1262,7 @@ void GameServer::OnNMSGameCommand(const GameMessage_GameCommand& msg)
 	// NFCs speichern
 	player->gc_queue.push_back(msg);
 
-	//// Command schlieÃlich an alle Clients weiterleiten, aber nicht in der Pause und nicht, wenn derjenige Spieler besiegt wurde!
+	//// Command schließlich an alle Clients weiterleiten, aber nicht in der Pause und nicht, wenn derjenige Spieler besiegt wurde!
 	if(!this->framesinfo.pause && !players[msg.player].isDefeated())
 		SendToAll(msg);
 	else

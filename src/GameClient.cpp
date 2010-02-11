@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 5970 2010-02-08 17:57:10Z FloSoft $
+// $Id: GameClient.cpp 5999 2010-02-11 09:53:02Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -42,7 +42,6 @@
 
 #include "SerializedGameData.h"
 #include "LobbyClient.h"
-#include "GameFiles.h"
 #include "Settings.h"
 #include "files.h"
 #include "ClientInterface.h"
@@ -1337,7 +1336,7 @@ void GameClient::WriteReplayHeader(const unsigned random_init)
 
 	// Spielerdaten
 	delete [] replayinfo.replay.players;
-	replayinfo.replay.players = new SavedGameFile::Player[players.getCount()];
+	replayinfo.replay.players = new SavedFile::Player[players.getCount()];
 
 	// Spielerdaten
 	for(unsigned char i = 0;i<players.getCount();++i)
@@ -1576,7 +1575,7 @@ unsigned GameClient::WriteSaveHeader(const std::string& filename)
 	save.map_name = this->mapinfo.title;
 	// Anzahl Spieler
 	save.player_count = players.getCount();
-	save.players = new SavedGameFile::Player[players.getCount()];
+	save.players = new SavedFile::Player[players.getCount()];
 
 	// Spielerdaten
 	for(unsigned char i = 0;i<players.getCount();++i)

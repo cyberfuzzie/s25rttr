@@ -1,4 +1,4 @@
-// $Id: iwSave.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: iwSave.cpp 5999 2010-02-11 09:53:02Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -33,7 +33,6 @@
 #include "LobbyClient.h"
 #include "dskLobby.h"
 #include "dskHostGame.h"
-#include "GameFiles.h"
 
 #include "iwPleaseWait.h"
 #include "iwMsgbox.h"

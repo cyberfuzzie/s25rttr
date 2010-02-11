@@ -1,4 +1,4 @@
-// $Id: iwPlayReplay.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: iwPlayReplay.cpp 5999 2010-02-11 09:53:02Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -29,7 +29,6 @@
 #include "ListDir.h"
 #include "GameClient.h"
 #include "files.h"
-#include "GameFiles.h"
 
 #include "iwMsgbox.h"
 #include "dskGameLoader.h"

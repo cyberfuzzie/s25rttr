@@ -1,4 +1,4 @@
-// $Id: AddonManager.cpp 5991 2010-02-10 15:44:37Z FloSoft $
+// $Id: AddonManager.cpp 5999 2010-02-11 09:53:02Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -107,11 +107,15 @@ void AddonManager::SaveSettings() const
  */
 void AddonManager::Serialize(Serializer *ser) const
 {
+	LOG.write(">>> Addon Status:\n");
+
 	ser->PushUnsignedInt(addons.size());
 	for( std::vector<item>::const_iterator it = addons.begin(); it != addons.end(); ++it)
 	{
 		ser->PushUnsignedInt(it->addon->getId());
 		ser->PushUnsignedInt(it->status);
+
+		LOG.write("\t%d=%d\n", it->addon->getId(), it->status);
 	}
 }
 
@@ -129,10 +133,14 @@ void AddonManager::Deserialize(Serializer *ser)
 
 	reset();
 
+	LOG.write("<<< Addon Status:\n");
+
 	for(unsigned int i = 0; i < count; ++i)
 	{
 		AddonId addon = AddonId(ser->PopUnsignedInt());
 		unsigned int status = ser->PopUnsignedInt();
 		setSelection(addon, status);
+
+		LOG.write("\t%d=%d\n", addon, status);
 	}
 }

@@ -1202,14 +1202,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\GameFiles.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\GameFiles.h"
-					>
-				</File>
-				<File
 					RelativePath="..\..\src\GameInterface.cpp"
 					>
 				</File>
@@ -1223,6 +1215,30 @@
 				</File>
 				<File
 					RelativePath="..\..\src\GameObject.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\GameReplay.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\GameReplay.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\GameSavedFile.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\GameSavedFile.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\GameSavegame.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\GameSavegame.h"
 					>
 				</File>
 				<File

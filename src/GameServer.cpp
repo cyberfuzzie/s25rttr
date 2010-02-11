@@ -1,4 +1,4 @@
-// $Id: GameServer.cpp 5998 2010-02-11 08:19:47Z FloSoft $
+// $Id: GameServer.cpp 5999 2010-02-11 09:53:02Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -38,7 +38,8 @@
 
 #include "GameServerPlayer.h"
 
-#include "GameFiles.h"
+#include "GameSavegame.h"
+#include "GameReplay.h"
 #include "AIPlayer.h"
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -243,6 +244,9 @@ bool GameServer::Start()
 		{
 			// Host bei normalen Spieler der erste Spieler
 			players[0].is_host = true;
+
+			// Standardeinstellungen aus den SETTINGS für die Addons laden
+			ADDONMANAGER.LoadSettings();
 		} break;
 	case MAPTYPE_SAVEGAME:
 		{
@@ -283,6 +287,8 @@ bool GameServer::Start()
 				else if(players[i].ps == PS_KI)
 					SetAIName(i);
 			}
+
+			// Einstellungen aus dem Savegame für die Addons werden in Load geladen
 
 			// Und die GGS
 			ggs = save.ggs;
@@ -1248,7 +1254,6 @@ inline void GameServer::OnNMSMapChecksum(const GameMessage_Map_Checksum& msg)
 			OnNMSPlayerToggleColor(GameMessage_Player_Toggle_Color(msg.player,player->color));
 
 		// GGS senden
-		// und verschicken
 		player->send_queue.push(new GameMessage_GGSChange(ggs));
 
 		LOG.write("SERVER >>> BROADCAST: NMS_GGS_CHANGE\n");

@@ -1,4 +1,4 @@
-// $Id: iwAddons.cpp 5992 2010-02-10 17:16:10Z FloSoft $
+// $Id: iwAddons.cpp 5999 2010-02-11 09:53:02Z FloSoft $
 //
 // Copyright (c) 2005-2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -107,7 +107,7 @@ void iwAddons::Msg_ButtonClick(const unsigned int ctrl_id)
 					continue;
 
 				bool failed = false;
-				status = addon->getGuiStatus(this, 20 + 5*i, failed);
+				status = addon->getGuiStatus(this, 10 + 20*i, failed);
 				if(!failed)
 					ADDONMANAGER.setSelection(addon->getId(), status);
 			}

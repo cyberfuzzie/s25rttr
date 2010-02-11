@@ -1,4 +1,4 @@
-// $Id: GameClientGF_Replay.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: GameClientGF_Replay.cpp 5999 2010-02-11 09:53:02Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -40,10 +40,10 @@ void GameClient::ExecuteGameFrame_Replay()
 		if(replayinfo.next_gf == framesinfo.nr)
 		{
 			// RC-Type auslesen
-			ReplayCommand rc = replayinfo.replay.ReadRCType();
+			Replay::ReplayCommand rc = replayinfo.replay.ReadRCType();
 			
 			// Chat Command?
-			if(rc == RC_CHAT)
+			if(rc == Replay::RC_CHAT)
 			{
 				unsigned char player,dest;
 				std::string message;
@@ -56,7 +56,7 @@ void GameClient::ExecuteGameFrame_Replay()
 					ci->CI_Chat(player,ChatDestination(dest),message);
 			}
 			// Game Command?
-			else if(rc == RC_GAME)
+			else if(rc == Replay::RC_GAME)
 			{
 				unsigned char * data;
 				unsigned short length;

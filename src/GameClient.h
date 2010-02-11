@@ -1,4 +1,4 @@
-// $Id: GameClient.h 5970 2010-02-08 17:57:10Z FloSoft $
+// $Id: GameClient.h 5999 2010-02-11 09:53:02Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -27,7 +27,8 @@
 #include "GamePlayerList.h"
 
 #include "EventManager.h"
-#include "GameFiles.h"
+#include "GameSavegame.h"
+#include "GameReplay.h"
 #include "GameWorld.h"
 #include "GlobalGameSettings.h"
 #include "AIEventManager.h"

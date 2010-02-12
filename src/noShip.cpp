@@ -1,4 +1,4 @@
-// $Id: noShip.cpp 6004 2010-02-12 07:50:42Z FloSoft $
+// $Id: noShip.cpp 6012 2010-02-12 17:54:01Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -36,8 +36,15 @@
 #include "AIEventManager.h"
 
 const unsigned SHIP_SPEED = 20;
-const unsigned int ship_count = 5;
-const std::string ship_names[ship_count] = {"FloSoftius", "Demophobius", "Olivianus", "Spikeonius", "Nastius"};
+const unsigned int ship_count = 55;
+const std::string ship_names[NATION_COUNT][ship_count] = {
+	/* Nubier */	{ "Aica", "Aida", "Ainra", "Alayna", "Alisha", "Alma", "Amila", "Anina", "Armina", "Banu", "Baya", "Bea", "Bia", "Bisa", "Cheche", "Dafina", "Daria", "Dina", "Do", "Dofi", "Efia", "Erin", "Esi", "Esra", "Fahari", "Faraya", "Fujo", "Ghiday", "Habiaba", "Hajunza", "Ina", "Layla", "Lenia", "Lillian", "Malika", "Mona", "Naja", "Neriman", "Nyela", "Olufunmilayo", "Panyin", "Rayyan", "Rhiannon", "Safiya", "Sahra", "Selda", "Senna", "Shaira", "Shakira", "Sharina", "Sinah", "Suada", "Sulamith", "Tiada", "Yelda" },
+	/* Japaner */	{ "Ai", "Aiko", "Aimi", "Akemi", "Amaya", "Aoi", "Ayaka", "Ayano", "Beniko", "Chiyo", "Chiyoko", "Emi", "Fumiko", "Haruka", "Hiroko", "Hotaru", "Kaori", "Kasumi", "Kazuko", "Kazumi", "Keiko", "Kiriko", "Kumiko", "Mai", "Mayumi", "Megumi", "Midori", "Misaki", "Miu", "Moe", "Nanami", "Naoko", "Naomi", "Natsuki", "Noriko", "Reika", "Sachiko", "Sadako", "Sakura", "Satsuki", "Sayuri", "Setsuko", "Shigeko", "Teiko", "Tomomi", "Umeko", "Yoko", "Yoshiko", "Youko", "Yukiko", "Yumi", "Yumiko", "Yuna", "Yuuka", "Yuzuki" },
+	/* Römer */		{ "Antia", "Ateia", "Aurelia", "Camilia", "Claudia", "Duccia", "Epidia", "Equitia", "Fabia", "Galeria", "Helvetia", "Iunia", "Iusta", "Iuventia", "Lafrenia", "Livia", "Longinia", "Maelia", "Maxima", "Nigilia", "Nipia", "Norbana", "Novia", "Orania", "Otacilia", "Petronia", "Pinaria", "Piscia", "Pisentia", "Placidia", "Quintia", "Quirinia", "Rusonia", "Rutilia", "Sabucia", "Sallustia", "Salonia", "Salvia", "Scribonia", "Secundia", "Secundinia", "Tadia", "Talmudia", "Tanicia", "Tertinia", "Tita", "Ulpia", "Umbrenia", "Valeria", "Varia", "Vassenia", "Vatinia", "Vedia", "Velia", "Verania" },
+	/* Wikinger */	{ "Adelberga", "Adelgund", "Adelheid", "Adelinde", "Alsuna", "Alwina", "Amelinde", "Astrid", "Baltrun", "Bernhild", "Bothilde", "Dagny", "Dankrun", "Eldrid", "Erlgard", "Fehild ", "Ferun", "Frauke ", "Freya", "Gerda ", "Gesa", "Gismara", "Hella", "Henrike ", "Hilke", "Ida", "Irma", "Irmlinde", "Isantrud ", "Kunheide", "Kunigunde", "Lioba", "Lykke", "Marada", "Margard ", "Merlinde", "Minnegard", "Nanna", "Norwiga", "Oda", "Odarike", "Osrun ", "Raginhild ", "Raskild ", "Rinelda", "Runa", "Runhild ", "Salgard", "Sarhild", "Tanka", "Tyra", "Ulla", "Uta", "Walda", "Wiebke" }
+};
+
+//{"FloSoftius", "Demophobius", "Olivianus", "Spikeonius", "Nastius"};
 
 /// Positionen der Flaggen am Schiff für die 6 unterschiedlichen Richtungen jeweils#
 const Point<int> SHIPS_FLAG_POS[12] =
@@ -61,7 +68,9 @@ const Point<int> SHIPS_FLAG_POS[12] =
 
 /// Konstruktor
 noShip::noShip(const unsigned short x, const unsigned short y, const unsigned char player) 
-: noMovable(NOP_SHIP,x,y), player(player), state(STATE_IDLE), sea_id(0), name(ship_names[Random::inst().Rand(__FILE__,__LINE__,this->obj_id, ship_count)])
+	: noMovable(NOP_SHIP, x, y), 
+	player(player), state(STATE_IDLE), sea_id(0), 
+	name(ship_names[gwg->GetPlayer(player)->nation][Random::inst().Rand(__FILE__, __LINE__, this->obj_id, ship_count)])
 {
 	// Meer ermitteln, auf dem dieses Schiff fährt
 	for(unsigned i = 0;i<6;++i)

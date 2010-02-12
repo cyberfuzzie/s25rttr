@@ -1,4 +1,4 @@
-// $Id: nobUsual.cpp 6008 2010-02-12 12:48:14Z FloSoft $
+// $Id: nobUsual.cpp 6010 2010-02-12 13:07:51Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -22,16 +22,14 @@
 #include "main.h"
 #include "nobUsual.h"
 
-/*#include "GameClient.h"
-#include "GameClientPlayer.h"
-#include "BuildingConsts.h"
-#include "Ware.h"
-#include "GameWorld.h"
-#include "EventManager.h"
 #include "nofBuildingWorker.h"
-#include "Loader.h"
+#include "nofPigbreeder.h"
+#include "Ware.h"
+
+#include "GameClient.h"
+#include "GameWorld.h"
 #include "SerializedGameData.h"
-#include "nofPigbreeder.h"*/
+#include "Loader.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines

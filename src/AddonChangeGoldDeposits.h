@@ -1,4 +1,4 @@
-// $Id$
+// $Id: AddonChangeGoldDeposits.h 6009 2010-02-12 12:53:52Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

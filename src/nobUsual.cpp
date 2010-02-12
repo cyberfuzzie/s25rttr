@@ -1,4 +1,4 @@
-// $Id: nobUsual.cpp 6010 2010-02-12 13:07:51Z FloSoft $
+// $Id: nobUsual.cpp 6011 2010-02-12 16:35:00Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -54,7 +54,7 @@ nobUsual::nobUsual(BuildingType type,
 	worker(NULL), productivity(0), disable_production(false), disable_production_virtual(false), 
 	last_ordered_ware(0), orderware_ev(NULL), productivity_ev(NULL), is_working(false)
 {
-	wares[0] = wares[1] = wares[2] = NULL;
+	wares[0] = wares[1] = wares[2] = 0;
 
 	// Entsprechend so viele Listen erstellen, wie nötig sind, bei Bergwerken 3
 	if(USUAL_BUILDING_CONSTS[type-10].wares_needed_count)

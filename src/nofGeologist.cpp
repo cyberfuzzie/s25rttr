@@ -1,4 +1,4 @@
-// $Id: nofGeologist.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: nofGeologist.cpp 6011 2010-02-12 16:35:00Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -262,7 +262,7 @@ void nofGeologist::HandleDerivedEvent(const unsigned int id)
 
 			if((resources >= 0x41 && resources <= 0x47)||(resources >= 0x49 && resources <= 0x4F)||
 				(resources >= 0x51 && resources <= 0x57)||(resources >= 0x59 && resources <= 0x5F)||
-				(resources == 0x20 || resources == 0x21))
+				(resources >= 0x21 && resources <= 0x2F))
 			{
 				// Es wurde was gefunden, erstmal Jubeln
 				state = STATE_GEOLOGIST_CHEER;
@@ -472,11 +472,11 @@ void nofGeologist::SetSign(const unsigned char resources)
 		type = 3;
 		quantity = (resources-0x58)/3;
 	}
-	else if(resources == 0x20 || resources == 0x21)
+	else if(resources >= 0x21 && resources <= 0x27)
 	{
 		// Wasser
 		type = 4;
-		quantity = 0;
+		quantity = (resources-0x20)/3;
 	}
 	else
 	{

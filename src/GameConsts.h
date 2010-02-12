@@ -1,4 +1,4 @@
-// $Id: GameConsts.h 5969 2010-02-08 16:08:49Z FloSoft $
+// $Id: GameConsts.h 6011 2010-02-12 16:35:00Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -395,7 +395,7 @@ const unsigned char NATION_RTTR_TO_S2[4] =
 	1
 };
 /// Konvertierungstabelle von Rohstoff-Indizes von den Bergwerken --> Map
-const unsigned char RESOURCES_MINE_TO_MAP[4] = {3,0,1,2};
+const unsigned char RESOURCES_MINE_TO_MAP[5] = {3,0,1,2,4};
 
 /// Geschwindigkeitsabstufungen - Längen der GFs in ms
 const unsigned SPEED_GF_LENGTHS[5] = {80,60,50,40,30};

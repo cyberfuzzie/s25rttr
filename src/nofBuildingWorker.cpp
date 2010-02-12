@@ -1,4 +1,4 @@
-// $Id: nofBuildingWorker.cpp 6008 2010-02-12 12:48:14Z FloSoft $
+// $Id: nofBuildingWorker.cpp 6011 2010-02-12 16:35:00Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -223,9 +223,12 @@ void nofBuildingWorker::TryToWork()
 	}
 	// Falls man auf Waren wartet, kann man dann anfangen zu arbeiten 
 	// (bei Bergwerken müssen zusätzlich noch Rohstoffvorkommen vorhanden sein!)
+	// (bei Brunnen muss ebenfalls auf Wasser geprüft werden!)
 	// Spähturm-Erkunder arbeiten nie!
-	else if(workplace->WaresAvailable() && (job != JOB_MINER || GetResources(workplace->GetBuildingType()-BLD_GRANITEMINE))
-		&& job != JOB_SCOUT)
+	else if(workplace->WaresAvailable() && 
+		   (job != JOB_MINER || GetResources(workplace->GetBuildingType()-BLD_GRANITEMINE)) && 
+		   (job != JOB_HELPER || GetResources(4)) &&
+		   job != JOB_SCOUT)
 	{
 		state = STATE_WAITING1;
 		current_ev = em->AddEvent(this, (GetGOT() == GOT_NOF_CATAPULTMAN) ? CATAPULT_WAIT1_LENGTH : JOB_CONSTS[job].wait1_length, 1);
@@ -345,7 +348,8 @@ void nofBuildingWorker::LostWork()
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  verbraucht einen Rohstoff einer Mine an einer (umliegenden) Stelle.
+ *  verbraucht einen Rohstoff einer Mine oder eines Brunnens
+ *  an einer (umliegenden) Stelle.
  *
  *  @author OLiver
  */
@@ -384,8 +388,9 @@ bool nofBuildingWorker::GetResources(unsigned char type)
 
 	if(found)
 	{
-		// Minen unerschöpflich?
-		if(!ADDONMANAGER.isEnabled(ADDON_INEXHAUSTIBLE_MINES))
+		// Minen / Brunnen unerschöpflich?
+		if( (type == 4 && ADDONMANAGER.isEnabled(ADDON_EXHAUSTIBLE_WELLS)) || 
+			(type != 4 && !ADDONMANAGER.isEnabled(ADDON_INEXHAUSTIBLE_MINES)) )
 			--gwg->GetNode(mx, my).resources;
 		return true;
 	}
@@ -395,8 +400,12 @@ bool nofBuildingWorker::GetResources(unsigned char type)
 	{
 		if(GameClient::inst().GetPlayerID() == this->player)
 		{
+			std::string error = "This mine is exhausted";
+			if(workplace->GetBuildingType() == BLD_WELL)
+				error = "This well is dried out";
+
 			GameClient::inst().SendPostMessage(
-				new ImagePostMsgWithLocation(_("This mine is exhausted"), PMC_GENERAL, x, y, 
+				new ImagePostMsgWithLocation(_(error), PMC_GENERAL, x, y, 
 				workplace->GetBuildingType(), workplace->GetNation())
 			);
 		}
@@ -423,6 +432,10 @@ bool nofBuildingWorker::GetResourcesOfNode(const unsigned short x, const unsigne
 		return false;
 
 	unsigned char resources = gwg->GetNode(x,y).resources;
+
+	// wasser?
+	if(type == 4)
+		return (resources > 0x20 && resources < 0x28);
 
 	// Gibts Ressourcen von dem Typ an diesem Punkt?
 	return (resources > 0x40+type*8 && resources < 0x48+type*8);

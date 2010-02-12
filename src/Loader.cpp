@@ -1,4 +1,4 @@
-// $Id: Loader.cpp 5933 2010-01-25 16:34:59Z FloSoft $
+// $Id: Loader.cpp 6011 2010-02-12 16:35:00Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -404,9 +404,10 @@ bool Loader::LoadFile(const char *pfad, const libsiedler2::ArchivItem_Palette *p
 		unsigned char *buffer = new unsigned char[1000*1000*4];
 		for(std::list<std::string>::iterator i = lst.begin(); i != lst.end(); ++i)
 		{
-			// empty-file filler
-			/*std::string lf = i->substr(i->find_last_of('/')+1);
+			/*// empty-file filler
+			std::string lf = i->substr(i->find_last_of('/')+1);
 			std::stringstream aa;
+			unsigned int a = 0, b = 0;
 			aa << lf;
 			if(aa >> a)
 			{
@@ -414,7 +415,7 @@ bool Loader::LoadFile(const char *pfad, const libsiedler2::ArchivItem_Palette *p
 				{
 					std::stringstream file;
 					file << GetFilePath(pfad) << "/" << b << ".empty";
-					std::ofstream out(file.str());
+					std::ofstream out(file.str().c_str());
 					out.close();
 				}
 				b = a + 1;

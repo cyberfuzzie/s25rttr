@@ -1997,6 +1997,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\src\AddonExhaustibleWells.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\AddonInexhaustibleMines.h"
 						>
 					</File>

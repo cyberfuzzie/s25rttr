@@ -1,4 +1,4 @@
-// $Id: GameWorld.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: GameWorld.cpp 6011 2010-02-12 16:35:00Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -105,8 +105,24 @@ void GameWorld::Scan(glArchivItem_Map *map)
 			node.t1 = (t1<20)?TERRAIN_INDIZES[t1]:0;
 			node.t2 = (t2<20)?TERRAIN_INDIZES[t2]:0;
 
-
 			node.resources = map->GetMapDataAt(MAP_RESOURCES, x, y);
+			
+			// Wasser?
+			if(node.resources == 0x20 || node.resources == 0x21)
+			{
+				// TODO: Berge hatten komische Wasserbeeinflussung
+				// ggf 0-4 Wasser setzen
+				if( (node.t1 == TT_DESERT || node.t2 == TT_DESERT) ||
+					(node.t1 == TT_WATER || node.t2 == TT_WATER) )
+					node.resources = 0; // Kein Wasser, in der Wüste, da isses trocken!
+				else if( (node.t1 == TT_STEPPE || node.t2 == TT_STEPPE) )
+					node.resources = 0x23; // 2 Wasser
+				else if( (node.t1 == TT_SAVANNAH || node.t2 == TT_SAVANNAH) )
+					node.resources = 0x25; // 4 Wasser
+				else
+					node.resources = 0x27; // 7 Wasser
+			}
+			
 			node.reserved = false;
 			node.owner = 0;
 			for(unsigned i = 0;i<4;++i)

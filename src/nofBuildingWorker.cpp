@@ -1,4 +1,4 @@
-// $Id: nofBuildingWorker.cpp 6004 2010-02-12 07:50:42Z FloSoft $
+// $Id: nofBuildingWorker.cpp 6008 2010-02-12 12:48:14Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -221,13 +221,14 @@ void nofBuildingWorker::TryToWork()
 		// Nun arbeite ich nich mehr
 		StartNotWorking();
 	}
-	// Falls man auf Waren wartet, kann man dann anfangen zu arbeiten (bei Bergwerken müssen zusätzlich noch Rohstoffvorkommen vorhanden sein!)
+	// Falls man auf Waren wartet, kann man dann anfangen zu arbeiten 
+	// (bei Bergwerken müssen zusätzlich noch Rohstoffvorkommen vorhanden sein!)
 	// Spähturm-Erkunder arbeiten nie!
 	else if(workplace->WaresAvailable() && (job != JOB_MINER || GetResources(workplace->GetBuildingType()-BLD_GRANITEMINE))
 		&& job != JOB_SCOUT)
 	{
 		state = STATE_WAITING1;
-		current_ev = em->AddEvent(this,(GetGOT() == GOT_NOF_CATAPULTMAN) ? CATAPULT_WAIT1_LENGTH : JOB_CONSTS[job].wait1_length,1);
+		current_ev = em->AddEvent(this, (GetGOT() == GOT_NOF_CATAPULTMAN) ? CATAPULT_WAIT1_LENGTH : JOB_CONSTS[job].wait1_length, 1);
 		StopNotWorking();
 
 	}

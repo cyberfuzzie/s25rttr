@@ -1,4 +1,4 @@
-// $Id: Pathfinding.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: Pathfinding.cpp 6005 2010-02-12 10:08:09Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -358,7 +358,7 @@ bool GameWorldBase::FindPathOnRoads(const noRoadNode * const start, const noRoad
 			unsigned xaid = MakeCoordID(rna->GetX(),rna->GetY());
 
 			// Neuer Weg für diesen neuen Knoten berechnen
-			unsigned new_way = pf_nodes[best_id].way  +best->routes[i]->route.size();
+			unsigned new_way = pf_nodes[best_id].way  +best->routes[i]->GetLength();
 			// Im Warenmodus müssen wir Strafpunkte für überlastete Träger hinzuaddieren,
 			// damit der Algorithmus auch Ausweichrouten auswählt
 			if(ware_mode)

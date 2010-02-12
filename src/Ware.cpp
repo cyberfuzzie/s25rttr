@@ -1,4 +1,4 @@
-// $Id: Ware.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: Ware.cpp 6005 2010-02-12 10:08:09Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -248,12 +248,12 @@ void Ware::RemoveWareJobForCurrentDir(const unsigned char last_next_dir)
 			// Den Trägern Bescheid sagen
 			location->routes[last_next_dir]->WareJobRemoved(0);
 			// Wenn nicht, könntes ja sein, dass die Straße in ein Lagerhaus führt, dann muss dort Bescheid gesagt werden
-			if(location->routes[last_next_dir]->f2->GetType() == NOP_BUILDING)
+			if(location->routes[last_next_dir]->GetF2()->GetType() == NOP_BUILDING)
 			{
-				if(static_cast<noBuilding*>(location->routes[1]->f2)->GetBuildingType() == BLD_HEADQUARTERS ||
-				   static_cast<noBuilding*>(location->routes[1]->f2)->GetBuildingType() == BLD_STOREHOUSE ||
-				   static_cast<noBuilding*>(location->routes[1]->f2)->GetBuildingType() == BLD_HARBORBUILDING)
-				   static_cast<nobBaseWarehouse*>(location->routes[1]->f2)->DontFetchNextWare();
+				if(static_cast<noBuilding*>(location->routes[1]->GetF2())->GetBuildingType() == BLD_HEADQUARTERS ||
+				   static_cast<noBuilding*>(location->routes[1]->GetF2())->GetBuildingType() == BLD_STOREHOUSE ||
+				   static_cast<noBuilding*>(location->routes[1]->GetF2())->GetBuildingType() == BLD_HARBORBUILDING)
+				   static_cast<nobBaseWarehouse*>(location->routes[1]->GetF2())->DontFetchNextWare();
 			}
 		}
 

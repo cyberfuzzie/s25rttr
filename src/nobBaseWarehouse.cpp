@@ -1,4 +1,4 @@
-// $Id: nobBaseWarehouse.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: nobBaseWarehouse.cpp 6005 2010-02-12 10:08:09Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -184,11 +184,10 @@ nobBaseWarehouse::nobBaseWarehouse(SerializedGameData * sgd, const unsigned obj_
 
 void nobBaseWarehouse::OrderCarrier(noRoadNode* const goal, RoadSegment * workplace)
 {
-	workplace->carrier[0] = new nofCarrier(
-		(workplace->GetRoadType() == RoadSegment::RT_BOAT) ? nofCarrier::CT_BOAT : nofCarrier::CT_NORMAL,x,y,player,workplace,goal);
+	workplace->setCarrier(0, new nofCarrier((workplace->GetRoadType() == RoadSegment::RT_BOAT) ? nofCarrier::CT_BOAT : nofCarrier::CT_NORMAL, x, y, player, workplace, goal));
 
-	if(!UseFigureAtOnce(workplace->carrier[0],goal))
-		AddLeavingFigure(workplace->carrier[0]);
+	if(!UseFigureAtOnce(workplace->getCarrier(0), goal))
+		AddLeavingFigure(workplace->getCarrier(0));
 
 	--real_goods.people[JOB_HELPER];
 	if((workplace->GetRoadType() == RoadSegment::RT_BOAT))

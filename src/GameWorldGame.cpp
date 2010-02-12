@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 5970 2010-02-08 17:57:10Z FloSoft $
+// $Id: GameWorldGame.cpp 6005 2010-02-12 10:08:09Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -694,9 +694,9 @@ void GameWorldGame::DestroyPlayerRests(const MapCoord x, const MapCoord y, const
 	if(flag)
 	{
 		// Die Ministraße von dem Militärgebäude nich abreißen!
-		if(flag->routes[dir]->route.size() == 1)
+		if(flag->routes[dir]->GetLength() == 1)
 		{
-			if(flag->routes[dir]->f2 == exception)
+			if(flag->routes[dir]->GetF2() == exception)
 				return;
 		}
 

@@ -1,4 +1,4 @@
-// $Id: noRoadNode.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: noRoadNode.cpp 6005 2010-02-12 10:08:09Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -79,39 +79,39 @@ noRoadNode * noRoadNode::GetNeighbour(const unsigned char dir) const
 	if(!routes[dir])
 		return 0;
 
-	if(routes[dir]->f1 == this)
-		return routes[dir]->f2;
+	if(routes[dir]->GetF1() == this)
+		return routes[dir]->GetF2();
 	else
-		return routes[dir]->f1;
+		return routes[dir]->GetF1();
 }
 
 void noRoadNode::DestroyRoad(const unsigned char dir)
 {
 	if(routes[dir])
 	{
-		int tx=routes[dir]->f1->GetX(), ty=routes[dir]->f1->GetY();
+		int tx=routes[dir]->GetF1()->GetX(), ty=routes[dir]->GetF1()->GetY();
 		for(unsigned z = 0;z<routes[dir]->GetLength();++z)
 		{
-			gwg->SetPointRoad(tx,ty, routes[dir]->route[z], 0);
+			gwg->SetPointRoad(tx,ty, routes[dir]->GetRoute(z), 0);
 			int ttx = tx,tty = ty;
-			tx = gwg->GetXA(ttx,tty,routes[dir]->route[z]);
-			ty = gwg->GetYA(ttx,tty,routes[dir]->route[z]);
+			tx = gwg->GetXA(ttx,tty,routes[dir]->GetRoute(z));
+			ty = gwg->GetYA(ttx,tty,routes[dir]->GetRoute(z));
 			gwg->CalcRoad(ttx,tty,player);
 		}
 
 		noRoadNode * oflag;
 
-		if(routes[dir]->f1 == this)
-			oflag = routes[dir]->f2;
+		if(routes[dir]->GetF1() == this)
+			oflag = routes[dir]->GetF2();
 		else
-			oflag = routes[dir]->f1;
+			oflag = routes[dir]->GetF1();
 
 		bool found = false;
 		for(unsigned z = 0;z<6;++z)
 		{
 			if(oflag->routes[z] == routes[dir])
 			{
-				oflag->routes[z] = 0;
+				oflag->routes[z] = NULL;
 				found = true;
 				break;
 			}

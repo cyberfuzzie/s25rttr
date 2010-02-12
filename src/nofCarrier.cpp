@@ -1,4 +1,4 @@
-// $Id: nofCarrier.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: nofCarrier.cpp 6005 2010-02-12 10:08:09Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -460,7 +460,7 @@ void nofCarrier::Walked()
 			{
 
 				// Flagge, an der wir gerade stehen
-				noFlag * this_flag  = static_cast<noFlag*>(((rs_dir) ? workplace->f1 : workplace->f2));
+				noFlag * this_flag  = static_cast<noFlag*>(((rs_dir) ? workplace->GetF1() : workplace->GetF2()));
 
 				// Will die Waren jetzt gleich zur Baustelle neben der Flagge?
 				if(WantInBuilding())
@@ -470,7 +470,7 @@ void nofCarrier::Walked()
 					StartWalking(1);
 					cur_rs = this_flag->routes[1];
 					// location wird immer auf nächste Flagge gesetzt --> in dem Fall aktualisieren
-					carried_ware->Carry((cur_rs->f1 == this_flag)? cur_rs->f2 : cur_rs->f1);
+					carried_ware->Carry((cur_rs->GetF1() == this_flag)? cur_rs->GetF2() : cur_rs->GetF1());
 				}
 				else
 				{
@@ -516,7 +516,7 @@ void nofCarrier::Walked()
 			else if(rs_pos == cur_rs->GetLength()-1)
 			{
 				// Wenn wir fast da sind, gucken, ob an der Flagge noch ein freier Platz ist
-				noFlag * this_flag  = static_cast<noFlag*>(((rs_dir) ? workplace->f1 : workplace->f2));
+				noFlag * this_flag  = static_cast<noFlag*>(((rs_dir) ? workplace->GetF1() : workplace->GetF2()));
 
 				if(this_flag->IsSpaceForWare() || WantInBuilding() || cur_rs->AreWareJobs(!rs_dir,ct,true))
 				{
@@ -619,7 +619,7 @@ void nofCarrier::GoalReached()
 			StartWalking(i);
 			cur_rs = workplace;
 			rs_pos = 0;
-			rs_dir = (rn == cur_rs->f1) ? false : true;
+			rs_dir = (rn == cur_rs->GetF1()) ? false : true;
 
 			state = CARRS_GOTOMIDDLEOFROAD;
 
@@ -629,7 +629,7 @@ void nofCarrier::GoalReached()
 				// Ware aufnehmen
 				carried_ware = static_cast<noFlag*>(rn)->SelectWare(dir,false,this);
 
-				carried_ware->Carry((rs_dir)?workplace->f1:workplace->f2);
+				carried_ware->Carry( (rs_dir ? workplace->GetF1() : workplace->GetF2()) );
 
 				if(carried_ware != NULL)
 					state = CARRS_CARRYWARE;
@@ -662,14 +662,13 @@ void nofCarrier::AbrogateWorkplace()
 
 		// wenn ich in ein Gebäude gegangen bin und dann vom Weg geworfen wurde, muss der andere
 		// ggf. die Waren tragen, die ich jetzt nicht mehr tragen kann
-		if((state == CARRS_LEAVEBUILDING || state == CARRS_CARRYWARETOBUILDING) && workplace->carrier[other])
+		if((state == CARRS_LEAVEBUILDING || state == CARRS_CARRYWARETOBUILDING) && workplace->hasCarrier(other))
 		{
 			if(workplace->AreWareJobs(false,ct,true))
-				workplace->carrier[other]->AddWareJob(workplace->f1);
+				workplace->getCarrier(other)->AddWareJob(workplace->GetF1());
 			else if(workplace->AreWareJobs(true,ct,true))
-				workplace->carrier[other]->AddWareJob(workplace->f2);
+				workplace->getCarrier(other)->AddWareJob(workplace->GetF2());
 		}
-
 
 		workplace->CarrierAbrogated(this);
 		workplace = 0;
@@ -726,7 +725,7 @@ void nofCarrier::RoadSplitted(RoadSegment * rs1, RoadSegment * rs2)
 	if(state == CARRS_FIGUREWORK)
 	{
 		// ich gehe erst noch hin, also gucken, welche Flagge ich anvisiert habe und das jeweilige Teilstück dann als Arbeitsstraße
-		if(GetGoal() == rs1->f1)
+		if(GetGoal() == rs1->GetF1())
 			workplace = rs1;
 		else
 			workplace = rs2;
@@ -734,7 +733,7 @@ void nofCarrier::RoadSplitted(RoadSegment * rs1, RoadSegment * rs2)
 	else if(state == CARRS_CARRYWARETOBUILDING || state == CARRS_LEAVEBUILDING)
 	{
 		// Wenn ich in ein Gebäude gehen oder rauskomme, auf den Weg gehen, der an dieses Gebäude grenzt
-		if(cur_rs->f1 == rs1->f1 || cur_rs->f1 == rs1->f2)
+		if(cur_rs->GetF1() == rs1->GetF1() || cur_rs->GetF1() == rs1->GetF2())
 			workplace = rs1;
 		else
 			workplace = rs2;
@@ -765,17 +764,16 @@ void nofCarrier::RoadSplitted(RoadSegment * rs1, RoadSegment * rs2)
 	}
 
 	// Mich als Träger für meinen neuen Arbeitsplatz zuweisen
-	workplace->carrier[ct==CT_DONKEY?1:0] = this;
+	workplace->setCarrier(ct == CT_DONKEY ? 1 : 0, this);
 
 	// Für andere Straße neuen Träger/Esel rufen
 	RoadSegment * uc_road = ((rs1==workplace)?(rs2):(rs1));
-	uc_road->carrier[ct==CT_DONKEY?1:0] = 0;
+	uc_road->setCarrier(ct == CT_DONKEY ? 1 : 0, NULL);
 
 	if(ct == CT_NORMAL)
 		gwg->GetPlayer(player)->FindCarrierForRoad(uc_road);
 	else if(ct == CT_DONKEY)
-		uc_road->carrier[1] = gwg->GetPlayer(player)->OrderDonkey(uc_road);
-
+		uc_road->setCarrier(1, gwg->GetPlayer(player)->OrderDonkey(uc_road));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -913,7 +911,7 @@ void nofCarrier::FetchWare(const bool swap_wares)
 	
 	if(carried_ware)
 	{
-		carried_ware->Carry((rs_dir)?workplace->f2:workplace->f1);
+		carried_ware->Carry((rs_dir)?workplace->GetF2():workplace->GetF1());
 		// Und zum anderen Ende laufen
 		state = CARRS_CARRYWARE;
 		rs_dir = !rs_dir;
@@ -954,7 +952,7 @@ bool nofCarrier::SpaceAtFlag(const bool flag)
  */
 bool nofCarrier::WantInBuilding()
 {
-	RoadSegment * rs = static_cast<noFlag*>((rs_dir?cur_rs->f1:cur_rs->f2))->routes[1];
+	RoadSegment * rs = static_cast<noFlag*>((rs_dir?cur_rs->GetF1():cur_rs->GetF2()))->routes[1];
 	if(!rs)
 		return false;
 
@@ -987,6 +985,6 @@ void nofCarrier::StopWorking()
 
 
 noRoadNode * nofCarrier::GetFirstFlag() const
-{ return workplace ? workplace->f1 : 0; }
+{ return workplace ? workplace->GetF1() : 0; }
 noRoadNode * nofCarrier::GetSecondFlag() const
-{ return workplace ? workplace->f2 : 0; }
+{ return workplace ? workplace->GetF2() : 0; }

@@ -1,4 +1,4 @@
-// $Id: noBaseBuilding.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: noBaseBuilding.cpp 6005 2010-02-12 10:08:09Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -78,7 +78,7 @@ noBaseBuilding::noBaseBuilding(const NodalObjectType nop,const BuildingType type
 
 		assert(flag->routes[1]);
 		routes[4] = flag->routes[1];
-		routes[4]->f2 = this;
+		routes[4]->SetF2(this);
 		
 	}
 

@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 5998 2010-02-11 08:19:47Z FloSoft $
+// $Id: GameClientPlayer.cpp 6005 2010-02-12 10:08:09Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -519,25 +519,25 @@ bool GameClientPlayer::FindCarrierForRoad(RoadSegment * rs)
 	{
 		// dann braucht man Träger UND Boot
 		FW::Param_WareAndJob p = { {GD_BOAT,1}, {JOB_HELPER,1} };
-		best[0] = FindWarehouse(rs->f1,FW::Condition_WareAndJob,rs,0,&p,false,&length[0]);
+		best[0] = FindWarehouse(rs->GetF1(),FW::Condition_WareAndJob,rs,0,&p,false,&length[0]);
 		// 2. Flagge des Weges
-		best[1] = FindWarehouse(rs->f2,FW::Condition_WareAndJob,rs,0,&p,false,&length[1]);
+		best[1] = FindWarehouse(rs->GetF2(),FW::Condition_WareAndJob,rs,0,&p,false,&length[1]);
 	}
 	else
 	{
 		// 1. Flagge des Weges
 		FW::Param_Job p = { JOB_HELPER, 1 };
-		best[0] = FindWarehouse(rs->f1,FW::Condition_Job,rs,0,&p,false,&length[0]);
+		best[0] = FindWarehouse(rs->GetF1(),FW::Condition_Job,rs,0,&p,false,&length[0]);
 		// 2. Flagge des Weges
-		best[1] = FindWarehouse(rs->f2,FW::Condition_Job,rs,0,&p,false,&length[1]);
+		best[1] = FindWarehouse(rs->GetF2(),FW::Condition_Job,rs,0,&p,false,&length[1]);
 	}
 
 	// überhaupt nen Weg gefunden?
 	// Welche Flagge benutzen?
 	if(best[0] && (length[0]<length[1]))
-		best[0]->OrderCarrier(rs->f1,rs);
+		best[0]->OrderCarrier(rs->GetF1(),rs);
 	else if(best[1])
-		best[1]->OrderCarrier(rs->f2,rs);
+		best[1]->OrderCarrier(rs->GetF2(),rs);
 	else
 		return false;
 
@@ -621,10 +621,9 @@ void GameClientPlayer::FindWarehouseForAllRoads()
 {
 	for(std::list<RoadSegment*>::iterator it = roads.begin(); it != roads.end(); ++it)
 	{
-		if(!(*it)->carrier[0])
+		if(!(*it)->hasCarrier(0))
 			FindCarrierForRoad(*it);
 	}
-
 }
 
 void GameClientPlayer::FindMaterialForBuildingSites()
@@ -717,16 +716,16 @@ nofCarrier * GameClientPlayer::OrderDonkey(RoadSegment * road)
 
 	// 1. Flagge des Weges
 	FW::Param_Job p = { JOB_PACKDONKEY, 1 };
-	best[0] = FindWarehouse(road->f1,FW::Condition_Job,road,0,&p,false,&length[0]);
+	best[0] = FindWarehouse(road->GetF1(),FW::Condition_Job,road,0,&p,false,&length[0]);
 	// 2. Flagge des Weges
-	best[1] = FindWarehouse(road->f2,FW::Condition_Job,road,0,&p,false,&length[1]);
+	best[1] = FindWarehouse(road->GetF2(),FW::Condition_Job,road,0,&p,false,&length[1]);
 
 	// überhaupt nen Weg gefunden?
 	// Welche Flagge benutzen?
 	if(best[0] && (length[0]<length[1]))
-		return best[0]->OrderDonkey(road,road->f1);
+		return best[0]->OrderDonkey(road,road->GetF1());
 	else if(best[1])
-		return best[1]->OrderDonkey(road,road->f2);
+		return best[1]->OrderDonkey(road,road->GetF2());
 	else
 		return 0;
 }
@@ -748,18 +747,18 @@ RoadSegment * GameClientPlayer::FindRoadForDonkey(noRoadNode * start,noRoadNode 
 			noRoadNode * current_best_goal = 0;
 			// Weg zu beiden Flaggen berechnen
 			unsigned length1 = 0,length2 = 0;
-			gwg->FindHumanPathOnRoads(start,(*it)->f1,&length1,NULL,*it);
-			gwg->FindHumanPathOnRoads(start,(*it)->f2,&length2,NULL,*it);
+			gwg->FindHumanPathOnRoads(start,(*it)->GetF1(),&length1,NULL,*it);
+			gwg->FindHumanPathOnRoads(start,(*it)->GetF2(),&length2,NULL,*it);
 
 			// Wenn man zu einer Flagge nich kommt, die jeweils andere nehmen
 			if(!length1)
-				current_best_goal = (length2)?(*it)->f2 : 0;
+				current_best_goal = (length2)?(*it)->GetF2() : 0;
 			else if(length2)
-				current_best_goal = (length1)?(*it)->f1 : 0;
+				current_best_goal = (length1)?(*it)->GetF1() : 0;
 			else
 			{
 				// ansonsten die kürzeste von beiden
-				current_best_goal = (length1 < length2) ? (*it)->f1 : (*it)->f2;
+				current_best_goal = (length1 < length2) ? (*it)->GetF1() : (*it)->GetF2();
 			}
 
 			// Kein Weg führt hin, nächste Straße bitte
@@ -767,11 +766,11 @@ RoadSegment * GameClientPlayer::FindRoadForDonkey(noRoadNode * start,noRoadNode 
 				continue;
 
 			// Jeweiligen Weg bestimmen
-			unsigned current_best_way = ((*it)->f1 == current_best_goal) ? length1 : length2;
+			unsigned current_best_way = ((*it)->GetF1() == current_best_goal) ? length1 : length2;
 
 			// Produktivität ausrechnen, *10 die Produktivität + die Wegstrecke, damit die
 			// auch noch mit einberechnet wird
-			unsigned current_productivity = 10*(*it)->carrier[0]->GetProductivity()+current_best_way;
+			unsigned current_productivity = 10*(*it)->getCarrier(0)->GetProductivity()+current_best_way;
 
 			// Besser als der bisher beste?
 			if(current_productivity > best_productivity)

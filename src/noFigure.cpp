@@ -416,7 +416,7 @@ void noFigure::WalkToGoal()
 			cur_rs = gwg->GetSpecObj<noRoadNode>(x,y)->routes[route];
 			StartWalking(route);
 			rs_pos = 0;
-			rs_dir = (gwg->GetSpecObj<noRoadNode>(x,y) == cur_rs->f1) ? false : true;
+			rs_dir = (gwg->GetSpecObj<noRoadNode>(x,y) == cur_rs->GetF1()) ? false : true;
 		}
 
 	}
@@ -489,7 +489,7 @@ void noFigure::GoHome(noRoadNode *goal)
 			return;
 		}
 		else
-			this->goal = gwg->GetPlayer(player)->FindWarehouse((rs_dir)?cur_rs->f1:cur_rs->f2,FW::Condition_StoreFigure,0,true,&job,false);
+			this->goal = gwg->GetPlayer(player)->FindWarehouse((rs_dir)?cur_rs->GetF1():cur_rs->GetF2(),FW::Condition_StoreFigure,0,true,&job,false);
 	}
 	else
 		this->goal = goal;
@@ -813,14 +813,14 @@ void noFigure::CorrectSplitData(const RoadSegment * const rs2)
 	{
 		// wir stehen genau in der Mitte
 		// abhängig von der Richtung machen, in die man gerade läuft
-		if(dir == rs2->route[0])
+		if(dir == rs2->GetRoute(0))
 		{
 			// wir laufen auf dem 2. Teilstück
 			cur_rs = rs2;
 			// und wir sind da noch am Anfang
 			rs_pos = 0;
 		}
-		else if(dir == (cur_rs->route[cur_rs->GetLength()-1]+3)%6)
+		else if(dir == (cur_rs->GetRoute(cur_rs->GetLength()-1)+3)%6)
 		{
 			// wir laufen auf dem 1. Teilstück
 

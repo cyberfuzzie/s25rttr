@@ -1,4 +1,4 @@
-// $Id: const_addons.h 6000 2010-02-11 17:19:50Z FloSoft $
+// $Id: const_addons.h 6006 2010-02-12 11:20:01Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -42,7 +42,8 @@ enum AddonId
 	ADDON_STATISTICS_VISIBILITY = 0x00200003,
 
 	ADDON_LIMIT_CATAPULTS		= 0x00000000,
-	ADDON_INEXHAUSTIBLE_MINES	= 0x00000001
+	ADDON_INEXHAUSTIBLE_MINES	= 0x00000001,
+	ADDON_REFUND_MATERIALS		= 0x00000002
 };
 
 enum AddonGroup

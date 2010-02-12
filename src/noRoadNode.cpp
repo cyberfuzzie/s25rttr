@@ -1,4 +1,4 @@
-// $Id: noRoadNode.cpp 6005 2010-02-12 10:08:09Z FloSoft $
+// $Id: noRoadNode.cpp 6006 2010-02-12 11:20:01Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -52,7 +52,7 @@ noRoadNode::~noRoadNode()
 void noRoadNode::Destroy_noRoadNode()
 {
 	// Alle Straßen um mich herum zerstören
-	for(unsigned char i = 0;i<6;++i)
+	for(unsigned char i = 0; i < 6; ++i)
 		DestroyRoad(i);
 
 	Destroy_noCoordBase();

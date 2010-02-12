@@ -1,4 +1,4 @@
-// $Id: noBaseBuilding.cpp 6005 2010-02-12 10:08:09Z FloSoft $
+// $Id: noBaseBuilding.cpp 6006 2010-02-12 11:20:01Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -33,6 +33,7 @@
 #include "WindowManager.h"
 #include "SerializedGameData.h"
 #include "GameInterface.h"
+#include "AddonManager.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -106,13 +107,58 @@ noBaseBuilding::~noBaseBuilding()
 
 void noBaseBuilding::Destroy_noBaseBuilding()
 {
-	gwg->GetGameInterface()->GI_UpdateMinimap(x,y);
+	gwg->GetGameInterface()->GI_UpdateMinimap(x, y);
 
 	// evtl Anbauten wieder abreißen
 	DestroyBuildingExtensions();
 
 	// ggf. Fenster schließen
-	gwg->ImportantObjectDestroyed(x,y);
+	gwg->ImportantObjectDestroyed(x, y);
+
+	// Baukosten zurückerstatten
+	if(ADDONMANAGER.isEnabled(ADDON_REFUND_MATERIALS))
+	{
+		// lebt unsere Flagge noch?
+		noFlag *flag = GetFlag();
+		if(flag)
+		{
+			// wieviel kriegt man von jeder Ware wieder?
+			const unsigned int percents[5] = { 0, 25, 50, 75, 100 };
+			const unsigned int percent = 10 * percents[ADDONMANAGER.getSelection(ADDON_REFUND_MATERIALS)];
+
+			// zurückgaben berechnen (abgerundet)
+			unsigned int boards = (percent * BUILDING_COSTS[nation][type].boards) / 1000;
+			unsigned int stones = (percent * BUILDING_COSTS[nation][type].stones) / 1000;
+
+			GoodType goods[2] = {GD_BOARDS, GD_STONES};
+			bool which = 0;
+			while(flag->IsSpaceForWare() && ( boards > 0 || stones > 0 ))
+			{
+				if( (!which && boards > 0) || (which && stones > 0))
+				{
+					// Ware erzeugen
+					Ware *ware = new Ware(goods[which], 0, flag);
+					// Inventur anpassen
+					gwg->GetPlayer(player)->IncreaseInventoryWare(goods[which], 1);
+					// Abnehmer für Ware finden
+					ware->goal = gwg->GetPlayer(player)->FindClientForWare(ware);
+					// Ware soll ihren weiteren Weg berechnen
+					ware->RecalcRoute();
+					// Ware ablegen
+					flag->AddWare(ware);
+					ware->LieAtFlag(flag);
+				}
+
+				if(!which)
+					--boards;
+				else
+					--stones;
+
+				which = !which;
+			}
+
+		}
+	}
 
 	Destroy_noRoadNode();
 }

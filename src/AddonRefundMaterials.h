@@ -1,4 +1,4 @@
-// $Id: AddonInexhaustibleMines.h 6006 2010-02-12 11:20:01Z FloSoft $
+// $Id: AddonRefundMaterials.h 6006 2010-02-12 11:20:01Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -16,8 +16,8 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Siedler II.5 RTTR. If not, see <http://www.gnu.org/licenses/>.
-#ifndef ADDONINEXHAUSTIBLEMINES_H_INCLUDED
-#define ADDONINEXHAUSTIBLEMINES_H_INCLUDED
+#ifndef ADDONREFUNDMATERIALS_H_INCLUDED
+#define ADDONREFUNDMATERIALS_H_INCLUDED
 
 #pragma once
 
@@ -25,22 +25,27 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  Addon for allowing to have unlimited resources.
+ *  Addon for refunding materials soon as a building gets destroyed.
  *
  *  @author FloSoft
  */
-class AddonInexhaustibleMines : public AddonBool
+class AddonRefundMaterials : public AddonList
 {
 public:
-	AddonInexhaustibleMines() : AddonBool(ADDON_INEXHAUSTIBLE_MINES,
-										  ADDONGROUP_ECONOMY,
-										  gettext_noop("Inexhaustible Mines"), 
-										  gettext_noop("Allows to have unlimited resources\n\n"
-													   "Mines will never be depleted"),
-										  0
-										 )
+	AddonRefundMaterials() : AddonList(ADDON_REFUND_MATERIALS, 
+									   ADDONGROUP_ECONOMY,
+									   gettext_noop("Refund materials when building is destroyed"), 
+									   gettext_noop("Allows you to get building materials back if the building is destroyed\n\n"),
+									   0
+									  )
 	{
+		addOption(gettext_noop("No Refund"));
+		addOption(gettext_noop("Refund 25%"));
+		addOption(gettext_noop("Refund 50%"));
+		addOption(gettext_noop("Refund 75%"));
+		addOption(gettext_noop("Get All Back"));	
 	}
 };
 
-#endif // !ADDONINEXHAUSTIBLEMINES_H_INCLUDED
+#endif // !ADDONREFUNDMATERIALS_H_INCLUDED
+

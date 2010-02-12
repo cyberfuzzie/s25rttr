@@ -1,4 +1,4 @@
-// $Id: AddonManager.cpp 6000 2010-02-11 17:19:50Z FloSoft $
+// $Id: AddonManager.cpp 6006 2010-02-12 11:20:01Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -31,6 +31,7 @@
 
 #include "AddonLimitCatapults.h"
 #include "AddonInexhaustibleMines.h"
+#include "AddonRefundMaterials.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
@@ -79,6 +80,7 @@ void AddonManager::reset(bool recreate)
 
 		registerAddon(new AddonLimitCatapults);
 		registerAddon(new AddonInexhaustibleMines);
+		registerAddon(new AddonRefundMaterials);
 	}
 }
 

@@ -1,4 +1,4 @@
-// $Id: noBuilding.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: noBuilding.cpp 6006 2010-02-12 11:20:01Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -19,15 +19,13 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // Header
-
 #include "main.h"
 #include "noBuilding.h"
-#include "GameWorld.h"
-#include "Loader.h"
+
 #include "noFire.h"
-#include "EventManager.h"
+
+#include "GameWorld.h"
 #include "SerializedGameData.h"
-#include "FOWObjects.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -37,11 +35,28 @@
 	static char THIS_FILE[] = __FILE__;
 #endif
 
-noBuilding::noBuilding(const BuildingType type,const unsigned short x, const unsigned short y,const unsigned char player,const Nation nation)
-: noBaseBuilding(NOP_BUILDING,type,x,y,player), opendoor(0)
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
+noBuilding::noBuilding(const BuildingType type,
+					   const unsigned short x, 
+					   const unsigned short y,
+					   const unsigned char player,
+					   const Nation nation)
+	: noBaseBuilding(NOP_BUILDING,type, x, y, player),
+	opendoor(0)
 {
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void noBuilding::Destroy_noBuilding()
 {
 	// Feuer erzeugen (bei Hütten und Bergwerken kleine Feuer, bei allen anderen große!)
@@ -51,6 +66,12 @@ void noBuilding::Destroy_noBuilding()
 	Destroy_noBaseBuilding();
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void noBuilding::Serialize_noBuilding(SerializedGameData * sgd) const
 {
 	Serialize_noBaseBuilding(sgd);
@@ -58,11 +79,23 @@ void noBuilding::Serialize_noBuilding(SerializedGameData * sgd) const
 	sgd->PushUnsignedChar(opendoor);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 noBuilding::noBuilding(SerializedGameData * sgd, const unsigned obj_id) : noBaseBuilding(sgd,obj_id),
 opendoor(sgd->PopUnsignedChar())
 {
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void noBuilding::DrawBaseBuilding(int x,int y)
 {
 	LOADER.GetNationImageN(nation, 250+5*type)->Draw(x,y,0,0,0,0,0,0);
@@ -74,10 +107,22 @@ void noBuilding::DrawBaseBuilding(int x,int y)
 		LOADER.GetNationImageN(nation, 250+5*type+4)->Draw(x,y,0,0,0,0,0,0);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void noBuilding::GotWorker(Job job, noFigure * worker)
 {
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 FOWObject * noBuilding::CreateFOWObject() const
 {
 	return new fowBuilding(type,nation);

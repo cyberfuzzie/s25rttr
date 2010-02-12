@@ -2017,6 +2017,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\src\AddonRefundMaterials.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\Addons.cpp"
 						>
 					</File>

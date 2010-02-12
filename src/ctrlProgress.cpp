@@ -1,4 +1,4 @@
-// $Id: ctrlProgress.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: ctrlProgress.cpp 6007 2010-02-12 11:54:50Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -112,6 +112,11 @@ bool ctrlProgress::Draw_(void)
 
 	// Leiste
 	DrawRectangle(GetX() + height + 2 + x_padding, GetY() + 4 + y_padding, progress, height-8-2*y_padding, color);
+
+	// Prozentzahlen zeichnen
+	std::stringstream percent;
+	percent << percentage << "%";
+	SmallFont->Draw(GetX() + (width / 2), GetY() + height / 2, percent.str(), glArchivItem_Font::DF_VCENTER|glArchivItem_Font::DF_CENTER, COLOR_YELLOW);
 
 	return true;
 }

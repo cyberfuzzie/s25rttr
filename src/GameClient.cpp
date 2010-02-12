@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 5999 2010-02-11 09:53:02Z FloSoft $
+// $Id: GameClient.cpp 6004 2010-02-12 07:50:42Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1176,7 +1176,7 @@ void GameClient::ExecuteGameFrame(const bool skipping)
 		{
 		
 			// Diesen Zeitpunkt merken
-			framesinfo.lasttime = currenttime - ( currenttime - framesinfo.lasttime - framesinfo.gf_length);
+			framesinfo.lasttime += framesinfo.gf_length;
 			// Nächster Game-Frame erreicht
 			++framesinfo.nr;
 
@@ -1482,10 +1482,17 @@ unsigned GameClient::StartReplay(const std::string &path, GameWorldViewer * &gwv
 //	return ((networkframe.nr * networkframe.length + networkframe.frame_time+offset) % (networkframe.length*time_part_nominator/time_part_denominator)) / (networkframe.length*time_part_nominator/time_part_denominator);
 //}
 
-unsigned GameClient::GetGlobalAnimation(const unsigned max,unsigned factor_numerator, unsigned factor_denumerator, unsigned offset)
+unsigned int GameClient::GetGlobalAnimation(const unsigned short max, const unsigned char factor_numerator, const unsigned char factor_denumerator, const unsigned int offset)
 {
-	unsigned factor = framesinfo.gf_length*factor_numerator/factor_denumerator;
-	return ((framesinfo.nr * framesinfo.gf_length + framesinfo.frame_time+offset) % (factor*max)) / factor;
+	// Unit for animations is 630ms (dividable by 2, 3, 5, 6, 7, 10, 15, ...)
+	// But this also means: If framerate drops below approx. 15Hz, you won't see 
+	// every frame of an 8-part animation anymore.
+	// An animation runs fully in (factor_numerator / factor_denumerator) multiples of 630ms
+	const unsigned unit = 630/*ms*/ * factor_numerator / factor_denumerator;
+	// Good approximation of current time in ms 
+	// (Accuracy of a possibly expensive VideoDriverWrapper::GetTicks() isn't needed here):
+	const unsigned currenttime = framesinfo.lasttime+framesinfo.frame_time;
+	return ((currenttime % unit) * max / unit + offset) % max;
 }
 
 unsigned GameClient::Interpolate(unsigned max_val,EventManager::EventPointer ev)

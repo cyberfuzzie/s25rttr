@@ -1,4 +1,4 @@
-// $Id: noFlag.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: noFlag.cpp 6004 2010-02-12 07:50:42Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -197,9 +197,9 @@ void noFlag::Draw(int x, int y)
 	}
 
 	// Flagge
-	LOADER.GetNationImageN(gwg->GetPlayer(player)->nation, nr+GAMECLIENT.GetGlobalAnimation(8,80,40,ani_offset))->Draw(x,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[gwg->GetPlayer(player)->color]);
+	LOADER.GetNationImageN(gwg->GetPlayer(player)->nation, nr+GAMECLIENT.GetGlobalAnimation(8,2,1,ani_offset))->Draw(x,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[gwg->GetPlayer(player)->color]);
 	// Schatten
-	LOADER.GetNationImageN(gwg->GetPlayer(player)->nation, nr+10+GAMECLIENT.GetGlobalAnimation(8,80,40,ani_offset))->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
+	LOADER.GetNationImageN(gwg->GetPlayer(player)->nation, nr+10+GAMECLIENT.GetGlobalAnimation(8,2,1,ani_offset))->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
 
 	// Waren (von hinten anfangen zu zeichnen)
 	for(unsigned i = 8;i;--i)

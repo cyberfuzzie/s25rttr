@@ -1,4 +1,4 @@
-// $Id: noShip.cpp 5854 2010-01-04 16:30:33Z FloSoft $
+// $Id: noShip.cpp 6004 2010-02-12 07:50:42Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -43,22 +43,20 @@ const std::string ship_names[ship_count] = {"FloSoftius", "Demophobius", "Olivia
 const Point<int> SHIPS_FLAG_POS[12] =
 {
 	// Und wenn das Schiff steht und Segel nicht gehisst hat
-	Point<int>(2,-70),
-	Point<int>(-1,-64),
-	Point<int>(2,-64),
-	Point<int>(-2,-70),
-	Point<int>(4,-63),
-	Point<int>(4,-63),
+	Point<int>(-3,-77),
+	Point<int>(-6,-71),
+	Point<int>(-3,-71),
+	Point<int>(-7,-77),
+	Point<int>(-1,-70),
+	Point<int>(-1,-70),
 
 	// Und wenn es fährt
-	Point<int>(2,-70),
-	Point<int>(-1,-64),
-	Point<int>(2,-64),
-	Point<int>(-2,-70),
-	Point<int>(4,-63),
-	Point<int>(4,-63)
-
-
+	Point<int>(3,-70),
+	Point<int>(0,-64),
+	Point<int>(3,-64),
+	Point<int>(-1,-70),
+	Point<int>(5,-63),
+	Point<int>(5,-63)
 };
 
 /// Konstruktor
@@ -127,7 +125,7 @@ void noShip::Destroy()
 
 void noShip::Draw(int x, int y)
 {
-	unsigned flag_drawing_type = 0;
+	unsigned flag_drawing_type = 1;
 
  	switch(state)
 	{
@@ -137,12 +135,12 @@ void noShip::Draw(int x, int y)
 		{
 			LOADER.GetImageN("boot_z",  1)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
 			LOADER.GetImageN("boot_z",  0)->Draw(x,y);
+			flag_drawing_type = 0;
 		} break;
 	
 	case STATE_GOTOHARBOR:
 		{
 			DrawDriving(x,y);
-			flag_drawing_type = 1;
 		} break;
 	case STATE_EXPEDITION_LOADING:
 	case STATE_TRANSPORT_LOADING:
@@ -163,12 +161,15 @@ void noShip::Draw(int x, int y)
 	case STATE_TRANSPORT_DRIVING:
 		{
 			DrawDrivingWithWares(x,y);
-			flag_drawing_type = 1;
 		} break;
 	}
 
-	LOADER.GetMapImageN(3162+GAMECLIENT.GetGlobalAnimation(8,80,40,obj_id))->
+	LOADER.GetImageN("boot_z", 40 + GAMECLIENT.GetGlobalAnimation(6,1,1,obj_id))->
 		Draw(x+SHIPS_FLAG_POS[dir+flag_drawing_type*6].x,y+SHIPS_FLAG_POS[dir+flag_drawing_type*6].y,0,0,0,0,0,0,COLOR_WHITE, COLORS[gwg->GetPlayer(player)->color]);
+	// Second, white flag, only when on expedition, always swinging in the opposite direction
+	if(state >= STATE_EXPEDITION_LOADING && state <= STATE_EXPEDITION_DRIVING)
+	LOADER.GetImageN("boot_z", 40 + GAMECLIENT.GetGlobalAnimation(6,1,1,obj_id+4))->
+		Draw(x+SHIPS_FLAG_POS[dir+flag_drawing_type*6].x,y+4+SHIPS_FLAG_POS[dir+flag_drawing_type*6].y,0,0,0,0,0,0,COLOR_WHITE, COLOR_WHITE);
 
 }
 /// Zeichnet normales Fahren auf dem Meer ohne irgendwelche Güter

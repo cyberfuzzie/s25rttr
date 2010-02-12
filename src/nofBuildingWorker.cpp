@@ -1,4 +1,4 @@
-// $Id: nofBuildingWorker.cpp 6000 2010-02-11 17:19:50Z FloSoft $
+// $Id: nofBuildingWorker.cpp 6004 2010-02-12 07:50:42Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -353,7 +353,7 @@ bool nofBuildingWorker::GetResources(unsigned char type)
 	// in Map-Resource-Koordinaten konvertieren
 	type = RESOURCES_MINE_TO_MAP[type];
 
-	MapCoord mx, my;
+	MapCoord mx=0, my=0;
 	bool found = false;
 
 	// Alle Punkte durchgehen, bis man einen findet, wo man graben kann

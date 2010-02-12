@@ -1,4 +1,4 @@
-// $Id: nobUsual.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: nobUsual.cpp 6004 2010-02-12 07:50:42Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -233,15 +233,24 @@ void nobUsual::Draw(int x,int y)
 		/// Großes Schwein zeichnen
 		LOADER.GetMapImageN(2160)->Draw(
 			x+PIG_POSITIONS[nation][0][0],y+PIG_POSITIONS[nation][0][1],0,0,0,0,0,0,COLOR_SHADOW);
-		LOADER.GetMapImageN(2100+GameClient::inst().GetGlobalAnimation(12,30,10,x+y+obj_id))->Draw(
+		LOADER.GetMapImageN(2100+GameClient::inst().GetGlobalAnimation(12,3,1,x+y+obj_id))->Draw(
 			x+PIG_POSITIONS[nation][0][0],y+PIG_POSITIONS[nation][0][1]);
 
 		// Die 4 kleinen Schweinchen, je nach Produktivität
 		for(unsigned i = 1;i<min<unsigned>(unsigned(productivity)/20+1,5);++i)
 		{
+			//A random (really, dice-rolled by hand:) ) order of the four possible pig animations, with eating three times as much as the others ones
+			//To get random-looking, non synchronous, sweet little pigs
+			const unsigned char smallpig_animations[63] = {
+			0,0,3,2, 0,0,1,3, 0,3,1,3, 2,0,0,1,
+			0,0,1,3, 2,0,1,1, 0,0,2,1, 0,1,0,2,
+			2,0,0,2, 2,0,1,0, 3,1,2,0, 1,2,2,0,
+			0,0,3,0, 2,0,3,0, 3,0,1,1, 0,3,0
+			};
+			const unsigned short animpos = GameClient::inst().GetGlobalAnimation(63*12,63*4-i*5,1,183*i+x*obj_id+y*i);
 			LOADER.GetMapImageN(2160)->Draw(
 				x+PIG_POSITIONS[nation][i][0],y+PIG_POSITIONS[nation][i][1],0,0,0,0,0,0,COLOR_SHADOW);
-			LOADER.GetMapImageN(2112+GameClient::inst().GetGlobalAnimation(48,30,10,obj_id*i+x/i+y*i))->Draw(
+			LOADER.GetMapImageN(2112+smallpig_animations[animpos/12]*12+animpos%12)->Draw(
 				x+PIG_POSITIONS[nation][i][0],y+PIG_POSITIONS[nation][i][1]);
 		}
 

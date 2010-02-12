@@ -1,4 +1,4 @@
-// $Id: noTree.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: noTree.cpp 6004 2010-02-12 07:50:42Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -108,8 +108,8 @@ void noTree::Draw( int x,	int y)
 	case STATE_FALLING_WAIT:
 		{
 			// Wenn er ausgewachsen ist, dann animiert zeichnen
-			LOADER.GetMapImageN(200+type*15+GAMECLIENT.GetGlobalAnimation(8,35,20,x*y*10*type))->Draw(x,y,0,0,0,0,0,0);
-			LOADER.GetMapImageN(350+type*15+GAMECLIENT.GetGlobalAnimation(8,35,20,x*y*10*type))->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
+			LOADER.GetMapImageN(200+type*15+GAMECLIENT.GetGlobalAnimation(8,7-x%2,3+y%3,x*y*10*type))->Draw(x,y,0,0,0,0,0,0);
+			LOADER.GetMapImageN(350+type*15+GAMECLIENT.GetGlobalAnimation(8,7-x%2,3+y%3,x*y*10*type))->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
 
 			// je mehr Bäume gezeichnet, desto mehr Vogelgezwitscher
 			++DRAW_COUNTER;

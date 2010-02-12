@@ -1,4 +1,4 @@
-// $Id: nobHarborBuilding.cpp 5854 2010-01-04 16:30:33Z FloSoft $
+// $Id: nobHarborBuilding.cpp 6004 2010-02-12 07:50:42Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -201,7 +201,7 @@ void nobHarborBuilding::Draw(int x,int y)
 
 	// Hafenfeuer zeichnen // TODO auch für nicht-römer machen
 	if (nation == NAT_ROMANS)
-		LOADER.GetNationImageN(nation, 500 + 5 * GameClient::inst().GetGlobalAnimation(8,10,2,obj_id+x+y))->Draw(x,y,0,0,0,0,0,0);
+		LOADER.GetNationImageN(nation, 500 + 5 * GameClient::inst().GetGlobalAnimation(8,2,1,obj_id+x+y))->Draw(x,y,0,0,0,0,0,0);
 
 	// Läuft gerade eine Expedition?
 	if(expedition.active)
@@ -218,7 +218,7 @@ void nobHarborBuilding::Draw(int x,int y)
 		// Und den Bauarbeiter, falls er schon da ist
 		if(expedition.builder)
 		{
-			unsigned id = GameClient::inst().GetGlobalAnimation(1000,1,10,this->x+this->y);
+			unsigned id = GameClient::inst().GetGlobalAnimation(1000,7,1,this->x+this->y);
 
 			const int WALKING_DISTANCE = 30;
 

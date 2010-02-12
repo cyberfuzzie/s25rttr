@@ -1,4 +1,4 @@
-// $Id: GameManager.cpp 6001 2010-02-11 17:30:01Z FloSoft $
+// $Id: GameManager.cpp 6004 2010-02-12 07:50:42Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -162,17 +162,18 @@ bool GameManager::Run()
 
 	unsigned int current_time = VideoDriverWrapper::inst().GetTickCount();
 
-	// Evtl. Soft-VSync machen 
-	// Schleifenrate auf 104% der Refreshrate begrenzen: Falls der Grafiktreiber
-	// VSync kann bleibt dafür noch genug Platz.
-	// Windows kann kein nanosleep - Dafür können die Windows-Treiber aber alle VSync.
-
+	// SW-VSync (mit 4% Toleranz)
 	if(SETTINGS.video.vsync > 1)
 	{
-		unsigned long vsync = SETTINGS.video.vsync;
+		static unsigned long vsync = SETTINGS.video.vsync;
 
-		if(1000 * framerate < 960 * SETTINGS.video.vsync )
-			vsync = (1100 * SETTINGS.video.vsync) / 1000;
+		// immer 10% dazu/weg bis man über der Framerate liegt
+		if(vsync < 200 && 1000 * framerate < (unsigned int)(960 * vsync) )
+			vsync = (1100 * vsync) / 1000;
+		else if(vsync > SETTINGS.video.vsync)
+			vsync = (900 * vsync) / 1000;
+		else
+			vsync = SETTINGS.video.vsync;
 
 		unsigned long goal_ticks = 960*1000*1000 / vsync;
 #ifdef _WIN32

@@ -1,4 +1,4 @@
-// $Id: GameClient.h 5999 2010-02-11 09:53:02Z FloSoft $
+// $Id: GameClient.h 6004 2010-02-12 07:50:42Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -98,7 +98,7 @@ public:
 	unsigned int GetGFLength() const { return framesinfo.gf_length; }
 	unsigned int GetNWFLength() const { return framesinfo.nwf_length; }
 	unsigned int GetFrameTime() const { return framesinfo.frame_time; }
-	unsigned int GetGlobalAnimation(const unsigned max,unsigned factor_numerator, unsigned factor_denumerator, unsigned offset);
+	unsigned int GetGlobalAnimation(const unsigned short max, const unsigned char factor_numerator, const unsigned char factor_denumerator, const unsigned int offset);
 	unsigned int Interpolate(unsigned max_val,EventManager::EventPointer ev);
 	int Interpolate(int x1,int x2,EventManager::EventPointer ev);
 	/// Gibt Geschwindigkeits-Faktor zurück

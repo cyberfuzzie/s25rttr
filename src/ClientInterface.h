@@ -1,4 +1,4 @@
-// $Id: ClientInterface.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: ClientInterface.h 6015 2010-02-13 15:09:58Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -79,6 +79,8 @@ public:
 	virtual void CI_GGSChanged(const GlobalGameSettings& ggs);
 
 	virtual void CI_Chat(const unsigned player_id, const ChatDestination cd, const std::string& msg);
+	virtual void CI_Countdown(int countdown);
+	virtual void CI_CancelCountdown();
 
 	virtual void CI_NewPostMessage(const unsigned postmessages_count);
 	virtual void CI_PostMessageDeleted(const unsigned postmessages_count);

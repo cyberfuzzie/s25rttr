@@ -1,4 +1,4 @@
-// $Id: dskHostGame.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: dskHostGame.h 6015 2010-02-13 15:09:58Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -54,9 +54,6 @@ private:
 	void ChangePing(const unsigned i);
 	void ChangeColor(const unsigned i, const unsigned char color);
 
-	void CreateMapPreview();
-
-
 	void Msg_PaintBefore();
 	void Msg_Group_ButtonClick(const unsigned int group_id, const unsigned int ctrl_id);
 	void Msg_Group_CheckboxChange(const unsigned int group_id, const unsigned int ctrl_id, const bool checked);
@@ -85,6 +82,8 @@ private:
 	void CI_GGSChanged(const GlobalGameSettings& ggs);
 
 	void CI_Chat(const unsigned player_id, const ChatDestination cd, const std::string& msg);
+	void CI_Countdown(int countdown);
+	void CI_CancelCountdown();
 
 	void LC_Status_Error(const std::string &error);
 

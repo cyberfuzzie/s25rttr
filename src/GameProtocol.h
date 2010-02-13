@@ -1,4 +1,4 @@
-// $Id: GameProtocol.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: GameProtocol.h 6015 2010-02-13 15:09:58Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -30,13 +30,15 @@ enum
 	NMS_PING = 0x0001, // 0
 	NMS_PONG = 0x0002, // 0
 
-	NMS_SERVER_TYPE = 0x0101, // 1 servertyp, x server-version
-	NMS_SERVER_TYPEOK, // 1 servertyp, x server-version
-	NMS_SERVER_PASSWORD, // x serverpassword | 1 serverpasswordok
-	NMS_SERVER_NAME, // x servername
-	NMS_SERVER_START, // 
-	NMS_SERVER_CHAT, // 1 destination, x text | 1 source, x text
-	NMS_SERVER_ASYNC, // playercount*4 int (Checksummen)
+	NMS_SERVER_TYPE = 0x0101,	// 1 servertyp, x server-version
+	NMS_SERVER_TYPEOK,			// 1 servertyp, x server-version
+	NMS_SERVER_PASSWORD,		// x serverpassword | 1 serverpasswordok
+	NMS_SERVER_NAME,			// x servername
+	NMS_SERVER_START,			// 
+	NMS_SERVER_CHAT,			// 1 destination, x text | 1 source, x text
+	NMS_SERVER_ASYNC,			// playercount*4 int (Checksummen)
+	NMS_SERVER_COUNTDOWN,		// 4 countdown
+	NMS_SERVER_CANCELCOUNTDOWN,	// 0
 
 	NMS_PLAYER_ID = 0x0201, // 1 playerid
 	NMS_PLAYER_NAME, // x playername
@@ -51,15 +53,16 @@ enum
 	NMS_PLAYER_READY, // 1 status | 1 playerid, 1 status
 	NMS_PLAYER_SWAP, // 1 playerid1, 1 playerid2
 
-	NMS_MAP_NAME = 0x0301, // x mapname
-	NMS_MAP_INFO, // 0 | 4 parts, 4 ziplength, 4 length
-	NMS_MAP_DATA, // 0 | x mappartdata
-	NMS_MAP_CHECKSUM, // 4 checksum | 1 checksumok
-	NMS_MAP_CHECKSUMOK,
+	NMS_MAP_NAME = 0x0301,	// x mapname
+	NMS_MAP_INFO,			// 0 | 4 parts, 4 ziplength, 4 length
+	NMS_MAP_DATA,			// 0 | x mappartdata
+	NMS_MAP_CHECKSUM,		// 4 checksum
+	NMS_MAP_CHECKSUMOK,		// 1 checksumok
 
 	NMS_SERVER_NWF_DONE = 0x0401, // 0
 	NMS_GAMECOMMANDS,
 	NMS_PAUSE,
+
 	NMS_GGS_CHANGE = 0x0501 // 
 };
 

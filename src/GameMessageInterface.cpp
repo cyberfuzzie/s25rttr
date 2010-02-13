@@ -1,4 +1,4 @@
-// $Id: GameMessageInterface.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: GameMessageInterface.cpp 6015 2010-02-13 15:09:58Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -32,6 +32,8 @@ void GameMessageInterface::OnNMSServerName(const GameMessage_Server_Name& msg) {
 void GameMessageInterface::OnNMSServerStart(const GameMessage_Server_Start& msg) {}
 void GameMessageInterface::OnNMSServerChat(const GameMessage_Server_Chat& msg) {}
 void GameMessageInterface::OnNMSServerAsync(const GameMessage_Server_Async& msg) {}
+void GameMessageInterface::OnNMSServerCountdown(const GameMessage_Server_Countdown& msg) {}
+void GameMessageInterface::OnNMSServerCancelCountdown(const GameMessage_Server_CancelCountdown& msg) {}
 
 void GameMessageInterface::OnNMSPlayerId(const GameMessage_Player_Id& msg) {}
 void GameMessageInterface::OnNMSPlayerName(const GameMessage_Player_Name& msg) {}

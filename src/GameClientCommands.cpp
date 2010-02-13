@@ -1,4 +1,4 @@
-// $Id: GameClientCommands.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: GameClientCommands.cpp 6015 2010-02-13 15:09:58Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -107,7 +107,7 @@ void GameClient::Command_ToggleTeam()
  */
 void GameClient::Command_ToggleReady()
 {
-	send_queue.push(new GameMessage_Player_Ready(0xFF,GetLocalPlayer()->ready ));
+	send_queue.push(new GameMessage_Player_Ready(0xFF, GetLocalPlayer()->ready ));
 }
 
 ///////////////////////////////////////////////////////////////////////////////

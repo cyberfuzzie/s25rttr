@@ -1,4 +1,4 @@
-// $Id: GameClient.h 6004 2010-02-12 07:50:42Z FloSoft $
+// $Id: GameClient.h 6015 2010-02-13 15:09:58Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -180,6 +180,8 @@ private:
 	virtual void OnNMSServerStart(const GameMessage_Server_Start& msg);
 	virtual void OnNMSServerChat(const GameMessage_Server_Chat& msg);
 	virtual void OnNMSServerAsync(const GameMessage_Server_Async& msg);
+	virtual void OnNMSServerCountdown(const GameMessage_Server_Countdown& msg);
+	virtual void OnNMSServerCancelCountdown(const GameMessage_Server_CancelCountdown& msg);
 
 	virtual void OnNMSPlayerId(const GameMessage_Player_Id& msg);
 	virtual void OnNMSPlayerList(const GameMessage_Player_List& msg);

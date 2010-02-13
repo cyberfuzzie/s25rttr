@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 6004 2010-02-12 07:50:42Z FloSoft $
+// $Id: GameClient.cpp 6015 2010-02-13 15:09:58Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -914,6 +914,30 @@ void GameClient::OnNMSServerAsync(const GameMessage_Server_Async& msg)
 
 	// Pausieren
 
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Server-Countdown-Nachricht.
+ *
+ *  @author FloSoft
+ */
+void GameClient::OnNMSServerCountdown(const GameMessage_Server_Countdown& msg)
+{
+	if(ci)
+		ci->CI_Countdown(msg.countdown);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Server-Cancel-Countdown-Nachricht.
+ *
+ *  @author FloSoft
+ */
+void GameClient::OnNMSServerCancelCountdown(const GameMessage_Server_CancelCountdown& msg)
+{
+	if(ci)
+		ci->CI_CancelCountdown();
 }
 
 ///////////////////////////////////////////////////////////////////////////////

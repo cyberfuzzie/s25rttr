@@ -1,4 +1,4 @@
-// $Id: GameServer.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: GameServer.h 6015 2010-02-13 15:09:58Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -54,6 +54,8 @@ public:
 	void Stop(void);
 
 	bool StartGame(void);
+	bool StartCountdown(void);
+	void CancelCountdown(void);
 
 	bool TogglePause();
 
@@ -166,6 +168,18 @@ private:
 	Socket serversocket;
 	GameServerPlayerList players;
 	GlobalGameSettings ggs;
+
+	/// der Spielstartcountdown
+	class CountDown
+	{
+	public:
+		CountDown();
+		void Clear();
+
+		bool do_countdown;
+		int countdown;
+		unsigned int lasttime;
+	} countdown;
 
 	/// Alle KI-Spieler und ihre Daten (NULL, falls ein solcher Spieler nicht existiert)
 	std::vector<AIBase*> ai_players;

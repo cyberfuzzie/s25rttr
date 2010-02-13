@@ -1,4 +1,4 @@
-// $Id: GameMessageInterface.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: GameMessageInterface.h 6015 2010-02-13 15:09:58Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -25,6 +25,7 @@
 
 class GameMessage_Ping;
 class GameMessage_Pong;
+
 class GameMessage_Server_Type;
 class GameMessage_Server_TypeOK;
 class GameMessage_Server_Password;
@@ -32,6 +33,9 @@ class GameMessage_Server_Name;
 class GameMessage_Server_Start;
 class GameMessage_Server_Chat;
 class GameMessage_Server_Async;
+class GameMessage_Server_Countdown;
+class GameMessage_Server_CancelCountdown;
+
 class GameMessage_Player_Id;
 class GameMessage_Player_Name;
 class GameMessage_Player_List;
@@ -44,6 +48,7 @@ class GameMessage_Player_Ping;
 class GameMessage_Player_New;
 class GameMessage_Player_Ready;
 class GameMessage_Player_Swap;
+
 class GameMessage_Map_Info;
 class GameMessage_Map_Data;
 class GameMessage_Map_Checksum;
@@ -69,6 +74,8 @@ public:
 	virtual void OnNMSServerStart(const GameMessage_Server_Start& msg);
 	virtual void OnNMSServerChat(const GameMessage_Server_Chat& msg);
 	virtual void OnNMSServerAsync(const GameMessage_Server_Async& msg);
+	virtual void OnNMSServerCountdown(const GameMessage_Server_Countdown& msg);
+	virtual void OnNMSServerCancelCountdown(const GameMessage_Server_CancelCountdown& msg);
 
 	virtual void OnNMSPlayerId(const GameMessage_Player_Id& msg);
 	virtual void OnNMSPlayerName(const GameMessage_Player_Name& msg);

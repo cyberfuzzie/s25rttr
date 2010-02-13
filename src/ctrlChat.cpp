@@ -1,4 +1,4 @@
-// $Id: ctrlChat.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: ctrlChat.cpp 6015 2010-02-13 15:09:58Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -112,7 +112,7 @@ bool ctrlChat::Draw_()
 		if(chat_lines[i+pos].secondary)
 		{
 			// dann etwas Platz lassen davor und den entsprechenden Text hinschreiben
-			font->Draw(GetX()+2+SECONDARY_PUGGING,GetY()+2+i*(font->getHeight()+2),chat_lines[i+pos].msg.c_str(),0,chat_lines[i+pos].msg_color);
+			font->Draw(GetX()+2,GetY()+2+i*(font->getHeight()+2),chat_lines[i+pos].msg.c_str(),0,chat_lines[i+pos].msg_color);
 		}
 		else
 		{
@@ -171,7 +171,7 @@ void ctrlChat::AddMessage(const std::string& time_string,const std::string& play
 	glArchivItem_Font::WrapInfo wi;
 
 	// Zeilen ggf. wrappen, falls der Platz nich reicht und die Zeilenanfanänge in wi speichern
-	font->GetWrapInfo(msg, width - prefix_width - 2 - SCROLLBAR_WIDTH, width - SECONDARY_PUGGING - 2 - SCROLLBAR_WIDTH, wi);
+	font->GetWrapInfo(msg, width - prefix_width - 2 - SCROLLBAR_WIDTH, width - 2 - SCROLLBAR_WIDTH, wi);
 
 	//// Reicht der Speicher noch aus?
 	//if(cl_count + wi.positions.size() > allocated_cl_count)

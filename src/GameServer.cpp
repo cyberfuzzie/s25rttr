@@ -1,4 +1,4 @@
-// $Id: GameServer.cpp 5999 2010-02-11 09:53:02Z FloSoft $
+// $Id: GameServer.cpp 6015 2010-02-13 15:09:58Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -99,6 +99,18 @@ void GameServer::MapInfo::Clear()
 	map_type = MAPTYPE_OLDMAP;
 }
 
+GameServer::CountDown::CountDown()
+{
+	Clear();
+}
+
+void GameServer::CountDown::Clear()
+{
+	do_countdown = false;
+	countdown = 10;
+	lasttime = 0;
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 GameServer::GameServer(void)
@@ -108,6 +120,7 @@ GameServer::GameServer(void)
 	framesinfo.Clear();
 	serverconfig.Clear();
 	mapinfo.Clear();
+	countdown.Clear();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -330,6 +343,29 @@ void GameServer::Run(void)
 	// post zustellen
 	FillPlayerQueues();
 
+	if(countdown.do_countdown)
+	{
+		// countdown erzeugen
+		if(VideoDriverWrapper::inst().GetTickCount() - countdown.lasttime > 1000)
+		{
+			// nun echt starten
+			if(countdown.countdown < 0)
+			{
+				countdown.Clear();
+				StartGame();
+			}
+			else
+			{
+				SendToAll(GameMessage_Server_Countdown(countdown.countdown));
+				LOG.write("SERVER >>> BROADCAST: NMS_SERVER_COUNTDOWN(%d)\n", countdown.countdown);
+				
+				countdown.lasttime = VideoDriverWrapper::inst().GetTickCount();
+
+				--countdown.countdown;
+			}
+		}
+	}
+
 	// queues abarbeiten
 	for(unsigned int client = 0; client < serverconfig.playercount; ++client)
 	{
@@ -359,6 +395,7 @@ void GameServer::Stop(void)
 	framesinfo.Clear();
 	serverconfig.Clear();
 	mapinfo.Clear();
+	countdown.Clear();
 
 	// KI-Player zerstören
 	for(unsigned i = 0;i<ai_players.size();++i)
@@ -375,10 +412,13 @@ void GameServer::Stop(void)
 	status = SS_STOPPED;
 }
 
-
 ///////////////////////////////////////////////////////////////////////////////
-// startet das Spiel
-bool GameServer::StartGame()
+/**
+ *  startet den Spielstart-Countdown
+ *
+ *  @author FloSoft
+ */
+bool GameServer::StartCountdown()
 {
 	GameServerPlayer *player = NULL;
 	unsigned char client = 0xFF;
@@ -413,12 +453,43 @@ bool GameServer::StartGame()
 		}
 	}
 
+	// Countdown starten
+	countdown.Clear();
+	countdown.do_countdown = true;
 
+	return true;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  stoppt den Spielstart-Countdown
+ *
+ *  @author FloSoft
+ */
+void GameServer::CancelCountdown()
+{
+	// Countdown-Stop allen mitteilen
+	countdown.Clear();
+	SendToAll(GameMessage_Server_CancelCountdown(true));
+	LOG.write("SERVER >>> BROADCAST: NMS_SERVER_CANCELCOUNTDOWN\n");
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  startet das Spiel.
+ *
+ *  @author OLiver
+ *  @author FloSoft
+ */
+bool GameServer::StartGame()
+{
 	// Bei Savegames wird der Startwert von den Clients aus der Datei gelesen!
-	unsigned random_init = (mapinfo.map_type==MAPTYPE_SAVEGAME)?0xFFFFFFFF:VideoDriverWrapper::inst().GetTickCount();
+	unsigned random_init = (mapinfo.map_type==MAPTYPE_SAVEGAME)? 0xFFFFFFFF : VideoDriverWrapper::inst().GetTickCount();
 
 	// Höchsten Ping ermitteln
 	unsigned highest_ping = 0;
+	GameServerPlayer *player = NULL;
+	unsigned char client = 0xFF;
 
 	for(client = 0; client < serverconfig.playercount; ++client)
 	{
@@ -435,15 +506,15 @@ bool GameServer::StartGame()
 
 	// NetworkFrame-Länge bestimmen, je schlechter (also höher) die Pings, desto länger auch die Framelänge
 	unsigned i = 1;
-	for(;i<20;++i)
+	for( ; i < 20; ++i)
 	{
-		if(i*framesinfo.gf_length > highest_ping+200)
+		if(i * framesinfo.gf_length > highest_ping + 200)
 			break;
 	}
 
 	framesinfo.nwf_length = i;
 
-	GameMessage_Server_Start start_msg(random_init,i);
+	GameMessage_Server_Start start_msg(random_init, framesinfo.nwf_length);
 
 	LOG.lprintf("SERVER: Using gameframe length of %dms\n", framesinfo.gf_length);
 	LOG.lprintf("SERVER: Using networkframe length of %ums\n", framesinfo.nwf_length);
@@ -461,18 +532,17 @@ bool GameServer::StartGame()
 	SendToAll(GameMessage_Server_NWFDone(0xff));
 
 	// GameClient soll erstmal starten, damit wir von ihm die benötigten Daten für die KIs bekommen
-	GameClient::inst().StartGame(random_init);
+	GAMECLIENT.StartGame(random_init);
 
 	// Erste KI-Nachrichten schicken
-	for(unsigned i = 0;i<this->serverconfig.playercount;++i)
+	for(unsigned i = 0;i < this->serverconfig.playercount; ++i)
 	{
 		if(players[i].ps == PS_KI)
 		{
 			SendNothingNC(i);
-			ai_players[i] = GameClient::inst().CreateAIPlayer(i);
+			ai_players[i] = GAMECLIENT.CreateAIPlayer(i);
 		}
 	}
-
 
 	LOG.write("SERVER >>> BROADCAST: NMS_NFC_DONE\n");
 
@@ -1187,9 +1257,13 @@ inline void GameServer::OnNMSPlayerReady(const GameMessage_Player_Ready& msg)
 
 	player->ready = msg.ready;
 
+	// countdown ggf abbrechen
+	if(!player->ready && countdown.do_countdown)
+		CancelCountdown();
+
 	LOG.write("CLIENT%d >>> SERVER: NMS_PLAYER_READY(%s)\n", msg.player, (player->ready ? "true" : "false"));
 	// Ready-Change senden
-	SendToAll(GameMessage_Player_Ready(msg.player,msg.ready));
+	SendToAll(GameMessage_Player_Ready(msg.player, msg.ready));
 	LOG.write("SERVER >>> BROADCAST: NMS_PLAYER_READY(%d, %s)\n", msg.player, (player->ready ? "true" : "false"));
 }
 

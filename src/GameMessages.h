@@ -1,4 +1,4 @@
-// $Id: GameMessages.h 5970 2010-02-08 17:57:10Z FloSoft $
+// $Id: GameMessages.h 6015 2010-02-13 15:09:58Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -217,6 +217,47 @@ public:
 
 		LOG.write("<<< NMS_SERVER_START(%d, %d)\n", random_init, nwf_length);
 		GetInterface(callback)->OnNMSServerStart(*this);
+	}
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// eingehende Server-Countdown-Nachricht
+class GameMessage_Server_Countdown : public GameMessage
+{
+public:
+	int countdown;
+
+public:
+	GameMessage_Server_Countdown(void) : GameMessage(NMS_SERVER_COUNTDOWN) { }
+	GameMessage_Server_Countdown(int countdown) : GameMessage(NMS_SERVER_COUNTDOWN, 0xFF)
+	{
+		PushUnsignedInt(countdown);
+
+		LOG.write(">>> NMS_SERVER_COUNTDOWN(%d)\n", countdown);
+	}
+	void Run(MessageInterface *callback) 
+	{ 
+		countdown = PopUnsignedInt();
+
+		LOG.write("<<< NMS_SERVER_COUNTDOWN(%d)\n", countdown);
+		GetInterface(callback)->OnNMSServerCountdown(*this);
+	}
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// eingehende Server-CancelCountdown-Nachricht
+class GameMessage_Server_CancelCountdown : public GameMessage
+{
+public:
+	GameMessage_Server_CancelCountdown(void) : GameMessage(NMS_SERVER_CANCELCOUNTDOWN) { }
+	GameMessage_Server_CancelCountdown(bool reserved) : GameMessage(NMS_SERVER_CANCELCOUNTDOWN, 0xFF)
+	{
+		LOG.write(">>> NMS_SERVER_CANCELCOUNTDOWN\n");
+	}
+	void Run(MessageInterface *callback) 
+	{ 
+		LOG.write("<<< NMS_SERVER_CANCELCOUNTDOWN\n");
+		GetInterface(callback)->OnNMSServerCancelCountdown(*this);
 	}
 };
 
@@ -775,7 +816,7 @@ public:
 
 	void Run(MessageInterface *callback) 
 	{ 
-		LOG.write("<<< NMS_GGS_CHANGE\n");
+		LOG.write("<<< NMS_NFC_DONE\n");
 		GetInterface(callback)->OnNMSServerDone(*this);
 	}
 };

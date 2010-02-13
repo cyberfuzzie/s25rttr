@@ -1,4 +1,4 @@
-// $Id: dskHostGame.cpp 5970 2010-02-08 17:57:10Z FloSoft $
+// $Id: dskHostGame.cpp 6015 2010-02-13 15:09:58Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -51,7 +51,7 @@
  *  @author FloSoft
  */
 dskHostGame::dskHostGame() :
-	Desktop(LOADER.GetImageN("setup015", 0)), temppunkte(1000)
+	Desktop(LOADER.GetImageN("setup015", 0)), temppunkte(0)
 {
 	// Kartenname
 	AddText(0, 400, 5,GAMECLIENT.GetGameName().c_str(), COLOR_YELLOW, glArchivItem_Font::DF_CENTER, LargeFont);
@@ -80,12 +80,10 @@ dskHostGame::dskHostGame() :
 	AddEdit(4, 20, 530, 360, 22, TC_GREY, NormalFont);
 
 	// "Spiel starten"
-	ctrlButton *start = AddTextButton(2, 600, (GAMECLIENT.IsHost() ? 560 : 530), 180, 22, TC_GREEN2, _("Start game"),NormalFont);
-	if(!GAMECLIENT.IsHost())
-		start->SetVisible(false);
+	AddTextButton(2, 600, 560, 180, 22, TC_GREEN2, (GAMECLIENT.IsHost() ? _("Start game") : _("Ready")), NormalFont);
 
 	// "Zurück"
-	AddTextButton(3, (GAMECLIENT.IsHost() ? 400 : 600), 560, 180, 22, TC_RED1, _("Return"),NormalFont);
+	AddTextButton(3, (GAMECLIENT.IsHost() ? 400 : 600), 560, 180, 22, TC_RED1, _("Return"), NormalFont);
 
 	// "Teams sperren"
 	AddCheckBox(20, 400, 460, 180, 26, TC_GREY, _("Lock teams:"), NormalFont, !GAMECLIENT.IsHost()||GAMECLIENT.IsSavegame());
@@ -159,7 +157,7 @@ dskHostGame::dskHostGame() :
 	for(unsigned char i = GAMECLIENT.GetPlayerCount(); i; --i)
 		UpdatePlayerRow(i-1);
 
-	//// GGS aktualisieren, zum ersten Mal
+	// GGS aktualisieren, zum ersten Mal
 	this->CI_GGSChanged(GameClient::inst().GetGGS());
 
 	LOBBYCLIENT.SetInterface(this);
@@ -168,6 +166,12 @@ dskHostGame::dskHostGame() :
 	GAMECLIENT.SetInterface(this);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskHostGame::UpdatePlayerRow(const unsigned row)
 {
 	unsigned cy = 80 + row * 30;
@@ -201,13 +205,7 @@ void dskHostGame::UpdatePlayerRow(const unsigned row)
 			// Geschlossen
 			name = _("Closed");
 		} break;
-	//case PS_KI:
-	//	{
-	//		// KI-Spieler
-	//		name = _("AI Player");
-	//	} break;
 	}
-
 	
 	if(GetCtrl<ctrlPreviewMinimap>(70))
 	{
@@ -220,7 +218,6 @@ void dskHostGame::UpdatePlayerRow(const unsigned row)
 			GetCtrl<ctrlPreviewMinimap>(70)->SetPlayerColor(row,0);
 	}
 
-
 	// Spielername, beim Hosts Spielerbuttons, aber nich beim ihm selber, er kann sich ja nich selber kicken!
 	ctrlBaseText * text;
 	if(GAMECLIENT.IsHost() && !GAMECLIENT.GetPlayer(row)->is_host)
@@ -230,16 +227,14 @@ void dskHostGame::UpdatePlayerRow(const unsigned row)
 
 
 	// Is das der Host? Dann farblich markieren
-		if(GAMECLIENT.GetPlayer(row)->is_host == true)
-			text->SetColor(0xFF00FF00);
-
-
+	if(GAMECLIENT.GetPlayer(row)->is_host == true)
+		text->SetColor(0xFF00FF00);
 
 	// Bei geschlossenem nicht sichtbar
 	if(GAMECLIENT.GetPlayer(row)->ps == PS_OCCUPIED || GAMECLIENT.GetPlayer(row)->ps == PS_KI)
 	{
-		/// @todo Einstufung ( "%d" )
-		group->AddVarDeepening(2, 180, cy, 50, 22, tc, _("%d"), NormalFont, COLOR_YELLOW, 1, &temppunkte);
+		/// Einstufung nur bei Lobbyspielen anzeigen @todo Einstufung ( "%d" )
+		group->AddVarDeepening(2, 180, cy, 50, 22, tc, (LOBBYCLIENT.LoggedIn() ? _("%d") : _("n/a")), NormalFont, COLOR_YELLOW, 1, &temppunkte);
 
 		// Host kann nur das Zeug von der KI noch mit einstellen
 		if(((GAMECLIENT.IsHost() && GAMECLIENT.GetPlayer(row)->ps == PS_KI) || GAMECLIENT.GetPlayerID() == row) && !GAMECLIENT.IsSavegame())
@@ -247,7 +242,6 @@ void dskHostGame::UpdatePlayerRow(const unsigned row)
 			// Volk
 			group->AddTextButton( 3, 240, cy, 90, 22, tc, _("Africans"),NormalFont);
 			// Farbe
-			//group->AddTextButton( 4, 340, cy, 30, 22, tc, _("T"),NormalFont);
 			group->AddColorButton( 4, 340, cy, 30, 22, tc, 0 );
 			// Team
 			group->AddTextButton( 5, 380, cy, 50, 22, tc, _("-"),NormalFont);
@@ -257,7 +251,6 @@ void dskHostGame::UpdatePlayerRow(const unsigned row)
 			// Volk
 			group->AddDeepening( 3, 240, cy, 90, 22, tc, _("Africans"), NormalFont, COLOR_YELLOW);
 			// Farbe
-			//group->AddDeepening( 4, 340, cy, 30, 22, tc, _("T"), NormalFont, COLOR_YELLOW);
 			group->AddColorDeepening( 4, 340, cy, 30, 22, tc, 0);
 			// Team
 			group->AddDeepening( 5, 380, cy, 50, 22, tc, _("-"), NormalFont, COLOR_YELLOW);
@@ -287,11 +280,9 @@ void dskHostGame::UpdatePlayerRow(const unsigned row)
 			}
 		}
 
-
 		// Ping bei KI und Host ausblenden
 		if(GAMECLIENT.GetPlayer(row)->ps == PS_KI || GAMECLIENT.GetPlayer(row)->is_host)
 			ping->SetVisible(false);
-
 
 		// Felder ausfüllen
 		ChangeNation(row,GAMECLIENT.GetPlayer(row)->nation);
@@ -310,9 +301,16 @@ void dskHostGame::UpdatePlayerRow(const unsigned row)
  */
 void dskHostGame::Msg_PaintBefore()
 {
+	// Chatfenster Fokus geben
 	GetCtrl<ctrlEdit>(4)->SetFocus();
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskHostGame::Msg_Group_ButtonClick(const unsigned int group_id, const unsigned int ctrl_id)
 {
 	unsigned player_id = 8 - (group_id - 50);
@@ -388,6 +386,12 @@ void dskHostGame::Msg_Group_ButtonClick(const unsigned int group_id, const unsig
 	}
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskHostGame::Msg_Group_CheckboxChange(const unsigned int group_id, const unsigned int ctrl_id, const bool checked)
 {
 	unsigned player_id = 8 - (group_id - 50);
@@ -397,6 +401,12 @@ void dskHostGame::Msg_Group_CheckboxChange(const unsigned int group_id, const un
 		TogglePlayerReady(player_id, checked);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskHostGame::Msg_Group_ComboSelectItem(const unsigned int group_id, const unsigned int ctrl_id, const unsigned short selection)
 {
 	unsigned player_id = 8 - (group_id - 50);
@@ -422,6 +432,12 @@ void dskHostGame::Msg_Group_ComboSelectItem(const unsigned int group_id, const u
 	GameServer::inst().SwapPlayer(player_id,player2);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskHostGame::Msg_ButtonClick(const unsigned int ctrl_id)
 {
 	switch(ctrl_id)
@@ -443,10 +459,27 @@ void dskHostGame::Msg_ButtonClick(const unsigned int ctrl_id)
 	
 	case 2: // Starten
 		{
+			ctrlTextButton *ready = GetCtrl<ctrlTextButton>(2);
 			if(GAMECLIENT.IsHost())
 			{
-				if(!GAMESERVER.StartGame())
-					WindowManager::inst().Show(new iwMsgbox(_("Error"), _("Game can only be started as soon as everybody has a unique color,everyone is ready and all free slots are closed."), this, MSB_OK, MSB_EXCLAMATIONRED, 10));
+				if(ready->GetText() == _("Start game"))
+				{
+					if(GAMESERVER.StartCountdown())
+					{
+						ready->SetText(_("Cancel start"));
+					}
+					else
+						WindowManager::inst().Show(new iwMsgbox(_("Error"), _("Game can only be started as soon as everybody has a unique color,everyone is ready and all free slots are closed."), this, MSB_OK, MSB_EXCLAMATIONRED, 10));
+				}
+				else
+					GAMESERVER.CancelCountdown();
+			}
+			else
+			{
+				if(ready->GetText() == _("Ready"))
+					TogglePlayerReady(GAMECLIENT.GetPlayerID(), true);
+				else
+					TogglePlayerReady(GAMECLIENT.GetPlayerID(), false);
 			}
 		} break;
 	case 22: // Addons
@@ -455,19 +488,66 @@ void dskHostGame::Msg_ButtonClick(const unsigned int ctrl_id)
 			w->SetParent(this);
 			WindowManager::inst().Show(w);
 		} break;
-	case 102:
-		{
-			CreateMapPreview();
-		} break;
 	}
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskHostGame::Msg_EditEnter(const unsigned int ctrl_id)
 {
 	GAMECLIENT.Command_Chat(GetCtrl<ctrlEdit>(4)->GetText(),CD_ALL);
 	GetCtrl<ctrlEdit>(4)->SetText("");
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author FloSoft
+ */
+void dskHostGame::CI_Countdown(int countdown)
+{
+	std::stringstream message;
+
+	if (countdown == 10)
+	{
+		GetCtrl<ctrlChat>(1)->AddMessage("", "", 0, _("You have 10 seconds until game starts"), COLOR_RED);
+		GetCtrl<ctrlChat>(1)->AddMessage("", "", 0, _("Don't forget to check the addon configuration!"), 0xFFFFDD00);
+		GetCtrl<ctrlChat>(1)->AddMessage("", "", 0, "", 0xFFFFCC00);
+	}
+	
+	if(countdown > 0)
+		message << " " << countdown;
+	else 
+		message << _("Starting game, please wait");
+
+	GetCtrl<ctrlChat>(1)->AddMessage("", "", 0, message.str(), 0xFFFFBB00);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author FloSoft
+ */
+void dskHostGame::CI_CancelCountdown()
+{
+	GetCtrl<ctrlChat>(1)->AddMessage("", "", 0xFFCC2222, _("Start aborted"), 0xFFFFCC00);
+	
+	if(GAMECLIENT.IsHost())
+		TogglePlayerReady(GAMECLIENT.GetPlayerID(), false);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author FloSoft
+ */
 void dskHostGame::Msg_MsgBoxResult(const unsigned msgbox_id, const MsgboxResult mbr)
 {
 	switch(msgbox_id)
@@ -489,6 +569,12 @@ void dskHostGame::Msg_MsgBoxResult(const unsigned msgbox_id, const MsgboxResult 
 	}
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskHostGame::Msg_ComboSelectItem(const unsigned int ctrl_id, const unsigned short selection)
 {
 	switch(ctrl_id)
@@ -508,6 +594,12 @@ void dskHostGame::Msg_ComboSelectItem(const unsigned int ctrl_id, const unsigned
 	}
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskHostGame::Msg_CheckboxChange(const unsigned int ctrl_id, const bool checked)
 {
 
@@ -524,7 +616,12 @@ void dskHostGame::Msg_CheckboxChange(const unsigned int ctrl_id, const bool chec
 	}
 }
 
-
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskHostGame::UpdateGGS()
 {
 	// Geschwindigkeit
@@ -546,6 +643,12 @@ void dskHostGame::UpdateGGS()
 	GameServer::inst().ChangeGlobalGameSettings(ggs);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskHostGame::ChangeTeam(const unsigned i, const unsigned char nr)
 {
 	const std::string teams[6] =
@@ -554,12 +657,32 @@ void dskHostGame::ChangeTeam(const unsigned i, const unsigned char nr)
 	GetCtrl<ctrlGroup>(58-i)->GetCtrl<ctrlBaseText>(5)->SetText(teams[nr]);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskHostGame::ChangeReady(const unsigned i, const bool ready)
 {
 	if(ctrlCheck * check = GetCtrl<ctrlGroup>(58-i)->GetCtrl<ctrlCheck>(6))
 		check->SetCheck(ready);
+
+	if(ctrlTextButton *ready = GetCtrl<ctrlTextButton>(2))
+	{
+		if(GAMECLIENT.IsHost())
+			ready->SetText(ready ? _("Start game") : _("Cancel start"));
+		else
+			ready->SetText(ready ? _("Ready") : _("Not ready"));
+	}
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskHostGame::ChangeNation(const unsigned i, const Nation nation)
 {
 	const std::string nations[4] =
@@ -567,6 +690,12 @@ void dskHostGame::ChangeNation(const unsigned i, const Nation nation)
 	GetCtrl<ctrlGroup>(58-i)->GetCtrl<ctrlBaseText>(3)->SetText(nations[nation]);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskHostGame::ChangePing(const unsigned i)
 {
 	unsigned int color = COLOR_RED;
@@ -581,6 +710,12 @@ void dskHostGame::ChangePing(const unsigned i)
 	GetCtrl<ctrlGroup>(58-i)->GetCtrl<ctrlVarDeepening>(7)->SetColor(color);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskHostGame::ChangeColor(const unsigned i, const unsigned char color)
 {
 	GetCtrl<ctrlGroup>(58-i)->GetCtrl<ColorControlInterface>(4)->SetColor(COLORS[color]);
@@ -590,10 +725,14 @@ void dskHostGame::ChangeColor(const unsigned i, const unsigned char color)
 		GetCtrl<ctrlPreviewMinimap>(70)->SetPlayerColor(i,COLORS[color]);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskHostGame::TogglePlayerReady(unsigned char player, bool ready)
 {
-	/*if(GAMECLIENT.IsHost())
-		GAMESERVER.TogglePlayerReady(player);*/
 	if(player == GAMECLIENT.GetPlayerID())
 	{
 		GAMECLIENT.GetLocalPlayer()->ready = (GAMECLIENT.IsHost() ? true : ready);
@@ -602,124 +741,113 @@ void dskHostGame::TogglePlayerReady(unsigned char player, bool ready)
 	}
 }
 
-void dskHostGame::CreateMapPreview()
-{
-	//unsigned short w = gwg->GetWidth();
-	//unsigned short h = gwg->GetHeight();
-
-	//unsigned char *buffer = new unsigned char[w*2*h*2];
-	//memset(buffer, libsiedler2::TRANSPARENT_INDEX, w*2*h*2);
-
-	//const unsigned char *t1 = GetMap()->GetLayer(MAP_TERRAIN1);
-	//const unsigned char *t2 = GetMap()->GetLayer(MAP_TERRAIN2);
-
-	//const unsigned char *colors = NULL;
-
-	//switch(GetMap()->getHeader().getGfxSet())
-	//{
-	//case 0: // Grünland
-	//	{
-	//		const unsigned char c[256] = {
-	//			45, // steppe
-	//			77, // berg
-	//			156, // schnee
-	//			0,
-	//			53, // wüste
-	//			62, // wasser
-	//			0,
-	//			43, // blumenwiese
-	//			42, // gras
-	//			43, // gras 2
-	//			44, // gras 3
-	//			79, // berg 2
-	//			0,
-	//			0,
-	//			47, // strand
-	//			42, // langes gras
-	//			0,
-	//			0,
-	//			78 // bergland
-	//		};
-	//		colors = c;
-	//	} break;
-	//case 1: // Ödland
-	//case 2: // Winterwelt
-	//	// todo
-	//	break;
-	//}
-
-	//if(!colors)
-	//	return;
-
-	//for(unsigned short x = 0; x < w; ++x)
-	//{
-	//	for(unsigned short y = 0; y < h; ++y)
-	//	{
-	//		buffer[y*2*w*2 + x*2 + 0] = colors[t1[y*w + x]];
-	//		buffer[y*2*w*2 + x*2 + 1] = colors[t1[y*w + x]];
-	//		buffer[(y*2+1)*w*2 + x*2 + 0] = colors[t1[y*w + x]];
-	//		buffer[(y*2+1)*w*2 + x*2 + 1] = colors[t2[y*w + x]];
-	//	}
-	//}
-
-	//preview.setFilter(4444);
-	//preview.setFilter(GL_LINEAR);
-	//preview.create(w*2, h*2, buffer, w*2, h*2, libsiedler2::FORMAT_PALETTED, LOADER.GetPaletteN("pal5"));
-
-	//delete[] buffer;
-
-	//// "Preview"
-	//AddImage(100, 500, 40, &preview);
-	//AddButton(102, 400, 560, 180, 22, TC_RED1, 0, "Preview", NULL, NormalFont);
-}
-
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskHostGame::CI_NewPlayer(const unsigned player_id)
 {
 	// Spielername setzen
 	UpdatePlayerRow(player_id);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskHostGame::CI_PlayerLeft(const unsigned player_id)
 {
 	UpdatePlayerRow(player_id);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskHostGame::CI_GameStarted(GameWorldViewer *gwv)
 {
 	// Desktop wechseln
 	WindowManager::inst().Switch(new dskGameLoader(gwv));
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskHostGame::CI_PSChanged(const unsigned player_id, const PlayerState ps)
 {
 	UpdatePlayerRow(player_id);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskHostGame::CI_NationChanged(const unsigned player_id, const Nation nation)
 {
 	ChangeNation(player_id,nation);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskHostGame::CI_TeamChanged(const unsigned player_id, const unsigned char team)
 {
 	ChangeTeam(player_id,team);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskHostGame::CI_ColorChanged(const unsigned player_id, const unsigned char color)
 {
 	ChangeColor(player_id, color);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskHostGame::CI_PingChanged(const unsigned player_id, const unsigned short ping)
 {
 	ChangePing(player_id);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskHostGame::CI_ReadyChanged(const unsigned player_id, const bool ready)
 {
 	ChangeReady(player_id,ready);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskHostGame::CI_PlayersSwapped(const unsigned player1, const unsigned player2)
 {
 	// Spieler wurden vertauscht, beide Reihen updaten
@@ -727,6 +855,12 @@ void dskHostGame::CI_PlayersSwapped(const unsigned player1, const unsigned playe
 	UpdatePlayerRow(player2);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskHostGame::CI_GGSChanged(const GlobalGameSettings& ggs)
 {
 	this->ggs = ggs;
@@ -752,11 +886,15 @@ void dskHostGame::CI_GGSChanged(const GlobalGameSettings& ggs)
 	// Team-Sicht
 	GetCtrl<ctrlCheck>(19)->SetCheck(ggs.team_view);
 
-
 	TogglePlayerReady(GAMECLIENT.GetPlayerID(), false);
 }
 
-
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskHostGame::CI_Chat(const unsigned player_id, const ChatDestination cd, const std::string& msg)
 {
 	if(player_id != 0xFFFFFFFF) // Keine Lobby-Nachrichten anzeigen
@@ -765,11 +903,17 @@ void dskHostGame::CI_Chat(const unsigned player_id, const ChatDestination cd, co
 		char time_string[64];
 		TIME.FormatTime(time_string, "(%H:%i:%s)", NULL);
 
-		GetCtrl<ctrlChat>(1)->AddMessage(time_string,GAMECLIENT.GetPlayer(player_id)->name.c_str(),
-			COLORS[GAMECLIENT.GetPlayer(player_id)->color],msg.c_str(),0xFFFFFF00);
+		GetCtrl<ctrlChat>(1)->AddMessage(time_string, GAMECLIENT.GetPlayer(player_id)->name.c_str(),
+			COLORS[GAMECLIENT.GetPlayer(player_id)->color], msg.c_str(), 0xFFFFFF00);
 	}
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskHostGame::CI_Error(const ClientError ce)
 {
 	switch(ce)

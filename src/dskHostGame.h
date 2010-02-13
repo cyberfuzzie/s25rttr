@@ -1,4 +1,4 @@
-// $Id: dskHostGame.h 6015 2010-02-13 15:09:58Z FloSoft $
+// $Id: dskHostGame.h 6016 2010-02-13 15:45:50Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -91,6 +91,7 @@ private:
 	int temppunkte; // TODO - wegmachen und durch korrekte punkte ersetzen!
 	glArchivItem_Bitmap_Raw preview;
 	GlobalGameSettings ggs;
+	bool has_countdown;
 };
 
 

@@ -1,4 +1,4 @@
-// $Id: dskHostGame.cpp 6015 2010-02-13 15:09:58Z FloSoft $
+// $Id: dskHostGame.cpp 6016 2010-02-13 15:45:50Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -51,7 +51,7 @@
  *  @author FloSoft
  */
 dskHostGame::dskHostGame() :
-	Desktop(LOADER.GetImageN("setup015", 0)), temppunkte(0)
+	Desktop(LOADER.GetImageN("setup015", 0)), temppunkte(0), has_countdown(false)
 {
 	// Kartenname
 	AddText(0, 400, 5,GAMECLIENT.GetGameName().c_str(), COLOR_YELLOW, glArchivItem_Font::DF_CENTER, LargeFont);
@@ -83,7 +83,7 @@ dskHostGame::dskHostGame() :
 	AddTextButton(2, 600, 560, 180, 22, TC_GREEN2, (GAMECLIENT.IsHost() ? _("Start game") : _("Ready")), NormalFont);
 
 	// "Zurück"
-	AddTextButton(3, (GAMECLIENT.IsHost() ? 400 : 600), 560, 180, 22, TC_RED1, _("Return"), NormalFont);
+	AddTextButton(3, 400, 560, 180, 22, TC_RED1, _("Return"), NormalFont);
 
 	// "Teams sperren"
 	AddCheckBox(20, 400, 460, 180, 26, TC_GREY, _("Lock teams:"), NormalFont, !GAMECLIENT.IsHost()||GAMECLIENT.IsSavegame());
@@ -511,6 +511,8 @@ void dskHostGame::Msg_EditEnter(const unsigned int ctrl_id)
  */
 void dskHostGame::CI_Countdown(int countdown)
 {
+	has_countdown = true;
+
 	std::stringstream message;
 
 	if (countdown == 10)
@@ -538,6 +540,8 @@ void dskHostGame::CI_CancelCountdown()
 {
 	GetCtrl<ctrlChat>(1)->AddMessage("", "", 0xFFCC2222, _("Start aborted"), 0xFFFFCC00);
 	
+	has_countdown = false;
+
 	if(GAMECLIENT.IsHost())
 		TogglePlayerReady(GAMECLIENT.GetPlayerID(), false);
 }
@@ -663,17 +667,19 @@ void dskHostGame::ChangeTeam(const unsigned i, const unsigned char nr)
  *
  *  @author OLiver
  */
-void dskHostGame::ChangeReady(const unsigned i, const bool ready)
+void dskHostGame::ChangeReady(const unsigned int player, const bool ready)
 {
-	if(ctrlCheck * check = GetCtrl<ctrlGroup>(58-i)->GetCtrl<ctrlCheck>(6))
+	ctrlCheck *check;
+	if( (check = GetCtrl<ctrlGroup>(58 - player)->GetCtrl<ctrlCheck>(6)))
 		check->SetCheck(ready);
 
-	if(ctrlTextButton *ready = GetCtrl<ctrlTextButton>(2))
+	ctrlTextButton *start;
+	if(player == GAMECLIENT.GetPlayerID() && (start = GetCtrl<ctrlTextButton>(2)))
 	{
 		if(GAMECLIENT.IsHost())
-			ready->SetText(ready ? _("Start game") : _("Cancel start"));
+			start->SetText(has_countdown ? _("Cancel start") : _("Start game"));
 		else
-			ready->SetText(ready ? _("Ready") : _("Not ready"));
+			start->SetText(ready ? _("Not Ready") : _("Ready"));
 	}
 }
 

@@ -1,4 +1,4 @@
-// $Id: noBaseBuilding.cpp 6019 2010-02-14 12:18:02Z FloSoft $
+// $Id: noBaseBuilding.cpp 6020 2010-02-14 12:51:18Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -148,12 +148,12 @@ void noBaseBuilding::Destroy_noBaseBuilding()
 					// Ware ablegen
 					flag->AddWare(ware);
 					ware->LieAtFlag(flag);
-				}
 
-				if(!which)
-					--boards;
-				else
-					--stones;
+					if(!which)
+						--boards;
+					else
+						--stones;
+				}
 
 				which = !which;
 			}

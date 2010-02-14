@@ -3,13 +3,13 @@ msgstr ""
 "Project-Id-Version: Siedler II.5 RttR\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-11 21:15+0100\n"
-"PO-Revision-Date: 2009-12-02 17:46+0000\n"
+"PO-Revision-Date: 2010-01-17 23:36+0000\n"
 "Last-Translator: FloSoft <Unknown>\n"
 "Language-Team: Siedler II.5 RttR <sf-team@siedler25.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-01-02 16:44+0000\n"
+"X-Launchpad-Export-Date: 2010-02-14 17:20+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: UNITED KINGDOM\n"
 "X-Poedit-Language: English\n"
@@ -17,1034 +17,182 @@ msgstr ""
 "X-Poedit-SearchPath-0: /storage/RTTR/svn/trunk/src\n"
 "X-Poedit-Basepath: .\n"
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:586
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:598
-msgid " (AI)"
-msgstr " (AI)"
+#: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:48
+msgid "Post office"
+msgstr "Post office"
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:241
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:270
-#, c-format
-msgid "%d"
-msgstr "%d"
+#: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:83
+#: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:228
+msgid "No letters!"
+msgstr "No letters!"
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:394
-#, c-format
-msgid "%d Player"
-msgstr "%d Player"
+#: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:251
+msgid "Message"
+msgstr "Message"
 
-#: /storage/RTTR/svn/trunk/src/iwHQ.cpp:68
-#, c-format
-msgid "%u/%u"
-msgstr "%u/%u"
+#: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:251
+msgid "of"
+msgstr "of"
 
-#: /storage/RTTR/svn/trunk/src/iwDirectIPCreate.cpp:83
-msgid "'s Game"
-msgstr "'s game"
-
-#: /storage/RTTR/svn/trunk/src/GameWorldViewer.cpp:223
-#, c-format
-msgid "(%d soldiers)"
-msgstr "(%d soldiers)"
-
-#: /storage/RTTR/svn/trunk/src/GameWorldViewer.cpp:221
-msgid "(1 soldier)"
-msgstr "(1 soldier)"
-
-#: /storage/RTTR/svn/trunk/src/GameWorldViewer.cpp:190
-msgid "(House unoccupied)"
-msgstr "(House unoccupied)"
-
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:219
-#, c-format
-msgid ""
-"(Replay-Mode) Current GF: %u (End at: %u) / GF length: %u ms / NWF length: %"
-"u gf (%u ms)"
-msgstr ""
-"(Replay-Mode) Current GF: %u (End at: %u) / GF length: %u ms / NWF length: %"
-"u gf (%u ms)"
-
-#: /storage/RTTR/svn/trunk/src/GameWorldViewer.cpp:192
-msgid "(stopped)"
-msgstr "(stopped)"
-
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:252
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:262
-msgid "-"
-msgstr "-"
-
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:123
-msgid "-> Build castle"
-msgstr "-> Build castle"
-
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:102
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:116
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:122
-msgid "-> Build house"
-msgstr "-> Build house"
-
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:111
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:115
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:121
-msgid "-> Build hut"
-msgstr "-> Build hut"
-
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:127
-msgid "-> Dig mines"
-msgstr "-> Dig mines"
-
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:106
-msgid "1 h"
-msgstr "1 h"
-
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:105
-msgid "15 m"
-msgstr "15 m"
-
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:108
-msgid "16 h"
-msgstr "16 h"
-
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:107
-msgid "4 h"
-msgstr "4 h"
-
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:872
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:898
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:921
-#, c-format
-msgid "<%s> "
-msgstr "<%s> "
-
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:881
-msgid "A auto-savegame is created..."
-msgstr "A auto-savegame is created..."
-
-#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:1038
-msgid "A catapult is firing upon us!"
-msgstr "A catapult is firing upon us!"
-
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:357
-msgid ""
-"A gold mine allows you to prospect for valuable gold deposits. For this, it "
-"is necessary to ensure that the miners are provided with plenty of food."
-msgstr ""
-"A gold mine allows you to prospect for valuable gold deposits. For this, it "
-"is necessary to ensure that the miners are provided with plenty of food."
-
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:121
-msgid "A lot"
-msgstr "A lot"
-
-#: /storage/RTTR/svn/trunk/src/noShipBuildingSite.cpp:136
-msgid "A new ship is ready"
-msgstr ""
-
-#: /storage/RTTR/svn/trunk/src/noShip.cpp:482
-msgid "A ship has reached the destination of its expedition."
-msgstr ""
-
-#: /storage/RTTR/svn/trunk/src/noShip.cpp:224
-msgid "A ship is ready for an expedition."
-msgstr ""
-
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:510
-msgid ""
-"A well supplies water to the bakery, brewery, donkey breeder and pig farm."
-msgstr ""
-"A well supplies water to the bakery, brewery, donkey breeder and pig farm."
-
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:382
-msgid ""
-"A woodcutter provides the sawmill with logs. A forester is able to replant "
-"the depleted forest."
-msgstr ""
-"A woodcutter provides the sawmill with logs. A forester is able to replant "
-"the depleted forest."
-
-#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:45
-msgid "Abort"
-msgstr "Abort"
-
-#: /storage/RTTR/svn/trunk/src/iwRoadWindow.cpp:47
-msgid "Activity window"
-msgstr "Activity window"
-
-#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:76
-msgid "Add"
-msgstr "Add"
-
-#: /storage/RTTR/svn/trunk/src/dskLobby.cpp:73
-msgid "Add Server"
-msgstr "Add Server"
-
-#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:82
-#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:199
-msgid "Add track"
-msgstr "Add track"
-
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:120
-#, fuzzy
-msgid "Additional Programming:"
-msgstr "Programming"
-
-#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:105
-msgid "Advanced"
-msgstr ""
-
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:247
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:257
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:552
-msgid "Africans"
-msgstr "Africans"
-
-#: /storage/RTTR/svn/trunk/src/iwBuildOrder.cpp:69
-msgid "After the following order"
-msgstr "After the following order"
-
-#: /storage/RTTR/svn/trunk/src/iwChat.cpp:54
-msgid "All"
-msgstr "All"
-
-#: /storage/RTTR/svn/trunk/src/iwChat.cpp:56
-msgid "Allies"
-msgstr "Allies"
-
-#: /storage/RTTR/svn/trunk/src/SerializedGameData.cpp:239
-msgid "An error occured while saving which was suppressed!"
-msgstr "An error occured while saving which was suppressed!"
-
-#: /storage/RTTR/svn/trunk/src/AIPlayerJH.cpp:113
-msgid "And I may crash your game sometimes..."
-msgstr "And I may crash your game sometimes..."
-
-#: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:167
-msgid "And let's go!"
-msgstr "And let's go!"
-
-#: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:113
-msgid "Are you sure to remove all replays?"
-msgstr "Are you sure to remove all replays?"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:331
-msgid "Armorer"
-msgstr "Armourer"
-
-#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:101
-#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:111
-msgid "Armory"
-msgstr "Armory"
-
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:115
-msgid "Artificial Intelligence (AI)"
-msgstr ""
-
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:271
-msgid "Attack not possible."
-msgstr "Attack not possible."
-
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:225
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:233
-msgid "Attack options"
-msgstr "Attack options"
-
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:296
-msgid "Attack!"
-msgstr "Attack!"
-
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:99
-msgid "Author"
-msgstr "Author"
-
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:1219
-msgid "Auto-Save"
-msgstr "Auto save"
-
-#: /storage/RTTR/svn/trunk/src/iwSave.cpp:204
-msgid "Auto-Save every:"
-msgstr "Auto save every:"
-
-#: /storage/RTTR/svn/trunk/src/iwTools.cpp:51
-msgid "Axe"
-msgstr "Axe"
+#: /storage/RTTR/svn/trunk/src/languages.cpp:69
+msgid "System language"
+msgstr "System language"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:70
 msgid "Back"
 msgstr "Back"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:322
-msgid "Baker"
-msgstr "Baker"
-
-#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:136
-msgid "Bakery"
-msgstr "Bakery"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:229
-msgid "Barracks"
-msgstr "Barracks"
-
-#: /storage/RTTR/svn/trunk/src/iwTransport.cpp:61
-msgid "Beer"
-msgstr "Beer"
-
-#: /storage/RTTR/svn/trunk/src/iwTransport.cpp:66
-msgid "Boards"
-msgstr "Boards"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:153
-msgid "Boat"
-msgstr "Boat"
-
-#: /storage/RTTR/svn/trunk/src/iwTransport.cpp:72
-msgid "Boats"
-msgstr "Boats"
-
-#: /storage/RTTR/svn/trunk/src/iwMilitary.cpp:55
-msgid "Border areas"
-msgstr "Border areas"
-
-#: /storage/RTTR/svn/trunk/src/iwTransport.cpp:96
-msgid "Bottom"
-msgstr "Bottom"
-
-#: /storage/RTTR/svn/trunk/src/iwTools.cpp:61
-msgid "Bow"
-msgstr "Bow"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:158
-msgid "Bread"
-msgstr "Bread"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:325
-msgid "Brewer"
-msgstr "Brewer"
-
-#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:94
-#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:139
-msgid "Brewery"
-msgstr "Brewery"
-
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:178
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:185
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:193
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:197
-msgid "Build road"
-msgstr "Build road"
-
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:186
-msgid "Build waterway"
-msgstr "Build waterway"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:332
-msgid "Builder"
-msgstr "Builder"
-
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:86
-msgid "Building sequence"
-msgstr "Building sequence"
-
-#: /storage/RTTR/svn/trunk/src/iwBuildings.cpp:76
-msgid "Buildings"
-msgstr "Buildings"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:323
-msgid "Butcher"
-msgstr "Butcher"
-
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:180
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:188
-msgid "Call in geologist"
-msgstr "Call in geologist"
-
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:121
-msgid "Campaign"
-msgstr "Campaign"
-
-#: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:72
-#: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:87
-msgid "Cancel"
-msgstr "Cancel"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:317
-msgid "Carpenter"
-msgstr "Carpenter"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:244
-msgid "Catapult"
-msgstr "Catapult"
-
-#: /storage/RTTR/svn/trunk/src/iwMilitary.cpp:54
-msgid "Center of country"
-msgstr "Center of country"
-
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:96
-msgid "Change Settings..."
-msgstr "Change Settings..."
-
-#: /storage/RTTR/svn/trunk/src/iwChat.cpp:47
-msgid "Chat Window"
-msgstr "Chat window"
-
-#: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:281
-msgid "Checking Map..."
-msgstr "Checking map..."
-
-#: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:280
-msgid "Checking Password..."
-msgstr "Ckecking password..."
-
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:112
-msgid "Classic (Settlers 2)"
-msgstr "Classic (Settlers 2)"
-
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:61
-msgid "Classification"
-msgstr "Classification"
-
-#: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:68
-#: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:113
-msgid "Clear"
-msgstr "Clear"
-
-#: /storage/RTTR/svn/trunk/src/iwTools.cpp:59
-msgid "Cleaver"
-msgstr "Cleaver"
-
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:201
-msgid "Closed"
-msgstr "Closed"
-
-#: /storage/RTTR/svn/trunk/src/iwTransport.cpp:65
-msgid "Coal"
-msgstr "Coal"
-
-#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:72
-msgid "Coal mine"
-msgstr "Coal mine"
-
-#: /storage/RTTR/svn/trunk/src/iwTransport.cpp:59
-msgid "Coins"
-msgstr "Coins"
-
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:65
-msgid "Color"
-msgstr "Colour"
-
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:80
-msgid "Common"
-msgstr "Common"
-
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:596
-#, c-format
-msgid "Computer %u"
-msgstr "Computer %u"
-
-#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:285
-msgid "Confirm"
-msgstr "Confirm"
-
-#: /storage/RTTR/svn/trunk/src/dskLobby.cpp:69
-msgid "Connect"
-msgstr "Connect"
-
-#: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:50
-msgid "Connecting to Lobby"
-msgstr "Connecting to lobby"
-
-#: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:167
-msgid "Connecting with Host..."
-msgstr "Connecting with host..."
-
-#: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:173
-msgid "Connection failed!"
-msgstr "Connection failed!"
-
-#: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:261
-msgid "Connection to Host closed!"
-msgstr "Connection to host closed!"
-
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:127
-msgid "Conquer 3/4 of map"
-msgstr "Conquer 3/4 of map"
-
-#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:124
-msgid "Construction"
-msgstr "Construction"
-
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:105
-msgid "Construction aid mode"
-msgstr "Construction aid mode"
-
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:119
-msgid "Continents"
-msgstr "Continents"
-
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:109
-msgid "Continue"
-msgstr "Continue"
-
-#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:265
-msgid "Contract type:"
-msgstr "Contract type:"
-
-#: /storage/RTTR/svn/trunk/src/dskDirectIP.cpp:61
-msgid "Create Game"
-msgstr "Create Game"
-
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:67
-msgid "Credits"
-msgstr "Credits"
-
-#: /storage/RTTR/svn/trunk/src/iwTools.cpp:56
-msgid "Crucible"
-msgstr "Crucible"
-
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:221
-#, c-format
-msgid ""
-"Current GF: %u / GF length: %u ms / NWF length: %u gf (%u ms) /  Ping: %u ms"
-msgstr ""
-"Current GF: %u / GF length: %u ms / NWF length: %u gf (%u ms) / Ping: %u ms"
-
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:350
-msgid ""
-"Deep within the mountains, miners dig for iron ore. They will obviously need "
-"a lot of food for the strenuous work."
-msgstr ""
-"Deep within the mountains, miners dig for iron ore. They will obviously need "
-"a lot of food for the strenuous work."
-
-#: /storage/RTTR/svn/trunk/src/iwTools.cpp:66
-msgid "Default"
-msgstr "Default"
-
-#: /storage/RTTR/svn/trunk/src/iwBaseWarehouse.cpp:106
-msgid "Demolish house"
-msgstr "Demolish house"
-
-#: /storage/RTTR/svn/trunk/src/iwDemolishBuilding.cpp:44
-msgid "Demolish?"
-msgstr "Demolish?"
-
-#: /storage/RTTR/svn/trunk/src/iwMilitaryBuilding.cpp:170
-msgid ""
-"Demolition ist not allowed because the building is located in border area!"
-msgstr ""
-"Demolition is not allowed because the building is located in border area!"
-
-#: /storage/RTTR/svn/trunk/src/iwMilitaryBuilding.cpp:169
-msgid "Demolition ist not allowed because the building is under attack!"
-msgstr "Demolition ist not allowed because the building is under attack!"
-
-#: /storage/RTTR/svn/trunk/src/iwMilitaryBuilding.cpp:173
-msgid "Demolition not possible"
-msgstr "Demolition not possible"
-
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:102
-msgid "Demolition prohibition:"
-msgstr "Demolition prohibition:"
-
-#: /storage/RTTR/svn/trunk/src/iwSurrender.cpp:54
-msgid "Destroy all buildings and surrender"
-msgstr "Destroy all buildings and surrender"
-
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:218
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:220
-msgid "Dig up road"
-msgstr "Dig up road"
-
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:88
-msgid "Diplomacy"
-msgstr "Diplomacy"
-
-#: /storage/RTTR/svn/trunk/src/dskMultiPlayer.cpp:69
-msgid "Direct IP"
-msgstr "Direct IP"
-
-#: /storage/RTTR/svn/trunk/src/iwSave.cpp:208
-msgid "Disabled"
-msgstr "Disabled"
-
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:244
-msgid "Display options"
-msgstr "Display options"
-
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:64
-msgid "Distribution of goods"
-msgstr "Distribution of goods"
-
-#: /storage/RTTR/svn/trunk/src/iwSurrender.cpp:56
-msgid "Don't surrender"
-msgstr "Don't surrender"
-
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:145
-msgid "Donators"
-msgstr "Donators"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:327
-msgid "Donkey breeder"
-msgstr "Donkey breeder"
-
-#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:91
-#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:145
-msgid "Donkey breeding"
-msgstr "Donkey breeding"
-
-#: /storage/RTTR/svn/trunk/src/iwTransport.cpp:94
-msgid "Down"
-msgstr "Down"
-
-#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:85
-msgid "Downwards"
-msgstr "Downwarts"
-
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:584
-#, c-format
-msgid "Dummy %u"
-msgstr "Dummy %u"
-
-#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:269
-msgid "Duration:"
-msgstr "Duration:"
-
-#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:122
-#, c-format
-msgid "Duration: %u GF (%s)"
-msgstr "Duration: %u GF (%s)"
-
-#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:120
-msgid "Duration: Forever"
-msgstr "Duration: Forever"
-
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:228
-msgid "Effects"
-msgstr "Effects"
-
-#: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:64
-msgid "Email Address:"
-msgstr "Email address:"
-
-#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:110
-msgid "End game"
-msgstr "End game"
-
-#: /storage/RTTR/svn/trunk/src/iwEndgame.cpp:48
-msgid "End game?"
-msgstr "End game?"
-
-#: /storage/RTTR/svn/trunk/src/iwChat.cpp:58
-msgid "Enemies"
-msgstr "Enemies"
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:73
+msgid "Options"
+msgstr "Options"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:77
 msgid "Enhancements"
 msgstr "Enhancements"
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:95
-msgid "Enhancements:"
-msgstr "Enhancements:"
-
-#: /storage/RTTR/svn/trunk/src/iwRoadWindow.cpp:56
-msgid "Erect flag"
-msgstr "Erect flag"
-
-#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:141
-#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:165
-#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:171
-#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:191
-#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:305
-#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:320
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:449
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:767
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:781
-msgid "Error"
-msgstr "Ooops"
-
-#: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:96
-msgid "Error while opening file!"
-msgstr "Error while opening file!"
-
-#: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:95
-#: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:105
-msgid "Error while playing replay!"
-msgstr "Error while playing replay!"
-
-#: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:98
-msgid "Error: Replay is too old!"
-msgstr "Error: Replay is too old!"
-
-#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:283
-msgid "Eternal"
-msgstr "Eternal"
-
-#: /storage/RTTR/svn/trunk/src/iwHarborBuilding.cpp:53
-msgid "Expedition"
-msgstr "Expedition"
-
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:109
-msgid "Exploration:"
-msgstr "Exploration:"
-
-#: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:143
-msgid "Failed to load map objects."
-msgstr "Failed to load map objects."
-
-#: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:155
-msgid "Failed to load terrain data."
-msgstr "Failed to load terrain data."
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:265
-msgid "Farm"
-msgstr "Farm"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:320
-msgid "Farmer"
-msgstr "Farmer"
-
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:136
-msgid "Fast"
-msgstr "Fast"
-
-#: /storage/RTTR/svn/trunk/src/iwMilitary.cpp:51
-msgid "Fewer defenders"
-msgstr "Fewer defenders"
-
-#: /storage/RTTR/svn/trunk/src/iwMilitary.cpp:49
-msgid "Fewer recruits"
-msgstr "Fewer recruits"
-
-#: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:63
-msgid "Filename"
-msgstr "Filename"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:157
-msgid "Fish"
-msgstr "Fish"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:315
-msgid "Fisher"
-msgstr "Fisherman"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:246
-msgid "Fishery"
-msgstr "Fishery"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:156
-msgid "Flour"
-msgstr "Flour"
-
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:114
-msgid "FoW - all explored"
-msgstr "FoW - all explored"
-
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:113
-msgid "Fog of War"
-msgstr "Fog of War"
-
-#: /storage/RTTR/svn/trunk/src/iwTransport.cpp:70
-msgid "Food"
-msgstr "Food"
-
-#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:67
-msgid "Foodstuff"
-msgstr "Foodstuff"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:248
-msgid "Forester"
-msgstr "Forester"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:237
-msgid "Fortress"
-msgstr "Fortress"
-
-#: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:500
-msgid "Found coal"
-msgstr "Coal found"
-
-#: /storage/RTTR/svn/trunk/src/iwShip.cpp:72
-msgid "Found colony"
-msgstr "Found colony"
-
-#: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:498
-msgid "Found gold"
-msgstr "Gold found"
-
-#: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:502
-msgid "Found granite"
-msgstr "Granite found"
-
-#: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:496
-msgid "Found iron ore"
-msgstr "Found iron ore"
-
-#: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:504
-msgid "Found water"
-msgstr "Water found"
-
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:366
-msgid ""
-"From the lookout tower you can see far into previously unexplored lands."
-msgstr ""
-"From the lookout tower you can see far into previously unexplored lands."
-
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:167
-msgid "Fullscreen"
-msgstr "Fullscreen"
-
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:449
-msgid ""
-"Game can only be started as soon as everybody has a unique color,everyone is "
-"ready and all free slots are closed."
-msgstr ""
-"Game can only be started as soon as everybody has a unique colour, everyone "
-"is ready and all free slots are closed."
-
-#: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:147
-msgid "Game crate was picked and spread out..."
-msgstr "The Game crate was picked and spread out..."
-
-#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:59
-msgid "Game menu"
-msgstr "Game menu"
-
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:899
-msgid "Game was paused."
-msgstr "Game was paused."
-
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:922
-msgid "Game was resumed."
-msgstr "The game was resumed."
-
-#: /storage/RTTR/svn/trunk/src/iwDirectIPCreate.cpp:55
-msgid "Game's Name:"
-msgstr "Game name:"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:338
-msgid "General"
-msgstr "General"
-
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:71
-msgid "General statistics"
-msgstr "General statistics"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:339
-msgid "Geologist"
-msgstr "Geologist"
-
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:248
-msgid "Go to headquarters"
-msgstr "Go to headquarters"
-
-#: /storage/RTTR/svn/trunk/src/iwBaseWarehouse.cpp:73
-msgid "Go to place"
-msgstr "Go to"
-
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:124
-msgid "Goals:"
-msgstr "Goals:"
-
-#: /storage/RTTR/svn/trunk/src/iwTransport.cpp:63
-msgid "Gold"
-msgstr "Gold"
-
-#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:78
-msgid "Gold mine"
-msgstr "Gold mine"
-
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:117
-msgid "Goods at start:"
-msgstr "Starting goods:"
-
-#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:82
-msgid "Grain"
-msgstr "Grain"
-
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:454
-msgid ""
-"Grain and water are needed for rearing pigs. The meat thus obtained can then "
-"be processed by a butcher."
-msgstr ""
-"Grain and water are needed for rearing pigs. The meat thus obtained can then "
-"be processed by a butcher."
-
-#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:69
-msgid "Granite mine"
-msgstr "Granite mine"
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:80
+msgid "Common"
+msgstr "Common"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:82
 msgid "Graphics"
 msgstr "Graphics"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:191
-msgid "Graphics Driver"
-msgstr "Graphics Driver"
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:84
+msgid "Sound/Music"
+msgstr "Sound/Music"
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:399
-msgid "Greenland"
-msgstr "Greenland"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:230
-msgid "Guardhouse"
-msgstr "Guardhouse"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:171
-msgid "Ham"
-msgstr "Ham"
-
-#: /storage/RTTR/svn/trunk/src/iwTools.cpp:54
-msgid "Hammer"
-msgstr "Hammer"
-
-#: /storage/RTTR/svn/trunk/src/iwHarborBuilding.cpp:47
-msgid "Harbor building"
-msgstr "Harbour Building"
-
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:347
-msgid "Headquarters"
-msgstr "Headquarters"
-
-#: /storage/RTTR/svn/trunk/src/iwTools.cpp:64
-#: /storage/RTTR/svn/trunk/src/iwBuildingProductivities.cpp:103
-msgid "Help"
-msgstr "Help"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:313
-msgid "Helper"
-msgstr "Helper"
-
-#: /storage/RTTR/svn/trunk/src/AIPlayerJH.cpp:109
-msgid "Hi, I'm an artifical player and I'm not very good yet!"
-msgstr "Hi, I'm an artifical player and I'm not very good yet!"
-
-#: /storage/RTTR/svn/trunk/src/iwLobbyServerInfo.cpp:79
-msgid "Host:"
-msgstr "Host:"
-
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:247
-msgid "House names"
-msgstr "House names"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:250
-msgid "Hunter"
-msgstr "Hunter"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:319
-msgid "Huntsman"
-msgstr "Huntsman"
-
-#: /storage/RTTR/svn/trunk/src/dskLobby.cpp:76
-msgid "ID"
-msgstr "ID"
-
-#: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:55
-msgid "IP Address of Host:"
-msgstr "IP address of host:"
-
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:127
-msgid "IPv4"
-msgstr "IPv4"
-
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:126
-msgid "IPv6"
-msgstr "IPv6"
-
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:333
-msgid "Incomplete message was received!"
-msgstr "Incomplete message was received!"
-
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:96
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:179
-msgid "Inhabitants"
-msgstr "Inhabitants"
-
-#: /storage/RTTR/svn/trunk/src/iwMilitary.cpp:53
-msgid "Interior"
-msgstr "Interior"
-
-#: /storage/RTTR/svn/trunk/src/dskMultiPlayer.cpp:65
-msgid "Internet Lobby"
-msgstr "Internet Lobby"
-
-#: /storage/RTTR/svn/trunk/src/dskLobby.cpp:71
-msgid "Internet Ranking"
-msgstr "Internet Ranking"
-
-#: /storage/RTTR/svn/trunk/src/iwRoadWindow.cpp:51
-msgid "Interrupt road building"
-msgstr "Interrupt road building"
-
-#: /storage/RTTR/svn/trunk/src/dskMainMenu.cpp:78
-msgid "Intro"
-msgstr "Intro"
-
-#: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:97
-msgid "Invalid Replay!"
-msgstr "Invalid replay!"
-
-#: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:156
-msgid "Invalid port. The valid port-range is 1 to 65535!"
-msgstr "Invalid port. The valid port-range is 1 to 65535!"
-
-#: /storage/RTTR/svn/trunk/src/iwTransport.cpp:62
-msgid "Iron"
-msgstr "Iron"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:328
-msgid "Iron founder"
-msgstr "Iron founder"
-
-#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:75
-msgid "Iron mine"
-msgstr "Iron mine"
-
-#: /storage/RTTR/svn/trunk/src/iwTransport.cpp:64
-msgid "Iron ore"
-msgstr "Iron ore"
-
-#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:114
-msgid "Iron smelter"
-msgstr "Iron smelter"
-
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:516
-msgid ""
-"It is possible to build small rowing boats as well as huge cargo ships in a "
-"shipyard. The boards required for this are skillfully worked by shipwrights."
-msgstr ""
-"It is possible to build small rowing boats as well as huge cargo ships in a "
-"shipyard. The boards required for this are skilfully worked by shipwrights."
-
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:552
-msgid "Japaneses"
-msgstr "Japanese"
-
-#: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:49
-msgid "Join Game"
-msgstr "Join Game"
-
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:531
-msgid "Keyboard layout"
-msgstr "Keyboard layout"
-
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:119
-msgid "Keyboard layout:"
-msgstr "Keyboard layout:"
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:95
+msgid "Name in Game:"
+msgstr "Name in Game:"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:100
 msgid "Language:"
 msgstr "Language:"
 
-#: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:63
-msgid "Length"
-msgstr "Length"
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:119
+msgid "Keyboard layout:"
+msgstr "Keyboard layout:"
 
-#: /storage/RTTR/svn/trunk/src/iwHQ.cpp:64
-msgid "Less"
-msgstr "Less"
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:120
+msgid "Readme"
+msgstr "Readme"
 
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:278
-msgid "Less attackers"
-msgstr "Less attackers"
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:123
+msgid "Use IPv6:"
+msgstr "Use IPv6:"
+
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:126
+msgid "IPv6"
+msgstr "IPv6"
+
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:127
+msgid "IPv4"
+msgstr "IPv4"
+
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:134
+msgid "Proxyserver:"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:141
+msgid "Proxytyp:"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:143
+msgid "No Proxy"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:144
+msgid "Socks v4"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:161
+msgid "Resolution:"
+msgstr "Resolution:"
+
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:165
+msgid "Mode:"
+msgstr "Mode:"
+
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:167
+msgid "Fullscreen"
+msgstr "Fullscreen"
+
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:168
+msgid "Windowed"
+msgstr "Windowed"
+
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:171
+msgid "VSync:"
+msgstr "VSync:"
+
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:175
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:185
+msgid "not supported"
+msgstr "not supported"
+
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:177
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:187
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:221
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:230
+msgid "On"
+msgstr "On"
+
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:178
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:188
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:222
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:231
+msgid "Off"
+msgstr "Off"
+
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:181
+msgid "Vertex Buffer Objects:"
+msgstr "Vertex Buffer Objects:"
+
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:191
+msgid "Graphics Driver"
+msgstr "Graphics Driver"
+
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:205
+msgid "Sounddriver"
+msgstr "Sound Driver"
+
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:219
+msgid "Music"
+msgstr "Music"
+
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:228
+msgid "Effects"
+msgstr "Effects"
+
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:237
+msgid "Music player"
+msgstr "Music player"
+
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:496
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:504
+msgid "Sorry!"
+msgstr "Sorry!"
+
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:496
+msgid "You need to restart your game to change the screen resolution!"
+msgstr "You need to restart your game to change the screen resolution!"
+
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:504
+msgid "You need to restart your game to change the video or audio driver!"
+msgstr "You need to restart your game to change the video or audio driver!"
+
+#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:531
+msgid "Keyboard layout"
+msgstr "Keyboard layout"
+
+#: /storage/RTTR/svn/trunk/src/iwTools.cpp:46
+msgid "Tools"
+msgstr "Tools"
+
+#: /storage/RTTR/svn/trunk/src/iwTools.cpp:50
+msgid "Tongs"
+msgstr "Tongs"
 
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:50
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:51
@@ -1061,190 +209,6 @@ msgstr "Less attackers"
 msgid "Less often"
 msgstr "Less often"
 
-#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:87
-msgid "Less repeats"
-msgstr "Less repeats"
-
-#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:79
-msgid "Load"
-msgstr "Load"
-
-#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:77
-msgid "Load 'ReadMe' file"
-msgstr "Load 'ReadMe' file"
-
-#: /storage/RTTR/svn/trunk/src/dskSinglePlayer.cpp:75
-msgid "Load game"
-msgstr "Load game"
-
-#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:81
-msgid "Load game!"
-msgstr "Load game!"
-
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:107
-msgid "Load game..."
-msgstr "Load game..."
-
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:90
-msgid "Lock teams:"
-msgstr "Lock teams:"
-
-#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:245
-msgid "Long-run"
-msgstr "Long-run"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:242
-msgid "Lookout tower"
-msgstr "Lookout tower"
-
-#: /storage/RTTR/svn/trunk/src/nofScout_LookoutTower.cpp:81
-msgid "Lookout-tower occupied"
-msgstr "Lookout-tower occupied"
-
-#: /storage/RTTR/svn/trunk/src/iwLobbyRanking.cpp:81
-msgid "Lost"
-msgstr "Lost"
-
-#: /storage/RTTR/svn/trunk/src/dskLobby.cpp:321
-msgid "Lost connection to lobby!"
-msgstr "Lost connection to lobby!"
-
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:767
-msgid "Lost connection to server!"
-msgstr "Lost connection to server!"
-
-#: /storage/RTTR/svn/trunk/src/GameWorldGame.cpp:563
-msgid "Lost land by this building"
-msgstr "This building causing lost your land"
-
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:119
-msgid "Low"
-msgstr "Low"
-
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:60
-msgid "Main selection"
-msgstr "Main selection"
-
-#: /storage/RTTR/svn/trunk/src/dskLobby.cpp:76
-msgid "Map"
-msgstr "Map"
-
-#: /storage/RTTR/svn/trunk/src/iwLobbyServerInfo.cpp:75
-msgid "Map Name:"
-msgstr "Map name:"
-
-#: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:125
-msgid "Map was loaded and pinned at the wall..."
-msgstr "Map has been loaded and pinned at the wall..."
-
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:152
-msgid "Map: "
-msgstr "Map: "
-
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:133
-msgid "Mapfile: "
-msgstr "Mapfile: "
-
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:106
-#, fuzzy
-msgid "Mapping"
-msgstr "Map"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:170
-msgid "Meat"
-msgstr "Meat"
-
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:417
-msgid "Meat the hunter acquires is used to feed the miners."
-msgstr "The hunter is acquiring meat to fead the miners."
-
-#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:244
-msgid "Medium-term"
-msgstr "Medium-term"
-
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:97
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:183
-msgid "Merchandise"
-msgstr "Merchandise"
-
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:72
-msgid "Merchandise statistics"
-msgstr "Merchandise statistics"
-
-#: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:251
-msgid "Message"
-msgstr "Message"
-
-#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:127
-msgid "Metalworker"
-msgstr "Metalworker"
-
-#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:104
-msgid "Metalworks"
-msgstr "Metalworks"
-
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:81
-msgid "Military"
-msgstr "Military"
-
-#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:811
-msgid "Military building captured"
-msgstr "Military building captured"
-
-#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:808
-msgid "Military building lost"
-msgstr "Military building lost"
-
-#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:563
-msgid "Military building occupied"
-msgstr "Military building occupied"
-
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:98
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:187
-msgid "Military strength"
-msgstr "Military strength"
-
-#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:85
-msgid "Mill"
-msgstr "Mill"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:321
-msgid "Miller"
-msgstr "Miller"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:324
-msgid "Miner"
-msgstr "Miner"
-
-#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:117
-msgid "Mint"
-msgstr "Mint"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:329
-msgid "Minter"
-msgstr "Minter"
-
-#: /storage/RTTR/svn/trunk/src/iwSettings.cpp:57
-#, fuzzy
-msgid "Mode :"
-msgstr "Mode:"
-
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:165
-msgid "Mode:"
-msgstr "Mode:"
-
-#: /storage/RTTR/svn/trunk/src/iwHQ.cpp:66
-msgid "More"
-msgstr "More"
-
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:279
-msgid "More attackers"
-msgstr "More attackers"
-
-#: /storage/RTTR/svn/trunk/src/iwMilitary.cpp:51
-msgid "More defenders"
-msgstr "More defenders"
-
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:50
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:51
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:52
@@ -1260,101 +224,986 @@ msgstr "More defenders"
 msgid "More often"
 msgstr "More often"
 
-#: /storage/RTTR/svn/trunk/src/iwMilitary.cpp:49
-msgid "More recruits"
-msgstr "More recruits"
+#: /storage/RTTR/svn/trunk/src/iwTools.cpp:51
+msgid "Axe"
+msgstr "Axe"
+
+#: /storage/RTTR/svn/trunk/src/iwTools.cpp:52
+msgid "Saw"
+msgstr "Saw"
+
+#: /storage/RTTR/svn/trunk/src/iwTools.cpp:53
+msgid "Pick-axe"
+msgstr "Pick-axe"
+
+#: /storage/RTTR/svn/trunk/src/iwTools.cpp:54
+msgid "Hammer"
+msgstr "Hammer"
+
+#: /storage/RTTR/svn/trunk/src/iwTools.cpp:55
+msgid "Shovel"
+msgstr "Shovel"
+
+#: /storage/RTTR/svn/trunk/src/iwTools.cpp:56
+msgid "Crucible"
+msgstr "Crucible"
+
+#: /storage/RTTR/svn/trunk/src/iwTools.cpp:57
+msgid "Rod and line"
+msgstr "Rod and line"
+
+#: /storage/RTTR/svn/trunk/src/iwTools.cpp:58
+msgid "Scythe"
+msgstr "Scythe"
+
+#: /storage/RTTR/svn/trunk/src/iwTools.cpp:59
+msgid "Cleaver"
+msgstr "Cleaver"
+
+#: /storage/RTTR/svn/trunk/src/iwTools.cpp:60
+msgid "Rolling pin"
+msgstr "Rolling pin"
+
+#: /storage/RTTR/svn/trunk/src/iwTools.cpp:61
+msgid "Bow"
+msgstr "Bow"
+
+#: /storage/RTTR/svn/trunk/src/iwTools.cpp:64
+#: /storage/RTTR/svn/trunk/src/iwBuildingProductivities.cpp:103
+msgid "Help"
+msgstr "Help"
+
+#: /storage/RTTR/svn/trunk/src/iwTools.cpp:66
+msgid "Default"
+msgstr "Default"
+
+#: /storage/RTTR/svn/trunk/src/iwBuildingProductivities.cpp:82
+msgid "Productivity"
+msgstr "Productivity"
+
+#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:563
+msgid "Military building occupied"
+msgstr "Military building occupied"
+
+#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:808
+msgid "Military building lost"
+msgstr "Military building lost"
+
+#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:811
+msgid "Military building captured"
+msgstr "Military building captured"
+
+#: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:1038
+msgid "A catapult is firing upon us!"
+msgstr "A catapult is firing upon us!"
+
+#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:44
+#: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:65
+#: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:71
+msgid "OK"
+msgstr "Ok"
+
+#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:45
+msgid "Abort"
+msgstr "Abort"
+
+#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:70
+msgid "Playlist:"
+msgstr "Playlist:"
+
+#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:76
+msgid "Add"
+msgstr "Add"
+
+#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:77
+msgid "Remove"
+msgstr "Remove"
+
+#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:78
+msgid "Save"
+msgstr "Save"
+
+#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:79
+msgid "Load"
+msgstr "Load"
+
+#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:82
+#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:199
+msgid "Add track"
+msgstr "Add track"
+
+#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:83
+msgid "Remove track"
+msgstr "Remove track"
+
+#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:84
+msgid "Upwards"
+msgstr "Upwarts"
+
+#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:85
+msgid "Downwards"
+msgstr "Downwarts"
+
+#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:87
+msgid "Less repeats"
+msgstr "Less repeats"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:88
 msgid "More repeats"
 msgstr "More repeats"
 
-#: /storage/RTTR/svn/trunk/src/dskMainMenu.cpp:74
-msgid "Multiplayer"
-msgstr "Multiplayer"
+#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:89
+#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:257
+msgid "Playback in this order"
+msgstr "Playback in this order"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:219
-msgid "Music"
-msgstr "Music"
+#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:126
+msgid "Specify the playlist name"
+msgstr "Specify the playlist name"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:237
-msgid "Music player"
-msgstr "Music player"
+#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:141
+#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:165
+#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:171
+#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:191
+#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:305
+#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:320
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:449
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:767
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:781
+msgid "Error"
+msgstr "Ooops"
 
-#: /storage/RTTR/svn/trunk/src/dskLobby.cpp:78
-msgid "Name"
-msgstr "Name"
+#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:141
+msgid "You are not allowed to delete the standard playlist!"
+msgstr "You are not allowed to delete the standard play list!"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:95
-msgid "Name in Game:"
-msgstr "Name in Game:"
+#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:165
+msgid "You are not allowed to change the standard playlist!"
+msgstr "You are not allowed to change the standard play list!"
+
+#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:171
+#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:320
+msgid "The specified file couldn't be saved!"
+msgstr "The specified file couldn't be saved!"
+
+#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:191
+msgid "The specified file couldn't be loaded!"
+msgstr "The specified file couldn't be loaded!"
+
+#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:257
+msgid "Random playback"
+msgstr "Random playback"
+
+#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:305
+msgid "The specified file couldn't be opened!"
+msgstr "The specified file couldn't be opened!"
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:59
+msgid "Player Name"
+msgstr "Player Name"
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:61
+msgid "Classification"
+msgstr "Classification"
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:63
+msgid "Race"
+msgstr "Race"
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:65
+msgid "Color"
+msgstr "Colour"
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:67
+msgid "Team"
+msgstr "Team"
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:69
+msgid "Ready?"
+msgstr "Ready?"
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:71
+msgid "Ping"
+msgstr "Ping"
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:74
+msgid "Past player"
+msgstr "Past player"
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:82
+msgid "Start game"
+msgstr "Start game"
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:87
+msgid "Return"
+msgstr "Return"
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:90
+msgid "Lock teams:"
+msgstr "Lock teams:"
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:92
+msgid "Shared team view"
+msgstr "Shared team view:"
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:95
+msgid "Enhancements:"
+msgstr "Enhancements:"
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:96
+msgid "Change Settings..."
+msgstr "Change Settings..."
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:96
+msgid "View Settings..."
+msgstr "View Settings..."
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:102
+msgid "Demolition prohibition:"
+msgstr "Demolition prohibition:"
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:105
+msgid "When attack"
+msgstr "When attack"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:106
 msgid "Near frontiers"
 msgstr "Near frontiers"
 
-#: /storage/RTTR/svn/trunk/src/dskMultiPlayer.cpp:67
-msgid "Network/LAN"
-msgstr "Network/LAN"
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:109
+msgid "Exploration:"
+msgstr "Exploration:"
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:115
-msgid "New maps"
-msgstr "New maps"
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:111
+msgid "Off (all visible)"
+msgstr "Off (all visible)"
 
-#: /storage/RTTR/svn/trunk/src/nobStorehouse.cpp:59
-msgid "New storehouse finished"
-msgstr "New storehouse finished"
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:112
+msgid "Classic (Settlers 2)"
+msgstr "Classic (Settlers 2)"
 
-#: /storage/RTTR/svn/trunk/src/iwWares.cpp:167
-msgid "Next page"
-msgstr "Next page"
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:113
+msgid "Fog of War"
+msgstr "Fog of War"
 
-#: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:79
-#: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:86
-msgid "No"
-msgstr "No"
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:114
+msgid "FoW - all explored"
+msgstr "FoW - all explored"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:143
-msgid "No Proxy"
-msgstr ""
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:117
+msgid "Goods at start:"
+msgstr "Starting goods:"
 
-#: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:83
-#: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:228
-msgid "No letters!"
-msgstr "No letters!"
-
-#: /storage/RTTR/svn/trunk/src/nofFarmhand.cpp:176
-msgid "No more fishes in range"
-msgstr "No more fishes in range"
-
-#: /storage/RTTR/svn/trunk/src/nofFarmhand.cpp:169
-msgid "No more stones in range"
-msgstr "No more stones in range"
-
-#: /storage/RTTR/svn/trunk/src/iwShip.cpp:104
-msgid "No ships available"
-msgstr "No ships available"
-
-#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:114
-msgid "Non-aggression pact"
-msgstr "Non-aggression pact"
-
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:126
-msgid "None"
-msgstr "None"
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:119
+msgid "Low"
+msgstr "Low"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:120
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:135
 msgid "Normal"
 msgstr "Normal"
 
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:121
+msgid "A lot"
+msgstr "A lot"
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:124
+msgid "Goals:"
+msgstr "Goals:"
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:126
+msgid "None"
+msgstr "None"
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:127
+msgid "Conquer 3/4 of map"
+msgstr "Conquer 3/4 of map"
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:128
+msgid "Total domination"
+msgstr "Total domination"
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:131
+msgid "Speed:"
+msgstr "Speed:"
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:133
+msgid "Very slow"
+msgstr "Very slow"
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:134
+msgid "Slow"
+msgstr "Slow"
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:136
+msgid "Fast"
+msgstr "Fast"
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:137
+msgid "Very fast"
+msgstr "Very fast"
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:152
+msgid "Map: "
+msgstr "Map: "
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:196
+msgid "Open"
+msgstr "Open"
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:201
+msgid "Closed"
+msgstr "Closed"
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:241
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:270
+#, c-format
+msgid "%d"
+msgstr "%d"
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:247
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:257
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:552
+msgid "Africans"
+msgstr "Africans"
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:252
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:262
+msgid "-"
+msgstr "-"
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:449
+msgid ""
+"Game can only be started as soon as everybody has a unique color,everyone is "
+"ready and all free slots are closed."
+msgstr ""
+"Game can only be started as soon as everybody has a unique colour, everyone "
+"is ready and all free slots are closed."
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:552
+msgid "Japaneses"
+msgstr "Japanese"
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:552
+msgid "Romans"
+msgstr "Romans"
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:552
+msgid "Vikings"
+msgstr "Vikings"
+
+#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:767
+msgid "Lost connection to server!"
+msgstr "Lost connection to server!"
+
+#: /storage/RTTR/svn/trunk/src/AIPlayerJH.cpp:109
+msgid "Hi, I'm an artifical player and I'm not very good yet!"
+msgstr "Hi, I'm an artifical player and I'm not very good yet!"
+
+#: /storage/RTTR/svn/trunk/src/AIPlayerJH.cpp:113
+msgid "And I may crash your game sometimes..."
+msgstr "And I may crash your game sometimes..."
+
+#: /storage/RTTR/svn/trunk/src/AIPlayerJH.cpp:309
+msgid "Oh, no, you destroyed my headquarter! I surrender!"
+msgstr "Oh, no, you destroyed my headquarter! I surrender!"
+
+#: /storage/RTTR/svn/trunk/src/iwHQ.cpp:52
+msgid "Reserve"
+msgstr "Reserve"
+
+#: /storage/RTTR/svn/trunk/src/iwHQ.cpp:64
+msgid "Less"
+msgstr "Less"
+
+#: /storage/RTTR/svn/trunk/src/iwHQ.cpp:66
+msgid "More"
+msgstr "More"
+
+#: /storage/RTTR/svn/trunk/src/iwHQ.cpp:68
+#, c-format
+msgid "%u/%u"
+msgstr "%u/%u"
+
+#: /storage/RTTR/svn/trunk/src/GameClientPlayer.cpp:1951
+msgid "The emergency program has been activated."
+msgstr "Das Notfallprogramm wurde aktiviert."
+
+#: /storage/RTTR/svn/trunk/src/GameClientPlayer.cpp:1961
+msgid "The emergency program has been deactivated."
+msgstr "Das Notfallprogramm wurde deaktiviert."
+
+#: /storage/RTTR/svn/trunk/src/iwEndgame.cpp:48
+msgid "End game?"
+msgstr "End game?"
+
+#: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:72
+#: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:87
+msgid "Cancel"
+msgstr "Cancel"
+
+#: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:78
+#: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:85
+msgid "Yes"
+msgstr "Yes"
+
+#: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:79
+#: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:86
+msgid "No"
+msgstr "No"
+
+#: /storage/RTTR/svn/trunk/src/dskLobby.cpp:60
+#, c-format
+msgid "Return To The Roots - v%s-%s"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/dskLobby.cpp:62
+msgid "http://www.siedler25.org"
+msgstr "http://www.siedler25.org"
+
+#: /storage/RTTR/svn/trunk/src/dskLobby.cpp:69
+msgid "Connect"
+msgstr "Connect"
+
+#: /storage/RTTR/svn/trunk/src/dskLobby.cpp:71
+msgid "Internet Ranking"
+msgstr "Internet Ranking"
+
+#: /storage/RTTR/svn/trunk/src/dskLobby.cpp:73
+msgid "Add Server"
+msgstr "Add Server"
+
+#: /storage/RTTR/svn/trunk/src/dskLobby.cpp:76
+msgid "ID"
+msgstr "ID"
+
+#: /storage/RTTR/svn/trunk/src/dskLobby.cpp:76
+msgid "Server"
+msgstr "Server"
+
+#: /storage/RTTR/svn/trunk/src/dskLobby.cpp:76
+msgid "Map"
+msgstr "Map"
+
+#: /storage/RTTR/svn/trunk/src/dskLobby.cpp:76
+msgid "Player"
+msgstr "Player"
+
+#: /storage/RTTR/svn/trunk/src/dskLobby.cpp:76
+#: /storage/RTTR/svn/trunk/src/dskLobby.cpp:78
+msgid "Version"
+msgstr "Version"
+
+#: /storage/RTTR/svn/trunk/src/dskLobby.cpp:78
+msgid "Name"
+msgstr "Name"
+
+#: /storage/RTTR/svn/trunk/src/dskLobby.cpp:78
+msgid "Points"
+msgstr "Points"
+
+#: /storage/RTTR/svn/trunk/src/dskLobby.cpp:157
+msgid ""
+"You can't create a game while a proxy server is active\n"
+"Disable the use of a proxy server first!"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/dskLobby.cpp:321
+msgid "Lost connection to lobby!"
+msgstr "Lost connection to lobby!"
+
+#: /storage/RTTR/svn/trunk/src/iwBuildings.cpp:76
+msgid "Buildings"
+msgstr "Buildings"
+
+#: /storage/RTTR/svn/trunk/src/dskSinglePlayer.cpp:66
+msgid "Resume last game"
+msgstr "Resume last game"
+
+#: /storage/RTTR/svn/trunk/src/dskSinglePlayer.cpp:69
+msgid "Play Replay"
+msgstr "Play replay"
+
+#: /storage/RTTR/svn/trunk/src/dskSinglePlayer.cpp:75
+msgid "Load game"
+msgstr "Load game"
+
 #: /storage/RTTR/svn/trunk/src/dskSinglePlayer.cpp:97
 msgid "Not available"
 msgstr "Not available"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:865
+#: /storage/RTTR/svn/trunk/src/dskSinglePlayer.cpp:97
+msgid ""
+"Singleplayer mode and AI are not yet implemented. Please use the Multiplayer "
+"mode and 'Direct IP' to create a Singleplayer game."
+msgstr ""
+"Singleplayer mode and AI are not yet implemented. Please use the Multiplayer "
+"mode and 'Direct IP' to create a Singleplayer game."
+
+#: /storage/RTTR/svn/trunk/src/iwBaseWarehouse.cpp:62
+msgid "do nothing"
+msgstr "do nothing"
+
+#: /storage/RTTR/svn/trunk/src/iwBaseWarehouse.cpp:64
+msgid "Take out of store"
+msgstr "Take out of store"
+
+#: /storage/RTTR/svn/trunk/src/iwBaseWarehouse.cpp:66
+msgid "Stop storage"
+msgstr "Stop storage"
+
+#: /storage/RTTR/svn/trunk/src/iwBaseWarehouse.cpp:71
+msgid "Select all"
+msgstr "Select all"
+
+#: /storage/RTTR/svn/trunk/src/iwBaseWarehouse.cpp:73
+msgid "Go to place"
+msgstr "Go to"
+
+#: /storage/RTTR/svn/trunk/src/iwBaseWarehouse.cpp:106
+msgid "Demolish house"
+msgstr "Demolish house"
+
+#: /storage/RTTR/svn/trunk/src/iwSurrender.cpp:49
+msgid "Surrender game?"
+msgstr "Surrender game?"
+
+#: /storage/RTTR/svn/trunk/src/iwSurrender.cpp:52
+#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:108
+msgid "Surrender"
+msgstr "Surrender"
+
+#: /storage/RTTR/svn/trunk/src/iwSurrender.cpp:54
+msgid "Destroy all buildings and surrender"
+msgstr "Destroy all buildings and surrender"
+
+#: /storage/RTTR/svn/trunk/src/iwSurrender.cpp:56
+msgid "Don't surrender"
+msgstr "Don't surrender"
+
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:99
+msgid "Author"
+msgstr "Author"
+
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:99
+msgid "Type"
+msgstr "Type"
+
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:99
+msgid "Size"
+msgstr "Size"
+
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:102
+msgid "Selection of maps"
+msgstr "Map selection"
+
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:107
+msgid "Load game..."
+msgstr "Load game..."
+
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:109
+msgid "Continue"
+msgstr "Continue"
+
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:113
+msgid "Old maps"
+msgstr "Old maps"
+
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:115
+msgid "New maps"
+msgstr "New maps"
+
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:117
+msgid "Own maps"
+msgstr "Own maps"
+
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:119
+msgid "Continents"
+msgstr "Continents"
+
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:121
+msgid "Campaign"
+msgstr "Campaign"
+
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:123
+msgid "RTTR"
+msgstr "RTTR"
+
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:125
+msgid "Other"
+msgstr "Other"
+
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:127
+msgid "Sea"
+msgstr "Sea"
+
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:129
+msgid "Played"
+msgstr "Last played"
+
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:133
+msgid "Mapfile: "
+msgstr "Mapfile: "
+
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:333
+msgid "Incomplete message was received!"
+msgstr "Incomplete message was received!"
+
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:394
 #, c-format
-msgid "Note: Game settings changed by the server%s"
-msgstr "Note: Game settings changed by the server%s"
+msgid "%d Player"
+msgstr "%d Player"
+
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:399
+msgid "Greenland"
+msgstr "Greenland"
+
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:400
+msgid "Wasteland"
+msgstr "Wasteland"
+
+#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:401
+msgid "Winter world"
+msgstr "Winter world"
+
+#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:59
+msgid "Game menu"
+msgstr "Game menu"
+
+#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:77
+msgid "Load 'ReadMe' file"
+msgstr "Load 'ReadMe' file"
+
+#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:81
+msgid "Load game!"
+msgstr "Load game!"
+
+#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:85
+msgid "Save game!"
+msgstr "Save game!"
+
+#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:105
+msgid "Advanced"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:110
+msgid "End game"
+msgstr "End game"
+
+#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:130
+msgid "Readme!"
+msgstr "Read me!"
+
+#: /storage/RTTR/svn/trunk/src/iwMinimap.cpp:53
+msgid "Outline map"
+msgstr "Outline map"
+
+#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:104
+msgid "treaty of alliance"
+msgstr "treaty of alliance"
+
+#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:105
+msgid "non-aggression pact"
+msgstr "non-aggression pact"
+
+#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:115
+#, c-format
+msgid "The player '%s' offers you a %s."
+msgstr "The player '%s' offers you a %s."
+
+#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:120
+msgid "Duration: Forever"
+msgstr "Duration: Forever"
+
+#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:122
+#, c-format
+msgid "Duration: %u GF (%s)"
+msgstr "Duration: %u GF (%s)"
+
+#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:134
+#, c-format
+msgid ""
+"The player '%s' want to cancel the '%s' between you both primaturely. Do you "
+"agree?"
+msgstr ""
+"The player '%s' want to cancel the '%s' between you both primaturely. Do you "
+"agree?"
+
+#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:157
+#, c-format
+msgid "The %s between player '%s' and you has been concluded."
+msgstr "The %s between player '%s' and you has been concluded."
+
+#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:160
+#, c-format
+msgid "The %s between player '%s' and you has been cancelled."
+msgstr "The %s between player '%s' and you has been cancelled."
+
+#: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:63
+msgid "Filename"
+msgstr "Filename"
+
+#: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:63
+msgid "Stocktaking date"
+msgstr "Stocktaking date"
+
+#: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:63
+msgid "Length"
+msgstr "Length"
+
+#: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:66
+msgid "Start"
+msgstr "Start"
+
+#: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:68
+#: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:113
+msgid "Clear"
+msgstr "Clear"
+
+#: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:95
+#: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:105
+msgid "Error while playing replay!"
+msgstr "Error while playing replay!"
+
+#: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:96
+msgid "Error while opening file!"
+msgstr "Error while opening file!"
+
+#: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:97
+msgid "Invalid Replay!"
+msgstr "Invalid replay!"
+
+#: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:98
+msgid "Error: Replay is too old!"
+msgstr "Error: Replay is too old!"
+
+#: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:99
+msgid "Program version is too old to play that replay!"
+msgstr "Program version is too old to play that replay!"
+
+#: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:101
+msgid "Temporary map file was not found!"
+msgstr "Temporary map file was not found!"
+
+#: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:113
+msgid "Are you sure to remove all replays?"
+msgstr "Are you sure to remove all replays?"
+
+#: /storage/RTTR/svn/trunk/src/iwShip.cpp:60
+msgid "Ship register"
+msgstr "Ship register"
+
+#: /storage/RTTR/svn/trunk/src/iwShip.cpp:72
+msgid "Found colony"
+msgstr "Found colony"
+
+#: /storage/RTTR/svn/trunk/src/iwShip.cpp:104
+msgid "No ships available"
+msgstr "No ships available"
+
+#: /storage/RTTR/svn/trunk/src/iwTextfile.cpp:72
+msgid "The readme file was not found!"
+msgstr "The readme file was not found!"
+
+#: /storage/RTTR/svn/trunk/src/iwStorehouse.cpp:43
+msgid "Storehouse"
+msgstr "Storehouse"
+
+#: /storage/RTTR/svn/trunk/src/iwLobbyServerInfo.cpp:73
+msgid "Server Information"
+msgstr "Server information"
+
+#: /storage/RTTR/svn/trunk/src/iwLobbyServerInfo.cpp:75
+msgid "Map Name:"
+msgstr "Map name:"
+
+#: /storage/RTTR/svn/trunk/src/iwLobbyServerInfo.cpp:77
+msgid "Server Name:"
+msgstr "Server name:"
+
+#: /storage/RTTR/svn/trunk/src/iwLobbyServerInfo.cpp:79
+msgid "Host:"
+msgstr "Host:"
+
+#: /storage/RTTR/svn/trunk/src/iwLobbyServerInfo.cpp:81
+msgid "Version:"
+msgstr "Version:"
+
+#: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:125
+msgid "Map was loaded and pinned at the wall..."
+msgstr "Map has been loaded and pinned at the wall..."
+
+#: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:135
+msgid "Tribal chiefs assembled around the table..."
+msgstr "Tribal chiefs assembled around the table..."
+
+#: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:143
+msgid "Failed to load map objects."
+msgstr "Failed to load map objects."
+
+#: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:147
+msgid "Game crate was picked and spread out..."
+msgstr "The Game crate was picked and spread out..."
+
+#: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:155
+msgid "Failed to load terrain data."
+msgstr "Failed to load terrain data."
+
+#: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:161
+msgid "World was put together and glued..."
+msgstr "The world was put together and glued..."
+
+#: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:167
+msgid "And let's go!"
+msgstr "And let's go!"
+
+#: /storage/RTTR/svn/trunk/src/noShipBuildingSite.cpp:136
+msgid "A new ship is ready"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:64
+msgid "Return To The Roots"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:67
+msgid "Credits"
+msgstr "Credits"
+
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:73
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:86
+msgid "Project management"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:74
+msgid "Server management"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:75
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:87
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:114
+msgid "Programming"
+msgstr "Programming"
+
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:76
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:96
+msgid "Website Administration"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:77
+msgid "Website Programming"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:78
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:88
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:97
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:105
+msgid "Quality Assurance"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:106
+msgid "Mapping"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:115
+msgid "Artificial Intelligence (AI)"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:120
+msgid "Additional Programming:"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:133
+msgid "Other Support:"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:145
+msgid "Donators"
+msgstr "Donators"
+
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:147
+msgid "various anonymous donators"
+msgstr "Various anonymous donators"
+
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:164
+msgid "Thank you for your donations!"
+msgstr "Thank you for your donations!"
+
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:169
+msgid "We hope you enjoy playing Return To The Roots!"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:171
+msgid "Thank you!"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:172
+msgid "THE END"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/GameWorldViewer.cpp:190
+msgid "(House unoccupied)"
+msgstr "(House unoccupied)"
+
+#: /storage/RTTR/svn/trunk/src/GameWorldViewer.cpp:192
+msgid "(stopped)"
+msgstr "(stopped)"
+
+#: /storage/RTTR/svn/trunk/src/GameWorldViewer.cpp:221
+msgid "(1 soldier)"
+msgstr "(1 soldier)"
+
+#: /storage/RTTR/svn/trunk/src/GameWorldViewer.cpp:223
+#, c-format
+msgid "(%d soldiers)"
+msgstr "(%d soldiers)"
+
+#: /storage/RTTR/svn/trunk/src/iwChat.cpp:47
+msgid "Chat Window"
+msgstr "Chat window"
+
+#: /storage/RTTR/svn/trunk/src/iwChat.cpp:54
+msgid "All"
+msgstr "All"
+
+#: /storage/RTTR/svn/trunk/src/iwChat.cpp:56
+msgid "Allies"
+msgstr "Allies"
+
+#: /storage/RTTR/svn/trunk/src/iwChat.cpp:58
+msgid "Enemies"
+msgstr "Enemies"
+
+#: /storage/RTTR/svn/trunk/src/iwPleaseWait.cpp:42
+#: /storage/RTTR/svn/trunk/src/iwPleaseWait.cpp:44
+msgid "Please wait..."
+msgstr "Please wait..."
+
+#: /storage/RTTR/svn/trunk/src/noShip.cpp:224
+msgid "A ship is ready for an expedition."
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/noShip.cpp:482
+msgid "A ship has reached the destination of its expedition."
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/iwRoadWindow.cpp:47
+msgid "Activity window"
+msgstr "Activity window"
+
+#: /storage/RTTR/svn/trunk/src/iwRoadWindow.cpp:51
+msgid "Interrupt road building"
+msgstr "Interrupt road building"
+
+#: /storage/RTTR/svn/trunk/src/iwRoadWindow.cpp:56
+msgid "Erect flag"
+msgstr "Erect flag"
+
+#: /storage/RTTR/svn/trunk/src/GameClientGF_Replay.cpp:75
+#, c-format
+msgid ""
+"Warning: The played replay is not in sync with the original match. (GF: %u)"
+msgstr ""
+"Warning: The played replay is not in sync with the original match. (GF: %u)"
 
 #: /storage/RTTR/svn/trunk/src/GameClientGF_Replay.cpp:117
 #, c-format
@@ -1365,142 +1214,350 @@ msgstr ""
 "Notice: The played replay has ended. (GF: %u, %dh %dmin %ds, TF: %u, "
 "AVG_FPS: %u)"
 
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:293
-msgid "Number of attackers"
-msgstr "Number of attackers"
+#: /storage/RTTR/svn/trunk/src/nofBuildingWorker.cpp:376
+msgid "This mine is exhausted"
+msgstr "This mine is exhausted"
 
-#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:44
-#: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:65
-#: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:71
-msgid "OK"
-msgstr "Ok"
+#: /storage/RTTR/svn/trunk/src/iwDemolishBuilding.cpp:44
+msgid "Demolish?"
+msgstr "Demolish?"
+
+#: /storage/RTTR/svn/trunk/src/nofAttacker.cpp:471
+msgid "We are under attack!"
+msgstr "We are under attack!"
+
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:584
+#, c-format
+msgid "Dummy %u"
+msgstr "Dummy %u"
+
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:586
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:598
+msgid " (AI)"
+msgstr " (AI)"
+
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:596
+#, c-format
+msgid "Computer %u"
+msgstr "Computer %u"
+
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:870
+msgid "The Game is not in sync. Checksums of some players don't match."
+msgstr "The Game is not in sync. Checksums of some players don't match."
+
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:1219
+msgid "Auto-Save"
+msgstr "Auto save"
+
+#: /storage/RTTR/svn/trunk/src/GameClient.cpp:1528
+#, c-format
+msgid "current GF: %u - still fast forwarding: %d GFs left (%d %%)"
+msgstr "current GF: %u - still fast forwarding: %d GFs left (%d %%)"
+
+#: /storage/RTTR/svn/trunk/src/iwAction.cpp:102
+#: /storage/RTTR/svn/trunk/src/iwAction.cpp:116
+#: /storage/RTTR/svn/trunk/src/iwAction.cpp:122
+msgid "-> Build house"
+msgstr "-> Build house"
+
+#: /storage/RTTR/svn/trunk/src/iwAction.cpp:111
+#: /storage/RTTR/svn/trunk/src/iwAction.cpp:115
+#: /storage/RTTR/svn/trunk/src/iwAction.cpp:121
+msgid "-> Build hut"
+msgstr "-> Build hut"
+
+#: /storage/RTTR/svn/trunk/src/iwAction.cpp:123
+msgid "-> Build castle"
+msgstr "-> Build castle"
+
+#: /storage/RTTR/svn/trunk/src/iwAction.cpp:127
+msgid "-> Dig mines"
+msgstr "-> Dig mines"
+
+#: /storage/RTTR/svn/trunk/src/iwAction.cpp:178
+#: /storage/RTTR/svn/trunk/src/iwAction.cpp:185
+#: /storage/RTTR/svn/trunk/src/iwAction.cpp:193
+#: /storage/RTTR/svn/trunk/src/iwAction.cpp:197
+msgid "Build road"
+msgstr "Build road"
+
+#: /storage/RTTR/svn/trunk/src/iwAction.cpp:179
+#: /storage/RTTR/svn/trunk/src/iwAction.cpp:187
+msgid "Pull down flag"
+msgstr "Pull down flag"
+
+#: /storage/RTTR/svn/trunk/src/iwAction.cpp:180
+#: /storage/RTTR/svn/trunk/src/iwAction.cpp:188
+msgid "Call in geologist"
+msgstr "Call in geologist"
+
+#: /storage/RTTR/svn/trunk/src/iwAction.cpp:181
+#: /storage/RTTR/svn/trunk/src/iwAction.cpp:189
+msgid "Send out scout"
+msgstr "Send out scout"
+
+#: /storage/RTTR/svn/trunk/src/iwAction.cpp:186
+msgid "Build waterway"
+msgstr "Build waterway"
+
+#: /storage/RTTR/svn/trunk/src/iwAction.cpp:218
+#: /storage/RTTR/svn/trunk/src/iwAction.cpp:220
+msgid "Dig up road"
+msgstr "Dig up road"
+
+#: /storage/RTTR/svn/trunk/src/iwAction.cpp:225
+#: /storage/RTTR/svn/trunk/src/iwAction.cpp:233
+msgid "Attack options"
+msgstr "Attack options"
+
+#: /storage/RTTR/svn/trunk/src/iwAction.cpp:244
+msgid "Display options"
+msgstr "Display options"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:246
 msgid "Observation window"
 msgstr "Observation window"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:178
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:188
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:222
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:231
-msgid "Off"
-msgstr "Off"
+#: /storage/RTTR/svn/trunk/src/iwAction.cpp:247
+msgid "House names"
+msgstr "House names"
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:111
-msgid "Off (all visible)"
-msgstr "Off (all visible)"
+#: /storage/RTTR/svn/trunk/src/iwAction.cpp:248
+msgid "Go to headquarters"
+msgstr "Go to headquarters"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:337
-msgid "Officer"
-msgstr "Officer"
+#: /storage/RTTR/svn/trunk/src/iwAction.cpp:271
+msgid "Attack not possible."
+msgstr "Attack not possible."
 
-#: /storage/RTTR/svn/trunk/src/AIPlayerJH.cpp:309
-msgid "Oh, no, you destroyed my headquarter! I surrender!"
-msgstr "Oh, no, you destroyed my headquarter! I surrender!"
+#: /storage/RTTR/svn/trunk/src/iwAction.cpp:278
+msgid "Less attackers"
+msgstr "Less attackers"
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:113
-msgid "Old maps"
-msgstr "Old maps"
+#: /storage/RTTR/svn/trunk/src/iwAction.cpp:279
+msgid "More attackers"
+msgstr "More attackers"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:177
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:187
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:221
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:230
-msgid "On"
-msgstr "On"
+#: /storage/RTTR/svn/trunk/src/iwAction.cpp:283
+msgid "Weak attackers"
+msgstr "Weak attackers"
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:196
-msgid "Open"
-msgstr "Open"
+#: /storage/RTTR/svn/trunk/src/iwAction.cpp:284
+msgid "Strong attackers"
+msgstr "Strong attackers"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:73
-msgid "Options"
-msgstr "Options"
+#: /storage/RTTR/svn/trunk/src/iwAction.cpp:293
+msgid "Number of attackers"
+msgstr "Number of attackers"
 
-#: /storage/RTTR/svn/trunk/src/iwBuildingSite.cpp:57
-msgid "Order of building site"
-msgstr "Order of building site"
+#: /storage/RTTR/svn/trunk/src/iwAction.cpp:296
+msgid "Attack!"
+msgstr "Attack!"
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:125
-msgid "Other"
-msgstr "Other"
+#: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:49
+msgid "Join Game"
+msgstr "Join Game"
 
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:133
-#, fuzzy
-msgid "Other Support:"
-msgstr "Other Support"
+#: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:55
+msgid "IP Address of Host:"
+msgstr "IP address of host:"
 
-#: /storage/RTTR/svn/trunk/src/iwMinimap.cpp:53
-msgid "Outline map"
-msgstr "Outline map"
-
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:117
-msgid "Own maps"
-msgstr "Own maps"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:342
-msgid "Pack donkey"
-msgstr "Pack donkey"
+#: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:59
+msgid "Server-Port:"
+msgstr "Server port:"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:63
 msgid "Password (if needed):"
 msgstr "Password (if needed):"
 
-#: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:59
-msgid "Password:"
-msgstr "Password:"
+#: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:156
+msgid "Invalid port. The valid port-range is 1 to 65535!"
+msgstr "Invalid port. The valid port-range is 1 to 65535!"
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:74
-msgid "Past player"
-msgstr "Past player"
+#: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:167
+msgid "Connecting with Host..."
+msgstr "Connecting with host..."
 
-#: /storage/RTTR/svn/trunk/src/iwTools.cpp:53
-msgid "Pick-axe"
-msgstr "Pick-axe"
+#: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:173
+msgid "Connection failed!"
+msgstr "Connection failed!"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:326
-msgid "Pig breeder"
-msgstr "Pig breeder"
+#: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:258
+msgid "This Server is full!"
+msgstr "This server is full!"
 
-#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:88
-#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:142
-msgid "Pig farm"
-msgstr "Pig farm"
+#: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:259
+msgid "Wrong Password!"
+msgstr "Wrong password!"
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:71
-msgid "Ping"
-msgstr "Ping"
+#: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:260
+msgid "Wrong client version"
+msgstr "Wrong client version!"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:333
-msgid "Planer"
-msgstr "Planer"
+#: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:261
+msgid "Connection to Host closed!"
+msgstr "Connection to host closed!"
 
-#: /storage/RTTR/svn/trunk/src/dskSinglePlayer.cpp:69
-msgid "Play Replay"
-msgstr "Play replay"
+#: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:262
+msgid "Too short Message received!"
+msgstr "Too short message recieved!"
 
-#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:89
-#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:257
-msgid "Playback in this order"
-msgstr "Playback in this order"
+#: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:263
+msgid "Wrong Server Type!"
+msgstr "Wrong server type!"
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:129
-msgid "Played"
-msgstr "Last played"
+#: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:279
+msgid "Waiting for Reply..."
+msgstr "Waiting for reply..."
 
-#: /storage/RTTR/svn/trunk/src/dskLobby.cpp:76
-msgid "Player"
-msgstr "Player"
+#: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:280
+msgid "Checking Password..."
+msgstr "Ckecking password..."
+
+#: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:281
+msgid "Checking Map..."
+msgstr "Checking map..."
+
+#: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:282
+msgid "Waiting for Playerinfo..."
+msgstr "Waiting for playerinfo..."
+
+#: /storage/RTTR/svn/trunk/src/SerializedGameData.cpp:239
+msgid "An error occured while saving which was suppressed!"
+msgstr "An error occured while saving which was suppressed!"
+
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:60
+msgid "Main selection"
+msgstr "Main selection"
+
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:64
+msgid "Distribution of goods"
+msgstr "Distribution of goods"
+
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:66
+msgid "Transport"
+msgstr "Transport"
+
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:71
+msgid "General statistics"
+msgstr "General statistics"
+
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:72
+msgid "Merchandise statistics"
+msgstr "Merchandise statistics"
+
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:76
+msgid "Stock"
+msgstr "Stock"
+
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:81
+msgid "Military"
+msgstr "Military"
+
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:86
+msgid "Building sequence"
+msgstr "Building sequence"
+
+#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:88
+msgid "Diplomacy"
+msgstr "Diplomacy"
+
+#: /storage/RTTR/svn/trunk/src/iwLobbyRanking.cpp:81
+msgid "Lost"
+msgstr "Lost"
+
+#: /storage/RTTR/svn/trunk/src/iwLobbyRanking.cpp:81
+msgid "Won"
+msgstr "Won"
+
+#: /storage/RTTR/svn/trunk/src/nofFarmhand.cpp:169
+msgid "No more stones in range"
+msgstr "No more stones in range"
+
+#: /storage/RTTR/svn/trunk/src/nofFarmhand.cpp:176
+msgid "No more fishes in range"
+msgstr "No more fishes in range"
+
+#: /storage/RTTR/svn/trunk/src/iwWares.cpp:167
+msgid "Next page"
+msgstr "Next page"
+
+#: /storage/RTTR/svn/trunk/src/iwMilitaryBuilding.cpp:169
+msgid "Demolition ist not allowed because the building is under attack!"
+msgstr "Demolition ist not allowed because the building is under attack!"
+
+#: /storage/RTTR/svn/trunk/src/iwMilitaryBuilding.cpp:170
+msgid ""
+"Demolition ist not allowed because the building is located in border area!"
+msgstr ""
+"Demolition is not allowed because the building is located in border area!"
+
+#: /storage/RTTR/svn/trunk/src/iwMilitaryBuilding.cpp:173
+msgid "Demolition not possible"
+msgstr "Demolition not possible"
+
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:105
+msgid "Construction aid mode"
+msgstr "Construction aid mode"
+
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:219
+#, c-format
+msgid ""
+"(Replay-Mode) Current GF: %u (End at: %u) / GF length: %u ms / NWF length: "
+"%u gf (%u ms)"
+msgstr ""
+"(Replay-Mode) Current GF: %u (End at: %u) / GF length: %u ms / NWF length: "
+"%u gf (%u ms)"
+
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:221
+#, c-format
+msgid ""
+"Current GF: %u / GF length: %u ms / NWF length: %u gf (%u ms) /  Ping: %u ms"
+msgstr ""
+"Current GF: %u / GF length: %u ms / NWF length: %u gf (%u ms) / Ping: %u ms"
+
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:347
+msgid "Headquarters"
+msgstr "Headquarters"
+
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:854
+#, c-format
+msgid "Player '%s' left the game!"
+msgstr "Player '%s' left the game!"
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:857
 #, c-format
 msgid "Player '%s' joined the game!"
 msgstr "Player '%s' joined the game!"
 
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:854
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:865
 #, c-format
-msgid "Player '%s' left the game!"
-msgstr "Player '%s' left the game!"
+msgid "Note: Game settings changed by the server%s"
+msgstr "Note: Game settings changed by the server%s"
+
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:872
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:898
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:921
+#, c-format
+msgid "<%s> "
+msgstr "<%s> "
+
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:881
+msgid "A auto-savegame is created..."
+msgstr "A auto-savegame is created..."
+
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:898
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:921
+msgid "SYSTEM"
+msgstr "SYSTEM"
+
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:899
+msgid "Game was paused."
+msgstr "Game was paused."
+
+#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:922
+msgid "Game was resumed."
+msgstr "The game was resumed."
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:968
 #, c-format
@@ -1512,318 +1569,269 @@ msgstr "Player '%s' switched to player '%s'"
 msgid "Player '%s' was defeated!"
 msgstr "Player '%s' has been defeated!"
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:59
-msgid "Player Name"
-msgstr "Player Name"
-
-#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:70
-msgid "Playlist:"
-msgstr "Playlist:"
-
-#: /storage/RTTR/svn/trunk/src/iwDirectIPCreate.cpp:169
-msgid "Please enter a name for the game"
-msgstr "Please enter a name for the game."
-
-#: /storage/RTTR/svn/trunk/src/iwPleaseWait.cpp:42
-#: /storage/RTTR/svn/trunk/src/iwPleaseWait.cpp:44
-msgid "Please wait..."
-msgstr "Please wait..."
-
-#: /storage/RTTR/svn/trunk/src/dskLobby.cpp:78
-msgid "Points"
-msgstr "Points"
-
-#: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:48
-msgid "Post office"
-msgstr "Post office"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:334
-msgid "Private"
-msgstr "Private"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:335
-msgid "Private first class"
-msgstr "Private first class"
-
-#: /storage/RTTR/svn/trunk/src/iwBuildingProductivities.cpp:82
-msgid "Productivity"
-msgstr "Productivity"
-
-#: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:99
-msgid "Program version is too old to play that replay!"
-msgstr "Program version is too old to play that replay!"
-
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:75
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:87
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:114
-msgid "Programming"
-msgstr "Programming"
-
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:73
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:86
-msgid "Project management"
-msgstr ""
-
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:134
-msgid "Proxyserver:"
-msgstr ""
-
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:141
-msgid "Proxytyp:"
-msgstr ""
-
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:179
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:187
-msgid "Pull down flag"
-msgstr "Pull down flag"
-
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:78
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:88
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:97
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:105
-msgid "Quality Assurance"
-msgstr ""
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:247
-msgid "Quarry"
-msgstr "Quarry"
-
-#: /storage/RTTR/svn/trunk/src/dskMainMenu.cpp:84
-msgid "Quit program"
-msgstr "Quit program"
-
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:123
-msgid "RTTR"
-msgstr "RTTR"
-
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:63
-msgid "Race"
-msgstr "Race"
-
-#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:257
-msgid "Random playback"
-msgstr "Random playback"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:316
-msgid "Ranger"
-msgstr "Ranger"
-
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:442
-msgid ""
-"Raw iron ore is smelted in the iron smelters with the help of coal. The "
-"processed iron is then used to making weapons (in the Armory) and tools (in "
-"the metalworks)."
-msgstr ""
-"Raw iron ore is smelted in the iron smelters with the help of coal. The "
-"processed iron is then used to making weapons (in the Armory) and tools (in "
-"the metalworks)."
-
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:120
-msgid "Readme"
-msgstr "Readme"
-
-#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:130
-msgid "Readme!"
-msgstr "Read me!"
-
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:69
-msgid "Ready?"
-msgstr "Ready?"
-
-#: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:88
-msgid "Register"
-msgstr "Register"
-
-#: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:319
-msgid "Registration successful!"
-msgstr "Registration successful!"
-
-#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:77
-msgid "Remove"
-msgstr "Remove"
-
-#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:83
-msgid "Remove track"
-msgstr "Remove track"
-
-#: /storage/RTTR/svn/trunk/src/iwHQ.cpp:52
-msgid "Reserve"
-msgstr "Reserve"
-
-#: /storage/RTTR/svn/trunk/src/iwSettings.cpp:56
-#, fuzzy
-msgid "Resolution :"
-msgstr "Resolution:"
-
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:161
-msgid "Resolution:"
-msgstr "Resolution:"
-
-#: /storage/RTTR/svn/trunk/src/dskSinglePlayer.cpp:66
-msgid "Resume last game"
-msgstr "Resume last game"
-
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:87
-msgid "Return"
-msgstr "Return"
-
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:64
-msgid "Return To The Roots"
-msgstr ""
-
-#: /storage/RTTR/svn/trunk/src/dskLobby.cpp:60
-#, c-format
-msgid "Return To The Roots - v%s-%s"
-msgstr ""
-
-#: /storage/RTTR/svn/trunk/src/iwTools.cpp:57
-msgid "Rod and line"
-msgstr "Rod and line"
-
-#: /storage/RTTR/svn/trunk/src/iwTools.cpp:60
-msgid "Rolling pin"
-msgstr "Rolling pin"
-
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:552
-msgid "Romans"
-msgstr "Romans"
-
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:898
-#: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:921
-msgid "SYSTEM"
-msgstr "SYSTEM"
-
-#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:78
-msgid "Save"
-msgstr "Save"
-
-#: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:69
-msgid "Save Password?"
-msgstr "Save password?"
-
-#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:85
-msgid "Save game!"
-msgstr "Save game!"
-
-#: /storage/RTTR/svn/trunk/src/iwTools.cpp:52
-msgid "Saw"
-msgstr "Saw"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:261
-msgid "Sawmill"
-msgstr "Sawmill"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:341
-msgid "Scout"
-msgstr "Scout"
-
-#: /storage/RTTR/svn/trunk/src/iwTools.cpp:58
-msgid "Scythe"
-msgstr "Scythe"
-
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:127
-msgid "Sea"
-msgstr "Sea"
-
-#: /storage/RTTR/svn/trunk/src/iwBaseWarehouse.cpp:71
-msgid "Select all"
-msgstr "Select all"
-
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:102
-msgid "Selection of maps"
-msgstr "Map selection"
-
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:181
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:189
-msgid "Send out scout"
-msgstr "Send out scout"
-
-#: /storage/RTTR/svn/trunk/src/iwBuildOrder.cpp:68
-msgid "Sequence of given order"
-msgstr "Sequence of given order"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:336
-msgid "Sergeant"
-msgstr "Sergeant"
-
-#: /storage/RTTR/svn/trunk/src/dskLobby.cpp:76
-msgid "Server"
-msgstr "Server"
-
-#: /storage/RTTR/svn/trunk/src/iwLobbyServerInfo.cpp:73
-msgid "Server Information"
-msgstr "Server information"
-
-#: /storage/RTTR/svn/trunk/src/iwLobbyServerInfo.cpp:77
-msgid "Server Name:"
-msgstr "Server name:"
-
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:74
-#, fuzzy
-msgid "Server management"
-msgstr "Server name:"
-
-#: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:59
-msgid "Server-Port:"
-msgstr "Server port:"
-
-#: /storage/RTTR/svn/trunk/src/iwSettings.cpp:53
-#, fuzzy
-msgid "Settings"
-msgstr "View Settings..."
-
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:92
-msgid "Shared team view"
-msgstr "Shared team view:"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:159
-msgid "Shield"
-msgstr "Schield"
-
-#: /storage/RTTR/svn/trunk/src/iwShip.cpp:60
-msgid "Ship register"
-msgstr "Ship register"
-
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:541
-msgid ""
-"Ships can only be loaded and unloaded in a harbor. Expeditions can also be "
-"prepared here. You can release certain merchandise from the storehouse, as "
-"and when required. Alternatively, the storage function can be disabled. To "
-"do this, first choose the relevant icon followed by the desired merchandise "
-"or job symbol."
-msgstr ""
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:340
-msgid "Shipwright"
-msgstr "Shipwright"
-
-#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:130
-msgid "Shipyard"
-msgstr "Shipyard"
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:80
+msgid "Treaties"
+msgstr "Treaties"
+
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:105
+msgid "Treaty of alliance"
+msgstr "Treaty of alliance"
+
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:114
+msgid "Non-aggression pact"
+msgstr "Non-aggression pact"
+
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:224
+msgid "Suggest treaty of alliance"
+msgstr "Suggest treaty of alliance"
+
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:225
+msgid "Suggest non-aggression pact"
+msgstr "Suggest non-aggression pact"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:243
 msgid "Short-run"
 msgstr "Short-run"
 
-#: /storage/RTTR/svn/trunk/src/iwTools.cpp:55
-msgid "Shovel"
-msgstr "Shovel"
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:244
+msgid "Medium-term"
+msgstr "Medium-term"
+
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:245
+msgid "Long-run"
+msgstr "Long-run"
+
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:265
+msgid "Contract type:"
+msgstr "Contract type:"
+
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:267
+msgid "To player:"
+msgstr "To player:"
+
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:269
+msgid "Duration:"
+msgstr "Duration:"
+
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:283
+msgid "Eternal"
+msgstr "Eternal"
+
+#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:285
+msgid "Confirm"
+msgstr "Confirm"
+
+#: /storage/RTTR/svn/trunk/src/nofScout_LookoutTower.cpp:81
+msgid "Lookout-tower occupied"
+msgstr "Lookout-tower occupied"
+
+#: /storage/RTTR/svn/trunk/src/dskDirectIP.cpp:61
+msgid "Create Game"
+msgstr "Create Game"
+
+#: /storage/RTTR/svn/trunk/src/iwTransport.cpp:59
+msgid "Coins"
+msgstr "Coins"
+
+#: /storage/RTTR/svn/trunk/src/iwTransport.cpp:60
+msgid "Weapons"
+msgstr "Weapons"
+
+#: /storage/RTTR/svn/trunk/src/iwTransport.cpp:61
+msgid "Beer"
+msgstr "Beer"
+
+#: /storage/RTTR/svn/trunk/src/iwTransport.cpp:62
+msgid "Iron"
+msgstr "Iron"
+
+#: /storage/RTTR/svn/trunk/src/iwTransport.cpp:63
+msgid "Gold"
+msgstr "Gold"
+
+#: /storage/RTTR/svn/trunk/src/iwTransport.cpp:64
+msgid "Iron ore"
+msgstr "Iron ore"
+
+#: /storage/RTTR/svn/trunk/src/iwTransport.cpp:65
+msgid "Coal"
+msgstr "Coal"
+
+#: /storage/RTTR/svn/trunk/src/iwTransport.cpp:66
+msgid "Boards"
+msgstr "Boards"
+
+#: /storage/RTTR/svn/trunk/src/iwTransport.cpp:67
+msgid "Stones"
+msgstr "Stones"
+
+#: /storage/RTTR/svn/trunk/src/iwTransport.cpp:68
+msgid "Wood"
+msgstr "Wood"
+
+#: /storage/RTTR/svn/trunk/src/iwTransport.cpp:69
+msgid "Water"
+msgstr "Water"
+
+#: /storage/RTTR/svn/trunk/src/iwTransport.cpp:70
+msgid "Food"
+msgstr "Food"
+
+#: /storage/RTTR/svn/trunk/src/iwTransport.cpp:72
+msgid "Boats"
+msgstr "Boats"
+
+#: /storage/RTTR/svn/trunk/src/iwTransport.cpp:90
+msgid "Top"
+msgstr "Top"
+
+#: /storage/RTTR/svn/trunk/src/iwTransport.cpp:92
+msgid "Up"
+msgstr "Up"
+
+#: /storage/RTTR/svn/trunk/src/iwTransport.cpp:94
+msgid "Down"
+msgstr "Down"
+
+#: /storage/RTTR/svn/trunk/src/iwTransport.cpp:96
+msgid "Bottom"
+msgstr "Bottom"
+
+#: /storage/RTTR/svn/trunk/src/GameWorldGame.cpp:563
+msgid "Lost land by this building"
+msgstr "This building causing lost your land"
+
+#: /storage/RTTR/svn/trunk/src/iwBuildingSite.cpp:57
+msgid "Order of building site"
+msgstr "Order of building site"
+
+#: /storage/RTTR/svn/trunk/src/iwMilitary.cpp:49
+msgid "Fewer recruits"
+msgstr "Fewer recruits"
+
+#: /storage/RTTR/svn/trunk/src/iwMilitary.cpp:49
+msgid "More recruits"
+msgstr "More recruits"
+
+#: /storage/RTTR/svn/trunk/src/iwMilitary.cpp:50
+msgid "Weak defense"
+msgstr "Weak defence"
+
+#: /storage/RTTR/svn/trunk/src/iwMilitary.cpp:50
+msgid "Strong defense"
+msgstr "Strong defence"
+
+#: /storage/RTTR/svn/trunk/src/iwMilitary.cpp:51
+msgid "Fewer defenders"
+msgstr "Fewer defenders"
+
+#: /storage/RTTR/svn/trunk/src/iwMilitary.cpp:51
+msgid "More defenders"
+msgstr "More defenders"
+
+#: /storage/RTTR/svn/trunk/src/iwMilitary.cpp:53
+msgid "Interior"
+msgstr "Interior"
+
+#: /storage/RTTR/svn/trunk/src/iwMilitary.cpp:54
+msgid "Center of country"
+msgstr "Center of country"
+
+#: /storage/RTTR/svn/trunk/src/iwMilitary.cpp:55
+msgid "Border areas"
+msgstr "Border areas"
+
+#: /storage/RTTR/svn/trunk/src/iwBuildOrder.cpp:68
+msgid "Sequence of given order"
+msgstr "Sequence of given order"
+
+#: /storage/RTTR/svn/trunk/src/iwBuildOrder.cpp:69
+msgid "After the following order"
+msgstr "After the following order"
 
 #: /storage/RTTR/svn/trunk/src/dskMainMenu.cpp:72
 msgid "Singleplayer"
 msgstr "Singleplayer"
 
-#: /storage/RTTR/svn/trunk/src/dskSinglePlayer.cpp:97
-msgid ""
-"Singleplayer mode and AI are not yet implemented. Please use the Multiplayer "
-"mode and 'Direct IP' to create a Singleplayer game."
-msgstr ""
-"Singleplayer mode and AI are not yet implemented. Please use the Multiplayer "
-"mode and 'Direct IP' to create a Singleplayer game."
+#: /storage/RTTR/svn/trunk/src/dskMainMenu.cpp:74
+msgid "Multiplayer"
+msgstr "Multiplayer"
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:99
-msgid "Size"
-msgstr "Size"
+#: /storage/RTTR/svn/trunk/src/dskMainMenu.cpp:78
+msgid "Intro"
+msgstr "Intro"
+
+#: /storage/RTTR/svn/trunk/src/dskMainMenu.cpp:84
+msgid "Quit program"
+msgstr "Quit program"
+
+#: /storage/RTTR/svn/trunk/src/iwSkipGFs.cpp:44
+msgid "Skip GameFrames"
+msgstr "Skip GameFrames"
+
+#: /storage/RTTR/svn/trunk/src/iwSkipGFs.cpp:47
+msgid "to GameFrame:"
+msgstr "to GameFrame:"
+
+#: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:50
+msgid "Connecting to Lobby"
+msgstr "Connecting to lobby"
+
+#: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:53
+msgid "Username:"
+msgstr "Username:"
+
+#: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:59
+msgid "Password:"
+msgstr "Password:"
+
+#: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:64
+msgid "Email Address:"
+msgstr "Email address:"
+
+#: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:69
+msgid "Save Password?"
+msgstr "Save password?"
+
+#: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:88
+msgid "Register"
+msgstr "Register"
+
+#: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:222
+msgid ""
+"To register, you have to create a valid board account at "
+"http://forum.siedler25.org at the moment.\n"
+msgstr ""
+"To register, you have to create a valid board account at "
+"http://forum.siedler25.org at the moment.\n"
+
+#: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:319
+msgid "Registration successful!"
+msgstr "Registration successful!"
+
+#: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:496
+msgid "Found iron ore"
+msgstr "Found iron ore"
+
+#: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:498
+msgid "Found gold"
+msgstr "Gold found"
+
+#: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:500
+msgid "Found coal"
+msgstr "Coal found"
+
+#: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:502
+msgid "Found granite"
+msgstr "Granite found"
+
+#: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:504
+msgid "Found water"
+msgstr "Water found"
+
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:47
+msgid "Statistics"
+msgstr "Statistics"
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:94
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:114
@@ -1831,290 +1839,189 @@ msgstr "Size"
 msgid "Size of country"
 msgstr "Size of country"
 
-#: /storage/RTTR/svn/trunk/src/iwSkipGFs.cpp:44
-msgid "Skip GameFrames"
-msgstr "Skip GameFrames"
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:96
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:179
+msgid "Inhabitants"
+msgstr "Inhabitants"
 
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:249
-msgid "Slaughterhouse"
-msgstr "Slaughterhouse"
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:97
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:183
+msgid "Merchandise"
+msgstr "Merchandise"
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:134
-msgid "Slow"
-msgstr "Slow"
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:98
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:187
+msgid "Military strength"
+msgstr "Military strength"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:144
-msgid "Socks v4"
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:101
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:199
+msgid "Vanquished enemies"
+msgstr "Vanquished enemies"
+
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:105
+msgid "15 m"
+msgstr "15 m"
+
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:106
+msgid "1 h"
+msgstr "1 h"
+
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:107
+msgid "4 h"
+msgstr "4 h"
+
+#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:108
+msgid "16 h"
+msgstr "16 h"
+
+#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:67
+msgid "Foodstuff"
+msgstr "Foodstuff"
+
+#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:69
+msgid "Granite mine"
+msgstr "Granite mine"
+
+#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:72
+msgid "Coal mine"
+msgstr "Coal mine"
+
+#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:75
+msgid "Iron mine"
+msgstr "Iron mine"
+
+#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:78
+msgid "Gold mine"
+msgstr "Gold mine"
+
+#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:82
+msgid "Grain"
+msgstr "Grain"
+
+#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:85
+msgid "Mill"
+msgstr "Mill"
+
+#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:88
+#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:142
+msgid "Pig farm"
+msgstr "Pig farm"
+
+#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:91
+#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:145
+msgid "Donkey breeding"
+msgstr "Donkey breeding"
+
+#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:94
+#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:139
+msgid "Brewery"
+msgstr "Brewery"
+
+#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:101
+#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:111
+msgid "Armory"
+msgstr "Armory"
+
+#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:104
+msgid "Metalworks"
+msgstr "Metalworks"
+
+#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:114
+msgid "Iron smelter"
+msgstr "Iron smelter"
+
+#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:117
+msgid "Mint"
+msgstr "Mint"
+
+#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:124
+msgid "Construction"
+msgstr "Construction"
+
+#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:127
+msgid "Metalworker"
+msgstr "Metalworker"
+
+#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:130
+msgid "Shipyard"
+msgstr "Shipyard"
+
+#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:136
+msgid "Bakery"
+msgstr "Bakery"
+
+#: /storage/RTTR/svn/trunk/src/dskMultiPlayer.cpp:65
+msgid "Internet Lobby"
+msgstr "Internet Lobby"
+
+#: /storage/RTTR/svn/trunk/src/dskMultiPlayer.cpp:67
+msgid "Network/LAN"
+msgstr "Network/LAN"
+
+#: /storage/RTTR/svn/trunk/src/dskMultiPlayer.cpp:69
+msgid "Direct IP"
+msgstr "Direct IP"
+
+#: /storage/RTTR/svn/trunk/src/iwSettings.cpp:53
+msgid "Settings"
 msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:496
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:504
-msgid "Sorry!"
-msgstr "Sorry!"
+#: /storage/RTTR/svn/trunk/src/iwSettings.cpp:56
+msgid "Resolution :"
+msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:84
-msgid "Sound/Music"
-msgstr "Sound/Music"
+#: /storage/RTTR/svn/trunk/src/iwSettings.cpp:57
+msgid "Mode :"
+msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:205
-msgid "Sounddriver"
-msgstr "Sound Driver"
+#: /storage/RTTR/svn/trunk/src/iwSettings.cpp:58
+msgid "Statistic Scale"
+msgstr ""
 
-#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:126
-msgid "Specify the playlist name"
-msgstr "Specify the playlist name"
-
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:131
-msgid "Speed:"
-msgstr "Speed:"
-
-#: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:66
-msgid "Start"
-msgstr "Start"
+#: /storage/RTTR/svn/trunk/src/iwSave.cpp:68
+msgid "Time"
+msgstr "Time"
 
 #: /storage/RTTR/svn/trunk/src/iwSave.cpp:68
 msgid "Start GF"
 msgstr "Start GF"
 
+#: /storage/RTTR/svn/trunk/src/iwSave.cpp:204
+msgid "Auto-Save every:"
+msgstr "Auto save every:"
+
+#: /storage/RTTR/svn/trunk/src/iwSave.cpp:208
+msgid "Disabled"
+msgstr "Disabled"
+
+#: /storage/RTTR/svn/trunk/src/iwHarborBuilding.cpp:47
+msgid "Harbor building"
+msgstr "Harbour Building"
+
+#: /storage/RTTR/svn/trunk/src/iwHarborBuilding.cpp:53
+msgid "Expedition"
+msgstr "Expedition"
+
 #: /storage/RTTR/svn/trunk/src/iwHarborBuilding.cpp:56
 msgid "Start expedition"
 msgstr "Start expedition"
 
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:82
-msgid "Start game"
-msgstr "Start game"
+#: /storage/RTTR/svn/trunk/src/iwDirectIPCreate.cpp:55
+msgid "Game's Name:"
+msgstr "Game name:"
 
-#: /storage/RTTR/svn/trunk/src/iwSettings.cpp:58
-#, fuzzy
-msgid "Statistic Scale"
-msgstr "Statistics"
+#: /storage/RTTR/svn/trunk/src/iwDirectIPCreate.cpp:83
+msgid "'s Game"
+msgstr "'s game"
 
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:47
-msgid "Statistics"
-msgstr "Statistics"
+#: /storage/RTTR/svn/trunk/src/iwDirectIPCreate.cpp:169
+msgid "Please enter a name for the game"
+msgstr "Please enter a name for the game."
 
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:76
-msgid "Stock"
-msgstr "Stock"
-
-#: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:63
-msgid "Stocktaking date"
-msgstr "Stocktaking date"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:318
-msgid "Stonemason"
-msgstr "Stonemason"
-
-#: /storage/RTTR/svn/trunk/src/iwTransport.cpp:67
-msgid "Stones"
-msgstr "Stones"
-
-#: /storage/RTTR/svn/trunk/src/iwBaseWarehouse.cpp:66
-msgid "Stop storage"
-msgstr "Stop storage"
-
-#: /storage/RTTR/svn/trunk/src/iwStorehouse.cpp:43
-msgid "Storehouse"
-msgstr "Storehouse"
-
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:284
-msgid "Strong attackers"
-msgstr "Strong attackers"
-
-#: /storage/RTTR/svn/trunk/src/iwMilitary.cpp:50
-msgid "Strong defense"
-msgstr "Strong defence"
-
-#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:225
-msgid "Suggest non-aggression pact"
-msgstr "Suggest non-aggression pact"
-
-#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:224
-msgid "Suggest treaty of alliance"
-msgstr "Suggest treaty of alliance"
-
-#: /storage/RTTR/svn/trunk/src/iwSurrender.cpp:52
-#: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:108
-msgid "Surrender"
-msgstr "Surrender"
-
-#: /storage/RTTR/svn/trunk/src/iwSurrender.cpp:49
-msgid "Surrender game?"
-msgstr "Surrender game?"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:154
-msgid "Sword"
-msgstr "Sword"
-
-#: /storage/RTTR/svn/trunk/src/languages.cpp:69
-msgid "System language"
-msgstr "System language"
-
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:172
-msgid "THE END"
-msgstr ""
-
-#: /storage/RTTR/svn/trunk/src/iwBaseWarehouse.cpp:64
-msgid "Take out of store"
-msgstr "Take out of store"
-
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:67
-msgid "Team"
-msgstr "Team"
-
-#: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:101
-msgid "Temporary map file was not found!"
-msgstr "Temporary map file was not found!"
-
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:164
-msgid "Thank you for your donations!"
-msgstr "Thank you for your donations!"
-
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:171
-msgid "Thank you!"
-msgstr ""
-
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:375
-msgid ""
-"Thanks to its immense strength, the catapults represents an effective weapon "
-"against enemy military buildings."
-msgstr ""
-"Thanks to its immense strength, the catapults represents an effective weapon "
-"against enemy military buildings."
-
-#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:160
-#, c-format
-msgid "The %s between player '%s' and you has been cancelled."
-msgstr "The %s between player '%s' and you has been cancelled."
-
-#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:157
-#, c-format
-msgid "The %s between player '%s' and you has been concluded."
-msgstr "The %s between player '%s' and you has been concluded."
-
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:870
-msgid "The Game is not in sync. Checksums of some players don't match."
-msgstr "The Game is not in sync. Checksums of some players don't match."
-
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:429
-msgid ""
-"The armory produces swords and strong shields. This equipment is vital for "
-"your soldiers."
-msgstr ""
-"The armoury produces swords and strong shields. This equipment is vital for "
-"your soldiers."
-
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:276
-msgid ""
-"The barracks is a very small hut which can be used by your soldiers as "
-"quarters. Using the gold coin button you can stop the delivery of gold coins "
-"to the soldiers stationed here. However, without gold coins the soldiers "
-"here can not train and improve their skills."
-msgstr ""
-"The barracks is a very small hut which can be used by your soldiers as "
-"quarters. Using the gold coin button you can stop the delivery of gold coins "
-"to the soldiers stationed here. However, without gold coins the soldiers "
-"here can not train and improve their skills."
-
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:422
-msgid ""
-"The brewer produces fine beer from grain and water. This drink is needed to "
-"fill the soldiers with courage."
-msgstr ""
-"The brewer produces fine beer from grain and water. This is needed to fill "
-"the soldiers with courage."
-
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:410
-msgid ""
-"The butcher processes the livestock delivered into nutritious ham on which "
-"you miners are fed."
-msgstr ""
-"The butcher processes the livestock delivered into nutritious ham on which "
-"you miners are fed."
-
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:495
-msgid ""
-"The carpenter turns the woodcutter's logs into made-to-measure planks. These "
-"form the basic for building houses and ships."
-msgstr ""
-"The carpenter turns the woodcutter's logs into made-to-measure planks. These "
-"form the basic for building houses and ships."
-
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:435
-msgid ""
-"The countless tools which your workers need are made in the metalworks. This "
-"requires boards and iron."
-msgstr ""
-"The countless tools which your workers need are made in the metalworks. This "
-"requires boards and iron."
-
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:320
-msgid ""
-"The defensive capabilities and size of the fortress are unsurpassed. This "
-"stronghold ensures that other valuable buildings and commodities are "
-"protected. Using the gold coin button you can stop the delivery of gold "
-"coins to the soldiers stationed here. However, without gold coins the "
-"soldiers here can not train and improve their skills."
-msgstr ""
-"The defensive capabilities and size of the fortress are unsurpassed. This "
-"stronghold ensures that other valuable buildings and commodities are "
-"protected. Using the gold coin button you can stop the delivery of gold "
-"coins to the soldiers stationed here. However, without gold coins the "
-"soldiers here can not train and improve their skills."
-
-#: /storage/RTTR/svn/trunk/src/GameClientPlayer.cpp:1951
-msgid "The emergency program has been activated."
-msgstr ""
-
-#: /storage/RTTR/svn/trunk/src/GameClientPlayer.cpp:1961
-msgid "The emergency program has been deactivated."
-msgstr ""
-
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:525
-msgid ""
-"The farmer plants and harvests grain in the surrounding fields. A windmill "
-"then processes the harvested grain into flour or can be used to feed the "
-"pigs."
-msgstr ""
-"The farmer plants and harvests grain in the surrounding fields. A windmill "
-"then processes the harvested grain into flour or can be used to feed the "
-"pigs."
-
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:389
-msgid ""
-"The fish man is responsible for finding water rich in fish. His fish feed a "
-"great many miners."
-msgstr ""
-"The fish man is responsible for finding water rich in fish. His fish feed a "
-"great many miners."
-
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:487
-msgid ""
-"The flour produced at the windmill can be combined with water in the bakery "
-"to make oven-fresh bread. It's your miners' favorite!"
-msgstr ""
-"The flour produced at the windmill can be combined with water in the bakery "
-"to make oven-fresh bread. It's your miners' favourite!"
-
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:480
-msgid ""
-"The grain is ground in the windmill. The flour from the windmill is later "
-"used at the bakery to bake bread."
-msgstr ""
-"The grain is ground in the windmill. The flour from the windmill is later "
-"used at the bakery to bake bread."
-
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:288
-msgid ""
-"The guardhouse is a comfortable place for the military which is also "
-"protected by solid stone walls. Using the gold coin button you can stop the "
-"delivery of gold coins to the soldiers stationed here. However, without gold "
-"coins the soldiers here can not train and improve their skills."
-msgstr ""
-"The guardhouse is a comfortable place for the military which is also "
-"protected by solid stone walls. Using the gold coin button you can stop the "
-"delivery of gold coins to the soldiers stationed here. However, without gold "
-"coins the soldiers here can not train and improve their skills."
+#: /storage/RTTR/svn/trunk/src/nobStorehouse.cpp:59
+msgid "New storehouse finished"
+msgstr "New storehouse finished"
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:253
 msgid ""
@@ -2138,43 +2045,55 @@ msgstr ""
 "indicates the current number of men, the second value indicates the desired "
 "number. "
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:343
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:276
 msgid ""
-"The mining of coal supports the metalworks and smithy. This hard work "
-"requires an adequate supply of food."
+"The barracks is a very small hut which can be used by your soldiers as "
+"quarters. Using the gold coin button you can stop the delivery of gold coins "
+"to the soldiers stationed here. However, without gold coins the soldiers "
+"here can not train and improve their skills."
 msgstr ""
-"The mining of coal supports the metalworks and smithy. This hard work "
-"requires an adequate supply of food."
+"The barracks is a very small hut which can be used by your soldiers as "
+"quarters. Using the gold coin button you can stop the delivery of gold coins "
+"to the soldiers stationed here. However, without gold coins the soldiers "
+"here can not train and improve their skills."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:503
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:288
 msgid ""
-"The mint is responsible for producing valuable gold coins. These precious "
-"objects are produced using coal and gold."
+"The guardhouse is a comfortable place for the military which is also "
+"protected by solid stone walls. Using the gold coin button you can stop the "
+"delivery of gold coins to the soldiers stationed here. However, without gold "
+"coins the soldiers here can not train and improve their skills."
 msgstr ""
-"The mint is responsible for producing valuable gold coins. These precious "
-"objects are produced using coal and gold."
+"The guardhouse is a comfortable place for the military which is also "
+"protected by solid stone walls. Using the gold coin button you can stop the "
+"delivery of gold coins to the soldiers stationed here. However, without gold "
+"coins the soldiers here can not train and improve their skills."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:533
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:304
 msgid ""
-"The pack donkeys bred here are used to transport your merchandise more "
-"efficiently. They are reared on water and grain."
+"The watchtower with its large amount of space is best suited for stationing "
+"a large number of your troops. Using the gold coin button you can stop the "
+"delivery of gold coins to the soldiers stationed here. However, without gold "
+"coins the soldiers here can not train and improve their skills."
 msgstr ""
-"The pack donkeys bred here are used to transport your merchandise more "
-"efficiently. They are reared on water and grain."
+"The watchtower with its large amount of space is best suited for stationing "
+"a large number of your troops. Using the gold coin button you can stop the "
+"delivery of gold coins to the soldiers stationed here. However, without gold "
+"coins the soldiers here can not train and improve their skills."
 
-#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:115
-#, c-format
-msgid "The player '%s' offers you a %s."
-msgstr "The player '%s' offers you a %s."
-
-#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:134
-#, c-format
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:320
 msgid ""
-"The player '%s' want to cancel the '%s' between you both primaturely. Do you "
-"agree?"
+"The defensive capabilities and size of the fortress are unsurpassed. This "
+"stronghold ensures that other valuable buildings and commodities are "
+"protected. Using the gold coin button you can stop the delivery of gold "
+"coins to the soldiers stationed here. However, without gold coins the "
+"soldiers here can not train and improve their skills."
 msgstr ""
-"The player '%s' want to cancel the '%s' between you both primaturely. Do you "
-"agree?"
+"The defensive capabilities and size of the fortress are unsurpassed. This "
+"stronghold ensures that other valuable buildings and commodities are "
+"protected. Using the gold coin button you can stop the delivery of gold "
+"coins to the soldiers stationed here. However, without gold coins the "
+"soldiers here can not train and improve their skills."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:335
 msgid ""
@@ -2184,22 +2103,59 @@ msgstr ""
 "The quarrying of stone in a granite mine guarantees the supply of stone for "
 "buildings. However, eben a granite mine has to feed its workers."
 
-#: /storage/RTTR/svn/trunk/src/iwTextfile.cpp:72
-msgid "The readme file was not found!"
-msgstr "The readme file was not found!"
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:343
+msgid ""
+"The mining of coal supports the metalworks and smithy. This hard work "
+"requires an adequate supply of food."
+msgstr ""
+"The mining of coal supports the metalworks and smithy. This hard work "
+"requires an adequate supply of food."
 
-#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:191
-msgid "The specified file couldn't be loaded!"
-msgstr "The specified file couldn't be loaded!"
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:350
+msgid ""
+"Deep within the mountains, miners dig for iron ore. They will obviously need "
+"a lot of food for the strenuous work."
+msgstr ""
+"Deep within the mountains, miners dig for iron ore. They will obviously need "
+"a lot of food for the strenuous work."
 
-#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:305
-msgid "The specified file couldn't be opened!"
-msgstr "The specified file couldn't be opened!"
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:357
+msgid ""
+"A gold mine allows you to prospect for valuable gold deposits. For this, it "
+"is necessary to ensure that the miners are provided with plenty of food."
+msgstr ""
+"A gold mine allows you to prospect for valuable gold deposits. For this, it "
+"is necessary to ensure that the miners are provided with plenty of food."
 
-#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:171
-#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:320
-msgid "The specified file couldn't be saved!"
-msgstr "The specified file couldn't be saved!"
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:366
+msgid ""
+"From the lookout tower you can see far into previously unexplored lands."
+msgstr ""
+"From the lookout tower you can see far into previously unexplored lands."
+
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:375
+msgid ""
+"Thanks to its immense strength, the catapults represents an effective weapon "
+"against enemy military buildings."
+msgstr ""
+"Thanks to its immense strength, the catapults represents an effective weapon "
+"against enemy military buildings."
+
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:382
+msgid ""
+"A woodcutter provides the sawmill with logs. A forester is able to replant "
+"the depleted forest."
+msgstr ""
+"A woodcutter provides the sawmill with logs. A forester is able to replant "
+"the depleted forest."
+
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:389
+msgid ""
+"The fish man is responsible for finding water rich in fish. His fish feed a "
+"great many miners."
+msgstr ""
+"The fish man is responsible for finding water rich in fish. His fish feed a "
+"great many miners."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:395
 msgid ""
@@ -2208,6 +2164,68 @@ msgid ""
 msgstr ""
 "The stonemason works the stone near his quarry into bricks. These are needed "
 "mainly for building houses and as ammunition for catapults."
+
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:403
+msgid ""
+"Within his area, the forester ensures the survival of the forest. He plants "
+"all types of trees."
+msgstr ""
+"Within his area, the forester ensures the survival of the forest. He plants "
+"all types of trees."
+
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:410
+msgid ""
+"The butcher processes the livestock delivered into nutritious ham on which "
+"you miners are fed."
+msgstr ""
+"The butcher processes the livestock delivered into nutritious ham on which "
+"you miners are fed."
+
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:417
+msgid "Meat the hunter acquires is used to feed the miners."
+msgstr "The hunter is acquiring meat to fead the miners."
+
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:422
+msgid ""
+"The brewer produces fine beer from grain and water. This drink is needed to "
+"fill the soldiers with courage."
+msgstr ""
+"The brewer produces fine beer from grain and water. This is needed to fill "
+"the soldiers with courage."
+
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:429
+msgid ""
+"The armory produces swords and strong shields. This equipment is vital for "
+"your soldiers."
+msgstr ""
+"The armoury produces swords and strong shields. This equipment is vital for "
+"your soldiers."
+
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:435
+msgid ""
+"The countless tools which your workers need are made in the metalworks. This "
+"requires boards and iron."
+msgstr ""
+"The countless tools which your workers need are made in the metalworks. This "
+"requires boards and iron."
+
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:442
+msgid ""
+"Raw iron ore is smelted in the iron smelters with the help of coal. The "
+"processed iron is then used to making weapons (in the Armory) and tools (in "
+"the metalworks)."
+msgstr ""
+"Raw iron ore is smelted in the iron smelters with the help of coal. The "
+"processed iron is then used to making weapons (in the Armory) and tools (in "
+"the metalworks)."
+
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:454
+msgid ""
+"Grain and water are needed for rearing pigs. The meat thus obtained can then "
+"be processed by a butcher."
+msgstr ""
+"Grain and water are needed for rearing pigs. The meat thus obtained can then "
+"be processed by a butcher."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:461
 msgid ""
@@ -2223,313 +2241,308 @@ msgstr ""
 "Alternatively, the storage function can be disabled. To do this, first "
 "choose the relevant icon followed by the desired merchandise or job symbol."
 
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:304
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:480
 msgid ""
-"The watchtower with its large amount of space is best suited for stationing "
-"a large number of your troops. Using the gold coin button you can stop the "
-"delivery of gold coins to the soldiers stationed here. However, without gold "
-"coins the soldiers here can not train and improve their skills."
+"The grain is ground in the windmill. The flour from the windmill is later "
+"used at the bakery to bake bread."
 msgstr ""
-"The watchtower with its large amount of space is best suited for stationing "
-"a large number of your troops. Using the gold coin button you can stop the "
-"delivery of gold coins to the soldiers stationed here. However, without gold "
-"coins the soldiers here can not train and improve their skills."
+"The grain is ground in the windmill. The flour from the windmill is later "
+"used at the bakery to bake bread."
 
-#: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:258
-msgid "This Server is full!"
-msgstr "This server is full!"
-
-#: /storage/RTTR/svn/trunk/src/nofBuildingWorker.cpp:376
-msgid "This mine is exhausted"
-msgstr "This mine is exhausted"
-
-#: /storage/RTTR/svn/trunk/src/iwSave.cpp:68
-msgid "Time"
-msgstr "Time"
-
-#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:267
-msgid "To player:"
-msgstr "To player:"
-
-#: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:222
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:487
 msgid ""
-"To register, you have to create a valid board account at http://forum."
-"siedler25.org at the moment.\n"
+"The flour produced at the windmill can be combined with water in the bakery "
+"to make oven-fresh bread. It's your miners' favorite!"
 msgstr ""
-"To register, you have to create a valid board account at http://forum."
-"siedler25.org at the moment.\n"
+"The flour produced at the windmill can be combined with water in the bakery "
+"to make oven-fresh bread. It's your miners' favourite!"
 
-#: /storage/RTTR/svn/trunk/src/iwTools.cpp:50
-msgid "Tongs"
-msgstr "Tongs"
-
-#: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:262
-msgid "Too short Message received!"
-msgstr "Too short message recieved!"
-
-#: /storage/RTTR/svn/trunk/src/iwTools.cpp:46
-msgid "Tools"
-msgstr "Tools"
-
-#: /storage/RTTR/svn/trunk/src/iwTransport.cpp:90
-msgid "Top"
-msgstr "Top"
-
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:128
-msgid "Total domination"
-msgstr "Total domination"
-
-#: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:66
-msgid "Transport"
-msgstr "Transport"
-
-#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:80
-msgid "Treaties"
-msgstr "Treaties"
-
-#: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:105
-msgid "Treaty of alliance"
-msgstr "Treaty of alliance"
-
-#: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:135
-msgid "Tribal chiefs assembled around the table..."
-msgstr "Tribal chiefs assembled around the table..."
-
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:99
-msgid "Type"
-msgstr "Type"
-
-#: /storage/RTTR/svn/trunk/src/iwTransport.cpp:92
-msgid "Up"
-msgstr "Up"
-
-#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:84
-msgid "Upwards"
-msgstr "Upwarts"
-
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:123
-msgid "Use IPv6:"
-msgstr "Use IPv6:"
-
-#: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:53
-msgid "Username:"
-msgstr "Username:"
-
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:171
-msgid "VSync:"
-msgstr "VSync:"
-
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:101
-#: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:199
-msgid "Vanquished enemies"
-msgstr "Vanquished enemies"
-
-#: /storage/RTTR/svn/trunk/src/dskLobby.cpp:76
-#: /storage/RTTR/svn/trunk/src/dskLobby.cpp:78
-msgid "Version"
-msgstr "Version"
-
-#: /storage/RTTR/svn/trunk/src/iwLobbyServerInfo.cpp:81
-msgid "Version:"
-msgstr "Version:"
-
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:181
-msgid "Vertex Buffer Objects:"
-msgstr "Vertex Buffer Objects:"
-
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:137
-msgid "Very fast"
-msgstr "Very fast"
-
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:133
-msgid "Very slow"
-msgstr "Very slow"
-
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:96
-msgid "View Settings..."
-msgstr "View Settings..."
-
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:552
-msgid "Vikings"
-msgstr "Vikings"
-
-#: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:282
-msgid "Waiting for Playerinfo..."
-msgstr "Waiting for playerinfo..."
-
-#: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:279
-msgid "Waiting for Reply..."
-msgstr "Waiting for reply..."
-
-#: /storage/RTTR/svn/trunk/src/GameClientGF_Replay.cpp:75
-#, c-format
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:495
 msgid ""
-"Warning: The played replay is not in sync with the original match. (GF: %u)"
+"The carpenter turns the woodcutter's logs into made-to-measure planks. These "
+"form the basic for building houses and ships."
 msgstr ""
-"Warning: The played replay is not in sync with the original match. (GF: %u)"
+"The carpenter turns the woodcutter's logs into made-to-measure planks. These "
+"form the basic for building houses and ships."
 
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:400
-msgid "Wasteland"
-msgstr "Wasteland"
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:503
+msgid ""
+"The mint is responsible for producing valuable gold coins. These precious "
+"objects are produced using coal and gold."
+msgstr ""
+"The mint is responsible for producing valuable gold coins. These precious "
+"objects are produced using coal and gold."
+
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:510
+msgid ""
+"A well supplies water to the bakery, brewery, donkey breeder and pig farm."
+msgstr ""
+"A well supplies water to the bakery, brewery, donkey breeder and pig farm."
+
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:516
+msgid ""
+"It is possible to build small rowing boats as well as huge cargo ships in a "
+"shipyard. The boards required for this are skillfully worked by shipwrights."
+msgstr ""
+"It is possible to build small rowing boats as well as huge cargo ships in a "
+"shipyard. The boards required for this are skilfully worked by shipwrights."
+
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:525
+msgid ""
+"The farmer plants and harvests grain in the surrounding fields. A windmill "
+"then processes the harvested grain into flour or can be used to feed the "
+"pigs."
+msgstr ""
+"The farmer plants and harvests grain in the surrounding fields. A windmill "
+"then processes the harvested grain into flour or can be used to feed the "
+"pigs."
+
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:533
+msgid ""
+"The pack donkeys bred here are used to transport your merchandise more "
+"efficiently. They are reared on water and grain."
+msgstr ""
+"The pack donkeys bred here are used to transport your merchandise more "
+"efficiently. They are reared on water and grain."
+
+#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:541
+msgid ""
+"Ships can only be loaded and unloaded in a harbor. Expeditions can also be "
+"prepared here. You can release certain merchandise from the storehouse, as "
+"and when required. Alternatively, the storage function can be disabled. To "
+"do this, first choose the relevant icon followed by the desired merchandise "
+"or job symbol."
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:153
+msgid "Boat"
+msgstr "Boat"
+
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:154
+msgid "Sword"
+msgstr "Sword"
+
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:156
+msgid "Flour"
+msgstr "Flour"
+
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:157
+msgid "Fish"
+msgstr "Fish"
+
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:158
+msgid "Bread"
+msgstr "Bread"
+
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:159
+msgid "Shield"
+msgstr "Schield"
+
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:170
+msgid "Meat"
+msgstr "Meat"
+
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:171
+msgid "Ham"
+msgstr "Ham"
+
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:229
+msgid "Barracks"
+msgstr "Barracks"
+
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:230
+msgid "Guardhouse"
+msgstr "Guardhouse"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:232
 msgid "Watchtower"
 msgstr "Watchtower"
 
-#: /storage/RTTR/svn/trunk/src/iwTransport.cpp:69
-msgid "Water"
-msgstr "Water"
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:237
+msgid "Fortress"
+msgstr "Fortress"
 
-#: /storage/RTTR/svn/trunk/src/nofAttacker.cpp:471
-msgid "We are under attack!"
-msgstr "We are under attack!"
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:242
+msgid "Lookout tower"
+msgstr "Lookout tower"
 
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:169
-msgid "We hope you enjoy playing Return To The Roots!"
-msgstr ""
-
-#: /storage/RTTR/svn/trunk/src/iwAction.cpp:283
-msgid "Weak attackers"
-msgstr "Weak attackers"
-
-#: /storage/RTTR/svn/trunk/src/iwMilitary.cpp:50
-msgid "Weak defense"
-msgstr "Weak defence"
-
-#: /storage/RTTR/svn/trunk/src/iwTransport.cpp:60
-msgid "Weapons"
-msgstr "Weapons"
-
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:76
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:96
-msgid "Website Administration"
-msgstr ""
-
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:77
-#, fuzzy
-msgid "Website Programming"
-msgstr "Programming"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:263
-msgid "Well"
-msgstr "Well"
-
-#: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:105
-msgid "When attack"
-msgstr "When attack"
-
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:168
-msgid "Windowed"
-msgstr "Windowed"
-
-#: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:401
-msgid "Winter world"
-msgstr "Winter world"
-
-#: /storage/RTTR/svn/trunk/src/BuildingConsts.h:403
-msgid ""
-"Within his area, the forester ensures the survival of the forest. He plants "
-"all types of trees."
-msgstr ""
-"Within his area, the forester ensures the survival of the forest. He plants "
-"all types of trees."
-
-#: /storage/RTTR/svn/trunk/src/iwLobbyRanking.cpp:81
-msgid "Won"
-msgstr "Won"
-
-#: /storage/RTTR/svn/trunk/src/iwTransport.cpp:68
-msgid "Wood"
-msgstr "Wood"
-
-#: /storage/RTTR/svn/trunk/src/GameConsts.h:314
-msgid "Woodchopper"
-msgstr "Woodchopper"
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:244
+msgid "Catapult"
+msgstr "Catapult"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:245
 msgid "Woodcutter"
 msgstr "Woodcutter"
 
-#: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:161
-msgid "World was put together and glued..."
-msgstr "The world was put together and glued..."
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:246
+msgid "Fishery"
+msgstr "Fishery"
 
-#: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:259
-msgid "Wrong Password!"
-msgstr "Wrong password!"
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:247
+msgid "Quarry"
+msgstr "Quarry"
 
-#: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:263
-msgid "Wrong Server Type!"
-msgstr "Wrong server type!"
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:248
+msgid "Forester"
+msgstr "Forester"
 
-#: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:260
-msgid "Wrong client version"
-msgstr "Wrong client version!"
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:249
+msgid "Slaughterhouse"
+msgstr "Slaughterhouse"
 
-#: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:78
-#: /storage/RTTR/svn/trunk/src/iwMsgbox.cpp:85
-msgid "Yes"
-msgstr "Yes"
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:250
+msgid "Hunter"
+msgstr "Hunter"
 
-#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:165
-msgid "You are not allowed to change the standard playlist!"
-msgstr "You are not allowed to change the standard play list!"
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:261
+msgid "Sawmill"
+msgstr "Sawmill"
 
-#: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:141
-msgid "You are not allowed to delete the standard playlist!"
-msgstr "You are not allowed to delete the standard play list!"
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:263
+msgid "Well"
+msgstr "Well"
 
-#: /storage/RTTR/svn/trunk/src/dskLobby.cpp:157
-msgid ""
-"You can't create a game while a proxy server is active\n"
-"Disable the use of a proxy server first!"
-msgstr ""
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:265
+msgid "Farm"
+msgstr "Farm"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:496
-msgid "You need to restart your game to change the screen resolution!"
-msgstr "You need to restart your game to change the screen resolution!"
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:313
+msgid "Helper"
+msgstr "Helper"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:504
-msgid "You need to restart your game to change the video or audio driver!"
-msgstr "You need to restart your game to change the video or audio driver!"
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:314
+msgid "Woodchopper"
+msgstr "Woodchopper"
 
-#: /storage/RTTR/svn/trunk/src/GameClient.cpp:1528
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:315
+msgid "Fisher"
+msgstr "Fisherman"
+
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:316
+msgid "Ranger"
+msgstr "Ranger"
+
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:317
+msgid "Carpenter"
+msgstr "Carpenter"
+
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:318
+msgid "Stonemason"
+msgstr "Stonemason"
+
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:319
+msgid "Huntsman"
+msgstr "Huntsman"
+
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:320
+msgid "Farmer"
+msgstr "Farmer"
+
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:321
+msgid "Miller"
+msgstr "Miller"
+
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:322
+msgid "Baker"
+msgstr "Baker"
+
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:323
+msgid "Butcher"
+msgstr "Butcher"
+
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:324
+msgid "Miner"
+msgstr "Miner"
+
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:325
+msgid "Brewer"
+msgstr "Brewer"
+
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:326
+msgid "Pig breeder"
+msgstr "Pig breeder"
+
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:327
+msgid "Donkey breeder"
+msgstr "Donkey breeder"
+
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:328
+msgid "Iron founder"
+msgstr "Iron founder"
+
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:329
+msgid "Minter"
+msgstr "Minter"
+
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:331
+msgid "Armorer"
+msgstr "Armourer"
+
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:332
+msgid "Builder"
+msgstr "Builder"
+
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:333
+msgid "Planer"
+msgstr "Planer"
+
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:334
+msgid "Private"
+msgstr "Private"
+
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:335
+msgid "Private first class"
+msgstr "Private first class"
+
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:336
+msgid "Sergeant"
+msgstr "Sergeant"
+
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:337
+msgid "Officer"
+msgstr "Officer"
+
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:338
+msgid "General"
+msgstr "General"
+
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:339
+msgid "Geologist"
+msgstr "Geologist"
+
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:340
+msgid "Shipwright"
+msgstr "Shipwright"
+
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:341
+msgid "Scout"
+msgstr "Scout"
+
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:342
+msgid "Pack donkey"
+msgstr "Pack donkey"
+
+#~ msgid "Game testers"
+#~ msgstr "Game testers"
+
+#~ msgid "The Settlers II.5 RTTR"
+#~ msgstr "The Settlers II.5 RTTR"
+
 #, c-format
-msgid "current GF: %u - still fast forwarding: %d GFs left (%d %%)"
-msgstr "current GF: %u - still fast forwarding: %d GFs left (%d %%)"
+#~ msgid "The Settlers II.5 RTTR, v%s-%s"
+#~ msgstr "The Settlers II.5 RTTR, v%s-%s"
 
-#: /storage/RTTR/svn/trunk/src/iwBaseWarehouse.cpp:62
-msgid "do nothing"
-msgstr "do nothing"
+#~ msgid "Series sequence"
+#~ msgstr "Series sequence"
 
-#: /storage/RTTR/svn/trunk/src/dskLobby.cpp:62
-msgid "http://www.siedler25.org"
-msgstr "http://www.siedler25.org"
+#~ msgid "Please fill out all fields!"
+#~ msgstr "Please fill out all fields!"
 
-#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:105
-msgid "non-aggression pact"
-msgstr "non-aggression pact"
+#~ msgid "File was not found!"
+#~ msgstr "File was not found!"
 
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:175
-#: /storage/RTTR/svn/trunk/src/dskOptions.cpp:185
-msgid "not supported"
-msgstr "not supported"
-
-#: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:251
-msgid "of"
-msgstr "of"
-
-#: /storage/RTTR/svn/trunk/src/iwSkipGFs.cpp:47
-msgid "to GameFrame:"
-msgstr "to GameFrame:"
-
-#: /storage/RTTR/svn/trunk/src/PostMsg.cpp:104
-msgid "treaty of alliance"
-msgstr "treaty of alliance"
-
-#: /storage/RTTR/svn/trunk/src/dskCredits.cpp:147
-msgid "various anonymous donators"
-msgstr "Various anonymous donators"
+#~ msgid "Waterway's maximum length"
+#~ msgstr "Waterway's maximum length"
 
 #~ msgid "0 means infinite"
 #~ msgstr "0 means infinite"
@@ -2539,24 +2552,3 @@ msgstr "Various anonymous donators"
 
 #~ msgid "Discard Changes"
 #~ msgstr "Discard Changes"
-
-#~ msgid "File was not found!"
-#~ msgstr "File was not found!"
-
-#~ msgid "Game testers"
-#~ msgstr "Game testers"
-
-#~ msgid "Please fill out all fields!"
-#~ msgstr "Please fill out all fields!"
-
-#~ msgid "Series sequence"
-#~ msgstr "Series sequence"
-
-#~ msgid "The Settlers II.5 RTTR"
-#~ msgstr "The Settlers II.5 RTTR"
-
-#~ msgid "The Settlers II.5 RTTR, v%s-%s"
-#~ msgstr "The Settlers II.5 RTTR, v%s-%s"
-
-#~ msgid "Waterway's maximum length"
-#~ msgstr "Waterway's maximum length"

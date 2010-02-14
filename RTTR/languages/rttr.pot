@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Siedler II.5 RttR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-14 18:27+0100\n"
-"PO-Revision-Date: 2010-02-14 18:27+0100\n"
+"POT-Creation-Date: 2010-02-14 20:52+0100\n"
+"PO-Revision-Date: 2010-02-14 20:52+0100\n"
 "Last-Translator: \n"
 "Language-Team: Siedler II.5 RttR <sf-team@siedler25.org>\n"
 "MIME-Version: 1.0\n"
@@ -1982,6 +1982,7 @@ msgid "Armory"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:104
+#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:127
 msgid "Metalworks"
 msgstr ""
 
@@ -1995,10 +1996,6 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:124
 msgid "Construction"
-msgstr ""
-
-#: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:127
-msgid "Metalworker"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwDistribution.cpp:130
@@ -2553,6 +2550,10 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:329
 msgid "Minter"
+msgstr ""
+
+#: /storage/RTTR/svn/trunk/src/GameConsts.h:330
+msgid "Metalworker"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:331

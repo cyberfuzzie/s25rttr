@@ -1,4 +1,4 @@
-// $Id: nobHarborBuilding.h 5855 2010-01-04 16:44:38Z FloSoft $
+// $Id: nobHarborBuilding.h 6022 2010-02-14 16:51:44Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -25,6 +25,7 @@
 #include <list>
 
 class noShip;
+class nofPassiveSoldier;
 
 class nobHarborBuilding : public nobBaseWarehouse
 {
@@ -136,8 +137,25 @@ public:
 	/// Erhält die Waren von einem Schiff und nimmt diese in den Warenbestand auf
 	void ReceiveGoodsFromShip(const std::list<noFigure*> figures, const std::list<Ware*> wares);
 
-	/// Gibt die Anzahl der Angreifer zurück, die dieser Hafen für einen Seeangriff zur Verfügung stellen kann
-	unsigned GetAttackersForSeaAttack() const;
+	struct SeaAttackerBuilding
+	{
+		/// Das Gebäude selbst
+		nobMilitary * building;
+		// Dazugehöriger Hafen, wo die Angreifer dann auf das Schiff warten sollen
+		nobHarborBuilding * harbor;
+		/// Entfernung Hafen - anderer Hafen
+		unsigned distance;
+		
+		bool operator==(const nobMilitary * const building) const
+		{
+			return (this->building == building);
+		};
+	};
+	
+	/// Gibt die Angreifer zurück, die dieser Hafen für einen Seeangriff zur Verfügung stellen kann
+	/// defender_harbors sind dabei mögliche Zielhäfen
+	void GetAttackerBuildingsForSeaAttack(std::vector<SeaAttackerBuilding> * buildings,
+											const std::vector<unsigned>& defender_harbors);
 };
 
 

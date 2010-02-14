@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 6004 2010-02-12 07:50:42Z FloSoft $
+// $Id: nobMilitary.cpp 6022 2010-02-14 16:51:44Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -693,6 +693,18 @@ unsigned nobMilitary::GetSoldiersForAttack(const MapCoord dest_x, const MapCoord
 		return soldiers_count;
 	else
 		return 0;
+}
+
+/// Gibt die Soldaten zurück, die für einen Angriff auf ein bestimmtes Ziel zur Verfügung stehen
+void nobMilitary::GetSoldiersForAttack(const MapCoord dest_x, const MapCoord dest_y, 
+	const unsigned char player_attacker, std::vector<nofPassiveSoldier*> * soldiers) const
+{
+	unsigned soldiers_count = GetSoldiersForAttack(dest_x,dest_y,player_attacker);
+	for(list<nofPassiveSoldier*>::const_iterator it = troops.end();it.valid() && soldiers_count;--it, --soldiers_count)
+	{
+		soldiers->push_back(*it);
+	}
+	
 }
 
 

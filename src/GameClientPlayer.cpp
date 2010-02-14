@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 6005 2010-02-12 10:08:09Z FloSoft $
+// $Id: GameClientPlayer.cpp 6022 2010-02-14 16:51:44Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1967,39 +1967,11 @@ void GameClientPlayer::TestForEmergencyProgramm()
 	}
 }
 
-/// Sucht die Anzahl der verfügbaren Soldaten, um Hafenpunkt mit einem Seeangriff anzugreifen
-unsigned GameClientPlayer::GetAvailableSoldiersForSeaAttack(const MapCoord x, const MapCoord y) const
+
+/// Gibt die Anzahl verfügbarer Soldaten für einen Seeangriff zurück
+unsigned GameClientPlayer::GetAvailableSoldiersForSeaAttackCount(const MapCoord x, const MapCoord y) const
 {
-	// Meeres-IDs von diesem Punkt erst einmal herausfinden
-	unsigned short sea_ids[6];
-	gwg->GetSeaIDs(gwg->GetHarborPointID(x,y),sea_ids);
-
-	unsigned soldiers_count = 0;
-
-	// Alle unsere Häfen durchgehen
-	for(std::list<nobHarborBuilding*>::const_iterator it = harbors.begin();it!=harbors.end();++it)
-	{
-		bool at_sea = false;
-		// Herausfinden, ob dieser Hafen an einem gleichen Meer wie das Ziel liegt
-		for(unsigned i = 0;i<6;++i)
-		{
-			if(sea_ids[i])
-			{
-				if(gwg->IsAtThisSea((*it)->GetHarborPosID(),sea_ids[i]))
-				{
-					at_sea = true;
-					break;
-				}
-			}
-		}
-
-		// Dann Soldaten, die dieser Hafen für den Angriff bieten kann, dazuaddieren
-		soldiers_count += (*it)->GetAttackersForSeaAttack();
-	}
-
-	return soldiers_count;
-
-
+	
 }
 
 /// Testet die Bündnisse, ob sie nicht schon abgelaufen sind

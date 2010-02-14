@@ -1,4 +1,4 @@
-// $Id: iwAction.cpp 5983 2010-02-09 16:49:38Z FloSoft $
+// $Id: iwAction.cpp 6022 2010-02-14 16:51:44Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -71,15 +71,15 @@ iwAction::iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, cons
 	gi(gi), gwv(gwv), selected_x(selected_x), selected_y(selected_y), last_x(mouse_x), last_y(mouse_y)
 {
 	/*
-		TAB_FLAG	1 = Straﬂenbau
+		TAB_FLAG	1 = Stra√üenbau
 		TAB_FLAG	2 = Wasserbau
-		TAB_FLAG	3 = Flagge abreiﬂen
+		TAB_FLAG	3 = Flagge abrei√üen
 		TAB_FLAG	4 = Geologe rufen
-		TAB_FLAG	5 = Sp‰her rufen
+		TAB_FLAG	5 = Sp√§her rufen
 
-		TAB_CUTROAD	1 = Straﬂe abreiﬂen
+		TAB_CUTROAD	1 = Stra√üe abrei√üen
 
-		TAB_BUILD   100-108, 200-212, 300-303, 400-403 = Geb‰ude
+		TAB_BUILD   100-108, 200-212, 300-303, 400-403 = Geb√§ude
 
 		TAB_SETFLAG 1 = Flagge setzen
 
@@ -104,7 +104,7 @@ iwAction::iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, cons
 
 		ctrlTab *build_tab = group->AddTabCtrl(1, 0, 45, 180);
 
-		// Geb‰udetabs hinzuf¸gen
+		// Geb√§udetabs hinzuf√ºgen
 		switch(tabs.build_tabs)
 		{
 		case Tabs::BT_HUT:
@@ -129,7 +129,7 @@ iwAction::iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, cons
 			} break;
 		}
 
-		// Geb‰udeicons dem TabCtrl hinzuf¸gen
+		// Geb√§udeicons dem TabCtrl hinzuf√ºgen
 		const unsigned char building_count_max = 13;
 		const unsigned building_count[4] = { 9, 13, 5, 4 };
 		const BuildingType building_icons[4][building_count_max] =
@@ -320,7 +320,7 @@ iwAction::iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, cons
 		ctrlGroup *group = main_tab->AddTab(LOADER.GetImageN("io", 177), _("Attack options"), TAB_SEAATTACK);
 
 		selected_soldiers_count_sea = 1;
-		available_soldiers_count_sea = GameClient::inst().GetLocalPlayer()->GetAvailableSoldiersForSeaAttack(selected_x,selected_y);
+		available_soldiers_count_sea = gwv->GetAvailableSoldiersForSeaAttackCount(GameClient::inst().GetPlayerID(),selected_x,selected_y);
 
 		AddAttackControls(group,available_soldiers_count_sea);
 	}
@@ -345,13 +345,13 @@ iwAction::iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, cons
 	VideoDriverWrapper::inst().SetMousePos(GetX()+20,GetY()+75);
 }
 
-/// F¸gt Angriffs-Steuerelemente f¸r bestimmte Gruppe hinzu
+/// F√ºgt Angriffs-Steuerelemente f√ºr bestimmte Gruppe hinzu
 void iwAction::AddAttackControls(ctrlGroup * group, const unsigned attackers_count)
 {
-	// Verf¸gbare Soldatenzahl steht in params, wenns keine gibt, einfach Meldung anzeigen: "Angriff nicht mˆglich!"
+	// Verf√ºgbare Soldatenzahl steht in params, wenns keine gibt, einfach Meldung anzeigen: "Angriff nicht m√∂glich!"
 	if(attackers_count == 0)
 	{
-		// Angriff nicht  mˆglich!
+		// Angriff nicht  m√∂glich!
 		group->AddText(1, 90, 56, _("Attack not possible."), COLOR_YELLOW, glArchivItem_Font::DF_CENTER, NormalFont);
 	}
 	else
@@ -366,7 +366,7 @@ void iwAction::AddAttackControls(ctrlGroup * group, const unsigned attackers_cou
 		ctrlOptionGroup *ogroup = group->AddOptionGroup(3, ctrlOptionGroup::ILLUMINATE);
 		ogroup->AddImageButton(0, 146, 49, 30, 33, TC_GREY, LOADER.GetImageN("io", 31), _("Weak attackers"));
 		ogroup->AddImageButton(1, 117, 49, 30, 33, TC_GREY, LOADER.GetImageN("io", 30), _("Strong attackers"));
-		// standardm‰ﬂig starke Soldaten
+		// standardm√§√üig starke Soldaten
 		ogroup->SetSelection(1);
 
 		// Schnellauswahl-Buttons
@@ -446,7 +446,7 @@ void iwAction::Msg_TabChange(const unsigned int ctrl_id, const unsigned short ta
 			case TAB_CUTROAD: height = 138; break;
 			case TAB_BUILD:
 				{
-					// unterschiedliche Hˆhe, je nachdem welches Geb‰ude
+					// unterschiedliche H√∂he, je nachdem welches Geb√§ude
 					switch(GetCtrl<ctrlTab>(0)->GetGroup(TAB_BUILD)->GetCtrl<ctrlTab>(1)->GetCurrentTab())
 					{
 					case Tabs::BT_HUT:    height = 222; break;
@@ -484,7 +484,7 @@ void iwAction::Msg_Group_TabChange(const unsigned group_id,const unsigned int ct
 {
 	switch(ctrl_id)
 	{
-		case 1: // Geb‰udetabs
+		case 1: // Geb√§udetabs
 		{
 			unsigned short height = 0;
 			switch(tab_id)
@@ -505,7 +505,7 @@ void iwAction::Msg_PaintAfter()
 	ctrlTab *tab = GetCtrl<ctrlTab>(0);
 	if(tab)
 	{
-		// Anzeige Soldaten/mˆgliche Soldatenanzahl bei Angriffstab
+		// Anzeige Soldaten/m√∂gliche Soldatenanzahl bei Angriffstab
 		if(tab->GetCurrentTab() == TAB_ATTACK && available_soldiers_count > 0)
 		{
 			char str[32];
@@ -593,30 +593,30 @@ void iwAction::Msg_ButtonClick_TabFlag(const unsigned int ctrl_id)
 {
 	switch(ctrl_id)
 	{
-	case 1: // Straﬂe bauen
+	case 1: // Stra√üe bauen
 		{
 			gi->ActivateRoadMode(RM_NORMAL);
 			Close();
 		} break;
-	case 2: // Wasserstraﬂe bauen
+	case 2: // Wasserstra√üe bauen
 		{
 			gi->ActivateRoadMode(RM_BOAT);
 			Close();
 		} break;
-	case 3: // Flagge abreiﬂen
+	case 3: // Flagge abrei√üen
 		{
-			// Haben wir ne Baustelle/Geb‰ude dran?
+			// Haben wir ne Baustelle/Geb√§ude dran?
 			if(gwv->GetNO(selected_x-!(selected_y&1), selected_y-1)->GetType() == NOP_BUILDING ||
 			   gwv->GetNO(selected_x-!(selected_y&1), selected_y-1)->GetType() == NOP_BUILDINGSITE)
 			{
-				// Abreiﬂen?
+				// Abrei√üen?
 				Close();
 				noBaseBuilding * building = gwv->GetSpecObj<noBaseBuilding>(selected_x-!(selected_y&1), selected_y-1);
 
-				// Milit‰rgeb‰ude?
+				// Milit√§rgeb√§ude?
 				if(building->GetGOT() == GOT_NOB_MILITARY)
 				{
-					// Darf das Geb‰ude abgerissen werden?
+					// Darf das Geb√§ude abgerissen werden?
 					if(!static_cast<nobMilitary*>(building)->IsDemolitionAllowed())
 					{
 						// Nein, dann Messagebox anzeigen
@@ -640,7 +640,7 @@ void iwAction::Msg_ButtonClick_TabFlag(const unsigned int ctrl_id)
 			GAMECLIENT.AddGC(new gc::CallGeologist(selected_x, selected_y));
 			Close();
 		} break;
-	case 5: // Sp‰her rufen
+	case 5: // Sp√§her rufen
 		{
 			GAMECLIENT.AddGC(new gc::CallScout(selected_x, selected_y));
 			Close();
@@ -650,12 +650,12 @@ void iwAction::Msg_ButtonClick_TabFlag(const unsigned int ctrl_id)
 
 void iwAction::Msg_ButtonClick_TabBuild(const unsigned int ctrl_id)
 {
-	// Klick auf Geb‰udebauicon
+	// Klick auf Geb√§udebauicon
 	GAMECLIENT.AddGC(new gc::SetBuildingSite(selected_x, selected_y, 
 		GetCtrl<ctrlTab>(0)->GetGroup(TAB_BUILD)->GetCtrl<ctrlTab>(1)->GetCurrentGroup()->
 		GetCtrl<ctrlBuildingIcon>(ctrl_id)->GetType()));
 
-	// Fenster schlieﬂen
+	// Fenster schlie√üen
 	Close();
 }
 
@@ -676,7 +676,7 @@ void iwAction::Msg_ButtonClick_TabCutRoad(const unsigned int ctrl_id)
 {
 	switch(ctrl_id)
 	{
-	case 1: // Straﬂe abreiﬂen
+	case 1: // Stra√üe abrei√üen
 		{
 			unsigned char flag_dir = 0;
 			noFlag *flag = gwv->GetRoadFlag(selected_x, selected_y, flag_dir);
@@ -695,7 +695,7 @@ void iwAction::Msg_ButtonClick_TabWatch(const unsigned int ctrl_id)
 	case 1:
 		{
 		} break;
-	case 2: // H‰usernamen/Prozent anmachen
+	case 2: // H√§usernamen/Prozent anmachen
 		{
 			gwv->ShowNamesAndProductivity();
 		} break;

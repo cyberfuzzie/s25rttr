@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 5976 2010-02-08 23:05:33Z jh $
+// $Id: GameWorld.h 6022 2010-02-14 16:51:44Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -379,11 +379,31 @@ public:
 										   const unsigned char player) const;
 	/// Gibt die angrenzenden Sea-IDs eines Hafenpunktes zurück
 	void GetSeaIDs(const unsigned harbor_id, unsigned short * sea_ids) const;
+	/// Berechnet die Entfernung zwischen 2 Hafenpunkten
+	unsigned CalcHarborDistance(const unsigned habor_id1, const unsigned harbor_id2) const;
+	
 	
 
 	void SetPlayers(GameClientPlayerList *pls) { players = pls; }
 	/// Liefert einen Player zurück
 	inline GameClientPlayer * GetPlayer(const unsigned int id) const { return players->getElement(id); }
+	
+	struct PotentialSeaAttacker
+	{
+		/// Soldat, der als Angreifer in Frage kommt
+		nofPassiveSoldier * soldier;
+		/// Hafen, den der Soldat zuerst ansteuern soll
+		nobHarborBuilding * harbor;
+		/// Entfernung Hafen-Hafen (entscheidende)
+		unsigned distance;
+		
+		/// Komperator zum Sortieren
+		bool operator<(const PotentialSeaAttacker& pa) const;
+	};
+
+	/// Sucht verfügbare Soldaten, um dieses Militärgebäude mit einem Seeangriff anzugreifen
+	void GetAvailableSoldiersForSeaAttack(const unsigned char player_attacker, 
+	const MapCoord x, const MapCoord y, std::list<PotentialSeaAttacker> * attackers) const;
 
 protected:
 
@@ -450,7 +470,6 @@ public:
 	bool FindRoadPath(const MapCoord x_start,const MapCoord y_start, const MapCoord x_dest, const MapCoord y_dest,std::vector<unsigned char>& route, const bool boat_road);
 	/// Sucht die Anzahl der verfügbaren Soldaten, um das Militärgebäude an diesem Punkt anzugreifen
 	unsigned GetAvailableSoldiersForAttack(const unsigned char player_attacker,const MapCoord x, const MapCoord y);
-
 	/// Zeichnet die Objekte
 	void Draw(const unsigned char player, unsigned * water, const bool draw_selected, const MapCoord selected_x, const MapCoord selected_y,const RoadsBuilding& rb);
 
@@ -507,7 +526,9 @@ public:
 	/// Gibt das erste Schiff, was gefunden wird von diesem Spieler, zurück, ansonsten NULL, falls es nicht
 	/// existiert
 	noShip * GetShip(const MapCoord x, const MapCoord y, const unsigned char player) const;
-
+	
+	/// Gibt die verfügbar Anzahl der Angreifer für einen Seeangriff zurück
+	unsigned GetAvailableSoldiersForSeaAttackCount(const unsigned char player_attacker, const MapCoord x, const MapCoord y) const;
 
 	// debug ai
 	private:

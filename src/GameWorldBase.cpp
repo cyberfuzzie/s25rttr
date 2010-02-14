@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 5899 2010-01-17 10:36:56Z OLiver $
+// $Id: GameWorldBase.cpp 6022 2010-02-14 16:51:44Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -32,6 +32,9 @@
 #include "nobBaseMilitary.h"
 #include "MapGeometry.h"
 #include "noMovable.h"
+#include "nofPassiveSoldier.h"
+#include "nobHarborBuilding.h"
+#include "nobMilitary.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -1375,4 +1378,128 @@ void GameWorldBase::GetSeaIDs(const unsigned harbor_id, unsigned short * sea_ids
 		sea_ids[i] = harbor_pos[harbor_id].cps[i].sea_id;
 	}
 }
+
+/// Berechnet die Entfernung zwischen 2 Hafenpunkten
+unsigned GameWorldBase::CalcHarborDistance(const unsigned habor_id1, const unsigned harbor_id2) const
+{
+	const HarborPos& hp = harbor_pos[habor_id1];
+	for(unsigned i = 0;i<6;++i)
+	{
+		for(unsigned z = 0;z<hp.neighbors[i].size();++z)
+		{
+			const HarborPos::Neighbor& n = hp.neighbors[i][z];
+			if(n.id == harbor_id2)
+				return n.distance;
+		}
+	}
+	
+	return 0xffffffff;
+}
+
+/// Komperator zum Sortieren
+bool GameWorldBase::PotentialSeaAttacker::operator<(const GameWorldBase::PotentialSeaAttacker& pa) const
+{
+	// Erst nach Rang, an zweiter Stelle nach Entfernung sortieren (
+	if(soldier->GetRank() == pa.soldier->GetRank())
+		return distance < pa.distance;
+	else
+		return soldier->GetRank() > pa.soldier->GetRank();
+}
+
+/// Sucht verfügbare Soldaten, um dieses Militärgebäude mit einem Seeangriff anzugreifen
+void GameWorldBase::GetAvailableSoldiersForSeaAttack(const unsigned char player_attacker, const MapCoord x, const MapCoord y, 
+	std::list<GameWorldBase::PotentialSeaAttacker> * attackers) const
+{
+	// Ist das Ziel auch ein richtiges Militärgebäude?
+	if(GetNO(x,y)->GetGOT() && GOT_NOB_HARBORBUILDING && GetNO(x,y)->GetGOT() !=  GOT_NOB_HQ 
+		&& GetNO(x,y)->GetGOT() !=  GOT_NOB_MILITARY)
+		return;
+		
+	// Angegriffenen Spieler ermitteln
+	unsigned char player_defender = GetSpecObj<nobBaseMilitary>(x,y)->GetPlayer();
+		
+	bool use_seas[512];
+	memset(use_seas,0,512);
+	
+	// Mögliche Hafenpunkte in der Nähe des Gebäudes
+	std::vector< unsigned > defender_harbors;
+	
+	// Nach Hafenpunkten in der Nähe des angegriffenen Gebäudes suchen
+	// Alle unsere Häfen durchgehen
+	for(unsigned i = 1;i<harbor_pos.size();++i)
+	{
+		MapCoord harbor_x = harbor_pos[i].x, harbor_y = harbor_pos[i].y;
+		
+		if(CalcDistance(harbor_x,harbor_y,x,y) <= SEAATTACK_DISTANCE)
+		{
+			unsigned length1;
+			// Wird ein Weg vom Militärgebäude zum Hafen gefunden?
+			if(FindFreePath(x,y,harbor_x,harbor_y,false,SEAATTACK_DISTANCE,NULL,NULL,NULL,NULL,NULL,NULL))
+			{
+				unsigned short sea_ids[6];
+				GetSeaIDs(i,sea_ids);
+				for(unsigned z = 0;z<6;++z)
+				{
+					if(sea_ids[z])
+						use_seas[sea_ids[z]] = true;
+				}
+				
+				defender_harbors.push_back(i);
+			}
+		}
+	}
+	
+	// Liste alle Militärgebäude des Angreifers, die Soldaten liefern
+	std::vector<nobHarborBuilding::SeaAttackerBuilding> buildings;
+	
+	// Angrenzende Häfen des Angreifers an den entsprechenden Meere herausfinden
+	for(std::list<nobHarborBuilding*>::const_iterator it = players->getElement(player_attacker)->GetHarbors()
+	.begin();it!=players->getElement(player_attacker)->GetHarbors().end();++it)
+	{
+		// Bestimmen, ob Hafen an einem der Meere liegt, über die sich auch die gegnerischen 
+		// Hafenpunkte erreichen lassen
+		bool is_at_sea = false;
+		unsigned short sea_ids[6];
+		GetSeaIDs((*it)->GetHarborPosID(),sea_ids);
+		for(unsigned i = 0;i<6;++i)
+		{
+			if(sea_ids[i] && use_seas[sea_ids[i]])
+			{
+				is_at_sea = true;
+				break;
+			}
+		}
+		
+		if(!is_at_sea)
+			continue;
+			
+		(*it)->GetAttackerBuildingsForSeaAttack(&buildings,defender_harbors);
+	}
+	
+	// Die Soldaten aus allen Militärgebäuden sammeln 
+	for(unsigned i = 0;i<buildings.size();++i)
+	{
+		// Soldaten holen
+		std::vector<nofPassiveSoldier*> tmp_soldiers;
+		buildings[i].building->GetSoldiersForAttack(x,y,player_attacker,&tmp_soldiers);
+		
+		// Überhaupt welche gefunden?
+		if(!tmp_soldiers.size())
+			continue;
+			
+		// Soldaten hinzufügen
+		for(unsigned i = 0;i<tmp_soldiers.size();++i)
+		{
+			PotentialSeaAttacker pa = { tmp_soldiers[i], buildings[i].harbor, buildings[i].distance };
+			attackers->push_back(pa);
+		}
+	}
+	
+	// Entsprechend nach Rang sortieren
+	attackers->sort();
+	
+	
+	
+}
+
 

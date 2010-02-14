@@ -262,6 +262,10 @@
         <File Name="../src/iwShip.h"/>
         <File Name="../src/iwSettings.cpp"/>
         <File Name="../src/iwSettings.h"/>
+        <File Name="../src/iwAddons.cpp"/>
+        <File Name="../src/iwAddons.h"/>
+        <File Name="../src/iwAIDebug.cpp"/>
+        <File Name="../src/iwAIDebug.h"/>
       </VirtualDirectory>
       <File Name="../src/PostMsg.cpp"/>
       <File Name="../src/PostMsg.h"/>
@@ -460,8 +464,6 @@
       <File Name="../src/GameClientGF_Replay.cpp"/>
       <File Name="../src/GameClientPlayer.cpp"/>
       <File Name="../src/GameClientPlayer.h"/>
-      <File Name="../src/GameFiles.cpp"/>
-      <File Name="../src/GameFiles.h"/>
       <File Name="../src/GameInterface.cpp"/>
       <File Name="../src/GameInterface.h"/>
       <File Name="../src/GameObject.cpp"/>
@@ -476,6 +478,26 @@
       <File Name="../src/nobHarborBuilding.cpp"/>
       <File Name="../src/GlobalGameSettings.cpp"/>
       <File Name="../src/GlobalGameSettings.h"/>
+      <File Name="../src/GameReplay.cpp"/>
+      <File Name="../src/GameReplay.h"/>
+      <File Name="../src/GameSavedFile.cpp"/>
+      <File Name="../src/GameSavedFile.h"/>
+      <File Name="../src/GameSavegame.cpp"/>
+      <File Name="../src/GameSavegame.h"/>
+      <VirtualDirectory Name="Addons">
+        <File Name="../src/AddonChangeGoldDeposits.h"/>
+        <File Name="../src/AddonCustomBuildSequence.h"/>
+        <File Name="../src/AddonExhaustibleWells.h"/>
+        <File Name="../src/AddonInexhaustibleMines.h"/>
+        <File Name="../src/AddonLimitCatapults.h"/>
+        <File Name="../src/AddonManager.cpp"/>
+        <File Name="../src/AddonManager.h"/>
+        <File Name="../src/AddonMaxWaterwayLength.h"/>
+        <File Name="../src/AddonRefundMaterials.h"/>
+        <File Name="../src/Addons.cpp"/>
+        <File Name="../src/Addons.h"/>
+        <File Name="../src/AddonStatisticsVisibility.h"/>
+      </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="libutil">
       <File Name="../libutil/src/Serializer.cpp"/>
@@ -508,6 +530,10 @@
       <File Name="../src/AIJHHelper.h"/>
       <File Name="../src/AIPlayerJH.cpp"/>
       <File Name="../src/AIPlayerJH.h"/>
+      <File Name="../src/AIConstruction.cpp"/>
+      <File Name="../src/AIConstruction.h"/>
+      <File Name="../src/AIResourceMap.cpp"/>
+      <File Name="../src/AIResourceMap.h"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Treiber">
       <File Name="../src/AudioDriverLoaderInterface.h"/>

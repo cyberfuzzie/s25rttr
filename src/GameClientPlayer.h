@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.h 5910 2010-01-18 20:43:44Z FloSoft $
+// $Id: GameClientPlayer.h 6022 2010-02-14 16:51:44Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -47,6 +47,7 @@ class noShip;
 class nobHarborBuilding;
 class GameWorldGame;
 class GameMessage_GameCommand;
+class nofPassiveSoldier;
 
 
 /// Informationen über Gebäude-Anzahlen
@@ -373,8 +374,13 @@ public:
 	/// gibt true zurück, falls erfolgreich
 	bool FindHarborForUnloading(noShip * ship, const MapCoord start_x, const MapCoord start_y, unsigned * goal_harbor_id, std::vector<unsigned char> * route,
 		nobHarborBuilding * exception);
-	/// Sucht die Anzahl der verfügbaren Soldaten, um Hafenpunkt mit einem Seeangriff anzugreifen
-	unsigned GetAvailableSoldiersForSeaAttack(const MapCoord x, const MapCoord y) const;
+
+	/// Sucht verfügbare Soldaten, um dieses Militärgebäude mit einem Seeangriff anzugreifen
+	//void GetAvailableSoldiersForSeaAttack(const MapCoord x, const MapCoord y, std::list<PotentialAttacker> * attackers) const;
+	/// Gibt die Anzahl verfügbarer Soldaten für einen Seeangriff zurück
+	unsigned GetAvailableSoldiersForSeaAttackCount(const MapCoord x, const MapCoord y) const;
+	/// Gibt eine Liste der verfügbaren Häfen zurück
+	const std::list<nobHarborBuilding*>& GetHarbors() const { return harbors; }
 
 
 

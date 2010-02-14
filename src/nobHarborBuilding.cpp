@@ -1,4 +1,4 @@
-// $Id: nobHarborBuilding.cpp 6004 2010-02-12 07:50:42Z FloSoft $
+// $Id: nobHarborBuilding.cpp 6022 2010-02-14 16:51:44Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -775,20 +775,56 @@ void nobHarborBuilding::CancelFigure(noFigure * figure)
 
 
 /// Gibt die Anzahl der Angreifer zurück, die dieser Hafen für einen Seeangriff zur Verfügung stellen kann
-unsigned nobHarborBuilding::GetAttackersForSeaAttack() const
+void nobHarborBuilding::GetAttackerBuildingsForSeaAttack(std::vector<SeaAttackerBuilding> * buildings,
+											const std::vector<unsigned>& defender_harbors)
 {
-	list<nobBaseMilitary*> buildings;
-	gwg->LookForMilitaryBuildings(buildings,x,y,3);
+	list<nobBaseMilitary*> all_buildings;
+	gwg->LookForMilitaryBuildings(all_buildings,x,y,3);
 
 	// Und zählen
 	unsigned soldiers_count = 0;
-	for(list<nobBaseMilitary*>::iterator it = buildings.begin();it.valid();++it)
+	for(list<nobBaseMilitary*>::iterator it = all_buildings.begin();it.valid();++it)
 	{
-		if((*it)->GetGOT() == GOT_NOB_MILITARY)
-			soldiers_count += static_cast<nobMilitary*>(*it)->GetSoldiersForAttack(x,y,player);
+		if((*it)->GetGOT() != GOT_NOB_MILITARY)
+			continue;
+			
+		/*// Soldaten holen
+		std::vector<nofPassiveSoldier*> soldiers2;
+		static_cast<nobMilitary*>(*it)->GetSoldiersForAttack(x,y,player,&soldiers2);
+		
+		// Überhaupt welche gefunden?
+		if(!soldiers2.size())
+			continue;*/
+			
+		// Weg vom Hafen zum Militärgebäude berechnen
+		if(!gwg->FindFreePath((*it)->GetX(),(*it)->GetY(),x,y,false,BASE_ATTACKING_DISTANCE*2,NULL,NULL,NULL,NULL,NULL,NULL))
+			continue;
+			
+		// Entfernung zwischen Hafen und möglichen Zielhafenpunkt ausrechnen
+		unsigned min_distance = 0xffffffff;
+		for(unsigned i = 0;i<defender_harbors.size();++i)
+		{
+			min_distance = min(min_distance, gwg->CalcHarborDistance(GetHarborPosID(),defender_harbors.at(i)));
+		}
+		
+		// Gebäude suchen, vielleicht schon vorhanden?
+		std::vector<SeaAttackerBuilding>::iterator it2 = std::find(buildings->begin(), buildings->end(), 
+		static_cast<nobMilitary*>(*it));
+		// Noch nicht vorhanden? 
+		if(it2 == buildings->end())
+		{
+			// Dann neu hinzufügen
+			SeaAttackerBuilding sab = { static_cast<nobMilitary*>(*it), this, min_distance };
+			buildings->push_back(sab);
+		}
+		// Oder vorhanden und jetzige Distanz ist kleiner?
+		else if(min_distance < it2->distance)
+		{
+			// Dann Distanz und betreffenden Hafen aktualisieren
+			it2->distance = min_distance;
+			it2->harbor = this;
+		}
 	}
-
-	return soldiers_count;
 }
 
 

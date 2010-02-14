@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 6005 2010-02-12 10:08:09Z FloSoft $
+// $Id: GameWorldGame.cpp 6022 2010-02-14 16:51:44Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1615,3 +1615,8 @@ bool GameWorldGame::FoundColony(const unsigned harbor_point, const unsigned char
 
 	return true;
 }
+
+
+
+
+

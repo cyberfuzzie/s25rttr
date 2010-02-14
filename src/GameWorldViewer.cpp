@@ -1,4 +1,4 @@
-// $Id: GameWorldViewer.cpp 5994 2010-02-10 18:24:55Z FloSoft $
+// $Id: GameWorldViewer.cpp 6022 2010-02-14 16:51:44Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -54,7 +54,7 @@ void GameWorldViewer::Draw(const unsigned char player, unsigned * water, const b
 
 	tr.Draw(this,water);
 
-	// Draw-Counter der B‰ume zur¸cksetzen vor jedem Zeichnen
+	// Draw-Counter der B√§ume zur√ºcksetzen vor jedem Zeichnen
 	noTree::ResetDrawCounter();
 
 	for(int y = fy;y<ly;++y)
@@ -176,7 +176,7 @@ void GameWorldViewer::Draw(const unsigned char player, unsigned * water, const b
 				int xpos = (int)(tr.GetTerrainX(tx,ty) - xoffset +xo);
 				int ypos = (int)(tr.GetTerrainY(tx,ty) - yoffset +yo);
 
-				// Name bzw Produktivit‰t anzeigen
+				// Name bzw Produktivit√§t anzeigen
 				GO_Type got = GetNO(tx, ty)->GetGOT();
 				if(IsBaseBuilding(got))
 				{
@@ -214,7 +214,7 @@ void GameWorldViewer::Draw(const unsigned char player, unsigned * water, const b
 								SmallFont->Draw(xpos, py, text, glArchivItem_Font::DF_CENTER | glArchivItem_Font::DF_VCENTER, color);
 							}
 						}
-						// Normales Geb‰ude?
+						// Normales Geb√§ude?
 						else if(got == GOT_NOB_USUAL)
 						{
 							nobUsual *n = dynamic_cast<nobUsual*>(no);
@@ -229,7 +229,7 @@ void GameWorldViewer::Draw(const unsigned char player, unsigned * water, const b
 									snprintf(text, 256, "%s", _("(stopped)"));
 								else
 								{
-									// Bei Katapult und Sp‰hturm keine Produktivit‰t anzeigen!
+									// Bei Katapult und Sp√§hturm keine Produktivit√§t anzeigen!
 									if(n->GetBuildingType() == BLD_CATAPULT || n->GetBuildingType() == BLD_LOOKOUTTOWER)
 										text[0] = 0;
 									else
@@ -247,7 +247,7 @@ void GameWorldViewer::Draw(const unsigned char player, unsigned * water, const b
 								SmallFont->Draw(xpos, py, text, glArchivItem_Font::DF_CENTER | glArchivItem_Font::DF_VCENTER, color);
 							}
 						}
-						// Milit‰rgeb‰ude?
+						// Milit√§rgeb√§ude?
 						else if(got == GOT_NOB_MILITARY)
 						{
 							
@@ -271,7 +271,7 @@ void GameWorldViewer::Draw(const unsigned char player, unsigned * water, const b
 
 	/// GUI-Symbole auf der Map zeichnen
 
-	/// Falls im Straﬂenbaumodus: Punkte um den aktuellen Straﬂenbaupunkt herum ermitteln
+	/// Falls im Stra√üenbaumodus: Punkte um den aktuellen Stra√üenbaupunkt herum ermitteln
 	unsigned short road_points[6*2];
 
 	if(rb.mode)
@@ -435,7 +435,7 @@ void GameWorldViewer::DrawBoundaryStone(const int x, const int y, const MapCoord
 	}
 }
 
-/// Schaltet Produktivit‰ten/Namen komplett aus oder an
+/// Schaltet Produktivit√§ten/Namen komplett aus oder an
 void GameWorldViewer::ShowNamesAndProductivity()
 {
 	if(show_productivity && show_names)
@@ -446,7 +446,7 @@ void GameWorldViewer::ShowNamesAndProductivity()
 
 unsigned GameWorldViewer::GetAvailableSoldiersForAttack(const unsigned char player_attacker,const MapCoord x, const MapCoord y)
 {
-	// Ist das angegriffenne ein normales Geb‰ude?
+	// Ist das angegriffenne ein normales Geb√§ude?
 	nobBaseMilitary * attacked_building = GetSpecObj<nobBaseMilitary>(x,y);
 	if(attacked_building->GetBuildingType() >= BLD_BARRACKS && attacked_building->GetBuildingType() <= BLD_FORTRESS)
 	{
@@ -456,7 +456,7 @@ unsigned GameWorldViewer::GetAvailableSoldiersForAttack(const unsigned char play
 			return 0;
 	}
 
-	// Milit‰rgeb‰ude in der N‰he finden
+	// Milit√§rgeb√§ude in der N√§he finden
 	list<nobBaseMilitary*> buildings;
 	LookForMilitaryBuildings(buildings,x,y,3);
 
@@ -464,7 +464,7 @@ unsigned GameWorldViewer::GetAvailableSoldiersForAttack(const unsigned char play
 
 	for(list<nobBaseMilitary*>::iterator it = buildings.begin();it.valid();++it)
 	{
-		// Muss ein Geb‰ude von uns sein und darf nur ein "normales Milit‰rgeb‰ude" sein (kein HQ etc.)
+		// Muss ein Geb√§ude von uns sein und darf nur ein "normales Milit√§rgeb√§ude" sein (kein HQ etc.)
 		if((*it)->GetPlayer() == player_attacker && (*it)->GetBuildingType() >= BLD_BARRACKS && (*it)->GetBuildingType() <= BLD_FORTRESS)
 			total_count += static_cast<nobMilitary*>(*it)->GetSoldiersForAttack(x,y,player_attacker);
 			
@@ -577,7 +577,7 @@ void GameWorldViewer::CalcFxLx()
 	ly = (yoffset+VideoDriverWrapper::inst().GetScreenHeight()+0x20*HEIGHT_FACTOR)/TR_H;
 }
 
-// Hˆhe wurde Ver‰ndert: TerrainRenderer Bescheid sagen, damit es entsprechend ver‰ndert werden kann
+// H√∂he wurde Ver√§ndert: TerrainRenderer Bescheid sagen, damit es entsprechend ver√§ndert werden kann
 void GameWorldViewer::AltitudeChanged(const MapCoord x, const MapCoord y)
 {
 	tr.AltitudeChanged(x,y,this);
@@ -608,22 +608,22 @@ void GameWorldViewer::RecalcAllColors()
 	tr.UpdateAllColors(this);
 }
 
-/// liefert sichtbare Straﬂe, im FoW entsprechend die FoW-Straﬂe
+/// liefert sichtbare Stra√üe, im FoW entsprechend die FoW-Stra√üe
 unsigned char GameWorldViewer::GetVisibleRoad(const MapCoord x, const MapCoord y, unsigned char dir, const Visibility visibility) const
 {
 	if(visibility == VIS_VISIBLE)
-		// Normal die sichtbaren Straﬂen zur¸ckliefern
+		// Normal die sichtbaren Stra√üen zur√ºckliefern
 		return GetPointRoad(x,y,dir,true);
 	else if(visibility == VIS_FOW)
-		// entsprechende FoW-Straﬂe liefern
+		// entsprechende FoW-Stra√üe liefern
 		return GetPointFOWRoad(x,y,dir,GameClient::inst().GetPlayerID());
 	else
-		// Unsichtbar -> keine Straﬂe zeichnen
+		// Unsichtbar -> keine Stra√üe zeichnen
 		return 0;
 }
 
 
-/// Gibt das erste Schiff, was gefunden wird von diesem Spieler, zur¸ck, ansonsten NULL, falls es nicht
+/// Gibt das erste Schiff, was gefunden wird von diesem Spieler, zur√ºck, ansonsten NULL, falls es nicht
 /// existiert
 noShip * GameWorldViewer::GetShip(const MapCoord x, const MapCoord y, const unsigned char player) const
 {
@@ -641,3 +641,14 @@ noShip * GameWorldViewer::GetShip(const MapCoord x, const MapCoord y, const unsi
 
 	return NULL;
 }
+
+/// Gibt die verf√ºgbar Anzahl der Angreifer f√ºr einen Seeangriff zur√ºck
+unsigned GameWorldViewer::GetAvailableSoldiersForSeaAttackCount(const unsigned char player_attacker, 
+											const MapCoord x, const MapCoord y) const
+{
+	std::list<GameWorldBase::PotentialSeaAttacker> attackers;
+	GetAvailableSoldiersForSeaAttack(player_attacker,x,y,&attackers);
+	return unsigned(attackers.size());
+}
+
+

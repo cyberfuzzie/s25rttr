@@ -1,4 +1,4 @@
-// $Id: GameServer.cpp 6015 2010-02-13 15:09:58Z FloSoft $
+// $Id: GameServer.cpp 6021 2010-02-14 13:04:43Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -513,6 +513,10 @@ bool GameServer::StartGame()
 	}
 
 	framesinfo.nwf_length = i;
+
+	// Mond malen
+	LOADER.GetImageN("resource", 33)->Draw(VideoDriverWrapper::inst().GetMouseX(), VideoDriverWrapper::inst().GetMouseY() - 40, 0, 0, 0, 0, 0, 0);
+	VideoDriverWrapper::inst().SwapBuffers();
 
 	GameMessage_Server_Start start_msg(random_init, framesinfo.nwf_length);
 

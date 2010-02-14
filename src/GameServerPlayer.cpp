@@ -1,4 +1,4 @@
-// $Id: GameServerPlayer.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: GameServerPlayer.cpp 6021 2010-02-14 13:04:43Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -90,7 +90,7 @@ void GameServerPlayer::doTimeout()
 	if( (ps == PS_RESERVED) && ( ( VideoDriverWrapper::inst().GetTickCount() - connecttime ) > PING_TIMEOUT ) )
 	{
 		puts("aaahh");
-		LOG.lprintf("SERVER: Reserved slot %d freed due ping timeout\n", playerid);
+		LOG.lprintf("SERVER: Reserved slot %d freed due to ping timeout\n", playerid);
 
 		/*// Todesnachricht absetzen
 		Message_Dead dm();
@@ -136,7 +136,8 @@ void GameServerPlayer::clear()
 unsigned GameServerPlayer::GetTimeOut() const
 {
 	// Nach 34 Sekunden kicken (34 damit ab 30 erst die Meldung kommt, sonst kommt sie andauernd)
-	return unsigned(34-(TIME.CurrentTime()-last_command_timeout)/1000);
+	const int timeout = 34 - int(TIME.CurrentTime() - last_command_timeout) / 1000;
+	return (timeout >= 0 ? timeout : 0);
 }
 
 /// Tauscht Spieler

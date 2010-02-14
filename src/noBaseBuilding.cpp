@@ -1,4 +1,4 @@
-// $Id: noBaseBuilding.cpp 6006 2010-02-12 11:20:01Z FloSoft $
+// $Id: noBaseBuilding.cpp 6019 2010-02-14 12:18:02Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -116,7 +116,8 @@ void noBaseBuilding::Destroy_noBaseBuilding()
 	gwg->ImportantObjectDestroyed(x, y);
 
 	// Baukosten zurückerstatten
-	if(ADDONMANAGER.isEnabled(ADDON_REFUND_MATERIALS))
+	
+	if(GetGOT() != GOT_BUILDINGSITE && ADDONMANAGER.isEnabled(ADDON_REFUND_MATERIALS))
 	{
 		// lebt unsere Flagge noch?
 		noFlag *flag = GetFlag();

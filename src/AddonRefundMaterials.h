@@ -1,4 +1,4 @@
-// $Id: AddonRefundMaterials.h 6006 2010-02-12 11:20:01Z FloSoft $
+// $Id: AddonRefundMaterials.h 6019 2010-02-14 12:18:02Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -39,11 +39,11 @@ public:
 									   0
 									  )
 	{
-		addOption(gettext_noop("No Refund"));
+		addOption(gettext_noop("No refund"));
 		addOption(gettext_noop("Refund 25%"));
 		addOption(gettext_noop("Refund 50%"));
 		addOption(gettext_noop("Refund 75%"));
-		addOption(gettext_noop("Get All Back"));	
+		addOption(gettext_noop("Get all back"));	
 	}
 };
 

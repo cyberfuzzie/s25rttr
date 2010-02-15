@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.h 6022 2010-02-14 16:51:44Z OLiver $
+// $Id: GameClientPlayer.h 6029 2010-02-15 19:10:57Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -375,15 +375,8 @@ public:
 	bool FindHarborForUnloading(noShip * ship, const MapCoord start_x, const MapCoord start_y, unsigned * goal_harbor_id, std::vector<unsigned char> * route,
 		nobHarborBuilding * exception);
 
-	/// Sucht verfügbare Soldaten, um dieses Militärgebäude mit einem Seeangriff anzugreifen
-	//void GetAvailableSoldiersForSeaAttack(const MapCoord x, const MapCoord y, std::list<PotentialAttacker> * attackers) const;
-	/// Gibt die Anzahl verfügbarer Soldaten für einen Seeangriff zurück
-	unsigned GetAvailableSoldiersForSeaAttackCount(const MapCoord x, const MapCoord y) const;
 	/// Gibt eine Liste der verfügbaren Häfen zurück
 	const std::list<nobHarborBuilding*>& GetHarbors() const { return harbors; }
-
-
-
 
 	/// Er gibt auf
 	void Surrender();

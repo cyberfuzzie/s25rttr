@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 6022 2010-02-14 16:51:44Z OLiver $
+// $Id: GameClientPlayer.cpp 6029 2010-02-15 19:10:57Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1965,13 +1965,6 @@ void GameClientPlayer::TestForEmergencyProgramm()
 			FindMaterialForBuildingSites();
 		}
 	}
-}
-
-
-/// Gibt die Anzahl verfügbarer Soldaten für einen Seeangriff zurück
-unsigned GameClientPlayer::GetAvailableSoldiersForSeaAttackCount(const MapCoord x, const MapCoord y) const
-{
-	
 }
 
 /// Testet die Bündnisse, ob sie nicht schon abgelaufen sind

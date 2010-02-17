@@ -1,4 +1,4 @@
-// $Id: main.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: main.cpp 6036 2010-02-17 10:07:24Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -125,6 +125,12 @@ int main(int argc, char *argv[])
 		ll >> q; // "
 		ll >> v; // value
 		ll >> q; // "
+
+		if(n == "FORCE")
+		{
+			break;
+			changed = false;
+		}
 
 		if(n == "WINDOW_VERSION")
 		{

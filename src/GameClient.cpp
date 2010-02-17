@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 6021 2010-02-14 13:04:43Z FloSoft $
+// $Id: GameClient.cpp 6036 2010-02-17 10:07:24Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -545,6 +545,7 @@ inline void GameClient::OnNMSPlayerNew(const GameMessage_Player_New& msg)
 			players[msg.player].name = msg.name;
 			players[msg.player].ps = PS_OCCUPIED;
 			players[msg.player].ping = 0;
+			players[msg.player].rating = 1000;
 
 			if(ci)
 				ci->CI_NewPlayer(msg.player);
@@ -594,6 +595,7 @@ void GameClient::OnNMSPlayerToggleState(const GameMessage_Player_Toggle_State& m
 					sprintf(str,_("Dummy %u"),unsigned(msg.player));
 					player->name = str;
 					player->name += _(" (AI)");
+					player->rating = 0;
 				} break;
 		case PS_KI:
 			{
@@ -606,6 +608,7 @@ void GameClient::OnNMSPlayerToggleState(const GameMessage_Player_Toggle_State& m
 					sprintf(str,_("Computer %u"),unsigned(msg.player));
 					player->name = str;
 					player->name += _(" (AI)");
+					player->rating = 666; // ;-)
 					break;
 				case AI_JH:
 					if(mapinfo.map_type != MAPTYPE_SAVEGAME)

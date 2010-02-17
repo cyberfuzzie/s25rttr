@@ -1,4 +1,4 @@
-// $Id: ArchivItem_Map.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: ArchivItem_Map.cpp 6038 2010-02-17 18:28:38Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -128,18 +128,26 @@ int libsiedler2::ArchivItem_Map::loadHelper(FILE *file, bool only_header )
 		// 6 Unbekannte Daten überspringen
 		fseek(file, 6, SEEK_CUR);
 
-		if(libendian::le_read_us(&width, file) != 0)
-			return 4;
-		if(libendian::le_read_us(&height, file) != 0)
-			return 5;
+		// ggf paar bytes weiterspringen
+		int seek = -4;
+		do {
+			seek += 2;
+			if(libendian::le_read_us(&width, file) != 0)
+				return 4;
+		} while(width == 0);
 
-		//if(header->getWidth() == 0)
-			header->setWidth(width);
-		//if(header->getHeight() == 0)
-			header->setHeight(height);
+		// ggf paar bytes weiterspringen
+		do {
+			seek += 2;
+			if(libendian::le_read_us(&height, file) != 0)
+				return 5;
+		} while(height == 0);
+
+		header->setWidth(width);
+		header->setHeight(height);
 
 		// 6 Unbekannte Daten überspringen
-		fseek(file, 6, SEEK_CUR);
+		fseek(file, 6 - seek, SEEK_CUR);
 
 		ArchivItem_Raw *layer = dynamic_cast<ArchivItem_Raw*>((*allocator)(BOBTYPE_RAW, 0, NULL));
 		if(layer->load(file, header->getWidth() * header->getHeight()) != 0)

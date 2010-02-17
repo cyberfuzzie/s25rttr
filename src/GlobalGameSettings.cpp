@@ -1,4 +1,4 @@
-// $Id: GlobalGameSettings.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: GlobalGameSettings.cpp 6039 2010-02-17 19:13:04Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -33,13 +33,16 @@
 
 void GlobalGameSettings::Serialize(Serializer * ser) const
 {
+	static unsigned char unused;
+
 	ser->PushUnsignedChar(static_cast<unsigned char>(game_speed));
 	ser->PushUnsignedChar(static_cast<unsigned char>(game_objective));
 	ser->PushUnsignedChar(static_cast<unsigned char>(start_wares));
 	ser->PushBool(lock_teams);
 	ser->PushUnsignedChar(static_cast<unsigned char>(exploration));
 	ser->PushBool(team_view);
-	ser->PushUnsignedChar(static_cast<unsigned char>(demolition_prohibition));
+
+	ser->PushUnsignedChar(unused); // old demolition prevention, to not invalidate old savegames
 }
 
 void GlobalGameSettings::Deserialize(Serializer * ser)
@@ -50,5 +53,6 @@ void GlobalGameSettings::Deserialize(Serializer * ser)
 	lock_teams = ser->PopBool();
 	exploration = static_cast<Exploration>(ser->PopUnsignedChar());
 	team_view = ser->PopBool();
-	demolition_prohibition = static_cast<DemolitionProhibition>(ser->PopUnsignedChar());
+
+	ser->PopUnsignedChar(); // old demolition prevention, to not invalidate old savegames
 }

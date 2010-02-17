@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 6022 2010-02-14 16:51:44Z OLiver $
+// $Id: nobMilitary.cpp 6039 2010-02-17 19:13:04Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -39,6 +39,7 @@
 #include "nobBaseWarehouse.h"
 
 #include "WindowManager.h"
+#include "AddonManager.h"
 #include "SerializedGameData.h"
 #include "MapGeometry.h"
 #include "AIEventManager.h"
@@ -1053,26 +1054,32 @@ void nobMilitary::HitOfCatapultStone()
 		new ImagePostMsgWithLocation(_("A catapult is firing upon us!"), PMC_MILITARY, x, y, GetBuildingType(), GetNation()));
 }
 
-/// Darf das Militärgebäude abgerissen werden (Abriss-Verbot berücksichtigen)?
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Darf das Militärgebäude abgerissen werden (Abriss-Verbot berücksichtigen)?
+ *
+ *  @author OLiver
+ */
 bool nobMilitary::IsDemolitionAllowed() const
 {
-	if(GameClient::inst().GetGGS().demolition_prohibition
-		== GlobalGameSettings::DP_UNDERATTACK)
+	switch(ADDONMANAGER.getSelection(ADDON_DEMOLITION_PROHIBITION))
 	{
-		// Prüfen, ob das Gebäude angegriffen wird
-		if(aggressors.size())
-			return false;
-
-	}
-	else if(GameClient::inst().GetGGS().demolition_prohibition
-		== GlobalGameSettings::DP_NEARFRONTIERS)
-	{
-		// Prüfen, ob es in Grenznähe steht
-		if(frontier_distance == 2)
-			return false;
+	default: // off
+		break;
+	case 1: // under attack
+		{
+			// Prüfen, ob das Gebäude angegriffen wird
+			if(aggressors.size())
+				return false;
+		} break;
+	case 2: // near frontiers
+		{
+			// Prüfen, ob es in Grenznähe steht
+			if(frontier_distance == 2)
+				return false;
+		} break;
 	}
 
 	return true;
-
 }
 

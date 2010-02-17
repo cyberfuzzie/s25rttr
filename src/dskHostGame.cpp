@@ -1,4 +1,4 @@
-// $Id: dskHostGame.cpp 6037 2010-02-17 11:26:49Z FloSoft $
+// $Id: dskHostGame.cpp 6039 2010-02-17 19:13:04Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -97,12 +97,6 @@ dskHostGame::dskHostGame() :
 	ctrlComboBox *combo;
 
 	// umgedrehte Reihenfolge, damit die Listen nicht dahinter sind
-	// "Abriss-Verbot"
-	AddText(29, 400, 435, _("Demolition prohibition:"), COLOR_YELLOW, 0, NormalFont);
-	combo = AddComboBox(39, 600, 430, 180, 20, TC_GREY, NormalFont, 100, !GAMECLIENT.IsHost()||GAMECLIENT.IsSavegame());
-	combo->AddString(_("Off"));
-	combo->AddString(_("When attack"));
-	combo->AddString(_("Near frontiers"));
 
 	// "Aufklärung"
 	AddText(30, 400, 405, _("Exploration:"), COLOR_YELLOW, 0, NormalFont);
@@ -591,7 +585,6 @@ void dskHostGame::Msg_ComboSelectItem(const unsigned int ctrl_id, const unsigned
 	case 42: // Ziel
 	case 41: // Waren
 	case 40: // Aufklärung
-	case 39: // Abriss-Verbot
 		{
 			// GameSettings wurden verändert, resetten
 			UpdateGGS();
@@ -637,8 +630,6 @@ void dskHostGame::UpdateGGS()
 	ggs.start_wares = static_cast<GlobalGameSettings::StartWares>(GetCtrl<ctrlComboBox>(41)->GetSelection());
 	// Aufklärung
 	ggs.exploration = static_cast<GlobalGameSettings::Exploration>(GetCtrl<ctrlComboBox>(40)->GetSelection());
-	// Abriss-Verbot
-	ggs.demolition_prohibition = static_cast<GlobalGameSettings::DemolitionProhibition>(GetCtrl<ctrlComboBox>(39)->GetSelection());
 	// Teams gesperrt
 	ggs.lock_teams = GetCtrl<ctrlCheck>(20)->GetCheck();
 	// Team sicht
@@ -874,22 +865,14 @@ void dskHostGame::CI_GGSChanged(const GlobalGameSettings& ggs)
 	
 	// Geschwindigkeit
 	GetCtrl<ctrlComboBox>(43)->SetSelection(static_cast<unsigned short>(ggs.game_speed));
-
 	// Ziel
 	GetCtrl<ctrlComboBox>(42)->SetSelection(static_cast<unsigned short>(ggs.game_objective));
-
 	// Waren
 	GetCtrl<ctrlComboBox>(41)->SetSelection(static_cast<unsigned short>(ggs.start_wares));
-
 	// Aufklärung
 	GetCtrl<ctrlComboBox>(40)->SetSelection(static_cast<unsigned short>(ggs.exploration));
-
-	// Abriss-Verbot
-	GetCtrl<ctrlComboBox>(39)->SetSelection(static_cast<unsigned short>(ggs.demolition_prohibition));
-
 	// Teams
 	GetCtrl<ctrlCheck>(20)->SetCheck(ggs.lock_teams);
-
 	// Team-Sicht
 	GetCtrl<ctrlCheck>(19)->SetCheck(ggs.team_view);
 
@@ -945,4 +928,3 @@ void dskHostGame::LC_Status_Error(const std::string &error)
 {
 	WindowManager::inst().Show(new iwMsgbox(_("Error"), error, this, MSB_OK, MSB_EXCLAMATIONRED, 0));
 }
-

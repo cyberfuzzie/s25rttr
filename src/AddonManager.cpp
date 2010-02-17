@@ -1,4 +1,4 @@
-// $Id: AddonManager.cpp 6011 2010-02-12 16:35:00Z FloSoft $
+// $Id: AddonManager.cpp 6039 2010-02-17 19:13:04Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -28,6 +28,8 @@
 #include "AddonMaxWaterwayLength.h"
 #include "AddonCustomBuildSequence.h"
 #include "AddonStatisticsVisibility.h"
+
+#include "AddonDemolitionProhibition.h"
 
 #include "AddonLimitCatapults.h"
 #include "AddonInexhaustibleMines.h"
@@ -78,6 +80,8 @@ void AddonManager::reset(bool recreate)
 		registerAddon(new AddonMaxWaterwayLength);
 		registerAddon(new AddonCustomBuildSequence);
 		registerAddon(new AddonStatisticsVisibility);
+
+		registerAddon(new AddonDemolitionProhibition);
 
 		registerAddon(new AddonLimitCatapults);
 		registerAddon(new AddonInexhaustibleMines);

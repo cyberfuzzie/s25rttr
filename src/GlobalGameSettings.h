@@ -1,4 +1,4 @@
-// $Id: GlobalGameSettings.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: GlobalGameSettings.h 6039 2010-02-17 19:13:04Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -16,45 +16,29 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Siedler II.5 RTTR. If not, see <http://www.gnu.org/licenses/>.
+#ifndef GLOBALGAMESETTINGS_H_INCLUDED
+#define GLOBALGAMESETTINGS_H_INCLUDED
 
-#ifndef GGS_H_
-#define GGS_H_
-
-#include "Singleton.h"
-#include "GameConsts.h"
-#include "GameProtocol.h"
-#include "Settings.h"
+#pragma once
 
 class Serializer;
 
 class GlobalGameSettings
 {
 public:
+	GlobalGameSettings() : game_speed(GS_FAST), game_objective(GO_NONE), start_wares(SWR_NORMAL), lock_teams(true), exploration(EXP_FOGOFWAR), team_view(true) {}
 
-	// TODO: letzte Settings aus der settings.bin möglichst laden
-	GlobalGameSettings() : game_speed(GS_FAST), game_objective(GO_NONE), start_wares(SWR_NORMAL), 
-		lock_teams(true), exploration(EXP_FOGOFWAR), team_view(true), demolition_prohibition(DP_NEARFRONTIERS) {}
+	/// Serialisierung und Deserialisierung
+	void Serialize(Serializer * ser) const;
+	void Deserialize(Serializer * ser);
 
-
+public:
 	enum GameSpeed { GS_VERYSLOW = 0,GS_SLOW , GS_NORMAL, GS_FAST, GS_VERYFAST } game_speed;
 	enum GameObjective { GO_NONE = 0, GO_TOTALDOMINATION, GO_CONQUER3_4 } game_objective;
 	enum StartWares { SWR_LOW = 0, SWR_NORMAL, SWR_ALOT } start_wares;
 	bool lock_teams;
 	enum Exploration { EXP_DISABLED = 0, EXP_CLASSIC, EXP_FOGOFWAR, EXP_FOGOFWARE_EXPLORED } exploration;
 	bool team_view;
-	/// Abriss bei Angriff erlaubt?
-	enum DemolitionProhibition { DP_OFF = 0, DP_UNDERATTACK, DP_NEARFRONTIERS } demolition_prohibition;
-
-
-	/// Größe des Serialisierungsbuffers
-	// static const unsigned GGS_BUFFER_SIZE = 7;
-	unsigned GetLength() const {return 7; }
-
-	/// Serialisierung und Deserialisierung
-	void Serialize(Serializer * ser) const;
-	void Deserialize(Serializer * ser);
 };
 
-#define GGS GlobalGameSettings::inst()
-
-#endif
+#endif // !GLOBALGAMESETTINGS_H_INCLUDED

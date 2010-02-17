@@ -87,6 +87,9 @@
     <ClInclude Include="..\..\src\AddonCustomBuildSequence.h">
       <Filter>Quelldateien\Spiel\Addons</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\AddonDemolitionProhibition.h">
+      <Filter>Quelldateien\Spiel\Addons</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\src\AddonExhaustibleWells.h">
       <Filter>Quelldateien\Spiel\Addons</Filter>
     </ClInclude>
@@ -155,6 +158,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\colors.h">
       <Filter>Quelldateien\Allgemein</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\const_addons.h">
+      <Filter>Quelldateien\Spiel\Addons</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\const_gui_ids.h">
       <Filter>Quelldateien\GUI</Filter>

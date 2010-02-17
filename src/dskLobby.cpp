@@ -1,4 +1,4 @@
-// $Id: dskLobby.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: dskLobby.cpp 6039 2010-02-17 19:13:04Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -30,6 +30,7 @@
 #include "LobbyProtocol.h"
 #include "controls.h"
 #include "FileChecksum.h"
+#include "Settings.h"
 
 #include "dskHostGame.h"
 #include "dskMultiPlayer.h"

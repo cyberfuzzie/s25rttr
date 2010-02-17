@@ -1,4 +1,4 @@
-// $Id: GameReplay.h 5999 2010-02-11 09:53:02Z FloSoft $
+// $Id: GameReplay.h 6039 2010-02-17 19:13:04Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -22,6 +22,7 @@
 #pragma once
 
 #include "GameSavedFile.h"
+#include "GameProtocol.h"
 
 class Savegame;
 

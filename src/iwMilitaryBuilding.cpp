@@ -1,4 +1,4 @@
-// $Id: iwMilitaryBuilding.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: iwMilitaryBuilding.cpp 6039 2010-02-17 19:13:04Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -36,6 +36,7 @@
 #include "nofPassiveSoldier.h"
 #include "nofActiveSoldier.h"
 #include "GameCommands.h"
+#include "AddonManager.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -159,17 +160,23 @@ void iwMilitaryBuilding::Msg_ButtonClick(const unsigned int ctrl_id)
 	}
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void iwMilitaryBuilding::DemolitionNotAllowed()
 {
 	// Meldung auswählen, je nach Einstellung
 	std::string msg;
-	switch(GameClient::inst().GetGGS().demolition_prohibition)
+	switch(ADDONMANAGER.getSelection(ADDON_DEMOLITION_PROHIBITION))
 	{
 	default: assert(false); break;
-	case GlobalGameSettings::DP_UNDERATTACK: msg = _("Demolition ist not allowed because the building is under attack!"); break;
-	case GlobalGameSettings::DP_NEARFRONTIERS: msg = _("Demolition ist not allowed because the building is located in border area!"); break;
+	case 1: msg = _("Demolition ist not allowed because the building is under attack!"); break;
+	case 2: msg = _("Demolition ist not allowed because the building is located in border area!"); break;
 	}
 
-	WindowManager::inst().Show(new iwMsgbox(_("Demolition not possible"),msg,NULL,MSB_OK,MSB_EXCLAMATIONRED));
+	WindowManager::inst().Show(new iwMsgbox(_("Demolition not possible"), msg, NULL, MSB_OK, MSB_EXCLAMATIONRED));
 }
 

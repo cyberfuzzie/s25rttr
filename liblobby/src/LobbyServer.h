@@ -1,4 +1,4 @@
-// $Id: LobbyServer.h 4936 2009-05-24 15:17:07Z FloSoft $
+// $Id: LobbyServer.h 6042 2010-02-17 20:49:25Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -86,6 +86,8 @@ protected:
 	virtual void OnNMSLobbyServerDelete(unsigned int id);
 	/// Lobby-Server-Join-Nachricht.
 	virtual void OnNMSLobbyServerJoin(unsigned int id);
+	/// Lobby-Ranking-Info Nachricht.
+	virtual void OnNMSLobbyRankingInfo(unsigned int id, const LobbyPlayerInfo &player);
 
 private:
 	/// schickt eine Nachricht an alle Clients.

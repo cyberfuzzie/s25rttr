@@ -1,4 +1,4 @@
-// $Id: MySQL.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: MySQL.h 6042 2010-02-17 20:49:25Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -43,6 +43,7 @@ public:
   bool GetServerList(LobbyServerList *List);
   bool GetServerInfo(unsigned int id, LobbyServerInfo *Info);
   bool GetRankingList(LobbyPlayerList* List);
+  bool GetRankingInfo(LobbyPlayerInfo& player);
 
   bool AddServer(LobbyServerInfo *Info);
   bool DeleteServer(unsigned int id);

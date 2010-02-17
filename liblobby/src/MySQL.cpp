@@ -1,4 +1,4 @@
-// $Id: MySQL.cpp 5576 2009-10-01 15:44:10Z FloSoft $
+// $Id: MySQL.cpp 6042 2010-02-17 20:49:25Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -290,7 +290,7 @@ bool MySQL::GetRankingList(LobbyPlayerList *List)
 	MYSQL_ROW	Row;
 
 	char query[1024];
-	snprintf(query, 1024, "SELECT * FROM `lobby_users` WHERE `email` IS NOT NULL ORDER BY `win` DESC , `lose` ASC LIMIT 10;");
+	snprintf(query, 1024, "SELECT username, win, lose FROM `tb_user` WHERE `useremail` IS NOT NULL AND (`win` > 0 OR `lose` > 0) ORDER BY `win` DESC, `lose` ASC LIMIT 10;");
 
 	if(!DoQuery(query))
 		return false;
@@ -309,19 +309,64 @@ bool MySQL::GetRankingList(LobbyPlayerList *List)
 	{
 		Row = mysql_fetch_row(pResult);
 
-		int punkte = atoi(Row[4]) * 100 - atoi(Row[5]) * 70;
+		int punkte = atoi(Row[1]) * 100 - atoi(Row[2]) * 70;
 		if(punkte < 0)
 			punkte = 0;
 
 		LobbyPlayerInfo player;
 		player.setId(i + 1);
-		player.setName(Row[1]);
-		player.setGewonnen(atoi(Row[4]));
-		player.setVerloren(atoi(Row[5]));
+		player.setName(Row[0]);
+		player.setGewonnen(atoi(Row[1]));
+		player.setVerloren(atoi(Row[2]));
 		player.setPunkte(punkte);
 
 		List->push_back(player);
 	}
+
+	mysql_free_result(pResult);
+
+	return true;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *
+ *  @author FloSoft
+ */
+bool MySQL::GetRankingInfo(LobbyPlayerInfo& player)
+{
+	MYSQL_RES	*pResult;
+	MYSQL_ROW	Row;
+	char query[1024];
+
+	char name[256];
+	mysql_real_escape_string(m_pMySQL, name, player.getName().c_str(), (unsigned long)player.getName().length());
+
+	snprintf(query, 1024, "SELECT username, win, lose FROM `tb_user` WHERE `username` = '%s' LIMIT 1;", name);
+	if(!DoQuery(query))
+		return false;
+
+	pResult = mysql_store_result(m_pMySQL);
+
+	if(mysql_num_rows(pResult) == 0)
+	{
+		mysql_free_result(pResult);
+		return true;
+	}
+
+	Row = mysql_fetch_row(pResult);
+
+	int punkte = atoi(Row[1]) * 100 - atoi(Row[2]) * 70;
+	if(punkte < 0)
+		punkte = 0;
+
+	player.setId(0);
+	player.setName(Row[0]);
+	player.setGewonnen(atoi(Row[1]));
+	player.setVerloren(atoi(Row[2]));
+	player.setPunkte(punkte);
 
 	mysql_free_result(pResult);
 

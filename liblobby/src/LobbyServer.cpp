@@ -1,4 +1,4 @@
-// $Id: LobbyServer.cpp 5956 2010-02-03 13:33:22Z FloSoft $
+// $Id: LobbyServer.cpp 6042 2010-02-17 20:49:25Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -688,22 +688,6 @@ void LobbyServer::SendPlayerList(unsigned int id)
 			list.push_back(p);
 		}
 	}
-	
-	/*list.alloc(count);
-
-	unsigned int i = 0;
-	for(LobbyPlayerMapIterator it = players.begin(); it != players.end() && i < count; ++it)
-	{
-		LobbyPlayer &p = it->second;
-
-		LobbyPlayerInfo *info = list.getElement(i);
-
-		if(p.isOccupied() && !p.isHost() && !p.isClient() )
-		{
-			*info = p;
-			++i;
-		}
-	}*/
 
 	LobbyMessage *m = new LobbyMessage_PlayerList(list);
 	if(id == 0xFFFFFFFF)
@@ -738,4 +722,24 @@ void LobbyServer::SendRankingList(unsigned int id)
 	}
 	else
 		players[id].Send(m);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Lobby-Ranking-Info Nachricht.
+ *
+ *  @param[in] email Die PlayerInfo des angefragten Spielers.
+ *
+ *  @author FloSoft
+ */
+void LobbyServer::OnNMSLobbyRankingInfo(unsigned int id, const LobbyPlayerInfo &player)
+{
+	LobbyPlayerInfo p = player;
+
+	if(!MYSQLCLIENT.GetRankingInfo(p))
+		LOG.lprintf("Failed to lookup Ranking of player %s!\n", p.getName().c_str());
+
+	LobbyMessage *m = new LobbyMessage_Lobby_Ranking_Info(p);
+	SendToAll(m);
+	delete m;
 }

@@ -1,4 +1,4 @@
-// $Id: LobbyMessage.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: LobbyMessage.cpp 6040 2010-02-17 20:12:22Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -73,6 +73,8 @@ Message *LobbyMessage::create_lobby(unsigned short id)
 	case NMS_LOBBY_SERVER_UPDATE_PLAYER:	{ msg = new LobbyMessage_Server_Update_Player(); } break;
 	case NMS_LOBBY_SERVER_UPDATE_MAP:		{ msg = new LobbyMessage_Server_Update_Map(); } break;
 	case NMS_LOBBY_SERVER_JOIN:				{ msg = new LobbyMessage_Server_Join(); } break;
+
+	case NMS_LOBBY_RANKING_INFO:			{ msg = new LobbyMessage_Lobby_Ranking_Info(); } break;
 	}
 
 	return msg;

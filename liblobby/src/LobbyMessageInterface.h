@@ -1,4 +1,4 @@
-// $Id: LobbyMessageInterface.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: LobbyMessageInterface.h 6040 2010-02-17 20:12:22Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -26,6 +26,7 @@
 class LobbyServerList;
 class LobbyPlayerList;
 class LobbyServerInfo;
+class LobbyPlayerInfo;
 
 class LobbyMessageInterface : public MessageInterface
 {
@@ -79,6 +80,8 @@ public:
 	virtual void OnNMSLobbyServerDelete(unsigned int id);
 	/// Lobby-Server-Join-Nachricht.
 	virtual void OnNMSLobbyServerJoin(unsigned int id);
+	/// Lobby-Ranking-Info-Nachricht.
+	virtual void OnNMSLobbyRankingInfo(unsigned int id, const LobbyPlayerInfo &player);
 };
 
 #endif //!LOBBYMESSAGEINTERFACE_H_INCLUDED

@@ -1,4 +1,4 @@
-// $Id: LobbyInterface.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: LobbyInterface.h 6040 2010-02-17 20:12:22Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -22,6 +22,7 @@
 #pragma once
 
 #include "LobbyProtocol.h"
+#include "LobbyPlayerInfo.h"
 
 class LobbyInterface
 {
@@ -32,6 +33,7 @@ public:
 	virtual void LC_Registered(void);
 	virtual void LC_Connected(void);
 	virtual void LC_Created(void);
+	virtual void LC_RankingInfo(const LobbyPlayerInfo &player);
 
 	virtual void LC_Status_ConnectionLost(void);
 	virtual void LC_Status_IncompleteMessage(void);

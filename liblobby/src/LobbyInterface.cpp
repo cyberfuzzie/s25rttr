@@ -1,4 +1,4 @@
-// $Id: LobbyInterface.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: LobbyInterface.cpp 6040 2010-02-17 20:12:22Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -26,6 +26,7 @@ void LobbyInterface::LC_LoggedIn(const std::string &email) { }
 void LobbyInterface::LC_Registered(void) { }
 void LobbyInterface::LC_Connected(void) { }
 void LobbyInterface::LC_Created(void) { }
+void LobbyInterface::LC_RankingInfo(const LobbyPlayerInfo &player) { }
 
 void LobbyInterface::LC_Status_Waiting(void) { }
 void LobbyInterface::LC_Status_Error(const std::string &error) { }

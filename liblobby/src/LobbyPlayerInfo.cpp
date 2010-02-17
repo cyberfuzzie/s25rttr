@@ -1,4 +1,4 @@
-// $Id: LobbyPlayerInfo.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: LobbyPlayerInfo.cpp 6040 2010-02-17 20:12:22Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -41,15 +41,15 @@ LobbyPlayerInfo::LobbyPlayerInfo(void)
 	clear();
 }
 
-/// Deserialisierungs-Konstruktor von @p LobbyPlayerInfo.
-LobbyPlayerInfo::LobbyPlayerInfo(const unsigned playerid, Serializer * ser) :
-	playerid(ser->PopUnsignedInt()),
-	name(ser->PopString()),
-	version(ser->PopString()),
-	punkte(ser->PopSignedInt()),
-	gewonnen(ser->PopUnsignedInt()),
-	verloren(ser->PopUnsignedInt())
+///////////////////////////////////////////////////////////////////////////////
+/*
+ *  Deserialisierungs-Konstruktor von @p LobbyPlayerInfo.
+ *
+ *  @author FloSoft
+ */
+LobbyPlayerInfo::LobbyPlayerInfo(const unsigned playerid, Serializer *ser)
 {
+	deserialize(ser);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -72,13 +72,11 @@ void LobbyPlayerInfo::clear(void)
 /*
  *  serialisiert die Daten.
  *
- *  @param[in,out] data Datensatz, muss groß genug sein
- *
- *  @return liefert die Größe der Daten zurück.
+ *  @param[in] ser der benutzte Serializer
  *
  *  @author FloSoft
  */
-void LobbyPlayerInfo::serialize(Serializer * ser) const
+void LobbyPlayerInfo::serialize(Serializer *ser) const
 {
 	ser->PushUnsignedInt(playerid);
 	ser->PushString(name);
@@ -86,4 +84,22 @@ void LobbyPlayerInfo::serialize(Serializer * ser) const
 	ser->PushSignedInt(punkte);
 	ser->PushUnsignedInt(gewonnen);
 	ser->PushUnsignedInt(verloren);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/*
+ *  deserialisiert die Daten.
+ *
+ *  @param[in] ser der benutzte Serializer
+ *
+ *  @author FloSoft
+ */
+void LobbyPlayerInfo::deserialize(Serializer *ser)
+{
+	playerid = ser->PopUnsignedInt();
+	name = ser->PopString();
+	version = ser->PopString();
+	punkte = ser->PopSignedInt();
+	gewonnen = ser->PopUnsignedInt();
+	verloren = ser->PopUnsignedInt();
 }

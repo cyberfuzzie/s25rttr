@@ -1,4 +1,4 @@
-// $Id: dskHostGame.h 6016 2010-02-13 15:45:50Z FloSoft $
+// $Id: dskHostGame.h 6040 2010-02-17 20:12:22Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -64,6 +64,7 @@ private:
 	void Msg_ComboSelectItem(const unsigned int ctrl_id, const unsigned short selection);
 	void Msg_CheckboxChange(const unsigned int ctrl_id, const bool checked);
 
+	void LC_RankingInfo(const LobbyPlayerInfo &player);
 
 	void CI_Error(const ClientError ce);
 

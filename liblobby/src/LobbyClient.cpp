@@ -1,4 +1,4 @@
-// $Id: LobbyClient.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: LobbyClient.cpp 6040 2010-02-17 20:12:22Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -253,6 +253,18 @@ void LobbyClient::SendServerJoinRequest()
 {
 	send_queue.push(new LobbyMessage_Server_Join());
 }
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  schickt einen Request um die Punkte eines bestimmten Spielers auszulesen.
+ *
+ *  @author FloSoft
+ */
+void LobbyClient::SendRankingInfoRequest(const std::string name)
+{
+	send_queue.push(new LobbyMessage_Lobby_Ranking_Info(name));
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 /**
  *  verschickt eine Chatnachricht.
@@ -577,6 +589,20 @@ void LobbyClient::OnNMSLobbyServerAdd(unsigned int id, const LobbyServerInfo &in
 	// Server kann jetzt gestartet werden
 	if(parent)
 		parent->LC_Created();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Lobby-Ranking-Info Nachricht.
+ *
+ *  @param[in] email Die empfangene PlayerInfo des angefragten Spielers.
+ *
+ *  @author FloSoft
+ */
+void LobbyClient::OnNMSLobbyRankingInfo(unsigned int id, const LobbyPlayerInfo &player)
+{
+	if(parent)
+		parent->LC_RankingInfo(player);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

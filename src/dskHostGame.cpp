@@ -1,4 +1,4 @@
-// $Id: dskHostGame.cpp 6039 2010-02-17 19:13:04Z FloSoft $
+// $Id: dskHostGame.cpp 6040 2010-02-17 20:12:22Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -749,6 +749,10 @@ void dskHostGame::CI_NewPlayer(const unsigned player_id)
 {
 	// Spielername setzen
 	UpdatePlayerRow(player_id);
+
+	// Rankinginfo abrufen
+	if(LOBBYCLIENT.LoggedIn())
+		LOBBYCLIENT.SendRankingInfoRequest(GAMECLIENT.GetPlayer(player_id)->name);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -916,6 +920,17 @@ void dskHostGame::CI_Error(const ClientError ce)
 		} break;
 	default: break;
 	}
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  (Lobby-)RankingInfo: Rankinginfo eines bestimmten Benutzers empfangen
+ *
+ *  @author FloSoft
+ */
+void dskHostGame::LC_RankingInfo(const LobbyPlayerInfo &player)
+{
+	GAMECLIENT.GetPlayer(player_id)->rating = player.getPunkte();
 }
 
 ///////////////////////////////////////////////////////////////////////////////

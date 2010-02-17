@@ -1,4 +1,4 @@
-// $Id: LobbyProtocol.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: LobbyProtocol.h 6040 2010-02-17 20:12:22Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -50,7 +50,9 @@ enum
 	 NMS_LOBBY_SERVER_DELETE,
 	 NMS_LOBBY_SERVER_UPDATE_PLAYER,
 	 NMS_LOBBY_SERVER_UPDATE_MAP,
-	 NMS_LOBBY_SERVER_JOIN
+	 NMS_LOBBY_SERVER_JOIN,
+
+	 NMS_LOBBY_RANKING_INFO = 0x7000
 };
 
 #endif // LOBBYPROTOCOL_H_INCLUDED

@@ -1,4 +1,4 @@
-// $Id: LobbyClient.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: LobbyClient.h 6040 2010-02-17 20:12:22Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -68,6 +68,8 @@ public:
 	void SendServerInfoRequest(unsigned int id);
 	/// schickt einen Request für den Serverjoin.
 	void SendServerJoinRequest(void);
+	/// schickt einen Request um die Punkte eines bestimmten Spielers auszulesen.
+	void SendRankingInfoRequest(const std::string name);
 
 	/// verschickt eine Chatnachricht.
 	void SendChat(std::string text);
@@ -124,6 +126,9 @@ public:
 	virtual void OnNMSLobbyServerAdd(unsigned int id, const LobbyServerInfo &info);
 	/// Lobby-Server-Add-Failed-Nachricht.
 	virtual void OnNMSLobbyServerAddFailed(unsigned int id, const std::string &error);
+
+	/// Lobby-Ranking-Info Nachricht.
+	virtual void OnNMSLobbyRankingInfo(unsigned int id, const LobbyPlayerInfo &player);
 
 	/// Dead-Nachricht.
 	virtual void OnNMSDeadMsg(unsigned int id);

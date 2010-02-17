@@ -1,4 +1,4 @@
-// $Id: LobbyMessages.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: LobbyMessages.h 6040 2010-02-17 20:12:22Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -552,7 +552,7 @@ public:
 	{
 		LobbyMessageInterface *cb = dynamic_cast<LobbyMessageInterface*>(callback);
 
-		info = LobbyServerInfo(0,this);
+		info = LobbyServerInfo(0, this);
 
 		LOG.write("<<< NMS_LOBBY_SERVER_ADD\n");
 		LOG.write("    %d %s %s:%d %s %d %s %d %d\n", info.getId(), info.getName().c_str(), info.getHost().c_str(), info.getPort(), info.getVersion().c_str(), info.getPing(), info.getMap().c_str(), info.getCurPlayers(), info.getMaxPlayers() );
@@ -683,6 +683,47 @@ public:
 
 		LOG.write("<<< NMS_LOBBY_SERVER_JOIN\n");
 		cb->OnNMSLobbyServerJoin(id);
+	}
+};
+
+
+///////////////////////////////////////////////////////////////////////////////
+/// aus/eingehende Ranking-Info-Nachricht.
+class LobbyMessage_Lobby_Ranking_Info : public LobbyMessage
+{
+public:
+	LobbyPlayerInfo player;
+
+public:
+	LobbyMessage_Lobby_Ranking_Info(void) : LobbyMessage(NMS_LOBBY_RANKING_INFO) { }
+	LobbyMessage_Lobby_Ranking_Info(const std::string &name) : LobbyMessage(NMS_LOBBY_RANKING_INFO)
+	{
+		PushBool(true); // Anfrage
+
+		PushString(name);
+		LOG.write(">>> NMS_LOBBY_RANKING_INFO(%s)\n", name.c_str());
+	}
+	LobbyMessage_Lobby_Ranking_Info(const LobbyPlayerInfo &player) : LobbyMessage(NMS_LOBBY_RANKING_INFO)
+	{
+		PushBool(false); // Antwort
+
+		player.serialize(this);
+		LOG.write(">>> NMS_LOBBY_RANKING_INFO(%s)\n", player.getName().c_str());
+		LOG.write("    %d: %d %s %s %d %d %d\n", 0, player.getId(), player.getName().c_str(), player.getVersion().c_str(), player.getPunkte(), player.getGewonnen(), player.getVerloren());
+	}
+	void run(MessageInterface *callback, unsigned int id)
+	{
+		LobbyMessageInterface *cb = dynamic_cast<LobbyMessageInterface*>(callback);
+
+		if(PopBool()) // Anfrage
+			player.setName(PopString());
+		else
+			player.deserialize(this);
+
+		LOG.write("<<< NMS_LOBBY_RANKING_INFO(%s)\n", player.getName().c_str());
+		LOG.write("    %d: %d %s %s %d %d %d\n", 0, player.getId(), player.getName().c_str(), player.getVersion().c_str(), player.getPunkte(), player.getGewonnen(), player.getVerloren());
+		
+		cb->OnNMSLobbyRankingInfo(id, player);
 	}
 };
 

@@ -1,4 +1,4 @@
-// $Id: dskSplash.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: dskSplash.h 6037 2010-02-17 11:26:49Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -29,6 +29,8 @@ class dskSplash : public Desktop
 public:
 	/// Konstruktor von @p dskSplash.
 	dskSplash();
+	/// Destruktor von @p dskSplash.
+	~dskSplash();
 
 private:
 

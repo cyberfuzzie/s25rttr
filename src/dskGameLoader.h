@@ -1,4 +1,4 @@
-// $Id: dskGameLoader.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: dskGameLoader.h 6037 2010-02-17 11:26:49Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -36,12 +36,13 @@ class dskGameLoader :
 public:
 	/// Konstruktor von @p dskGameLoader.
 	dskGameLoader(GameWorldViewer * gwv);
+	/// Destruktor von @p dskGameLoader.
+	~dskGameLoader();
 
 	void LC_Status_Error(const std::string &error);
 
 private:
 	void Msg_MsgBoxResult(const unsigned int msgbox_id, const MsgboxResult mbr);
-	void Msg_PaintBefore();
 	void Msg_Timer(const unsigned int ctrl_id);
 
 	unsigned int position;

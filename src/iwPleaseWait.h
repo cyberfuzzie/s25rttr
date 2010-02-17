@@ -1,4 +1,4 @@
-// $Id: iwPleaseWait.h 5855 2010-01-04 16:44:38Z FloSoft $
+// $Id: iwPleaseWait.h 6037 2010-02-17 11:26:49Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -29,6 +29,8 @@ class iwPleaseWait : public IngameWindow
 public:
 	/// Konstruktor von @p iwPleaseWait.
 	iwPleaseWait(void);
+	/// Destruktor von @p iwPleaseWait.
+	~iwPleaseWait();
 };
 
 #endif // !iwPLEASEWAIT_H_INCLUDED

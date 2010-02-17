@@ -1,4 +1,4 @@
-// $Id: ctrlMinimap.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: ctrlMinimap.cpp 6037 2010-02-17 11:26:49Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -47,9 +47,10 @@ ctrlMinimap::ctrlMinimap( Window *parent,
 				 const unsigned short padding_x,
 				 const unsigned short padding_y,
 				 const unsigned short map_width,
-				 const unsigned short map_height) : ctrlRectangle(parent,id,x,y,width,height), padding_x(padding_x), padding_y(padding_y)
+				 const unsigned short map_height)
+	: ctrlRectangle(parent, id, x, y, width, height), padding_x(padding_x), padding_y(padding_y)
 {
-	SetDisplaySize(width,height,map_width,map_height);
+	SetDisplaySize(width, height, map_width, map_height);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -58,14 +59,14 @@ ctrlMinimap::ctrlMinimap( Window *parent,
  *
  *  @author OLiver
  */
-void ctrlMinimap::SetDisplaySize(const unsigned short width, const unsigned short height, const unsigned short map_width,	const unsigned short map_height)
+void ctrlMinimap::SetDisplaySize(const unsigned short width, const unsigned short height, const unsigned short map_width, const unsigned short map_height)
 {
 	this->width = width;
 	this->height = height;
 
-	unsigned short scaled_map_width = static_cast<unsigned short>(map_width*MINIMAP_SCALE_X);
-	double x_scale = double(scaled_map_width) / double(width-padding_x*2);
-	double y_scale = double(map_height) / double(height-padding_y*2);
+	unsigned short scaled_map_width = static_cast<unsigned short>(map_width * MINIMAP_SCALE_X);
+	double x_scale = double(scaled_map_width) / double(width - padding_x * 2);
+	double y_scale = double(map_height) / double(height - padding_y * 2);
 
 	bool scale_width = false;
 
@@ -74,15 +75,18 @@ void ctrlMinimap::SetDisplaySize(const unsigned short width, const unsigned shor
 	else
 		scale_width = true;
 
+	assert(map_height != 0);
+	assert(scaled_map_width != 0);
+
 	if(scale_width)
 	{
-		width_show = scaled_map_width*(height-padding_y*2)/map_height;
-		height_show = height-padding_y*2;
+		height_show = height - padding_y * 2;
+		width_show  = scaled_map_width * height_show / map_height;
 	}
 	else
 	{
-		height_show = map_height*(width-padding_x*2)/scaled_map_width;
-		width_show = width-padding_x*2;
+		width_show  = width - padding_x * 2;
+		height_show = map_height * width_show / scaled_map_width;
 	}
 }
 
@@ -95,8 +99,7 @@ void ctrlMinimap::SetDisplaySize(const unsigned short width, const unsigned shor
 void ctrlMinimap::DrawMap(Minimap& map)
 {
 	// Map ansich zeichnen
-	map.Draw(GetX()+GetLeft(), GetY()+GetTop(), 
-		width_show, height_show);
+	map.Draw(GetX()+GetLeft(), GetY()+GetTop(), width_show, height_show);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -107,6 +110,6 @@ void ctrlMinimap::DrawMap(Minimap& map)
  */
 void ctrlMinimap::RemoveBoundingBox(const unsigned short width_min, const unsigned short height_min)
 {
-	width = max<unsigned short>(width_show+padding_x*2,width_min);
-	height = max<unsigned short>(height_show+padding_y*2,height_min);
+	width  = max<unsigned short>( width_show + padding_x * 2,  width_min);
+	height = max<unsigned short>(height_show + padding_y * 2, height_min);
 }

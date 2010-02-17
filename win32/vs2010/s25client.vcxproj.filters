@@ -48,6 +48,9 @@
     <Filter Include="Quelldateien\Spiel">
       <UniqueIdentifier>{28170663-a604-4454-a1fe-77d66701c951}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\Spiel\Addons">
+      <UniqueIdentifier>{197fdc00-3a72-451f-a004-87659475cf73}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Quelldateien\Spiel\Knotenobjekte">
       <UniqueIdentifier>{757f5fea-0e72-4050-ac5d-47cef6e34b59}</UniqueIdentifier>
     </Filter>
@@ -77,6 +80,36 @@
   <ItemGroup>
     <ClInclude Include="..\..\local.h">
       <Filter>Quelldateien\Allgemein</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\AddonChangeGoldDeposits.h">
+      <Filter>Quelldateien\Spiel\Addons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\AddonCustomBuildSequence.h">
+      <Filter>Quelldateien\Spiel\Addons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\AddonExhaustibleWells.h">
+      <Filter>Quelldateien\Spiel\Addons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\AddonInexhaustibleMines.h">
+      <Filter>Quelldateien\Spiel\Addons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\AddonLimitCatapults.h">
+      <Filter>Quelldateien\Spiel\Addons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\AddonManager.h">
+      <Filter>Quelldateien\Spiel\Addons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\AddonMaxWaterwayLength.h">
+      <Filter>Quelldateien\Spiel\Addons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\AddonRefundMaterials.h">
+      <Filter>Quelldateien\Spiel\Addons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Addons.h">
+      <Filter>Quelldateien\Spiel\Addons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\AddonStatisticsVisibility.h">
+      <Filter>Quelldateien\Spiel\Addons</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\AIBase.h">
       <Filter>Quelldateien\KI</Filter>
@@ -285,9 +318,6 @@
     <ClInclude Include="..\..\src\GameConsts.h">
       <Filter>Quelldateien\Spiel\Konstanten</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\GameFiles.h">
-      <Filter>Quelldateien\Spiel</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\GameInterface.h">
       <Filter>Quelldateien\Spiel</Filter>
     </ClInclude>
@@ -311,6 +341,15 @@
     </ClInclude>
     <ClInclude Include="..\..\src\GameProtocol.h">
       <Filter>Quelldateien\Netzwerk\Spiel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GameReplay.h">
+      <Filter>Quelldateien\Spiel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GameSavedFile.h">
+      <Filter>Quelldateien\Spiel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GameSavegame.h">
+      <Filter>Quelldateien\Spiel</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GameServer.h">
       <Filter>Quelldateien\Netzwerk\Spiel</Filter>
@@ -379,6 +418,12 @@
       <Filter>Quelldateien\GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\iwAction.h">
+      <Filter>Quelldateien\GUI\Fenster\IngameWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\iwAddons.h">
+      <Filter>Quelldateien\GUI\Fenster\IngameWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\iwAIDebug.h">
       <Filter>Quelldateien\GUI\Fenster\IngameWindows</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\iwBaseWarehouse.h">
@@ -810,6 +855,9 @@
     <ClInclude Include="..\..\src\Ware.h">
       <Filter>Quelldateien\Spiel</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\win32_nanosleep.h">
+      <Filter>Quelldateien\Allgemein</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\src\Window.h">
       <Filter>Quelldateien\GUI</Filter>
     </ClInclude>
@@ -824,6 +872,12 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\AddonManager.cpp">
+      <Filter>Quelldateien\Spiel\Addons</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Addons.cpp">
+      <Filter>Quelldateien\Spiel\Addons</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\AIConstruction.cpp">
       <Filter>Quelldateien\KI</Filter>
     </ClCompile>
@@ -1016,9 +1070,6 @@
     <ClCompile Include="..\..\src\GameCommands.cpp">
       <Filter>Quelldateien\Netzwerk\Spiel</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\GameFiles.cpp">
-      <Filter>Quelldateien\Spiel</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\GameInterface.cpp">
       <Filter>Quelldateien\Spiel</Filter>
     </ClCompile>
@@ -1039,6 +1090,15 @@
     </ClCompile>
     <ClCompile Include="..\..\src\GamePlayerInfo.cpp">
       <Filter>Quelldateien\Netzwerk\Spiel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GameReplay.cpp">
+      <Filter>Quelldateien\Spiel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GameSavedFile.cpp">
+      <Filter>Quelldateien\Spiel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GameSavegame.cpp">
+      <Filter>Quelldateien\Spiel</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\GameServer.cpp">
       <Filter>Quelldateien\Netzwerk\Spiel</Filter>
@@ -1116,6 +1176,12 @@
       <Filter>Quelldateien\GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\iwAction.cpp">
+      <Filter>Quelldateien\GUI\Fenster\IngameWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\iwAddons.cpp">
+      <Filter>Quelldateien\GUI\Fenster\IngameWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\iwAIDebug.cpp">
       <Filter>Quelldateien\GUI\Fenster\IngameWindows</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\iwBaseWarehouse.cpp">
@@ -1519,6 +1585,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\Ware.cpp">
       <Filter>Quelldateien\Spiel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\win32_nanosleep.cpp">
+      <Filter>Quelldateien\Allgemein</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\Window.cpp">
       <Filter>Quelldateien\GUI</Filter>

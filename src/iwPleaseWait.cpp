@@ -1,4 +1,4 @@
-// $Id: iwPleaseWait.cpp 5854 2010-01-04 16:30:33Z FloSoft $
+// $Id: iwPleaseWait.cpp 6037 2010-02-17 11:26:49Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -22,6 +22,8 @@
 #include "main.h"
 #include "iwPleaseWait.h"
 
+#include "GameManager.h"
+
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
 #if defined _WIN32 && defined _DEBUG && defined _MSC_VER
@@ -41,5 +43,11 @@
  */
 iwPleaseWait::iwPleaseWait(void) : IngameWindow(CGI_PLEASEWAIT, 0xFFFF, 0xFFFF, 300, 60, _("Please wait..."), LOADER.GetImageN("resource", 41), true)
 {
+	GAMEMANAGER.SetCursor(CURSOR_MOON);
 	AddText(0, GetWidth() / 2, GetHeight() / 2, _("Please wait..."), COLOR_YELLOW, glArchivItem_Font::DF_CENTER | glArchivItem_Font::DF_VCENTER, NormalFont);
+}
+
+iwPleaseWait::~iwPleaseWait()
+{
+	GAMEMANAGER.SetCursor();
 }

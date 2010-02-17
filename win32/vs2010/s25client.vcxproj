@@ -123,6 +123,16 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\AddonChangeGoldDeposits.h" />
+    <ClInclude Include="..\..\src\AddonCustomBuildSequence.h" />
+    <ClInclude Include="..\..\src\AddonExhaustibleWells.h" />
+    <ClInclude Include="..\..\src\AddonInexhaustibleMines.h" />
+    <ClInclude Include="..\..\src\AddonLimitCatapults.h" />
+    <ClInclude Include="..\..\src\AddonManager.h" />
+    <ClInclude Include="..\..\src\AddonMaxWaterwayLength.h" />
+    <ClInclude Include="..\..\src\AddonRefundMaterials.h" />
+    <ClInclude Include="..\..\src\Addons.h" />
+    <ClInclude Include="..\..\src\AddonStatisticsVisibility.h" />
     <ClInclude Include="..\..\src\AIBase.h" />
     <ClInclude Include="..\..\src\AIConstruction.h" />
     <ClInclude Include="..\..\src\AIEventManager.h" />
@@ -132,8 +142,14 @@
     <ClInclude Include="..\..\src\AIResourceMap.h" />
     <ClInclude Include="..\..\src\const_gui_ids.h" />
     <ClInclude Include="..\..\src\Desktop.h" />
+    <ClInclude Include="..\..\src\GameReplay.h" />
+    <ClInclude Include="..\..\src\GameSavedFile.h" />
+    <ClInclude Include="..\..\src\GameSavegame.h" />
     <ClInclude Include="..\..\src\IngameWindow.h" />
+    <ClInclude Include="..\..\src\iwAddons.h" />
+    <ClInclude Include="..\..\src\iwAIDebug.h" />
     <ClInclude Include="..\..\src\PostMsg.h" />
+    <ClInclude Include="..\..\src\win32_nanosleep.h" />
     <ClInclude Include="..\..\src\Window.h" />
     <ClInclude Include="..\..\src\WindowManager.h" />
     <ClInclude Include="..\..\src\controls.h" />
@@ -248,7 +264,6 @@
     <ClInclude Include="..\..\src\CatapultStone.h" />
     <ClInclude Include="..\..\src\EventManager.h" />
     <ClInclude Include="..\..\src\GameClientPlayer.h" />
-    <ClInclude Include="..\..\src\GameFiles.h" />
     <ClInclude Include="..\..\src\GameInterface.h" />
     <ClInclude Include="..\..\src\GameObject.h" />
     <ClInclude Include="..\..\src\GameWorld.h" />
@@ -374,6 +389,8 @@
     <ClInclude Include="..\resource.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\AddonManager.cpp" />
+    <ClCompile Include="..\..\src\Addons.cpp" />
     <ClCompile Include="..\..\src\AIConstruction.cpp" />
     <ClCompile Include="..\..\src\AIEventManager.cpp" />
     <ClCompile Include="..\..\src\AIJHHelper.cpp" />
@@ -381,8 +398,14 @@
     <ClCompile Include="..\..\src\AIPlayerJH.cpp" />
     <ClCompile Include="..\..\src\AIResourceMap.cpp" />
     <ClCompile Include="..\..\src\Desktop.cpp" />
+    <ClCompile Include="..\..\src\GameReplay.cpp" />
+    <ClCompile Include="..\..\src\GameSavedFile.cpp" />
+    <ClCompile Include="..\..\src\GameSavegame.cpp" />
     <ClCompile Include="..\..\src\IngameWindow.cpp" />
+    <ClCompile Include="..\..\src\iwAddons.cpp" />
+    <ClCompile Include="..\..\src\iwAIDebug.cpp" />
     <ClCompile Include="..\..\src\PostMsg.cpp" />
+    <ClCompile Include="..\..\src\win32_nanosleep.cpp" />
     <ClCompile Include="..\..\src\Window.cpp" />
     <ClCompile Include="..\..\src\WindowManager.cpp" />
     <ClCompile Include="..\..\src\ctrlBuildingIcon.cpp" />
@@ -493,7 +516,6 @@
     <ClCompile Include="..\..\src\CatapultStone.cpp" />
     <ClCompile Include="..\..\src\EventManager.cpp" />
     <ClCompile Include="..\..\src\GameClientPlayer.cpp" />
-    <ClCompile Include="..\..\src\GameFiles.cpp" />
     <ClCompile Include="..\..\src\GameInterface.cpp" />
     <ClCompile Include="..\..\src\GameObject.cpp" />
     <ClCompile Include="..\..\src\GameWorld.cpp" />

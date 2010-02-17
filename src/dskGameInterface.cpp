@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.cpp 5994 2010-02-10 18:24:55Z FloSoft $
+// $Id: dskGameInterface.cpp 6037 2010-02-17 11:26:49Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -38,6 +38,7 @@
 #include "LobbyClient.h"
 #include "ctrlButton.h"
 #include "GameMessages.h"
+#include "GameManager.h"
 
 #include "iwChat.h"
 #include "iwHQ.h"
@@ -107,7 +108,7 @@ dskGameInterface::dskGameInterface()
 	AddImageButton(3, barx + 37*3, bary, 37, 32, TC_GREEN1, LOADER.GetImageN("io",  62), _("Post office"))
 		->SetBorder(false);
 
-  AddText(4, barx + 37*3 + 18, bary + 24, "0", COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_VCENTER, SmallFont);
+	AddText(4, barx + 37*3 + 18, bary + 24, "0", COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_VCENTER, SmallFont);
 
 	LOBBYCLIENT.SetInterface(this);
 	GAMECLIENT.SetInterface(this);
@@ -124,9 +125,7 @@ dskGameInterface::dskGameInterface()
 
 	// Kann passieren dass schon Nachrichten vorliegen, bevor es uns gab (insb. HQ-Landverlust)
 	if (GAMECLIENT.GetPostMessages().size() > 0)
-	{
 		CI_NewPostMessage(GAMECLIENT.GetPostMessages().size());
-	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -140,6 +139,13 @@ dskGameInterface::~dskGameInterface()
 {
 	GLOBALVARS.ingame = false;
 }
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskGameInterface::SettingsChanged(void)
  {
  	// recreate borders
@@ -161,11 +167,19 @@ void dskGameInterface::SettingsChanged(void)
  
  	button = GetCtrl<ctrlImageButton>(3);
  	button->Move(barx + 37 * 3, bary, true);
+ 	ctrlText *text = GetCtrl<ctrlText>(4);
+	text->Move(barx + 37 * 3 + 18, bary + 24);
  
  	// refresh view (does not change position)
  	this->gwv->MoveTo(0, 0);
  }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskGameInterface::Msg_ButtonClick(const unsigned int ctrl_id)
 {
 	switch(ctrl_id)
@@ -191,7 +205,12 @@ void dskGameInterface::Msg_ButtonClick(const unsigned int ctrl_id)
 	}
 }
 
-
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskGameInterface::Msg_PaintBefore()
 {
 	// Spiel ausführen
@@ -210,6 +229,12 @@ void dskGameInterface::Msg_PaintBefore()
 	LOADER.GetImageN("resource", 29)->Draw(VideoDriverWrapper::inst().GetScreenWidth()/2-LOADER.GetImageN("resource", 29)->getWidth()/2,VideoDriverWrapper::inst().GetScreenHeight()-LOADER.GetImageN("resource", 29)->getHeight(), 0, 0, 0, 0, 0, 0);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskGameInterface::Msg_PaintAfter()
 {
 	/* NWF-Anzeige (vorläufig)*/
@@ -230,18 +255,13 @@ void dskGameInterface::Msg_PaintAfter()
 	if(road.mode != RM_DISABLED)
 	{
 		if(VideoDriverWrapper::inst().IsLeftDown())
-			LOADER.GetImageN("resource", 35)->Draw(VideoDriverWrapper::inst().GetMouseX(),VideoDriverWrapper::inst().GetMouseY(), 0, 0, 0, 0, 0, 0);
+			GAMEMANAGER.SetCursor(CURSOR_RM_PRESSED, /*once*/ true);
 		else
-			LOADER.GetImageN("resource", 34)->Draw(VideoDriverWrapper::inst().GetMouseX(),VideoDriverWrapper::inst().GetMouseY(), 0, 0, 0, 0, 0, 0);
+			GAMEMANAGER.SetCursor(CURSOR_RM, /*once*/ true);
 	}
-	else
+	else if(VideoDriverWrapper::inst().IsRightDown())
 	{
-		if(VideoDriverWrapper::inst().IsLeftDown())
-			LOADER.GetImageN("resource", 31)->Draw(VideoDriverWrapper::inst().GetMouseX(),VideoDriverWrapper::inst().GetMouseY(), 0, 0, 0, 0, 0, 0);
-		else if(VideoDriverWrapper::inst().IsRightDown())
-			LOADER.GetImageN("resource", 32)->Draw(VideoDriverWrapper::inst().GetMouseX(),VideoDriverWrapper::inst().GetMouseY(), 0, 0, 0, 0, 0, 0);
-		else
-			LOADER.GetImageN("resource", 30)->Draw(VideoDriverWrapper::inst().GetMouseX(),VideoDriverWrapper::inst().GetMouseY(), 0, 0, 0, 0, 0, 0);
+			GAMEMANAGER.SetCursor(CURSOR_SCROLL, /*once*/ true);
 	}
 
 	// Laggende Spieler anzeigen in Form von Schnecken
@@ -468,20 +488,36 @@ bool dskGameInterface::Msg_LeftDown(const MouseCoords& mc)
 	return true;
 }
 
-
-
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 bool dskGameInterface::Msg_MouseMove(const MouseCoords& mc)
 {
 	gwv->MouseMove(mc);
 	return false;
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 bool dskGameInterface::Msg_RightDown(const MouseCoords& mc)
 {
 	gwv->MouseDown(mc);
 	return false;
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 bool dskGameInterface::Msg_RightUp(const MouseCoords& mc)
 {
 	gwv->MouseUp();
@@ -549,11 +585,8 @@ bool dskGameInterface::Msg_KeyDown(const KeyEvent& ke)
 		{
 			WindowManager::inst().Show(new iwOptionsWindow(this));
 		} return true;
-
-
 	}
-
-
+	
 	switch(ke.c)
 	{
 	case '+': // Geschwindigkeit im Replay erhöhen
@@ -650,7 +683,6 @@ bool dskGameInterface::Msg_KeyDown(const KeyEvent& ke)
 	return false;
 }
 
-
 ///////////////////////////////////////////////////////////////////////////////
 /**
  *
@@ -667,7 +699,6 @@ void dskGameInterface::Run()
 
 	messenger.Draw();
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
@@ -853,6 +884,12 @@ void dskGameInterface::CommandBuildRoad()
 	road.mode = RM_DISABLED;
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskGameInterface::GI_FlagDestroyed(const unsigned short x, const unsigned short y)
 {
 	// Im Wegbaumodus und haben wir von hier eine Flagge gebaut?
@@ -870,20 +907,36 @@ void dskGameInterface::GI_FlagDestroyed(const unsigned short x, const unsigned s
 	}
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskGameInterface::ActionWindowClosed()
 {
 	actionwindow = NULL;
 	gwv->DontScroll();
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskGameInterface::RoadWindowClosed()
 {
 	roadwindow = NULL;
 	gwv->DontScroll();
 }
 
-
-
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskGameInterface::CI_PlayerLeft(const unsigned player_id)
 {
 	// Info-Meldung ausgeben
@@ -895,6 +948,12 @@ void dskGameInterface::CI_PlayerLeft(const unsigned player_id)
 	messenger.AddMessage("", 0, CD_SYSTEM, text, COLOR_GREEN);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskGameInterface::CI_GGSChanged(const GlobalGameSettings& ggs)
 {
 	// TODO: print what has changed
@@ -903,6 +962,12 @@ void dskGameInterface::CI_GGSChanged(const GlobalGameSettings& ggs)
 	messenger.AddMessage("", 0, CD_SYSTEM, text);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskGameInterface::CI_Chat(const unsigned player_id, const ChatDestination cd, const std::string& msg)
 {
 	char from[256];
@@ -911,6 +976,12 @@ void dskGameInterface::CI_Chat(const unsigned player_id, const ChatDestination c
 		COLORS[GameClient::inst().GetPlayer(player_id)->color], cd, msg);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskGameInterface::CI_Async(const std::string& checksums_list)
 {
 	messenger.AddMessage("", 0, CD_SYSTEM, _("The Game is not in sync. Checksums of some players don't match."), COLOR_RED);
@@ -919,16 +990,34 @@ void dskGameInterface::CI_Async(const std::string& checksums_list)
 
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskGameInterface::CI_ReplayAsync(const std::string& msg)
 {
 	messenger.AddMessage("", 0, CD_SYSTEM, msg, COLOR_RED);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskGameInterface::CI_ReplayEndReached(const std::string& msg)
 {
 	messenger.AddMessage("", 0, CD_SYSTEM, msg, COLOR_BLUE);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskGameInterface::CI_GamePaused()
 {
 	char from[256];
@@ -952,6 +1041,12 @@ void dskGameInterface::CI_GamePaused()
 	}
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskGameInterface::CI_GameResumed()
 {
 	char from[256];
@@ -959,8 +1054,12 @@ void dskGameInterface::CI_GameResumed()
 	messenger.AddMessage(from, COLOR_GREY, CD_SYSTEM, _("Game was resumed."));
 }
 
-
-
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskGameInterface::CI_Error(const ClientError ce)
 {
 	switch(ce)
@@ -974,7 +1073,6 @@ void dskGameInterface::CI_Error(const ClientError ce)
 		} break;
 	}
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////
 /** 
@@ -998,6 +1096,12 @@ void dskGameInterface::LC_Status_Error(const std::string &error)
 	messenger.AddMessage("", 0, CD_SYSTEM, error, COLOR_RED);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskGameInterface::CI_PlayersSwapped(const unsigned player1, const unsigned player2)
 {
 	// Meldung anzeigen
@@ -1016,7 +1120,12 @@ void dskGameInterface::CI_PlayersSwapped(const unsigned player1, const unsigned 
 
 }
 
-/// Wenn ein Spieler verloren hat
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Wenn ein Spieler verloren hat
+ *
+ *  @author OLiver
+ */
 void dskGameInterface::GI_PlayerDefeated(const unsigned player_id)
 {
 	char text[256];
@@ -1033,13 +1142,24 @@ void dskGameInterface::GI_PlayerDefeated(const unsigned player_id)
 	}
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void dskGameInterface::GI_UpdateMinimap(const MapCoord x, const MapCoord y)
 {
 	// Minimap Bescheid sagen
 	minimap.UpdateNode(x,y);
 }
 
-/// Bündnisvertrag wurde abgeschlossen oder abgebrochen --> Minimap updaten
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Bündnisvertrag wurde abgeschlossen oder abgebrochen --> Minimap updaten
+ *
+ *  @author OLiver
+ */
 void dskGameInterface::GI_TreatyOfAllianceChanged()
 {
 	// Nur wenn Team-Sicht aktiviert ist, können sihc die Sichtbarkeiten auch ändern
@@ -1052,7 +1172,12 @@ void dskGameInterface::GI_TreatyOfAllianceChanged()
 	}
 }
 
-/// Baut Weg zurück von Ende bis zu start_id
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Baut Weg zurück von Ende bis zu start_id
+ *
+ *  @author OLiver
+ */
 void dskGameInterface::DemolishRoad(const unsigned start_id)
 {
 	for(unsigned i = road.route.size();i>=start_id;--i)
@@ -1067,7 +1192,12 @@ void dskGameInterface::DemolishRoad(const unsigned start_id)
 	road.route.resize(start_id-1);
 }
 
-/// Updatet das Post-Icon mit der Nachrichtenanzahl und der Taube
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Updatet das Post-Icon mit der Nachrichtenanzahl und der Taube
+ *
+ *  @author OLiver
+ */
 void dskGameInterface::UpdatePostIcon(const unsigned postmessages_count, bool showPigeon)
 {
 	// Taube setzen oder nicht (Post) 
@@ -1082,7 +1212,12 @@ void dskGameInterface::UpdatePostIcon(const unsigned postmessages_count, bool sh
 	GetCtrl<ctrlText>(4)->SetText(ss.str());
 }
 
-/// Neue Post-Nachricht eingetroffen
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Neue Post-Nachricht eingetroffen
+ *
+ *  @author OLiver
+ */
 void dskGameInterface::CI_NewPostMessage(const unsigned postmessages_count)
 {
 	UpdatePostIcon(postmessages_count, true);
@@ -1091,7 +1226,12 @@ void dskGameInterface::CI_NewPostMessage(const unsigned postmessages_count)
 	LOADER.GetSoundN("sound", 114)->Play(255,false);
 }
 
-/// Es wurde eine Postnachricht vom Spieler gelöscht
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Es wurde eine Postnachricht vom Spieler gelöscht
+ *
+ *  @author OLiver
+ */
 void dskGameInterface::CI_PostMessageDeleted(const unsigned postmessages_count)
 {
 	UpdatePostIcon(postmessages_count, false);

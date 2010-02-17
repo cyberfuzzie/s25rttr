@@ -1,4 +1,4 @@
-// $Id: dskGameLoader.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: dskGameLoader.cpp 6037 2010-02-17 11:26:49Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -28,6 +28,7 @@
 #include "VideoDriverWrapper.h"
 #include "GameClient.h"
 #include "LobbyClient.h"
+#include "GameManager.h"
 
 #include "dskGameInterface.h"
 #include "dskMainMenu.h"
@@ -55,6 +56,8 @@ dskGameLoader::dskGameLoader(GameWorldViewer * gwv)
 	: Desktop(LOADER.GetImageN(FILE_LOAD_IDS[rand() % FILE_LOAD_IDS_COUNT], 0)), 
 	position(0), gwv(gwv)
 {
+	GAMEMANAGER.SetCursor(CURSOR_NONE);
+
 	AddTimer(1, 50);
 
 	AddText(10, VideoDriverWrapper::inst().GetScreenWidth() / 2, VideoDriverWrapper::inst().GetScreenHeight() - 50, "", COLOR_YELLOW, glArchivItem_Font::DF_CENTER, LargeFont);
@@ -64,6 +67,11 @@ dskGameLoader::dskGameLoader(GameWorldViewer * gwv)
 
 	LOBBYCLIENT.SetInterface(this);
 	GAMECLIENT.SetInterface(this);
+}
+
+dskGameLoader::~dskGameLoader()
+{
+	GAMEMANAGER.SetCursor();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -83,17 +91,6 @@ void dskGameLoader::Msg_MsgBoxResult(const unsigned int msgbox_id, const MsgboxR
 		else
 			WindowManager::inst().Switch(new dskDirectIP);
 	}
-}
-
-///////////////////////////////////////////////////////////////////////////////
-/**
- *  
- *
- *  @author OLiver
- */
-void dskGameLoader::Msg_PaintBefore()
-{
-	DrawRectangle(0, 0, VideoDriverWrapper::inst().GetScreenWidth(), VideoDriverWrapper::inst().GetScreenHeight(), COLOR_BLACK);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

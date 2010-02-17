@@ -1,4 +1,4 @@
-// $Id: GameManager.cpp 6004 2010-02-12 07:50:42Z FloSoft $
+// $Id: GameManager.cpp 6037 2010-02-17 11:26:49Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -55,7 +55,7 @@
  *
  *  @author OLiver
  */
-GameManager::GameManager(void) : frames(0), frame_count(0), framerate(0), frame_time(0), run_time(0), last_time(0)
+GameManager::GameManager(void) : frames(0), frame_count(0), framerate(0), frame_time(0), run_time(0), last_time(0), cursor(CURSOR_HAND), cursor_next(CURSOR_HAND)
 {
 }
 
@@ -198,14 +198,7 @@ bool GameManager::Run()
 		
 	last_time = current_time;
 
-	if(!GLOBALVARS.ingame)
-	{
-		// Mauszeiger zeichnen
-		if(VideoDriverWrapper::inst().IsLeftDown())
-			LOADER.GetImageN("resource", 31)->Draw(VideoDriverWrapper::inst().GetMouseX(), VideoDriverWrapper::inst().GetMouseY(), 0, 0, 0, 0, 0, 0);
-		else
-			LOADER.GetImageN("resource", 30)->Draw(VideoDriverWrapper::inst().GetMouseX(), VideoDriverWrapper::inst().GetMouseY(), 0, 0, 0, 0, 0, 0);
-	}
+	DrawCursor();
 
 	// Framerate berechnen
 	if(current_time - frame_time >= 1000)
@@ -298,7 +291,47 @@ bool GameManager::ShowMenu()
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  Average FPS Zähler zurücksetzen.
+ *  Set the cursor type
  *
- *  @author FloSoft
+ *  @author Divan
  */
+void GameManager::SetCursor(CursorType cursor, bool once)
+{
+	cursor_next = cursor;
+	if(!once) this->cursor = cursor;
+	return;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Draw the cursor
+ *
+ *  @author Divan
+ */
+void GameManager::DrawCursor()
+{
+	// Mauszeiger zeichnen
+	switch(cursor_next)
+	{	
+		case CURSOR_HAND:
+		{
+			if(VideoDriverWrapper::inst().IsLeftDown())
+				LOADER.GetImageN("resource", 31)->Draw(VideoDriverWrapper::inst().GetMouseX(), VideoDriverWrapper::inst().GetMouseY(), 0, 0, 0, 0, 0, 0);
+			else
+				LOADER.GetImageN("resource", 30)->Draw(VideoDriverWrapper::inst().GetMouseX(), VideoDriverWrapper::inst().GetMouseY(), 0, 0, 0, 0, 0, 0);
+		} break;
+		case CURSOR_SCROLL:
+		case CURSOR_MOON:
+		case CURSOR_RM:
+		case CURSOR_RM_PRESSED:
+		{
+			LOADER.GetImageN("resource", cursor_next)->Draw(VideoDriverWrapper::inst().GetMouseX(), VideoDriverWrapper::inst().GetMouseY(), 0, 0, 0, 0, 0, 0);
+		} break;
+		case CURSOR_NONE:
+		default:
+		{}
+	}
+	
+	cursor_next = cursor;
+	return;
+}

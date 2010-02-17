@@ -1,4 +1,4 @@
-// $Id: GameManager.h 5989 2010-02-10 14:13:58Z FloSoft $
+// $Id: GameManager.h 6037 2010-02-17 11:26:49Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -22,6 +22,16 @@
 #pragma once
 
 #include "Singleton.h"
+
+// Die verschiedenen Cursor mit ihren Indizes in resource.idx
+enum CursorType {
+	CURSOR_NONE,
+	CURSOR_HAND,
+	CURSOR_SCROLL     = 32,
+	CURSOR_MOON       = 33,
+	CURSOR_RM         = 34,
+	CURSOR_RM_PRESSED = 35
+};
 
 /// "Die" GameManager-Klasse
 class GameManager : public Singleton<GameManager>
@@ -65,6 +75,12 @@ public:
 		return framerate;
 	}
 
+	void SetCursor(CursorType cursor = CURSOR_HAND, bool once = false);
+
+private:
+
+	void DrawCursor();
+
 private:
 	unsigned int frames;
 	unsigned int frame_count;
@@ -72,6 +88,8 @@ private:
 	unsigned int frame_time;
 	unsigned int run_time;
 	unsigned int last_time;
+	CursorType cursor;
+	CursorType cursor_next;
 };
 
 #define GAMEMANAGER GameManager::inst()

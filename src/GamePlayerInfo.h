@@ -1,4 +1,4 @@
-// $Id: GamePlayerInfo.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: GamePlayerInfo.h 6037 2010-02-17 11:26:49Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -91,7 +91,7 @@ public:
 	unsigned char color;
 
 	unsigned ping;
-	unsigned short rating;
+	unsigned int rating;
 	
 	int checksum;
 	bool ready;

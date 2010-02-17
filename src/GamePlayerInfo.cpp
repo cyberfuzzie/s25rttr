@@ -1,4 +1,4 @@
-// $Id: GamePlayerInfo.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: GamePlayerInfo.cpp 6037 2010-02-17 11:26:49Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -62,7 +62,7 @@ GamePlayerInfo::GamePlayerInfo(const unsigned playerid, Serializer * ser) :
 	team(Team(ser->PopUnsignedChar())),
 	color(ser->PopUnsignedChar()),
 	ping(ser->PopUnsignedInt()),
-	rating(ser->PopUnsignedShort()),
+	rating(ser->PopUnsignedInt()),
 	ready(ser->PopBool())
 {
 }
@@ -96,7 +96,7 @@ void GamePlayerInfo::serialize(Serializer * ser) const
 	ser->PushUnsignedChar(team);
 	ser->PushUnsignedChar(color);
 	ser->PushUnsignedInt(ping);
-	ser->PushUnsignedShort(rating);
+	ser->PushUnsignedInt(rating);
 	ser->PushBool(ready);
 	
 }

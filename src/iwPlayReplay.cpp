@@ -1,4 +1,4 @@
-// $Id: iwPlayReplay.cpp 5999 2010-02-11 09:53:02Z FloSoft $
+// $Id: iwPlayReplay.cpp 6037 2010-02-17 11:26:49Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -22,6 +22,7 @@
 #include "main.h"
 #include "iwPlayReplay.h"
 
+#include "VideoDriverWrapper.h"
 #include "WindowManager.h"
 #include "Loader.h"
 #include "controls.h"
@@ -84,6 +85,10 @@ void iwPlayReplay::Msg_ButtonClick(const unsigned int ctrl_id)
 	default: break;
 	case 1:
 		{
+			// Mond malen
+			LOADER.GetImageN("resource", 33)->Draw(VideoDriverWrapper::inst().GetMouseX(), VideoDriverWrapper::inst().GetMouseY() - 40, 0, 0, 0, 0, 0, 0);
+			VideoDriverWrapper::inst().SwapBuffers();
+
 			ctrlTable *table = GetCtrl<ctrlTable>(0);
 			if(table->GetSelection() < table->GetRowCount())
 			{

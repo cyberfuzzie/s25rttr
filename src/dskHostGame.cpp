@@ -1,4 +1,4 @@
-// $Id: dskHostGame.cpp 6016 2010-02-13 15:45:50Z FloSoft $
+// $Id: dskHostGame.cpp 6037 2010-02-17 11:26:49Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -174,17 +174,20 @@ dskHostGame::dskHostGame() :
  */
 void dskHostGame::UpdatePlayerRow(const unsigned row)
 {
+	GameClientPlayer *player = GAMECLIENT.GetPlayer(row);
+	assert(player);
+
 	unsigned cy = 80 + row * 30;
 	TextureColor tc = (row&1 ? TC_GREY : TC_GREEN2);
 
 	// Alle Controls erstmal zerstören (die ganze Gruppe)
-	DeleteCtrl(58-row);
+	DeleteCtrl(58 - row);
 	// und neu erzeugen
-	ctrlGroup *group = AddGroup(58-row, scale);
+	ctrlGroup *group = AddGroup(58 - row, scale);
 
 	std::string name;
 	// Name
-	switch(GAMECLIENT.GetPlayer(row)->ps)
+	switch(player->ps)
 	{
 	default:
 		name = "";
@@ -192,7 +195,7 @@ void dskHostGame::UpdatePlayerRow(const unsigned row)
 	case PS_OCCUPIED:
 	case PS_KI:
 		{
-			name = GAMECLIENT.GetPlayer(row)->name;
+			name = player->name;
 		} break;
 	case PS_FREE:
 	case PS_RESERVED:
@@ -209,42 +212,40 @@ void dskHostGame::UpdatePlayerRow(const unsigned row)
 	
 	if(GetCtrl<ctrlPreviewMinimap>(70))
 	{
-		if(GAMECLIENT.GetPlayer(row)->ps == PS_OCCUPIED ||
-		   GAMECLIENT.GetPlayer(row)->ps == PS_KI)
+		if(player->ps == PS_OCCUPIED || player->ps == PS_KI)
 		   // Nur KIs und richtige Spieler haben eine Farbe auf der Karte
-			GetCtrl<ctrlPreviewMinimap>(70)->SetPlayerColor(row,COLORS[GAMECLIENT.GetPlayer(row)->color]);
+			GetCtrl<ctrlPreviewMinimap>(70)->SetPlayerColor(row, COLORS[player->color]);
 		else
 			// Keine richtigen Spieler --> Startposition auf der Karte ausblenden
-			GetCtrl<ctrlPreviewMinimap>(70)->SetPlayerColor(row,0);
+			GetCtrl<ctrlPreviewMinimap>(70)->SetPlayerColor(row, 0);
 	}
 
 	// Spielername, beim Hosts Spielerbuttons, aber nich beim ihm selber, er kann sich ja nich selber kicken!
 	ctrlBaseText * text;
-	if(GAMECLIENT.IsHost() && !GAMECLIENT.GetPlayer(row)->is_host)
+	if(GAMECLIENT.IsHost() && !player->is_host)
 		text = group->AddTextButton(1, 20, cy, 150, 22, tc, name.c_str(), NormalFont);
 	else
 		text = group->AddDeepening(1, 20, cy, 150, 22, tc, name.c_str(), NormalFont, COLOR_YELLOW);
 
-
 	// Is das der Host? Dann farblich markieren
-	if(GAMECLIENT.GetPlayer(row)->is_host == true)
+	if(player->is_host == true)
 		text->SetColor(0xFF00FF00);
 
 	// Bei geschlossenem nicht sichtbar
-	if(GAMECLIENT.GetPlayer(row)->ps == PS_OCCUPIED || GAMECLIENT.GetPlayer(row)->ps == PS_KI)
+	if(player->ps == PS_OCCUPIED || player->ps == PS_KI)
 	{
 		/// Einstufung nur bei Lobbyspielen anzeigen @todo Einstufung ( "%d" )
-		group->AddVarDeepening(2, 180, cy, 50, 22, tc, (LOBBYCLIENT.LoggedIn() ? _("%d") : _("n/a")), NormalFont, COLOR_YELLOW, 1, &temppunkte);
+		group->AddVarDeepening(2, 180, cy, 50, 22, tc, (LOBBYCLIENT.LoggedIn() || player->ps == PS_KI ? _("%d") : _("n/a")), NormalFont, COLOR_YELLOW, 1, &player->rating);
 
 		// Host kann nur das Zeug von der KI noch mit einstellen
-		if(((GAMECLIENT.IsHost() && GAMECLIENT.GetPlayer(row)->ps == PS_KI) || GAMECLIENT.GetPlayerID() == row) && !GAMECLIENT.IsSavegame())
+		if(((GAMECLIENT.IsHost() && player->ps == PS_KI) || GAMECLIENT.GetPlayerID() == row) && !GAMECLIENT.IsSavegame())
 		{
 			// Volk
-			group->AddTextButton( 3, 240, cy, 90, 22, tc, _("Africans"),NormalFont);
+			group->AddTextButton( 3, 240, cy, 90, 22, tc, _("Africans"), NormalFont);
 			// Farbe
-			group->AddColorButton( 4, 340, cy, 30, 22, tc, 0 );
+			group->AddColorButton( 4, 340, cy, 30, 22, tc, 0);
 			// Team
-			group->AddTextButton( 5, 380, cy, 50, 22, tc, _("-"),NormalFont);
+			group->AddTextButton( 5, 380, cy, 50, 22, tc, _("-"), NormalFont);
 		}
 		else
 		{
@@ -257,39 +258,39 @@ void dskHostGame::UpdatePlayerRow(const unsigned row)
 		}
 
 		// Bereit (nicht bei KIs und Host)
-		if(GAMECLIENT.GetPlayer(row)->ps == PS_OCCUPIED && !GAMECLIENT.GetPlayer(row)->is_host)
+		if(player->ps == PS_OCCUPIED && !player->is_host)
 			group->AddCheckBox(6, 450, cy, 22, 22, tc, EMPTY_STRING, NULL, (GAMECLIENT.GetPlayerID() != row) );
 
 		// Ping ( "%d" )
-		ctrlVarDeepening *ping = group->AddVarDeepening(7, 490, cy, 50, 22, tc, _("%d"), NormalFont, COLOR_YELLOW, 1, &GAMECLIENT.GetPlayer(row)->ping);
+		ctrlVarDeepening *ping = group->AddVarDeepening(7, 490, cy, 50, 22, tc, _("%d"), NormalFont, COLOR_YELLOW, 1, &player->ping);
 
 		// Verschieben (nur bei Savegames und beim Host!)
-		if(GAMECLIENT.IsSavegame() && GAMECLIENT.GetPlayer(row)->ps == PS_OCCUPIED)
+		if(GAMECLIENT.IsSavegame() && player->ps == PS_OCCUPIED)
 		{
-			ctrlComboBox * combo = group->AddComboBox(8,570,cy,150,22,tc,NormalFont,150,!GAMECLIENT.IsHost());
+			ctrlComboBox *combo = group->AddComboBox(8, 570, cy, 150, 22, tc, NormalFont, 150, !GAMECLIENT.IsHost());
 
 			// Mit den alten Namen füllen
-			for(unsigned i = 0;i<GAMECLIENT.GetPlayerCount();++i)
+			for(unsigned i = 0; i < GAMECLIENT.GetPlayerCount(); ++i)
 			{
 				if(GAMECLIENT.GetPlayer(i)->origin_name.length())
 				{
 					combo->AddString(GAMECLIENT.GetPlayer(i)->origin_name.c_str());
 					if(i == row)
-						combo->SetSelection(combo->GetCount()-1);
+						combo->SetSelection(combo->GetCount() - 1);
 				}
 			}
 		}
 
 		// Ping bei KI und Host ausblenden
-		if(GAMECLIENT.GetPlayer(row)->ps == PS_KI || GAMECLIENT.GetPlayer(row)->is_host)
+		if(player->ps == PS_KI || player->is_host)
 			ping->SetVisible(false);
 
 		// Felder ausfüllen
-		ChangeNation(row,GAMECLIENT.GetPlayer(row)->nation);
-		ChangeTeam(row,GAMECLIENT.GetPlayer(row)->team);
+		ChangeNation(row,player->nation);
+		ChangeTeam(row,player->team);
 		ChangePing(row);
-		ChangeReady(row,GAMECLIENT.GetPlayer(row)->ready);
-		ChangeColor(row,GAMECLIENT.GetPlayer(row)->color);
+		ChangeReady(row,player->ready);
+		ChangeColor(row,player->color);
 	}
 }
 

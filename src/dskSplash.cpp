@@ -1,4 +1,4 @@
-// $Id: dskSplash.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: dskSplash.cpp 6037 2010-02-17 11:26:49Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -25,6 +25,7 @@
 #include "WindowManager.h"
 #include "Loader.h"
 #include "VideoDriverWrapper.h"
+#include "GameManager.h"
 
 #include "dskMainMenu.h"
 
@@ -53,7 +54,13 @@
  */
 dskSplash::dskSplash() : Desktop(LOADER.GetImageN("splash", 0))
 {
+	GAMEMANAGER.SetCursor(CURSOR_NONE);
 	AddTimer(0, 5000);
+}
+
+dskSplash::~dskSplash()
+{
+	GAMEMANAGER.SetCursor();
 }
 
 void dskSplash::Msg_Timer(const unsigned int ctrl_id)

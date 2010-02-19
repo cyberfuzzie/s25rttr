@@ -1,4 +1,4 @@
-// $Id: AddonManager.cpp 6039 2010-02-17 19:13:04Z FloSoft $
+// $Id: AddonManager.cpp 6048 2010-02-19 11:36:11Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -146,8 +146,6 @@ void AddonManager::Serialize(Serializer *ser) const
 void AddonManager::Deserialize(Serializer *ser)
 {
 	unsigned int count = ser->PopUnsignedInt();
-
-	assert(count == addons.size());
 
 	reset();
 

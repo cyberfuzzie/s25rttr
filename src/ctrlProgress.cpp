@@ -1,4 +1,4 @@
-// $Id: ctrlProgress.cpp 6007 2010-02-12 11:54:50Z FloSoft $
+// $Id: ctrlProgress.cpp 6052 2010-02-20 14:06:09Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -90,8 +90,8 @@ bool ctrlProgress::Draw_(void)
 	// Buttons
 	DrawControls();
 
-	unsigned int percentage = position*100/maximum;
-	unsigned int progress = (width - (height*2) - 4 - 2*x_padding)* percentage / 100;
+	unsigned int percentage = position * 100 / maximum;
+	unsigned int progress = (width - height*2 - 4 - 2*x_padding) * position / maximum;
 
 	// Farbe herausfinden
 	unsigned int color = 0xFFFF0000;
@@ -111,7 +111,7 @@ bool ctrlProgress::Draw_(void)
 	}
 
 	// Leiste
-	DrawRectangle(GetX() + height + 2 + x_padding, GetY() + 4 + y_padding, progress, height-8-2*y_padding, color);
+	DrawRectangle(GetX() + height + 2 + x_padding, GetY() + 4 + y_padding, progress, height -8 - 2*y_padding, color);
 
 	// Prozentzahlen zeichnen
 	std::stringstream percent;
@@ -156,7 +156,21 @@ void ctrlProgress::Msg_ButtonClick(const unsigned int ctrl_id)
  */
 bool ctrlProgress::Msg_LeftDown(const MouseCoords& mc)
 {
-	return RelayMouseMessage(&Window::Msg_LeftDown, mc);
+	// Test if clicked on progress bar
+	if(Coll(mc.x, mc.y, 
+		GetX() + height + 2 + x_padding, GetY() + 4 + y_padding, 
+		width - height*2 - 4 - 2*x_padding, height - 8 - 2*y_padding))
+	{
+		// The additional check for (position > maximum) is
+		// mathematically redundant here; if there was more code than 
+		// it in SetPosition() we had to call it here instead of simply:
+		position = ( mc.x - (GetX() + height + 2 + x_padding) 
+		             + /*rounding:*/ (width - height*2 - 4 - 2*x_padding) / maximum / 2)
+		           * maximum / (width - height*2 - 4 - 2*x_padding);
+		return true;
+	}
+	else
+		return RelayMouseMessage(&Window::Msg_LeftDown, mc);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

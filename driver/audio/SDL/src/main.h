@@ -1,4 +1,4 @@
-// $Id: main.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: main.h 6052 2010-02-20 14:06:09Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -31,6 +31,16 @@
 #	include <unistd.h>
 #	include <limits.h>
 #endif // !_WIN32
+
+#ifdef _MSC_VER
+	#define getch _getch
+#ifndef snprintf
+	#define snprintf _snprintf
+#endif
+	#ifndef assert
+		#define assert _ASSERT
+	#endif
+#endif
 
 #if defined _WIN32 && defined _DEBUG
 #	include <crtdbg.h>

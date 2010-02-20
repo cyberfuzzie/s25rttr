@@ -1,4 +1,4 @@
-// $Id: SDL.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: SDL.cpp 6052 2010-02-20 14:06:09Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -385,7 +385,9 @@ void AudioSDL::SetMasterEffectVolume(unsigned char volume)
 	master_effects_volume = volume;
 	//Mix_SetPanning(MIX_CHANNEL_POST, volume2, volume2);
 
-	printf("%s\n", Mix_GetError());
+	char mix_error[1024];
+	if(snprintf(mix_error, 1024, "%s", Mix_GetError()))
+		printf("%s\n", mix_error);
 }
 
 void AudioSDL::SetMasterMusicVolume(unsigned char volume)

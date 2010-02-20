@@ -1,4 +1,4 @@
-// $Id: SDL.cpp 5902 2010-01-17 19:14:21Z FloSoft $
+// $Id: SDL.cpp 6054 2010-02-20 14:46:42Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -477,18 +477,24 @@ unsigned long VideoSDL::GetTickCount(void) const
 	return SDL_GetTicks();
 }
 
-/// Listet verfügbare Videomodi auf
+///////////////////////////////////////////////////////////////////////////////
+/** 
+ *   Listet verfügbare Videomodi auf
+ *
+ *  @param[in,out] video_modes Der Vector mit den Videomodes
+ *
+ *  @author OLiver
+ */
 void VideoSDL::ListVideoModes(std::vector<VideoMode>& video_modes) const
 {
 	SDL_Rect** modes = SDL_ListModes(NULL, SDL_FULLSCREEN|SDL_HWSURFACE);
 
-	for (unsigned i=0; modes[i]; ++i)
+	for (unsigned int i = 0; modes[i]; ++i)
 	{
 		VideoMode vm = { modes[i]->w, modes[i]->h };
 		if(std::find(video_modes.begin(), video_modes.end(), vm) == video_modes.end())
 			video_modes.push_back(vm);
 	}
-
 }
 
 ///////////////////////////////////////////////////////////////////////////////

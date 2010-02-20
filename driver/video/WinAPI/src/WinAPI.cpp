@@ -1,4 +1,4 @@
-// $Id: WinAPI.cpp 5901 2010-01-17 13:45:34Z FloSoft $
+// $Id: WinAPI.cpp 6054 2010-02-20 14:46:42Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -681,7 +681,11 @@ void VideoWinAPI::OnWMPaste()
 	const char *pData = (const char *)GlobalLock(hData);
 
 	while( pData && *pData )
-		OnWMChar( *(pData++), true );
+	{
+		char c = *(pData++);
+		OnWMKeyDown( c );
+		OnWMChar( c, true );
+	}
 
 	GlobalUnlock(hData);
 	CloseClipboard();

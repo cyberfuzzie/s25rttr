@@ -1,4 +1,4 @@
-// $Id: LobbyServer.cpp 6042 2010-02-17 20:49:25Z FloSoft $
+// $Id: LobbyServer.cpp 6057 2010-02-20 16:27:08Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -684,6 +684,9 @@ void LobbyServer::SendPlayerList(unsigned int id)
 
 		if(p.isOccupied() && !p.isHost() && !p.isClient() )
 		{
+			if(p.getPunkte() == 0 && !MYSQLCLIENT.GetRankingInfo(p))
+                		LOG.lprintf("Failed to lookup Ranking of player %s!\n", p.getName().c_str());
+
 			++count;
 			list.push_back(p);
 		}

@@ -1,4 +1,4 @@
-// $Id: MySQL.cpp 6042 2010-02-17 20:49:25Z FloSoft $
+// $Id: MySQL.cpp 6057 2010-02-20 16:27:08Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -421,7 +421,7 @@ bool MySQL::AddServer(LobbyServerInfo *Info)
 
 	mysql_free_result(pResult);*/
 
-	snprintf(query, 1024, "INSERT INTO `lobby_servers` (`name`, `hostname`, `port`, `version`, `map`, `maxplayers`, `curplayer`, `has_password`) VALUES ('%s', '%s', '%d', '%s', '%s', 0, 0, %d);", name, host, Info->getPort(), version, Info->getMap().c_str(), (Info->hasPassword() ? 1 : 0));
+	snprintf(query, 1024, "INSERT INTO `lobby_servers` (`name`, `hostname`, `port`, `version`, `map`, `maxplayers`, `curplayer`, `has_password`) VALUES ('%s', '%s', '%d', '%s', '%s', 0, 0, %d);", name, host, Info->getPort(), version, map, (Info->hasPassword() ? 1 : 0));
 
 	if(!DoQuery(query))
 		return false;

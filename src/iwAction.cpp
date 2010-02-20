@@ -1,4 +1,4 @@
-// $Id: iwAction.cpp 6022 2010-02-14 16:51:44Z OLiver $
+// $Id: iwAction.cpp 6055 2010-02-20 15:57:19Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -245,7 +245,22 @@ iwAction::iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, cons
 				if (!building_available[bt][j])
 					continue;
 
-				build_tab->GetGroup(bt)->AddBuildingIcon(j, (k % 5) * 36, (k / 5) * 36 + 45, building_icons[bt][j], GAMECLIENT.GetLocalPlayer()->nation, 36, _(BUILDING_NAMES[building_icons[bt][j]]));
+				// Baukosten im Tooltip mit anzeigen
+				std::stringstream tooltip;
+				tooltip << _(BUILDING_NAMES[building_icons[bt][j]]);
+
+				tooltip << _("\nCosts: ");
+				if(BUILDING_COSTS[GAMECLIENT.GetLocalPlayer()->nation][building_icons[bt][j]].boards > 0)
+					tooltip << (int)BUILDING_COSTS[GAMECLIENT.GetLocalPlayer()->nation][building_icons[bt][j]].boards << _(" boards");
+				if(BUILDING_COSTS[GAMECLIENT.GetLocalPlayer()->nation][building_icons[bt][j]].stones > 0)
+				{
+					if(BUILDING_COSTS[GAMECLIENT.GetLocalPlayer()->nation][building_icons[bt][j]].boards > 0)
+						tooltip << ", ";
+					tooltip << (int)BUILDING_COSTS[GAMECLIENT.GetLocalPlayer()->nation][building_icons[bt][j]].stones << _(" stones");
+				}
+				
+				build_tab->GetGroup(bt)->AddBuildingIcon(j, (k % 5) * 36, (k / 5) * 36 + 45, building_icons[bt][j], GAMECLIENT.GetLocalPlayer()->nation, 36, tooltip.str());
+				
 				++k;
 			}
 		}

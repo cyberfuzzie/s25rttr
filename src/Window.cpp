@@ -1,4 +1,4 @@
-// $Id: Window.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: Window.cpp 6055 2010-02-20 15:57:19Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -306,7 +306,7 @@ ctrlBuildingIcon *Window::AddBuildingIcon(unsigned int id,
 										  BuildingType type,
 										  const Nation nation,
 										  unsigned short size,
-										  const char *tooltip)
+										  const std::string& tooltip)
 {
 	if(scale)
 	{

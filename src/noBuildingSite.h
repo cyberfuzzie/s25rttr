@@ -1,4 +1,4 @@
-// $Id: noBuildingSite.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: noBuildingSite.h 6055 2010-02-20 15:57:19Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -57,6 +57,10 @@ class noBuildingSite : public noBaseBuilding
 	list<Ware*> ordered_boards, ordered_stones;
 	
 public:
+	unsigned char getUsedBoards() const { return used_boards; }
+	unsigned char getUsedStones() const { return used_stones; }
+	unsigned char getBoards() const { return boards; }
+	unsigned char getStones() const { return stones; }
 
 	noBuildingSite(const BuildingType type,const unsigned short x, const unsigned short y, const unsigned char player);
 	/// Konstruktor für Hafenbaustellen vom Schiff aus

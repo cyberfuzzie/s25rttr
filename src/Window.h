@@ -1,4 +1,4 @@
-// $Id: Window.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: Window.h 6055 2010-02-20 15:57:19Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -136,7 +136,7 @@ public:
 	}
 
 	/// fügt ein BuildingIcon hinzu.
-	ctrlBuildingIcon *AddBuildingIcon(unsigned int id, unsigned short x, unsigned short y, BuildingType type, const Nation nation, unsigned short size = 36, const char *tooltip = NULL);
+	ctrlBuildingIcon *AddBuildingIcon(unsigned int id, unsigned short x, unsigned short y, BuildingType type, const Nation nation, unsigned short size = 36, const std::string& tooltip = "");
 	/// fügt einen Text-ButtonCtrl hinzu.
 	ctrlTextButton *AddTextButton(unsigned int id, unsigned short x, unsigned short y,unsigned short width, unsigned short height, const TextureColor tc,const std::string& text,  glArchivItem_Font *font, const std::string& tooltip = "");
 	/// fügt einen Color-ButtonCtrl hinzu.

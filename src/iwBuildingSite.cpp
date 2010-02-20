@@ -1,4 +1,4 @@
-// $Id: iwBuildingSite.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: iwBuildingSite.cpp 6055 2010-02-20 15:57:19Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -47,9 +47,9 @@
  *
  *  @author OLiver
  */
-iwBuildingSite::iwBuildingSite(GameWorldViewer * const gwv,const noBuildingSite * const buildingsite) 
-: IngameWindow(buildingsite->CreateGUIID(), 0xFFFE, 0xFFFE, 226, 194, _(BUILDING_NAMES[buildingsite->GetBuildingType()]), LOADER.GetImageN("resource",41)),
-	gwv(gwv),buildingsite(buildingsite)
+iwBuildingSite::iwBuildingSite(GameWorldViewer *const gwv, const noBuildingSite *const buildingsite) 
+: IngameWindow(buildingsite->CreateGUIID(), 0xFFFE, 0xFFFE, 226, 194, _(BUILDING_NAMES[buildingsite->GetBuildingType()]), LOADER.GetImageN("resource", 41)),
+	gwv(gwv), buildingsite(buildingsite)
 {
 	// Bild des Gebäudes
 	AddImage(0, 113, 130, LOADER.GetNationImageN(GAMECLIENT.GetLocalPlayer()->nation, 250+5*buildingsite->GetBuildingType()));
@@ -65,25 +65,75 @@ iwBuildingSite::iwBuildingSite(GameWorldViewer * const gwv,const noBuildingSite 
 	AddImageButton( 4, 179, 147, 30, 32, TC_GREY, LOADER.GetImageN("io", 107), _("Go to place"));
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void iwBuildingSite::Msg_ButtonClick(const unsigned int ctrl_id)
 {
 	switch(ctrl_id)
 	{
 	case 2: // Hilfe
 		{
-			WindowManager::inst().Show(new iwHelp(GUI_ID(CGI_HELPBUILDING+buildingsite->GetBuildingType()),_(BUILDING_NAMES[buildingsite->GetBuildingType()]),
-				_(BUILDING_HELP_STRINGS[buildingsite->GetBuildingType()])));
+			WindowManager::inst().Show(new iwHelp(GUI_ID(CGI_HELPBUILDING + buildingsite->GetBuildingType()),
+										_(BUILDING_NAMES[buildingsite->GetBuildingType()]),
+										_(BUILDING_HELP_STRINGS[buildingsite->GetBuildingType()]) ) );
 		} break;
 	case 3: // Gebäude abbrennen
 		{
 			// Abreißen?
 			Close();
-			WindowManager::inst().Show(new iwDemolishBuilding(gwv,GOT_NOB_USUAL,buildingsite->GetX(), buildingsite->GetY(),buildingsite->GetBuildingType(),buildingsite->GetNation(),buildingsite->CreateGUIID()));
+			WindowManager::inst().Show(new iwDemolishBuilding(gwv, GOT_NOB_USUAL, 
+															  buildingsite->GetX(), buildingsite->GetY(), 
+															  buildingsite->GetBuildingType(), buildingsite->GetNation(), 
+															  buildingsite->CreateGUIID() ) );
 		} break;
-
 	case 4: // "Gehe Zu Ort"
 		{
 			gwv->MoveToMapObject(buildingsite->GetX(), buildingsite->GetY());	
 		} break;
+	}
+}
+
+void iwBuildingSite::Msg_PaintAfter()
+{
+	// Baukosten zeichnen
+	for(unsigned char i = 0; i < 2; ++i)
+	{
+		unsigned int wares_count = 0;
+		unsigned int wares_delivered = 0;
+		unsigned int wares_used = 0;
+
+		if(i == 0)
+		{
+			wares_count = BUILDING_COSTS[buildingsite->GetNation()][buildingsite->GetBuildingType()].boards;
+			wares_used = buildingsite->getUsedBoards();
+			wares_delivered = buildingsite->getBoards() + wares_used;
+		}
+		else
+		{
+			wares_count = BUILDING_COSTS[buildingsite->GetNation()][buildingsite->GetBuildingType()].stones;
+			wares_used = buildingsite->getUsedStones();
+			wares_delivered = buildingsite->getStones() + wares_used;
+		}
+
+		if(wares_count == 0)
+			break;
+
+		// "Schwarzer Rahmen"
+		DrawRectangle(GetX() + width/2 - 24 * wares_count / 2, GetY()+60 + i*29, 24*wares_count, 24, 0x80000000);
+
+		// Die Waren
+		for(unsigned char z = 0; z < wares_count; ++z)
+		{
+			glArchivItem_Bitmap *bitmap = LOADER.GetMapImageN(2250 + (i == 0 ? GD_BOARDS : GD_STONES));
+			bitmap->Draw(GetX() + width/2 - 24 * wares_count / 2 + 24*z+12, GetY()+72 + i*28, 0, 0, 0, 0, 0, 0, (z < wares_delivered ? 0xFFFFFFFF : 0xFF404040) );
+
+			// Hammer wenn Ware verbaut
+			if(z < wares_used)
+				LOADER.GetMapImageN(2250 + GD_HAMMER)->Draw(GetX() + width/2 - 24 * wares_count / 2 + 24*z+12, GetY()+72 + i*28);
+		}
 	}
 }

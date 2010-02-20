@@ -1,4 +1,4 @@
-// $Id: AddonManager.h 5991 2010-02-10 15:44:37Z FloSoft $
+// $Id: AddonManager.h 6053 2010-02-20 14:30:51Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -89,6 +89,8 @@ private:
 
 		if(std::find(addons.begin(), addons.end(), addon->getId()) == addons.end())
 			addons.push_back(item(addon));
+
+		std::sort(addons.begin(), addons.end());
 	}
 
 	struct item
@@ -100,6 +102,7 @@ private:
 		unsigned int status;
 
 		bool operator==(const AddonId &o) const { return (addon ? addon->getId() == o : false); }
+		bool operator<(const item &o) const { return (addon->getName().compare(o.addon->getName()) < 0); }
 	};
 
 	std::vector<item> addons;

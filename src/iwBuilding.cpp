@@ -1,4 +1,4 @@
-// $Id: iwBuilding.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: iwBuilding.cpp 6056 2010-02-20 16:08:57Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -101,9 +101,7 @@ iwBuilding::iwBuilding(GameWorldViewer * const gwv,dskGameInterface *const gi,no
 	if(building->GetBuildingType() == BLD_CATAPULT || building->GetBuildingType() == BLD_LOOKOUTTOWER)
 		productivity->SetVisible(false);
 
-	ctrlText *text = AddText(10, 113, 50, _("(House unoccupied)"), COLOR_RED, glArchivItem_Font::DF_CENTER, NormalFont); 
-
-	text->SetVisible(!building->HasWorker());
+	AddText(10, 113, 50, _("(House unoccupied)"), COLOR_RED, glArchivItem_Font::DF_CENTER, NormalFont); 
 }
 
 
@@ -114,6 +112,9 @@ void iwBuilding::Msg_PaintBefore()
 
 	if(bitmap)
 		bitmap->Draw(GetX()+117, GetY()+114, 0, 0, 0, 0, 0, 0, COLOR_SHADOW);
+
+	// Haus unbesetzt ggf ausblenden
+	GetCtrl<ctrlText>(10)->SetVisible(!building->HasWorker());
 }
 
 void iwBuilding::Msg_PaintAfter()

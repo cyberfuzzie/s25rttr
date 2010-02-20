@@ -1,4 +1,4 @@
-// $Id: MySQL.cpp 6057 2010-02-20 16:27:08Z FloSoft $
+// $Id: MySQL.cpp 6058 2010-02-20 16:32:38Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -362,7 +362,7 @@ bool MySQL::GetRankingInfo(LobbyPlayerInfo& player)
 	if(punkte < 0)
 		punkte = 0;
 
-	player.setId(0);
+	//player.setId(0);
 	player.setName(Row[0]);
 	player.setGewonnen(atoi(Row[1]));
 	player.setVerloren(atoi(Row[2]));

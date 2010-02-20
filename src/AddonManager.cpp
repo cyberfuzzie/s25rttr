@@ -1,4 +1,4 @@
-// $Id: AddonManager.cpp 6051 2010-02-20 13:41:35Z FloSoft $
+// $Id: AddonManager.cpp 6059 2010-02-20 17:45:40Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -29,6 +29,7 @@
 #include "AddonRefundMaterials.h"
 #include "AddonExhaustibleWells.h"
 #include "AddonRefundOnEmergency.h"
+#include "AddonManualRoadEnlargement.h"
 
 #include "AddonDemolitionProhibition.h"
 
@@ -82,6 +83,7 @@ void AddonManager::reset(bool recreate)
 		registerAddon(new AddonRefundMaterials);
 		registerAddon(new AddonExhaustibleWells);
 		registerAddon(new AddonRefundOnEmergency);
+		registerAddon(new AddonManualRoadEnlargement);
 
 		registerAddon(new AddonDemolitionProhibition);
 

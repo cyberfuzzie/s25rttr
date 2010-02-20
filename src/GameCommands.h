@@ -50,7 +50,8 @@ enum Type
 	SEAATTACKFALLBACK,
 	SURRENDER,
 	CHEAT_ARMAGEDDON,
-	DESTROYALL
+	DESTROYALL,
+	UPGRADEROAD
 };
 
 
@@ -176,6 +177,28 @@ public:
 	{
 		Coords::Serialize(ser);
 
+		ser->PushUnsignedChar(start_dir);
+	}
+
+	/// Führt das GameCommand aus
+	void Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid);
+};
+
+/// Straße aufwerten
+class UpgradeRoad : public Coords
+{
+	friend class GameClient;
+	/// Richtung in der von der Flagge an x;y aus gesehen die Straße zerstört werden soll
+	const unsigned char start_dir;
+public:
+	UpgradeRoad(const MapCoord x, const MapCoord y, const unsigned char start_dir)
+		: Coords(UPGRADEROAD,x,y), start_dir(start_dir) {}
+	UpgradeRoad(Serializer * ser) 
+		: Coords(UPGRADEROAD,ser), start_dir(ser->PopUnsignedChar()) {}
+
+	virtual void Serialize(Serializer *ser) const
+	{
+		Coords::Serialize(ser);
 		ser->PushUnsignedChar(start_dir);
 	}
 

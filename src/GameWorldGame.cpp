@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 6022 2010-02-14 16:51:44Z OLiver $
+// $Id: GameWorldGame.cpp 6059 2010-02-20 17:45:40Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -476,6 +476,13 @@ void GameWorldGame::DestroyRoad(const MapCoord x, const MapCoord y, const unsign
 	GetSpecObj<noFlag>(x,y)->DestroyRoad(dir);
 }
 
+void GameWorldGame::UpgradeRoad(const MapCoord x, const MapCoord y, const unsigned char dir)
+{
+	if(!GetSpecObj<noFlag>(x,y))
+		return;
+
+	GetSpecObj<noFlag>(x,y)->UpgradeRoad(dir);
+}
 
 void GameWorldGame::RecalcTerritory(const noBaseBuilding * const building,const unsigned short radius, const bool destroyed, const bool newBuilt)
 {

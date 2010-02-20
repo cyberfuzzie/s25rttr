@@ -1,4 +1,4 @@
-// $Id: iwAction.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: iwAction.h 6059 2010-02-20 17:45:40Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -96,6 +96,8 @@ private:
 
 	/// Fügt Angriffs-Steuerelemente für bestimmte Gruppe hinzu
 	void AddAttackControls(ctrlGroup * group, const unsigned attackers_count);
+	void AddUpgradeRoad(ctrlGroup *group, unsigned int &x, unsigned int& width);
+	void DoUpgradeRoad();
 
 };
 

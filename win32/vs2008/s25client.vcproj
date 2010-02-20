@@ -2017,6 +2017,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\src\AddonManualRoadEnlargement.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\AddonMaxWaterwayLength.h"
 						>
 					</File>

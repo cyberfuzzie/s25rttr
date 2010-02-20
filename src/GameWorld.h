@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 6022 2010-02-14 16:51:44Z OLiver $
+// $Id: GameWorld.h 6059 2010-02-20 17:45:40Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -641,6 +641,8 @@ public:
 		unsigned short start_x,unsigned short start_y, const std::vector<unsigned char>& route);
 	/// Reißt eine Straße ab
 	void DestroyRoad(const MapCoord x, const MapCoord y, const unsigned char dir);
+	/// baut eine Straße aus
+	void UpgradeRoad(const MapCoord x, const MapCoord y, const unsigned char dir);
 
 	/// Berechnet das Land in einem bestimmten Bereich (um ein neues, abgerissenes oder eingenommenes
 	/// Militärgebäude rum) neu, destroyed gibt an, ob building abgerissen wurde und somit nicht einberechnet werden soll

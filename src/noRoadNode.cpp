@@ -1,4 +1,4 @@
-// $Id: noRoadNode.cpp 6006 2010-02-12 11:20:01Z FloSoft $
+// $Id: noRoadNode.cpp 6059 2010-02-20 17:45:40Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -83,6 +83,12 @@ noRoadNode * noRoadNode::GetNeighbour(const unsigned char dir) const
 		return routes[dir]->GetF2();
 	else
 		return routes[dir]->GetF1();
+}
+
+void noRoadNode::UpgradeRoad(const unsigned char dir)
+{
+	if(routes[dir])
+		routes[dir]->UpgradeDonkeyRoad();
 }
 
 void noRoadNode::DestroyRoad(const unsigned char dir)

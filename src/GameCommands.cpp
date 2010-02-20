@@ -1,4 +1,4 @@
-// $Id: GameCommands.cpp 5854 2010-01-04 16:30:33Z FloSoft $
+// $Id: GameCommands.cpp 6059 2010-02-20 17:45:40Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -67,6 +67,7 @@ GameCommand * GameCommand::CreateGameCommand(const Type gst, Serializer * ser)
 	case SURRENDER: return new Surrender(ser);
 	case CHEAT_ARMAGEDDON: return new CheatArmageddon(ser);
 	case DESTROYALL: return new DestroyAll(ser);
+	case UPGRADEROAD: return new UpgradeRoad(ser);
 	}
 
 	return NULL;
@@ -88,6 +89,10 @@ void BuildRoad::Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsi
 void DestroyRoad::Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid)
 {
 	gwg.DestroyRoad(x,y,start_dir);
+}
+void UpgradeRoad::Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid)
+{
+	gwg.UpgradeRoad(x,y,start_dir);
 }
 void ChangeDistribution::Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid)
 {

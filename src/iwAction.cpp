@@ -1,4 +1,4 @@
-// $Id: iwAction.cpp 6055 2010-02-20 15:57:19Z FloSoft $
+// $Id: iwAction.cpp 6059 2010-02-20 17:45:40Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -311,15 +311,24 @@ iwAction::iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, cons
 		if(params == AWFT_WATERFLAG)
 			nr = 94;
 
-		group->AddImageButton(1, 0, 45, 180, 36, TC_GREY, LOADER.GetImageN("io",  nr),_("Erect flag"));
+		// Straße aufwerten ggf anzeigen
+		unsigned int width = 180, x = 90;
+		AddUpgradeRoad(group, x, width);
+
+		group->AddImageButton(1, 0, 45, width, 36, TC_GREY, LOADER.GetImageN("io", nr), _("Erect flag"));
 	}
 	
 	// Cut-main_tab
 	if(tabs.cutroad)
 	{
-		ctrlGroup *group = 	main_tab->AddTab(LOADER.GetImageN("io", 19), _("Dig up road"), TAB_CUTROAD);
+		ctrlGroup *group = main_tab->AddTab(LOADER.GetImageN("io", 19), _("Dig up road"), TAB_CUTROAD);
 
-		group->AddImageButton(1, 0, 45, 180, 36, TC_GREY, LOADER.GetImageN("io", 32), _("Dig up road"));
+		// Straße aufwerten ggf anzeigen
+		unsigned int width = 180, x = 0;
+		if(!tabs.setflag)
+			AddUpgradeRoad(group, x, width);
+
+		group->AddImageButton(1, x, 45, width, 36, TC_GREY, LOADER.GetImageN("io", 32), _("Dig up road"));
 	}
 	
 	if(tabs.attack)
@@ -358,6 +367,33 @@ iwAction::iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, cons
 		y = mouse_y-GetHeight()-40;
 	
 	VideoDriverWrapper::inst().SetMousePos(GetX()+20,GetY()+75);
+}
+
+void iwAction::AddUpgradeRoad(ctrlGroup *group, unsigned int &x, unsigned int& width)
+{
+	assert(group);
+
+	if(ADDONMANAGER.isEnabled(ADDON_MANUAL_ROAD_ENLARGEMENT))
+	{
+		unsigned char flag_dir = 0;
+		noFlag *flag = gwv->GetRoadFlag(selected_x, selected_y, flag_dir);
+		if(flag && flag->routes[flag_dir]->GetRoadType() == RoadSegment::RT_NORMAL)
+		{
+			width = 90;
+
+			group->AddImageButton(2, x, 45, width, 36, TC_GREY, LOADER.GetImageN("io", 44), _("Upgrade to donkey road")); 
+
+			x += width;
+		}
+	}
+}
+
+void iwAction::DoUpgradeRoad()
+{
+	unsigned char flag_dir = 0;
+	noFlag *flag = gwv->GetRoadFlag(selected_x, selected_y, flag_dir);
+	if(flag)
+		GAMECLIENT.AddGC(new gc::UpgradeRoad(flag->GetX(), flag->GetY(), flag_dir));
 }
 
 /// Fügt Angriffs-Steuerelemente für bestimmte Gruppe hinzu
@@ -682,6 +718,10 @@ void iwAction::Msg_ButtonClick_TabSetFlag(const unsigned int ctrl_id)
 		{
 			GAMECLIENT.AddGC(new gc::SetFlag(selected_x, selected_y));
 		} break;
+	case 2: // Weg aufwerten
+		{
+			DoUpgradeRoad();
+		} break;
 	}
 
 	Close();
@@ -697,6 +737,10 @@ void iwAction::Msg_ButtonClick_TabCutRoad(const unsigned int ctrl_id)
 			noFlag *flag = gwv->GetRoadFlag(selected_x, selected_y, flag_dir);
 			if(flag)
 				GAMECLIENT.AddGC(new gc::DestroyRoad(flag->GetX(), flag->GetY(), flag_dir));
+		} break;
+	case 2: // Straße aufwerten
+		{
+			DoUpgradeRoad();
 		} break;
 	}
 

@@ -1,4 +1,4 @@
-// $Id: const_addons.h 6051 2010-02-20 13:41:35Z FloSoft $
+// $Id: const_addons.h 6059 2010-02-20 17:45:40Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -41,6 +41,7 @@ enum AddonId
 	ADDON_REFUND_MATERIALS			= 0x00000002,
 	ADDON_EXHAUSTIBLE_WELLS			= 0x00000003,
 	ADDON_REFUND_ON_EMERGENCY		= 0x00000004,
+	ADDON_MANUAL_ROAD_ENLARGEMENT	= 0x00000005,
 
 	ADDON_DEMOLITION_PROHIBITION	= 0x00100000,
 

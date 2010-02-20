@@ -1,4 +1,4 @@
-// $Id: noBaseBuilding.cpp 6020 2010-02-14 12:51:18Z FloSoft $
+// $Id: noBaseBuilding.cpp 6051 2010-02-20 13:41:35Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -115,17 +115,28 @@ void noBaseBuilding::Destroy_noBaseBuilding()
 	// ggf. Fenster schließen
 	gwg->ImportantObjectDestroyed(x, y);
 
-	// Baukosten zurückerstatten
-	
-	if(GetGOT() != GOT_BUILDINGSITE && ADDONMANAGER.isEnabled(ADDON_REFUND_MATERIALS))
+	// Baukosten zurückerstatten (nicht bei Baustellen)
+	if( (GetGOT() != GOT_BUILDINGSITE) && 
+		( ADDONMANAGER.isEnabled(ADDON_REFUND_MATERIALS) || 
+		ADDONMANAGER.isEnabled(ADDON_REFUND_ON_EMERGENCY) ) )
 	{
 		// lebt unsere Flagge noch?
 		noFlag *flag = GetFlag();
 		if(flag)
 		{
+			unsigned int percent_index = 0;
+
+			// wenn Rückerstattung aktiv ist, entsprechende Prozentzahl wählen
+			if(ADDONMANAGER.isEnabled(ADDON_REFUND_MATERIALS))
+				percent_index = ADDONMANAGER.getSelection(ADDON_REFUND_MATERIALS);
+
+			// wenn Rückerstattung bei Notprogramm aktiv ist, 50% zurückerstatten
+			else if(gwg->GetPlayer(player)->hasEmergency() && ADDONMANAGER.isEnabled(ADDON_REFUND_ON_EMERGENCY))
+				percent_index = 2;
+			
 			// wieviel kriegt man von jeder Ware wieder?
 			const unsigned int percents[5] = { 0, 25, 50, 75, 100 };
-			const unsigned int percent = 10 * percents[ADDONMANAGER.getSelection(ADDON_REFUND_MATERIALS)];
+			const unsigned int percent = 10 * percents[percent_index];
 
 			// zurückgaben berechnen (abgerundet)
 			unsigned int boards = (percent * BUILDING_COSTS[nation][type].boards) / 1000;

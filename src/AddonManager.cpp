@@ -1,4 +1,4 @@
-// $Id: AddonManager.cpp 6048 2010-02-19 11:36:11Z FloSoft $
+// $Id: AddonManager.cpp 6051 2010-02-20 13:41:35Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -24,17 +24,18 @@
 
 #include "Settings.h"
 
-#include "AddonChangeGoldDeposits.h"
-#include "AddonMaxWaterwayLength.h"
-#include "AddonCustomBuildSequence.h"
-#include "AddonStatisticsVisibility.h"
-
-#include "AddonDemolitionProhibition.h"
-
 #include "AddonLimitCatapults.h"
 #include "AddonInexhaustibleMines.h"
 #include "AddonRefundMaterials.h"
 #include "AddonExhaustibleWells.h"
+#include "AddonRefundOnEmergency.h"
+
+#include "AddonDemolitionProhibition.h"
+
+#include "AddonChangeGoldDeposits.h"
+#include "AddonMaxWaterwayLength.h"
+#include "AddonCustomBuildSequence.h"
+#include "AddonStatisticsVisibility.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
@@ -76,17 +77,18 @@ void AddonManager::reset(bool recreate)
 
 	if(recreate)
 	{
-		registerAddon(new AddonChangeGoldDeposits);
-		registerAddon(new AddonMaxWaterwayLength);
-		registerAddon(new AddonCustomBuildSequence);
-		registerAddon(new AddonStatisticsVisibility);
-
-		registerAddon(new AddonDemolitionProhibition);
-
 		registerAddon(new AddonLimitCatapults);
 		registerAddon(new AddonInexhaustibleMines);
 		registerAddon(new AddonRefundMaterials);
 		registerAddon(new AddonExhaustibleWells);
+		registerAddon(new AddonRefundOnEmergency);
+
+		registerAddon(new AddonDemolitionProhibition);
+
+		registerAddon(new AddonChangeGoldDeposits);
+		registerAddon(new AddonMaxWaterwayLength);
+		registerAddon(new AddonCustomBuildSequence);
+		registerAddon(new AddonStatisticsVisibility);
 	}
 }
 

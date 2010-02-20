@@ -2025,6 +2025,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\src\AddonRefundOnEmergency.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\Addons.cpp"
 						>
 					</File>

@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.h 6029 2010-02-15 19:10:57Z OLiver $
+// $Id: GameClientPlayer.h 6051 2010-02-20 13:41:35Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -439,6 +439,9 @@ private:
 
 	// Notfall-Programm aktiviert ja/nein (Es gehen nur noch Res an Holzfäller- und Sägewerk-Baustellen raus)
 	bool emergency;
+
+public:
+	bool hasEmergency() const { return emergency; }
 
 };
 

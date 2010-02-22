@@ -1,4 +1,4 @@
-// $Id: AIConstruction.cpp 5991 2010-02-10 15:44:37Z FloSoft $
+// $Id: AIConstruction.cpp 6067 2010-02-22 17:06:18Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -269,7 +269,7 @@ BuildingType AIConstruction::ChooseMilitaryBuilding(MapCoord x, MapCoord y)
 		{
 			int randmil = rand();
 
-			if (randmil % 8 == 0)
+			if (randmil % 8 == 0 && player->CanBuildCatapult())
 				bld = BLD_CATAPULT;
 			else if (randmil % 2 == 0)
 				bld = BLD_FORTRESS;
@@ -290,6 +290,8 @@ unsigned AIConstruction::GetBuildingCount(BuildingType type)
 
 bool AIConstruction::Wanted(BuildingType type)
 {
+	if (type == BLD_CATAPULT && !player->CanBuildCatapult())
+		return false;
 	if ((type >= BLD_BARRACKS && type <= BLD_FORTRESS) || type == BLD_STOREHOUSE)
 		return true;
 	return GetBuildingCount(type) < buildingsWanted[type];

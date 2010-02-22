@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 6059 2010-02-20 17:45:40Z FloSoft $
+// $Id: GameWorldGame.cpp 6067 2010-02-22 17:06:18Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -260,6 +260,10 @@ void GameWorldGame::SetBuildingSite(const BuildingType type,const MapCoord x, co
 		no->Destroy();
 		delete no;
 	}
+
+	// Prüfen ob Katapult und ob Katapult erlaubt ist
+	if (type == BLD_CATAPULT && !GetPlayer(player)->CanBuildCatapult())
+		return;
 
 	// Baustelle setzen
 	SetNO(new noBuildingSite(type, x, y, player), x, y);

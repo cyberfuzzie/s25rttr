@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 6029 2010-02-15 19:10:57Z OLiver $
+// $Id: GameClientPlayer.cpp 6067 2010-02-22 17:06:18Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1984,5 +1984,37 @@ void GameClientPlayer::TestPacts()
 			}
 		}
 	}
+}
+
+
+bool GameClientPlayer::CanBuildCatapult() const
+{
+	// Wenn ADDON_LIMIT_CATAPULTS nicht aktiv ist, bauen immer erlaubt
+	if(!ADDONMANAGER.isEnabled(ADDON_LIMIT_CATAPULTS))
+		return true;
+
+	BuildingCount bc;
+	GetBuildingCount(bc);
+
+	unsigned int max = 0;
+
+	// proportional?
+	if(ADDONMANAGER.getSelection(ADDON_LIMIT_CATAPULTS) == 1)
+	{
+		max = int(bc.building_counts[BLD_BARRACKS] * 0.125 +
+			  bc.building_counts[BLD_GUARDHOUSE] * 0.25 +
+			  bc.building_counts[BLD_WATCHTOWER] * 0.5 +
+			  bc.building_counts[BLD_FORTRESS] + 0.111); // to avoid rounding errors
+	}
+	else
+	{
+		const unsigned int limits[6] = { 0, 10, 20, 30, 40, 50 };
+		max = limits[ADDONMANAGER.getSelection(ADDON_LIMIT_CATAPULTS) - 2];
+	}
+
+	if(bc.building_counts[BLD_CATAPULT] + bc.building_site_counts[BLD_CATAPULT] >= max)
+		return false;
+	else
+		return true;
 }
 

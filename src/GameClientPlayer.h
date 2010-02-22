@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.h 6051 2010-02-20 13:41:35Z FloSoft $
+// $Id: GameClientPlayer.h 6067 2010-02-22 17:06:18Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -442,6 +442,9 @@ private:
 
 public:
 	bool hasEmergency() const { return emergency; }
+
+	/// Testet ob der Spieler noch mehr Katapulte bauen darf
+	bool CanBuildCatapult() const;
 
 };
 

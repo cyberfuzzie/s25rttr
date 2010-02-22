@@ -1,10 +1,5 @@
 #!/bin/sh
 
-make
-if [ $? != 0 ] ; then
-	exit 1
-fi
-
 export LD_LIBRARY_PATH=libsiedler2/src
 export EF_ALLOW_MALLOC_0=1
 export EF_PROTECT_FREE=0
@@ -19,18 +14,25 @@ while test $# != 0 ; do
 		--*=*)
 			ac_option=`expr "X$1" : 'X\([^=]*\)='`
 			ac_optarg=`expr "X$1" : 'X[^=]*=\(.*\)'`
-			ac_shift=:
+			ac_shift=2
 			;;
 		*)
 			ac_option=$1
 			ac_optarg=$2
-			ac_shift=shift
+			ac_shift=1
 			;;
 	esac
 	
 	case $ac_option in
 		-n | --nowait)
 			NOWAIT=1
+			;;
+		-m | --makeargs)
+			MAKEARGS="$ac_optarg"
+			if [ -n "$ac_optarg" ]
+			then
+				ac_shift=2
+			fi
 			;;
 		debug)
 			CMD=gdb
@@ -52,8 +54,14 @@ while test $# != 0 ; do
 			;;
 	esac
 	
-	shift
+	shift $ac_shift
 done
+
+make $MAKEARGS
+
+if [ $? != 0 ] ; then
+	exit 1
+fi
 
 case $CMD in
 	gdb)

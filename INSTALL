@@ -1,5 +1,5 @@
 -------------------------------------------------------------------------------
-$Id: INSTALL 5719 2009-11-29 00:11:53Z Demophobie $
+$Id: INSTALL 6065 2010-02-22 10:32:37Z FloSoft $
 -------------------------------------------------------------------------------
 
 Conditions:
@@ -14,7 +14,7 @@ following folder: ../trunk/build/S2/
 Installation:
 
 cd build
-./cmake.sh $optionen	(see below)
+./cmake.sh $options	(see below)
 make
 make install            or rather ./start.sh
 

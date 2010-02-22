@@ -1,4 +1,4 @@
-// $Id: ctrlList.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: ctrlList.h 6065 2010-02-22 10:32:37Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -57,6 +57,7 @@ public:
 	
 	virtual bool Msg_MouseMove(const MouseCoords& mc);
 	virtual bool Msg_LeftDown(const MouseCoords& mc);
+	virtual bool Msg_RightDown(const MouseCoords& mc);
 	virtual bool Msg_LeftUp(const MouseCoords& mc);
 	virtual bool Msg_WheelUp(const MouseCoords& mc);
 	virtual bool Msg_WheelDown(const MouseCoords& mc);

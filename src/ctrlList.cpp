@@ -1,4 +1,4 @@
-// $Id: ctrlList.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: ctrlList.cpp 6065 2010-02-22 10:32:37Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -23,6 +23,7 @@
 #include "ctrlList.h"
 
 #include "ctrlScrollBar.h"
+#include "WindowManager.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -80,16 +81,18 @@ bool ctrlList::Msg_MouseMove(const MouseCoords& mc)
 	{
 		// Neue Selektierung
 		mouseover = (mc.y - (GetY() + 2) ) / font->getHeight();
+		WindowManager::inst().SetToolTip(this, 
+			((font->getWidth(GetItemText(mouseover)) > width - 22) ?
+			  GetItemText(mouseover) : ""));
 		return true;
 	}
-	else
-	{
-		mouseover = 0xFFFF;
-		// Für die Scrollbar weiterleiten
-		return  scrollbar->Msg_MouseMove(mc);
-	}
 
-	
+	// Mouse-Over deaktivieren und Tooltip entfernen
+	mouseover = 0xFFFF;
+	WindowManager::inst().SetToolTip(this, "");
+
+	// Für die Scrollbar weiterleiten
+	return scrollbar->Msg_MouseMove(mc);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -105,19 +108,45 @@ bool ctrlList::Msg_LeftDown(const MouseCoords& mc)
 	// Wenn Maus in der Liste
 	if(Coll(mc.x, mc.y, GetX() + 2, GetY() + 2, width - 22, height - 4))
 	{
+		// Tooltip löschen, sonst bleibt er ewig
+		WindowManager::inst().SetToolTip(this, "");
+
 		// aktuellen Eintrag selektieren
 		selection = mouseover + scrollbar->GetPos();
 		parent->Msg_ListSelectItem(id,selection);
 
 		return true;
 	}
-	else
+
+	// Für die Scrollbar weiterleiten
+	return scrollbar->Msg_LeftDown(mc);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author FloSoft
+ */
+bool ctrlList::Msg_RightDown(const MouseCoords& mc)
+{
+	ctrlScrollBar *scrollbar = GetCtrl<ctrlScrollBar>(0);
+
+	// Wenn Maus in der Liste
+	if(Coll(mc.x, mc.y, GetX() + 2, GetY() + 2, width - 22, height - 4))
 	{
-		// Für die Scrollbar weiterleiten
-		return scrollbar->Msg_LeftDown(mc);
+		// Tooltip löschen, sonst bleibt er ewig
+		WindowManager::inst().SetToolTip(this, "");
+
+		// aktuellen Eintrag selektieren
+		selection = mouseover + scrollbar->GetPos();
+		parent->Msg_ListSelectItem(id,selection);
+
+		return true;
 	}
 
-	
+	// Für die Scrollbar weiterleiten
+	return scrollbar->Msg_RightDown(mc);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -152,10 +181,16 @@ bool ctrlList::Msg_WheelUp(const MouseCoords& mc)
 		scrollbar->Msg_ButtonClick(0);
 		return true;
 	}
-	else
-		return false;
+	
+	return false;
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author Divan
+ */
 bool ctrlList::Msg_WheelDown(const MouseCoords& mc)
 {
 	// Forward to ScrollBar
@@ -168,8 +203,8 @@ bool ctrlList::Msg_WheelDown(const MouseCoords& mc)
 		scrollbar->Msg_ButtonClick(1);
 		return true;
 	}
-	else
-		return false;
+
+	return false;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -221,7 +256,12 @@ void ctrlList::AddString(const std::string& text)
 	GetCtrl<ctrlScrollBar>(0)->SetRange(static_cast<unsigned short>(lines.size()));
 }
 
-/// Verändert einen String
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Verändert einen String
+ *
+ *  @author OLiver
+ */
 void ctrlList::SetString(const std::string& text, const unsigned id)
 {
 	lines[id] = text;
@@ -253,8 +293,8 @@ const std::string& ctrlList::GetItemText(unsigned short line) const
 {
 	if(line < lines.size())
 		return lines.at(line);
-	else
-		return EMPTY_STRING;
+
+	return EMPTY_STRING;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -294,12 +334,18 @@ void ctrlList::Swap(unsigned short first, unsigned short second)
 	::Swap(lines[first], lines[second]);
 }
 
-
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  entfernt eine Zeile
+ *
+ *  @author OLiver
+ */
 void ctrlList::Remove(const unsigned short index)
 {
 	if(index < lines.size())
 	{
-		lines.erase(lines.begin()+index);
+		lines.erase(lines.begin() + index);
+
 		// Ggf. selection korrigieren
 		if(selection)
 			--selection;

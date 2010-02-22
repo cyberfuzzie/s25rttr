@@ -1,4 +1,4 @@
-// $Id: glArchivItem_Font.cpp 5978 2010-02-09 14:34:10Z FloSoft $
+// $Id: glArchivItem_Font.cpp 6065 2010-02-22 10:32:37Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -194,14 +194,14 @@ void glArchivItem_Font::Draw(short x,
 			}
 			else
 			{
-				unsigned char c = ANSI_TO_OEM[(unsigned char)text[i]];
+				unsigned char c = ANSI_TO_OEM[(unsigned char)end[i]];
 				if(_charwidths[c] > 0)
 				{
 					unsigned int x = 0, y = 0;
 					x = c % 16;
 					y = c / 16;
 
-					_font->Draw(cx, cy, 0, 0, x+1, y+1, _charwidths[c], dy, (GetAlpha(color) << 24) | 0x00FFFFFF, color);
+					_font->Draw(cx, cy, 0, 0, x*(dx+2)+1, y*(dy+2)+1, _charwidths[c], dy, (GetAlpha(color) << 24) | 0x00FFFFFF, color);
 					cx += _charwidths[c];
 				}
 			}
@@ -327,7 +327,7 @@ void glArchivItem_Font::GetWrapInfo(const std::string& text,
 	unsigned word_start = 0;
 
 	// Logischerweise fangen wir in der ersten Zeile an
-	//wi.positions.size() = 1;
+	wi.positions.clear();
 	wi.positions.push_back(0);
 
 	// Länge des Strings
@@ -339,7 +339,7 @@ void glArchivItem_Font::GetWrapInfo(const std::string& text,
 		if(text[i] == '\n' || text[i] == ' ' || i == length)
 		{
 			// Passt das letzte Wort mit auf die Zeile? (bzw bei newline immer neue zeile anfangen)
-			if(text[i] != '\n' && word_width + line_width <= ( (wi.positions.size() == 1) ? primary_width : secondary_width))
+			if(word_width + line_width <= ( (wi.positions.size() == 1) ? primary_width : secondary_width))
 			{
 				// Länge des Leerzeichens mit draufaddieren
 				line_width += word_width;
@@ -401,6 +401,15 @@ void glArchivItem_Font::GetWrapInfo(const std::string& text,
 					}
 				}
 			}
+			// Bei Newline immer neue Zeile anfangen, aber erst jetzt
+			// und nicht schon oben in diesem if-Zweig
+			if(text[i] == '\n' && i < length-1)
+			{
+				word_start = i+1;
+				word_width = 0;
+				line_width = 0;
+				wi.positions.push_back(word_start);
+			}
 		}
 		else
 		{
@@ -409,6 +418,10 @@ void glArchivItem_Font::GetWrapInfo(const std::string& text,
 				word_width += _charwidths[ANSI_TO_OEM[(unsigned char)text[i]]];
 		}
 	}
+
+	// Ignore trailing newline
+	if(wi.positions[wi.positions.size()-1] == length-1)
+		wi.positions.pop_back();
 }
 
 void glArchivItem_Font::initFont()

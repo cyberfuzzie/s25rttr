@@ -1,4 +1,4 @@
-// $Id: ctrlComboBox.cpp 5993 2010-02-10 17:39:18Z FloSoft $
+// $Id: ctrlComboBox.cpp 6065 2010-02-22 10:32:37Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -61,6 +61,12 @@ ctrlComboBox::ctrlComboBox(Window *parent,
 		AddImageButton(1, width-height, 0, height, height, tc, LOADER.GetImageN("io", 34));
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void ctrlComboBox::Msg_PaintAfter()
 {
 	// Liste erst jetzt malen, damit sie den Rest überdeckt
@@ -96,17 +102,16 @@ bool ctrlComboBox::Msg_LeftDown(const MouseCoords& mc)
 		ShowList(false);
 		return false;
 	}
-	else if(!readonly && Coll(mc.x, mc.y, GetX(), GetY(), width, height))
+	
+	if(!readonly && Coll(mc.x, mc.y, GetX(), GetY(), width, height))
 	{
 		// Liste wieder ein/ausblenden
 		ShowList(!list->GetVisible());
 		return true;
 	}
-	else
-	{
-		// Für Button und Liste weiterleiten
-		return RelayMouseMessage(&Window::Msg_LeftDown, mc);
-	}
+
+	// Für Button und Liste weiterleiten
+	return RelayMouseMessage(&Window::Msg_LeftDown, mc);
 } 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -131,13 +136,17 @@ bool ctrlComboBox::Msg_RightDown(const MouseCoords& mc)
 {
 	ctrlList *list = GetCtrl<ctrlList>(0);
 
+	// Für Button und Liste weiterleiten (und danach erst schließen)
+	bool ret = RelayMouseMessage(&Window::Msg_RightDown, mc);
+
 	// Clicked on list -> close it
 	if(!readonly && Coll(mc.x, mc.y, GetX(), GetY() + height, width, height + list->GetHeight()))
 	{
 		// Liste wieder ausblenden
 		ShowList(false);
 	}
-	return false;
+
+	return ret;
 } 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -155,17 +164,16 @@ bool ctrlComboBox::Msg_WheelUp(const MouseCoords& mc)
 		// Scrolled in opened list ->
 		return RelayMouseMessage(&Window::Msg_WheelUp, mc);
 	}
-	else if(!readonly && Coll(mc.x, mc.y, GetX(), GetY(), width, height))
+	
+	if(!readonly && Coll(mc.x, mc.y, GetX(), GetY(), width, height))
 	{
 		// Scrolled without list opened
 		if (list->GetSelection() > 0)
 			Msg_ListSelectItem(GetID(),list->GetSelection() - 1);
 		return true;
 	}
-	else
-	{
-		return false;
-	}
+
+	return false;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -183,17 +191,16 @@ bool ctrlComboBox::Msg_WheelDown(const MouseCoords& mc)
 		// Scrolled in opened list ->
 		return RelayMouseMessage(&Window::Msg_WheelDown, mc);
 	}
-	else if(!readonly && Coll(mc.x, mc.y, GetX(), GetY(), width, height))
+	
+	if(!readonly && Coll(mc.x, mc.y, GetX(), GetY(), width, height))
 	{
 		// Scrolled without list opened
 		if (list->GetSelection() < list->GetLineCount() - 1)
 			Msg_ListSelectItem(GetID(),list->GetSelection() + 1);
 		return true;
 	}
-	else
-	{
-		return false;
-	}
+
+	return false;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -306,8 +313,6 @@ bool ctrlComboBox::Draw_(void)
 
 	return true;
 }
-
-
 
 ///////////////////////////////////////////////////////////////////////////////
 /**

@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 6036 2010-02-17 10:07:24Z FloSoft $
+// $Id: GameClient.cpp 6069 2010-02-22 18:56:35Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -25,6 +25,7 @@
 #include "GameManager.h"
 #include "GameMessages.h"
 
+#include "GlobalVars.h"
 #include "SocketSet.h"
 #include "Loader.h"
 #include "Settings.h"

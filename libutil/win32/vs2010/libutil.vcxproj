@@ -104,6 +104,7 @@
     <ClCompile Include="..\..\src\SocketSet.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\colors.h" />
     <ClInclude Include="..\..\src\error.h" />
     <ClInclude Include="..\..\src\files.h" />
     <ClInclude Include="..\..\src\libutil.h" />

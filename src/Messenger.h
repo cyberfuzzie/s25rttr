@@ -1,4 +1,4 @@
-// $Id: Messenger.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: Messenger.h 6069 2010-02-22 18:56:35Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -16,12 +16,11 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Siedler II.5 RTTR. If not, see <http://www.gnu.org/licenses/>.
+#ifndef MESSENGER_H_INCLUDED
+#define MESSENGER_H_INCLUDED
 
-#ifndef MESSENGER_H_
-#define MESSENGER_H_
+#pragma once
 
-#include "GlobalVars.h"
-#include "colors.h"
 #include "GameProtocol.h"
 
 class Messenger
@@ -38,15 +37,11 @@ class Messenger
 	};
 	list<Msg> messages;
 
-private:
-	void PrintTermColor(const std::string& text, const unsigned color_text);
-
 public:
-
 	~Messenger();
 
 	void Draw();
 	void AddMessage(const std::string& author, const unsigned color_author, const ChatDestination cd, const std::string& msg,const unsigned color_msg = COLOR_YELLOW);
 };
 
-#endif
+#endif // !MESSENGER_H_INCLUDED

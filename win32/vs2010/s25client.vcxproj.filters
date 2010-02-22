@@ -156,9 +156,6 @@
     <ClInclude Include="..\..\src\CollisionDetection.h">
       <Filter>Quelldateien\GUI\Hilfsfunktionen und -klassen</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\colors.h">
-      <Filter>Quelldateien\Allgemein</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\const_addons.h">
       <Filter>Quelldateien\Spiel\Addons</Filter>
     </ClInclude>

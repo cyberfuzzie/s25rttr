@@ -1,4 +1,4 @@
-// $Id: main.h 5989 2010-02-10 14:13:58Z FloSoft $
+// $Id: main.h 6069 2010-02-22 18:56:35Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -127,7 +127,6 @@
 #include "libendian.h"
 
 #include "macros.h"
-#include "colors.h"
 #include "list.h"
 #include "Swap.h"
 

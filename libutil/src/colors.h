@@ -1,4 +1,4 @@
-// $Id: colors.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: colors.h 6069 2010-02-22 18:56:35Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

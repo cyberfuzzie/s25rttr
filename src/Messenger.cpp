@@ -1,4 +1,4 @@
-// $Id: Messenger.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: Messenger.cpp 6069 2010-02-22 18:56:35Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -83,92 +83,11 @@ void Messenger::Draw()
 	}
 }
 
-/// colored author string for terminal output
-void Messenger::PrintTermColor(const std::string& text, const unsigned c)
-{
-	std::string tmp;
-	// On Linux, we insert escape-codes into the string. On Windows call system functions.
-	#ifndef _WIN32
-		// A switch statement doesn't work here because we compare against the array COLORS[] (although it's constant, it can't be dereferenced at compile time)
-		if (c == COLOR_BLUE)
-		  tmp += "\033[40m\033[1;34m";
-		else if (c == COLOR_RED)
-		  tmp += "\033[40m\033[1;31m";
-		else if (c == COLOR_YELLOW)
-		  tmp += "\033[40m\033[1;33m";
-		else if (c == COLOR_GREEN)
-		  tmp += "\033[40m\033[1;32m";
-		else if (c == COLOR_MAGENTA)
-		  tmp += "\033[40m\033[1;35m";
-		else if (c == COLOR_CYAN)
-		  tmp += "\033[40m\033[1;36m";
-		else if (c == COLOR_BLACK)
-		  tmp += "\033[47m\033[1;30m";
-		else if (c == COLOR_WHITE)
-		  tmp += "\033[40m\033[1;37m";
-		else if (c == COLOR_ORANGE)
-		  tmp += "\033[43m\033[1;30m";
-		else if (c == COLOR_BROWN)
-		  tmp += "\033[40m\033[33m";
-		else tmp += "\033[0m";
-	#endif
-	tmp += text; 
-	#ifndef _WIN32
-		tmp += "\033[0m";
-	#endif
-
-	#ifdef _WIN32
-		// obtain handle
-		HANDLE hStdout; 
-		CONSOLE_SCREEN_BUFFER_INFO csbiInfo; 
-
-		hStdout = GetStdHandle(STD_OUTPUT_HANDLE); 		
-		if (GetConsoleScreenBufferInfo(hStdout, &csbiInfo)) 
-		{
-			WORD colorAttr = 0;
-			if (c == COLOR_BLUE || c == COLOR_MAGENTA || c == COLOR_CYAN || c == COLOR_WHITE)
-				colorAttr |= FOREGROUND_BLUE;
-			if (c == COLOR_YELLOW || c == COLOR_GREEN || c == COLOR_CYAN || c == COLOR_WHITE || c == COLOR_BROWN)
-				colorAttr |= FOREGROUND_GREEN;
-			if (c == COLOR_RED || c == COLOR_YELLOW || c == COLOR_MAGENTA || c == COLOR_WHITE || c == COLOR_BROWN)
-				colorAttr |= FOREGROUND_RED;
-			if (c == COLOR_BLACK)
-				colorAttr |= BACKGROUND_BLUE;
-			if (c == COLOR_BLACK || c == COLOR_ORANGE)
-				colorAttr |= BACKGROUND_GREEN;
-			if (c == COLOR_BLACK || c == COLOR_ORANGE)
-				colorAttr |= BACKGROUND_RED;
-
-			// if color matches any but brown
-			if (colorAttr != 0 && c != COLOR_BROWN)
-				colorAttr |= FOREGROUND_INTENSITY;
-
-			// if color didn't match any, make default gray
-			if (colorAttr == 0)
-				colorAttr = FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED;
-
-			SetConsoleTextAttribute(hStdout, colorAttr);
-		}
-	#endif 
-
-	LOG.lprintf("%s",tmp.c_str());
-
-	// restore white-on-black
-	#ifdef _WIN32
-		// Obtain handle
-		if (GetConsoleScreenBufferInfo(hStdout, &csbiInfo)) 
-		{
-			SetConsoleTextAttribute(hStdout, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
-		}
-	#endif 
-}
-
 void Messenger::AddMessage(const std::string& author, const unsigned color_author, const ChatDestination cd, const std::string& msg,const unsigned color_msg)
 {
-	// print colored message to the log/console	
-	PrintTermColor(author, color_author);
-	PrintTermColor(CD_STRINGS[cd], CD_COLORS[cd]);
-	PrintTermColor(msg + "\n",0);
+	LOG.lcprintf(color_author, "%s", author.c_str());
+	LOG.lcprintf(CD_COLORS[cd], "%s", CD_STRINGS[cd].c_str());
+	LOG.lprintf("%s\n", msg.c_str());
 
 	glArchivItem_Font::WrapInfo wi;
 

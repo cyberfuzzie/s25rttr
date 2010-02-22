@@ -1,4 +1,4 @@
-// $Id: GameClientGF_Replay.cpp 5999 2010-02-11 09:53:02Z FloSoft $
+// $Id: GameClientGF_Replay.cpp 6069 2010-02-22 18:56:35Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -22,6 +22,7 @@
 #include "main.h"
 #include "GameClient.h"
 
+#include "GlobalVars.h"
 #include "Loader.h"
 #include "Random.h"
 #include "GameManager.h"

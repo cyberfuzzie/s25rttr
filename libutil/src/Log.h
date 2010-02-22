@@ -1,4 +1,4 @@
-// $Id: Log.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: Log.h 6069 2010-02-22 18:56:35Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -35,6 +35,8 @@ public:
 
 	void getlasterror(const char *text);
 
+	/// Schreibt gefärbte Daten ins Log und auf stdout.
+	void lcprintf(const unsigned int color, const char *format, ...);
 	/// Schreibt Daten ins Log und auf stdout.
 	void lprintf(const char *format, ...);
 	/// Schreibt Daten ins Log und auf stdout.

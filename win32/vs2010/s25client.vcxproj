@@ -378,7 +378,6 @@
     <ClInclude Include="..\..\src\GameProtocol.h" />
     <ClInclude Include="..\..\src\GameServer.h" />
     <ClInclude Include="..\..\src\GameServerPlayer.h" />
-    <ClInclude Include="..\..\src\colors.h" />
     <ClInclude Include="..\..\src\GameManager.h" />
     <ClInclude Include="..\..\src\GlobalVars.h" />
     <ClInclude Include="..\..\src\languages.h" />

@@ -1,4 +1,4 @@
-// $Id: Log.cpp 6069 2010-02-22 18:56:35Z FloSoft $
+// $Id: Log.cpp 6070 2010-02-22 19:07:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -110,7 +110,7 @@ void Log::lcprintf(const unsigned int color, const char *format, ...)
 		else 
 			tmp = "\033[0m";
 
-		lvprintf("%s", tmp.c_str());
+		lprintf("%s", tmp.c_str());
 	#else
 		// obtain handle
 		HANDLE hStdout; 
@@ -154,7 +154,7 @@ void Log::lcprintf(const unsigned int color, const char *format, ...)
 	// restore white-on-black
 	#ifndef _WIN32
 		tmp = "\033[0m";
-		lvprintf("%s", tmp.c_str());
+		lprintf("%s", tmp.c_str());
 	#else
 		// Obtain handle
 		if (GetConsoleScreenBufferInfo(hStdout, &csbiInfo)) 

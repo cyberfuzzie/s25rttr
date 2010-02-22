@@ -1,4 +1,4 @@
-// $Id: Socket.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: Socket.h 6068 2010-02-22 18:05:33Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -125,40 +125,77 @@ public:
 	/// liefert Ip-Adresse(n) für einen Hostnamen.
 	struct HostAddr
 	{
-		HostAddr() : host(""), port("0"), addr(NULL), ipv6(false) { }
+		HostAddr() : host(""), port("0"), addr(NULL), ipv6(false), lookup(true) { }
 
 		// copy
-		HostAddr(const HostAddr &ha) : host(ha.host), port(ha.port), addr(NULL), ipv6(ha.ipv6)
+		HostAddr(const HostAddr &ha) : host(ha.host), port(ha.port), addr(NULL), ipv6(ha.ipv6), lookup(ha.lookup)
 		{
 			UpdateAddr();
 		}
 
 		~HostAddr()
 		{
-			freeaddrinfo(addr);
+			if(lookup)
+				freeaddrinfo(addr);
+			else
+			{
+				free(addr->ai_addr);
+				delete addr;
+				addr = NULL;
+			}
 		}
 
 		// set
 		void UpdateAddr()
 		{
-			addrinfo hints;
-			memset(&hints, 0, sizeof(addrinfo));
-			hints.ai_flags = AI_NUMERICHOST;
-			hints.ai_socktype = SOCK_STREAM;
-
-			if(ipv6)
-				hints.ai_family = AF_INET6;
-			else
-				hints.ai_family = AF_INET;
-
 			freeaddrinfo(addr);
-			getaddrinfo(host.c_str(), port.c_str(), &hints, &addr);
+
+			// do not use addr resolution for localhost
+			lookup = (host != "localhost");
+
+			if(lookup)
+			{
+				addrinfo hints;
+				memset(&hints, 0, sizeof(addrinfo));
+				hints.ai_flags = AI_NUMERICHOST;
+				hints.ai_socktype = SOCK_STREAM;
+
+				if(ipv6)
+					hints.ai_family = AF_INET6;
+				else
+					hints.ai_family = AF_INET;
+
+				getaddrinfo(host.c_str(), port.c_str(), &hints, &addr);
+			}
+			else // fill with loopback
+			{
+				addr = new addrinfo;
+				addr->ai_family = (ipv6 ? AF_INET6 : AF_INET);
+				addr->ai_addrlen = (ipv6 ? sizeof(sockaddr_in6) : sizeof(sockaddr_in));
+				addr->ai_addr = (sockaddr *)calloc(1, addr->ai_addrlen);
+
+				if(ipv6)
+				{
+					sockaddr_in6 *addr6 = (sockaddr_in6*)addr->ai_addr;
+					addr6->sin6_family = AF_INET6;
+					addr6->sin6_port = htons(atoi(port.c_str()));
+					addr6->sin6_addr = in6addr_loopback;
+				}
+				else
+				{
+					sockaddr_in *addr4 = (sockaddr_in*)addr->ai_addr;
+					addr4->sin_family = AF_INET;
+					addr4->sin_port = htons(atoi(port.c_str()));
+					addr4->sin_addr.s_addr = inet_addr("127.0.0.1");
+				}
+			}
 		}
 
 		std::string host;
 		std::string port;
 		addrinfo *addr;
 		bool ipv6;
+		bool lookup;
 	};
 	std::vector<HostAddr> HostToIp(const std::string &hostname, const unsigned int port, bool get_ipv6);
 

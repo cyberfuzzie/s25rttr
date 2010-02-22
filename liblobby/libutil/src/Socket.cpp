@@ -1,4 +1,4 @@
-// $Id: Socket.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: Socket.cpp 6068 2010-02-22 18:05:33Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -291,6 +291,20 @@ bool Socket::Accept(Socket& client)
 std::vector<Socket::HostAddr> Socket::HostToIp(const std::string &hostname, const unsigned int port, bool get_ipv6)
 {
 	std::vector<HostAddr> ips;
+	char dport[256];
+	snprintf(dport, 255, "%d", port);
+
+	// no dns resolution for localhost
+	if(hostname == "localhost")
+	{
+		HostAddr h;
+		h.host = "localhost";
+		h.port = dport;
+		h.ipv6 = get_ipv6;
+		ips.push_back(h);
+
+		return ips;
+	}
 
 	addrinfo hints;
 	memset(&hints, 0, sizeof(addrinfo));
@@ -304,8 +318,6 @@ std::vector<Socket::HostAddr> Socket::HostToIp(const std::string &hostname, cons
 		hints.ai_family = AF_INET;
 
 	addrinfo *res;
-	char dport[256];
-	snprintf(dport, 255, "%d", port);
 	if(getaddrinfo(hostname.c_str(), dport, &hints, &res) != 0)
 		return ips; // "DNS Error"
 
@@ -373,7 +385,8 @@ bool Socket::Connect(const std::string &hostname, const unsigned short port, boo
 
 	std::vector<HostAddr>::const_iterator start, end;
 
-	if(typ != PROXY_NONE)
+	// do not use proxy for connecting to localhost
+	if(typ != PROXY_NONE && hostname != "localhost")
 	{
 		start = proxy_ips.begin();
 		end = proxy_ips.end();

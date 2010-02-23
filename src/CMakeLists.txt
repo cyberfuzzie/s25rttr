@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 6000 2010-02-11 17:19:50Z FloSoft $
+### $Id: CMakeLists.txt 6073 2010-02-23 08:43:32Z FloSoft $
 ################################################################################
 
 INCLUDE(FindBZip2)
@@ -215,7 +215,6 @@ SET(SOURCES_OTHER
     CatapultStone.cpp                   CatapultStone.h
     CollisionDetection.cpp              CollisionDetection.h
     ClientInterface.cpp                 ClientInterface.h
-                                        colors.h
                                         const_gui_ids.h
                                         controls.h
     customborderbuilder.h               customborderbuilder.cpp

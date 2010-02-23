@@ -1,4 +1,4 @@
-// $Id: GameManager.cpp 6037 2010-02-17 11:26:49Z FloSoft $
+// $Id: GameManager.cpp 6077 2010-02-23 19:37:53Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -122,8 +122,9 @@ bool GameManager::Start()
 	if(!StartMenu())
 		return false;
 
-	MusicPlayer::inst().Load(iwMusicPlayer::GetFullPlaylistPath(SETTINGS.sound.playlist));
-	MusicPlayer::inst().StartPlaying();
+	std::string playlist = iwMusicPlayer::GetFullPlaylistPath(SETTINGS.sound.playlist);
+	if(MusicPlayer::inst().Load(playlist))
+		MusicPlayer::inst().Play();
 
 	return true;
 }

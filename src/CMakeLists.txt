@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 6076 2010-02-23 16:37:00Z FloSoft $
+### $Id: CMakeLists.txt 6077 2010-02-23 19:37:53Z FloSoft $
 ################################################################################
 
 INCLUDE(FindBZip2)
@@ -388,22 +388,36 @@ IF ( "${COMPILEFOR}" STREQUAL "windows")
 ENDIF ( "${COMPILEFOR}" STREQUAL "windows")
 
 IF ( "${COMPILEFOR}" STREQUAL "apple")
-	IF(NOT EXISTS "${OPENGL_gl_LIBRARY}")
-		SET(SPLIT "${OPENGL_gl_LIBRARY}")
-		INCLUDE(FindSplitPath)
-		MESSAGE(STATUS ${PATHS} ${SPLIT})
+	SET(SPLIT "${OPENGL_gl_LIBRARY}")
+	INCLUDE(FindSplitPath)
+	MESSAGE(STATUS ${PATHS} ${SPLIT})
 	
-		MESSAGE(STATUS "OpenGL-Library is a directory, searching for the Library")
-		FIND_FILE(OpenGL
-			OpenGL
-			PATHS ${PATHS}
-		)
-		IF(NOT OpenGL-NOTFOUND)
-			MESSAGE(STATUS "OpenGL-Library was directory, found ${OpenGL}")
-			SET(OPENGL_gl_LIBRARY "${OpenGL}")
-		ENDIF(NOT OpenGL-NOTFOUND)
-	ENDIF(NOT EXISTS "${OPENGL_gl_LIBRARY}")
-  
+	MESSAGE(STATUS "OpenGL-Library is a directory, searching for the Library")
+	FIND_FILE(OpenGL
+		OpenGL
+		PATHS ${PATHS}
+	)
+
+	IF(NOT OpenGL-NOTFOUND)
+		MESSAGE(STATUS "OpenGL-Library was directory, found ${OpenGL}")
+		SET(OPENGL_gl_LIBRARY "${OpenGL}")
+	ENDIF(NOT OpenGL-NOTFOUND)
+
+	SET(SPLIT "${SDL_LIBRARY}")
+	INCLUDE(FindSplitPath)
+
+	MESSAGE(STATUS "SDL-Library is a directory, searching for the Library")
+
+	FIND_FILE(SDL
+		SDL
+		PATHS ${PATHS}
+	)
+	
+	IF(NOT SDL-NOTFOUND)
+		MESSAGE(STATUS "SDL-Library was directory, found ${SDL}")
+		SET(SDL_LIBRARY "${SDL}")
+	ENDIF(NOT SDL-NOTFOUND)  
+
 	SET(CMAKE_C_LINK_FLAGS  "${CMAKE_C_LINK_FLAGS} -framework OpenGL -L${CMAKE_SOURCE_DIR}/macos")
 	SET(CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -framework OpenGL -L${CMAKE_SOURCE_DIR}/macos")
 	

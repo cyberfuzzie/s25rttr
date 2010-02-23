@@ -1,4 +1,4 @@
-// $Id: MusicPlayer.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: MusicPlayer.cpp 6077 2010-02-23 19:37:53Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -23,183 +23,252 @@
 #include "MusicPlayer.h"
 #include "iwMusicPlayer.h"
 #include "AudioDriverWrapper.h"
-#include <fstream>
-#include <algorithm>
 
-Playlist::Playlist() : repeats(1), random_playback(false)
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
+Playlist::Playlist() : repeats(1), random(false)
 {
 }
 
-/// Einstellungen in Datei speichern
-bool Playlist::SaveAs(const std::string& filename, const bool must_new_file)
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  startet das Abspielen der Playlist.
+ *
+ *  @author OLiver
+ *  @author FloSoft
+ */
+void Playlist::Prepare()
 {
-	// Existiert Datei auch noch nicht?
-	std::ifstream in(filename.c_str());
-
-	if(in.good() && must_new_file)
+	if(songs.size())
 	{
-		// Datei darf noch nicht existieren!
-		in.close();
-		return false;
+		order.clear();
+
+		// Abspielreihenfolge erstmal normal festlegen
+		order.resize(songs.size());
+
+		// normale Reihenfolge
+		for(unsigned int i = 0; i < songs.size() * repeats; ++i)
+			order[i] = i % songs.size();
+
+		// Bei Zufall nochmal mischen
+		if(random)
+			std::random_shuffle(order.begin(), order.end());
+
+		// ersten Song auswählen
+		getNextSong();
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Playlist in Datei speichern
+ *
+ *  @author OLiver
+ */
+bool Playlist::SaveAs(const std::string filename, const bool overwrite)
+{
+	if(!overwrite)
+	{
+		std::ifstream in(filename.c_str());
+		if(in.good())
+		{
+			// Datei existiert und wir sollen sie nicht überschreiben
+			in.close();
+			return false;
+		}
 	}
 
 	std::ofstream out(filename.c_str());
-
 	if(!out.good())
 		return false;
 
 	out << repeats << " ";
-	out << ((random_playback) ? ("random_playback") : ("in_order")) << std::endl;
+	out << (random ? "random" : "ordered") << std::endl;
 
-	for(unsigned i = 0;i<segments.size();++i)
-		out << segments[i] << "\n";
+	// songs reinschreiben
+	for(unsigned int i = 0; i< songs.size(); ++i)
+		out << songs[i] << "\n";
 
 	out.close();
 
 	return true;
 }
 
-/// Einstellungen laden
-bool Playlist::Load(const std::string& filename)
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Playlist laden
+ *
+ *  @author OLiver
+ */
+bool Playlist::Load(const std::string filename)
 {
+	if(filename.length() == 0)
+		return false;
+
+	LOG.lprintf("lade \"%s\"\n", filename.c_str());
+
 	std::ifstream in(filename.c_str());
 
-	if(!in.good())
+	if(in.fail())
 		return false;
 
-	std::string random_playback_str;
+	std::string line, random_str;
+	std::stringstream sline;
 
-	in >> repeats;
-	in >> random_playback_str;
-
-	if(random_playback_str == "random_playback")
-		random_playback = true;
-	else if(random_playback_str == "in_order")
-		random_playback = false;
-	else
+	if(!std::getline(in, line))
 		return false;
+	printf("%s\n", line.c_str());
+	sline.clear();
+	sline << line;
+	sline >> repeats;
+	sline >> random_str;
+
+	random = (random_str == "random_playback" || random_str == "random");
 
 	// Liste leeren von evtl vorherigen Stücken
-	segments.clear();
-
-	// Zeile zuende lesen
-	char tmp[512];
-	in.getline(tmp,512);
+	/*songs.clear();
+	order.clear();*/
 
 	while(true)
 	{
-		in.getline(tmp,512);
+		std::getline(in, line);
 
-		// Carriage Returns aus Windows-Dateien ggf. rausfiltern
-		size_t length = strlen(tmp);
-		if(length)
-		{
-			if(tmp[length-1] == '\r')
-				tmp[length-1] = 0;
-		}
+		// Carriage returns & Line feeds aus der Zeile ggf. rausfiltern
+		std::string::size_type k = 0;
+		while((k = line.find('\r', k)) != std::string::npos) 
+			line.erase(k, 1);
+		k = 0;
+		while((k = line.find('\n', k)) != std::string::npos) 
+			line.erase(k, 1);
 
-		if(strlen(tmp) == 0 || in.eof())
+		// bei leeren Zeilen oder bei eof aufhören
+		if(line.length() == 0 || in.eof())
 		{
 			in.close();
+
+			// geladen, also zum Abspielen vorbereiten
+			Prepare();
+
 			return true;
 		}
 
-		segments.push_back(tmp);
+		songs.push_back(line);
 	}
 
 	return false;
 }
 
-void Playlist::FillWindow(iwMusicPlayer * window) const
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Füllt das iwMusicPlayer-Fenster mit den entsprechenden Werten
+ *
+ *  @author OLiver
+ */
+void Playlist::FillMusicPlayer(iwMusicPlayer *window) const
 {
-	window->SetSegments(segments);
+	window->SetSegments(songs);
 	window->SetRepeats(repeats);
-	window->SetRandomPlayback(random_playback);
+	window->SetRandomPlayback(random);
 }
 
-/// Liest die Werte aus dem iwMusicPlayer - Fenster
-void Playlist::ReadValuesOfWindow(const iwMusicPlayer * const window)
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Liest die Werte aus dem iwMusicPlayer-Fenster
+ *
+ *  @author OLiver
+ */
+void Playlist::ReadMusicPlayer(const iwMusicPlayer* const window)
 {
 	repeats = window->GetRepeats();
-	random_playback = window->GetRandomPlayback();
-	window->GetSegments(segments);
+	random = window->GetRandomPlayback();
+	window->GetSegments(songs);
+
+	// zum Abspielen vorbereiten
+	Prepare();
 }
 
 /////////////////////////////////////////////////////////////////////////////
-
-MusicPlayer::MusicPlayer() : play_position(0), stopped(false)
+/**
+ *  
+ *
+ *  @author OLiver
+ */
+MusicPlayer::MusicPlayer() : playing(false)
 {
 }
 
-/// Startet Abspielvorgang
-void MusicPlayer::StartPlaying()
+/////////////////////////////////////////////////////////////////////////////
+/**
+ *  Startet Abspielvorgang
+ *
+ *  @author OLiver
+ */
+void MusicPlayer::Play()
 {
-	play_position = 0;
-	stopped = false;
+	playing = true;
 
-	if(segments.size())
-	{
-		// Abspielreihenfolge erstmal normal festlegen
-		play_order.resize(segments.size());
-		for(unsigned i = 0;i<segments.size();++i)
-			play_order[i] = i;
-
-		// Bei Zufall nochmal mischen
-		if(random_playback)
-			std::random_shuffle(play_order.begin(),play_order.end());
-
-		PlayNextSegment();
-	}
+	PlayNext();
 }
 
-/// Stoppt das gerade abgespielte
+/////////////////////////////////////////////////////////////////////////////
+/**
+ *  Stoppt Abspielvorgang
+ *
+ *  @author OLiver
+ */
 void MusicPlayer::Stop()
 {
 	AudioDriverWrapper::inst().StopMusic();
-	stopped = true;
+	playing = false;
 }
 
-
-
-void MusicPlayer::MusicFinished()
+/////////////////////////////////////////////////////////////////////////////
+/**
+ * Spielt nächstes Stück ab
+ *
+ *  @author OLiver
+ */
+void MusicPlayer::PlayNext()
 {
-	if(!stopped)
+	std::string song = list.getNextSong();
+
+	// Am Ende der Liste angekommen?
+	if(song == "")
 	{
-		if(++play_position >= segments.size())
-			play_position = 0;
-		PlayNextSegment();
+		Stop();
+		return;
 	}
-}
-
-/// Spielt nächstes Stück ab
-void MusicPlayer::PlayNextSegment()
-{
-	std::string to_play = segments[play_order[play_position]];
 
 	// Evtl ein Siedlerstück ("sNN")?
-	if(to_play.length() == 3)
+	if(song.length() == 3)
 	{
-		unsigned nr;
-		if((nr = atoi(to_play.substr(1).c_str())) <= 14)
+		unsigned int nr = atoi(song.substr(1).c_str());
+		if( nr <= 14)
 		{
 			// Siedlerstück abspielen (falls es geladen wurde)
 			if(GetMusic(sng_lst, nr-1))
-				GetMusic(sng_lst, nr-1)->Play(repeats);
+				GetMusic(sng_lst, nr-1)->Play(1);
 		}
+		return;
 	}
-	else
+
+	// anderes benutzerdefiniertes Stück abspielen
+	// in "sng" speichern, daher evtl. altes Stück erstmal löschen
+	sng.clear();
+	
+	LOG.lprintf("lade \"%s\": ", song.c_str());
+
+	// Neues Stück laden
+	if(libsiedler2::loader::LoadSND(song.c_str(), &sng) != 0 )
 	{
-		// anderes benutzerdefiniertes Stück abspielen
-		// in "sng" speichern, daher evtl. altes Stück erstmal löschen
-		sng.clear();
-		LOG.lprintf("lade \"%s\": ", to_play.c_str());
-		// Neues Stück laden
-		if(libsiedler2::loader::LoadSND(to_play.c_str(), &sng) != 0 )
-			Stop();
-
-		// Und abspielen
-		dynamic_cast<glArchivItem_Music*>(sng.get(0))->Play(repeats);
-
-
+		Stop();
+		return;
 	}
+
+	// Und abspielen
+	dynamic_cast<glArchivItem_Music*>(sng.get(0))->Play(1);
 }

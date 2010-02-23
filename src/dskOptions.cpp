@@ -1,4 +1,4 @@
-// $Id: dskOptions.cpp 5989 2010-02-10 14:13:58Z FloSoft $
+// $Id: dskOptions.cpp 6077 2010-02-23 19:37:53Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -472,7 +472,7 @@ void dskOptions::Msg_Group_OptionGroupChange(const unsigned int group_id, const 
 			case 65: SETTINGS.sound.musik = false; break;
 			}
 			if(SETTINGS.sound.musik)
-				MusicPlayer::inst().StartPlaying();
+				MusicPlayer::inst().Play();
 			else
 				MusicPlayer::inst().Stop();
 		} break;

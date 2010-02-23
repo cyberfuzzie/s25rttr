@@ -1,4 +1,4 @@
-// $Id: MusicPlayer.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: MusicPlayer.h 6077 2010-02-23 19:37:53Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -16,75 +16,78 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Siedler II.5 RTTR. If not, see <http://www.gnu.org/licenses/>.
-#ifndef MUSIC_PLAYER_H_
-#define MUSIC_PLAYER_H_
+#ifndef MUSICPLAYER_H_INCLUDED
+#define MUSICPLAYER_H_INCLUDED
 
 #include "Singleton.h"
-#include <vector>
-#include <string>
+
+#pragma once
 
 class iwMusicPlayer;
 
 /// Speichert die Daten über eine Playlist und verwaltet diese
 class Playlist
 {
-protected:
-
-	/// Anzahl an Wiederholungen
-	unsigned repeats;
-	/// Zufällige Wiedergabe?
-	bool random_playback;
-	/// Einzelne abzuspielende Titel
-	std::vector<std::string> segments;
-
 public:
-
 	Playlist();
 
-	/// Einstellungen in Datei speichern
-	bool SaveAs(const std::string& filename, const bool must_new_file);
-	/// Einstellungen laden
-	bool Load(const std::string& filename);
+	/// bereitet die Playlist aufs abspielen vor.
+	void Prepare();
 
-	/// Füllt das iwMusicPlayer - Fenster mit den entsprechenden Werten
-	void FillWindow(iwMusicPlayer * window) const;
-	/// Liest die Werte aus dem iwMusicPlayer - Fenster
-	void ReadValuesOfWindow(const iwMusicPlayer * const window);
+	/// liefert den Dateinamen des akteullen Songs
+	const std::string getCurrentSong() const	{	return (songs.size() && order.size() ? songs[order[0]] : "");	}
+	
+	/// schaltet einen Song weiter und liefert den Dateinamen des aktuellen Songs
+	const std::string getNextSong()	
+	{
+		if(order.size())
+			order.erase(order.begin());
+		return getCurrentSong();
+	}
+
+	/// Playlist in Datei speichern
+	bool SaveAs(const std::string filename, const bool overwrite);
+	/// Playlist laden
+	bool Load(const std::string filename);
+
+	/// Füllt das iwMusicPlayer-Fenster mit den entsprechenden Werten
+	void FillMusicPlayer(iwMusicPlayer *window) const;
+	/// Liest die Werte aus dem iwMusicPlayer-Fenster
+	void ReadMusicPlayer(const iwMusicPlayer *const window);
+
+protected:
+	unsigned int repeats;				///< Anzahl der Wiederholungen
+	bool random;						///< Zufallswiedergabe?
+	std::vector<std::string> songs;		///< Dateinamen der abzuspielenden Titel
+	std::vector<unsigned int> order;	///< Reihenfolge der Titel
 };
 
 /// Globaler Musikplayer bzw. eine abspielbare Playlist
-class MusicPlayer : public Playlist, public Singleton<MusicPlayer>
+class MusicPlayer : public Singleton<MusicPlayer>
 {
-private:
-
-	/// Reihenfolge der abzuspielenden Titel
-	std::vector<unsigned> play_order;
-	/// Aktuelle Position
-	unsigned play_position;
-	/// Wiedergabe gestoppt?
-	bool stopped;
-
-	/// externes benutzerdefiniertes Musikstück (z.B. andere mp3)
-	libsiedler2::ArchivInfo sng;
-
-private:
-
-	/// Spielt nächstes Stück ab
-	void PlayNextSegment();
-
 public:
-
 	MusicPlayer();
 
 	/// Startet Abspielvorgang
-	void StartPlaying();
-	/// Stoppt das gerade abgespielte
+	void Play();
+	/// Stoppt Abspielvorgang
 	void Stop(); 
 
-	/// Musik wurde fertiggespielt
-	void MusicFinished();
+	/// Playlist laden
+	bool Load(const std::string filename) { return list.Load(filename); }
+	/// Musik wurde fertiggespielt (Callback)
+	void MusicFinished()	{	PlayNext();	}
+	/// liefert die Playlist.
+	Playlist& GetPlaylist() { return list;}
 
+protected:
+	/// Spielt nächstes Stück ab
+	void PlayNext();
+
+private:
+	bool playing;					///< Läuft die Musik gerade?
+	Playlist list;					///< Unsere aktuell aktive Playlist
+	libsiedler2::ArchivInfo sng;	///< externes benutzerdefiniertes Musikstück (z.B. andere mp3)
 };
 
-
-#endif
+#endif // !MUSICPLAYER_H_INCLUDED

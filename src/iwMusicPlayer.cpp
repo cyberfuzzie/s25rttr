@@ -1,4 +1,4 @@
-// $Id: iwMusicPlayer.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: iwMusicPlayer.cpp 6077 2010-02-23 19:37:53Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -89,7 +89,7 @@ iwMusicPlayer::iwMusicPlayer()
 	AddImageButton(14,370,220,40,40,TC_GREY,LOADER.GetImageN("io",107),_("Playback in this order")); //225
 
 	// Mit Werten füllen
-	MusicPlayer::inst().FillWindow(this);
+	MusicPlayer::inst().GetPlaylist().FillMusicPlayer(this);
 	UpdatePlaylistCombo(SETTINGS.sound.playlist);
 }
 
@@ -103,8 +103,8 @@ iwMusicPlayer::~iwMusicPlayer()
 		SETTINGS.sound.playlist = GetCtrl<ctrlComboBox>(2)->GetText(selection);
 
 	// Werte in Musikplayer bringen
-	MusicPlayer::inst().ReadValuesOfWindow(this);
-	MusicPlayer::inst().StartPlaying();
+	MusicPlayer::inst().GetPlaylist().ReadMusicPlayer(this);
+	MusicPlayer::inst().Play();
 }
 
 void iwMusicPlayer::Msg_ListSelectItem(const unsigned int ctrl_id, const unsigned short selection)
@@ -113,7 +113,7 @@ void iwMusicPlayer::Msg_ListSelectItem(const unsigned int ctrl_id, const unsigne
 
 std::string iwMusicPlayer::GetFullPlaylistPath(const std::string& combo_str)
 {
-	return (FILE_PATHS[90] + combo_str+ ".pll");
+	return (GetFilePath(FILE_PATHS[90]) + combo_str + ".pll");
 }
 
 void iwMusicPlayer::Msg_ButtonClick(const unsigned int ctrl_id)
@@ -155,7 +155,7 @@ void iwMusicPlayer::Msg_ButtonClick(const unsigned int ctrl_id)
 			if(selection != 0xFFFF)
 			{
 				Playlist pl;
-				pl.ReadValuesOfWindow(this);
+				pl.ReadMusicPlayer(this);
 
 				std::string str(GetCtrl<ctrlComboBox>(2)->GetText(selection));
 
@@ -184,7 +184,7 @@ void iwMusicPlayer::Msg_ButtonClick(const unsigned int ctrl_id)
 				if(pl.Load(GetFullPlaylistPath(GetCtrl<ctrlComboBox>(2)->GetText(selection))))
 				{
 					// Das Fenster entsprechend mit den geladenen Werten füllen
-					pl.FillWindow(this);
+					pl.FillMusicPlayer(this);
 				}
 				else
 					// Fehler, konnte nicht geladen werden

@@ -1,4 +1,4 @@
-// $Id: iwOptionsWindow.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: iwOptionsWindow.cpp 6077 2010-02-23 19:37:53Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -148,7 +148,7 @@ void iwOptionsWindow::Msg_ButtonClick(const unsigned int ctrl_id)
 			SETTINGS.sound.musik = !SETTINGS.sound.musik;
 			GetCtrl<ctrlImageButton>(13)->SetImage(LOADER.GetImageN("io", 116+!SETTINGS.sound.musik));
 			if(SETTINGS.sound.musik)
-				MusicPlayer::inst().StartPlaying();
+				MusicPlayer::inst().Play();
 			else
 				MusicPlayer::inst().Stop();
 		} break;

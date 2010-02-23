@@ -1,6 +1,6 @@
 #!/bin/bash
 ###############################################################################
-## $Id: cmake.sh 5745 2009-12-05 08:14:09Z FloSoft $
+## $Id: cmake.sh 6076 2010-02-23 16:37:00Z FloSoft $
 ###############################################################################
 
 # Editable Variables
@@ -201,6 +201,15 @@ case "$enable_debug" in
 				PARAMS="$PARAMS -DCMAKE_BUILD_TYPE=Release"
 			;;
 		esac
+	;;
+esac
+
+case "$enable_verbose" in
+	yes|YES|Yes)
+		mecho --magenta "Activating verbose build"
+		PARAMS="$PARAMS -DCMAKE_VERBOSE_MAKEFILE=On"
+	;;
+	*)
 	;;
 esac
 

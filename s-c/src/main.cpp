@@ -1,4 +1,4 @@
-// $Id: main.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: main.cpp 6076 2010-02-23 16:37:00Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -101,14 +101,23 @@ int main(int argc, char *argv[])
 		return EXIT_FAILURE;
 	}
 
-	int linenr = 0;
+	int linenr = 0, emptylines = 0;
 	while(!in.eof())
 	{
 		std::string line;
 		std::getline(in, line);
 		++linenr;
 
-		if(line.length() == 0 || line.at(0) == '#')
+		if(line.length() == 0)
+		{
+			++emptylines;
+			if(emptylines > 100)
+				break;
+			continue;
+		}
+		emptylines = 0;
+		
+		if(line.at(0) == '#')
 			continue;
 		
 		tokenizer token(line);

@@ -13,7 +13,7 @@ if [ -z "$TARGET" ] ; then
 fi
 
 if [ -z "$ARCH" ] ; then
-	export ARCH=local
+	export ARCH=unknown
 fi
 
 echo "Building in $BUILDDIR for $ARCH"
@@ -35,13 +35,15 @@ if ! make -j 2 -C $BUILDDIR ; then
 	exit 1
 fi
 
-sudo rm -vr $ARCH
+ARCH="$(grep COMPILEFOR $BUILDDIR/CMakeCache.txt | cut -d '=' -f 2 | head -n 1).$(grep COMPILEARCH $BUILDDIR/CMakeCache.txt | cut -d '=' -f 2 | head -n 1)"
+
+sudo rm -v -r $ARCH
 mkdir -vp $ARCH
 if ! cd $ARCH ; then
 	exit 1
 fi
 
-mkdir -vp s25rttr_$VERSION
+mkdir -v -p s25rttr_$VERSION
 if ! cd s25rttr_$VERSION ; then
 	exit 1
 fi

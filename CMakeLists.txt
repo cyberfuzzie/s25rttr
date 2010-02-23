@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 5640 2009-10-16 07:15:10Z FloSoft $
+### $Id: CMakeLists.txt 6076 2010-02-23 16:37:00Z FloSoft $
 ################################################################################
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
@@ -47,47 +47,47 @@ IF (WERROR_FLAGS)
 	ENDIF (NOT "${COMPILEFOR}" STREQUAL "windows" )
 ENDIF (WERROR_FLAGS)
 
-IF ("${COMPILEFOR}" STREQUAL "linux" )
+IF ("${COMPILEFOR}" STREQUAL "linux")
 	CHECK_CXX_COMPILER_FLAG("-fPIC" FPIC_FLAGS)
 	IF (FPIC_FLAGS)
 		IF ("${COMPILEARCH}" STREQUAL "amd64" )
 			ADD_DEFINITIONS(-fPIC)
 		ENDIF ("${COMPILEARCH}" STREQUAL "amd64" )
 	ENDIF (FPIC_FLAGS)
-ENDIF ("${COMPILEFOR}" STREQUAL "linux" )
+ENDIF ("${COMPILEFOR}" STREQUAL "linux")
 
 # avoid lhs-path bug in windows
-IF ("${COMPILEFOR}" STREQUAL "windows" )
+IF ("${COMPILEFOR}" STREQUAL "windows")
 	SET(BINDIR ".")
 	SET(DATADIR ".")
 	SET(LIBDIR ".")
 	ADD_DEFINITIONS(-D_WIN32_WINNT=0x0501)
 	ADD_DEFINITIONS(-D__CYGWIN__)
-ENDIF ("${COMPILEFOR}" STREQUAL "windows" )
+ENDIF ("${COMPILEFOR}" STREQUAL "windows")
 
 ################################################################################
 
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/local.h.cmake
-               ${CMAKE_CURRENT_SOURCE_DIR}/local.h)
+			   ${CMAKE_CURRENT_SOURCE_DIR}/local.h)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/version.h.cmake
-               ${CMAKE_CURRENT_SOURCE_DIR}/version.h)
+			   ${CMAKE_CURRENT_SOURCE_DIR}/version.h)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/build/preinstall.sh.cmake
-               preinstall.sh @ONLY)
+			   preinstall.sh @ONLY)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/build/postinstall.sh.cmake
-               postinstall.sh @ONLY)
+			   postinstall.sh @ONLY)
 
 ################################################################################
 
 ADD_SUBDIRECTORY(version)
 
 ADD_CUSTOM_TARGET(updateversion ALL
-                  COMMAND ${CMAKE_BINARY_DIR}/version/src/version
-                  DEPENDS version
-                  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+				  COMMAND ${CMAKE_BINARY_DIR}/version/src/version
+				  DEPENDS version
+				  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
 ADD_CUSTOM_TARGET(mrproper
-		  COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/build/cleanup.sh
-		  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+				  COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/build/cleanup.sh
+				  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
 
 # preinstall script

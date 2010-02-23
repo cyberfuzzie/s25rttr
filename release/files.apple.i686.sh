@@ -7,17 +7,16 @@ cp -v ../../$BUILDDIR/driver/audio/*.dylib share/s25rttr/driver/audio
 
 cp -v ../../$BUILDDIR/s25update/src/s25update share/s25rttr/RTTR
 cp -v ../../$BUILDDIR/s-c/src/sound-convert share/s25rttr/RTTR
-cp -v ../../$BUILDDIR/s-c/src/s-c_resample share/s25rttr/RTTR
+cp -v ../../$BUILDDIR/s-c/resample-1.8.1/src/s-c_resample share/s25rttr/RTTR
 
 # app anlegen
-mkdir -vp s25client.app/Contents/{Frameworks,MacOS,Resources}
+mkdir -vp s25client.app/Contents/{MacOS,Resources}
 
 # frameworks kopieren (da updater nicht mit symlinks umgehen kann, nur lib kopieren
-mkdir -vp s25client.app/Contents/Frameworks/{SDL,SDL_mixer}.framework/Versions/A
-cp -v /usr/i686-apple-darwin9/SDKs/MacOSX10.4u.sdk/Library/Frameworks/SDL.framework/SDL s25client.app/Contents/Frameworks/SDL.framework/Versions/A/SDL
-cp -v /usr/i686-apple-darwin9/SDKs/MacOSX10.4u.sdk/Library/Frameworks/SDL_mixer.framework/SDL_mixer s25client.app/Contents/Frameworks/SDL_mixer.framework/Versions/A/SDL_mixer
-#cp -v /usr/i686-apple-darwin9/SDKs/MacOSX10.4u.sdk/Library/Frameworks/sndfile.framework/sndfile s25client.app/Contents/Frameworks/sndfile.framework/sndfile
-#cp -v /usr/i686-apple-darwin9/SDKs/MacOSX10.4u.sdk/Library/Frameworks/samplerate.framework/samplerate s25client.app/Contents/Frameworks/samplerate.framework/samplerate
+mkdir -vp s25client.app/Contents/MacOS/Frameworks
+mkdir -vp s25client.app/Contents/MacOS/Frameworks/{SDL,SDL_mixer}.framework/Versions/A
+cp -v /usr/i686-apple-darwin9/SDKs/MacOSX10.4u.sdk/Library/Frameworks/SDL.framework/Versions/A/SDL s25client.app/Contents/MacOS/Frameworks/SDL.framework/Versions/A/SDL
+cp -v /usr/i686-apple-darwin9/SDKs/MacOSX10.4u.sdk/Library/Frameworks/SDL_mixer.framework/Versions/A/SDL_mixer s25client.app/Contents/Frameworks/MacOS/SDL_mixer.framework/Versions/A/SDL_mixer
 
 mkdir -vp s25client.app/Contents/MacOS/bin
 

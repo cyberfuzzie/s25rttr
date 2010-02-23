@@ -1,44 +1,46 @@
 #################################################################################
-### $Id: CMakeLists.txt 5745 2009-12-05 08:14:09Z FloSoft $
+### $Id: CMakeLists.txt 6076 2010-02-23 16:37:00Z FloSoft $
 #################################################################################
 
 INCLUDE(FindSDL)
 INCLUDE(FindSDL_mixer)
 
 IF (SDL_FOUND)
-        IF ( "${COMPILEFOR}" STREQUAL "apple")
-                SET(SPLIT "${SDL_LIBRARY}")
-                INCLUDE(FindSplitPath)
+		IF ( "${COMPILEFOR}" STREQUAL "apple")
+			SET(SPLIT "${SDL_LIBRARY}")
+			INCLUDE(FindSplitPath)
 
-                MESSAGE(STATUS "SDL-Library is a directory, searching for the Library")
+			MESSAGE(STATUS "SDL-Library is a directory, searching for the Library")
 
-                FIND_FILE(SDL
-                                SDL
-                                PATHS ${PATHS}
-                         )
-                IF(NOT SDL-NOTFOUND)
-                        MESSAGE(STATUS "SDL-Library was directory, found ${SDL}")
-                        SET(SDL_LIBRARY "${SDL}")
-                ENDIF(NOT SDL-NOTFOUND)
-        ENDIF ( "${COMPILEFOR}" STREQUAL "apple")
+			FIND_FILE(SDL
+				SDL
+				PATHS ${PATHS}
+			)
+			
+			IF(NOT SDL-NOTFOUND)
+				MESSAGE(STATUS "SDL-Library was directory, found ${SDL}")
+				SET(SDL_LIBRARY "${SDL}")
+			ENDIF(NOT SDL-NOTFOUND)
+		ENDIF ( "${COMPILEFOR}" STREQUAL "apple")
 
 	IF (SDLMIXER_FOUND)
 
-	        IF ( "${COMPILEFOR}" STREQUAL "apple")
-	                SET(SPLIT "${SDLMIXER_LIBRARY}")
-        	        INCLUDE(FindSplitPath)
-	
-        	        MESSAGE(STATUS "SDLMIXER-Library is a directory, searching for the Library")
+		IF ( "${COMPILEFOR}" STREQUAL "apple")
+			SET(SPLIT "${SDLMIXER_LIBRARY}")
+			INCLUDE(FindSplitPath)
 
-                	FIND_FILE(SDLMIXER
-                                	SDL_mixer
-                        	        PATHS ${PATHS}
-	                         )
-        	        IF(NOT SDLMIXER-NOTFOUND)
-                	        MESSAGE(STATUS "SDLMIXER-Library was directory, found ${SDLMIXER}")
-                        	SET(SDLMIXER_LIBRARY "${SDLMIXER}")
-	                ENDIF(NOT SDLMIXER-NOTFOUND)
-        	ENDIF ( "${COMPILEFOR}" STREQUAL "apple")
+			MESSAGE(STATUS "SDLMIXER-Library is a directory, searching for the Library")
+
+			FIND_FILE(SDLMIXER
+				SDL_mixer
+				PATHS ${PATHS}
+			)
+			
+			IF(NOT SDLMIXER-NOTFOUND)
+				MESSAGE(STATUS "SDLMIXER-Library was directory, found ${SDLMIXER}")
+				SET(SDLMIXER_LIBRARY "${SDLMIXER}")
+			ENDIF(NOT SDLMIXER-NOTFOUND)
+		ENDIF ( "${COMPILEFOR}" STREQUAL "apple")
 
 		INCLUDE_DIRECTORIES(../../../src ../libendian/src)
 		
@@ -58,17 +60,13 @@ IF (SDL_FOUND)
 			ADD_DEFINITIONS(-DBUILD_DLL)
 		ENDIF ( "${COMPILEFOR}" STREQUAL "windows")
 			
-		IF ( "${COMPILEFOR}" STREQUAL "apple")
-			SET_TARGET_PROPERTIES(audioSDL PROPERTIES LINK_FLAGS "-framework SDL -framework SDL_mixer")
-		ENDIF ( "${COMPILEFOR}" STREQUAL "apple")
-
 		ADD_CUSTOM_COMMAND(TARGET audioSDL POST_BUILD COMMAND ln -fvs SDL/src/${CMAKE_SHARED_LIBRARY_PREFIX}audioSDL${CMAKE_SHARED_LIBRARY_SUFFIX} ../../audioSDL${CMAKE_SHARED_LIBRARY_SUFFIX})
 
 		INSTALL(TARGETS audioSDL 
-				RUNTIME DESTINATION ${LIBDIR}/driver/audio 
-				LIBRARY DESTINATION ${LIBDIR}/driver/audio
-				ARCHIVE DESTINATION ${LIBDIR}/driver/audio
-		       )
+			RUNTIME DESTINATION ${LIBDIR}/driver/audio 
+			LIBRARY DESTINATION ${LIBDIR}/driver/audio
+			ARCHIVE DESTINATION ${LIBDIR}/driver/audio
+		)
 	ELSE (SDLMIXER_FOUND)
 		MESSAGE(WARNING ": SDL_mixer library not found: Not building SDL audiodriver")
 	ENDIF (SDLMIXER_FOUND)

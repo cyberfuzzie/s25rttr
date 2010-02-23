@@ -471,7 +471,7 @@ void noFigure::GoHome(noRoadNode *goal)
 	if(on_ship)
 	{
 		// Wir befinden uns gerade an Deck, also einfach goal auf Null setzen und dann sehen wir, was so passiert
-		goal = NULL;
+		this->goal = NULL;
 		return;
 	}
 	// Nächstes Lagerhaus suchen

@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-02-14 17:20+0000\n"
+"X-Launchpad-Export-Date: 2010-02-23 10:36+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: SLOVAKIA\n"
 "X-Poedit-Language: Slovak\n"
@@ -98,9 +98,8 @@ msgid "1 h"
 msgstr "1 h"
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:49
-#, fuzzy
 msgid "10 catapults"
-msgstr "Katapult"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:127
 msgid "15 m"
@@ -111,28 +110,24 @@ msgid "16 h"
 msgstr "16 h"
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:50
-#, fuzzy
 msgid "20 catapults"
-msgstr "Katapult"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:51
-#, fuzzy
 msgid "30 catapults"
-msgstr "Katapult"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:129
 msgid "4 h"
 msgstr "4 h"
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:52
-#, fuzzy
 msgid "40 catapults"
-msgstr "Katapult"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:53
-#, fuzzy
 msgid "50 catapults"
-msgstr "Katapult"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:909
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:935
@@ -225,19 +220,16 @@ msgid "Additional features:"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwAddons.cpp:43
-#, fuzzy
 msgid "Addon Settings"
-msgstr "Zmenit Nastavenia..."
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:79
-#, fuzzy
 msgid "Addons"
-msgstr "Vložiť"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:94
-#, fuzzy
 msgid "Addons:"
-msgstr "Vložiť"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:105
 msgid "Advanced"
@@ -466,9 +458,8 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:469
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:680
-#, fuzzy
 msgid "Cancel start"
-msgstr "Zrušiť"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:317
 msgid "Carpenter"
@@ -972,9 +963,8 @@ msgid "Game's Name:"
 msgstr "Názov hry:"
 
 #: /storage/RTTR/svn/trunk/src/iwAddons.cpp:65
-#, fuzzy
 msgid "Gameplay"
-msgstr "Prehrať záznam"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:338
 msgid "General"
@@ -1230,9 +1220,8 @@ msgid "Less repeats"
 msgstr "Zriedkavejšie"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:172
-#, fuzzy
 msgid "Limit Framerate:"
-msgstr "to GameFrame:"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:37
 msgid "Limit count of catapults"
@@ -1288,18 +1277,16 @@ msgid "Lock teams:"
 msgstr "Uzamknúť tímy:"
 
 #: /storage/RTTR/svn/trunk/src/AddonMaxWaterwayLength.h:47
-#, fuzzy
 msgid "Long"
-msgstr "Kliešte"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:245
 msgid "Long-run"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/AddonMaxWaterwayLength.h:48
-#, fuzzy
 msgid "Longer"
-msgstr "Lesník"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:242
 msgid "Lookout tower"
@@ -1525,14 +1512,12 @@ msgid "No Proxy"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:48
-#, fuzzy
 msgid "No catapults"
-msgstr "Katapult"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/AddonChangeGoldDeposits.h:47
-#, fuzzy
 msgid "No change"
-msgstr "Nič"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwAIDebug.cpp:148
 msgid "No current job"
@@ -1577,9 +1562,8 @@ msgid "Normal"
 msgstr "Normal"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:682
-#, fuzzy
 msgid "Not Ready"
-msgstr "Pripravený?"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskSinglePlayer.cpp:95
 msgid "Not available"
@@ -1859,9 +1843,8 @@ msgstr "Čítaj ma!"
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:83
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:479
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:682
-#, fuzzy
 msgid "Ready"
-msgstr "Pripravený?"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:70
 msgid "Ready?"
@@ -2060,9 +2043,8 @@ msgid "Shipyard"
 msgstr "Lodenica"
 
 #: /storage/RTTR/svn/trunk/src/AddonMaxWaterwayLength.h:45
-#, fuzzy
 msgid "Short"
-msgstr "Ukončiť"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:243
 msgid "Short-run"
@@ -2140,9 +2122,8 @@ msgid "Start GF"
 msgstr "Start GF"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:541
-#, fuzzy
 msgid "Start aborted"
-msgstr "Spustiť hru"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwHarborBuilding.cpp:56
 #: /storage/RTTR/svn/trunk/src/iwHarborBuilding.cpp:89
@@ -2561,9 +2542,8 @@ msgid "Use IPv6:"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwAddons.cpp:54
-#, fuzzy
 msgid "Use S2 Defaults"
-msgstr "Základné"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:53
 msgid "Username:"
@@ -2592,9 +2572,8 @@ msgid "Very fast"
 msgstr "Veľmi rýchlo"
 
 #: /storage/RTTR/svn/trunk/src/AddonMaxWaterwayLength.h:49
-#, fuzzy
 msgid "Very long"
-msgstr "Veľmi pomaly"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:132
 msgid "Very slow"

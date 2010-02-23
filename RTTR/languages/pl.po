@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: s25rttr\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-02-14 20:52+0100\n"
-"PO-Revision-Date: 2010-01-23 23:29+0000\n"
+"PO-Revision-Date: 2010-02-19 18:27+0000\n"
 "Last-Translator: Baton1 <baton1batonik@gmail.com>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-02-14 17:20+0000\n"
+"X-Launchpad-Export-Date: 2010-02-23 10:36+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: /storage/RTTR/svn/trunk/src/GameClient.cpp:596
@@ -98,9 +98,8 @@ msgid "1 h"
 msgstr "1 h"
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:49
-#, fuzzy
 msgid "10 catapults"
-msgstr "Katapulta"
+msgstr "10 katapult"
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:127
 msgid "15 m"
@@ -111,28 +110,24 @@ msgid "16 h"
 msgstr "16 h"
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:50
-#, fuzzy
 msgid "20 catapults"
-msgstr "Katapulta"
+msgstr "20 katapult"
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:51
-#, fuzzy
 msgid "30 catapults"
-msgstr "Katapulta"
+msgstr "30 katapult"
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:129
 msgid "4 h"
 msgstr "4 h"
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:52
-#, fuzzy
 msgid "40 catapults"
-msgstr "Katapulta"
+msgstr "40 katapult"
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:53
-#, fuzzy
 msgid "50 catapults"
-msgstr "Katapulta"
+msgstr "50 katapult"
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:909
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:935
@@ -189,11 +184,11 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwAIDebug.cpp:49
 msgid "AI Debug"
-msgstr ""
+msgstr "AI Debug"
 
 #: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:96
 msgid "AI Debug Window"
-msgstr ""
+msgstr "Okno AI Debug"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:45
 msgid "Abort"
@@ -222,24 +217,20 @@ msgid "Additional Programming:"
 msgstr "Pozostali programiści:"
 
 #: /storage/RTTR/svn/trunk/src/iwAddons.cpp:46
-#, fuzzy
 msgid "Additional features:"
-msgstr "Pozostali programiści:"
+msgstr "Dodatkowe opcje:"
 
 #: /storage/RTTR/svn/trunk/src/iwAddons.cpp:43
-#, fuzzy
 msgid "Addon Settings"
-msgstr "Ustawienia"
+msgstr "Ustawienia dodatków"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:79
-#, fuzzy
 msgid "Addons"
-msgstr "Dodaj"
+msgstr "Dodatki"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:94
-#, fuzzy
 msgid "Addons:"
-msgstr "Dodaj"
+msgstr "Dodatki:"
 
 #: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:105
 msgid "Advanced"
@@ -276,6 +267,9 @@ msgid ""
 "\n"
 "Wells will now dry out"
 msgstr ""
+"Ogranicza zasoby wody\n"
+"\n"
+"Studnie mogą teraz wyschnąć"
 
 #: /storage/RTTR/svn/trunk/src/AddonInexhaustibleMines.h:38
 msgid ""
@@ -283,6 +277,9 @@ msgid ""
 "\n"
 "Mines will never be depleted"
 msgstr ""
+"Pozwala na brak ograniczeń surowców\n"
+"\n"
+"Kopalnie nigdy się nie wyczerpią"
 
 #: /storage/RTTR/svn/trunk/src/AddonChangeGoldDeposits.h:39
 msgid ""
@@ -294,12 +291,24 @@ msgid ""
 "You'll probably want to convert gold to iron ore, as this (on most maps)\n"
 "allows you to utilize the additional coal not needed for minting anymore."
 msgstr ""
+"Zezwól na grę bez złota.\n"
+"\n"
+"Możesz wybrać, aby całkowicie usunąć zasoby złota,\n"
+"zmienić je w rudę żelaza, węgla albo granitu.\n"
+"\n"
+"Prawdopodobnie zechcesz zamienić złoto na rudę żelaza, jako że (na "
+"większości map)\n"
+"pozwoli ci to wykorzystać dodatkowy węgiel nie potrzebny już więcej do bicia "
+"monet."
 
 #: /storage/RTTR/svn/trunk/src/AddonRefundMaterials.h:38
 msgid ""
 "Allows you to get building materials back if the building is destroyed\n"
 "\n"
 msgstr ""
+"Pozwala na odzyskanie materiałów budowlanych jeśli budynek zostanie "
+"zniszczony\n"
+"\n"
 
 #: /storage/RTTR/svn/trunk/src/SerializedGameData.cpp:239
 msgid "An error occured while saving which was suppressed!"
@@ -463,15 +472,13 @@ msgid "Cancel"
 msgstr "Anuluj"
 
 #: /storage/RTTR/svn/trunk/src/iwHarborBuilding.cpp:84
-#, fuzzy
 msgid "Cancel expedition"
-msgstr "Rozpocznij ekspedycję"
+msgstr "Anuluj ekspedycję"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:469
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:680
-#, fuzzy
 msgid "Cancel start"
-msgstr "Anuluj"
+msgstr "Anuluj start"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:317
 msgid "Carpenter"
@@ -491,11 +498,11 @@ msgstr "Zmień ustawienia..."
 
 #: /storage/RTTR/svn/trunk/src/AddonChangeGoldDeposits.h:38
 msgid "Change gold deposits"
-msgstr ""
+msgstr "Zmień depozyty złota"
 
 #: /storage/RTTR/svn/trunk/src/AddonStatisticsVisibility.h:37
 msgid "Change the visibility of your ingame statistics"
-msgstr ""
+msgstr "Zmień widoczność twoich statystyk w grze"
 
 #: /storage/RTTR/svn/trunk/src/iwChat.cpp:47
 msgid "Chat Window"
@@ -528,7 +535,7 @@ msgstr "Tasak"
 
 #: /storage/RTTR/svn/trunk/src/iwAddons.cpp:51
 msgid "Close Without Saving"
-msgstr ""
+msgstr "Zamknij bez zapisywania"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:206
 msgid "Closed"
@@ -609,17 +616,15 @@ msgstr "Rodzaj umowy:"
 
 #: /storage/RTTR/svn/trunk/src/AddonChangeGoldDeposits.h:50
 msgid "Convert to coal"
-msgstr ""
+msgstr "Zamień na węgiel"
 
 #: /storage/RTTR/svn/trunk/src/AddonChangeGoldDeposits.h:51
-#, fuzzy
 msgid "Convert to granite"
-msgstr "Znaleziono granit"
+msgstr "Zamień na granit"
 
 #: /storage/RTTR/svn/trunk/src/AddonChangeGoldDeposits.h:49
-#, fuzzy
 msgid "Convert to iron ore"
-msgstr "Znaleziono rudę żelaza"
+msgstr "Zamień na rudę żelaza"
 
 #: /storage/RTTR/svn/trunk/src/dskDirectIP.cpp:61
 msgid "Create Game"
@@ -642,9 +647,8 @@ msgstr ""
 "ms"
 
 #: /storage/RTTR/svn/trunk/src/AddonCustomBuildSequence.h:37
-#, fuzzy
 msgid "Custom build sequence"
-msgstr "Kolejność budowania"
+msgstr "Ręczna kolejność budowy"
 
 #: /storage/RTTR/svn/trunk/src/AddonStatisticsVisibility.h:38
 msgid ""
@@ -652,6 +656,10 @@ msgid ""
 "\n"
 "\"Allies\" applies to team members as well as to allies by treaty."
 msgstr ""
+"Zdecyduj dla kogo będą widoczne twoje statystyki.\n"
+"\n"
+"\"Sojusznicy\" oznacza nie tylko członków twojej drużyny, ale także "
+"sojuszników ze względu na pakty."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:350
 msgid ""
@@ -723,7 +731,7 @@ msgstr "Dystrybucja produktów"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:521
 msgid "Don't forget to check the addon configuration!"
-msgstr ""
+msgstr "Nie zapomnij sprawdzić ustawień dodatków!"
 
 #: /storage/RTTR/svn/trunk/src/iwSurrender.cpp:56
 msgid "Don't surrender"
@@ -772,10 +780,12 @@ msgstr "Czas trwania: Wiecznie"
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:286
 msgid "Dynamic (Limits to display refresh rate, works with most drivers)"
 msgstr ""
+"Dynamiczny (limit w ilości wyświetlanych klatek na sekundę, współpracuje z "
+"większością sterowników)"
 
 #: /storage/RTTR/svn/trunk/src/iwAddons.cpp:63
 msgid "Economy"
-msgstr ""
+msgstr "Ekonomia"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:223
 msgid "Effects"
@@ -835,11 +845,11 @@ msgstr "Wieczny"
 
 #: /storage/RTTR/svn/trunk/src/AddonStatisticsVisibility.h:44
 msgid "Everyone"
-msgstr ""
+msgstr "Wszyscy"
 
 #: /storage/RTTR/svn/trunk/src/AddonExhaustibleWells.h:37
 msgid "Exhaustible Wells"
-msgstr ""
+msgstr "Wyczerpywalne studnie"
 
 #: /storage/RTTR/svn/trunk/src/iwHarborBuilding.cpp:53
 msgid "Expedition"
@@ -984,9 +994,8 @@ msgid "Game's Name:"
 msgstr "Nazwa gry:"
 
 #: /storage/RTTR/svn/trunk/src/iwAddons.cpp:65
-#, fuzzy
 msgid "Gameplay"
-msgstr "Odtwórz powtórkę"
+msgstr "Gra"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:338
 msgid "General"
@@ -1002,7 +1011,7 @@ msgstr "Geolog"
 
 #: /storage/RTTR/svn/trunk/src/AddonRefundMaterials.h:46
 msgid "Get all back"
-msgstr ""
+msgstr "Zwracaj wszystko"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:335
 msgid "Go to headquarters"
@@ -1129,7 +1138,7 @@ msgstr "Otrzymano niekompletną wiadomość!"
 
 #: /storage/RTTR/svn/trunk/src/AddonInexhaustibleMines.h:37
 msgid "Inexhaustible Mines"
-msgstr ""
+msgstr "Niewyczerpywalne kopalnie"
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:118
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:219
@@ -1244,13 +1253,12 @@ msgid "Less repeats"
 msgstr "Mniej powtórzeń"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:172
-#, fuzzy
 msgid "Limit Framerate:"
-msgstr "do klatki:"
+msgstr "Max klatek/sec:"
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:37
 msgid "Limit count of catapults"
-msgstr ""
+msgstr "Ograniczona liczba katapult"
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:38
 msgid ""
@@ -1276,6 +1284,15 @@ msgid ""
 "Very long: 21 tiles\n"
 "and Unlimited"
 msgstr ""
+"Limit długości jako twoi poddani mogą przebyć za pomocą łodzi\n"
+"\n"
+"Możliwe długości:\n"
+"Krótkie: 3 długości\n"
+"Domyślne: 5 długości\n"
+"Długie: 9 długości\n"
+"Dłuższe: 13 długości\n"
+"Bardzo długie: 21 długości\n"
+"oraz Nieograniczone"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:79
 msgid "Load"
@@ -1302,18 +1319,16 @@ msgid "Lock teams:"
 msgstr "Zablokuj drużyny:"
 
 #: /storage/RTTR/svn/trunk/src/AddonMaxWaterwayLength.h:47
-#, fuzzy
 msgid "Long"
-msgstr "Szczypce"
+msgstr "Długie"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:245
 msgid "Long-run"
 msgstr "Długi okres czasu"
 
 #: /storage/RTTR/svn/trunk/src/AddonMaxWaterwayLength.h:48
-#, fuzzy
 msgid "Longer"
-msgstr "Długi okres czasu"
+msgstr "Dłuższe"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:242
 msgid "Lookout tower"
@@ -1539,18 +1554,16 @@ msgid "No Proxy"
 msgstr "Brak Proxy"
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:48
-#, fuzzy
 msgid "No catapults"
-msgstr "Katapulta"
+msgstr "Brak katapult"
 
 #: /storage/RTTR/svn/trunk/src/AddonChangeGoldDeposits.h:47
-#, fuzzy
 msgid "No change"
-msgstr "Nic"
+msgstr "Bez zmian"
 
 #: /storage/RTTR/svn/trunk/src/iwAIDebug.cpp:148
 msgid "No current job"
-msgstr ""
+msgstr "Brak zadań"
 
 #: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:83
 #: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:228
@@ -1567,7 +1580,7 @@ msgstr "Brak kamieni w okolicy"
 
 #: /storage/RTTR/svn/trunk/src/AddonRefundMaterials.h:42
 msgid "No refund"
-msgstr ""
+msgstr "Brak zwrotów"
 
 #: /storage/RTTR/svn/trunk/src/iwShip.cpp:104
 msgid "No ships available"
@@ -1575,7 +1588,7 @@ msgstr "Brak dostępnych statków"
 
 #: /storage/RTTR/svn/trunk/src/AddonStatisticsVisibility.h:46
 msgid "Nobody else but you"
-msgstr ""
+msgstr "Nikt poza tobą"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:114
 msgid "Non-aggression pact"
@@ -1591,9 +1604,8 @@ msgid "Normal"
 msgstr "Standardowo"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:682
-#, fuzzy
 msgid "Not Ready"
-msgstr "Gotowy?"
+msgstr "Nie gotowy"
 
 #: /storage/RTTR/svn/trunk/src/dskSinglePlayer.cpp:95
 msgid "Not available"
@@ -1811,7 +1823,7 @@ msgstr "Zarządzający projektem"
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:47
 msgid "Proportional"
-msgstr ""
+msgstr "Proporcjonalnie"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:136
 msgid "Proxyserver:"
@@ -1878,9 +1890,8 @@ msgstr "CzytajTo!"
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:83
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:479
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:682
-#, fuzzy
 msgid "Ready"
-msgstr "Gotowy?"
+msgstr "Gotowe"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:70
 msgid "Ready?"
@@ -1888,19 +1899,19 @@ msgstr "Gotowy?"
 
 #: /storage/RTTR/svn/trunk/src/AddonRefundMaterials.h:43
 msgid "Refund 25%"
-msgstr ""
+msgstr "Zwracaj 25%"
 
 #: /storage/RTTR/svn/trunk/src/AddonRefundMaterials.h:44
 msgid "Refund 50%"
-msgstr ""
+msgstr "Zwracaj 50%"
 
 #: /storage/RTTR/svn/trunk/src/AddonRefundMaterials.h:45
 msgid "Refund 75%"
-msgstr ""
+msgstr "Zwracaj 75%"
 
 #: /storage/RTTR/svn/trunk/src/AddonRefundMaterials.h:37
 msgid "Refund materials when building is destroyed"
-msgstr ""
+msgstr "Zwracaj materiały przy niszczeniu budynku."
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:88
 msgid "Register"
@@ -1916,7 +1927,7 @@ msgstr "Usuń"
 
 #: /storage/RTTR/svn/trunk/src/AddonChangeGoldDeposits.h:48
 msgid "Remove gold completely"
-msgstr ""
+msgstr "Całkowicie usuń złoto"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:83
 msgid "Remove track"
@@ -2042,9 +2053,8 @@ msgid "Server-Port:"
 msgstr "Serwer-Port:"
 
 #: /storage/RTTR/svn/trunk/src/AddonMaxWaterwayLength.h:37
-#, fuzzy
 msgid "Set maximum waterway length"
-msgstr "Max długość dróg wodnych"
+msgstr "Ustaw maksymalną długość ścieżek wodnych"
 
 #: /storage/RTTR/svn/trunk/src/iwSettings.cpp:53
 msgid "Settings"
@@ -2085,9 +2095,8 @@ msgid "Shipyard"
 msgstr "Stocznia"
 
 #: /storage/RTTR/svn/trunk/src/AddonMaxWaterwayLength.h:45
-#, fuzzy
 msgid "Short"
-msgstr "Krótki okres czasu"
+msgstr "Krótkie"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:243
 msgid "Short-run"
@@ -2165,9 +2174,8 @@ msgid "Start GF"
 msgstr "Zacznij GF"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:541
-#, fuzzy
 msgid "Start aborted"
-msgstr "Rozpocznij grę"
+msgstr "Start anulowany"
 
 #: /storage/RTTR/svn/trunk/src/iwHarborBuilding.cpp:56
 #: /storage/RTTR/svn/trunk/src/iwHarborBuilding.cpp:89
@@ -2182,7 +2190,7 @@ msgstr "Rozpocznij grę"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:528
 msgid "Starting game, please wait"
-msgstr ""
+msgstr "Rozpoczynanie gry, proszę czekać"
 
 #: /storage/RTTR/svn/trunk/src/iwSettings.cpp:58
 msgid "Statistic Scale"
@@ -2477,13 +2485,10 @@ msgstr ""
 "się?"
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:335
-#, fuzzy
 msgid ""
 "The quarrying of stone in a granite mine guarantees the supply of stone for "
 "buildings. However, even a granite mine has to feed its workers."
 msgstr ""
-"Wydobywanie kamieni w kopalni granitu gwarantuje zaopatrzenie budynków w ten "
-"surowiec. Jednakże, nawet kopalnia granitu musi karmić swoich pracowników."
 
 #: /storage/RTTR/svn/trunk/src/iwTextfile.cpp:72
 msgid "The readme file was not found!"
@@ -2601,7 +2606,7 @@ msgstr "Rodzaj"
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:46
 msgid "Unlimited"
-msgstr ""
+msgstr "Bez ograniczeń"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:92
 #: /storage/RTTR/svn/trunk/src/iwBuildOrder.cpp:58
@@ -2614,16 +2619,15 @@ msgstr "W górę"
 
 #: /storage/RTTR/svn/trunk/src/Addons.cpp:168
 msgid "Use"
-msgstr ""
+msgstr "Użyj"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:125
 msgid "Use IPv6:"
 msgstr "Użyj IPv6:"
 
 #: /storage/RTTR/svn/trunk/src/iwAddons.cpp:54
-#, fuzzy
 msgid "Use S2 Defaults"
-msgstr "Domyślne"
+msgstr "Użyj domyślnych S2"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:53
 msgid "Username:"
@@ -2652,9 +2656,8 @@ msgid "Very fast"
 msgstr "Bardzo szybko"
 
 #: /storage/RTTR/svn/trunk/src/AddonMaxWaterwayLength.h:49
-#, fuzzy
 msgid "Very long"
-msgstr "Bardzo wolno"
+msgstr "Bardzo długie"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:132
 msgid "Very slow"
@@ -2803,7 +2806,7 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:520
 msgid "You have 10 seconds until game starts"
-msgstr ""
+msgstr "Masz 10s zanim rozpocznie się gra"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:537
 msgid "You need to restart your game to change the screen resolution!"
@@ -2816,7 +2819,7 @@ msgstr "Musisz zrestartować grę by zmienić sterowniki audio lub wideo!"
 #: /storage/RTTR/svn/trunk/src/GameClient.cpp:1587
 #, c-format
 msgid "current GF: %u - still fast forwarding: %d GFs left (%d %%)"
-msgstr ""
+msgstr "aktualna GF: %u - Nadal pozostalo: %d GF (%d %%)"
 
 #: /storage/RTTR/svn/trunk/src/iwBaseWarehouse.cpp:62
 msgid "do nothing"
@@ -2828,7 +2831,7 @@ msgstr "http://www.siedler25.org"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:237
 msgid "n/a"
-msgstr ""
+msgstr "n/a"
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:105
 msgid "non-aggression pact"

@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-02-14 17:20+0000\n"
+"X-Launchpad-Export-Date: 2010-02-23 10:36+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: GERMANY\n"
 "X-Poedit-Language: German\n"
@@ -98,9 +98,8 @@ msgid "1 h"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:49
-#, fuzzy
 msgid "10 catapults"
-msgstr "Katapult"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:127
 msgid "15 m"
@@ -111,28 +110,24 @@ msgid "16 h"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:50
-#, fuzzy
 msgid "20 catapults"
-msgstr "Katapult"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:51
-#, fuzzy
 msgid "30 catapults"
-msgstr "Katapult"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:129
 msgid "4 h"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:52
-#, fuzzy
 msgid "40 catapults"
-msgstr "Katapult"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:53
-#, fuzzy
 msgid "50 catapults"
-msgstr "Katapult"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:909
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:935
@@ -462,9 +457,8 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:469
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:680
-#, fuzzy
 msgid "Cancel start"
-msgstr "Avbryt"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:317
 msgid "Carpenter"
@@ -968,9 +962,8 @@ msgid "Game's Name:"
 msgstr "Spelnamn:"
 
 #: /storage/RTTR/svn/trunk/src/iwAddons.cpp:65
-#, fuzzy
 msgid "Gameplay"
-msgstr "Visa replay"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:338
 msgid "General"
@@ -1226,9 +1219,8 @@ msgid "Less repeats"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:172
-#, fuzzy
 msgid "Limit Framerate:"
-msgstr "till GF:"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:37
 msgid "Limit count of catapults"
@@ -1284,18 +1276,16 @@ msgid "Lock teams:"
 msgstr "Låsa teamen"
 
 #: /storage/RTTR/svn/trunk/src/AddonMaxWaterwayLength.h:47
-#, fuzzy
 msgid "Long"
-msgstr "Tång"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:245
 msgid "Long-run"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/AddonMaxWaterwayLength.h:48
-#, fuzzy
 msgid "Longer"
-msgstr "Skogvaktare"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:242
 msgid "Lookout tower"
@@ -1521,14 +1511,12 @@ msgid "No Proxy"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:48
-#, fuzzy
 msgid "No catapults"
-msgstr "Katapult"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/AddonChangeGoldDeposits.h:47
-#, fuzzy
 msgid "No change"
-msgstr "Inget"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwAIDebug.cpp:148
 msgid "No current job"
@@ -1573,9 +1561,8 @@ msgid "Normal"
 msgstr "Lagom"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:682
-#, fuzzy
 msgid "Not Ready"
-msgstr "Klar?"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskSinglePlayer.cpp:95
 msgid "Not available"
@@ -1855,9 +1842,8 @@ msgstr "Läs mig!"
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:83
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:479
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:682
-#, fuzzy
 msgid "Ready"
-msgstr "Klar?"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:70
 msgid "Ready?"
@@ -2056,9 +2042,8 @@ msgid "Shipyard"
 msgstr "Skeppsvarv"
 
 #: /storage/RTTR/svn/trunk/src/AddonMaxWaterwayLength.h:45
-#, fuzzy
 msgid "Short"
-msgstr "Starta"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:243
 msgid "Short-run"
@@ -2134,9 +2119,8 @@ msgid "Start GF"
 msgstr "Start-GF"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:541
-#, fuzzy
 msgid "Start aborted"
-msgstr "Starta spel"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwHarborBuilding.cpp:56
 #: /storage/RTTR/svn/trunk/src/iwHarborBuilding.cpp:89
@@ -2562,9 +2546,8 @@ msgid "Use IPv6:"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwAddons.cpp:54
-#, fuzzy
 msgid "Use S2 Defaults"
-msgstr "Standard"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:53
 msgid "Username:"
@@ -2593,9 +2576,8 @@ msgid "Very fast"
 msgstr "Fortast"
 
 #: /storage/RTTR/svn/trunk/src/AddonMaxWaterwayLength.h:49
-#, fuzzy
 msgid "Very long"
-msgstr "Långsamast"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:132
 msgid "Very slow"

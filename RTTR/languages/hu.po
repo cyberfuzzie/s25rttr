@@ -3,13 +3,13 @@ msgstr ""
 "Project-Id-Version: Siedler II.5 RttR\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-02-14 20:52+0100\n"
-"PO-Revision-Date: 2010-01-17 23:37+0000\n"
-"Last-Translator: Muszela Balázs <Unknown>\n"
+"PO-Revision-Date: 2010-02-20 00:28+0000\n"
+"Last-Translator: FloSoft <Unknown>\n"
 "Language-Team: Siedler II.5 RttR <sf-team@siedler25.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-02-14 17:20+0000\n"
+"X-Launchpad-Export-Date: 2010-02-23 10:36+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: Hungary\n"
 "X-Poedit-Language: Hungarian\n"
@@ -98,9 +98,8 @@ msgid "1 h"
 msgstr "1 h"
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:49
-#, fuzzy
 msgid "10 catapults"
-msgstr "Katapult"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:127
 msgid "15 m"
@@ -111,28 +110,24 @@ msgid "16 h"
 msgstr "16 h"
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:50
-#, fuzzy
 msgid "20 catapults"
-msgstr "Katapult"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:51
-#, fuzzy
 msgid "30 catapults"
-msgstr "Katapult"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:129
 msgid "4 h"
 msgstr "4 h"
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:52
-#, fuzzy
 msgid "40 catapults"
-msgstr "Katapult"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:53
-#, fuzzy
 msgid "50 catapults"
-msgstr "Katapult"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:909
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:935
@@ -225,19 +220,16 @@ msgid "Additional features:"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwAddons.cpp:43
-#, fuzzy
 msgid "Addon Settings"
-msgstr "Beállítások módosítása..."
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:79
-#, fuzzy
 msgid "Addons"
-msgstr "Hozzáad"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:94
-#, fuzzy
 msgid "Addons:"
-msgstr "Hozzáad"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:105
 msgid "Advanced"
@@ -461,15 +453,13 @@ msgid "Cancel"
 msgstr "Megszakit"
 
 #: /storage/RTTR/svn/trunk/src/iwHarborBuilding.cpp:84
-#, fuzzy
 msgid "Cancel expedition"
-msgstr "Felfedezés indítása"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:469
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:680
-#, fuzzy
 msgid "Cancel start"
-msgstr "Megszakit"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:317
 msgid "Carpenter"
@@ -610,14 +600,12 @@ msgid "Convert to coal"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/AddonChangeGoldDeposits.h:51
-#, fuzzy
 msgid "Convert to granite"
-msgstr "Gránitot találtunk"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/AddonChangeGoldDeposits.h:49
-#, fuzzy
 msgid "Convert to iron ore"
-msgstr "Vasércet találtam"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskDirectIP.cpp:61
 msgid "Create Game"
@@ -639,9 +627,8 @@ msgstr ""
 "Jelenlegi GF: %u / GF hossz: %u ms / NWF hossz: %u gf (%u ms) /  Ping: %u ms"
 
 #: /storage/RTTR/svn/trunk/src/AddonCustomBuildSequence.h:37
-#, fuzzy
 msgid "Custom build sequence"
-msgstr "Építési sorrend"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/AddonStatisticsVisibility.h:38
 msgid ""
@@ -978,9 +965,8 @@ msgid "Game's Name:"
 msgstr "Játék neve:"
 
 #: /storage/RTTR/svn/trunk/src/iwAddons.cpp:65
-#, fuzzy
 msgid "Gameplay"
-msgstr "Visszajátszás inditása"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:338
 msgid "General"
@@ -1234,9 +1220,8 @@ msgid "Less repeats"
 msgstr "Kevesebb újrajátszás"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:172
-#, fuzzy
 msgid "Limit Framerate:"
-msgstr "GameFramehez:"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:37
 msgid "Limit count of catapults"
@@ -1292,18 +1277,16 @@ msgid "Lock teams:"
 msgstr "Zárt csapatok"
 
 #: /storage/RTTR/svn/trunk/src/AddonMaxWaterwayLength.h:47
-#, fuzzy
 msgid "Long"
-msgstr "Fogó"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:245
 msgid "Long-run"
 msgstr "Hosszútávú"
 
 #: /storage/RTTR/svn/trunk/src/AddonMaxWaterwayLength.h:48
-#, fuzzy
 msgid "Longer"
-msgstr "Hosszútávú"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:242
 msgid "Lookout tower"
@@ -1529,14 +1512,12 @@ msgid "No Proxy"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:48
-#, fuzzy
 msgid "No catapults"
-msgstr "Katapult"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/AddonChangeGoldDeposits.h:47
-#, fuzzy
 msgid "No change"
-msgstr "Nincs"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwAIDebug.cpp:148
 msgid "No current job"
@@ -1581,9 +1562,8 @@ msgid "Normal"
 msgstr "Normális"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:682
-#, fuzzy
 msgid "Not Ready"
-msgstr "Kész?"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskSinglePlayer.cpp:95
 msgid "Not available"
@@ -1863,9 +1843,8 @@ msgstr "Olvassel!"
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:83
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:479
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:682
-#, fuzzy
 msgid "Ready"
-msgstr "Kész?"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:70
 msgid "Ready?"
@@ -2064,9 +2043,8 @@ msgid "Shipyard"
 msgstr "Hajógyár"
 
 #: /storage/RTTR/svn/trunk/src/AddonMaxWaterwayLength.h:45
-#, fuzzy
 msgid "Short"
-msgstr "Rövidtávú"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:243
 msgid "Short-run"
@@ -2144,9 +2122,8 @@ msgid "Start GF"
 msgstr "GF indítása"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:541
-#, fuzzy
 msgid "Start aborted"
-msgstr "Új játék"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwHarborBuilding.cpp:56
 #: /storage/RTTR/svn/trunk/src/iwHarborBuilding.cpp:89
@@ -2438,13 +2415,10 @@ msgid ""
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:335
-#, fuzzy
 msgid ""
 "The quarrying of stone in a granite mine guarantees the supply of stone for "
 "buildings. However, even a granite mine has to feed its workers."
 msgstr ""
-"A gránitbányából kifejthető kövek szolgáltatják a követ az épületekhez. "
-"Azonban a bányászoknak élelemre van szükségük a munkához."
 
 #: /storage/RTTR/svn/trunk/src/iwTextfile.cpp:72
 msgid "The readme file was not found!"
@@ -2577,9 +2551,8 @@ msgid "Use IPv6:"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwAddons.cpp:54
-#, fuzzy
 msgid "Use S2 Defaults"
-msgstr "Alapbeállitás"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:53
 msgid "Username:"
@@ -2608,9 +2581,8 @@ msgid "Very fast"
 msgstr "Nagyon Gyors"
 
 #: /storage/RTTR/svn/trunk/src/AddonMaxWaterwayLength.h:49
-#, fuzzy
 msgid "Very long"
-msgstr "Nagyon Lassú"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:132
 msgid "Very slow"

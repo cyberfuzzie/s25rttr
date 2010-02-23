@@ -14,7 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-02-14 17:20+0000\n"
+"X-Launchpad-Export-Date: 2010-02-23 10:36+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: /storage/RTTR/svn/trunk/src/GameClient.cpp:596
@@ -218,14 +218,12 @@ msgid "Addon Settings"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:79
-#, fuzzy
 msgid "Addons"
-msgstr "D'todöhn"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:94
-#, fuzzy
 msgid "Addons:"
-msgstr "D'todöhn"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:105
 msgid "Advanced"
@@ -454,9 +452,8 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:469
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:680
-#, fuzzy
 msgid "Cancel start"
-msgstr "Ofbreken"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:317
 msgid "Carpenter"
@@ -959,9 +956,8 @@ msgid "Game's Name:"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwAddons.cpp:65
-#, fuzzy
 msgid "Gameplay"
-msgstr "Replay ofspeelen."
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:338
 msgid "General"
@@ -1270,18 +1266,16 @@ msgid "Lock teams:"
 msgstr "Teams dicht maken:"
 
 #: /storage/RTTR/svn/trunk/src/AddonMaxWaterwayLength.h:47
-#, fuzzy
 msgid "Long"
-msgstr "Tang"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:245
 msgid "Long-run"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/AddonMaxWaterwayLength.h:48
-#, fuzzy
 msgid "Longer"
-msgstr "Keen Spöltiet"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:242
 msgid "Lookout tower"
@@ -1511,9 +1505,8 @@ msgid "No catapults"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/AddonChangeGoldDeposits.h:47
-#, fuzzy
 msgid "No change"
-msgstr "Keen Spöltiet"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwAIDebug.cpp:148
 msgid "No current job"
@@ -1558,9 +1551,8 @@ msgid "Normal"
 msgstr "Normaal"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:682
-#, fuzzy
 msgid "Not Ready"
-msgstr "Klaar?"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskSinglePlayer.cpp:95
 msgid "Not available"
@@ -1840,9 +1832,8 @@ msgstr "Laise mi!"
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:83
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:479
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:682
-#, fuzzy
 msgid "Ready"
-msgstr "Klaar?"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:70
 msgid "Ready?"
@@ -2041,9 +2032,8 @@ msgid "Shipyard"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/AddonMaxWaterwayLength.h:45
-#, fuzzy
 msgid "Short"
-msgstr "Ofbreken"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:243
 msgid "Short-run"
@@ -2121,9 +2111,8 @@ msgid "Start GF"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:541
-#, fuzzy
 msgid "Start aborted"
-msgstr "Spöl anfangen"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwHarborBuilding.cpp:56
 #: /storage/RTTR/svn/trunk/src/iwHarborBuilding.cpp:89
@@ -2507,9 +2496,8 @@ msgid "Use IPv6:"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwAddons.cpp:54
-#, fuzzy
 msgid "Use S2 Defaults"
-msgstr "Standard"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:53
 msgid "Username:"
@@ -2538,9 +2526,8 @@ msgid "Very fast"
 msgstr "Heejl flink"
 
 #: /storage/RTTR/svn/trunk/src/AddonMaxWaterwayLength.h:49
-#, fuzzy
 msgid "Very long"
-msgstr "Heejl langsom"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:132
 msgid "Very slow"

@@ -3,13 +3,13 @@ msgstr ""
 "Project-Id-Version: Siedler II.5 RttR\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-02-14 20:52+0100\n"
-"PO-Revision-Date: 2010-01-04 00:17+0000\n"
-"Last-Translator: Yentl <y.v.t@scarlet.be>\n"
+"PO-Revision-Date: 2010-02-14 23:05+0000\n"
+"Last-Translator: Sean Aero <Unknown>\n"
 "Language-Team: Siedler II.5 RttR <sf-team@siedler25.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-02-14 17:20+0000\n"
+"X-Launchpad-Export-Date: 2010-02-23 10:36+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: GERMANY\n"
 "X-Poedit-Language: German\n"
@@ -91,16 +91,15 @@ msgstr "-> Bouw hut"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:128
 msgid "-> Dig mines"
-msgstr "-> Bouw mijnen"
+msgstr "-> Graaf mijnen"
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:128
 msgid "1 h"
-msgstr "1 h"
+msgstr "1 u"
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:49
-#, fuzzy
 msgid "10 catapults"
-msgstr "Katapult"
+msgstr "10 katapulten"
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:127
 msgid "15 m"
@@ -108,31 +107,27 @@ msgstr "15 m"
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:130
 msgid "16 h"
-msgstr "16 h"
+msgstr "16 u"
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:50
-#, fuzzy
 msgid "20 catapults"
-msgstr "Katapult"
+msgstr "20 katapulten"
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:51
-#, fuzzy
 msgid "30 catapults"
-msgstr "Katapult"
+msgstr "30 katapulten"
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:129
 msgid "4 h"
-msgstr "4 h"
+msgstr "4 u"
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:52
-#, fuzzy
 msgid "40 catapults"
-msgstr "Katapult"
+msgstr "40 katapulten"
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:53
-#, fuzzy
 msgid "50 catapults"
-msgstr "Katapult"
+msgstr "50 katapulten"
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:909
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:935
@@ -154,8 +149,8 @@ msgid ""
 "A gold mine allows you to prospect for valuable gold deposits. For this, it "
 "is necessary to ensure that the miners are provided with plenty of food."
 msgstr ""
-"Een goudmijn staat je toe om waardevolle goudafzettingen te vinden. Hiervoor "
-"is het nodig om ervoor te zorgen dat je mijnwerkers voldoende voedsel hebben."
+"Een goudmijn staat u toe om waardevolle goudafzettingen te vinden. Hiervoor "
+"is het nodig om ervoor te zorgen dat uw mijnwerkers voldoende voedsel hebben."
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:120
 msgid "A lot"
@@ -167,11 +162,11 @@ msgstr "Een nieuw schip is klaar"
 
 #: /storage/RTTR/svn/trunk/src/noShip.cpp:492
 msgid "A ship has reached the destination of its expedition."
-msgstr "Een schip heeft de bestemming van zijn expeditie gehaald."
+msgstr "Een schip heeft de bestemming van zijn expeditie bereikt."
 
 #: /storage/RTTR/svn/trunk/src/noShip.cpp:234
 msgid "A ship is ready for an expedition."
-msgstr "Een schik is klaar voor een expeditie."
+msgstr "Een ship is klaar voor een expeditie."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:510
 msgid ""
@@ -220,30 +215,27 @@ msgstr "Voeg titel toe"
 
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:121
 msgid "Additional Programming:"
-msgstr ""
+msgstr "Extra programmeerwerk:"
 
 #: /storage/RTTR/svn/trunk/src/iwAddons.cpp:46
 msgid "Additional features:"
-msgstr ""
+msgstr "Toegevoegde functies:"
 
 #: /storage/RTTR/svn/trunk/src/iwAddons.cpp:43
-#, fuzzy
 msgid "Addon Settings"
-msgstr "Instellingen wijzigen..."
+msgstr "Uitbreiding Instellingen"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:79
-#, fuzzy
 msgid "Addons"
-msgstr "Voeg toe"
+msgstr "Uitbreidingen"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:94
-#, fuzzy
 msgid "Addons:"
-msgstr "Voeg toe"
+msgstr "Uitbreidingen:"
 
 #: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:105
 msgid "Advanced"
-msgstr ""
+msgstr "Uitgebreid"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:243
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:252
@@ -300,14 +292,17 @@ msgid ""
 "Allows you to get building materials back if the building is destroyed\n"
 "\n"
 msgstr ""
+"Stelt u instaat om materialen terug te krijgen wanneer een gebouw gesloopt "
+"is.\n"
+"\n"
 
 #: /storage/RTTR/svn/trunk/src/SerializedGameData.cpp:239
 msgid "An error occured while saving which was suppressed!"
-msgstr "Een fout is opgetreden bij het opslaan, welke werd onderdrukt."
+msgstr "Een fout is opgetreden bij het opslaan, welke onderdrukt werd."
 
 #: /storage/RTTR/svn/trunk/src/AIPlayerJH.cpp:105
 msgid "And I may crash your game sometimes..."
-msgstr "En soms zorg ik ervoor dat jouw spel crasht..."
+msgstr "En soms zorg ik ervoor dat uw spel crasht..."
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:167
 msgid "And let's go!"
@@ -315,11 +310,11 @@ msgstr "Daar gaan we!"
 
 #: /storage/RTTR/svn/trunk/src/iwAddons.cpp:49
 msgid "Apply Changes"
-msgstr ""
+msgstr "Veranderingen Toepassen"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:112
 msgid "Are you sure to remove all replays?"
-msgstr "Weet je zeker dat je alle herhalingen wilt verwijderen?"
+msgstr "Weet u zeker dat u alle herhalingen wilt verwijderen?"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:331
 msgid "Armorer"
@@ -332,7 +327,7 @@ msgstr "Wapensmidse"
 
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:116
 msgid "Artificial Intelligence (AI)"
-msgstr ""
+msgstr "Kunstmatige intelligentie"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:355
 msgid "Attack not possible."
@@ -426,11 +421,11 @@ msgstr "Bierbrouwerij"
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:280
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:284
 msgid "Build road"
-msgstr "Bouw weg"
+msgstr "Leg weg aan"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:273
 msgid "Build waterway"
-msgstr "Bouw waterweg"
+msgstr "Leg waterweg aan"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:332
 msgid "Builder"
@@ -463,15 +458,13 @@ msgid "Cancel"
 msgstr "Annuleer"
 
 #: /storage/RTTR/svn/trunk/src/iwHarborBuilding.cpp:84
-#, fuzzy
 msgid "Cancel expedition"
-msgstr "Expeditie starten"
+msgstr "Expeditie afhaken"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:469
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:680
-#, fuzzy
 msgid "Cancel start"
-msgstr "Annuleer"
+msgstr "Breek start af"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:317
 msgid "Carpenter"
@@ -528,7 +521,7 @@ msgstr "Hakbijl"
 
 #: /storage/RTTR/svn/trunk/src/iwAddons.cpp:51
 msgid "Close Without Saving"
-msgstr ""
+msgstr "Afsluiten zonder opslaan"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:206
 msgid "Closed"
@@ -601,7 +594,7 @@ msgstr "Continenten"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:109
 msgid "Continue"
-msgstr "Ga door"
+msgstr "Doorgaan"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:265
 msgid "Contract type:"
@@ -609,17 +602,15 @@ msgstr "Type contract:"
 
 #: /storage/RTTR/svn/trunk/src/AddonChangeGoldDeposits.h:50
 msgid "Convert to coal"
-msgstr ""
+msgstr "Zet om in steenkool"
 
 #: /storage/RTTR/svn/trunk/src/AddonChangeGoldDeposits.h:51
-#, fuzzy
 msgid "Convert to granite"
-msgstr "Graniet gevonden"
+msgstr "Zet om in graniet"
 
 #: /storage/RTTR/svn/trunk/src/AddonChangeGoldDeposits.h:49
-#, fuzzy
 msgid "Convert to iron ore"
-msgstr "IJzererts gevonden"
+msgstr "Zet om in ijzererts"
 
 #: /storage/RTTR/svn/trunk/src/dskDirectIP.cpp:61
 msgid "Create Game"
@@ -641,9 +632,8 @@ msgstr ""
 "Actuele GF: %u / GF-duur: %u ms / NWF-duur: %u gf (%u ms) / Ping: %u ms"
 
 #: /storage/RTTR/svn/trunk/src/AddonCustomBuildSequence.h:37
-#, fuzzy
 msgid "Custom build sequence"
-msgstr "Bouw volgorde"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/AddonStatisticsVisibility.h:38
 msgid ""
@@ -747,7 +737,7 @@ msgstr "Omlaag"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:85
 msgid "Downwards"
-msgstr "Naar onderen"
+msgstr "Naar beneden"
 
 #: /storage/RTTR/svn/trunk/src/GameClient.cpp:594
 #, c-format
@@ -770,10 +760,12 @@ msgstr "Duur: Eeuwig"
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:286
 msgid "Dynamic (Limits to display refresh rate, works with most drivers)"
 msgstr ""
+"Dynamisch (Limiteert de vernieuwingssnelheid van de monitor, functioneert "
+"met de meeste videokaarten)"
 
 #: /storage/RTTR/svn/trunk/src/iwAddons.cpp:63
 msgid "Economy"
-msgstr ""
+msgstr "Economie"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:223
 msgid "Effects"
@@ -816,7 +808,7 @@ msgstr "Fout"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:95
 msgid "Error while opening file!"
-msgstr "Fout bij het openen van bestand! -"
+msgstr "Fout bij het openen van bestand!"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:94
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:104
@@ -833,7 +825,7 @@ msgstr "Eeuwig"
 
 #: /storage/RTTR/svn/trunk/src/AddonStatisticsVisibility.h:44
 msgid "Everyone"
-msgstr ""
+msgstr "Iedereen"
 
 #: /storage/RTTR/svn/trunk/src/AddonExhaustibleWells.h:37
 msgid "Exhaustible Wells"
@@ -921,7 +913,7 @@ msgstr "Vesting"
 
 #: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:500
 msgid "Found coal"
-msgstr "Kool gevonden"
+msgstr "Steenkool gevonden"
 
 #: /storage/RTTR/svn/trunk/src/iwShip.cpp:72
 msgid "Found colony"
@@ -946,11 +938,11 @@ msgstr "Water gevonden"
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:366
 msgid ""
 "From the lookout tower you can see far into previously unexplored lands."
-msgstr "Vanuit de uitkijktoren kun je ver in voorheen onverkend gebied kijken."
+msgstr "Vanuit de uitkijktoren kunt u ver in voorheen onverkend gebied kijken."
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:168
 msgid "Fullscreen"
-msgstr "Volledig beeld"
+msgstr "Volledig Scherm"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:472
 msgid ""
@@ -958,7 +950,7 @@ msgid ""
 "ready and all free slots are closed."
 msgstr ""
 "Spel kan alleen beginnen zodra iedereen een unieke kleur heeft, iedereen "
-"klaar is en alle vrije plaatsen gesloten zijn."
+"gereed is en alle vrije plaatsen gesloten zijn."
 
 #: /storage/RTTR/svn/trunk/src/dskGameLoader.cpp:147
 msgid "Game crate was picked and spread out..."
@@ -981,13 +973,12 @@ msgid "Game's Name:"
 msgstr "Spelnaam:"
 
 #: /storage/RTTR/svn/trunk/src/iwAddons.cpp:65
-#, fuzzy
 msgid "Gameplay"
-msgstr "Speel herhaling af"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:338
 msgid "General"
-msgstr "Algemeen"
+msgstr "Generaal"
 
 #: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:73
 msgid "General statistics"
@@ -999,7 +990,7 @@ msgstr "Geoloog"
 
 #: /storage/RTTR/svn/trunk/src/AddonRefundMaterials.h:46
 msgid "Get all back"
-msgstr ""
+msgstr "Volledige teruggave"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:335
 msgid "Go to headquarters"
@@ -1084,7 +1075,7 @@ msgstr "Helper"
 
 #: /storage/RTTR/svn/trunk/src/AIPlayerJH.cpp:101
 msgid "Hi, I'm an artifical player and I'm not very good yet!"
-msgstr "Hallo, ik ben een artificiele speler en ben nog niet goed!"
+msgstr "Hallo, ik ben een kunstmatige speler en ik ben nog niet zo goed!"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyServerInfo.cpp:79
 msgid "Host:"
@@ -1141,7 +1132,7 @@ msgstr "Internet Lobby"
 
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:71
 msgid "Internet Ranking"
-msgstr "Internet Rangschkking"
+msgstr "Internet Rangschikking"
 
 #: /storage/RTTR/svn/trunk/src/iwRoadWindow.cpp:51
 msgid "Interrupt road building"
@@ -1240,13 +1231,12 @@ msgid "Less repeats"
 msgstr "Minder herhalingen"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:172
-#, fuzzy
 msgid "Limit Framerate:"
-msgstr "naar GameFrame:"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:37
 msgid "Limit count of catapults"
-msgstr ""
+msgstr "Gelimiteerd aantal katapulten"
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:38
 msgid ""
@@ -1298,18 +1288,16 @@ msgid "Lock teams:"
 msgstr "Sluit teams:"
 
 #: /storage/RTTR/svn/trunk/src/AddonMaxWaterwayLength.h:47
-#, fuzzy
 msgid "Long"
-msgstr "Tang"
+msgstr "Lang"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:245
 msgid "Long-run"
-msgstr "Langetermijn"
+msgstr "Lange termijn"
 
 #: /storage/RTTR/svn/trunk/src/AddonMaxWaterwayLength.h:48
-#, fuzzy
 msgid "Longer"
-msgstr "Langetermijn"
+msgstr "Langer"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:242
 msgid "Lookout tower"
@@ -1329,7 +1317,7 @@ msgstr "Verbinding met lobby afgebroken!"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:931
 msgid "Lost connection to server!"
-msgstr "Verbinding met server afgebroken!"
+msgstr "Verbinding met de server verbroken!"
 
 #: /storage/RTTR/svn/trunk/src/GameWorldGame.cpp:563
 msgid "Lost land by this building"
@@ -1361,7 +1349,7 @@ msgstr "Map: "
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:133
 msgid "Mapfile: "
-msgstr "Mapbestan: "
+msgstr "Mapbestand: "
 
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:107
 msgid "Mapping"
@@ -1378,12 +1366,12 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:244
 msgid "Medium-term"
-msgstr "Middelangetermijn"
+msgstr "Middelange termijn"
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:119
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:223
 msgid "Merchandise"
-msgstr "Handelen"
+msgstr "Handelswaar"
 
 #: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:74
 msgid "Merchandise statistics"
@@ -1445,7 +1433,7 @@ msgstr "Muntenperser"
 
 #: /storage/RTTR/svn/trunk/src/iwSettings.cpp:57
 msgid "Mode :"
-msgstr ""
+msgstr "Modus :"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:166
 msgid "Mode:"
@@ -1536,18 +1524,16 @@ msgid "No Proxy"
 msgstr "Geen proxy"
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:48
-#, fuzzy
 msgid "No catapults"
-msgstr "Katapult"
+msgstr "Geen katapulten"
 
 #: /storage/RTTR/svn/trunk/src/AddonChangeGoldDeposits.h:47
-#, fuzzy
 msgid "No change"
-msgstr "Geen"
+msgstr "Geen aanpassingen"
 
 #: /storage/RTTR/svn/trunk/src/iwAIDebug.cpp:148
 msgid "No current job"
-msgstr ""
+msgstr "Geen huidige beroep"
 
 #: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:83
 #: /storage/RTTR/svn/trunk/src/iwPostWindow.cpp:228
@@ -1564,7 +1550,7 @@ msgstr "Geen stenen meer binnen bereik"
 
 #: /storage/RTTR/svn/trunk/src/AddonRefundMaterials.h:42
 msgid "No refund"
-msgstr ""
+msgstr "Geen teruggave"
 
 #: /storage/RTTR/svn/trunk/src/iwShip.cpp:104
 msgid "No ships available"
@@ -1572,7 +1558,7 @@ msgstr "Geen schepen beschikbaar"
 
 #: /storage/RTTR/svn/trunk/src/AddonStatisticsVisibility.h:46
 msgid "Nobody else but you"
-msgstr ""
+msgstr "Niemand anders dan u"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:114
 msgid "Non-aggression pact"
@@ -1588,9 +1574,8 @@ msgid "Normal"
 msgstr "Gemiddeld"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:682
-#, fuzzy
 msgid "Not Ready"
-msgstr "Klaar?"
+msgstr "Niet gereed"
 
 #: /storage/RTTR/svn/trunk/src/dskSinglePlayer.cpp:95
 msgid "Not available"
@@ -1607,8 +1592,8 @@ msgid ""
 "Notice: The played replay has ended. (GF: %u, %dh %dmin %ds, TF: %u, "
 "AVG_FPS: %u)"
 msgstr ""
-"Opmerking: De afgespeelde replay is beëindigd. (GF: %u, %dh %dmin %ds, TF: %"
-"u, AVG_FPS: %u)"
+"Opmerking: De afgespeelde herhaling is beëindigd. (GF: %u, %dh %dmin %ds, "
+"TF: %u, AVG_FPS: %u)"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:377
 msgid "Number of attackers"
@@ -1640,7 +1625,7 @@ msgstr "Officier"
 
 #: /storage/RTTR/svn/trunk/src/AIPlayerJH.cpp:136
 msgid "Oh, no, you destroyed my headquarter! I surrender!"
-msgstr "Oh neen, je hebt mijn hoofdkwartier vernietigd! Ik geef met over!"
+msgstr "Oh neen, je hebt mijn hoofdkwartier vernietigd! Ik geef mij over!"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:113
 msgid "Old maps"
@@ -1670,7 +1655,7 @@ msgstr "Andere"
 
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:134
 msgid "Other Support:"
-msgstr ""
+msgstr "Overige Ondersteuning:"
 
 #: /storage/RTTR/svn/trunk/src/iwMinimap.cpp:53
 msgid "Outline map"
@@ -1747,7 +1732,7 @@ msgstr "Speler '%s' heeft het spel verlaten!"
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:1005
 #, c-format
 msgid "Player '%s' switched to player '%s'"
-msgstr "Spieler '%s' heeft geruild met speler '%s'"
+msgstr "Speler '%s' heeft geruild met speler '%s'"
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:1023
 #, c-format
@@ -1764,7 +1749,7 @@ msgstr "Afspeellijst:"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPCreate.cpp:169
 msgid "Please enter a name for the game"
-msgstr "Vul een naam voor het spel in aub"
+msgstr "Vul a.u.b. een naam in voor het spel"
 
 #: /storage/RTTR/svn/trunk/src/iwPleaseWait.cpp:42
 #: /storage/RTTR/svn/trunk/src/iwPleaseWait.cpp:44
@@ -1804,11 +1789,11 @@ msgstr "Programmering"
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:74
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:87
 msgid "Project management"
-msgstr ""
+msgstr "Project management"
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:47
 msgid "Proportional"
-msgstr ""
+msgstr "Proportioneel"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:136
 msgid "Proxyserver:"
@@ -1821,14 +1806,14 @@ msgstr "Proxytype:"
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:266
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:274
 msgid "Pull down flag"
-msgstr "Breek vlag af"
+msgstr "Strijk vlag"
 
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:79
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:89
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:98
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:106
 msgid "Quality Assurance"
-msgstr ""
+msgstr "Kwaliteitsgarantie"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:247
 msgid "Quarry"
@@ -1875,29 +1860,28 @@ msgstr "Leesmij!"
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:83
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:479
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:682
-#, fuzzy
 msgid "Ready"
-msgstr "Klaar?"
+msgstr "Gereed"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:70
 msgid "Ready?"
-msgstr "Klaar?"
+msgstr "Gereed?"
 
 #: /storage/RTTR/svn/trunk/src/AddonRefundMaterials.h:43
 msgid "Refund 25%"
-msgstr ""
+msgstr "25% teruggave"
 
 #: /storage/RTTR/svn/trunk/src/AddonRefundMaterials.h:44
 msgid "Refund 50%"
-msgstr ""
+msgstr "50% teruggave"
 
 #: /storage/RTTR/svn/trunk/src/AddonRefundMaterials.h:45
 msgid "Refund 75%"
-msgstr ""
+msgstr "75% teruggave"
 
 #: /storage/RTTR/svn/trunk/src/AddonRefundMaterials.h:37
 msgid "Refund materials when building is destroyed"
-msgstr ""
+msgstr "Stort materialen terug wanneer een gebouw gesloopt is"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:88
 msgid "Register"
@@ -1913,7 +1897,7 @@ msgstr "Verwijder"
 
 #: /storage/RTTR/svn/trunk/src/AddonChangeGoldDeposits.h:48
 msgid "Remove gold completely"
-msgstr ""
+msgstr "Verwijder goud volledig"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:83
 msgid "Remove track"
@@ -1925,7 +1909,7 @@ msgstr "Reserveer"
 
 #: /storage/RTTR/svn/trunk/src/iwSettings.cpp:56
 msgid "Resolution :"
-msgstr ""
+msgstr "Resolutie :"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:162
 msgid "Resolution:"
@@ -1941,12 +1925,12 @@ msgstr "Keer terug"
 
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:65
 msgid "Return To The Roots"
-msgstr ""
+msgstr "Return To The Roots"
 
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:60
 #, c-format
 msgid "Return To The Roots - v%s-%s"
-msgstr ""
+msgstr "Return To The Roots - v%s-%s"
 
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:57
 msgid "Rod and line"
@@ -1963,11 +1947,11 @@ msgstr "Romeinen"
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:935
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:958
 msgid "SYSTEM"
-msgstr "SYSTEM"
+msgstr "SYSTEEM"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:78
 msgid "Save"
-msgstr "Sla op"
+msgstr "Opslaan"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:69
 msgid "Save Password?"
@@ -2032,7 +2016,7 @@ msgstr "Servernaam:"
 
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:75
 msgid "Server management"
-msgstr ""
+msgstr "Server management"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:59
 msgid "Server-Port:"
@@ -2040,11 +2024,11 @@ msgstr "Serverpoort:"
 
 #: /storage/RTTR/svn/trunk/src/AddonMaxWaterwayLength.h:37
 msgid "Set maximum waterway length"
-msgstr ""
+msgstr "Zet het maximale waterweg lengte"
 
 #: /storage/RTTR/svn/trunk/src/iwSettings.cpp:53
 msgid "Settings"
-msgstr ""
+msgstr "Instellingen"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:91
 msgid "Shared team view"
@@ -2067,10 +2051,10 @@ msgid ""
 "or job symbol."
 msgstr ""
 "Schepen kunnen enkel geladen en ontladen worden in een haven. Expedities "
-"kunnen hier ook voorbereid worden. Je kan bepaalde handelswaren in een "
-"warenhuis achterlaten, mocht je dit nodig achten. De opslag functie kan ook "
-"uitgeschakeld worden. Om dit te doen, kies eerst het relevante icoon, "
-"gevolgd door de gewenste handelswaren of job symbool."
+"kunnen hier ook voorbereid worden. U kan bepaalde handelswaren in een "
+"warenhuis achterlaten, mocht u dit nodig achten. De opslag functie kan ook "
+"uitgeschakeld worden. Om dit te doen, kiest u eerst het relevante icoon, "
+"gevolgd door de gewenste handelswaren of baansymbool."
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:340
 msgid "Shipwright"
@@ -2081,13 +2065,12 @@ msgid "Shipyard"
 msgstr "Scheepswerf"
 
 #: /storage/RTTR/svn/trunk/src/AddonMaxWaterwayLength.h:45
-#, fuzzy
 msgid "Short"
-msgstr "Kortetermijn"
+msgstr "Kort"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:243
 msgid "Short-run"
-msgstr "Kortetermijn"
+msgstr "Korte termijn"
 
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:55
 msgid "Shovel"
@@ -2102,8 +2085,8 @@ msgid ""
 "Singleplayer mode and AI are not yet implemented. Please use the Multiplayer "
 "mode and 'Direct IP' to create a Singleplayer game."
 msgstr ""
-"Singleplayer modus en KI zijn nog niet geïmplementeerd. Gebruik de "
-"Multiplayer modus en \"Direct IP\", om een Singelplayer spel te creëren aub."
+"Singleplayer modus en KI zijn nog niet geïmplementeerd. Gebruik a.u.b. de "
+"Multiplayer modus en \"Direct IP\", om een Singelplayer spel te creëren."
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:99
 msgid "Size"
@@ -2117,7 +2100,7 @@ msgstr "Grootte van land"
 
 #: /storage/RTTR/svn/trunk/src/iwSkipGFs.cpp:44
 msgid "Skip GameFrames"
-msgstr "Sla Gameframes over"
+msgstr "Sla GameFrames over"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:249
 msgid "Slaughterhouse"
@@ -2161,9 +2144,8 @@ msgid "Start GF"
 msgstr "Start-GF"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:541
-#, fuzzy
 msgid "Start aborted"
-msgstr "Start spel"
+msgstr "Start afgebroken"
 
 #: /storage/RTTR/svn/trunk/src/iwHarborBuilding.cpp:56
 #: /storage/RTTR/svn/trunk/src/iwHarborBuilding.cpp:89
@@ -2178,7 +2160,7 @@ msgstr "Start spel"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:528
 msgid "Starting game, please wait"
-msgstr ""
+msgstr "Spel wordt gestart, een momentje"
 
 #: /storage/RTTR/svn/trunk/src/iwSettings.cpp:58
 msgid "Statistic Scale"
@@ -2247,7 +2229,7 @@ msgstr "Systeemtaal"
 
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:173
 msgid "THE END"
-msgstr ""
+msgstr "Einde"
 
 #: /storage/RTTR/svn/trunk/src/iwBaseWarehouse.cpp:64
 msgid "Take out of store"
@@ -2263,11 +2245,11 @@ msgstr "Tijdelijk mapbestand niet gevonden!"
 
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:165
 msgid "Thank you for your donations!"
-msgstr "Bedankt voor je donaties!"
+msgstr "Bedank voor uw donaties!"
 
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:172
 msgid "Thank you!"
-msgstr ""
+msgstr "Dank u!"
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:375
 msgid ""
@@ -2280,7 +2262,7 @@ msgstr ""
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:160
 #, c-format
 msgid "The %s between player '%s' and you has been cancelled."
-msgstr "De %s tussen speler '%s' en jou is geannuleerd."
+msgstr "De %s tussen speler '%s' en u is geannuleerd."
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:157
 #, c-format
@@ -2308,8 +2290,8 @@ msgid ""
 "to the soldiers stationed here. However, without gold coins the soldiers "
 "here can not train and improve their skills."
 msgstr ""
-"De barak is een klein hutje die door je soldaten kan worden gebruikt als "
-"kamp. Door de gouden munt-knop te gebruiken kun je de toevoer van gouden "
+"De barak is een klein hutje die door uw soldaten kan worden gebruikt als "
+"kamp. Door de gouden munt-knop te gebruiken kunt u de toevoer van gouden "
 "munten naar de hier gestationeerde soldaten stoppen. Echter, zonder gouden "
 "munten kunnen de soldaten hier niet trainen en hun vaardigheden verbeteren."
 
@@ -2318,15 +2300,15 @@ msgid ""
 "The brewer produces fine beer from grain and water. This drink is needed to "
 "fill the soldiers with courage."
 msgstr ""
-"De bierbrouwer produceert bier uit graan en water. Deze drank is benodigd om "
-"je soldaten aan te moedigen."
+"De bierbrouwer produceert bier uit graan en water. Deze drank is nodig om uw "
+"soldaten aan te moedigen."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:410
 msgid ""
 "The butcher processes the livestock delivered into nutritious ham on which "
 "you miners are fed."
 msgstr ""
-"De slager verwerkt het aangeleverde vee tot voedzame ham waarmee je "
+"De slager verwerkt het aangeleverde vee tot voedzame ham waarmee uw "
 "mijnwerkers worden gevoed."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:495
@@ -2342,7 +2324,7 @@ msgid ""
 "The countless tools which your workers need are made in the metalworks. This "
 "requires boards and iron."
 msgstr ""
-"De eindeloze werktuigen die je arbeiders nodig hebben worden vervaardigd in "
+"De eindeloze werktuigen die uw arbeiders nodig hebben worden vervaardigd in "
 "de werkplaats. Hiervoor zijn planken en ijzer nodig."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:320
@@ -2355,7 +2337,7 @@ msgid ""
 msgstr ""
 "De verdedigingskracht en grootte van de vesting zijn onovertroffen. Deze "
 "vesting verzekert dat de overige waardevolle gebouwen en bezittingen worden "
-"beschermd. Door de gouden munt-knop te gebruiken kun je de toevoer van "
+"beschermd. Door de gouden munt-knop te gebruiken kunt u de toevoer van "
 "gouden munten naar de hier gestationeerde soldaten stoppen. Echter, zonder "
 "gouden munten kunnen de soldaten hier niet trainen en hun vaardigheden "
 "verbeteren."
@@ -2366,7 +2348,7 @@ msgstr "Het noodprogramma is geactiveerd."
 
 #: /storage/RTTR/svn/trunk/src/GameClientPlayer.cpp:1964
 msgid "The emergency program has been deactivated."
-msgstr "Het noodprogramma is gedesactiveerd."
+msgstr "Het noodprogramma is gedeactiveerd."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:525
 msgid ""
@@ -2392,7 +2374,7 @@ msgid ""
 "to make oven-fresh bread. It's your miners' favorite!"
 msgstr ""
 "Het in de molen geproduceerde meel kan bij de bakkerij worden gecombineerd "
-"met water om brood te maken. Dit is voedsel voor je mijnwerkers."
+"met water om brood te maken. De favoriet van uw mijnwerkers!"
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:480
 msgid ""
@@ -2409,9 +2391,9 @@ msgid ""
 "delivery of gold coins to the soldiers stationed here. However, without gold "
 "coins the soldiers here can not train and improve their skills."
 msgstr ""
-"Het wachthuis is een comfortabele plek voor je soldaten die hier worden "
+"Het wachthuis is een comfortabele plek voor uw soldaten die hier worden "
 "beschermd door sterke stenen muren. Door de gouden munt-knop te gebruiken "
-"kun je de toevoer van gouden munten naar de hier gestationeerde soldaten "
+"kunt u de toevoer van gouden munten naar de hier gestationeerde soldaten "
 "stoppen. Echter, zonder gouden munten kunnen de soldaten hier niet trainen "
 "en hun vaardigheden verbeteren."
 
@@ -2427,10 +2409,10 @@ msgid ""
 "indicates the current number of men, the second value indicates the desired "
 "number. "
 msgstr ""
-"Het hoofdkwartier is het centrum van je domein. De grote hoeveelheid "
-"opbergruimte beteent dat je heel veel dingen veilig kan opbergen. Je kunt "
-"bepaalde grondstoffen vrijgeven vanuit je hoofdkwartier, zodra dit nogdig is "
-"of je kunt de oplsag beeindigen. Om dit te doen, kies eerst het "
+"Het hoofdkwartier is het centrum van uw domein. De grote hoeveelheid "
+"opbergruimte betekent dat u heel veel dingen veilig kan opbergen. U kunt "
+"bepaalde grondstoffen vrijgeven vanuit uw hoofdkwartier, zodra dit nodig is "
+"of u kunt de opslag beëindigen. Om dit te doen, kies eerst het "
 "overeenkomstige pictogram gevolgd door het gewenste koopwaar of baansymbool. "
 "Voor de derde pagina, kunt u het aantal militairen uit de reserve aanpassen "
 "die voor het bewaken van het hoofdkwartier verantwoordelijk zijn. Er zijn "
@@ -2476,13 +2458,12 @@ msgstr ""
 "akkoord?"
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:335
-#, fuzzy
 msgid ""
 "The quarrying of stone in a granite mine guarantees the supply of stone for "
 "buildings. However, even a granite mine has to feed its workers."
 msgstr ""
-"Het uithouwen van steen in een granietmijn garandeert een voorraad steen "
-"voor gebouwen. Maar zelfs een granietmijn moet zijn werkers voeden."
+"Het uithakken van steen uit een graniet mijn garandeert een toestroom van "
+"stenen voor gebouwen. Maar, ook een graniet mijn moet zijn arbeider voeden."
 
 #: /storage/RTTR/svn/trunk/src/iwTextfile.cpp:72
 msgid "The readme file was not found!"
@@ -2519,10 +2500,10 @@ msgid ""
 "choose the relevant icon followed by the desired merchandise or job symbol."
 msgstr ""
 "De opslagplaats is handig voor het verkorten van de duur van het vervoer en "
-"voor de tijdelijke opslag van goederen en inwoners. Je kunt bepaalde "
-"goederen scheiden van de opslagplaats, wanneer je dit wil. Daarnaast kan de "
-"opslag worden uitgeschakeld. Om dit te doen moet je eerst het relevante "
-"icoontje aanklikken gevolgd door het gewenste goed- of baansymbool."
+"voor de tijdelijke opslag van goederen en inwoners. U kunt bepaalde goederen "
+"scheiden van de opslagplaats, wanneer u dit wil. Daarnaast kan de opslag "
+"worden uitgeschakeld. Om dit te doen moet u eerst het relevante icoontje "
+"aanklikken gevolgd door het gewenste goed- of baansymbool."
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:304
 msgid ""
@@ -2532,7 +2513,7 @@ msgid ""
 "coins the soldiers here can not train and improve their skills."
 msgstr ""
 "De wachttoren kan een groot aantal soldaten herbergen. Door de gouden munt-"
-"knop te gebruiken kun je de toevoer van gouden munten naar de hier "
+"knop te gebruiken kunt u de toevoer van gouden munten naar de hier "
 "gestationeerde soldaten stoppen. Echter, zonder gouden munten kunnen de "
 "soldaten hier niet trainen en hun vaardigheden verbeteren."
 
@@ -2553,12 +2534,12 @@ msgid ""
 "To register, you have to create a valid board account at http://forum."
 "siedler25.org at the moment.\n"
 msgstr ""
-"Om te registreren, moet je een geldige board account hebben op http://forum."
-"siedler25.org op het moment.\n"
+"Om te registreren, moet u op het moment een geldige board account hebben bij "
+"http://forum.siedler25.org.\n"
 
 #: /storage/RTTR/svn/trunk/src/iwTools.cpp:50
 msgid "Tongs"
-msgstr "Tang"
+msgstr "Tangen"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:262
 msgid "Too short Message received!"
@@ -2599,7 +2580,7 @@ msgstr "Type"
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:46
 msgid "Unlimited"
-msgstr ""
+msgstr "Onbeperkt"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:92
 #: /storage/RTTR/svn/trunk/src/iwBuildOrder.cpp:58
@@ -2612,16 +2593,15 @@ msgstr "Naar boven"
 
 #: /storage/RTTR/svn/trunk/src/Addons.cpp:168
 msgid "Use"
-msgstr ""
+msgstr "Gebruik"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:125
 msgid "Use IPv6:"
 msgstr "Gebruik IPv6:"
 
 #: /storage/RTTR/svn/trunk/src/iwAddons.cpp:54
-#, fuzzy
 msgid "Use S2 Defaults"
-msgstr "Standaard"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:53
 msgid "Username:"
@@ -2650,9 +2630,8 @@ msgid "Very fast"
 msgstr "Zeer snel"
 
 #: /storage/RTTR/svn/trunk/src/AddonMaxWaterwayLength.h:49
-#, fuzzy
 msgid "Very long"
-msgstr "Zeer langzaam"
+msgstr "Heel lang"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:132
 msgid "Very slow"
@@ -2668,7 +2647,7 @@ msgstr "Vikingen"
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:282
 msgid "Waiting for Playerinfo..."
-msgstr "Wachten op Spelersinfo:"
+msgstr "Wachten op Spelersinfo..."
 
 #: /storage/RTTR/svn/trunk/src/iwDirectIPConnect.cpp:279
 msgid "Waiting for Reply..."
@@ -2700,7 +2679,7 @@ msgstr "We worden aangevallen!"
 
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:170
 msgid "We hope you enjoy playing Return To The Roots!"
-msgstr ""
+msgstr "Wij hopen dat u veel spelplezier beleeft met Return To The Roots!"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:367
 msgid "Weak attackers"
@@ -2717,11 +2696,11 @@ msgstr "Wapens"
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:77
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:97
 msgid "Website Administration"
-msgstr ""
+msgstr "Website Beheer"
 
 #: /storage/RTTR/svn/trunk/src/dskCredits.cpp:78
 msgid "Website Programming"
-msgstr ""
+msgstr "Website Programmering"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:263
 msgid "Well"
@@ -2786,11 +2765,11 @@ msgstr "Ja"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:165
 msgid "You are not allowed to change the standard playlist!"
-msgstr "Je mag de standaardafspeellijst niet aanpassen!"
+msgstr "U mag de standaardafspeellijst niet aanpassen!"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:141
 msgid "You are not allowed to delete the standard playlist!"
-msgstr "Je mag de standaardafspeellijst niet verwijderen."
+msgstr "U mag de standaardafspeellijst niet verwijderen."
 
 #: /storage/RTTR/svn/trunk/src/dskLobby.cpp:157
 msgid ""
@@ -2802,15 +2781,15 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:520
 msgid "You have 10 seconds until game starts"
-msgstr ""
+msgstr "U heeft 10 seconden tot het spel begint"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:537
 msgid "You need to restart your game to change the screen resolution!"
-msgstr "Je moet jouw spel herstarten om de schermresolutie te wijzigen!"
+msgstr "U moet uw spel herstarten om de schermresolutie te wijzigen!"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:545
 msgid "You need to restart your game to change the video or audio driver!"
-msgstr "Je moet jouw spel herstarten om de video of audio driver te wijzigen!"
+msgstr "U moet uw spel herstarten om de video of audio driver te wijzigen!"
 
 #: /storage/RTTR/svn/trunk/src/GameClient.cpp:1587
 #, c-format
@@ -2827,7 +2806,7 @@ msgstr "http://www.siedler25.org"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:237
 msgid "n/a"
-msgstr ""
+msgstr "n/a"
 
 #: /storage/RTTR/svn/trunk/src/PostMsg.cpp:105
 msgid "non-aggression pact"

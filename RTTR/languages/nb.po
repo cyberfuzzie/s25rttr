@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: s25rttr\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-02-14 20:52+0100\n"
-"PO-Revision-Date: 2010-02-14 02:30+0000\n"
-"Last-Translator: Tore S <Unknown>\n"
+"PO-Revision-Date: 2010-02-22 01:32+0000\n"
+"Last-Translator: Jg.a <Unknown>\n"
 "Language-Team: Norwegian Bokmal <nb@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-02-14 17:20+0000\n"
+"X-Launchpad-Export-Date: 2010-02-23 10:36+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: /storage/RTTR/svn/trunk/src/GameClient.cpp:596
@@ -96,41 +96,36 @@ msgid "1 h"
 msgstr "1 t"
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:49
-#, fuzzy
 msgid "10 catapults"
-msgstr "Katapult"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:127
 msgid "15 m"
-msgstr "15 m"
+msgstr "15 min"
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:130
 msgid "16 h"
 msgstr "16 t"
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:50
-#, fuzzy
 msgid "20 catapults"
-msgstr "Katapult"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:51
-#, fuzzy
 msgid "30 catapults"
-msgstr "Katapult"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:129
 msgid "4 h"
 msgstr "4 t"
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:52
-#, fuzzy
 msgid "40 catapults"
-msgstr "Katapult"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:53
-#, fuzzy
 msgid "50 catapults"
-msgstr "Katapult"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:909
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:935
@@ -141,7 +136,7 @@ msgstr "<%s> "
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:918
 msgid "A auto-savegame is created..."
-msgstr ""
+msgstr "En automatisk lagringsfil blir lagd..."
 
 #: /storage/RTTR/svn/trunk/src/nobMilitary.cpp:1041
 msgid "A catapult is firing upon us!"
@@ -216,22 +211,19 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwAddons.cpp:46
 msgid "Additional features:"
-msgstr ""
+msgstr "Tilleggsfunksjoner:"
 
 #: /storage/RTTR/svn/trunk/src/iwAddons.cpp:43
-#, fuzzy
 msgid "Addon Settings"
-msgstr "Innstillinger"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:79
-#, fuzzy
 msgid "Addons"
-msgstr "Legg til"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:94
-#, fuzzy
 msgid "Addons:"
-msgstr "Legg til"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwOptionsWindow.cpp:105
 msgid "Advanced"
@@ -307,7 +299,7 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwAddons.cpp:49
 msgid "Apply Changes"
-msgstr ""
+msgstr "Utfør endringer"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:112
 msgid "Are you sure to remove all replays?"
@@ -333,7 +325,7 @@ msgstr "Angrep er ikke mulig."
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:312
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:320
 msgid "Attack options"
-msgstr ""
+msgstr "Angrepsinstillinger"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:380
 msgid "Attack!"
@@ -455,15 +447,13 @@ msgid "Cancel"
 msgstr "Avbryt"
 
 #: /storage/RTTR/svn/trunk/src/iwHarborBuilding.cpp:84
-#, fuzzy
 msgid "Cancel expedition"
-msgstr "Start ekspedisjon"
+msgstr "Avbryt ekspedisjon"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:469
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:680
-#, fuzzy
 msgid "Cancel start"
-msgstr "Avbryt"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:317
 msgid "Carpenter"
@@ -520,7 +510,7 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwAddons.cpp:51
 msgid "Close Without Saving"
-msgstr ""
+msgstr "Lukk uten å lagre"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:206
 msgid "Closed"
@@ -604,14 +594,12 @@ msgid "Convert to coal"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/AddonChangeGoldDeposits.h:51
-#, fuzzy
 msgid "Convert to granite"
-msgstr "Granitt funnet"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/AddonChangeGoldDeposits.h:49
-#, fuzzy
 msgid "Convert to iron ore"
-msgstr "Jernmalm funnet"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskDirectIP.cpp:61
 msgid "Create Game"
@@ -663,7 +651,7 @@ msgstr "Riv?"
 #: /storage/RTTR/svn/trunk/src/iwMilitaryBuilding.cpp:170
 msgid ""
 "Demolition ist not allowed because the building is located in border area!"
-msgstr "Riving er ikke tillatt ettersom bygningen er i grenseområde."
+msgstr "Riving er ikke tillatt ettersom bygningen er i et grenseområde."
 
 #: /storage/RTTR/svn/trunk/src/iwMilitaryBuilding.cpp:169
 msgid "Demolition ist not allowed because the building is under attack!"
@@ -684,7 +672,7 @@ msgstr ""
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:305
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:307
 msgid "Dig up road"
-msgstr ""
+msgstr "Grav opp veien"
 
 #: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:92
 msgid "Diplomacy"
@@ -700,7 +688,7 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:331
 msgid "Display options"
-msgstr ""
+msgstr "Visningsinstillinger"
 
 #: /storage/RTTR/svn/trunk/src/iwMainMenu.cpp:66
 msgid "Distribution of goods"
@@ -760,7 +748,7 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwAddons.cpp:63
 msgid "Economy"
-msgstr ""
+msgstr "Økonomi"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:223
 msgid "Effects"
@@ -908,7 +896,7 @@ msgstr "Fort"
 
 #: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:500
 msgid "Found coal"
-msgstr "Kull funnet"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwShip.cpp:72
 msgid "Found colony"
@@ -928,7 +916,7 @@ msgstr "Jernmalm funnet"
 
 #: /storage/RTTR/svn/trunk/src/nofGeologist.cpp:504
 msgid "Found water"
-msgstr "Vann funnet"
+msgstr "Vannkilde funnet"
 
 #: /storage/RTTR/svn/trunk/src/BuildingConsts.h:366
 msgid ""
@@ -955,7 +943,7 @@ msgstr "Spillmeny"
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:936
 msgid "Game was paused."
-msgstr "Spillet ble satt i pause"
+msgstr "Spillet ble satt i pause."
 
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:959
 msgid "Game was resumed."
@@ -987,7 +975,7 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:335
 msgid "Go to headquarters"
-msgstr ""
+msgstr "Gå til hovedkvarteret"
 
 #: /storage/RTTR/svn/trunk/src/iwBaseWarehouse.cpp:73
 msgid "Go to place"
@@ -1106,7 +1094,7 @@ msgstr "En ufullstendig melding ble mottatt!"
 
 #: /storage/RTTR/svn/trunk/src/AddonInexhaustibleMines.h:37
 msgid "Inexhaustible Mines"
-msgstr ""
+msgstr "Utømmelige miner"
 
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:118
 #: /storage/RTTR/svn/trunk/src/iwStatistics.cpp:219
@@ -1131,7 +1119,7 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskMainMenu.cpp:78
 msgid "Intro"
-msgstr ""
+msgstr "Introduksjon"
 
 #: /storage/RTTR/svn/trunk/src/iwPlayReplay.cpp:96
 msgid "Invalid Replay!"
@@ -1276,18 +1264,16 @@ msgid "Lock teams:"
 msgstr "Lås lagene"
 
 #: /storage/RTTR/svn/trunk/src/AddonMaxWaterwayLength.h:47
-#, fuzzy
 msgid "Long"
-msgstr "Tang"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:245
 msgid "Long-run"
 msgstr "Lang sikt"
 
 #: /storage/RTTR/svn/trunk/src/AddonMaxWaterwayLength.h:48
-#, fuzzy
 msgid "Longer"
-msgstr "Lang sikt"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:242
 msgid "Lookout tower"
@@ -1422,7 +1408,7 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwSettings.cpp:57
 msgid "Mode :"
-msgstr ""
+msgstr "Modus:"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:166
 msgid "Mode:"
@@ -1489,7 +1475,7 @@ msgstr "Nær fronten"
 
 #: /storage/RTTR/svn/trunk/src/dskMultiPlayer.cpp:67
 msgid "Network/LAN"
-msgstr ""
+msgstr "Lokalnettverk"
 
 #: /storage/RTTR/svn/trunk/src/dskSelectMap.cpp:115
 msgid "New maps"
@@ -1513,14 +1499,12 @@ msgid "No Proxy"
 msgstr "Ingen Proxy:"
 
 #: /storage/RTTR/svn/trunk/src/AddonLimitCatapults.h:48
-#, fuzzy
 msgid "No catapults"
-msgstr "Katapult"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/AddonChangeGoldDeposits.h:47
-#, fuzzy
 msgid "No change"
-msgstr "Ingen"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwAIDebug.cpp:148
 msgid "No current job"
@@ -1565,9 +1549,8 @@ msgid "Normal"
 msgstr "Normalt"
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:682
-#, fuzzy
 msgid "Not Ready"
-msgstr "Klar?"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskSinglePlayer.cpp:95
 msgid "Not available"
@@ -1576,7 +1559,7 @@ msgstr "Ikke tilgjengelig"
 #: /storage/RTTR/svn/trunk/src/dskGameInterface.cpp:902
 #, c-format
 msgid "Note: Game settings changed by the server%s"
-msgstr "Notis: Spillinnstillinger ble endret av server %s"
+msgstr "Notis: Spillinnstillinger ble endret av tjener %s"
 
 #: /storage/RTTR/svn/trunk/src/GameClientGF_Replay.cpp:117
 #, c-format
@@ -1597,7 +1580,7 @@ msgstr "OK"
 
 #: /storage/RTTR/svn/trunk/src/iwAction.cpp:333
 msgid "Observation window"
-msgstr ""
+msgstr "Obervasjonsvindu"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:183
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:217
@@ -1847,9 +1830,8 @@ msgstr "Les meg!"
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:83
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:479
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:682
-#, fuzzy
 msgid "Ready"
-msgstr "Klar?"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:70
 msgid "Ready?"
@@ -1873,11 +1855,11 @@ msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:88
 msgid "Register"
-msgstr ""
+msgstr "Registrer"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:319
 msgid "Registration successful!"
-msgstr ""
+msgstr "Registreringen er vellykket!"
 
 #: /storage/RTTR/svn/trunk/src/iwMusicPlayer.cpp:77
 msgid "Remove"
@@ -1897,7 +1879,7 @@ msgstr "Reserve"
 
 #: /storage/RTTR/svn/trunk/src/iwSettings.cpp:56
 msgid "Resolution :"
-msgstr ""
+msgstr "Oppløsning:"
 
 #: /storage/RTTR/svn/trunk/src/dskOptions.cpp:162
 msgid "Resolution:"
@@ -2048,9 +2030,8 @@ msgid "Shipyard"
 msgstr "Skipsverft"
 
 #: /storage/RTTR/svn/trunk/src/AddonMaxWaterwayLength.h:45
-#, fuzzy
 msgid "Short"
-msgstr "Kort sikt"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:243
 msgid "Short-run"
@@ -2126,9 +2107,8 @@ msgid "Start GF"
 msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:541
-#, fuzzy
 msgid "Start aborted"
-msgstr "Start spillet"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/iwHarborBuilding.cpp:56
 #: /storage/RTTR/svn/trunk/src/iwHarborBuilding.cpp:89
@@ -2183,7 +2163,7 @@ msgstr "Sterke angripere"
 
 #: /storage/RTTR/svn/trunk/src/iwMilitary.cpp:50
 msgid "Strong defense"
-msgstr ""
+msgstr "Sterkt forsvar"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:225
 msgid "Suggest non-aggression pact"
@@ -2437,7 +2417,7 @@ msgstr "Denne serveren er full."
 
 #: /storage/RTTR/svn/trunk/src/iwSave.cpp:67
 msgid "Time"
-msgstr ""
+msgstr "Tid"
 
 #: /storage/RTTR/svn/trunk/src/iwDiplomacy.cpp:267
 msgid "To player:"
@@ -2512,9 +2492,8 @@ msgid "Use IPv6:"
 msgstr "Bruk IPv6:"
 
 #: /storage/RTTR/svn/trunk/src/iwAddons.cpp:54
-#, fuzzy
 msgid "Use S2 Defaults"
-msgstr "Standard"
+msgstr "Bruk S2 standarder"
 
 #: /storage/RTTR/svn/trunk/src/iwLobbyConnect.cpp:53
 msgid "Username:"
@@ -2543,9 +2522,8 @@ msgid "Very fast"
 msgstr "Veldig hurtig"
 
 #: /storage/RTTR/svn/trunk/src/AddonMaxWaterwayLength.h:49
-#, fuzzy
 msgid "Very long"
-msgstr "Veldig langsomt"
+msgstr ""
 
 #: /storage/RTTR/svn/trunk/src/dskHostGame.cpp:132
 msgid "Very slow"
@@ -2583,7 +2561,7 @@ msgstr "Vakttårn"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:69
 msgid "Water"
-msgstr "Vann"
+msgstr "Eau"
 
 #: /storage/RTTR/svn/trunk/src/nofAttacker.cpp:471
 msgid "We are under attack!"
@@ -2599,7 +2577,7 @@ msgstr "Svake angripere"
 
 #: /storage/RTTR/svn/trunk/src/iwMilitary.cpp:50
 msgid "Weak defense"
-msgstr ""
+msgstr "Svakt forsvar"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:60
 msgid "Weapons"
@@ -2642,7 +2620,7 @@ msgstr "Vunnet"
 
 #: /storage/RTTR/svn/trunk/src/iwTransport.cpp:68
 msgid "Wood"
-msgstr "Tømmer"
+msgstr "Lund"
 
 #: /storage/RTTR/svn/trunk/src/GameConsts.h:314
 msgid "Woodchopper"

@@ -3,12 +3,12 @@ SET(CMAKE_SYSTEM_NAME Darwin)
 SET(CMAKE_SYSTEM_PROCESSOR i686)
 
 # specify the cross compiler
-SET(CMAKE_C_COMPILER   i686-apple-darwin9-gcc)
-SET(CMAKE_CXX_COMPILER i686-apple-darwin9-g++)
-SET(CMAKE_RANLIB i686-apple-darwin9-ranlib)
+SET(CMAKE_C_COMPILER   i686-apple-darwin10-gcc)
+SET(CMAKE_CXX_COMPILER i686-apple-darwin10-g++)
+SET(CMAKE_RANLIB i686-apple-darwin10-ranlib)
 
 # set SDK
-SET(CMAKE_PREFIX_PATH "/usr/i686-apple-darwin9/SDKs/MacOSX10.4u.sdk")
+SET(CMAKE_PREFIX_PATH "/srv/buildfarm/SDKs/MacOSX10.6.sdk")
 
 # set root path
 SET(CMAKE_FIND_ROOT_PATH "${CMAKE_PREFIX_PATH}")

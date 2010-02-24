@@ -1,4 +1,4 @@
-// $Id: MusicPlayer.cpp 6077 2010-02-23 19:37:53Z FloSoft $
+// $Id: MusicPlayer.cpp 6081 2010-02-24 13:35:39Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -48,7 +48,7 @@ void Playlist::Prepare()
 		order.clear();
 
 		// Abspielreihenfolge erstmal normal festlegen
-		order.resize(songs.size());
+		order.resize(songs.size() * repeats);
 
 		// normale Reihenfolge
 		for(unsigned int i = 0; i < songs.size() * repeats; ++i)

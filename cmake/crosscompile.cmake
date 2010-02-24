@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: crosscompile.cmake 5628 2009-10-12 17:32:03Z FloSoft $
+### $Id: crosscompile.cmake 6083 2010-02-24 22:37:11Z FloSoft $
 #################################################################################
 
 # read host compiler machine triplet
@@ -108,12 +108,25 @@ ENDIF ( "${AD_CDM_OV}" MATCHES "linux" )
 IF ( "${AD_CDM_OV}" MATCHES "apple" )
 	# Apple spezifische Parameter
 	SET(COMPILEFOR "apple")
+	
+	STRING(REGEX REPLACE "\n" "" AD_CDM_OV ${AD_CDM_OV})
 
-	IF ( "${AD_CDM_OV}" MATCHES "powerpc" )
-		SET(COMPILEARCH "ppc")
-	ELSE ( "${AD_CDM_OV}" MATCHES "powerpc" )
-		SET(COMPILEARCH "i686")
-	ENDIF ( "${AD_CDM_OV}" MATCHES "powerpc" )
+	EXECUTE_PROCESS(
+	  COMMAND "/usr/bin/${AD_CDM_OV}-lipo" "-info" "${CMAKE_PREFIX_PATH}/usr/lib/libSystem.B.dylib"
+	  RESULT_VARIABLE AD_LIPO_RV
+	  ERROR_VARIABLE AD_LIPO_EV
+	  OUTPUT_VARIABLE AD_LIPO_OV
+	  )
+	
+	IF ( "${AD_LIPO_OV}" MATCHES "x86_64" )
+		SET(COMPILEARCH "x86_64")
+	ELSE ( "${AD_LIPO_OV}" MATCHES "x86_64" )
+		IF ( "${AD_LIPO_OV}" MATCHES "i386" )
+			SET(COMPILEARCH "i686")
+		ELSE ( "${AD_LIPO_OV}" MATCHES "i386" )
+			SET(COMPILEARCH "ppc")
+		ENDIF ( "${AD_LIPO_OV}" MATCHES "i386" )
+	ENDIF ( "${AD_LIPO_OV}" MATCHES "x86_64" )
 ENDIF ( "${AD_CDM_OV}" MATCHES "apple" )
 
 IF ( "${AD_CDM_OV}" MATCHES "mingw" OR "${AD_CDM_OV}" MATCHES "cygwin" )

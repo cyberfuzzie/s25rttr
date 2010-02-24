@@ -7,17 +7,29 @@ EXECUTE_PROCESS(COMMAND "uname" "-m"
 SET(CMAKE_C_COMPILER   gcc)
 SET(CMAKE_CXX_COMPILER g++)
 
-# set specific compiler flags
-IF ( "${COMPILEARCH}" STREQUAL "ppc" )
-	# for powerpc
-	SET(APPLE_FLAGS "-faltivec")
-ELSE( "${COMPILEARCH}" STREQUAL "ppc" )
-	# for intel
-	SET(APPLE_FLAGS "-mtune=prescott -mmmx -mfpmath=sse -malign-double")
-ENDIF ( "${COMPILEARCH}" STREQUAL "ppc" )
-
 SET(CMAKE_OSX_ARCHITECTURES "i686" CACHE STRING "OSX-Architectures")
 SET(CMAKE_OSX_DEPLOYMENT_TARGET "10.5" CACHE STRING "OSX-Target")
+
+# set specific compiler and architecture flags
+IF ( "${COMPILEARCH}" STREQUAL "x86_64" AND "${CMAKE_OSX_ARCHITECTURES}" MATCHES "x86_64" )
+	MESSAGE(STATUS "building universal binary with i386 x86_64")
+	# for intel 32/64 universal
+	SET(APPLE_FLAGS "-arch i386 -arch x86_64" CACHE STRING "Apple Flags")
+	SET(APPLE_LDFLAGS "-arch i386 -arch x86_64" CACHE STRING "Apple Link Flags")
+ELSE ( "${COMPILEARCH}" STREQUAL "x86_64" AND "${CMAKE_OSX_ARCHITECTURES}" MATCHES "x86_64" )
+	MESSAGE(STATUS "building non-fat binary")
+	IF ( "${COMPILEARCH}" STREQUAL "i386" )
+		# for intel
+		SET(APPLE_FLAGS "-arch i386 -mtune=prescott -mmmx -mfpmath=sse -malign-double" CACHE STRING "Apple Flags")
+		SET(APPLE_LDFLAGS "-arch i386" CACHE STRING "Apple Link Flags")
+	ELSE ( "${COMPILEARCH}" STREQUAL "i386" )
+		IF ( "${COMPILEARCH}" STREQUAL "ppc" )
+			# for powerpc
+			SET(APPLE_FLAGS "-faltivec" CACHE STRING "Apple Flags")
+			SET(APPLE_LDFLAGS "" CACHE STRING "Apple Link Flags")
+		ENDIF ( "${COMPILEARCH}" STREQUAL "ppc" )
+	ENDIF ( "${COMPILEARCH}" STREQUAL "i386" )
+ENDIF ( "${COMPILEARCH}" STREQUAL "x86_64" AND "${CMAKE_OSX_ARCHITECTURES}" MATCHES "x86_64" )
 
 # set compiler flags
 SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${APPLE_FLAGS} -ffast-math -msse -fomit-frame-pointer"  CACHE STRING "CFLAGS")

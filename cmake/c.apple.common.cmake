@@ -17,36 +17,41 @@ SET(CMAKE_PREFIX_PATH "/srv/buildfarm/SDKs/MacOSX10.6.sdk")
 SET(CMAKE_FIND_ROOT_PATH "${CMAKE_PREFIX_PATH}")
 
 IF ( NOT "${COMPILEARCH}" STREQUAL "" )
+	SET(APPLE_CFLAGS "" CACHE STRING "Apple Flags")
+	SET(APPLE_LDFLAGS "" CACHE STRING "Apple Link Flags")
+	
+	IF ( "${CMAKE_OSX_ARCHITECTURES}" MATCHES "x86_64" )
+		SET(APPLE_CFLAGS "${APPLE_CFLAGS} -arch x86_64")
+		SET(APPLE_LDFLAGS "${APPLE_LDFLAGS} -arch x86_64")
+	ENDIF ( "${CMAKE_OSX_ARCHITECTURES}" MATCHES "x86_64" )
+	
+	IF ( "${CMAKE_OSX_ARCHITECTURES}" MATCHES "i386" )
+		SET(APPLE_CFLAGS "${APPLE_CFLAGS} -arch i386")
+		SET(APPLE_LDFLAGS "${APPLE_LDFLAGS} -arch i386")
+	ENDIF ( "${CMAKE_OSX_ARCHITECTURES}" MATCHES "i386" )
 
-	# set specific compiler and architecture flags
-	IF ( "${COMPILEARCH}" STREQUAL "x86_64" AND "${CMAKE_OSX_ARCHITECTURES}" MATCHES "x86_64" )
-		MESSAGE(STATUS "building universal binary with i386 x86_64")
-		# for intel 32/64 universal
-		SET(APPLE_FLAGS "-arch i386 -arch x86_64" CACHE STRING "Apple Flags")
-		SET(APPLE_LDFLAGS "-arch i386 -arch x86_64" CACHE STRING "Apple Link Flags")
-	ELSE ( "${COMPILEARCH}" STREQUAL "x86_64" AND "${CMAKE_OSX_ARCHITECTURES}" MATCHES "x86_64" )
-		MESSAGE(STATUS "building non-fat binary")
-		IF ( "${COMPILEARCH}" STREQUAL "i386" )
-			# for intel
-			SET(APPLE_FLAGS "-arch i386 -mtune=prescott -mmmx -mfpmath=sse -malign-double" CACHE STRING "Apple Flags")
-			SET(APPLE_LDFLAGS "-arch i386" CACHE STRING "Apple Link Flags")
-		ELSE ( "${COMPILEARCH}" STREQUAL "i386" )
-			IF ( "${COMPILEARCH}" STREQUAL "ppc" )
-				# for powerpc
-				SET(APPLE_FLAGS "-faltivec" CACHE STRING "Apple Flags")
-				SET(APPLE_LDFLAGS "" CACHE STRING "Apple Link Flags")
-			ENDIF ( "${COMPILEARCH}" STREQUAL "ppc" )
-		ENDIF ( "${COMPILEARCH}" STREQUAL "i386" )
-	ENDIF ( "${COMPILEARCH}" STREQUAL "x86_64" AND "${CMAKE_OSX_ARCHITECTURES}" MATCHES "x86_64" )
+	IF ( "${CMAKE_OSX_ARCHITECTURES}" MATCHES "ppc" )
+		SET(APPLE_CFLAGS "${APPLE_CFLAGS} -arch ppc")
+		SET(APPLE_LDFLAGS "${APPLE_LDFLAGS} -arch ppc")
+	ENDIF ( "${CMAKE_OSX_ARCHITECTURES}" MATCHES "ppc" )
+
+	# i386 only?
+	IF ( NOT "${CMAKE_OSX_ARCHITECTURES}" MATCHES "x86_64" AND NOT "${CMAKE_OSX_ARCHITECTURES}" MATCHES "ppc" )
+		SET(APPLE_FLAGS "${APPLE_FLAGS} -mtune=prescott -mmmx -mfpmath=sse -malign-double")
+	ENDIF ( NOT "${CMAKE_OSX_ARCHITECTURES}" MATCHES "x86_64" AND NOT "${CMAKE_OSX_ARCHITECTURES}" MATCHES "ppc" )
+
+	# ppc only?
+	IF ( NOT "${CMAKE_OSX_ARCHITECTURES}" MATCHES "x86_64" AND NOT "${CMAKE_OSX_ARCHITECTURES}" MATCHES "i386" )
+		SET(APPLE_FLAGS "${APPLE_FLAGS} -faltivec")
+	ENDIF ( NOT "${CMAKE_OSX_ARCHITECTURES}" MATCHES "x86_64" AND NOT "${CMAKE_OSX_ARCHITECTURES}" MATCHES "i386" )
 
 	# set compiler flags
-	SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${APPLE_FLAGS} -ffast-math -msse -fomit-frame-pointer"  CACHE STRING "CFLAGS" FORCE)
-	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${APPLE_FLAGS} -ffast-math -msse -fomit-frame-pointer"  CACHE STRING "CXXFLAGS" FORCE)
+	SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${APPLE_CFLAGS} -ffast-math -msse -fomit-frame-pointer"  CACHE STRING "CFLAGS" FORCE)
+	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${APPLE_CFLAGS} -ffast-math -msse -fomit-frame-pointer"  CACHE STRING "CXXFLAGS" FORCE)
 	
 	# set linker flags
 	SET(CMAKE_C_LINK_FLAGS 	"${CMAKE_C_LINK_FLAGS} ${APPLE_LDFLAGS} -framework OpenGL -L${CMAKE_SOURCE_DIR}/macos -lSDLmain" CACHE STRING "LDFLAGS (C)")
 	SET(CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} ${APPLE_LDFLAGS} -framework OpenGL -L${CMAKE_SOURCE_DIR}/macos -lSDLmain" CACHE STRING "LDFLAGS (C++)")
-
 ENDIF ( NOT "${COMPILEARCH}" STREQUAL "" )
 
 # search for programs in the build host directories

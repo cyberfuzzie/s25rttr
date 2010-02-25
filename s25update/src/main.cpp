@@ -1,4 +1,4 @@
-// $Id: main.cpp 5990 2010-02-10 15:28:42Z FloSoft $
+// $Id: main.cpp 6086 2010-02-25 08:51:56Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -43,15 +43,17 @@ using namespace std;
 #endif
 
 #ifdef _WIN32
-#	define ARCH "i686"
+#	define ARCH "i386"
 #endif
 
 #ifndef ARCH
-#	error You have to set ARCH to your architecture (i686/amd64/ppc)
+#	error You have to set ARCH to your architecture (i386/x86_64/ppc)
 #endif
 
-#define HTTPHOST "http://nightly.ra-doersch.de/s25client/" TARGET "." ARCH "/"
-#define FILELIST HTTPHOST "files"
+#define HTTPHOST "http://nightly.ra-doersch.de/s25client/"
+#define HTTPPATH TARGET "." ARCH
+#define FILELIST HTTPHOST HTTPPATH "/files"
+#define OLDFILELIST HTTPHOST HTTPPATH ".old/files"
 
 #ifdef _WIN32
 ///////////////////////////////////////////////////////////////////////////////
@@ -274,12 +276,16 @@ int main(int argc, char *argv[])
 	// download filelist
 	if(!DownloadFile(FILELIST, filelist))
 	{
-		cout << "Update Failed: Downloading the masterfile was unsuccessful!" << endl;
-#if defined _DEBUG && defined _MSC_VER
-		cout << "Press return to continue . . ." << flush;
-		cin.get();
-#endif
-		return 1;
+		cout << "Warning: Was not able to get current masterfile, trying old one" << endl;
+		if(!DownloadFile(OLDFILELIST, filelist))
+		{
+			cout << "Update failed: Downloading the masterfile was unsuccessful!" << endl;
+	#if defined _DEBUG && defined _MSC_VER
+			cout << "Press return to continue . . ." << flush;
+			cin.get();
+	#endif
+			return 1;
+		}
 	}
 
 	stringstream flstream(filelist);

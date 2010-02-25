@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: crosscompile.cmake 6083 2010-02-24 22:37:11Z FloSoft $
+### $Id: crosscompile.cmake 6086 2010-02-25 08:51:56Z FloSoft $
 #################################################################################
 
 # read host compiler machine triplet
@@ -32,28 +32,28 @@ ENDIF (NOT FOUND_A AND NOT FOUND_B AND NOT FOUND_C)
 #################################################################################
 
 EXECUTE_PROCESS(
-  COMMAND "gcc" "-dumpmachine"
-  RESULT_VARIABLE AD_HDM_RV
-  ERROR_VARIABLE AD_HDM_EV
-  OUTPUT_VARIABLE AD_HDM_OV
-  )
-IF(NOT "${AD_HDM_RV}" STREQUAL "0")
-	MESSAGE(FATAL_ERROR "ERROR: gcc -dumpmachine failed... AD_HDM_RV='${AD_HDM_RV}' AD_HDM_EV='${AD_HDM_EV}'")
-ENDIF(NOT "${AD_HDM_RV}" STREQUAL "0")
+	COMMAND "gcc" "-dumpmachine"
+	RESULT_VARIABLE HOST_GCC_RESULT
+	ERROR_VARIABLE HOST_GCC_ERROR
+	OUTPUT_VARIABLE HOST_GCC_OUTPUT
+)
+IF(NOT "${HOST_GCC_RESULT}" STREQUAL "0")
+	MESSAGE(FATAL_ERROR "ERROR: gcc -dumpmachine failed... Result:'${HOST_GCC_RESULT}' Error:'${HOST_GCC_ERROR}' Output:'${HOST_GCC_OUTPUT}'")
+ENDIF(NOT "${HOST_GCC_RESULT}" STREQUAL "0")
 
 #################################################################################
 
 # read target C compiler machine triplet
 
 EXECUTE_PROCESS(
-  COMMAND "${CMAKE_C_COMPILER}" "-dumpmachine"
-  RESULT_VARIABLE AD_CDM_RV
-  ERROR_VARIABLE AD_CDM_EV
-  OUTPUT_VARIABLE AD_CDM_OV
-  )
-IF(NOT "${AD_CDM_RV}" STREQUAL "0")
-  MESSAGE(FATAL_ERROR "ERROR: ${CMAKE_C_COMPILER} -dumpmachine failed... AD_CDM_RV='${AD_CDM_RV}' AD_CDM_EV='${AD_CDM_EV}'")
-ENDIF(NOT "${AD_CDM_RV}" STREQUAL "0")
+	COMMAND "${CMAKE_C_COMPILER}" "-dumpmachine"
+	RESULT_VARIABLE USED_GCC_RESULT
+	ERROR_VARIABLE USED_GCC_ERROR
+	OUTPUT_VARIABLE USED_GCC_OUTPUT
+)
+IF(NOT "${USED_GCC_RESULT}" STREQUAL "0")
+  MESSAGE(FATAL_ERROR "ERROR: ${CMAKE_C_COMPILER} -dumpmachine failed... Result:'${USED_GCC_RESULT}' Error:'${USED_GCC_ERROR}' Output:'${USED_GCC_OUTPUT}'")
+ENDIF(NOT "${USED_GCC_RESULT}" STREQUAL "0")
 
 #################################################################################
 
@@ -61,96 +61,101 @@ ENDIF(NOT "${AD_CDM_RV}" STREQUAL "0")
 
 EXECUTE_PROCESS(
   COMMAND "${CMAKE_CXX_COMPILER}" "-dumpmachine"
-  RESULT_VARIABLE AD_CXXDM_RV
-  ERROR_VARIABLE AD_CXXDM_EV
-  OUTPUT_VARIABLE AD_CXXDM_OV
+  RESULT_VARIABLE USED_GPP_RESULT
+  ERROR_VARIABLE USED_GPP_ERROR
+  OUTPUT_VARIABLE USED_GPP_OUTPUT
   )
-IF(NOT "${AD_CXXDM_RV}" STREQUAL "0")
-	MESSAGE(FATAL_ERROR "ERROR: ${CMAKE_CXX_COMPILER} -dumpmachine failed... AD_CXXDM_RV='${AD_CXXDM_RV}' AD_CXXDM_EV='${AD_CXXDM_EV}'")
-ENDIF(NOT "${AD_CXXDM_RV}" STREQUAL "0")
+IF(NOT "${USED_GPP_RESULT}" STREQUAL "0")
+	MESSAGE(FATAL_ERROR "ERROR: ${CMAKE_CXX_COMPILER} -dumpmachine failed... Result:'${USED_GPP_RESULT}' Error:'${USED_GPP_ERROR}' Output:'${USED_GPP_OUTPUT}'")
+ENDIF(NOT "${USED_GPP_RESULT}" STREQUAL "0")
 
 #################################################################################
 
 # check if target compiler triplets match
 
-IF(NOT "${AD_CDM_OV}" STREQUAL "${AD_CXXDM_OV}")
-	MESSAGE(FATAL_ERROR "ERROR: Your C and C++ Compiler do not match: ${AD_CDM_OV} != $AD_CXXDM_OV}!")
-ENDIF(NOT "${AD_CDM_OV}" STREQUAL "${AD_CXXDM_OV}")
+IF(NOT "${USED_GCC_OUTPUT}" STREQUAL "${USED_GPP_OUTPUT}")
+	MESSAGE(FATAL_ERROR "ERROR: Your C and C++ Compiler do not match: ${USED_GCC_OUTPUT} != $USED_GPP_OUTPUT}!")
+ENDIF(NOT "${USED_GCC_OUTPUT}" STREQUAL "${USED_GPP_OUTPUT}")
 
 #################################################################################
 
 # do we crosscompile? if so, set a flag
 
-IF (NOT "${AD_HDM_OV}" STREQUAL "${AD_CDM_OV}")
+IF (NOT "${HOST_GCC_OUTPUT}" STREQUAL "${USED_GCC_OUTPUT}")
 	SET(CROSSCOMPILE "1")
 	SET(CROSS "c")
-	MESSAGE(STATUS "Configuring for cross-compiling to ${AD_CDM_OV}")
-ELSE (NOT "${AD_HDM_OV}" STREQUAL "${AD_CDM_OV}")
+	MESSAGE(STATUS "Configuring for cross-compiling to ${USED_GCC_OUTPUT}")
+ELSE (NOT "${HOST_GCC_OUTPUT}" STREQUAL "${USED_GCC_OUTPUT}")
 	SET(CROSSCOMPILE "0")
 	SET(CROSS "")
-ENDIF (NOT "${AD_HDM_OV}" STREQUAL "${AD_CDM_OV}")
+ENDIF (NOT "${HOST_GCC_OUTPUT}" STREQUAL "${USED_GCC_OUTPUT}")
 
 #################################################################################
 
-# set specific flags for target platform
+# strip newlines from var
+STRING(REGEX REPLACE "\n" "" USED_GCC_OUTPUT ${USED_GCC_OUTPUT})
 
-IF ( "${AD_CDM_OV}" MATCHES "linux" )
-	# Linux spezifische Parameter
+#################################################################################
+
+# Linux spezifische Parameter
+IF ( "${USED_GCC_OUTPUT}" MATCHES "linux" )
+	
 	SET(COMPILEFOR "linux")
 	
-	IF ( "${AD_CDM_OV}" MATCHES "x86_64" )
-		SET(COMPILEARCH "amd64")
-	ELSE ( "${AD_CDM_OV}" MATCHES "x86_64" )
-		SET(COMPILEARCH "i686")
-	ENDIF ( "${AD_CDM_OV}" MATCHES "x86_64" )
-ENDIF ( "${AD_CDM_OV}" MATCHES "linux" )
-
-IF ( "${AD_CDM_OV}" MATCHES "apple" )
-	# Apple spezifische Parameter
-	SET(COMPILEFOR "apple")
-	
-	STRING(REGEX REPLACE "\n" "" AD_CDM_OV ${AD_CDM_OV})
-
-	EXECUTE_PROCESS(
-	  COMMAND "/usr/bin/${AD_CDM_OV}-lipo" "-info" "${CMAKE_PREFIX_PATH}/usr/lib/libSystem.B.dylib"
-	  RESULT_VARIABLE AD_LIPO_RV
-	  ERROR_VARIABLE AD_LIPO_EV
-	  OUTPUT_VARIABLE AD_LIPO_OV
-	  )
-	
-	IF ( "${AD_LIPO_OV}" MATCHES "x86_64" )
+	IF ( "${USED_GCC_OUTPUT}" MATCHES "x86_64" )
 		SET(COMPILEARCH "x86_64")
-	ELSE ( "${AD_LIPO_OV}" MATCHES "x86_64" )
-		IF ( "${AD_LIPO_OV}" MATCHES "i386" )
-			SET(COMPILEARCH "i686")
-		ELSE ( "${AD_LIPO_OV}" MATCHES "i386" )
-			SET(COMPILEARCH "ppc")
-		ENDIF ( "${AD_LIPO_OV}" MATCHES "i386" )
-	ENDIF ( "${AD_LIPO_OV}" MATCHES "x86_64" )
-ENDIF ( "${AD_CDM_OV}" MATCHES "apple" )
+	ELSE ( "${USED_GCC_OUTPUT}" MATCHES "x86_64" )
+		SET(COMPILEARCH "i386")
+	ENDIF ( "${USED_GCC_OUTPUT}" MATCHES "x86_64" )
+ENDIF ( "${USED_GCC_OUTPUT}" MATCHES "linux" )
 
-IF ( "${AD_CDM_OV}" MATCHES "mingw" OR "${AD_CDM_OV}" MATCHES "cygwin" )
-	# Cygwin/Mingw spezifische Parameter
+#################################################################################
+
+# Apple spezifische Parameter
+IF ( "${USED_GCC_OUTPUT}" MATCHES "apple" )
+	SET(COMPILEFOR "apple")
+
+	# read supported platforms	
+	EXECUTE_PROCESS(
+		COMMAND "/usr/bin/${USED_GCC_OUTPUT}-lipo" "-info" "${CMAKE_PREFIX_PATH}/usr/lib/libSystem.B.dylib"
+		RESULT_VARIABLE LIPO_RESULT
+		ERROR_VARIABLE LIPO_ERROR
+		OUTPUT_VARIABLE LIPO_OUTPUT
+	)
+	
+	# always universal
+	SET(COMPILEARCH "universal")
+	SET(COMPILEARCHS "" CACHE STRING "Target Architectures")
+	
+	IF ( "${LIPO_OUTPUT}" MATCHES "x86_64" )
+		SET(COMPILEARCHS "${COMPILEARCHS} x86_64")
+	ENDIF ( "${LIPO_OUTPUT}" MATCHES "x86_64" )
+
+	IF ( "${LIPO_OUTPUT}" MATCHES "i386" )
+		SET(COMPILEARCHS "${COMPILEARCHS} i386")
+	ENDIF ( "${LIPO_OUTPUT}" MATCHES "i386" )
+
+	IF ( "${LIPO_OUTPUT}" MATCHES "ppc" )
+		SET(COMPILEARCHS "${COMPILEARCHS} ppc")
+	ENDIF ( "${LIPO_OUTPUT}" MATCHES "ppc" )
+ENDIF ( "${USED_GCC_OUTPUT}" MATCHES "apple" )
+
+#################################################################################
+
+# Cygwin/Mingw spezifische Parameter
+IF ( "${USED_GCC_OUTPUT}" MATCHES "mingw" OR "${USED_GCC_OUTPUT}" MATCHES "cygwin" )
 	SET(COMPILEFOR "windows")
 
-	SET(COMPILEARCH "i686")
-ENDIF ( "${AD_CDM_OV}" MATCHES "mingw" OR "${AD_CDM_OV}" MATCHES "cygwin" )
+	SET(COMPILEARCH "i386")
+ENDIF ( "${USED_GCC_OUTPUT}" MATCHES "mingw" OR "${USED_GCC_OUTPUT}" MATCHES "cygwin" )
 
 #################################################################################
 
 SET(CROSSCOMPILE "${CROSSCOMPILE}" CACHE INT "Are we cross compiling?")
 SET(COMPILEFOR "${COMPILEFOR}" CACHE STRING "Target Platform")
-SET(COMPILEARCH "${COMPILEARCH}" CACHE STRING "Target Archictecure")
+SET(COMPILEARCH "${COMPILEARCH}" CACHE STRING "Target Architecture")
 
 #################################################################################
-
-IF(NOT COMPILEFOR_PLATFORM)
-	IF ( "${COMPILEFOR}" STREQUAL "apple" )
-		SET(COMPILEFOR_PLATFORM "local")
-	ELSE ( "${COMPILEFOR}" STREQUAL "apple" )
-		SET(COMPILEFOR_PLATFORM "apple.local")
-	ENDIF ( "${COMPILEFOR}" STREQUAL "apple" )
-ENDIF(NOT COMPILEFOR_PLATFORM)
 
 MESSAGE(STATUS "Compiling for ${COMPILEFOR}/${COMPILEARCH}")
 

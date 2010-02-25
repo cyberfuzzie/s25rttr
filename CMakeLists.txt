@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 6076 2010-02-23 16:37:00Z FloSoft $
+### $Id: CMakeLists.txt 6087 2010-02-25 09:01:36Z FloSoft $
 ################################################################################
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
@@ -50,9 +50,9 @@ ENDIF (WERROR_FLAGS)
 IF ("${COMPILEFOR}" STREQUAL "linux")
 	CHECK_CXX_COMPILER_FLAG("-fPIC" FPIC_FLAGS)
 	IF (FPIC_FLAGS)
-		IF ("${COMPILEARCH}" STREQUAL "amd64" )
+		IF ("${COMPILEARCH}" STREQUAL "x86_64" )
 			ADD_DEFINITIONS(-fPIC)
-		ENDIF ("${COMPILEARCH}" STREQUAL "amd64" )
+		ENDIF ("${COMPILEARCH}" STREQUAL "x86_64" )
 	ENDIF (FPIC_FLAGS)
 ENDIF ("${COMPILEFOR}" STREQUAL "linux")
 

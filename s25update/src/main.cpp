@@ -1,4 +1,4 @@
-// $Id: main.cpp 6086 2010-02-25 08:51:56Z FloSoft $
+// $Id: main.cpp 6089 2010-02-25 14:13:31Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -344,7 +344,7 @@ int main(int argc, char *argv[])
 				progress << " to \"" << setw(longestpath) << path << "\"";
 			
 			progress << ": ";
-			string url = HTTPHOST + bzfile;
+			string url = HTTPHOST + HTTPPATH + bzfile;
 			string fdata = "";
 
 #ifdef _WIN32

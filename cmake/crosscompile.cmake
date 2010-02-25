@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: crosscompile.cmake 6086 2010-02-25 08:51:56Z FloSoft $
+### $Id: crosscompile.cmake 6088 2010-02-25 12:25:07Z FloSoft $
 #################################################################################
 
 # read host compiler machine triplet
@@ -93,7 +93,7 @@ ENDIF (NOT "${HOST_GCC_OUTPUT}" STREQUAL "${USED_GCC_OUTPUT}")
 #################################################################################
 
 # strip newlines from var
-STRING(REGEX REPLACE "\n" "" USED_GCC_OUTPUT ${USED_GCC_OUTPUT})
+STRING(REPLACE "\n" "" USED_GCC_OUTPUT ${USED_GCC_OUTPUT})
 
 #################################################################################
 
@@ -125,7 +125,7 @@ IF ( "${USED_GCC_OUTPUT}" MATCHES "apple" )
 	
 	# always universal
 	SET(COMPILEARCH "universal")
-	SET(COMPILEARCHS "" CACHE STRING "Target Architectures")
+	SET(COMPILEARCHS "")
 	
 	IF ( "${LIPO_OUTPUT}" MATCHES "x86_64" )
 		SET(COMPILEARCHS "${COMPILEARCHS} x86_64")
@@ -138,6 +138,7 @@ IF ( "${USED_GCC_OUTPUT}" MATCHES "apple" )
 	IF ( "${LIPO_OUTPUT}" MATCHES "ppc" )
 		SET(COMPILEARCHS "${COMPILEARCHS} ppc")
 	ENDIF ( "${LIPO_OUTPUT}" MATCHES "ppc" )
+	
 ENDIF ( "${USED_GCC_OUTPUT}" MATCHES "apple" )
 
 #################################################################################
@@ -154,6 +155,7 @@ ENDIF ( "${USED_GCC_OUTPUT}" MATCHES "mingw" OR "${USED_GCC_OUTPUT}" MATCHES "cy
 SET(CROSSCOMPILE "${CROSSCOMPILE}" CACHE INT "Are we cross compiling?")
 SET(COMPILEFOR "${COMPILEFOR}" CACHE STRING "Target Platform")
 SET(COMPILEARCH "${COMPILEARCH}" CACHE STRING "Target Architecture")
+SET(COMPILEARCHS "${COMPILEARCHS}" CACHE STRING "Target Architectures")
 
 #################################################################################
 

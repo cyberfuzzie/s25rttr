@@ -15,8 +15,8 @@ mkdir -vp s25client.app/Contents/{MacOS,Resources}
 # frameworks kopieren (da updater nicht mit symlinks umgehen kann, nur lib kopieren
 mkdir -vp s25client.app/Contents/MacOS/Frameworks
 mkdir -vp s25client.app/Contents/MacOS/Frameworks/{SDL,SDL_mixer}.framework
-cp -v /Library/Frameworks/SDL.framework/ s25client.app/Contents/MacOS/Frameworks/SDL.framework
-cp -v /Library/Frameworks/SDL_mixer.framework/ s25client.app/Contents/Frameworks/MacOS/SDL_mixer.framework
+cp -rv /Library/Frameworks/SDL.framework/ s25client.app/Contents/MacOS/Frameworks/SDL.framework
+cp -rv /Library/Frameworks/SDL_mixer.framework/ s25client.app/Contents/Frameworks/MacOS/SDL_mixer.framework
 
 mkdir -vp s25client.app/Contents/MacOS/bin
 

@@ -93,7 +93,15 @@ else
 	mv $TARGET/$ARCH.new $TARGET/$ARCH
 
 	if [ -z "$NORS" ] ; then
-		/srv/buildfarm/uploadrs.sh $TARGET/s25rttr_${VERSION}-${REVISION}_${ARCH}.tar.bz2 >> $TARGET/build_${ARCH}.log
+		gpg -u 6D09334C --armor --sign --detach-sig $TARGET/s25rttr_${VERSION}-${REVISION}_${ARCH}.tar.bz2 >> $TARGET/build_${ARCH}.log
+		OUTPUT=$(/srv/buildfarm/uploadlp.py s25rttr s25client nightly $TARGET/s25rttr_${VERSION}-${REVISION}_${ARCH}.tar.bz2)
+		echo $OUTPUT >> $TARGET/build_${ARCH}.log
+		if [ "$(echo $OUTPUT | head -n 1) = "Success!" ] ; then
+			echo $OUTPUT | tail -n 1 >> $TARGET/rapidshare.txt
+			/srv/buildfarm/remoters.sh "http://launchpad.net/s25rttr/s25client/nightly/+download/s25rttr_${VERSION}-${REVISION}_${ARCH}.tar.bz2" >> $TARGET/build_${ARCH}.log
+		fi
+		#/srv/buildfarm/uploadrs.sh $TARGET/s25rttr_${VERSION}-${REVISION}_${ARCH}.tar.bz2 >> $TARGET/build_${ARCH}.log
+		rm -f $TARGET/s25rttr_${VERSION}-${REVISION}_${ARCH}.tar.bz2.asc >> $TARGET/build_${ARCH}.log
 		rm -f $TARGET/s25rttr_${VERSION}-${REVISION}_${ARCH}.tar.bz2 >> $TARGET/build_${ARCH}.log
 	fi
 	

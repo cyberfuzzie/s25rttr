@@ -1,4 +1,4 @@
-// $Id: const_gui_ids.h 5969 2010-02-08 16:08:49Z FloSoft $
+// $Id: const_gui_ids.h 6109 2010-03-03 22:27:18Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -61,6 +61,7 @@ enum GUI_ID
 	CGI_HELPBUILDING,
 	CGI_SETTINGS,
 	CGI_ADDONS,
+	CGI_MERCHANDISE_STATISTICS,
 	CGI_NEXT = CGI_HELPBUILDING + 40
 };
 

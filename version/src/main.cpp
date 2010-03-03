@@ -1,4 +1,4 @@
-// $Id: main.cpp 6036 2010-02-17 10:07:24Z FloSoft $
+// $Id: main.cpp 6108 2010-03-03 20:24:59Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -91,6 +91,15 @@ int main(int argc, char *argv[])
 		svn.close();
 	}
 
+	ifstream versionhforce("version.h.force");
+	if(versionhforce)
+	{
+		cerr << "version: the file \"version.h.force\" does exist."<< endl;
+		cerr << "         i will not change \"version.h\"." << endl;
+		versionhforce.close();
+		return 0;
+	}
+
 	ifstream versionh("version.h");
 	const int versionh_errno = errno;
 
@@ -102,9 +111,9 @@ int main(int argc, char *argv[])
 
 	if(!versionh)
 	{
-		cerr << "failed to read any of:" << endl;
-		cerr << "version.h: " << strerror(versionh_errno) << endl;
-		cerr << "version.h.in: " << strerror(errno) << endl;
+		cerr << "version: failed to read any of:" << endl;
+		cerr << "         version.h:    " << strerror(versionh_errno) << endl;
+		cerr << "         version.h.in: " << strerror(errno) << endl;
 
 		return 1;
 	}
@@ -128,9 +137,9 @@ int main(int argc, char *argv[])
 
 		if(n == "FORCE")
 		{
-			break;
-			changed = false;
-		}
+	                cerr << "version: the define \"FORCE\" does exist in the file \"version.h\"."<< endl;
+                	cerr << "         i will not change \"version.h\"." << endl;
+		}	
 
 		if(n == "WINDOW_VERSION")
 		{
@@ -147,7 +156,7 @@ int main(int argc, char *argv[])
 				ll << d << " " << n << " \"" << tv << "\"";
 				l = ll.str();
 
-				cout << "renewing version to day \"" << tv << "\"" << endl;
+				cout << "version: renewing version to day \"" << tv << "\"" << endl;
 				changed = true;
 			}
 		}
@@ -162,7 +171,7 @@ int main(int argc, char *argv[])
 				ll << d << " " << n << " \"" << revision << "\"";
 				l = ll.str();
 
-				cout << "renewing version to revision \"" << revision << "\"" << endl;
+				cout << "version: renewing version to revision \"" << revision << "\"" << endl;
 				changed = true;
 			}
 		}
@@ -187,4 +196,5 @@ int main(int argc, char *argv[])
 
 		versionh.close();
 	}
+	return 0;
 }

@@ -1,4 +1,4 @@
-// $Id: iwMainMenu.cpp 5978 2010-02-09 14:34:10Z FloSoft $
+// $Id: iwMainMenu.cpp 6112 2010-03-04 10:56:07Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -40,6 +40,7 @@
 #include "iwDiplomacy.h"
 #include "iwShip.h"
 #include "iwAIDebug.h"
+#include "iwMerchandiseStatistics.h"
 
 #include "GameClient.h"
 #include "GameClientPlayer.h"
@@ -124,6 +125,10 @@ void iwMainMenu::Msg_ButtonClick(const unsigned int ctrl_id)
 	case 3: // Statistik
 		{
 			WindowManager::inst().Show(new iwStatistics);
+		} break;
+	case 4: // Warenstatistik
+		{
+			WindowManager::inst().Show(new iwMerchandiseStatistics);
 		} break;
 	case 5: // Gebäudestatistik
 		{

@@ -1,4 +1,4 @@
-// $Id: noFigure.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: noFigure.h 6113 2010-03-04 11:15:28Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -167,6 +167,8 @@ public:		void Destroy() { Destroy_noFigure(); }
 	const RoadSegment * GetCurrentRoad() { return cur_rs; }
 	/// Wird aufgerufen, wenn die Straße unter der Figur geteilt wurde, setzt vorraus, dass die Figur auf der geteilten Straße läuft!
 	void CorrectSplitData(const RoadSegment * const rs2);
+	/// Wird aufgerufen, wenn die Straße unter der Figur geteilt wurde (für abgeleitete Klassen)
+	virtual void CorrectSplitData_Derived();
 	/// Lässt die Figur sterben (löst sich auf und hinterlässt ggf. Leiche)
 	void Die();
 	/// Mitglied von nem Lagerhaus(Lagerhausarbeiter, die die Träger-Bestände nicht beeinflussen?)

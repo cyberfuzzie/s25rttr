@@ -1,4 +1,4 @@
-// $Id: nofCarrier.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: nofCarrier.h 6113 2010-03-04 11:15:28Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -147,6 +147,10 @@ public:		void Destroy() { Destroy_nofCarrier(); }
 	/// Gibt erste Flagge des Arbeitsweges zurück, falls solch einer existiert
 	noRoadNode * GetFirstFlag() const;
 	noRoadNode * GetSecondFlag() const;
+	
+	/// Wird aufgerufen, wenn die Straße unter der Figur geteilt wurde (für abgeleitete Klassen)
+	void CorrectSplitData_Derived();
+
 
 };
 

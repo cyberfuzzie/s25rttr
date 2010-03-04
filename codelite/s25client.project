@@ -266,6 +266,8 @@
         <File Name="../src/iwAddons.h"/>
         <File Name="../src/iwAIDebug.cpp"/>
         <File Name="../src/iwAIDebug.h"/>
+        <File Name="../src/iwMerchandiseStatistics.cpp"/>
+        <File Name="../src/iwMerchandiseStatistics.h"/>
       </VirtualDirectory>
       <File Name="../src/PostMsg.cpp"/>
       <File Name="../src/PostMsg.h"/>
@@ -550,7 +552,6 @@
       <File Name="../src/BinaryFile.h"/>
       <File Name="../src/CollisionDetection.cpp"/>
       <File Name="../src/CollisionDetection.h"/>
-      <File Name="../src/colors.h"/>
       <File Name="../libutil/src/error.cpp"/>
       <File Name="../libutil/src/error.h"/>
       <File Name="../src/FileChecksum.cpp"/>

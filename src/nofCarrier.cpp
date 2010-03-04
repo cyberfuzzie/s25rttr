@@ -1,4 +1,4 @@
-// $Id: nofCarrier.cpp 6005 2010-02-12 10:08:09Z FloSoft $
+// $Id: nofCarrier.cpp 6113 2010-03-04 11:15:28Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -980,6 +980,18 @@ void nofCarrier::StopWorking()
 	{
 		worked_gf += static_cast<unsigned short>(GAMECLIENT.GetGFNumber() - since_working_gf);
 		since_working_gf = 0xFFFFFFFF;
+	}
+}
+
+/// Wird aufgerufen, wenn die Straße unter der Figur geteilt wurde (für abgeleitete Klassen)
+void nofCarrier::CorrectSplitData_Derived()
+{
+	// Tragen wir eine Ware?
+	if(state == CARRS_CARRYWARE)
+	{
+		// Dann die Location von der Ware aktualisieren
+		if(!rs_dir) carried_ware->Carry(cur_rs->GetF2());
+		else carried_ware->Carry(cur_rs->GetF1());
 	}
 }
 

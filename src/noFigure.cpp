@@ -836,6 +836,13 @@ void noFigure::CorrectSplitData(const RoadSegment * const rs2)
 			rs_dir = 0;
 		}
 	}
+	
+	CorrectSplitData_Derived();
+}
+
+/// Wird aufgerufen, wenn die Straße unter der Figur geteilt wurde (für abgeleitete Klassen)
+void noFigure::CorrectSplitData_Derived()
+{
 }
 
 

@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 6109 2010-03-03 22:27:18Z jh $
+### $Id: CMakeLists.txt 6117 2010-03-05 21:43:17Z jh $
 ################################################################################
 
 INCLUDE(FindBZip2)
@@ -51,6 +51,7 @@ SET(SOURCES_CONTROLS
 	ctrlTimer.cpp                       ctrlTimer.h
 	ctrlVarDeepening.cpp                ctrlVarDeepening.h
 	ctrlVarText.cpp                     ctrlVarText.h
+	ctrlMultiSelectGroup.cpp            ctrlMultiSelectGroup.h
    )
 
 SET(SOURCES_DESKTOPS

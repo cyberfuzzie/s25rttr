@@ -1,4 +1,4 @@
-// $Id: Window.h 6055 2010-02-20 15:57:19Z FloSoft $
+// $Id: Window.h 6117 2010-03-05 21:43:17Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -56,6 +56,7 @@ class ctrlText;
 class ctrlTimer;
 class ctrlVarDeepening;
 class ctrlVarText;
+class ctrlMultiSelectGroup;
 
 /// Die Basisklasse der Fenster.
 class Window
@@ -167,6 +168,8 @@ public:
 	ctrlMultiline *AddMultiline(unsigned int id, unsigned short x, unsigned short y, unsigned short width, unsigned short height, TextureColor tc, glArchivItem_Font *font, unsigned int format = 0);
 	/// fügt eine OptionenGruppe hinzu.
 	ctrlOptionGroup *AddOptionGroup(unsigned int id, int select_type, bool scale = false);
+	/// fügt eine MultiSelectGruppe hinzu.
+	ctrlMultiSelectGroup *AddMultiSelectGroup(unsigned int id, int select_type, bool scale = false);
 	/// fügt eine prozentuale ProgressBar hinzu.
 	ctrlPercent *AddPercent(unsigned int id, unsigned short x, unsigned short y, unsigned short width, unsigned short height, TextureColor tc, unsigned int text_color, glArchivItem_Font *font, const unsigned short *percentage);
 	/// fügt eine ProgressBar hinzu.

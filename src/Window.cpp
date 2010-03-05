@@ -1,4 +1,4 @@
-// $Id: Window.cpp 6055 2010-02-20 15:57:19Z FloSoft $
+// $Id: Window.cpp 6117 2010-03-05 21:43:17Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -639,6 +639,24 @@ ctrlOptionGroup *Window::AddOptionGroup(unsigned int id,
 										bool scale)
 {
 	return AddCtrl(id, new ctrlOptionGroup(this, id, select_type, scale));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  fügt ein MultiSelectGruppe hinzu.
+ *
+ *  @param[in] id          ID des Steuerelements
+ *  @param[in] select_type Typ der Auswahl
+ *
+ *  @return Instanz das Steuerelement.
+ *
+ *  @author jh
+ */
+ctrlMultiSelectGroup *Window::AddMultiSelectGroup(unsigned int id, 
+																									int select_type, 
+																									bool scale)
+{
+	return AddCtrl(id, new ctrlMultiSelectGroup(this, id, select_type, scale));
 }
 
 ///////////////////////////////////////////////////////////////////////////////

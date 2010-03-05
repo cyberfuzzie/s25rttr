@@ -1,4 +1,4 @@
-// $Id: controls.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: controls.h 6117 2010-03-05 21:43:17Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -41,5 +41,6 @@
 #include "ctrlTimer.h"
 #include "ctrlVarDeepening.h"
 #include "ctrlVarText.h"
+#include "ctrlMultiSelectGroup.h"
 
 #endif // !CONTROLS_H_INCLUDED

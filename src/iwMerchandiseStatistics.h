@@ -26,12 +26,35 @@
 /// Fenster mit den Warenstatistiken.
 class iwMerchandiseStatistics : public IngameWindow
 {
+	
 
 public:
-
 	iwMerchandiseStatistics();
 	~iwMerchandiseStatistics();
   
+private:
+	/// Malt die bunten Kästchen über den Buttons
+	void DrawRectangles();
+	/// Zeichnet das Achsensystem
+	void DrawAxis();
+	/// Zeichnet die Statistikdaten (TODO)
+	void DrawStatistic();
+
+	// Die Farben für die einzelnen Warenlinien
+	static const unsigned int BarColors[14];
+
+	// Aktueller Zeitbereich
+	StatisticTime currentTime;
+
+	// Textelemente für die verschiedenen Zeitbereiche
+	std::vector<ctrlText*> timeAnnotations;
+
+	// Durchgereichte Methoden vom Window
+	void Msg_PaintAfter();
+	void Msg_OptionGroupChange(const unsigned int ctrl_id, const unsigned short selection);
+	void Msg_ButtonClick(const unsigned int ctrl_id);
+
+
 };
 
 #endif // !iwMERCHANDISE_STATISTICS_H_INCLUDED

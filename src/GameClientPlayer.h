@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.h 6067 2010-02-22 17:06:18Z jh $
+// $Id: GameClientPlayer.h 6120 2010-03-05 23:42:17Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -409,6 +409,8 @@ public:
 
   void SetStatisticValue(StatisticType type, unsigned int value);
   void ChangeStatisticValue(StatisticType type, int change);
+
+	void IncreaseMerchandiseStatistic(GoodType type);
  
   void StatisticStep();
   
@@ -416,6 +418,8 @@ public:
   {
     // 30 Datensätze pro Typ
     unsigned int data[STAT_TYPE_COUNT][STAT_STEP_COUNT];
+		// und das gleiche für die Warenstatistik
+		unsigned short merchandiseData[STAT_MERCHANDISE_TYPE_COUNT][STAT_STEP_COUNT];
     // Index, der gerade 'vorne' (rechts im Statistikfenster) ist
     unsigned short currentIndex;
     // Counter, bei jedem vierten Update jeweils Daten zu den längerfristigen Statistiken kopieren
@@ -433,6 +437,7 @@ private:
 
   // Die Statistikwerte die 'aktuell' gemessen werden
   unsigned int statisticCurrentData[STAT_TYPE_COUNT];
+	unsigned short statisticCurrentMerchandiseData[STAT_MERCHANDISE_TYPE_COUNT];
 
   unsigned short incrStatIndex(unsigned short i) { return (i==STAT_STEP_COUNT-1) ? 0 : ++i; }
   unsigned short decrStatIndex(unsigned short i) { return (i==0) ? STAT_STEP_COUNT-1 : --i; }

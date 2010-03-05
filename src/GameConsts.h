@@ -1,4 +1,4 @@
-// $Id: GameConsts.h 6011 2010-02-12 16:35:00Z FloSoft $
+// $Id: GameConsts.h 6120 2010-03-05 23:42:17Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -370,6 +370,9 @@ enum StatisticType
 
 /// Anzahl Statistikarten
 const unsigned STAT_TYPE_COUNT = 8;
+
+/// Anzahl Warenstatistikarten
+const unsigned STAT_MERCHANDISE_TYPE_COUNT = 14;
 
 /// Statistikzeiträume
 enum StatisticTime

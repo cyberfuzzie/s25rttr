@@ -1,4 +1,4 @@
-// $Id: nofBuildingWorker.cpp 6011 2010-02-12 16:35:00Z FloSoft $
+// $Id: nofBuildingWorker.cpp 6120 2010-03-05 23:42:17Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -188,7 +188,6 @@ void nofBuildingWorker::WorkingReady()
 		// Ist noch Platz an der Fahne?
 		if(flag->GetWareCount() < 8)
 		{
-
 			// Ware erzeugen
 			Ware * real_ware = new Ware(ware,0,flag);
 			// Inventur entsprechend erhöhen, dabei Schilder unterscheiden!
@@ -202,6 +201,8 @@ void nofBuildingWorker::WorkingReady()
 			// Ware ablegen
 			flag->AddWare(real_ware);
 			real_ware->LieAtFlag(flag);
+			// Warenstatistik erhöhen
+			GameClient::inst().GetPlayer(this->player)->IncreaseMerchandiseStatistic(ware);
 			// Tragen nun keine Ware mehr
 			ware = GD_NOTHING;
 		}

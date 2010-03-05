@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 6067 2010-02-22 17:06:18Z jh $
+// $Id: GameClientPlayer.cpp 6120 2010-03-05 23:42:17Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -177,6 +177,7 @@ GameClientPlayer::GameClientPlayer(const unsigned playerid) : GamePlayerInfo(pla
 	memset(&statistic[STAT_4H], 0, sizeof(statistic[STAT_4H]));
 	memset(&statistic[STAT_16H], 0, sizeof(statistic[STAT_16H]));
 	memset(&statisticCurrentData, 0, sizeof(statisticCurrentData));
+	memset(&statisticCurrentMerchandiseData, 0, sizeof(statisticCurrentMerchandiseData));
 
 	// Initial kein Notfallprogramm
 	emergency = false;
@@ -254,17 +255,27 @@ void GameClientPlayer::Serialize(SerializedGameData * sgd)
 	for(unsigned i = 0;i<JOB_TYPES_COUNT;++i)
 		sgd->PushUnsignedInt(global_inventory.people[i]);
 
-	// für Statistik, bitte prüfen!
+	// für Statistik
 	for (unsigned i=0; i<STAT_TIME_COUNT; ++i)
 	{
+		// normale Statistik
 		for (unsigned j=0; j<STAT_TYPE_COUNT; ++j)
 			for (unsigned k=0; k<STAT_STEP_COUNT; ++k)
 				sgd->PushUnsignedInt(statistic[i].data[j][k]);
+
+		// Warenstatistik
+		for (unsigned j=0; j<STAT_MERCHANDISE_TYPE_COUNT; ++j)
+			for (unsigned k=0; k<STAT_STEP_COUNT; ++k)
+				sgd->PushUnsignedShort(statistic[i].merchandiseData[j][k]);
+			
 		sgd->PushUnsignedShort(statistic[i].currentIndex);
 		sgd->PushUnsignedShort(statistic[i].counter);
 	}
 	for (unsigned i=0; i<STAT_TYPE_COUNT; ++i)
 		sgd->PushUnsignedInt(statisticCurrentData[i]);
+
+	for (unsigned i=0; i<STAT_MERCHANDISE_TYPE_COUNT; ++i)
+		sgd->PushUnsignedShort(statisticCurrentMerchandiseData[i]);
 
 	// Serialize Pacts:
 	for (unsigned i=0; i<MAX_PLAYERS; ++i)
@@ -366,17 +377,27 @@ void GameClientPlayer::Deserialize(SerializedGameData * sgd)
 
 	// Visuelle Einstellungen festlegen
 
-	// für Statistik, bitte prüfen!
+	// für Statistik
 	for (unsigned i=0; i<STAT_TIME_COUNT; ++i)
 	{
+		// normale Statistik
 		for (unsigned j=0; j<STAT_TYPE_COUNT; ++j)
 			for (unsigned k=0; k<STAT_STEP_COUNT; ++k)
 				statistic[i].data[j][k] = sgd->PopUnsignedInt();
+
+		// Warenstatistik
+		for (unsigned j=0; j<STAT_MERCHANDISE_TYPE_COUNT; ++j)
+			for (unsigned k=0; k<STAT_STEP_COUNT; ++k)
+				statistic[i].merchandiseData[j][k] = sgd->PopUnsignedShort();
+
 		statistic[i].currentIndex = sgd->PopUnsignedShort();
 		statistic[i].counter = sgd->PopUnsignedShort();
 	}
 	for (unsigned i=0; i<STAT_TYPE_COUNT; ++i)
 		statisticCurrentData[i] = sgd->PopUnsignedInt();
+
+	for (unsigned i=0; i<STAT_MERCHANDISE_TYPE_COUNT; ++i)
+		statisticCurrentMerchandiseData[i] = sgd->PopUnsignedShort();
 
 	// Deserialize Pacts:
 	for (unsigned i=0; i<MAX_PLAYERS; ++i)
@@ -1402,6 +1423,34 @@ void GameClientPlayer::ChangeStatisticValue(StatisticType type, int change)
 	statisticCurrentData[type] += change;
 }
 
+void GameClientPlayer::IncreaseMerchandiseStatistic(GoodType type)
+{
+	// Einsortieren...
+	switch(type)
+	{
+	case GD_WOOD: statisticCurrentMerchandiseData[0]++; break;
+	case GD_BOARDS: statisticCurrentMerchandiseData[1]++; break;
+	case GD_STONES: statisticCurrentMerchandiseData[2]++; break;
+	case GD_FISH: case GD_BREAD: case GD_MEAT: statisticCurrentMerchandiseData[3]++; break;
+	case GD_WATER: statisticCurrentMerchandiseData[4]++; break;		
+	case GD_BEER: statisticCurrentMerchandiseData[5]++; break;	
+	case GD_COAL: statisticCurrentMerchandiseData[6]++; break;	
+	case GD_IRONORE: statisticCurrentMerchandiseData[7]++; break;
+	case GD_GOLD: statisticCurrentMerchandiseData[8]++; break;
+	case GD_IRON: statisticCurrentMerchandiseData[9]++; break;
+	case GD_COINS: statisticCurrentMerchandiseData[10]++; break;
+	case GD_TONGS: case GD_AXE:	case GD_SAW: case GD_PICKAXE: case GD_HAMMER: case GD_SHOVEL: 
+	case GD_CRUCIBLE: case GD_RODANDLINE: case GD_SCYTHE: case GD_CLEAVER: case GD_ROLLINGPIN: 
+	case GD_BOW: statisticCurrentMerchandiseData[11]++; break;
+	case GD_SHIELDVIKINGS: case GD_SHIELDAFRICANS: case GD_SHIELDROMANS: case GD_SHIELDJAPANESE:
+	case GD_SWORD: statisticCurrentMerchandiseData[12]++; break;
+	case GD_BOAT: statisticCurrentMerchandiseData[13]++; break;
+	default: 
+		break;
+	}
+
+}
+
 void GameClientPlayer::StatisticStep()
 {
 	// Waren aus der Inventur zählen
@@ -1417,7 +1466,7 @@ void GameClientPlayer::StatisticStep()
 	// Militär aus der Inventur zählen
 	statisticCurrentData[STAT_MILITARY] = 
 		global_inventory.people[JOB_PRIVATE]
-	+ global_inventory.people[JOB_PRIVATEFIRSTCLASS] * 2
+		+ global_inventory.people[JOB_PRIVATEFIRSTCLASS] * 2
 		+ global_inventory.people[JOB_SERGEANT] * 3
 		+ global_inventory.people[JOB_OFFICER] * 4
 		+ global_inventory.people[JOB_GENERAL] * 5;
@@ -1430,6 +1479,10 @@ void GameClientPlayer::StatisticStep()
 	for (unsigned int i=0; i<STAT_TYPE_COUNT; ++i)
 	{
 		statistic[STAT_15M].data[i][incrStatIndex(statistic[STAT_15M].currentIndex)] = statisticCurrentData[i];
+	}
+	for (unsigned int i=0; i<STAT_MERCHANDISE_TYPE_COUNT; ++i)
+	{
+		statistic[STAT_15M].merchandiseData[i][incrStatIndex(statistic[STAT_15M].currentIndex)] = statisticCurrentMerchandiseData[i];
 	}
 	statistic[STAT_15M].currentIndex = incrStatIndex(statistic[STAT_15M].currentIndex);
 
@@ -1467,6 +1520,11 @@ void GameClientPlayer::StatisticStep()
 			statistic[STAT_16H].data[i][incrStatIndex(statistic[STAT_16H].currentIndex)] = statisticCurrentData[i];
 		}
 		statistic[STAT_16H].currentIndex = incrStatIndex(statistic[STAT_16H].currentIndex);
+	}
+
+	for (unsigned int i=0; i<STAT_MERCHANDISE_TYPE_COUNT; ++i)
+	{
+		statisticCurrentMerchandiseData[i] = 0;
 	}
 }
 

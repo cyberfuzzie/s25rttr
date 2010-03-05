@@ -22,6 +22,8 @@
 #include "main.h"
 #include "iwMerchandiseStatistics.h"
 #include "controls.h"
+#include "GameClient.h"
+#include "GameClientPlayer.h"
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -105,6 +107,10 @@ iwMerchandiseStatistics::iwMerchandiseStatistics()
 		timeAnnotations[i] = AddText(32+i, 211+i, 125+i, "", MakeColor(255,136,96,52), 
 			glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_TOP, LOADER.GetFontN("resource", 0));
 	}
+
+	// Aktueller Maximalwert an der y-Achse
+	maxValue = AddText(31, 211, 55, "1", MakeColor(255,136,96,52), 
+		glArchivItem_Font::DF_RIGHT|glArchivItem_Font::DF_VCENTER, LOADER.GetFontN("resource", 0));
 }
 
 iwMerchandiseStatistics::~iwMerchandiseStatistics()
@@ -176,14 +182,55 @@ void iwMerchandiseStatistics::DrawStatistic()
 	const int topLeftY = this->y + 64;
 	const int stepX = sizeX/STAT_STEP_COUNT; // 6
 
-	//unsigned short currentIndex;
-
 	// Aktive Buttons holen (Achtung ID == BarColor + 1)
 	const std::set<unsigned short>& active = GetCtrl<ctrlMultiSelectGroup>(22)->GetSelection();
+
+	// Statistik holen
+	const GameClientPlayer::Statistic stat = GameClient::inst().GetLocalPlayer()->GetStatistic(currentTime);
+
+
+	// Maximalwert suchen
+	unsigned short max = 1;
+	for(std::set<unsigned short>::const_iterator it = active.begin(); it != active.end(); it++)
+	{
+		for (unsigned int i=0; i<STAT_STEP_COUNT; ++i)
+		{
+			if (max < stat.merchandiseData[(*it) - 1][i])
+			{
+				max = stat.merchandiseData[(*it) - 1][i];
+			}
+		}
+	}
+
+	// Maximalen Wert an die Achse schreiben
+	std::stringstream ss;
+	ss << max;
+	maxValue->SetText(ss.str());
+
+	unsigned short previousX = 0;
+	unsigned short previousY = 0;
+	unsigned short currentIndex = stat.currentIndex;
+
 	for(std::set<unsigned short>::const_iterator it = active.begin(); it != active.end(); it++)
 	{
 		// Testing only:
-		DrawLine(topLeftX, topLeftY + 3 * (*it), topLeftX + sizeX, topLeftY + 3 * (*it), 2, BarColors[(*it) - 1]);
+		//DrawLine(topLeftX, topLeftY + 3 * (*it), topLeftX + sizeX, topLeftY + 3 * (*it), 2, BarColors[(*it) - 1]);
+
+	
+		for (unsigned int i=0; i<STAT_STEP_COUNT; ++i)
+		{
+			if (i != 0)
+			{	  	 
+				DrawLine(topLeftX + (STAT_STEP_COUNT-i) * stepX,
+					topLeftY + sizeY - ((stat.merchandiseData[(*it) - 1][(currentIndex >= i)?(currentIndex-i):(STAT_STEP_COUNT-i+currentIndex)])*sizeY)/max,       
+					previousX, previousY, 2, BarColors[(*it) - 1]);
+			}
+			previousX = topLeftX + (STAT_STEP_COUNT-i) * stepX;
+			previousY = topLeftY + sizeY - ((stat.merchandiseData[(*it) - 1][(currentIndex >= i)?(currentIndex-i):(STAT_STEP_COUNT-i+currentIndex)])*sizeY)/max;
+		}
+
+
+
 	}
 }
 

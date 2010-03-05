@@ -49,6 +49,9 @@ private:
 	// Textelemente für die verschiedenen Zeitbereiche
 	std::vector<ctrlText*> timeAnnotations;
 
+	// Maximalwert der y-Achse
+	ctrlText *maxValue;
+
 	// Durchgereichte Methoden vom Window
 	void Msg_PaintAfter();
 	void Msg_OptionGroupChange(const unsigned int ctrl_id, const unsigned short selection);

@@ -1,3 +1,7 @@
+################################################################################
+### $Id: CMakeLists.txt 6087 2010-02-25 09:01:36Z FloSoft $
+################################################################################
+
 # specify the cross compiler
 SET(CMAKE_C_COMPILER   i686-apple-darwin10-gcc CACHE STRING "CC")
 SET(CMAKE_CXX_COMPILER i686-apple-darwin10-g++ CACHE STRING "CPP")
@@ -8,67 +12,7 @@ SET(CMAKE_LIPO i686-apple-darwin10-lipo CACHE STRING "LIPO" FORCE)
 SET(CMAKE_OSX_DEPLOYMENT_TARGET "10.4" CACHE STRING "OSX-Target")
 
 # set SDK
-SET(CMAKE_PREFIX_PATH "/srv/buildfarm/SDKs/MacOSX10.6.sdk")
+SET(CMAKE_PREFIX_PATH "/srv/buildfarm/SDKs/MacOSX10.4u.sdk")
 
 # set root path
 SET(CMAKE_FIND_ROOT_PATH "${CMAKE_PREFIX_PATH}")
-
-IF ( NOT "${COMPILEARCH}" STREQUAL "" )
-	IF ( "${CMAKE_OSX_ARCHITECTURES}" MATCHES "i386" )
-		MESSAGE(STATUS "building architecture i386")
-		SET(APPLE_CFLAGS "${APPLE_CFLAGS} -arch i386")
-		SET(APPLE_LDFLAGS "${APPLE_LDFLAGS} -arch i386")
-	ENDIF ( "${CMAKE_OSX_ARCHITECTURES}" MATCHES "i386" )
-
-	IF ( "${CMAKE_OSX_ARCHITECTURES}" MATCHES "x86_64" )
-		MESSAGE(STATUS "building architecture x86_64")
-		SET(APPLE_CFLAGS "${APPLE_CFLAGS} -arch x86_64")
-		SET(APPLE_LDFLAGS "${APPLE_LDFLAGS} -arch x86_64")
-	ENDIF ( "${CMAKE_OSX_ARCHITECTURES}" MATCHES "x86_64" )
-	
-	IF ( "${CMAKE_OSX_ARCHITECTURES}" MATCHES "ppc" )
-		MESSAGE(STATUS "building architecture ppc")
-		SET(APPLE_CFLAGS "${APPLE_CFLAGS} -arch ppc")
-		SET(APPLE_LDFLAGS "${APPLE_LDFLAGS} -arch ppc")
-	ENDIF ( "${CMAKE_OSX_ARCHITECTURES}" MATCHES "ppc" )
-
-	# i386 only?
-	IF ( NOT "${CMAKE_OSX_ARCHITECTURES}" MATCHES "x86_64" AND NOT "${CMAKE_OSX_ARCHITECTURES}" MATCHES "ppc" )
-		SET(APPLE_FLAGS "${APPLE_FLAGS} -mtune=prescott -mmmx -mfpmath=sse -malign-double")
-	ENDIF ( NOT "${CMAKE_OSX_ARCHITECTURES}" MATCHES "x86_64" AND NOT "${CMAKE_OSX_ARCHITECTURES}" MATCHES "ppc" )
-
-	# ppc only?
-	IF ( NOT "${CMAKE_OSX_ARCHITECTURES}" MATCHES "x86_64" AND NOT "${CMAKE_OSX_ARCHITECTURES}" MATCHES "i386" )
-		SET(APPLE_FLAGS "${APPLE_FLAGS} -faltivec")
-	ENDIF ( NOT "${CMAKE_OSX_ARCHITECTURES}" MATCHES "x86_64" AND NOT "${CMAKE_OSX_ARCHITECTURES}" MATCHES "i386" )
-	
-	SET(CFLAGS "${APPLE_CFLAGS} -mmacosx-version-min=${CMAKE_OSX_DEPLOYMENT_TARGET} -fexceptions -ffast-math -msse -fomit-frame-pointer")
-	SET(LDFLAGS "${APPLE_LDFLAGS} -mmacosx-version-min=${CMAKE_OSX_DEPLOYMENT_TARGET} -fexceptions -lstdc++ -lgcc_s.1 -lgcc_eh -framework OpenGL -L${CMAKE_SOURCE_DIR}/macos -lSDLmain")
-
-	# remove duplicates and to much spaces
-	STRING(REPLACE "${CFLAGS}" "" CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
-	STRING(REPLACE "${CFLAGS}" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
-	STRING(REPLACE "${LDFLAGS}" "" CMAKE_C_LINK_FLAGS "${CMAKE_C_LINK_FLAGS}")
-	STRING(REPLACE "${LDFLAGS}" "" CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS}")
-	STRING(REPLACE "  " " " CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
-	STRING(REPLACE "  " " " CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
-	STRING(REPLACE "  " " " CMAKE_C_LINK_FLAGS "${CMAKE_C_LINK_FLAGS}")
-	STRING(REPLACE "  " " " CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS}")
-
-	# set compiler flags
-	SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${CFLAGS}" CACHE STRING "CFLAGS" FORCE)
-	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CFLAGS}" CACHE STRING "CXXFLAGS" FORCE)
-	
-	SET(CMAKE_CXX_STANDARD_LIBRARIES_INIT "-lstdc++ -lgcc_s.1 -lgcc_eh")
-	
-	# set linker flags
-	SET(CMAKE_C_LINK_FLAGS 	"${CMAKE_C_LINK_FLAGS} ${LDFLAGS}" CACHE STRING "LDFLAGS (C)" FORCE)
-	SET(CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} ${LDFLAGS}" CACHE STRING "LDFLAGS (C++)" FORCE)
-ENDIF ( NOT "${COMPILEARCH}" STREQUAL "" )
-
-# search for programs in the build host directories
-SET(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
-
-# for libraries and headers in the target directories
-SET(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
-SET(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)

@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeMacroAddFlags.cmake 6125 2010-03-07 18:20:41Z FloSoft $
+### $Id: CMakeMacroAddFlags.cmake 6129 2010-03-07 19:10:49Z FloSoft $
 ################################################################################
 
 MACRO(ADD_FLAGS parameter)
@@ -10,6 +10,9 @@ MACRO(ADD_FLAGS parameter)
 	# Make a copy of the current arguments in ${parameter}
 	SET(new_parameter ${${parameter}})
 	
+        # fix arch-argument bug
+        STRING(REPLACE "-arch;" "-arch=" new_parameter "${new_parameter}")
+
 	# Now loop over each required argument and see if it is in our
 	# current list of arguments.
 	FOREACH(required_arg ${ARGN})
@@ -37,5 +40,8 @@ MACRO(ADD_FLAGS parameter)
 		ENDFOREACH(option ${TMP})
 	ENDFOREACH(required_arg ${ARGN})
 	
+        # unfix arch-argument bug
+        STRING(REPLACE "-arch=" "-arch " new_parameter "${new_parameter}")
+
 	SET(${parameter} ${new_parameter})
 ENDMACRO(ADD_FLAGS)

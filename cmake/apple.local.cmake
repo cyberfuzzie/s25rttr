@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: apple.local.cmake 6121 2010-03-06 12:27:48Z FloSoft $
+### $Id: apple.local.cmake 6129 2010-03-07 19:10:49Z FloSoft $
 ################################################################################
 
 # this one is important
@@ -12,3 +12,7 @@ SET(CMAKE_C_COMPILER   gcc)
 SET(CMAKE_CXX_COMPILER g++)
 
 INCLUDE(cmake/apple.common.cmake)
+
+# disable cmake's own -arch parameter generation
+SET(CMAKE_OSX_ARCHITECTURES "" CACHE STRING "" FORCE)
+

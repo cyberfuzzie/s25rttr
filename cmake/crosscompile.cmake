@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: crosscompile.cmake 6125 2010-03-07 18:20:41Z FloSoft $
+### $Id: crosscompile.cmake 6127 2010-03-07 18:43:17Z FloSoft $
 #################################################################################
 
 # read host compiler machine triplet
@@ -115,9 +115,13 @@ ENDIF ( "${USED_GCC_OUTPUT}" MATCHES "linux" )
 IF ( "${USED_GCC_OUTPUT}" MATCHES "apple" )
 	SET(COMPILEFOR "apple")
 
+	# find lipo
+	FIND_PROGRAM(LIPO NAMES ${USED_GCC_OUTPUT}-lipo lipo)
+	SET(CMAKE_LIPO "${LIPO}" CACHE PATH "" FORCE)
+
 	# read supported platforms	
 	EXECUTE_PROCESS(
-		COMMAND "/usr/bin/${USED_GCC_OUTPUT}-lipo" "-info" "${CMAKE_PREFIX_PATH}/usr/lib/libSystem.B.dylib"
+		COMMAND ${LIPO} "-info" "${CMAKE_PREFIX_PATH}/usr/lib/libSystem.B.dylib"
 		RESULT_VARIABLE LIPO_RESULT
 		ERROR_VARIABLE LIPO_ERROR
 		OUTPUT_VARIABLE LIPO_OUTPUT

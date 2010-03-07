@@ -1,10 +1,18 @@
 ################################################################################
-### $Id: apple.common.cmake 6125 2010-03-07 18:20:41Z FloSoft $
+### $Id: apple.common.cmake 6128 2010-03-07 18:47:36Z FloSoft $
 ################################################################################
 
 IF ( "${CMAKE_OSX_DEPLOYMENT_TARGET}" STREQUAL "" )
-	SET(CMAKE_OSX_DEPLOYMENT_TARGET "10.4")
+	SET(CMAKE_OSX_DEPLOYMENT_TARGET "10.4" CACHE STRING "OSX-Deployment-Target" FORCE)
 ENDIF ( "${CMAKE_OSX_DEPLOYMENT_TARGET}" STREQUAL "" )
+
+IF ( "${CMAKE_OSX_ARCHITECTURES}" STREQUAL "" )
+	SET(CMAKE_OSX_ARCHITECTURES "${COMPILEARCHS}" CACHE STRING "OSX-Architectures" FORCE)
+ENDIF ( "${CMAKE_OSX_ARCHITECTURES}" STREQUAL "" )
+
+IF ( "${CMAKE_OSX_ARCHITECTURES}" STREQUAL "" )
+	MESSAGE(FATAL_ERROR "woooops: this should not happen! your system has no known architecture!")
+ENDIF ( "${CMAKE_OSX_ARCHITECTURES}" STREQUAL "" )
 
 IF ( NOT "${COMPILEARCH}" STREQUAL "" )
 	SET(APPLE_CFLAGS "")

@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: CMakeLists.txt 5594 2009-10-05 16:48:02Z FloSoft $
+### $Id: CMakeLists.txt 6126 2010-03-07 18:22:45Z FloSoft $
 #################################################################################
 
 PROJECT(resample-1.8.1)
@@ -9,7 +9,7 @@ CMAKE_POLICY(SET CMP0003 NEW)
 
 ################################################################################
 
-SET(CMAKE_C_FLAGS "-std=c99")
+ADD_FLAGS(CMAKE_C_FLAGS "-std=c99")
 
 ADD_SUBDIRECTORY( sndlib-20 )
 ADD_SUBDIRECTORY( src )

@@ -183,7 +183,7 @@ int device_channels(int dev)
 
 int device_gains(int ur_dev)
 {
-  float val[4];
+  float val[4] = {0.0f, 0.0f, 0.0f, 0.0f};
   int err;
   int dev;
   dev = MUS_AUDIO_DEVICE(ur_dev);

@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: crosscompile.cmake 6088 2010-02-25 12:25:07Z FloSoft $
+### $Id: crosscompile.cmake 6125 2010-03-07 18:20:41Z FloSoft $
 #################################################################################
 
 # read host compiler machine triplet
@@ -128,15 +128,15 @@ IF ( "${USED_GCC_OUTPUT}" MATCHES "apple" )
 	SET(COMPILEARCHS "")
 	
 	IF ( "${LIPO_OUTPUT}" MATCHES "x86_64" )
-		SET(COMPILEARCHS "${COMPILEARCHS} x86_64")
+		ADD_FLAGS(COMPILEARCHS x86_64)
 	ENDIF ( "${LIPO_OUTPUT}" MATCHES "x86_64" )
 
 	IF ( "${LIPO_OUTPUT}" MATCHES "i386" )
-		SET(COMPILEARCHS "${COMPILEARCHS} i386")
+		ADD_FLAGS(COMPILEARCHS i386)
 	ENDIF ( "${LIPO_OUTPUT}" MATCHES "i386" )
 
 	IF ( "${LIPO_OUTPUT}" MATCHES "ppc" )
-		SET(COMPILEARCHS "${COMPILEARCHS} ppc")
+		ADD_FLAGS(COMPILEARCHS ppc)
 	ENDIF ( "${LIPO_OUTPUT}" MATCHES "ppc" )
 	
 ENDIF ( "${USED_GCC_OUTPUT}" MATCHES "apple" )
@@ -183,5 +183,3 @@ IF (NOT FOUND_A AND NOT FOUND_B AND NOT FOUND_C)
 ENDIF (NOT FOUND_A AND NOT FOUND_B AND NOT FOUND_C)
 
 #################################################################################
-
-

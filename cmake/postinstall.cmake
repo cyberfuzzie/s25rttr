@@ -1,17 +1,18 @@
 ###############################################################################
-## $Id: postinstall.cmake 5627 2009-10-12 17:17:06Z FloSoft $
+## $Id: postinstall.cmake 6125 2010-03-07 18:20:41Z FloSoft $
 ###############################################################################
 
 MESSAGE(STATUS "Running postinstall script")
 
 # run install script
 EXECUTE_PROCESS(
-  COMMAND bash "postinstall.sh"
-  RESULT_VARIABLE AD_HDM_RV
-  )
-IF(NOT "${AD_HDM_RV}" STREQUAL "0")
-        MESSAGE(FATAL_ERROR "ERROR: Preinstallscript failed: Maybe you need administrative privileges?")
-ENDIF(NOT "${AD_HDM_RV}" STREQUAL "0")
+	COMMAND bash "postinstall.sh"
+	RESULT_VARIABLE POSTINSTALL_RESULT
+)
+
+IF(NOT "${POSTINSTALL_RESULT}" STREQUAL "0")
+	MESSAGE(FATAL_ERROR "ERROR: Postinstallscript failed: Maybe you need administrative privileges?")
+ENDIF(NOT "${POSTINSTALL_RESULT}" STREQUAL "0")
 
 MESSAGE(STATUS "Done")
 

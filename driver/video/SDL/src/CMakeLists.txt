@@ -1,38 +1,20 @@
 #################################################################################
-### $Id: CMakeLists.txt 6076 2010-02-23 16:37:00Z FloSoft $
+### $Id: CMakeLists.txt 6125 2010-03-07 18:20:41Z FloSoft $
 #################################################################################
 
 INCLUDE(FindSDL)
 
 IF (SDL_FOUND)
-	IF ( "${COMPILEFOR}" STREQUAL "apple")
-		SET(SPLIT "${SDL_LIBRARY}")
-		INCLUDE(FindSplitPath)
-
-		MESSAGE(STATUS "SDL-Library is a directory, searching for the Library")
-			
-		FIND_FILE(SDL
-			SDL
-			PATHS ${PATHS}
-		)
-		
-		IF(NOT SDL-NOTFOUND)
-			MESSAGE(STATUS "SDL-Library was directory, found ${SDL}")
-			SET(SDL_LIBRARY "${SDL}")
-		ENDIF(NOT SDL-NOTFOUND)
-	ENDIF ( "${COMPILEFOR}" STREQUAL "apple")
+	INCLUDE(CMakeMacroCorrectLib)
+	
+	CORRECT_LIB(SDL_LIBRARY SDL)
 
 	INCLUDE_DIRECTORIES(../../../src)
 
 	ADD_LIBRARY(videoSDL SHARED SDL.cpp SDL.h main.h oem.cpp oem.h ../../../../version.cpp ../../../src/DriverInterface.cpp)
 
-	# Let the user choose the flags used for this directory.
-	SET(videoSDL_C_FLAGS "-I${SDL_INCLUDE_DIR}" CACHE STRING "CFLAGS to use for videoSDL")
-	SET(videoSDL_CXX_FLAGS "-I${SDL_INCLUDE_DIR}" CACHE STRING "CXXFLAGS to use for videoSDL")
-	
-	# Add the user's chosen flags to the build for this directory.
-	SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${videoSDL_C_FLAGS}")
-	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${videoSDL_CXX_FLAGS}")
+	ADD_FLAGS(CMAKE_C_FLAGS -I${SDL_INCLUDE_DIR})
+	ADD_FLAGS(CMAKE_CXX_FLAGS -I${SDL_INCLUDE_DIR})
 
 	TARGET_LINK_LIBRARIES(videoSDL videodrv ${SDL_LIBRARY})
 

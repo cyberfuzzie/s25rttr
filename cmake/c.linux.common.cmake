@@ -1,6 +1,20 @@
 ################################################################################
-### $Id: c.linux.common.cmake 6122 2010-03-06 12:29:10Z FloSoft $
+### $Id: c.linux.common.cmake 6125 2010-03-07 18:20:41Z FloSoft $
 ################################################################################
+
+# where is the target environment 
+SET(CMAKE_FIND_ROOT_PATH ${CMAKE_PREFIX_PATH})
+
+FORCE_ADD_FLAGS(CMAKE_C_FLAGS -isysroot ${CMAKE_PREFIX_PATH})
+FORCE_ADD_FLAGS(CMAKE_CXX_FLAGS -isysroot ${CMAKE_PREFIX_PATH})
+
+FORCE_ADD_FLAGS(CMAKE_EXE_LINKER_FLAGS -isysroot ${CMAKE_PREFIX_PATH})
+FORCE_ADD_FLAGS(CMAKE_MODULE_LINKER_FLAGS -isysroot ${CMAKE_PREFIX_PATH})
+FORCE_ADD_FLAGS(CMAKE_SHARED_LINKER_FLAGS -isysroot ${CMAKE_PREFIX_PATH})
+
+# set compiler flags
+FORCE_ADD_FLAGS(CMAKE_C_FLAGS -mtune=generic)
+FORCE_ADD_FLAGS(CMAKE_CXX_FLAGS -mtune=generic)
 
 # search for programs in the build host directories
 SET(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
@@ -8,9 +22,5 @@ SET(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
 # for libraries and headers in the target directories
 SET(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
 SET(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
-
-# set compiler flags
-SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mtune=generic")
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mtune=generic")
 
 INCLUDE(cmake/linux.common.cmake)

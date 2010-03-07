@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 6117 2010-03-05 21:43:17Z jh $
+### $Id: CMakeLists.txt 6125 2010-03-07 18:20:41Z FloSoft $
 ################################################################################
 
 INCLUDE(FindBZip2)
@@ -390,42 +390,15 @@ IF ( "${COMPILEFOR}" STREQUAL "windows")
 ENDIF ( "${COMPILEFOR}" STREQUAL "windows")
 
 IF ( "${COMPILEFOR}" STREQUAL "apple")
-	SET(SPLIT "${OPENGL_gl_LIBRARY}")
-	INCLUDE(FindSplitPath)
-	MESSAGE(STATUS ${PATHS} ${SPLIT})
-	
-	MESSAGE(STATUS "OpenGL-Library is a directory, searching for the Library")
-	FIND_FILE(OpenGL
-		OpenGL
-		PATHS ${PATHS}
-	)
+	CORRECT_LIB(OPENGL_gl_LIBRARY OpenGL)
+	CORRECT_LIB(SDL_LIBRARY SDL)
 
-	IF(NOT OpenGL-NOTFOUND)
-		MESSAGE(STATUS "OpenGL-Library was directory, found ${OpenGL}")
-		SET(OPENGL_gl_LIBRARY "${OpenGL}")
-	ENDIF(NOT OpenGL-NOTFOUND)
-
-	SET(SPLIT "${SDL_LIBRARY}")
-	INCLUDE(FindSplitPath)
-
-	MESSAGE(STATUS "SDL-Library is a directory, searching for the Library")
-
-	FIND_FILE(SDL
-		SDL
-		PATHS ${PATHS}
-	)
-	
-	IF(NOT SDL-NOTFOUND)
-		MESSAGE(STATUS "SDL-Library was directory, found ${SDL}")
-		SET(SDL_LIBRARY "${SDL}")
-	ENDIF(NOT SDL-NOTFOUND)  
-
-	SET(CMAKE_C_LINK_FLAGS  "${CMAKE_C_LINK_FLAGS} -framework OpenGL -L${CMAKE_SOURCE_DIR}/macos")
-	SET(CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -framework OpenGL -L${CMAKE_SOURCE_DIR}/macos")
-	
 	# Add the SDL-include flags to an apple build
-	SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -I${SDL_INCLUDE_DIR}")
-	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -I${SDL_INCLUDE_DIR}")
+	ADD_FLAGS(CMAKE_C_FLAGS -I${SDL_INCLUDE_DIR})
+	ADD_FLAGS(CMAKE_CXX_FLAGS -I${SDL_INCLUDE_DIR})
+
+	# Add library
+	ADD_FLAGS(CMAKE_EXE_LINKER_FLAGS -framework OpenGL -L${CMAKE_SOURCE_DIR}/macos -lSDLmain)
 ENDIF ( "${COMPILEFOR}" STREQUAL "apple")
 
 ADD_EXECUTABLE(s25client ${s25client_SRCS})

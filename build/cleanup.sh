@@ -10,7 +10,7 @@ fi
 echo "Cleaning up $PWD"
 rm -vf CMakeCache.txt cmake_install.cmake Makefile install_manifest.txt
 rm -vrf CMakeFiles
-rm -vf *.bak *~
+rm -vf *.bak *~ .DS_Store
 
 # Unterverzeichnisse entfernen
 for I in `grep ADD_SUBDIRECTORY ../CMakeLists.txt | cut -d '(' -f 2 \

@@ -1,11 +1,16 @@
 ################################################################################
-### $Id: CMakeLists.txt 6087 2010-02-25 09:01:36Z FloSoft $
+### $Id: CMakeLists.txt 6125 2010-03-07 18:20:41Z FloSoft $
 ################################################################################
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 CMAKE_POLICY(SET CMP0003 OLD)
 
 SET(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules)
+
+INCLUDE(CMakeMacroAddFlags)
+INCLUDE(CMakeMacroForceAddFlags)
+INCLUDE(CMakeMacroCorrectLib)
+INCLUDE(CMakeMacroEnsureOutOfSourceBuild)
 
 ################################################################################
 
@@ -28,8 +33,7 @@ IF (PREFIX AND NOT BINDIR)
 ENDIF (PREFIX AND NOT BINDIR)
 
 # ensure out of source build
-INCLUDE(MacroEnsureOutOfSourceBuild)
-macro_ensure_out_of_source_build("${PROJECT_NAME} requires an out of source build. Please go to the build directory and run './cmake.sh [options]' there.")
+ENSURE_OUT_OF_SOURCE_BUILD("${PROJECT_NAME} requires an out of source build. Please go to the build directory and run './cmake.sh [options]' there.")
 
 # Build lobby client
 SET (LOBBY_C TRUE)

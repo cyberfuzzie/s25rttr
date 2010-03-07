@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: linux.local.cmake 6121 2010-03-06 12:27:48Z FloSoft $
+### $Id: linux.local.cmake 6125 2010-03-07 18:20:41Z FloSoft $
 ################################################################################
 
 # this one is important
@@ -13,7 +13,7 @@ SET(CMAKE_C_COMPILER   gcc)
 SET(CMAKE_CXX_COMPILER g++)
 
 # set compiler flags for "native"
-SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mtune=native")
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mtune=native")
+ADD_FLAGS(CMAKE_C_FLAGS -mtune=native)
+ADD_FLAGS(CMAKE_CXX_FLAGS -mtune=native)
 
 INCLUDE(cmake/linux.common.cmake)

@@ -1,59 +1,23 @@
 #################################################################################
-### $Id: CMakeLists.txt 6076 2010-02-23 16:37:00Z FloSoft $
+### $Id: CMakeLists.txt 6125 2010-03-07 18:20:41Z FloSoft $
 #################################################################################
 
 INCLUDE(FindSDL)
 INCLUDE(FindSDL_mixer)
 
 IF (SDL_FOUND)
-		IF ( "${COMPILEFOR}" STREQUAL "apple")
-			SET(SPLIT "${SDL_LIBRARY}")
-			INCLUDE(FindSplitPath)
-
-			MESSAGE(STATUS "SDL-Library is a directory, searching for the Library")
-
-			FIND_FILE(SDL
-				SDL
-				PATHS ${PATHS}
-			)
-			
-			IF(NOT SDL-NOTFOUND)
-				MESSAGE(STATUS "SDL-Library was directory, found ${SDL}")
-				SET(SDL_LIBRARY "${SDL}")
-			ENDIF(NOT SDL-NOTFOUND)
-		ENDIF ( "${COMPILEFOR}" STREQUAL "apple")
+	CORRECT_LIB(SDL_LIBRARY SDL)
 
 	IF (SDLMIXER_FOUND)
-
-		IF ( "${COMPILEFOR}" STREQUAL "apple")
-			SET(SPLIT "${SDLMIXER_LIBRARY}")
-			INCLUDE(FindSplitPath)
-
-			MESSAGE(STATUS "SDLMIXER-Library is a directory, searching for the Library")
-
-			FIND_FILE(SDLMIXER
-				SDL_mixer
-				PATHS ${PATHS}
-			)
-			
-			IF(NOT SDLMIXER-NOTFOUND)
-				MESSAGE(STATUS "SDLMIXER-Library was directory, found ${SDLMIXER}")
-				SET(SDLMIXER_LIBRARY "${SDLMIXER}")
-			ENDIF(NOT SDLMIXER-NOTFOUND)
-		ENDIF ( "${COMPILEFOR}" STREQUAL "apple")
+		CORRECT_LIB(SDLMIXER_LIBRARY SDL_mixer)
 
 		INCLUDE_DIRECTORIES(../../../src ../libendian/src)
 		
 		ADD_LIBRARY(audioSDL SHARED SDL.cpp SDL.h main.h SoundSDL_Music.cpp SoundSDL_Music.h SoundSDL_Effect.cpp SoundSDL_Effect.h ../../../../version.cpp ../../../src/DriverInterface.cpp ../../../src/tempname.cpp ../../../src/tempname.h)
 	
-		# Let the user choose the flags used for this directory.
-		SET(audioSDL_C_FLAGS "-I${SDL_INCLUDE_DIR} -I${SDLMIXER_INCLUDE_DIR}" CACHE STRING "CFLAGS to use for audioSDL")
-		SET(audioSDL_CXX_FLAGS "-I${SDL_INCLUDE_DIR} -I${SDLMIXER_INCLUDE_DIR}" CACHE STRING "CXXFLAGS to use for audioSDL")
-		
-		# Add the user's chosen flags to the build for this directory.
-		SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${audioSDL_C_FLAGS}")
-		SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${audioSDL_CXX_FLAGS}")
-		
+		ADD_FLAGS(CMAKE_C_FLAGS -I${SDL_INCLUDE_DIR} -I${SDLMIXER_INCLUDE_DIR})
+		ADD_FLAGS(CMAKE_CXX_FLAGS -I${SDL_INCLUDE_DIR} -I${SDLMIXER_INCLUDE_DIR})
+
 		TARGET_LINK_LIBRARIES(audioSDL audiodrv endian ${SDL_LIBRARY} ${SDLMIXER_LIBRARY})
 		
 		IF ( "${COMPILEFOR}" STREQUAL "windows")

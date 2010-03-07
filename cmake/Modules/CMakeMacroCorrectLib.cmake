@@ -1,11 +1,11 @@
 #################################################################################
-### $Id: CMakeMacroCorrectLib.cmake 6125 2010-03-07 18:20:41Z FloSoft $
+### $Id: CMakeMacroCorrectLib.cmake 6130 2010-03-07 19:36:17Z FloSoft $
 #################################################################################
 
 INCLUDE(CMakeMacroAddFlags)
 
 MACRO(CORRECT_LIB library name)
-	IF ( "${COMPILEFOR}" STREQUAL "apple")
+	IF ( CROSSCOMPILE AND "${COMPILEFOR}" STREQUAL "apple")
 		WHILE ( IS_DIRECTORY ${${library}})
 		
 			SET(TMP ${${library}})
@@ -28,7 +28,7 @@ MACRO(CORRECT_LIB library name)
 				SET(${library} ${new_library})
 			ENDIF(NOT new_library-NOTFOUND)
 		ENDWHILE ( IS_DIRECTORY ${${library}} )
-	ELSE ( "${COMPILEFOR}" STREQUAL "apple")
+	ELSE ( CROSSCOMPILE AND "${COMPILEFOR}" STREQUAL "apple")
 				MESSAGE(STATUS "Found ${name}: ${${library}}")
-	ENDIF ( "${COMPILEFOR}" STREQUAL "apple")
+	ENDIF ( CROSSCOMPILE AND "${COMPILEFOR}" STREQUAL "apple")
 ENDMACRO(CORRECT_LIB)

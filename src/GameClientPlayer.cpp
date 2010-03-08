@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 6120 2010-03-05 23:42:17Z jh $
+// $Id: GameClientPlayer.cpp 6134 2010-03-08 17:15:42Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1486,42 +1486,36 @@ void GameClientPlayer::StatisticStep()
 	}
 	statistic[STAT_15M].currentIndex = incrStatIndex(statistic[STAT_15M].currentIndex);
 
+	statistic[STAT_15M].counter++;
+
 	// Prüfen ob 4mal 15-min-Statistik weitergeschoben wurde, wenn ja: 1-h-Statistik weiterschieben 
 	// und aktuellen Wert der 15min-Statistik benutzen
-	if (++statistic[STAT_15M].counter == 4)
+	// gleiches für die 4h und 16h Statistik
+	for (unsigned t = STAT_15M; t < STAT_16H; t++)
 	{
-		statistic[STAT_15M].counter = 0;
-		for (unsigned int i=0; i<STAT_TYPE_COUNT; ++i)
+		if (statistic[t].counter == 4)
 		{
-			statistic[STAT_1H].data[i][incrStatIndex(statistic[STAT_1H].currentIndex)] = statisticCurrentData[i];
+			statistic[t].counter = 0;
+			for (unsigned int i=0; i<STAT_TYPE_COUNT; ++i)
+			{
+				statistic[t+1].data[i][incrStatIndex(statistic[t+1].currentIndex)] = statisticCurrentData[i];
+			}
+
+			// Summe für den Zeitraum berechnen (immer 4 Zeitschritte der jeweils kleineren Statistik)
+			for (unsigned int i=0; i<STAT_MERCHANDISE_TYPE_COUNT; ++i)
+			{
+				statistic[t+1].merchandiseData[i][incrStatIndex(statistic[t+1].currentIndex)] = statisticCurrentMerchandiseData[i]
+					+ statistic[t].merchandiseData[i][decrStatIndex(statistic[t].currentIndex, 1)]
+					+ statistic[t].merchandiseData[i][decrStatIndex(statistic[t].currentIndex, 2)]
+					+ statistic[t].merchandiseData[i][decrStatIndex(statistic[t].currentIndex, 3)];
+			}
+
+			statistic[t+1].currentIndex = incrStatIndex(statistic[t+1].currentIndex);
+			statistic[t+1].counter++;
 		}
-		statistic[STAT_1H].currentIndex = incrStatIndex(statistic[STAT_1H].currentIndex);
-		statistic[STAT_1H].counter++;
 	}
 
-	// Das gleiche für die 4-h-Statistik...
-	if (statistic[STAT_1H].counter == 4)
-	{
-		statistic[STAT_1H].counter = 0;
-		for (unsigned int i=0; i<STAT_TYPE_COUNT; ++i)
-		{
-			statistic[STAT_4H].data[i][incrStatIndex(statistic[STAT_4H].currentIndex)] = statisticCurrentData[i];
-		}
-		statistic[STAT_4H].currentIndex = incrStatIndex(statistic[STAT_4H].currentIndex);
-		statistic[STAT_4H].counter++;
-	}
-
-	// ... und die 16-h-Statistik
-	if (statistic[STAT_4H].counter == 4)
-	{
-		statistic[STAT_4H].counter = 0;
-		for (unsigned int i=0; i<STAT_TYPE_COUNT; ++i)
-		{
-			statistic[STAT_16H].data[i][incrStatIndex(statistic[STAT_16H].currentIndex)] = statisticCurrentData[i];
-		}
-		statistic[STAT_16H].currentIndex = incrStatIndex(statistic[STAT_16H].currentIndex);
-	}
-
+	// Warenstatistikzähler nullen
 	for (unsigned int i=0; i<STAT_MERCHANDISE_TYPE_COUNT; ++i)
 	{
 		statisticCurrentMerchandiseData[i] = 0;

@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.h 6120 2010-03-05 23:42:17Z jh $
+// $Id: GameClientPlayer.h 6134 2010-03-08 17:15:42Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -441,6 +441,7 @@ private:
 
   unsigned short incrStatIndex(unsigned short i) { return (i==STAT_STEP_COUNT-1) ? 0 : ++i; }
   unsigned short decrStatIndex(unsigned short i) { return (i==0) ? STAT_STEP_COUNT-1 : --i; }
+	unsigned short decrStatIndex(unsigned short i, unsigned short amount) { return (i < amount) ? STAT_STEP_COUNT - (amount - i) - 1 : i - amount; }
 
 	// Notfall-Programm aktiviert ja/nein (Es gehen nur noch Res an Holzfäller- und Sägewerk-Baustellen raus)
 	bool emergency;

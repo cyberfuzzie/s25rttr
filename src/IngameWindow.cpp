@@ -1,4 +1,4 @@
-// $Id: IngameWindow.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: IngameWindow.cpp 6135 2010-03-08 18:49:31Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -133,17 +133,35 @@ void IngameWindow::MouseMove(const MouseCoords& mc)
 	if(move)
 	{
 		int nx, ny;
+		int NewMouseX = mc.x;
+		int NewMouseY = mc.y;
 
 		nx = x + (mc.x - last_x);
 		ny = y + (mc.y - last_y);
 		if(nx < 0)
+		{
+			NewMouseX -= nx;
 			nx = 0;
+		}
 		if(ny < 0)
+		{
+			NewMouseY -= ny;
 			ny = 0;
+		}
 		if(nx > VideoDriverWrapper::inst().GetScreenWidth() - width)
+		{
+			NewMouseX -= nx - (VideoDriverWrapper::inst().GetScreenWidth() - width);
 			nx = VideoDriverWrapper::inst().GetScreenWidth() - width;
+		}
 		if(ny > VideoDriverWrapper::inst().GetScreenHeight() - GetHeight())
+		{
+			NewMouseY -= ny - (VideoDriverWrapper::inst().GetScreenHeight() - GetHeight());
 			ny = VideoDriverWrapper::inst().GetScreenHeight() - GetHeight();
+		}
+
+		// Fix mouse position if moved too far
+		if(NewMouseX - mc.x || NewMouseY - mc.y)
+			VideoDriverWrapper::inst().SetMousePos(NewMouseX, NewMouseY);
 
 		x = (unsigned short)nx;
 		y = (unsigned short)ny;

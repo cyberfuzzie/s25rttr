@@ -1,4 +1,4 @@
-// $Id: ctrlChat.cpp 6069 2010-02-22 18:56:35Z FloSoft $
+// $Id: ctrlChat.cpp 6135 2010-03-08 18:49:31Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -201,7 +201,8 @@ void ctrlChat::AddMessage(const std::string& time_string,const std::string& play
 		chat_lines[old_size+i].msg = strings[i];
 		chat_lines[old_size+i].msg_color = msg_color;
 
-		LOG.lcprintf(msg_color, "%s\n", strings[i].c_str());
+		LOG.lcprintf(msg_color, "%s", strings[i].c_str());
+		LOG.lprintf("\n");
 	}
 
 	delete [] strings;

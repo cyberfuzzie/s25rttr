@@ -1,16 +1,18 @@
 ################################################################################
-### $Id: c.linux.common.cmake 6125 2010-03-07 18:20:41Z FloSoft $
+### $Id: c.linux.common.cmake 6136 2010-03-08 20:05:55Z FloSoft $
 ################################################################################
 
-# where is the target environment 
-SET(CMAKE_FIND_ROOT_PATH ${CMAKE_PREFIX_PATH})
+IF ( NOT ${CMAKE_PREFIX_PATH} STREQUAL "" )
+	# where is the target environment 
+	SET(CMAKE_FIND_ROOT_PATH ${CMAKE_PREFIX_PATH})
 
-FORCE_ADD_FLAGS(CMAKE_C_FLAGS -isysroot ${CMAKE_PREFIX_PATH})
-FORCE_ADD_FLAGS(CMAKE_CXX_FLAGS -isysroot ${CMAKE_PREFIX_PATH})
+	FORCE_ADD_FLAGS(CMAKE_C_FLAGS -isysroot ${CMAKE_PREFIX_PATH})
+	FORCE_ADD_FLAGS(CMAKE_CXX_FLAGS -isysroot ${CMAKE_PREFIX_PATH})
 
-FORCE_ADD_FLAGS(CMAKE_EXE_LINKER_FLAGS -isysroot ${CMAKE_PREFIX_PATH})
-FORCE_ADD_FLAGS(CMAKE_MODULE_LINKER_FLAGS -isysroot ${CMAKE_PREFIX_PATH})
-FORCE_ADD_FLAGS(CMAKE_SHARED_LINKER_FLAGS -isysroot ${CMAKE_PREFIX_PATH})
+	FORCE_ADD_FLAGS(CMAKE_EXE_LINKER_FLAGS -isysroot ${CMAKE_PREFIX_PATH})
+	FORCE_ADD_FLAGS(CMAKE_MODULE_LINKER_FLAGS -isysroot ${CMAKE_PREFIX_PATH})
+	FORCE_ADD_FLAGS(CMAKE_SHARED_LINKER_FLAGS -isysroot ${CMAKE_PREFIX_PATH})
+ENDIF ( NOT ${CMAKE_PREFIX_PATH} STREQUAL "" )
 
 # set compiler flags
 FORCE_ADD_FLAGS(CMAKE_C_FLAGS -mtune=generic)

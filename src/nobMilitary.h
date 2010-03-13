@@ -1,4 +1,4 @@
-// $Id: nobMilitary.h 6022 2010-02-14 16:51:44Z OLiver $
+// $Id: nobMilitary.h 6150 2010-03-13 23:17:32Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -192,6 +192,8 @@ public: void Serialize(SerializedGameData *sgd) const { Serialize_nobMilitary(sg
 
 	/// Darf das Militärgebäude abgerissen werden (Abriss-Verbot berücksichtigen)?
 	bool IsDemolitionAllowed() const;
+
+	virtual void UnlinkAggressor(nofAttacker * soldier);
 };
 
 

@@ -1,4 +1,4 @@
-// $Id: nobBaseMilitary.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: nobBaseMilitary.h 6150 2010-03-13 23:17:32Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -111,7 +111,7 @@ public: void Serialize(SerializedGameData *sgd) const { Serialize_nobBaseMilitar
 
 	/// Soldaten zur Angreifer-Liste hinzufügen und wieder entfernen
 	void LinkAggressor(nofAttacker * soldier) { aggressors.push_back(soldier); }
-	void UnlinkAggressor(nofAttacker * soldier) { aggressors.erase(soldier); }
+	virtual void UnlinkAggressor(nofAttacker * soldier) { aggressors.erase(soldier); }
 
 	/// Soldaten zur Aggressiven-Verteidiger-Liste hinzufügen und wieder entfernen
 	void LinkAggressiveDefender(nofAggressiveDefender * soldier) { aggressive_defenders.push_back(soldier); }

@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 6039 2010-02-17 19:13:04Z FloSoft $
+// $Id: nobMilitary.cpp 6150 2010-03-13 23:17:32Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -433,9 +433,15 @@ void nobMilitary::RegulateTroops()
 	}
 	else if(diff)
 	{
-		// Zu wenig Truppen --> neue bestellen
-		gwg->GetPlayer(player)->OrderTroops(this,diff);
+		// Zu wenig Truppen
 
+		// Gebäude wird angegriffen und
+		// Addon aktiv, nur soviele Leute zum Nachbesetzen schicken wie Verteidiger eingestellt
+		if (aggressors.size() > 0 && ADDONMANAGER.getSelection(ADDON_DEFENDER_BEHAVIOR) == 2)	
+		{
+			diff = (gwg->GetPlayer(player)->military_settings[2] * diff) / 5;
+		}
+		gwg->GetPlayer(player)->OrderTroops(this,diff);
 	}
 }
 
@@ -1081,5 +1087,13 @@ bool nobMilitary::IsDemolitionAllowed() const
 	}
 
 	return true;
+}
+
+void nobMilitary::UnlinkAggressor(nofAttacker *soldier)
+{
+	aggressors.erase(soldier);
+
+	if (aggressors.size() == 0)
+		RegulateTroops();
 }
 

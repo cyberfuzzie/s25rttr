@@ -1,4 +1,4 @@
-// $Id: AddonManager.cpp 6059 2010-02-20 17:45:40Z FloSoft $
+// $Id: AddonManager.cpp 6150 2010-03-13 23:17:32Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -37,6 +37,8 @@
 #include "AddonMaxWaterwayLength.h"
 #include "AddonCustomBuildSequence.h"
 #include "AddonStatisticsVisibility.h"
+
+#include "AddonDefenderBehavior.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
@@ -91,6 +93,8 @@ void AddonManager::reset(bool recreate)
 		registerAddon(new AddonMaxWaterwayLength);
 		registerAddon(new AddonCustomBuildSequence);
 		registerAddon(new AddonStatisticsVisibility);
+
+		registerAddon(new AddonDefenderBehavior);
 	}
 }
 

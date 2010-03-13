@@ -1,4 +1,4 @@
-// $Id: const_addons.h 6059 2010-02-20 17:45:40Z FloSoft $
+// $Id: const_addons.h 6150 2010-03-13 23:17:32Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -26,6 +26,7 @@
 // 000 FloSoft
 // 001 OLiver
 // 002 Divan
+// 003 jh
 //
 
 // Do not forget to add your Addon to AddonManager::reset!
@@ -48,7 +49,9 @@ enum AddonId
 	ADDON_CHANGE_GOLD_DEPOSITS		= 0x00200000,
 	ADDON_MAX_WATERWAY_LENGTH		= 0x00200001,
 	ADDON_CUSTOM_BUILD_SEQUENCE		= 0x00200002,
-	ADDON_STATISTICS_VISIBILITY		= 0x00200003
+	ADDON_STATISTICS_VISIBILITY		= 0x00200003,
+
+	ADDON_DEFENDER_BEHAVIOR			= 0x00300000
 };
 
 enum AddonGroup

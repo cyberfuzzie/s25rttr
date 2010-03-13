@@ -2013,6 +2013,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\src\AddonDefenderBehavior.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\AddonExhaustibleWells.h"
 						>
 					</File>

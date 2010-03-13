@@ -1,4 +1,4 @@
-// $Id: iwMilitary.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: iwMilitary.cpp 6150 2010-03-13 23:17:32Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -26,6 +26,7 @@
 #include "controls.h"
 #include "GameClient.h"
 #include "GameCommands.h"
+#include "AddonManager.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -57,6 +58,12 @@ iwMilitary::iwMilitary(void)
 	// unteren 2 Buttons
 	AddImageButton(7,18,250,30,32,TC_GREY, LOADER.GetImageN("io",21), _("Help"));
 	AddImageButton(8,120,250,30,32,TC_GREY, LOADER.GetImageN("io",191),_("Default"));
+
+	// Falls Verteidiger ändern verboten ist, einfach die Bar ausblenden
+	if (ADDONMANAGER.getSelection(ADDON_DEFENDER_BEHAVIOR) == 1)
+	{
+		GetCtrl<ctrlProgress>(2)->SetVisible(false);
+	}
 
 	// Absendetimer, in 2s-Abschnitten wird jeweils das ganze als Netzwerknachricht ggf. abgeschickt
 	AddTimer(9,2000);

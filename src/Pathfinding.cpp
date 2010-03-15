@@ -1,4 +1,4 @@
-// $Id: Pathfinding.cpp 6005 2010-02-12 10:08:09Z FloSoft $
+// $Id: Pathfinding.cpp 6153 2010-03-15 21:25:52Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -603,7 +603,7 @@ bool GameWorldBase::FindShipPath(const MapCoord x_start,const MapCoord y_start, 
 								 const MapCoord y_dest, std::vector<unsigned char> * route, unsigned * length, const unsigned max_length,
 								 GameWorldBase::CrossBorders * cb)
 {
-	return FindFreePath(x_start,y_start,x_dest,y_dest,true,200,route,length,NULL,IsPointOK_ShipPath,
+	return FindFreePath(x_start,y_start,x_dest,y_dest,true,400,route,length,NULL,IsPointOK_ShipPath,
 		IsPointToDestOK_ShipPath,NULL);
 }
 

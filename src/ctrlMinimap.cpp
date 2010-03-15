@@ -1,4 +1,4 @@
-// $Id: ctrlMinimap.cpp 6037 2010-02-17 11:26:49Z FloSoft $
+// $Id: ctrlMinimap.cpp 6153 2010-03-15 21:25:52Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -81,7 +81,7 @@ void ctrlMinimap::SetDisplaySize(const unsigned short width, const unsigned shor
 	if(scale_width)
 	{
 		height_show = height - padding_y * 2;
-		width_show  = scaled_map_width * height_show / map_height;
+		width_show  = (scaled_map_width * height_show / map_height) & 0xFFFF; // to mask unsigned to unsigned short (VS debugger crying)
 	}
 	else
 	{

@@ -1,4 +1,4 @@
-// $Id: noShip.cpp 6012 2010-02-12 17:54:01Z FloSoft $
+// $Id: noShip.cpp 6153 2010-03-15 21:25:52Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -578,6 +578,7 @@ void noShip::StartTransport()
 	if(!gwg->FindShipPath(x,y,coastal_x,coastal_y,&route,NULL))
 	{
 		// todo
+		LOG.lprintf("Achtung: Bug im Spiel: noShip::StartTransport: Schiff hat keinen Weg gefunden!\n");
 		return;
 	}
 	pos = 0;

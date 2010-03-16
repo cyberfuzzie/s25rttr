@@ -1,4 +1,4 @@
-// $Id: Message.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: Message.cpp 6157 2010-03-16 21:08:42Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -125,7 +125,7 @@ Message *Message::recv(Socket *sock, int &error, bool wait, Message *(*createfun
 	while(true)
 	{
 		// Warten wir schon 5s auf Antwort?
-		if(time - timeout > 5000)
+		if(time - timeout > 15000)
 			wait = false;
 
 		time = TIME.CurrentTick();

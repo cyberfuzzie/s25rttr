@@ -1,4 +1,4 @@
-// $Id: nobHarborBuilding.cpp 6031 2010-02-15 21:29:53Z OLiver $
+// $Id: nobHarborBuilding.cpp 6156 2010-03-16 14:29:55Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -188,11 +188,13 @@ nobHarborBuilding::nobHarborBuilding(SerializedGameData * sgd, const unsigned ob
 }
 
 // Relative Position des Bauarbeiters 
-const Point<int> BUILDER_POS[4] = { Point<int>(0,0), Point<int>(0,0), Point<int>(0,15), Point<int>(0,0) };
+const Point<int> BUILDER_POS[4] = { Point<int>(0,18), Point<int>(-8,17), Point<int>(0,15), Point<int>(-18,17) };
 /// Relative Position der Brettertürme
-const Point<int> BOARDS_POS[4] = { Point<int>(0,0), Point<int>(0,0), Point<int>(-50,-5), Point<int>(0,0) };
+const Point<int> BOARDS_POS[4] = { Point<int>(-70,-5), Point<int>(-55,-5), Point<int>(-50,-5), Point<int>(-60,-5) };
 /// Relative Position der Steintürme
-const Point<int> STONES_POS[4] = { Point<int>(0,0), Point<int>(0,0), Point<int>(-50,10), Point<int>(0,0) };
+const Point<int> STONES_POS[4] = { Point<int>(-73,10), Point<int>(-60,10), Point<int>(-50,10), Point<int>(-60,10) };
+/// Relative Postion der Hafenfeuer
+const Point<int> FIRE_POS[4] = { Point<int>(36,-51), Point<int>(0,0), Point<int>(0,0), Point<int>(5,-80) };
 
 void nobHarborBuilding::Draw(int x,int y)
 {
@@ -200,8 +202,14 @@ void nobHarborBuilding::Draw(int x,int y)
 	DrawBaseBuilding(x,y);
 
 	// Hafenfeuer zeichnen // TODO auch für nicht-römer machen
-	if (nation == NAT_ROMANS)
-		LOADER.GetNationImageN(nation, 500 + 5 * GameClient::inst().GetGlobalAnimation(8,2,1,obj_id+x+y))->Draw(x,y,0,0,0,0,0,0);
+	if (nation == NAT_ROMANS || nation == NAT_JAPANESES)
+	{
+		LOADER.GetNationImageN(nation, 500 + 5 * GameClient::inst().GetGlobalAnimation(8,2,1,obj_id+x+y))->Draw(x+FIRE_POS[nation].x,y+FIRE_POS[nation].y,0,0,0,0,0,0);
+	}
+	else if (nation == NAT_AFRICANS || nation == NAT_VIKINGS)
+	{
+		LOADER.GetMapImageN(740+GameClient::inst().GetGlobalAnimation(8,5,2,obj_id+x+y))->Draw(x+FIRE_POS[nation].x,y+FIRE_POS[nation].y);
+	}
 
 	// Läuft gerade eine Expedition?
 	if(expedition.active)

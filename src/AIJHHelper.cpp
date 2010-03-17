@@ -1,4 +1,4 @@
-// $Id: AIJHHelper.cpp 5976 2010-02-08 23:05:33Z jh $
+// $Id: AIJHHelper.cpp 6160 2010-03-17 15:01:06Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -75,7 +75,7 @@ void AIJH::BuildJob::ExecuteJob()
 	// Evil harbour-hack
 	if (type == BLD_HARBORBUILDING && status == AIJH::JOB_FINISHED && target_x != 0xFFFF)
 	{
-		aijh->AddBuildJob(new AIJH::BuildJob(aijh, BLD_SHIPYARD, target_x, target_y));
+		aijh->AddBuildJob(new AIJH::BuildJob(aijh, BLD_SHIPYARD, target_x, target_y), true);
 	}
 
 	// Fertig?
@@ -195,7 +195,7 @@ void AIJH::BuildJob::BuildMainRoad()
 			std::cout << "Player " << (unsigned)aijh->GetPlayerID() << ", Job failed: BQ changed for " << BUILDING_NAMES[type] << " at " << target_x << "/" << target_y << ". Retrying..." << std::endl;
 #endif
 			aijh->nodes[target_x + target_y * aijh->GetGWB()->GetWidth()].bq = bq;
-			aijh->GetConstruction()->AddBuildJob(new AIJH::BuildJob(aijh, type, around_x, around_y));
+			aijh->AddBuildJob(new AIJH::BuildJob(aijh, type, around_x, around_y));
 			return;
 		}
 		return;
@@ -283,17 +283,17 @@ void AIJH::BuildJob::BuildMainRoad()
 			break;
 
 		case BLD_MILL:
-			aijh->GetConstruction()->AddBuildJob(new AIJH::BuildJob(aijh, BLD_BAKERY, target_x, target_y));
+			aijh->AddBuildJob(new AIJH::BuildJob(aijh, BLD_BAKERY, target_x, target_y));
 			break;
 
 		case BLD_PIGFARM:
-			aijh->GetConstruction()->AddBuildJob(new AIJH::BuildJob(aijh, BLD_SLAUGHTERHOUSE, target_x, target_y));
+			aijh->AddBuildJob(new AIJH::BuildJob(aijh, BLD_SLAUGHTERHOUSE, target_x, target_y));
 			break;
 
 		case BLD_BAKERY:
 		case BLD_SLAUGHTERHOUSE:
 		case BLD_BREWERY:
-			aijh->GetConstruction()->AddBuildJob(new AIJH::BuildJob(aijh, BLD_WELL, target_x, target_y));
+			aijh->AddBuildJob(new AIJH::BuildJob(aijh, BLD_WELL, target_x, target_y));
 			break;
 
 		default:
@@ -323,7 +323,7 @@ void AIJH::BuildJob::TryToBuildSecondaryRoad()
 #ifdef DEBUG_AI
 			std::cout << "Player " << (unsigned)aijh->GetPlayerID() << ", Job failed: House flag is gone, " << BUILDING_NAMES[type] << " at " << target_x << "/" << target_y << ". Retrying..." << std::endl;
 #endif
-		aijh->GetConstruction()->AddBuildJob(new AIJH::BuildJob(aijh, type, around_x, around_y));
+		aijh->AddBuildJob(new AIJH::BuildJob(aijh, type, around_x, around_y));
 		return;
 	}
 

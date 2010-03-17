@@ -1,4 +1,4 @@
-// $Id: AIConstruction.h 5995 2010-02-10 22:57:41Z jh $
+// $Id: AIConstruction.h 6160 2010-03-17 15:01:06Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -37,7 +37,7 @@ public:
 	~AIConstruction(void);
 
 	/// Adds a build job to the queue
-	void AddBuildJob(AIJH::BuildJob *job);
+	void AddBuildJob(AIJH::BuildJob *job, bool front);
 
 	AIJH::Job *GetBuildJob();
 	unsigned GetBuildJobNum() const { return buildJobs.size(); }

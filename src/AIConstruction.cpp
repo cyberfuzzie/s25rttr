@@ -1,4 +1,4 @@
-// $Id: AIConstruction.cpp 6067 2010-02-22 17:06:18Z jh $
+// $Id: AIConstruction.cpp 6160 2010-03-17 15:01:06Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -40,9 +40,12 @@ AIConstruction::~AIConstruction(void)
 {
 }
 
-void AIConstruction::AddBuildJob(AIJH::BuildJob *job)
+void AIConstruction::AddBuildJob(AIJH::BuildJob *job, bool front)
 {
-	buildJobs.push_back(job);
+	if (front)
+		buildJobs.push_front(job);
+	else
+		buildJobs.push_back(job);
 }
 
 AIJH::Job *AIConstruction::GetBuildJob()

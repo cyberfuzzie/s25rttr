@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.h 5995 2010-02-10 22:57:41Z jh $
+// $Id: AIPlayerJH.h 6160 2010-03-17 15:01:06Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -79,7 +79,7 @@ protected:
 
 	/// Executes a job form the job queue
 	void ExecuteAIJob();
-	void AddBuildJob(AIJH::BuildJob *job) { construction.AddBuildJob(job); }
+	void AddBuildJob(AIJH::BuildJob *job, bool front = false) { construction.AddBuildJob(job, front); }
 
 	/// Checks the list of military buildingsites and puts the coordinates into the list of military buildings if building is finished
 	void CheckNewMilitaryBuildings();

@@ -1,4 +1,4 @@
-// $Id: iwShip.cpp 5854 2010-01-04 16:30:33Z FloSoft $
+// $Id: iwShip.cpp 6167 2010-03-20 13:51:43Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -254,9 +254,11 @@ void iwShip::DrawCargo()
 			else if(i == JOB_SCOUT)
 				job_bobs_id = 35+NATION_RTTR_TO_S2[GameClient::inst().GetPlayer(player)->nation]*6;
 
+			if (i == JOB_PACKDONKEY)
+				LOADER.GetMapImageN(2016)->Draw(x,y);
+			else
+				LOADER.GetBobN("jobs")->Draw(job_bobs_id, 5, JOB_CONSTS[i].fat, 0, x, y, COLORS[gwv->GetPlayer(ship->GetPlayer())->color]);
 
-			// Soldaten
-			LOADER.GetBobN("jobs")->Draw(job_bobs_id, 5, JOB_CONSTS[i].fat, 0, x, y, COLORS[gwv->GetPlayer(ship->GetPlayer())->color]);
 			x += xStep;
 			lineCounter++;
 		}

@@ -1,4 +1,4 @@
-// $Id: GameWorldViewer.cpp 6022 2010-02-14 16:51:44Z OLiver $
+// $Id: GameWorldViewer.cpp 6167 2010-03-20 13:51:43Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -215,7 +215,7 @@ void GameWorldViewer::Draw(const unsigned char player, unsigned * water, const b
 							}
 						}
 						// Normales Gebäude?
-						else if(got == GOT_NOB_USUAL)
+						else if(got == GOT_NOB_USUAL || got == GOT_NOB_SHIPYARD)
 						{
 							nobUsual *n = dynamic_cast<nobUsual*>(no);
 							if(n)

@@ -1,4 +1,4 @@
-// $Id: GLFW.cpp 6179 2010-03-24 14:52:38Z FloSoft $
+// $Id: GLFW.cpp 6181 2010-03-24 19:37:39Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -116,7 +116,7 @@ bool VideoGLFW::Initialize(void)
 	initialized = glfwInit();
 
 	// automatisches Eventabrufen deaktivieren
-	glDisable(GLFW_AUTO_POLL_EVENTS);
+	glfwDisable(GLFW_AUTO_POLL_EVENTS);
 
 	libGL = dlopen("/usr/lib/libGL.so",RTLD_LAZY);
 	if(libGL == NULL)
@@ -543,9 +543,9 @@ void GLFWCALL VideoGLFW::OnKeyAction(int key, int action)
 KeyEvent VideoGLFW::GetModKeyState(void) const
 {
 	const KeyEvent ke = { KT_INVALID, 0, 
-		(glfwGetKey(GLFW_KEY_LCTRL)  || glfwGetKey(GLFW_KEY_RCTRL)  ) ? true : false,
-		(glfwGetKey(GLFW_KEY_LSHIFT) || glfwGetKey(GLFW_KEY_RSHIFT) ) ? true : false,
-		(glfwGetKey(GLFW_KEY_LALT)   || glfwGetKey(GLFW_KEY_RALT)   ) ? true : false };
+		(glfwGetKey(GLFW_KEY_LCTRL)  | glfwGetKey(GLFW_KEY_RCTRL)  ) ? true : false,
+		(glfwGetKey(GLFW_KEY_LSHIFT) | glfwGetKey(GLFW_KEY_RSHIFT) ) ? true : false,
+		(glfwGetKey(GLFW_KEY_LALT)   | glfwGetKey(GLFW_KEY_RALT)   ) ? true : false };
 	return ke;
 }
 

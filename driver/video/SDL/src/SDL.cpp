@@ -1,4 +1,4 @@
-// $Id: SDL.cpp 6054 2010-02-20 14:46:42Z FloSoft $
+// $Id: SDL.cpp 6176 2010-03-24 10:39:41Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -554,6 +554,18 @@ void VideoSDL::SetMousePosY(int y)
 	SetMousePos(mouse_xy.x, y);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/** 
+ *  Get state of the modifier keys
+ *
+ *  @author Divan
+ */
+KeyEvent VideoSDL::GetModKeyState(void) const
+{
+	const SDLMod modifiers = SDL_GetModState();
+	const KeyEvent ke = { KT_INVALID, 0, modifiers & KMOD_CTRL, modifiers & KMOD_SHIFT, modifiers & KMOD_ALT };
+	return ke;
+}
 
 /// Gibt Pointer auf ein Fenster zurück (device-dependent!), HWND unter Windows
 void * VideoSDL::GetWindowPointer() const

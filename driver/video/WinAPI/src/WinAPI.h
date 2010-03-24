@@ -1,4 +1,4 @@
-// $Id: WinAPI.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: WinAPI.h 6176 2010-03-24 10:39:41Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -74,6 +74,9 @@ public:
 
 	/// Funktion zum Setzen der Y-Koordinate der Maus.
 	void SetMousePosY(int y);
+
+	/// Get state of the modifier keys
+	KeyEvent VideoSDL::GetModKeyState(void) const
 
 	/// Gibt Pointer auf ein Fenster zurück (device-dependent!), HWND unter Windows
 	void * GetWindowPointer() const;

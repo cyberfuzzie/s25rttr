@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.cpp 6037 2010-02-17 11:26:49Z FloSoft $
+// $Id: dskGameInterface.cpp 6176 2010-03-24 10:39:41Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -285,6 +285,13 @@ bool dskGameInterface::Msg_LeftDown(const MouseCoords& mc)
 		SETTINGS.video.height-LOADER.GetImageN("resource", 29)->getHeight()+4,37*4,32*4))
 		return false;
 
+	// Start scrolling also on Ctrl + left click
+	if(VideoDriverWrapper::inst().GetModKeyState().ctrl)
+	{
+		gwv->MouseDown(mc);
+		return true;
+	}
+
 	// Unterscheiden je nachdem Straäcnbaumodus an oder aus ist
 	if(road.mode)
 	{
@@ -492,6 +499,19 @@ bool dskGameInterface::Msg_LeftDown(const MouseCoords& mc)
 /**
  *  
  *
+ *  @author Divan
+ */
+bool dskGameInterface::Msg_LeftUp(const MouseCoords& mc)\
+{
+	// Stop Scrolling
+	gwv->MouseUp();
+	return false;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
  *  @author OLiver
  */
 bool dskGameInterface::Msg_MouseMove(const MouseCoords& mc)
@@ -520,6 +540,7 @@ bool dskGameInterface::Msg_RightDown(const MouseCoords& mc)
  */
 bool dskGameInterface::Msg_RightUp(const MouseCoords& mc)
 {
+	// Stop Scrolling
 	gwv->MouseUp();
 	return false;
 }

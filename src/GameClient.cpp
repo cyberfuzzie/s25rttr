@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 6069 2010-02-22 18:56:35Z FloSoft $
+// $Id: GameClient.cpp 6176 2010-03-24 10:39:41Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1261,10 +1261,10 @@ void GameClient::ExecuteGameFrame(const bool skipping)
 		// Auto-Speichern ggf.
 
 		// Aktiviert?
-		if(SETTINGS.savegames.autosave_interval && !replay_mode)
+		if(SETTINGS.interface.autosave_interval && !replay_mode)
 		{
 			// Alle .... GF
-			if(framesinfo.nr % SETTINGS.savegames.autosave_interval == 0)
+			if(framesinfo.nr % SETTINGS.interface.autosave_interval == 0)
 			{
 				std::string tmp = GetFilePath(FILE_PATHS[85]).c_str();
 				tmp += _("Auto-Save");

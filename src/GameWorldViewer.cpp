@@ -1,4 +1,4 @@
-// $Id: GameWorldViewer.cpp 6167 2010-03-20 13:51:43Z jh $
+// $Id: GameWorldViewer.cpp 6176 2010-03-24 10:39:41Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -36,6 +36,7 @@
 #include "FOWObjects.h"
 #include "noShip.h"
 #include "AddonManager.h"
+#include "Settings.h"
 
 #include "GameServer.h"
 #include "AIPlayerJH.h"
@@ -511,7 +512,10 @@ void GameWorldViewer::MouseMove(const MouseCoords& mc)
 	// Scrollen
 	if(scroll)
 	{
-		MoveTo(-( sx - mc.x)*2, -( sy - mc.y)*2);
+		if(SETTINGS.interface.revert_mouse)
+			MoveTo( ( sx - mc.x)*2,  ( sy - mc.y)*2);
+		else
+			MoveTo(-( sx - mc.x)*2, -( sy - mc.y)*2);
 		VideoDriverWrapper::inst().SetMousePos(sx, sy);
 	}
 }

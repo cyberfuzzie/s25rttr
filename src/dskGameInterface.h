@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.h 5972 2010-02-08 18:47:05Z FloSoft $
+// $Id: dskGameInterface.h 6176 2010-03-24 10:39:41Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -146,6 +146,7 @@ private:
 	void Msg_PaintBefore();
 	void Msg_PaintAfter();
 	bool Msg_LeftDown(const MouseCoords& mc);
+	bool Msg_LeftUp(const MouseCoords& mc);
 	bool Msg_MouseMove(const MouseCoords& mc);
 	bool Msg_RightDown(const MouseCoords& mc);
 	bool Msg_RightUp(const MouseCoords& mc);

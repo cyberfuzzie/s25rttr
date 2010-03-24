@@ -1,4 +1,4 @@
-// $Id: WinAPI.cpp 6054 2010-02-20 14:46:42Z FloSoft $
+// $Id: WinAPI.cpp 6176 2010-03-24 10:39:41Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -52,7 +52,6 @@ DRIVERDLLAPI const char * GetDriverName(void)
 {
 	return "(WinAPI) OpenGL via the glorious WinAPI";
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////
 /** @class VideoWinAPI
@@ -483,7 +482,6 @@ bool VideoWinAPI::MessageLoop(void)
 	return true;
 }
 
-
 ///////////////////////////////////////////////////////////////////////////////
 /** 
  *  Funktion zum Auslesen des TickCounts.
@@ -585,7 +583,6 @@ void VideoWinAPI::SetMousePosY(int y)
 	SetMousePos(mouse_xy.x, y);
 }
 
-
 ///////////////////////////////////////////////////////////////////////////////
 /** 
  *  Funktion zum Senden einer gedrückten Taste.
@@ -656,9 +653,9 @@ void VideoWinAPI::OnWMKeyDown(unsigned char c)
 		} break;
 	}
 
-	if(GetAsyncKeyState(VK_LCONTROL) || GetAsyncKeyState(VK_RCONTROL)) ke.ctrl = true;
-	if(GetAsyncKeyState(VK_LSHIFT) || GetAsyncKeyState(VK_RSHIFT)) ke.shift = true;
-	if(GetAsyncKeyState(VK_LMENU) || GetAsyncKeyState(VK_RMENU)) ke.alt = true;
+	if(GetKeyState(VK_CONTROL)) ke.ctrl = true;
+	if(GetKeyState(VK_SHIFT))   ke.shift = true;
+	if(GetKeyState(VK_MENU))    ke.alt = true;
 
 	if(ke.kt != KT_INVALID)
 		pVideoWinAPI->CallBack->Msg_KeyDown(ke);
@@ -806,8 +803,20 @@ LRESULT CALLBACK VideoWinAPI::WindowProc(HWND window, UINT msg, WPARAM wParam, L
 	return DefWindowProc(window, msg, wParam, lParam);
 }
 
-
-
+///////////////////////////////////////////////////////////////////////////////
+/** 
+ *  Get state of the modifier keys
+ *
+ *  @author Divan
+ */
+KeyEvent VideoWinApi::GetModKeyState(void) const
+{
+	const KeyEvent ke = { KT_INVALID, 0, 
+		(GetKeyState(VK_CONTROL) & 0xFF00) ? true : false, 
+		(GetKeyState(VK_SHIFT)   & 0xFF00) ? true : false,
+		(GetKeyState(VK_MENU)    & 0xFF00) ? true : false };
+	return ke;
+}
 
 /// Gibt Pointer auf ein Fenster zurück (device-dependent!), HWND unter Windows
 void * VideoWinAPI::GetWindowPointer() const

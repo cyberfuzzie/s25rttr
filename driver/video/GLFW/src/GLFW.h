@@ -1,4 +1,4 @@
-// $Id: GLFW.h 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: GLFW.h 6176 2010-03-24 10:39:41Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -69,6 +69,9 @@ public:
 	/// Funktion zum Setzen der Y-Koordinate der Maus.
 	void SetMousePosY(int y);
 	
+	/// Get state of the modifier keys
+	KeyEvent GetModKeyState(void) const;
+
 	/// Gibt Pointer auf ein Fenster zur?ck (device-dependent!), HWND unter Windows
 	void * GetWindowPointer() const;
 

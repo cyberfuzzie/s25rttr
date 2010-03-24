@@ -1,4 +1,4 @@
-// $Id: Settings.cpp 5989 2010-02-10 14:13:58Z FloSoft $
+// $Id: Settings.cpp 6176 2010-03-24 10:39:41Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -37,7 +37,7 @@
 const unsigned int Settings::SETTINGS_VERSION = 11;
 const unsigned int Settings::SETTINGS_SECTIONS = 11;
 const std::string Settings::SETTINGS_SECTION_NAMES[] = {
-	"global", "video", "language", "driver", "sound", "lobby", "server", "proxy", "savegames", "ingame", "addons"
+	"global", "video", "language", "driver", "sound", "lobby", "server", "proxy", "interface", "ingame", "addons"
 };
 
 const unsigned char Settings::SCREEN_REFRESH_RATES_COUNT = 14;
@@ -120,9 +120,10 @@ bool Settings::LoadDefaults()
 		proxy.typ = 0;
 	// }
 
-	// savegames
+	// interface
 	// {
-		savegames.autosave_interval = 0;
+		interface.autosave_interval = 0;
+		interface.revert_mouse = false;
 	// }
 
 	// ingame
@@ -158,12 +159,12 @@ bool Settings::Load(void)
 	const libsiedler2::ArchivItem_Ini *lobby = LOADER.GetSettingsIniN("lobby");
 	const libsiedler2::ArchivItem_Ini *server = LOADER.GetSettingsIniN("server");
 	const libsiedler2::ArchivItem_Ini *proxy = LOADER.GetSettingsIniN("proxy");
-	const libsiedler2::ArchivItem_Ini *savegames = LOADER.GetSettingsIniN("savegames");
+	const libsiedler2::ArchivItem_Ini *interface = LOADER.GetSettingsIniN("interface");
 	const libsiedler2::ArchivItem_Ini *ingame = LOADER.GetSettingsIniN("ingame");
 	const libsiedler2::ArchivItem_Ini *addons = LOADER.GetSettingsIniN("addons");
 
 	// ist eine der Kategorien nicht vorhanden?
-	if(!global || !video || !language || !driver || !sound || !lobby || !server || !proxy || !savegames || !ingame || !addons ||
+	if(!global || !video || !language || !driver || !sound || !lobby || !server || !proxy || !interface || !ingame || !addons ||
 		// stimmt die Settingsversion?
 		((unsigned int)global->getValueI("version") != SETTINGS_VERSION)
 	  )
@@ -263,9 +264,10 @@ bool Settings::Load(void)
 	else if(this->proxy.typ == 4 && this->server.ipv6)
 		this->server.ipv6 = false;
 
-	// savegames
+	// interface
 	// {
-		this->savegames.autosave_interval = savegames->getValueI("autosave_interval");
+		this->interface.autosave_interval = interface->getValueI("autosave_interval");
+		this->interface.revert_mouse = (interface->getValueI("revert_mouse") ? true : false);
 	// }
 
 	// ingame
@@ -310,12 +312,12 @@ void Settings::Save(void)
 	libsiedler2::ArchivItem_Ini *lobby = LOADER.GetSettingsIniN("lobby");
 	libsiedler2::ArchivItem_Ini *server = LOADER.GetSettingsIniN("server");
 	libsiedler2::ArchivItem_Ini *proxy = LOADER.GetSettingsIniN("proxy");
-	libsiedler2::ArchivItem_Ini *savegames = LOADER.GetSettingsIniN("savegames");
+	libsiedler2::ArchivItem_Ini *interface = LOADER.GetSettingsIniN("interface");
 	libsiedler2::ArchivItem_Ini *ingame = LOADER.GetSettingsIniN("ingame");
 	libsiedler2::ArchivItem_Ini *addons = LOADER.GetSettingsIniN("addons");
 
 	// ist eine der Kategorien nicht vorhanden?
-	assert(global && video && language && driver && sound && lobby && server && proxy && savegames && ingame && addons);
+	assert(global && video && language && driver && sound && lobby && server && proxy && interface && ingame && addons);
 
 	// global
 	// {
@@ -385,9 +387,10 @@ void Settings::Save(void)
 		proxy->setValue("typ", this->proxy.typ);
 	// }
 
-	// savegames
+	// interface
 	// {
-		savegames->setValue("autosave_interval", this->savegames.autosave_interval);
+		interface->setValue("autosave_interval", this->interface.autosave_interval);
+		interface->setValue("revert_mouse", (this->interface.revert_mouse ? true : false));
 	// }
 
 	// ingame

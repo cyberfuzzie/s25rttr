@@ -1,4 +1,4 @@
-// $Id: VideoDriver.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: VideoDriver.h 6176 2010-03-24 10:39:41Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -100,6 +100,9 @@ public:
 	/// Funktion zum Auslesen ob die Rechte Maustaste gedrückt ist.
 	virtual bool GetMouseStateR(void) const;
 	
+	/// Get state of the modifier keys
+	virtual KeyEvent GetModKeyState(void) const = 0;// { const KeyEvent ke = {KT_INVALID,0,false,false,false}; return ke; }
+
 	/// Gibt Pointer auf ein Fenster zurück (device-dependent!), HWND unter Windows
 	virtual void * GetWindowPointer() const = 0;
 

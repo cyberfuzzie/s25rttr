@@ -1,4 +1,4 @@
-// $Id: GLFW.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: GLFW.cpp 6176 2010-03-24 10:39:41Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -520,7 +520,28 @@ void GLFWCALL VideoGLFW::OnKeyAction(int key, int action)
 			ke.kt = KT_CHAR;
 			ke.c = pVideoGLFW->TranslateKey(key);
 		}
+
+		if(glfwGetKey(GLFW_KEY_LCTRL)  | glfwGetKey(GLFW_KEY_RCTRL))  ke.ctrl  = true;
+		if(glfwGetKey(GLFW_KEY_LSHIFT) | glfwGetKey(GLFW_KEY_RSHIFT)) ke.shift = true;
+		if(glfwGetKey(GLFW_KEY_LALT)   | glfwGetKey(GLFW_KEY_RALT))   ke.alt   = true;
+
 		pVideoGLFW->CallBack->Msg_KeyDown(ke);
 	}
 }
+
+///////////////////////////////////////////////////////////////////////////////
+/** 
+ *  Get state of the modifier keys
+ *
+ *  @author Divan
+ */
+KeyEvent VideoGLFW::GetModKeyState(void) const
+{
+	const KeyEvent ke = { KT_INVALID, 0, 
+		(glfwGetKey(GLFW_KEY_LCTRL)  || glfwGetKey(GLFW_KEY_RCTRL)  ) ? true : false,
+		(glfwGetKey(GLFW_KEY_LSHIFT) || glfwGetKey(GLFW_KEY_RSHIFT) ) ? true : false,
+		(glfwGetKey(GLFW_KEY_LALT)   || glfwGetKey(GLFW_KEY_RALT)   ) ? true : false,
+	return ke;
+}
+
 void * VideoGLFW::GetWindowPointer() const { return NULL; }

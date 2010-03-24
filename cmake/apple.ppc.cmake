@@ -1,10 +1,13 @@
 ################################################################################
-### $Id: apple.ppc.cmake 6137 2010-03-08 20:12:52Z FloSoft $
+### $Id: apple.ppc.cmake 6180 2010-03-24 19:25:09Z FloSoft $
 ################################################################################
 
 # this one is important
 SET(CMAKE_SYSTEM_NAME Darwin)
 SET(CMAKE_SYSTEM_PROCESSOR powerpc)
+
+SET(CMAKE_C_COMPILER   gcc)
+SET(CMAKE_CXX_COMPILER g++)
 
 SET(CMAKE_OSX_ARCHITECTURES "ppc" CACHE STRING "OSX-Architectures")
 

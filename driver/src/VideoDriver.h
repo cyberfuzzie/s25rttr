@@ -1,4 +1,4 @@
-// $Id: VideoDriver.h 6176 2010-03-24 10:39:41Z FloSoft $
+// $Id: VideoDriver.h 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -99,6 +99,11 @@ public:
 
 	/// Funktion zum Auslesen ob die Rechte Maustaste gedrückt ist.
 	virtual bool GetMouseStateR(void) const;
+
+	//
+	unsigned short GetScreenWidth()  const { return screenWidth;  }
+	unsigned short GetScreenHeight() const { return screenHeight; }
+	bool IsFullscreen() const { return fullscreen; }
 	
 	/// Get state of the modifier keys
 	virtual KeyEvent GetModKeyState(void) const = 0;// { const KeyEvent ke = {KT_INVALID,0,false,false,false}; return ke; }
@@ -111,10 +116,11 @@ public:
 
 protected:
 	VideoDriverLoaderInterface * CallBack; ///< Das DriverCallback für Rückmeldungen.
-	bool initialized;         ///< Initialisierungsstatus.
-	MouseCoords mouse_xy;     ///< Status der Maus.
-    bool keyboard[512];       ///< Status der Tastatur;
-	bool fullscreen;          ///< Vollbild an/aus?
+	bool initialized;            ///< Initialisierungsstatus.
+	MouseCoords mouse_xy;        ///< Status der Maus.
+	bool keyboard[512];          ///< Status der Tastatur;
+	unsigned short screenWidth;  ///< aktuelle Bildschirm-/Fensterbreite
+	unsigned short screenHeight; ///< aktuelle Bildschirm-/Fensterhöhe
+	bool fullscreen;             ///< Vollbild an/aus?
 };
-
 #endif // !VIDEODRIVER_H_INCLUDED

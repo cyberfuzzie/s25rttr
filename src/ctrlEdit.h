@@ -1,4 +1,4 @@
-// $Id: ctrlEdit.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: ctrlEdit.h 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -55,8 +55,6 @@ private:
 	void CursorRight() { if(cursor_pos == text.length()) return; ++cursor_pos; Notify(); };
 
 private:
-	unsigned short width;
-	unsigned short height;
 	unsigned short maxlength;
 	TextureColor tc;
 	glArchivItem_Font *font;

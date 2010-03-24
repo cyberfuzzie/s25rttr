@@ -1,4 +1,4 @@
-// $Id: dskHostGame.cpp 6043 2010-02-17 21:06:25Z FloSoft $
+// $Id: dskHostGame.cpp 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -161,6 +161,23 @@ dskHostGame::dskHostGame() :
 		LOBBYCLIENT.SendRankingInfoRequest(GAMECLIENT.GetPlayer(GAMECLIENT.GetPlayerID())->name);
 	}
 	GAMECLIENT.SetInterface(this);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Größe ändern-Reaktionen die nicht vom Skaling-Mechanismus erfasst werden.
+ *
+ *  @author Divan
+ */
+void dskHostGame::Resize_(unsigned short width, unsigned short height)
+{
+	// Text unter der PreviewMinimap verschieben, dessen Höhe von der Höhe der 
+	// PreviewMinimap abhängt, welche sich gerade geändert hat.
+	ctrlPreviewMinimap *preview = GetCtrl<ctrlPreviewMinimap>(70);
+	ctrlText *text = GetCtrl<ctrlText>(71);
+	assert(preview);
+	assert(text);
+	text->Move(text->GetX(false),preview->GetY(false)+preview->GetBottom()+10);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

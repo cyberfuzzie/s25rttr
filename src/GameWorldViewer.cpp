@@ -1,4 +1,4 @@
-// $Id: GameWorldViewer.cpp 6176 2010-03-24 10:39:41Z FloSoft $
+// $Id: GameWorldViewer.cpp 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -44,6 +44,8 @@
 GameWorldViewer::GameWorldViewer() : show_bq(false), show_names(false), show_productivity(false),
 xoffset(0), yoffset(0), selx(0), sely(0), sx(0), sy(0), scroll(false), last_xoffset(0), last_yoffset(0), show_coordinates(false), d_what(0), d_player(0), d_active(false) 
 {
+	displayWidth  = VideoDriverWrapper::inst().GetScreenWidth();
+	displayHeight = VideoDriverWrapper::inst().GetScreenHeight();
 }
 
 void GameWorldViewer::Draw(const unsigned char player, unsigned * water, const bool draw_selected, const MapCoord selected_x, const MapCoord selected_y,const RoadsBuilding& rb)
@@ -548,8 +550,8 @@ void GameWorldViewer::MoveToMapObject(const MapCoord x, const MapCoord y)
 	last_yoffset = yoffset;
 
 	MoveTo(static_cast<int>(GetTerrainX(x, y))
-		- VideoDriverWrapper::inst().GetScreenWidth() / 2, static_cast<int>(GetTerrainY(x, y))
-		- VideoDriverWrapper::inst().GetScreenHeight() / 2, true);
+		- displayWidth  / 2, static_cast<int>(GetTerrainY(x, y))
+		- displayHeight / 2, true);
 }
 
 /// Springt zur letzten Position, bevor man "weggesprungen" ist
@@ -570,15 +572,15 @@ void GameWorldViewer::CalcFxLx()
 		xoffset = width * TR_W + xoffset;
 	if(yoffset < 0)
 		yoffset = height * TR_H + yoffset;
-	if(xoffset > width * TR_W + VideoDriverWrapper::inst().GetScreenWidth())
+	if(xoffset > width * TR_W + displayWidth)
 		xoffset -= (width * TR_W);
-	if(yoffset > height * TR_H + VideoDriverWrapper::inst().GetScreenHeight())
+	if(yoffset > height * TR_H + displayHeight)
 		yoffset -= (height * TR_H);
 
 	fx = xoffset / TR_W-1;
 	fy = (yoffset-0x20*HEIGHT_FACTOR) / TR_H;
-	lx = (xoffset+VideoDriverWrapper::inst().GetScreenWidth())/TR_W+2;
-	ly = (yoffset+VideoDriverWrapper::inst().GetScreenHeight()+0x20*HEIGHT_FACTOR)/TR_H;
+	lx = (xoffset+displayWidth)/TR_W+2;
+	ly = (yoffset+displayHeight+0x20*HEIGHT_FACTOR)/TR_H;
 }
 
 // Höhe wurde Verändert: TerrainRenderer Bescheid sagen, damit es entsprechend verändert werden kann
@@ -655,4 +657,9 @@ unsigned GameWorldViewer::GetAvailableSoldiersForSeaAttackCount(const unsigned c
 	return unsigned(attackers.size());
 }
 
-
+void GameWorldViewer::Resize(unsigned short displayWidth, unsigned short displayHeight)
+{
+	this->displayWidth  = displayWidth;
+	this->displayHeight = displayHeight;
+	CalcFxLx();
+}

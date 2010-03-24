@@ -1,4 +1,4 @@
-// $Id: GameManager.cpp 6077 2010-02-23 19:37:53Z FloSoft $
+// $Id: GameManager.cpp 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -87,21 +87,23 @@ bool GameManager::Start()
 		bool found = false;
 		for(size_t i = 0;i<available_video_modes.size();++i)
 		{
-			if(available_video_modes[i].width == SETTINGS.video.width &&
-				available_video_modes[i].height == SETTINGS.video.height)
+			if(available_video_modes[i].width == SETTINGS.video.fullscreen_width &&
+				available_video_modes[i].height == SETTINGS.video.fullscreen_height)
 				found = true;
 		}
 
 		if(!found && available_video_modes.size())
 		{
 			// Nicht gefunden, erste gültige Auflösung nehmen
-			SETTINGS.video.width = available_video_modes[0].width;
-			SETTINGS.video.height = available_video_modes[0].height;
+			SETTINGS.video.fullscreen_width = available_video_modes[0].width;
+			SETTINGS.video.fullscreen_height = available_video_modes[0].height;
 		}
 	}
 
 	// Fenster erstellen
-	if(!VideoDriverWrapper::inst().CreateScreen(SETTINGS.video.width,SETTINGS.video.height,SETTINGS.video.fullscreen))
+	if(!VideoDriverWrapper::inst().CreateScreen(SETTINGS.video.fullscreen ? SETTINGS.video.fullscreen_width : SETTINGS.video.windowed_width,
+	                                            SETTINGS.video.fullscreen ? SETTINGS.video.fullscreen_height : SETTINGS.video.windowed_height,
+	                                            SETTINGS.video.fullscreen))
 		return false;
 
 	/// Audiodriver laden

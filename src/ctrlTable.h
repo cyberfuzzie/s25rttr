@@ -1,4 +1,4 @@
-// $Id: ctrlTable.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: ctrlTable.h 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -67,12 +67,12 @@ protected:
 
 	virtual bool Draw_(void);
 
+	/// Größe ändern
+	void Resize_(unsigned short width, unsigned short height);
 	/// Setzt die Breite und Position der Buttons ohne Scrolleiste
 	void ResetButtonWidths();
 
 private:
-	unsigned short width;
-	unsigned short height;
 	TextureColor tc;
 	glArchivItem_Font *font;
 

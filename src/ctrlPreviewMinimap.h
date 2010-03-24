@@ -1,4 +1,4 @@
-// $Id: ctrlPreviewMinimap.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: ctrlPreviewMinimap.h 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -34,7 +34,7 @@ class ctrlPreviewMinimap : public ctrlMinimap
 	struct Player
 	{
 		Player();
-		/// Koordinaten relativ zur Control-Position
+		/// Map-Koordinaten der Startposition
 		unsigned short x,y;
 		/// Farbe
 		unsigned color;

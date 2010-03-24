@@ -1,4 +1,4 @@
-// $Id: ctrlMinimap.cpp 6153 2010-03-15 21:25:52Z jh $
+// $Id: ctrlMinimap.cpp 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -47,8 +47,19 @@ ctrlMinimap::ctrlMinimap( Window *parent,
 				 const unsigned short padding_x,
 				 const unsigned short padding_y,
 				 const unsigned short map_width,
-				 const unsigned short map_height)
-	: ctrlRectangle(parent, id, x, y, width, height), padding_x(padding_x), padding_y(padding_y)
+				 const unsigned short map_height) 
+	: Window(x,y,id,parent,width,height), padding_x(padding_x), padding_y(padding_y), map_width(map_width), map_height(map_height)
+{
+	SetDisplaySize(width, height, map_width, map_height);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Größe ändern
+ *
+ *  @author Divan
+ */
+void ctrlMinimap::Resize_(unsigned short width, unsigned short height)
 {
 	SetDisplaySize(width, height, map_width, map_height);
 }
@@ -63,6 +74,9 @@ void ctrlMinimap::SetDisplaySize(const unsigned short width, const unsigned shor
 {
 	this->width = width;
 	this->height = height;
+
+	this->map_width = map_width;
+	this->map_height = map_height;
 
 	unsigned short scaled_map_width = static_cast<unsigned short>(map_width * MINIMAP_SCALE_X);
 	double x_scale = double(scaled_map_width) / double(width - padding_x * 2);

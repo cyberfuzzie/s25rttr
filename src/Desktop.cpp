@@ -1,4 +1,4 @@
-// $Id: Desktop.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: Desktop.cpp 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -45,6 +45,7 @@ Desktop::Desktop(glArchivItem_Bitmap *background)
 	: Window(), background(background)
 {
 	SetScale(true);
+	Resize(VideoDriverWrapper::inst().GetScreenWidth(), VideoDriverWrapper::inst().GetScreenWidth());
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -76,3 +77,42 @@ void Desktop::Show(void)
 {
 	WindowManager::inst().Switch(this);
 }
+
+///////////////////////////////////////////////////////////////////////////////
+/*
+ *  Reagiert auf Spielfenstergrößenänderung
+ *
+ *  @author Divan
+ */
+void Desktop::Msg_ScreenResize(const ScreenResizeEvent& sr)
+{
+// Keep the following block the same as in ctrlGroup class:
+	// Für skalierte Desktops ist alles einfach, die brauchen im besten Fall gar nichts selbst implementieren
+	if (scale)
+	{
+		//Zunächst an die Kinder weiterleiten
+		for(std::map<unsigned int,Window*>::iterator it = idmap.begin(); it != idmap.end(); ++it)
+		if(it->second)
+		{
+			Window* ctrl = it->second;
+			// unskalierte Position und Größe bekommen
+			unsigned realx = ctrl->GetX() * 800 / sr.oldWidth;
+			unsigned realy = ctrl->GetY() * 600 / sr.oldHeight;
+			unsigned realwidth  = ctrl->GetWidth()  * 800 / sr.oldWidth;
+			unsigned realheight = ctrl->GetHeight() * 600 / sr.oldHeight;
+			// Rundungsfehler?
+			if (realx * sr.oldWidth  / 800 < ctrl->GetX()) ++realx;
+			if (realy * sr.oldHeight / 600 < ctrl->GetY()) ++realy;
+			if (realwidth  * sr.oldWidth  / 800 < ctrl->GetWidth())  ++realwidth;
+			if (realheight * sr.oldHeight / 600 < ctrl->GetHeight()) ++realheight;
+			// Und los
+			ctrl->Move(realx * sr.newWidth  / 800, realy * sr.newHeight / 600);
+			ctrl->Msg_ScreenResize(sr);
+			ctrl->Resize(realwidth * sr.newWidth / 800, realheight * sr.newHeight / 600);
+		}
+	}
+
+	// Individuelle Reaktion ist auch erlaubt
+	Resize(sr.newWidth, sr.newHeight);
+}
+

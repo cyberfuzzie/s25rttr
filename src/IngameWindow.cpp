@@ -1,4 +1,4 @@
-// $Id: IngameWindow.cpp 6135 2010-03-08 18:49:31Z FloSoft $
+// $Id: IngameWindow.cpp 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -42,8 +42,8 @@
  *  @author OLiver
  */
 IngameWindow::IngameWindow(unsigned int id, unsigned short x, unsigned short y, unsigned short width, unsigned short height, const std::string& title, glArchivItem_Bitmap *background, bool modal)
-	: Window(x, y, id, NULL), 
-	width(width), height(height), title(title), background(background), last_x(0), last_y(0),
+	: Window(x, y, id, NULL, width, height), 
+	iwHeight(height), title(title), background(background), last_x(0), last_y(0),
 	last_down(false), last_down2(false), modal(modal), closeme(false), minimized(false), move(false)
 {
 	memset(button_state, BUTTON_UP, sizeof(ButtonState)*2);
@@ -67,6 +67,12 @@ IngameWindow::IngameWindow(unsigned int id, unsigned short x, unsigned short y, 
  */
 IngameWindow::~IngameWindow(void)
 {
+}
+
+void IngameWindow::SetMinimized(bool minimized)
+{
+	this->minimized = minimized;
+	SetHeight(minimized ? 31 : iwHeight);
 }
 
 void IngameWindow::MouseLeftDown(const MouseCoords& mc)
@@ -118,7 +124,7 @@ void IngameWindow::MouseLeftUp(const MouseCoords& mc)
 		{
 			if(i) 
 			{
-				minimized = !minimized;
+				SetMinimized(!GetMinimized());
 				LOADER.GetSoundN("sound", 113)->Play(255,false);
 			}
 			else if(!modal) 
@@ -153,10 +159,10 @@ void IngameWindow::MouseMove(const MouseCoords& mc)
 			NewMouseX -= nx - (VideoDriverWrapper::inst().GetScreenWidth() - width);
 			nx = VideoDriverWrapper::inst().GetScreenWidth() - width;
 		}
-		if(ny > VideoDriverWrapper::inst().GetScreenHeight() - GetHeight())
+		if(ny > VideoDriverWrapper::inst().GetScreenHeight() - height)
 		{
-			NewMouseY -= ny - (VideoDriverWrapper::inst().GetScreenHeight() - GetHeight());
-			ny = VideoDriverWrapper::inst().GetScreenHeight() - GetHeight();
+			NewMouseY -= ny - (VideoDriverWrapper::inst().GetScreenHeight() - height);
+			ny = VideoDriverWrapper::inst().GetScreenHeight() - height;
 		}
 
 		// Fix mouse position if moved too far
@@ -277,12 +283,12 @@ bool IngameWindow::Draw_()
 		title_count = side_width / LOADER.GetImageN("resource", 40)->getWidth();
 
 		for(unsigned short i = 0;i<title_count;++i)
-			LOADER.GetImageN("resource", 40)->Draw(x+LOADER.GetImageN("resource", 45)->getWidth()+i*LOADER.GetImageN("resource", 40)->getWidth(),y+height-LOADER.GetImageN("resource", 40)->getHeight(), 0, 0, 0, 0, 0, 0);
+			LOADER.GetImageN("resource", 40)->Draw(x+LOADER.GetImageN("resource", 45)->getWidth()+i*LOADER.GetImageN("resource", 40)->getWidth(),y+iwHeight-LOADER.GetImageN("resource", 40)->getHeight(), 0, 0, 0, 0, 0, 0);
 
 		rest = side_width % LOADER.GetImageN("resource", 40)->getWidth();
 
 		if(rest)
-			LOADER.GetImageN("resource", 40)->Draw(x+LOADER.GetImageN("resource", 45)->getWidth()+title_count*LOADER.GetImageN("resource", 40)->getWidth(),y+height-LOADER.GetImageN("resource", 40)->getHeight(), rest, 0, 0, 0, rest, 0);
+			LOADER.GetImageN("resource", 40)->Draw(x+LOADER.GetImageN("resource", 45)->getWidth()+title_count*LOADER.GetImageN("resource", 40)->getWidth(),y+iwHeight-LOADER.GetImageN("resource", 40)->getHeight(), rest, 0, 0, 0, rest, 0);
 
 		// Clientbereich
 
@@ -291,14 +297,14 @@ bool IngameWindow::Draw_()
 		{
 			// Bereich ausrechnen
 			unsigned client_width = width - 20;
-			unsigned client_height = height - 31;
+			unsigned client_height = iwHeight - 31;
 
 			background->Draw(this->x + LOADER.GetImageN("resource", 38)->getWidth(), this->y + LOADER.GetImageN("resource", 36)->getHeight(), client_width, client_height, 0, 0, client_width, client_height);
 		}
 
 		// Links und rechts unten die 2 kleinen Knäufe
-		LOADER.GetImageN("resource", 45)->Draw(x, y + height-LOADER.GetImageN("resource", 45)->getHeight(), 0, 0, 0, 0, 0, 0);
-		LOADER.GetImageN("resource", 45)->Draw(x + width - LOADER.GetImageN("resource", 45)->getWidth(), y + height-LOADER.GetImageN("resource", 45)->getHeight(), 0, 0, 0, 0, 0, 0);
+		LOADER.GetImageN("resource", 45)->Draw(x, y + iwHeight-LOADER.GetImageN("resource", 45)->getHeight(), 0, 0, 0, 0, 0, 0);
+		LOADER.GetImageN("resource", 45)->Draw(x + width - LOADER.GetImageN("resource", 45)->getWidth(), y + iwHeight-LOADER.GetImageN("resource", 45)->getHeight(), 0, 0, 0, 0, 0, 0);
 
 		// Msg_PaintBefore aufrufen vor den Controls
 		Msg_PaintBefore();

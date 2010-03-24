@@ -1,4 +1,4 @@
-// $Id: WindowManager.cpp 6065 2010-02-22 10:32:37Z FloSoft $
+// $Id: WindowManager.cpp 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -45,7 +45,7 @@
  *  @author OLiver
  */
 WindowManager::WindowManager(void)
-	: desktop(NULL), nextdesktop(NULL), nextdesktop_data(NULL), disable_mouse(false), mc(NULL)
+	: desktop(NULL), nextdesktop(NULL), nextdesktop_data(NULL), disable_mouse(false), mc(NULL), screenWidth(0), screenHeight(0), lastScreenWidthSignal(0), lastScreenHeightSignal(0), lastScreenSignalCount(0)
 {
 }
 
@@ -852,7 +852,126 @@ void WindowManager::Msg_MouseMove(const MouseCoords& mc)
 
 void WindowManager::Msg_KeyDown(const KeyEvent& ke)
 {
-	RelayKeyboardMessage(&Window::Msg_KeyDown,ke);
+	if(ke.alt && ke.kt == KT_RETURN)
+	{
+		// Switch Fullscreen/Windowed
+		VideoDriverWrapper::inst().ResizeScreen(VideoDriverWrapper::inst().IsFullscreen() ? SETTINGS.video.windowed_width : SETTINGS.video.fullscreen_width,
+		                                        VideoDriverWrapper::inst().IsFullscreen() ? SETTINGS.video.windowed_height : SETTINGS.video.fullscreen_height,
+		                                        !VideoDriverWrapper::inst().IsFullscreen());
+	}
+	else
+		RelayKeyboardMessage(&Window::Msg_KeyDown,ke);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Verarbeitung Spielfenstergröße verändert (vom Betriebssystem aus)
+ *  Liefert evtl. eine Größe die wir nicht wollen und daher korrigieren
+ *  oder falls ok durchlassen.
+ *  Eigentliche Verarbeitung dann in Msg_ScreenResize.
+ *
+ *  @param[in] width  neue Breite
+ *  @param[in] height neue Höhe
+ *
+ *  @author Divan
+ */
+void WindowManager::ScreenResized(unsigned short width, unsigned short height)
+{
+	unsigned short newWidth  = width;
+	unsigned short newHeight = height;
+
+	bool mustResize = false;
+	// Minimale Ausdehnung erfüllt?
+	if(newWidth  < 800 || newHeight < 600)
+	{
+		mustResize = true;
+		if(newWidth  < 800) newWidth  = 800;
+		if(newHeight < 600) newHeight = 600;
+	}
+
+	// Es kann passieren dass wir versuchen ein 800x600-Fenster zu erstellen,
+	// aber das Betriebssystem es immer wieder verkleinert. Hier sollten wir 
+	// uns nicht auf einen endlosen Kampf einlassen, denn der Klügere gibt nach.
+	// Problem: Böse Windowmanager wie Metacity feuern ständig Resize-Events,
+	// wenn man den die Fenstergröße zieht und wir sie wieder zu vergrößern 
+	// versuchen.
+	// Wir müssen also durch Warten halbwegs ausschließen, dass wir es
+	// mit dem Nutzer zu tun haben.
+	// TODO: Dann den Treiber zwingen, ein nicht resizable Fenster zu öffnen
+	// und erst wieder, wenn der Nutzer im Menü nochmal eine Auflösung einstellt,
+	// das Resizen zulassen.
+	if(width < 800 || height < 600)
+	if(lastScreenWidthSignal  == width)
+	if(lastScreenHeightSignal == height)
+	if(lastScreenSignalCount == 500)
+	{
+		VideoDriverWrapper::inst().ResizeScreen(width, height, VideoDriverWrapper::inst().IsFullscreen());
+		return;
+	}
+
+	// Letzten Wert merken
+	if(lastScreenWidthSignal == width 
+	   && lastScreenHeightSignal == height)
+	{
+		++lastScreenSignalCount;
+	}
+	else
+	{
+		lastScreenWidthSignal  = width;
+		lastScreenHeightSignal = height;
+		lastScreenSignalCount  = 0;
+	}
+
+	// Und los
+	VideoDriverWrapper::inst().ResizeScreen(newWidth, newHeight, VideoDriverWrapper::inst().IsFullscreen());
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Verarbeitung Spielfenstergröße verändert (vom Spiel aus)
+ *  Liefert immer eine sinnvolle Größe, mind. 800x600.
+ *
+ *  @param[in] width  neue Breite
+ *  @param[in] height neue Höhe
+ *
+ *  @author Divan
+ */
+void WindowManager::Msg_ScreenResize(unsigned short width, unsigned short height)
+{
+	// Falls sich nichts ändert, brauchen wir auch nicht reagieren
+	// (Evtl hat sich ja nur der Modus Fenster/Vollbild geändert)
+	if(screenWidth == width && screenHeight == height)
+		return;
+
+	ScreenResizeEvent sr;
+	sr.oldWidth  = screenWidth;
+	sr.oldHeight = screenHeight; 
+	sr.newWidth  = screenWidth  = width;
+	sr.newHeight = screenHeight = height;
+
+	SETTINGS.video.fullscreen = VideoDriverWrapper::inst().IsFullscreen();
+	// Wenn es absolut nicht anders geht, lassen wir im temporär doch 
+	// kleiner als 800x600 zu, abspeichern tun wir die aber nie.
+	if(!SETTINGS.video.fullscreen)
+	{
+		if(width  >= 800) SETTINGS.video.windowed_width  = width;
+		if(height >= 600) SETTINGS.video.windowed_height = height;
+	}
+
+	// ist unser Desktop gültig?
+	if(!desktop)
+		return;
+
+	desktop->Msg_ScreenResize(sr);
+
+	// IngameWindow verschieben falls nötig, so dass sie komplett sichtbar sind
+	for(IngameWindowListIterator it = windows.begin(); it.valid(); ++it)
+	{
+		const short dx = (*it)->GetX()+(*it)->GetWidth()  - sr.newWidth;
+		const short dy = (*it)->GetY()+(*it)->GetHeight() - sr.newHeight;
+		if(dx > 0 || dy > 0)
+			(*it)->Move((dx > 0 ? -dx : 0), (dy > 0 ? -dy : 0) , /*absolute=*/false);
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -1,4 +1,4 @@
-// $Id: ctrlIngameMinimap.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: ctrlIngameMinimap.cpp 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -62,54 +62,7 @@ ctrlIngameMinimap::ctrlIngameMinimap( Window *parent,
 bool ctrlIngameMinimap::Draw_()
 {
 	DrawMap(*minimap);
-	return true;
-}
 
-///////////////////////////////////////////////////////////////////////////////
-/**
- *  
- *
- *  @author OLiver
- */
-bool ctrlIngameMinimap::Msg_LeftDown(const MouseCoords& mc)
-{
-	return Msg_MouseMove(mc);
-}
-
-///////////////////////////////////////////////////////////////////////////////
-/**
- *  
- *
- *  @author OLiver
- */
-bool ctrlIngameMinimap::Msg_MouseMove(const MouseCoords& mc)
-{
-	if(mc.ldown)
-	{
-		// Mauszeiger auf der Karte?
-		if(Coll(mc.x,mc.y,GetX()+GetLeft(),GetY()+GetTop(),width_show,height_show))
-		{
-			// Koordinate feststellen
-			unsigned short map_x = (mc.x-(GetX()+GetLeft()))*minimap->GetMapWidth()/width_show;
-			unsigned short map_y = (mc.y-(GetY()+GetTop()))*minimap->GetMapHeight()/height_show;
-
-			gwv.MoveToMapObject(map_x,map_y);
-
-			return true;
-		}
-	}
-
-	return false;
-}
-
-///////////////////////////////////////////////////////////////////////////////
-/**
- *  
- *
- *  @author OLiver
- */
-void ctrlIngameMinimap::Msg_PaintAfter()
-{
 	// Mittleren Punkt berechnen und dort hinscrollen
 	int middle_x = (gwv.GetLastX()+gwv.GetFirstX())/2;
 	int middle_y = (gwv.GetLastY()+gwv.GetFirstY())/2;
@@ -153,6 +106,45 @@ void ctrlIngameMinimap::Msg_PaintAfter()
 	
 	// Zeichnen
 	image->Draw(GetX()+GetLeft()+xpos,GetY()+GetTop()+ypos,0,0,src_x,src_y,draw_width,draw_height);
+
+	return true;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
+bool ctrlIngameMinimap::Msg_LeftDown(const MouseCoords& mc)
+{
+	return Msg_MouseMove(mc);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
+bool ctrlIngameMinimap::Msg_MouseMove(const MouseCoords& mc)
+{
+	if(mc.ldown)
+	{
+		// Mauszeiger auf der Karte?
+		if(Coll(mc.x,mc.y,GetX()+GetLeft(),GetY()+GetTop(),width_show,height_show))
+		{
+			// Koordinate feststellen
+			unsigned short map_x = (mc.x-(GetX()+GetLeft()))*minimap->GetMapWidth()/width_show;
+			unsigned short map_y = (mc.y-(GetY()+GetTop()))*minimap->GetMapHeight()/height_show;
+
+			gwv.MoveToMapObject(map_x,map_y);
+
+			return true;
+		}
+	}
+
+	return false;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

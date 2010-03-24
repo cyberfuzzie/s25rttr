@@ -1,4 +1,4 @@
-// $Id: ctrlMultiline.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: ctrlMultiline.cpp 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -47,7 +47,7 @@ ctrlMultiline::ctrlMultiline(Window *parent,
 							 TextureColor tc,
 							 glArchivItem_Font *font,
 							 unsigned int format)
-	: ctrlRectangle(parent, id, x, y, width, height),
+	: Window(x, y, id, parent, width, height),
 	tc(tc), font(font), format(format), lines_in_control((height-4) / font->getHeight()), draw_box(true)
 {
 	AddScrollBar(0, width - SCROLLBAR_WIDTH, 0, SCROLLBAR_WIDTH, height, SCROLLBAR_WIDTH, tc, lines_in_control);
@@ -207,16 +207,10 @@ bool ctrlMultiline::Msg_MouseMove(const MouseCoords& mc)
 }
 
 
-/// SetWidth überschreiben, damit auch die Scrollbar-Position angepasst werden kann
-void ctrlMultiline::SetWidth(const unsigned short width)
+void ctrlMultiline::Resize_(unsigned short width, unsigned short height)
 {
-	// Breite der Basisklasse richtig setzen
-	ctrlRectangle::SetWidth(width);
-	// Zusätzlich Position der Scrollbar anpassen
+	// Position der Scrollbar anpassen
 	GetCtrl<ctrlScrollBar>(0)->Move(width - SCROLLBAR_WIDTH,0);
-
-
-
 }
 
 /// Textzeile ersetzen. Klappt bestimmt nicht mit Scrollbar-Kram

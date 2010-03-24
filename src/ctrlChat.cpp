@@ -1,4 +1,4 @@
-// $Id: ctrlChat.cpp 6135 2010-03-08 18:49:31Z FloSoft $
+// $Id: ctrlChat.cpp 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -60,8 +60,8 @@ ctrlChat::ctrlChat(Window *parent,
 				   unsigned short height,
 				   TextureColor tc, 
 				   glArchivItem_Font *font)
-	: Window(x, y, id, parent), 
-	width(width), height(height), tc(tc), font(font), time_color(0xFFFFFFFF)
+	: Window(x, y, id, parent, width, height), 
+	tc(tc), font(font), time_color(0xFFFFFFFF)
 {
 	// Zeilen pro Seite festlegen errechnen
 	page_size = (height - 4) / (font->getHeight() + 2);
@@ -87,6 +87,66 @@ ctrlChat::~ctrlChat()
 {
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Größe ändern
+ *
+ *  @author Divan
+ */
+void ctrlChat::Resize_(unsigned short width, unsigned short height)
+{
+
+	ctrlScrollBar *scroll = GetCtrl<ctrlScrollBar>(0);
+	scroll->Move(width - SCROLLBAR_WIDTH, 0);
+	scroll->Resize(SCROLLBAR_WIDTH, height);
+
+	// Remember some things
+	const bool was_on_bottom = (scroll->GetPos() + page_size == chat_lines.size());
+	const bool width_changed = (this->width != width && chat_lines.size());
+	unsigned short position=0;
+	// Remember the entry on top
+	for(unsigned short i=1; i <= scroll->GetPos(); ++i)
+		if(!chat_lines[i].secondary)
+			++position;
+
+	// Rewrap
+	if(width_changed)
+	{
+		this->width = width;
+		chat_lines.clear();
+		for(unsigned short i = 0; i < raw_chat_lines.size(); ++i)
+			WrapLine(i);
+	}
+
+	// Zeilen pro Seite festlegen errechnen
+	page_size = (height - 4) / (font->getHeight() + 2);
+
+	scroll->SetPageSize(page_size);
+
+	// If we are were on the last line, keep
+	if(was_on_bottom)
+	{
+		scroll->SetPos(((chat_lines.size() > page_size) ? chat_lines.size() - page_size : 0));
+	}
+	else if(width_changed)
+	{
+		unsigned short i;
+		for(i=0; position > 0; ++i)
+			if(!chat_lines[i].secondary)
+				--position;
+		scroll->SetPos(i);
+	}
+
+	// Don't display empty lines at the end if there are this is
+	// not necessary because of a lack of lines in total 
+	if(chat_lines.size() < page_size)
+	{
+		scroll->SetPos(0);
+	}
+	else if(scroll->GetPos() + page_size > chat_lines.size())
+		scroll->SetPos(chat_lines.size() - page_size);
+
+}
 ///////////////////////////////////////////////////////////////////////////////
 /**
  *  Zeichnet das Chat-Control.
@@ -149,17 +209,18 @@ bool ctrlChat::Draw_()
 	return true;
 }
 
-
 ///////////////////////////////////////////////////////////////////////////////
 /**
  *  
  * 
- *  @author OLiver
+ *  @author Divan
  */
-void ctrlChat::AddMessage(const std::string& time_string,const std::string& player, const unsigned int player_color, const std::string& msg, const unsigned int msg_color)
+void ctrlChat::WrapLine(unsigned short i)
 {
+	ChatLine line = raw_chat_lines[i];
+
 	// Breite von Zeitstring und Spielername berechnen (falls vorhanden)
-	unsigned short prefix_width = ( time_string.length() ? font->getWidth(time_string) : 0) + (player.length() ? (bracket1_size + bracket2_size + font->getWidth(player)) : 0 );
+	unsigned short prefix_width = ( line.time_string.length() ? font->getWidth(line.time_string) : 0) + (line.player.length() ? (bracket1_size + bracket2_size + font->getWidth(line.player)) : 0 );
 
 	// Reicht die Breite des Textfeldes noch nichtmal dafür aus?
 	if(prefix_width > width - 2 - SCROLLBAR_WIDTH)
@@ -171,50 +232,70 @@ void ctrlChat::AddMessage(const std::string& time_string,const std::string& play
 	glArchivItem_Font::WrapInfo wi;
 
 	// Zeilen ggf. wrappen, falls der Platz nich reicht und die Zeilenanfanänge in wi speichern
-	font->GetWrapInfo(msg, width - prefix_width - 2 - SCROLLBAR_WIDTH, width - 2 - SCROLLBAR_WIDTH, wi);
+	font->GetWrapInfo(line.msg, width - prefix_width - 2 - SCROLLBAR_WIDTH, width - 2 - SCROLLBAR_WIDTH, wi);
 
 	// Message-Strings erzeugen aus den WrapInfo
 	std::string * strings = new std::string[wi.positions.size()];
 
-	wi.CreateSingleStrings(msg, strings);
-
-	unsigned old_size = unsigned(chat_lines.size());
-	chat_lines.resize(old_size+wi.positions.size());
+	wi.CreateSingleStrings(line.msg, strings);
 
 	// Zeilen hinzufügen
 	for(unsigned int i = 0; i < wi.positions.size(); ++i)
 	{
+		ChatLine wrap_line;
 		// Nur bei den ersten Zeilen müssen ja Zeit und Spielername mit angegeben werden
-		if(!(chat_lines[old_size+i].secondary = (i ? true : false)))
+		if(!(wrap_line.secondary = (i ? true : false)))
 		{
-			chat_lines[old_size+i].time_string = time_string;
-			chat_lines[old_size+i].player = player;
-			chat_lines[old_size+i].player_color = player_color;
-
-			LOG.lprintf("%s <", time_string.c_str());
-			LOG.lcprintf(player_color, "%s", player.c_str());
-			LOG.lprintf(">: ");
+			wrap_line.time_string = line.time_string;
+			wrap_line.player = line.player;
+			wrap_line.player_color = line.player_color;
 		}
-		else
-			LOG.lprintf("    ");
 
-		chat_lines[old_size+i].msg = strings[i];
-		chat_lines[old_size+i].msg_color = msg_color;
+		wrap_line.msg = strings[i];
+		wrap_line.msg_color = line.msg_color;
 
-		LOG.lcprintf(msg_color, "%s", strings[i].c_str());
-		LOG.lprintf("\n");
+		chat_lines.push_back(wrap_line);
 	}
 
 	delete [] strings;
+}
 
-	ctrlScrollBar *scrollbar = GetCtrl<ctrlScrollBar>(0);
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ * 
+ *  @author OLiver
+ */
+void ctrlChat::AddMessage(const std::string& time_string,const std::string& player, const unsigned int player_color, const std::string& msg, const unsigned int msg_color)
+{
+	ChatLine line;
+
+	line.time_string = time_string;
+	line.player = player;
+	line.player_color = player_color;
+	line.msg = msg;
+	line.msg_color = msg_color;
+	raw_chat_lines.push_back(line);
+
+	const unsigned short oldlength = chat_lines.size();
+
+	// Loggen
+	LOG.lprintf("%s <", time_string.c_str());
+	LOG.lcprintf(player_color, "%s", player.c_str());
+	LOG.lprintf(">: ");
+	LOG.lcprintf(msg_color, "%s", msg.c_str());
+	LOG.lprintf("\n");
+
+	// Umbrechen
+	WrapLine(raw_chat_lines.size()-1);
 
 	// Scrollbar Bescheid sagen
+	ctrlScrollBar *scrollbar = GetCtrl<ctrlScrollBar>(0);
 	scrollbar->SetRange(unsigned(chat_lines.size()));
 
-	// Waren wir am Ende? Dann mit runterscrollen 
-	if(scrollbar->GetPos() == (unsigned(chat_lines.size()) - wi.positions.size()) - page_size)
-		scrollbar->SetPos(scrollbar->GetPos() + wi.positions.size());
+	// Waren wir am Ende? Dann mit runterscrollen
+	if(scrollbar->GetPos() + page_size  == oldlength)
+		scrollbar->SetPos(chat_lines.size() - page_size);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

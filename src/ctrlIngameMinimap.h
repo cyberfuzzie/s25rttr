@@ -1,4 +1,4 @@
-// $Id: ctrlIngameMinimap.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: ctrlIngameMinimap.h 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -50,7 +50,6 @@ public:
 
 	bool Msg_LeftDown(const MouseCoords& mc);
 	bool Msg_MouseMove(const MouseCoords& mc);
-	void Msg_PaintAfter();
 
 	/// Setzt Breite und Höhe des Controls
 	void SetDisplaySize(const unsigned short width, const unsigned short height);

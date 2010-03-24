@@ -1,4 +1,4 @@
-// $Id: ctrlChat.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: ctrlChat.h 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -32,6 +32,8 @@ public:
 	/// Destruktor von @p ctrlChat.
 	virtual ~ctrlChat();
 
+	/// Größe ändern
+	void Resize_(unsigned short width, unsigned short height);
 	/// Fügt eine Chatnachricht hinzu.
 	void AddMessage(const std::string& time_string, const std::string& player, const unsigned int player_color, const std::string& msg, unsigned int msg_color);
 	/// Setzt Farbe der Zeitangaben.
@@ -48,6 +50,8 @@ protected:
 	virtual bool Draw_();
 	/// Vergrößert die Anzahl der Chatzeilen.
 	void ExtendMemory(const unsigned int count);
+	/// Converts an unwrapped line into a wrapped one and appends it
+	void WrapLine(unsigned short i);
 
 private:
 	// Struktur für eine Chatzeile.
@@ -68,12 +72,11 @@ private:
 	};
 
 private:
-	unsigned short width;    ///< Breite des Controls.
-	unsigned short height;   ///< Höhe des Controls.
 	TextureColor tc;         ///< Hintergrundtextur.
 	glArchivItem_Font *font; ///< Schriftart.
 
-	std::vector<ChatLine> chat_lines;  ///< Chatzeilen*/
+	std::vector<ChatLine> raw_chat_lines;  ///< Chatzeilen, noch nicht umgebrochen
+	std::vector<ChatLine> chat_lines;  ///< Chatzeilen
 
 	unsigned int page_size;  ///< Chatzeilen pro Seite
 	unsigned int time_color; ///< Farbe der Zeitangaben

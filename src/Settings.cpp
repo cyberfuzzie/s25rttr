@@ -1,4 +1,4 @@
-// $Id: Settings.cpp 6176 2010-03-24 10:39:41Z FloSoft $
+// $Id: Settings.cpp 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -34,7 +34,7 @@
 	static char THIS_FILE[] = __FILE__;
 #endif
 
-const unsigned int Settings::SETTINGS_VERSION = 11;
+const unsigned int Settings::SETTINGS_VERSION = 12;
 const unsigned int Settings::SETTINGS_SECTIONS = 11;
 const std::string Settings::SETTINGS_SECTION_NAMES[] = {
 	"global", "video", "language", "driver", "sound", "lobby", "server", "proxy", "interface", "ingame", "addons"
@@ -62,11 +62,13 @@ bool Settings::LoadDefaults()
 
 	// video
 	// {
-		video.width       = 800;
-		video.height      = 600;
-		video.fullscreen  = false;
-		video.vsync       = 0;
-		video.vbo         = false;
+		video.fullscreen_width  = 800;
+		video.fullscreen_height = 600;
+		video.windowed_width    = 800;
+		video.windowed_height   = 600;
+		video.fullscreen        = false;
+		video.vsync             = 0;
+		video.vbo               = false;
 	// }
 
 	// language
@@ -183,14 +185,17 @@ bool Settings::Load(void)
 
 	// video
 	// {
-		this->video.width =       video->getValueI("width");
-		this->video.height =      video->getValueI("height");
+		this->video.windowed_width =       video->getValueI("windowed_width");
+		this->video.windowed_height =      video->getValueI("windowed_height");
+		this->video.fullscreen_width =       video->getValueI("fullscreen_width");
+		this->video.fullscreen_height =      video->getValueI("fullscreen_height");
 		this->video.fullscreen = (video->getValueI("fullscreen") ? true : false);
 		this->video.vsync =       video->getValueI("vsync");
 		this->video.vbo =        (video->getValueI("vbo") ? true : false);
 	// };
 
-	if(this->video.width == 0 || this->video.height == 0)
+	if(this->video.fullscreen_width == 0 || this->video.fullscreen_height == 0
+	   || this->video.windowed_width == 0 || this->video.windowed_height == 0)
 	{
 		warning("Corrupted \"%s\" found, reverting to default values.\n", GetFilePath(FILE_PATHS[0]).c_str());
 		return LoadDefaults();
@@ -327,8 +332,10 @@ void Settings::Save(void)
 
 	// video
 	// {
-		video->setValue("width", this->video.width);
-		video->setValue("height", this->video.height);
+		video->setValue("fullscreen_width", this->video.fullscreen_width);
+		video->setValue("fullscreen_height", this->video.fullscreen_height);
+		video->setValue("windowed_width", this->video.windowed_width);
+		video->setValue("windowed_height", this->video.windowed_height);
 		video->setValue("fullscreen", (this->video.fullscreen ? 1 : 0) );
 		video->setValue("vsync", this->video.vsync);
 		video->setValue("vbo", (this->video.vbo ? 1 : 0) );

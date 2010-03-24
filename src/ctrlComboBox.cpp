@@ -1,4 +1,4 @@
-// $Id: ctrlComboBox.cpp 6065 2010-02-22 10:32:37Z FloSoft $
+// $Id: ctrlComboBox.cpp 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -47,18 +47,63 @@ ctrlComboBox::ctrlComboBox(Window *parent,
 					 unsigned short height,
 					 TextureColor tc, 
 					 glArchivItem_Font *font, 
-					 unsigned short list_height, 
+					 unsigned short max_list_height, 
 					 bool readonly)
-	: Window(x, y, id, parent), 
-	width(width), height(height), tc(tc), font(font), list_height(list_height), readonly(readonly), selection(0), last_show(false)
+	: Window(x, y, id, parent, width, height), 
+	tc(tc), font(font), max_list_height(max_list_height), readonly(readonly), selection(0), last_show(false)
 {
-	ctrlList *liste = AddList(0, 0, height, width, height, tc, font);
+	ctrlList *liste = AddList(0, 0, height, width, 4, tc, font);
 
 	// Liste am Anfang nicht anzeigen
 	liste->SetVisible(false);
 
 	if(!readonly)
 		AddImageButton(1, width-height, 0, height, height, tc, LOADER.GetImageN("io", 34));
+
+	Resize_(width, height);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Größe verändern
+ * 
+ *  @author Divan
+ *  @author OLiver
+ */
+void ctrlComboBox::Resize_(unsigned short width, unsigned short height)
+{
+	ctrlButton *button = GetCtrl<ctrlButton>(1);
+	if(button)
+	{
+		button->Move(width-height, 0);
+		button->Resize(height, height);
+	}
+
+	ctrlList *list = GetCtrl<ctrlList>(0);
+
+	unsigned short list_height = 4;
+
+	// Langsam die Höhe der maximalen annähern
+	for(unsigned int i = 0; i < list->GetLineCount(); ++i)
+	{
+		// zu große geworden?
+		list_height += font->getHeight();
+
+		if(list_height > (scale ? ScaleY(max_list_height) : max_list_height))
+		{
+			// kann nicht mal ein Item aufnehmen, dann raus
+			if(i == 0)
+				return;
+
+			// Höhe um eins erniedrigen, damits wieder kleiner ist als die maximale
+			list_height -= font->getHeight();;
+
+			break;
+		}
+	}
+
+	list->Move(0, height);
+	list->Resize(width, list_height);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -237,32 +282,8 @@ void ctrlComboBox::Msg_ListSelectItem(const unsigned int ctrl_id, const unsigned
  */
 void ctrlComboBox::AddString(const std::string& text)
 {
-	ctrlList *liste = GetCtrl<ctrlList>(0);
-
-	liste->AddString(text);
-
-	unsigned short height = 4;
-
-	// Langsam die Höhe der maximalen annähern
-	for(unsigned int i = 0; i < liste->GetLineCount(); ++i)
-	{
-		// zu große geworden?
-		height += font->getHeight();
-
-		if(height > list_height)
-		{
-			// kann nicht mal ein Item aufnehmen, dann raus
-			if(i == 0)
-				return;
-
-			// Höhe um eins erniedrigen, damits wieder kleiner ist als die maximale
-			height -= font->getHeight();;
-
-			break;
-		}
-	}
-
-	liste->SetHeight(height);
+	GetCtrl<ctrlList>(0)->AddString(text);
+	Resize_(width, height);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -274,6 +295,7 @@ void ctrlComboBox::AddString(const std::string& text)
 void ctrlComboBox::DeleteAllItems()
 {
 	GetCtrl<ctrlList>(0)->DeleteAllItems();
+	Resize_(width, height);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

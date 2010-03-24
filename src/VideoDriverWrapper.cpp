@@ -1,4 +1,4 @@
-// $Id: VideoDriverWrapper.cpp 5989 2010-02-10 14:13:58Z FloSoft $
+// $Id: VideoDriverWrapper.cpp 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -44,7 +44,7 @@
  *
  *  @author FloSoft
  */
-VideoDriverWrapper::VideoDriverWrapper() :  videodriver(NULL), screen_width(0), screen_height(0), fullscreen(false), texture_pos(0)
+VideoDriverWrapper::VideoDriverWrapper() :  videodriver(NULL), texture_pos(0)
 {
 	memset(texture_list, 0, sizeof(unsigned int)*100000);
 }
@@ -122,16 +122,15 @@ bool VideoDriverWrapper::CreateScreen(const unsigned short screen_width, const u
 		return false;
 	}
 
-	this->screen_width = screen_width;
-	this->screen_height = screen_height;
-	this->fullscreen = fullscreen;
-
 	// DriverWrapper Initialisieren
-	if(!Initialize(screen_width, screen_height))
+	if(!Initialize())
 	{
 		fatal_error("Initialisieren des OpenGL-Kontexts fehlgeschlagen!\n");
 		return false;
 	}
+
+	// WindowManager informieren
+	WindowManager::inst().Msg_ScreenResize(screen_width, screen_height);
 
 	// VSYNC ggf abschalten/einschalten
 	if(GLOBALVARS.ext_swapcontrol)
@@ -144,39 +143,22 @@ bool VideoDriverWrapper::CreateScreen(const unsigned short screen_width, const u
 /**
  *  Verändert Auflösung, Fenster/Fullscreen
  *
- *  @param[in] screen_width neue Breite des Fensters
- *  @param[in] screen_height neue Höhe des Fensters
+ *  @param[in] screenWidth neue Breite des Fensters
+ *  @param[in] screenHeight neue Höhe des Fensters
  *  @param[in] fullscreen Vollbild oder nicht
  *
  *  @return Bei Erfolg @p true ansonsten @p false
  *
  *  @author FloSoft
  */
-bool VideoDriverWrapper::ResizeScreen(const unsigned short screen_width, const unsigned short screen_height, const bool fullscreen)
+bool VideoDriverWrapper::ResizeScreen(const unsigned short screenWidth, const unsigned short screenHeight, const bool fullscreen)
 {
-	if(!videodriver->ResizeScreen(screen_width, screen_height, fullscreen))
+	if(!videodriver->ResizeScreen(screenWidth, screenHeight, fullscreen))	
 		return false;
 
-	this->screen_width = screen_width;
-	this->screen_height = screen_height;
-	this->fullscreen = fullscreen;
+	RenewViewport();
 
-	// Viewport mit widthxheight setzen
-	glViewport(0, 0, screen_width, screen_height);
-
-	// Orthogonale Matrix erstellen
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-
-	// ... und laden
-	glOrtho(0,screen_width,0,screen_height,-100,100);
-
-	// 0; 0 soll obere linke Ecke sein
-	glRotated(180,1,0,0);
-	glTranslated(0,-screen_height,0);
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
+	WindowManager::inst().Msg_ScreenResize(screenWidth, screenHeight);
 
 	return true;
 }
@@ -325,10 +307,9 @@ bool VideoDriverWrapper::Run()
  *
  *  @author FloSoft
  */
-bool VideoDriverWrapper::Initialize(const short width, const short height)
+bool VideoDriverWrapper::Initialize()
 {
-	// Viewport mit widthxheight setzen
-	glViewport(0, 0, width, height);
+	RenewViewport();
 
 	// Depthbuffer und Colorbuffer einstellen
 	glClearColor(0.0, 0.0, 0.0, 0.5);
@@ -352,20 +333,6 @@ bool VideoDriverWrapper::Initialize(const short width, const short height)
 	// Nur obere Seite von Dreiecke rendern --> Performance
 	glEnable(GL_CULL_FACE);
 
-	// Orthogonale Matrix erstellen
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-
-	// ... und laden
-	glOrtho(0,width,0,height,-100,100);
-
-	// 0; 0 soll obere linke Ecke sein
-	glRotated(180,1,0,0);
-	glTranslated(0,-height,0);
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-
 	// Extensions laden
 	if(!LoadAllExtensions())
 		return false;
@@ -381,9 +348,38 @@ bool VideoDriverWrapper::Initialize(const short width, const short height)
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  Lädt die DriverWrapper-Extensions.
+ *  Viewport (neu) setzen
  *
  *  @author FloSoft
+ */
+void VideoDriverWrapper::RenewViewport(bool onlyRenew)
+{
+	const unsigned short width  = GetScreenWidth();	
+	const unsigned short height = GetScreenHeight();	
+
+	// Viewport mit widthxheight setzen
+	glViewport(0, 0, width, height);
+
+	// Orthogonale Matrix erstellen
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+
+	// ... und laden
+	glOrtho(0,width,0,height,-100,100);
+
+	// 0; 0 soll obere linke Ecke sein
+	glRotated(180,1,0,0);
+	glTranslated(0,-height,0);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  lädt die driverwrapper-extensions.
+ *
+ *  @author flosoft
  */
 bool VideoDriverWrapper::LoadAllExtensions()
 {

@@ -1,4 +1,4 @@
-// $Id: iwAction.cpp 6067 2010-02-22 17:06:18Z jh $
+// $Id: iwAction.cpp 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -29,7 +29,6 @@
 #include "AddonManager.h"
 #include "Loader.h"
 #include "controls.h"
-#include "Settings.h"
 #include "VideoDriverWrapper.h"
 #include "GameClient.h"
 #include "GameWorld.h"
@@ -339,9 +338,9 @@ iwAction::iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, cons
 	
 	main_tab->SetSelection(0, true);
 	
-	if(x+GetWidth() > SETTINGS.video.width)
+	if(x+GetWidth() > VideoDriverWrapper::inst().GetScreenWidth())
 		x = mouse_x-GetWidth()-40;
-	if(y+GetHeight() > SETTINGS.video.height)
+	if(y+GetHeight() > VideoDriverWrapper::inst().GetScreenHeight())
 		y = mouse_y-GetHeight()-40;
 	
 	VideoDriverWrapper::inst().SetMousePos(GetX()+20,GetY()+75);
@@ -503,7 +502,7 @@ void iwAction::Msg_TabChange(const unsigned int ctrl_id, const unsigned short ta
 			}
 
 
-			SetHeight(height);
+			SetIwHeight(height);
 		} break;
 	}
 	
@@ -523,7 +522,7 @@ void iwAction::Msg_Group_TabChange(const unsigned group_id,const unsigned int ct
 			case Tabs::BT_CASTLE: height = 186; break;
 			case Tabs::BT_MINE:   height = 186; break;
 			}
-			SetHeight(height);
+			SetIwHeight(height);
 		} break;
 	}
 }

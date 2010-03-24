@@ -1,4 +1,4 @@
-// $Id: Window.cpp 6117 2010-03-05 21:43:17Z jh $
+// $Id: Window.cpp 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -41,7 +41,7 @@
  *  @author OLiver
  */
 Window::Window(void)
-	: x(0), y(0), id(0), parent(NULL), active(false), visible(true), scale(false), tooltip("")
+	: x(0), y(0), width(0), height(0), id(0), parent(NULL), active(false), visible(true), scale(false), tooltip("")
 {
 }
 
@@ -60,8 +60,10 @@ Window::Window(unsigned short x,
 			   unsigned short y, 
 			   unsigned int id, 
 			   Window *parent, 
+			   unsigned short width, 
+			   unsigned short height, 
 			   const std::string& tooltip)
-	: x(x), y(y), id(id), parent(parent), active(false), visible(true), scale(false), tooltip(tooltip)
+	: x(x), y(y), width(width), height(height), id(id), parent(parent), active(false), visible(true), scale(false), tooltip(tooltip)
 {
 }
 
@@ -445,7 +447,7 @@ ctrlComboBox *Window::AddComboBox(unsigned int id,
 								  unsigned short height,
 								  TextureColor tc, 
 								  glArchivItem_Font *font,
-								  unsigned short list_height,
+								  unsigned short max_list_height,
 								  bool readonly)
 {
 	if(scale)
@@ -454,10 +456,9 @@ ctrlComboBox *Window::AddComboBox(unsigned int id,
 		y = ScaleY(y);
 		width = ScaleX(width);
 		height = ScaleY(height);
-		list_height = ScaleY(list_height);
 	}
 
-	return AddCtrl(id, new ctrlComboBox(this, id, x, y, width, height, tc, font, list_height, readonly));
+	return AddCtrl(id, new ctrlComboBox(this, id, x, y, width, height, tc, font, max_list_height, readonly));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1314,6 +1315,17 @@ bool Window::Msg_KeyDown(const KeyEvent& ke)
 void Window::Msg_ButtonClick(const unsigned int ctrl_id)
 {
 }
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author Divan
+ */
+void Window::Msg_ScreenResize(const ScreenResizeEvent& sr)
+{
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 /**

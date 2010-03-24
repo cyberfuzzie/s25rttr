@@ -1,4 +1,4 @@
-// $Id: ctrlTab.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: ctrlTab.cpp 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -44,8 +44,8 @@ ctrlTab::ctrlTab(Window *parent,
 				 unsigned short x, 
 				 unsigned short y,
 				 unsigned short width)
-	: Window(x, y, id, parent),
-	width(width), tab_count(0), tab_selection(0)
+	: Window(x, y, id, parent, width, 45),
+	tab_count(0), tab_selection(0)
 {
 	memset(tabs, 0, MAX_TAB_COUNT * sizeof(unsigned int));
 }

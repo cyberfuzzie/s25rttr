@@ -1,4 +1,4 @@
-// $Id: ctrlVarDeepening.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: ctrlVarDeepening.cpp 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -49,8 +49,14 @@ ctrlVarDeepening::ctrlVarDeepening(Window *parent,
 								   unsigned int count,
 								   va_list liste)
 	: ctrlVarText(parent, id, x, y, text, color, 0, font, count, liste), 
-	tc(tc), width(width), height(height)
+	tc(tc)
 {
+	// We don't want to pass these through all those constructors 
+	// of only-text objects down to the Window class. This is a special
+	// situation, as we are a Deepening _and_ a VarText instead
+	// of owning the VarText.
+	this->width  = width;
+	this->height = height;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

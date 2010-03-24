@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.cpp 6176 2010-03-24 10:39:41Z FloSoft $
+// $Id: dskGameInterface.cpp 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -147,14 +147,17 @@ dskGameInterface::~dskGameInterface()
  *  @author OLiver
  */
 void dskGameInterface::SettingsChanged(void)
- {
+{
+}
+
+void dskGameInterface::Resize_(unsigned short width, unsigned short height)
+{
  	// recreate borders
- 	cbb.buildBorder(VideoDriverWrapper::inst().GetScreenWidth(),
- 		VideoDriverWrapper::inst().GetScreenHeight(),&borders);
+ 	cbb.buildBorder(width, height, &borders);
  
  	// move buttons
- 	int barx = (VideoDriverWrapper::inst().GetScreenWidth() - LOADER.GetImageN("resource", 29)->getWidth()) / 2 + 44;
- 	int bary = VideoDriverWrapper::inst().GetScreenHeight() - LOADER.GetImageN("resource", 29)->getHeight() + 4;
+ 	int barx = (width - LOADER.GetImageN("resource", 29)->getWidth()) / 2 + 44;
+ 	int bary = height - LOADER.GetImageN("resource", 29)->getHeight() + 4;
  
  	ctrlImageButton *button = GetCtrl<ctrlImageButton>(0);
  	button->Move(barx, bary, true);
@@ -170,9 +173,8 @@ void dskGameInterface::SettingsChanged(void)
  	ctrlText *text = GetCtrl<ctrlText>(4);
 	text->Move(barx + 37 * 3 + 18, bary + 24);
  
- 	// refresh view (does not change position)
- 	this->gwv->MoveTo(0, 0);
- }
+ 	this->gwv->Resize(width, height);
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
@@ -269,7 +271,7 @@ void dskGameInterface::Msg_PaintAfter()
 	{
 		GameClientPlayer *player = GAMECLIENT.GetPlayer(i);
 		if(player->is_lagging)
-			LOADER.GetImageN("rttr", 0)->Draw(SETTINGS.video.width-70-i*40, 35, 30, 30, 0, 0, 0, 0,  COLOR_WHITE, COLORS[player->color]);
+			LOADER.GetImageN("rttr", 0)->Draw(VideoDriverWrapper::inst().GetScreenWidth()-70-i*40, 35, 30, 30, 0, 0, 0, 0,  COLOR_WHITE, COLORS[player->color]);
 	}
 }
 
@@ -281,8 +283,8 @@ void dskGameInterface::Msg_PaintAfter()
  */
 bool dskGameInterface::Msg_LeftDown(const MouseCoords& mc)
 {
-	if(Coll(mc.x,mc.y,SETTINGS.video.width/2-LOADER.GetImageN("resource", 29)->getWidth()/2+44,
-		SETTINGS.video.height-LOADER.GetImageN("resource", 29)->getHeight()+4,37*4,32*4))
+	if(Coll(mc.x,mc.y,VideoDriverWrapper::inst().GetScreenWidth()/2-LOADER.GetImageN("resource", 29)->getWidth()/2+44,
+		VideoDriverWrapper::inst().GetScreenHeight()-LOADER.GetImageN("resource", 29)->getHeight()+4,37*4,32*4))
 		return false;
 
 	// Start scrolling also on Ctrl + left click

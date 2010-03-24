@@ -1,4 +1,4 @@
-// $Id: ctrlGroup.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: ctrlGroup.h 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -27,6 +27,8 @@ class ctrlGroup : public Window
 {
 public:
 	ctrlGroup(Window *parent, unsigned int id, bool scale = false);
+
+	void Msg_ScreenResize(const ScreenResizeEvent& sr);
 
 	virtual void Msg_ButtonClick(const unsigned int ctrl_id);
 	virtual void Msg_EditEnter(const unsigned int ctrl_id);

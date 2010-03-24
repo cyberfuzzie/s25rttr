@@ -1,4 +1,4 @@
-// $Id: ctrlList.h 6065 2010-02-22 10:32:37Z FloSoft $
+// $Id: ctrlList.h 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -31,6 +31,9 @@ public:
 	/// Destruktor von @p ctrlList.
 	virtual ~ctrlList(void);
 
+	/// Größe verändern
+	void Resize_(unsigned short width, unsigned short height);
+
 	/// Neuen String zur Listbox hinzufügen.
 	void AddString(const std::string& text);
 	/// Verändert einen String
@@ -41,8 +44,6 @@ public:
 	const std::string& GetItemText(unsigned short line) const;
 	/// liefert den Wert der aktuell gewählten Zeile.
 	const std::string& GetSelItemText(void) const { return GetItemText(selection); };
-	/// setzt die Höhe.
-	void SetHeight(unsigned short height);
 	/// Vertauscht zwei Zeilen.
 	void Swap(unsigned short first, unsigned short second);
 	/// Löscht ein Element
@@ -51,9 +52,6 @@ public:
 	unsigned short GetLineCount(void) const { return static_cast<unsigned short>(lines.size()); }
 	unsigned short GetSelection(void) const { return static_cast<unsigned short>(selection); };
 	void SetSelection(unsigned short selection) { if(selection < lines.size()) this->selection = selection; }
-	void SetWidth(unsigned short width) { this->width = width; }
-	unsigned short GetWidth() const { return width; }
-	unsigned short GetHeight() const { return height; }
 	
 	virtual bool Msg_MouseMove(const MouseCoords& mc);
 	virtual bool Msg_LeftDown(const MouseCoords& mc);
@@ -66,8 +64,6 @@ protected:
 	virtual bool Draw_(void);
 
 private:
-	unsigned short width;
-	unsigned short height;
 	TextureColor tc;
 	glArchivItem_Font *font;
 

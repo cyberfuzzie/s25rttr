@@ -1,4 +1,4 @@
-// $Id: WinAPI.cpp 6176 2010-03-24 10:39:41Z FloSoft $
+// $Id: WinAPI.cpp 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -325,6 +325,8 @@ bool VideoWinAPI::CreateScreen(unsigned short width, unsigned short height, cons
 		ChangeDisplaySettings(&dm, CDS_FULLSCREEN);
 	}
 
+	this->screenWidth  = width;
+	this->screenHeight = height;
 	this->fullscreen = fullscreen;
 
 	// Das Fenster anzeigen
@@ -389,6 +391,8 @@ bool VideoWinAPI::ResizeScreen(unsigned short width, unsigned short height, cons
 		ChangeDisplaySettings(&dm, CDS_FULLSCREEN);
 	}
 
+	this->screenWidth  = width;
+	this->screenHeight = height;
 	this->fullscreen = fullscreen;
 
 	// Das Fenster anzeigen

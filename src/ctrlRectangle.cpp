@@ -1,4 +1,4 @@
-// $Id: ctrlRectangle.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: ctrlRectangle.cpp 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -22,9 +22,3 @@
 #include "main.h"
 #include "ctrlRectangle.h"
 
-
-ctrlRectangle::ctrlRectangle(Window *parent, unsigned int id, unsigned short x, unsigned short y,
-							 unsigned short width, unsigned short height) : Window(x, y, id, parent), width(width),
-							 height(height)
-{
-}

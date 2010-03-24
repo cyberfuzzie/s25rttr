@@ -1,4 +1,4 @@
-// $Id: iwHelp.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: iwHelp.cpp 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -68,7 +68,7 @@ iwHelp::iwHelp(const GUI_ID gui_id, const std::string& title, const std::string&
 	unsigned short text_height=show_lines*NormalFont->getHeight();
 
 	// Höhe setzen
-	SetHeight(text_height+40);
+	SetIwHeight(text_height+40);
 	// Fenster neben die Maus schieben
 	MoveNextToMouse();
 

@@ -1,4 +1,4 @@
-// $Id: ctrlMultiline.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: ctrlMultiline.h 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -21,7 +21,7 @@
 
 #include "ctrlRectangle.h"
 
-class ctrlMultiline : public ctrlRectangle
+class ctrlMultiline : public Window
 {
 public:
 
@@ -47,11 +47,10 @@ public:
 	virtual bool Msg_WheelDown(const MouseCoords& mc);
 	virtual bool Msg_MouseMove(const MouseCoords& mc);
 
-	/// SetWidth überschreiben, damit auch die Scrollbar-Position angepasst werden kann
-	void SetWidth(const unsigned short width);
-
 protected:
 	virtual bool Draw_(void);
+
+	void Resize_(unsigned short width, unsigned short height);
 
 private:
 

@@ -1,4 +1,4 @@
-// $Id: VideoDriver.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: VideoDriver.cpp 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -94,7 +94,7 @@ static char THIS_FILE[] = __FILE__;
  *
  *  @author FloSoft
  */
-VideoDriver::VideoDriver(VideoDriverLoaderInterface * CallBack) : CallBack(CallBack), initialized(false), fullscreen(false)
+VideoDriver::VideoDriver(VideoDriverLoaderInterface * CallBack) : CallBack(CallBack), initialized(false), screenWidth(0), screenHeight(0), fullscreen(false)
 {
 	memset(keyboard, 0, 512);
 }

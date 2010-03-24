@@ -50,19 +50,19 @@ static char THIS_FILE[] = __FILE__;
  *  @author NastX
  */
 iwSettings::iwSettings(dskGameInterface *gameDesktop)
-	: IngameWindow(CGI_SETTINGS, 0xFFFF, 0xFFFF, 300, 300, _("Settings"), LOADER.GetImageN("resource", 41)),
+	: IngameWindow(CGI_SETTINGS, 0xFFFF, 0xFFFF, 370, 172, _("Settings"), LOADER.GetImageN("resource", 41)),
 	gameDesktop(gameDesktop)
 {
-	AddText(  46,  15,  40, _("Resolution :"), COLOR_YELLOW, 0, NormalFont);
-	AddText(  47,  15,  85, _("Mode :"), COLOR_YELLOW, 0, NormalFont);
-	AddCheckBox(4, 110, 120, 150, 26, TC_GREY, _("Statistics Scale"), NormalFont, false);
+	AddText(  46,  15,  40, _("Fullscreen resolution:"), COLOR_YELLOW, 0, NormalFont);
+	AddText(  47,  15,  85, _("Mode:"), COLOR_YELLOW, 0, NormalFont);
+	AddCheckBox(4, 200, 124, 150, 26, TC_GREY, _("Statistics Scale"), NormalFont, false);
 	GetCtrl<ctrlCheck>(4)->SetCheck(Settings::inst().ingame.scale_statistics);
 
 	// "Vollbild"
 	ctrlOptionGroup *optiongroup = AddOptionGroup(10, ctrlOptionGroup::CHECK, scale);
 	optiongroup = AddOptionGroup(3, ctrlOptionGroup::CHECK, scale);
-	optiongroup->AddTextButton(1, 110, 70, 150, 22, TC_GREY, _("Fullscreen"), NormalFont);
-	optiongroup->AddTextButton(2, 110, 95, 150, 22, TC_GREY, _("Windowed"), NormalFont);
+	optiongroup->AddTextButton(1, 200, 70, 150, 22, TC_GREY, _("Fullscreen"), NormalFont);
+	optiongroup->AddTextButton(2, 200, 95, 150, 22, TC_GREY, _("Windowed"), NormalFont);
 
 	// "Vollbild" setzen
 	optiongroup = GetCtrl<ctrlOptionGroup>(3);
@@ -70,7 +70,7 @@ iwSettings::iwSettings(dskGameInterface *gameDesktop)
 	VideoDriverWrapper::inst().ListVideoModes(video_modes);
 
 	// "Auflösung"
-	AddComboBox(0, 110, 35, 150, 22, TC_GREY, NormalFont, 150);
+	AddComboBox(0, 200, 35, 150, 22, TC_GREY, NormalFont, 150);
 
 	// Und zu der Combobox hinzufügen
 	for(unsigned i = 0;i<video_modes.size();++i)
@@ -84,8 +84,8 @@ iwSettings::iwSettings(dskGameInterface *gameDesktop)
 			GetCtrl<ctrlComboBox>(0)->AddString(str);
 
 			// Ist das die aktuelle Auflösung? Dann selektieren
-			if(video_modes[i].width == SETTINGS.video.width && 
-				video_modes[i].height == SETTINGS.video.height)
+			if(video_modes[i].width == SETTINGS.video.fullscreen_width && 
+				video_modes[i].height == SETTINGS.video.fullscreen_height)
 				GetCtrl<ctrlComboBox>(0)->SetSelection(i);
 		}
 		else
@@ -105,19 +105,21 @@ iwSettings::iwSettings(dskGameInterface *gameDesktop)
 iwSettings::~iwSettings()
 { 
 	ctrlComboBox *SizeCombo = GetCtrl<ctrlComboBox>(0);
-	SETTINGS.video.width = video_modes[SizeCombo->GetSelection()].width;
-	SETTINGS.video.height = video_modes[SizeCombo->GetSelection()].height;
+	SETTINGS.video.fullscreen_width = video_modes[SizeCombo->GetSelection()].width;
+	SETTINGS.video.fullscreen_height = video_modes[SizeCombo->GetSelection()].height;
 
 	// Auflösung/Vollbildmodus geändert?
-	if(SETTINGS.video.width != VideoDriverWrapper::inst().GetScreenWidth() ||
-		SETTINGS.video.height != VideoDriverWrapper::inst().GetScreenHeight() ||
-		SETTINGS.video.fullscreen != VideoDriverWrapper::inst().IsFullscreen())
+	if((SETTINGS.video.fullscreen && 
+	   (SETTINGS.video.fullscreen_width != VideoDriverWrapper::inst().GetScreenWidth()
+	    ||
+	    SETTINGS.video.fullscreen_height != VideoDriverWrapper::inst().GetScreenHeight())
+	  ) || SETTINGS.video.fullscreen != VideoDriverWrapper::inst().IsFullscreen())
 	{
-		if(!VideoDriverWrapper::inst().ResizeScreen(SETTINGS.video.width,SETTINGS.video.height,SETTINGS.video.fullscreen)){
+		if(!VideoDriverWrapper::inst().ResizeScreen(SETTINGS.video.fullscreen ? SETTINGS.video.fullscreen_width : SETTINGS.video.windowed_width,
+							    SETTINGS.video.fullscreen ? SETTINGS.video.fullscreen_height : SETTINGS.video.windowed_height,
+							    SETTINGS.video.fullscreen))
+				{
 			// WindowManager::inst().Show(new iwMsgbox(_("Sorry!"), _("You need to restart your game to change the screen resolution!"), this, MSB_OK, MSB_EXCLAMATIONGREEN, 1));
-		} else {
-			// notify that settings where changed
-			this->gameDesktop->SettingsChanged();
 		}
 	}
 }

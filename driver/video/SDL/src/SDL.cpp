@@ -1,4 +1,4 @@
-// $Id: SDL.cpp 6176 2010-03-24 10:39:41Z FloSoft $
+// $Id: SDL.cpp 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -190,7 +190,11 @@ bool VideoSDL::CreateScreen(unsigned short width, unsigned short height, const b
 	// TODO: Icon setzen
 
 	// Videomodus setzen
+#ifdef _WIN32
 	if(!(screen = SDL_SetVideoMode( width, height, 32, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_OPENGL | ((fullscreen) ? SDL_FULLSCREEN : 0) )))
+#else
+	if(!(screen = SDL_SetVideoMode( width, height, 32, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_OPENGL | ((!fullscreen) ? SDL_RESIZABLE : 0) | ((fullscreen) ? SDL_FULLSCREEN : 0) )))
+#endif
 	{
 		fprintf(stderr, "%s\n", SDL_GetError());
 		return false;
@@ -211,6 +215,9 @@ bool VideoSDL::CreateScreen(unsigned short width, unsigned short height, const b
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
 	memset(keyboard, false, sizeof(bool) * 512);
+
+	this->screenWidth  = width;
+	this->screenHeight = height;
 	this->fullscreen = fullscreen;
 
 	SDL_ShowCursor(SDL_DISABLE);
@@ -236,6 +243,10 @@ bool VideoSDL::ResizeScreen(unsigned short width, unsigned short height, const b
 {
 	if(!initialized)
 		return false;
+
+	this->screenWidth  = width;
+	this->screenHeight = height;
+	this->fullscreen = fullscreen;
 
 	// Die SDL-Implementierung kann das noch nicht direkt, also umweg über WinAPI!
 #ifdef WIN32
@@ -285,8 +296,6 @@ bool VideoSDL::ResizeScreen(unsigned short width, unsigned short height, const b
 			ChangeDisplaySettings(&dm, CDS_FULLSCREEN);
 		}
 
-		this->fullscreen = fullscreen;
-
 		// Das Fenster anzeigen
 		ShowWindow(info.window, SW_SHOW);
 		// Das Fenster in den Vordergrund rcken
@@ -296,7 +305,7 @@ bool VideoSDL::ResizeScreen(unsigned short width, unsigned short height, const b
 	}
 #else // unter anderen Platformen kann SDL das ohne den OpenGL-Kontext zu killen
 	// Videomodus setzen
-	if(!(screen = SDL_SetVideoMode( width, height, 32, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_OPENGL | ((fullscreen) ? SDL_FULLSCREEN : 0) )))
+	if(!(screen = SDL_SetVideoMode( width, height, 32, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_OPENGL | ((!fullscreen) ? SDL_RESIZABLE : 0) | ((fullscreen) ? SDL_FULLSCREEN : 0) )))
 	{
 		fprintf(stderr, "%s\n", SDL_GetError());
 		return false;
@@ -358,6 +367,14 @@ bool VideoSDL::MessageLoop(void)
 
 		case SDL_QUIT:
 			return false;
+
+		case SDL_VIDEORESIZE:
+			{
+				screenWidth = ev.resize.w;
+				screenHeight = ev.resize.h;
+
+				CallBack->ScreenResized(screenWidth, screenHeight);
+			} break;	
 
 		case SDL_KEYDOWN:
 			{

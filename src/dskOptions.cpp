@@ -1,4 +1,4 @@
-// $Id: dskOptions.cpp 6077 2010-02-23 19:37:53Z FloSoft $
+// $Id: dskOptions.cpp 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -159,7 +159,7 @@ dskOptions::dskOptions(void) : Desktop(LOADER.GetImageN("setup013", 0))
 	// }
 
 	// "Auflösung"
-	groupGrafik->AddText(  40,  80, 80, _("Resolution:"), COLOR_YELLOW, 0, NormalFont);
+	groupGrafik->AddText(  40,  80, 80, _("Fullscreen resolution:"), COLOR_YELLOW, 0, NormalFont);
 	groupGrafik->AddComboBox(41, 280, 75, 120, 22, TC_GREY, NormalFont, 150);
 
 	// "Vollbild"
@@ -254,8 +254,8 @@ dskOptions::dskOptions(void) : Desktop(LOADER.GetImageN("setup013", 0))
 			groupGrafik->GetCtrl<ctrlComboBox>(41)->AddString(str);
 
 			// Ist das die aktuelle Auflösung? Dann selektieren
-			if(video_modes[i].width == SETTINGS.video.width && 
-				video_modes[i].height == SETTINGS.video.height)
+			if(video_modes[i].width == SETTINGS.video.fullscreen_width && 
+				video_modes[i].height == SETTINGS.video.fullscreen_height)
 				groupGrafik->GetCtrl<ctrlComboBox>(41)->SetSelection(i);
 		}
 		else
@@ -392,8 +392,8 @@ void dskOptions::Msg_Group_ComboSelectItem(const unsigned int group_id, const un
 		} break;
 	case 41: // Auflösung
 		{
-			SETTINGS.video.width = video_modes[selection].width;
-			SETTINGS.video.height = video_modes[selection].height;
+			SETTINGS.video.fullscreen_width = video_modes[selection].width;
+			SETTINGS.video.fullscreen_height = video_modes[selection].height;
 		} break;
 	case 51: // Limit Framerate
 		{
@@ -528,11 +528,15 @@ void dskOptions::Msg_ButtonClick(const unsigned int ctrl_id)
 			SETTINGS.Save();
 			
 			// Auflösung/Vollbildmodus geändert?
-			if(SETTINGS.video.width != VideoDriverWrapper::inst().GetScreenWidth() ||
-				SETTINGS.video.height != VideoDriverWrapper::inst().GetScreenHeight() ||
-				SETTINGS.video.fullscreen != VideoDriverWrapper::inst().IsFullscreen())
+			if((SETTINGS.video.fullscreen && 
+			   (SETTINGS.video.fullscreen_width != VideoDriverWrapper::inst().GetScreenWidth()
+			    ||
+			    SETTINGS.video.fullscreen_height != VideoDriverWrapper::inst().GetScreenHeight())
+			  ) || SETTINGS.video.fullscreen != VideoDriverWrapper::inst().IsFullscreen())
 			{
-				if(!VideoDriverWrapper::inst().ResizeScreen(SETTINGS.video.width,SETTINGS.video.height,SETTINGS.video.fullscreen))
+				if(!VideoDriverWrapper::inst().ResizeScreen(SETTINGS.video.fullscreen ? SETTINGS.video.fullscreen_width : SETTINGS.video.windowed_width,
+				                                            SETTINGS.video.fullscreen ? SETTINGS.video.fullscreen_height : SETTINGS.video.windowed_height,
+				                                            SETTINGS.video.fullscreen))
 				{
 					WindowManager::inst().Show(new iwMsgbox(_("Sorry!"), _("You need to restart your game to change the screen resolution!"), this, MSB_OK, MSB_EXCLAMATIONGREEN, 1));
 					break;

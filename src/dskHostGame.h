@@ -1,4 +1,4 @@
-// $Id: dskHostGame.h 6040 2010-02-17 20:12:22Z FloSoft $
+// $Id: dskHostGame.h 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -39,6 +39,8 @@ public:
 	/// Map übergeben, damit die Kartenvorschau erstellt werden kann
 	dskHostGame();
 
+	/// Größe ändern-Reaktionen die nicht vom Skaling-Mechanismus erfasst werden.
+	void Resize_(unsigned short width, unsigned short height);
 private:
 
 	void TogglePlayerReady(unsigned char player, bool ready);

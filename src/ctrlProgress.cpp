@@ -1,4 +1,4 @@
-// $Id: ctrlProgress.cpp 6052 2010-02-20 14:06:09Z FloSoft $
+// $Id: ctrlProgress.cpp 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -56,8 +56,8 @@ ctrlProgress::ctrlProgress(Window *parent,
 						   const std::string& button_minus_tooltip,
 						   const std::string& button_plus_tooltip,
 						   unsigned short * const write_val)
-	: Window(x, y, id, parent, tooltip),
-	width(width), height(height), tc(tc), position(0), maximum(maximum), x_padding(x_padding), y_padding(y_padding), force_color(force_color)
+	: Window(x, y, id, parent, width, height, tooltip),
+	tc(tc), position(0), maximum(maximum), x_padding(x_padding), y_padding(y_padding), force_color(force_color)
 {
 	AddImageButton(0, 0,              0, height, height, tc, LOADER.GetImageN("io", button_minus), (button_minus_tooltip.length() ? button_minus_tooltip : _("Less")) );
 	AddImageButton(1, width - height, 0, height, height, tc, LOADER.GetImageN("io", button_plus),  (button_plus_tooltip.length( ) ? button_plus_tooltip  : _("More")) );

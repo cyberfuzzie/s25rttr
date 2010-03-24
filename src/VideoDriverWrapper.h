@@ -1,4 +1,4 @@
-// $Id: VideoDriverWrapper.h 6176 2010-03-24 10:39:41Z FloSoft $
+// $Id: VideoDriverWrapper.h 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -44,6 +44,8 @@ public:
 	bool CreateScreen(const unsigned short screen_width, const unsigned short screen_height, const bool fullscreen);
 	/// Verändert Auflösung, Fenster/Fullscreen
 	bool ResizeScreen(const unsigned short screen_width, const unsigned short screen_height, const bool fullscreen);
+	// Viewport (neu) setzen
+	void RenewViewport(bool onlyRenew = false);
 	// zerstört das Fenster.
 	bool DestroyScreen();
 	// räumt die Texturen auf
@@ -63,9 +65,12 @@ public:
 	/// Gibt Pointer auf ein Fenster zurück (device-dependent!), HWND unter Windows
 	void * GetWindowPointer() const;
 
-	unsigned short GetScreenWidth() const  { return screen_width; }
-	unsigned short GetScreenHeight() const  { return screen_height; }
-	bool IsFullscreen() const { return fullscreen; }
+	unsigned short GetScreenWidth()  const 
+		{ return videodriver->GetScreenWidth();  }
+	unsigned short GetScreenHeight() const 
+		{ return videodriver->GetScreenHeight(); }
+	bool IsFullscreen() const 
+		{ return videodriver->IsFullscreen(); }
 
 	bool IsLeftDown();
 	bool IsRightDown();
@@ -83,7 +88,7 @@ public:
 
 private:
 	// Viewpoint und Co initialisieren
-	bool Initialize(const short width, const short height);
+	bool Initialize();
 
 	// prüft ob eine Extension verfügbar ist
 	bool hasExtension(const char *extension);
@@ -98,10 +103,6 @@ private:
 
 	DriverWrapper driver_wrapper;
 	VideoDriver *videodriver;
-
-	unsigned short screen_width;
-	unsigned short screen_height;
-	bool fullscreen;
 
 	unsigned int texture_list[100000];
 	unsigned int texture_pos;

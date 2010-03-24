@@ -1,4 +1,4 @@
-// $Id: ctrlTable.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: ctrlTable.cpp 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -49,8 +49,8 @@ ctrlTable::ctrlTable(Window *parent,
 					 glArchivItem_Font *font,
 					 unsigned short column_count,
 					 va_list liste)
-	: Window(x, y, id, parent),
-	width(width), height(height), tc(tc), font(font),
+	: Window(x, y, id, parent, width, height),
+	tc(tc), font(font),
 	row_l_selection(0xFFFF), row_r_selection(0xFFFF), 
 	sort_column(0xFFFF), sort_direction(true)
 {
@@ -93,6 +93,39 @@ ctrlTable::~ctrlTable(void)
 {
 	DeleteAllItems();
 	columns.clear();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  Größe verändern
+ *
+ *  @author Divan
+ */
+void ctrlTable::Resize_(unsigned short width, unsigned short height)
+{
+	ctrlScrollBar *scrollbar = GetCtrl<ctrlScrollBar>(0);
+
+	// changed height
+
+	scrollbar->Move(width - 20, 0);
+	scrollbar->Resize(20, height);
+
+	line_count = (height - header_height - 2) / font->getHeight();
+	scrollbar->SetPageSize(line_count);
+
+	// If the size was enlarged we have to check that we don't try to
+	// display more lines than present
+	if(height > this->height)
+	while(rows.size() - scrollbar->GetPos() < line_count
+	      && scrollbar->GetPos() > 0)
+		scrollbar->SetPos(scrollbar->GetPos()-1);
+
+	// changed width
+
+	this->width=width;
+	ResetButtonWidths();
+	if(scrollbar->GetVisible())
+		Msg_ScrollShow(0, true);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

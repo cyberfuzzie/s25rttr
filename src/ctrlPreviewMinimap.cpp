@@ -1,4 +1,4 @@
-// $Id: ctrlPreviewMinimap.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: ctrlPreviewMinimap.cpp 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -74,8 +74,8 @@ ctrlPreviewMinimap::ctrlPreviewMinimap(Window *parent,
 				{
 					unsigned player = s2map->GetMapDataAt(MAP_LANDSCAPE, x, y);
 					assert(player < 8);
-					players[player].x = CalcMapCoordX(x, map_width);
-					players[player].y = CalcMapCoordY(y, map_height);
+					players[player].x = x;
+					players[player].y = y;
 				}
 			}
 		}
@@ -103,7 +103,8 @@ bool ctrlPreviewMinimap::Draw_()
 		if(players[i].color)
 		{
 			// Zeichnen
-			DrawRectangle(GetX()+players[i].x-2,GetY()+players[i].y-2,4,4,players[i].color);
+			DrawRectangle(GetX()+CalcMapCoordX(players[i].x)-2,
+			              GetY()+CalcMapCoordY(players[i].y)-2,4,4,players[i].color);
 		}
 	}
 

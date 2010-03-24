@@ -1,4 +1,4 @@
-// $Id: Window.h 6117 2010-03-05 21:43:17Z jh $
+// $Id: Window.h 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -67,7 +67,7 @@ public:
 	/// Konstruktor von @p Window.
 	Window(void);
 	/// Konstruktor von @p Window mit Parametern.
-	Window(unsigned short x, unsigned short y, unsigned int id, Window *parent, const std::string& tooltip = "");
+	Window(unsigned short x, unsigned short y, unsigned int id, Window *parent, unsigned short width = 0, unsigned short height = 0, const std::string& tooltip = "");
 	/// virtueller Destruktor von @p Window.
 	virtual ~Window(void);
 	/// zeichnet das Fenster.
@@ -76,6 +76,16 @@ public:
 	unsigned short GetX(bool absolute = true) const;
 	/// liefert die Y-Koordinate.
 	unsigned short GetY(bool absolute = true) const;
+	/// liefert die Breite des Fensters.
+	unsigned short GetWidth(const bool scale = false) const { return (scale) ? ScaleX(width) : width; }
+	/// liefert die Höhe des Fensters.
+	unsigned short GetHeight(const bool scale = false) const { return (scale) ? ScaleY(height) : height; }
+	/// setzt die Größe des Fensters
+	void Resize(unsigned short width, unsigned short height) { Resize_(width, height); this->width = width; this->height = height; }
+	/// setzt die Breite des Fensters
+	void SetWidth(unsigned short width)   { Resize(width, this->height); }
+	/// setzt die Höhe des Fensters
+	void SetHeight(unsigned short height) { Resize(this->width, height); }
 	/// Sendet eine Tastaturnachricht an die Steuerelemente.
 	bool RelayKeyboardMessage(bool (Window::*msg)(const KeyEvent&),const KeyEvent& ke);
 	/// Sendet eine Mausnachricht weiter an alle Steuerelemente
@@ -88,6 +98,7 @@ public:
 	void LockRegion(Window *window, const Rect &rect);
 	/// Gibt eine gesperrte Region wieder frei.
 	void FreeRegion(Window *window);
+	/// Größe verändern oder überhaupt setzen
 
 	/// setzt das Parentfenster.
 	void SetParent(Window *parent) { this->parent = parent; }
@@ -151,7 +162,7 @@ public:
 	/// fügt ein CheckBoxCtrl hinzu.
 	ctrlCheck *AddCheckBox(unsigned int id, unsigned short x, unsigned short y, unsigned short width, unsigned short height, TextureColor tc,const std::string& text, glArchivItem_Font *font, bool readonly = false);
 	/// fügt eine ComboBox hinzu.
-	ctrlComboBox *AddComboBox(unsigned int id, unsigned short x, unsigned short y, unsigned short width, unsigned short height, TextureColor tc, glArchivItem_Font *font, unsigned short list_height, bool readonly = false);
+	ctrlComboBox *AddComboBox(unsigned int id, unsigned short x, unsigned short y, unsigned short width, unsigned short height, TextureColor tc, glArchivItem_Font *font, unsigned short max_list_height, bool readonly = false);
 	/// fügt ein vertieftes TextCtrl hinzu.
 	ctrlDeepening *AddDeepening(unsigned int id, unsigned short x, unsigned short y, unsigned short width, unsigned short height, TextureColor tc, const std::string& text, glArchivItem_Font *font, unsigned int color);
 	/// Deepening fille with a color
@@ -221,6 +232,7 @@ public:
 	// NUR VORÜBERGEHEND für Edit-Controls, bis richtiger Steuerelement-Fokus
 	// eingebaut wurde!
 	virtual bool Msg_LeftDown_After(const MouseCoords& mc);
+	virtual void Msg_ScreenResize(const ScreenResizeEvent& sr);
 
 	// Nachrichten, die von unten (Controls) nach oben (Fenster) gereicht werden
 	virtual void Msg_ButtonClick(const unsigned int ctrl_id);
@@ -272,12 +284,17 @@ protected:
 	virtual bool Draw_() = 0;
 	/// Weiterleitung von Nachrichten von abgeleiteten Klassen erlaubt oder nicht?
 	virtual bool IsMessageRelayAllowed() const;
+	/// Auf Größe verändern evtl. auch individuell reagieren?
+	virtual void Resize_(unsigned short width, unsigned short height) {}
 
 	template <typename T>
 	T *AddCtrl(unsigned int id, T *ctrl)
 	{
 		// ID auf control mappen
 		idmap.insert(std::make_pair(id, ctrl));
+
+		// scale-Eigenschaft weitervererben
+		ctrl->scale = scale;
 
 		//// Control zur Liste hinzufügen.
 		//controls.push_back(ctrl);
@@ -296,6 +313,8 @@ protected:
 
 	unsigned short x;         ///< X-Position des Fensters.
 	unsigned short y;         ///< Y-Position des Fensters.
+	unsigned short width;     ///< Breite des Fensters.
+	unsigned short height;    ///< Höhe des Fensters.
 	unsigned int id;          ///< ID des Fensters.
 	Window *parent;           ///< Handle auf das Parentfenster.
 	bool active;              ///< Fenster aktiv?

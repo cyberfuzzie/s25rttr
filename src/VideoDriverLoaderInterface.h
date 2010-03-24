@@ -1,4 +1,4 @@
-// $Id: VideoDriverLoaderInterface.h 4936 2009-05-24 15:17:07Z FloSoft $
+// $Id: VideoDriverLoaderInterface.h 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -37,6 +37,8 @@ public:
 	virtual void Msg_MouseMove(const MouseCoords& mc) = 0;
 
 	virtual void Msg_KeyDown(const KeyEvent& ke) = 0;
+
+	virtual void ScreenResized(unsigned short width, unsigned short height) = 0;
 };
 
 #endif // !DRIVERLOADERINTERFACE_H_INCLUDED

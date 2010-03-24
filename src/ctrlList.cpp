@@ -1,4 +1,4 @@
-// $Id: ctrlList.cpp 6065 2010-02-22 10:32:37Z FloSoft $
+// $Id: ctrlList.cpp 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -47,8 +47,8 @@ ctrlList::ctrlList(Window *parent,
 				   unsigned short height,
 				   TextureColor tc,
 				   glArchivItem_Font *font)
-	: Window(x, y, id, parent),
-	width(width), height(height), tc(tc), font(font), selection(0xFFFF), mouseover(0xFFFF)
+	: Window(x, y, id, parent, width, height),
+	tc(tc), font(font), selection(0xFFFF), mouseover(0xFFFF)
 {
 	pagesize = (height - 4) / font->getHeight();
 	
@@ -299,21 +299,30 @@ const std::string& ctrlList::GetItemText(unsigned short line) const
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  setzt die Höhe.
+ *  Größe ändern.
  *
- *  @param[in] height Die neue Höhe der Listbox
+ *  @param[in] width  Neue Breite
+ *  @param[in] height Neue Höhe
  *
  *  @author OLiver
  */
-void ctrlList::SetHeight(const unsigned short height)
+void ctrlList::Resize_(unsigned short width, unsigned short height)
 {
 	ctrlScrollBar *scrollbar = GetCtrl<ctrlScrollBar>(0);
+	scrollbar->Move(width - 20, 0);
+	scrollbar->Resize(20, height);
 
 	pagesize = (height-4) / font->getHeight();
-	this->height = height;
 
 	scrollbar->SetPageSize(pagesize);
-	scrollbar->SetHeight(height);
+
+	// If the size was enlarged we have to check that we don't try to
+	// display more lines than present
+	if(height > this->height)
+	while(lines.size() - scrollbar->GetPos() < pagesize 
+	      && scrollbar->GetPos() > 0)
+		scrollbar->SetPos(scrollbar->GetPos()-1);
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////

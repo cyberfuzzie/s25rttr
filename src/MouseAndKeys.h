@@ -1,4 +1,4 @@
-// $Id: MouseAndKeys.h 5340 2009-07-28 19:13:03Z jh $
+// $Id: MouseAndKeys.h 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 20052008 Settlers Freaks (sfteam at siedler25.org)
 //
@@ -70,6 +70,15 @@ struct KeyEvent
 	KeyType kt;
 	char c;
 	bool ctrl,shift,alt;
+};
+
+/// ScreenResize-Event
+struct ScreenResizeEvent
+{
+	unsigned short oldWidth;
+	unsigned short oldHeight;
+	unsigned short newWidth;
+	unsigned short newHeight;
 };
 
 #endif //!MOUSEANDKEYS_H_INCLUDED

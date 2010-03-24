@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.h 6176 2010-03-24 10:39:41Z FloSoft $
+// $Id: dskGameInterface.h 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -135,6 +135,8 @@ public:
 	void ShowActionWindow(const iwAction::Tabs& action_tabs,int cselx,int csely,int mouse_x, int mouse_y, const bool enable_military_buildings);
 
 private:
+
+	void Resize_(unsigned short width, unsigned short height);
 
 	/// Baut Weg zurück von Ende bis zu start_id
 	void DemolishRoad(const unsigned start_id);

@@ -1,4 +1,4 @@
-// $Id: GLFW.cpp 6176 2010-03-24 10:39:41Z FloSoft $
+// $Id: GLFW.cpp 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -183,6 +183,8 @@ bool VideoGLFW::CreateScreen(unsigned short width, unsigned short height, bool f
 	glfwSetKeyCallback(OnKeyAction);
 
 	memset(keyboard, false, sizeof(bool) * 512);
+	this->screenWidth  = width;
+	this->screenHeight = height;
 	this->fullscreen = fullscreen;
 
 	// buggy im Fenstermodus
@@ -229,9 +231,11 @@ bool VideoGLFW::ResizeScreen(unsigned short *width, unsigned short *height, bool
 	glfwGetWindowSize(&w, &h);
 	*width = w;
 	*height = h;
-
-	// @todo Vollbild ändern?
-	// this->fullscreen = fullscreen;
+	
+	
+	this->screenWidth  = *width;
+	this->screenHeight = *height;
+	this->fullscreen = fullscreen;
 
 	return true;
 }

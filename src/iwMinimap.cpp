@@ -1,4 +1,4 @@
-// $Id: iwMinimap.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: iwMinimap.cpp 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -74,9 +74,6 @@ iwMinimap::iwMinimap(IngameMinimap * minimap, GameWorldViewer& gwv)
 /// Verändert die Größe des Fensters und positioniert alle Controls etc. neu
 void iwMinimap::ChangeWindowSize(const unsigned short width, const unsigned short height)
 {
-	SetWidth(width);
-	SetHeight(height);
-
 	ctrlIngameMinimap * im = GetCtrl<ctrlIngameMinimap>(0);
 
 	im->SetDisplaySize(width-20,height-30);
@@ -89,7 +86,7 @@ void iwMinimap::ChangeWindowSize(const unsigned short width, const unsigned shor
 
 	// Fensterbreite anpassen
 	SetWidth(im->GetWidth()+20);
-	SetHeight(im->GetHeight()+30+BUTTON_HEIGHT+BUTTON_MAP_SPACE+BUTTON_WINDOW_SPACE);
+	SetIwHeight(im->GetHeight()+30+BUTTON_HEIGHT+BUTTON_MAP_SPACE+BUTTON_WINDOW_SPACE);
 
 
 	// Buttonpositionen anpassen, nach unten verschieben

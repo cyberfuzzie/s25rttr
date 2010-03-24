@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 6059 2010-02-20 17:45:40Z FloSoft $
+// $Id: GameWorld.h 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -530,6 +530,12 @@ public:
 	/// Gibt die verfügbar Anzahl der Angreifer für einen Seeangriff zurück
 	unsigned GetAvailableSoldiersForSeaAttackCount(const unsigned char player_attacker, const MapCoord x, const MapCoord y) const;
 
+	void Resize(unsigned short displayWidth, unsigned short displayHeight);
+
+protected:
+	unsigned short displayWidth, displayHeight;
+
+
 	// debug ai
 	private:
 		unsigned d_what;
@@ -540,7 +546,6 @@ public:
 		{
 			d_what = what; d_player = player; d_active = active; 
 		}
-
 
 
 };

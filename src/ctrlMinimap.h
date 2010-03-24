@@ -1,4 +1,4 @@
-// $Id: ctrlMinimap.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: ctrlMinimap.h 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -26,7 +26,7 @@
 class Minimap;
 
 /// Übersichtskarte (MapPreview)
-class ctrlMinimap : public ctrlRectangle
+class ctrlMinimap : public Window
 {
 protected:
 	/// Größe der Anzeige der Minimap
@@ -51,18 +51,20 @@ public:
 	unsigned short GetHeightShow() const { return height_show; }
 
 	/// Gibt die entsprechenden Kanten relativ zur oberen linken Ecke der Bounding-Box
-	unsigned short GetLeft() const { return padding_x+(width-width_show-2*padding_x)/2; }
-	unsigned short GetTop() const { return padding_y+(height-height_show-2*padding_y)/2; }
-	unsigned short GetRight() const { return GetLeft() + width_show + padding_x; }
-	unsigned short GetBottom() const { return GetTop() + height_show + padding_y; }
+	inline unsigned short GetLeft() const { return padding_x+(width-width_show-2*padding_x)/2; }
+	inline unsigned short GetTop() const { return padding_y+(height-height_show-2*padding_y)/2; }
+	inline unsigned short GetRight() const { return GetLeft() + width_show + padding_x; }
+	inline unsigned short GetBottom() const { return GetTop() + height_show + padding_y; }
 
-	void SetDisplaySize(const unsigned short width, const unsigned short height, const unsigned short map_width,
-		const unsigned short map_height);
+	/// Größe ändern
+	virtual void Resize_(unsigned short width, unsigned short heigth);
+	void SetDisplaySize(const unsigned short width, const unsigned short height,
+		            const unsigned short map_width, const unsigned short map_height);
 
 	/// Liefert für einen gegebenen Map-Punkt die Pixel-Koordinaten relativ zur Bounding-Box
-	unsigned short CalcMapCoordX(const unsigned short x, const unsigned short map_width) const 
+	inline unsigned short CalcMapCoordX(const unsigned short x) const 
 	{ return GetLeft()+width_show*x/map_width; }
-	unsigned short CalcMapCoordY(const unsigned short y, const unsigned short map_height) const 
+	inline unsigned short CalcMapCoordY(const unsigned short y) const 
 	{ return GetTop()+height_show*y/map_height; }
 
 	/// Verkleinert Minimap soweit es geht (entfernt Bounding-Box) in Y-Richtung und gibt neue Höhe zurück
@@ -77,6 +79,11 @@ protected:
 	//unsigned short GetLeft() const { return x+minimap.GetLeft(); }
 	///// Berechnet Y-Koordinate der unteren Kante
 	//unsigned short GetBottom() const { return y+minimap.GetBottom(); }
+
+protected:
+
+	unsigned short map_width;
+	unsigned short map_height;
 };
 
 

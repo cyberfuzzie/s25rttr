@@ -1,4 +1,4 @@
-// $Id: ctrlScrollBar.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: ctrlScrollBar.cpp 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -48,8 +48,8 @@ ctrlScrollBar::ctrlScrollBar(Window *parent,
 					   unsigned short button_height,
 					   TextureColor tc,
 					   unsigned short pagesize)
-	: Window(x, y, id, parent),
-	width(width), height(height), button_height(button_height), tc(tc), pagesize(pagesize),
+	: Window(x, y, id, parent, width, height),
+	button_height(button_height), tc(tc), pagesize(pagesize),
 	move(false), scroll_range(0), scroll_pos(0), scroll_height(0), scrollbar_height(0), scrollbar_pos(0), last_y(0)
 {
 	visible = false;
@@ -57,8 +57,9 @@ ctrlScrollBar::ctrlScrollBar(Window *parent,
 	AddImageButton(0, 0, 0, width, button_height, tc, LOADER.GetImageN("io", 33));
 	AddImageButton(1, 0, (height>button_height) ? height - button_height : 1, width, button_height, tc, LOADER.GetImageN("io", 34));
 
-	if(height > 2 * button_height)
-		scroll_height = height - 2 * button_height;
+	Resize_(width, height);
+
+	CalculateScrollBar();
 }
 
 bool ctrlScrollBar::Msg_LeftUp(const MouseCoords& mc)
@@ -198,11 +199,15 @@ void ctrlScrollBar::SetPageSize(unsigned short pagesize)
 	CalculateScrollBar();
 }
 
-void ctrlScrollBar::SetHeight(unsigned short height)
+void ctrlScrollBar::Resize_(unsigned short width, unsigned short height)
 {
-	ctrlButton *button = GetCtrl<ctrlButton>(1);
+	ctrlButton *button;
 
-	this->height = height;
+	button = GetCtrl<ctrlButton>(0);
+	button->Resize(width, button_height);
+
+	button = GetCtrl<ctrlButton>(1);
+	button->Resize(width, button_height);
 
 	if(height >= button_height)
 	{
@@ -212,7 +217,7 @@ void ctrlScrollBar::SetHeight(unsigned short height)
 	else
 		button->SetVisible(false);
 
-	CalculateScrollBar();
+	CalculateScrollBar(height);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -243,9 +248,12 @@ bool ctrlScrollBar::Draw_(void)
  *
  *  @author FloSoft
  */
-void ctrlScrollBar::CalculateScrollBar()
+void ctrlScrollBar::CalculateScrollBar(unsigned short height)
 {
-	scroll_height = height - 2 * button_height;
+	// Default parameter
+	if(height == 0) height = this->height;
+
+	scroll_height = ((height>2*button_height) ? height-2*button_height : 0);
 
 	if(scroll_range > pagesize)
 	{

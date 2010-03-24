@@ -1,4 +1,4 @@
-// $Id: ctrlRectangle.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: ctrlRectangle.h 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -20,28 +20,6 @@
 #define CTRL_RECTANGLE_H_
 
 #include "Window.h"
-
-/// Control, welche ein eine feste Breite und Höhe besitzen
-class ctrlRectangle : public Window
-{
-public:
-
-	ctrlRectangle(Window *parent, unsigned int id, unsigned short x, unsigned short y,
-		unsigned short width, unsigned short height);
-
-	/// Setzt Breite und Höhe
-	virtual void SetWidth(const unsigned short width) { this->width = width; }
-	virtual void SetHeight(const unsigned short height) { this->height = height; }
-
-	/// Liefert Breite und Höhe zurück
-	unsigned short GetWidth(const bool scale = false) const { return (scale) ? ScaleX(width) : width; }
-	unsigned short GetHeight(const bool scale = false) const { return (scale) ? ScaleY(height) : height; }
-
-protected:
-
-	/// Breite und Höhe des Controls
-	unsigned short width, height;
-};
 
 /// Interface für Klassen, in denen eine Farbe angezeigt wird
 class ColorControlInterface

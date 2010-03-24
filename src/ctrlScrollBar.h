@@ -1,4 +1,4 @@
-// $Id: ctrlScrollBar.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: ctrlScrollBar.h 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -33,11 +33,6 @@ public:
 
 	unsigned short GetPos() { return scroll_pos; }
 
-	void SetHeight(unsigned short height);
-	unsigned short GetHeight() const { return height; }
-	void SetWidth(unsigned short width) { this->width = width; }
-	unsigned short GetWidth() const { return width; }
-
 	virtual bool Msg_LeftUp(const MouseCoords& mc);
 	virtual bool Msg_LeftDown(const MouseCoords& mc);
 	virtual bool Msg_MouseMove(const MouseCoords& mc);
@@ -46,13 +41,13 @@ public:
 protected:
 	virtual bool Draw_(void);
 
-private:
-	void CalculatePosition() { scroll_pos = (scrollbar_pos * scroll_range / scroll_height); }
-	void CalculateScrollBar();
+	void Resize_(unsigned short width, unsigned short height);
 
 private:
-	unsigned short width;
-	unsigned short height;
+	void CalculatePosition() { scroll_pos = (scrollbar_pos * scroll_range / scroll_height); }
+	void CalculateScrollBar(unsigned short height = 0);
+
+private:
 	unsigned short button_height;
 	TextureColor tc;
 	unsigned short pagesize;

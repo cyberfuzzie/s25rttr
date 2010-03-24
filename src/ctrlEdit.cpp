@@ -1,4 +1,4 @@
-// $Id: ctrlEdit.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: ctrlEdit.cpp 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -50,8 +50,8 @@ ctrlEdit::ctrlEdit(Window *parent,
 				   bool password,
 				   bool disabled,
 				   bool notify)
-	: Window(x, y, id, parent),
-	width(width), height(height), maxlength(maxlength), tc(tc), font(font), password(password), disabled(disabled),
+	: Window(x, y, id, parent, width, height),
+	maxlength(maxlength), tc(tc), font(font), password(password), disabled(disabled),
 	focus(false), newfocus(false), notify(notify)
 {
 	SetText("");

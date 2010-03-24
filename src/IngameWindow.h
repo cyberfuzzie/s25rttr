@@ -1,4 +1,4 @@
-// $Id: IngameWindow.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: IngameWindow.h 6177 2010-03-24 10:44:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -47,15 +47,10 @@ public:
 	/// liefert den Fenstertitel.
 	const std::string& GetTitle(void) { return title; }
 
-	/// setzt die Breite des Fensters.
-	void SetWidth(unsigned short width) { this->width = width; }
-	/// liefert die Breite des Fensters.
-	unsigned short GetWidth(void) const { return width; }
-
-	/// setzt die Höhe des Fensters.
-	void SetHeight(unsigned short height) { this->height = height; }
-	/// liefert die Höhe des Fensters.
-	unsigned short GetHeight(void) const { return (minimized?31:height); }
+	/// setzt die ausgeklappte Höhe des Fensters.
+	void SetIwHeight(unsigned short height) { this->iwHeight = height; if(!minimized) this->height = height; }
+	/// liefert die ausgeklappte Höhe des Fensters.
+	unsigned short GetIwHeight(void) const { return iwHeight; }
 
 	/// merkt das Fenster zum Schließen vor.
 	void Close(bool closeme = true) { this->closeme = closeme; }
@@ -63,7 +58,7 @@ public:
 	bool ShouldBeClosed() { return closeme; }
 
 	/// minimiert das Fenster.
-	void SetMinimized(bool minimized = true) { this->minimized = minimized; }
+	void SetMinimized(bool minimized = true);
 	/// ist das Fenster minimiert?
 	bool GetMinimized() { return minimized; }
 
@@ -88,8 +83,7 @@ protected:
 	bool IsMessageRelayAllowed() const;
 
 protected:
-	unsigned short width;
-	unsigned short height;
+	unsigned short iwHeight;
 	std::string title;
 	glArchivItem_Bitmap *background;
 	unsigned short last_x;

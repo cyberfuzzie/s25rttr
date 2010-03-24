@@ -1,4 +1,4 @@
-// $Id: WinAPI.cpp 6178 2010-03-24 10:55:33Z FloSoft $
+// $Id: WinAPI.cpp 6179 2010-03-24 14:52:38Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -814,7 +814,7 @@ LRESULT CALLBACK VideoWinAPI::WindowProc(HWND window, UINT msg, WPARAM wParam, L
  *
  *  @author Divan
  */
-KeyEvent VideoWinApi::GetModKeyState(void) const
+KeyEvent VideoWinAPI::GetModKeyState(void) const
 {
 	const KeyEvent ke = { KT_INVALID, 0, 
 		(GetKeyState(VK_CONTROL) & 0xFF00) ? true : false, 

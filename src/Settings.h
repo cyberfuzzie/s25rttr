@@ -1,4 +1,4 @@
-// $Id: Settings.h 6177 2010-03-24 10:44:32Z FloSoft $
+// $Id: Settings.h 6179 2010-03-24 14:52:38Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -24,6 +24,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Header
 #include "Singleton.h"
+
+#undef interface
 
 ///////////////////////////////////////////////////////////////////////////////
 // Klasse für die Konfiguration

@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: crosscompile.cmake 6127 2010-03-07 18:43:17Z FloSoft $
+### $Id: crosscompile.cmake 6179 2010-03-24 14:52:38Z FloSoft $
 #################################################################################
 
 # read host compiler machine triplet
@@ -13,17 +13,19 @@ MESSAGE(STATUS "Checking for ${COMPILEFOR_PLATFORM}")
 INCLUDE(cmake/${COMPILEFOR_PLATFORM}.cmake OPTIONAL RESULT_VARIABLE FOUND_A)
 IF(FOUND_A)
 	MESSAGE(STATUS "Reading specifications from ${FOUND_A}")
+ELSE(FOUND_A)
+	INCLUDE(cmake/c.${COMPILEFOR_PLATFORM}.cmake OPTIONAL RESULT_VARIABLE FOUND_B)
+	IF(FOUND_B)
+	        MESSAGE(STATUS "Reading specifications from ${FOUND_B}")
+	ENDIF(FOUND_B)
 ENDIF(FOUND_A)
 
-INCLUDE(cmake/c.${COMPILEFOR_PLATFORM}.cmake OPTIONAL RESULT_VARIABLE FOUND_B)
-IF(FOUND_B)
-        MESSAGE(STATUS "Reading specifications from ${FOUND_B}")
-ENDIF(FOUND_B)
-
-INCLUDE(cmake/${COMPILEFOR_PLATFORM}.local.cmake OPTIONAL RESULT_VARIABLE FOUND_C)
-IF(FOUND_C)
-	MESSAGE(STATUS "Reading specifications from ${FOUND_C}")
-ENDIF(FOUND_C)
+IF(NOT FOUND_A AND NOT FOUND_B)
+	INCLUDE(cmake/${COMPILEFOR_PLATFORM}.local.cmake OPTIONAL RESULT_VARIABLE FOUND_C)
+	IF(FOUND_C)
+		MESSAGE(STATUS "Reading specifications from ${FOUND_C}")
+	ENDIF(FOUND_C)
+ENDIF(NOT FOUND_A AND NOT FOUND_B)
 
 IF (NOT FOUND_A AND NOT FOUND_B AND NOT FOUND_C)
 	MESSAGE(FATAL_ERROR " Platform specific include file(s) not found")
@@ -83,7 +85,7 @@ ENDIF(NOT "${USED_GCC_OUTPUT}" STREQUAL "${USED_GPP_OUTPUT}")
 
 IF (NOT "${HOST_GCC_OUTPUT}" STREQUAL "${USED_GCC_OUTPUT}")
 	SET(CROSSCOMPILE "1")
-	SET(CROSS "c")
+	SET(CROSS "c.")
 	MESSAGE(STATUS "Configuring for cross-compiling to ${USED_GCC_OUTPUT}")
 ELSE (NOT "${HOST_GCC_OUTPUT}" STREQUAL "${USED_GCC_OUTPUT}")
 	SET(CROSSCOMPILE "0")
@@ -165,15 +167,15 @@ SET(COMPILEARCHS "${COMPILEARCHS}" CACHE STRING "Target Architectures")
 
 MESSAGE(STATUS "Compiling for ${COMPILEFOR}/${COMPILEARCH}")
 
-INCLUDE(cmake/${COMPILEFOR}.cmake OPTIONAL RESULT_VARIABLE FOUND_A)
+INCLUDE(cmake/${CROSS}${COMPILEFOR}.${COMPILEARCH}.cmake OPTIONAL RESULT_VARIABLE FOUND_A)
 IF(FOUND_A)
 	MESSAGE(STATUS "Reading specifications from ${FOUND_A}")
+ELSE(FOUND_A)
+	INCLUDE(cmake/${COMPILEFOR}.cmake OPTIONAL RESULT_VARIABLE FOUND_B)
+	IF(FOUND_B)
+	        MESSAGE(STATUS "Reading specifications from ${FOUND_B}")
+	ENDIF(FOUND_B)
 ENDIF(FOUND_A)
-
-INCLUDE(cmake/${CROSS}.${COMPILEFOR}.${COMPILEARCH}.cmake OPTIONAL RESULT_VARIABLE FOUND_B)
-IF(FOUND_B)
-	MESSAGE(STATUS "Reading specifications from ${FOUND_B}")
-ENDIF(FOUND_B)
 
 IF (NOT FOUND_A AND NOT FOUND_B)
 	INCLUDE(cmake/${COMPILEFOR}.local.cmake OPTIONAL RESULT_VARIABLE FOUND_C)

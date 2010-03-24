@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: apple.ppc.cmake 6182 2010-03-24 19:47:14Z FloSoft $
+### $Id: apple.ppc.cmake 6183 2010-03-24 19:59:16Z FloSoft $
 ################################################################################
 
 # this one is important
@@ -9,7 +9,7 @@ SET(CMAKE_SYSTEM_PROCESSOR powerpc)
 SET(CMAKE_C_COMPILER   gcc)
 SET(CMAKE_CXX_COMPILER g++)
 
-SET(CMAKE_OSX_ARCHITECTURES "ppc" CACHE STRING "OSX-Architectures")
+SET(COMPILEARCH "ppc")
 
 INCLUDE(cmake/apple.common.cmake)
 

@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: crosscompile.cmake 6179 2010-03-24 14:52:38Z FloSoft $
+### $Id: crosscompile.cmake 6183 2010-03-24 19:59:16Z FloSoft $
 #################################################################################
 
 # read host compiler machine triplet
@@ -128,22 +128,24 @@ IF ( "${USED_GCC_OUTPUT}" MATCHES "apple" )
 		ERROR_VARIABLE LIPO_ERROR
 		OUTPUT_VARIABLE LIPO_OUTPUT
 	)
-	
-	# always universal
-	SET(COMPILEARCH "universal")
-	SET(COMPILEARCHS "")
-	
-	IF ( "${LIPO_OUTPUT}" MATCHES "x86_64" )
-		ADD_FLAGS(COMPILEARCHS x86_64)
-	ENDIF ( "${LIPO_OUTPUT}" MATCHES "x86_64" )
 
-	IF ( "${LIPO_OUTPUT}" MATCHES "i386" )
-		ADD_FLAGS(COMPILEARCHS i386)
-	ENDIF ( "${LIPO_OUTPUT}" MATCHES "i386" )
+	IF("${COMPILEARCH}" STREQUAL "")	
+		# always universal
+		SET(COMPILEARCH "universal")
+		SET(COMPILEARCHS "")
+	
+		IF ( "${LIPO_OUTPUT}" MATCHES "x86_64" )
+			ADD_FLAGS(COMPILEARCHS x86_64)
+		ENDIF ( "${LIPO_OUTPUT}" MATCHES "x86_64" )
 
-	IF ( "${LIPO_OUTPUT}" MATCHES "ppc" )
-		ADD_FLAGS(COMPILEARCHS ppc)
-	ENDIF ( "${LIPO_OUTPUT}" MATCHES "ppc" )
+		IF ( "${LIPO_OUTPUT}" MATCHES "i386" )
+			ADD_FLAGS(COMPILEARCHS i386)
+		ENDIF ( "${LIPO_OUTPUT}" MATCHES "i386" )
+
+		IF ( "${LIPO_OUTPUT}" MATCHES "ppc" )
+			ADD_FLAGS(COMPILEARCHS ppc)
+		ENDIF ( "${LIPO_OUTPUT}" MATCHES "ppc" )
+	ENDIF("${COMPILEARCH}" STREQUAL "")
 	
 ENDIF ( "${USED_GCC_OUTPUT}" MATCHES "apple" )
 

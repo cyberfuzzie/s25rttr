@@ -1,15 +1,15 @@
 ################################################################################
-### $Id: apple.x86_64.cmake 6182 2010-03-24 19:47:14Z FloSoft $
+### $Id: apple.x86_64.cmake 6183 2010-03-24 19:59:16Z FloSoft $
 ################################################################################
 
 # this one is important
 SET(CMAKE_SYSTEM_NAME Darwin)
 SET(CMAKE_SYSTEM_PROCESSOR x86_64)
 
-SET(CMAKE_OSX_ARCHITECTURES "x86_64" CACHE STRING "OSX-Architectures")
-
 SET(CMAKE_C_COMPILER   gcc)
 SET(CMAKE_CXX_COMPILER g++)
+
+SET(COMPILEARCH "x86_64")
 
 INCLUDE(cmake/apple.common.cmake)
 

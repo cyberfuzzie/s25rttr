@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: crosscompile.cmake 6186 2010-03-24 20:38:36Z FloSoft $
+### $Id: crosscompile.cmake 6188 2010-03-24 20:46:55Z FloSoft $
 #################################################################################
 
 # read host compiler machine triplet
@@ -146,7 +146,7 @@ IF ( "${USED_GCC_OUTPUT}" MATCHES "apple" )
 			ADD_FLAGS(COMPILEARCHS ppc)
 		ENDIF ( "${LIPO_OUTPUT}" MATCHES "ppc" )
 	ELSE("${COMPILEARCH}" STREQUAL "")
-		SET(COMPILEARCHS" "${COMPILEARCH}")
+		SET(COMPILEARCHS "${COMPILEARCH}")
 	ENDIF("${COMPILEARCH}" STREQUAL "")
 	
 ENDIF ( "${USED_GCC_OUTPUT}" MATCHES "apple" )

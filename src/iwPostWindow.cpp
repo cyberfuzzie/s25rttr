@@ -1,4 +1,4 @@
-// $Id: iwPostWindow.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: iwPostWindow.cpp 6178 2010-03-24 10:55:33Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -126,7 +126,10 @@ void iwPostWindow::Msg_ButtonClick(const unsigned int ctrl_id)
 
 		// Löschen
 	case 15:
-		DeletePostMessage(GetPostMsg(currentMessage));
+		{
+			if(GameClient::inst().GetPostMessages().size())
+				DeletePostMessage(GetPostMsg(currentMessage));
+		}
 		break;
 
 		// Haken-Button ("Ja")
@@ -188,6 +191,41 @@ void iwPostWindow::Msg_PaintBefore()
 	}
 }
 
+/**
+ *  React on keypress
+ *
+ *  @author Divan
+ */
+bool iwPostWindow::Msg_KeyDown(const KeyEvent& ke)
+{
+	switch(ke.kt)
+	{
+	default:
+		break;
+	case KT_DELETE: // Delete current message
+		{
+			Msg_ButtonClick(9);
+		} return true;
+	}
+	
+	switch(ke.c)
+	{
+	case '+': // Next message
+		{
+			Msg_ButtonClick(10);
+		} return true;
+	case '-': // Previous message
+		{
+			Msg_ButtonClick(9);
+		} return true;
+	case 'g': // Go to site of event
+		{
+			Msg_ButtonClick(14);
+		} return true;
+	}
+
+	return false;
+}
 
 // Holt Nachricht Nummer pos
 PostMsg *iwPostWindow::GetPostMsg(unsigned pos) const

@@ -1,4 +1,4 @@
-// $Id: WinAPI.cpp 6177 2010-03-24 10:44:32Z FloSoft $
+// $Id: WinAPI.cpp 6178 2010-03-24 10:55:33Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -643,6 +643,7 @@ void VideoWinAPI::OnWMKeyDown(unsigned char c)
 	case VK_UP:     ke.kt = KT_UP; break;
 	case VK_DOWN:   ke.kt = KT_DOWN; break;
 	case VK_BACK:   ke.kt = KT_BACKSPACE; break;
+	case VK_DELETE: ke.kt = KT_DELETE; break;
 	case VK_LSHIFT: ke.kt = KT_SHIFT; break;
 	case VK_RSHIFT: ke.kt = KT_SHIFT; break;
 	case VK_TAB:    ke.kt = KT_TAB; break;

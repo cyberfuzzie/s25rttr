@@ -1,21 +1,22 @@
-2009.05.01        SIEDLER II.5 - RETURN TO THE ROOTS           0.7-dev
+2010.03.22        SIEDLER II.5 - RETURN TO THE ROOTS           0.7-dev
 ------------------------------------------------------------------------
 Global keyboard layout in game:
 
-Bracketed configurations do not work yet.
+Bracketed keys do not work yet.
 
 P:.................... Pause
 
 H:.................... Go to headquarters
 B:.................... Go back to start position
 
-N:.................... (Opens messages window)
-L:.................... Shows map
+N:.................... Open post office
+L:.................... Show map
 M:.................... Main selection
+I:..................... Open Inventory
 
-SPACE:............ Switches contruction aid function
+SPACE:............ Switch contruction aid function
 C:.................... Check information about houses
-S:.................... Shows status of houses
+S:.................... Show status of houses
 
 Z:.................... (Zoom current window)
 V:.................... (Game acceleration)
@@ -27,24 +28,23 @@ F1:................... (Load game)
 F2:................... Save game
 F8:................... Readme "Keyboard layout"
 F9:................... Readme
-F10:.................. (Music-Player)
-F11:.................. (Siedler-Juke-Box)
-F12:.................. Option windows
+F11:.................. Music Player
+F12:.................. Options window
 
 Post office:
 
-DEL:................ (Delete message)
-G:.................... (Go to site of event)
-+/-:.................. (Next/previous message)
+DEL:................ Delete message
+G:.................... Go to site of event
++/-:.................. Next/previous message
 
 Arrow keys: Scroll the main map
 
-Additional in Replay-mode:
+Additionally when in Replay-mode:
 
-D:.................... Discover/cover up map
+D:.................... Discover/hide unexplored land
 J:.................... Go to specific GF
 P:.................... Pause/Resume (also after GF jump)
 1-7:.................. Change to other player
 ------------------------------------------------------------------------
-http://www.siedler25.org    Copyright (C) 2005-2009 Settlers Freaks
+http://www.siedler25.org    Copyright (C) 2005-2010 Settlers Freaks
 ------------------------------------------------------------------------

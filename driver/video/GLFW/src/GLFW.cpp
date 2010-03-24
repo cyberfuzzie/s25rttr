@@ -1,4 +1,4 @@
-// $Id: GLFW.cpp 6177 2010-03-24 10:44:32Z FloSoft $
+// $Id: GLFW.cpp 6178 2010-03-24 10:55:33Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -515,6 +515,7 @@ void GLFWCALL VideoGLFW::OnKeyAction(int key, int action)
 		case GLFW_KEY_RIGHT:     ke.kt = KT_RIGHT;     break;
 		case GLFW_KEY_DOWN:      ke.kt = KT_DOWN;      break;
 		case GLFW_KEY_BACKSPACE: ke.kt = KT_BACKSPACE; break;
+		case GLFW_KEY_DEL:       ke.kt = KT_DELETE;    break;
 		case GLFW_KEY_TAB:       ke.kt = KT_TAB;       break;
 		case GLFW_KEY_END:       ke.kt = KT_END;       break;
 		}

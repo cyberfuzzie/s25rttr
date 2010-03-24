@@ -1,4 +1,4 @@
-// $Id: SDL.cpp 6177 2010-03-24 10:44:32Z FloSoft $
+// $Id: SDL.cpp 6178 2010-03-24 10:55:33Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -395,6 +395,7 @@ bool VideoSDL::MessageLoop(void)
 				case SDLK_UP:        ke.kt = KT_UP; break;
 				case SDLK_DOWN:      ke.kt = KT_DOWN; break;
 				case SDLK_BACKSPACE: ke.kt = KT_BACKSPACE; break;
+				case SDLK_DELETE:    ke.kt = KT_DELETE; break;
 				case SDLK_LSHIFT:    ke.kt = KT_SHIFT; break;
 				case SDLK_RSHIFT:    ke.kt = KT_SHIFT; break;
 				case SDLK_TAB:       ke.kt = KT_TAB; break;

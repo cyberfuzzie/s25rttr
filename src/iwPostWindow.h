@@ -1,4 +1,4 @@
-// $Id: iwPostWindow.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: iwPostWindow.h 6178 2010-03-24 10:55:33Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -30,6 +30,7 @@ public:
 	iwPostWindow(GameWorldViewer& gwv);
   void Msg_PaintBefore();
   void Msg_ButtonClick(const unsigned int ctrl_id);
+  bool Msg_KeyDown(const KeyEvent& ke);
 
 private:
   GameWorldViewer& gwv;

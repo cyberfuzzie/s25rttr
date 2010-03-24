@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.cpp 6177 2010-03-24 10:44:32Z FloSoft $
+// $Id: dskGameInterface.cpp 6178 2010-03-24 10:55:33Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -42,6 +42,8 @@
 
 #include "iwChat.h"
 #include "iwHQ.h"
+#include "iwInventory.h"
+#include "iwMusicPlayer.h"
 #include "iwStorehouse.h"
 #include "iwHarborBuilding.h"
 #include "iwAction.h"
@@ -604,6 +606,10 @@ bool dskGameInterface::Msg_KeyDown(const KeyEvent& ke)
 		{
 			WindowManager::inst().Show(new iwTextfile("readme.txt",_("Readme!")));
 		} return true;
+	case KT_F11: // Music player (midi files)
+		{
+			WindowManager::inst().Show(new iwMusicPlayer);
+		} return true;
 	case KT_F12: // Optionsfenster
 		{
 			WindowManager::inst().Show(new iwOptionsWindow(this));
@@ -638,12 +644,51 @@ bool dskGameInterface::Msg_KeyDown(const KeyEvent& ke)
 			}
 		} return true;
 
+	case 'b': // Zur lezten Position zurückspringen
+		{
+			gwv->MoveToLastPosition();
+		} return true;
+	case 'c': // Gebäudenamen anzeigen
+		{
+			gwv->ShowNames();
+		} return true;
+	case 'd': // Replay: FoW an/ausschalten
+		{
+			// GameClient Bescheid sagen
+			GameClient::inst().ToggleReplayFOW();
+			// Sichtbarkeiten neu setzen auf der Map-Anzeige und der Minimap
+			gwv->RecalcAllColors();
+			minimap.UpdateAll();
+		} return true;
+	case 'h': // Zum HQ springen
+		{
+			GameClientPlayer *player = GAMECLIENT.GetLocalPlayer();
+			// Prüfen, ob dieses überhaupt noch existiert
+			if(player->hqx != 0xFFFF)
+				gwv->MoveToMapObject(player->hqx,player->hqy);
+		} return true;
+	case 'i': // Show inventory
+		{
+			WindowManager::inst().Show(new iwInventory);
+		} return true;
 	case 'j': // GFs überspringen
 		{
 			if(GAMECLIENT.IsReplayModeOn())
 				WindowManager::inst().Show(new iwSkipGFs);
 		} return true;
-
+	case 'l': // Minimap anzeigen
+		{
+			WindowManager::inst().Show(new iwMinimap(&minimap,*gwv));
+		} return true;
+	case 'm': // Hauptauswahl
+		{
+			WindowManager::inst().Show(new iwMainMenu(gwv,this));
+		} return true;
+	case 'n': // Show Post window
+		{
+			WindowManager::inst().Show(new iwPostWindow(*gwv));
+			UpdatePostIcon(GAMECLIENT.GetPostMessages().size(), false);
+		} return true;
 	case 'p': // Pause
 		{
 			if(GAMECLIENT.IsHost())
@@ -659,47 +704,14 @@ bool dskGameInterface::Msg_KeyDown(const KeyEvent& ke)
 				GAMECLIENT.ToggleReplayPause();
 			}
 		} return true;
-
-	case 'h': // Zum HQ springen
-		{
-			GameClientPlayer *player = GAMECLIENT.GetLocalPlayer();
-			// Prüfen, ob dieses überhaupt noch existiert
-			if(player->hqx != 0xFFFF)
-				gwv->MoveToMapObject(player->hqx,player->hqy);
-		} return true;
-
-	case 'c': // Gebäudenamen anzeigen
-		{
-			gwv->ShowNames();
-		} return true;
-	case 's': // Produktivität anzeigen
-		{
-			gwv->ShowProductivity();
-		} return true;
-	case 'd': // Replay: FoW an/ausschalten
-		{
-			// GameClient Bescheid sagen
-			GameClient::inst().ToggleReplayFOW();
-			// Sichtbarkeiten neu setzen auf der Map-Anzeige und der Minimap
-			gwv->RecalcAllColors();
-			minimap.UpdateAll();
-		} return true;
-	case 'l': // Minimap anzeigen
-		{
-			WindowManager::inst().Show(new iwMinimap(&minimap,*gwv));
-		} return true;
-	case 'm': // Hauptauswahl
-		{
-			WindowManager::inst().Show(new iwMainMenu(gwv,this));
-		} return true;
 	case 'q': // Spiel verlassen
 		{
 			if(ke.alt)
 				WindowManager::inst().Show(new iwEndgame);
 		} return true;
-	case 'b': // Zur lezten Position zurückspringen
+	case 's': // Produktivität anzeigen
 		{
-			gwv->MoveToLastPosition();
+			gwv->ShowProductivity();
 		} return true;
 	}
 

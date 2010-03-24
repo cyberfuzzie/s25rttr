@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: apple.i386.cmake 6183 2010-03-24 19:59:16Z FloSoft $
+### $Id: apple.i386.cmake 6184 2010-03-24 20:04:20Z FloSoft $
 ################################################################################
 
 # this one is important
@@ -9,7 +9,8 @@ SET(CMAKE_SYSTEM_PROCESSOR i386)
 SET(CMAKE_C_COMPILER   gcc)
 SET(CMAKE_CXX_COMPILER g++)
 
-SET(COMPILEARCHS "i386")
+SET(COMPILEARCH "i386")
+SET(CMAKE_OSX_ARCHITECTURES "${COMPILEARCH}")
 
 INCLUDE(cmake/apple.common.cmake)
 

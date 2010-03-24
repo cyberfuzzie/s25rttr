@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: apple.common.cmake 6129 2010-03-07 19:10:49Z FloSoft $
+### $Id: apple.common.cmake 6185 2010-03-24 20:14:07Z FloSoft $
 ################################################################################
 
 IF ( "${CMAKE_OSX_DEPLOYMENT_TARGET}" STREQUAL "" )
@@ -18,19 +18,19 @@ IF ( NOT "${COMPILEARCH}" STREQUAL "" )
 	SET(APPLE_CFLAGS "")
 
 	IF ( "${CMAKE_OSX_ARCHITECTURES}" MATCHES "i386" )
-		MESSAGE(STATUS "building architecture i386")
+		MESSAGE(STATUS "Building architecture i386")
 		SET(APPLE_CFLAGS ${APPLE_CFLAGS} -arch i386)
 		SET(APPLE_LDFLAGS ${APPLE_LDFLAGS} -arch i386)
 	ENDIF ( "${CMAKE_OSX_ARCHITECTURES}" MATCHES "i386" )
 
 	IF ( "${CMAKE_OSX_ARCHITECTURES}" MATCHES "x86_64" )
-		MESSAGE(STATUS "building architecture x86_64")
+		MESSAGE(STATUS "Building architecture x86_64")
 		SET(APPLE_CFLAGS ${APPLE_CFLAGS} -arch x86_64)
 		SET(APPLE_LDFLAGS ${APPLE_LDFLAGS} -arch x86_64)
 	ENDIF ( "${CMAKE_OSX_ARCHITECTURES}" MATCHES "x86_64" )
 	
 	IF ( "${CMAKE_OSX_ARCHITECTURES}" MATCHES "ppc" )
-		MESSAGE(STATUS "building architecture ppc")
+		MESSAGE(STATUS "Building architecture ppc")
 		SET(APPLE_CFLAGS ${APPLE_CFLAGS} -arch ppc)
 		SET(APPLE_LDFLAGS ${APPLE_LDFLAGS} -arch ppc)
 	ENDIF ( "${CMAKE_OSX_ARCHITECTURES}" MATCHES "ppc" )

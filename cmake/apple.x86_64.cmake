@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: apple.x86_64.cmake 6184 2010-03-24 20:04:20Z FloSoft $
+### $Id: apple.x86_64.cmake 6186 2010-03-24 20:38:36Z FloSoft $
 ################################################################################
 
 # this one is important
@@ -10,7 +10,6 @@ SET(CMAKE_C_COMPILER   gcc)
 SET(CMAKE_CXX_COMPILER g++)
 
 SET(COMPILEARCH "x86_64")
-SET(CMAKE_OSX_ARCHITECTURES "${COMPILEARCH}")
 
 INCLUDE(cmake/apple.common.cmake)
 

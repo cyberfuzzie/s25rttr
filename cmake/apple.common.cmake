@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: apple.common.cmake 6185 2010-03-24 20:14:07Z FloSoft $
+### $Id: apple.common.cmake 6189 2010-03-24 20:57:28Z FloSoft $
 ################################################################################
 
 IF ( "${CMAKE_OSX_DEPLOYMENT_TARGET}" STREQUAL "" )
@@ -58,6 +58,11 @@ IF ( NOT "${COMPILEARCH}" STREQUAL "" )
 	FORCE_ADD_FLAGS(CMAKE_SHARED_LINKER_FLAGS ${APPLE_LDFLAGS} )
 
 ENDIF ( NOT "${COMPILEARCH}" STREQUAL "" )
+
+# set SDK
+IF ( "${CMAKE_PREFIX_PATH}" STREQUAL "" )
+	SET(CMAKE_PREFIX_PATH "/Developer/SDKs/MacOSX10.4u.sdk")
+ENDIF ( "${CMAKE_PREFIX_PATH}" STREQUAL "" )
 
 # search for programs in the build host directories
 SET(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)

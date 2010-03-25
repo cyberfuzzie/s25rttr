@@ -1,6 +1,6 @@
 #!/bin/bash
 ###############################################################################
-## $Id: cmake.sh 6076 2010-02-23 16:37:00Z FloSoft $
+## $Id: cmake.sh 6194 2010-03-25 07:39:21Z FloSoft $
 ###############################################################################
 
 # Editable Variables
@@ -79,6 +79,8 @@ PREFIX=/usr/local
 BINDIR=
 DATADIR=
 LIBDIR=
+ARCH=
+NOARCH=
 as_cr_letters='abcdefghijklmnopqrstuvwxyz'
 as_cr_LETTERS='ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 as_cr_Letters=$as_cr_letters$as_cr_LETTERS
@@ -119,6 +121,10 @@ while test $# != 0 ; do
 		-arch | --arch | -target | --target)
 			$ac_shift
 			ARCH=$ac_optarg
+		;;
+		-no-arch | --no-arch)
+			$ac_shift
+			NOARCH="$NOARCH $ac_optarg"
 		;;
 		-enable-* | --enable-*)
 			ac_feature=`expr "x$ac_option" : 'x-*enable-\([^=]*\)'`
@@ -184,6 +190,13 @@ PARAMS="$PARAMS -DDATADIR=$DATADIR"
 
 echo "Setting Library Dir to \"$LIBDIR\""
 PARAMS="$PARAMS -DLIBDIR=$LIBDIR"
+
+echo "Disabling build of \"$NOARCH\""
+for I in $NOARCH ; do
+	if [ ! -z "$I" ] ; then	
+		PARAMS="$PARAMS -DNO$I=$I"
+	fi
+done
 
 case "$enable_debug" in
 	yes|YES|Yes)

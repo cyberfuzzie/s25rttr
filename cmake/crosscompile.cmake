@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: crosscompile.cmake 6194 2010-03-25 07:39:21Z FloSoft $
+### $Id: crosscompile.cmake 6199 2010-03-26 07:30:22Z FloSoft $
 #################################################################################
 
 # read host compiler machine triplet
@@ -62,11 +62,11 @@ ENDIF(NOT "${USED_GCC_RESULT}" STREQUAL "0")
 # read target C++ compiler machine triplet
 
 EXECUTE_PROCESS(
-  COMMAND "${CMAKE_CXX_COMPILER}" "-dumpmachine"
-  RESULT_VARIABLE USED_GPP_RESULT
-  ERROR_VARIABLE USED_GPP_ERROR
-  OUTPUT_VARIABLE USED_GPP_OUTPUT
-  )
+	COMMAND "${CMAKE_CXX_COMPILER}" "-dumpmachine"
+	RESULT_VARIABLE USED_GPP_RESULT
+	ERROR_VARIABLE USED_GPP_ERROR
+	OUTPUT_VARIABLE USED_GPP_OUTPUT
+)
 IF(NOT "${USED_GPP_RESULT}" STREQUAL "0")
 	MESSAGE(FATAL_ERROR "ERROR: ${CMAKE_CXX_COMPILER} -dumpmachine failed... Result:'${USED_GPP_RESULT}' Error:'${USED_GPP_ERROR}' Output:'${USED_GPP_OUTPUT}'")
 ENDIF(NOT "${USED_GPP_RESULT}" STREQUAL "0")
@@ -81,6 +81,12 @@ ENDIF(NOT "${USED_GCC_OUTPUT}" STREQUAL "${USED_GPP_OUTPUT}")
 
 #################################################################################
 
+# strip newlines from var
+STRING(REPLACE "\n" "" USED_GCC_OUTPUT ${USED_GCC_OUTPUT})
+STRING(REPLACE "\n" "" HOST_GCC_OUTPUT ${HOST_GCC_OUTPUT})
+
+#################################################################################
+
 # do we crosscompile? if so, set a flag
 
 IF (NOT "${HOST_GCC_OUTPUT}" STREQUAL "${USED_GCC_OUTPUT}")
@@ -91,11 +97,6 @@ ELSE (NOT "${HOST_GCC_OUTPUT}" STREQUAL "${USED_GCC_OUTPUT}")
 	SET(CROSSCOMPILE "0")
 	SET(CROSS "")
 ENDIF (NOT "${HOST_GCC_OUTPUT}" STREQUAL "${USED_GCC_OUTPUT}")
-
-#################################################################################
-
-# strip newlines from var
-STRING(REPLACE "\n" "" USED_GCC_OUTPUT ${USED_GCC_OUTPUT})
 
 #################################################################################
 

@@ -18,12 +18,12 @@ fi
 
 echo "Building in $BUILDDIR for $ARCH"
 
-echo "Executing cmake -DPREFIX=. -DCMAKE_BUILD_TYPE=RelWithDebugInfo -DCOMPILEFOR_PLATFORM=$ARCH .."
+echo "Executing ./cmake.sh --prefix=. --arch=$CROSS$ARCH --enable-reldeb"
 
 mkdir -vp $BUILDDIR
 OLDDIR=$PWD
 cd $BUILDDIR
-if ! ../build/cmake.sh --prefix=. --arch=$ARCH --enable-reldeb  ; then
+if ! ../build/cmake.sh --prefix=. --arch=$CROSS$ARCH --enable-reldeb  ; then
 	exit 1
 fi
 cd $OLDDIR

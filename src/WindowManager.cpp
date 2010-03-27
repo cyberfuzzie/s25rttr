@@ -1,4 +1,4 @@
-// $Id: WindowManager.cpp 6177 2010-03-24 10:44:32Z FloSoft $
+// $Id: WindowManager.cpp 6202 2010-03-27 15:02:23Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -45,7 +45,7 @@
  *  @author OLiver
  */
 WindowManager::WindowManager(void)
-	: desktop(NULL), nextdesktop(NULL), nextdesktop_data(NULL), disable_mouse(false), mc(NULL), screenWidth(0), screenHeight(0), lastScreenWidthSignal(0), lastScreenHeightSignal(0), lastScreenSignalCount(0)
+	: desktop(NULL), nextdesktop(NULL), nextdesktop_data(NULL), disable_mouse(false), mc(NULL), screenWidth(0), screenHeight(0)//, lastScreenWidthSignal(0), lastScreenHeightSignal(0), lastScreenSignalCount(0)
 {
 }
 
@@ -852,6 +852,7 @@ void WindowManager::Msg_MouseMove(const MouseCoords& mc)
 
 void WindowManager::Msg_KeyDown(const KeyEvent& ke)
 {
+#ifndef _WIN32
 	if(ke.alt && ke.kt == KT_RETURN)
 	{
 		// Switch Fullscreen/Windowed
@@ -860,6 +861,7 @@ void WindowManager::Msg_KeyDown(const KeyEvent& ke)
 		                                        !VideoDriverWrapper::inst().IsFullscreen());
 	}
 	else
+#endif
 		RelayKeyboardMessage(&Window::Msg_KeyDown,ke);
 }
 
@@ -880,14 +882,14 @@ void WindowManager::ScreenResized(unsigned short width, unsigned short height)
 	unsigned short newWidth  = width;
 	unsigned short newHeight = height;
 
-	bool mustResize = false;
+//	bool mustResize = false;
 	// Minimale Ausdehnung erfüllt?
-	if(newWidth  < 800 || newHeight < 600)
-	{
-		mustResize = true;
-		if(newWidth  < 800) newWidth  = 800;
-		if(newHeight < 600) newHeight = 600;
-	}
+//	if(newWidth  < 800 || newHeight < 600)
+//	{
+//		mustResize = true;
+//		if(newWidth  < 800) newWidth  = 800;
+//		if(newHeight < 600) newHeight = 600;
+//	}
 
 	// Es kann passieren dass wir versuchen ein 800x600-Fenster zu erstellen,
 	// aber das Betriebssystem es immer wieder verkleinert. Hier sollten wir 
@@ -900,27 +902,27 @@ void WindowManager::ScreenResized(unsigned short width, unsigned short height)
 	// TODO: Dann den Treiber zwingen, ein nicht resizable Fenster zu öffnen
 	// und erst wieder, wenn der Nutzer im Menü nochmal eine Auflösung einstellt,
 	// das Resizen zulassen.
-	if(width < 800 || height < 600)
-	if(lastScreenWidthSignal  == width)
-	if(lastScreenHeightSignal == height)
-	if(lastScreenSignalCount == 500)
-	{
-		VideoDriverWrapper::inst().ResizeScreen(width, height, VideoDriverWrapper::inst().IsFullscreen());
-		return;
-	}
+//	if(width < 800 || height < 600)
+//	if(lastScreenWidthSignal  == width)
+//	if(lastScreenHeightSignal == height)
+//	if(lastScreenSignalCount == 500)
+//	{
+//		VideoDriverWrapper::inst().ResizeScreen(width, height, VideoDriverWrapper::inst().IsFullscreen());
+//		return;
+//	}
 
 	// Letzten Wert merken
-	if(lastScreenWidthSignal == width 
-	   && lastScreenHeightSignal == height)
-	{
-		++lastScreenSignalCount;
-	}
-	else
-	{
-		lastScreenWidthSignal  = width;
-		lastScreenHeightSignal = height;
-		lastScreenSignalCount  = 0;
-	}
+//	if(lastScreenWidthSignal == width 
+//	   && lastScreenHeightSignal == height)
+//	{
+//		++lastScreenSignalCount;
+//	}
+//	else
+//	{
+//		lastScreenWidthSignal  = width;
+//		lastScreenHeightSignal = height;
+//		lastScreenSignalCount  = 0;
+//	}
 
 	// Und los
 	VideoDriverWrapper::inst().ResizeScreen(newWidth, newHeight, VideoDriverWrapper::inst().IsFullscreen());
@@ -946,8 +948,8 @@ void WindowManager::Msg_ScreenResize(unsigned short width, unsigned short height
 	ScreenResizeEvent sr;
 	sr.oldWidth  = screenWidth;
 	sr.oldHeight = screenHeight; 
-	sr.newWidth  = screenWidth  = width;
-	sr.newHeight = screenHeight = height;
+	sr.newWidth  = screenWidth  = (width < 800 ? 800 : width);
+	sr.newHeight = screenHeight = (height < 600 ? 600 : height);
 
 	SETTINGS.video.fullscreen = VideoDriverWrapper::inst().IsFullscreen();
 	// Wenn es absolut nicht anders geht, lassen wir im temporär doch 

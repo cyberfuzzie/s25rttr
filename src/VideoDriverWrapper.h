@@ -1,4 +1,4 @@
-// $Id: VideoDriverWrapper.h 6177 2010-03-24 10:44:32Z FloSoft $
+// $Id: VideoDriverWrapper.h 6202 2010-03-27 15:02:23Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -66,9 +66,9 @@ public:
 	void * GetWindowPointer() const;
 
 	unsigned short GetScreenWidth()  const 
-		{ return videodriver->GetScreenWidth();  }
+		{ const unsigned short w = videodriver->GetScreenWidth(); return (w < 800 ? 800 : w); }
 	unsigned short GetScreenHeight() const 
-		{ return videodriver->GetScreenHeight(); }
+		{ const unsigned short h = videodriver->GetScreenHeight(); return (h < 600 ? 600 : h); }
 	bool IsFullscreen() const 
 		{ return videodriver->IsFullscreen(); }
 

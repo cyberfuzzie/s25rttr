@@ -1,4 +1,4 @@
-// $Id: WindowManager.h 6177 2010-03-24 10:44:32Z FloSoft $
+// $Id: WindowManager.h 6202 2010-03-27 15:02:23Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -108,9 +108,9 @@ private:
 	unsigned short screenHeight; /// letzte gültige Bildschirm-/Fensterhöhe
 
 	// um Schleifen abzufangen, die entstehen, weil wir mindestens 800x600 haben wollen.
-	unsigned short lastScreenWidthSignal;
-	unsigned short lastScreenHeightSignal;
-	unsigned short lastScreenSignalCount;
+//	unsigned short lastScreenWidthSignal;
+//	unsigned short lastScreenHeightSignal;
+//	unsigned short lastScreenSignalCount;
 };
 
 #endif // !WINDOWMANAGER_H_INCLUDED

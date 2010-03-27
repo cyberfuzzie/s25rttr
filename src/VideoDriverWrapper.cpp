@@ -1,4 +1,4 @@
-// $Id: VideoDriverWrapper.cpp 6177 2010-03-24 10:44:32Z FloSoft $
+// $Id: VideoDriverWrapper.cpp 6202 2010-03-27 15:02:23Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -354,8 +354,8 @@ bool VideoDriverWrapper::Initialize()
  */
 void VideoDriverWrapper::RenewViewport(bool onlyRenew)
 {
-	const unsigned short width  = GetScreenWidth();	
-	const unsigned short height = GetScreenHeight();	
+	const unsigned short width  = videodriver->GetScreenWidth();	
+	const unsigned short height = videodriver->GetScreenHeight();	
 
 	// Viewport mit widthxheight setzen
 	glViewport(0, 0, width, height);
@@ -369,7 +369,7 @@ void VideoDriverWrapper::RenewViewport(bool onlyRenew)
 
 	// 0; 0 soll obere linke Ecke sein
 	glRotated(180,1,0,0);
-	glTranslated(0,-height,0);
+	glTranslated(0,-videodriver->GetScreenHeight(),0);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();

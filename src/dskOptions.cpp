@@ -1,4 +1,4 @@
-// $Id: dskOptions.cpp 6177 2010-03-24 10:44:32Z FloSoft $
+// $Id: dskOptions.cpp 6202 2010-03-27 15:02:23Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -528,6 +528,21 @@ void dskOptions::Msg_ButtonClick(const unsigned int ctrl_id)
 			SETTINGS.Save();
 			
 			// Auflösung/Vollbildmodus geändert?
+#ifdef _WIN32
+			if((SETTINGS.video.fullscreen_width != VideoDriverWrapper::inst().GetScreenWidth()
+			   ||
+			   SETTINGS.video.fullscreen_height != VideoDriverWrapper::inst().GetScreenHeight())
+			   || SETTINGS.video.fullscreen != VideoDriverWrapper::inst().IsFullscreen())
+			{
+				if(!VideoDriverWrapper::inst().ResizeScreen(SETTINGS.video.fullscreen_width,
+				                                            SETTINGS.video.fullscreen_height,
+				                                            SETTINGS.video.fullscreen))
+				{
+					WindowManager::inst().Show(new iwMsgbox(_("Sorry!"), _("You need to restart your game to change the screen resolution!"), this, MSB_OK, MSB_EXCLAMATIONGREEN, 1));
+					break;
+				}
+			}
+#else
 			if((SETTINGS.video.fullscreen && 
 			   (SETTINGS.video.fullscreen_width != VideoDriverWrapper::inst().GetScreenWidth()
 			    ||
@@ -542,7 +557,7 @@ void dskOptions::Msg_ButtonClick(const unsigned int ctrl_id)
 					break;
 				}
 			}
-
+#endif
 			if(SETTINGS.driver.video != VideoDriverWrapper::inst().GetName() || 
 				SETTINGS.driver.audio != AudioDriverWrapper::inst().GetName())
 			{

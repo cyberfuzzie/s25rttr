@@ -109,6 +109,20 @@ iwSettings::~iwSettings()
 	SETTINGS.video.fullscreen_height = video_modes[SizeCombo->GetSelection()].height;
 
 	// Auflösung/Vollbildmodus geändert?
+#ifdef _WIN32
+	if((SETTINGS.video.fullscreen_width != VideoDriverWrapper::inst().GetScreenWidth()
+	    ||
+	    SETTINGS.video.fullscreen_height != VideoDriverWrapper::inst().GetScreenHeight()
+	    || SETTINGS.video.fullscreen != VideoDriverWrapper::inst().IsFullscreen()))
+	{
+		if(!VideoDriverWrapper::inst().ResizeScreen(SETTINGS.video.fullscreen_width,
+							    SETTINGS.video.fullscreen_height,
+							    SETTINGS.video.fullscreen))
+				{
+			// WindowManager::inst().Show(new iwMsgbox(_("Sorry!"), _("You need to restart your game to change the screen resolution!"), this, MSB_OK, MSB_EXCLAMATIONGREEN, 1));
+		}
+	}
+#else
 	if((SETTINGS.video.fullscreen && 
 	   (SETTINGS.video.fullscreen_width != VideoDriverWrapper::inst().GetScreenWidth()
 	    ||
@@ -122,6 +136,7 @@ iwSettings::~iwSettings()
 			// WindowManager::inst().Show(new iwMsgbox(_("Sorry!"), _("You need to restart your game to change the screen resolution!"), this, MSB_OK, MSB_EXCLAMATIONGREEN, 1));
 		}
 	}
+#endif
 }
 
 ///////////////////////////////////////////////////////////////////////////////

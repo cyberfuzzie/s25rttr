@@ -18,12 +18,12 @@ fi
 
 echo "Building in $BUILDDIR for $ARCH"
 
-echo "Executing ./cmake.sh --prefix=. --arch=$CROSS$ARCH --enable-reldeb"
+echo "Executing ./cmake.sh --prefix=. --arch=$CROSS$ARCH"
 
 mkdir -vp $BUILDDIR
 OLDDIR=$PWD
 cd $BUILDDIR
-if ! ../build/cmake.sh --prefix=. --arch=$CROSS$ARCH --enable-reldeb  ; then
+if ! ../build/cmake.sh --prefix=. --arch=$CROSS$ARCH  ; then
 	exit 1
 fi
 cd $OLDDIR

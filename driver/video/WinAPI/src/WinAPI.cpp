@@ -1,4 +1,4 @@
-// $Id: WinAPI.cpp 6179 2010-03-24 14:52:38Z FloSoft $
+// $Id: WinAPI.cpp 6210 2010-03-29 16:41:43Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -595,29 +595,23 @@ void VideoWinAPI::SetMousePosY(int y)
  *
  *  @author FloSoft
  */
-void VideoWinAPI::OnWMChar(char c, bool disablepaste)
+void VideoWinAPI::OnWMChar(char c, bool disablepaste, LPARAM lParam)
 {
 	// Keine Leerzeichen als Extra-Zeichen senden!
 	if(c == ' ')
 		return;
-
-	if(c == 'V' || c == 'v' || c == 0x16)
-	{
-		short state = GetKeyState(VK_CONTROL);
-		if( !disablepaste && (state & 0xFF00) != 0)
-		{
-			OnWMPaste();
-			return;
-		}
-	}
-
-	//char cc[2] = {c, 0};
-	//AnsiToOem(cc, cc);
 	
 	KeyEvent ke = {KT_CHAR, c, 
-		(GetKeyState(VK_CONTROL)&0xFF00)?true:false, 
-		(GetKeyState(VK_SHIFT)&0xFF00)?true:false,
-		(GetKeyState(VK_MENU)&0xFF00)?true:false};
+		(GetKeyState(VK_CONTROL) & 0x8000) != 0, 
+		(GetKeyState(VK_SHIFT)   & 0x8000) != 0,
+		(lParam & KF_ALTDOWN) != 0};
+
+	if(c == 'V' || c == 'v' || c == 0x16)
+	if( !disablepaste && ke.ctrl != 0)
+	{
+		OnWMPaste();
+		return;
+	}
 
 	CallBack->Msg_KeyDown(ke);
 }
@@ -630,13 +624,20 @@ void VideoWinAPI::OnWMChar(char c, bool disablepaste)
  *
  *  @author FloSoft
  */
-void VideoWinAPI::OnWMKeyDown(unsigned char c)
+void VideoWinAPI::OnWMKeyDown(unsigned char c, LPARAM lParam)
 {
-	KeyEvent ke = {KT_INVALID, 0, false, false, false};
+	KeyEvent ke = {KT_INVALID, 0,
+		(GetKeyState(VK_CONTROL) & 0x8000) != 0, 
+		(GetKeyState(VK_SHIFT)   & 0x8000) != 0,
+		(lParam & KF_ALTDOWN) != 0};
 
 	switch(c)
 	{
-	case VK_RETURN: ke.kt = KT_RETURN; break;
+	case VK_RETURN: 
+	{ // Don't report Alt+Return events, as WinAPI seems to fire them in a lot of cases
+		ke.kt = KT_RETURN; 
+		ke.alt = false;
+	} break; 
 	case VK_SPACE:  ke.kt = KT_SPACE; break;
 	case VK_LEFT:   ke.kt = KT_LEFT; break;
 	case VK_RIGHT:  ke.kt = KT_RIGHT; break;
@@ -657,10 +658,6 @@ void VideoWinAPI::OnWMKeyDown(unsigned char c)
 				ke.kt = static_cast<KeyType>(KT_F1 + int(c)-VK_F1);
 		} break;
 	}
-
-	if(GetKeyState(VK_CONTROL)) ke.ctrl = true;
-	if(GetKeyState(VK_SHIFT))   ke.shift = true;
-	if(GetKeyState(VK_MENU))    ke.alt = true;
 
 	if(ke.kt != KT_INVALID)
 		pVideoWinAPI->CallBack->Msg_KeyDown(ke);
@@ -795,14 +792,14 @@ LRESULT CALLBACK VideoWinAPI::WindowProc(HWND window, UINT msg, WPARAM wParam, L
 			}
 		} break;
 	case WM_KEYDOWN:
+//	case WM_SYSKEYDOWN: // auch abfangen, wenn linkes ALT mit gedrückt wurde
 		{
-			pVideoWinAPI->OnWMKeyDown((unsigned char)wParam);
-		} break;
+			pVideoWinAPI->OnWMKeyDown((unsigned char)wParam, lParam);
+		} return 0;
 	case WM_CHAR:
-	case WM_SYSCHAR: // auch abfangen, wenn ALT etc. gedrückt wurde mit
+	case WM_SYSCHAR: // auch abfangen, wenn linkes ALT mit gedrückt wurde
 		{
-			pVideoWinAPI->OnWMChar((char)wParam);
-
+			pVideoWinAPI->OnWMChar((char)wParam, false, lParam);
 		} return 0;
 	}
 	return DefWindowProc(window, msg, wParam, lParam);
@@ -817,9 +814,9 @@ LRESULT CALLBACK VideoWinAPI::WindowProc(HWND window, UINT msg, WPARAM wParam, L
 KeyEvent VideoWinAPI::GetModKeyState(void) const
 {
 	const KeyEvent ke = { KT_INVALID, 0, 
-		(GetKeyState(VK_CONTROL) & 0xFF00) ? true : false, 
-		(GetKeyState(VK_SHIFT)   & 0xFF00) ? true : false,
-		(GetKeyState(VK_MENU)    & 0xFF00) ? true : false };
+		(GetKeyState(VK_CONTROL) & 0x8000) != 0, 
+		(GetKeyState(VK_SHIFT)   & 0x8000) != 0,
+		(GetKeyState(VK_MENU)    & 0x8000) != 0 };
 	return ke;
 }
 

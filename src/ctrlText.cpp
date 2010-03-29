@@ -1,4 +1,4 @@
-// $Id: ctrlText.cpp 6177 2010-03-24 10:44:32Z FloSoft $
+// $Id: ctrlText.cpp 6210 2010-03-29 16:41:43Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -49,7 +49,7 @@ ctrlText::ctrlText(Window *parent,
 				   unsigned int color, 
 				   unsigned int format, 
 				   glArchivItem_Font *font)
-	: Window(x, y, id, parent, width, height), ctrlBaseText(text,color,font), format(format)
+	: Window(x, y, id, parent), ctrlBaseText(text,color,font), format(format)
 {
 }
 

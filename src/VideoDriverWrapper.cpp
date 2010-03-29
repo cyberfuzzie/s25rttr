@@ -1,4 +1,4 @@
-// $Id: VideoDriverWrapper.cpp 6202 2010-03-27 15:02:23Z jh $
+// $Id: VideoDriverWrapper.cpp 6210 2010-03-29 16:41:43Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -116,11 +116,28 @@ bool VideoDriverWrapper::CreateScreen(const unsigned short screen_width, const u
 	}
 
 	// Fenster erstellen
+	// On Windows it is necessary to open a windowed mode window at first and then resize it
+#ifdef _WIN32
+	// We need this doubled up here
+	// - With WinAPI in the windowed case, otherwise the GL Viewport is set wrong (or something related, seems to be a bug in our WinAPI implementation)
+	// - With SDL in the fullscreen case
+	if(!videodriver->CreateScreen(800, 600, false))
+	{
+		fatal_error("Erstellen des Fensters fehlgeschlagen!\n");
+		return false;
+	}
+	if(!videodriver->ResizeScreen(screen_width, screen_height, fullscreen))
+	{
+		fatal_error("Erstellen des Fensters fehlgeschlagen!\n");
+		return false;
+	}
+#else
 	if(!videodriver->CreateScreen(screen_width, screen_height, fullscreen))
 	{
 		fatal_error("Erstellen des Fensters fehlgeschlagen!\n");
 		return false;
 	}
+#endif
 
 	// DriverWrapper Initialisieren
 	if(!Initialize())
@@ -128,6 +145,8 @@ bool VideoDriverWrapper::CreateScreen(const unsigned short screen_width, const u
 		fatal_error("Initialisieren des OpenGL-Kontexts fehlgeschlagen!\n");
 		return false;
 	}
+
+
 
 	// WindowManager informieren
 	WindowManager::inst().Msg_ScreenResize(screen_width, screen_height);
@@ -153,14 +172,19 @@ bool VideoDriverWrapper::CreateScreen(const unsigned short screen_width, const u
  */
 bool VideoDriverWrapper::ResizeScreen(const unsigned short screenWidth, const unsigned short screenHeight, const bool fullscreen)
 {
-	if(!videodriver->ResizeScreen(screenWidth, screenHeight, fullscreen))	
+	if(videodriver == NULL)
+	{
+		fatal_error("Kein Videotreiber ausgewaehlt!\n");
 		return false;
+	}
+
+	const bool result = videodriver->ResizeScreen(screenWidth, screenHeight, fullscreen);
 
 	RenewViewport();
 
 	WindowManager::inst().Msg_ScreenResize(screenWidth, screenHeight);
 
-	return true;
+	return result;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

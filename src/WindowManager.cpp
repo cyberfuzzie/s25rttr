@@ -1,4 +1,4 @@
-// $Id: WindowManager.cpp 6202 2010-03-27 15:02:23Z jh $
+// $Id: WindowManager.cpp 6210 2010-03-29 16:41:43Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -852,16 +852,20 @@ void WindowManager::Msg_MouseMove(const MouseCoords& mc)
 
 void WindowManager::Msg_KeyDown(const KeyEvent& ke)
 {
-#ifndef _WIN32
-	if(ke.alt && ke.kt == KT_RETURN)
+	if(ke.alt && (ke.kt == KT_RETURN))
 	{
 		// Switch Fullscreen/Windowed
+#ifdef _WIN32
+		VideoDriverWrapper::inst().ResizeScreen(SETTINGS.video.fullscreen_width,
+		                                        SETTINGS.video.fullscreen_height,
+		                                        !VideoDriverWrapper::inst().IsFullscreen());
+#else
 		VideoDriverWrapper::inst().ResizeScreen(VideoDriverWrapper::inst().IsFullscreen() ? SETTINGS.video.windowed_width : SETTINGS.video.fullscreen_width,
 		                                        VideoDriverWrapper::inst().IsFullscreen() ? SETTINGS.video.windowed_height : SETTINGS.video.fullscreen_height,
 		                                        !VideoDriverWrapper::inst().IsFullscreen());
+#endif
 	}
 	else
-#endif
 		RelayKeyboardMessage(&Window::Msg_KeyDown,ke);
 }
 

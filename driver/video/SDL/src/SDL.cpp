@@ -1,4 +1,4 @@
-// $Id: SDL.cpp 6178 2010-03-24 10:55:33Z FloSoft $
+// $Id: SDL.cpp 6210 2010-03-29 16:41:43Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -191,9 +191,9 @@ bool VideoSDL::CreateScreen(unsigned short width, unsigned short height, const b
 
 	// Videomodus setzen
 #ifdef _WIN32
-	if(!(screen = SDL_SetVideoMode( width, height, 32, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_OPENGL | ((fullscreen) ? SDL_FULLSCREEN : 0) )))
+	if(!(screen = SDL_SetVideoMode(width, height, 32, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_OPENGL | ((fullscreen) ? SDL_FULLSCREEN : 0) )))
 #else
-	if(!(screen = SDL_SetVideoMode( width, height, 32, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_OPENGL | ((!fullscreen) ? SDL_RESIZABLE : 0) | ((fullscreen) ? SDL_FULLSCREEN : 0) )))
+	if(!(screen = SDL_SetVideoMode(width, height, 32, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_OPENGL | (fullscreen ? SDL_FULLSCREEN : SDL_RESIZABLE))))
 #endif
 	{
 		fprintf(stderr, "%s\n", SDL_GetError());
@@ -305,7 +305,7 @@ bool VideoSDL::ResizeScreen(unsigned short width, unsigned short height, const b
 	}
 #else // unter anderen Platformen kann SDL das ohne den OpenGL-Kontext zu killen
 	// Videomodus setzen
-	if(!(screen = SDL_SetVideoMode( width, height, 32, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_OPENGL | ((!fullscreen) ? SDL_RESIZABLE : 0) | ((fullscreen) ? SDL_FULLSCREEN : 0) )))
+	if(!(screen = SDL_SetVideoMode(width, height, 32, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_OPENGL | (fullscreen ? SDL_FULLSCREEN : SDL_RESIZABLE))))
 	{
 		fprintf(stderr, "%s\n", SDL_GetError());
 		return false;
@@ -581,7 +581,7 @@ void VideoSDL::SetMousePosY(int y)
 KeyEvent VideoSDL::GetModKeyState(void) const
 {
 	const SDLMod modifiers = SDL_GetModState();
-	const KeyEvent ke = { KT_INVALID, 0, modifiers & KMOD_CTRL, modifiers & KMOD_SHIFT, modifiers & KMOD_ALT };
+	const KeyEvent ke = { KT_INVALID, 0, (modifiers & KMOD_CTRL != 0), (modifiers & KMOD_SHIFT != 0), (modifiers & KMOD_ALT != 0)};
 	return ke;
 }
 

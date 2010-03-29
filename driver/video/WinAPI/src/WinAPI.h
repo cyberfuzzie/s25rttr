@@ -1,4 +1,4 @@
-// $Id: WinAPI.h 6179 2010-03-24 14:52:38Z FloSoft $
+// $Id: WinAPI.h 6210 2010-03-29 16:41:43Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -83,8 +83,8 @@ public:
 
 private:
 	/// Funktion zum Senden einer gedrückten Taste.
-	void OnWMChar(char c, bool disablepaste = false);
-	void OnWMKeyDown(unsigned char c);
+	void OnWMChar(char c, bool disablepaste = false, LPARAM lParam = 0);
+	void OnWMKeyDown(unsigned char c, LPARAM lParam = 0);
 
 	/// Funktion zum Pasten von Text aus dem Clipboard.
 	void OnWMPaste();

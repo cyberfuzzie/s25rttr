@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 6125 2010-03-07 18:20:41Z FloSoft $
+### $Id: CMakeLists.txt 6208 2010-03-29 06:34:07Z FloSoft $
 ################################################################################
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
@@ -92,7 +92,6 @@ ADD_CUSTOM_TARGET(updateversion ALL
 ADD_CUSTOM_TARGET(mrproper
 				  COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/build/cleanup.sh
 				  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
-
 
 # preinstall script
 INSTALL(SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/cmake/preinstall.cmake)

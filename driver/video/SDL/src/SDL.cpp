@@ -1,4 +1,4 @@
-// $Id: SDL.cpp 6210 2010-03-29 16:41:43Z jh $
+// $Id: SDL.cpp 6211 2010-03-29 19:18:37Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -581,7 +581,7 @@ void VideoSDL::SetMousePosY(int y)
 KeyEvent VideoSDL::GetModKeyState(void) const
 {
 	const SDLMod modifiers = SDL_GetModState();
-	const KeyEvent ke = { KT_INVALID, 0, (modifiers & KMOD_CTRL != 0), (modifiers & KMOD_SHIFT != 0), (modifiers & KMOD_ALT != 0)};
+	const KeyEvent ke = { KT_INVALID, 0, ( (modifiers & KMOD_CTRL) != 0), ( (modifiers & KMOD_SHIFT) != 0), ( (modifiers & KMOD_ALT) != 0)};
 	return ke;
 }
 

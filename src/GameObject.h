@@ -1,4 +1,4 @@
-// $Id: GameObject.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: GameObject.h 6209 2010-03-29 16:26:57Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -118,7 +118,7 @@ public:
 	/// Serialisierungsfunktion.
 	virtual void Serialize(SerializedGameData *sgd) const = 0;
 	/// Liefert den GOT (siehe oben)
-	virtual GO_Type GetGOT(void) const = 0;
+	virtual GO_Type GetGOT(void) const { return GOT_UNKNOWN; }
 
 	/// Setzt Pointer auf GameWorld und EventManager
 	static void SetPointers(GameWorldGame * const gwg,EventManager * const em, GameClientPlayerList* players) 

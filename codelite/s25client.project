@@ -144,6 +144,8 @@
         <File Name="../src/ctrlVarDeepening.h"/>
         <File Name="../src/ctrlVarText.cpp"/>
         <File Name="../src/ctrlVarText.h"/>
+        <File Name="../src/ctrlMultiSelectGroup.cpp"/>
+        <File Name="../src/ctrlMultiSelectGroup.h"/>
       </VirtualDirectory>
       <VirtualDirectory Name="Desktops">
         <File Name="../src/dskAboutRTTR.cpp"/>

@@ -1,4 +1,4 @@
-// $Id: version.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: version.cpp 6258 2010-04-01 20:07:45Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -36,7 +36,6 @@ const char *GetWindowTitle()
 	static char title[256];
 	memset(title, 0, 256);
 	strncpy(title, WINDOW_TITLE, 256);
-	std::string test;
 	return title;
 }
 

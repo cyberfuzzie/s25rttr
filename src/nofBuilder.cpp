@@ -1,4 +1,4 @@
-// $Id: nofBuilder.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: nofBuilder.cpp 6259 2010-04-01 20:43:40Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -215,6 +215,9 @@ void nofBuilder::HandleDerivedEvent(const unsigned int id)
 					// Evtl Träger aus dem HQ wieder verwenden
 					gwg->GetPlayer(player)->FindWarehouseForAllRoads();
 					gwg->GetPlayer(player)->FindWarehouseForAllJobs(JOB_HELPER);
+					
+					// Evtl gabs verlorene Waren, die jetzt in das HQ wieder reinkönnen
+					gwg->GetPlayer(player)->FindClientForLostWares();
 
 					return;
 

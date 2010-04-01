@@ -1,4 +1,4 @@
-// $Id: GameObject.h 6209 2010-03-29 16:26:57Z jh $
+// $Id: GameObject.h 6259 2010-04-01 20:43:40Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -93,7 +93,7 @@ enum GO_Type
 	GOT_SHIP
 };
 
-/// Basisklasse fÃ¼r alle Spielobjekte
+/// Basisklasse für alle Spielobjekte
 class GameObject
 {
 public:
@@ -106,7 +106,7 @@ public:
 	/// Destruktor von @p GameObject.
 	virtual ~GameObject(void);
 
-	/// zerstÃ¶rt das Objekt.
+	/// zerstört das Objekt.
 	virtual void Destroy(void) = 0;
 
 	/// Benachrichtigen, wenn neuer GF erreicht wurde.
@@ -118,7 +118,7 @@ public:
 	/// Serialisierungsfunktion.
 	virtual void Serialize(SerializedGameData *sgd) const = 0;
 	/// Liefert den GOT (siehe oben)
-	virtual GO_Type GetGOT(void) const { return GOT_UNKNOWN; }
+	virtual GO_Type GetGOT(void) const = 0;
 
 	/// Setzt Pointer auf GameWorld und EventManager
 	static void SetPointers(GameWorldGame * const gwg,EventManager * const em, GameClientPlayerList* players) 

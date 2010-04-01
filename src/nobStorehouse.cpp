@@ -1,4 +1,4 @@
-// $Id: nobStorehouse.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: nobStorehouse.cpp 6260 2010-04-01 21:02:47Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -50,8 +50,6 @@ nobStorehouse::nobStorehouse(const unsigned short x, const unsigned short y,cons
 	// Aktuellen Warenbestand zur aktuellen Inventur dazu addieren
 	AddToInventory();
 
-	// Evtl gabs verlorene Waren, die jetzt in das HQ wieder reinkönnen
-	gwg->GetPlayer(player)->FindClientForLostWares();
 
 	// Post versenden
 	if(GameClient::inst().GetPlayerID() == this->player)

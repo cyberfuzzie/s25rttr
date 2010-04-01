@@ -1,4 +1,4 @@
-// $Id: nobBaseWarehouse.cpp 6258 2010-04-01 20:07:45Z OLiver $
+// $Id: nobBaseWarehouse.cpp 6260 2010-04-01 21:02:47Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -63,9 +63,6 @@ nobBaseWarehouse::nobBaseWarehouse(const BuildingType type,const unsigned short 
 : nobBaseMilitary(type,x,y,player,nation), fetch_double_protection(false), producinghelpers_event(em->AddEvent(this,PRODUCE_HELPERS_GF+RANDOM.Rand(__FILE__,__LINE__,obj_id,PRODUCE_HELPERS_RANDOM_GF),1)), recruiting_event(0),
 empty_event(0)
 {
-	// Evtl gabs verlorene Waren, die jetzt in das HQ wieder reinkönnen
-	gwg->GetPlayer(player)->FindClientForLostWares();
-
 	// Reserve nullen
 	for(unsigned i = 0;i<5;++i)
 		reserve_soldiers_available[i] = 

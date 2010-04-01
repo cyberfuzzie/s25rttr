@@ -1,4 +1,4 @@
-// $Id: nobHarborBuilding.cpp 6156 2010-03-16 14:29:55Z jh $
+// $Id: nobHarborBuilding.cpp 6260 2010-04-01 21:02:47Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -78,8 +78,6 @@ nobHarborBuilding::nobHarborBuilding(const unsigned short x, const unsigned shor
 	// Aktuellen Warenbestand zur aktuellen Inventur dazu addieren
 	AddToInventory();
 
-	// Evtl gabs verlorene Waren, die jetzt in den Hafen wieder reinkönnen
-	gwg->GetPlayer(player)->FindClientForLostWares();
 
 	/// Die Meere herausfinden, an die dieser Hafen grenzt
 	for(unsigned i = 0;i<6;++i)

@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.cpp 6178 2010-03-24 10:55:33Z FloSoft $
+// $Id: dskGameInterface.cpp 6261 2010-04-02 12:25:11Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -467,19 +467,12 @@ bool dskGameInterface::Msg_LeftDown(const MouseCoords& mc)
 				{
 					// Dann darf es nicht neu gebaut sein!
 					if(!gwv->GetSpecObj<nobMilitary>(cselx,csely)->IsNewBuilt())
-						action_tabs.attack = true;
+						action_tabs.attack = action_tabs.sea_attack = true;
 				}
 				// oder ein HQ oder Hafen?
 				else if(bt == BLD_HEADQUARTERS || bt == BLD_HARBORBUILDING)
-					action_tabs.attack = true;
+					action_tabs.attack = action_tabs.sea_attack = true;
 			}
-
-			// Evtl. ist das hier ein Hafenpunkt, dann können wir ein Angriffsschiff entsenden
-			if(gwv->GetNode(cselx,csely).harbor_id)
-				action_tabs.sea_attack = true;
-
-
-
 		}
 
 

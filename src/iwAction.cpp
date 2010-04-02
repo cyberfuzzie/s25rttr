@@ -1,4 +1,4 @@
-// $Id: iwAction.cpp 6177 2010-03-24 10:44:32Z FloSoft $
+// $Id: iwAction.cpp 6261 2010-04-02 12:25:11Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -538,6 +538,12 @@ void iwAction::Msg_PaintAfter()
 		{
 			char str[32];
 			sprintf(str, "%u/%u", selected_soldiers_count, available_soldiers_count);
+			LargeFont->Draw(GetX()+67, GetY()+79, str, glArchivItem_Font::DF_CENTER, COLOR_YELLOW);
+		}
+		else if(tab->GetCurrentTab() == TAB_SEAATTACK && available_soldiers_count_sea > 0)
+		{
+			char str[32];
+			sprintf(str, "%u/%u", selected_soldiers_count_sea, available_soldiers_count_sea);
 			LargeFont->Draw(GetX()+67, GetY()+79, str, glArchivItem_Font::DF_CENTER, COLOR_YELLOW);
 		}
 	}

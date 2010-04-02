@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 6030 2010-02-15 20:15:33Z OLiver $
+// $Id: GameWorldBase.cpp 6261 2010-04-02 12:25:11Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1448,7 +1448,7 @@ void GameWorldBase::GetAvailableSoldiersForSeaAttack(const unsigned char player_
 	// Liste alle Militärgebäude des Angreifers, die Soldaten liefern
 	std::vector<nobHarborBuilding::SeaAttackerBuilding> buildings;
 	
-	// Angrenzende Häfen des Angreifers an den entsprechenden Meere herausfinden
+	// Angrenzende Häfen des Angreifers an den entsprechenden Meeren herausfinden
 	for(std::list<nobHarborBuilding*>::const_iterator it = players->getElement(player_attacker)->GetHarbors()
 	.begin();it!=players->getElement(player_attacker)->GetHarbors().end();++it)
 	{
@@ -1477,7 +1477,8 @@ void GameWorldBase::GetAvailableSoldiersForSeaAttack(const unsigned char player_
 	{
 		// Soldaten holen
 		std::vector<nofPassiveSoldier*> tmp_soldiers;
-		buildings[i].building->GetSoldiersForAttack(x,y,player_attacker,&tmp_soldiers);
+		buildings[i].building->GetSoldiersForAttack(buildings[i].harbor->GetX(),buildings[i].harbor->GetY(),
+		player_attacker,&tmp_soldiers);
 		
 		// Überhaupt welche gefunden?
 		if(!tmp_soldiers.size())

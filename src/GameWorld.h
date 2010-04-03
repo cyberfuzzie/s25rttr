@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 6177 2010-03-24 10:44:32Z FloSoft $
+// $Id: GameWorld.h 6262 2010-04-03 22:05:03Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -400,6 +400,10 @@ public:
 		/// Komperator zum Sortieren
 		bool operator<(const PotentialSeaAttacker& pa) const;
 	};
+	
+	
+	/// Liefert Hafenpunkte im Umkreis von einem bestimmten Milit‰rgeb‰ude
+	void GetHarborPointsAroundMilitaryBuilding(const MapCoord x, const MapCoord y, std::vector<unsigned> * harbor_points) const;
 
 	/// Sucht verf√ºgbare Soldaten, um dieses Milit√§rgeb√§ude mit einem Seeangriff anzugreifen
 	void GetAvailableSoldiersForSeaAttack(const unsigned char player_attacker, 

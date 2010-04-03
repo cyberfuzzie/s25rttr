@@ -1,4 +1,4 @@
-// $Id: nofActiveSoldier.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: nofActiveSoldier.h 6262 2010-04-03 22:05:03Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -44,6 +44,11 @@ public:
 		//STATE_ATTACKING_SUCCEEDING, // rückt auf einen bestimmten Platz um die Flagge herum nach, der frei geworden ist
 		STATE_ATTACKING_FIGHTINGVSAGGRESSIVEDEFENDER,  // kämpft mit einem aggressiven Verteidiger
 		STATE_ATTACKING_FIGHTINGVSDEFENDER, // kämpft mit normalem Verteidiger an der Flagge
+		
+		STATE_SEAATTACKING_GOTOHARBOR, // geht von seinem Heimatmilitärgebäude zum Starthafen
+		STATE_SEAATTACKING_WAITINHARBOR, // wartet im Hafen auf das ankommende Schiff
+		STATE_SEAATTACKING_ONSHIP, // befindet sich auf dem Schiff auf dem Weg zum Zielpunkt
+		STATE_SEAATTACKING_RETURNTOSHIP, // befindet sich an der Zielposition auf dem Weg zurück zum Schiff
 
 		STATE_AGGRESSIVEDEFENDING_WALKINGTOAGGRESSOR,
 		STATE_AGGRESSIVEDEFENDING_FIGHTING,// kämpft mit einem Angreifer

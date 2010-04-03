@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 6261 2010-04-02 12:25:11Z OLiver $
+// $Id: GameWorldBase.cpp 6262 2010-04-03 22:05:03Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1406,6 +1406,26 @@ bool GameWorldBase::PotentialSeaAttacker::operator<(const GameWorldBase::Potenti
 		return soldier->GetRank() > pa.soldier->GetRank();
 }
 
+/// Liefert Hafenpunkte im Umkreis von einem bestimmten Militärgebäude
+void GameWorldBase::GetHarborPointsAroundMilitaryBuilding(const MapCoord x, const MapCoord y, std::vector<unsigned> * harbor_points) const
+{
+	assert(harbor_points);
+	
+	// Nach Hafenpunkten in der Nähe des angegriffenen Gebäudes suchen
+	// Alle unsere Häfen durchgehen
+	for(unsigned i = 1;i<harbor_pos.size();++i)
+	{
+		MapCoord harbor_x = harbor_pos[i].x, harbor_y = harbor_pos[i].y;
+		
+		if(CalcDistance(harbor_x,harbor_y,x,y) <= SEAATTACK_DISTANCE)
+		{
+			// Wird ein Weg vom Militärgebäude zum Hafen gefunden?
+			if(FindFreePath(x,y,harbor_x,harbor_y,false,SEAATTACK_DISTANCE,NULL,NULL,NULL,NULL,NULL,NULL))
+				harbor_points->push_back(i);
+		}
+	}
+}
+
 /// Sucht verfügbare Soldaten, um dieses Militärgebäude mit einem Seeangriff anzugreifen
 void GameWorldBase::GetAvailableSoldiersForSeaAttack(const unsigned char player_attacker, const MapCoord x, const MapCoord y, 
 	std::list<GameWorldBase::PotentialSeaAttacker> * attackers) const
@@ -1421,29 +1441,21 @@ void GameWorldBase::GetAvailableSoldiersForSeaAttack(const unsigned char player_
 	// Mögliche Hafenpunkte in der Nähe des Gebäudes
 	std::vector< unsigned > defender_harbors;
 	
+	GetHarborPointsAroundMilitaryBuilding(x,y,&defender_harbors);
 	// Nach Hafenpunkten in der Nähe des angegriffenen Gebäudes suchen
 	// Alle unsere Häfen durchgehen
-	for(unsigned i = 1;i<harbor_pos.size();++i)
+	for(unsigned i = 1;i<defender_harbors.size();++i)
 	{
-		MapCoord harbor_x = harbor_pos[i].x, harbor_y = harbor_pos[i].y;
-		
-		if(CalcDistance(harbor_x,harbor_y,x,y) <= SEAATTACK_DISTANCE)
+		unsigned harbor_id = defender_harbors[i];
+		unsigned short sea_ids[6];
+		GetSeaIDs(harbor_id,sea_ids);
+		for(unsigned z = 0;z<6;++z)
 		{
-			// Wird ein Weg vom Militärgebäude zum Hafen gefunden?
-			if(FindFreePath(x,y,harbor_x,harbor_y,false,SEAATTACK_DISTANCE,NULL,NULL,NULL,NULL,NULL,NULL))
-			{
-				unsigned short sea_ids[6];
-				GetSeaIDs(i,sea_ids);
-				for(unsigned z = 0;z<6;++z)
-				{
-					if(sea_ids[z])
-						use_seas[sea_ids[z]] = true;
-				}
-				
-				defender_harbors.push_back(i);
-			}
+			if(sea_ids[z])
+				use_seas[sea_ids[z]] = true;
 		}
 	}
+	
 	
 	// Liste alle Militärgebäude des Angreifers, die Soldaten liefern
 	std::vector<nobHarborBuilding::SeaAttackerBuilding> buildings;

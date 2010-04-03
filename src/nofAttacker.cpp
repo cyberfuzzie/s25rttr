@@ -36,6 +36,7 @@
 #include "nobBaseWarehouse.h"
 #include "MapGeometry.h"
 #include "PostMsg.h"
+#include "nobHarborBuilding.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -54,7 +55,8 @@ const unsigned BLOCK_OFFSET = 10;
 
 nofAttacker::nofAttacker(nofPassiveSoldier * other,nobBaseMilitary * const attacked_goal)
 : nofActiveSoldier(*other,STATE_ATTACKING_WALKINGTOGOAL), attacked_goal(attacked_goal), defender(false),
-should_haunted(GAMECLIENT.GetPlayer(attacked_goal->GetPlayer())->ShouldSendDefender()), blocking_event(0), encounteredEnemy(0)
+should_haunted(GAMECLIENT.GetPlayer(attacked_goal->GetPlayer())->ShouldSendDefender()), blocking_event(0), encounteredEnemy(0),
+harbor_x(0xffff), harbor_y(0xffff), ship_x(0xffff), ship_y(0xffff)
 {
 	// Dem Haus Bescheid sagen
 	static_cast<nobMilitary*>(building)->SoldierOnMission(other,this);
@@ -63,6 +65,22 @@ should_haunted(GAMECLIENT.GetPlayer(attacked_goal->GetPlayer())->ShouldSendDefen
 	// Dem Ziel Bescheid sagen
 	attacked_goal->LinkAggressor(this);
 }
+
+nofAttacker::nofAttacker(nofPassiveSoldier * other,nobBaseMilitary * const attacked_goal,const nobHarborBuilding * const harbor)
+: nofActiveSoldier(*other,STATE_SEAATTACKING_GOTOHARBOR), 
+
+attacked_goal(attacked_goal), defender(false),
+should_haunted(GAMECLIENT.GetPlayer(attacked_goal->GetPlayer())->ShouldSendDefender()), blocking_event(0), encounteredEnemy(0),
+	harbor_x(harbor->GetX()), harbor_y(harbor->GetY()), ship_x(0xffff), ship_y(0xffff)
+{
+	// Dem Haus Bescheid sagen
+	static_cast<nobMilitary*>(building)->SoldierOnMission(other,this);
+	// Das Haus soll uns rausschicken
+	building->AddLeavingFigure(this);
+	// Dem Ziel Bescheid sagen
+	attacked_goal->LinkAggressor(this);
+}
+		
 
 nofAttacker::~nofAttacker()
 {
@@ -96,6 +114,11 @@ void nofAttacker::Serialize_nofAttacker(SerializedGameData * sgd) const
 
 		if(state == STATE_ATTACKING_WAITINGFORDEFENDER)
 			sgd->PushObject(blocking_event,true);
+			
+		sgd->PushUnsignedShort(harbor_x);
+		sgd->PushUnsignedShort(harbor_y);
+		sgd->PushUnsignedShort(ship_x);
+		sgd->PushUnsignedShort(ship_y);
 	}
 }
 
@@ -113,6 +136,11 @@ nofAttacker::nofAttacker(SerializedGameData * sgd, const unsigned obj_id) : nofA
 
 		if(state == STATE_ATTACKING_WAITINGFORDEFENDER)
 			blocking_event = sgd->PopObject<EventManager::Event>(GOT_EVENT);
+			
+		harbor_x = sgd->PopUnsignedShort();
+		harbor_y = sgd->PopUnsignedShort();
+		ship_x = sgd->PopUnsignedShort();
+		ship_y = sgd->PopUnsignedShort();
 	}
 	else
 	{
@@ -244,6 +272,71 @@ void nofAttacker::Walked()
 		{
 			CapturingWalking();
 		} break;
+		
+	case STATE_SEAATTACKING_GOTOHARBOR: // geht von seinem Heimatmilitärgebäude zum Starthafen
+		{
+			
+			// Gucken, ob der Abflughafen auch noch steht und sich in unserer Hand befindet
+			bool valid_harbor = true;
+			noBase * hb = gwg->GetNO(harbor_x,harbor_y);
+			if(hb->GetGOT() != GOT_NOB_HARBORBUILDING)
+				valid_harbor = false;
+			else if(static_cast<nobHarborBuilding*>(hb)->GetPlayer() != player)
+				valid_harbor = false;	
+				
+			// Nicht mehr oder das angegriffene Gebäude kaputt? Dann müssen wir die ganze Aktion abbrechen
+			if(!valid_harbor || !attacked_goal)
+			{
+				// Dann gehen wir halt wieder nach Hause
+				ReturnHomeMissionAttacking();
+				return;
+			}
+			
+			// Sind wir schon da?
+			if(x == harbor_x && y == harbor_y)
+			{
+				// Uns zum Hafen hinzufügen
+				gwg->GetSpecObj<nobHarborBuilding>(x,y)->AddSeaAttacker(this);
+				state = STATE_SEAATTACKING_WAITINHARBOR;
+				gwg->RemoveFigure(this,x,y);
+				return;
+			}
+			
+			// Erstmal Flagge ansteuern
+			MapCoord harbor_flag_x = gwg->GetXA(harbor_x, harbor_y,4);
+			MapCoord harbor_flag_y = gwg->GetYA(harbor_x, harbor_y,4);
+			
+			// Wenn wir an der Flagge bereits sind, in den Hafen eintreten
+			if(x == harbor_flag_x && y == harbor_flag_y)
+				StartWalking(1);
+			else
+			{
+			
+				// Weg zum Hafen suchen
+				unsigned char dir = gwg->FindHumanPath(x,y,harbor_flag_x,harbor_flag_y,20,NULL,NULL);
+				if(dir == 0xff)
+				{
+					// Kein Weg gefunden? Dann auch abbrechen!
+					ReturnHomeMissionAttacking();
+					return;
+				}
+				
+				// Und schön weiterlaufen
+				StartWalking(dir);
+			}
+			
+		} break;
+	case STATE_SEAATTACKING_WAITINHARBOR: // wartet im Hafen auf das ankommende Schiff
+		{
+		} break;
+	case STATE_SEAATTACKING_ONSHIP: // befindet sich auf dem Schiff auf dem Weg zum Zielpunkt
+		{
+			// Auweia, das darf nicht passieren
+			assert(false); 
+		} break;
+	case STATE_SEAATTACKING_RETURNTOSHIP: // befindet sich an der Zielposition auf dem Weg zurück zum Schiff
+		{
+		} break;
 	}
 }
 
@@ -289,6 +382,10 @@ void nofAttacker::HomeDestroyed()
 	case STATE_ATTACKING_FIGHTINGVSDEFENDER:
 	case STATE_ATTACKING_WALKINGTOFIGHTSPOT:
 	case STATE_ATTACKING_FIGHTVSATTACKER:
+	case STATE_SEAATTACKING_GOTOHARBOR:
+	case STATE_SEAATTACKING_WAITINHARBOR:
+	case STATE_SEAATTACKING_ONSHIP:
+	case STATE_SEAATTACKING_RETURNTOSHIP:
 		{
 			//  Die normale Tätigkeit wird erstmal fortgesetzt (Laufen, Kämpfen, wenn er schon an der Fahne ist
 			// wird er auch nicht mehr zurückgehen)

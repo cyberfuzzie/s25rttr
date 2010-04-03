@@ -1,4 +1,4 @@
-// $Id: GameCommands.cpp 6059 2010-02-20 17:45:40Z FloSoft $
+// $Id: GameCommands.cpp 6262 2010-04-03 22:05:03Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -52,6 +52,7 @@ GameCommand * GameCommand::CreateGameCommand(const Type gst, Serializer * ser)
 	case CALLGEOLOGIST: return new CallGeologist(ser);
 	case CALLSCOUT: return new CallScout(ser);
 	case ATTACK: return new Attack(ser);
+	case SEAATTACK: return new SeaAttack(ser);
 	case SWITCHPLAYER: return new SwitchPlayer(ser);
 	case STOPGOLD: return new StopGold(ser);
 	case STOPPRODUCTION: return new StopProduction(ser);

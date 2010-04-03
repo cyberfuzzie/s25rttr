@@ -428,9 +428,9 @@ protected:
 	
 public:
 	BaseAttack(const Type gst, const MapCoord x, const MapCoord y, const unsigned soldiers_count, const bool strong_soldiers)
-		: Coords(ATTACK,x,y), soldiers_count(soldiers_count), strong_soldiers(strong_soldiers) {}
+		: Coords(gst,x,y), soldiers_count(soldiers_count), strong_soldiers(strong_soldiers) {}
 	BaseAttack(const Type gst, Serializer * ser)
-		: Coords(ATTACK,ser),
+		: Coords(gst,ser),
 		soldiers_count(ser->PopUnsignedInt()), strong_soldiers(ser->PopBool()) {}
 
 	virtual void Serialize(Serializer *ser) const

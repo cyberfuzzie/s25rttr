@@ -1,4 +1,4 @@
-// $Id: nobHarborBuilding.cpp 6260 2010-04-01 21:02:47Z OLiver $
+// $Id: nobHarborBuilding.cpp 6262 2010-04-03 22:05:03Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -34,6 +34,7 @@
 #include "noFigure.h"
 #include "Random.h"
 #include "nobMilitary.h"
+#include "nofAttacker.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -792,15 +793,7 @@ void nobHarborBuilding::GetAttackerBuildingsForSeaAttack(std::vector<SeaAttacker
 	{
 		if((*it)->GetGOT() != GOT_NOB_MILITARY)
 			continue;
-			
-		/*// Soldaten holen
-		std::vector<nofPassiveSoldier*> soldiers2;
-		static_cast<nobMilitary*>(*it)->GetSoldiersForAttack(x,y,player,&soldiers2);
-		
-		// Überhaupt welche gefunden?
-		if(!soldiers2.size())
-			continue;*/
-			
+
 		// Weg vom Hafen zum Militärgebäude berechnen
 		if(!gwg->FindFreePath((*it)->GetX(),(*it)->GetY(),x,y,false,BASE_ATTACKING_DISTANCE*2,NULL,NULL,NULL,NULL,NULL,NULL))
 			continue;
@@ -830,6 +823,29 @@ void nobHarborBuilding::GetAttackerBuildingsForSeaAttack(std::vector<SeaAttacker
 			it2->harbor = this;
 		}
 	}
+}
+
+/// Fügt einen Schiffs-Angreifer zum Hafen hinzu
+void nobHarborBuilding::AddSeaAttacker(nofAttacker * attacker)
+{
+	unsigned best_distance = 0xffffffff;
+	unsigned best_harbor_point;
+	std::vector<unsigned> harbor_points;
+	gwg->GetHarborPointsAroundMilitaryBuilding(attacker->GetAttackedGoal()->GetX(),attacker->GetAttackedGoal()->GetY(),
+												&harbor_points);
+	for(unsigned i = 0;i<harbor_points.size();++i)
+	{
+		unsigned tmp_distance = gwg->CalcHarborDistance(this->GetHarborPosID(),harbor_points[i]);
+		if(tmp_distance < best_distance)
+		{
+			best_distance = tmp_distance;
+			best_harbor_point = harbor_points[i];
+		}
+	}
+	
+	
+	SoldierForShip sfs = { attacker, gwg->GetHarborPoint(best_harbor_point) };
+	soldiers_for_ships.push_back(sfs);
 }
 
 

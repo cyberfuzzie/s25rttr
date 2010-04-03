@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 6067 2010-02-22 17:06:18Z jh $
+// $Id: GameWorldGame.cpp 6262 2010-04-03 22:05:03Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -935,6 +935,32 @@ void GameWorldGame::Attack(const unsigned char player_attacker, const MapCoord x
 
 void  GameWorldGame::AttackViaSea(const unsigned char player_attacker, const MapCoord x, const MapCoord y, const unsigned short soldiers_count, const bool strong_soldiers)
 {
+	// Verfügbare Soldaten herausfinden
+	std::list<GameWorldBase::PotentialSeaAttacker> attackers;
+	GetAvailableSoldiersForSeaAttack(player_attacker,x,y,&attackers);
+	
+	// Ist das angegriffenne ein normales GebÃ¤ude?
+	nobBaseMilitary * attacked_building = GetSpecObj<nobBaseMilitary>(x,y);
+	if(attacked_building->GetBuildingType() >= BLD_BARRACKS && attacked_building->GetBuildingType() <= BLD_FORTRESS)
+	{
+		// Wird es gerade eingenommen?
+		if(static_cast<nobMilitary*>(attacked_building)->IsCaptured())
+			// Dann darf es nicht angegriffen werden
+			return;
+		if (static_cast<nobMilitary*>(attacked_building)->IsNewBuilt())
+			return;
+	}
+	
+	if(strong_soldiers)
+		for(std::list<GameWorldBase::PotentialSeaAttacker>::iterator it = attackers.begin();it!=attackers.end();
+		++it)
+		{
+			// neuen Angreifer-Soldaten erzeugen
+			new nofAttacker(it->soldier,attacked_building,it->harbor);
+			// passiven Soldaten entsorgen
+			it->soldier->Destroy();
+			delete it->soldier;
+		}
 }
 
 

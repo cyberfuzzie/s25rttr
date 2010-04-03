@@ -1,4 +1,4 @@
-// $Id: nobHarborBuilding.h 6022 2010-02-14 16:51:44Z OLiver $
+// $Id: nobHarborBuilding.h 6262 2010-04-03 22:05:03Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -56,6 +56,14 @@ class nobHarborBuilding : public nobBaseWarehouse
 		Point<MapCoord> dest;
 	};
 	std::list<FigureForShip> figures_for_ships;
+	
+	/// Liste von angreifenden Soldaten, die verschifft werden sollen
+	struct SoldierForShip
+	{
+		nofAttacker * attacker;
+		Point<MapCoord> dest;
+	};
+	std::list<SoldierForShip> soldiers_for_ships;
 
 private:
 
@@ -156,6 +164,9 @@ public:
 	/// defender_harbors sind dabei mögliche Zielhäfen
 	void GetAttackerBuildingsForSeaAttack(std::vector<SeaAttackerBuilding> * buildings,
 											const std::vector<unsigned>& defender_harbors);
+											
+	/// F�gt einen Schiffs-Angreifer zum Hafen hinzu
+	void AddSeaAttacker(nofAttacker * attacker);
 };
 
 

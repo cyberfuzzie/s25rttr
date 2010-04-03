@@ -1,4 +1,4 @@
-// $Id: nofAttacker.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: nofAttacker.h 6262 2010-04-03 22:05:03Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -24,6 +24,7 @@
 class nofDefender;
 class nofAggressiveDefender;
 class nofPassiveSoldier;
+class nobHarborBuilding;
 
 /// Angreifender Soldat
 class nofAttacker : public nofActiveSoldier
@@ -51,6 +52,12 @@ private:
 	nofActiveSoldier *encounteredEnemy;
 	/// vereinbarter Treffpunkt um den encounteredEnemy zu bekämpfen
 	MapCoord fightSpot_x, fightSpot_y;
+	/// Für Seeangreifer: Stelle, wo sich der Hafen befindet, von wo aus sie losfahren sollen
+	MapCoord harbor_x, harbor_y;
+	/// Für Seeangreifer: Landepunkt, wo sich das Schiff befindet, mit dem der Angreifer
+	/// ggf. wieder nach Hause fahren kann
+	MapCoord ship_x, ship_y;
+	
 
 private:
 
@@ -88,7 +95,11 @@ private:
 public:
 
 
+	/// Normaler Konstruktor für Angreifer
 	nofAttacker(nofPassiveSoldier * other,nobBaseMilitary * const attacked_goal);
+	/// Konstruktor für Schiffs-Angreifer, die zuerst einmal zu einem Hafen laufen müssen
+	nofAttacker(nofPassiveSoldier * other,nobBaseMilitary * const attacked_goal, 
+		const nobHarborBuilding * const harbor);
 	nofAttacker(SerializedGameData * sgd, const unsigned obj_id);
 	~nofAttacker();
 

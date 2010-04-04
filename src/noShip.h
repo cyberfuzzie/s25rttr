@@ -1,4 +1,4 @@
-// $Id: noShip.h 5855 2010-01-04 16:44:38Z FloSoft $
+// $Id: noShip.h 6263 2010-04-04 10:13:43Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -48,7 +48,12 @@ class noShip : public noMovable
 		STATE_EXPEDITION_DRIVING,
 		STATE_TRANSPORT_LOADING, // Schiff wird mit Waren/Figuren erst noch beladen, bleibt also für kurze Zeit am Hafen
 		STATE_TRANSPORT_DRIVING, /// Schiff transportiert Waren/Figuren von einen Ort zum anderen
-		STATE_TRANSPORT_UNLOADING /// Entlädt Schiff am Zielhafen, kurze Zeit ankern, bevor Waren im Hafengebäude ankommen..
+		STATE_TRANSPORT_UNLOADING, /// Entlädt Schiff am Zielhafen, kurze Zeit ankern, bevor Waren im Hafengebäude ankommen..
+		STATE_SEAATTACK_LOADING,
+		STATE_SEAATTACK_UNLOADING,
+		STATE_SEAATACK_DRIVINGTODESTINATION, /// Fährt mit den Soldaten zum Zielhafenpunkt
+		STATE_SEAATTACK_WAITING, /// wartet an der Küste, während die Soldaten was schönes machen
+		STATE_SEAATTACK_RETURN /// fährt mit den Soldaten wieder zurück zum Heimathafen
 
 	} state;
 
@@ -77,6 +82,7 @@ private:
 	void HandleState_GoToHarbor();
 	void HandleState_ExpeditionDriving();
 	void HandleState_TransportDriving();
+	void HandleState_SeaAttackDriving();
 
 	enum Result
 	{
@@ -99,9 +105,15 @@ private:
 
 	/// Startet die eigentliche Transportaktion, nachdem das Schiff beladen wurde
 	void StartTransport();
+	
+	/// Startet Schiffs-Angreiff
+	void StartSeaAttack();
 
 	/// Fängt an mit idlen und setzt nötigen Sachen auf NULL
 	void StartIdling();
+	
+	/// Fängt an zu einem Hafen zu fahren (berechnet Route usw.)
+	void StartDrivingToHarborPlace();
 
 public:
 
@@ -136,6 +148,10 @@ public:
 	bool IsOnExpedition() const
 	{ return (state == STATE_EXPEDITION_LOADING || state == STATE_EXPEDITION_WAITING 
 	|| state ==	STATE_EXPEDITION_DRIVING); }
+	/// Gibt Liste der Waren an Bord zurück
+	const std::list<Ware *> &GetWares() const { return wares; }
+	/// Gibt Liste der Menschen an Bord zurück
+	const std::list<noFigure *> &GetFigures() const { return figures; }
 
 	/// Beim Warten bei der Expedition: Gibt die Hafenpunkt-ID zurück, wo es sich gerade befindet
 	unsigned GetCurrentHarbor() const;
@@ -156,14 +172,13 @@ public:
 	/// Belädt das Schiff mit Waren und Figuren, um eine Transportfahrt zu starten
 	void PrepareTransport(Point<MapCoord> goal, const std::list<noFigure*>& figures, const std::list<Ware*>& wares);
 
+	/// Belädt das Schiff mit Schiffs-Angreifern
+	void PrepareSeaAttack(Point<MapCoord> goal, const std::list<noFigure*>& figures);
+
 	/// Sagt dem Schiff, das ein bestimmter Hafen zerstört wurde
 	void HarborDestroyed(nobHarborBuilding * hb);
 
-	/// Gibt Liste der Waren an Bord zurück
-	const std::list<Ware *> &GetWares() const { return wares; }
 
-	/// Gibt Liste der Menschen an Bord zurück
-	const std::list<noFigure *> &GetFigures() const { return figures; }
 
 
 };

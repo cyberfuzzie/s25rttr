@@ -1,4 +1,4 @@
-// $Id: noShip.cpp 6153 2010-03-15 21:25:52Z jh $
+// $Id: noShip.cpp 6263 2010-04-04 10:13:43Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -135,7 +135,7 @@ void noShip::Destroy()
 void noShip::Draw(int x, int y)
 {
 	unsigned flag_drawing_type = 1;
-
+	
  	switch(state)
 	{
 	default:
@@ -154,6 +154,8 @@ void noShip::Draw(int x, int y)
 	case STATE_EXPEDITION_LOADING:
 	case STATE_TRANSPORT_LOADING:
 	case STATE_TRANSPORT_UNLOADING:
+	case STATE_SEAATTACK_LOADING:
+	case STATE_SEAATTACK_UNLOADING:
 		{
 			LOADER.GetImageN("boot_z",  ((dir+3)%6)*2 + 1)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
 			LOADER.GetImageN("boot_z",  ((dir+3)%6)*2)->Draw(x,y);
@@ -168,8 +170,18 @@ void noShip::Draw(int x, int y)
 		} break;
 	case STATE_EXPEDITION_DRIVING:
 	case STATE_TRANSPORT_DRIVING:
+	case STATE_SEAATACK_DRIVINGTODESTINATION:
+	
 		{
 			DrawDrivingWithWares(x,y);
+		} break;
+	case STATE_SEAATTACK_RETURN:
+	case STATE_SEAATTACK_WAITING:
+		{
+			if(figures.size() || wares.size())
+				DrawDrivingWithWares(x,y);
+			else
+				DrawDriving(x,y);
 		} break;
 	}
 
@@ -261,6 +273,10 @@ void noShip::HandleEvent(const unsigned int id)
 					StartIdling();
 					players->getElement(player)->GetJobForShip(this);
 				} break;
+			case STATE_SEAATTACK_LOADING:
+				{
+					StartSeaAttack();
+				} break;
 			}
 		} break;
 
@@ -285,6 +301,7 @@ void noShip::Driven()
 	case STATE_GOTOHARBOR: HandleState_GoToHarbor(); break;
 	case STATE_EXPEDITION_DRIVING: HandleState_ExpeditionDriving(); break;
 	case STATE_TRANSPORT_DRIVING: HandleState_TransportDriving(); break;
+	case STATE_SEAATACK_DRIVINGTODESTINATION: HandleState_SeaAttackDriving(); break;
 	default:
 		break;
 	}
@@ -566,11 +583,44 @@ void noShip::PrepareTransport(Point<MapCoord> goal, const std::list<noFigure*>& 
 	current_ev = em->AddEvent(this,200,1);
 }
 
-/// Startet die eigentliche Transportaktion, nachdem das Schiff beladen wurde
-void noShip::StartTransport()
+/// Belädt das Schiff mit Schiffs-Angreifern
+void noShip::PrepareSeaAttack(Point<MapCoord> goal, const std::list<noFigure*>& figures)
 {
-	state = STATE_TRANSPORT_DRIVING;
+	this->goal_harbor_id = gwg->GetHarborPointID(goal.x,goal.y);
+	this->figures = figures;
+	state = STATE_SEAATTACK_LOADING;
+	current_ev = em->AddEvent(this,200,1);
+}
 
+/// Startet Schiffs-Angreiff
+void noShip::StartSeaAttack()
+{
+	state = STATE_SEAATACK_DRIVINGTODESTINATION;
+	StartDrivingToHarborPlace();
+	HandleState_SeaAttackDriving();
+}
+
+void noShip::HandleState_SeaAttackDriving()
+{
+	Result res = DriveToHarbourPlace();
+	switch(res)
+	{
+	default: return;
+	case GOAL_REACHED:
+		{
+		} break;
+	case NO_ROUTE_FOUND:
+		{
+			Point<MapCoord> goal(gwg->GetHarborPoint(goal_harbor_id));
+			// Nichts machen und idlen
+			StartIdling();
+		} break;
+	}
+}
+
+/// Fängt an zu einem Hafen zu fahren (berechnet Route usw.)
+void noShip::StartDrivingToHarborPlace()
+{
 	MapCoord coastal_x, coastal_y;
 	gwg->GetCoastalPoint(goal_harbor_id,&coastal_x, &coastal_y,sea_id);
 
@@ -578,10 +628,18 @@ void noShip::StartTransport()
 	if(!gwg->FindShipPath(x,y,coastal_x,coastal_y,&route,NULL))
 	{
 		// todo
-		LOG.lprintf("Achtung: Bug im Spiel: noShip::StartTransport: Schiff hat keinen Weg gefunden!\n");
+		LOG.lprintf("Achtung: Bug im Spiel: noShip::StartDrivingToHarborPlace: Schiff hat keinen Weg gefunden!\n");
 		return;
 	}
 	pos = 0;
+}
+
+/// Startet die eigentliche Transportaktion, nachdem das Schiff beladen wurde
+void noShip::StartTransport()
+{
+	state = STATE_TRANSPORT_DRIVING;
+
+	StartDrivingToHarborPlace();
 
 	// Einfach weiterfahren
 	HandleState_TransportDriving(); 

@@ -1,4 +1,4 @@
-// $Id: nobHarborBuilding.cpp 6262 2010-04-03 22:05:03Z OLiver $
+// $Id: nobHarborBuilding.cpp 6263 2010-04-04 10:13:43Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -456,6 +456,30 @@ void nobHarborBuilding::ShipArrived(noShip * ship)
 		ship->PrepareTransport(dest,figures,wares);
 		
 	}
+	// Oder vielleicht Schiffs-Angreifer?
+	else if(soldiers_for_ships.size())
+	{
+		// Ein Ziel (das des ersten Soldaten in der Liste) auswählen und alle übrigen
+		// Soldaten mit dem gleichen Ziel mit auf das Schiff laden
+		std::list<noFigure*> attackers;
+		Point<MapCoord> ship_dest = soldiers_for_ships.begin()->dest;
+		
+		for(std::list<SoldierForShip>::iterator it = soldiers_for_ships.begin();it!=soldiers_for_ships.end();)
+		{
+			if(it->dest == ship_dest)
+			{
+				--goods.people[it->attacker->GetJobType()];
+				attackers.push_back(it->attacker);
+				it = soldiers_for_ships.erase(it);
+				
+			}
+			else
+				++it;
+			
+		}
+		
+		ship->PrepareSeaAttack(ship_dest,attackers);
+	}
 }
 
 /// Legt eine Ware im Lagerhaus ab
@@ -631,6 +655,22 @@ unsigned nobHarborBuilding::GetNeededShipsCount() const
 	// Evtl. Waren und Figuren -> noch ein Schiff
 	if(figures_for_ships.size() > 0 || wares_for_ships.size() > 0)
 		++count;
+	// Evtl. Angreifer, die noch verschifft werden müssen
+	if(soldiers_for_ships.size())
+	{
+		// Die verschiedenen Zielhäfen -> Für jeden Hafen ein Schiff ordern
+		std::vector< Point<MapCoord> > different_dests;
+		for(std::list<SoldierForShip>::const_iterator it = soldiers_for_ships.begin();
+		it!=soldiers_for_ships.end();++it)
+		{
+			if(std::find(different_dests.begin(),different_dests.end(),it->dest)
+				== different_dests.end())
+			{
+				different_dests.push_back(it->dest);
+				++count;
+			}
+		}
+	}
 
 	return count;
 }
@@ -650,6 +690,12 @@ int nobHarborBuilding::GetNeedForShip(unsigned ships_coming) const
 	}
 	if((figures_for_ships.size() > 0 || wares_for_ships.size() > 0) && ships_coming == 0)
 		points += (figures_for_ships.size()+wares_for_ships.size())*5;
+	else if((figures_for_ships.size() > 0 || wares_for_ships.size() > 0) && ships_coming)
+		--ships_coming;
+		
+		
+	if(soldiers_for_ships.size() > 0 && ships_coming == 0)
+		points += (soldiers_for_ships.size()*10);
 
 	return points;
 }
@@ -846,6 +892,9 @@ void nobHarborBuilding::AddSeaAttacker(nofAttacker * attacker)
 	
 	SoldierForShip sfs = { attacker, gwg->GetHarborPoint(best_harbor_point) };
 	soldiers_for_ships.push_back(sfs);
+	
+	players->getElement(player)->OrderShip(this);
+	++goods.people[attacker->GetJobType()];
 }
 
 

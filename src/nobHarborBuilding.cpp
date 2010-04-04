@@ -1,4 +1,4 @@
-// $Id: nobHarborBuilding.cpp 6264 2010-04-04 20:56:17Z OLiver $
+// $Id: nobHarborBuilding.cpp 6265 2010-04-04 21:08:02Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -619,7 +619,9 @@ void nobHarborBuilding::GetShipConnections(std::vector<ShipConnection>& connecti
 	{
 		ShipConnection sc;
 		sc.dest = harbor_buildings[i];
-		sc.way_costs = 200; // todo
+		// Als Kantengewicht nehmen wir die doppelte Entfernung (evtl muss ja das Schiff erst kommen)
+		// plus einer Kopfpauschale (Ein/Ausladen usw. dauert ja alles)
+		sc.way_costs = 2*gwg->CalcHarborDistance(GetHarborPosID(),harbor_buildings[i]->GetHarborPosID()) + 10; 
 		connections.push_back(sc);
 	}
 }

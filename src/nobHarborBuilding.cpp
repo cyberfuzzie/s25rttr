@@ -1,4 +1,4 @@
-// $Id: nobHarborBuilding.cpp 6265 2010-04-04 21:08:02Z OLiver $
+// $Id: nobHarborBuilding.cpp 6266 2010-04-04 21:11:16Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -159,6 +159,13 @@ void nobHarborBuilding::Serialize(SerializedGameData * sgd) const
 		sgd->PushUnsignedShort(it->dest.y);
 		sgd->PushObject(it->fig,false);
 	}
+	sgd->PushUnsignedInt(soldiers_for_ships.size());
+	for(std::list<SoldierForShip>::const_iterator it = soldiers_for_ships.begin();it!=soldiers_for_ships.end();++it)
+	{
+		sgd->PushUnsignedShort(it->dest.x);
+		sgd->PushUnsignedShort(it->dest.y);
+		sgd->PushObject(it->attacker,true);
+	}
 
 }
 
@@ -183,6 +190,16 @@ nobHarborBuilding::nobHarborBuilding(SerializedGameData * sgd, const unsigned ob
 		ffs.dest.y = sgd->PopUnsignedShort();
 		ffs.fig = sgd->PopObject<noFigure>(GOT_UNKNOWN);
 		figures_for_ships.push_back(ffs);
+	}
+
+	count = sgd->PopUnsignedInt();
+	for(unsigned i = 0;i<count;++i)
+	{
+		SoldierForShip ffs;
+		ffs.dest.x = sgd->PopUnsignedShort();
+		ffs.dest.y = sgd->PopUnsignedShort();
+		ffs.attacker = sgd->PopObject<nofAttacker>(GOT_NOF_ATTACKER);
+		soldiers_for_ships.push_back(ffs);
 	}
 
 }

@@ -1,4 +1,4 @@
-// $Id: noFigure.h 6113 2010-03-04 11:15:28Z OLiver $
+// $Id: noFigure.h 6264 2010-04-04 20:56:17Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -60,10 +60,8 @@ protected:
 	// Befindet sich die Figur gerade auf einem Schiff?
 	bool on_ship;
 
-private:
-
-	noRoadNode * goal; /// zu welcher Flagge er laufen soll
-protected:
+	/// zu welcher Flagge er laufen soll
+	noRoadNode * goal; 
 	 /// ist der Platz davor besetzt (z.B. durch Kampf), muss er warten (Stehen bleiben), sowohl genau auf einem
 	/// Wegpunkt, also auch beliebig dazwischen!
 	bool waiting_for_free_node;

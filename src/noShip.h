@@ -1,4 +1,4 @@
-// $Id: noShip.h 6263 2010-04-04 10:13:43Z OLiver $
+// $Id: noShip.h 6264 2010-04-04 20:56:17Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -31,6 +31,7 @@ const unsigned SHIP_CAPACITY[NATION_COUNT] = { 40, 40, 40, 40 };
 
 class noFigure;
 class Ware;
+class nofAttacker;
 
 /// Klasse für die Schiffe
 class noShip : public noMovable
@@ -51,7 +52,7 @@ class noShip : public noMovable
 		STATE_TRANSPORT_UNLOADING, /// Entlädt Schiff am Zielhafen, kurze Zeit ankern, bevor Waren im Hafengebäude ankommen..
 		STATE_SEAATTACK_LOADING,
 		STATE_SEAATTACK_UNLOADING,
-		STATE_SEAATACK_DRIVINGTODESTINATION, /// Fährt mit den Soldaten zum Zielhafenpunkt
+		STATE_SEAATTACK_DRIVINGTODESTINATION, /// Fährt mit den Soldaten zum Zielhafenpunkt
 		STATE_SEAATTACK_WAITING, /// wartet an der Küste, während die Soldaten was schönes machen
 		STATE_SEAATTACK_RETURN /// fährt mit den Soldaten wieder zurück zum Heimathafen
 
@@ -71,6 +72,11 @@ class noShip : public noMovable
 	/// Ladung des Schiffes
 	std::list<noFigure*> figures;
 	std::list<Ware*> wares;
+	/// Bei Schiffen im STATE_SEAATTACK_WAITING: 
+	/// Anzahl der Soldaten, die noch kommen müssten
+	unsigned remaining_sea_attackers;
+	/// Heimathafen der Schiffs-Angreifer
+	unsigned home_harbor;
 	
 private:
 
@@ -83,6 +89,7 @@ private:
 	void HandleState_ExpeditionDriving();
 	void HandleState_TransportDriving();
 	void HandleState_SeaAttackDriving();
+	void HandleState_SeaAttackReturn();
 
 	enum Result
 	{
@@ -174,9 +181,14 @@ public:
 
 	/// Belädt das Schiff mit Schiffs-Angreifern
 	void PrepareSeaAttack(Point<MapCoord> goal, const std::list<noFigure*>& figures);
+	/// Sagt Bescheid, dass ein Schiffsangreifer nicht mehr mit nach Hause fahren will
+	void SeaAttackerWishesNoReturn();
+	/// Schiffs-Angreifer sind nach dem Angriff wieder zurückgekehrt
+	void AddAttacker(nofAttacker * attacker);
 
 	/// Sagt dem Schiff, das ein bestimmter Hafen zerstört wurde
 	void HarborDestroyed(nobHarborBuilding * hb);
+
 
 
 

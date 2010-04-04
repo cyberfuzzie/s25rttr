@@ -1,4 +1,4 @@
-// $Id: Socket.h 6068 2010-02-22 18:05:33Z FloSoft $
+// $Id: Socket.h 6264 2010-04-04 20:56:17Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -23,6 +23,7 @@
 
 #ifdef _WIN32
 	#include <ws2tcpip.h>
+	#include <Wspiapi.h>
 	typedef int socklen_t;
 #else
 	#include <arpa/inet.h>

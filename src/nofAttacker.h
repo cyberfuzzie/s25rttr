@@ -1,4 +1,4 @@
-// $Id: nofAttacker.h 6262 2010-04-03 22:05:03Z OLiver $
+// $Id: nofAttacker.h 6264 2010-04-04 20:56:17Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -57,7 +57,7 @@ private:
 	/// Für Seeangreifer: Landepunkt, wo sich das Schiff befindet, mit dem der Angreifer
 	/// ggf. wieder nach Hause fahren kann
 	MapCoord ship_x, ship_y;
-	
+	unsigned ship_obj_id;
 
 private:
 
@@ -76,21 +76,21 @@ private:
 
 	/// Sucht nach feindlichen nofAttackern in der Nähe (gibt NULL zurück wenn keiner da)
 	nofActiveSoldier *FindValidEnemyNearby();
-
 	/// Geht zu einem anderen nofAttacker und kämpft mit ihm bzw. versucht das
 	bool GoToFightEncounteredAttacker(nofAttacker *enemy, MapCoord tx, MapCoord ty);
-
 	/// Gibt einen Platz zurück, an dem Kampf möglich ist (nur die 6 angrenzenden werden getestet)
 	bool GetFightSpotNear(MapCoord &x, MapCoord &y);
-
 	/// Lässt Soldaten zu einem Kampfplatz laufen, um mit einem anderen nofAttacker zu kämpfen
 	void WalkingToFightSpot();
-
 	/// Trifft auf anderen Attacker der in der Nähe rumläuft und vereinbart Kampf
 	bool EncounterEnemy();
-
 	/// Entfernt den encountered Enemy, setzt normale Tätigkeit fort
 	void LostEncounteredEnemy();
+
+	/// Für Schiffsangreifer: Sagt dem Schiff Bescheid, dass wir nicht mehr kommen
+	void CancelAtShip();
+	/// Behandelt das Laufen zurück zum Schiff
+	void HandleState_SeaAttack_ReturnToShip();
 
 public:
 
@@ -121,6 +121,9 @@ public:		void Destroy() { Destroy_nofAttacker(); }
 	void HomeDestroyed();
 	/// Wenn er noch in der Warteschleife vom Ausgangsgebäude hängt und dieses zerstört wurde
 	void HomeDestroyedAtBegin();
+	/// Sagt dem Heimatgebäude Bescheid, dass er nicht mehr nach Hause kommen wird
+	void CancelAtHomeMilitaryBuilding();
+
 	/// Wenn ein Kampf gewonnen wurde
 	void WonFighting();
 	/// Wenn ein Kampf verloren wurde (Tod)
@@ -165,6 +168,11 @@ public:		void Destroy() { Destroy_nofAttacker(); }
 	/// der Verteidiger des Gebäudes zur Tür rauskommt und wenn ja, ob ein wartender vor der Flagge, der am
 	/// potenziellen Kampf vorbei will, es noch schafft vorbeizukommen, bevor der Kampf wieder anfängt
 	bool CanPassBeforeFight() const;
+
+	/// Startet den Angriff am Landungspunkt vom Schiff
+	void StartAttackOnOtherIsland(const MapCoord ship_x, const MapCoord ship_y, const unsigned ship_id);
+	/// Sagt Schiffsangreifern, dass sie mit dem Schiff zurück fahren
+	void StartReturnViaShip();
 
 
 };

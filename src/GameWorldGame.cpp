@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 6262 2010-04-03 22:05:03Z OLiver $
+// $Id: GameWorldGame.cpp 6264 2010-04-04 20:56:17Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -951,9 +951,20 @@ void  GameWorldGame::AttackViaSea(const unsigned char player_attacker, const Map
 			return;
 	}
 	
+	unsigned counter = 0;
 	if(strong_soldiers)
-		for(std::list<GameWorldBase::PotentialSeaAttacker>::iterator it = attackers.begin();it!=attackers.end();
-		++it)
+		for(std::list<GameWorldBase::PotentialSeaAttacker>::iterator it = attackers.begin();it!=attackers.end() &&
+			counter < soldiers_count;++it,++counter)
+		{
+			// neuen Angreifer-Soldaten erzeugen
+			new nofAttacker(it->soldier,attacked_building,it->harbor);
+			// passiven Soldaten entsorgen
+			it->soldier->Destroy();
+			delete it->soldier;
+		}
+	else
+		for(std::list<GameWorldBase::PotentialSeaAttacker>::reverse_iterator it = attackers.rbegin();it!=attackers.rend() &&
+			counter < soldiers_count;++it,++counter)
 		{
 			// neuen Angreifer-Soldaten erzeugen
 			new nofAttacker(it->soldier,attacked_building,it->harbor);

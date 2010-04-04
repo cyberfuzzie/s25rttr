@@ -37,6 +37,7 @@
 #include "MapGeometry.h"
 #include "PostMsg.h"
 #include "nobHarborBuilding.h"
+#include "noShip.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -119,6 +120,7 @@ void nofAttacker::Serialize_nofAttacker(SerializedGameData * sgd) const
 		sgd->PushUnsignedShort(harbor_y);
 		sgd->PushUnsignedShort(ship_x);
 		sgd->PushUnsignedShort(ship_y);
+		sgd->PushUnsignedInt(ship_obj_id);
 	}
 }
 
@@ -141,6 +143,7 @@ nofAttacker::nofAttacker(SerializedGameData * sgd, const unsigned obj_id) : nofA
 		harbor_y = sgd->PopUnsignedShort();
 		ship_x = sgd->PopUnsignedShort();
 		ship_y = sgd->PopUnsignedShort();
+		ship_obj_id = sgd->PopUnsignedInt();
 	}
 	else
 	{
@@ -246,6 +249,9 @@ void nofAttacker::Walked()
 					// Meinem Heimatgebäude Bescheid sagen, dass ich nicht mehr komme (falls es noch eins gibt)
 					if(building)
 						building->SoldierLost(this);
+					// Ggf. Schiff Bescheid sagen (Schiffs-Angreifer)
+					if(ship_obj_id)
+						CancelAtShip();
 					// Gebäude einnehmen
 					static_cast<nobMilitary*>(attacked_goal)->Capture(player);
 					// Bin nun kein Angreifer mehr
@@ -336,6 +342,7 @@ void nofAttacker::Walked()
 		} break;
 	case STATE_SEAATTACKING_RETURNTOSHIP: // befindet sich an der Zielposition auf dem Weg zurück zum Schiff
 		{
+			HandleState_SeaAttack_ReturnToShip();
 		} break;
 	}
 }
@@ -357,6 +364,10 @@ void nofAttacker::HomeDestroyed()
 				static_cast<nofAggressiveDefender*>(defender)->AttackerLost();
 
 			defender = 0;
+
+			// Ggf. Schiff Bescheid sagen (Schiffs-Angreifer)
+			if(ship_obj_id)
+				CancelAtShip();
 
 			// Rumirren
 			building = 0;
@@ -415,6 +426,13 @@ void nofAttacker::HomeDestroyedAtBegin()
 	StartWalking(RANDOM.Rand(__FILE__,__LINE__,obj_id,6));
 }
 
+/// Sagt dem Heimatgebäude Bescheid, dass er nicht mehr nach Hause kommen wird
+void nofAttacker::CancelAtHomeMilitaryBuilding()
+{
+	if(building)
+		building->SoldierLost(this);
+}
+
 /// Wenn ein Kampf gewonnen wurde
 void nofAttacker::WonFighting()
 {
@@ -430,6 +448,10 @@ void nofAttacker::WonFighting()
 			attacked_goal->UnlinkAggressor(this);
 			attacked_goal = 0;
 		}
+
+		// Ggf. Schiff Bescheid sagen (Schiffs-Angreifer)
+		if(ship_obj_id)
+			CancelAtShip();
 
 		// Rumirren
 		state = STATE_FIGUREWORK;
@@ -495,6 +517,10 @@ void nofAttacker::LostFighting()
 		attacked_goal->UnlinkAggressor(this);
 		attacked_goal = 0;
 	}
+
+	// Ggf. Schiff Bescheid sagen
+	if(ship_obj_id)
+		this->CancelAtShip();
 }
 
 
@@ -502,8 +528,15 @@ void nofAttacker::ReturnHomeMissionAttacking()
 {
 	// Zielen Bescheid sagen
 	InformTargetsAboutCancelling();
-	// Und nach Hause gehen
-	ReturnHome();
+	// Schiffsangreifer?
+	if(ship_obj_id)
+	{
+		state = STATE_SEAATTACKING_RETURNTOSHIP;
+		HandleState_SeaAttack_ReturnToShip();
+	}
+	else
+		// Und nach Hause gehen
+		ReturnHome();
 }
 
 void nofAttacker::MissAttackingWalk()
@@ -521,6 +554,10 @@ void nofAttacker::MissAttackingWalk()
 		// evtl. noch dem Verteidiger Bescheid sagen, falls einer existiert
 		if(defender)
 			static_cast<nofAggressiveDefender*>(defender)->AttackerLost();
+
+		// Ggf. Schiff Bescheid sagen (Schiffs-Angreifer)
+		if(ship_obj_id)
+			CancelAtShip();
 
 		// Rumirren
 		state = STATE_FIGUREWORK;
@@ -909,6 +946,10 @@ void nofAttacker::CapturingWalking()
 				attacked_goal = 0;
 			}
 
+			// Ggf. Schiff Bescheid sagen (Schiffs-Angreifer)
+			if(ship_obj_id)
+				CancelAtShip();
+
 			// Rumirren
 			state = STATE_FIGUREWORK;
 			StartWandering();
@@ -984,98 +1025,7 @@ void nofAttacker::StartSucceeding(const unsigned short x, const unsigned short y
 	
 	// Neuen Radius speichern
 	radius = new_radius;
-
-
-	//// Wir sollen auf diesen Punkt nachrücken
-	//state = STATE_ATTACKING_SUCCEEDING;
-	//succeed_x = x;
-	//succeed_y = y;
-	//succeed_dir = dir;
-
-	//// Kollegen Bescheid sagen, falls es einen gibt
-	//if(defender)
-	//{
-	//	static_cast<nofAggressiveDefender*>(defender)->AttackerLost();
-	//	defender = 0;
-	//}
-
-	//// Unsere alte Richtung merken für evtl. weitere Nachrücker
-	//unsigned char old_dir = this->dir;
-
-	//// Und schonmal loslaufen, da wir ja noch stehen
-	//SucceedingWalk();
-
-	//// unser alter Platz ist ja nun auch leer, da gibts vielleicht auch einen Nachrücker?
-	///*bool succeeder =*/ attacked_goal->SendSuccessor(this->x,this->y,radius,old_dir);
-
-	//// Neuen Radius speichern
-	//radius = new_radius;
 }
-
-
-//void nofAttacker::SucceedingWalk()
-//{
-//	// Ist evtl. unser Heimatgebäude zerstört?
-//	if(!building)
-//	{
-//		// Rumirren
-//		state = STATE_FIGUREWORK;
-//		StartWandering();
-//		Wander();
-//
-//		// Dann dem Ziel Bescheid sagen, falls es existiert (evtl. wurdes zufällig zur selben Zeit zerstört)
-//		if(attacked_goal)
-//		{
-//			attacked_goal->UnlinkAggressor(this);
-//			// Neuen Nachrücker suchen
-//			attacked_goal->SendSuccessor(this->x,this->y,radius,succeed_dir);
-//
-//			attacked_goal = 0;
-//		}
-//
-//
-//		// evtl. noch dem Verteidiger Bescheid sagen, falls einer existiert
-//		if(defender)
-//			static_cast<nofAggressiveDefender*>(defender)->AttackerLost();
-//
-//		return;
-//	}
-//
-//	// Ist evtl. das Zielgebäude zerstört?
-//	if(!attacked_goal)
-//	{
-//		// Nach Hause gehen
-//		ReturnHomeMissionAttacking();
-//
-//		return;
-//	}
-//
-//	// Sind wir schon da?
-//	if(succeed_x == x && succeed_y == y)
-//	{
-//		// dann stellen wir uns hier hin
-//		state = STATE_ATTACKING_WAITINGAROUNDBUILDING;
-//		// entsprechend ausrichten
-//		dir = succeed_dir;
-//	}
-//	else
-//	{
-//		// weiterlaufen
-//		if((dir = gwg->FindHumanPath(x,y,succeed_x,succeed_y,50)) == 0xFF)
-//		{
-//			// auweia, es wurde kein Weg mehr gefunden
-//
-//			state = STATE_ATTACKING_WALKINGTOGOAL;
-//			// Neuen Nachrücker suchen
-//			attacked_goal->SendSuccessor(succeed_x,succeed_y,radius,succeed_dir);
-//			// Neuen Platz drumrum finden
-//			MissAttackingWalk();
-//
-//		}
-//		else
-//			StartWalking(dir);
-//	}
-//}
 
 
 void nofAttacker::LetsFight(nofAggressiveDefender * other)
@@ -1451,3 +1401,112 @@ void nofAttacker::LostEncounteredEnemy()
 		MissAttackingWalk();
 	}
 }
+
+/// Startet den Angriff am Landungspunkt vom Schiff
+void nofAttacker::StartAttackOnOtherIsland(const MapCoord ship_x, const MapCoord ship_y, const unsigned ship_id)
+{
+	x = this->ship_x = ship_x;
+	y = this->ship_y = ship_y;
+	this->ship_obj_id = ship_id;
+
+	state = STATE_ATTACKING_WALKINGTOGOAL;
+
+	// Normal weiterlaufen
+	MissAttackingWalk();
+}
+
+/// Sagt Schiffsangreifern, dass sie mit dem Schiff zurück fahren
+void nofAttacker::StartReturnViaShip()
+{
+	goal = building;
+	state = STATE_FIGUREWORK;
+	on_ship = true;
+}
+
+/// Für Schiffsangreifer: Sagt dem Schiff Bescheid, dass wir nicht mehr kommen
+void nofAttacker::CancelAtShip()
+{
+	// Alle Figuren durchgehen
+	list<noBase*> figures;
+	gwg->GetDynamicObjectsFrom(ship_x, ship_y,figures);
+	for(list<noBase*>::iterator it = figures.begin();it.valid();++it)
+	{
+		if((*it)->GetObjId() == ship_obj_id)
+		{
+			noShip * ship = static_cast<noShip*>(*it);
+			ship->SeaAttackerWishesNoReturn();
+			return;
+		}
+	}
+
+}
+
+/// Behandelt das Laufen zurück zum Schiff
+void nofAttacker::HandleState_SeaAttack_ReturnToShip()
+{
+	// Ist evtl. unser Heimatgebäude zerstört?
+	if(!building)
+	{
+		// Rumirren
+		state = STATE_FIGUREWORK;
+		StartWandering();
+		Wander();
+
+		// Schiff Bescheid sagen
+		CancelAtShip();
+
+		return;
+	}
+
+	// Sind wir schon im Schiff?
+	if(x == ship_x && y == ship_y)
+	{
+		// Alle Figuren durchgehen
+		list<noBase*> figures;
+		gwg->GetDynamicObjectsFrom(x, y,figures);
+		for(list<noBase*>::iterator it = figures.begin();it.valid();++it)
+		{
+			if((*it)->GetObjId() == ship_obj_id)
+			{
+				noShip * ship = static_cast<noShip*>(*it);
+				// Und von der Landkarte tilgen
+				gwg->RemoveFigure(this,x,y);
+				// Uns zum Schiff hinzufügen
+				ship->AddAttacker(this);
+				
+
+				state = STATE_FIGUREWORK;
+				fs = FS_GOTOGOAL;
+				StartReturnViaShip();
+				return;
+			}
+		}
+
+		// Kein Schiff gefunden? Das kann eigentlich nich sein!
+		// Dann rumirren
+		StartWandering();
+		state = STATE_FIGUREWORK;
+		Wander();
+	}
+	// oder finden wir gar keinen Weg mehr?
+	else if((dir = gwg->FindHumanPath(x,y,ship_x,ship_y,100)) == 0xFF)
+	{
+		// Kein Weg gefunden --> Rumirren
+		StartWandering();
+		state = STATE_FIGUREWORK;
+		Wander();
+
+		// Dem Heimatgebäude Bescheid sagen
+		building->SoldierLost(this);
+		// Und dem Schiff
+		CancelAtShip();
+	}
+	// oder ist alles ok? :)
+	else
+	{
+		// weiterlaufen
+		StartWalking(dir);
+	}
+
+}
+

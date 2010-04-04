@@ -1,4 +1,4 @@
-// $Id: nofActiveSoldier.cpp 6262 2010-04-03 22:05:03Z OLiver $
+// $Id: nofActiveSoldier.cpp 6264 2010-04-04 20:56:17Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -67,8 +67,11 @@ state(SoldierState(sgd->PopUnsignedChar()))
 
 void nofActiveSoldier::GoalReached()
 {
-	// Dürfte nicht passieren!
-	assert(false);
+	// mich hinzufügen
+	static_cast<nobMilitary*>(building)->AddActiveSoldier(this);
+
+	// und wir können uns auch aus der Laufliste erstmal entfernen
+	gwg->RemoveFigure(this,x,y);
 }
 
 void nofActiveSoldier::ReturnHome()

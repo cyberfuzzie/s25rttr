@@ -1,4 +1,4 @@
-// $Id: noShip.cpp 6263 2010-04-04 10:13:43Z OLiver $
+// $Id: noShip.cpp 6264 2010-04-04 20:56:17Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -34,9 +34,16 @@
 #include "Ware.h"
 #include "PostMsg.h"
 #include "AIEventManager.h"
+#include "nofAttacker.h"
 
 const unsigned SHIP_SPEED = 20;
 const unsigned int ship_count = 55;
+
+/// Zeit zum Beladen des Schiffes
+const unsigned LOADING_TIME = 200;
+/// Zeit zum Entladen des Schiffes
+const unsigned UNLOADING_TIME = 200;
+
 const std::string ship_names[NATION_COUNT][ship_count] = {
 	/* Nubier */	{ "Aica", "Aida", "Ainra", "Alayna", "Alisha", "Alma", "Amila", "Anina", "Armina", "Banu", "Baya", "Bea", "Bia", "Bisa", "Cheche", "Dafina", "Daria", "Dina", "Do", "Dofi", "Efia", "Erin", "Esi", "Esra", "Fahari", "Faraya", "Fujo", "Ghiday", "Habiaba", "Hajunza", "Ina", "Layla", "Lenia", "Lillian", "Malika", "Mona", "Naja", "Neriman", "Nyela", "Olufunmilayo", "Panyin", "Rayyan", "Rhiannon", "Safiya", "Sahra", "Selda", "Senna", "Shaira", "Shakira", "Sharina", "Sinah", "Suada", "Sulamith", "Tiada", "Yelda" },
 	/* Japaner */	{ "Ai", "Aiko", "Aimi", "Akemi", "Amaya", "Aoi", "Ayaka", "Ayano", "Beniko", "Chiyo", "Chiyoko", "Emi", "Fumiko", "Haruka", "Hiroko", "Hotaru", "Kaori", "Kasumi", "Kazuko", "Kazumi", "Keiko", "Kiriko", "Kumiko", "Mai", "Mayumi", "Megumi", "Midori", "Misaki", "Miu", "Moe", "Nanami", "Naoko", "Naomi", "Natsuki", "Noriko", "Reika", "Sachiko", "Sadako", "Sakura", "Satsuki", "Sayuri", "Setsuko", "Shigeko", "Teiko", "Tomomi", "Umeko", "Yoko", "Yoshiko", "Youko", "Yukiko", "Yumi", "Yumiko", "Yuna", "Yuuka", "Yuzuki" },
@@ -70,7 +77,8 @@ const Point<int> SHIPS_FLAG_POS[12] =
 noShip::noShip(const unsigned short x, const unsigned short y, const unsigned char player) 
 	: noMovable(NOP_SHIP, x, y), 
 	player(player), state(STATE_IDLE), sea_id(0), 
-	name(ship_names[gwg->GetPlayer(player)->nation][Random::inst().Rand(__FILE__, __LINE__, this->obj_id, ship_count)])
+	name(ship_names[gwg->GetPlayer(player)->nation][Random::inst().Rand(__FILE__, __LINE__, this->obj_id, ship_count)]),
+	remaining_sea_attackers(0), home_harbor(0)
 {
 	// Meer ermitteln, auf dem dieses Schiff fährt
 	for(unsigned i = 0;i<6;++i)
@@ -105,6 +113,8 @@ void noShip::Serialize(SerializedGameData * sgd) const
 		sgd->PushUnsignedChar(route[i]);
 	sgd->PushObjectList(figures,false);
 	sgd->PushObjectList(wares,true);
+	sgd->PushUnsignedInt(remaining_sea_attackers);
+	sgd->PushUnsignedInt(home_harbor);
 	
 }
 
@@ -117,7 +127,9 @@ goal_harbor_id(sgd->PopUnsignedInt()),
 goal_dir(sgd->PopUnsignedChar()),
 name(sgd->PopString()),
 pos(sgd->PopUnsignedInt()),
-route(sgd->PopUnsignedInt())
+route(sgd->PopUnsignedInt()),
+remaining_sea_attackers(sgd->PopUnsignedInt()),
+home_harbor(sgd->PopUnsignedInt())
 {
 	for(unsigned i = 0;i<route.size();++i)
 		route[i] = sgd->PopUnsignedChar();
@@ -141,6 +153,7 @@ void noShip::Draw(int x, int y)
 	default:
 		break;
 	case STATE_IDLE:
+	case STATE_SEAATTACK_WAITING:
 		{
 			LOADER.GetImageN("boot_z",  1)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
 			LOADER.GetImageN("boot_z",  0)->Draw(x,y);
@@ -170,13 +183,12 @@ void noShip::Draw(int x, int y)
 		} break;
 	case STATE_EXPEDITION_DRIVING:
 	case STATE_TRANSPORT_DRIVING:
-	case STATE_SEAATACK_DRIVINGTODESTINATION:
+	case STATE_SEAATTACK_DRIVINGTODESTINATION:
 	
 		{
 			DrawDrivingWithWares(x,y);
 		} break;
 	case STATE_SEAATTACK_RETURN:
-	case STATE_SEAATTACK_WAITING:
 		{
 			if(figures.size() || wares.size())
 				DrawDrivingWithWares(x,y);
@@ -277,6 +289,21 @@ void noShip::HandleEvent(const unsigned int id)
 				{
 					StartSeaAttack();
 				} break;
+			case STATE_SEAATTACK_WAITING:
+				{
+					// Nächsten Soldaten nach draußen beordern
+					if(!figures.size())
+						break;
+
+					nofAttacker * attacker = static_cast<nofAttacker*>(*figures.rbegin());
+					figures.pop_back();
+					gwg->AddFigure(attacker,x,y);
+					attacker->StartAttackOnOtherIsland(x,y,obj_id);
+					current_ev = em->AddEvent(this,30,1);
+				};
+			case STATE_SEAATTACK_UNLOADING:
+				{
+				} break;
 			}
 		} break;
 
@@ -301,7 +328,8 @@ void noShip::Driven()
 	case STATE_GOTOHARBOR: HandleState_GoToHarbor(); break;
 	case STATE_EXPEDITION_DRIVING: HandleState_ExpeditionDriving(); break;
 	case STATE_TRANSPORT_DRIVING: HandleState_TransportDriving(); break;
-	case STATE_SEAATACK_DRIVINGTODESTINATION: HandleState_SeaAttackDriving(); break;
+	case STATE_SEAATTACK_DRIVINGTODESTINATION: HandleState_SeaAttackDriving(); break;
+	case STATE_SEAATTACK_RETURN: HandleState_SeaAttackReturn(); break;
 	default:
 		break;
 	}
@@ -371,7 +399,7 @@ void noShip::StartExpedition()
 {
 	/// Schiff wird "beladen", also kurze Zeit am Hafen stehen, bevor wir bereit sind
 	state = STATE_EXPEDITION_LOADING;
-	current_ev = em->AddEvent(this,200,1);
+	current_ev = em->AddEvent(this,LOADING_TIME,1);
 }
 
 /// Fährt weiter zu einem Hafen
@@ -530,7 +558,7 @@ void noShip::HandleState_TransportDriving()
 		{
 			// Waren abladen, dafür wieder kurze Zeit hier ankern
 			state = STATE_TRANSPORT_UNLOADING;
-			current_ev = em->AddEvent(this,200,1);
+			current_ev = em->AddEvent(this,UNLOADING_TIME,1);
 			
 		} break;
 	case NO_ROUTE_FOUND:
@@ -540,8 +568,18 @@ void noShip::HandleState_TransportDriving()
 		} break;
 	case HARBOR_DOESNT_EXIST:
 		{
-			// Nichts machen und idlen
-			StartIdling();
+			// Kein Hafen mehr?
+			// Dann müssen alle Leute ihren Heimatgebäuden Bescheid geben, dass sie
+			// nun nicht mehr kommen
+			// Das Schiff muss einen Notlandeplatz ansteuern
+			for(std::list<noFigure*>::iterator it = figures.begin();it!=figures.end();++it)
+				(*it)->Abrogate();
+			for(std::list<Ware*>::iterator it = wares.begin();it!=wares.end();++it)
+			{
+				(*it)->NotifyGoalAboutLostWare();
+				(*it)->goal = NULL;
+			}
+
 		} break;
 	}
 }
@@ -580,22 +618,24 @@ void noShip::PrepareTransport(Point<MapCoord> goal, const std::list<noFigure*>& 
 	this->wares = wares;
 
 	state = STATE_TRANSPORT_LOADING;
-	current_ev = em->AddEvent(this,200,1);
+	current_ev = em->AddEvent(this,LOADING_TIME,1);
 }
 
 /// Belädt das Schiff mit Schiffs-Angreifern
 void noShip::PrepareSeaAttack(Point<MapCoord> goal, const std::list<noFigure*>& figures)
 {
+	// Heimathafen merken
+	home_harbor = goal_harbor_id;
 	this->goal_harbor_id = gwg->GetHarborPointID(goal.x,goal.y);
 	this->figures = figures;
 	state = STATE_SEAATTACK_LOADING;
-	current_ev = em->AddEvent(this,200,1);
+	current_ev = em->AddEvent(this,LOADING_TIME,1);
 }
 
 /// Startet Schiffs-Angreiff
 void noShip::StartSeaAttack()
 {
-	state = STATE_SEAATACK_DRIVINGTODESTINATION;
+	state = STATE_SEAATTACK_DRIVINGTODESTINATION;
 	StartDrivingToHarborPlace();
 	HandleState_SeaAttackDriving();
 }
@@ -608,6 +648,54 @@ void noShip::HandleState_SeaAttackDriving()
 	default: return;
 	case GOAL_REACHED:
 		{
+			// Ziel erreicht, dann stellen wir das Schiff hier hin und die Soldaten laufen nacheinander
+			// raus zum Ziel
+			state = STATE_SEAATTACK_WAITING;
+			current_ev = em->AddEvent(this,15,1);
+			remaining_sea_attackers = figures.size();
+
+		} break;
+	case NO_ROUTE_FOUND:
+		{
+			Point<MapCoord> goal(gwg->GetHarborPoint(goal_harbor_id));
+			// Nichts machen und idlen
+			StartIdling();
+		} break;
+	}
+}
+
+void noShip::HandleState_SeaAttackReturn()
+{
+	Result res = DriveToHarbour();
+	switch(res)
+	{
+	default: return;
+	case GOAL_REACHED:
+		{
+			// Entladen
+			state = STATE_SEAATTACK_UNLOADING;
+			this->current_ev = em->AddEvent(this,UNLOADING_TIME,1);
+		} break;
+	case HARBOR_DOESNT_EXIST:
+		{
+			// Kein Hafen mehr?
+			// Dann müssen alle Angreifer ihren Heimatgebäuden Bescheid geben, dass sie
+			// nun nicht mehr kommen
+			// Das Schiff muss einen Notlandeplatz ansteuern
+			for(std::list<noFigure*>::iterator it = figures.begin();it!=figures.end();++it)
+				static_cast<nofAttacker*>(*it)->CancelAtHomeMilitaryBuilding();
+
+			// Neuen Hafen suchen
+			if(players->getElement(player)->FindHarborForUnloading
+				(this,x,y,&goal_harbor_id,&route,NULL))
+			{
+				state = STATE_TRANSPORT_DRIVING;
+				HandleState_TransportDriving();
+			}
+			else
+				state = STATE_IDLE;
+
+			
 		} break;
 	case NO_ROUTE_FOUND:
 		{
@@ -726,3 +814,41 @@ void noShip::StartIdling()
 	//goal_harbor_id = 0;
 	state = STATE_IDLE;
 }
+
+
+/// Sagt Bescheid, dass ein Schiffsangreifer nicht mehr mit nach Hause fahren will
+void noShip::SeaAttackerWishesNoReturn()
+{
+	assert(remaining_sea_attackers);
+	--remaining_sea_attackers;
+	// Alle Soldaten an Bord 
+	if(remaining_sea_attackers == 0)
+	{
+		if(figures.size())
+		{
+			// Wieder nach Hause fahren
+			goal_harbor_id = home_harbor;
+			StartDrivingToHarborPlace();
+			state = STATE_TRANSPORT_DRIVING;
+			HandleState_TransportDriving();
+			for(std::list<noFigure*>::iterator it = figures.begin();it!=figures.end();++it)
+				(*it)->StartShipJourney(gwg->GetHarborPoint(goal_harbor_id));
+		}
+		else
+		{
+			// Wenn keine Soldaten mehr da sind können wir auch erstmal idlen
+			StartIdling();
+			players->getElement(player)->GetJobForShip(this);
+		}
+	}
+
+}
+
+/// Schiffs-Angreifer sind nach dem Angriff wieder zurückgekehrt
+void noShip::AddAttacker(nofAttacker * attacker)
+{
+	figures.push_back(attacker);
+	// Nun brauchen wir quasi einen Angreifer weniger
+	SeaAttackerWishesNoReturn();
+}
+

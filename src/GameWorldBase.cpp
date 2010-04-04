@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 6262 2010-04-03 22:05:03Z OLiver $
+// $Id: GameWorldBase.cpp 6264 2010-04-04 20:56:17Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1413,14 +1413,16 @@ void GameWorldBase::GetHarborPointsAroundMilitaryBuilding(const MapCoord x, cons
 	
 	// Nach Hafenpunkten in der Nähe des angegriffenen Gebäudes suchen
 	// Alle unsere Häfen durchgehen
-	for(unsigned i = 1;i<harbor_pos.size();++i)
+	for(unsigned i = 0;i<harbor_pos.size();++i)
 	{
 		MapCoord harbor_x = harbor_pos[i].x, harbor_y = harbor_pos[i].y;
 		
 		if(CalcDistance(harbor_x,harbor_y,x,y) <= SEAATTACK_DISTANCE)
 		{
-			// Wird ein Weg vom Militärgebäude zum Hafen gefunden?
-			if(FindFreePath(x,y,harbor_x,harbor_y,false,SEAATTACK_DISTANCE,NULL,NULL,NULL,NULL,NULL,NULL))
+			// Wird ein Weg vom Militärgebäude zum Hafen gefunden bzw. Ziel = Hafen?
+			if(x == harbor_x && y == harbor_y)
+				harbor_points->push_back(i);
+			else if(FindFreePath(x,y,harbor_x,harbor_y,false,SEAATTACK_DISTANCE,NULL,NULL,NULL,NULL,NULL,NULL))
 				harbor_points->push_back(i);
 		}
 	}
@@ -1431,7 +1433,7 @@ void GameWorldBase::GetAvailableSoldiersForSeaAttack(const unsigned char player_
 	std::list<GameWorldBase::PotentialSeaAttacker> * attackers) const
 {
 	// Ist das Ziel auch ein richtiges Militärgebäude?
-	if(GetNO(x,y)->GetGOT() && GOT_NOB_HARBORBUILDING && GetNO(x,y)->GetGOT() !=  GOT_NOB_HQ 
+	if(GetNO(x,y)->GetGOT() != GOT_NOB_HARBORBUILDING && GetNO(x,y)->GetGOT() !=  GOT_NOB_HQ 
 		&& GetNO(x,y)->GetGOT() !=  GOT_NOB_MILITARY)
 		return;
 		
@@ -1444,9 +1446,24 @@ void GameWorldBase::GetAvailableSoldiersForSeaAttack(const unsigned char player_
 	GetHarborPointsAroundMilitaryBuilding(x,y,&defender_harbors);
 	// Nach Hafenpunkten in der Nähe des angegriffenen Gebäudes suchen
 	// Alle unsere Häfen durchgehen
-	for(unsigned i = 1;i<defender_harbors.size();++i)
+	for(unsigned i = 0;i<defender_harbors.size();++i)
 	{
 		unsigned harbor_id = defender_harbors[i];
+
+		// Steht an dieser Stelle ein Hafengeäude?
+		Point<MapCoord> harbor_pos = GetHarborPoint(harbor_id);
+		const noBase * hb = GetNO(harbor_pos.x,harbor_pos.y);
+		if(hb->GetGOT() == GOT_NOB_HARBORBUILDING)
+		{
+			// Gehört dem Feind dieser Hafen und ist dieser Hafen nicht unser Ziel?
+			if(players->getElement(player_attacker)->IsPlayerAttackable(static_cast<const nobHarborBuilding*>(hb)->GetPlayer())
+				&& !(harbor_pos.x == x && harbor_pos.y == y))
+			{
+				// Dann können wir hier nicht landen
+				continue;
+			}
+		}
+
 		unsigned short sea_ids[6];
 		GetSeaIDs(harbor_id,sea_ids);
 		for(unsigned z = 0;z<6;++z)

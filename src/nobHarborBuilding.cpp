@@ -1,4 +1,4 @@
-// $Id: nobHarborBuilding.cpp 6263 2010-04-04 10:13:43Z OLiver $
+// $Id: nobHarborBuilding.cpp 6264 2010-04-04 20:56:17Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -67,6 +67,7 @@ nobHarborBuilding::nobHarborBuilding(const unsigned short x, const unsigned shor
 {
 	// ins Milit‰rquadrat einf¸gen
 	gwg->GetMilitarySquare(x,y).push_back(this);
+	gwg->RecalcTerritory(this,GetMilitaryRadius(),false,true);
 
 	// Alle Waren 0, auﬂer 100 Tr‰ger
 	memset(&goods,0,sizeof(goods));

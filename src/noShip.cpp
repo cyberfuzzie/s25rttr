@@ -1,4 +1,4 @@
-// $Id: noShip.cpp 6264 2010-04-04 20:56:17Z OLiver $
+// $Id: noShip.cpp 6270 2010-04-05 12:03:22Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -111,10 +111,11 @@ void noShip::Serialize(SerializedGameData * sgd) const
 	sgd->PushUnsignedInt(route.size());
 	for(unsigned i =0;i<route.size();++i)
 		sgd->PushUnsignedChar(route[i]);
-	sgd->PushObjectList(figures,false);
-	sgd->PushObjectList(wares,true);
 	sgd->PushUnsignedInt(remaining_sea_attackers);
 	sgd->PushUnsignedInt(home_harbor);
+	sgd->PushObjectList(figures,false);
+	sgd->PushObjectList(wares,true);
+	
 	
 }
 

@@ -1,4 +1,4 @@
-// $Id: MySQL.cpp 6058 2010-02-20 16:32:38Z FloSoft $
+// $Id: MySQL.cpp 6278 2010-04-05 16:01:29Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -125,7 +125,8 @@ bool MySQL::LoginUser(const std::string &user, const std::string &pass, std::str
 
 	char query[1024];
 	//snprintf(query, 1024, "SELECT * FROM `lobby_users` WHERE `user` = '%s' AND `pass` = DES_ENCRYPT('%s', '%s') AND `email` IS NOT NULL LIMIT 1;", user2, pass2, user2);
-	snprintf(query, 1024, "SELECT `username`,`useremail` FROM `tb_user` WHERE `username` = '%s' AND `userpassword` = MD5('%s') AND `userbanned` = 0 AND `useremail` IS NOT NULL LIMIT 1;", user2, pass2);
+	//snprintf(query, 1024, "SELECT `username`,`useremail` FROM `tb_user` WHERE `username` = '%s' AND `userpassword` = MD5('%s') AND `userbanned` = 0 AND `useremail` IS NOT NULL LIMIT 1;", user2, pass2);
+	snprintf(query, 1024, "SELECT `user`,`mail` FROM `users` WHERE `user` = '%s' AND `pass` = MD5('%s') AND `mail` IS NOT NULL LIMIT 1;", user2, pass2);
 
 	// LOG.lprintf("%s\n", query);
 
@@ -290,7 +291,8 @@ bool MySQL::GetRankingList(LobbyPlayerList *List)
 	MYSQL_ROW	Row;
 
 	char query[1024];
-	snprintf(query, 1024, "SELECT username, win, lose FROM `tb_user` WHERE `useremail` IS NOT NULL AND (`win` > 0 OR `lose` > 0) ORDER BY `win` DESC, `lose` ASC LIMIT 10;");
+	//snprintf(query, 1024, "SELECT username, win, lose FROM `tb_user` WHERE `useremail` IS NOT NULL AND (`win` > 0 OR `lose` > 0) ORDER BY `win` DESC, `lose` ASC LIMIT 10;");
+        snprintf(query, 1024, "SELECT user, win, lose FROM `users` WHERE `mail` IS NOT NULL AND (`win` > 0 OR `lose` > 0) ORDER BY `win` DESC, `lose` ASC LIMIT 10;");
 
 	if(!DoQuery(query))
 		return false;
@@ -344,7 +346,9 @@ bool MySQL::GetRankingInfo(LobbyPlayerInfo& player)
 	char name[256];
 	mysql_real_escape_string(m_pMySQL, name, player.getName().c_str(), (unsigned long)player.getName().length());
 
-	snprintf(query, 1024, "SELECT username, win, lose FROM `tb_user` WHERE `username` = '%s' LIMIT 1;", name);
+	//snprintf(query, 1024, "SELECT username, win, lose FROM `tb_user` WHERE `username` = '%s' LIMIT 1;", name);
+        snprintf(query, 1024, "SELECT name, win, lose FROM `users` WHERE `user` = '%s' LIMIT 1;", name);
+
 	if(!DoQuery(query))
 		return false;
 

@@ -1,4 +1,4 @@
-// $Id: noEnvObject.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: noEnvObject.h 6268 2010-04-05 09:59:22Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -36,6 +36,8 @@ public:
 	public:		void Serialize(SerializedGameData *sgd) const { Serialize_noEnvObject(sgd); }
 
 	GO_Type GetGOT() const { return GOT_ENVOBJECT; }
+
+	virtual BlockingManner GetBM() const { return BM_NOTBLOCKING; }
 
 protected:
 	void Destroy_noEnvObject() { Destroy_noStaticObject(); }

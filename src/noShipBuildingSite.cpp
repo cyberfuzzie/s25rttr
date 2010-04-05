@@ -1,4 +1,4 @@
-// $Id: noShipBuildingSite.cpp 5854 2010-01-04 16:30:33Z FloSoft $
+// $Id: noShipBuildingSite.cpp 6268 2010-04-05 09:59:22Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -130,6 +130,8 @@ void noShipBuildingSite::MakeBuildStep()
 		gwg->SetNO(NULL,x,y);
 		// ein fertiges Schiff stattdessen hinsetzen
 		new noShip(x,y,player);
+		// BQ neu berechnen, da Schiff nicht mehr blockiert
+		gwg->RecalcBQAroundPointBig(x,y);
 
 		// Spieler über Fertigstellung benachrichtigen
 		if(GameClient::inst().GetPlayerID() == this->player)

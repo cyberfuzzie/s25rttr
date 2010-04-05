@@ -1,4 +1,4 @@
-// $Id: noStaticObject.h 6267 2010-04-05 09:16:14Z OLiver $
+// $Id: noStaticObject.h 6268 2010-04-05 09:59:22Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -38,7 +38,7 @@ public:
 	/// gibt die Größe des Objekts zurück.
 	unsigned char GetSize(void) const { return size; }
 
-	BlockingManner GetBM() const { return BlockingManner(unsigned(BM_HUT) + size); }
+	virtual BlockingManner GetBM() const { return BlockingManner(unsigned(BM_HUT) + size); }
 
 	/// zeichnet das Objekt.
 	void Draw(int x, int y);

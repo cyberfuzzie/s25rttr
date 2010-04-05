@@ -1,4 +1,4 @@
-// $Id: noShip.cpp 6270 2010-04-05 12:03:22Z OLiver $
+// $Id: noShip.cpp 6274 2010-04-05 13:36:09Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -296,8 +296,14 @@ void noShip::HandleEvent(const unsigned int id)
 					if(!figures.size())
 						break;
 
-					nofAttacker * attacker = static_cast<nofAttacker*>(*figures.rbegin());
-					figures.pop_back();
+					nofAttacker * attacker = static_cast<nofAttacker*>(*figures.begin());
+					// Evtl. ist ein Angreifer schon fertig und wieder an Board gegangen
+					// der darf dann natürlich nicht noch einmal raus, sonst kann die schöne Reise
+					// böse enden
+					if(attacker->IsSeaAttackCompleted())
+						break;
+
+					figures.pop_front();
 					gwg->AddFigure(attacker,x,y);
 					attacker->StartAttackOnOtherIsland(x,y,obj_id);
 					current_ev = em->AddEvent(this,30,1);
@@ -629,6 +635,11 @@ void noShip::PrepareSeaAttack(Point<MapCoord> goal, const std::list<noFigure*>& 
 	home_harbor = goal_harbor_id;
 	this->goal_harbor_id = gwg->GetHarborPointID(goal.x,goal.y);
 	this->figures = figures;
+	for(std::list<noFigure*>::iterator it = this->figures.begin();it!=this->figures.end();++it)
+	{
+		static_cast<nofAttacker*>(*it)->StartShipJourney(goal);
+		static_cast<nofAttacker*>(*it)->SeaAttackStarted();
+	}
 	state = STATE_SEAATTACK_LOADING;
 	current_ev = em->AddEvent(this,LOADING_TIME,1);
 }
@@ -848,6 +859,8 @@ void noShip::SeaAttackerWishesNoReturn()
 /// Schiffs-Angreifer sind nach dem Angriff wieder zurückgekehrt
 void noShip::AddAttacker(nofAttacker * attacker)
 {
+	assert(std::find(figures.begin(), figures.end(),attacker) == figures.end());
+
 	figures.push_back(attacker);
 	// Nun brauchen wir quasi einen Angreifer weniger
 	SeaAttackerWishesNoReturn();

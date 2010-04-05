@@ -1,4 +1,4 @@
-// $Id: nofAttacker.h 6264 2010-04-04 20:56:17Z OLiver $
+// $Id: nofAttacker.h 6274 2010-04-05 13:36:09Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -173,6 +173,12 @@ public:		void Destroy() { Destroy_nofAttacker(); }
 	void StartAttackOnOtherIsland(const MapCoord ship_x, const MapCoord ship_y, const unsigned ship_id);
 	/// Sagt Schiffsangreifern, dass sie mit dem Schiff zurück fahren
 	void StartReturnViaShip();
+	/// Sagt Bescheid, dass sich die Angreifer nun auf dem Schiff befinden
+	void SeaAttackStarted() 
+	{ state = STATE_SEAATTACKING_ONSHIP; }
+	/// Fragt einen Schiffs-Angreifer auf dem Schiff, ob er schon einmal
+	/// draußen war und gekämpft hat
+	bool IsSeaAttackCompleted() const { return (state != STATE_SEAATTACKING_ONSHIP); }
 
 
 };

@@ -668,7 +668,7 @@ void nofAttacker::MissAttackingWalk()
 			{
 				// Wenn der Verteidiger in der Nähe ist, zu ihm laufen
 				// Achtung: nicht in die Hütte des Verteidigers laufen!!
-				if(CalcDistance(x,y,defender->GetX(),defender->GetY())<5
+				if(gwg->CalcDistance(x,y,defender->GetX(),defender->GetY())<5
 					&& !(defender->GetX() == attacked_goal->GetX() &&
 					defender->GetY() == attacked_goal->GetY() ))
 					// zum Verteidiger laufen, falls er in der Nähe ist
@@ -737,7 +737,7 @@ void nofAttacker::MissAttackingWalk()
 					// und es darf natürlich auch der entsprechende Feind sein, aber es darf auch nicht derselbe Spieler
 					// wie man selbst sein, da das Gebäude ja z.B. schon erobert worden sein kann
 					if(((*it)->GetBuildingType() != BLD_HEADQUARTERS || (*it) == attacked_goal)
-						&& CalcDistance(x,y,(*it)->GetX(),(*it)->GetY()) < 15
+						&& gwg->CalcDistance(x,y,(*it)->GetX(),(*it)->GetY()) < 15
 						&& GameClient::inst().GetPlayer(attacked_goal->GetPlayer())->IsAlly((*it)->GetPlayer())  && 
 						GameClient::inst().GetPlayer(player)->IsPlayerAttackable((*it)->GetPlayer()))
 					{
@@ -760,7 +760,7 @@ void nofAttacker::MissAttackingWalk()
 			// ist der Verteidiger in meiner Nähe und wartet er noch nicht auf mich
 			// und ist da noch Platz für einen Kampf?
 			// Nicht an die Flagge des angegriffenen Militärgebäudes stellen!
-			if(CalcDistance(x,y,defender->GetX(),defender->GetY())<3 &&
+			if(gwg->CalcDistance(x,y,defender->GetX(),defender->GetY())<3 &&
 				static_cast<nofAggressiveDefender*>(defender)->state != STATE_WAITINGFORFIGHT &&
 				!(x == attacked_goal->GetX() + (attacked_goal->GetY()&1) && y == attacked_goal->GetY()+1))
 			{

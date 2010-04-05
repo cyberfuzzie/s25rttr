@@ -1,4 +1,4 @@
-// $Id: GameWorldViewer.cpp 6177 2010-03-24 10:44:32Z FloSoft $
+// $Id: GameWorldViewer.cpp 6269 2010-04-05 12:00:54Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -128,6 +128,13 @@ void GameWorldViewer::Draw(const unsigned char player, unsigned * water, const b
 				//*sprintf(high,"%X",unsigned(GetNode(tx,ty))).resources;*/
 				//sprintf(high,"%u",GetNode(tx,ty)).reserved;
 				NormalFont->Draw(static_cast<int>(xpos),static_cast<int>(ypos),high,0,0xFFFFFF00);
+
+				if(GetNode(tx,ty).harbor_id)
+				{
+					sprintf(high,"%u",GetNode(tx,ty).harbor_id);
+					NormalFont->Draw(static_cast<int>(xpos),static_cast<int>(ypos),high,0,0xFFFF0000);
+				}
+
 			}
 
 			if (d_active)

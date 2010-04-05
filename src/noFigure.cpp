@@ -585,7 +585,7 @@ void noFigure::Wander()
 				}
 
 				// würde die die bisher beste an Weg unterbieten?
-				unsigned way = CalcDistance(x,y,(*it)->GetX(),(*it)->GetY());
+				unsigned way = gwg->CalcDistance(x,y,(*it)->GetX(),(*it)->GetY());
 				if(way < best_way)
 				{
 					// Gibts nen Weg zu dieser Flagge?

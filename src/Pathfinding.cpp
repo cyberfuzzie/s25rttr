@@ -1,4 +1,4 @@
-// $Id: Pathfinding.cpp 6267 2010-04-05 09:16:14Z OLiver $
+// $Id: Pathfinding.cpp 6269 2010-04-05 12:00:54Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -108,8 +108,8 @@ public:
 	{
 		// Weglängen schätzen für beide Punkte, indem man den bisherigen Weg mit der Luftlinie vom aktullen 
 		// Punkt zum Ziel addiert und auf diese Weise den kleinsten Weg auswählt
-		unsigned way1 = pf_nodes[gwb->MakeCoordID(x,y)].way + CalcDistance(x,y,dst_x,dst_y);
-		unsigned way2 = pf_nodes[gwb->MakeCoordID(two.x,two.y)].way + CalcDistance(two.x,two.y,dst_x,dst_y);
+		unsigned way1 = pf_nodes[gwb->MakeCoordID(x,y)].way + gwb->CalcDistance(x,y,dst_x,dst_y);
+		unsigned way2 = pf_nodes[gwb->MakeCoordID(two.x,two.y)].way + gwb->CalcDistance(two.x,two.y,dst_x,dst_y);
 
 		// Wenn die Wegkosten gleich sind, vergleichen wir die Koordinaten, da wir für std::set eine streng
 		// monoton steigende Folge brauchen

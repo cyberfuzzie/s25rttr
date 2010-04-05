@@ -318,7 +318,7 @@ void nofAggressiveDefender::MissAggressiveDefendingWalk()
 		// ist der Angreifer in meiner Nähe und wartet er noch nicht auf mich
 		// und ist da noch Platz für einen Kampf?
 		// Wenn er schon vor dem Militärgebäude wartet, kann ich nicht auf ihn warten
-		if(CalcDistance(x,y,attacker->GetX(),attacker->GetY())<3 &&
+		if(gwg->CalcDistance(x,y,attacker->GetX(),attacker->GetY())<3 &&
 			attacker->state != STATE_WAITINGFORFIGHT &&
 			attacker->state != STATE_ATTACKING_WAITINGAROUNDBUILDING &&
 			gwg->ValidPointForFighting(x,y) &&

@@ -23,8 +23,9 @@
 #include <cassert>
 
 
-/// Ermittelt Abstand zwischen 2 Punkten auf der Map (mit Pythagoras)
-unsigned CalcDistance(const int x1, const int y1,
+
+
+unsigned CalcRawDistance(const int x1, const int y1,
 					  const int x2, const int y2)
 {
 	int dx = std::abs((2*int(x1)+(y1&1))-(2*int(x2)+(y2&1))), dy = std::abs(2*int(y1)-2*int(y2));

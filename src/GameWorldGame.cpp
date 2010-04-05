@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 6267 2010-04-05 09:16:14Z OLiver $
+// $Id: GameWorldGame.cpp 6269 2010-04-05 12:00:54Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1503,7 +1503,7 @@ unsigned char GameWorldGame::GetShipDir(Point<int> pos1, Point<int> pos2)
 	if(!diff)
 		diff = 1;
 	// Oben?
-	bool marginal_x = ((SafeDiff<int>(pos1.x,pos2.x) * 1000 / diff) < 180);
+	bool marginal_x = ((SafeDiff<int>(pos1.y,pos2.y) * 1000 / diff) < 180);
 	if(pos2.y < pos1.y)
 	{
 		if(marginal_x)

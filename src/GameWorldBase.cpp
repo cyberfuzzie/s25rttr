@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 6267 2010-04-05 09:16:14Z OLiver $
+// $Id: GameWorldBase.cpp 6269 2010-04-05 12:00:54Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -217,6 +217,39 @@ MapCoord GameWorldBase::CalcDistanceAroundBorderY(const MapCoord y1, const MapCo
 		// Ansonten Stück bis zum Rand und das Stück vom Rand bis zu Punkt 2
 		return (width-y1) + y2;
 	}
+}
+
+
+/// Ermittelt Abstand zwischen 2 Punkten auf der Map unter Berücksichtigung der Kartengrenzüberquerung
+unsigned GameWorldBase::CalcDistance(const int x1, const int y1,
+					  const int x2, const int y2) const
+{
+	// Jeweils kürzeste gemessene Distanz
+	unsigned best = 0xffffffff;
+
+	// In Erwägung ziehen, alle Kartenränder jeweils zu überqueren und kürzeste Distanz merken
+	for(unsigned plusx = 0;plusx<3;++plusx)
+	{
+		for(unsigned plusy = 0;plusy<3;++plusy)
+		{
+			int tx1 = x1, ty1 = y1, tx2 = x2, ty2 = y2;
+			if(plusx == 1)
+				tx1 += width;
+			else if(plusx == 2)
+				tx2 += width;
+			if(plusy == 1)
+				ty1 += height;
+			else if(plusy == 2)
+				ty2 += height;
+
+			unsigned tmp_dist = CalcRawDistance(tx1,ty1,tx2,ty2);
+			if(tmp_dist < best)
+				best = tmp_dist;
+
+		}
+	}
+
+	return best;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1482,9 +1515,9 @@ void GameWorldBase::GetAvailableSoldiersForSeaAttack(const unsigned char player_
 			continue;
 			
 		// Soldaten hinzufügen
-		for(unsigned i = 0;i<tmp_soldiers.size();++i)
+		for(unsigned j = 0;j<tmp_soldiers.size();++j)
 		{
-			PotentialSeaAttacker pa = { tmp_soldiers[i], buildings[i].harbor, buildings[i].distance };
+			PotentialSeaAttacker pa = { tmp_soldiers[j], buildings[i].harbor, buildings[i].distance };
 			attackers->push_back(pa);
 		}
 	}

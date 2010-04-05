@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 6150 2010-03-13 23:17:32Z jh $
+// $Id: nobMilitary.cpp 6269 2010-04-05 12:00:54Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -288,7 +288,7 @@ void nobMilitary::LookForEnemyBuildings(const nobBaseMilitary * const exception)
 		// feindliches Militärgebäude?
 		if(*it != exception && (*it)->GetPlayer() != player && gwg->GetPlayer((*it)->GetPlayer())->IsPlayerAttackable(player))
 		{
-			unsigned distance = CalcDistance(x,y,(*it)->GetX(),(*it)->GetY());
+			unsigned distance = gwg->CalcDistance(x,y,(*it)->GetX(),(*it)->GetY());
 
 			// in nahem Umkreis, also Grenzen berühren sich
 			if(distance <= MILITARY_RADIUS[size] + (*it)->GetMilitaryRadius()) // warum erzeugtn das ne warning in vs2008?
@@ -681,7 +681,7 @@ unsigned nobMilitary::GetSoldiersForAttack(const MapCoord dest_x, const MapCoord
 		(GetTroopsCount()>1)?
 		((GetTroopsCount()-1)*players->getElement(player_attacker)->military_settings[3]/5):0;
 
-	unsigned int distance = CalcDistance(x,y,dest_x,dest_y);
+	unsigned int distance = gwg->CalcDistance(x,y,dest_x,dest_y);
 
 	// Falls Entfernung größer als Basisreichweite, Soldaten subtrahieren
 	if (distance > BASE_ATTACKING_DISTANCE)

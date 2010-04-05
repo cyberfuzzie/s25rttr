@@ -1,4 +1,4 @@
-// $Id: AIConstruction.cpp 6160 2010-03-17 15:01:06Z jh $
+// $Id: AIConstruction.cpp 6269 2010-04-05 12:00:54Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -77,7 +77,7 @@ void AIConstruction::FindFlags(std::vector<const noFlag*>& flags, unsigned short
 		{
 			for(MapCoord r2=0;r2<r;gwb->GetPointA(tx2,ty2,i%6),++r2)
 			{
-				if(CalcDistance(tx2, ty2, real_x, real_y) <= real_radius && gwb->GetSpecObj<noFlag>(tx2,ty2))
+				if(gwb->CalcDistance(tx2, ty2, real_x, real_y) <= real_radius && gwb->GetSpecObj<noFlag>(tx2,ty2))
 				{
 					flags.push_back(gwb->GetSpecObj<noFlag>(tx2,ty2));
 				}
@@ -99,7 +99,7 @@ void AIConstruction::FindFlags(std::vector<const noFlag*>& flags, unsigned short
 		gwb->LookForMilitaryBuildings(military, x, y, 2);
 		for(list<nobBaseMilitary*>::iterator it = military.begin();it.valid();++it)
 		{
-			unsigned distance = CalcDistance((*it)->GetX(), (*it)->GetY(), x, y);
+			unsigned distance = gwb->CalcDistance((*it)->GetX(), (*it)->GetY(), x, y);
 			if (distance < radius && (*it)->GetPlayer() == player->getPlayerID())
 			{
 				FindFlags(flags, (*it)->GetX(), (*it)->GetY(), 10, x, y, radius, false);
@@ -265,7 +265,7 @@ BuildingType AIConstruction::ChooseMilitaryBuilding(MapCoord x, MapCoord y)
 	gwb->LookForMilitaryBuildings(military, x, y, 3);
 	for(list<nobBaseMilitary*>::iterator it = military.begin();it.valid();++it)
 	{
-		unsigned distance = CalcDistance((*it)->GetX(), (*it)->GetY(), x, y);
+		unsigned distance = gwb->CalcDistance((*it)->GetX(), (*it)->GetY(), x, y);
 
 		// Prüfen ob Feind in der Nähe
 		if ((*it)->GetPlayer() != playerid && distance < 35)
@@ -440,7 +440,7 @@ noFlag *AIConstruction::FindTargetStoreHouseFlag(MapCoord x, MapCoord y)
 			if (bld->GetBuildingType() != BLD_STOREHOUSE && bld->GetBuildingType() != BLD_HEADQUARTERS)
 				continue;
 		
-			unsigned dist = CalcDistance(x, y, (*it).x, (*it).y);
+			unsigned dist = gwb->CalcDistance(x, y, (*it).x, (*it).y);
 
 			if (dist < minDistance)
 			{

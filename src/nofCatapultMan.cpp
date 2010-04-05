@@ -1,4 +1,4 @@
-// $Id: nofCatapultMan.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: nofCatapultMan.cpp 6269 2010-04-05 12:00:54Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -147,7 +147,7 @@ void nofCatapultMan::HandleDerivedEvent(const unsigned int id)
 						&& !static_cast<nobMilitary*>((*it))->IsNewBuilt())
 					{
 						// Entfernung ausrechnen
-						unsigned distance = CalcDistance(x,y,(*it)->GetX(),(*it)->GetY());
+						unsigned distance = gwg->CalcDistance(x,y,(*it)->GetX(),(*it)->GetY());
 
 						// Entfernung nicht zu hoch?
 						if(distance < 14)

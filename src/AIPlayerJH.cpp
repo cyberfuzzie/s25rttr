@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.cpp 5946 2010-01-30 22:13:17Z jh $
+// $Id: AIPlayerJH.cpp 6269 2010-04-05 12:00:54Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -879,7 +879,7 @@ void AIPlayerJH::TryToAttack()
 		{
 			MapCoord dest_x = (*it2)->GetX();
 			MapCoord dest_y = (*it2)->GetY();
-			if (CalcDistance((*it).x, (*it).y, dest_x, dest_y) < BASE_ATTACKING_DISTANCE 
+			if (gwb->CalcDistance((*it).x, (*it).y, dest_x, dest_y) < BASE_ATTACKING_DISTANCE 
 				&& player->IsPlayerAttackable((*it2)->GetPlayer()) && gwb->GetNode(dest_x, dest_y).fow[playerid].visibility == VIS_VISIBLE)
 			{
 				potentialTargets.push_back(std::make_pair((*it2), 0));

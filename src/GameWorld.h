@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 6262 2010-04-03 22:05:03Z OLiver $
+// $Id: GameWorld.h 6269 2010-04-05 12:00:54Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -222,6 +222,10 @@ public:
 	/// Rand weitergehen kann
 	MapCoord CalcDistanceAroundBorderX(const MapCoord x1, const MapCoord x2) const;
 	MapCoord CalcDistanceAroundBorderY(const MapCoord y1, const MapCoord y2) const;
+
+	/// Ermittelt Abstand zwischen 2 Punkten auf der Map unter Berücksichtigung der Kartengrenzüberquerung
+	unsigned GameWorldBase::CalcDistance(const int x1, const int y1,
+					  const int x2, const int y2) const;
 
 	// Erzeugt eindeutige ID aus gegebenen X und Y-Werten
 	unsigned MakeCoordID(const MapCoord x, const MapCoord y) const

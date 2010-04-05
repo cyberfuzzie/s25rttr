@@ -22,8 +22,8 @@
 #include "MapConsts.h"
 
 
-/// Ermittelt Abstand zwischen 2 Punkten auf der Map (mit Pythagoras)
-unsigned CalcDistance(const int x1, const int y1,
+/// Ermittelt Abstand zwischen 2 Punkten auf der Map
+unsigned CalcRawDistance(const int x1, const int y1,
 					  const int x2, const int y2);
 					  
 

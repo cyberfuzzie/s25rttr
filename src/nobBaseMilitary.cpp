@@ -1,4 +1,4 @@
-// $Id: nobBaseMilitary.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: nobBaseMilitary.cpp 6269 2010-04-05 12:00:54Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -177,7 +177,7 @@ nofAttacker * nobBaseMilitary::FindAggressor(nofAggressiveDefender * defender)
 		if((*it)->WannaFight())
 		{
 			// Mal sehen, ob er auch nicht so weit entfernt ist (erstmal grob)
-			if(CalcDistance((*it)->GetX(),(*it)->GetY(),defender->GetX(),defender->GetY()) < 5)
+			if(gwg->CalcDistance((*it)->GetX(),(*it)->GetY(),defender->GetX(),defender->GetY()) < 5)
 			{
 				// Er darf auch per Fuß nicht zu weit entfernt sein (nicht dass er an der anderen Seite
 				// von nem Fluss steht (genau)

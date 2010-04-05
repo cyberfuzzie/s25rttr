@@ -1,4 +1,4 @@
-// $Id: nofHunter.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: nofHunter.cpp 6269 2010-04-05 12:00:54Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -259,7 +259,7 @@ bool nofHunter::IsShootingPointGood(const unsigned short x, const unsigned short
 void nofHunter::HandleStateChasing()
 {
 	// Sind wir in der Nähe des Tieres?
-	if(CalcDistance(x,y,animal->GetX(),animal->GetY()) < 7)
+	if(gwg->CalcDistance(x,y,animal->GetX(),animal->GetY()) < 7)
 	{
 		unsigned short animal_x, animal_y;
 

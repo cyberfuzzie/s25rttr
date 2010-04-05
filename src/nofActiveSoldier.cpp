@@ -1,4 +1,4 @@
-// $Id: nofActiveSoldier.cpp 6264 2010-04-04 20:56:17Z OLiver $
+// $Id: nofActiveSoldier.cpp 6275 2010-04-05 14:32:43Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -110,8 +110,6 @@ void nofActiveSoldier::WalkingHome()
 		building->AddActiveSoldier(this);
 		// Mich entfernen hier
 		gwg->RemoveFigure(this,x,y);
-		// Wir sind jetzt auch nicht mehr auf Mission
-		building->SoldierLost(this);
 	}
 	// oder finden wir gar keinen Weg mehr?
 	else if((dir = gwg->FindHumanPath(x,y,building->GetFlag()->GetX(),building->GetFlag()->GetY(),100)) == 0xFF)

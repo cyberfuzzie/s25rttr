@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 6269 2010-04-05 12:00:54Z OLiver $
+// $Id: nobMilitary.cpp 6275 2010-04-05 14:32:43Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -532,6 +532,8 @@ void nobMilitary::AddActiveSoldier(nofActiveSoldier * soldier)
 	// alten Soldaten später vernichten
 	em->AddToKillList(soldier);
 
+	// Soldat ist wie tot, d.h. er muss aus allen Missionslisten etc. wieder rausgenommen werden
+	SoldierLost(soldier);
 }
 
 void nobMilitary::AddPassiveSoldier(nofPassiveSoldier * soldier)

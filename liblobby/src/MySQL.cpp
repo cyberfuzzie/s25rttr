@@ -1,4 +1,4 @@
-// $Id: MySQL.cpp 6278 2010-04-05 16:01:29Z FloSoft $
+// $Id: MySQL.cpp 6279 2010-04-05 16:05:08Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -347,7 +347,7 @@ bool MySQL::GetRankingInfo(LobbyPlayerInfo& player)
 	mysql_real_escape_string(m_pMySQL, name, player.getName().c_str(), (unsigned long)player.getName().length());
 
 	//snprintf(query, 1024, "SELECT username, win, lose FROM `tb_user` WHERE `username` = '%s' LIMIT 1;", name);
-        snprintf(query, 1024, "SELECT name, win, lose FROM `users` WHERE `user` = '%s' LIMIT 1;", name);
+        snprintf(query, 1024, "SELECT user, win, lose FROM `users` WHERE `user` = '%s' LIMIT 1;", name);
 
 	if(!DoQuery(query))
 		return false;

@@ -1,4 +1,4 @@
-// $Id: noMovable.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: noMovable.cpp 6271 2010-04-05 12:54:25Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -161,6 +161,23 @@ void noMovable::CalcWalkingRelative(int &x, int &y)
 	int y1 = static_cast<int>(gwg->GetTerrainY(this->x,this->y));
 	int x2 = static_cast<int>(gwg->GetTerrainX(gwg->GetXA(this->x,this->y,dir),gwg->GetYA(this->x,this->y,dir)));
 	int y2 = static_cast<int>(gwg->GetTerrainY(gwg->GetXA(this->x,this->y,dir),gwg->GetYA(this->x,this->y,dir)));
+
+	// Gehen wir über einen Kartenrand (horizontale Richung?)
+	if(abs(x1-x2) >= gwg->GetWidth() * TR_W / 2)
+	{
+		if(abs(x1-int(gwg->GetWidth())*TR_W-x2) < abs(x1-x2))
+			x1 -= gwg->GetWidth()*TR_W;
+		else
+			x1 += gwg->GetWidth()*TR_W;
+	}
+	// Und dasselbe für vertikale Richtung
+	if(abs(y1-y2) >= gwg->GetHeight() * TR_H / 2)
+	{
+		if(abs(y1-int(gwg->GetHeight())*TR_H-y2) < abs(y1-y2))
+			y1 -= gwg->GetHeight()*TR_H;
+		else
+			y1 += gwg->GetHeight()*TR_H;
+	}
 
 
 	// Wenn sie runterlaufen, muss es andersrum sein, da die Tiere dann immer vom OBEREN Punkt aus gezeichnet werden

@@ -1,4 +1,4 @@
-// $Id: noFire.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: noFire.h 6267 2010-04-05 09:16:14Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -53,6 +53,8 @@ public:		void Destroy() { Destroy_noFire(); }
 	public:		void Serialize(SerializedGameData *sgd) const { Serialize_noFire(sgd); }
 
 	GO_Type GetGOT() const { return GOT_FIRE; }
+
+	BlockingManner GetBM() const { return BM_GRANITE; }
 
 	/// Zeichnen
 	void Draw(int x, int y);

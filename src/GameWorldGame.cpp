@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 6264 2010-04-04 20:56:17Z OLiver $
+// $Id: GameWorldGame.cpp 6267 2010-04-05 09:16:14Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -724,17 +724,8 @@ bool GameWorldGame::IsNodeForFigures(const MapCoord x, const MapCoord y)
 
 
 	// Irgendwelche Objekte im Weg?
-	noBase * no = GetNO(x,y);
-
-	if(/*	no->GetType() == NOP_FLAG ||*/
-		no->GetType() == NOP_GRANITE ||
-		/*no->GetType() == NOP_TREE ||*/
-		no->GetType() == NOP_GRAINFIELD ||
-		no->GetType() == NOP_BUILDING ||
-		no->GetType() == NOP_BUILDINGSITE ||
-		no->GetType() == NOP_EXTENSION ||
-		no->GetType() == NOP_FIRE ||
-		no->GetType() == NOP_OBJECT)
+	noBase::BlockingManner bm =GetNO(x,y)->GetBM();
+	if(bm != noBase::BM_NOTBLOCKING && bm != noBase::BM_TREE && bm != noBase::BM_FLAG)
 		return false;
 
 	unsigned char t;
@@ -1147,18 +1138,9 @@ bool GameWorldGame::ValidPointForFighting(const MapCoord x, const MapCoord y, no
 		}
 	}
 	// Liegt hier was rum auf dem man nicht kämpfen sollte?
-	noBase *obj = GetNode(x,y).obj;
-	if(obj)
-	{
-		if(obj->GetType() == NOP_BUILDING ||
-		obj->GetGOT() == GOT_BUILDINGSITE ||
-		obj->GetGOT() == GOT_EXTENSION ||
-		obj->GetGOT() == GOT_GRANITE || 
-		obj->GetType() == NOP_OBJECT ||
-		obj->GetGOT() == GOT_FIRE ||
-		obj->GetGOT() == GOT_GRANITE)
-		 return false;
-	}
+	noBase::BlockingManner bm = GetNO(x,y)->GetBM();
+	if(bm != noBase::BM_NOTBLOCKING && bm != noBase::BM_TREE && bm != noBase::BM_FLAG)
+		return false;
 
 	if(GetNode(x,y).reserved)
 		return false;

@@ -1,4 +1,4 @@
-// $Id: noShipBuildingSite.h 5855 2010-01-04 16:44:38Z FloSoft $
+// $Id: noShipBuildingSite.h 6267 2010-04-05 09:16:14Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -38,6 +38,8 @@ public:
 
 	/// Das Schiff wird um eine Stufe weitergebaut
 	void MakeBuildStep();
+
+	BlockingManner GetBM() const { return BM_HUT; }
 
 protected:	
 

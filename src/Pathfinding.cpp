@@ -1,4 +1,4 @@
-// $Id: Pathfinding.cpp 6153 2010-03-15 21:25:52Z jh $
+// $Id: Pathfinding.cpp 6267 2010-04-05 09:16:14Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -508,18 +508,9 @@ bool GameWorldViewer::FindRoadPath(const MapCoord x_start,const MapCoord y_start
 bool IsPointOK_HumanPath(const GameWorldBase& gwb, const MapCoord x, const MapCoord y, const unsigned char dir, const void *param)
 {
 	// Feld passierbar?
-	noBase * obj = gwb.GetNode(x,y).obj;
-	if(obj)
-	{
-		if(obj->GetType() == NOP_BUILDING ||
-		obj->GetGOT() == GOT_BUILDINGSITE ||
-		obj->GetGOT() == GOT_EXTENSION ||
-		obj->GetGOT() == GOT_GRANITE || 
-		obj->GetType() == NOP_OBJECT ||
-		obj->GetGOT() == GOT_FIRE ||
-		obj->GetGOT() == GOT_GRANITE)
-		 return false;
-	}
+	noBase::BlockingManner bm = gwb.GetNO(x,y)->GetBM();
+	if(bm != noBase::BM_NOTBLOCKING && bm != noBase::BM_TREE && bm != noBase::BM_FLAG)
+		return false;
 
 	if(gwb.GetNode(x,y).reserved)
 		return false;

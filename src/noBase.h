@@ -1,4 +1,4 @@
-// $Id: noBase.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: noBase.h 6267 2010-04-05 09:16:14Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -44,6 +44,22 @@ public:
 
 	/// Erzeugt von ihnen selbst ein FOW Objekt als visuelle "Erinnerung" für den Fog of War
 	virtual FOWObject * CreateFOWObject() const;
+
+	/// Gibt an, inwieweit ein Objekt auf der Karte die BQ beeinflusst
+	enum BlockingManner
+	{
+		BM_NOTBLOCKING, // blockiert gar nicht (z.B. Zierobjekte)
+		BM_HUT,
+		BM_HOUSE,
+		BM_CASTLE,
+		BM_MINE,
+		BM_SINGLEBLOCKING, // Blockiert nur einzelnen Punkt, hat aber sonst keinen weiteren Einfluss auf Umgebung
+		BM_GRANITE,
+		BM_TREE,
+		BM_FLAG
+		};
+
+	virtual BlockingManner GetBM() const;
 
 protected:
 	/// Räumt das Basisobjekt auf.

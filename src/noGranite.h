@@ -1,4 +1,4 @@
-// $Id: noGranite.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: noGranite.h 6267 2010-04-05 09:16:14Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -44,6 +44,8 @@ public:		void Destroy() { Destroy_noGranite(); }
 	GO_Type GetGOT() const { return GOT_GRANITE; }
 
 	void Draw(int x, int y);
+
+	BlockingManner GetBM() const { return BM_GRANITE; }
 
 	/// Erzeugt von ihnen selbst ein FOW Objekt als visuelle "Erinnerung" für den Fog of War
 	FOWObject * CreateFOWObject() const;

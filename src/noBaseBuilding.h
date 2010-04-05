@@ -1,4 +1,4 @@
-// $Id: noBaseBuilding.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: noBaseBuilding.h 6267 2010-04-05 09:16:14Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -67,6 +67,7 @@ public:		void Destroy() { Destroy_noBaseBuilding(); }
 	BuildingQuality GetSize() const { return BUILDING_SIZE[type]; }
 	BuildingType GetBuildingType () const { return type; }
 	Nation GetNation() const { return nation; }
+	virtual BlockingManner GetBM() const;
 
 	/// Ermittelt die Flagge, die vor dem Gebäude steht
 	noFlag * GetFlag() const;

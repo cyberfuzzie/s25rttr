@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 6264 2010-04-04 20:56:17Z OLiver $
+// $Id: GameWorldBase.cpp 6267 2010-04-05 09:16:14Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -292,17 +292,8 @@ bool GameWorldBase::RoadAvailable(const bool boat_road,const int x, const int y,
 	// Hindernisse
 	if(GetNode(x,y).obj)
 	{
-		NodalObjectType nop = GetNode(x,y).obj->GetType();
-		if(nop == NOP_BUILDING ||
-			 nop == NOP_BUILDINGSITE ||
-			 nop == NOP_EXTENSION ||
-			 nop == NOP_TREE ||
-			 nop == NOP_GRANITE ||
-			 nop == NOP_FLAG ||
-			 nop == NOP_GRAINFIELD ||
-			 nop == NOP_FIRE ||
-			 nop == NOP_OBJECT
-			 )
+		noBase::BlockingManner bm = GetNode(x,y).obj->GetBM();
+		if(bm != noBase::BM_NOTBLOCKING)
 			 return 0;
 	}
 
@@ -320,13 +311,8 @@ bool GameWorldBase::RoadAvailable(const bool boat_road,const int x, const int y,
 
 	for(unsigned char i = 3;i<6;++i)
 	{
-		if(GetNO(GetXA(x,y,i),GetYA(x,y,i))->GetType() == NOP_BUILDING
-			|| GetNO(GetXA(x,y,i),GetYA(x,y,i))->GetType() == NOP_BUILDINGSITE)
-		{
-			BuildingQuality bq = GetSpecObj<noBaseBuilding>(GetXA(x,y,i),GetYA(x,y,i))->GetSize();
-			if(bq == BQ_CASTLE || bq == BQ_HARBOR)
-				return 0;
-		}
+		if(GetNO(GetXA(x,y,i),GetYA(x,y,i))->GetBM() == noBase::BM_CASTLE)		
+			return 0;
 	}
 
 	// Terrain (unterscheidne, ob Wasser und Landweg)
@@ -701,18 +687,9 @@ BuildingQuality GameWorldBase::CalcBQ(const MapCoord x, const MapCoord y,const u
 	 if(flagonly) if(FlagNear(x,y)) return BQ_NOTHING;
 
 
-
 	// allgemein nix bauen auf folgenden Objekten:
 
-	if(	GetNO(x,y)->GetType() == NOP_TREE ||
-		GetNO(x,y)->GetType() == NOP_GRANITE ||
-		GetNO(x,y)->GetType() == NOP_BUILDING ||
-		GetNO(x,y)->GetType() == NOP_FLAG ||
-		GetNO(x,y)->GetType() == NOP_BUILDINGSITE ||
-		GetNO(x,y)->GetType() == NOP_EXTENSION ||
-		GetNO(x,y)->GetType() == NOP_FIRE ||
-		GetNO(x,y)->GetType() == NOP_GRAINFIELD ||
-		GetNO(x,y)->GetType() == NOP_OBJECT)
+	 if(GetNO(x,y)->GetBM() != noBase::BM_NOTBLOCKING)
 		return BQ_NOTHING;
 
 	if(val > 2 && val != BQ_MINE)
@@ -726,7 +703,7 @@ BuildingQuality GameWorldBase::CalcBQ(const MapCoord x, const MapCoord y,const u
 				break;
 			}
 
-			// StaticObject --> rundrum Flagge/Hütte
+			/*// StaticObject --> rundrum Flagge/Hütte
 			else if(GetNO(GetXA(x,y,i),GetYA(x,y,i))->GetType() == NOP_OBJECT)
 			{
 				const noStaticObject *obj = GetSpecObj<noStaticObject>(GetXA(x,y,i),GetYA(x,y,i));
@@ -736,16 +713,14 @@ BuildingQuality GameWorldBase::CalcBQ(const MapCoord x, const MapCoord y,const u
 					val = BQ_HUT;
 
 				break;
-			}
+			}*/
 		}
 	}
 
 	// Stein, Feuer und Getreidefeld --> rundrum Flagge
 	for(unsigned i = 0;i<6;++i)
 	{
-		if( GetNO(GetXA(x,y,i),GetYA(x,y,i))->GetType() == NOP_GRANITE ||
-			GetNO(GetXA(x,y,i),GetYA(x,y,i))->GetType() == NOP_GRAINFIELD ||
-			GetNO(GetXA(x,y,i),GetYA(x,y,i))->GetType() == NOP_FIRE)
+		if(GetNO(GetXA(x,y,i),GetYA(x,y,i))->GetBM() == noBase::BM_GRANITE)
 		{
 			val = BQ_FLAG;
 			break;
@@ -759,21 +734,21 @@ BuildingQuality GameWorldBase::CalcBQ(const MapCoord x, const MapCoord y,const u
 		{
 			if(GetNodeAround(x,y,i).obj)
 			{
-				if(GetNodeAround(x,y,i).obj->GetType() == NOP_FLAG)
+				if(GetNodeAround(x,y,i).obj->GetBM() == noBase::BM_FLAG)
 					val = BQ_HOUSE;
 			}
 		}
 	}
 
-	if(GetNO(GetXA(x,y,3),GetYA(x,y,3))->GetType() == NOP_FLAG)
+	if(GetNO(GetXA(x,y,3),GetYA(x,y,3))->GetBM() == noBase::BM_FLAG)
 		return BQ_NOTHING;
-	if(GetNO(GetXA(x,y,5),GetYA(x,y,5))->GetType() == NOP_FLAG)
+	if(GetNO(GetXA(x,y,5),GetYA(x,y,5))->GetBM() == noBase::BM_FLAG)
 		return BQ_NOTHING;
 
 
 	if(val != BQ_FLAG)
 	{
-		if(GetNO(GetXA(x,y,5),GetYA(x,y,5))->GetType() == NOP_FLAG)
+		if(GetNO(GetXA(x,y,5),GetYA(x,y,5))->GetBM() == noBase::BM_FLAG)
 			val = BQ_FLAG;
 	}
 
@@ -782,19 +757,12 @@ BuildingQuality GameWorldBase::CalcBQ(const MapCoord x, const MapCoord y,const u
 	{
 		for(unsigned i = 0;i<12;++i)
 		{
-			if(GetNO(GetXA2(x,y,i),GetYA2(x,y,i))->GetType() == NOP_BUILDING || GetNO(GetXA2(x,y,i),GetYA2(x,y,i))->GetType() == NOP_BUILDINGSITE)
+			noBase::BlockingManner bm = GetNO(GetXA2(x,y,i),GetYA2(x,y,i))->GetBM();
+
+			if(bm >= noBase::BM_HUT && bm <= noBase::BM_MINE)
 				val = BQ_HOUSE;
 		}
 	}
-
-	//for(unsigned i = 3;i<6;++i)
-	//{
-	//	if(GetNO(GetXA(x,y,i),GetYA(x,y,i))->GetType() == NOP_BUILDING)
-	//	{
-	//		if(reinterpret_cast<noBuilding*>(objects[GetYA(x,y,i)*width+GetXA(x,y,i)])->GetSize() == BQ_CASTLE)
-	//			return BQ_NOTHING;
-	//	}
-	//}
 
 	for(unsigned i = 0;i<3;++i)
 	{
@@ -824,7 +792,7 @@ BuildingQuality GameWorldBase::CalcBQ(const MapCoord x, const MapCoord y,const u
 	{
 		for(unsigned char i = 0;i<6;++i)
 		{
-			if(GetNO(GetXA(x,y,i),GetYA(x,y,i))->GetType() == NOP_FLAG)
+			if(GetNO(GetXA(x,y,i),GetYA(x,y,i))->GetBM() == noBase::BM_FLAG)
 				return BQ_NOTHING;
 		}
 	}
@@ -836,7 +804,7 @@ BuildingQuality GameWorldBase::CalcBQ(const MapCoord x, const MapCoord y,const u
 	if(val == BQ_FLAG)
 	{
 		for(unsigned char i = 0;i<3;++i)
-			if(GetNO(GetXA(x,y,i),GetYA(x,y,i))->GetType() == NOP_FLAG)
+			if(GetNO(GetXA(x,y,i),GetYA(x,y,i))->GetBM() == noBase::BM_FLAG)
 				return BQ_NOTHING;
 	}
 
@@ -848,7 +816,7 @@ BuildingQuality GameWorldBase::CalcBQ(const MapCoord x, const MapCoord y,const u
 
 	if(val >= BQ_HUT && val <= BQ_HARBOR)
 	{
-		if(GetNO(x+(y&1),y+1)->GetType() == NOP_FLAG)
+		if(GetNO(x+(y&1),y+1)->GetBM() == noBase::BM_FLAG)
 			return val;
 
 		if(CalcBQ(x+(y&1),y+1,player,true,visual,ignore_player))
@@ -859,7 +827,7 @@ BuildingQuality GameWorldBase::CalcBQ(const MapCoord x, const MapCoord y,const u
 		{
 
 			for(unsigned char i = 0;i<3;++i)
-				if(GetNO(GetXA(x,y,i),GetYA(x,y,i))->GetType() == NOP_FLAG)
+				if(GetNO(GetXA(x,y,i),GetYA(x,y,i))->GetBM() == noBase::BM_FLAG)
 					return BQ_NOTHING;
 			return BQ_FLAG;
 		}

@@ -1,4 +1,4 @@
-// $Id: noGrainfield.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: noGrainfield.h 6267 2010-04-05 09:16:14Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -64,6 +64,8 @@ public:		void Destroy() { Destroy_noGrainfield(); }
 
 	void Draw(int x,int y);
 	void HandleEvent(const unsigned int id);
+
+	BlockingManner GetBM() const { return BM_GRANITE; }
 
 	/// Kann man es abernten?
 	bool IsHarvestable() const { return size == 3 && state == STATE_NORMAL;}

@@ -1,4 +1,4 @@
-// $Id: noFlag.h 6005 2010-02-12 10:08:09Z FloSoft $
+// $Id: noFlag.h 6267 2010-04-05 09:16:14Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -41,6 +41,8 @@ public:
 	inline bool IsSpaceForWare() const { return (GetWareCount() < 8); }
 
 	void Draw(int x, int y);
+
+	BlockingManner GetBM() const { return BM_FLAG; }
 
 	/// Erzeugt von ihnen selbst ein FOW Objekt als visuelle "Erinnerung" für den Fog of War.
 	FOWObject *CreateFOWObject() const;

@@ -1,4 +1,4 @@
-// $Id: noStaticObject.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: noStaticObject.h 6267 2010-04-05 09:16:14Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -37,6 +37,8 @@ public:
 	unsigned short GetItemFile() const { return file; }
 	/// gibt die Größe des Objekts zurück.
 	unsigned char GetSize(void) const { return size; }
+
+	BlockingManner GetBM() const { return BlockingManner(unsigned(BM_HUT) + size); }
 
 	/// zeichnet das Objekt.
 	void Draw(int x, int y);

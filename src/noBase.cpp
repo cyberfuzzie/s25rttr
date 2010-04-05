@@ -1,4 +1,4 @@
-// $Id: noBase.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: noBase.cpp 6267 2010-04-05 09:16:14Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -38,4 +38,9 @@ void noBase::Serialize_noBase(SerializedGameData * sgd) const
 FOWObject * noBase::CreateFOWObject() const
 {
 	return NULL;
+}
+
+noBase::BlockingManner noBase::GetBM() const
+{
+	return BM_NOTBLOCKING;
 }

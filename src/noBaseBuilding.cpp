@@ -1,4 +1,4 @@
-// $Id: noBaseBuilding.cpp 6051 2010-02-20 13:41:35Z FloSoft $
+// $Id: noBaseBuilding.cpp 6267 2010-04-05 09:16:14Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -269,3 +269,12 @@ void noBaseBuilding::DestroyBuildingExtensions()
 	}
 }
 
+noBase::BlockingManner noBaseBuilding::GetBM() const
+{
+	BuildingQuality bq = GetSize();
+
+	if(bq == BQ_HARBOR)
+		return noBase::BM_CASTLE;
+	else
+		return noBase::BlockingManner(unsigned(bq) -1);
+}

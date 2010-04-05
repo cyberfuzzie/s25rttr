@@ -1,4 +1,4 @@
-// $Id: nofForester.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: nofForester.cpp 6267 2010-04-05 09:16:14Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -134,18 +134,9 @@ void nofForester::WorkFinished()
 bool nofForester::IsPointGood(const unsigned short x, const unsigned short y)
 {
 	// Der Platz muss frei sein
-	noBase * no = gwg->GetNO(x,y);
+	noBase::BlockingManner bm = gwg->GetNO(x,y)->GetBM();
 
-	if(	no->GetType() == NOP_FLAG || 
-		no->GetGOT()  == GOT_SIGN ||
-		no->GetType() == NOP_GRANITE || 
-		no->GetType() == NOP_TREE || 
-		no->GetType() == NOP_GRAINFIELD ||
-		no->GetType() == NOP_BUILDING || 
-		no->GetType() == NOP_BUILDINGSITE || 
-		no->GetType() == NOP_EXTENSION || 
-		no->GetType() == NOP_FIRE ||
-		no->GetType() == NOP_OBJECT)
+	if(bm != noBase::BM_NOTBLOCKING)
 		return false;
 
 	// Kein Grenzstein darf da stehen

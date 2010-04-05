@@ -1,4 +1,4 @@
-// $Id: GameWorld.cpp 6011 2010-02-12 16:35:00Z FloSoft $
+// $Id: GameWorld.cpp 6267 2010-04-05 09:16:14Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -296,7 +296,7 @@ void GameWorld::Scan(glArchivItem_Map *map)
 
 					// der Wikinger (mis3bobs)
 					else if(lc == 0x31)
-						nodes[pos].obj = new noStaticObject(x, y, 0, 3);
+						nodes[pos].obj = new noStaticObject(x, y, 0, 2);
 
 					else
 					{

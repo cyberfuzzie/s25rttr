@@ -1,4 +1,4 @@
-// $Id: nobHarborBuilding.cpp 6266 2010-04-04 21:11:16Z OLiver $
+// $Id: nobHarborBuilding.cpp 6272 2010-04-05 13:30:49Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -895,7 +895,7 @@ void nobHarborBuilding::GetAttackerBuildingsForSeaAttack(std::vector<SeaAttacker
 void nobHarborBuilding::AddSeaAttacker(nofAttacker * attacker)
 {
 	unsigned best_distance = 0xffffffff;
-	unsigned best_harbor_point;
+	unsigned best_harbor_point = 0xffffffff;
 	std::vector<unsigned> harbor_points;
 	gwg->GetHarborPointsAroundMilitaryBuilding(attacker->GetAttackedGoal()->GetX(),attacker->GetAttackedGoal()->GetY(),
 												&harbor_points);
@@ -908,7 +908,6 @@ void nobHarborBuilding::AddSeaAttacker(nofAttacker * attacker)
 			best_harbor_point = harbor_points[i];
 		}
 	}
-	
 	
 	SoldierForShip sfs = { attacker, gwg->GetHarborPoint(best_harbor_point) };
 	soldiers_for_ships.push_back(sfs);

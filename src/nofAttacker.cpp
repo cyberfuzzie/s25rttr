@@ -302,9 +302,10 @@ void nofAttacker::Walked()
 			if(x == harbor_x && y == harbor_y)
 			{
 				// Uns zum Hafen hinzufügen
-				gwg->GetSpecObj<nobHarborBuilding>(x,y)->AddSeaAttacker(this);
 				state = STATE_SEAATTACKING_WAITINHARBOR;
 				gwg->RemoveFigure(this,x,y);
+				gwg->GetSpecObj<nobHarborBuilding>(x,y)->AddSeaAttacker(this);
+				
 				return;
 			}
 			

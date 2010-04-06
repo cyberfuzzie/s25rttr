@@ -1,4 +1,4 @@
-// $Id: nobHarborBuilding.cpp 6272 2010-04-05 13:30:49Z FloSoft $
+// $Id: nobHarborBuilding.cpp 6280 2010-04-06 12:40:52Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -60,6 +60,19 @@ void nobHarborBuilding::ExpeditionInfo::Serialize(SerializedGameData *sgd) const
 	sgd->PushUnsignedInt(stones);
 	sgd->PushBool(builder);
 }
+
+nobHarborBuilding::ExplorationExpeditionInfo::ExplorationExpeditionInfo(SerializedGameData *sgd) :
+active(sgd->PopBool()),
+scouts(sgd->PopUnsignedInt())
+{
+}
+
+void nobHarborBuilding::ExplorationExpeditionInfo::Serialize(SerializedGameData *sgd) const
+{
+	sgd->PushBool(active);
+	sgd->PushUnsignedInt(scouts);
+}
+
 
 
 nobHarborBuilding::nobHarborBuilding(const unsigned short x, const unsigned short y,const unsigned char player,const Nation nation) 
@@ -148,6 +161,7 @@ void nobHarborBuilding::Serialize(SerializedGameData * sgd) const
 {
 	Serialize_nobBaseWarehouse(sgd);
 	expedition.Serialize(sgd);
+	exploration_expedition.Serialize(sgd);
 	sgd->PushObject(orderware_ev,true);
 	for(unsigned i = 0;i<6;++i)
 		sgd->PushUnsignedShort(sea_ids[i]);
@@ -167,11 +181,14 @@ void nobHarborBuilding::Serialize(SerializedGameData * sgd) const
 		sgd->PushObject(it->attacker,true);
 	}
 
+
+
 }
 
 nobHarborBuilding::nobHarborBuilding(SerializedGameData * sgd, const unsigned obj_id) 
 : nobBaseWarehouse(sgd,obj_id),
 	expedition(sgd),
+	exploration_expedition(sgd),
 	orderware_ev(sgd->PopObject<EventManager::Event>(GOT_EVENT))
 {
 	// ins Militärquadrat einfügen
@@ -344,6 +361,42 @@ void nobHarborBuilding::StartExpedition()
 
 }
 
+/// Startet eine Erkundungs-Expedition oder stoppt sie, wenn bereits eine stattfindet
+void nobHarborBuilding::StartExplorationExpedition()
+{
+	// Schon eine Expedition gestartet?
+	if(exploration_expedition.active)
+	{
+		// Dann diese stoppen
+		exploration_expedition.active = false;
+
+		// Erkunder zurücktransferieren
+		if(exploration_expedition.scouts)
+		{
+			real_goods.people[JOB_SCOUT] += exploration_expedition.scouts;
+			// Evtl. Abnehmer für die Figur wieder finden
+			gwg->GetPlayer(player)->FindWarehouseForAllJobs(JOB_SCOUT);
+		}
+		return;
+	}
+
+	// Initialisierung
+	exploration_expedition.active = true;
+	
+	// In unseren Warenbestand gucken und die erforderlichen Erkunder rausziehen
+	if(real_goods.people[JOB_SCOUT])
+	{
+		exploration_expedition.scouts = min(real_goods.people[JOB_SCOUT],SCOUTS_EXPLORATION_EXPEDITION);
+
+		real_goods.people[JOB_SCOUT] -= exploration_expedition.scouts;
+	}
+
+	// Den Rest bestellen
+	for(unsigned i = exploration_expedition.scouts;i<SCOUTS_EXPLORATION_EXPEDITION;++i)
+		gwg->GetPlayer(player)->AddJobWanted(JOB_SCOUT,this);
+
+}
+
 
 /// Bestellt die zusätzlichen erforderlichen Waren für eine Expedition
 void nobHarborBuilding::OrderExpeditionWares()
@@ -414,7 +467,7 @@ void nobHarborBuilding::ShipArrived(noShip * ship)
 {
 	// Verfügbare Aufgaben abklappern
 
-	// Steht Expedition zum Start bereit
+	// Steht Expedition zum Start bereit?
 	if(expedition.active && expedition.builder 
 		&& expedition.boards == BUILDING_COSTS[nation][BLD_HARBORBUILDING].boards
 		&& expedition.stones == BUILDING_COSTS[nation][BLD_HARBORBUILDING].stones)
@@ -423,6 +476,15 @@ void nobHarborBuilding::ShipArrived(noShip * ship)
 		expedition.active = false;
 		// Expedition starten
 		ship->StartExpedition();
+	}
+	// Oder auch eine Erkundungs-Expedition
+	else if(IsExplorationExpeditionReady())
+	{
+		// Aufräumen am Hafen
+		exploration_expedition.active = false;
+		// Expedition starten
+		ship->StartExplorationExpedition();
+		goods.people[JOB_SCOUT] -= exploration_expedition.scouts;
 	}
 	// Gibt es Waren oder Figuren, die ein Schiff von hier aus nutzen wollen?
 	else if(wares_for_ships.size() || figures_for_ships.size())
@@ -546,12 +608,23 @@ void nobHarborBuilding::AddFigure(noFigure * figure)
 	if(figure->GetJobType() == JOB_BUILDER && expedition.active && !expedition.builder)
 	{
 		
-		RemoveDependentFigure(figure);
+		nobBaseWarehouse::RemoveDependentFigure(figure);
 		em->AddToKillList(figure);
 
 		expedition.builder = true;
 		// Ggf. ist jetzt alles benötigte da
 		CheckExpeditionReady();
+	}
+	// Brauchen wir einen Spähter für die Expedition?
+	else if(figure->GetJobType() == JOB_SCOUT && exploration_expedition.active && !IsExplorationExpeditionReady())
+	{
+		nobBaseWarehouse::RemoveDependentFigure(figure);
+		em->AddToKillList(figure);
+
+		++exploration_expedition.scouts;
+		++goods.people[JOB_SCOUT];
+		// Ggf. ist jetzt alles benötigte da
+		CheckExplorationExpeditionReady();
 	}
 	else
 		// ansonsten weiterdelegieren
@@ -574,6 +647,18 @@ bool nobHarborBuilding::IsExpeditionReady() const
 	return true;
 }
 
+/// Gibt zurück, ob Expedition vollständig ist
+bool nobHarborBuilding::IsExplorationExpeditionReady() const
+{
+	if(!exploration_expedition.active)
+		return false;
+	// Alles da?
+	if(exploration_expedition.scouts < SCOUTS_EXPLORATION_EXPEDITION)
+		return false;
+
+	return true;
+}
+
 /// Prüft, ob eine Expedition von den Waren her vollständig ist und ruft ggf. das Schiff
 void nobHarborBuilding::CheckExpeditionReady()
 {
@@ -583,7 +668,14 @@ void nobHarborBuilding::CheckExpeditionReady()
 		players->getElement(player)->OrderShip(this);
 }
 
-
+/// PrÃ¼ft, ob eine Expedition von den Spähern her vollstÃ¤ndig ist und ruft ggf. das Schiff
+void nobHarborBuilding::CheckExplorationExpeditionReady()
+{
+	// Alles da?
+	// Dann bestellen wir mal das Schiff
+	if(IsExplorationExpeditionReady())
+		players->getElement(player)->OrderShip(this);
+}
 
 /// Schiff konnte nicht mehr kommen
 void nobHarborBuilding::ShipLost(noShip * ship)
@@ -617,6 +709,24 @@ void nobHarborBuilding::RemoveDependentFigure(noFigure * figure)
 
 		// Keinen gefunden, also müssen wir noch einen bestellen
 		players->getElement(player)->AddJobWanted(JOB_BUILDER,this);
+	}
+
+	// Ist das ein Erkunder und brauchen wir noch welche?
+	else if(figure->GetJobType() == JOB_SCOUT && exploration_expedition.active)
+	{
+		unsigned scouts_coming = 0;
+		// Alle Figuren durchkommen, die noch hierher kommen wollen und gucken, ob ein 
+		// Bauarbeiter dabei ist
+		for(list<noFigure*>::iterator it = dependent_figures.begin();it.valid();++it)
+		{
+			if((*it)->GetJobType() == JOB_SCOUT)
+				// Brauchen keinen bestellen, also raus
+				++scouts_coming;
+		}
+
+		// Wenn nicht genug Erkunder mehr kommen, müssen wir einen neuen bestellen
+		if(exploration_expedition.scouts + scouts_coming < SCOUTS_EXPLORATION_EXPEDITION)
+			players->getElement(player)->AddJobWanted(JOB_SCOUT,this);
 	}
 
 	
@@ -672,6 +782,9 @@ unsigned nobHarborBuilding::GetNeededShipsCount() const
 	// Expedition -> 1 Schiff
 	if(IsExpeditionReady())
 		++count;
+	// Erkundungs-Expedition -> noch ein Schiff
+	if(IsExplorationExpeditionReady())
+		++count;
 	// Evtl. Waren und Figuren -> noch ein Schiff
 	if(figures_for_ships.size() > 0 || wares_for_ships.size() > 0)
 		++count;
@@ -702,6 +815,13 @@ int nobHarborBuilding::GetNeedForShip(unsigned ships_coming) const
 
 	// Expedition -> 1 Schiff
 	if(IsExpeditionReady())
+	{
+		if(ships_coming == 0)
+			points += 100;
+		else
+			--ships_coming;
+	}
+	if(IsExplorationExpeditionReady())
 	{
 		if(ships_coming == 0)
 			points += 100;

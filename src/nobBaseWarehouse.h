@@ -1,4 +1,4 @@
-// $Id: nobBaseWarehouse.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: nobBaseWarehouse.h 6280 2010-04-06 12:40:52Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -85,6 +85,11 @@ private:
 	virtual bool UseWareAtOnce(Ware * ware, noBaseBuilding* const goal);
 	/// Dasselbe für Menschen
 	virtual bool UseFigureAtOnce(noFigure * fig, noRoadNode* const goal); 
+	/// Prüft verschiedene Verwendungszwecke für eine neuangekommende Ware
+	void CheckUsesForNewWare(const GoodType gt);
+	/// Prüft verschiedene Sachen, falls ein neuer Mensch das Haus betreten hat
+	void CheckJobsForNewFigure(const Job job);
+	
 
 protected:
 
@@ -117,6 +122,9 @@ protected: void Serialize_nobBaseWarehouse(SerializedGameData * sgd) const;
 public: void Serialize(SerializedGameData *sgd) const { Serialize_nobBaseWarehouse(sgd); }
 
 	const Goods *GetInventory() const;
+
+	/// Fügt einige Güter hinzu
+	void AddGoods(const Goods goods);
 
 
 	/// Gibt Anzahl der Waren bzw. Figuren zurück

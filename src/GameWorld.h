@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 6269 2010-04-05 12:00:54Z OLiver $
+// $Id: GameWorld.h 6280 2010-04-06 12:40:52Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -224,7 +224,7 @@ public:
 	MapCoord CalcDistanceAroundBorderY(const MapCoord y1, const MapCoord y2) const;
 
 	/// Ermittelt Abstand zwischen 2 Punkten auf der Map unter Berücksichtigung der Kartengrenzüberquerung
-	unsigned GameWorldBase::CalcDistance(const int x1, const int y1,
+	unsigned CalcDistance(const int x1, const int y1,
 					  const int x2, const int y2) const;
 
 	// Erzeugt eindeutige ID aus gegebenen X und Y-Werten
@@ -363,6 +363,9 @@ public:
 	/// Ermittelt Sichtbarkeit eines Punktes auch unter Einbeziehung der VerbÃ¼ndeten des jeweiligen Spielers
 	Visibility CalcWithAllyVisiblity(const MapCoord x, const MapCoord y, const unsigned char player) const; 
 
+	/// Gibt die Anzahl an Hafenpunkten zurück
+	unsigned GetHarborPointCount() const 
+	{ return harbor_pos.size()-1; }
 	/// Ist es an dieser Stelle fÃ¼r einen Spieler mÃ¶glich einen Hafen zu bauen
 	bool IsHarborPointFree(const unsigned harbor_id, const unsigned char player, 
 		const unsigned short sea_id) const;
@@ -711,6 +714,8 @@ public:
 	/// Entfernt diese wieder
 	void RemoveHarborBuildingSiteFromSea(noBuildingSite * building_site)
 	{ this->harbor_building_sites_from_sea.remove(building_site); }
+	/// Liefert eine Liste der Hafenpunkte, die von einem bestimmten Hafenpunkt erreichbar sind
+	void GetHarborPointsWithinReach(const unsigned hp,std::vector<unsigned>& hps) const;
 };
 
 

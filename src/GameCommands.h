@@ -47,7 +47,7 @@ enum Type
 	STARTATTACKINGEXPEDITION,
 	EXPEDITION_COMMAND,
 	SEAATTACK,
-	SEAATTACKFALLBACK,
+	STARTEXPLORATIONEXPEDITION,
 	SURRENDER,
 	CHEAT_ARMAGEDDON,
 	DESTROYALL,
@@ -470,20 +470,6 @@ public:
 	void Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid);
 };
 
-/// Späher rufen
-class SeaAttackFallback : public Coords
-{
-public:
-	SeaAttackFallback(const MapCoord x, const MapCoord y)
-		: Coords(SEAATTACKFALLBACK,x,y) {}
-	SeaAttackFallback(Serializer * ser)
-		: Coords(SEAATTACKFALLBACK,ser) {}
-
-	/// Führt das GameCommand aus
-	void Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid);
-};
-
-
 /// Spielerwechsel
 class SwitchPlayer : public GameCommand
 {
@@ -785,6 +771,20 @@ public:
 		: Coords(STARTEXPEDITION,x,y) {}
 	StartExpedition(Serializer * ser)
 		: Coords(STARTEXPEDITION,ser) {}
+
+	/// Führt das GameCommand aus
+	void Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid);
+};
+
+/// Expedition starten
+class StartExplorationExpedition : public Coords
+{
+	friend class GameClient;
+public:
+	StartExplorationExpedition(const MapCoord x, const MapCoord y)
+		: Coords(STARTEXPLORATIONEXPEDITION,x,y) {}
+	StartExplorationExpedition(Serializer * ser)
+		: Coords(STARTEXPLORATIONEXPEDITION,ser) {}
 
 	/// Führt das GameCommand aus
 	void Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid);

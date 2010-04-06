@@ -1,4 +1,4 @@
-// $Id: nobHarborBuilding.h 6262 2010-04-03 22:05:03Z OLiver $
+// $Id: nobHarborBuilding.h 6280 2010-04-06 12:40:52Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -43,6 +43,19 @@ class nobHarborBuilding : public nobBaseWarehouse
 		bool builder;
 	} expedition;
 
+	struct ExplorationExpeditionInfo
+	{
+		ExplorationExpeditionInfo() : active(false), scouts(0) {}
+		ExplorationExpeditionInfo(SerializedGameData *sgd);
+		void Serialize(SerializedGameData *sgd) const;
+
+		/// Expedition in Vorbereitung?
+		bool active;
+		/// Anzahl der Erkunder, die schon da sind
+		unsigned scouts;
+	} exploration_expedition;
+
+
 	/// Bestell-Ware-Event
 	EventManager::EventPointer orderware_ev;
 	/// Die Meeres-IDs aller angrenzenden Meere (jeweils für die 6 drumherumliegenden Küstenpunkte)
@@ -65,14 +78,19 @@ class nobHarborBuilding : public nobBaseWarehouse
 	};
 	std::list<SoldierForShip> soldiers_for_ships;
 
+
 private:
 
 	/// Bestellt die zusätzlichen erforderlichen Waren für eine Expedition
 	void OrderExpeditionWares();
 	/// Prüft, ob eine Expedition von den Waren her vollständig ist und ruft ggf. das Schiff
 	void CheckExpeditionReady();
+	/// Prüft, ob eine Expedition von den Sp�hern her vollständig ist und ruft ggf. das Schiff
+	void CheckExplorationExpeditionReady();
 	/// Gibt zurück, ob Expedition vollständig ist
 	bool IsExpeditionReady() const;
+	/// Gibt zurück, ob Erkundungs-Expedition vollständig ist
+	bool IsExplorationExpeditionReady() const;
 	/// Abgeleitete kann eine gerade erzeugte Ware ggf. sofort verwenden 
 	/// (muss in dem Fall true zurückgeben)
 	bool UseWareAtOnce(Ware * ware, noBaseBuilding* const goal);
@@ -108,8 +126,12 @@ public:
 	
 	/// Startet eine Expedition oder stoppt sie, wenn bereits eine stattfindet
 	void StartExpedition();	
+	/// Startet eine Erkundungs-Expedition oder stoppt sie, wenn bereits eine stattfindet
+	void StartExplorationExpedition();	
 	/// Ist Expedition in Vorbereitung?
 	bool IsExpeditionActive() const { return expedition.active; }
+	/// Ist Erkundungs-Expedition in Vorbereitung?
+	bool IsExplorationExpeditionActive() const { return exploration_expedition.active; }
 	/// Schiff ist angekommen
 	void ShipArrived(noShip * ship);
 	/// Schiff konnte nicht mehr kommen

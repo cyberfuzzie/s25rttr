@@ -1,4 +1,4 @@
-// $Id: nofScout_LookoutTower.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: nofScout_LookoutTower.cpp 6280 2010-04-06 12:40:52Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -26,6 +26,7 @@
 #include "MilitaryConsts.h"
 #include "nobUsual.h"
 #include "GameClient.h"
+#include "nobHarborBuilding.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -72,11 +73,23 @@ void nofScout_LookoutTower::WorkAborted()
 
 void nofScout_LookoutTower::WorkplaceReached()
 {
-	// Im enstprechenden Radius alles sichtbar machen
-	gwg->SetVisibilitiesAroundPoint(x,y,VISUALRANGE_LOOKOUTTOWER,player);
+	// Sind wir ggf. in einem Hafen angekommen, um einer Expedition beizutreten?
+	noBase * rn;
+	if((rn = gwg->GetNO(x,y))->GetGOT() == GOT_NOB_HARBORBUILDING)
+	{
+		// Mich hier einquartieren
+		gwg->RemoveFigure(this,x,y);
+		static_cast<nobHarborBuilding*>(rn)->AddFigure(this);
+		
+	}
+	else
+	{
+		// Im enstprechenden Radius alles sichtbar machen
+		gwg->SetVisibilitiesAroundPoint(x,y,VISUALRANGE_LOOKOUTTOWER,player);
 
-	// Und Post versenden
-	if(GameClient::inst().GetPlayerID() == this->player)
-		GameClient::inst().SendPostMessage(new ImagePostMsgWithLocation(
-			_("Lookout-tower occupied"), PMC_MILITARY, x, y, workplace->GetBuildingType(), workplace->GetNation()));
+		// Und Post versenden
+		if(GameClient::inst().GetPlayerID() == this->player)
+			GameClient::inst().SendPostMessage(new ImagePostMsgWithLocation(
+				_("Lookout-tower occupied"), PMC_MILITARY, x, y, workplace->GetBuildingType(), workplace->GetNation()));
+	}
 }

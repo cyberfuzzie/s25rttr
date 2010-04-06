@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 6269 2010-04-05 12:00:54Z OLiver $
+// $Id: GameWorldGame.cpp 6280 2010-04-06 12:40:52Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1211,7 +1211,7 @@ bool GameWorldGame::IsPointCompletelyVisible(const MapCoord x, const MapCoord y,
 		return true;
 
 	// Und drumherum
-	for(MapCoord tx=GetXA(x,y,0), r = 1;r<=VISUALRANGE_SCOUT;tx=GetXA(tx,y,0),++r)
+	for(MapCoord tx=GetXA(x,y,0), r = 1;r<=VISUALRANGE_EXPLORATION_SHIP;tx=GetXA(tx,y,0),++r)
 	{
 		MapCoord tx2 = tx, ty2 = y;
 		for(unsigned i = 2;i<8;++i)
@@ -1270,11 +1270,12 @@ bool GameWorldGame::IsScoutingFigureOnNode(const MapCoord x, const MapCoord y, c
 		}
 
 		// Schiffe?
-		if(distance <= VISUALRANGE_SHIP)
+		
+		if((*it)->GetGOT() == GOT_SHIP)
 		{
-			if((*it)->GetGOT() == GOT_SHIP)
+			noShip * ship = dynamic_cast<noShip*>(*it);
+			if(distance <= ship->GetVisualRange())
 			{
-				noShip * ship = dynamic_cast<noShip*>(*it);
 				if(ship->GetX() == x && ship->GetY() == y && ship->GetPlayer() == player)
 					return true;
 			}
@@ -1647,6 +1648,19 @@ bool GameWorldGame::FoundColony(const unsigned harbor_point, const unsigned char
 }
 
 
+/// Liefert eine Liste der Hafenpunkte, die von einem bestimmten Hafenpunkt erreichbar sind
+void GameWorldGame::GetHarborPointsWithinReach(const unsigned hp,std::vector<unsigned>& hps) const
+{
+	for(unsigned i = 1;i<harbor_pos.size();++i)
+	{
+		if(i == hp)
+			continue;
+		unsigned dist = CalcHarborDistance(hp,i);
+		if(dist == 0xffffffff)
+			continue;
 
+		hps.push_back(i);
+	}
+}
 
 

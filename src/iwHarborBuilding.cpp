@@ -1,4 +1,4 @@
-// $Id: iwHarborBuilding.cpp 5899 2010-01-17 10:36:56Z OLiver $
+// $Id: iwHarborBuilding.cpp 6280 2010-04-06 12:40:52Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -56,6 +56,13 @@ iwHarborBuilding::iwHarborBuilding(GameWorldViewer * const gwv,nobHarborBuilding
 	harbor_page->AddImageButton(1,65,100,30,30,TC_GREY,LOADER.GetImageN("io",176),_("Start expedition"));
 	AdjustExpeditionButton(false);
 
+	// "Expedition"-Überschrift
+	harbor_page->AddText(2,83,140,_("Exploration expedition"),0xFFFFFF00,glArchivItem_Font::DF_CENTER,NormalFont);
+
+	// Button zum Expedition starten
+	harbor_page->AddImageButton(3,65,170,30,30,TC_GREY,LOADER.GetImageN("io",176),_("Start exporation expedition"));
+	AdjustExplorationExpeditionButton(false);
+
 	harbor_page->SetVisible(false);
 }
 
@@ -75,6 +82,37 @@ void iwHarborBuilding::AdjustExpeditionButton(bool flip)
 	// Jeweils umgekehrte Farbe nehmen, da die Änderung ja spielerisch noch nicht 
 	// in Kraft getreten ist!
 	bool exp = static_cast<nobHarborBuilding*>(wh)->IsExpeditionActive();
+
+	// "flip xor exp", damit korrekt geswitcht wird, falls expedition abgebrochen werden soll
+	// und dies direkt dargestellt werden soll (flip)
+	if( (flip || exp) && !(flip && exp))
+	{
+		button->SetModulationColor(COLOR_WHITE);
+		button->SetTooltip(_("Cancel expedition"));
+	}
+	else
+	{
+		button->SetModulationColor(COLOR_RED);
+		button->SetTooltip(_("Start expedition"));
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  setzt den Expeditionsknopf korrekt
+ *
+ *  falls @p flip gesetzt, dann umgekehrt einfärben
+ *
+ *  @author OLiver
+ */
+void iwHarborBuilding::AdjustExplorationExpeditionButton(bool flip)
+{
+	ctrlImageButton *button = GetCtrl<ctrlGroup>(103)->GetCtrl<ctrlImageButton>(3);
+
+	// Visuelle Rückmeldung, grün einfärben, wenn Expedition gestartet wurde
+	// Jeweils umgekehrte Farbe nehmen, da die Änderung ja spielerisch noch nicht 
+	// in Kraft getreten ist!
+	bool exp = static_cast<nobHarborBuilding*>(wh)->IsExplorationExpeditionActive();
 
 	// "flip xor exp", damit korrekt geswitcht wird, falls expedition abgebrochen werden soll
 	// und dies direkt dargestellt werden soll (flip)
@@ -115,6 +153,12 @@ void iwHarborBuilding::Msg_Group_ButtonClick(const unsigned int group_id, const 
 					// Entsprechenden GC senden
 					if(GameClient::inst().AddGC(new gc::StartExpedition(wh->GetX(),wh->GetY())))
 						AdjustExpeditionButton(true);
+				} break;
+			case 3: // Expedition starten
+				{
+					// Entsprechenden GC senden
+					if(GameClient::inst().AddGC(new gc::StartExplorationExpedition(wh->GetX(),wh->GetY())))
+						AdjustExplorationExpeditionButton(true);
 				} break;
 			}
 		} break;

@@ -1,4 +1,4 @@
-// $Id: iwHarborBuilding.h 5855 2010-01-04 16:44:38Z FloSoft $
+// $Id: iwHarborBuilding.h 6280 2010-04-06 12:40:52Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -34,6 +34,7 @@ protected:
 
 private:
 	void AdjustExpeditionButton(bool flip);
+	void AdjustExplorationExpeditionButton(bool flip);
 };
 
 #endif // !iwHQ_H_INCLUDED

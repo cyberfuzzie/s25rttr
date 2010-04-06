@@ -886,7 +886,7 @@ noFigure * CreateJob(const Job job_id,const unsigned short x, const unsigned sho
 			if(!goal)
 				return new nofScout_LookoutTower(x,y,player,static_cast<nobUsual*>(goal));
 			// Spähturm / Lagerhaus?
-			else if(goal->GetGOT() == GOT_NOB_USUAL)
+			else if(goal->GetGOT() == GOT_NOB_USUAL || goal->GetGOT() == GOT_NOB_HARBORBUILDING)
 				return new nofScout_LookoutTower(x,y,player,static_cast<nobUsual*>(goal));
 			else if(goal->GetGOT() == GOT_FLAG)
 				return new nofScout_Free(x,y,player,goal);

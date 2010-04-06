@@ -1,4 +1,4 @@
-// $Id: MilitaryConsts.h 6022 2010-02-14 16:51:44Z OLiver $
+// $Id: MilitaryConsts.h 6280 2010-04-06 12:40:52Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -107,6 +107,8 @@ const unsigned VISUALRANGE_SCOUT = 3;
 const unsigned VISUALRANGE_SOLDIER = 2;
 /// Sichtweite von Schiffen
 const unsigned VISUALRANGE_SHIP = 2;
+/// Sichtweite von Erkundungs-Schiffen
+const unsigned VISUALRANGE_EXPLORATION_SHIP = 12;
 
 /// Beförderungszeit von Soldaten ( =UPGRADE_TIME + rand(UPGRADE_TIME_RANDOM) )
 const unsigned UPGRADE_TIME = 100;

@@ -1,4 +1,4 @@
-// $Id: nobBaseWarehouse.cpp 6260 2010-04-01 21:02:47Z OLiver $
+// $Id: nobBaseWarehouse.cpp 6280 2010-04-06 12:40:52Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -611,8 +611,13 @@ void nobBaseWarehouse::AddWare(Ware * ware)
 
 	++real_goods.goods[type];
 	++goods.goods[type];
-	
 
+	CheckUsesForNewWare(type);
+}
+
+/// Prüft verschiedene Verwendungszwecke für eine neuangekommende Ware
+void nobBaseWarehouse::CheckUsesForNewWare(const GoodType gt)
+{
 	// Wenn es ein Werkzeug war, evtl neuen Job suchen, der jetzt erzeugt werden könnte..
 	if(type >= GD_TONGS && type <= GD_BOAT)
 	{
@@ -634,6 +639,53 @@ void nobBaseWarehouse::AddWare(Ware * ware)
 
 	// Evtl die Ware gleich wieder auslagern, falls erforderlich
 	CheckOuthousing(0,type);
+}
+
+/// Prüft verschiedene Sachen, falls ein neuer Mensch das Haus betreten hat
+void nobBaseWarehouse::CheckJobsForNewFigure(const Job job)
+{
+	// Evtl ging ein Gehilfe rein --> versuchen zu rekrutieren
+	if(job == JOB_HELPER)
+		TryRecruiting();
+
+	if(job >= JOB_PRIVATE && job <= JOB_GENERAL)
+	{
+		// Truppen prüfen in allen Häusern
+		gwg->GetPlayer(player)->NewSoldierAvailable(real_goods.people[job]);
+		// Reserve prüfen
+		RefreshReserve(job-JOB_PRIVATE);
+	}
+	else
+	{
+		if(job == JOB_PACKDONKEY)
+		{
+			// StraÃŸe für Esel suchen
+			noRoadNode * goal;
+			if(RoadSegment * road = gwg->GetPlayer(player)->FindRoadForDonkey(this,&goal))
+			{
+				// gefunden --> Esel an die StraÃŸe bestellen
+				road->GotDonkey(OrderDonkey(road,goal));
+			}
+
+		}
+		else
+		{
+			// Evtl. Abnehmer für die Figur wieder finden
+			gwg->GetPlayer(player)->FindWarehouseForAllJobs(job);
+			// Wenns ein Träger war, auch Wege prüfen
+			if(job == JOB_HELPER && real_goods.people[JOB_HELPER]==1)
+			{
+				// evtl als Träger auf StraÃŸen schicken
+				gwg->GetPlayer(player)->FindWarehouseForAllRoads();
+				// evtl Träger mit Werkzeug kombiniert -> neuer Beruf
+				gwg->GetPlayer(player)->FindWarehouseForAllJobs(JOB_NOTHING);
+			}
+				
+		}
+	}
+
+	// Evtl den Typen gleich wieder auslagern, falls erforderlich
+	CheckOuthousing(1,job);
 }
 
 void nobBaseWarehouse::AddFigure(noFigure * figure)
@@ -660,48 +712,7 @@ void nobBaseWarehouse::AddFigure(noFigure * figure)
 	RemoveDependentFigure(figure);
 	em->AddToKillList(figure);
 
-	// Evtl ging ein Gehilfe rein --> versuchen zu rekrutieren
-	if(figure->GetJobType() == JOB_HELPER)
-		TryRecruiting();
-
-	if(figure->GetJobType() >= JOB_PRIVATE && figure->GetJobType() <= JOB_GENERAL)
-	{
-		// Truppen prüfen in allen Häusern
-		gwg->GetPlayer(player)->NewSoldierAvailable(real_goods.people[figure->GetJobType()]);
-		// Reserve prüfen
-		RefreshReserve(figure->GetJobType()-JOB_PRIVATE);
-	}
-	else
-	{
-		if(figure->GetJobType() == JOB_PACKDONKEY)
-		{
-			// StraÃŸe für Esel suchen
-			noRoadNode * goal;
-			if(RoadSegment * road = gwg->GetPlayer(player)->FindRoadForDonkey(this,&goal))
-			{
-				// gefunden --> Esel an die StraÃŸe bestellen
-				road->GotDonkey(OrderDonkey(road,goal));
-			}
-
-		}
-		else
-		{
-			// Evtl. Abnehmer für die Figur wieder finden
-			gwg->GetPlayer(player)->FindWarehouseForAllJobs(figure->GetJobType());
-			// Wenns ein Träger war, auch Wege prüfen
-			if(figure->GetJobType() == JOB_HELPER && real_goods.people[JOB_HELPER]==1)
-			{
-				// evtl als Träger auf StraÃŸen schicken
-				gwg->GetPlayer(player)->FindWarehouseForAllRoads();
-				// evtl Träger mit Werkzeug kombiniert -> neuer Beruf
-				gwg->GetPlayer(player)->FindWarehouseForAllJobs(JOB_NOTHING);
-			}
-				
-		}
-	}
-
-	// Evtl den Typen gleich wieder auslagern, falls erforderlich
-	CheckOuthousing(1,figure->GetJobType());
+	CheckJobsForNewFigure(figure->GetJobType());
 }
 
 void nobBaseWarehouse::FetchWare()
@@ -1031,6 +1042,28 @@ bool FW::Condition_StoreFigure(nobBaseWarehouse * wh, const void * param)
 const Goods *nobBaseWarehouse::GetInventory() const
 {
 	return &goods;
+}
+
+/// Fügt einige Güter hinzu
+void nobBaseWarehouse::AddGoods(const Goods goods)
+{
+	for(unsigned int i = 0; i < WARE_TYPES_COUNT; ++i)
+	{
+		this->goods.goods[i] += goods.goods[i];
+		this->real_goods.goods[i] += goods.goods[i];
+
+		if(goods.goods[i])
+			CheckUsesForNewWare(GoodType(i));
+	}
+
+	for(unsigned int i = 0; i < JOB_TYPES_COUNT; ++i)
+	{
+		this->goods.people[i] += goods.people[i];
+		this->real_goods.people[i] += goods.people[i];
+
+		if(goods.people[i])
+			CheckJobsForNewFigure(Job(i));
+	}
 }
 
 void nobBaseWarehouse::AddToInventory()

@@ -1,4 +1,4 @@
-// $Id: noShip.h 6264 2010-04-04 20:56:17Z OLiver $
+// $Id: noShip.h 6280 2010-04-06 12:40:52Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -47,6 +47,10 @@ class noShip : public noMovable
 		STATE_EXPEDITION_LOADING,
 		STATE_EXPEDITION_WAITING,
 		STATE_EXPEDITION_DRIVING,
+		STATE_EXPLORATIONEXPEDITION_LOADING,
+		STATE_EXPLORATIONEXPEDITION_UNLOADING,
+		STATE_EXPLORATIONEXPEDITION_WAITING,
+		STATE_EXPLORATIONEXPEDITION_DRIVING,
 		STATE_TRANSPORT_LOADING, // Schiff wird mit Waren/Figuren erst noch beladen, bleibt also für kurze Zeit am Hafen
 		STATE_TRANSPORT_DRIVING, /// Schiff transportiert Waren/Figuren von einen Ort zum anderen
 		STATE_TRANSPORT_UNLOADING, /// Entlädt Schiff am Zielhafen, kurze Zeit ankern, bevor Waren im Hafengebäude ankommen..
@@ -77,6 +81,8 @@ class noShip : public noMovable
 	unsigned remaining_sea_attackers;
 	/// Heimathafen der Schiffs-Angreifer
 	unsigned home_harbor;
+	/// Anzahl an Strecke, die das Schiff schon seit Expeditionsstart zurückgelegt hat
+	unsigned covered_distance;
 	
 private:
 
@@ -87,6 +93,7 @@ private:
 
 	void HandleState_GoToHarbor();
 	void HandleState_ExpeditionDriving();
+	void HandleState_ExplorationExpeditionDriving();
 	void HandleState_TransportDriving();
 	void HandleState_SeaAttackDriving();
 	void HandleState_SeaAttackReturn();
@@ -159,6 +166,8 @@ public:
 	const std::list<Ware *> &GetWares() const { return wares; }
 	/// Gibt Liste der Menschen an Bord zurück
 	const std::list<noFigure *> &GetFigures() const { return figures; }
+	/// Gibt Sichtradius dieses Schiffes zurück
+	unsigned GetVisualRange() const;
 
 	/// Beim Warten bei der Expedition: Gibt die Hafenpunkt-ID zurück, wo es sich gerade befindet
 	unsigned GetCurrentHarbor() const;
@@ -167,8 +176,12 @@ public:
 	void GoToHarbor(nobHarborBuilding * hb, const std::vector<unsigned char>& route);
 	/// Startet eine Expedition
 	void StartExpedition();
+	/// Startet eine Erkundungs-Expedition
+	void StartExplorationExpedition();
 	/// Weist das Schiff an, in einer bestimmten Richtung die Expedition fortzusetzen
 	void ContinueExpedition(const unsigned char dir);
+	/// Weist das Schiff an, seine Erkundungs-Expedition fortzusetzen
+	void ContinueExplorationExpedition();
 	/// Gibt zurück, ob das Schiff jetzt in der Lage wäre, eine Kolonie zu gründen
 	bool IsAbleToFoundColony() const;
 	/// Weist das Schiff an, an der aktuellen Position einen Hafen zu gründen

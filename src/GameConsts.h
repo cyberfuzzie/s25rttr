@@ -1,4 +1,4 @@
-// $Id: GameConsts.h 6120 2010-03-05 23:42:17Z jh $
+// $Id: GameConsts.h 6280 2010-04-06 12:40:52Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -456,5 +456,8 @@ const unsigned MAX_POST_MESSAGES = 20;
 
 /// Konstante für die Pfadrichtung bei einer Schiffsverbindung
 const unsigned char SHIP_DIR = 100;
+
+/// Anzahl der Späher bei einer Erkundungs-Expedition
+const unsigned SCOUTS_EXPLORATION_EXPEDITION = 3;
 
 #endif

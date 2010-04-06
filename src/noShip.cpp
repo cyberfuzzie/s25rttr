@@ -1,4 +1,4 @@
-// $Id: noShip.cpp 6274 2010-04-05 13:36:09Z OLiver $
+// $Id: noShip.cpp 6280 2010-04-06 12:40:52Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -44,6 +44,11 @@ const unsigned LOADING_TIME = 200;
 /// Zeit zum Entladen des Schiffes
 const unsigned UNLOADING_TIME = 200;
 
+/// Maximaler Weg, der zurückgelegt werden kann bei einem Erkundungsschiff 
+const unsigned MAX_EXPLORATION_EXPEDITION_DISTANCE = 100;
+/// Zeit (in GF), die das Schiff bei der Erkundungs-Expedition jeweils an einem Punkt ankert
+const unsigned EXPLORATION_EXPEDITION_WAITING_TIME = 300;
+
 const std::string ship_names[NATION_COUNT][ship_count] = {
 	/* Nubier */	{ "Aica", "Aida", "Ainra", "Alayna", "Alisha", "Alma", "Amila", "Anina", "Armina", "Banu", "Baya", "Bea", "Bia", "Bisa", "Cheche", "Dafina", "Daria", "Dina", "Do", "Dofi", "Efia", "Erin", "Esi", "Esra", "Fahari", "Faraya", "Fujo", "Ghiday", "Habiaba", "Hajunza", "Ina", "Layla", "Lenia", "Lillian", "Malika", "Mona", "Naja", "Neriman", "Nyela", "Olufunmilayo", "Panyin", "Rayyan", "Rhiannon", "Safiya", "Sahra", "Selda", "Senna", "Shaira", "Shakira", "Sharina", "Sinah", "Suada", "Sulamith", "Tiada", "Yelda" },
 	/* Japaner */	{ "Ai", "Aiko", "Aimi", "Akemi", "Amaya", "Aoi", "Ayaka", "Ayano", "Beniko", "Chiyo", "Chiyoko", "Emi", "Fumiko", "Haruka", "Hiroko", "Hotaru", "Kaori", "Kasumi", "Kazuko", "Kazumi", "Keiko", "Kiriko", "Kumiko", "Mai", "Mayumi", "Megumi", "Midori", "Misaki", "Miu", "Moe", "Nanami", "Naoko", "Naomi", "Natsuki", "Noriko", "Reika", "Sachiko", "Sadako", "Sakura", "Satsuki", "Sayuri", "Setsuko", "Shigeko", "Teiko", "Tomomi", "Umeko", "Yoko", "Yoshiko", "Youko", "Yukiko", "Yumi", "Yumiko", "Yuna", "Yuuka", "Yuzuki" },
@@ -78,7 +83,7 @@ noShip::noShip(const unsigned short x, const unsigned short y, const unsigned ch
 	: noMovable(NOP_SHIP, x, y), 
 	player(player), state(STATE_IDLE), sea_id(0), 
 	name(ship_names[gwg->GetPlayer(player)->nation][Random::inst().Rand(__FILE__, __LINE__, this->obj_id, ship_count)]),
-	remaining_sea_attackers(0), home_harbor(0)
+	remaining_sea_attackers(0), home_harbor(0), covered_distance(0)
 {
 	// Meer ermitteln, auf dem dieses Schiff fährt
 	for(unsigned i = 0;i<6;++i)
@@ -113,6 +118,7 @@ void noShip::Serialize(SerializedGameData * sgd) const
 		sgd->PushUnsignedChar(route[i]);
 	sgd->PushUnsignedInt(remaining_sea_attackers);
 	sgd->PushUnsignedInt(home_harbor);
+	sgd->PushUnsignedInt(covered_distance);
 	sgd->PushObjectList(figures,false);
 	sgd->PushObjectList(wares,true);
 	
@@ -130,7 +136,8 @@ name(sgd->PopString()),
 pos(sgd->PopUnsignedInt()),
 route(sgd->PopUnsignedInt()),
 remaining_sea_attackers(sgd->PopUnsignedInt()),
-home_harbor(sgd->PopUnsignedInt())
+home_harbor(sgd->PopUnsignedInt()),
+covered_distance(0)
 {
 	for(unsigned i = 0;i<route.size();++i)
 		route[i] = sgd->PopUnsignedChar();
@@ -143,7 +150,6 @@ void noShip::Destroy()
 	// Schiff wieder abmelden
 	players->getElement(player)->RemoveShip(this);
 }
-
 
 void noShip::Draw(int x, int y)
 {
@@ -170,10 +176,13 @@ void noShip::Draw(int x, int y)
 	case STATE_TRANSPORT_UNLOADING:
 	case STATE_SEAATTACK_LOADING:
 	case STATE_SEAATTACK_UNLOADING:
+	case STATE_EXPLORATIONEXPEDITION_LOADING:
+	case STATE_EXPLORATIONEXPEDITION_UNLOADING:
 		{
 			LOADER.GetImageN("boot_z",  ((dir+3)%6)*2 + 1)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
 			LOADER.GetImageN("boot_z",  ((dir+3)%6)*2)->Draw(x,y);
 		} break;
+	case STATE_EXPLORATIONEXPEDITION_WAITING:
 	case STATE_EXPEDITION_WAITING:
 	
 		{
@@ -185,6 +194,7 @@ void noShip::Draw(int x, int y)
 	case STATE_EXPEDITION_DRIVING:
 	case STATE_TRANSPORT_DRIVING:
 	case STATE_SEAATTACK_DRIVINGTODESTINATION:
+	case STATE_EXPLORATIONEXPEDITION_DRIVING:
 	
 		{
 			DrawDrivingWithWares(x,y);
@@ -261,6 +271,40 @@ void noShip::HandleEvent(const unsigned int id)
 					// KI Event senden
 					GAMECLIENT.SendAIEvent(new AIEvent::Location(AIEvent::ExpeditionWaiting, x, y), player);
 				} break;
+			case STATE_EXPLORATIONEXPEDITION_LOADING:
+				{
+					// Schiff ist nun bereit und Expedition kann beginnen
+					ContinueExplorationExpedition();
+				} break;
+			case STATE_EXPLORATIONEXPEDITION_WAITING:
+				{
+					// Schiff ist nun bereit und Expedition kann beginnen
+					ContinueExplorationExpedition();
+				} break;
+			case STATE_EXPLORATIONEXPEDITION_UNLOADING:
+				{
+					// Hafen herausfinden 
+					Point<MapCoord> goal_pos(gwg->GetHarborPoint(goal_harbor_id));
+					noBase * hb = gwg->GetNO(goal_pos.x,goal_pos.y);
+					if(hb->GetGOT() == GOT_NOB_HARBORBUILDING)
+					{
+						// Späher wieder entladen
+						Goods goods;
+						memset(&goods,0,sizeof(Goods));
+						goods.people[JOB_SCOUT] = SCOUTS_EXPLORATION_EXPEDITION;
+						static_cast<nobBaseWarehouse*>(hb)->AddGoods(goods);
+						// Wieder idlen und ggf. neuen Job suchen
+						StartIdling();
+						players->getElement(player)->GetJobForShip(this);
+					}
+					else
+					{
+						// todo
+						assert(false);
+					}
+
+					
+				} break;
 			case STATE_TRANSPORT_LOADING:
 				{
 					StartTransport();
@@ -326,20 +370,31 @@ void noShip::StartDriving(const unsigned char dir)
 void noShip::Driven()
 {
 	gwg->RecalcVisibilitiesAroundPoint(gwg->GetXA(x,y,(dir+3)%6),gwg->GetYA(x,y,(dir+3)%6),
-		VISUALRANGE_SHIP+2,player,NULL);
-	gwg->RecalcVisibilitiesAroundPoint(x,y,VISUALRANGE_SHIP+2,player,NULL);
+		GetVisualRange()+2,player,NULL);
+	gwg->RecalcVisibilitiesAroundPoint(x,y,GetVisualRange()+2,player,NULL);
 
 
 	switch(state)
 	{
 	case STATE_GOTOHARBOR: HandleState_GoToHarbor(); break;
 	case STATE_EXPEDITION_DRIVING: HandleState_ExpeditionDriving(); break;
+	case STATE_EXPLORATIONEXPEDITION_DRIVING: HandleState_ExplorationExpeditionDriving(); break;
 	case STATE_TRANSPORT_DRIVING: HandleState_TransportDriving(); break;
 	case STATE_SEAATTACK_DRIVINGTODESTINATION: HandleState_SeaAttackDriving(); break;
 	case STATE_SEAATTACK_RETURN: HandleState_SeaAttackReturn(); break;
 	default:
 		break;
 	}
+}
+
+/// Gibt Sichtradius dieses Schiffes zurück
+unsigned noShip::GetVisualRange() const
+{
+	// Erkundungsschiffe haben einen größeren Sichtbereich
+	if(state >= STATE_EXPLORATIONEXPEDITION_LOADING && state <= STATE_EXPLORATIONEXPEDITION_DRIVING)
+		return VISUALRANGE_EXPLORATION_SHIP;
+	else
+		return VISUALRANGE_SHIP;
 }
 
 
@@ -408,6 +463,17 @@ void noShip::StartExpedition()
 	state = STATE_EXPEDITION_LOADING;
 	current_ev = em->AddEvent(this,LOADING_TIME,1);
 }
+
+/// Startet eine Erkundungs-Expedition
+void noShip::StartExplorationExpedition()
+{
+	/// Schiff wird "beladen", also kurze Zeit am Hafen stehen, bevor wir bereit sind
+	state = STATE_EXPLORATIONEXPEDITION_LOADING;
+	current_ev = em->AddEvent(this,LOADING_TIME,1);
+	covered_distance = 0;
+	home_harbor = goal_harbor_id;
+}
+
 
 /// Fährt weiter zu einem Hafen
 noShip::Result noShip::DriveToHarbour()
@@ -545,6 +611,41 @@ void noShip::HandleState_ExpeditionDriving()
 
 			// KI Event senden
 			GAMECLIENT.SendAIEvent(new AIEvent::Location(AIEvent::ExpeditionWaiting, x, y), player);
+		} break;
+	case NO_ROUTE_FOUND:
+		{
+			Point<MapCoord> goal(gwg->GetHarborPoint(goal_harbor_id));
+			// Nichts machen und idlen
+			StartIdling();
+		} break;
+	}
+}
+
+void noShip::HandleState_ExplorationExpeditionDriving()
+{
+	Result res = DriveToHarbourPlace();
+	switch(res)
+	{
+	default: return;
+	case GOAL_REACHED:
+		{
+			// Haben wir unsere Expedition beendet?
+			if(home_harbor == goal_harbor_id && covered_distance >= MAX_EXPLORATION_EXPEDITION_DISTANCE)
+			{
+				// Dann sind wir fertig -> wieder entladen
+				state = STATE_EXPLORATIONEXPEDITION_UNLOADING;
+				current_ev = em->AddEvent(this,UNLOADING_TIME,1);
+			}
+			else
+			{
+				// Strecke, die wir gefahren sind, draufaddieren
+				covered_distance += route.size();
+				// Erstmal kurz ausruhen an diesem Punkt und das Rohr ausfahren, um ein bisschen
+				// auf der Insel zu gucken
+				state = STATE_EXPLORATIONEXPEDITION_WAITING;
+				current_ev = em->AddEvent(this,EXPLORATION_EXPEDITION_WAITING_TIME,1);
+			}
+
 		} break;
 	case NO_ROUTE_FOUND:
 		{
@@ -866,3 +967,32 @@ void noShip::AddAttacker(nofAttacker * attacker)
 	SeaAttackerWishesNoReturn();
 }
 
+/// Weist das Schiff an, seine Erkundungs-Expedition fortzusetzen
+void noShip::ContinueExplorationExpedition()
+{
+	// Sind wir schon über unserem Limit, also zu weit gefahren
+	if(covered_distance >= MAX_EXPLORATION_EXPEDITION_DISTANCE)
+	{
+		// Dann steuern wir unseren Heimathafen an!
+		goal_harbor_id = home_harbor;
+	}
+	else
+	{
+		// Nächsten Zielpunkt bestimmen
+		std::vector<unsigned> hps;
+		gwg->GetHarborPointsWithinReach(goal_harbor_id,hps);
+		
+		// Keine möglichen Häfen gefunden?
+		if(hps.size() == 0)
+			// Dann wieder Heimathafen ansteuern
+			goal_harbor_id = home_harbor;
+
+		else
+			// Zufällig den nächsten Hafen auswählen
+			goal_harbor_id = hps[Random::inst().Rand(__FILE__,__LINE__,obj_id,hps.size())];
+	}
+
+	StartDrivingToHarborPlace();
+	state = STATE_EXPLORATIONEXPEDITION_DRIVING;
+	HandleState_ExplorationExpeditionDriving();
+}

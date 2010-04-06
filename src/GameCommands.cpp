@@ -1,4 +1,4 @@
-// $Id: GameCommands.cpp 6262 2010-04-03 22:05:03Z OLiver $
+// $Id: GameCommands.cpp 6280 2010-04-06 12:40:52Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -64,6 +64,7 @@ GameCommand * GameCommand::CreateGameCommand(const Type gst, Serializer * ser)
 	case CANCELPACT: return new CancelPact(ser);
 	case CHANGESHIPYARDMODE: return new ChangeShipYardMode(ser);
 	case STARTEXPEDITION: return new StartExpedition(ser);
+	case STARTEXPLORATIONEXPEDITION: return new StartExplorationExpedition(ser);
 	case EXPEDITION_COMMAND: return new ExpeditionCommand(ser);
 	case SURRENDER: return new Surrender(ser);
 	case CHEAT_ARMAGEDDON: return new CheatArmageddon(ser);
@@ -143,10 +144,6 @@ void SeaAttack::Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsi
 	gwg.AttackViaSea(playerid,x,y,soldiers_count,strong_soldiers);
 }
 
-void SeaAttackFallback::Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid)
-{
-	
-}
 void SwitchPlayer::Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid)
 {
 }
@@ -221,6 +218,12 @@ void StartExpedition::Execute(GameWorldGame& gwg, GameClientPlayer& player, cons
 {
 	if(gwg.GetNO(x,y)->GetGOT() == GOT_NOB_HARBORBUILDING)
 		gwg.GetSpecObj<nobHarborBuilding>(x,y)->StartExpedition();
+}
+
+void StartExplorationExpedition::Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid)
+{
+	if(gwg.GetNO(x,y)->GetGOT() == GOT_NOB_HARBORBUILDING)
+		gwg.GetSpecObj<nobHarborBuilding>(x,y)->StartExplorationExpedition();
 }
 
 void ExpeditionCommand::Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid)

@@ -1,4 +1,4 @@
-// $Id: nobBaseWarehouse.cpp 6280 2010-04-06 12:40:52Z OLiver $
+// $Id: nobBaseWarehouse.cpp 6281 2010-04-06 18:13:13Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -619,11 +619,11 @@ void nobBaseWarehouse::AddWare(Ware * ware)
 void nobBaseWarehouse::CheckUsesForNewWare(const GoodType gt)
 {
 	// Wenn es ein Werkzeug war, evtl neuen Job suchen, der jetzt erzeugt werden könnte..
-	if(type >= GD_TONGS && type <= GD_BOAT)
+	if(gt >= GD_TONGS && gt <= GD_BOAT)
 	{
 		for(unsigned i = 0;i<30;++i)
 		{
-			if(JOB_CONSTS[i].tool == type)
+			if(JOB_CONSTS[i].tool == gt)
 				gwg->GetPlayer(player)->FindWarehouseForAllJobs(Job(i));
 		}
 	}
@@ -631,7 +631,7 @@ void nobBaseWarehouse::CheckUsesForNewWare(const GoodType gt)
 	
 
 	// Wars Baumaterial? Dann den Baustellen Bescheid sagen
-	if(type == GD_BOARDS || type == GD_STONES)
+	if(gt == GD_BOARDS || gt == GD_STONES)
 		gwg->GetPlayer(player)->FindMaterialForBuildingSites();
 
 	// Evtl wurden Bier oder Waffen reingetragen --> versuchen zu rekrutieren

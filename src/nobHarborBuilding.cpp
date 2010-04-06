@@ -1,4 +1,4 @@
-// $Id: nobHarborBuilding.cpp 6280 2010-04-06 12:40:52Z OLiver $
+// $Id: nobHarborBuilding.cpp 6283 2010-04-06 21:08:12Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -394,6 +394,8 @@ void nobHarborBuilding::StartExplorationExpedition()
 	// Den Rest bestellen
 	for(unsigned i = exploration_expedition.scouts;i<SCOUTS_EXPLORATION_EXPEDITION;++i)
 		gwg->GetPlayer(player)->AddJobWanted(JOB_SCOUT,this);
+		
+	CheckExplorationExpeditionReady();
 
 }
 
@@ -978,6 +980,10 @@ void nobHarborBuilding::GetAttackerBuildingsForSeaAttack(std::vector<SeaAttacker
 	for(list<nobBaseMilitary*>::iterator it = all_buildings.begin();it.valid();++it)
 	{
 		if((*it)->GetGOT() != GOT_NOB_MILITARY)
+			continue;
+			
+		// Liegt er auch im groben Raster und handelt es sich um den gleichen Besitzer?
+		if((*it)->GetPlayer() != player || gwg->CalcDistance((*it)->GetX(),(*it)->GetY(),x,y) > BASE_ATTACKING_DISTANCE)
 			continue;
 
 		// Weg vom Hafen zum Militärgebäude berechnen

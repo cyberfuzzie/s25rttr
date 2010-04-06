@@ -1,4 +1,4 @@
-// $Id: nofActiveSoldier.cpp 6275 2010-04-05 14:32:43Z OLiver $
+// $Id: nofActiveSoldier.cpp 6282 2010-04-06 20:48:19Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -175,3 +175,10 @@ void nofActiveSoldier::HandleDerivedEvent(const unsigned int id)
 	// Das dürfte nich aufgerufen werden!
 	assert(false);
 }
+
+/// Gibt den Sichtradius dieser Figur zurück (0, falls nicht-spähend)
+unsigned nofActiveSoldier::GetVisualRange() const
+{
+	return VISUALRANGE_SCOUT;
+}
+

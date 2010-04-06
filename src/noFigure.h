@@ -1,4 +1,4 @@
-// $Id: noFigure.h 6264 2010-04-04 20:56:17Z OLiver $
+// $Id: noFigure.h 6282 2010-04-06 20:48:19Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -93,6 +93,9 @@ private:
 	
 	/// Für alle restlichen Events, die nicht von noFigure behandelt werden
 	virtual void HandleDerivedEvent(const unsigned int id) = 0;
+	
+	/// Gibt den Sichtradius dieser Figur zurück (0, falls nicht-spähend)
+	virtual unsigned GetVisualRange() const;
 
 	/// Unterfunktion von Wander --> zur Flagge irren
 	void WanderToFlag();

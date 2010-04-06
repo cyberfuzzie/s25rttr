@@ -1,4 +1,4 @@
-// $Id: nofActiveSoldier.h 6262 2010-04-03 22:05:03Z OLiver $
+// $Id: nofActiveSoldier.h 6282 2010-04-06 20:48:19Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -78,6 +78,9 @@ private:
 
 	// informieren, wenn ...
 	void GoalReached(); // das Ziel erreicht wurde
+	
+	/// Gibt den Sichtradius dieser Figur zurück (0, falls nicht-spähend)
+	virtual unsigned GetVisualRange() const;
 
 public:
 

@@ -1,4 +1,4 @@
-// $Id: noShip.cpp 6280 2010-04-06 12:40:52Z OLiver $
+// $Id: noShip.cpp 6282 2010-04-06 20:48:19Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -137,7 +137,7 @@ pos(sgd->PopUnsignedInt()),
 route(sgd->PopUnsignedInt()),
 remaining_sea_attackers(sgd->PopUnsignedInt()),
 home_harbor(sgd->PopUnsignedInt()),
-covered_distance(0)
+covered_distance(sgd->PopUnsignedInt())
 {
 	for(unsigned i = 0;i<route.size();++i)
 		route[i] = sgd->PopUnsignedChar();
@@ -286,6 +286,9 @@ void noShip::HandleEvent(const unsigned int id)
 					// Hafen herausfinden 
 					Point<MapCoord> goal_pos(gwg->GetHarborPoint(goal_harbor_id));
 					noBase * hb = gwg->GetNO(goal_pos.x,goal_pos.y);
+					
+					unsigned old_visual_range = GetVisualRange();
+					
 					if(hb->GetGOT() == GOT_NOB_HARBORBUILDING)
 					{
 						// Späher wieder entladen
@@ -302,6 +305,9 @@ void noShip::HandleEvent(const unsigned int id)
 						// todo
 						assert(false);
 					}
+					
+					// Sichtbarkeiten neu berechnen
+					gwg->RecalcVisibilitiesAroundPoint(x,y,old_visual_range,player,NULL);
 
 					
 				} break;
@@ -369,9 +375,10 @@ void noShip::StartDriving(const unsigned char dir)
 
 void noShip::Driven()
 {
-	gwg->RecalcVisibilitiesAroundPoint(gwg->GetXA(x,y,(dir+3)%6),gwg->GetYA(x,y,(dir+3)%6),
-		GetVisualRange()+2,player,NULL);
-	gwg->RecalcVisibilitiesAroundPoint(x,y,GetVisualRange()+2,player,NULL);
+	gwg->RecalcMovingVisibilities(x,y,player,GetVisualRange(),dir);
+	//gwg->RecalcVisibilitiesAroundPoint(gwg->GetXA(x,y,(dir+3)%6),gwg->GetYA(x,y,(dir+3)%6),
+	//	GetVisualRange()+2,player,NULL);
+	//gwg->RecalcVisibilitiesAroundPoint(x,y,GetVisualRange()+2,player,NULL);
 
 
 	switch(state)
@@ -472,6 +479,8 @@ void noShip::StartExplorationExpedition()
 	current_ev = em->AddEvent(this,LOADING_TIME,1);
 	covered_distance = 0;
 	home_harbor = goal_harbor_id;
+	// Sichtbarkeiten neu berechnen
+	gwg->SetVisibilitiesAroundPoint(x,y,GetVisualRange(),player);
 }
 
 
@@ -650,8 +659,11 @@ void noShip::HandleState_ExplorationExpeditionDriving()
 	case NO_ROUTE_FOUND:
 		{
 			Point<MapCoord> goal(gwg->GetHarborPoint(goal_harbor_id));
+			unsigned old_visual_range = GetVisualRange();
 			// Nichts machen und idlen
 			StartIdling();
+			// Sichtbarkeiten neu berechnen
+			gwg->RecalcVisibilitiesAroundPoint(x,y,old_visual_range,player,NULL);
 		} break;
 	}
 }

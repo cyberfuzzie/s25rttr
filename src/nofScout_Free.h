@@ -1,4 +1,4 @@
-// $Id: nofScout_Free.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: nofScout_Free.h 6282 2010-04-06 20:48:19Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -41,6 +41,9 @@ private:
 
 	/// Sucht einen neuen Zielpunkt und geht zu diesen
 	void GoToNewNode();
+	
+	/// Gibt den Sichtradius dieser Figur zurück (0, falls nicht-spähend)
+	virtual unsigned GetVisualRange() const;
 
 public:
 

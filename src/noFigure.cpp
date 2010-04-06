@@ -98,12 +98,16 @@ noFigure::noFigure(const Job job,const unsigned short x, const unsigned short y,
 	rs_pos(0),rs_dir(0), on_ship(false), goal(goal), waiting_for_free_node(false), last_id(0xFFFFFFFF)
 
 {
+	if(GetVisualRange())
+		gwg->SetVisibilitiesAroundPoint(x,y,GetVisualRange(),player);
 }
 
 noFigure::noFigure(const Job job,const unsigned short x, const unsigned short y,const unsigned char player)
 :	noMovable(NOP_FIGURE,x,y), fs(FS_JOB), job(job), player(player), cur_rs(0),
 	rs_pos(0),rs_dir(0), on_ship(false), goal(0), waiting_for_free_node(false), last_id(0xFFFFFFFF)
 {
+	if(GetVisualRange())
+		gwg->SetVisibilitiesAroundPoint(x,y,GetVisualRange(),player);
 }
 
 void noFigure::Destroy_noFigure()
@@ -192,6 +196,12 @@ void noFigure::ActAtFirst()
 	}
 }
 
+
+/// Gibt den Sichtradius dieser Figur zurück (0, falls nicht-spähend)
+unsigned noFigure::GetVisualRange() const
+{
+	return 0;
+}
 
 /// Legt die Anfangsdaten fÃ¼r das Laufen auf Wegen fest
 void noFigure::InitializeRoadWalking(const RoadSegment * const road, const unsigned short rs_pos, const bool rs_dir)
@@ -461,8 +471,15 @@ void noFigure::HandleEvent(const unsigned int id)
 				break;
 			}
 		}
-
-		CalcVisibilities(x,y);
+		
+		// Gucken, ob Figur noch auf der Karte vorhanden ist
+		list<noBase*> figures;
+		gwg->GetDynamicObjectsFrom(x,y,figures);
+		if(figures.search(this).valid())
+			gwg->RecalcMovingVisibilities(x,y,player,GetVisualRange(),dir);
+		else
+			CalcVisibilities(x,y);
+		
 	}
 }
 
@@ -1049,11 +1066,9 @@ void noFigure::StopIfNecessary(const unsigned short x, const unsigned short y)
 void noFigure::CalcVisibilities(const MapCoord x, const MapCoord y)
 {
 	// Sichtbarkeiten neu berechnen fÃ¼r Erkunder und Soldaten
-	if(GetGOT() == GOT_NOF_SCOUT_FREE || GetGOT() == GOT_NOF_ATTACKER ||
-		GetGOT() == GOT_NOF_AGGRESSIVEDEFENDER)
+	if(GetVisualRange())
 		// An alter Position neu berechnen
-		gwg->RecalcVisibilitiesAroundPoint(x,y,
-		(GetGOT() == GOT_NOF_SCOUT_FREE) ? VISUALRANGE_SCOUT : VISUALRANGE_SOLDIER,player,NULL);
+		gwg->RecalcVisibilitiesAroundPoint(x,y,GetVisualRange(),player,NULL);
 }
 
 /// Informiert die Figur, dass fÃ¼r sie eine Schiffsreise beginnt

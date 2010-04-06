@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 6280 2010-04-06 12:40:52Z OLiver $
+// $Id: GameWorldGame.cpp 6282 2010-04-06 20:48:19Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1400,6 +1400,66 @@ void GameWorldGame::SetVisibilitiesAroundPoint(const MapCoord x, const MapCoord 
 		}
 	}
 }
+
+/// Bestimmt bei der Bewegung eines spähenden Objekts die Sichtbarkeiten an
+/// den Rändern neu
+void GameWorldGame::RecalcMovingVisibilities(const MapCoord x, const MapCoord y, const unsigned char player, const MapCoord radius, 
+const unsigned char moving_dir)
+{
+	// Neue Sichtbarkeiten zuerst setzen
+	// Zum Eckpunkt der beiden neuen sichtbaren Kanten gehen
+	MapCoord tx = x, ty = y;
+	for(unsigned i = 0;i<radius;++i)
+		this->GetPointA(tx,ty,moving_dir);
+		
+	// Und zu beiden Abzweigungen weiter gehen und Punkte auf visible setzen
+	SetVisibility(tx,ty,player);
+	MapCoord ttx = tx, tty = ty;
+	unsigned char dir = (moving_dir+2)%6;
+	for(unsigned i = 0;i<radius;++i)
+	{
+		this->GetPointA(ttx,tty,dir);
+		SetVisibility(ttx,tty,player);
+	}
+	
+	ttx = tx;
+	tty = ty;
+	dir = (moving_dir+6-2)%6;
+	for(unsigned i = 0;i<radius;++i)
+	{
+		this->GetPointA(ttx,tty,dir);
+		SetVisibility(ttx,tty,player);
+	}
+	
+	// Dasselbe für die zurückgebliebenen Punkte
+	// Diese müssen allerdings neu berechnet werden!
+	tx = x;
+	ty = y;
+	unsigned char anti_moving_dir = (moving_dir+3)%6;
+	for(unsigned i = 0;i<radius+1;++i)
+		this->GetPointA(tx,ty,anti_moving_dir);
+		
+	RecalcVisibility(tx,ty,player,NULL);
+	ttx = tx;
+	tty = ty;
+	dir = (anti_moving_dir+2)%6;
+	for(unsigned i = 0;i<radius;++i)
+	{
+		this->GetPointA(ttx,tty,dir);
+		RecalcVisibility(ttx,tty,player,NULL);
+	}
+	
+	ttx = tx;
+	tty = ty;
+	dir = (anti_moving_dir+6-2)%6;
+	for(unsigned i = 0;i<radius;++i)
+	{
+		this->GetPointA(ttx,tty,dir);
+		RecalcVisibility(ttx,tty,player,NULL);
+	}
+		
+}
+
 
 void GameWorldGame::SaveFOWNode(const MapCoord x, const MapCoord y, const unsigned player)
 {

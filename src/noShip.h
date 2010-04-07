@@ -1,4 +1,4 @@
-// $Id: noShip.h 6280 2010-04-06 12:40:52Z OLiver $
+// $Id: noShip.h 6286 2010-04-07 11:27:43Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -76,6 +76,9 @@ class noShip : public noMovable
 	/// Ladung des Schiffes
 	std::list<noFigure*> figures;
 	std::list<Ware*> wares;
+	/// Gibt an, ob das Schiff verlassen auf dem Meer auf einen Anlegeplatz wartet,
+	/// um sein Zeug auszuladen
+	bool lost;
 	/// Bei Schiffen im STATE_SEAATTACK_WAITING: 
 	/// Anzahl der Soldaten, die noch kommen müssten
 	unsigned remaining_sea_attackers;
@@ -112,6 +115,8 @@ private:
 	/// Fährt weiter zu Hafenbauplatz
 	Result DriveToHarbourPlace();
 
+	/// Zeichnet das Schiff stehend mit oder ohne Waren
+	void DrawFixed(const int x, const int y, const bool draw_wares);
 	/// Zeichnet normales Fahren auf dem Meer ohne irgendwelche Güter
 	void DrawDriving(int& x, int& y);
 	/// Zeichnet normales Fahren auf dem Meer mit Gütern
@@ -201,6 +206,8 @@ public:
 
 	/// Sagt dem Schiff, das ein bestimmter Hafen zerstört wurde
 	void HarborDestroyed(nobHarborBuilding * hb);
+	/// Sagt dem Schiff, dass ein neuer Hafen erbaut wurde
+	void NewHarborBuilt(nobHarborBuilding * hb);
 
 
 

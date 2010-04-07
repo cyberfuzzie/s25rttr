@@ -64,6 +64,7 @@
 #include "nofPlaner.h"
 #include "nofScout_LookoutTower.h"
 #include "nofScout_Free.h"
+#include "nofPassiveWorker.h"
 
 #include "nobHarborBuilding.h"
 
@@ -357,11 +358,13 @@ void noFigure::WalkToGoal()
 				cur_rs = 0;
 				rs_dir = 0;
 				rs_pos = 0;
-				goal = 0;
+			
 
 				// abgeleiteter Klasse sagen, dass das Ziel erreicht wurde
 				fs = FS_JOB;
 				GoalReached();
+				
+				goal = 0;
 			}
 
 		}
@@ -870,7 +873,14 @@ noFigure * CreateJob(const Job job_id,const unsigned short x, const unsigned sho
 {
 	switch(job_id)
 	{
-	case JOB_BUILDER: return new nofBuilder(x,y,player,goal);
+	case JOB_BUILDER:
+	{
+		if(!goal)
+			return new nofBuilder(x,y,player,goal);
+		else if(goal->GetGOT() == GOT_NOB_HARBORBUILDING)
+			return new nofPassiveWorker(JOB_BUILDER,x,y,player,goal);
+		else return new nofBuilder(x,y,player,goal);
+	}
 	case JOB_PLANER: return new nofPlaner(x,y,player,static_cast<noBuildingSite*>(goal));
 	case JOB_CARPENTER: return new nofCarpenter(x,y,player,static_cast<nobUsual*>(goal));
 	case JOB_ARMORER: return new nofArmorer(x,y,player,static_cast<nobUsual*>(goal));
@@ -905,6 +915,8 @@ noFigure * CreateJob(const Job job_id,const unsigned short x, const unsigned sho
 			// Wenn goal = 0 oder Lagerhaus, dann Auslagern anscheinend und mann kann irgendeinen Typ nehmen
 			if(!goal)
 				return new nofScout_LookoutTower(x,y,player,static_cast<nobUsual*>(goal));
+			if(goal->GetGOT() == GOT_NOB_HARBORBUILDING)
+				return new nofPassiveWorker(JOB_SCOUT,x,y,player,goal);
 			// Spähturm / Lagerhaus?
 			else if(goal->GetGOT() == GOT_NOB_USUAL || goal->GetGOT() == GOT_NOB_HARBORBUILDING)
 				return new nofScout_LookoutTower(x,y,player,static_cast<nobUsual*>(goal));

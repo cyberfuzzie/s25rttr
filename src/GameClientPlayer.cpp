@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 6269 2010-04-05 12:00:54Z OLiver $
+// $Id: GameClientPlayer.cpp 6286 2010-04-07 11:27:43Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -528,6 +528,16 @@ void GameClientPlayer::RoadDestroyed()
 
 		++it;
 	}
+}
+
+/// Hafen zur Warenhausliste hinzufügen
+void GameClientPlayer::AddHarbor(nobHarborBuilding * hb)
+{
+	harbors.push_back(hb); 
+	
+	// Schiff durchgehen und denen Bescheid sagen
+	for(unsigned i = 0;i<ships.size();++i)
+		ships[i]->NewHarborBuilt(hb);
 }
 
 bool GameClientPlayer::FindCarrierForRoad(RoadSegment * rs)

@@ -1,4 +1,4 @@
-// $Id: noShip.cpp 6282 2010-04-06 20:48:19Z OLiver $
+// $Id: noShip.cpp 6286 2010-04-07 11:27:43Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -83,7 +83,7 @@ noShip::noShip(const unsigned short x, const unsigned short y, const unsigned ch
 	: noMovable(NOP_SHIP, x, y), 
 	player(player), state(STATE_IDLE), sea_id(0), 
 	name(ship_names[gwg->GetPlayer(player)->nation][Random::inst().Rand(__FILE__, __LINE__, this->obj_id, ship_count)]),
-	remaining_sea_attackers(0), home_harbor(0), covered_distance(0)
+	lost(false), remaining_sea_attackers(0), home_harbor(0), covered_distance(0)
 {
 	// Meer ermitteln, auf dem dieses Schiff fährt
 	for(unsigned i = 0;i<6;++i)
@@ -114,11 +114,12 @@ void noShip::Serialize(SerializedGameData * sgd) const
 	sgd->PushString(name);
 	sgd->PushUnsignedInt(pos);
 	sgd->PushUnsignedInt(route.size());
-	for(unsigned i =0;i<route.size();++i)
-		sgd->PushUnsignedChar(route[i]);
+	sgd->PushBool(lost);
 	sgd->PushUnsignedInt(remaining_sea_attackers);
 	sgd->PushUnsignedInt(home_harbor);
 	sgd->PushUnsignedInt(covered_distance);
+	for(unsigned i =0;i<route.size();++i)
+		sgd->PushUnsignedChar(route[i]);
 	sgd->PushObjectList(figures,false);
 	sgd->PushObjectList(wares,true);
 	
@@ -135,6 +136,7 @@ goal_dir(sgd->PopUnsignedChar()),
 name(sgd->PopString()),
 pos(sgd->PopUnsignedInt()),
 route(sgd->PopUnsignedInt()),
+lost(sgd->PopBool()),
 remaining_sea_attackers(sgd->PopUnsignedInt()),
 home_harbor(sgd->PopUnsignedInt()),
 covered_distance(sgd->PopUnsignedInt())
@@ -151,9 +153,27 @@ void noShip::Destroy()
 	players->getElement(player)->RemoveShip(this);
 }
 
+/// Zeichnet das Schiff stehend mit oder ohne Waren
+void noShip::DrawFixed(const int x, const int y, const bool draw_wares)
+{
+	LOADER.GetImageN("boot_z",  ((dir+3)%6)*2 + 1)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
+	LOADER.GetImageN("boot_z",  ((dir+3)%6)*2)->Draw(x,y);
+	
+	if(draw_wares)
+		/// Waren zeichnen 
+		LOADER.GetImageN("boot_z",  30+((dir+3)%6))->Draw(x,y);
+}
+
 void noShip::Draw(int x, int y)
 {
 	unsigned flag_drawing_type = 1;
+	
+	// Sind wir verloren? Dann immer stehend zeichnen
+	if(lost)
+	{
+		DrawFixed(x,y,true);
+		return;
+	}
 	
  	switch(state)
 	{
@@ -162,8 +182,7 @@ void noShip::Draw(int x, int y)
 	case STATE_IDLE:
 	case STATE_SEAATTACK_WAITING:
 		{
-			LOADER.GetImageN("boot_z",  1)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
-			LOADER.GetImageN("boot_z",  0)->Draw(x,y);
+			DrawFixed(x,y,false);
 			flag_drawing_type = 0;
 		} break;
 	
@@ -179,17 +198,13 @@ void noShip::Draw(int x, int y)
 	case STATE_EXPLORATIONEXPEDITION_LOADING:
 	case STATE_EXPLORATIONEXPEDITION_UNLOADING:
 		{
-			LOADER.GetImageN("boot_z",  ((dir+3)%6)*2 + 1)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
-			LOADER.GetImageN("boot_z",  ((dir+3)%6)*2)->Draw(x,y);
+			DrawFixed(x,y,false);
 		} break;
 	case STATE_EXPLORATIONEXPEDITION_WAITING:
 	case STATE_EXPEDITION_WAITING:
 	
 		{
-			LOADER.GetImageN("boot_z",  ((dir+3)%6)*2 + 1)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
-			LOADER.GetImageN("boot_z",  ((dir+3)%6)*2)->Draw(x,y);
-			/// Waren zeichnen 
-			LOADER.GetImageN("boot_z",  30+((dir+3)%6))->Draw(x,y);
+			DrawFixed(x,y,true);
 		} break;
 	case STATE_EXPEDITION_DRIVING:
 	case STATE_TRANSPORT_DRIVING:
@@ -632,7 +647,13 @@ void noShip::HandleState_ExpeditionDriving()
 
 void noShip::HandleState_ExplorationExpeditionDriving()
 {
-	Result res = DriveToHarbourPlace();
+	Result res;
+	// Zum Heimathafen fahren?
+	if(home_harbor == goal_harbor_id && covered_distance >= MAX_EXPLORATION_EXPEDITION_DISTANCE)
+		res = DriveToHarbour();
+	else
+		res = DriveToHarbourPlace();
+		
 	switch(res)
 	{
 	default: return;
@@ -664,6 +685,18 @@ void noShip::HandleState_ExplorationExpeditionDriving()
 			StartIdling();
 			// Sichtbarkeiten neu berechnen
 			gwg->RecalcVisibilitiesAroundPoint(x,y,old_visual_range,player,NULL);
+		} break;
+	case HARBOR_DOESNT_EXIST:
+		{
+			// Neuen Hafen suchen
+			if(players->getElement(player)->FindHarborForUnloading
+				(this,x,y,&goal_harbor_id,&route,NULL))
+				HandleState_TransportDriving();
+			else
+				// Ansonsten als verloren markieren, damit uns später Bescheid gesagt wird
+				// wenn es einen neuen Hafen gibt
+				lost = true;
+			
 		} break;
 	}
 }
@@ -699,7 +732,16 @@ void noShip::HandleState_TransportDriving()
 				(*it)->NotifyGoalAboutLostWare();
 				(*it)->goal = NULL;
 			}
-
+			
+			// Neuen Hafen suchen
+			if(players->getElement(player)->FindHarborForUnloading
+				(this,x,y,&goal_harbor_id,&route,NULL))
+				HandleState_TransportDriving();
+			else
+				// Ansonsten als verloren markieren, damit uns später Bescheid gesagt wird
+				// wenn es einen neuen Hafen gibt
+				lost = true;
+			
 		} break;
 	}
 }
@@ -810,15 +852,14 @@ void noShip::HandleState_SeaAttackReturn()
 			for(std::list<noFigure*>::iterator it = figures.begin();it!=figures.end();++it)
 				static_cast<nofAttacker*>(*it)->CancelAtHomeMilitaryBuilding();
 
+			state = STATE_TRANSPORT_DRIVING;
+			
 			// Neuen Hafen suchen
 			if(players->getElement(player)->FindHarborForUnloading
 				(this,x,y,&goal_harbor_id,&route,NULL))
-			{
-				state = STATE_TRANSPORT_DRIVING;
 				HandleState_TransportDriving();
-			}
 			else
-				state = STATE_IDLE;
+				lost = true;
 
 			
 		} break;
@@ -1007,4 +1048,32 @@ void noShip::ContinueExplorationExpedition()
 	StartDrivingToHarborPlace();
 	state = STATE_EXPLORATIONEXPEDITION_DRIVING;
 	HandleState_ExplorationExpeditionDriving();
+}
+
+/// Sagt dem Schiff, dass ein neuer Hafen erbaut wurde
+void noShip::NewHarborBuilt(nobHarborBuilding * hb)
+{
+	if(lost)
+	{
+		// Liegt der Hafen auch am Meer von diesem Schiff?
+		if(!gwg->IsAtThisSea(hb->GetHarborPosID(),sea_id))
+			return;
+		
+		home_harbor = goal_harbor_id = hb->GetHarborPosID();
+		lost = false;
+		
+		StartDrivingToHarborPlace();
+		
+		switch(state)
+		{
+		case STATE_EXPLORATIONEXPEDITION_DRIVING:
+		case STATE_TRANSPORT_DRIVING:
+			{
+				Driven();
+			} break;
+
+		default: assert(false); // Das darf eigentlich nicht passieren
+		}
+		
+	}
 }

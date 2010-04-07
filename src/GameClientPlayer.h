@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.h 6134 2010-03-08 17:15:42Z jh $
+// $Id: GameClientPlayer.h 6286 2010-04-07 11:27:43Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -217,7 +217,7 @@ public:
 	void NewRoad(RoadSegment * const rs);
 	/// Neue Straße hinzufügen
 	void AddRoad(RoadSegment * const rs) { roads.push_back(rs); }
-	/// Gibt dem Spieler bekannt, das eine Straße abgerissen wurde
+	/// Gibt dem Spieler brekannt, das eine Straße abgerissen wurde
 	void RoadDestroyed();
 	/// Sucht einen Träger für die Straße und ruft ggf den Träger aus dem jeweiligen nächsten Lagerhaus
 	bool FindCarrierForRoad(RoadSegment * rs);
@@ -226,7 +226,7 @@ public:
 	/// Warenhaus aus Warenhausliste entfernen
 	void RemoveWarehouse(nobBaseWarehouse * wh) { warehouses.remove(wh); TestDefeat(); }
 	/// Hafen zur Warenhausliste hinzufügen
-	void AddHarbor(nobHarborBuilding * hb) { harbors.push_back(hb); }
+	void AddHarbor(nobHarborBuilding * hb);
 	/// Hafen aus Warenhausliste entfernen
 	void RemoveHarbor(nobHarborBuilding * hb) { harbors.remove(hb); }
 	/// (Unbesetzte) Straße aus der Liste entfernen

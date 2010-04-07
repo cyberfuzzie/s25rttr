@@ -1,4 +1,4 @@
-// $Id: nofBuilder.cpp 6259 2010-04-01 20:43:40Z OLiver $
+// $Id: nofBuilder.cpp 6286 2010-04-07 11:27:43Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -87,26 +87,16 @@ building_steps_available(sgd->PopUnsignedChar())
 
 void nofBuilder::GoalReached()
 {
-	// Sind wir ggf. in einem Hafen angekommen, um einer Expedition beizutreten?
-	noBase * rn;
-	if((rn = gwg->GetNO(x,y))->GetGOT() == GOT_NOB_HARBORBUILDING)
-	{
-		// Mich hier einquartieren
-		gwg->RemoveFigure(this,x,y);
-		static_cast<nobHarborBuilding*>(rn)->AddFigure(this);
-		
-	}
-	else
-	{
-		// Ansonsten an der Baustelle normal anfangen zu arbeiten
-		state = STATE_WAITINGFREEWALK;
 
-		// Sind jetzt an der Baustelle
-		rel_x = rel_y = 0;
+	// Ansonsten an der Baustelle normal anfangen zu arbeiten
+	state = STATE_WAITINGFREEWALK;
 
-		// Anfangen um die Baustelle herumzulaufen
-		StartFreewalk();
-	}
+	// Sind jetzt an der Baustelle
+	rel_x = rel_y = 0;
+
+	// Anfangen um die Baustelle herumzulaufen
+	StartFreewalk();
+	
 }
 
 void nofBuilder::Walked()
@@ -205,8 +195,13 @@ void nofBuilder::HandleDerivedEvent(const unsigned int id)
 						wh = new nobStorehouse(x,y,player,building_nation);
 					else
 						wh = new nobHarborBuilding(x,y,player,building_nation);
+						
 
 					gwg->SetNO(wh,x,y);
+					// Bei Häfen zusätzlich der Wirtschaftsverwaltung Bescheid sagen
+					// Achtung: das kann NIOHT in den Konstruktor von nobHarborBuilding!
+					if(wh->GetGOT() == GOT_NOB_HARBORBUILDING)
+						gwg->GetPlayer(player)->AddHarbor(static_cast<nobHarborBuilding*>(wh));
 
 					// Mich dort gleich einquartieren und nicht erst zurücklaufen
 					wh->AddFigure(this);

@@ -1,4 +1,4 @@
-// $Id: nofPassiveWorker.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: nofPassiveWorker.cpp 6286 2010-04-07 11:27:43Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -21,6 +21,8 @@
 // Header
 #include "main.h"
 #include "nofPassiveWorker.h"
+#include "nobBaseWarehouse.h"
+#include "GameWorld.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -49,6 +51,10 @@ void nofPassiveWorker::Walked()
 // wenn das Ziel erreicht wurde
 void nofPassiveWorker::GoalReached()
 {
+	// Mich hier einquartieren
+	gwg->RemoveFigure(this,x,y);
+	static_cast<nobBaseWarehouse*>(goal)->AddFigure(this);
+	
 }
 
 void nofPassiveWorker::AbrogateWorkplace()

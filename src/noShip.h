@@ -1,4 +1,4 @@
-// $Id: noShip.h 6286 2010-04-07 11:27:43Z OLiver $
+// $Id: noShip.h 6287 2010-04-07 11:32:08Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -167,6 +167,10 @@ public:
 	bool IsOnExpedition() const
 	{ return (state == STATE_EXPEDITION_LOADING || state == STATE_EXPEDITION_WAITING 
 	|| state ==	STATE_EXPEDITION_DRIVING); }
+	/// Ist das Schiff gerade irgendwie am Explorations-Expeditionieren und hat entsprechenden Kram an Bord?
+	bool IsOnExplorationExpedition() const
+	{ return (state == STATE_EXPLORATIONEXPEDITION_LOADING || state == STATE_EXPLORATIONEXPEDITION_UNLOADING 
+	|| state ==	STATE_EXPLORATIONEXPEDITION_WAITING || state ==	STATE_EXPLORATIONEXPEDITION_DRIVING); }
 	/// Gibt Liste der Waren an Bord zurück
 	const std::list<Ware *> &GetWares() const { return wares; }
 	/// Gibt Liste der Menschen an Bord zurück

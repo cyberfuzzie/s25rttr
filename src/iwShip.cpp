@@ -1,4 +1,4 @@
-// $Id: iwShip.cpp 6167 2010-03-20 13:51:43Z jh $
+// $Id: iwShip.cpp 6287 2010-04-07 11:32:08Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -215,6 +215,10 @@ void iwShip::DrawCargo()
 		orderedFigures[JOB_BUILDER] = 1;
 		orderedWares[GD_BOARDS] = 4;
 		orderedWares[GD_STONES] = 6;
+	}
+	else if(ship->IsOnExplorationExpedition())
+	{
+		orderedFigures[JOB_SCOUT] = SCOUTS_EXPLORATION_EXPEDITION;
 	}
 
 	// Start Offset zum malen

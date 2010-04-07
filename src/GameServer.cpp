@@ -1,4 +1,4 @@
-// $Id: GameServer.cpp 6021 2010-02-14 13:04:43Z FloSoft $
+// $Id: GameServer.cpp 6288 2010-04-07 21:01:32Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -107,7 +107,7 @@ GameServer::CountDown::CountDown()
 void GameServer::CountDown::Clear()
 {
 	do_countdown = false;
-	countdown = 10;
+	countdown = 2;
 	lasttime = 0;
 }
 

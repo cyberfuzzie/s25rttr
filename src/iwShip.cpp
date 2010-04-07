@@ -1,4 +1,4 @@
-// $Id: iwShip.cpp 6287 2010-04-07 11:32:08Z OLiver $
+// $Id: iwShip.cpp 6288 2010-04-07 21:01:32Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -75,9 +75,14 @@ gwv(gwv), gi(gi), ship_id(ship ? GameClient::inst().GetPlayer(ship->GetPlayer())
 	{
 		{60,61}, {80,70}, {80,90}, {60,101}, {40,90}, {40,70}
 	};
+	
+	// Expedition abbrechen
+	AddImageButton(11,200,143,18,18,TC_RED1,LOADER.GetImageN("io",40),_("Return to harbor"))->SetVisible(false);
 
+	// Die 6 Richtungen
 	for(unsigned i = 0;i<6;++i)
-		AddImageButton(11+i,BUTTON_POS[i][0],BUTTON_POS[i][1],18,18,TC_GREY,LOADER.GetImageN("io",181+(i+4)%6))->SetVisible(false);
+		AddImageButton(12+i,BUTTON_POS[i][0],BUTTON_POS[i][1],18,18,TC_GREY,LOADER.GetImageN("io",181+(i+4)%6))->SetVisible(false);
+	
 }
 
 
@@ -120,15 +125,17 @@ void iwShip::Msg_PaintAfter()
 	if(ship->IsWaitingForExpeditionInstructions())
 	{
 		GetCtrl<Window>(10)->SetVisible(ship->IsAbleToFoundColony());
+		GetCtrl<Window>(11)->SetVisible(true);
 
 		for(unsigned char i = 0;i<6;++i)
-			GetCtrl<Window>(11+i)->SetVisible(gwv->GetNextFreeHarborPoint(ship->GetX(),ship->GetY(),
+			GetCtrl<Window>(12+i)->SetVisible(gwv->GetNextFreeHarborPoint(ship->GetX(),ship->GetY(),
 			ship->GetCurrentHarbor(),i,ship->GetPlayer()) > 0);
+		
 	}
 	else
 	{
 		// Alle Buttons inklusive Anker in der Mitte ausblenden
-		for(unsigned i = 0;i<7;++i)
+		for(unsigned i = 0;i<8;++i)
 			GetCtrl<Window>(10+i)->SetVisible(false);
 	}
 
@@ -141,7 +148,7 @@ void iwShip::Msg_ButtonClick(const unsigned int ctrl_id)
 	noShip * ship = GameClient::inst().GetPlayer(player)->GetShipByID(ship_id);
 
 	// Expeditionskommando? (Schiff weiterfahren lassen, Kolonie gründen)
-	if(ctrl_id >= 10 && ctrl_id <= 16)
+	if(ctrl_id >= 10 && ctrl_id <= 17)
 	{
 		GameClient::inst().AddGC(new gc::ExpeditionCommand(gc::ExpeditionCommand::Action(ctrl_id-10),ship_id));
 		Close();

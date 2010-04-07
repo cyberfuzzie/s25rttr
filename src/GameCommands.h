@@ -799,6 +799,7 @@ public:
 	enum Action
 	{
 		FOUNDCOLONY = 0,
+		CANCELEXPEDITION,
 		NORTH,
 		NORTHEAST,
 		SOUTHEAST,

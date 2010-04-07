@@ -1,4 +1,4 @@
-// $Id: noShip.cpp 6286 2010-04-07 11:27:43Z OLiver $
+// $Id: noShip.cpp 6288 2010-04-07 21:01:32Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -191,6 +191,7 @@ void noShip::Draw(int x, int y)
 			DrawDriving(x,y);
 		} break;
 	case STATE_EXPEDITION_LOADING:
+	case STATE_EXPEDITION_UNLOADING:
 	case STATE_TRANSPORT_LOADING:
 	case STATE_TRANSPORT_UNLOADING:
 	case STATE_SEAATTACK_LOADING:
@@ -296,6 +297,42 @@ void noShip::HandleEvent(const unsigned int id)
 					// Schiff ist nun bereit und Expedition kann beginnen
 					ContinueExplorationExpedition();
 				} break;
+				
+			case STATE_EXPEDITION_UNLOADING:
+				{			
+						// Hafen herausfinden 
+					Point<MapCoord> goal_pos(gwg->GetHarborPoint(goal_harbor_id));
+					noBase * hb = gwg->GetNO(goal_pos.x,goal_pos.y);
+					
+					unsigned old_visual_range = GetVisualRange();
+					
+					if(hb->GetGOT() == GOT_NOB_HARBORBUILDING)
+					{
+						Goods goods;
+						memset(&goods,0,sizeof(Goods));
+						unsigned char nation = players->getElement(player)->nation;
+						goods.goods[GD_BOARDS] = BUILDING_COSTS[nation][BLD_HARBORBUILDING].boards;
+						goods.goods[GD_STONES] = BUILDING_COSTS[nation][BLD_HARBORBUILDING].stones;
+						goods.people[JOB_BUILDER] = 1;
+						static_cast<nobBaseWarehouse*>(hb)->AddGoods(goods);
+						// Wieder idlen und ggf. neuen Job suchen
+						StartIdling();
+						players->getElement(player)->GetJobForShip(this);
+					}
+					else
+					{
+						// Erstmal verloren
+						// Neuen Hafen suchen
+						if(players->getElement(player)->FindHarborForUnloading
+							(this,x,y,&goal_harbor_id,&route,NULL))
+							HandleState_ExpeditionDriving();
+						else
+							// Ansonsten als verloren markieren, damit uns später Bescheid gesagt wird
+							// wenn es einen neuen Hafen gibt
+							lost = true;
+					}
+					
+				} break;
 			case STATE_EXPLORATIONEXPEDITION_UNLOADING:
 				{
 					// Hafen herausfinden 
@@ -317,8 +354,15 @@ void noShip::HandleEvent(const unsigned int id)
 					}
 					else
 					{
-						// todo
-						assert(false);
+						// Erstmal verloren
+						// Neuen Hafen suchen
+						if(players->getElement(player)->FindHarborForUnloading
+							(this,x,y,&goal_harbor_id,&route,NULL))
+							HandleState_ExplorationExpeditionDriving();
+						else
+							// Ansonsten als verloren markieren, damit uns später Bescheid gesagt wird
+							// wenn es einen neuen Hafen gibt
+							lost = true;
 					}
 					
 					// Sichtbarkeiten neu berechnen
@@ -484,6 +528,7 @@ void noShip::StartExpedition()
 	/// Schiff wird "beladen", also kurze Zeit am Hafen stehen, bevor wir bereit sind
 	state = STATE_EXPEDITION_LOADING;
 	current_ev = em->AddEvent(this,LOADING_TIME,1);
+	home_harbor = goal_harbor_id;
 }
 
 /// Startet eine Erkundungs-Expedition
@@ -597,7 +642,28 @@ void noShip::ContinueExpedition(const unsigned char dir)
 	state = STATE_EXPEDITION_DRIVING;
 
 	StartDriving(route[pos++]);
+}
 
+/// Weist das Schiff an, eine Expedition abzubrechen (nur wenn es steht) und zum
+/// Hafen zurückzukehren
+void noShip::CancelExpedition()
+{
+	// Zum Heimathafen zurückkehren
+	
+	// Oder sind wir schon dort?
+	if(goal_harbor_id == home_harbor)
+	{
+		route.clear();
+		pos = 0;
+		HandleState_ExpeditionDriving();
+	}
+	else
+	{
+		state = STATE_EXPEDITION_DRIVING;
+		goal_harbor_id = home_harbor;
+		StartDrivingToHarborPlace();
+		HandleState_ExpeditionDriving();
+	}
 }
 
 /// Weist das Schiff an, an der aktuellen Position einen Hafen zu gründen
@@ -620,21 +686,37 @@ void noShip::FoundColony()
 
 void noShip::HandleState_ExpeditionDriving()
 {
-	Result res = DriveToHarbourPlace();
+	Result res;
+	// Zum Heimathafen fahren?
+	if(home_harbor == goal_harbor_id)
+		res = DriveToHarbour();
+	else
+		res = DriveToHarbourPlace();
+		
 	switch(res)
 	{
 	default: return;
 	case GOAL_REACHED:
 		{
-			// Warten auf weitere Anweisungen
-			state = STATE_EXPEDITION_WAITING;
+			// Haben wir unsere Expedition beendet?
+			if(home_harbor == goal_harbor_id)
+			{
+				// Sachen wieder in den Hafen verladen
+				state = STATE_EXPEDITION_UNLOADING;
+				current_ev = em->AddEvent(this,UNLOADING_TIME,1);
+			}
+			else
+			{
+				// Warten auf weitere Anweisungen
+				state = STATE_EXPEDITION_WAITING;
 
-			// Spieler benachrichtigen
-			if(GameClient::inst().GetPlayerID() == this->player)
-				GAMECLIENT.SendPostMessage(new ShipPostMsg(_("A ship has reached the destination of its expedition."), PMC_GENERAL, GAMECLIENT.GetPlayer(player)->nation, x, y));
+				// Spieler benachrichtigen
+				if(GameClient::inst().GetPlayerID() == this->player)
+					GAMECLIENT.SendPostMessage(new ShipPostMsg(_("A ship has reached the destination of its expedition."), PMC_GENERAL, GAMECLIENT.GetPlayer(player)->nation, x, y));
 
-			// KI Event senden
-			GAMECLIENT.SendAIEvent(new AIEvent::Location(AIEvent::ExpeditionWaiting, x, y), player);
+				// KI Event senden
+				GAMECLIENT.SendAIEvent(new AIEvent::Location(AIEvent::ExpeditionWaiting, x, y), player);
+			}
 		} break;
 	case NO_ROUTE_FOUND:
 		{
@@ -1067,6 +1149,7 @@ void noShip::NewHarborBuilt(nobHarborBuilding * hb)
 		switch(state)
 		{
 		case STATE_EXPLORATIONEXPEDITION_DRIVING:
+		case STATE_EXPEDITION_DRIVING:
 		case STATE_TRANSPORT_DRIVING:
 			{
 				Driven();

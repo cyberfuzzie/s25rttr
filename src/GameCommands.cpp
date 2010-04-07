@@ -1,4 +1,4 @@
-// $Id: GameCommands.cpp 6280 2010-04-06 12:40:52Z OLiver $
+// $Id: GameCommands.cpp 6288 2010-04-07 21:01:32Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -228,13 +228,19 @@ void StartExplorationExpedition::Execute(GameWorldGame& gwg, GameClientPlayer& p
 
 void ExpeditionCommand::Execute(GameWorldGame& gwg, GameClientPlayer& player, const unsigned char playerid)
 {
+	noShip * ship = player.GetShipByID(this->ship_id);
+	if(!ship)
+		return;
+		
 	if(this->action == FOUNDCOLONY)
 	{
-		player.GetShipByID(this->ship_id)->FoundColony();
+		ship->FoundColony();
 	}
+	else if(this->action == CANCELEXPEDITION)
+		ship->CancelExpedition();
 	else
 	{
-		player.GetShipByID(this->ship_id)->ContinueExpedition(action-1);
+		ship->ContinueExpedition(action-2);
 	}
 }
 

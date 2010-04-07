@@ -1,4 +1,4 @@
-// $Id: noShip.h 6287 2010-04-07 11:32:08Z OLiver $
+// $Id: noShip.h 6288 2010-04-07 21:01:32Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -45,6 +45,7 @@ class noShip : public noMovable
 		STATE_IDLE = 0, /// Schiff hat nix zu tun und hängt irgendwo an der Küste rum 
 		STATE_GOTOHARBOR,
 		STATE_EXPEDITION_LOADING,
+		STATE_EXPEDITION_UNLOADING,
 		STATE_EXPEDITION_WAITING,
 		STATE_EXPEDITION_DRIVING,
 		STATE_EXPLORATIONEXPEDITION_LOADING,
@@ -189,6 +190,9 @@ public:
 	void StartExplorationExpedition();
 	/// Weist das Schiff an, in einer bestimmten Richtung die Expedition fortzusetzen
 	void ContinueExpedition(const unsigned char dir);
+	/// Weist das Schiff an, eine Expedition abzubrechen (nur wenn es steht) und zum
+	/// Hafen zurückzukehren
+	void CancelExpedition();
 	/// Weist das Schiff an, seine Erkundungs-Expedition fortzusetzen
 	void ContinueExplorationExpedition();
 	/// Gibt zurück, ob das Schiff jetzt in der Lage wäre, eine Kolonie zu gründen

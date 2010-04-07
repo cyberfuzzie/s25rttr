@@ -450,7 +450,10 @@ void noFigure::HandleEvent(const unsigned int id)
 		current_ev = 0;
 		WalkFigure();
 
-		CalcVisibilities(gwg->GetXA(x,y,(dir+3)%6),gwg->GetYA(x,y,(dir+3)%6));
+		//CalcVisibilities(gwg->GetXA(x,y,(dir+3)%6),gwg->GetYA(x,y,(dir+3)%6));
+		
+		// Alte Richtung für die Berechnung der Sichtbarkeiten merken
+		unsigned char old_dir = dir;
 
 		switch(fs)
 		{
@@ -476,7 +479,7 @@ void noFigure::HandleEvent(const unsigned int id)
 		list<noBase*> figures;
 		gwg->GetDynamicObjectsFrom(x,y,figures);
 		if(figures.search(this).valid())
-			gwg->RecalcMovingVisibilities(x,y,player,GetVisualRange(),dir);
+			gwg->RecalcMovingVisibilities(x,y,player,GetVisualRange(),old_dir);
 		else
 			CalcVisibilities(x,y);
 		

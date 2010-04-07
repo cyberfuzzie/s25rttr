@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 6282 2010-04-06 20:48:19Z OLiver $
+// $Id: GameWorldGame.cpp 6284 2010-04-07 07:08:14Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1241,13 +1241,16 @@ bool GameWorldGame::IsScoutingFigureOnNode(const MapCoord x, const MapCoord y, c
 	// Späher/Soldaten in der Nähe prüfen und direkt auf dem Punkt
 	for(list<noBase*>::iterator it = objects.begin();it.valid();++it)
 	{
-		// Späher?
-		if((*it)->GetGOT() == GOT_NOF_SCOUT_FREE)
+		if(distance <= VISUALRANGE_SCOUT)
 		{
-			// Prüfen, ob er auch am Erkunden ist und an der Position genau und ob es vom richtigen Spieler ist
-			nofScout_Free* scout = dynamic_cast<nofScout_Free*>(*it);
-			if(scout->GetX() == x && scout->GetY() == y && scout->GetPlayer() == player)
-				return true;
+			// Späher?
+			if((*it)->GetGOT() == GOT_NOF_SCOUT_FREE)
+			{
+				// Prüfen, ob er auch am Erkunden ist und an der Position genau und ob es vom richtigen Spieler ist
+				nofScout_Free* scout = dynamic_cast<nofScout_Free*>(*it);
+				if(scout->GetX() == x && scout->GetY() == y && scout->GetPlayer() == player)
+					return true;
+			}
 		}
 
 		// Soldaten?

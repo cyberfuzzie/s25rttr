@@ -1,4 +1,4 @@
-// $Id: AudioDriver.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: AudioDriver.cpp 6289 2010-04-07 21:29:16Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -98,7 +98,7 @@ unsigned AudioDriver::GeneratePlayID()
 	if(play_id_counter == 0xFFFF)
 	{
 		// dann wieder bei 0 anfangen (0xFFFF als Fehlermeldung!)
-		return 0;
+		play_id_counter = 0;
 	}
 
 	return play_id_counter++;

@@ -1,4 +1,4 @@
-// $Id: noBuildingSite.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: noBuildingSite.cpp 6292 2010-04-08 12:11:50Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -132,7 +132,7 @@ void noBuildingSite::Destroy_noBuildingSite()
 	gwg->GetPlayer(player)->RemoveBuildingSite(this);
 
 	// Hafenbaustelle?
-	if(type == BLD_HARBORBUILDING)
+	if(IsHarborBuildingSiteFromSea())
 	{
 		// Ggf. aus der Liste mit den vom Schiff aus gegründeten Baustellen streichen
 		gwg->RemoveHarborBuildingSiteFromSea(this);
@@ -458,5 +458,13 @@ void noBuildingSite::PlaningFinished()
 
 	// Bauwaren anfordern
 	OrderConstructionMaterial();
+}
 
+/// Gibt zurück, ob eine bestimmte Baustellen eine Baustelle ist, die vom Schiff aus errichtet wurde
+bool noBuildingSite::IsHarborBuildingSiteFromSea() const
+{
+	if(this->type == BLD_HARBORBUILDING)
+		return gwg->IsHarborBuildingSiteFromSea(this);
+	else
+		return false;
 }

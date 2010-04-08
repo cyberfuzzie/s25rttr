@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 6282 2010-04-06 20:48:19Z OLiver $
+// $Id: GameWorld.h 6292 2010-04-08 12:11:50Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -715,8 +715,10 @@ public:
 	void AddHarborBuildingSiteFromSea(noBuildingSite * building_site)
 	{ this->harbor_building_sites_from_sea.push_back(building_site); }
 	/// Entfernt diese wieder
-	void RemoveHarborBuildingSiteFromSea(noBuildingSite * building_site)
+	bool RemoveHarborBuildingSiteFromSea(noBuildingSite * building_site)
 	{ this->harbor_building_sites_from_sea.remove(building_site); }
+	/// Gibt zurück, ob eine bestimmte Baustellen eine Baustelle ist, die vom Schiff aus errichtet wurde
+	bool IsHarborBuildingSiteFromSea(const noBuildingSite * building_site) const;
 	/// Liefert eine Liste der Hafenpunkte, die von einem bestimmten Hafenpunkt erreichbar sind
 	void GetHarborPointsWithinReach(const unsigned hp,std::vector<unsigned>& hps) const;
 };

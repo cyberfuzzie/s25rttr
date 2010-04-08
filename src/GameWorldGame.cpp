@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 6291 2010-04-08 11:38:30Z OLiver $
+// $Id: GameWorldGame.cpp 6292 2010-04-08 12:11:50Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1718,6 +1718,13 @@ bool GameWorldGame::FoundColony(const unsigned harbor_point, const unsigned char
 	RecalcTerritory(bs,HARBOR_ALONE_RADIUS,false,true);
 
 	return true;
+}
+
+/// Gibt zurück, ob eine bestimmte Baustellen eine Baustelle ist, die vom Schiff aus errichtet wurde
+bool GameWorldGame::IsHarborBuildingSiteFromSea(const noBuildingSite * building_site) const
+{
+	return (std::find(harbor_building_sites_from_sea.begin(),
+	harbor_building_sites_from_sea.end(),building_site) != harbor_building_sites_from_sea.end());
 }
 
 

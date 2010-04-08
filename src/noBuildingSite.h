@@ -1,4 +1,4 @@
-// $Id: noBuildingSite.h 6055 2010-02-20 15:57:19Z FloSoft $
+// $Id: noBuildingSite.h 6292 2010-04-08 12:11:50Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -105,6 +105,8 @@ public:		void Destroy() { Destroy_noBuildingSite(); }
 
 	/// Aufgerufen, wenn Planierung beendet wurde
 	void PlaningFinished(); 
+	/// Gibt zurück, ob eine bestimmte Baustellen eine Baustelle ist, die vom Schiff aus errichtet wurde
+	bool IsHarborBuildingSiteFromSea() const;
 
 
 };

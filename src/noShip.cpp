@@ -1,4 +1,4 @@
-// $Id: noShip.cpp 6288 2010-04-07 21:01:32Z OLiver $
+// $Id: noShip.cpp 6290 2010-04-08 06:10:51Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -304,7 +304,7 @@ void noShip::HandleEvent(const unsigned int id)
 					Point<MapCoord> goal_pos(gwg->GetHarborPoint(goal_harbor_id));
 					noBase * hb = gwg->GetNO(goal_pos.x,goal_pos.y);
 					
-					unsigned old_visual_range = GetVisualRange();
+					//unsigned old_visual_range = GetVisualRange();
 					
 					if(hb->GetGOT() == GOT_NOB_HARBORBUILDING)
 					{

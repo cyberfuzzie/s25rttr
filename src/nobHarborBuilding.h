@@ -1,4 +1,4 @@
-// $Id: nobHarborBuilding.h 6280 2010-04-06 12:40:52Z OLiver $
+// $Id: nobHarborBuilding.h 6291 2010-04-08 11:38:30Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -120,6 +120,9 @@ public:
 	void AddWare(Ware * ware);
 	/// Eine Figur geht ins Lagerhaus
 	void AddFigure(noFigure * figure);
+	/// Berechnet Wichtigkeit einer neuen Ware für den Hafen (Waren werden für Expeditionen 
+	/// benötigt!)
+	unsigned CalcDistributionPoints(const GoodType type);
 	
 	/// Storniert die Bestellung fÃ¼r eine bestimmte Ware, die mit einem Schiff transportiert werden soll
 	void CancelWareForShip(Ware * ware);

@@ -12,7 +12,7 @@ nofShipWright::nofShipWright(const unsigned short x, const unsigned short y,cons
 		: nofWorkman(JOB_SHIPWRIGHT,x,y,player,workplace), dest_x(0xFFFF), dest_y(0xFFFF)
 {}
 
-const unsigned SHIPWRIGHT_RADIUS = 10;
+const unsigned SHIPWRIGHT_RADIUS = 8;
 const unsigned SHIPWRIGHT_WALKING_DISTANCE = 15;
 /// Arbeitszeit des Schiffsbauers beim Bauen von großen Schiffen
 const unsigned WORKING_TIME_SHIPS = 70;
@@ -186,7 +186,15 @@ void nofShipWright::StartWalkingToShip(const unsigned char first_dir)
 /// Ist ein bestimmter Punkt auf der Karte für den Schiffsbau geeignet
 bool nofShipWright::IsPointGood(const MapCoord x, const MapCoord y) const
 {
-	return (gwg->IsCoastalPoint(x,y) && (gwg->GetNO(x,y)->GetType() == NOP_ENVIRONMENT
+	// Auf Wegen nicht bauen
+	for(unsigned i = 0;i<6;++i)
+	{
+		if(gwg->GetPointRoad(x,y,i))
+			return false;
+	}
+
+	return (gwg->IsPlayerTerritory(x,y) &&
+	gwg->IsCoastalPoint(x,y) && (gwg->GetNO(x,y)->GetType() == NOP_ENVIRONMENT
 								|| gwg->GetNO(x,y)->GetType() == NOP_NOTHING));
 }
 

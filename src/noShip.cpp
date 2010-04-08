@@ -1,4 +1,4 @@
-// $Id: noShip.cpp 6290 2010-04-08 06:10:51Z FloSoft $
+// $Id: noShip.cpp 6291 2010-04-08 11:38:30Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -303,8 +303,6 @@ void noShip::HandleEvent(const unsigned int id)
 						// Hafen herausfinden 
 					Point<MapCoord> goal_pos(gwg->GetHarborPoint(goal_harbor_id));
 					noBase * hb = gwg->GetNO(goal_pos.x,goal_pos.y);
-					
-					//unsigned old_visual_range = GetVisualRange();
 					
 					if(hb->GetGOT() == GOT_NOB_HARBORBUILDING)
 					{

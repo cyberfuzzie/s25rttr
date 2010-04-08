@@ -1,4 +1,4 @@
-// $Id: nobHarborBuilding.cpp 6286 2010-04-07 11:27:43Z OLiver $
+// $Id: nobHarborBuilding.cpp 6291 2010-04-08 11:38:30Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1040,6 +1040,48 @@ void nobHarborBuilding::AddSeaAttacker(nofAttacker * attacker)
 	
 	players->getElement(player)->OrderShip(this);
 	++goods.people[attacker->GetJobType()];
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
+unsigned nobHarborBuilding::CalcDistributionPoints(const GoodType type)
+{
+	
+	// Ist überhaupt eine Expedition im Gang und ein entsprechender Warentyp
+	if(!expedition.active || !(type == GD_BOARDS || type == GD_STONES))
+		return 0;
+		
+		
+	unsigned ordered_boards = 0, ordered_stones = 0;
+	// Ermitteln, wiviele Bretter und Steine auf dem Weg zum Lagerhaus sind
+	for(list<Ware*>::iterator it = dependent_wares.begin();it.valid();++it)
+	{
+		if((*it)->type == GD_BOARDS) ++ordered_boards;
+		else if((*it)->type == GD_STONES) ++ordered_stones;
+	}
+	
+	// 10000 als Basis wählen, damit man auch noch was abziehen kann
+	unsigned short points = 10000;
+	
+	// Ermitteln, ob wir noch Bretter oder Steine brauchen
+	if(expedition.boards + ordered_boards 
+	>= BUILDING_COSTS[nation][BLD_HARBORBUILDING].boards && type == GD_BOARDS)
+		return 0;
+	if(expedition.stones + ordered_stones 
+	>= BUILDING_COSTS[nation][BLD_HARBORBUILDING].stones && type == GD_STONES)
+		return 0;
+
+	// Schon bestellte Sachen wirken sich positiv aus, da wir ja so eher eine Expedition bereit haben
+	if(type == GD_BOARDS)
+		points += (expedition.boards + ordered_boards)*30;
+	else if(type == GD_STONES)
+		points += (expedition.stones + ordered_stones)*30;
+
+	return points;
 }
 
 

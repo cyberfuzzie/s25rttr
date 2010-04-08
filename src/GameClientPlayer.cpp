@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 6286 2010-04-07 11:27:43Z OLiver $
+// $Id: GameClientPlayer.cpp 6291 2010-04-08 11:38:30Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -835,6 +835,36 @@ noBaseBuilding * GameClientPlayer::FindClientForWare(Ware * ware)
 	// akzeptiert wird
 	if(gt_clients == GD_BREAD || gt_clients == GD_MEAT)
 		gt_clients = GD_FISH;
+		
+	// Bretter und Steine können evtl. auch Häfen für Expeditionen gebrauchen
+	if(gt_clients == GD_STONES || gt_clients == GD_BOARDS)
+	{
+		for(std::list<nobHarborBuilding*>::iterator it = harbors.begin();it!=harbors.end();++it)
+		{
+			unsigned way_points,points;
+			points = (*it)->CalcDistributionPoints(gt);
+
+			if(points)
+			{
+				// Weg dorthin berechnen
+				if(gwg->FindPathForWareOnRoads(ware->GetLocation(),*it,&way_points) != 0xFF)
+				{
+					// Die Wegpunkte noch davon abziehen, Verteilung draufaddieren
+					points -= way_points/2;
+					points += 10*30; // Verteilung existiert nicht, Expeditionen haben 
+					// allerdings hohe Priorität
+
+					// Besser als der bisher Beste?
+					if(points > best_points)
+					{
+						best_points = points;
+						bb = *it;
+					}
+				}
+			}
+		}
+	}
+		
 
 	for(std::list<BuildingType>::iterator it = distribution[gt_clients].client_buildings.begin();
 		it!=distribution[gt_clients].client_buildings.end(); ++it)
@@ -855,14 +885,8 @@ noBaseBuilding * GameClientPlayer::FindClientForWare(Ware * ware)
 					if(points)
 					{
 						// Die Wegpunkte noch davon abziehen, Verteilung draufaddieren
-						points -= way_points;
+						points -= way_points/2;
 						points += distribution[gt].percent_buildings[BLD_HEADQUARTERS]*30;
-
-						/*char str[256];
-						sprintf(str,"gf = %u, points = %u, way_points = %u, distribution = %u  \n", 
-						GameClient::inst().GetGFNumber(), points, way_points, distribution[gt].percent_buildings[BLD_HEADQUARTERS]);
-						GameClient::inst().AddToGameLog(str);*/
-
 
 						// Besser als der bisher Beste?
 						if(points > best_points)
@@ -873,21 +897,6 @@ noBaseBuilding * GameClientPlayer::FindClientForWare(Ware * ware)
 					}
 				}
 			}
-
-			//// Bei Baustellen die Extraliste abfragen
-			//for(std::list<noBuildingSite*>::iterator i = building_sites.begin(); i.valid(); ++i)
-			//{
-			//	// ZusÃ¤tzliche Distribution-Punkte draufaddieren, welcher GebÃ¤udetyp bekommt zuerst die Waren?
-			//	if(unsigned short distri_points = (*i)->CalcDistributionPoints(ware->GetLocation(),gt))
-			//	{
-			//		points = distri_points + distribution[gt].percent_buildings[BLD_HEADQUARTERS]*25;
-			//		if((points < best_points || !bb) && points)
-			//		{
-			//			bb = *i;
-			//			best_points = points;
-			//		}
-			//	}
-			//}
 		}
 		else
 		{
@@ -903,17 +912,8 @@ noBaseBuilding * GameClientPlayer::FindClientForWare(Ware * ware)
 					{
 						// Die Wegpunkte noch davon abziehen, Verteilung draufaddieren
 						//points -= way_points;
-						points -= (unsigned int) (0.5 * way_points);
+						points -= (unsigned int) ( way_points / 2);
 						//points += distribution[gt].percent_buildings[*it]*30;
-
-						//// Verteilung Ã¼berprÃ¼fen ob GebÃ¤udetyp an der Reihe ist
-						//if(distribution[gt].goals.size())
-						//{
-						//	char str[256];
-						//	sprintf(str,"gf = %u, obj_id = %u, selected_goal = %u,  rest = %u\n", 
-						//	GameClient::inst().GetGFNumber(), ware->GetObjId(), distribution[gt].selected_goal, distribution[gt].goals[distribution[gt].selected_goal]);
-						//	GameClient::inst().AddToGameLog(str);
-						//}
 
 						if(distribution[gt].goals.size()) {
 							if ((*i)->GetBuildingType() == 

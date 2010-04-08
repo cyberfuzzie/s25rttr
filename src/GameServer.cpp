@@ -1,4 +1,4 @@
-// $Id: GameServer.cpp 6288 2010-04-07 21:01:32Z OLiver $
+// $Id: GameServer.cpp 6291 2010-04-08 11:38:30Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1126,8 +1126,9 @@ void GameServer::OnNMSServerPassword(const GameMessage_Server_Password& msg)
 void GameServer::OnNMSServerChat(const GameMessage_Server_Chat& msg)
 {
 	GameServerPlayer *player = &players[msg.player];
+	SendToAll(msg);
 
-	switch(msg.destination)
+	/*switch(msg.destination)
 	{
 	default:
 	case CD_ALL: // Alle
@@ -1163,7 +1164,7 @@ void GameServer::OnNMSServerChat(const GameMessage_Server_Chat& msg)
 				}
 			}
 		} break;
-	}
+	}*/
 }
 
 ///////////////////////////////////////////////////////////////////////////////

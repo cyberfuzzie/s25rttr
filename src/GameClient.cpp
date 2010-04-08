@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 6176 2010-03-24 10:39:41Z FloSoft $
+// $Id: GameClient.cpp 6291 2010-04-08 11:38:30Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -865,12 +865,26 @@ void GameClient::OnNMSServerChat(const GameMessage_Server_Chat& msg)
 {
 	if(msg.player != 0xFF)
 	{
-		if(ci)
-			ci->CI_Chat(msg.player, msg.destination, msg.text);
-
 		if(state == CS_GAME)
 			/// Mit im Replay aufzeichnen
 			replayinfo.replay.AddChatCommand(framesinfo.nr, msg.player, msg.destination, msg.text);
+
+		GameClientPlayer * player = GetPlayer(msg.player);
+		 
+		// Besiegte dürfen nicht mehr heimlich mit Verbündeten oder Feinden reden
+		if(player->isDefeated() && msg.destination != CD_ALL)
+			return;
+		// Entscheiden, ob ich ein Gegner oder Vebündeter bin vom Absender
+		bool ally = GetLocalPlayer()->IsAlly(msg.player);
+		
+		// Chatziel unerscheiden und ggf. nicht senden
+		if(!ally && msg.destination == CD_ALLIES)
+			return;
+		if(ally && msg.destination == CD_ENEMIES && msg.player != playerid)
+			return;
+			
+		if(ci)
+			ci->CI_Chat(msg.player, msg.destination, msg.text);
 
 	}
 }

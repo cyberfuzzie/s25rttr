@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 6288 2010-04-07 21:01:32Z OLiver $
+// $Id: GameWorldGame.cpp 6291 2010-04-08 11:38:30Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -311,7 +311,17 @@ void GameWorldGame::BuildRoad(const unsigned char playerid,const bool boat_road,
 {
 	// TODO: Verzögerungsbugabfrage, kann später ggf. weg
 	if(!GetSpecObj<noFlag>(start_x,start_y))
+	{
+		RemoveVisualRoad(start_x,start_y,route);
 		return;
+	}
+	// Falscher Spieler?
+	else if(GetSpecObj<noFlag>(start_x,start_y)->GetPlayer() != playerid)
+	{
+		// Dann Weg nicht bauen und ggf. das visuelle wieder zurückbauen
+		RemoveVisualRoad(start_x,start_y,route);
+		return;
+	}
 
 	unsigned short tmpx = start_x, tmpy = start_y;
 

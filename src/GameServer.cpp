@@ -1,4 +1,4 @@
-// $Id: GameServer.cpp 6291 2010-04-08 11:38:30Z OLiver $
+// $Id: GameServer.cpp 6294 2010-04-09 14:56:54Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1125,7 +1125,7 @@ void GameServer::OnNMSServerPassword(const GameMessage_Server_Password& msg)
  */
 void GameServer::OnNMSServerChat(const GameMessage_Server_Chat& msg)
 {
-	GameServerPlayer *player = &players[msg.player];
+	//GameServerPlayer *player = &players[msg.player];
 	SendToAll(msg);
 
 	/*switch(msg.destination)

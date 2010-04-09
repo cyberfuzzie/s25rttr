@@ -57,7 +57,7 @@ const unsigned BLOCK_OFFSET = 10;
 nofAttacker::nofAttacker(nofPassiveSoldier * other,nobBaseMilitary * const attacked_goal)
 : nofActiveSoldier(*other,STATE_ATTACKING_WALKINGTOGOAL), attacked_goal(attacked_goal), defender(false),
 should_haunted(GAMECLIENT.GetPlayer(attacked_goal->GetPlayer())->ShouldSendDefender()), blocking_event(0), encounteredEnemy(0),
-harbor_x(0xffff), harbor_y(0xffff), ship_x(0xffff), ship_y(0xffff)
+harbor_x(0xffff), harbor_y(0xffff), ship_x(0xffff), ship_y(0xffff), ship_obj_id(0)
 {
 	// Dem Haus Bescheid sagen
 	static_cast<nobMilitary*>(building)->SoldierOnMission(other,this);
@@ -72,7 +72,7 @@ nofAttacker::nofAttacker(nofPassiveSoldier * other,nobBaseMilitary * const attac
 
 attacked_goal(attacked_goal), defender(false),
 should_haunted(GAMECLIENT.GetPlayer(attacked_goal->GetPlayer())->ShouldSendDefender()), blocking_event(0), encounteredEnemy(0),
-	harbor_x(harbor->GetX()), harbor_y(harbor->GetY()), ship_x(0xffff), ship_y(0xffff)
+	harbor_x(harbor->GetX()), harbor_y(harbor->GetY()), ship_x(0xffff), ship_y(0xffff), ship_obj_id(0)
 {
 	// Dem Haus Bescheid sagen
 	static_cast<nobMilitary*>(building)->SoldierOnMission(other,this);

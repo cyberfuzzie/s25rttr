@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 6292 2010-04-08 12:11:50Z OLiver $
+// $Id: GameWorld.h 6293 2010-04-09 01:28:06Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -715,7 +715,7 @@ public:
 	void AddHarborBuildingSiteFromSea(noBuildingSite * building_site)
 	{ this->harbor_building_sites_from_sea.push_back(building_site); }
 	/// Entfernt diese wieder
-	bool RemoveHarborBuildingSiteFromSea(noBuildingSite * building_site)
+	void RemoveHarborBuildingSiteFromSea(noBuildingSite * building_site)
 	{ this->harbor_building_sites_from_sea.remove(building_site); }
 	/// Gibt zurück, ob eine bestimmte Baustellen eine Baustelle ist, die vom Schiff aus errichtet wurde
 	bool IsHarborBuildingSiteFromSea(const noBuildingSite * building_site) const;

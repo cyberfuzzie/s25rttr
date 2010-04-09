@@ -1,4 +1,4 @@
-// $Id: GameWorldViewer.cpp 6269 2010-04-05 12:00:54Z OLiver $
+// $Id: GameWorldViewer.cpp 6296 2010-04-09 20:37:28Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -640,17 +640,31 @@ unsigned char GameWorldViewer::GetVisibleRoad(const MapCoord x, const MapCoord y
 /// existiert
 noShip * GameWorldViewer::GetShip(const MapCoord x, const MapCoord y, const unsigned char player) const
 {
-	list<noBase*> objs;
-	GetDynamicObjectsFrom(x,y,objs);
-
-	for(list<noBase*>::iterator it = objs.begin();it.valid();++it)
+	for(unsigned i = 0;i<7;++i)
 	{
-		if((*it)->GetGOT() == GOT_SHIP)
+		Point<MapCoord> pa(x,y);
+		if(i > 0)
 		{
-			if(static_cast<noShip*>(*it)->GetPlayer() == player)
-				return static_cast<noShip*>(*it);
+			pa.x = GetXA(x,y,i-1);
+			pa.y = GetYA(x,y,i-1);
 		}
+		for(list<noBase*>::iterator it = GetFigures(pa.x,pa.y).begin();it.valid();++it)
+		{
+			if((*it)->GetGOT() == GOT_SHIP)
+			{
+				noShip * ship = static_cast<noShip*>(*it);
+				if(ship->GetPlayer() == player)
+				{
+					if((ship->GetX() == x && ship->GetY() ==y) ||
+					ship->GetDestinationForCurrentMove() == Point<MapCoord>(x,y))
+						return static_cast<noShip*>(*it);
+				}
+			}
+		}
+		
+		
 	}
+	
 
 	return NULL;
 }

@@ -90,6 +90,9 @@ const unsigned short WANDER_WAY_MAX = 40;
 const unsigned short WANDER_TRYINGS = 3;
 // Größe des Rechtecks um den Punkt, wo er die Flaggen sucht beim Rumirren
 const unsigned short WANDER_RADIUS = 10;
+/// Dasselbe nochmal f�r Soldaten
+const unsigned short WANDER_TRYINGS_SOLDIERS = 6;
+const unsigned short WANDER_RADIUS_SOLDIERS = 15;
 
 
 
@@ -550,7 +553,9 @@ void noFigure::StartWandering(const unsigned burned_wh_id)
 	// eine bestimmte Strecke rumirren und dann eine Flagge suchen
 	// 3x rumirren und eine Flagge suchen, wenn dann keine gefunden wurde, stirbt die Figur
 	wander_way = WANDER_WAY_MIN + RANDOM.Rand(__FILE__,__LINE__,obj_id,WANDER_WAY_MAX-WANDER_WAY_MIN);
-	wander_tryings = 3;
+	// Soldaten sind h�rter im Nehmen
+	bool is_soldier = (job >= JOB_PRIVATE && job <= JOB_GENERAL);
+	wander_tryings = is_soldier ? WANDER_TRYINGS_SOLDIERS : WANDER_TRYINGS;
 
 	// Wenn wir stehen, zusätzlich noch loslaufen!
 	if(waiting_for_free_node)
@@ -565,14 +570,17 @@ void noFigure::Wander()
 	// Sind wir noch auf der Suche nach einer Flagge?
 	if(wander_way != 0xFFFF)
 	{
+		// Soldaten sind h�rter im Nehmen
+		bool is_soldier = (job >= JOB_PRIVATE && job <= JOB_GENERAL);
+		unsigned short wander_radius = is_soldier ? WANDER_RADIUS_SOLDIERS : WANDER_RADIUS;
 		// Ist es mal wieder an der Zeit, eine Flagge zu suchen?
 		if(!wander_way)
 		{
 			// Umgebung abscannen, nicht über den Rand gehen
-			unsigned short x1 = (x > WANDER_RADIUS) ? (x-WANDER_RADIUS) : 0;
-			unsigned short y1 = (y > WANDER_RADIUS) ? (y-WANDER_RADIUS) : 0;
-			unsigned short x2 = (x+WANDER_RADIUS < gwg->GetWidth()) ? (x+WANDER_RADIUS) : (gwg->GetWidth()-1);
-			unsigned short y2 = (y+WANDER_RADIUS < gwg->GetHeight()) ? (y+WANDER_RADIUS) : (gwg->GetHeight()-1);
+			unsigned short x1 = (x > wander_radius) ? (x-wander_radius) : 0;
+			unsigned short y1 = (y > wander_radius) ? (y-wander_radius) : 0;
+			unsigned short x2 = (x+wander_radius < gwg->GetWidth()) ? (x+wander_radius) : (gwg->GetWidth()-1);
+			unsigned short y2 = (y+wander_radius < gwg->GetHeight()) ? (y+wander_radius) : (gwg->GetHeight()-1);
 
 			// Flaggen sammeln und dann zufällig eine auswählen
 			list<noFlag*> flags;

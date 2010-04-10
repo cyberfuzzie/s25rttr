@@ -1,4 +1,4 @@
-// $Id: nofCarrier.cpp 6113 2010-03-04 11:15:28Z OLiver $
+// $Id: nofCarrier.cpp 6304 2010-04-10 21:24:08Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -679,7 +679,10 @@ void nofCarrier::AbrogateWorkplace()
 			delete carried_ware;
 			carried_ware = 0;
 		 }
+		
 	}
+	
+	state = CARRS_FIGUREWORK;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

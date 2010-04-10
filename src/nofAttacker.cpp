@@ -161,6 +161,8 @@ nofAttacker::nofAttacker(SerializedGameData * sgd, const unsigned obj_id) : nofA
 
 void nofAttacker::Walked()
 {
+	ExpelEnemies();
+	
 	// Was bestimmtes machen, je nachdem welchen Status wir gerade haben
 	switch(state)
 	{

@@ -1,4 +1,4 @@
-// $Id: noMovable.h 6302 2010-04-10 18:34:20Z OLiver $
+// $Id: noMovable.h 6304 2010-04-10 21:24:08Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -24,6 +24,7 @@
 #include "GameConsts.h"
 #include "list.h"
 #include "EventManager.h"
+#include "MapConsts.h"
 
 /// Anzahl Animationsschritte bei dem jeweiligen Anstieg
 const unsigned short ASCENT_ANIMATION_STEPS[7] = {16,16,16,16,24,32,48};
@@ -46,9 +47,6 @@ protected:
 
 	/// Pausiert ein gerade laufendes Wesen
 	void PauseWalking();
-	/// Gibt zurück, ob sich das angegebene Objekt zwischen zwei Punkten bewegt
-	bool IsMoving() const;
-	
 
 public:
 
@@ -73,6 +71,11 @@ public:		void Destroy() { Destroy_noMovable(); }
 	void CalcWalkingRelative(int &x, int &y);
 	// Steht er in der zwischen 2 Wegpunkten?
 	bool IsStandingBetweenNodes() const { return (pause_walked_gf>0) ? true : false; }
+	/// Gibt die Position zurück, wo wir uns hinbewegen (selbe Position, wenn Schiff steht)
+	Point<MapCoord> GetDestinationForCurrentMove() const;
+		/// Gibt zurück, ob sich das angegebene Objekt zwischen zwei Punkten bewegt
+	bool IsMoving() const;
+
 };
 
 

@@ -1,4 +1,4 @@
-// $Id: noShip.cpp 6296 2010-04-09 20:37:28Z OLiver $
+// $Id: noShip.cpp 6304 2010-04-10 21:24:08Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -461,18 +461,7 @@ unsigned noShip::GetVisualRange() const
 		return VISUALRANGE_SHIP;
 }
 
-/// Gibt die Position zurück, wo wir uns hinbewegen (selbe Position, wenn Schiff steht)
-Point<MapCoord> noShip::GetDestinationForCurrentMove() const
-{
-	// Bewegt sich das Schiff gerade (Anzeichen ist Event mit ID 0!)
-	if(current_ev)
-	{
-		if(current_ev->id == 0)
-			return Point<MapCoord>(gwg->GetXA(x,y,dir), gwg->GetYA(x,y,dir));
-	}
-		
-	return Point<MapCoord>(x,y);
-}
+
 
 
 /// Fährt zum Hafen, um dort eine Mission (Expedition) zu erledigen

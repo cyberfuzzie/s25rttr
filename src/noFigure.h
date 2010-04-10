@@ -1,4 +1,4 @@
-// $Id: noFigure.h 6282 2010-04-06 20:48:19Z OLiver $
+// $Id: noFigure.h 6304 2010-04-10 21:24:08Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -201,6 +201,14 @@ public:		void Destroy() { Destroy_noFigure(); }
 	/// Gibt zurück, ob die Figur kein Ziel mehr hat und damit nach einer Schifffahrt im
 	/// Lagerhaus interniert werden muss
 	bool HasNoGoal() const { return (goal ==  NULL); }
+	/// Gibt zurück, ob die Figur auf Straßen läuft zu ihrem Arbeitsplatz o.Ä.
+	bool IsWalkingOnRoad() const
+	{
+		// Nur Träger arbeiten richtig auf Straßen
+		if(fs == FS_JOB) return (GetGOT() == GOT_NOF_CARRIER);
+		else if(fs == FS_GOHOME || fs == FS_GOTOGOAL) return true;
+		else return false;
+	}
 
 };
 

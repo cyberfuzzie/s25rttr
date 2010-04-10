@@ -1,4 +1,4 @@
-// $Id: nofActiveSoldier.cpp 6282 2010-04-06 20:48:19Z OLiver $
+// $Id: nofActiveSoldier.cpp 6304 2010-04-10 21:24:08Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -180,5 +180,60 @@ void nofActiveSoldier::HandleDerivedEvent(const unsigned int id)
 unsigned nofActiveSoldier::GetVisualRange() const
 {
 	return VISUALRANGE_SCOUT;
+}
+
+/// Prüft feindliche Leute auf Straßen in der Umgebung und vertreibt diese
+void nofActiveSoldier::ExpelEnemies()
+{
+	// Figuren sammeln aus der Umgebung
+	std::vector<noFigure*> figures;
+	
+	// Am Punkt selbst
+	for(list<noBase*>::iterator it = gwg->GetFigures(x,y).begin();it.valid();++it)
+	{
+		if((*it)->GetType() == NOP_FIGURE)
+			figures.push_back(static_cast<noFigure*>(*it));
+	}
+	
+	// Und rund herum
+	for(unsigned i = 0;i<6;++i)
+	{
+		// Diese müssen sich entweder auf dem Punkt befinden oder zu diesem laufen
+		for(list<noBase*>::iterator it = gwg->GetFigures(gwg->GetXA(x,y,i),gwg->GetYA(x,y,i)).begin();it.valid();++it)
+		{
+			// Figur?
+			// Nicht dass wir noch Hase und Igel stören (Naturschutz!)
+			if((*it)->GetType() == NOP_FIGURE)
+			{
+				noFigure * fig = static_cast<noFigure*>(*it);
+				if(fig->GetX() == x && fig->GetY() == y)
+					figures.push_back(fig);
+				else if(fig->GetDestinationForCurrentMove() == Point<MapCoord>(x,y))
+					figures.push_back(fig);
+			}
+		}
+	}
+	
+	// Mal gucken, was uns alles ins Netz gegangen ist, und aussieben
+	// Nicht, dass Erika Steinbach noch böse wird
+	for(unsigned i = 0;i<figures.size();++i)
+	{
+		noFigure * fig = figures[i];
+		// Feind von uns und kein Soldat?
+		if(!players->getElement(player)->IsAlly(fig->GetPlayer()) &&
+		!(fig->GetJobType() >= JOB_PRIVATE && fig->GetJobType() <= JOB_GENERAL))
+		{
+			// Dann weg mit dem!
+			fig->Abrogate();
+			fig->StartWandering();
+			// Läuft der immer noch nicht? (Träger, die auf Wegen stehen und auf Waren warten)
+			if(!fig->IsMoving())
+				// Dann machen wir dir aber Beine
+				fig->StartWalking(Random::inst().Rand(__FILE__,__LINE__,obj_id,6));
+		}
+	}
+	
+	// Straße ist gesäubert, vielleicht nützt dem Feind das ja sogar was..
+	//gwg->RoadNodeAvailable(x, y);
 }
 

@@ -1,4 +1,4 @@
-// $Id: noShip.h 6296 2010-04-09 20:37:28Z OLiver $
+// $Id: noShip.h 6304 2010-04-10 21:24:08Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -178,8 +178,6 @@ public:
 	const std::list<noFigure *> &GetFigures() const { return figures; }
 	/// Gibt Sichtradius dieses Schiffes zurück
 	unsigned GetVisualRange() const;
-	/// Gibt die Position zurück, wo wir uns hinbewegen (selbe Position, wenn Schiff steht)
-	Point<MapCoord> GetDestinationForCurrentMove() const;
 
 	/// Beim Warten bei der Expedition: Gibt die Hafenpunkt-ID zurück, wo es sich gerade befindet
 	unsigned GetCurrentHarbor() const;

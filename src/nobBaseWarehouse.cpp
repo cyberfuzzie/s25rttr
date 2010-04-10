@@ -1,4 +1,4 @@
-// $Id: nobBaseWarehouse.cpp 6281 2010-04-06 18:13:13Z OLiver $
+// $Id: nobBaseWarehouse.cpp 6304 2010-04-10 21:24:08Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -847,6 +847,9 @@ void nobBaseWarehouse::AddActiveSoldier(nofActiveSoldier * soldier)
 
 	// und Soldat vernichten
 	em->AddToKillList(soldier);
+	
+	// Ggf. war er auf Mission
+	troops_on_mission.erase(soldier);
 }
 
 nofDefender * nobBaseWarehouse::ProvideDefender(nofAttacker * const attacker)

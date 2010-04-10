@@ -1,4 +1,4 @@
-// $Id: noMovable.cpp 6302 2010-04-10 18:34:20Z OLiver $
+// $Id: noMovable.cpp 6304 2010-04-10 21:24:08Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -227,5 +227,16 @@ bool noMovable::IsMoving() const
 			return true;
 			
 	return false;
+}
+
+/// Gibt die Position zurück, wo wir uns hinbewegen (selbe Position, wenn Schiff steht)
+Point<MapCoord> noMovable::GetDestinationForCurrentMove() const
+{
+	// Bewegt sich das Ding gerade?
+	if(IsMoving())
+		// Dann unsere Zielrichtung zur Berechnung verwenden
+		return Point<MapCoord>(gwg->GetXA(x,y,dir), gwg->GetYA(x,y,dir));
+		
+	return Point<MapCoord>(x,y);
 }
 

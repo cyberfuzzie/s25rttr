@@ -1,4 +1,4 @@
-// $Id: nofActiveSoldier.h 6282 2010-04-06 20:48:19Z OLiver $
+// $Id: nofActiveSoldier.h 6304 2010-04-10 21:24:08Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -73,6 +73,9 @@ protected:
 	void ReturnHome();
 	/// Nach-Hause-Gehen, wird nach jedem gelaufenen Stück aufgerufen
 	void WalkingHome();
+	
+	/// Prüft feindliche Leute auf Straßen in der Umgebung und vertreibt diese
+	void ExpelEnemies();
 
 private:
 

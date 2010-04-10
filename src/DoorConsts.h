@@ -1,4 +1,4 @@
-// $Id: DoorConsts.h 6167 2010-03-20 13:51:43Z jh $
+// $Id: DoorConsts.h 6305 2010-04-10 21:53:00Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -65,7 +65,7 @@ const signed char DOOR_CONSTS[4][40] =
 	0,
 	-1,
 	4,
-	10},
+	13},
 
 	// Japaner
 	{9,
@@ -107,7 +107,7 @@ const signed char DOOR_CONSTS[4][40] =
 	15,
 	-7,
 	-5,
-	10},
+	16},
 
 
 	// Räcer
@@ -150,7 +150,7 @@ const signed char DOOR_CONSTS[4][40] =
 	4,
 	-13,
 	-8,
-	10},
+	2},
 
 
 	// Wikinger

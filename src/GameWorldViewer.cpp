@@ -1,4 +1,4 @@
-// $Id: GameWorldViewer.cpp 6303 2010-04-10 19:54:17Z OLiver $
+// $Id: GameWorldViewer.cpp 6305 2010-04-10 21:53:00Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -116,8 +116,8 @@ void GameWorldViewer::Draw(const unsigned char player, unsigned * water, const b
 				{
 					for(list<noBase*>::iterator it = mn.figures.begin(); it.valid(); ++it)
 					{
-						// Bewegt er sich
-						if((*it)->IsMoving())
+						// Bewegt er sich oder ist es ein Schiff?
+						if((*it)->IsMoving() || (*it)->GetGOT() == GOT_SHIP)
 							// Dann nach der gesamten Zeile zeichnen
 							between_lines.push_back(ObjectBetweenLines(*it,Point<int>(static_cast<int>(xpos),static_cast<int>(ypos))));
 						else

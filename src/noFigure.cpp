@@ -481,13 +481,16 @@ void noFigure::HandleEvent(const unsigned int id)
 			}
 		}
 		
-		// Gucken, ob Figur noch auf der Karte vorhanden ist
-		list<noBase*> figures;
-		gwg->GetDynamicObjectsFrom(x,y,figures);
-		if(figures.search(this).valid())
-			gwg->RecalcMovingVisibilities(x,y,player,GetVisualRange(),old_dir);
-		else
-			CalcVisibilities(x,y);
+		// Ggf. Sichtbereich testen
+		if(GetVisualRange())
+		{
+			list<noBase*> figures;
+			gwg->GetDynamicObjectsFrom(x,y,figures);
+			if(figures.search(this).valid())
+				gwg->RecalcMovingVisibilities(x,y,player,GetVisualRange(),old_dir);
+			else
+				CalcVisibilities(x,y);
+		}
 		
 	}
 }

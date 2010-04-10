@@ -1,4 +1,4 @@
-// $Id: GameWorldViewer.cpp 6302 2010-04-10 18:34:20Z OLiver $
+// $Id: GameWorldViewer.cpp 6303 2010-04-10 19:54:17Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -423,21 +423,6 @@ void GameWorldViewer::Draw(const unsigned char player, unsigned * water, const b
 
 
 	SoundManager::inst().PlayBirdSounds(noTree::QueryDrawCounter());
-}
-
-
-
-unsigned char GameWorldViewer::IsBoundaryStone(const int x, const int y)
-{
-	unsigned char p[7];
-	p[0] = GetNode(x,y).owner;
-	for(unsigned i = 0;i<6;++i)
-		p[i+1] = GetNodeAround(x,y,i).owner;
-
-	if(!p[0] && (p[1] || p[2] || p[3] || p[4] || p[5] || p[6]))
-		return (p[1] | p[2] | p[3] | p[4] | p[5] | p[6]);
-	else
-		return 0;
 }
 
 void GameWorldViewer::DrawBoundaryStone(const int x, const int y, const MapCoord tx, const MapCoord ty, const int xpos, const int ypos, Visibility vis)

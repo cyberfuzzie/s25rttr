@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 6292 2010-04-08 12:11:50Z OLiver $
+// $Id: GameWorldGame.cpp 6303 2010-04-10 19:54:17Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -632,9 +632,15 @@ void GameWorldGame::RecalcTerritory(const noBaseBuilding * const building,const 
 
 	// Grenzsteine neu berechnen, noch 1 Ã¼ber das Areal hinausgehen, da dieses auch die Grenzsteine rundrum
 	// mit beeinflusst
+	
+	// In diesem Array merken, wie wieviele Nachbarn ein Grenzstein hat
+	unsigned neighbors[y2-y1+7][x2-x1+7];
+	
 
 	for(int y = y1-3;y < y2+3;++y)
 	{
+		memset(neighbors[y-(y1-3)],0,x2-x1+7);
+		
 		for(int x = x1-3;x < x2+3;++x)
 		{
 			// Korrigierte X-Koordinaten (nicht Ã¼ber den Rand gehen)
@@ -658,6 +664,14 @@ void GameWorldGame::RecalcTerritory(const noBaseBuilding * const building,const 
 						GetNode(xc,yc).boundary_stones[i+1] = 0;
 
 				}
+				
+				// Zählen
+				for(unsigned i = 0;i<6;++i)
+				{
+					neighbors[y-(y1-3)][x-(x1-3)] = 0;
+					if(GetNodeAround(xc,yc,i).boundary_stones[i] == owner)
+						++neighbors[y-(y1-3)][x-(x1-3)];
+				}
 			}
 			else
 			{
@@ -667,6 +681,54 @@ void GameWorldGame::RecalcTerritory(const noBaseBuilding * const building,const 
 
 				//for(unsigned i = 0;i<3;++i)
 				//	GetNodeAround(x,y,3+i).boundary_stones[i+1] = 0;
+			}
+			
+			
+		}
+	}
+	
+	// Nochmal durchgehen und bei Grenzsteinen mit mehr als 3 Nachbarn welche löschen
+	// da sich sonst gelegentlich solche "Klötzchen" bilden können
+	for(int y = y1-3;y < y2+3;++y)
+	{
+		memset(neighbors[y-(y1-3)],0,x2-x1+7);
+		
+		for(int x = x1-3;x < x2+3;++x)
+		{
+			
+			// Korrigierte X-Koordinaten (nicht Ã¼ber den Rand gehen)
+			MapCoord xc,yc;
+			ConvertCoords(x,y,&xc,&yc);
+			
+			// Steht auch hier ein Grenzstein?
+			unsigned char owner = GetNode(xc,yc).boundary_stones[0];
+			if(!owner)
+				continue;
+			
+			if(neighbors[y-(y1-3)][x-(x1-3)] > 2)
+			{
+				for(unsigned dir = 0;dir<3 && neighbors[y-(y1-3)][x-(x1-3)] > 2;++dir)
+				{
+					// Da ein Grenzstein vom selben Besitzer?
+					MapCoord xa = GetXA(xc,yc,dir+3);
+					MapCoord ya = GetYA(xc,yc,dir+3);
+					
+					if(GetNode(xa,ya).boundary_stones[0] == owner)
+					{
+						Point<int> p(x,y);
+						Point<int> pa = GetPointAround(p,dir+3);
+						// Hat der auch zu viele Nachbarn?
+						if(neighbors[pa.y-(y1-3)][pa.x-(x1-3)] > 2)
+						{
+							// Dann löschen wir hier einfach die Verbindung
+							GetNode(xc,yc).boundary_stones[dir+1] = 0;
+							--neighbors[y-(y1-3)][x-(x1-3)];
+							--neighbors[pa.y-(y1-3)][pa.x-(x1-3)];
+						}
+						
+					}
+				}
+				
 			}
 		}
 	}

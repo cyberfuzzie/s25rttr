@@ -1,4 +1,4 @@
-// $Id: GameWorldViewer.cpp 6296 2010-04-09 20:37:28Z OLiver $
+// $Id: GameWorldViewer.cpp 6302 2010-04-10 18:34:20Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -48,6 +48,14 @@ xoffset(0), yoffset(0), selx(0), sely(0), sx(0), sy(0), scroll(false), last_xoff
 	displayHeight = VideoDriverWrapper::inst().GetScreenHeight();
 }
 
+struct ObjectBetweenLines
+{
+	noBase * obj;
+	Point<int> pos; // Zeichenposition
+	
+	ObjectBetweenLines(noBase * const obj, const Point<int> pos) : obj(obj), pos(pos) {}
+};
+
 void GameWorldViewer::Draw(const unsigned char player, unsigned * water, const bool draw_selected, const MapCoord selected_x, const MapCoord selected_y,const RoadsBuilding& rb)
 {
 
@@ -62,6 +70,10 @@ void GameWorldViewer::Draw(const unsigned char player, unsigned * water, const b
 
 	for(int y = fy;y<ly;++y)
 	{
+		// Figuren speichern, die in dieser Zeile gemalt werden müssen
+		// und sich zwischen zwei Zeilen befinden, da sie dazwischen laufen
+		std::vector<ObjectBetweenLines> between_lines;
+		
 		for(int x = fx;x<lx;++x)
 		{
 			unsigned short tx,ty;
@@ -103,7 +115,15 @@ void GameWorldViewer::Draw(const unsigned char player, unsigned * water, const b
 				if(mn.figures.size())
 				{
 					for(list<noBase*>::iterator it = mn.figures.begin(); it.valid(); ++it)
-						(*it)->Draw(static_cast<int>(xpos),static_cast<int>(ypos));
+					{
+						// Bewegt er sich
+						if((*it)->IsMoving())
+							// Dann nach der gesamten Zeile zeichnen
+							between_lines.push_back(ObjectBetweenLines(*it,Point<int>(static_cast<int>(xpos),static_cast<int>(ypos))));
+						else
+							// Ansonsten jetzt schon zeichnen
+							(*it)->Draw(static_cast<int>(xpos),static_cast<int>(ypos));
+					}
 				}
 
 				////////////////////////////////////////////////
@@ -170,6 +190,10 @@ void GameWorldViewer::Draw(const unsigned char player, unsigned * water, const b
 				}
 			}
 		}
+		
+		// Figuren zwischen den Zeilen zeichnen
+		for(unsigned i = 0;i<between_lines.size();++i)
+			between_lines[i].obj->Draw(between_lines[i].pos.x,between_lines[i].pos.y);
 	}
 
 	if(show_names || show_productivity)
@@ -276,6 +300,8 @@ void GameWorldViewer::Draw(const unsigned char player, unsigned * water, const b
 					}
 				}
 			}
+
+					
 		}
 	}
 

@@ -1,4 +1,4 @@
-// $Id: noMovable.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: noMovable.h 6302 2010-04-10 18:34:20Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -46,6 +46,8 @@ protected:
 
 	/// Pausiert ein gerade laufendes Wesen
 	void PauseWalking();
+	/// Gibt zurück, ob sich das angegebene Objekt zwischen zwei Punkten bewegt
+	bool IsMoving() const;
 	
 
 public:

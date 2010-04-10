@@ -1,4 +1,4 @@
-// $Id: noBase.cpp 6267 2010-04-05 09:16:14Z OLiver $
+// $Id: noBase.cpp 6302 2010-04-10 18:34:20Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -43,4 +43,10 @@ FOWObject * noBase::CreateFOWObject() const
 noBase::BlockingManner noBase::GetBM() const
 {
 	return BM_NOTBLOCKING;
+}
+
+/// Gibt zurück, ob sich das angegebene Objekt zwischen zwei Punkten bewegt
+bool noBase::IsMoving() const
+{
+	return false;
 }

@@ -1,4 +1,4 @@
-// $Id: noMovable.cpp 6271 2010-04-05 12:54:25Z OLiver $
+// $Id: noMovable.cpp 6302 2010-04-10 18:34:20Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -218,3 +218,14 @@ void noMovable::PauseWalking()
 		}
 	}
 }
+
+/// Gibt zurück, ob sich das angegebene Objekt zwischen zwei Punkten bewegt
+bool noMovable::IsMoving() const
+{
+	if(current_ev)
+		if(current_ev->id == 0)
+			return true;
+			
+	return false;
+}
+

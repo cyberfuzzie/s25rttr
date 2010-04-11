@@ -1,4 +1,4 @@
-// $Id: nobBaseWarehouse.cpp 6304 2010-04-10 21:24:08Z OLiver $
+// $Id: nobBaseWarehouse.cpp 6311 2010-04-11 11:35:56Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -650,10 +650,10 @@ void nobBaseWarehouse::CheckJobsForNewFigure(const Job job)
 
 	if(job >= JOB_PRIVATE && job <= JOB_GENERAL)
 	{
-		// Truppen prüfen in allen Häusern
-		gwg->GetPlayer(player)->NewSoldierAvailable(real_goods.people[job]);
 		// Reserve prüfen
 		RefreshReserve(job-JOB_PRIVATE);
+		// Truppen prüfen in allen Häusern
+		gwg->GetPlayer(player)->NewSoldierAvailable(real_goods.people[job]);
 	}
 	else
 	{
@@ -841,6 +841,9 @@ void nobBaseWarehouse::AddActiveSoldier(nofActiveSoldier * soldier)
 	// Soldat hinzufügen
 	++real_goods.people[JOB_PRIVATE+soldier->GetRank()];
 	++goods.people[JOB_PRIVATE+soldier->GetRank()];
+	
+	// Evtl. geht der Soldat wieder in die Reserve
+	RefreshReserve(soldier->GetRank());
 
 	// Truppen prüfen in allen Häusern
 	gwg->GetPlayer(player)->RegulateAllTroops();

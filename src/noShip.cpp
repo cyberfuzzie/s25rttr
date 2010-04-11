@@ -1,4 +1,4 @@
-// $Id: noShip.cpp 6304 2010-04-10 21:24:08Z OLiver $
+// $Id: noShip.cpp 6311 2010-04-11 11:35:56Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -81,7 +81,7 @@ const Point<int> SHIPS_FLAG_POS[12] =
 /// Konstruktor
 noShip::noShip(const unsigned short x, const unsigned short y, const unsigned char player) 
 	: noMovable(NOP_SHIP, x, y), 
-	player(player), state(STATE_IDLE), sea_id(0), 
+	player(player), state(STATE_IDLE), sea_id(0), goal_harbor_id(0), goal_dir(0), 
 	name(ship_names[gwg->GetPlayer(player)->nation][Random::inst().Rand(__FILE__, __LINE__, this->obj_id, ship_count)]),
 	lost(false), remaining_sea_attackers(0), home_harbor(0), covered_distance(0)
 {

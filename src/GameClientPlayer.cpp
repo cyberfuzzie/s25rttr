@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 6291 2010-04-08 11:38:30Z OLiver $
+// $Id: GameClientPlayer.cpp 6311 2010-04-11 11:35:56Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1839,6 +1839,7 @@ void GameClientPlayer::GetJobForShip(noShip * ship)
 			// Evtl. sind wir schon da?
 			if(ship->GetX() == dest_x && ship->GetY() == dest_y)
 			{
+				ship->AssignHarborId((*it)->GetHarborPosID());
 				(*it)->ShipArrived(ship);
 				return;
 			}

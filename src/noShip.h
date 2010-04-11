@@ -1,4 +1,4 @@
-// $Id: noShip.h 6304 2010-04-10 21:24:08Z OLiver $
+// $Id: noShip.h 6311 2010-04-11 11:35:56Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -181,6 +181,10 @@ public:
 
 	/// Beim Warten bei der Expedition: Gibt die Hafenpunkt-ID zurück, wo es sich gerade befindet
 	unsigned GetCurrentHarbor() const;
+	
+	/// Sagt dem Schiff, an welchem Hafenpunkt es gerade ankert, wenn es das selber noch nicht weiß
+	void AssignHarborId(const unsigned harbor_id) 
+	{ this->goal_harbor_id = harbor_id; }
 
 	/// Fährt zum Hafen, um dort eine Mission (Expedition) zu erledigen
 	void GoToHarbor(nobHarborBuilding * hb, const std::vector<unsigned char>& route);

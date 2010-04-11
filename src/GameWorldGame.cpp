@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 6303 2010-04-10 19:54:17Z OLiver $
+// $Id: GameWorldGame.cpp 6306 2010-04-11 00:25:59Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -634,12 +634,13 @@ void GameWorldGame::RecalcTerritory(const noBaseBuilding * const building,const 
 	// mit beeinflusst
 	
 	// In diesem Array merken, wie wieviele Nachbarn ein Grenzstein hat
-	unsigned neighbors[y2-y1+7][x2-x1+7];
+	//unsigned neighbors[y2-y1+7][x2-x1+7];
+	std::vector<std::vector <unsigned> > neighbors(y2-y1+7, std::vector<unsigned>(x2-x1+7, 0));
 	
 
 	for(int y = y1-3;y < y2+3;++y)
 	{
-		memset(neighbors[y-(y1-3)],0,x2-x1+7);
+		//memset(neighbors[y-(y1-3)],0,x2-x1+7);
 		
 		for(int x = x1-3;x < x2+3;++x)
 		{
@@ -691,7 +692,7 @@ void GameWorldGame::RecalcTerritory(const noBaseBuilding * const building,const 
 	// da sich sonst gelegentlich solche "Klötzchen" bilden können
 	for(int y = y1-3;y < y2+3;++y)
 	{
-		memset(neighbors[y-(y1-3)],0,x2-x1+7);
+		//memset(neighbors[y-(y1-3)],0,x2-x1+7);
 		
 		for(int x = x1-3;x < x2+3;++x)
 		{

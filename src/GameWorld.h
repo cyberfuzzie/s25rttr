@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 6307 2010-04-11 08:09:32Z OLiver $
+// $Id: GameWorld.h 6313 2010-04-11 20:29:58Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -305,7 +305,7 @@ public:
 	bool IsMilitaryBuilding(const MapCoord x, const MapCoord y) const;
 
 	/// Erstellt eine Liste mit allen Militärgebäuden in der Umgebung, radius bestimmt wie viele Kästchen nach einer Richtung im Umkreis
-	void LookForMilitaryBuildings(list<nobBaseMilitary*>& buildings,const MapCoord x, const MapCoord y, const unsigned short radius) const;
+	void LookForMilitaryBuildings(list<nobBaseMilitary*>& buildings,const MapCoord x, const MapCoord y, unsigned short radius) const;
 
 	/// Prüft, ob von einem bestimmten Punkt aus der Untergrund für Figuren zugänglich ist (kein Wasser,Lava,Sumpf)
 	bool IsNodeToNodeForFigure(const MapCoord x, const MapCoord y, const unsigned dir) const;

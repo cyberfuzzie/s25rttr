@@ -1,4 +1,4 @@
-// $Id: TerritoryRegion.cpp 6309 2010-04-11 09:09:40Z OLiver $
+// $Id: TerritoryRegion.cpp 6313 2010-04-11 20:29:58Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -34,8 +34,8 @@
 	static char THIS_FILE[] = __FILE__;
 #endif
 
-TerritoryRegion::TerritoryRegion(const unsigned short x1, const unsigned short y1, const unsigned short x2, const unsigned short y2)
-: x1(x1), y1(y1), x2(x2), y2(y2), width(x2-x1), height(y2-y1)
+TerritoryRegion::TerritoryRegion(const int x1, const int y1, const int x2, const int y2, const GameWorldBase * const gwb)
+: x1(x1), y1(y1), x2(x2), y2(y2), width(x2-x1), height(y2-y1), gwb(gwb)
 {
 	// Feld erzeugen
 	nodes = new TRNode[(x2-x1)*(y2-y1)];
@@ -50,12 +50,23 @@ TerritoryRegion::~TerritoryRegion()
 	delete [] nodes;
 }
 
-void TerritoryRegion::TestNode(const int x, const int y,const unsigned char player, const unsigned char radius)
+void TerritoryRegion::TestNode( int x,  int y,const unsigned char player, const unsigned char radius)
 {
 	// Gucken, ob der Punkt überhaupt mit in diese Region gehört
-	if(x < int(x1) || x >= int(x2) || y < int(y1) || y >= int(y2))
+	if(x+gwb->GetWidth() >= int(x1) && x+gwb->GetWidth() < int(x2))
+		x += gwb->GetWidth();
+	else if(x-gwb->GetWidth() >= int(x1) && x-gwb->GetWidth() < int(x2))
+		x -= gwb->GetWidth();
+	else if(x < int(x1) || x >= int(x2))
 		return;
-
+		
+	if(y+gwb->GetHeight() >= int(y1) && y+gwb->GetHeight() < int(y2))
+		y += gwb->GetHeight();
+	else if(y-gwb->GetHeight() >= int(y1) && y-gwb->GetHeight() < int(y2))
+		y -= gwb->GetHeight();
+	else if(y < int(y1) || y >= int(y2))
+		return;
+	
 	/// Wenn das Militargebäude jetzt näher dran ist, dann geht dieser Punkt in den Besitz vom jeweiligen Spieler
 	/// oder wenn es halt gar nicht besetzt ist
  	if(radius < nodes[(y-y1)*(x2-x1)+(x-x1)].radius || !nodes[(y-y1)*(x2-x1)+(x-x1)].owner)
@@ -65,7 +76,7 @@ void TerritoryRegion::TestNode(const int x, const int y,const unsigned char play
 	}
 }
 
-void TerritoryRegion::CalcTerritoryOfBuilding(const GameWorldBase * const gwb, const noBaseBuilding * const building)
+void TerritoryRegion::CalcTerritoryOfBuilding(const noBaseBuilding * const building)
 {
 	unsigned short radius;
 	

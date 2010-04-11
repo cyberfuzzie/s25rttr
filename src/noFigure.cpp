@@ -221,6 +221,24 @@ bool noFigure::CalcFigurRelative(int &x, int &y)
 	int y1 = static_cast<int>(gwg->GetTerrainY(this->x,this->y));
 	int x2 = static_cast<int>(gwg->GetTerrainX(gwg->GetXA(this->x,this->y,dir),gwg->GetYA(this->x,this->y,dir)));
 	int y2 = static_cast<int>(gwg->GetTerrainY(gwg->GetXA(this->x,this->y,dir),gwg->GetYA(this->x,this->y,dir)));
+	
+	
+	// Gehen wir über einen Kartenrand (horizontale Richung?)
+	if(abs(x1-x2) >= gwg->GetWidth() * TR_W / 2)
+	{
+		if(abs(x1-int(gwg->GetWidth())*TR_W-x2) < abs(x1-x2))
+			x1 -= gwg->GetWidth()*TR_W;
+		else
+			x1 += gwg->GetWidth()*TR_W;
+	}
+	// Und dasselbe für vertikale Richtung
+	if(abs(y1-y2) >= gwg->GetHeight() * TR_H / 2)
+	{
+		if(abs(y1-int(gwg->GetHeight())*TR_H-y2) < abs(y1-y2))
+			y1 -= gwg->GetHeight()*TR_H;
+		else
+			y1 += gwg->GetHeight()*TR_H;
+	}
 
 	MapCoord xa = gwg->GetXA(this->x,this->y,1), ya = gwg->GetYA(this->x,this->y,1);
 

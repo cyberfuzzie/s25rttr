@@ -1,4 +1,4 @@
-// $Id: GameWorldViewer.cpp 6305 2010-04-10 21:53:00Z OLiver $
+// $Id: GameWorldViewer.cpp 6313 2010-04-11 20:29:58Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -598,7 +598,8 @@ void GameWorldViewer::CalcFxLx()
 	fx = xoffset / TR_W-1;
 	fy = (yoffset-0x20*HEIGHT_FACTOR) / TR_H;
 	lx = (xoffset+displayWidth)/TR_W+2;
-	ly = (yoffset+displayHeight+0x20*HEIGHT_FACTOR)/TR_H;
+	ly = (yoffset+displayHeight+0x40*HEIGHT_FACTOR)/TR_H;
+	
 }
 
 // Höhe wurde Verändert: TerrainRenderer Bescheid sagen, damit es entsprechend verändert werden kann

@@ -1,4 +1,4 @@
-// $Id: TerrainRenderer.cpp 6037 2010-02-17 11:26:49Z FloSoft $
+// $Id: TerrainRenderer.cpp 6313 2010-04-11 20:29:58Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -960,13 +960,6 @@ void TerrainRenderer::DrawWays(const GameWorldViewer * gwv)
 			//////////////////////////////
 			// Weg(e) zeichnen
 
-			unsigned short coords[6] =
-			{
-				gwv->GetXA(tx,ty,3), gwv->GetYA(tx,ty,3), // -
-				gwv->GetXA(tx,ty,4), gwv->GetYA(tx,ty,4), // !/
-				gwv->GetXA(tx,ty,5), gwv->GetYA(tx,ty,5), // /
-			};
-
 			float begin_end_coords[24] =
 			{
 				-3.0f,-3.0f,
@@ -999,8 +992,26 @@ void TerrainRenderer::DrawWays(const GameWorldViewer * gwv)
 			{
 				if( (type = gwv->GetVisibleRoad(tx,ty, dir+3, visibility)) )
 				{
-					float xpos2 = GetTerrainX(coords[dir*2],coords[dir*2+1])-gwv->GetXOffset()+xo;
-					float ypos2 = GetTerrainY(coords[dir*2],coords[dir*2+1])-gwv->GetYOffset()+yo;
+					float xpos2 = GetTerrainX(gwv->GetXA(tx,ty,3+dir),gwv->GetYA(tx,ty,3+dir))-gwv->GetXOffset()+xo;
+					float ypos2 = GetTerrainY(gwv->GetXA(tx,ty,3+dir),gwv->GetYA(tx,ty,3+dir))-gwv->GetYOffset()+yo;
+					
+					
+					// Gehen wir über einen Kartenrand (horizontale Richung?)
+					if(abs(xpos-xpos2) >= gwv->GetWidth() * TR_W / 2)
+					{
+						if(abs(xpos2-int(gwv->GetWidth())*TR_W-xpos) < abs(xpos-xpos2))
+							xpos2 -= gwv->GetWidth()*TR_W;
+						else
+							xpos2 += gwv->GetWidth()*TR_W;
+					}
+					// Und dasselbe für vertikale Richtung
+					if(abs(ypos-ypos2) >= gwv->GetHeight() * TR_H / 2)
+					{
+						if(abs(ypos2-int(gwv->GetHeight())*TR_H-ypos) < abs(ypos-ypos2))
+							ypos2 -= gwv->GetHeight()*TR_H;
+						else
+							ypos2 += gwv->GetHeight()*TR_H;
+					}
 
 					--type;
 
@@ -1034,7 +1045,9 @@ void TerrainRenderer::DrawWays(const GameWorldViewer * gwv)
 					glTexCoord2f(0.0f,1.0f);
 					glVertex2f(xpos+begin_end_coords[dir*8+2],ypos+begin_end_coords[dir*8+3]);
 
-					glColor3f(GetColor(coords[dir*2],coords[dir*2+1]),GetColor(coords[dir*2],coords[dir*2+1]),GetColor(coords[dir*2],coords[dir*2+1]));
+					glColor3f(GetColor(gwv->GetXA(tx,ty,3+dir),gwv->GetYA(tx,ty,3+dir)),
+					GetColor(gwv->GetXA(tx,ty,3+dir),gwv->GetYA(tx,ty,3+dir)),
+					GetColor(gwv->GetXA(tx,ty,3+dir),gwv->GetYA(tx,ty,3+dir)));
 					glTexCoord2f(0.78f,1.0f);
 					glVertex2f(xpos2+begin_end_coords[dir*8+4],ypos2+begin_end_coords[dir*8+5]);
 					glTexCoord2f(0.78f,0.0f);

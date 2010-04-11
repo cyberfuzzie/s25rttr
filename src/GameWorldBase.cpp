@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 6309 2010-04-11 09:09:40Z OLiver $
+// $Id: GameWorldBase.cpp 6313 2010-04-11 20:29:58Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -504,30 +504,42 @@ bool GameWorldBase::IsMilitaryBuilding(const MapCoord x, const MapCoord y) const
 	return false;
 }
 
-void GameWorldBase::LookForMilitaryBuildings(list<nobBaseMilitary*>& buildings,const MapCoord x, const MapCoord y, const unsigned short radius) const
+void GameWorldBase::LookForMilitaryBuildings(list<nobBaseMilitary*>& buildings,const MapCoord x, const MapCoord y, unsigned short radius) const
 {
+	// Radius auf Anzahl der Militärquadrate begrenzen, sonst gibt es Überlappungen
+	radius = min<MapCoord>(width/MILITARY_SQUARE_SIZE+1,radius);
+	
 	// in Militärquadrat-Koordinaten umwandeln-
-	unsigned short first_x = x/MILITARY_SQUARE_SIZE;
-	unsigned short first_y = y/MILITARY_SQUARE_SIZE;
+	int first_x = x/MILITARY_SQUARE_SIZE;
+	int first_y = y/MILITARY_SQUARE_SIZE;
 
 	// linkes, oberes Quadrat ermitteln, dabei aufpassen dass wir nicht unter 0 geraden
-	if(first_x > radius) first_x -= radius; else first_x = 0;
-	if(first_y > radius) first_y -= radius; else first_y = 0;
+	first_x -= radius;
+	first_y -= radius; 
 
 	// in Militärquadrat-Koordinaten umwandeln
 	unsigned short last_x = x/MILITARY_SQUARE_SIZE;
 	unsigned short last_y = y/MILITARY_SQUARE_SIZE;
 
 	// rechtes unteres Quadrat ermitteln, dabei nicht über die Karte hinausgehen
-	if(last_x+radius < width/MILITARY_SQUARE_SIZE+1) last_x += radius; else last_x = width/MILITARY_SQUARE_SIZE;
-	if(last_y+radius < height/MILITARY_SQUARE_SIZE+1) last_y += radius; else last_y = height/MILITARY_SQUARE_SIZE;
+	last_x += radius;
+	last_y += radius;
 
 	// Liste erzeugen
-	for(unsigned short cy = first_y;cy<=last_y;++cy)
+	for(int cy = first_y;cy<=last_y;++cy)
 	{
-		for(unsigned short cx = first_x;cx<=last_x;++cx)
+		MapCoord ty;
+		if(cy < 0) ty = cy + width/MILITARY_SQUARE_SIZE+1;
+		else if(cy >= height/MILITARY_SQUARE_SIZE+1) ty = cy - height/MILITARY_SQUARE_SIZE - 1;
+		else ty = cy;
+		for(int cx = first_x;cx<=last_x;++cx)
 		{
-			for(list<nobBaseMilitary*>::iterator it = military_squares[cy*(width/MILITARY_SQUARE_SIZE+1)+cx].begin();it.valid();++it)
+			MapCoord tx;
+			if(cx < 0) tx = cx + width/MILITARY_SQUARE_SIZE+1;
+			else if(cx >= width/MILITARY_SQUARE_SIZE+1) tx = cx - width/MILITARY_SQUARE_SIZE - 1;
+			else tx = cx;
+
+			for(list<nobBaseMilitary*>::iterator it = military_squares[ty*(width/MILITARY_SQUARE_SIZE+1)+tx].begin();it.valid();++it)
 				buildings.push_back(*it);
 		}
 	}

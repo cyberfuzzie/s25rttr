@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 6309 2010-04-11 09:09:40Z OLiver $
+// $Id: GameWorldGame.cpp 6313 2010-04-11 20:29:58Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -492,15 +492,16 @@ void GameWorldGame::RecalcTerritory(const noBaseBuilding * const building,const 
 
 	// Radius der noch draufaddiert wird auf den eigentlich ausreichenden Bereich, für das Eliminieren von
 	// herausragenden Landesteilen und damit Grenzsteinen
-	const unsigned ADD_RADIUS = 2;
+	const int ADD_RADIUS = 2;
 
-	// Koordinaten erzeugen für TerritoryRegion (nicht bis ganz an den Rand gehen, da unten noch die Punkte herum geprüft werden!)
-	MapCoord x1 = (building->GetX()>radius+ADD_RADIUS) ? (building->GetX()-(radius+ADD_RADIUS)) : 1;
-	MapCoord y1 = (building->GetY()>radius+ADD_RADIUS) ? (building->GetY()-(radius+ADD_RADIUS)) : 1;
-	MapCoord x2 = (building->GetX()+radius+ADD_RADIUS+1 < width) ? (building->GetX()+(radius+ADD_RADIUS)+1) : width-1;
-	MapCoord y2 = (building->GetY()+radius+ADD_RADIUS+1 < height) ? (building->GetY()+(radius+ADD_RADIUS)+1) : height-1;
+	// Koordinaten erzeugen für TerritoryRegion 
+	int x1 = int(building->GetX())-(radius+ADD_RADIUS);
+	int y1 = int(building->GetY())-(radius+ADD_RADIUS);
+	int x2 = int(building->GetX())+(radius+ADD_RADIUS)+1;
+	int y2 = int(building->GetY())+(radius+ADD_RADIUS)+1;
 
-	TerritoryRegion tr(x1,y1,x2,y2);
+
+	TerritoryRegion tr(x1,y1,x2,y2,this);
 
 
 	// Alle Gebäude ihr Terrain in der Nähe neu berechnen
@@ -516,7 +517,7 @@ void GameWorldGame::RecalcTerritory(const noBaseBuilding * const building,const 
 
 		// Wenn das Gebäude abgerissen wird oder wenn es noch nicht besetzt war, natürlich nicht mit einberechnen
 		if(*it != building || !destroyed)
-			tr.CalcTerritoryOfBuilding(this,*it);
+			tr.CalcTerritoryOfBuilding(*it);
 	}
 
 	// Baustellen von Häfen mit einschließen
@@ -524,28 +525,30 @@ void GameWorldGame::RecalcTerritory(const noBaseBuilding * const building,const 
 		it != harbor_building_sites_from_sea.end();++it)
 	{
 		if(*it != building || !destroyed)
-			tr.CalcTerritoryOfBuilding(this,*it);
+			tr.CalcTerritoryOfBuilding(*it);
 	}
 		
 
 
-	// Merkwn, wo sich der Besitzer geändert hat
+	// Merken, wo sich der Besitzer geändert hat
 	bool * owner_changed = new bool[(x2-x1)*(y2-y1)];
 
 
 	std::vector<int> sizeChanges(GAMECLIENT.GetPlayerCount());
 	// Daten von der TR kopieren in die richtige Karte, dabei zus. Grenzen korrigieren und Objekte zerstören, falls
 	// das Land davon jemanden anders nun gehört
- 	for(MapCoord y = y1;y<y2;++y)
+ 	for(int y = y1;y<y2;++y)
 	{
-		for(MapCoord x = x1;x<x2;++x)
+		for(int x = x1;x<x2;++x)
 		{
 			unsigned char prev_player,player;
+			MapCoord tx,ty;
+			ConvertCoords(x,y,&tx,&ty);
 			// Wenn der Punkt den Besitz geändert hat
-			if((prev_player=GetNode(x,y).owner) != (player=tr.GetOwner(x,y)))
+			if((prev_player=GetNode(tx,ty).owner) != (player=tr.GetOwner(x,y)))
 			{
 				// Dann entsprechend neuen Besitzer setzen
-				GetNode(x,y).owner = player;
+				GetNode(tx,ty).owner = player;
 				owner_changed[(x2-x1)*(y-y1)+(x-x1)] = true;
 				if (player != 0)
 					sizeChanges[player-1]++;
@@ -571,15 +574,17 @@ void GameWorldGame::RecalcTerritory(const noBaseBuilding * const building,const 
 		}
 	}
 
-	for(MapCoord y = y1;y<y2;++y)
+	for(int y = y1;y<y2;++y)
 	{
-		for(MapCoord x = x1;x<x2;++x)
+		for(int x = x1;x<x2;++x)
 		{
+			MapCoord tx,ty;
+			ConvertCoords(x,y,&tx,&ty);
 			bool isplayerterritory_near = false;
 			/// Grenzsteine, die alleine "rausragen" und nicht mit einem richtigen Territorium verbunden sind, raushauen
 			for(unsigned d = 0;d<6;++d)
 			{
-				if(IsPlayerTerritory(GetXA(x,y,d),GetYA(x,y,d)))
+				if(IsPlayerTerritory(GetXA(tx,ty,d),GetYA(tx,ty,d)))
 				{
 					isplayerterritory_near = true;
 					break;
@@ -588,7 +593,7 @@ void GameWorldGame::RecalcTerritory(const noBaseBuilding * const building,const 
 
 			// Wenn kein Land angrenzt, dann nicht nehmen
 			if(!isplayerterritory_near)
-				GetNode(x,y).owner = 0;
+				GetNode(tx,ty).owner = 0;
 
 			// Drumherum (da ja Grenzen mit einberechnet werden ins Gebiet, da darf trotzdem nichts stehen) alles vom Spieler zerstören
 			// nicht das Militärgebäude oder dessen Flagge nochmal abreißen
@@ -596,19 +601,19 @@ void GameWorldGame::RecalcTerritory(const noBaseBuilding * const building,const 
 			{
 				for(unsigned char i = 0;i<6;++i)
 				{
-					unsigned short tx = GetXA(x,y,i), ty = GetYA(x,y,i);
+					unsigned short ttx = GetXA(tx,ty,i), tty = GetYA(tx,ty,i);
 
-					DestroyPlayerRests(tx,ty,GetNode(x,y).owner,building);
+					DestroyPlayerRests(ttx,tty,GetNode(tx,ty).owner,building);
 
 					// BQ neu berechnen
-					GetNode(tx,ty).bq = CalcBQ(tx,ty,GAMECLIENT.GetPlayerID());
+					GetNode(ttx,tty).bq = CalcBQ(ttx,tty,GAMECLIENT.GetPlayerID());
 					// ggf den noch darüber, falls es eine Flagge war (kann ja ein Gebäude entstehen)
-					if(GetNodeAround(tx,ty,1).bq)
-						SetBQ(GetXA(tx,ty,1),GetYA(tx,ty,1),GAMECLIENT.GetPlayerID());
+					if(GetNodeAround(ttx,tty,1).bq)
+						SetBQ(GetXA(ttx,tty,1),GetYA(ttx,tty,1),GAMECLIENT.GetPlayerID());
 				}
 
 				if(gi)
-					gi->GI_UpdateMinimap(x,y);
+					gi->GI_UpdateMinimap(tx,ty);
 			}
 		}
 	}
@@ -629,7 +634,7 @@ void GameWorldGame::RecalcTerritory(const noBaseBuilding * const building,const 
 		
 		for(int x = x1-3;x < x2+3;++x)
 		{
-			// Korrigierte X-Koordinaten (nicht über den Rand gehen)
+			// Korrigierte X-Koordinaten
 			MapCoord xc,yc;
 			ConvertCoords(x,y,&xc,&yc);
 

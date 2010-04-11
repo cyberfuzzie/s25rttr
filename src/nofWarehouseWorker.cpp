@@ -1,4 +1,4 @@
-// $Id: nofWarehouseWorker.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: nofWarehouseWorker.cpp 6309 2010-04-11 09:09:40Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -41,14 +41,15 @@
 #endif
 
 nofWarehouseWorker::nofWarehouseWorker(const unsigned short x, const unsigned short y, const unsigned char player,Ware * ware,const bool task)
-: noFigure(JOB_HELPER,x,y,player,gwg->GetSpecObj<noRoadNode>(x+(y&1),y+1)),carried_ware(ware), task(task), fat((RANDOM.Rand(__FILE__,__LINE__,obj_id,2))?true:false)
+: noFigure(JOB_HELPER,x,y,player,gwg->GetSpecObj<noRoadNode>(gwg->GetXA(x,y,4),gwg->GetYA(x,y,4))),
+carried_ware(ware), task(task), fat((RANDOM.Rand(__FILE__,__LINE__,obj_id,2))?true:false)
 {
 	// Zur Inventur hinzufügen, sind ja sonst nicht registriert
 	gwg->GetPlayer(player)->IncreaseInventoryJob(JOB_HELPER,1);
 	
 	/// Straße (also die 1-er-Straße vor dem Lagerhaus) setzen
-	assert(gwg->GetSpecObj<noFlag>(x+(y&1),y+1)->routes[1]->GetLength() == 1);
-	cur_rs = gwg->GetSpecObj<noFlag>(x+(y&1),y+1)->routes[1];
+	assert(gwg->GetSpecObj<noFlag>(gwg->GetXA(x,y,4),gwg->GetYA(x,y,4))->routes[1]->GetLength() == 1);
+	cur_rs = gwg->GetSpecObj<noFlag>(gwg->GetXA(x,y,4),gwg->GetYA(x,y,4))->routes[1];
 	rs_dir = true;
 }
 
@@ -120,13 +121,13 @@ void nofWarehouseWorker::GoalReached()
 		}
 		else
 			// ansonsten Ware wieder mit reinnehmen
-			carried_ware->Carry(gwg->GetSpecObj<noRoadNode>(x-!(y&1),y-1));
+			carried_ware->Carry(gwg->GetSpecObj<noRoadNode>(gwg->GetXA(x,y,1),gwg->GetYA(x,y,1)));
 	}
 	else
 	{
 		// Ware aufnehmen
 		carried_ware = gwg->GetSpecObj<noFlag>(x,y)->SelectWare(1,false,this);
-		carried_ware->Carry(gwg->GetSpecObj<noRoadNode>(x-!(y&1),y-1));
+		carried_ware->Carry(gwg->GetSpecObj<noRoadNode>(gwg->GetXA(x,y,1),gwg->GetYA(x,y,1)));
 	}
 
 	// Wieder ins Schloss gehen
@@ -202,8 +203,4 @@ void nofWarehouseWorker::HandleDerivedEvent(const unsigned int id)
 
 void nofWarehouseWorker::CarryWare(Ware * ware)
 {
-	//fat = (rand()&1)?true:false;
-	//carried_ware = ware;
-	//goal = gwg->GetSpecObj<noRoadNode>(x+(y&1),y+1);
-	//
 }

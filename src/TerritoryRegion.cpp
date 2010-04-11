@@ -1,4 +1,4 @@
-// $Id: TerritoryRegion.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: TerritoryRegion.cpp 6309 2010-04-11 09:09:40Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -24,6 +24,7 @@
 
 #include "nobBaseMilitary.h"
 #include "MilitaryConsts.h"
+#include "GameWorld.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -64,7 +65,7 @@ void TerritoryRegion::TestNode(const int x, const int y,const unsigned char play
 	}
 }
 
-void TerritoryRegion::CalcTerritoryOfBuilding(const noBaseBuilding * const building)
+void TerritoryRegion::CalcTerritoryOfBuilding(const GameWorldBase * const gwb, const noBaseBuilding * const building)
 {
 	unsigned short radius;
 	
@@ -74,109 +75,24 @@ void TerritoryRegion::CalcTerritoryOfBuilding(const noBaseBuilding * const build
 		radius = static_cast<const nobBaseMilitary*>(building)->GetMilitaryRadius();
 
 	// Punkt, auf dem das Militärgebäude steht
-	int x = building->GetX(),y = building->GetY();
+	MapCoord x = building->GetX(),y = building->GetY();
 	TestNode(x,y,building->GetPlayer(),0);
-
-	for(unsigned char r = 1;r<=radius;++r)
+	
+	for(unsigned r = 1;r<=radius;++r)
 	{
-		x=building->GetX()-r;
-
-		// Bei Hafenbaustellen ist der Radius geringwertig, d.h. er wird von allen
-		// anderen Militärgebäuden ggf. "überschrieben"
-		unsigned char radius_value = 
-			(building->GetBuildingType() == BLD_HARBORBUILDING && building->GetGOT() == GOT_BUILDINGSITE) ? 100 : r;
-
-		// links oben
-		for(unsigned short i = 0;i<r;++i)
+		// Eins weiter nach links gehen
+		gwb->GetPointA(x,y,0);
+		
+		for(unsigned dir = 0;dir<6;++dir)
 		{
-			TestNode(x,y,building->GetPlayer(),radius_value);
-			x+=(y&1);
-			--y;
-		}
-		// oben
-		for(unsigned short i = 0;i<r;++i)
-		{
-			TestNode(x,y,building->GetPlayer(),radius_value);
-			++x;
-		}
-		// rechts oben
-		for(unsigned short i = 0;i<r;++i)
-		{
-			TestNode(x,y,building->GetPlayer(),radius_value);
-			x+=(y&1);
-			++y;
-		}
-		// rechts unten
-		for(unsigned short i = 0;i<r;++i)
-		{
-			TestNode(x,y,building->GetPlayer(),radius_value);
-			x-=!(y&1);
-			++y;
-		}
-		// unten
-		for(unsigned short i = 0;i<r;++i)
-		{
-			TestNode(x,y,building->GetPlayer(),radius_value);
-			--x;
-		}
-		// links unten
-		for(unsigned short i = 0;i<r;++i)
-		{
-			TestNode(x,y,building->GetPlayer(),radius_value);
-			x-=!(y&1);
-			--y;
+			for(unsigned short i = 0;i<r;++i)
+			{
+				TestNode(x,y,building->GetPlayer(),r);
+				// Nach rechts oben anfangen
+				gwb->GetPointA(x,y,(2+dir)%6);
+			}
 		}
 	}
-
-	
-	// Reihe, in der das Militärgebäude steh
-
-	//if(building->GetY() >= y1 && building->GetY() < y2)
-	//{
-	//	//// 1. Punkt --> der Punkt, auf dem das Militärgebäude steht
-	//	//TestNode(building->GetX(),building->GetY(),building->GetPlayer(),0);
-
-	//	// mittlere Reihe
-	//	for(unsigned short x = (building->GetX() >= x1+radius) ? (building->GetX()-radius) : x1;
-	//		x < ((building->GetX()+radius < x2) ? (building->GetX()+radius+1) : x2); ++x)
-	//		TestNode(x,building->GetY(),building->GetPlayer(),
-	//		(x<building->GetX()) ? (building->GetX()-x) : (x-building->GetX()),building->GetAge());
-	//}
- 
-
-	// Restliche Reihen ober- und unterhalb
-	//for(unsigned char y = 1;y<=radius;++y)
-	//{
-	//	unsigned short dx = radius-(y+(building->GetY()&1))/2; // Relativ zum Gebäude Ausschweif in linke Richtung
-
-	//	// Wenn sichs gar nicht überschneidet, brauchen wir nicht groß weiter rumrätseln
-	//	if(building->GetX()+radius*2-y-dx < x1 || building->GetX()-dx >= x2)
-	//		continue;
-
-	//	//building->GetX()+dx
-
-	//	unsigned short fx = (building->GetX() >= x1+dx) ? (building->GetX()-dx) : x1; // Erster Punkt in linker Richtung
-	//	unsigned short lx = (building->GetX()+radius*2+1-y-dx <= x2) ? (building->GetX()+radius*2+1-y-dx) : x2;
-
-	//	/*unsigned short lx = (fx+radius*2+1-y < x2+1) ? (fx+radius*2+1-y) : x2;*/
-
-
-	//	// unterhalb (+y)
-	//	if(building->GetY()+y >= y1 && building->GetY()+y < y2)
-	//	{
-	//		for(unsigned short x = fx;x<lx;++x)
-	//			TestNode(x,building->GetY()+y,building->GetPlayer()
-	//			,(y+!(building->GetY()&1))/2+((building->GetX()>x)?(building->GetX()-x):(x-building->GetX())),building->GetAge());
-	//	}
-
-	//	// oberhalb (-y)
-	//	if(building->GetY() >= y1+y && building->GetY() < y2+y)
-	//	{
-	//			for(unsigned short x = fx;x<lx;++x)
-	//			TestNode(x,building->GetY()-y,building->GetPlayer()
-	//			,(y+!(building->GetY()&1))/2+((building->GetX()>x)?(building->GetX()-x):(x-building->GetX())),building->GetAge());
-	//	}
-	//}
 }
 
 

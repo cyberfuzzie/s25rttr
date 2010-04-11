@@ -496,6 +496,12 @@
         <File Name="../src/Addons.h"/>
         <File Name="../src/AddonStatisticsVisibility.h"/>
       </VirtualDirectory>
+      <File Name="../src/GameReplay.cpp"/>
+      <File Name="../src/GameReplay.h"/>
+      <File Name="../src/GameSavedFile.cpp"/>
+      <File Name="../src/GameSavedFile.h"/>
+      <File Name="../src/GameSavegame.cpp"/>
+      <File Name="../src/GameSavegame.h"/>
     </VirtualDirectory>
     <VirtualDirectory Name="libutil">
       <File Name="../libutil/src/Serializer.cpp"/>

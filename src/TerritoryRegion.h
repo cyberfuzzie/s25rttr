@@ -1,4 +1,4 @@
-// $Id: TerritoryRegion.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: TerritoryRegion.h 6309 2010-04-11 09:09:40Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -24,6 +24,7 @@
 /// aktionen (Neubau, Übernahme, Abriss) benötigt wird von RecalcTerritory
 
 class noBaseBuilding;
+class GameWorldBase;
 
 class TerritoryRegion
 {
@@ -57,7 +58,7 @@ public:
 	~TerritoryRegion();
 
 	/// Berechnet ein Militärgebäude mit ein
-	void CalcTerritoryOfBuilding(const noBaseBuilding * const building);
+	void CalcTerritoryOfBuilding(const GameWorldBase * const gwb, const noBaseBuilding * const building);
 
 	// Liefert den Besitzer eines Punktes (mit absoluten Koordinaten, werden automatisch in relative umgerechnet!)
 	unsigned char GetOwner(const unsigned short x, const unsigned short y)

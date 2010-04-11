@@ -1,4 +1,4 @@
-// $Id: noFlag.cpp 6005 2010-02-12 10:08:09Z FloSoft $
+// $Id: noFlag.cpp 6309 2010-04-11 09:09:40Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -317,9 +317,10 @@ Ware *noFlag::SelectWare(const unsigned char dir, const bool swap_wares, const n
 				if(routes[i]->GetLength() == 1)
 				{
 					// Gebäude?
-					if(gwg->GetSpecObj<noBase>(x-!(y&1),y-1)->GetType() == NOP_BUILDING)
+					
+					if(gwg->GetSpecObj<noBase>(gwg->GetXA(x,y,1), gwg->GetYA(x,y,1))->GetType() == NOP_BUILDING)
 					{
-						if(gwg->GetSpecObj<noBuilding>(x-!(y&1),y-1)->FreePlaceAtFlag())
+						if(gwg->GetSpecObj<noBuilding>(gwg->GetXA(x,y,1), gwg->GetYA(x,y,1))->FreePlaceAtFlag())
 							break;
 					}
 				}

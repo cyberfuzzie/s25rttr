@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 6275 2010-04-05 14:32:43Z OLiver $
+// $Id: nobMilitary.cpp 6309 2010-04-11 09:09:40Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -800,7 +800,7 @@ void nobMilitary::Capture(const unsigned char new_owner)
 	}
 
 	// ehemalige Leute dieses Gebäudes nach Hause schicken, die ggf. grad auf dem Weg rein/raus waren
-	unsigned short coords[4] = {x,y,x+(y&1),y+1};
+	unsigned short coords[4] = {x,y,gwg->GetXA(x,y,4),gwg->GetYA(x,y,4)};
 	for(unsigned short i = 0;i<2;++i)
 	{
 		for(list<noBase*>::iterator it = gwg->GetFigures(coords[i*2],coords[i*2+1]).begin(); it.valid(); ++it)
@@ -865,7 +865,7 @@ void nobMilitary::NeedOccupyingTroops(const unsigned char new_owner)
 				{
 					// Und kommt er überhaupt zur Flagge (könnte ja in der 2. Reihe stehen, sodass die
 					// vor ihm ihn den Weg versperren)?
-					if(gwg->FindHumanPath((*it)->GetX(),(*it)->GetY(),x+(y&1),y+1,10,false) != 0xFF)
+					if(gwg->FindHumanPath((*it)->GetX(),(*it)->GetY(),gwg->GetXA(x,y,4),gwg->GetYA(x,y,4),10,false) != 0xFF)
 					{
 						// Dann is das der bisher beste
 						best_attacker = *it;

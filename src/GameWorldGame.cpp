@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 6307 2010-04-11 08:09:32Z OLiver $
+// $Id: GameWorldGame.cpp 6309 2010-04-11 09:09:40Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -516,7 +516,7 @@ void GameWorldGame::RecalcTerritory(const noBaseBuilding * const building,const 
 
 		// Wenn das Gebäude abgerissen wird oder wenn es noch nicht besetzt war, natürlich nicht mit einberechnen
 		if(*it != building || !destroyed)
-			tr.CalcTerritoryOfBuilding(*it);
+			tr.CalcTerritoryOfBuilding(this,*it);
 	}
 
 	// Baustellen von Häfen mit einschließen
@@ -524,7 +524,7 @@ void GameWorldGame::RecalcTerritory(const noBaseBuilding * const building,const 
 		it != harbor_building_sites_from_sea.end();++it)
 	{
 		if(*it != building || !destroyed)
-			tr.CalcTerritoryOfBuilding(*it);
+			tr.CalcTerritoryOfBuilding(this,*it);
 	}
 		
 

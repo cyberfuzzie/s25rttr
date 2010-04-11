@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 6307 2010-04-11 08:09:32Z OLiver $
+// $Id: GameWorldBase.cpp 6309 2010-04-11 09:09:40Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -445,7 +445,7 @@ bool GameWorldBase::IsMilitaryBuildingNearNode(const MapCoord nx, const MapCoord
 			{
 				if(IsMilitaryBuilding(x,y))
 					return true;
-				// Nach links oben anfangen
+				// Nach rechts oben anfangen
 				this->GetPointA(x,y,(2+dir)%6);
 			}
 		}

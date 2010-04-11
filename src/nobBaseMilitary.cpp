@@ -1,4 +1,4 @@
-// $Id: nobBaseMilitary.cpp 6269 2010-04-05 12:00:54Z OLiver $
+// $Id: nobBaseMilitary.cpp 6309 2010-04-11 09:09:40Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -204,8 +204,8 @@ void nobBaseMilitary::FindAnAttackerPlace(unsigned short &ret_x,unsigned short &
 {
 	
 
-	const unsigned short flag_x = x+(y&1);
-	const unsigned short flag_y = y+1;
+	const unsigned short flag_x = gwg->GetXA(x,y,4);
+	const unsigned short flag_y = gwg->GetYA(x,y,4);
 
 	unsigned short d;
 
@@ -389,7 +389,7 @@ void nobBaseMilitary::CheckArrestedAttackers()
 		{
 			// Und kommt er überhaupt zur Flagge (könnte ja in der 2. Reihe stehen, sodass die
 			// vor ihm ihn den Weg versperren)?
-			if(gwg->FindHumanPath((*it)->GetX(),(*it)->GetY(),x+(y&1),y+1,5,false) != 0xFF)
+			if(gwg->FindHumanPath((*it)->GetX(),(*it)->GetY(),gwg->GetXA(x,y,4),gwg->GetYA(x,y,4),5,false) != 0xFF)
 			{
 				// dann kann der zur Flagge gehen
 				(*it)->AttackFlag();

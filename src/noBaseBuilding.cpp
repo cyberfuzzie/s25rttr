@@ -1,4 +1,4 @@
-// $Id: noBaseBuilding.cpp 6267 2010-04-05 09:16:14Z OLiver $
+// $Id: noBaseBuilding.cpp 6309 2010-04-11 09:09:40Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -46,17 +46,18 @@
 noBaseBuilding::noBaseBuilding(const NodalObjectType nop,const BuildingType type,const unsigned short x, const unsigned short y,const unsigned char player)
 : noRoadNode(nop,x,y,player), type(type), nation(GAMECLIENT.GetPlayer(player)->nation), door_point_x(1000000), door_point_y(DOOR_CONSTS[GAMECLIENT.GetPlayer(player)->nation][type])
 {
+	
 	// Evtl Flagge setzen, wenn noch keine da ist
- 	if(gwg->GetNO(x + (y&1),y+1)->GetType() != NOP_FLAG)
+ 	if(gwg->GetNO(gwg->GetXA(x,y,4), gwg->GetYA(x,y,4))->GetType() != NOP_FLAG)
 	{
 		// ggf. vorherige Objekte löschen
-		noBase *no = gwg->GetSpecObj<noBase>(x + (y&1),y+1);
+		noBase *no = gwg->GetSpecObj<noBase>(gwg->GetXA(x,y,4), gwg->GetYA(x,y,4));
 		if(no)
 		{
 			no->Destroy();
 			delete no;
 		}
-		gwg->SetNO(new noFlag(x + (y&1),y+1,player), x + (y&1), y+1);
+		gwg->SetNO(new noFlag(gwg->GetXA(x,y,4), gwg->GetYA(x,y,4),player), gwg->GetXA(x,y,4), gwg->GetYA(x,y,4));
 	}
 
 	// Straßeneingang setzen (wenn nicht schon vorhanden z.b. durch vorherige Baustelle!)
@@ -68,14 +69,14 @@ noBaseBuilding::noBaseBuilding(const NodalObjectType nop,const BuildingType type
 		// immer von Flagge ZU Gebäude (!)
 		std::vector<unsigned char> route(1,1);
 		// Straße zuweisen
-		gwg->GetSpecObj<noRoadNode>(x + (y&1),y+1)->routes[1] = // der Flagge
+		gwg->GetSpecObj<noRoadNode>(gwg->GetXA(x,y,4), gwg->GetYA(x,y,4))->routes[1] = // der Flagge
 		routes[4] = // dem Gebäude
-		new RoadSegment(RoadSegment::RT_NORMAL,gwg->GetSpecObj<noRoadNode>(x + (y&1),y+1),this,route);
+		new RoadSegment(RoadSegment::RT_NORMAL,gwg->GetSpecObj<noRoadNode>(gwg->GetXA(x,y,4), gwg->GetYA(x,y,4)),this,route);
 	}
 	else
 	{
 		// vorhandene Straße der Flagge nutzen
-		noFlag * flag = gwg->GetSpecObj<noFlag>(x + (y&1),y+1);
+		noFlag * flag = gwg->GetSpecObj<noFlag>(gwg->GetXA(x,y,4), gwg->GetYA(x,y,4));
 
 		assert(flag->routes[1]);
 		routes[4] = flag->routes[1];
@@ -86,17 +87,18 @@ noBaseBuilding::noBaseBuilding(const NodalObjectType nop,const BuildingType type
 	// Werde/Bin ich (mal) ein großes Schloss? Dann müssen die Anbauten gesetzt werden
 	if(GetSize() == BQ_CASTLE || GetSize() == BQ_HARBOR)
 	{
-		unsigned short coords[6] = {x-1,y,x-!(y&1),y-1,x+ (y&1),y-1};
-
-		for(unsigned short i = 0;i<3;++i)
+		for(unsigned i = 0;i<3;++i)
 		{
-			noBase *no = gwg->GetSpecObj<noBase>(coords[i*2],coords[i*2+1]);
+			MapCoord xa = gwg->GetXA(x,y,i);
+			MapCoord ya = gwg->GetYA(x,y,i);
+			
+			noBase *no = gwg->GetSpecObj<noBase>(xa,ya);
 			if(no)
 			{
 				no->Destroy();
 				delete no;
 			}
-			gwg->SetNO(new noExtension(this),coords[i*2],coords[i*2+1]);
+			gwg->SetNO(new noExtension(this),xa,ya);
 		}
 	}
 }
@@ -214,7 +216,7 @@ short noBaseBuilding::GetDoorPointX()
 
 noFlag * noBaseBuilding::GetFlag() const
 {
-	return gwg->GetSpecObj<noFlag>(x + (y&1),y+1);
+	return gwg->GetSpecObj<noFlag>(gwg->GetXA(x,y,4), gwg->GetYA(x,y,4));
 }
 
 
@@ -241,31 +243,21 @@ void noBaseBuilding::DestroyBuildingExtensions()
 	// Nur bei großen Gebäuden gibts diese Anbauten
 	if(GetSize() == BQ_CASTLE || GetSize() == BQ_HARBOR)
 	{
-		noBase *no;
 		
-		no = gwg->GetSpecObj<noBase>(x-1, y);
-		if(no)
+		for(unsigned i = 0;i<3;++i)
 		{
-			no->Destroy();
-			delete no;
-			gwg->SetNO(0, x-1, y);
+			MapCoord xa = gwg->GetXA(x,y,i);
+			MapCoord ya = gwg->GetYA(x,y,i);
+			
+			noBase *no = gwg->GetSpecObj<noBase>(xa, ya);
+			if(no)
+			{
+				no->Destroy();
+				delete no;
+				gwg->SetNO(NULL, xa, ya);
+			}
 		}
-		
-		no = gwg->GetSpecObj<noBase>(x - !(y&1), y-1);
-		if(no)
-		{
-			no->Destroy();
-			delete no;
-			gwg->SetNO(0, x - !(y&1), y-1);
-		}
-		
-		no = gwg->GetSpecObj<noBase>(x + (y&1), y-1);
-		if(no)
-		{
-			no->Destroy();
-			delete no;
-			gwg->SetNO(0, x + (y&1), y-1);
-		}
+	
 	}
 }
 

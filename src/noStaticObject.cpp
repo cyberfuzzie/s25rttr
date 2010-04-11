@@ -1,4 +1,4 @@
-// $Id: noStaticObject.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: noStaticObject.cpp 6309 2010-04-11 09:09:40Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -53,18 +53,18 @@ noStaticObject::noStaticObject(unsigned short x, unsigned short y, unsigned shor
 	// sind wir ein "Schloss" Objekt?
 	if(GetSize() == 2)
 	{
-		unsigned short coords[6] = {x-1,y,x-!(y&1),y-1,x+ (y&1),y-1};
-
-		for(unsigned short i = 0;i<3;++i)
+		for(unsigned i = 0;i<3;++i)
 		{
-			noBase *no = gwg->GetSpecObj<noBase>(coords[i*2], coords[i*2+1]);
+			MapCoord xa = gwg->GetXA(x,y,i);
+			MapCoord ya = gwg->GetYA(x,y,i);
+			
+			noBase *no = gwg->GetSpecObj<noBase>(xa,ya);
 			if(no)
 			{
 				no->Destroy();
 				delete no;
 			}
-
-			gwg->SetNO(new noExtension(this), coords[i*2], coords[i*2+1]);
+			gwg->SetNO(new noExtension(this),xa,ya);
 		}
 	}
 }
@@ -134,30 +134,19 @@ void noStaticObject::Destroy_noStaticObject(void)
 	// waren wir ein "Schloss" Objekt?
 	if(GetSize() == 2)
 	{
-		noBase *no;
-		
-		no = gwg->GetSpecObj<noBase>(x-1, y);
-		if(no)
+	
+		for(unsigned i = 0;i<3;++i)
 		{
-			no->Destroy();
-			delete no;
-			gwg->SetNO(0, x-1, y);
-		}
-		
-		no = gwg->GetSpecObj<noBase>(x - !(y&1), y-1);
-		if(no)
-		{
-			no->Destroy();
-			delete no;
-			gwg->SetNO(0, x - !(y&1), y-1);
-		}
-		
-		no = gwg->GetSpecObj<noBase>(x + (y&1), y-1);
-		if(no)
-		{
-			no->Destroy();
-			delete no;
-			gwg->SetNO(0, x + (y&1), y-1);
+			MapCoord xa = gwg->GetXA(x,y,i);
+			MapCoord ya = gwg->GetYA(x,y,i);
+			
+			noBase *no = gwg->GetSpecObj<noBase>(xa, ya);
+			if(no)
+			{
+				no->Destroy();
+				delete no;
+				gwg->SetNO(NULL, xa, ya);
+			}
 		}
 	}
 

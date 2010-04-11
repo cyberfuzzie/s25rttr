@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.cpp 6307 2010-04-11 08:09:32Z OLiver $
+// $Id: AIPlayerJH.cpp 6308 2010-04-11 08:16:03Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -820,7 +820,7 @@ void AIPlayerJH::HandleNoMoreResourcesReachable(const Coords& coords, BuildingTy
 	else
 		return;
 	
-	RemoveUnusedRoad(gwb->GetSpecObj<noFlag>(GetXA(x,y,4),GetYA(x,y,4)), 1);
+	RemoveUnusedRoad(gwb->GetSpecObj<noFlag>(gwb->GetXA(x,y,4),gwb->GetYA(x,y,4)), 1);
 
 	// try to expand, maybe res blocked a passage
 	AddBuildJob(new AIJH::BuildJob(this, construction.ChooseMilitaryBuilding(x, y), x, y));

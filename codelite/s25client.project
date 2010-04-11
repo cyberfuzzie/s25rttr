@@ -596,27 +596,6 @@
   </VirtualDirectory>
   <Dependencies Name="Release"/>
   <Settings Type="Executable">
-    <GlobalSettings>
-      <Compiler Options="">
-        <IncludePath Value="."/>
-        <IncludePath Value="../"/>
-        <IncludePath Value="../libsiedler2/src/"/>
-        <IncludePath Value="../liblobby/src/"/>
-        <IncludePath Value="../liblobby/libutil/src/"/>
-        <IncludePath Value="../mygettext/src/"/>
-        <IncludePath Value="../libendian/src/"/>
-      </Compiler>
-      <Linker Options="">
-        <LibraryPath Value="../libsiedler2/libendian/codelite"/>
-        <LibraryPath Value="../"/>
-        <Library Value="GL"/>
-        <Library Value="siedler2"/>
-        <Library Value="mygettext"/>
-        <Library Value="endian"/>
-        <Library Value="bz2"/>
-      </Linker>
-      <ResourceCompiler Options=""/>
-    </GlobalSettings>
     <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-g" Required="yes" PreCompiledHeader=""/>
       <Linker Options="" Required="yes"/>
@@ -671,6 +650,27 @@
         <CustomPreBuild/>
       </AdditionalRules>
     </Configuration>
+    <GlobalSettings>
+      <Compiler Options="-Wall;-Werror">
+        <IncludePath Value="."/>
+        <IncludePath Value="../"/>
+        <IncludePath Value="../libsiedler2/src/"/>
+        <IncludePath Value="../liblobby/src/"/>
+        <IncludePath Value="../liblobby/libutil/src/"/>
+        <IncludePath Value="../mygettext/src/"/>
+        <IncludePath Value="../libendian/src/"/>
+      </Compiler>
+      <Linker Options="">
+        <LibraryPath Value="../libsiedler2/libendian/codelite"/>
+        <LibraryPath Value="../"/>
+        <Library Value="GL"/>
+        <Library Value="siedler2"/>
+        <Library Value="mygettext"/>
+        <Library Value="endian"/>
+        <Library Value="bz2"/>
+      </Linker>
+      <ResourceCompiler Options=""/>
+    </GlobalSettings>
   </Settings>
   <Dependencies Name="Debug">
     <Project Name="audio"/>

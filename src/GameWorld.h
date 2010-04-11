@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 6303 2010-04-10 19:54:17Z OLiver $
+// $Id: GameWorld.h 6307 2010-04-11 08:09:32Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -290,11 +290,11 @@ public:
 	/// Prüft, ob der Pkut zu dem Spieler gehört (wenn er der Besitzer ist und es false zurückliefert, ist es Grenzgebiet)
 	bool IsPlayerTerritory(const MapCoord x, const MapCoord y) const;
 	/// Berechnet BQ bei einer gebauten Straße
-	void CalcRoad(const int x, const int y,const unsigned char player);
+	void CalcRoad(const MapCoord x, const MapCoord y,const unsigned char player);
 	/// Ist eine Flagge irgendwo um x,y ?
 	bool FlagNear(const int x, const int y) const;
 	/// Prüft, ob sich in unmittelbarer Nähe (im Radius von 4) Militärgebäude befinden
-	bool IsMilitaryBuildingNearNode(const int nx, const int ny) const;
+	bool IsMilitaryBuildingNearNode(const MapCoord nx, const MapCoord ny) const;
 
 	/// setzt den virtuellen Straßen-Wert an der Stelle X,Y (berichtigt).
 	void SetVirtualRoad(const MapCoord x, const MapCoord y, unsigned char dir, unsigned char type);

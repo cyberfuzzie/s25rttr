@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 6306 2010-04-11 00:25:59Z jh $
+// $Id: GameWorldGame.cpp 6307 2010-04-11 08:09:32Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -217,21 +217,6 @@ void GameWorldGame::RemoveFigure(const noBase * fig,const MapCoord x, const MapC
 
 void GameWorldGame::SetBuildingSite(const BuildingType type,const MapCoord x, const MapCoord y, const unsigned char player)
 {
-	//// TODO: Verzögerungsbugabfrage, kann später ggf. weg
-	//// Abfragen, ob schon eine Flagge in der Nähe ist (keine Mini-1-Wege)
-	//unsigned short flag_x = x+(y&1),flag_y = y+1;
-	//for(unsigned char i = 0;i<6;++i)
-	//{
-	//	if(GetNO(GetXA(flag_x,flag_y,i),GetYA(flag_x,flag_y,i))->GetType() == NOP_FLAG)
-	//		return;
-	//}
-
-	//// TODO: Verzögerungsbugabfrage, kann später ggf. weg
-	//// Abfragen, ob evtl ein Baum gepflanzt wurde, damit der nicht überschrieben wird und auch nich am Platz davor für die
-	//// Flagge!
-	//if(GetNO(x,y)->GetType() == NOP_TREE || GetNO(x+(y&1),y+1)->GetType() == NOP_TREE)
-	//	return;
-
 	// Gucken, ob das Gebäude hier überhaupt noch gebaut wrden kann
 	BuildingQuality bq = CalcBQ(x,y,player,false,false);
 
@@ -670,7 +655,7 @@ void GameWorldGame::RecalcTerritory(const noBaseBuilding * const building,const 
 				for(unsigned i = 0;i<6;++i)
 				{
 					neighbors[y-(y1-3)][x-(x1-3)] = 0;
-					if(GetNodeAround(xc,yc,i).boundary_stones[i] == owner)
+					if(GetNodeAround(xc,yc,i).boundary_stones[0] == owner)
 						++neighbors[y-(y1-3)][x-(x1-3)];
 				}
 			}

@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.cpp 6261 2010-04-02 12:25:11Z OLiver $
+// $Id: dskGameInterface.cpp 6307 2010-04-11 08:09:32Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1210,7 +1210,7 @@ void dskGameInterface::DemolishRoad(const unsigned start_id)
 {
 	for(unsigned i = road.route.size();i>=start_id;--i)
 	{
-		int tx = road.point_x,ty = road.point_y;
+		MapCoord tx = road.point_x,ty = road.point_y;
 		road.point_x = gwv->GetXA(tx,ty,(road.route[i-1]+3)%6);
 		road.point_y = gwv->GetYA(tx,ty,(road.route[i-1]+3)%6);
 		gwv->SetPointVirtualRoad(road.point_x,road.point_y, road.route[i-1], 0);

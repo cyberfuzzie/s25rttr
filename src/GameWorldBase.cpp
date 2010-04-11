@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 6269 2010-04-05 12:00:54Z OLiver $
+// $Id: GameWorldBase.cpp 6307 2010-04-11 08:09:32Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -421,95 +421,33 @@ bool GameWorldBase::FlagNear(const int x, const int y) const
 	return 0;
 }
 
-void GameWorldBase::CalcRoad(const int x, const int y,const unsigned char player)
+void GameWorldBase::CalcRoad(const MapCoord x, const MapCoord y,const unsigned char player)
 {
 	SetBQ(x,y,GAMECLIENT.GetPlayerID());
-	SetBQ(x,y,GAMECLIENT.GetPlayerID());
-
-	SetBQ(x+1,y,GAMECLIENT.GetPlayerID());
-	SetBQ(x-!(y&1),y+1,GAMECLIENT.GetPlayerID());
-	SetBQ(x+ (y&1),y+1,GAMECLIENT.GetPlayerID());
+	
+	for(unsigned i = 0;i<3;++i)
+		SetBQ(GetXA(x,y,i),GetYA(x,y,i),GAMECLIENT.GetPlayerID());
 }
 
-bool GameWorldBase::IsMilitaryBuildingNearNode(const int nx, const int ny) const
+bool GameWorldBase::IsMilitaryBuildingNearNode(const MapCoord nx, const MapCoord ny) const
 {
 	// Im Umkreis von 4 Punkten ein Militärgebäude suchen
-	int x,y;
+	MapCoord x = nx,y = ny;
 
 	for(int r = 1;r<=4;++r)
 	{
-		x=nx-r;
-		y=ny;
-
-		// links oben
-		for(unsigned short i = 0;i<r;++i)
+		// Eins weiter nach links gehen
+		this->GetPointA(x,y,0);
+		
+		for(unsigned dir = 0;dir<6;++dir)
 		{
-			if(x>0 && y>0 && x<width && y<height)
+			for(unsigned short i = 0;i<r;++i)
 			{
 				if(IsMilitaryBuilding(x,y))
 					return true;
+				// Nach links oben anfangen
+				this->GetPointA(x,y,(2+dir)%6);
 			}
-
-			x+=(y&1);
-			--y;
-		}
-		// oben
-		for(unsigned short i = 0;i<r;++i)
-		{
-			if(x>0 && y>0 && x<width && y<height)
-			{
-				if(IsMilitaryBuilding(x,y))
-					return true;
-			}
-
-			++x;
-		}
-		// rechts oben
-		for(unsigned short i = 0;i<r;++i)
-		{
-			if(x>0 && y>0 && x<width && y<height)
-			{
-				if(IsMilitaryBuilding(x,y))
-					return true;
-			}
-
-			x+=(y&1);
-			++y;
-		}
-		// rechts unten
-		for(unsigned short i = 0;i<r;++i)
-		{
-			if(x>0 && y>0 && x<width && y<height)
-			{
-				if(IsMilitaryBuilding(x,y))
-					return true;
-			}
-
-			x-=!(y&1);
-			++y;
-		}
-		// unten
-		for(unsigned short i = 0;i<r;++i)
-		{
-			if(x>0 && y>0 && x<width && y<height)
-			{
-				if(IsMilitaryBuilding(x,y))
-					return true;
-			}
-
-			--x;
-		}
-		// links unten
-		for(unsigned short i = 0;i<r;++i)
-		{
-			if(x>0 && y>0 && x<width && y<height)
-			{
-				if(IsMilitaryBuilding(x,y))
-					return true;
-			}
-
-			x-=!(y&1);
-			--y;
 		}
 	}
 
@@ -849,10 +787,10 @@ BuildingQuality GameWorldBase::CalcBQ(const MapCoord x, const MapCoord y,const u
 
 	if(val >= BQ_HUT && val <= BQ_HARBOR)
 	{
-		if(GetNO(x+(y&1),y+1)->GetBM() == noBase::BM_FLAG)
+		if(GetNO(GetXA(x,y,4),GetYA(x,y,4))->GetBM() == noBase::BM_FLAG)
 			return val;
 
-		if(CalcBQ(x+(y&1),y+1,player,true,visual,ignore_player))
+		if(CalcBQ(GetXA(x,y,4),GetYA(x,y,4),player,true,visual,ignore_player))
 		{
 			return val;
 		}

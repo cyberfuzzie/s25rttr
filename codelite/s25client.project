@@ -482,12 +482,6 @@
       <File Name="../src/nobHarborBuilding.cpp"/>
       <File Name="../src/GlobalGameSettings.cpp"/>
       <File Name="../src/GlobalGameSettings.h"/>
-      <File Name="../src/GameReplay.cpp"/>
-      <File Name="../src/GameReplay.h"/>
-      <File Name="../src/GameSavedFile.cpp"/>
-      <File Name="../src/GameSavedFile.h"/>
-      <File Name="../src/GameSavegame.cpp"/>
-      <File Name="../src/GameSavegame.h"/>
       <VirtualDirectory Name="Addons">
         <File Name="../src/AddonChangeGoldDeposits.h"/>
         <File Name="../src/AddonCustomBuildSequence.h"/>

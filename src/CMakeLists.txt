@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 6150 2010-03-13 23:17:32Z jh $
+### $Id: CMakeLists.txt 6312 2010-04-11 12:36:04Z FloSoft $
 ################################################################################
 
 INCLUDE(FindBZip2)
@@ -387,7 +387,7 @@ IF ( "${COMPILEFOR}" STREQUAL "windows")
 	ADD_CUSTOM_COMMAND(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/s25client.res.o 
 					   COMMAND ${WINDRES} -I${CMAKE_CURRENT_SOURCE_DIR}/../win32/ -i${CMAKE_CURRENT_SOURCE_DIR}/../win32/s25client.rc -o ${CMAKE_CURRENT_BINARY_DIR}/s25client.res.o)
 
-	SET(s25client_SRCS ${s25client_SRCS} s25client.res.o)
+	SET(s25client_SRCS ${s25client_SRCS} ${CMAKE_CURRENT_BINARY_DIR}/s25client.res.o)
 ENDIF ( "${COMPILEFOR}" STREQUAL "windows")
 
 IF ( "${COMPILEFOR}" STREQUAL "apple")

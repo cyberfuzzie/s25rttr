@@ -1,4 +1,4 @@
-// $Id: ctrlProgress.cpp 6177 2010-03-24 10:44:32Z FloSoft $
+// $Id: ctrlProgress.cpp 6310 2010-04-11 10:26:09Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -167,6 +167,8 @@ bool ctrlProgress::Msg_LeftDown(const MouseCoords& mc)
 		position = ( mc.x - (GetX() + height + 2 + x_padding) 
 		             + /*rounding:*/ (width - height*2 - 4 - 2*x_padding) / maximum / 2)
 		           * maximum / (width - height*2 - 4 - 2*x_padding);
+
+		if(parent) parent->Msg_ProgressChange(GetID(), position);
 		return true;
 	}
 	else

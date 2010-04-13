@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: windows.local.cmake 6121 2010-03-06 12:27:48Z FloSoft $
+### $Id: windows.local.cmake 6321 2010-04-13 16:08:47Z FloSoft $
 ################################################################################
 
 # this one is important
@@ -9,7 +9,7 @@ EXECUTE_PROCESS(COMMAND "uname" "-m"
 	OUTPUT_VARIABLE CMAKE_SYSTEM_PROCESSOR OUTPUT_STRIP_TRAILING_WHITESPACE)
 
 # specify the compiler
-SET(CMAKE_C_COMPILER   gcc)
-SET(CMAKE_CXX_COMPILER g++)
+SET_CCACHE(CMAKE_C_COMPILER   gcc)
+SET_CCACHE(CMAKE_CXX_COMPILER g++)
 
 INCLUDE(cmake/windows.common.cmake)

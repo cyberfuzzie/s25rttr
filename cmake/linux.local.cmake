@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: linux.local.cmake 6125 2010-03-07 18:20:41Z FloSoft $
+### $Id: linux.local.cmake 6321 2010-04-13 16:08:47Z FloSoft $
 ################################################################################
 
 # this one is important
@@ -9,8 +9,8 @@ EXECUTE_PROCESS(COMMAND "uname" "-m"
 	OUTPUT_VARIABLE CMAKE_SYSTEM_PROCESSOR OUTPUT_STRIP_TRAILING_WHITESPACE)
 
 # specify the compiler
-SET(CMAKE_C_COMPILER   gcc)
-SET(CMAKE_CXX_COMPILER g++)
+SET_CCACHE(CMAKE_C_COMPILER   gcc)
+SET_CCACHE(CMAKE_CXX_COMPILER g++)
 
 # set compiler flags for "native"
 ADD_FLAGS(CMAKE_C_FLAGS -mtune=native)

@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 6320 2010-04-13 15:30:16Z FloSoft $
+### $Id: CMakeLists.txt 6321 2010-04-13 16:08:47Z FloSoft $
 ################################################################################
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
@@ -7,6 +7,7 @@ CMAKE_POLICY(SET CMP0003 OLD)
 
 SET(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules)
 
+INCLUDE(CMakeMacroSetCCache)
 INCLUDE(CMakeMacroAddFlags)
 INCLUDE(CMakeMacroForceAddFlags)
 INCLUDE(CMakeMacroCorrectLib)

@@ -1,4 +1,4 @@
-// $Id: AddonInexhaustibleMines.h 6006 2010-02-12 11:20:01Z FloSoft $
+// $Id: AddonInexhaustibleMines.h 6320 2010-04-13 15:30:16Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

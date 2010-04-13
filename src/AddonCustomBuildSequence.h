@@ -1,4 +1,4 @@
-// $Id: AddonCustomBuildSequence.h 6000 2010-02-11 17:19:50Z FloSoft $
+// $Id: AddonCustomBuildSequence.h 6320 2010-04-13 15:30:16Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

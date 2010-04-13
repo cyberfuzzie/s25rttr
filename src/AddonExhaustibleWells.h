@@ -1,4 +1,4 @@
-// $Id: AddonExhaustibleWells.h 6011 2010-02-12 16:35:00Z FloSoft $
+// $Id: AddonExhaustibleWells.h 6320 2010-04-13 15:30:16Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

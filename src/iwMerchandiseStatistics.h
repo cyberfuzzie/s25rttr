@@ -1,4 +1,4 @@
-// $Id: iwMerchandiseStatistics.h 5855 2010-01-04 16:44:38Z FloSoft $
+// $Id: iwMerchandiseStatistics.h 6320 2010-04-13 15:30:16Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

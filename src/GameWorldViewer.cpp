@@ -1,4 +1,4 @@
-// $Id: GameWorldViewer.cpp 6313 2010-04-11 20:29:58Z OLiver $
+// $Id: GameWorldViewer.cpp 6323 2010-04-14 16:46:13Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -46,6 +46,7 @@ xoffset(0), yoffset(0), selx(0), sely(0), sx(0), sy(0), scroll(false), last_xoff
 {
 	displayWidth  = VideoDriverWrapper::inst().GetScreenWidth();
 	displayHeight = VideoDriverWrapper::inst().GetScreenHeight();
+	MoveTo(0,0);
 }
 
 struct ObjectBetweenLines

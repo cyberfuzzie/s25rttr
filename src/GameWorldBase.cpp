@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 6313 2010-04-11 20:29:58Z OLiver $
+// $Id: GameWorldBase.cpp 6323 2010-04-14 16:46:13Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -540,7 +540,11 @@ void GameWorldBase::LookForMilitaryBuildings(list<nobBaseMilitary*>& buildings,c
 			else tx = cx;
 
 			for(list<nobBaseMilitary*>::iterator it = military_squares[ty*(width/MILITARY_SQUARE_SIZE+1)+tx].begin();it.valid();++it)
-				buildings.push_back(*it);
+			{
+				// Jedes Militärgebäude nur einmal hinzufügen
+				if(!buildings.search(*it).valid())
+					buildings.push_back(*it);
+			}
 		}
 	}
 }

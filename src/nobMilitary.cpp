@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 6309 2010-04-11 09:09:40Z OLiver $
+// $Id: nobMilitary.cpp 6327 2010-04-16 18:28:38Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -279,7 +279,7 @@ void nobMilitary::LookForEnemyBuildings(const nobBaseMilitary * const exception)
 {
 	// Umgebung nach Militärgebäuden absuchen
 	list<nobBaseMilitary*> buildings;
-	gwg->LookForMilitaryBuildings(buildings,x,y,4);
+	gwg->LookForMilitaryBuildings(buildings,x,y,3);
 	frontier_distance = 0;
 
 

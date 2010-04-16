@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 6311 2010-04-11 11:35:56Z OLiver $
+// $Id: GameClientPlayer.cpp 6327 2010-04-16 18:28:38Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1203,6 +1203,13 @@ void GameClientPlayer::RegulateAllTroops()
 		(*it)->RegulateTroops();
 }
 
+/// Pr�ft von allen Milit�rgeb�uden die Fahnen neu
+void GameClientPlayer::RecalcMilitaryFlags()
+{
+	for(std::list<nobMilitary*>::iterator it = military_buildings.begin();it!=military_buildings.end();++it)
+		(*it)->LookForEnemyBuildings(NULL);
+}
+
 /// Sucht für EINEN Soldaten ein neues Militärgebäude, als Argument wird Referenz auf die 
 /// entsprechende Soldatenanzahl im Lagerhaus verlangt
 void GameClientPlayer::NewSoldierAvailable(const unsigned& soldier_count)
@@ -1568,7 +1575,7 @@ void GameClientPlayer::AcceptPact(const unsigned id, const PactType pt, const un
 		// Besetzung der Militärgebäude der jeweiligen Spieler überprüfen, da ja jetzt neue Feinde oder neue 
 		// Verbündete sich in Grenznähe befinden könnten
 		this->RegulateAllTroops();
-		GameClient::inst().GetPlayer(other_player)->RegulateAllTroops();
+		GameClient::inst().GetPlayer(other_player)->RecalcMilitaryFlags();
 
 		// Ggf. den GUI Bescheid sagen, um Sichtbarkeiten etc. neu zu berechnen
 		if(pt == TREATY_OF_ALLIANCE && (GameClient::inst().GetPlayerID() == playerid || GameClient::inst().GetPlayerID() == other_player))

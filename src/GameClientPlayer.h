@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.h 6286 2010-04-07 11:27:43Z OLiver $
+// $Id: GameClientPlayer.h 6327 2010-04-16 18:28:38Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -329,6 +329,8 @@ public:
 	void OrderTroops(nobMilitary * goal, unsigned count);
 	/// Prüft die Besatzung von allen Militärgebäuden und reguliert entsprechend (bei Veränderung der Militäreinstellungen)
 	void RegulateAllTroops();
+	/// Pr�ft von allen Milit�rgeb�uden die Fahnen neu
+	void RecalcMilitaryFlags();
 	/// Sucht für EINEN Soldaten ein neues Militärgebäude, als Argument wird Referenz auf die 
 	/// entsprechende Soldatenanzahl im Lagerhaus verlangt
 	void NewSoldierAvailable(const unsigned& soldier_count);

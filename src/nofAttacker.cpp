@@ -676,14 +676,14 @@ void nofAttacker::MissAttackingWalk()
 					defender->GetY() == attacked_goal->GetY() ))
 					// zum Verteidiger laufen, falls er in der Nähe ist
 					dir = gwg->FindHumanPath(x,y,defender->GetX(),
-					defender->GetY(),100,true);
+					defender->GetY(),MAX_ATTACKING_RUN_DISTANCE,true);
 				else
-					dir = gwg->FindHumanPath(x,y,goal_x,goal_y,100,true);
+					dir = gwg->FindHumanPath(x,y,goal_x,goal_y,MAX_ATTACKING_RUN_DISTANCE,true);
 			}
 		}
 		else
 			// Zur Flagge des angegriffenen Gebäudes laufen
-			dir = gwg->FindHumanPath(x,y,goal_x,goal_y,100,true);
+			dir = gwg->FindHumanPath(x,y,goal_x,goal_y,MAX_ATTACKING_RUN_DISTANCE,true);
 	}
 	else
 	{
@@ -1306,7 +1306,7 @@ void nofAttacker::WalkingToFightSpot()
 	// Noch nicht am Platz... Hingehen!
 	else
 	{
-		dir = gwg->FindHumanPath(x,y,fightSpot_x,fightSpot_y,100);
+		dir = gwg->FindHumanPath(x,y,fightSpot_x,fightSpot_y,MAX_ATTACKING_RUN_DISTANCE);
 		StartWalking(dir);
 		return;
 	}
@@ -1492,7 +1492,7 @@ void nofAttacker::HandleState_SeaAttack_ReturnToShip()
 		Wander();
 	}
 	// oder finden wir gar keinen Weg mehr?
-	else if((dir = gwg->FindHumanPath(x,y,ship_x,ship_y,100)) == 0xFF)
+	else if((dir = gwg->FindHumanPath(x,y,ship_x,ship_y,MAX_ATTACKING_RUN_DISTANCE)) == 0xFF)
 	{
 		// Kein Weg gefunden --> Rumirren
 		StartWandering();

@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 6324 2010-04-14 18:22:08Z OLiver $
+// $Id: GameWorldBase.cpp 6331 2010-04-19 09:22:32Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1184,7 +1184,7 @@ void GameWorldBase::GetDynamicObjectsFrom(const MapCoord x, const MapCoord y,lis
 			it.valid();++it)
 		{
 			// Ist es auch ein Figur und befindet sie sich an diesem Punkt?
-			if((*it)->GetType() == NOP_FIGURE || (*it)->GetGOT() == GOT_ANIMAL)
+			if((*it)->GetType() == NOP_FIGURE || (*it)->GetGOT() == GOT_ANIMAL || (*it)->GetGOT() == GOT_SHIP)
 			{
 				if(static_cast<noMovable*>(*it)->GetX() == x && static_cast<noMovable*>(*it)->GetY() == y)
 					objects.push_back(*it);

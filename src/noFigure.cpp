@@ -504,9 +504,12 @@ void noFigure::HandleEvent(const unsigned int id)
 		{
 			list<noBase*> figures;
 			gwg->GetDynamicObjectsFrom(x,y,figures);
-			if(figures.search(this).valid())
-				gwg->RecalcMovingVisibilities(x,y,player,GetVisualRange(),old_dir);
-			else
+			
+			gwg->RecalcMovingVisibilities(x,y,player,GetVisualRange(),old_dir);
+			
+			// Wenn Figur verschwunden ist, muss ihr ehemaliger gesamter Sichtbereich noch einmal
+			// neue berechnet werden
+			if(!figures.search(this).valid())
 				CalcVisibilities(x,y);
 		}
 		

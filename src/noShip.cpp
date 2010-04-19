@@ -1,4 +1,4 @@
-// $Id: noShip.cpp 6311 2010-04-11 11:35:56Z OLiver $
+// $Id: noShip.cpp 6331 2010-04-19 09:22:32Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -412,8 +412,10 @@ void noShip::HandleEvent(const unsigned int id)
 
 					figures.pop_front();
 					gwg->AddFigure(attacker,x,y);
-					attacker->StartAttackOnOtherIsland(x,y,obj_id);
+					
 					current_ev = em->AddEvent(this,30,1);
+					attacker->StartAttackOnOtherIsland(x,y,obj_id);
+					;
 				};
 			case STATE_SEAATTACK_UNLOADING:
 				{
@@ -1072,6 +1074,8 @@ void noShip::SeaAttackerWishesNoReturn()
 	// Alle Soldaten an Bord 
 	if(remaining_sea_attackers == 0)
 	{
+		// Andere Events ggf. erstmal abmelden
+		em->RemoveEvent(current_ev);
 		if(figures.size())
 		{
 			// Wieder nach Hause fahren

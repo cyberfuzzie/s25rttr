@@ -1,4 +1,4 @@
-// $Id: iwAction.cpp 6261 2010-04-02 12:25:11Z OLiver $
+// $Id: iwAction.cpp 6334 2010-04-19 18:59:57Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -357,10 +357,7 @@ void iwAction::AddUpgradeRoad(ctrlGroup *group, unsigned int &x, unsigned int& w
 		if(flag && flag->routes[flag_dir]->GetRoadType() == RoadSegment::RT_NORMAL)
 		{
 			width = 90;
-
-			group->AddImageButton(2, x, 45, width, 36, TC_GREY, LOADER.GetImageN("io", 44), _("Upgrade to donkey road")); 
-
-			x += width;
+			group->AddImageButton(2, 90, 45, width, 36, TC_GREY, LOADER.GetImageN("io", 44), _("Upgrade to donkey road")); 
 		}
 	}
 }

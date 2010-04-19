@@ -1,4 +1,4 @@
-// $Id: noShip.cpp 6331 2010-04-19 09:22:32Z OLiver $
+// $Id: noShip.cpp 6335 2010-04-19 21:40:21Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1024,8 +1024,11 @@ void noShip::HarborDestroyed(nobHarborBuilding * hb)
 							return;
 						}
 					}
-
-				} // Keinbreak;
+					
+					pos = 0;
+					
+					HandleState_TransportDriving();
+				} break;
 			case STATE_TRANSPORT_DRIVING: /// Schiff transportiert Waren/Figuren von einen Ort zum anderen
 				{
 					// Route wird wieder von vorne abgearbeitet
@@ -1040,6 +1043,8 @@ void noShip::HarborDestroyed(nobHarborBuilding * hb)
 					// Route wird wieder von vorne abgearbeitet
 					pos = 0;
 					state = STATE_TRANSPORT_DRIVING;
+					
+					HandleState_TransportDriving();
 				} break;
 
 			}

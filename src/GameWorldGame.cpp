@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 6313 2010-04-11 20:29:58Z OLiver $
+// $Id: GameWorldGame.cpp 6333 2010-04-19 18:42:40Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1203,9 +1203,6 @@ bool GameWorldGame::ValidPointForFighting(const MapCoord x, const MapCoord y, no
 	// Liegt hier was rum auf dem man nicht kämpfen sollte?
 	noBase::BlockingManner bm = GetNO(x,y)->GetBM();
 	if(bm != noBase::BM_NOTBLOCKING && bm != noBase::BM_TREE && bm != noBase::BM_FLAG)
-		return false;
-
-	if(GetNode(x,y).reserved)
 		return false;
 
 	return true;

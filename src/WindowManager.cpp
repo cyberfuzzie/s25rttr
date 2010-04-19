@@ -1,4 +1,4 @@
-// $Id: WindowManager.cpp 6210 2010-03-29 16:41:43Z jh $
+// $Id: WindowManager.cpp 6333 2010-04-19 18:42:40Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1114,37 +1114,25 @@ void WindowManager::DrawToolTip()
 {
 	// Tooltip zeichnen
 	if(tooltip.length() && mc)
-	if(mc->x + 40 < VideoDriverWrapper::inst().GetScreenWidth())
 	{
-		const unsigned  maxWidth = VideoDriverWrapper::inst().GetScreenWidth() - mc->x - 40;
-		if(NormalFont->getWidth(tooltip) > maxWidth)
-		{
-			glArchivItem_Font::WrapInfo wi;
-			NormalFont->GetWrapInfo(tooltip, maxWidth, maxWidth, wi);
+		unsigned text_width = NormalFont->getWidth(tooltip);
+		unsigned right_edge = mc->x + 30 + text_width + 2;
+		unsigned x = mc->x + 30;
+		
+		// links neben der Maus, wenn es über den Rand gehen würde
+		if(right_edge > VideoDriverWrapper::inst().GetScreenWidth() )
+			x = mc->x - 30 - text_width;
+	
+		unsigned int count = 0;
+		std::string::size_type pos = 0;
+		do {
+			count++;
+			if(pos != 0)
+				pos++;
+		} while( (pos = tooltip.find('\n', pos)) != std::string::npos && (pos < tooltip.length()-2));
 
-			std::string * lines = new std::string[wi.positions.size()];
-			wi.CreateSingleStrings(tooltip,lines);
-			unsigned short actualWidth = 0;
-			for(unsigned char i=0; i < wi.positions.size(); ++i)
-				if(NormalFont->getWidth(lines[i]) > actualWidth)
-					actualWidth = NormalFont->getWidth(lines[i]);
-			Window::DrawRectangle(mc->x + 30 - 2, mc->y - 2, actualWidth + 4, 4 + wi.positions.size() * NormalFont->getDy(), 0x9F000000);
-			for(unsigned char i=0; i < wi.positions.size(); ++i)
-				NormalFont->Draw(mc->x + 30, mc->y + NormalFont->getDy() * (2*i+1)/2, lines[i].c_str(), glArchivItem_Font::DF_VCENTER, COLOR_YELLOW);
-			delete [] lines;
-		}
-		else
-		{
-			unsigned int count = 0;
-			std::string::size_type pos = 0;
-			do {
-				count++;
-				if(pos != 0)
-					pos++;
-			} while( (pos = tooltip.find('\n', pos)) != std::string::npos && (pos < tooltip.length()-2));
-
-			Window::DrawRectangle(mc->x + 30 - 2, mc->y - 2, NormalFont->getWidth(tooltip) + 4, 4 + count * NormalFont->getDy(), 0x9F000000);
-			NormalFont->Draw(mc->x + 30, mc->y , tooltip, glArchivItem_Font::DF_TOP, COLOR_YELLOW);
-		}
+		Window::DrawRectangle(x - 2 , mc->y - 2, text_width+ 4, 4 + count * NormalFont->getDy(), 0x9F000000);
+		NormalFont->Draw(x, mc->y , tooltip, glArchivItem_Font::DF_TOP, COLOR_YELLOW);
+	
 	}
 }

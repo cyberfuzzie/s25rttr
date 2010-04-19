@@ -1,4 +1,4 @@
-// $Id: nofActiveSoldier.cpp 6304 2010-04-10 21:24:08Z OLiver $
+// $Id: nofActiveSoldier.cpp 6333 2010-04-19 18:42:40Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -220,8 +220,10 @@ void nofActiveSoldier::ExpelEnemies()
 	{
 		noFigure * fig = figures[i];
 		// Feind von uns und kein Soldat?
+		// Außerdem muss er auf der Straße unterwegs sein (keine freiarbeitenden Berufe durcheinanderbringen..)
 		if(!players->getElement(player)->IsAlly(fig->GetPlayer()) &&
-		!(fig->GetJobType() >= JOB_PRIVATE && fig->GetJobType() <= JOB_GENERAL))
+		!(fig->GetJobType() >= JOB_PRIVATE && fig->GetJobType() <= JOB_GENERAL)
+		&& fig->IsWalkingOnRoad())
 		{
 			// Dann weg mit dem!
 			fig->Abrogate();

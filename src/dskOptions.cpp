@@ -1,4 +1,4 @@
-// $Id: dskOptions.cpp 6202 2010-03-27 15:02:23Z jh $
+// $Id: dskOptions.cpp 6333 2010-04-19 18:42:40Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -539,7 +539,7 @@ void dskOptions::Msg_ButtonClick(const unsigned int ctrl_id)
 				                                            SETTINGS.video.fullscreen))
 				{
 					WindowManager::inst().Show(new iwMsgbox(_("Sorry!"), _("You need to restart your game to change the screen resolution!"), this, MSB_OK, MSB_EXCLAMATIONGREEN, 1));
-					break;
+		
 				}
 			}
 #else
@@ -554,7 +554,7 @@ void dskOptions::Msg_ButtonClick(const unsigned int ctrl_id)
 				                                            SETTINGS.video.fullscreen))
 				{
 					WindowManager::inst().Show(new iwMsgbox(_("Sorry!"), _("You need to restart your game to change the screen resolution!"), this, MSB_OK, MSB_EXCLAMATIONGREEN, 1));
-					break;
+			
 				}
 			}
 #endif
@@ -562,7 +562,7 @@ void dskOptions::Msg_ButtonClick(const unsigned int ctrl_id)
 				SETTINGS.driver.audio != AudioDriverWrapper::inst().GetName())
 			{
 				WindowManager::inst().Show(new iwMsgbox(_("Sorry!"), _("You need to restart your game to change the video or audio driver!"), this, MSB_OK, MSB_EXCLAMATIONGREEN, 1));
-				break;
+
 			}
 
 			WindowManager::inst().Switch(new dskMainMenu);

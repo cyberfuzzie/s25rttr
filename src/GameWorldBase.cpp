@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 6331 2010-04-19 09:22:32Z OLiver $
+// $Id: GameWorldBase.cpp 6333 2010-04-19 18:42:40Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -425,7 +425,7 @@ void GameWorldBase::CalcRoad(const MapCoord x, const MapCoord y,const unsigned c
 {
 	SetBQ(x,y,GAMECLIENT.GetPlayerID());
 	
-	for(unsigned i = 0;i<3;++i)
+	for(unsigned i = 3;i<6;++i)
 		SetBQ(GetXA(x,y,i),GetYA(x,y,i),GAMECLIENT.GetPlayerID());
 }
 
@@ -757,7 +757,7 @@ BuildingQuality GameWorldBase::CalcBQ(const MapCoord x, const MapCoord y,const u
 		{
 			for(unsigned char c = 0;c<6;++c)
 			{
-				if(GetPointRoad(/*width+*/GetXA(x,y,i),GetYA(x,y,i), c, visual))
+				if(GetPointRoad(GetXA(x,y,i),GetYA(x,y,i), c, visual))
 				{
 					val = BQ_HOUSE;
 					break;

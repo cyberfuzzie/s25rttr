@@ -1,4 +1,4 @@
-// $Id: AudioDriverWrapper.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: AudioDriverWrapper.h 6333 2010-04-19 18:42:40Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -27,6 +27,7 @@
 class AudioDriver;
 
 #define MAX_DRIVER_COUNT 20
+const char * const EMPTY_STR = "";
 
 ///////////////////////////////////////////////////////////////////////////////
 // DriverWrapper
@@ -68,7 +69,7 @@ public:
 	 void SetMasterMusicVolume(unsigned char volume)
 	{ if(audiodriver) audiodriver->SetMasterMusicVolume(volume); }
 
-	const char *GetName(void) const { if(audiodriver) return audiodriver->GetName();	return NULL; }
+	const char *GetName(void) const { if(audiodriver) return audiodriver->GetName();	return EMPTY_STR; }
 private:
 
 	void Msg_MusicFinished();

@@ -128,7 +128,7 @@ void nofShipWright::HandleDerivedEvent(const unsigned int id)
 				// fertig mit Arbeiten --> dann müssen die "Folgen des Arbeitens" ausgeführt werden
 				WorkFinished();
 				// Objekt wieder freigeben
-				gwg->GetNode(x,y).reserved = false;;
+				gwg->GetNode(x,y).reserved = false;
 				// Wieder nach Hause gehen
 				StartWalkingHome();
 

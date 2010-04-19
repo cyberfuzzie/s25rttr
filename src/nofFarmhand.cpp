@@ -1,4 +1,4 @@
-// $Id: nofFarmhand.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: nofFarmhand.cpp 6333 2010-04-19 18:42:40Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -238,7 +238,7 @@ void nofFarmhand::WalkToWorkpoint()
 	else if((dir = gwg->FindHumanPath(x,y,dest_x,dest_y,20)) == 0xFF || !IsPointGood(dest_x,dest_y))
 	{
 		// Punkt freigeben
-		gwg->GetNode(dest_x,dest_y).reserved = false;;
+		gwg->GetNode(dest_x,dest_y).reserved = false;
 		// Kein Weg führt mehr zum Ziel oder Punkt ist nich mehr in Ordnung --> wieder nach Hause gehen
 		StartWalkingHome();
 	}

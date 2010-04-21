@@ -65,6 +65,7 @@
 #include "nofScout_LookoutTower.h"
 #include "nofScout_Free.h"
 #include "nofPassiveWorker.h"
+#include "nofCharburner.h"
 
 #include "nobHarborBuilding.h"
 
@@ -972,6 +973,7 @@ noFigure * CreateJob(const Job job_id,const unsigned short x, const unsigned sho
 		return new nofPassiveSoldier(x,y,player,static_cast<nobBaseMilitary*>(goal),static_cast<nobBaseMilitary*>(goal),job_id-JOB_PRIVATE);
 	case JOB_PACKDONKEY: return new nofCarrier(nofCarrier::CT_DONKEY,x,y,player,0,goal); 
 	case JOB_SHIPWRIGHT: return new nofShipWright(x,y,player,static_cast<nobUsual*>(goal));
+	case JOB_CHARBURNER: return new nofCharburner(x,y,player,static_cast<nobUsual*>(goal));
 	default: return 0;
 	}
 }

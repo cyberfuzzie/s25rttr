@@ -1,4 +1,4 @@
-// $Id: SerializedGameData.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: SerializedGameData.cpp 6345 2010-04-21 19:06:26Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -64,6 +64,7 @@
 #include "nofScout_LookoutTower.h"
 #include "nofWarehouseWorker.h"
 #include "nofPassiveWorker.h"
+#include "nofCharburner.h"
 #include "nofCatapultMan.h"
 #include "noExtension.h"
 #include "noBuildingSite.h"
@@ -87,6 +88,7 @@
 #include "nobHarborBuilding.h"
 #include "noShip.h"
 #include "noShipBuildingSite.h"
+#include "noCharburnerPile.h"
 #include "BurnedWarehouse.h"
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -141,6 +143,7 @@ GameObject * SerializedGameData::Create_GameObject(const GO_Type got, const unsi
 	case GOT_NOF_SCOUT_LOOKOUTTOWER: return new nofScout_LookoutTower(this,obj_id);
 	case GOT_NOF_WAREHOUSEWORKER: return new nofWarehouseWorker(this,obj_id);
 	case GOT_NOF_CATAPULTMAN: return new nofCatapultMan(this,obj_id);
+	case GOT_NOF_CHARBURNER: return new nofCharburner(this,obj_id);
 	case GOT_EXTENSION: return new noExtension(this,obj_id);
 	case GOT_BUILDINGSITE: return new noBuildingSite(this,obj_id);
 	case GOT_ENVOBJECT: return new noEnvObject(this,obj_id);
@@ -162,6 +165,7 @@ GameObject * SerializedGameData::Create_GameObject(const GO_Type got, const unsi
 	case GOT_CATAPULTSTONE: return new CatapultStone(this,obj_id);
 	case GOT_SHIP: return new noShip(this,obj_id);
 	case GOT_SHIPBUILDINGSITE: return new noShipBuildingSite(this,obj_id);
+	case GOT_CHARBURNERPILE: return new noCharburnerPile(this,obj_id);
 	
 	}
 }

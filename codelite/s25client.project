@@ -309,7 +309,6 @@
       <File Name="../src/nofDonkeybreeder.h"/>
       <File Name="../src/noBaseBuilding.h"/>
       <File Name="../src/noStaticObject.cpp"/>
-      <File Name="../src/noGrainfield.h"/>
       <File Name="../src/nofAttacker.h"/>
       <File Name="../src/nofGeologist.cpp"/>
       <File Name="../src/nofDonkeybreeder.cpp"/>
@@ -350,10 +349,8 @@
       <File Name="../src/nofFlagWorker.h"/>
       <File Name="../src/nofWarehouseWorker.cpp"/>
       <File Name="../src/noAnimal.cpp"/>
-      <File Name="../src/nofForester.cpp"/>
       <File Name="../src/MapGeometry.h"/>
       <File Name="../src/nofDefender.cpp"/>
-      <File Name="../src/nofForester.h"/>
       <File Name="../src/nofPassiveWorker.cpp"/>
       <File Name="../src/nofPassiveWorker.h"/>
       <File Name="../src/nofWorkman.h"/>
@@ -415,7 +412,6 @@
       <File Name="../src/nofGeologist.h"/>
       <File Name="../src/noBase.cpp"/>
       <File Name="../src/nofFisher.cpp"/>
-      <File Name="../src/noGrainfield.cpp"/>
       <File Name="../src/nofFisher.h"/>
       <File Name="../src/noEnvObject.cpp"/>
       <File Name="../src/nofAggressiveDefender.h"/>
@@ -508,6 +504,18 @@
       <File Name="../src/GameSavedFile.h"/>
       <File Name="../src/GameSavegame.cpp"/>
       <File Name="../src/GameSavegame.h"/>
+      <VirtualDirectory Name="Menschen">
+        <File Name="../src/nofCharburner.h"/>
+        <File Name="../src/nofForester.cpp"/>
+        <File Name="../src/nofForester.h"/>
+        <File Name="../src/nofCharburner.cpp"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="Objekte">
+        <File Name="../src/noCharburnerPile.cpp"/>
+        <File Name="../src/noCharburnerPile.h"/>
+        <File Name="../src/noGrainfield.cpp"/>
+        <File Name="../src/noGrainfield.h"/>
+      </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="libutil">
       <File Name="../libutil/src/Serializer.cpp"/>

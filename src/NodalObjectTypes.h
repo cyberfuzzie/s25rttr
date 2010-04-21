@@ -1,4 +1,4 @@
-// $Id: NodalObjectTypes.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: NodalObjectTypes.h 6345 2010-04-21 19:06:26Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -39,6 +39,7 @@ enum NodalObjectType
 	NOP_ANIMAL, // Tier
 	NOP_BURNEDWAREHOUSE, // abgebranntes Lagerhaus, aus dem die Menschen jetzt strömen
 	NOP_SHIP, // Schiff
+	NOP_CHARBURNERPILE, // Holz-/Kohle-Haufen vom Köhler
 	NOP_ERROR
 };
 

@@ -1,4 +1,4 @@
-// $Id: nobHarborBuilding.cpp 6291 2010-04-08 11:38:30Z OLiver $
+// $Id: nobHarborBuilding.cpp 6341 2010-04-21 12:20:31Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -383,6 +383,8 @@ void nobHarborBuilding::StartExplorationExpedition()
 	// Initialisierung
 	exploration_expedition.active = true;
 	
+	exploration_expedition.scouts = 0;
+	
 	// In unseren Warenbestand gucken und die erforderlichen Erkunder rausziehen
 	if(real_goods.people[JOB_SCOUT])
 	{
@@ -486,7 +488,9 @@ void nobHarborBuilding::ShipArrived(noShip * ship)
 		exploration_expedition.active = false;
 		// Expedition starten
 		ship->StartExplorationExpedition();
+		assert(goods.people[JOB_SCOUT] >= exploration_expedition.scouts);
 		goods.people[JOB_SCOUT] -= exploration_expedition.scouts;
+		
 	}
 	// Gibt es Waren oder Figuren, die ein Schiff von hier aus nutzen wollen?
 	else if(wares_for_ships.size() || figures_for_ships.size())

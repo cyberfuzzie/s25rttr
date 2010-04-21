@@ -146,6 +146,7 @@
         <File Name="../src/ctrlVarText.h"/>
         <File Name="../src/ctrlMultiSelectGroup.cpp"/>
         <File Name="../src/ctrlMultiSelectGroup.h"/>
+        <File Name="../src/noShip.cpp"/>
       </VirtualDirectory>
       <VirtualDirectory Name="Desktops">
         <File Name="../src/dskAboutRTTR.cpp"/>
@@ -288,7 +289,6 @@
       <File Name="../src/CatapultStone.cpp"/>
       <File Name="../src/CatapultStone.h"/>
       <File Name="../src/nobHarborBuilding.h"/>
-      <File Name="../src/noShip.cpp"/>
       <File Name="../src/noShip.h"/>
       <File Name="../src/noShipBuildingSite.cpp"/>
       <File Name="../src/noShipBuildingSite.h"/>

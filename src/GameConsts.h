@@ -1,4 +1,4 @@
-// $Id: GameConsts.h 6343 2010-04-21 17:19:42Z OLiver $
+// $Id: GameConsts.h 6344 2010-04-21 18:30:29Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -252,7 +252,7 @@ const std::string BUILDING_NAMES[40] =
 	gettext_noop("Armory"),
 	gettext_noop("Metalworks"),
 	gettext_noop("Iron smelter"),
-	"",
+	gettext_noop("Charburner"),
 	gettext_noop("Pig farm"),
 	gettext_noop("Storehouse"),
 	"",

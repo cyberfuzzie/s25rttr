@@ -1,4 +1,4 @@
-// $Id: noBaseBuilding.cpp 6343 2010-04-21 17:19:42Z OLiver $
+// $Id: noBaseBuilding.cpp 6344 2010-04-21 18:30:29Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -279,7 +279,7 @@ glArchivItem_Bitmap * noBaseBuilding::GetBuildingImage() const
 		unsigned id = 1+nation*8;
 		if(gwg->GetLandscapeType() == LT_WINTERWORLD)
 			id = 1+nation*8+5;
-		return LOADER.GetImageN("charburner.lst",id);
+		return LOADER.GetImageN("charburner",id);
 	}
 	else
 		return LOADER.GetNationImageN(nation, 250 + 5*type);
@@ -289,7 +289,7 @@ glArchivItem_Bitmap * noBaseBuilding::GetBuildingImage() const
 glArchivItem_Bitmap * noBaseBuilding::GetBuildingSkeletonImage() const
 {
 	if(type == BLD_CHARBURNER)
-		return LOADER.GetImageN("charburner.lst",1+nation*8 + 2);
+		return LOADER.GetImageN("charburner",1+nation*8 + 2);
 	else
 		return LOADER.GetNationImageN(nation,250 + 5*type + 2);
 }
@@ -298,7 +298,7 @@ glArchivItem_Bitmap * noBaseBuilding::GetBuildingSkeletonImage() const
 glArchivItem_Bitmap * noBaseBuilding::GetBuildingImageShadow() const
 {
 	if(type == BLD_CHARBURNER)
-		return LOADER.GetImageN("charburner.lst",1+nation*8 + 1);
+		return LOADER.GetImageN("charburner",1+nation*8 + 1);
 	else
 		return LOADER.GetNationImageN(nation, 250 + 5*type +1);
 }
@@ -307,7 +307,7 @@ glArchivItem_Bitmap * noBaseBuilding::GetBuildingImageShadow() const
 glArchivItem_Bitmap * noBaseBuilding::GetBuildingSkeletonImageShadow() const
 {
 	if(type == BLD_CHARBURNER)
-		return LOADER.GetImageN("charburner.lst",1+nation*8 + 3);
+		return LOADER.GetImageN("charburner",1+nation*8 + 3);
 	else
 		return LOADER.GetNationImageN(nation,250 + 5*type + 3);
 }
@@ -320,7 +320,7 @@ glArchivItem_Bitmap * noBaseBuilding::GetDoorImage() const
 		unsigned id = 1+nation*8+4;
 		if(gwg->GetLandscapeType() == LT_WINTERWORLD)
 			id = 1+nation*8+6;
-		return LOADER.GetImageN("charburner.lst",id);
+		return LOADER.GetImageN("charburner",id);
 	}
 	else
 		return LOADER.GetNationImageN(nation, 250+5*type+4);

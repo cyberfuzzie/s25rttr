@@ -1,4 +1,4 @@
-// $Id: iwAction.cpp 6334 2010-04-19 18:59:57Z jh $
+// $Id: iwAction.cpp 6344 2010-04-21 18:30:29Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -129,8 +129,8 @@ iwAction::iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, cons
 		}
 
 		// Gebäudeicons dem TabCtrl hinzufügen
-		const unsigned char building_count_max = 13;
-		const unsigned building_count[4] = { 9, 13, 5, 4 };
+		const unsigned char building_count_max = 14;
+		const unsigned building_count[4] = { 9, 14, 5, 4 };
 		const BuildingType building_icons[4][building_count_max] =
 		{
 			{ /* 0 */
@@ -146,18 +146,19 @@ iwAction::iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, cons
 			},
 			{ /* 1 */
 				/*  0 */ BLD_SAWMILL,
-				/*  1 */ BLD_SLAUGHTERHOUSE,
-				/*  2 */ BLD_MILL,
-				/*  3 */ BLD_BAKERY, 
-				/*  4 */ BLD_IRONSMELTER, 
-				/*  5 */ BLD_METALWORKS, 
-				/*  6 */ BLD_ARMORY, 
-				/*  7 */ BLD_MINT, 
-				/*  8 */ BLD_SHIPYARD, 
-				/*  9 */ BLD_BREWERY, 
-				/* 10 */ BLD_STOREHOUSE, 
-				/* 11 */ BLD_WATCHTOWER, 
-				/* 12 */ BLD_CATAPULT
+				/*  1 */ BLD_CHARBURNER,
+				/*  2 */ BLD_SLAUGHTERHOUSE,
+				/*  3 */ BLD_MILL,
+				/*  4 */ BLD_BAKERY, 
+				/*  5 */ BLD_IRONSMELTER, 
+				/*  6 */ BLD_METALWORKS, 
+				/*  7 */ BLD_ARMORY, 
+				/*  8 */ BLD_MINT, 
+				/*  9 */ BLD_SHIPYARD, 
+				/* 10 */ BLD_BREWERY, 
+				/* 11 */ BLD_STOREHOUSE, 
+				/* 12 */ BLD_WATCHTOWER, 
+				/* 13 */ BLD_CATAPULT
 			},
 			{ /* 2 */
 				/* 0 */ BLD_FARM, 
@@ -197,7 +198,7 @@ iwAction::iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, cons
 		{
 			building_available[0][5] = false;
 			building_available[0][6] = false;
-			building_available[1][11] = false;
+			building_available[1][12] = false;
 			building_available[2][3] = false;
 		}
 		
@@ -211,6 +212,10 @@ iwAction::iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, cons
 		// Catapult
 		if (!GAMECLIENT.GetLocalPlayer()->CanBuildCatapult())
 			building_available[1][12] = false;
+			
+		// Charburner
+		if(!ADDONMANAGER.isEnabled(ADDON_CHARBURNER))
+			building_available[1][1] = false;
 		
 		for(unsigned char i = 0; i < TABS_COUNT[tabs.build_tabs]; ++i)
 		{

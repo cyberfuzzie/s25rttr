@@ -995,6 +995,9 @@ void nofAttacker::CapturedBuildingFull()
 	case STATE_ATTACKING_FIGHTINGVSAGGRESSIVEDEFENDER:
 	case STATE_ATTACKING_FIGHTVSATTACKER:
 	case STATE_ATTACKING_WALKINGTOFIGHTSPOT:
+	case STATE_SEAATTACKING_GOTOHARBOR: // geht von seinem Heimatmilitärgebäude zum Starthafen
+	case STATE_SEAATTACKING_WAITINHARBOR: // wartet im Hafen auf das ankommende Schiff
+	case STATE_SEAATTACKING_ONSHIP: // befindet sich auf dem Schiff auf dem Weg zum Zielpunkt
 		{
 			// Bei allem anderen läuft man oder kämpft --> auf 0 setzen und wenn man fertig
 			// mit der jetzigen Aktion ist, entsprechend handeln (nicht die Einnehmer darüber benachrichten, sonst

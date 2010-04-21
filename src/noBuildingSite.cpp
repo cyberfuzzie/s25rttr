@@ -1,4 +1,4 @@
-// $Id: noBuildingSite.cpp 6292 2010-04-08 12:11:50Z OLiver $
+// $Id: noBuildingSite.cpp 6343 2010-04-21 17:19:42Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -242,7 +242,7 @@ void noBuildingSite::Draw(int x, int y)
 		unsigned short progress, build_height;
 
 		// Normal
-		image = LOADER.GetNationImageN(nation,250 + 5*type + 2);
+		image = GetBuildingImage();
 		if(image)
 		{
 			progress = p1*image->getHeight() / p2;
@@ -253,7 +253,7 @@ void noBuildingSite::Draw(int x, int y)
 		}
 
 		// Schatten
-		image = LOADER.GetNationImageN(nation,250 + 5*type + 3);
+		image = GetBuildingImageShadow();
 		if(image)
 		{
 			progress = p1*image->getHeight() / p2;
@@ -277,7 +277,7 @@ void noBuildingSite::Draw(int x, int y)
 		}
 
 		// Normal
-		image = LOADER.GetNationImageN(nation, 250 + 5*type);
+		image = GetBuildingSkeletonImage();
 		if(image)
 		{
 			progress = p1*image->getHeight() / p2;
@@ -287,7 +287,7 @@ void noBuildingSite::Draw(int x, int y)
 		}
 
 
-		image = LOADER.GetNationImageN(nation, 250 + 5*type + 1);
+		image =  GetBuildingSkeletonImageShadow();
 		if(image)
 		{
 			progress = p1*image->getHeight() / p2;

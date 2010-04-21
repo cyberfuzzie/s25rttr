@@ -1,4 +1,4 @@
-// $Id: noShip.cpp 6335 2010-04-19 21:40:21Z OLiver $
+// $Id: noShip.cpp 6343 2010-04-21 17:19:42Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1117,8 +1117,20 @@ void noShip::ContinueExplorationExpedition()
 	// Sind wir schon über unserem Limit, also zu weit gefahren
 	if(covered_distance >= MAX_EXPLORATION_EXPEDITION_DISTANCE)
 	{
+		// Ggf. sind wir schon da?
+		if(goal_harbor_id == home_harbor)
+		{
+			// Dann sind wir fertig -> wieder entladen
+			state = STATE_EXPLORATIONEXPEDITION_UNLOADING;
+			current_ev = em->AddEvent(this,UNLOADING_TIME,1);
+			return;
+		}
+			
+		
 		// Dann steuern wir unseren Heimathafen an!
 		goal_harbor_id = home_harbor;
+		
+		
 	}
 	else
 	{

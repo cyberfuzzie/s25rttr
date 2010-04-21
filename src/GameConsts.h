@@ -1,4 +1,4 @@
-// $Id: GameConsts.h 6280 2010-04-06 12:40:52Z OLiver $
+// $Id: GameConsts.h 6343 2010-04-21 17:19:42Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -204,7 +204,7 @@ enum BuildingType
 	BLD_ARMORY         = 24, // NJR
 	BLD_METALWORKS     = 25, // NJR
 	BLD_IRONSMELTER    = 26, // NJR
-	BLD_NOTHING8       = 27, // ----
+	BLD_CHARBURNER     = 27, // ---- // neu
 	BLD_PIGFARM        = 28, // NJR
 	BLD_STOREHOUSE     = 29, //
 	BLD_NOTHING9       = 30, // ----
@@ -302,13 +302,14 @@ enum Job
 	JOB_SCOUT             = 28,
 	JOB_PACKDONKEY        = 29,
 	JOB_BOATCARRIER		  = 30,
-	JOB_NOTHING           = 31
+	JOB_CHARBURNER		  = 31,
+	JOB_NOTHING           = 32
 };
 
 // Anzahl an unterschiedlichen Berufstypen
 const unsigned JOB_TYPES_COUNT = JOB_NOTHING;
 
-const std::string JOB_NAMES[32] = 
+const std::string JOB_NAMES[JOB_TYPES_COUNT] = 
 {
 	gettext_noop("Helper"),
 	gettext_noop("Woodchopper"),
@@ -340,8 +341,8 @@ const std::string JOB_NAMES[32] =
 	gettext_noop("Shipwright"),
 	gettext_noop("Scout"),
 	gettext_noop("Pack donkey"),
-	"",
-	""
+	"", // Bootsträger
+	gettext_noop("Charburner")
 };
 
 

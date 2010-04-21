@@ -1,4 +1,4 @@
-// $Id: noBaseBuilding.h 6267 2010-04-05 09:16:14Z OLiver $
+// $Id: noBaseBuilding.h 6343 2010-04-21 17:19:42Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -44,6 +44,19 @@ protected:
 	void WareNotNeeded(Ware * ware);
 	/// Zerstört Anbauten, falls es sich um ein großes Gebäude handelt (wo es diese auch gibt)
 	void DestroyBuildingExtensions();
+	
+	/// Gibt ein Bild zurück für das normale Gebäude
+	glArchivItem_Bitmap * GetBuildingImage() const;
+	/// Gibt ein Bild zurück für das Gebäudegerüst
+	glArchivItem_Bitmap * GetBuildingSkeletonImage() const;
+	/// Gibt ein Bild zurück für das normale Gebäude
+	glArchivItem_Bitmap * GetBuildingImageShadow() const;
+	/// Gibt ein Bild zurück für das Gebäudegerüst
+	glArchivItem_Bitmap * GetBuildingSkeletonImageShadow() const;
+	/// Gibt ein Bild zurück für die Tür des Gebäudes
+	glArchivItem_Bitmap * GetDoorImage() const;
+	
+	
 
 public:
 

@@ -1,4 +1,4 @@
-// $Id: JobConsts.h 5980 2010-02-09 16:14:40Z FloSoft $
+// $Id: JobConsts.h 6343 2010-04-21 17:19:42Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -41,7 +41,7 @@ struct JobConst
 
 
 // Welcher Beruf welches Werkzeug braucht
-const JobConst JOB_CONSTS[] =
+const JobConst JOB_CONSTS[JOB_TYPES_COUNT] =
 {
 	{GD_NOTHING,false,0,385,190,5},    //JOB_HELPER
 	{GD_AXE,false,5,148,789,5},          //JOB_WOODCUTTER
@@ -72,7 +72,9 @@ const JobConst JOB_CONSTS[] =
 	{GD_HAMMER,false,26,0,0,0},      //JOB_GEOLOGIST
 	{GD_HAMMER,false,25,1250,100,5},      //JOB_SHIPWRIGHT, Todo: Timing wenn Schiffe bauen möglich
 	{GD_BOW,false,35,0,0,0},         //JOB_SCOUT
-	{GD_NOTHING,false,37,0,0,0}      //JOB_PACKDONKEY
+	{GD_NOTHING,false,37,0,0,0},      //JOB_PACKDONKEY
+	{GD_NOTHING,false,37,0,0,0},      //JOB_BOATCARRIER
+	{GD_SHOVEL,false,37,0,0,0}      //JOB_CHARBURNER
 };
 
 /// Katapultmann-Wartezeit

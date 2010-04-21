@@ -1,4 +1,4 @@
-// $Id: const_addons.h 6150 2010-03-13 23:17:32Z jh $
+// $Id: const_addons.h 6343 2010-04-21 17:19:42Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -43,6 +43,7 @@ enum AddonId
 	ADDON_EXHAUSTIBLE_WELLS			= 0x00000003,
 	ADDON_REFUND_ON_EMERGENCY		= 0x00000004,
 	ADDON_MANUAL_ROAD_ENLARGEMENT	= 0x00000005,
+	ADDON_CHARBURNER				= 0x00100006,
 
 	ADDON_DEMOLITION_PROHIBITION	= 0x00100000,
 

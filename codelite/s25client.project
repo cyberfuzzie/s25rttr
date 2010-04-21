@@ -397,7 +397,6 @@
       <File Name="../src/Minimap.h"/>
       <File Name="../src/TerrainRenderer.cpp"/>
       <File Name="../src/noBuilding.cpp"/>
-      <File Name="../src/JobConsts.h"/>
       <File Name="../src/nofPlaner.cpp"/>
       <File Name="../src/nofPassiveSoldier.h"/>
       <File Name="../src/Pathfinding.cpp"/>
@@ -456,6 +455,7 @@
         <File Name="../src/BuildingConsts.h"/>
         <File Name="../src/DoorConsts.h"/>
         <File Name="../src/GameConsts.h"/>
+        <File Name="../src/JobConsts.h"/>
       </VirtualDirectory>
       <File Name="../src/EventManager.cpp"/>
       <File Name="../src/EventManager.h"/>
@@ -495,6 +495,12 @@
         <File Name="../src/Addons.cpp"/>
         <File Name="../src/Addons.h"/>
         <File Name="../src/AddonStatisticsVisibility.h"/>
+        <File Name="../src/AddonDefenderBehavior.h"/>
+        <File Name="../src/AddonDemolitionProhibition.h"/>
+        <File Name="../src/AddonManualRoadEnlargement.h"/>
+        <File Name="../src/AddonRefundOnEmergency.h"/>
+        <File Name="../src/AddonCharburner.h"/>
+        <File Name="../src/const_addons.h"/>
       </VirtualDirectory>
       <File Name="../src/GameReplay.cpp"/>
       <File Name="../src/GameReplay.h"/>

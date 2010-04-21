@@ -1,4 +1,4 @@
-// $Id: noBuilding.cpp 6006 2010-02-12 11:20:01Z FloSoft $
+// $Id: noBuilding.cpp 6343 2010-04-21 17:19:42Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -98,13 +98,14 @@ opendoor(sgd->PopUnsignedChar())
  */
 void noBuilding::DrawBaseBuilding(int x,int y)
 {
-	LOADER.GetNationImageN(nation, 250+5*type)->Draw(x,y,0,0,0,0,0,0);
+	GetBuildingImage()->Draw(x,y,0,0,0,0,0,0);
+	
 	// ACHTUNG nicht jedes Gebäude hat einen Schatten !!
-	if(LOADER.GetNationImageN(nation, 250+5*type+1))
-		LOADER.GetNationImageN(nation, 250+5*type+1)->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
+	if(GetBuildingImageShadow())
+		GetBuildingImageShadow()->Draw(x,y,0,0,0,0,0,0,COLOR_SHADOW);
 	// Falls Tür offen ist und es ein Tür-Bild gibt, offene Tür zeichnen
-	if(opendoor && LOADER.GetNationImageN(nation, 250+5*type+4))
-		LOADER.GetNationImageN(nation, 250+5*type+4)->Draw(x,y,0,0,0,0,0,0);
+	if(opendoor && GetDoorImage())
+		GetDoorImage()->Draw(x,y,0,0,0,0,0,0);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

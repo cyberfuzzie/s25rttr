@@ -1,4 +1,4 @@
-// $Id: AddonManager.cpp 6150 2010-03-13 23:17:32Z jh $
+// $Id: AddonManager.cpp 6343 2010-04-21 17:19:42Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -30,6 +30,7 @@
 #include "AddonExhaustibleWells.h"
 #include "AddonRefundOnEmergency.h"
 #include "AddonManualRoadEnlargement.h"
+#include "AddonCharburner.h"
 
 #include "AddonDemolitionProhibition.h"
 
@@ -86,6 +87,7 @@ void AddonManager::reset(bool recreate)
 		registerAddon(new AddonExhaustibleWells);
 		registerAddon(new AddonRefundOnEmergency);
 		registerAddon(new AddonManualRoadEnlargement);
+		registerAddon(new AddonCharburner);
 
 		registerAddon(new AddonDemolitionProhibition);
 

@@ -1,4 +1,4 @@
-// $Id: noBaseBuilding.cpp 6309 2010-04-11 09:09:40Z OLiver $
+// $Id: noBaseBuilding.cpp 6343 2010-04-21 17:19:42Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -270,3 +270,62 @@ noBase::BlockingManner noBaseBuilding::GetBM() const
 	else
 		return noBase::BlockingManner(unsigned(bq) -1);
 }
+
+/// Gibt ein Bild zurück für das normale Gebäude
+glArchivItem_Bitmap * noBaseBuilding::GetBuildingImage() const
+{
+	if(type == BLD_CHARBURNER)
+	{
+		unsigned id = 1+nation*8;
+		if(gwg->GetLandscapeType() == LT_WINTERWORLD)
+			id = 1+nation*8+5;
+		return LOADER.GetImageN("charburner.lst",id);
+	}
+	else
+		return LOADER.GetNationImageN(nation, 250 + 5*type);
+}
+
+/// Gibt ein Bild zurück für das Gebäudegerüst
+glArchivItem_Bitmap * noBaseBuilding::GetBuildingSkeletonImage() const
+{
+	if(type == BLD_CHARBURNER)
+		return LOADER.GetImageN("charburner.lst",1+nation*8 + 2);
+	else
+		return LOADER.GetNationImageN(nation,250 + 5*type + 2);
+}
+
+/// Gibt ein Bild zurück für das normale Gebäude
+glArchivItem_Bitmap * noBaseBuilding::GetBuildingImageShadow() const
+{
+	if(type == BLD_CHARBURNER)
+		return LOADER.GetImageN("charburner.lst",1+nation*8 + 1);
+	else
+		return LOADER.GetNationImageN(nation, 250 + 5*type +1);
+}
+
+/// Gibt ein Bild zurück für das Gebäudegerüst
+glArchivItem_Bitmap * noBaseBuilding::GetBuildingSkeletonImageShadow() const
+{
+	if(type == BLD_CHARBURNER)
+		return LOADER.GetImageN("charburner.lst",1+nation*8 + 3);
+	else
+		return LOADER.GetNationImageN(nation,250 + 5*type + 3);
+}
+
+/// Gibt ein Bild zurück für die Tür des Gebäudes
+glArchivItem_Bitmap * noBaseBuilding::GetDoorImage() const
+{
+	if(type == BLD_CHARBURNER)
+	{
+		unsigned id = 1+nation*8+4;
+		if(gwg->GetLandscapeType() == LT_WINTERWORLD)
+			id = 1+nation*8+6;
+		return LOADER.GetImageN("charburner.lst",id);
+	}
+	else
+		return LOADER.GetNationImageN(nation, 250+5*type+4);
+}
+
+
+
+

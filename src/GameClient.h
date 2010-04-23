@@ -1,4 +1,4 @@
-// $Id: GameClient.h 6015 2010-02-13 15:09:58Z FloSoft $
+// $Id: GameClient.h 6349 2010-04-23 18:11:38Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -243,7 +243,7 @@ public:
 		/// Werkzeugeinstellungen (in der Reihenfolge wie im Fenster!)
 		std::vector<unsigned char> tools_settings;
 
-		VisualSettings() : distribution(20), build_order(31), transport_order(14), military_settings(7), tools_settings(12)
+		VisualSettings() : distribution(20), build_order(31), transport_order(14), military_settings(MILITARY_SETTINGS_COUNT), tools_settings(12)
 		{}
 
 	} visual_settings, default_settings;

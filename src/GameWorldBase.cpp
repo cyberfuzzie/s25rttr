@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 6333 2010-04-19 18:42:40Z OLiver $
+// $Id: GameWorldBase.cpp 6349 2010-04-23 18:11:38Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1350,6 +1350,17 @@ unsigned GameWorldBase::CalcHarborDistance(const unsigned habor_id1, const unsig
 	
 	return 0xffffffff;
 }
+
+/// Bestimmt für einen beliebigen Punkt auf der Karte die Entfernung zum nächsten Hafenpunkt
+unsigned GameWorldBase::CalcDistanceToNearestHarbor(const Point<MapCoord> pos) const
+{
+	unsigned min_distance = 0xffffffff;
+	for(unsigned i = 0;i<harbor_pos.size();++i)
+		min_distance = min(min_distance,this->CalcDistance(pos.x,pos.y,harbor_pos[i].x,harbor_pos[i].y));
+		
+	return min_distance;
+}
+
 
 /// Komperator zum Sortieren
 bool GameWorldBase::PotentialSeaAttacker::operator<(const GameWorldBase::PotentialSeaAttacker& pa) const

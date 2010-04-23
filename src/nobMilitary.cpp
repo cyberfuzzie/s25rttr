@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 6327 2010-04-16 18:28:38Z OLiver $
+// $Id: nobMilitary.cpp 6349 2010-04-23 18:11:38Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -173,8 +173,19 @@ void nobMilitary::Draw(int x, int y)
 		LOADER.GetMapImageN(3162+GAMECLIENT.GetGlobalAnimation(8,2,1,this->x*this->y*i))->Draw(x+TROOPS_FLAGS[nation][size][0],y+TROOPS_FLAGS[nation][size][1]+(i)*3,0,0,0,0,0,0,COLOR_WHITE, COLORS[gwg->GetPlayer(player)->color]);
 
 	// Die Fahne, die anzeigt wie weit das Gebäude von der Grenze entfernt ist, zeichnen
-	LOADER.GetMapImageN(3150+frontier_distance*4+GAMECLIENT.GetGlobalAnimation(4,1,1,this->x*this->y*age))
-		->Draw(x+BORDER_FLAGS[nation][size][0],y+BORDER_FLAGS[nation][size][1],0,0,0,0,0,0);
+	unsigned frontier_distance_tmp = frontier_distance;
+	glArchivItem_Bitmap * bitmap = NULL;
+	if(frontier_distance_tmp == 2)
+	{
+		// todo Hafenflagge
+	}
+	else
+	{
+		if(frontier_distance_tmp == 3) frontier_distance_tmp = 2;
+		bitmap = LOADER.GetMapImageN(3150+frontier_distance_tmp*4+GAMECLIENT.GetGlobalAnimation(4,1,1,this->x*this->y*age));
+	}
+	if(bitmap)
+		bitmap->Draw(x+BORDER_FLAGS[nation][size][0],y+BORDER_FLAGS[nation][size][1],0,0,0,0,0,0);
 
 	// Wenn Goldzufuhr gestoppt ist, Schild außen am Gebäude zeichnen zeichnen
 	if(disable_coins_virtual)
@@ -294,11 +305,11 @@ void nobMilitary::LookForEnemyBuildings(const nobBaseMilitary * const exception)
 			if(distance <= MILITARY_RADIUS[size] + (*it)->GetMilitaryRadius()) // warum erzeugtn das ne warning in vs2008?
 			{
 				// Grenznähe entsprechend setzen
-				frontier_distance = 2;
+				frontier_distance = 3;
 
 				// Wenns ein richtiges Militärgebäude ist, dann dort auch entsprechend setzen
 				if((*it)->GetBuildingType() >= BLD_BARRACKS && (*it)->GetBuildingType() <= BLD_FORTRESS)
-					static_cast<nobMilitary*>(*it)->NewEnemyMilitaryBuilding(2);
+					static_cast<nobMilitary*>(*it)->NewEnemyMilitaryBuilding(3);
 			}
 				// in mittlerem Umkreis, also theoretisch angreifbar?
 			else if(distance < BASE_ATTACKING_DISTANCE 
@@ -328,6 +339,13 @@ void nobMilitary::LookForEnemyBuildings(const nobBaseMilitary * const exception)
 			}
 		}
 	}
+	
+	// Evtl. Hafenpunkte in der N�he mit ber�cksichtigen
+	if(frontier_distance <= 1)
+	{
+		if(gwg->CalcDistanceToNearestHarbor(Point<MapCoord>(x,y)) < BASE_ATTACKING_DISTANCE+5)
+			frontier_distance = 2;
+	}
 
 	// Truppen schicken
 	RegulateTroops();
@@ -338,10 +356,10 @@ void nobMilitary::LookForEnemyBuildings(const nobBaseMilitary * const exception)
 void nobMilitary::NewEnemyMilitaryBuilding(const unsigned short distance)
 {
 	// Neues Grenzgebäude in der Nähe --> Distanz entsprechend setzen
-	if(distance == 2)
+	if(distance == 3)
 	{
 		// Nah
-		frontier_distance = 2;
+		frontier_distance = 3;
 	}
 	// in mittlerem Umkreis?
 	else if(distance == 1)
@@ -372,7 +390,7 @@ void nobMilitary::RegulateTroops()
 
 		// Zuerst die bestellten Soldaten wegschicken
 		// Schwache zuerst zurück
-		if (gwg->GetPlayer(player)->military_settings[1] > 2)
+		if (gwg->GetPlayer(player)->military_settings[1] > MILITARY_SETTINGS_SCALE[1]/2)
 		{
 			for(list<nofPassiveSoldier*>::iterator it = ordered_troops.begin();diff&&ordered_troops.size();++diff,++it)
 			{
@@ -402,7 +420,7 @@ void nobMilitary::RegulateTroops()
 		{
 			// Dann den Rest (einer muss immer noch drinbleiben!)
 			// erst die schwachen Soldaten raus
-			if (gwg->GetPlayer(player)->military_settings[1] > 2)
+			if (gwg->GetPlayer(player)->military_settings[1] > MILITARY_SETTINGS_SCALE[1]/2)
 			{
 				for(list<nofPassiveSoldier*>::iterator it = troops.begin();diff&&troops.size()>1;++diff,++it)
 				{
@@ -439,7 +457,7 @@ void nobMilitary::RegulateTroops()
 		// Addon aktiv, nur soviele Leute zum Nachbesetzen schicken wie Verteidiger eingestellt
 		if (aggressors.size() > 0 && ADDONMANAGER.getSelection(ADDON_DEFENDER_BEHAVIOR) == 2)	
 		{
-			diff = (gwg->GetPlayer(player)->military_settings[2] * diff) / 5;
+			diff = (gwg->GetPlayer(player)->military_settings[2] * diff) / MILITARY_SETTINGS_SCALE[2];
 		}
 		gwg->GetPlayer(player)->OrderTroops(this,diff);
 	}
@@ -447,7 +465,8 @@ void nobMilitary::RegulateTroops()
 
 int nobMilitary::CalcTroopsCount()
 {
-	return (TROOPS_COUNT[nation][size]-1)*gwg->GetPlayer(player)->military_settings[4+frontier_distance]/10 + 1;
+	return (TROOPS_COUNT[nation][size]-1)*
+	gwg->GetPlayer(player)->military_settings[4+frontier_distance]/MILITARY_SETTINGS_SCALE[4+frontier_distance] + 1;
 }
 
 void nobMilitary::TakeWare(Ware * ware)
@@ -629,7 +648,7 @@ list<nofPassiveSoldier*>::iterator nobMilitary::ChooseSoldier()
 	}
 
 	// ID ausrechnen
-	unsigned rank = ((rank_count-1)*gwg->GetPlayer(player)->military_settings[1]+2)/5;
+	unsigned rank = ((rank_count-1)*gwg->GetPlayer(player)->military_settings[1])/MILITARY_SETTINGS_SCALE[0];
 
 	unsigned r = 0;
 

@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 6313 2010-04-11 20:29:58Z OLiver $
+// $Id: GameWorld.h 6349 2010-04-23 18:11:38Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -388,6 +388,8 @@ public:
 	void GetSeaIDs(const unsigned harbor_id, unsigned short * sea_ids) const;
 	/// Berechnet die Entfernung zwischen 2 Hafenpunkten
 	unsigned CalcHarborDistance(const unsigned habor_id1, const unsigned harbor_id2) const;
+	/// Bestimmt für einen beliebigen Punkt auf der Karte die Entfernung zum nächsten Hafenpunkt
+	unsigned CalcDistanceToNearestHarbor(const Point<MapCoord> pos) const;
 	
 	
 

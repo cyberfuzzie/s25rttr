@@ -1,4 +1,4 @@
-// $Id: nobBaseWarehouse.cpp 6311 2010-04-11 11:35:56Z OLiver $
+// $Id: nobBaseWarehouse.cpp 6349 2010-04-23 18:11:38Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -397,16 +397,16 @@ void nobBaseWarehouse::HandleBaseEvent(const unsigned int id)
 				real_goods.people[JOB_HELPER],
 				max_recruits);
 
-			const unsigned char recruiting_ratio 
+			const unsigned recruiting_ratio 
 				= gwg->GetPlayer(player)->military_settings[0];
-			unsigned short real_recruits = 
+			unsigned real_recruits = 
 				max_recruits 
 				* recruiting_ratio
-				/ 10;
+				/ MILITARY_SETTINGS_SCALE[0];
 			// Wurde abgerundet?
-			if (real_recruits * recruiting_ratio % 10 != 0)
-			if (RANDOM.Rand(__FILE__,__LINE__,obj_id,9) 
-			    < real_recruits * recruiting_ratio % 10)
+			if (real_recruits * recruiting_ratio % MILITARY_SETTINGS_SCALE[0] != 0)
+			if (unsigned(RANDOM.Rand(__FILE__,__LINE__,obj_id,MILITARY_SETTINGS_SCALE[0]-1)) 
+			    < real_recruits * recruiting_ratio % MILITARY_SETTINGS_SCALE[0])
 			{ 
 				++real_recruits;
 			}
@@ -768,7 +768,7 @@ void nobBaseWarehouse::OrderTroops(nobMilitary * goal, unsigned count)
 	// Soldaten durchgehen und count rausschicken
 
 	// Ränge durchgehen, absteigend, starke zuerst
-	if (gwg->GetPlayer(player)->military_settings[1] > 2)
+	if (gwg->GetPlayer(player)->military_settings[1]*5/MILITARY_SETTINGS_SCALE[0] > 2)
 	{
 		for(unsigned i = 5;i && count;--i)
 		{
@@ -870,7 +870,7 @@ nofDefender * nobBaseWarehouse::ProvideDefender(nofAttacker * const attacker)
 	if(rank_count)
 	{
 		// Gewünschten Rang an Hand der Militäreinstellungen ausrechnen, je nachdem wie stark verteidigt werden soll
-		unsigned rank = (rank_count-1)*gwg->GetPlayer(player)->military_settings[1]/5;
+		unsigned rank = (rank_count-1)*gwg->GetPlayer(player)->military_settings[1]/MILITARY_SETTINGS_SCALE[1];
 
 		// Gewünschten Rang suchen
 		unsigned r = 0;

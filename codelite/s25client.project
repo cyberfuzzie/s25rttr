@@ -386,7 +386,6 @@
       <File Name="../src/nofAttacker.cpp"/>
       <File Name="../src/nofMetalworker.h"/>
       <File Name="../src/noBuildingSite.h"/>
-      <File Name="../src/MilitaryConsts.h"/>
       <File Name="../src/noBaseBuilding.cpp"/>
       <File Name="../src/NodalObjectTypes.h"/>
       <File Name="../src/nofMiner.cpp"/>
@@ -403,7 +402,6 @@
       <File Name="../src/noFighting.cpp"/>
       <File Name="../src/MusicPlayer.h"/>
       <File Name="../src/nofScout_Free.h"/>
-      <File Name="../src/MapConsts.h"/>
       <File Name="../src/nofDefender.h"/>
       <File Name="../src/TerritoryRegion.h"/>
       <File Name="../src/noTree.cpp"/>
@@ -452,6 +450,8 @@
         <File Name="../src/DoorConsts.h"/>
         <File Name="../src/GameConsts.h"/>
         <File Name="../src/JobConsts.h"/>
+        <File Name="../src/MapConsts.h"/>
+        <File Name="../src/MilitaryConsts.h"/>
       </VirtualDirectory>
       <File Name="../src/EventManager.cpp"/>
       <File Name="../src/EventManager.h"/>

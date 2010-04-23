@@ -1,4 +1,4 @@
-// $Id: nobMilitary.h 6150 2010-03-13 23:17:32Z jh $
+// $Id: nobMilitary.h 6349 2010-04-23 18:11:38Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -39,7 +39,7 @@ class nobMilitary : public nobBaseMilitary
 	unsigned char coins;
 	/// Gibt an, ob Goldmünzen gesperrt worden (letzteres nur visuell, um Netzwerk-Latenzen zu verstecken)
 	bool disable_coins, disable_coins_virtual;
-	/// Entfernung zur freindlichen Grenze (woraus sich dann die Besatzung ergibt) von 0-2, 0 fern, 2 nah
+	/// Entfernung zur freindlichen Grenze (woraus sich dann die Besatzung ergibt) von 0-3, 0 fern, 3 nah, 2 Hafen!
 	unsigned char frontier_distance;
 	/// Größe bzw Typ des Militärgebäudes (0 = Baracke, 3 = Festung)
 	unsigned char size;

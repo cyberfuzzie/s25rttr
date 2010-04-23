@@ -4,6 +4,7 @@
 #include "Serializer.h"
 #include "GameConsts.h"
 #include "MapConsts.h"
+#include "MilitaryConsts.h"
 #include <vector>
 #include <cassert>
 
@@ -338,7 +339,7 @@ class ChangeMilitary : public GameCommand
 {
 	friend class GameClient;
 	/// Größe der Distributionsdaten
-	static const unsigned DATA_SIZE = 7;
+	static const unsigned DATA_SIZE = MILITARY_SETTINGS_COUNT;
 	/// Daten der Distribution (einzelne Prozente der Waren in Gebäuden)
 	std::vector<unsigned char> data;
 public:

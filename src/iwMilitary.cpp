@@ -1,4 +1,4 @@
-// $Id: iwMilitary.cpp 6150 2010-03-13 23:17:32Z jh $
+// $Id: iwMilitary.cpp 6349 2010-04-23 18:11:38Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -43,21 +43,22 @@
  *  @author OLiver
  */
 iwMilitary::iwMilitary(void)
-	: IngameWindow(CGI_MILITARY, 0xFFFE, 0xFFFE, 168, 298, _("Military"), LOADER.GetImageN("io", 5)),
+	: IngameWindow(CGI_MILITARY, 0xFFFE, 0xFFFE, 168, 320, _("Military"), LOADER.GetImageN("io", 5)),
 	settings_changed(false)
 {
 	// Einzelne Balken
-	AddProgress(0,17,25,132,26,TC_GREY,119,120,10,"",4,4,0,_("Fewer recruits"),_("More recruits")); /* pitch: 4, 4 */
-	AddProgress(1,17,57,132,26,TC_GREY,121,122,5,"",4,4,0,_("Weak defense"),_("Strong defense"));
-	AddProgress(2,17,89,132,26,TC_GREY,123,124,5,"",4,4,0,_("Fewer defenders"),_("More defenders"));
-	AddProgress(3,17,121,132,26,TC_GREY,209,210,5,"",4,4,0,_("Less attackers"),_("More attackers"));
-	AddProgress(4,17,153,132,26,TC_GREY,129,130,10,"",4,4,0,_("Interior"),_("Interior"));
-	AddProgress(5,17,185,132,26,TC_GREY,127,128,10,"",4,4,0,_("Center of country"),_("Center of country"));
-	AddProgress(6,17,217,132,26,TC_GREY,125,126,10,"",4,4,0,_("Border areas"),_("Border areas"));
+	AddProgress(0,17,25,132,26,TC_GREY,119,120,MILITARY_SETTINGS_SCALE[0],"",4,4,0,_("Fewer recruits"),_("More recruits")); /* pitch: 4, 4 */
+	AddProgress(1,17,57,132,26,TC_GREY,121,122,MILITARY_SETTINGS_SCALE[1],"",4,4,0,_("Weak defense"),_("Strong defense"));
+	AddProgress(2,17,89,132,26,TC_GREY,123,124,MILITARY_SETTINGS_SCALE[2],"",4,4,0,_("Fewer defenders"),_("More defenders"));
+	AddProgress(3,17,121,132,26,TC_GREY,209,210,MILITARY_SETTINGS_SCALE[3],"",4,4,0,_("Less attackers"),_("More attackers"));
+	AddProgress(4,17,153,132,26,TC_GREY,129,130,MILITARY_SETTINGS_SCALE[4],"",4,4,0,_("Interior"),_("Interior"));
+	AddProgress(5,17,185,132,26,TC_GREY,127,128,MILITARY_SETTINGS_SCALE[5],"",4,4,0,_("Center of country"),_("Center of country"));
+	AddProgress(6,17,217,132,26,TC_GREY,125,126,MILITARY_SETTINGS_SCALE[6],"",4,4,0,_("Near harbor points"),_("Near harbor points")); // todo Symbole
+	AddProgress(7,17,249,132,26,TC_GREY,125,126,MILITARY_SETTINGS_SCALE[7],"",4,4,0,_("Border areas"),_("Border areas"));
 
 	// unteren 2 Buttons
-	AddImageButton(7,18,250,30,32,TC_GREY, LOADER.GetImageN("io",21), _("Help"));
-	AddImageButton(8,120,250,30,32,TC_GREY, LOADER.GetImageN("io",191),_("Default"));
+	AddImageButton(20,18,282,30,32,TC_GREY, LOADER.GetImageN("io",21), _("Help"));
+	AddImageButton(21,120,282,30,32,TC_GREY, LOADER.GetImageN("io",191),_("Default"));
 
 	// Falls Verteidiger ändern verboten ist, einfach die Bar ausblenden
 	if (ADDONMANAGER.getSelection(ADDON_DEFENDER_BEHAVIOR) == 1)
@@ -66,7 +67,7 @@ iwMilitary::iwMilitary(void)
 	}
 
 	// Absendetimer, in 2s-Abschnitten wird jeweils das ganze als Netzwerknachricht ggf. abgeschickt
-	AddTimer(9,2000);
+	AddTimer(22,2000);
 	UpdateSettings();
 }
 
@@ -82,7 +83,7 @@ void iwMilitary::TransmitSettings()
 	if(settings_changed)
 	{
 		// Einstellungen speichern
-		for(unsigned char i = 0; i < 7; ++i)
+		for(unsigned char i = 0; i < MILITARY_SETTINGS_COUNT; ++i)
 			GAMECLIENT.visual_settings.military_settings[i] = (unsigned char)GetCtrl<ctrlProgress>(i)->GetPosition();
 
 		GAMECLIENT.AddGC(new gc::ChangeMilitary(GAMECLIENT.visual_settings.military_settings));
@@ -111,7 +112,7 @@ void iwMilitary::Msg_ProgressChange(const unsigned int ctrl_id, const unsigned s
 void iwMilitary::UpdateSettings()
 {
 	// Einstellungen festlegen
-	for(unsigned i = 0;i<7;++i)
+	for(unsigned i = 0;i<MILITARY_SETTINGS_COUNT;++i)
 		GetCtrl<ctrlProgress>(i)->SetPosition(GAMECLIENT.visual_settings.military_settings[i]);
 }
 

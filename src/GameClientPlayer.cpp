@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 6327 2010-04-16 18:28:38Z OLiver $
+// $Id: GameClientPlayer.cpp 6349 2010-04-23 18:11:38Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -66,7 +66,7 @@ const unsigned char STD_TRANSPORT[35] =
  *
  *  @author OLiver
  */
-GameClientPlayer::GameClientPlayer(const unsigned playerid) : GamePlayerInfo(playerid), build_order(31), military_settings(7), tools_settings(12,0)
+GameClientPlayer::GameClientPlayer(const unsigned playerid) : GamePlayerInfo(playerid), build_order(31), military_settings(MILITARY_SETTINGS_COUNT), tools_settings(12,0)
 {
 	// Erstmal kein HQ (leerer Spieler) wie das bei manchen Karten der Fall ist
 	hqy = hqx = 0xFFFF;
@@ -155,7 +155,8 @@ GameClientPlayer::GameClientPlayer(const unsigned playerid) : GamePlayerInfo(pla
 	military_settings[3] = 3;
 	military_settings[4] = 2;
 	military_settings[5] = 4;
-	military_settings[6] = 10;
+	military_settings[6] = MILITARY_SETTINGS_SCALE[6];
+	military_settings[7] = MILITARY_SETTINGS_SCALE[7];
 	GAMECLIENT.visual_settings.military_settings = military_settings;
 	GAMECLIENT.visual_settings.tools_settings = tools_settings;
 
@@ -244,7 +245,7 @@ void GameClientPlayer::Serialize(SerializedGameData * sgd)
 
 	sgd->PushRawData(transport,WARE_TYPES_COUNT);
 
-	for(unsigned i = 0;i<7;++i)
+	for(unsigned i = 0;i<MILITARY_SETTINGS_COUNT;++i)
 		sgd->PushUnsignedChar(military_settings[i]);
 
 	for(unsigned i = 0;i<12;++i)
@@ -364,7 +365,7 @@ void GameClientPlayer::Deserialize(SerializedGameData * sgd)
 
 	sgd->PopRawData(transport,WARE_TYPES_COUNT);
 
-	for(unsigned i = 0;i<7;++i)
+	for(unsigned i = 0;i<MILITARY_SETTINGS_COUNT;++i)
 		military_settings[i] = sgd->PopUnsignedChar();
 
 	for(unsigned i = 0;i<12;++i)
@@ -1275,7 +1276,7 @@ void GameClientPlayer::RefreshDefenderList()
 	/// Die Verteidigungsliste muss erneuert werden
 	memset(defenders,0,5);
 	for(unsigned i = 0;i<5;++i)
-		defenders[i] = (i<military_settings[2]);
+		defenders[i] = (i<military_settings[2]*5/MILITARY_SETTINGS_SCALE[2]);
 	// und ordentlich schütteln
 	RANDOM.Shuffle(defenders,5);
 

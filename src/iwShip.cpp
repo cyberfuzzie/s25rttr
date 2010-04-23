@@ -1,4 +1,4 @@
-// $Id: iwShip.cpp 6288 2010-04-07 21:01:32Z OLiver $
+// $Id: iwShip.cpp 6349 2010-04-23 18:11:38Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -287,7 +287,23 @@ void iwShip::DrawCargo()
 				lineCounter = 0;
 			}
 			orderedWares[i]--;
-			LOADER.GetMapImageN(2200+i)->Draw(x,y,0,0,0,0,0,0);
+			
+			unsigned draw_id = i;
+			
+			// Schilder? Dann das  Schild der jeweiligen Nationalität nehmen
+			if(draw_id == GD_SHIELDROMANS)
+			{
+				switch(GameClient::inst().GetLocalPlayer()->nation)
+				{
+				case NAT_AFRICANS: draw_id = GD_SHIELDAFRICANS; break;
+				case NAT_JAPANESES: draw_id = GD_SHIELDJAPANESE; break;
+				case NAT_VIKINGS: draw_id = GD_SHIELDVIKINGS; break;
+				default: break;
+				}
+			}
+		
+			
+			LOADER.GetMapImageN(2200+draw_id)->Draw(x,y,0,0,0,0,0,0);
 			x += xStep;
 			lineCounter++;
 		}

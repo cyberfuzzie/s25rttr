@@ -1,4 +1,4 @@
-// $Id: MilitaryConsts.h 6280 2010-04-06 12:40:52Z OLiver $
+// $Id: MilitaryConsts.h 6349 2010-04-23 18:11:38Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -70,6 +70,22 @@ const signed char TROOPS_FLAGS[4][4][2] =
 	{{-9,-49},{14,-59},{16,-63},{0,-44}},
 	{{-24,-36},{9,-62},{-2,-80},{23,-75}},
 	{{-5,-50},{-5,-51},{-9,-74},{-12,-58}}
+};
+
+/// Anzahl an Milit‰reinstellungen
+const unsigned MILITARY_SETTINGS_COUNT = 8;
+
+/// Skalierung der einzelnen Milit‰reinstellungen (maximale Werte)
+const unsigned MILITARY_SETTINGS_SCALE[MILITARY_SETTINGS_COUNT] = 
+{
+	10,
+	5,
+	5,
+	5,
+	9,
+	9,
+	9,
+	9
 };
 
 // Besatzungsflaggen f√ºr die HQs

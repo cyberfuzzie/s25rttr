@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 6333 2010-04-19 18:42:40Z OLiver $
+// $Id: GameWorldGame.cpp 6349 2010-04-23 18:11:38Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -906,7 +906,7 @@ void GameWorldGame::Attack(const unsigned char player_attacker, const MapCoord x
 			// Militäreinstellungen zum Angriff eingestellt wurden
 			unsigned short soldiers_count =
 				(static_cast<nobMilitary*>(*it)->GetTroopsCount()>1)?
-				((static_cast<nobMilitary*>(*it)->GetTroopsCount()-1)*GetPlayer(player_attacker)->military_settings[3]/5):0;
+				((static_cast<nobMilitary*>(*it)->GetTroopsCount()-1)*GetPlayer(player_attacker)->military_settings[3]/MILITARY_SETTINGS_SCALE[3]):0;
 
       unsigned int distance = CalcDistance(x,y,(*it)->GetX(),(*it)->GetY());
 

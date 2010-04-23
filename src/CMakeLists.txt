@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 6320 2010-04-13 15:30:16Z FloSoft $
+### $Id: CMakeLists.txt 6348 2010-04-23 05:33:08Z FloSoft $
 ################################################################################
 
 INCLUDE(FindBZip2)
@@ -155,6 +155,7 @@ SET(SOURCES_NO
 	noSkeleton.cpp                      noSkeleton.h
 	noStaticObject.cpp                  noStaticObject.h
 	noTree.cpp                          noTree.h
+	noCharburnerPile.cpp				noCharburnerPile.h
    )
    
 SET(SOURCES_NOB
@@ -208,7 +209,8 @@ SET(SOURCES_NOF
 	nofWellguy.cpp                      nofWellguy.h
 	nofWoodcutter.cpp                   nofWoodcutter.h
 	nofWorkman.cpp                      nofWorkman.h
-	 )
+	nofCharburner.cpp		    		nofCharburner.h
+	)
 
 SET(SOURCES_OTHER
 	BinaryFile.cpp

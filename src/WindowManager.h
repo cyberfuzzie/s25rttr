@@ -1,4 +1,4 @@
-// $Id: WindowManager.h 6202 2010-03-27 15:02:23Z jh $
+// $Id: WindowManager.h 6352 2010-04-25 12:59:33Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -62,7 +62,7 @@ public:
 	/// merkt einen Desktop zum Wechsel vor.
 	void Switch(Desktop *desktop, void *data = NULL, bool mouse = false);
 	/// Verarbeitung des Drückens der Linken Maustaste.
-	void Msg_LeftDown(const MouseCoords& mc);
+	void Msg_LeftDown(MouseCoords mc);
 	/// Verarbeitung des Loslassens der Linken Maustaste.
 	void Msg_LeftUp(const MouseCoords& mc);
 	/// Verarbeitung des Drückens der Rechten Maustaste.
@@ -106,6 +106,10 @@ private:
 	std::string tooltip;
 	unsigned short screenWidth;  /// letzte gültige Bildschirm-/Fensterbreite
 	unsigned short screenHeight; /// letzte gültige Bildschirm-/Fensterhöhe
+	
+	// Für Doppelklick merken:
+	unsigned long long last_left_click_time; /// Zeit des letzten Links-Klicks
+	Point<int> last_left_click_point; /// Position beim letzten Links-Klick
 
 	// um Schleifen abzufangen, die entstehen, weil wir mindestens 800x600 haben wollen.
 //	unsigned short lastScreenWidthSignal;

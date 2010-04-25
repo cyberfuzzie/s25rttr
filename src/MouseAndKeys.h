@@ -1,4 +1,4 @@
-// $Id: MouseAndKeys.h 6177 2010-03-24 10:44:32Z FloSoft $
+// $Id: MouseAndKeys.h 6352 2010-04-25 12:59:33Z OLiver $
 //
 // Copyright (c) 20052008 Settlers Freaks (sfteam at siedler25.org)
 //
@@ -28,15 +28,20 @@
 class MouseCoords
 { 
 public:
-	MouseCoords() : x(0), y(0), ldown(false), rdown(false) {}
-	MouseCoords(int x, int y, bool ldown, bool rdown) : x(x), y(y), ldown(ldown), rdown(rdown) {}
+	MouseCoords() : x(0), y(0), ldown(false), rdown(false), dbl_click(false) {}
+	MouseCoords(int x, int y, bool ldown, bool rdown, const bool dbl_click)
+	: x(x), y(y), ldown(ldown), rdown(rdown), dbl_click(dbl_click) {}
  
 public:
 	int x;      /// xKoordinate
 	int y;      /// yKoordinate
 	bool ldown; /// Linke Maustaste gedrückt
 	bool rdown; /// Rechte Maustaste gedrückt
+	bool dbl_click; /// Linke Maustaste - Doppelklick
  };
+ 
+ /// Maximale Zeitdifferenz in ms für einen Doppeklick
+ const unsigned DOUBLE_CLICK_INTERVAL = 500;
  
 ///////////////////////////////////////////////////////////////////////////////
 /**

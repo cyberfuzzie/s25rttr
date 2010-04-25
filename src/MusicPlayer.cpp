@@ -1,4 +1,4 @@
-// $Id: MusicPlayer.cpp 6081 2010-02-24 13:35:39Z FloSoft $
+// $Id: MusicPlayer.cpp 6352 2010-04-25 12:59:33Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -58,8 +58,6 @@ void Playlist::Prepare()
 		if(random)
 			std::random_shuffle(order.begin(), order.end());
 
-		// ersten Song auswählen
-		getNextSong();
 	}
 }
 
@@ -191,6 +189,19 @@ void Playlist::ReadMusicPlayer(const iwMusicPlayer* const window)
 	Prepare();
 }
 
+// Wählt den Start-Song aus
+void Playlist::SetStartSong(const unsigned id)
+{
+	for(unsigned i = 0;i<order.size();++i)
+	{
+		if(order[i] == id)
+		{
+			std::swap(order[0],order[i]);
+			return;
+		}
+	}
+}
+
 /////////////////////////////////////////////////////////////////////////////
 /**
  *  
@@ -271,4 +282,14 @@ void MusicPlayer::PlayNext()
 
 	// Und abspielen
 	dynamic_cast<glArchivItem_Music*>(sng.get(0))->Play(1);
+}
+
+
+/// schaltet einen Song weiter und liefert den Dateinamen des aktuellen Songs
+const std::string Playlist::getNextSong()	
+{
+	const std::string tmp(getCurrentSong());
+	if(order.size())
+		order.erase(order.begin());
+	return tmp;
 }

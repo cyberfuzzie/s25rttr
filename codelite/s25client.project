@@ -282,6 +282,7 @@
       <File Name="../src/Desktop.h"/>
       <File Name="../src/IngameWindow.cpp"/>
       <File Name="../src/IngameWindow.h"/>
+      <File Name="../src/MouseAndKeys.h"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Spiel">
       <File Name="../src/BurnedWarehouse.cpp"/>

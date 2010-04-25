@@ -1,4 +1,4 @@
-// $Id: Window.h 6177 2010-03-24 10:44:32Z FloSoft $
+// $Id: Window.h 6352 2010-04-25 12:59:33Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -240,6 +240,7 @@ public:
 	virtual void Msg_EditChange(const unsigned int ctrl_id);
 	virtual void Msg_TabChange(const unsigned int ctrl_id, const unsigned short tab_id);
 	virtual void Msg_ListSelectItem(const unsigned int ctrl_id, const unsigned short selection);
+	virtual void Msg_ListChooseItem(const unsigned int ctrl_id, const unsigned short selection);
 	virtual void Msg_ComboSelectItem(const unsigned int ctrl_id, const unsigned short selection);
 	virtual void Msg_CheckboxChange(const unsigned int ctrl_id, const bool checked);
 	virtual void Msg_ProgressChange(const unsigned int ctrl_id, const unsigned short position);
@@ -247,6 +248,7 @@ public:
 	virtual void Msg_OptionGroupChange(const unsigned int ctrl_id, const unsigned short selection);
 	virtual void Msg_Timer(const unsigned int ctrl_id);
 	virtual void Msg_TableSelectItem(const unsigned int ctrl_id, const unsigned short selection);
+	virtual void Msg_TableChooseItem(const unsigned ctrl_id, const unsigned short selection);
 	virtual void Msg_TableRightButton(const unsigned int ctrl_id, const unsigned short selection);
 	virtual void Msg_TableLeftButton(const unsigned int ctrl_id, const unsigned short selection);
 

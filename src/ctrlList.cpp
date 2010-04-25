@@ -1,4 +1,4 @@
-// $Id: ctrlList.cpp 6177 2010-03-24 10:44:32Z FloSoft $
+// $Id: ctrlList.cpp 6352 2010-04-25 12:59:33Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -113,7 +113,10 @@ bool ctrlList::Msg_LeftDown(const MouseCoords& mc)
 
 		// aktuellen Eintrag selektieren
 		selection = mouseover + scrollbar->GetPos();
-		parent->Msg_ListSelectItem(id,selection);
+		
+		if(parent) parent->Msg_ListSelectItem(id,selection);
+		// Doppelklick? Dann noch einen extra Eventhandler aufrufen
+		if(mc.dbl_click && parent) parent->Msg_ListChooseItem(id,selection);
 
 		return true;
 	}

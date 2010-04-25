@@ -1,4 +1,4 @@
-// $Id: Window.cpp 6177 2010-03-24 10:44:32Z FloSoft $
+// $Id: Window.cpp 6352 2010-04-25 12:59:33Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1367,6 +1367,10 @@ void Window::Msg_ListSelectItem(const unsigned int ctrl_id, const unsigned short
 {
 }
 
+void Window::Msg_ListChooseItem(const unsigned int ctrl_id, const unsigned short selection)
+{
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 /**
  *  
@@ -1434,6 +1438,10 @@ void Window::Msg_Timer(const unsigned int ctrl_id)
  *  @author OLiver
  */
 void Window::Msg_TableSelectItem(const unsigned int ctrl_id, const unsigned short selection)
+{
+}
+
+void Window::Msg_TableChooseItem(const unsigned ctrl_id, const unsigned short selection)
 {
 }
 

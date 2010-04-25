@@ -1,4 +1,4 @@
-// $Id: VideoDriverLoaderInterface.h 6177 2010-03-24 10:44:32Z FloSoft $
+// $Id: VideoDriverLoaderInterface.h 6352 2010-04-25 12:59:33Z OLiver $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -28,7 +28,7 @@ class VideoDriverLoaderInterface
 public:
 	virtual ~VideoDriverLoaderInterface() {};
 
-	virtual void Msg_LeftDown(const MouseCoords& mc) = 0;
+	virtual void Msg_LeftDown(MouseCoords mc) = 0;
 	virtual void Msg_LeftUp(const MouseCoords& mc) = 0;
 	virtual void Msg_RightDown(const MouseCoords& mc) = 0;
 	virtual void Msg_RightUp(const MouseCoords& mc) = 0;

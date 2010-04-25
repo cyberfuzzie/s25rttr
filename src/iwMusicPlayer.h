@@ -1,4 +1,4 @@
-// $Id: iwMusicPlayer.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: iwMusicPlayer.h 6352 2010-04-25 12:59:33Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -61,7 +61,8 @@ public:
 
 private:
 
-	void Msg_ListSelectItem(const unsigned int ctrl_id, const unsigned short selection);
+	void Msg_ListChooseItem(const unsigned int ctrl_id, const unsigned short selection);
+	void Msg_ComboSelectItem(const unsigned ctrl_id, const unsigned short selection);
 	void Msg_ButtonClick(const unsigned int ctrl_id);
 
 	void Msg_Input(const unsigned int win_id,const std::string& msg);

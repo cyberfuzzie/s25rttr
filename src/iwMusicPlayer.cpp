@@ -1,4 +1,4 @@
-// $Id: iwMusicPlayer.cpp 6077 2010-02-23 19:37:53Z FloSoft $
+// $Id: iwMusicPlayer.cpp 6352 2010-04-25 12:59:33Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -74,9 +74,9 @@ iwMusicPlayer::iwMusicPlayer()
 	const unsigned short button_distance = 10;
 	const unsigned short button_width = (330-button_distance)/2;
 	ctrlButton * b1 = AddTextButton(3,20,290,button_width,22,TC_GREEN2,_("Add"),NormalFont);
-	ctrlButton * b2 = AddTextButton(4,b1->GetX(false)+button_width+button_distance,290,button_width,22,TC_GREEN2,_("Remove"),NormalFont);
-	AddTextButton(5,b1->GetX(false),320,button_width,22,TC_GREEN2,_("Save"),NormalFont);
-	AddTextButton(6,b2->GetX(false),320,button_width,22,TC_GREEN2,_("Load"),NormalFont);
+	AddTextButton(4,b1->GetX(false)+button_width+button_distance,290,button_width,22,TC_GREEN2,_("Remove"),NormalFont);
+	//AddTextButton(5,b1->GetX(false),320,button_width,22,TC_GREEN2,_("Save"),NormalFont);
+	//AddTextButton(6,b2->GetX(false),320,button_width,22,TC_GREEN2,_("Load"),NormalFont);
 
 	// Buttons für die Musikstücke
 	AddImageButton(7,370,30,40,40,TC_GREY,LOADER.GetImageN("io",138),_("Add track"));
@@ -97,8 +97,30 @@ iwMusicPlayer::~iwMusicPlayer()
 {
 	// Playlist ggf. speichern, die ausgewählt ist, falls eine ausgewählt ist
 	unsigned short selection = GetCtrl<ctrlComboBox>(2)->GetSelection();
+	
 
 	// Entsprechende Datei speichern
+	if(selection != 0xFFFF)
+	{
+		Playlist pl;
+		pl.ReadMusicPlayer(this);
+
+		std::string str(GetCtrl<ctrlComboBox>(2)->GetText(selection));
+
+		// RTTR-Playlisten dürfen nicht gelöscht werden
+		if(str == "S2_Standard")
+		{
+			WindowManager::inst().Show(new iwMsgbox(_("Error"),_("You are not allowed to change the standard playlist!"),this,MSB_OK,MSB_EXCLAMATIONRED));
+			return;
+		}
+
+		if(!pl.SaveAs(GetFullPlaylistPath(str),true))
+			// Fehler, konnte nicht gespeichert werden
+			WindowManager::inst().Show(new iwMsgbox(_("Error"),_("The specified file couldn't be saved!"),this,MSB_OK,MSB_EXCLAMATIONRED));
+	}
+
+
+	// Entsprechenden Dateipfad speichern
 	if(selection != 0xFFFF)
 		SETTINGS.sound.playlist = GetCtrl<ctrlComboBox>(2)->GetText(selection);
 
@@ -107,8 +129,30 @@ iwMusicPlayer::~iwMusicPlayer()
 	MusicPlayer::inst().Play();
 }
 
-void iwMusicPlayer::Msg_ListSelectItem(const unsigned int ctrl_id, const unsigned short selection)
+void iwMusicPlayer::Msg_ComboSelectItem(const unsigned ctrl_id, const unsigned short selection)
 {
+	// Entsprechende Datei geladen
+	if(selection != 0xFFFF)
+	{
+		Playlist pl;
+		if(pl.Load(GetFullPlaylistPath(GetCtrl<ctrlComboBox>(2)->GetText(selection))))
+		{
+			// Das Fenster entsprechend mit den geladenen Werten füllen
+			pl.FillMusicPlayer(this);
+		}
+		else
+			// Fehler, konnte nicht geladen werden
+			WindowManager::inst().Show(new iwMsgbox(_("Error"),_("The specified file couldn't be loaded!"),this,MSB_OK,MSB_EXCLAMATIONRED));
+	}
+
+}
+
+void iwMusicPlayer::Msg_ListChooseItem(const unsigned int ctrl_id, const unsigned short selection)
+{
+	// Werte in Musikplayer bringen
+	MusicPlayer::inst().GetPlaylist().ReadMusicPlayer(this);
+	MusicPlayer::inst().GetPlaylist().SetStartSong(selection);
+	MusicPlayer::inst().Play();
 }
 
 std::string iwMusicPlayer::GetFullPlaylistPath(const std::string& combo_str)
@@ -149,48 +193,12 @@ void iwMusicPlayer::Msg_ButtonClick(const unsigned int ctrl_id)
 	// Save Playlist
 	case 5:
 		{
-			unsigned short selection = GetCtrl<ctrlComboBox>(2)->GetSelection();
-
-			// Entsprechende Datei speichern
-			if(selection != 0xFFFF)
-			{
-				Playlist pl;
-				pl.ReadMusicPlayer(this);
-
-				std::string str(GetCtrl<ctrlComboBox>(2)->GetText(selection));
-
-				// RTTR-Playlisten dürfen nicht gelöscht werden
-				if(str == "S2_Standard")
-				{
-					WindowManager::inst().Show(new iwMsgbox(_("Error"),_("You are not allowed to change the standard playlist!"),this,MSB_OK,MSB_EXCLAMATIONRED));
-					return;
-				}
-
-				if(!pl.SaveAs(GetFullPlaylistPath(str),false))
-					// Fehler, konnte nicht gespeichert werden
-					WindowManager::inst().Show(new iwMsgbox(_("Error"),_("The specified file couldn't be saved!"),this,MSB_OK,MSB_EXCLAMATIONRED));
-			}
-
+		
 		} break;
 	// Load Playlist
 	case 6:
 		{
-			unsigned short selection = GetCtrl<ctrlComboBox>(2)->GetSelection();
-
-			// Entsprechende Datei geladen
-			if(selection != 0xFFFF)
-			{
-				Playlist pl;
-				if(pl.Load(GetFullPlaylistPath(GetCtrl<ctrlComboBox>(2)->GetText(selection))))
-				{
-					// Das Fenster entsprechend mit den geladenen Werten füllen
-					pl.FillMusicPlayer(this);
-				}
-				else
-					// Fehler, konnte nicht geladen werden
-					WindowManager::inst().Show(new iwMsgbox(_("Error"),_("The specified file couldn't be loaded!"),this,MSB_OK,MSB_EXCLAMATIONRED));
-			}
-
+			
 
 		} break;
 	// Add Track

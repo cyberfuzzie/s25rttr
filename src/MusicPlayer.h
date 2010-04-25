@@ -1,4 +1,4 @@
-// $Id: MusicPlayer.h 6077 2010-02-23 19:37:53Z FloSoft $
+// $Id: MusicPlayer.h 6352 2010-04-25 12:59:33Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -38,12 +38,7 @@ public:
 	const std::string getCurrentSong() const	{	return (songs.size() && order.size() ? songs[order[0]] : "");	}
 	
 	/// schaltet einen Song weiter und liefert den Dateinamen des aktuellen Songs
-	const std::string getNextSong()	
-	{
-		if(order.size())
-			order.erase(order.begin());
-		return getCurrentSong();
-	}
+	const std::string getNextSong();
 
 	/// Playlist in Datei speichern
 	bool SaveAs(const std::string filename, const bool overwrite);
@@ -54,6 +49,9 @@ public:
 	void FillMusicPlayer(iwMusicPlayer *window) const;
 	/// Liest die Werte aus dem iwMusicPlayer-Fenster
 	void ReadMusicPlayer(const iwMusicPlayer *const window);
+	
+	/// Wählt den Start-Song aus
+	void SetStartSong(const unsigned id);
 
 protected:
 	unsigned int repeats;				///< Anzahl der Wiederholungen

@@ -1,4 +1,4 @@
-// $Id: WindowManager.cpp 6333 2010-04-19 18:42:40Z OLiver $
+// $Id: WindowManager.cpp 6352 2010-04-25 12:59:33Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -45,7 +45,8 @@
  *  @author OLiver
  */
 WindowManager::WindowManager(void)
-	: desktop(NULL), nextdesktop(NULL), nextdesktop_data(NULL), disable_mouse(false), mc(NULL), screenWidth(0), screenHeight(0)//, lastScreenWidthSignal(0), lastScreenHeightSignal(0), lastScreenSignalCount(0)
+	: desktop(NULL), nextdesktop(NULL), nextdesktop_data(NULL), disable_mouse(false), 
+	mc(NULL), screenWidth(0), screenHeight(0), last_left_click_time(0), last_left_click_point(0,0)
 {
 }
 
@@ -352,7 +353,7 @@ void WindowManager::Switch(Desktop *desktop, void *data, bool mouse)
  *
  *  @author OLiver
  */
-void WindowManager::Msg_LeftDown(const MouseCoords& mc)
+void WindowManager::Msg_LeftDown(MouseCoords mc)
 {
 	// ist unser Desktop gültig?
 	if(!desktop)
@@ -360,6 +361,16 @@ void WindowManager::Msg_LeftDown(const MouseCoords& mc)
 
 	// Sound abspielen
 	LOADER.GetSoundN("sound", 112)->Play(255,false);
+	
+	// Ggf. Doppelklick untersuche
+	unsigned long long time_now = std::clock();
+	if((time_now - last_left_click_time)*1000/CLOCKS_PER_SEC < DOUBLE_CLICK_INTERVAL
+		&& Point<int>(mc.x,mc.y) == last_left_click_point)
+		mc.dbl_click = true;
+		
+	// Werte wieder erneut speichern
+	last_left_click_point = Point<int>(mc.x,mc.y);
+	last_left_click_time = time_now;
 
 	// haben wir überhaupt fenster?
 	if(!windows.size())

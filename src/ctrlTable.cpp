@@ -1,4 +1,4 @@
-// $Id: ctrlTable.cpp 6177 2010-03-24 10:44:32Z FloSoft $
+// $Id: ctrlTable.cpp 6352 2010-04-25 12:59:33Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -334,9 +334,14 @@ bool ctrlTable::Msg_LeftDown(const MouseCoords& mc)
 {
 	if(Coll(mc.x, mc.y, GetX(), GetY() + header_height, width - 20, height - header_height))
 	{
+		// Save last selection
+		unsigned short last_selection = row_l_selection;
 		SetSelection((mc.y - header_height - GetY()) / font->getHeight() + GetCtrl<ctrlScrollBar>(0)->GetPos());
 		if(parent)
-			parent->Msg_TableRightButton(this->id, row_l_selection);
+			parent->Msg_TableLeftButton(this->id, row_l_selection);
+		// Selection hasnt changed? Then we call an additional event handler for a "pseudo double click"
+		if(parent && last_selection == row_l_selection && row_l_selection != 0xffff)
+			parent->Msg_TableChooseItem(this->id, row_l_selection);
 
 		return true;
 	}
@@ -356,7 +361,7 @@ bool ctrlTable::Msg_RightDown(const MouseCoords& mc)
 	{
 		SetSelection((mc.y - header_height - GetY()) / font->getHeight() + GetCtrl<ctrlScrollBar>(0)->GetPos(), false);
 		if(parent)
-			parent->Msg_TableLeftButton(this->id,row_r_selection);
+			parent->Msg_TableRightButton(this->id,row_r_selection);
 
 		return true;
 	}

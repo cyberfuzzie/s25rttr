@@ -1,4 +1,4 @@
-// $Id: iwAction.cpp 6344 2010-04-21 18:30:29Z OLiver $
+// $Id: iwAction.cpp 6355 2010-04-25 20:09:12Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -211,7 +211,7 @@ iwAction::iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, cons
 
 		// Catapult
 		if (!GAMECLIENT.GetLocalPlayer()->CanBuildCatapult())
-			building_available[1][12] = false;
+			building_available[1][13] = false;
 			
 		// Charburner
 		if(!ADDONMANAGER.isEnabled(ADDON_CHARBURNER))

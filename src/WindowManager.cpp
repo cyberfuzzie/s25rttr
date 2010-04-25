@@ -1,4 +1,4 @@
-// $Id: WindowManager.cpp 6352 2010-04-25 12:59:33Z OLiver $
+// $Id: WindowManager.cpp 6354 2010-04-25 19:48:44Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -363,7 +363,7 @@ void WindowManager::Msg_LeftDown(MouseCoords mc)
 	LOADER.GetSoundN("sound", 112)->Play(255,false);
 	
 	// Ggf. Doppelklick untersuche
-	unsigned long long time_now = std::clock();
+	unsigned time_now = VideoDriverWrapper::inst().GetTickCount();
 	if((time_now - last_left_click_time)*1000/CLOCKS_PER_SEC < DOUBLE_CLICK_INTERVAL
 		&& Point<int>(mc.x,mc.y) == last_left_click_point)
 		mc.dbl_click = true;

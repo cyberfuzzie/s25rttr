@@ -1,4 +1,4 @@
-// $Id: WindowManager.h 6352 2010-04-25 12:59:33Z OLiver $
+// $Id: WindowManager.h 6354 2010-04-25 19:48:44Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -108,7 +108,7 @@ private:
 	unsigned short screenHeight; /// letzte gültige Bildschirm-/Fensterhöhe
 	
 	// Für Doppelklick merken:
-	unsigned long long last_left_click_time; /// Zeit des letzten Links-Klicks
+	unsigned last_left_click_time; /// Zeit des letzten Links-Klicks
 	Point<int> last_left_click_point; /// Position beim letzten Links-Klick
 
 	// um Schleifen abzufangen, die entstehen, weil wir mindestens 800x600 haben wollen.

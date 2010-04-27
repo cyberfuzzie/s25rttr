@@ -1,4 +1,4 @@
-// $Id: Ware.cpp 6005 2010-02-12 10:08:09Z FloSoft $
+// $Id: Ware.cpp 6360 2010-04-27 11:51:10Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -40,10 +40,14 @@
 #endif
 
 Ware::Ware(const GoodType type, noBaseBuilding * goal, noRoadNode * location) :
-next_dir(255), state(STATE_WAITINWAREHOUSE), location(location), type(type), goal(goal)
+next_dir(255), state(STATE_WAITINWAREHOUSE), location(location),
+type(type == GD_SHIELDROMANS ? SHIELD_TYPES[GameClient::inst().GetPlayer(location->GetPlayer())->nation] : type ),// Bin ich ein Schild? Dann evtl. Typ nach Nation anpassen
+goal(goal)
 {
 	// Ware in den Index mit eintragen
 	gwg->GetPlayer(location->GetPlayer())->RegisterWare(this);
+	
+	
 	//assert(obj_id != 610542);
 }
 

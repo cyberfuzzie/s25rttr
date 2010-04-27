@@ -1,4 +1,4 @@
-// $Id: noExtension.h 6267 2010-04-05 09:16:14Z OLiver $
+// $Id: noExtension.h 6359 2010-04-27 10:59:06Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -29,6 +29,7 @@ class noExtension : public noBase
 public:
 	noExtension(noBase *const base)	: noBase(NOP_EXTENSION), base(base) {}
 	noExtension(SerializedGameData * sgd, const unsigned obj_id);
+	~noExtension();
 
 	void Destroy() { Destroy_noExtension(); }
 	noBase *GetBaseObject() const { return base; }

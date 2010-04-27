@@ -1,4 +1,4 @@
-// $Id: noExtension.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: noExtension.cpp 6359 2010-04-27 10:59:06Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -34,5 +34,10 @@ void noExtension::Serialize_noExtension(SerializedGameData * sgd) const
 noExtension::noExtension(SerializedGameData * sgd, const unsigned obj_id) : noBase(sgd,obj_id),
 base(sgd->PopObject<noBase>(GOT_UNKNOWN))
 {
+}
+
+noExtension::~noExtension()
+{
+	assert(true);
 }
 

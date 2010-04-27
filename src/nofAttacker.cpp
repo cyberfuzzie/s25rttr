@@ -908,6 +908,8 @@ void nofAttacker::CapturingWalking()
 		// Meinem alten Heimatgebäude Bescheid sagen (falls es noch existiert)
 		if(building)
 			building->SoldierLost(this);
+		if(ship_obj_id)
+			CancelAtShip();
 		// mich von der Karte tilgen-
 		gwg->RemoveFigure(this,x,y);
 		// Das ist nun mein neues zu Hause

@@ -1,4 +1,4 @@
-// $Id: const_addons.h 6343 2010-04-21 17:19:42Z OLiver $
+// $Id: const_addons.h 6364 2010-04-28 19:38:37Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -27,6 +27,7 @@
 // 001 OLiver
 // 002 Divan
 // 003 jh
+// 004 Johann-Nikolaus Andreae
 //
 
 // Do not forget to add your Addon to AddonManager::reset!
@@ -52,7 +53,9 @@ enum AddonId
 	ADDON_CUSTOM_BUILD_SEQUENCE		= 0x00200002,
 	ADDON_STATISTICS_VISIBILITY		= 0x00200003,
 
-	ADDON_DEFENDER_BEHAVIOR			= 0x00300000
+	ADDON_DEFENDER_BEHAVIOR			= 0x00300000,
+
+	ADDON_NO_COINS_DEFAULT			= 0x00400000
 };
 
 enum AddonGroup

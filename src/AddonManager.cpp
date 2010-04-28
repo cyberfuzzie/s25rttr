@@ -1,4 +1,4 @@
-// $Id: AddonManager.cpp 6343 2010-04-21 17:19:42Z OLiver $
+// $Id: AddonManager.cpp 6364 2010-04-28 19:38:37Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -40,6 +40,8 @@
 #include "AddonStatisticsVisibility.h"
 
 #include "AddonDefenderBehavior.h"
+
+#include "AddonNoCoinsDefault.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
@@ -97,6 +99,8 @@ void AddonManager::reset(bool recreate)
 		registerAddon(new AddonStatisticsVisibility);
 
 		registerAddon(new AddonDefenderBehavior);
+		
+		registerAddon(new AddonNoCoinsDefault);
 	}
 }
 

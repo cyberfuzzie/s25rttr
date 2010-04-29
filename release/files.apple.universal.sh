@@ -16,7 +16,7 @@ mkdir -vp s25client.app/Contents/{MacOS,Resources}
 mkdir -vp s25client.app/Contents/MacOS/Frameworks
 mkdir -vp s25client.app/Contents/MacOS/Frameworks/{SDL,SDL_mixer}.framework
 cp -rv /Library/Frameworks/SDL.framework s25client.app/Contents/MacOS/Frameworks
-cp -rv /Library/Frameworks/SDL_mixer.framework s25client.app/Contents/Frameworks/MacOS
+cp -rv /Library/Frameworks/SDL_mixer.framework s25client.app/Contents/MacOS/Frameworks
 
 # remove headers and additional libraries from the frameworks
 rm -rv s25client.app/Contents/Frameworks/MacOS/SDL_mixer.framework/Versions/*/{Headers,Resources}

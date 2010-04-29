@@ -1,4 +1,4 @@
-// $Id: iwAddons.cpp 6366 2010-04-29 17:52:45Z FloSoft $
+// $Id: iwAddons.cpp 6368 2010-04-29 18:15:43Z FloSoft $
 //
 // Copyright (c) 2005-2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -246,3 +246,4 @@ bool iwAddons::Msg_WheelDown(const MouseCoords& mc)
 	scrollbar->Msg_ButtonClick(1);
 	return true;
 }
+

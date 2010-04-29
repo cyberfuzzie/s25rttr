@@ -1,6 +1,6 @@
 #!/bin/bash
 ###############################################################################
-## $Id: cmake.sh 6320 2010-04-13 15:30:16Z FloSoft $
+## $Id: cmake.sh 6368 2010-04-29 18:15:43Z FloSoft $
 ###############################################################################
 
 # Editable Variables
@@ -137,9 +137,22 @@ while test $# != 0 ; do
 			ac_feature=`echo $ac_feature | sed 's/[-.]/_/g'`
 			if [ -z "$ac_optarg" ] ; then
 				ac_optarg="yes"
-				echo foo
 			fi
 			eval enable_$ac_feature=\$ac_optarg
+		;;
+		-disable-* | --disable-*)
+		        ac_feature=`expr "x$ac_option" : 'x-*disable-\([^=]*\)'`
+                        # Reject names that are not valid shell variable names.
+                        expr "x$ac_feature" : ".*[^-._$as_cr_alnum]" >/dev/null &&
+                        {
+                                echo "error: invalid feature name: $ac_feature" >&2
+                                { (exit 1); exit 1; };
+                        }
+                        ac_feature=`echo $ac_feature | sed 's/[-.]/_/g'`
+                        if [ -z "$ac_optarg" ] ; then
+                                ac_optarg="yes"
+                        fi
+                        eval disable_$ac_feature=\$ac_optarg
 		;;
 		*)
 			echo "Unknown option: $ac_option"
@@ -192,6 +205,9 @@ echo "Setting Library Dir to \"$LIBDIR\""
 PARAMS="$PARAMS -DLIBDIR=$LIBDIR"
 
 echo "Disabling build of \"$NOARCH\""
+if [ ! -z "$disable_arch" ] ; then
+	NOARCH="$disable_arch $NOARCH"
+fi
 for I in $NOARCH ; do
 	if [ ! -z "$I" ] ; then	
 		PARAMS="$PARAMS -DNO$I=$I"

@@ -1,4 +1,4 @@
-// $Id: ctrlScrollBar.cpp 6177 2010-03-24 10:44:32Z FloSoft $
+// $Id: ctrlScrollBar.cpp 6366 2010-04-29 17:52:45Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -62,6 +62,12 @@ ctrlScrollBar::ctrlScrollBar(Window *parent,
 	CalculateScrollBar();
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 bool ctrlScrollBar::Msg_LeftUp(const MouseCoords& mc)
 {
 	move = false;
@@ -70,53 +76,57 @@ bool ctrlScrollBar::Msg_LeftUp(const MouseCoords& mc)
 	return RelayMouseMessage(&Window::Msg_LeftUp, mc);
 } 
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 bool ctrlScrollBar::Msg_LeftDown(const MouseCoords& mc)
 {
-	if (Coll(mc.x, mc.y, GetX(), GetY() + button_height
-	         + scrollbar_pos, width, scrollbar_height)) {
-
+	if (Coll(mc.x, mc.y, GetX(), GetY() + button_height + scrollbar_pos, width, scrollbar_height)) 
+	{
 		// Maus auf dem Scrollbutton
 		move = true;
 
 		return true;
-
-	} else if (Coll(mc.x, mc.y, GetX(), GetY(), width, button_height)
-	        || Coll(mc.x, mc.y, GetX(), GetY() + height
-	                - button_height, width, button_height)) {
-
+	}
+	
+	else if (Coll(mc.x, mc.y, GetX(), GetY(), width, button_height) || Coll(mc.x, mc.y, GetX(), GetY() + height - button_height, width, button_height)) 
+	{
 		// Maus auf einer Schaltflaeche
 		return RelayMouseMessage(&Window::Msg_LeftDown, mc);
+	}
 
-	} else {
-
+	else
+	{
 		// Maus auf der Leiste
 		unsigned short diff = scrollbar_height / 2;
 
-		if (Coll(mc.x, mc.y, GetX(), GetY() + button_height, width,
-		         scrollbar_pos)) {
-
-			if (scrollbar_pos < diff) {
+		if (Coll(mc.x, mc.y, GetX(), GetY() + button_height, width, scrollbar_pos))
+		{
+			if (scrollbar_pos < diff)
 				scrollbar_pos = 0;
-			} else {
+			else
 				scrollbar_pos -= diff;
-			}
+
 			CalculatePosition();
-
+			parent->Msg_ScrollChange(id, scroll_pos);
 			return true;
+		}
+		else
+		{
+			unsigned short sbb = button_height + scrollbar_pos + scrollbar_height;
 
-		} else {
-
-			unsigned short sbb = button_height + scrollbar_pos
-			                     + scrollbar_height;
-
-			if (Coll(mc.x, mc.y, GetX(), GetY() + sbb, width,
-		             height - (sbb + button_height))) {
+			if (Coll(mc.x, mc.y, GetX(), GetY() + sbb, width, height - (sbb + button_height))) 
+			{
 				scrollbar_pos += diff;
-				if (scrollbar_pos
-				    > (scroll_height - scrollbar_height)) {
+
+				if (scrollbar_pos > (scroll_height - scrollbar_height))
 					scrollbar_pos = scroll_height - scrollbar_height;
-				}
+
 				CalculatePosition();
+				parent->Msg_ScrollChange(id, scroll_pos);
 				return true;
 			}
 		}
@@ -125,6 +135,12 @@ bool ctrlScrollBar::Msg_LeftDown(const MouseCoords& mc)
 	return false;
 } 
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 bool ctrlScrollBar::Msg_MouseMove(const MouseCoords& mc)
 {
 	if(move)
@@ -136,6 +152,7 @@ bool ctrlScrollBar::Msg_MouseMove(const MouseCoords& mc)
 		CalculatePosition();
 		if(scroll_pos > scroll_range - pagesize)
 			scroll_pos = scroll_range - pagesize;
+		parent->Msg_ScrollChange(id, scroll_pos);
 	}
 	last_y = mc.y;
 
@@ -143,19 +160,31 @@ bool ctrlScrollBar::Msg_MouseMove(const MouseCoords& mc)
 	return RelayMouseMessage(&Window::Msg_MouseMove, mc);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void ctrlScrollBar::Msg_ButtonClick(const unsigned int ctrl_id)
 {
 	switch(ctrl_id)
 	{
-	case 0: // Upwards. Oliver, you mixed it up ;)
+	case 0: // Upwards
 		{
 			if(scroll_pos > 0)
+			{
 				--scroll_pos;
+				parent->Msg_ScrollChange(id, scroll_pos);
+			}
 		} break;
 	case 1: // Downwards
 		{
 			if(scroll_pos < scroll_range - pagesize)
+			{
 				++scroll_pos;
+				parent->Msg_ScrollChange(id, scroll_pos);
+			}
 		} break;
 	}
 
@@ -199,6 +228,12 @@ void ctrlScrollBar::SetPageSize(unsigned short pagesize)
 	CalculateScrollBar();
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author OLiver
+ */
 void ctrlScrollBar::Resize_(unsigned short width, unsigned short height)
 {
 	ctrlButton *button;

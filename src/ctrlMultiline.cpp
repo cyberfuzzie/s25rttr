@@ -1,4 +1,4 @@
-// $Id: ctrlMultiline.cpp 6177 2010-03-24 10:44:32Z FloSoft $
+// $Id: ctrlMultiline.cpp 6366 2010-04-29 17:52:45Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -52,36 +52,6 @@ ctrlMultiline::ctrlMultiline(Window *parent,
 {
 	AddScrollBar(0, width - SCROLLBAR_WIDTH, 0, SCROLLBAR_WIDTH, height, SCROLLBAR_WIDTH, tc, lines_in_control);
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////
-///**
-// *  fügt einen mehrzeiligen Text hinzu.
-// *
-// *  @author FloSoft
-// */
-//void ctrlMultiline::AddText(const std::string& text, unsigned int color)
-//{
-//	size_t i;
-//	size_t length = strlen(text);
-//	char  *temp   = new char[length + 1];
-//	char  *s      = temp;
-//
-//	// In temporaeren String kopieren, damit man diesen zerlegen kann
-//	memcpy(temp, text, length);
-//
-//	// Zeilenweise einfuegen
-//	for (i = 0; i < length; ++i) {
-//		if(temp[i] == '\n') {
-//			temp[i] = '\0';
-//			AddString(s, color, false);
-//			s = &temp[i + 1];
-//		}
-//	}
-//	if (s < &temp[i]) AddString(s, color, false);
-
-//	delete[] temp;
-//}
 
 ///////////////////////////////////////////////////////////////////////////////
 /**

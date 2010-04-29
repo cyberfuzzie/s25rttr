@@ -1,4 +1,4 @@
-// $Id: iwAddons.cpp 5999 2010-02-11 09:53:02Z FloSoft $
+// $Id: iwAddons.cpp 6366 2010-04-29 17:52:45Z FloSoft $
 //
 // Copyright (c) 2005-2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -65,6 +65,9 @@ iwAddons::iwAddons(ChangePolicy policy)
 	optiongroup->AddTextButton(ADDONGROUP_GAMEPLAY, 430, 50, 120, 22, TC_GREEN2, _("Gameplay"), NormalFont);
 	// "Sonstiges"
 	optiongroup->AddTextButton(ADDONGROUP_OTHER, 560, 50, 120, 22, TC_GREEN2, _("Other"), NormalFont);
+
+	ctrlScrollBar* scrollbar = AddScrollBar(6, width - SCROLLBAR_WIDTH-20, 90, SCROLLBAR_WIDTH, height-140, SCROLLBAR_WIDTH, TC_GREEN2, (height-140)/30 - 1);
+	scrollbar->SetRange(ADDONMANAGER.getCount());
 
 	optiongroup->SetSelection(ADDONGROUP_ALL, true);
 }
@@ -164,7 +167,9 @@ void iwAddons::Msg_OptionGroupChange(const unsigned int ctrl_id, const unsigned 
 	{
 	case 5: // richtige Kategorie anzeigen
 		{
+			ctrlScrollBar* scrollbar = GetCtrl<ctrlScrollBar>(6);
 			unsigned short y = 90;
+			unsigned short inthiscategory = 0;
 			for(unsigned int i = 0; i < ADDONMANAGER.getCount(); ++i)
 			{
 				unsigned int id = 10 + 20*i;
@@ -175,14 +180,69 @@ void iwAddons::Msg_OptionGroupChange(const unsigned int ctrl_id, const unsigned 
 					continue;
 
 				unsigned int groups = addon->getGroups();
-				if( (groups & selection) != selection)
+
+				if( (groups & selection) == selection)
+					++inthiscategory;
+
+				if( ((groups & selection) != selection) || i < scrollbar->GetPos() || i > (unsigned int)(scrollbar->GetPos()+scrollbar->GetPageSize()) )
 				{
 					addon->hideGui(this, id);
 					continue;
 				}
 
 				addon->createGui(this, id, y, (policy == READONLY), status);
-			}		
+			}
+			if(_inthiscategory != inthiscategory)
+			{
+				_inthiscategory = inthiscategory;
+				scrollbar->SetRange(inthiscategory);
+			}
 		} break;
 	}
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  get scrollbar notification
+ *
+ *  @author FloSoft
+ */
+void iwAddons::Msg_ScrollChange(const unsigned int ctrl_id, const unsigned short position)
+{
+	ctrlOptionGroup* optiongroup = GetCtrl<ctrlOptionGroup>(5);
+	optiongroup->SetSelection(optiongroup->GetSelection(), true);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author Divan
+ */
+bool iwAddons::Msg_WheelUp(const MouseCoords& mc)
+{
+	// Forward to ScrollBar
+	ctrlScrollBar *scrollbar = GetCtrl<ctrlScrollBar>(6);
+
+	// Simulate two Button Clicks
+	scrollbar->Msg_ButtonClick(0);
+	scrollbar->Msg_ButtonClick(0);
+	return true;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author Divan
+ */
+bool iwAddons::Msg_WheelDown(const MouseCoords& mc)
+{
+	// Forward to ScrollBar
+	ctrlScrollBar *scrollbar = GetCtrl<ctrlScrollBar>(6);
+
+	// Simulate two Button Clicks
+	scrollbar->Msg_ButtonClick(1);
+	scrollbar->Msg_ButtonClick(1);
+	return true;
 }

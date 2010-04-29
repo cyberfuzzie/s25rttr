@@ -1,4 +1,4 @@
-// $Id: ctrlScrollBar.h 6177 2010-03-24 10:44:32Z FloSoft $
+// $Id: ctrlScrollBar.h 6366 2010-04-29 17:52:45Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -31,7 +31,8 @@ public:
 	void SetRange(unsigned short scroll_range);
 	void SetPageSize(unsigned short pagesize);
 
-	unsigned short GetPos() { return scroll_pos; }
+	unsigned short GetPageSize() const { return pagesize; }
+	unsigned short GetPos() const { return scroll_pos; }
 
 	virtual bool Msg_LeftUp(const MouseCoords& mc);
 	virtual bool Msg_LeftDown(const MouseCoords& mc);

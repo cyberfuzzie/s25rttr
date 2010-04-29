@@ -1,4 +1,4 @@
-// $Id: Addons.cpp 5992 2010-02-10 17:16:10Z FloSoft $
+// $Id: Addons.cpp 6366 2010-04-29 17:52:45Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -92,7 +92,7 @@ void AddonList::createGui(Window *window, unsigned int id, unsigned short& y, bo
 	ctrlComboBox *combo = window->GetCtrl<ctrlComboBox>(id + 2);
 	if(!combo)
 	{
-		combo = window->AddComboBox(id + 2, 430, y, 250, 20,  TC_GREY, NormalFont, 100, readonly );
+		combo = window->AddComboBox(id + 2, 450, y, 220, 20,  TC_GREY, NormalFont, 100, readonly );
 		for(std::vector<std::string>::const_iterator it = options.begin(); it != options.end(); ++it)
 			combo->AddString(*it);
 
@@ -165,7 +165,7 @@ void AddonBool::createGui(Window *window, unsigned int id, unsigned short& y, bo
 	ctrlCheck *check = window->GetCtrl<ctrlCheck>(id + 2);
 	if(!check)
 	{
-		check = window->AddCheckBox(id + 2, 430, y, 250, 20,  TC_GREY, _("Use"), NormalFont, readonly );
+		check = window->AddCheckBox(id + 2, 430, y, 220, 20,  TC_GREY, _("Use"), NormalFont, readonly );
 		setGuiStatus(window, id, status);
 	}
 	

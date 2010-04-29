@@ -1,4 +1,4 @@
-// $Id: Window.cpp 6352 2010-04-25 12:59:33Z OLiver $
+// $Id: Window.cpp 6366 2010-04-29 17:52:45Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1398,6 +1398,16 @@ void Window::Msg_CheckboxChange(const unsigned int ctrl_id, const bool checked)
  *  @author OLiver
  */
 void Window::Msg_ProgressChange(const unsigned int ctrl_id, const unsigned short position)
+{
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ *  
+ *
+ *  @author FloSoft
+ */
+void Window::Msg_ScrollChange(const unsigned int ctrl_id, const unsigned short position)
 {
 }
 

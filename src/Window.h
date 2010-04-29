@@ -1,4 +1,4 @@
-// $Id: Window.h 6352 2010-04-25 12:59:33Z OLiver $
+// $Id: Window.h 6366 2010-04-29 17:52:45Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -244,6 +244,7 @@ public:
 	virtual void Msg_ComboSelectItem(const unsigned int ctrl_id, const unsigned short selection);
 	virtual void Msg_CheckboxChange(const unsigned int ctrl_id, const bool checked);
 	virtual void Msg_ProgressChange(const unsigned int ctrl_id, const unsigned short position);
+	virtual void Msg_ScrollChange(const unsigned int ctrl_id, const unsigned short position);
 	virtual void Msg_ScrollShow(const unsigned int ctrl_id, const bool visible);
 	virtual void Msg_OptionGroupChange(const unsigned int ctrl_id, const unsigned short selection);
 	virtual void Msg_Timer(const unsigned int ctrl_id);

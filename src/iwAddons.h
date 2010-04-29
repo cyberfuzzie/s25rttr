@@ -1,4 +1,4 @@
-// $Id: iwAddons.h 5991 2010-02-10 15:44:37Z FloSoft $
+// $Id: iwAddons.h 6366 2010-04-29 17:52:45Z FloSoft $
 //
 // Copyright (c) 2005-2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -25,6 +25,9 @@
 
 class iwAddons : public IngameWindow
 {
+	/// Breite der Scrollbar
+	static const unsigned short SCROLLBAR_WIDTH = 20;
+
 public:
 	enum ChangePolicy
 	{
@@ -40,9 +43,13 @@ public:
 protected:
 	void Msg_ButtonClick(const unsigned int ctrl_id);
 	void Msg_OptionGroupChange(const unsigned int ctrl_id, const unsigned short selection);
+	void Msg_ScrollChange(const unsigned int ctrl_id, const unsigned short position);
+	bool Msg_WheelUp(const MouseCoords& mc);
+	bool Msg_WheelDown(const MouseCoords& mc);
 
 private:
 	ChangePolicy policy;
+	unsigned short _inthiscategory;
 };
 
 #endif // !iwENHANCEMENTS_H_INCLUDED

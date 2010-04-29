@@ -124,14 +124,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\AddonChangeGoldDeposits.h" />
+    <ClInclude Include="..\..\src\AddonCharburner.h" />
     <ClInclude Include="..\..\src\AddonCustomBuildSequence.h" />
+    <ClInclude Include="..\..\src\AddonDefenderBehavior.h" />
     <ClInclude Include="..\..\src\AddonDemolitionProhibition.h" />
     <ClInclude Include="..\..\src\AddonExhaustibleWells.h" />
     <ClInclude Include="..\..\src\AddonInexhaustibleMines.h" />
     <ClInclude Include="..\..\src\AddonLimitCatapults.h" />
     <ClInclude Include="..\..\src\AddonManager.h" />
+    <ClInclude Include="..\..\src\AddonManualRoadEnlargement.h" />
     <ClInclude Include="..\..\src\AddonMaxWaterwayLength.h" />
+    <ClInclude Include="..\..\src\AddonNoCoinsDefault.h" />
     <ClInclude Include="..\..\src\AddonRefundMaterials.h" />
+    <ClInclude Include="..\..\src\AddonRefundOnEmergency.h" />
     <ClInclude Include="..\..\src\Addons.h" />
     <ClInclude Include="..\..\src\AddonStatisticsVisibility.h" />
     <ClInclude Include="..\..\src\AIBase.h" />
@@ -143,6 +148,7 @@
     <ClInclude Include="..\..\src\AIResourceMap.h" />
     <ClInclude Include="..\..\src\const_addons.h" />
     <ClInclude Include="..\..\src\const_gui_ids.h" />
+    <ClInclude Include="..\..\src\ctrlMultiSelectGroup.h" />
     <ClInclude Include="..\..\src\Desktop.h" />
     <ClInclude Include="..\..\src\GameReplay.h" />
     <ClInclude Include="..\..\src\GameSavedFile.h" />
@@ -150,6 +156,9 @@
     <ClInclude Include="..\..\src\IngameWindow.h" />
     <ClInclude Include="..\..\src\iwAddons.h" />
     <ClInclude Include="..\..\src\iwAIDebug.h" />
+    <ClInclude Include="..\..\src\iwMerchandiseStatistics.h" />
+    <ClInclude Include="..\..\src\noCharburnerPile.h" />
+    <ClInclude Include="..\..\src\nofCharburner.h" />
     <ClInclude Include="..\..\src\PostMsg.h" />
     <ClInclude Include="..\..\src\win32_nanosleep.h" />
     <ClInclude Include="..\..\src\Window.h" />
@@ -398,6 +407,7 @@
     <ClCompile Include="..\..\src\AIPlayer.cpp" />
     <ClCompile Include="..\..\src\AIPlayerJH.cpp" />
     <ClCompile Include="..\..\src\AIResourceMap.cpp" />
+    <ClCompile Include="..\..\src\ctrlMultiSelectGroup.cpp" />
     <ClCompile Include="..\..\src\Desktop.cpp" />
     <ClCompile Include="..\..\src\GameReplay.cpp" />
     <ClCompile Include="..\..\src\GameSavedFile.cpp" />
@@ -405,6 +415,9 @@
     <ClCompile Include="..\..\src\IngameWindow.cpp" />
     <ClCompile Include="..\..\src\iwAddons.cpp" />
     <ClCompile Include="..\..\src\iwAIDebug.cpp" />
+    <ClCompile Include="..\..\src\iwMerchandiseStatistics.cpp" />
+    <ClCompile Include="..\..\src\noCharburnerPile.cpp" />
+    <ClCompile Include="..\..\src\nofCharburner.cpp" />
     <ClCompile Include="..\..\src\PostMsg.cpp" />
     <ClCompile Include="..\..\src\win32_nanosleep.cpp" />
     <ClCompile Include="..\..\src\Window.cpp" />

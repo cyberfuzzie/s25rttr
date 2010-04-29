@@ -24,9 +24,9 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  Addon for allowing to have unlimited resources.
+ *  Addon for a Charburner
  *
- *  @author FloSoft
+ *  @author OLiver
  */
 class AddonCharburner : public AddonBool
 {

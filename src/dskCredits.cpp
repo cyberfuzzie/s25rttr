@@ -1,4 +1,4 @@
-// $Id: dskCredits.cpp 6375 2010-04-30 18:53:57Z FloSoft $
+// $Id: dskCredits.cpp 6376 2010-04-30 19:39:50Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -138,7 +138,7 @@ dskCredits::dskCredits(void) : Desktop(LOADER.GetImageN("setup013", 0))
 	entry.lines.push_back(CreditsEntry::Line("Sotham"));
 	entry.lines.push_back(CreditsEntry::Line("Z-Stef"));
 	entry.lines.push_back(CreditsEntry::Line("Fenan"));
-	entry.lines.push_back(CreditsEntry::Line("Spikeone (Christopher Kühnel)"));
+	entry.lines.push_back(CreditsEntry::Line("Spikeone (Christopher Kuehnel)"));
 
 	this->entries.push_back(entry);
 	entry.lines.clear();
@@ -152,7 +152,7 @@ dskCredits::dskCredits(void) : Desktop(LOADER.GetImageN("setup013", 0))
 	entry.lines.push_back(CreditsEntry::Line("Gilles Bordelais"));
 	entry.lines.push_back(CreditsEntry::Line("Dominic Jonas"));
 	entry.lines.push_back(CreditsEntry::Line("Rene Hopf"));
-	entry.lines.push_back(CreditsEntry::Line("Spikeone (Christopher Kühnel)"));
+	entry.lines.push_back(CreditsEntry::Line("Spikeone (Christopher Kuehnel)"));
 	entry.lines.push_back(CreditsEntry::Line("Philipp Strathausen"));
 
 	entry.lines.push_back(CreditsEntry::Line("Max Skuratov", 1));

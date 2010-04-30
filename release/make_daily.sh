@@ -36,7 +36,7 @@ else
 	REVISION=$(grep WINDOW_REVISION ../version.h | cut -d ' ' -f 3 | cut -d \" -f 2)
 	rm -f $TARGET/s25rttr_${VERSION}-*_${ARCH}.tar.bz2
 	rm -f $TARGET/s25rttr_*-${REVISION}_${ARCH}.tar.bz2
-	cp -v s25rttr_$VERSION.tar.bz2 $TARGET/s25rttr_${VERSION}-${REVISION}_${ARCH}.tar.bz2 >> $TARGET/build_${ARCH}.log
+	cp -v s25rttr_$VERSION.tar.bz2 /srv/buildfarm/uploads/s25rttr_${VERSION}-${REVISION}_${ARCH}.tar.bz2 >> $TARGET/build_${ARCH}.log
 	rm -f s25rttr_$VERSION.tar.bz2
 
 	rm -f $TARGET/$ARCH.new/music.tar.bz2
@@ -91,8 +91,8 @@ else
 	rm -fr $TARGET/$ARCH.old
 	mv $TARGET/$ARCH $TARGET/$ARCH.old
 	mv $TARGET/$ARCH.new $TARGET/$ARCH
-
-	if [ -z "$NORS" ] ; then
+	
+	#if [ -z "$NORS" ] ; then
 		#gpg -u 6D09334C --armor --sign --detach-sig $TARGET/s25rttr_${VERSION}-${REVISION}_${ARCH}.tar.bz2 >> $TARGET/build_${ARCH}.log
 		#OUTPUT=$(/srv/buildfarm/uploadlp.py s25rttr s25client nightly $TARGET/s25rttr_${VERSION}-${REVISION}_${ARCH}.tar.bz2)
 		#echo $OUTPUT >> $TARGET/build_${ARCH}.log
@@ -100,10 +100,10 @@ else
 		#	echo $OUTPUT | tail -n 1 >> $TARGET/rapidshare.txt
 		#	/srv/buildfarm/remoters.sh "http://launchpad.net/s25rttr/s25client/nightly/+download/s25rttr_${VERSION}-${REVISION}_${ARCH}.tar.bz2" >> $TARGET/build_${ARCH}.log
 		#fi
-		/srv/buildfarm/uploadrs.sh $TARGET/s25rttr_${VERSION}-${REVISION}_${ARCH}.tar.bz2 >> $TARGET/build_${ARCH}.log
+	#	/srv/buildfarm/uploadrs.sh $TARGET/s25rttr_${VERSION}-${REVISION}_${ARCH}.tar.bz2 >> $TARGET/build_${ARCH}.log
 		#rm -f $TARGET/s25rttr_${VERSION}-${REVISION}_${ARCH}.tar.bz2.asc >> $TARGET/build_${ARCH}.log
-		rm -f $TARGET/s25rttr_${VERSION}-${REVISION}_${ARCH}.tar.bz2 >> $TARGET/build_${ARCH}.log
-	fi
+	#	rm -f $TARGET/s25rttr_${VERSION}-${REVISION}_${ARCH}.tar.bz2 >> $TARGET/build_${ARCH}.log
+	#fi
 	
 	EXIT=0
 fi

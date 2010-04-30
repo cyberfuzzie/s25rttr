@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 6349 2010-04-23 18:11:38Z OLiver $
+// $Id: GameWorldBase.cpp 6377 2010-04-30 20:04:30Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1300,7 +1300,7 @@ bool GameWorldBase::IsHarborPointFree(const unsigned harbor_id, const unsigned c
 		return false;
 
 	// Überprüfen, ob das Gebiet in einem bestimmten Radius entweder vom Spieler oder gar nicht besetzt ist
-	for(MapCoord tx=GetXA(coords.x,coords.y,0), r=1;r<=HARBOR_ALONE_RADIUS;tx=GetXA(tx,coords.y,0),++r)
+	for(MapCoord tx=GetXA(coords.x,coords.y,0), r=1;r<=4;tx=GetXA(tx,coords.y,0),++r)
 	{
 		MapCoord tx2 = tx, ty2 = coords.y;
 		for(unsigned i = 2;i<8;++i)

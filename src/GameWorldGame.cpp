@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 6359 2010-04-27 10:59:06Z OLiver $
+// $Id: GameWorldGame.cpp 6377 2010-04-30 20:04:30Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1766,6 +1766,9 @@ bool GameWorldGame::FoundColony(const unsigned harbor_point, const unsigned char
 	AddHarborBuildingSiteFromSea(bs);
 
 	RecalcTerritory(bs,HARBOR_ALONE_RADIUS,false,true);
+	
+	// BQ neu berechnen (evtl durch RecalcTerritory noch nicht geschehen)
+	RecalcBQAroundPointBig(pos.x,pos.y);
 
 	return true;
 }

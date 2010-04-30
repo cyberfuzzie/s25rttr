@@ -1,4 +1,4 @@
-// $Id: const_addons.h 6364 2010-04-28 19:38:37Z FloSoft $
+// $Id: const_addons.h 6370 2010-04-30 09:08:34Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -27,7 +27,7 @@
 // 001 OLiver
 // 002 Divan
 // 003 jh
-// 004 Johann-Nikolaus Andreae
+// 004 Kaffeepause (https://launchpad.net/~haw)
 //
 
 // Do not forget to add your Addon to AddonManager::reset!

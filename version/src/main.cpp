@@ -1,4 +1,4 @@
-// $Id: main.cpp 6372 2010-04-30 17:45:33Z FloSoft $
+// $Id: main.cpp 6374 2010-04-30 18:52:47Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -48,7 +48,11 @@ using namespace std;
 std::string getcwd()
 {
 	char curdir[4096];
+#ifdef _WIN32
+	GetCurrentDirectory(4096, curdir);
+#else
 	getcwd(curdir, 4096);
+#endif
 	
 	return std::string(curdir) + '/';
 }

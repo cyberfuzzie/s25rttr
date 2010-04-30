@@ -2294,7 +2294,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\local.h"
+					RelativePath="..\..\build_paths.h"
 					>
 				</File>
 				<File
@@ -2326,11 +2326,11 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\version.cpp"
+					RelativePath="..\..\build_version.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\version.h"
+					RelativePath="..\..\build_version.h"
 					>
 				</File>
 				<File

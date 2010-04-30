@@ -41,8 +41,8 @@
 		<Unit filename="..\..\src\SDL.cpp" />
 		<Unit filename="..\..\src\SDL.h" />
 		<Unit filename="..\..\src\main.h" />
-		<Unit filename="..\..\..\..\..\version.cpp" />
-		<Unit filename="..\..\..\..\..\version.h" />
+		<Unit filename="..\..\..\..\..\build_version.cpp" />
+		<Unit filename="..\..\..\..\..\build_version.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

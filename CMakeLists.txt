@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 6321 2010-04-13 16:08:47Z FloSoft $
+### $Id: CMakeLists.txt 6372 2010-04-30 17:45:33Z FloSoft $
 ################################################################################
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
@@ -70,15 +70,19 @@ IF ("${COMPILEFOR}" STREQUAL "windows")
 	ADD_DEFINITIONS(-D__CYGWIN__)
 ENDIF ("${COMPILEFOR}" STREQUAL "windows")
 
+# add build directory to compiler search path
+FORCE_ADD_FLAGS(CMAKE_C_FLAGS -I${CMAKE_BINARY_DIR})
+FORCE_ADD_FLAGS(CMAKE_CXX_FLAGS -I${CMAKE_BINARY_DIR})
+
 ################################################################################
 
-CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/local.h.cmake
-			   ${CMAKE_CURRENT_SOURCE_DIR}/local.h)
-CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/version.h.cmake
-			   ${CMAKE_CURRENT_SOURCE_DIR}/version.h)
-CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/build/preinstall.sh.cmake
+CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/build_paths.h.cmake"
+			   build_paths.h)
+CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/build_version.h.cmake"
+			   build_version.h)
+CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/build/preinstall.sh.cmake"
 			   preinstall.sh @ONLY)
-CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/build/postinstall.sh.cmake
+CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/build/postinstall.sh.cmake"
 			   postinstall.sh @ONLY)
 
 ################################################################################
@@ -86,16 +90,18 @@ CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/build/postinstall.sh.cmake
 ADD_SUBDIRECTORY(version)
 
 ADD_CUSTOM_TARGET(updateversion ALL
-				  COMMAND ${CMAKE_BINARY_DIR}/version/src/version
+				  COMMAND "${CMAKE_BINARY_DIR}/version/src/version" "${CMAKE_SOURCE_DIR}"
 				  DEPENDS version
-				  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+				  WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
+)
 
 ADD_CUSTOM_TARGET(mrproper
-				  COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/build/cleanup.sh
-				  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+				  COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/build/cleanup.sh"
+				  WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+)
 
 # preinstall script
-INSTALL(SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/cmake/preinstall.cmake)
+INSTALL(SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/cmake/preinstall.cmake")
 
 ################################################################################
 
@@ -121,7 +127,7 @@ INSTALL(CODE "INCLUDE(src/cmake_install.cmake)")
 INSTALL(CODE "SET(CMAKE_INSTALL_LOCAL_ONLY 1)")
   
 # postinstall script
-INSTALL(SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/cmake/postinstall.cmake)
+INSTALL(SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/cmake/postinstall.cmake")
 
 INSTALL(CODE "MESSAGE(STATUS \"Installation is now complete\")")
 

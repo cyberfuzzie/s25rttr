@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: CMakeLists.txt 6320 2010-04-13 15:30:16Z FloSoft $
+### $Id: CMakeLists.txt 6372 2010-04-30 17:45:33Z FloSoft $
 #################################################################################
 
 IF ("${COMPILEFOR}" STREQUAL "windows" )
@@ -12,7 +12,7 @@ IF ("${COMPILEFOR}" STREQUAL "windows" )
 	#IF (GDI32_LIBRARY AND OPENGL_LIBRARY AND USER32_LIBRARY)
 		INCLUDE_DIRECTORIES(../../../src)
 	
-		ADD_LIBRARY(videoWinAPI SHARED WinAPI.cpp WinAPI.h main.h ../../../../version.cpp ../../../src/DriverInterface.cpp)
+		ADD_LIBRARY(videoWinAPI SHARED WinAPI.cpp WinAPI.h main.h ../../../../build_version.cpp ../../../src/DriverInterface.cpp)
 	
 		TARGET_LINK_LIBRARIES(videoWinAPI videodrv gdi32 opengl32 user32) 
 		# ${GDI32_LIBRARY} ${OPENGL32_LIBRARY} ${USER32_LIBRARY})

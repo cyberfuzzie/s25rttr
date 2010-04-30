@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: CMakeLists.txt 6320 2010-04-13 15:30:16Z FloSoft $
+### $Id: CMakeLists.txt 6372 2010-04-30 17:45:33Z FloSoft $
 #################################################################################
 
 INCLUDE(FindSDL)
@@ -13,7 +13,7 @@ IF (SDL_FOUND)
 
 		INCLUDE_DIRECTORIES(../../../src ../libendian/src)
 		
-		ADD_LIBRARY(audioSDL SHARED SDL.cpp SDL.h main.h SoundSDL_Music.cpp SoundSDL_Music.h SoundSDL_Effect.cpp SoundSDL_Effect.h ../../../../version.cpp ../../../src/DriverInterface.cpp ../../../src/tempname.cpp ../../../src/tempname.h)
+		ADD_LIBRARY(audioSDL SHARED SDL.cpp SDL.h main.h SoundSDL_Music.cpp SoundSDL_Music.h SoundSDL_Effect.cpp SoundSDL_Effect.h ../../../../build_version.cpp ../../../src/DriverInterface.cpp ../../../src/tempname.cpp ../../../src/tempname.h)
 	
 		ADD_FLAGS(CMAKE_C_FLAGS -I${SDL_INCLUDE_DIR} -I${SDLMIXER_INCLUDE_DIR})
 		ADD_FLAGS(CMAKE_CXX_FLAGS -I${SDL_INCLUDE_DIR} -I${SDLMIXER_INCLUDE_DIR})

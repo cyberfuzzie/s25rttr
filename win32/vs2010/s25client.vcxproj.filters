@@ -78,7 +78,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\local.h">
+    <ClInclude Include="..\..\build_paths.h">
       <Filter>Quelldateien\Allgemein</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\AddonChangeGoldDeposits.h">
@@ -894,7 +894,7 @@
     <ClInclude Include="..\..\src\WindowManager.h">
       <Filter>Quelldateien\GUI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\version.h">
+    <ClInclude Include="..\..\build_version.h">
       <Filter>Quelldateien\Allgemein</Filter>
     </ClInclude>
     <ClInclude Include="..\resource.h">
@@ -1637,7 +1637,7 @@
     <ClCompile Include="..\..\src\WindowManager.cpp">
       <Filter>Quelldateien\GUI</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\version.cpp">
+    <ClCompile Include="..\..\build_version.cpp">
       <Filter>Quelldateien\Allgemein</Filter>
     </ClCompile>
   </ItemGroup>

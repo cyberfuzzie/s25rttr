@@ -390,12 +390,12 @@
     <ClInclude Include="..\..\src\GameManager.h" />
     <ClInclude Include="..\..\src\GlobalVars.h" />
     <ClInclude Include="..\..\src\languages.h" />
-    <ClInclude Include="..\..\local.h" />
+    <ClInclude Include="..\..\build_paths.h" />
     <ClInclude Include="..\..\src\macros.h" />
     <ClInclude Include="..\..\src\main.h" />
     <ClInclude Include="..\..\src\Settings.h" />
     <ClInclude Include="..\..\src\signale.h" />
-    <ClInclude Include="..\..\version.h" />
+    <ClInclude Include="..\..\build_version.h" />
     <ClInclude Include="..\resource.h" />
   </ItemGroup>
   <ItemGroup>
@@ -644,7 +644,7 @@
     <ClCompile Include="..\..\src\main.cpp" />
     <ClCompile Include="..\..\src\Settings.cpp" />
     <ClCompile Include="..\..\src\signale.cpp" />
-    <ClCompile Include="..\..\version.cpp" />
+    <ClCompile Include="..\..\build_version.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\s25client.ico" />

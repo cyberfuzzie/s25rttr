@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: CMakeLists.txt 6320 2010-04-13 15:30:16Z FloSoft $
+### $Id: CMakeLists.txt 6372 2010-04-30 17:45:33Z FloSoft $
 #################################################################################
 
 IF ("${COMPILEFOR}/${COMPILEARCH}" STREQUAL "linux/i386" )
@@ -8,7 +8,7 @@ IF ("${COMPILEFOR}/${COMPILEARCH}" STREQUAL "linux/i386" )
 	IF (GLFW_LIBRARY)
 		INCLUDE_DIRECTORIES(../../../src)
 
-		ADD_LIBRARY(videoGLFW SHARED GLFW.cpp GLFW.h oem.cpp oem.h main.h ../../../../version.cpp ../../../src/DriverInterface.cpp)
+		ADD_LIBRARY(videoGLFW SHARED GLFW.cpp GLFW.h oem.cpp oem.h main.h ../../../../build_version.cpp ../../../src/DriverInterface.cpp)
 	
 		TARGET_LINK_LIBRARIES(videoGLFW videodrv ${GLFW_LIBRARY})
 	

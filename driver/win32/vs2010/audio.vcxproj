@@ -86,7 +86,7 @@
     <ClCompile Include="..\..\src\AudioInterface.cpp" />
     <ClCompile Include="..\..\src\Sound.cpp" />
     <ClCompile Include="..\..\src\tempname.cpp" />
-    <ClCompile Include="..\..\..\version.cpp" />
+    <ClCompile Include="..\..\..\build_version.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\AudioDriver.h" />

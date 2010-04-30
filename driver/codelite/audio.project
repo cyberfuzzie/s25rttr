@@ -9,8 +9,8 @@
     <File Name="../src/AudioInterface.h"/>
     <File Name="../src/Sound.cpp"/>
     <File Name="../src/Sound.h"/>
-    <File Name="../../version.cpp"/>
-    <File Name="../../version.h"/>
+    <File Name="../../build_version.cpp"/>
+    <File Name="../../build_version.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include"/>
   <Settings Type="Static Library">

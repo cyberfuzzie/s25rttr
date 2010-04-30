@@ -1,4 +1,4 @@
-// $Id: version.cpp 6258 2010-04-01 20:07:45Z OLiver $
+// $Id: build_version.cpp 6372 2010-04-30 17:45:33Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -19,7 +19,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // Header
-#include "version.h"
+#include <build_version.h>
 #include <memory.h>
 #include <string>
 

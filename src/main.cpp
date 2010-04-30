@@ -1,4 +1,4 @@
-// $Id: main.cpp 6076 2010-02-23 16:37:00Z FloSoft $
+// $Id: main.cpp 6372 2010-04-30 17:45:33Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -64,7 +64,7 @@ void ExitHandler(void)
 ///////////////////////////////////////////////////////////////////////////////
 /**
  *  Exception-Handler, wird bei einer C-Exception ausgeführt, falls
- *  dies in der local.h mit deaktiviertem NOHWETRANS und
+ *  dies in der build_paths.h mit deaktiviertem NOHWETRANS und
  *  im Projekt mit den Compilerflags (/EHa) aktiviert ist.
  *
  *  @param[in] exception_type    Typ der Exception (siehe GetExceptionCode)

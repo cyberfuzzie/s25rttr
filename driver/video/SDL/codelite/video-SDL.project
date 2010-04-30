@@ -15,8 +15,8 @@
     <File Name="../src/SDL.h"/>
     <File Name="../../../src/DriverInterface.cpp"/>
     <File Name="../../../src/DriverInterface.h"/>
-    <File Name="../../../../version.cpp"/>
-    <File Name="../../../../version.h"/>
+    <File Name="../../../../build_version.cpp"/>
+    <File Name="../../../../build_version.h"/>
     <File Name="../../../src/VideoDriver.cpp"/>
     <File Name="../../../src/VideoDriver.h"/>
     <File Name="../../../src/VideoInterface.cpp"/>

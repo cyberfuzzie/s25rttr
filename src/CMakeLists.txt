@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 6348 2010-04-23 05:33:08Z FloSoft $
+### $Id: CMakeLists.txt 6372 2010-04-30 17:45:33Z FloSoft $
 ################################################################################
 
 INCLUDE(FindBZip2)
@@ -367,7 +367,7 @@ IF ( "${COMPILEFOR}" STREQUAL "windows" )
 ENDIF ( "${COMPILEFOR}" STREQUAL "windows" )
 
 SET(s25client_SRCS 
-	../version.cpp
+	../build_version.cpp
 	${SOURCES_CONTROLS} 
 	${SOURCES_DESKTOPS} 
 	${SOURCES_GL}

@@ -8,8 +8,8 @@
     <File Name="../src/VideoDriver.h"/>
     <File Name="../src/VideoInterface.cpp"/>
     <File Name="../src/VideoInterface.h"/>
-    <File Name="../../version.cpp"/>
-    <File Name="../../version.h"/>
+    <File Name="../../build_version.cpp"/>
+    <File Name="../../build_version.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include"/>
   <Settings Type="Static Library">

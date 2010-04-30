@@ -1,4 +1,4 @@
-// $Id: prebuild-mutex.cpp 5863 2010-01-05 12:45:19Z FloSoft $
+// $Id: prebuild-mutex.cpp 6372 2010-04-30 17:45:33Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -136,10 +136,10 @@ int main(int argc, char *argv[])
 					// Pre/Postbuild-Ereignis mit Parametern starten
 					if(prebuild)
 					{
-						if(!existfile(working + "version.h"))
-							copyfile("version.h.in", working, working, "version.h");
-						if(!existfile(working + "local.h"))
-							copyfile("local.h.in", working, working, "local.h");
+						if(!existfile(working + "build_version.h"))
+							copyfile("build_version.h.in", working, working, "build_version.h");
+						if(!existfile(working + "build_paths.h"))
+							copyfile("build_paths.h.in", working, working, "build_paths.h");
 
 						std::string cmd;
 

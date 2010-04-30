@@ -98,11 +98,11 @@
 			<Option link="0"/>
 			<Option target="default"/>
 		</Unit>
-		<Unit filename="..\..\..\..\..\version.cpp">
+		<Unit filename="..\..\..\..\..\build_version.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
 		</Unit>
-		<Unit filename="..\..\..\..\..\version.h">
+		<Unit filename="..\..\..\..\..\build_version.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>

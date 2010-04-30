@@ -420,8 +420,8 @@
 		<Unit filename="..\..\src\playerimage.h" />
 		<Unit filename="..\..\src\signale.cpp" />
 		<Unit filename="..\..\src\signale.h" />
-		<Unit filename="..\..\version.cpp" />
-		<Unit filename="..\..\version.h" />
+		<Unit filename="..\..\build_version.cpp" />
+		<Unit filename="..\..\build_version.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

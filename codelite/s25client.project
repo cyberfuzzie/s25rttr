@@ -45,8 +45,8 @@
     <File Name="../src/macros.h"/>
     <File Name="../src/VideoDriverWrapper.h"/>
     <File Name="../src/languages.h"/>
-    <File Name="../version.cpp"/>
-    <File Name="../version.h"/>
+    <File Name="../build_build_version.cpp"/>
+    <File Name="../build_version.h"/>
     <VirtualDirectory Name="libutil">
       <File Name="../libutil/src/Log.cpp"/>
       <File Name="../libutil/src/Log.h"/>

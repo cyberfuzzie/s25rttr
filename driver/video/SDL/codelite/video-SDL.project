@@ -90,6 +90,7 @@
         <IncludePath Value="."/>
         <IncludePath Value="../../../src"/>
         <IncludePath Value="../../../../libsiedler2/libendian/src"/>
+        <IncludePath Value="../../../../"/>
       </Compiler>
       <Linker Options="">
         <LibraryPath Value="."/>

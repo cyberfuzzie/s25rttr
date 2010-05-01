@@ -45,7 +45,6 @@
     <File Name="../src/macros.h"/>
     <File Name="../src/VideoDriverWrapper.h"/>
     <File Name="../src/languages.h"/>
-    <File Name="../build_build_version.cpp"/>
     <File Name="../build_version.h"/>
     <VirtualDirectory Name="libutil">
       <File Name="../libutil/src/Log.cpp"/>
@@ -614,6 +613,7 @@
       <File Name="../src/glArchivItem_Sound_XMidi.cpp"/>
       <File Name="../src/glArchivItem_Sound_XMidi.h"/>
     </VirtualDirectory>
+    <File Name="../build_version.cpp"/>
   </VirtualDirectory>
   <Dependencies Name="Release"/>
   <Settings Type="Executable">

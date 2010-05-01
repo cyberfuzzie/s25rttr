@@ -270,8 +270,10 @@ void nofAttacker::Walked()
 				else
 				{
 					// abreißen
-					attacked_goal->Destroy();
-					delete attacked_goal;
+					nobBaseMilitary * tmp_goal = attacked_goal; // attacked_goal wird evtl auf 0 gesetzt!
+					tmp_goal->Destroy();
+					delete tmp_goal;
+					attacked_goal = NULL;
 					ReturnHomeMissionAttacking();
 				}
 			}

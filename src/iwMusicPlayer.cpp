@@ -1,4 +1,4 @@
-// $Id: iwMusicPlayer.cpp 6352 2010-04-25 12:59:33Z OLiver $
+// $Id: iwMusicPlayer.cpp 6380 2010-05-01 20:38:01Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -63,7 +63,7 @@ void iwMusicPlayer::InputWindow::Msg_EditEnter(const unsigned int ctrl_id)
 
 iwMusicPlayer::iwMusicPlayer() 
 : IngameWindow(CGI_MUSICPLAYER,(unsigned short)-1,(unsigned short)-1,430,360,_("Music player"), 
-			   LOADER.GetImageN("resource", 41))
+			   LOADER.GetImageN("resource", 41)), changed(false)
 {
 
 	AddList(0,20,30,330,200,TC_GREEN1,NormalFont);
@@ -109,10 +109,7 @@ iwMusicPlayer::~iwMusicPlayer()
 
 		// RTTR-Playlisten dürfen nicht gelöscht werden
 		if(str == "S2_Standard")
-		{
-			WindowManager::inst().Show(new iwMsgbox(_("Error"),_("You are not allowed to change the standard playlist!"),this,MSB_OK,MSB_EXCLAMATIONRED));
 			return;
-		}
 
 		if(!pl.SaveAs(GetFullPlaylistPath(str),true))
 			// Fehler, konnte nicht gespeichert werden
@@ -125,8 +122,11 @@ iwMusicPlayer::~iwMusicPlayer()
 		SETTINGS.sound.playlist = GetCtrl<ctrlComboBox>(2)->GetText(selection);
 
 	// Werte in Musikplayer bringen
-	MusicPlayer::inst().GetPlaylist().ReadMusicPlayer(this);
-	MusicPlayer::inst().Play();
+	if(changed)
+	{
+		MusicPlayer::inst().GetPlaylist().ReadMusicPlayer(this);
+		MusicPlayer::inst().Play();
+	}
 }
 
 void iwMusicPlayer::Msg_ComboSelectItem(const unsigned ctrl_id, const unsigned short selection)
@@ -139,6 +139,7 @@ void iwMusicPlayer::Msg_ComboSelectItem(const unsigned ctrl_id, const unsigned s
 		{
 			// Das Fenster entsprechend mit den geladenen Werten füllen
 			pl.FillMusicPlayer(this);
+			changed = true;
 		}
 		else
 			// Fehler, konnte nicht geladen werden
@@ -153,6 +154,9 @@ void iwMusicPlayer::Msg_ListChooseItem(const unsigned int ctrl_id, const unsigne
 	MusicPlayer::inst().GetPlaylist().ReadMusicPlayer(this);
 	MusicPlayer::inst().GetPlaylist().SetStartSong(selection);
 	MusicPlayer::inst().Play();
+	
+	// Wir haben ab jetzt quasi keine Veränderungen mehr --> damit Musik nicht neugestartet werden muss
+	changed = false;
 }
 
 std::string iwMusicPlayer::GetFullPlaylistPath(const std::string& combo_str)
@@ -205,6 +209,7 @@ void iwMusicPlayer::Msg_ButtonClick(const unsigned int ctrl_id)
 	case 7:
 		{
 			WindowManager::inst().Show(new InputWindow(this,0,_("Add track")));
+			changed = true;
 		} break;
 	// Remove Track
 	case 8:
@@ -212,7 +217,11 @@ void iwMusicPlayer::Msg_ButtonClick(const unsigned int ctrl_id)
 			unsigned short selection = GetCtrl<ctrlList>(0)->GetSelection();
 
 			if(selection != 0xFFFF)
+			{
 				GetCtrl<ctrlList>(0)->Remove(selection);
+				changed = true;
+			}
+				
 
 		} break;
 	// Upwards
@@ -244,6 +253,7 @@ void iwMusicPlayer::Msg_ButtonClick(const unsigned int ctrl_id)
 				char str[32];
 				sprintf(str,"%u",repeats);
 				GetCtrl<ctrlDeepening>(11)->SetText(str);
+				changed = true;
 			}
 
 		} break;
@@ -255,6 +265,7 @@ void iwMusicPlayer::Msg_ButtonClick(const unsigned int ctrl_id)
 			char str[32];
 			sprintf(str,"%u",repeats);
 			GetCtrl<ctrlDeepening>(11)->SetText(str);
+			changed = true;
 		} break;
 	// Play Order
 	case 14:
@@ -263,6 +274,7 @@ void iwMusicPlayer::Msg_ButtonClick(const unsigned int ctrl_id)
 				LOADER.GetImageN("io",107) ? LOADER.GetImageN("io",225) : LOADER.GetImageN("io",107));
 			GetCtrl<ctrlImageButton>(14)->SetTooltip(GetCtrl<ctrlImageButton>(14)->GetButtonImage() == 
 				LOADER.GetImageN("io",107) ? _("Playback in this order") : _("Random playback"));
+			changed = true;
 		} break;
 
 	
@@ -291,7 +303,7 @@ void iwMusicPlayer::Msg_Input(const unsigned int win_id,const std::string& msg)
 	case 0:
 		{
 			bool valid = false;
-
+			
 			// Existiert diese Datei nicht?
 			if(ValidateFile(msg))
 				valid = true;
@@ -307,8 +319,11 @@ void iwMusicPlayer::Msg_Input(const unsigned int win_id,const std::string& msg)
 
 			// Gültiges Siedlerstück?
 			if(valid)
+			{
 				// Hinzufügen
 				GetCtrl<ctrlList>(0)->AddString(msg);
+				changed = true;
+			}
 			else
 				WindowManager::inst().Show(new iwMsgbox(_("Error"),_("The specified file couldn't be opened!"),this,MSB_OK,MSB_EXCLAMATIONRED));
 
@@ -316,11 +331,21 @@ void iwMusicPlayer::Msg_Input(const unsigned int win_id,const std::string& msg)
 	// Add Playlist
 	case 1:
 		{
+			bool valid = true;
+
+			// Ungültige Namen ausschließen
+			if(msg.length() == 0) valid = false;
+			else if(!((msg[0] >= 'a' && msg[0] <= 'z') || (msg[0] >= 'A' && msg[0] <= 'Z'))) valid = false;
+
 			Playlist pl;
-			if(pl.SaveAs(GetFullPlaylistPath(msg),true))
+			if(!pl.SaveAs(GetFullPlaylistPath(msg),true))
+				valid = false;
+				
+			if(valid)
 			{
 				// Combobox updaten
 				UpdatePlaylistCombo(msg);
+				changed = true;
 			}
 			else
 			{

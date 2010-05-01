@@ -1,4 +1,4 @@
-// $Id: Pathfinding.cpp 6269 2010-04-05 12:00:54Z OLiver $
+// $Id: Pathfinding.cpp 6380 2010-05-01 20:38:01Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -354,6 +354,8 @@ bool GameWorldBase::FindPathOnRoads(const noRoadNode * const start, const noRoad
 			// Wenn nicht, brauchen wir mit dieser Richtung gar nicht weiter zu machen
 			if(!rna)
 				continue;
+				
+				
 			// ID des umliegenden Knotens bilden
 			unsigned xaid = MakeCoordID(rna->GetX(),rna->GetY());
 

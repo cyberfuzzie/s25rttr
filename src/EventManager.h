@@ -1,4 +1,4 @@
-// $Id: EventManager.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: EventManager.h 6380 2010-05-01 20:38:01Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -88,6 +88,9 @@ public:
 	void Serialize(SerializedGameData *sgd) const;
 	/// Deserialisieren
 	void Deserialize(SerializedGameData *sgd);
+	
+	/// Ist ein Event mit bestimmter id für ein bestimmtes Objekt bereits vorhanden?
+	bool IsEventAcive(const GameObject * const obj, const unsigned id) const;
 
 private:
 	list<Event*> eis;     ///< Liste der Events für die einzelnen Objekte

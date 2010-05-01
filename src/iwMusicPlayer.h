@@ -1,4 +1,4 @@
-// $Id: iwMusicPlayer.h 6352 2010-04-25 12:59:33Z OLiver $
+// $Id: iwMusicPlayer.h 6380 2010-05-01 20:38:01Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -37,6 +37,10 @@ class iwMusicPlayer : public IngameWindow
 		void Msg_ButtonClick(const unsigned int ctrl_id);
 		void Msg_EditEnter(const unsigned int ctrl_id);
 	};
+	
+	/// Merken, ob Veränderungen an den Musikeinstellungen durchgeführt wurden und ob deswegen
+	/// beim Schließen des Fensters das ganze neu gestartet werden muss
+	bool changed;
 
 public:
 

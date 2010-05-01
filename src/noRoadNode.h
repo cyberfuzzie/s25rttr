@@ -1,4 +1,4 @@
-// $Id: noRoadNode.h 6059 2010-02-20 17:45:40Z FloSoft $
+// $Id: noRoadNode.h 6380 2010-05-01 20:38:01Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -60,6 +60,8 @@ public:		void Destroy() { Destroy_noRoadNode(); }
 	noRoadNode * GetNeighbour(const unsigned char dir) const;
 	void DestroyRoad(const unsigned char dir);
 	void UpgradeRoad(const unsigned char dir);
+	/// Vernichtet Alle Straﬂe um diesen Knoten
+	void DestroyAllRoads();
 
 	unsigned char GetPlayer() const { return player; }
 

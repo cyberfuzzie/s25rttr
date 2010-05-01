@@ -1,4 +1,4 @@
-// $Id: EventManager.cpp 6286 2010-04-07 11:27:43Z OLiver $
+// $Id: EventManager.cpp 6380 2010-05-01 20:38:01Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -58,6 +58,7 @@ EventManager::EventPointer EventManager::AddEvent(GameObject *obj, const unsigne
 {
 	assert(obj);
 	assert(gf_length);
+	//assert(!IsEventAcive(obj,0));
 
 	// Event eintragen
 	Event * event = new Event(obj, GAMECLIENT.GetGFNumber(), gf_length, id);
@@ -190,7 +191,21 @@ void EventManager::Deserialize(SerializedGameData *sgd)
 	//	}
 	//	assert(hits == 1);
 	//}
+}
 
+/// Ist ein Event mit bestimmter id für ein bestimmtes Objekt bereits vorhanden?
+bool EventManager::IsEventAcive(const GameObject * const obj, const unsigned id) const
+{
+	bool hit = true;
+	for(list<Event*>::const_iterator it = eis.begin(); it.valid(); ++it)
+	{
+		if((*it)->id == id && (*it)->obj == obj)
+		{
+			if(hit)
+				return true;
+			hit = true;
+		}
+	}
 	
-		
+	return false;
 }

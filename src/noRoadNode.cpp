@@ -1,4 +1,4 @@
-// $Id: noRoadNode.cpp 6059 2010-02-20 17:45:40Z FloSoft $
+// $Id: noRoadNode.cpp 6380 2010-05-01 20:38:01Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -51,9 +51,7 @@ noRoadNode::~noRoadNode()
 
 void noRoadNode::Destroy_noRoadNode()
 {
-	// Alle Straßen um mich herum zerstören
-	for(unsigned char i = 0; i < 6; ++i)
-		DestroyRoad(i);
+	DestroyAllRoads();
 
 	Destroy_noCoordBase();
 }
@@ -134,6 +132,12 @@ void noRoadNode::DestroyRoad(const unsigned char dir)
 		// Spieler Bescheid sagen
 		gwg->GetPlayer(player)->RoadDestroyed();
 	}
+}
 
-	
+/// Vernichtet Alle Straße um diesen Knoten
+void noRoadNode::DestroyAllRoads()
+{
+	// Alle Straßen um mich herum zerstören
+	for(unsigned char i = 0; i < 6; ++i)
+		DestroyRoad(i);
 }

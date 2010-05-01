@@ -1,4 +1,4 @@
-// $Id: noBaseBuilding.cpp 6344 2010-04-21 18:30:29Z OLiver $
+// $Id: noBaseBuilding.cpp 6380 2010-05-01 20:38:01Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -109,6 +109,8 @@ noBaseBuilding::~noBaseBuilding()
 
 void noBaseBuilding::Destroy_noBaseBuilding()
 {
+	DestroyAllRoads();
+	
 	gwg->GetGameInterface()->GI_UpdateMinimap(x, y);
 
 	// evtl Anbauten wieder abreißen

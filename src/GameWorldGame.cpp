@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 6377 2010-04-30 20:04:30Z OLiver $
+// $Id: GameWorldGame.cpp 6380 2010-05-01 20:38:01Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -989,6 +989,19 @@ void GameWorldGame::Attack(const unsigned char player_attacker, const MapCoord x
 
 void  GameWorldGame::AttackViaSea(const unsigned char player_attacker, const MapCoord x, const MapCoord y, const unsigned short soldiers_count, const bool strong_soldiers)
 {
+	// Verzögerungsbug-Abfrage:
+	// Existiert das angegriffenen Gebäude überhaupt noch?
+	if(GetNO(x,y)->GetGOT() != GOT_NOB_MILITARY && GetNO(x,y)->GetGOT() != GOT_NOB_HQ)
+		return;
+
+	// Auch noch ein Gebäude von einem Feind (nicht inzwischen eingenommen)?
+	if(!GetPlayer(player_attacker)->IsPlayerAttackable(GetSpecObj<noBuilding>(x,y)->GetPlayer()))
+		return;
+
+	// Prüfen, ob der angreifende Spieler das Gebäude überhaupt sieht (Cheatvorsorge)
+	if(CalcWithAllyVisiblity(x,y,player_attacker) != VIS_VISIBLE)
+		return;
+		
 	// Verf�gbare Soldaten herausfinden
 	std::list<GameWorldBase::PotentialSeaAttacker> attackers;
 	GetAvailableSoldiersForSeaAttack(player_attacker,x,y,&attackers);

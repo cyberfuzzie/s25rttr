@@ -1,4 +1,4 @@
-// $Id: ctrlProgress.h 6177 2010-03-24 10:44:32Z FloSoft $
+// $Id: ctrlProgress.h 6385 2010-05-02 19:32:10Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -33,8 +33,8 @@ public:
 				 const unsigned short width,
 				 const unsigned short height,
 				 const TextureColor tc, 
-				 const unsigned short button_minus, 
-				 const unsigned short button_plus,  
+				  unsigned short button_minus, 
+				  unsigned short button_plus,  
 				 const unsigned short maximum,
 				 const unsigned short x_padding,
 				 const unsigned short y_padding,

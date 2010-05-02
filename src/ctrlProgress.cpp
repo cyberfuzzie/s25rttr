@@ -1,4 +1,4 @@
-// $Id: ctrlProgress.cpp 6310 2010-04-11 10:26:09Z OLiver $
+// $Id: ctrlProgress.cpp 6385 2010-05-02 19:32:10Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -46,8 +46,8 @@ ctrlProgress::ctrlProgress(Window *parent,
 						   const unsigned short width,
 						   const unsigned short height,
 						   const TextureColor tc, 
-						   const unsigned short button_minus, 
-						   const unsigned short button_plus,  
+							unsigned short button_minus, 
+						   unsigned short button_plus,  
 						   const unsigned short maximum,
 						   const unsigned short x_padding,
 						   const unsigned short y_padding,
@@ -59,8 +59,20 @@ ctrlProgress::ctrlProgress(Window *parent,
 	: Window(x, y, id, parent, width, height, tooltip),
 	tc(tc), position(0), maximum(maximum), x_padding(x_padding), y_padding(y_padding), force_color(force_color)
 {
-	AddImageButton(0, 0,              0, height, height, tc, LOADER.GetImageN("io", button_minus), (button_minus_tooltip.length() ? button_minus_tooltip : _("Less")) );
-	AddImageButton(1, width - height, 0, height, height, tc, LOADER.GetImageN("io", button_plus),  (button_plus_tooltip.length( ) ? button_plus_tooltip  : _("More")) );
+	const char * str1 = "io", * str2 = "io";
+	if(button_minus >= 1000)
+	{
+		str1 = "io_new";
+		button_minus -= 1000;
+	}
+	if(button_plus >= 1000)
+	{
+		str2 = "io_new";
+		button_plus -= 1000;
+	}
+	
+	AddImageButton(0, 0,              0, height, height, tc, LOADER.GetImageN(str1, button_minus), (button_minus_tooltip.length() ? button_minus_tooltip : _("Less")) );
+	AddImageButton(1, width - height, 0, height, height, tc, LOADER.GetImageN(str2, button_plus),  (button_plus_tooltip.length( ) ? button_plus_tooltip  : _("More")) );
 }
 
 ///////////////////////////////////////////////////////////////////////////////

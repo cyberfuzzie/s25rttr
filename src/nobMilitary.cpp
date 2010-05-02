@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 6364 2010-04-28 19:38:37Z FloSoft $
+// $Id: nobMilitary.cpp 6385 2010-05-02 19:32:10Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -185,6 +185,8 @@ void nobMilitary::Draw(int x, int y)
 	if(frontier_distance_tmp == 2)
 	{
 		// todo Hafenflagge
+		bitmap = LOADER.GetImageN("map_new",0+GAMECLIENT.GetGlobalAnimation(4,1,1,this->x*this->y*age));
+
 	}
 	else
 	{

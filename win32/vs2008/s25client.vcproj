@@ -1397,6 +1397,14 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\src\noCharburnerPile.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\noCharburnerPile.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\noCoordBase.cpp"
 						>
 					</File>
@@ -1593,6 +1601,14 @@
 						</File>
 						<File
 							RelativePath="..\..\src\nofCatapultMan.h"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\nofCharburner.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\nofCharburner.h"
 							>
 						</File>
 						<File
@@ -2266,6 +2282,18 @@
 				Name="Allgemein"
 				>
 				<File
+					RelativePath="..\..\build_paths.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\build_version.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\build_version.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\colors.h"
 					>
 				</File>
@@ -2294,10 +2322,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\build_paths.h"
-					>
-				</File>
-				<File
 					RelativePath="..\..\src\macros.h"
 					>
 				</File>
@@ -2323,14 +2347,6 @@
 				</File>
 				<File
 					RelativePath="..\..\src\signale.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\build_version.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\build_version.h"
 					>
 				</File>
 				<File

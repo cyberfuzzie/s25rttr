@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.cpp 6308 2010-04-11 08:16:03Z OLiver $
+// $Id: AIPlayerJH.cpp 6388 2010-05-02 23:35:50Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -106,7 +106,7 @@ void AIPlayerJH::RunGF(const unsigned gf)
 
 		// Set military settings to some nicer default values
 		std::vector<unsigned char> milSettings;
-		milSettings.resize(7);
+		milSettings.resize(8);
 		milSettings[0] = 10;
 		milSettings[1] = 5;
 		milSettings[2] = 5;
@@ -114,6 +114,7 @@ void AIPlayerJH::RunGF(const unsigned gf)
 		milSettings[4] = 1;
 		milSettings[5] = 10;
 		milSettings[6] = 10;
+		milSettings[7] = 10;
 		gcs.push_back(new gc::ChangeMilitary(milSettings));
 	}
 
@@ -666,6 +667,44 @@ bool AIPlayerJH::SimpleFindPosition(MapCoord &x, MapCoord &y, BuildingQuality si
 	}
 
 	return false;
+}
+
+double AIPlayerJH::GetDensity(MapCoord x, MapCoord y, AIJH::Resource res, int radius)
+{
+		unsigned short width = gwb->GetWidth();
+		unsigned short height = gwb->GetHeight();
+	
+
+	// TODO: check warum das so ist, und ob das sinn macht!
+	if (x >= width || y >= height)
+	{
+		x = player->hqx;
+		y = player->hqy;
+	}
+
+
+
+	unsigned good = 0;
+	unsigned all = 0;
+
+	for(MapCoord tx=gwb->GetXA(x,y,0), r=1;r<=radius;tx=gwb->GetXA(tx,y,0),++r)
+	{
+		MapCoord tx2 = tx, ty2 = y;
+		for(unsigned i = 2;i<8;++i)
+		{
+			for(MapCoord r2=0;r2<r;gwb->GetPointA(tx2,ty2,i%6),++r2)
+			{
+				unsigned i = tx2 + ty2 * width;
+
+				if (nodes[i].res == res)
+					good++;
+
+				all++;
+			}
+		}
+	}
+
+	return (all != 0) ? good/(double)all : 0.0;
 }
 
 void AIPlayerJH::HandleNewMilitaryBuilingOccupied(const Coords& coords)

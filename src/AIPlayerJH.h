@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.h 6160 2010-03-17 15:01:06Z jh $
+// $Id: AIPlayerJH.h 6388 2010-05-02 23:35:50Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -111,6 +111,8 @@ protected:
 
 	/// Finds a position for the desired building size
 	bool SimpleFindPosition(MapCoord &x, MapCoord &y, BuildingQuality size, int radius = -1);
+
+	double GetDensity(MapCoord x, MapCoord y, AIJH::Resource res, int radius);
 
 	/// Recalculate the Buildingquality around a certain point
 	void RecalcBQAround(const MapCoord x, const MapCoord y);

@@ -31,7 +31,7 @@ mkdir -vp ../deb/s25rttr_$VERSION/usr/share/doc/s25rttr
 mv -v ../deb/s25rttr_$VERSION/usr/*.txt ../deb/s25rttr_$VERSION/usr/share/doc/s25rttr
 
 sed -i "s/Installed-Size: x/Installed-Size: $(du -sk ../deb/s25rttr_$VERSION | cut -f 1)/" ../deb/s25rttr_$VERSION/DEBIAN/control
-sed -i "s/Version: x/Version: $(grep WINDOW_VERSION ../../../version.h | cut -d ' ' -f 3 | cut -d \" -f 2)-$(grep WINDOW_REVISION ../../../version.h | cut -d ' ' -f 3 | cut -d \" -f 2)/"  ../deb/s25rttr_$VERSION/DEBIAN/control
+sed -i "s/Version: x/Version: $(grep WINDOW_VERSION ../../$BUILDDIR/build_version.h | cut -d ' ' -f 3 | cut -d \" -f 2)-$(grep WINDOW_REVISION ../../$BUILDDIR/build_version.h | cut -d ' ' -f 3 | cut -d \" -f 2)/"  ../deb/s25rttr_$VERSION/DEBIAN/control
 sed -i "s/Architecture: x/Architecture: $PKGARCH/" ../deb/s25rttr_$VERSION/DEBIAN/control
 
 

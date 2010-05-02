@@ -20,7 +20,11 @@ cp -rv /Library/Frameworks/SDL_mixer.framework s25client.app/Contents/MacOS/Fram
 
 # remove headers and additional libraries from the frameworks
 rm -rv s25client.app/Contents/Frameworks/MacOS/SDL_mixer.framework/Versions/*/{Headers,Resources}
+rm -rv s25client.app/Contents/Frameworks/MacOS/SDL_mixer.framework/Versions/*/*/{Headers,Resources}
+rm -rv s25client.app/Contents/Frameworks/MacOS/SDL_mixer.framework/Versions/*/*/*/*/{Headers,Resources}
+rm -rv s25client.app/Contents/Frameworks/MacOS/SDL_mixer.framework/Versions/*/*/*/*/*/{Headers,Resources}
 rm -rv s25client.app/Contents/Frameworks/MacOS/SDL.framework/Versions/*/{Headers,Resources}
+rm -rv s25client.app/Contents/Frameworks/MacOS/SDL.framework/Versions/*/*/{Headers,Resources}
 
 mkdir -vp s25client.app/Contents/MacOS/bin
 

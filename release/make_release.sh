@@ -1,11 +1,11 @@
 #!/bin/sh
 
-if [ -z "$VERSION" ] ; then
-	export VERSION=$(grep WINDOW_VERSION ../version.h | cut -d ' ' -f 3 | cut -d \" -f 2)
-fi
-
 if [ -z "$BUILDDIR" ] ; then
 	export BUILDDIR=../build
+fi
+
+if [ -z "$VERSION" ] ; then
+    export VERSION=$(grep WINDOW_VERSION ../$BUILDDIR/version.h | cut -d ' ' -f 3 | cut -d \" -f 2)
 fi
 
 if [ -z "$TARGET" ] ; then

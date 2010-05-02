@@ -2,7 +2,7 @@
 # $Author$
 ###############################################################################
 
-import os, time, socket, sys, glob
+import os, time, socket, sys, glob, threading, shutil
 
 os.environ['TZ'] = 'Europe/Berlin'
 time.tzset()
@@ -25,15 +25,121 @@ projects  = [
 ]
 
 systems = [
-	#[ 'linux',   True,  [ 'i386', 'x86_64' ],                     []                       ],
-	#[ 'apple',   True,  [ 'i386', 'x86_64', 'ppc', 'universal' ], [ '--disable-arch=ppc' ] ],
-	#[ 'windows', True,  [ 'i386', 'x86_64' ],                     []                       ],
-	[ 'music',   False, [],                                       []                       ],
-	[ 'common',  False, [],                                       []                       ],
+	[ 'common',  [ 'all' ],                                []                       ],
+	[ 'music',   [ 'all' ],                                []                       ],
+	#[ 'linux',   [ 'i386', 'x86_64' ],                     []                       ],
+	#[ 'apple',   [ 'i386', 'x86_64', 'ppc', 'universal' ], [ '--disable-arch=ppc' ] ],
+	#[ 'windows', [ 'i386', 'x86_64' ],                     []                       ],
 ]
 
 flags = [
-	'-j 3'
+	#'-j 3'
+]
+
+layouts = [
+	[ 
+		'linux',
+		[ # paths
+			[ 
+				'bin',
+				[ # include
+					'src/s25client',
+					'release/bin/rttr.sh'
+				]
+			],
+			[ 
+				'share/s25rttr/driver/video', 
+				[ # include
+					'driver/video/*.so',
+				]
+			],
+			[ 
+				'share/s25rttr/driver/audio', 
+				[ # include
+					'driver/audio/*.so',
+				]
+			],
+			[ 
+				'share/s25rttr/RTTR', 
+				[ # include
+					's25update/src/s25update',
+					's-c/src/sound-convert',
+					's-c/resample-1.8.1/src/s-c_resample',
+					'RTTR/languages/*.mo'
+				]
+			],
+		],
+		[ # types
+			'tar',
+			'deb'
+		]
+	],
+	[ 
+		'apple',
+		[ # paths
+		],
+		[ # types
+			'tar',
+		]
+	],
+	[ 
+		'windows',
+		[ # paths
+		],
+		[ # types
+			'zip'
+		]
+	],
+	[
+		'common',
+		[ # paths
+			[
+				'',
+				[ # include
+					'RTTR/texte/readme.txt',
+					'RTTR/texte/keyboardlayout.txt',
+				]
+			],
+			[
+				'share/s25rttr',
+				[ # include
+				],
+				[ # svn export
+					'RTTR',
+				],
+				[ # exclude
+					'RTTR/languages/*.mo',
+					'RTTR/languages/*.po',
+					'RTTR/languages/*.pot',
+					'RTTR/REPLAYS/*.rpl',
+					'RTTR/sound.lst',
+					'RTTR/settings.bin',
+					'RTTR/MUSIC/SNG/SNG_*.OGG',
+				]
+			]
+		],
+		[ # types
+			'zip',
+			'tar',
+		]
+	],
+	[
+		'music',
+		[ # paths
+			[
+				'share/s25rttr/RTTR',
+				[ # include
+				],
+				[ # svn export
+					'RTTR/MUSIC'
+				]
+			]
+		],
+		[ # types
+			'zip',
+			'tar',
+		]
+	],
 ]
 
 ###############################################################################
@@ -68,9 +174,9 @@ def run_command(log, command):
 	logger = ""
 	if log != None:
 		if debug == 1:
-			logger = " | tee %s" % log.name
+			logger = " 2>&1 | tee %s" % log.name
 		else:
-			logger = " >> %s" % log.name
+			logger = " >>%s 2>&1" % log.name
 
 	log_msg(log, "Executing \"%s\"" % command)
 	ret = os.system(command + logger)
@@ -82,86 +188,218 @@ def run_command(log, command):
 
 ###############################################################################
 
-def configure(log, arch, params):
+def configure(log, build_dir, arch, params):
 	log_msg(log, "Configuring %s" % arch)
 	
+	os.chdir(build_dir)
 	return run_command(log, "../build/cmake.sh --prefix=. --arch=c.%s %s" % (arch, params))
 
 ###############################################################################
 
-def make(log, arch):
+def make(log, build_dir, arch):
 	global flags
 
 	log_msg(log, "Building %s" % arch)
 	
 	make_flags = " ".join(flags)
-	return run_command(log, "make %s" % make_flags)
+	os.chdir(build_dir)
+	return run_command(log, "make %s -C %s" % (make_flags, build_dir))
 
 ###############################################################################
 
-def pack(log, arch):
+def pack(log, build_dir, arch):
+	global layouts
+	
 	log_msg(log, "Packing %s" % arch)
+	
+	system = arch.split('.')
+	source_dir = os.path.dirname(build_dir)
 
-	if arch == "
+	pack_dir = "%s/pack_%s" % (source_dir , arch)
+	
+	retval = True
+	
+	# cycle pack-dir
+	if os.path.exists(pack_dir):
+		if run_command(log, "rm -rvf %s_old" % pack_dir):
+			os.rename(pack_dir, pack_dir + "_old")
+		else:
+			retval = False
 
-	return False
+	os.makedirs(pack_dir)
+
+	for layout in layouts:
+		if not retval:
+			break;
+
+		if layout[0] == system[0]:
+			#print layout
+			
+			for directory in layout[1]:
+				print directory
+				dir = pack_dir
+				if len(directory[0]) > 0:
+					dir = os.path.join(pack_dir, directory[0])
+					print "creating directory %s" % dir
+					os.makedirs(dir)
+				
+				# copy included files/dirs
+				try:
+					for file in directory[1]:
+						print "copying file/directory %s" % file
+						if not run_command(log, "cp -v %s %s" % (file, os.path.join(dir, os.path.basename(file)))):
+							retval = False
+							break
+				except:
+					pass
+
+				if not retval:
+					break;
+
+				# svn export files/dirs
+				try:
+					for file in directory[2]:
+						print "exporting file/directory %s" % file
+						if not run_command(log, "svn export --force %s %s" % (file, os.path.join(dir, os.path.basename(file)))):
+							retval = False
+							break
+				except:
+					pass
+					
+				if not retval:
+					break;
+
+				# remove excluded files/dirs
+				try:
+					for file in directory[3]:
+						print "removing file/directory %s" % file
+						if not run_command(log, "rm -rvf %s" % os.path.join(dir, file)):
+							retval = False
+							break
+				except:
+					pass
+
+				if not retval:
+					break;
+
+		if not retval:
+			break;
+
+	if not retval:
+		log_msg(log, "Error: \"pack\" failed")
+	return retval
 
 ###############################################################################
 
-last_error_log = ""
+last_error_logs = []
+
+###############################################################################
+
+class build_thread( threading.Thread ):
+	def __init__(self, log, build_dir, arch, params):
+		self.log = log
+		self.build_dir = build_dir
+		self.arch = arch
+		self.params = params
+		self.retval = False
+		threading.Thread.__init__(self)
+	
+	def run(self):
+		global last_error_logs
+
+		log_msg(self.log, "-------------------------------------------------------------------------------")
+		log_msg(self.log, "Start %s" % self.arch)
+		
+		source_dir = os.path.dirname(self.build_dir)
+
+		if os.path.exists(self.build_dir):
+			os.chdir(self.build_dir)
+
+			if not configure(self.log, self.build_dir, self.arch, self.params):
+				last_error_logs.append(self.log.name)
+				self.retval = False
+				return False
+			
+			if not make(self.log, self.build_dir, self.arch):
+				last_error_logs.append(self.log.name)
+				self.retval = False
+				return False
+		
+		else:
+			os.chdir(source_dir)
+
+		if not pack(self.log, self.build_dir, self.arch):
+			last_error_logs.append(self.log.name)
+			self.retval = False
+			return False
+			
+		log_msg(self.log, "Finished %s" % self.arch)
+		self.retval = True
+		return True
+		
+	def finish(self):
+		if self.retval:
+			log_msg(self.log, "Finished %s" % self.arch)
+		else:
+			log_msg(self.log, "Failed %s" % self.arch)
+		log_msg(self.log, "-------------------------------------------------------------------------------")
+		return self.retval
+
+###############################################################################
 
 def build_all():
 	global projects
 	global systems
-	global last_error_log
+	global last_error_logs
+	
+	retval = True
 	
 	for project in projects:
-		for system in systems:
-			project_dir = "%s/%s" % (buildfarm, project)
-			project_log = "%s/%s/build_%%s.log" % (target, project)
-			
-			os.chdir(project_dir)
+		project_dir = "%s/%s" % (buildfarm, project)
+		project_log = "%s/%s/build_%%s.log" % (target, project)
+		
+		all_log = cycle_log(project_log % "all")
+		log_msg(all_log, "-------------------------------------------------------------------------------")
+		log_msg(all_log, "Start build_all")
 
-			if system[1]:
-				for architecture in system[2]:
+		os.chdir(project_dir)
+		
+		retval_proj = True
+		
+		# update project
+		if True == False:#not run_command(all_log, "svn up %s" % project_dir):
+			last_error_logs.append(all_log.name)
+			retval_proj = False
+		else:
+			threads = []
+			
+			# configure, make, pack
+			for system in systems:
+				for architecture in system[1]:
 					arch = "%s.%s" % (system[0], architecture)
 					build_dir = "%s/build_%s" % (project_dir, arch)
 					
-					if os.path.exists(build_dir):
-						os.chdir(build_dir)
+					arch_log = cycle_log(project_log % arch)
 
-						build_log = project_log % arch
-						log = cycle_log(build_log)
+					params = " ".join(system[2])
+					
+					thread = build_thread(arch_log, build_dir, arch, params)
+					threads.append(thread)
+					thread.start()
 	
-						params = " ".join(system[3])
-						if not configure(log, arch, params):
-							last_error_log = build_log
-							return False
-							
-						if not make(log, arch):
-							last_error_log = build_log
-							return False
-	
-						if not pack(log, arch):
-							last_error_log = build_log
-							return False
-						
-						log_msg(log, "Finished %s" % arch)
-						log_msg(log, "-------------------------------------------------------------------------------")
-			
-			else:
-				arch = "%s" % system[0]
-				build_log = project_log % arch
-				
-				log = cycle_log(build_log)
-				
-				if not pack(log, arch):
-					last_error_log = build_log
-					return False
+			for t in threads:
+				t.join()
+				if not t.finish():
+					retval_proj = False
 
-				log_msg(log, "Finished %s" % arch)
-				log_msg(log, "-------------------------------------------------------------------------------")
-	return True
+		if retval_proj:
+			log_msg(all_log, "Finished build_all")
+		else:
+			log_msg(all_log, "Failed build_all")
+			retval = False
+		log_msg(all_log, "-------------------------------------------------------------------------------")
+
+	return retval
 
 ###############################################################################
 
@@ -169,8 +407,43 @@ print >> sys.stderr, "Build started %s" % time.strftime("%X %x")
 
 if not build_all():
 	print >> sys.stderr, "Build failed %s" % time.strftime("%X %x")
-	#if last_error_log != "":
-	#	run_command(None, 'cat %s | /usr/bin/mail -s "Nightly Build Failed" -c bugs@siedler25.org sf-team@siedler25.org' % last_error_log)
+	#if len(last_error_logs) > 0:
+	if False:
+		# Import smtplib for the actual sending function
+		import smtplib
+
+		# Here are the email package modules we'll need
+		from email.mime.text import MIMEText
+		from email.mime.multipart import MIMEMultipart
+		
+		mail_from = 'sf-team@siedler25.org'
+		mail_to = [ 'bugs@siedler25.org', 'sf-team@siedler25.org' ]
+		
+		# Create the container (outer) email message.
+		msg = MIMEMultipart()
+		msg['Subject'] = 'Nightly Build Failed'
+		# me == the sender's email address
+		# family = the list of all recipients' email addresses
+		msg['From'] = mail_from
+		msg['To'] = ", ".join(mail_to)
+		
+		msg.attach(MIMEText("Nightly Build Failed\nThe logs of the failed builds are attached\n"))
+		
+		# Assume we know that the image files are all in PNG format
+		for file in last_error_logs:
+			# Open the files in binary mode.  Let the MIMEImage class automatically
+			# guess the specific image type.
+			fp = open(file, 'rb')
+			log = MIMEText(fp.read())
+			fp.close()
+			log.add_header('Content-Disposition', 'attachment', filename=os.path.basename(file))
+			msg.attach(log)
+
+		
+		# Send the email via our own SMTP server.
+		s = smtplib.SMTP("localhost")
+		s.sendmail(mail_from, mail_to, msg.as_string())
+		s.quit()
 else:
 	print >> sys.stderr, "Build finished %s" % time.strftime("%X %x")
 	

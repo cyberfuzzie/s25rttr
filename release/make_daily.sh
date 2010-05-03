@@ -77,6 +77,8 @@ else
 	
 	OPWD=$PWD
 	cd $TARGET/$ARCH.new
+	echo -n > $TARGET/$ARCH.new/links
+	find -type l -exec bash -c 'echo "{} $(readlink {})" >> $TARGET/$ARCH.new/links ; rm {}' \;
 	md5deep -r -l . > /tmp/files.$$
 	cd $OPWD
 

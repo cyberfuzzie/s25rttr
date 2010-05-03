@@ -1,4 +1,4 @@
-// $Id: main.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: main.h 6395 2010-05-03 20:37:41Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -36,6 +36,7 @@
 	#undef PlaySound
 #else
 	#include <sys/stat.h>
+	#include <unistd.h>
 #endif // !_WIN32
 
 #if defined _WIN32 && defined _DEBUG

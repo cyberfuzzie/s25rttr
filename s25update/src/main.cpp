@@ -1,4 +1,4 @@
-// $Id: main.cpp 6391 2010-05-03 16:59:15Z FloSoft $
+// $Id: main.cpp 6395 2010-05-03 20:37:41Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -54,6 +54,9 @@ using namespace std;
 #define HTTPPATH TARGET "." ARCH
 #define FILELIST HTTPHOST HTTPPATH "/files"
 #define OLDFILELIST HTTPHOST HTTPPATH ".old/files"
+
+#define LINKLIST HTTPHOST HTTPPATH "/links"
+#define OLDLINKLIST HTTPHOST HTTPPATH ".old/links"
 
 #ifdef _WIN32
 ///////////////////////////////////////////////////////////////////////////////
@@ -268,10 +271,11 @@ int main(int argc, char *argv[])
 	curl_global_init(CURL_GLOBAL_ALL);
 	atexit(curl_global_cleanup);
 
-	string filelist;
+	string filelist, linklist;
 	string hash, file;
 	size_t longestname = 0,longestpath = 0;
 	map<string,string> files;
+	map<string,string> links;
 
 	// download filelist
 	if(!DownloadFile(FILELIST, filelist))
@@ -288,6 +292,21 @@ int main(int argc, char *argv[])
 		}
 	}
 
+	// download linklist
+	if(!DownloadFile(LINKLIST, linklist))
+	{
+		cout << "Warning: Was not able to get current master-link-file, trying old one" << endl;
+		if(!DownloadFile(OLDLINKLIST, linklist))
+		{
+			cout << "Update failed: Downloading the master-link-file was unsuccessful!" << endl;
+	#if defined _DEBUG && defined _MSC_VER
+			cout << "Press return to continue . . ." << flush;
+			cin.get();
+	#endif
+			return 1;
+		}
+	}
+
 	stringstream flstream(filelist);
 
 	//cout << filelist << endl;
@@ -296,8 +315,8 @@ int main(int argc, char *argv[])
 	string line;
 	while( getline(flstream, line) )
 	{
-		if(line.length() < 34)
-			continue;
+		if(line.length() == 0)
+			break;
 
 		hash = line.substr(0, 32);
 		file = line.substr(34);
@@ -317,6 +336,25 @@ int main(int argc, char *argv[])
 			longestpath = path.length();
 	}
 
+	stringstream llstream(linklist);
+
+	//cout << linklist << endl;
+	
+	// parse linklist
+	while( getline(llstream, line) )
+	{
+		if(line.length() == 0)
+			break;
+
+		string target = line.substr(line.find(' ') + 1);
+		string source = line.substr(0, line.rfind(' '));
+
+		links.insert(pair<string,string>(source,target));
+		
+		if(llstream.fail())
+			break;
+	}
+
 	// check md5 of files and download them
 	map<string,string>::iterator it = files.begin();
 	while(it != files.end())
@@ -331,7 +369,9 @@ int main(int argc, char *argv[])
 #endif
 
 		// check hash of file
-		if(hash != md5sum(tfile))
+		string nhash = md5sum(tfile);
+		cerr << hash << " - " << nhash << endl;
+		if(hash != nhash)
 		{
 			string name = file.substr(file.rfind('/') + 1);
 			string path = file.substr(0, file.rfind('/'));
@@ -414,6 +454,22 @@ int main(int argc, char *argv[])
 		}
 	}
 
+	it = links.begin();
+	while(it != links.end())
+	{
+#ifdef _WIN32
+		//cout << "creating file " << it->second << endl;
+		string path = it->first.substr(0, it->first.rfind('/') + 1);
+		std::string target = path + it->second;
+
+		CopyFileA(it->first.c_str(), target.c_str(), FALSE);
+#else
+		//cout << "creating symlink " << it->second << endl;
+		symlink(it->second.c_str(), it->first.c_str());
+#endif
+		++it;
+	}
+		
 #if defined _DEBUG && defined _MSC_VER
 	cout << "Press return to continue . . ." << flush;
 	cin.get();

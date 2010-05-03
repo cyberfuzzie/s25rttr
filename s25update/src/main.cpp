@@ -1,4 +1,4 @@
-// $Id: main.cpp 6114 2010-03-04 16:49:54Z FloSoft $
+// $Id: main.cpp 6391 2010-05-03 16:59:15Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -296,6 +296,9 @@ int main(int argc, char *argv[])
 	string line;
 	while( getline(flstream, line) )
 	{
+		if(line.length() < 34)
+			continue;
+
 		hash = line.substr(0, 32);
 		file = line.substr(34);
 

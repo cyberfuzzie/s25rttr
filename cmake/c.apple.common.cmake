@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: c.apple.common.cmake 6321 2010-04-13 16:08:47Z FloSoft $
+### $Id: c.apple.common.cmake 6392 2010-05-03 17:29:20Z FloSoft $
 ################################################################################
 
 # specify the cross compiler
@@ -20,6 +20,11 @@ FORCE_ADD_FLAGS(CMAKE_CXX_FLAGS -isysroot ${CMAKE_PREFIX_PATH})
 FORCE_ADD_FLAGS(CMAKE_EXE_LINKER_FLAGS -isysroot ${CMAKE_PREFIX_PATH})
 FORCE_ADD_FLAGS(CMAKE_MODULE_LINKER_FLAGS -isysroot ${CMAKE_PREFIX_PATH})
 FORCE_ADD_FLAGS(CMAKE_SHARED_LINKER_FLAGS -isysroot ${CMAKE_PREFIX_PATH})
+
+# disable optimization - buggy gcc?
+FORCE_ADD_FLAGS(CMAKE_CXX_FLAGS_MINSIZEREL -O0 -DNDEBUG)
+FORCE_ADD_FLAGS(CMAKE_CXX_FLAGS_RELEASE -O0 -DNDEBUG)
+FORCE_ADD_FLAGS(CMAKE_CXX_FLAGS_RELWITHDEBINFO -O0 -g)
 
 # set root path
 SET(CMAKE_FIND_ROOT_PATH "${CMAKE_PREFIX_PATH}")

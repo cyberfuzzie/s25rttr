@@ -1,4 +1,4 @@
-// $Id: Pathfinding.cpp 6380 2010-05-01 20:38:01Z OLiver $
+// $Id: Pathfinding.cpp 6394 2010-05-03 19:53:33Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -28,6 +28,7 @@
 #include "Random.h"
 #include "MapGeometry.h"
 #include "nobHarborBuilding.h"
+#include "GameClient.h"
 
 #include <set>
 #include <vector>
@@ -275,9 +276,21 @@ bool GameWorldBase::FindPathOnRoads(const noRoadNode * const start, const noRoad
 									unsigned char * first_dir,  Point<MapCoord> * next_harbor,
 									const RoadSegment * const forbidden) const
 {
+	// Aus Replay lesen?
+	if(GameClient::inst().ArePathfindingResultsAvailable())
+	{
+		unsigned char dir;
+		GameClient::inst().ReadPathfindingResult(&dir,length,next_harbor);
+		if(first_dir) *first_dir = dir;
+		return (dir != 0xff);
+	}
+			
 	// Irgendwelche Null-Anfänge oder Ziele? --> Kein Weg
 	if(!start || !goal)
+	{
+		GameClient::inst().AddPathfindingResult(0xff,length,next_harbor);
 		return false;
+	}
 
 	// Erst einmal wieder aufräumen
 	for(unsigned i = 0;i<clean_list.size();++i)
@@ -302,7 +315,10 @@ bool GameWorldBase::FindPathOnRoads(const noRoadNode * const start, const noRoad
 	{
 		// Liste leer und kein Ziel erreicht --> kein Weg
 		if(!todo.size())
+		{
+			GameClient::inst().AddPathfindingResult(0xff,length,next_harbor);
 			return false;
+		}
 		
 		// Knoten mit den geringsten Wegkosten auswählen
 		const noRoadNode* best = *todo.begin();
@@ -314,6 +330,8 @@ bool GameWorldBase::FindPathOnRoads(const noRoadNode * const start, const noRoad
 
 		// Knoten wurde entfernt, daher erstmal auf das Ende des set setzen (als Alternative zu NULL)
 		pf_nodes[best_id].it_rn = todo.end();
+		
+		unsigned char first_dir_tmp;
 
 		// Ziel erreicht, allerdings keine Nullwege erlauben?
 		if(best == goal &&  pf_nodes[best_id].way)
@@ -331,8 +349,8 @@ bool GameWorldBase::FindPathOnRoads(const noRoadNode * const start, const noRoad
 			{
 				//if(route)
 				//	route->at(z) = pf_nodes[best_id].dir;
-				if(first_dir && z == 0)
-					*first_dir = pf_nodes[best_id].dir;
+				if(z == 0)
+					first_dir_tmp = pf_nodes[best_id].dir;
 				if(next_harbor && z == 0)
 				{
 					next_harbor->x = best_id%width;
@@ -340,9 +358,13 @@ bool GameWorldBase::FindPathOnRoads(const noRoadNode * const start, const noRoad
 				}
 				
 			}
+			
+			if(first_dir)
+				*first_dir = first_dir_tmp;
 				
 
 			// Fertig, es wurde ein Pfad gefunden
+			GameClient::inst().AddPathfindingResult(first_dir_tmp,length,next_harbor);
 			return true;
 		}
 		
@@ -562,12 +584,22 @@ bool IsPointToDestOK_ShipPath(const GameWorldBase& gwb, const MapCoord x, const 
 unsigned char GameWorldBase::FindHumanPath(const MapCoord x_start,const MapCoord y_start,
 			const MapCoord x_dest, const MapCoord y_dest, const unsigned max_route, const bool random_route, unsigned *length)
 {
+	// Aus Replay lesen?
+	if(GameClient::inst().ArePathfindingResultsAvailable())
+	{
+		unsigned char dir;
+		GameClient::inst().ReadPathfindingResult(&dir,length,NULL);
+		return dir;
+	}
+	
 	unsigned char first_dir = 0xFF;
-	if(FindFreePath(x_start,y_start,x_dest,y_dest,random_route,max_route,NULL,length,&first_dir,IsPointOK_HumanPath,
-		IsPointToDestOK_HumanPath,NULL))
-		return first_dir;
-	else
-		return 0xFF;
+	FindFreePath(x_start,y_start,x_dest,y_dest,random_route,max_route,NULL,length,&first_dir,IsPointOK_HumanPath,
+		IsPointToDestOK_HumanPath,NULL);
+		
+	GameClient::inst().AddPathfindingResult(first_dir,length,NULL);	
+	
+	return first_dir;
+
 }
 
 /// Wegfindung für Menschen im Straßennetz

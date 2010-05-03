@@ -1,4 +1,4 @@
-// $Id: GameClient.h 6349 2010-04-23 18:11:38Z OLiver $
+// $Id: GameClient.h 6394 2010-05-03 19:53:33Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -149,6 +149,13 @@ public:
 	unsigned WriteSaveHeader(const std::string& filename);
 	/// Visuelle Einstellungen aus den richtigen ableiten
 	void GetVisualSettings();
+	
+	/// Schreibt ggf. Pathfinding-Results in das Replay, falls erforderlich
+	void AddPathfindingResult(const unsigned char dir, const unsigned * const length, const Point<MapCoord> * const next_harbor);
+	/// Gibt zurück, ob Pathfinding-Results zur Verfügung stehen
+	bool ArePathfindingResultsAvailable() const;
+	/// Gibt Pathfinding-Results zurück aus einem Replay
+	void ReadPathfindingResult( unsigned char *dir, unsigned * length, Point<MapCoord> * next_harbor);
 
 private:
 	/// Versucht einen neuen GameFrame auszuführen, falls die Zeit dafür gekommen ist

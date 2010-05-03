@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 6291 2010-04-08 11:38:30Z OLiver $
+// $Id: GameClient.cpp 6394 2010-05-03 19:53:33Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1854,5 +1854,37 @@ void GameClient::SendAIEvent(AIEvent::Base *ev, unsigned receiver)
 	else
 		delete ev;
 }
+
+/// Schreibt ggf. Pathfinding-Results in das Replay, falls erforderlich
+void GameClient::AddPathfindingResult(const unsigned char dir, const unsigned * const length, const Point<MapCoord> * const next_harbor)
+{
+	// Sind wir im normalem Spiel?
+	if(!replay_mode)
+	{
+		// Dann hinzufügen
+		replayinfo.replay.AddPathfindingResult(dir,length,next_harbor);
+	}
+}
+
+/// Gibt zurück, ob Pathfinding-Results zur Verfügung stehen
+bool GameClient::ArePathfindingResultsAvailable() const
+{
+	// Replaymodus?
+	if(replay_mode)
+	{
+		// Unterstützt das Replay das auch?
+		if(replayinfo.replay.pathfinding_results)
+			return true;
+	}
+	
+	return false;
+}
+
+/// Gibt Pathfinding-Results zurück aus einem Replay
+void GameClient::ReadPathfindingResult(unsigned char *dir, unsigned * length, Point<MapCoord> * next_harbor)
+{
+	replayinfo.replay.ReadPathfindingResult(dir,length,next_harbor);
+}
+
 
 

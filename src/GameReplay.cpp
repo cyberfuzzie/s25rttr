@@ -1,4 +1,4 @@
-// $Id: GameReplay.cpp 5999 2010-02-11 09:53:02Z FloSoft $
+// $Id: GameReplay.cpp 6394 2010-05-03 19:53:33Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -27,15 +27,15 @@
 /// Kleine Signatur am Anfang "RTTRRP", die ein gültiges S25 RTTR Replay kennzeichnet
 const char Replay::REPLAY_SIGNATURE[6] = {'R','T','T','R','R','P'};
 /// Version des Replay-Formates
-const unsigned short Replay::REPLAY_VERSION = 20;
+const unsigned short Replay::REPLAY_VERSION = 21;
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
  *
  *  @author OLiver
  */
-Replay::Replay() : nwf_length(0), random_init(0), map_length(0), map_zip_length(0), map_data(0), 
-	savegame(0), last_gf(0), last_gf_file_pos(0)
+Replay::Replay() : nwf_length(0), random_init(0), pathfinding_results(true), map_length(0), map_zip_length(0), map_data(0), 
+	savegame(0), last_gf(0), last_gf_file_pos(0), gf_file_pos(0)
 {
 }
 
@@ -83,6 +83,8 @@ bool Replay::WriteHeader(const std::string& filename)
 	file.WriteUnsignedShort(nwf_length);
 	/// Zufallsgeneratorinitialisierung
 	file.WriteUnsignedInt(random_init);
+	/// Pathfinding-Results hier drin?
+	file.WriteUnsignedChar(pathfinding_results ? 1 : 0);
 
 	// Position merken für End-GF
 	last_gf_file_pos = file.Tell();
@@ -124,11 +126,13 @@ bool Replay::WriteHeader(const std::string& filename)
 	file.WriteShortString(map_name);
 
 	// bei ungerader 4er position aufrunden
-	while(file.Tell() % 4)
-		file.WriteSignedChar(0);
+	//while(file.Tell() % 4)
+	//	file.WriteSignedChar(0);
 
 	// Alles sofort reinschreiben
 	file.Flush();
+	
+	gf_file_pos  = 0;
 
 	return true;
 }
@@ -158,6 +162,8 @@ bool Replay::LoadHeader(const std::string& filename, const bool load_extended_he
 	nwf_length = file.ReadUnsignedShort();
 	// Zufallsgeneratorinitialisierung
 	random_init = file.ReadUnsignedInt();
+	/// Pathfinding-Results hier drin?
+	pathfinding_results = (file.ReadUnsignedChar()==1);
 	/// End-GF
 	last_gf = file.ReadUnsignedInt();
 	// Spieleranzahl
@@ -198,8 +204,8 @@ bool Replay::LoadHeader(const std::string& filename, const bool load_extended_he
 		file.ReadShortString(map_name);
 
 		// bei ungerader 4er position aufrunden
-		while(file.Tell() % 4)
-			file.Seek(1, SEEK_CUR);
+		//while(file.Tell() % 4)
+		//	file.Seek(1, SEEK_CUR);
 	}
 
 	return true;
@@ -214,9 +220,20 @@ void Replay::AddChatCommand(const unsigned gf,const unsigned char player, const 
 {
 	if(!file.IsValid())
 		return;
-
+	
 	// GF-Anzahl
-	file.WriteUnsignedInt(gf);
+	if(gf_file_pos)
+	{
+		unsigned current_pos = file.Tell();
+		file.Seek(gf_file_pos,SEEK_SET);
+		file.WriteUnsignedInt(gf);
+		file.Seek(current_pos,SEEK_SET);
+	}
+	else
+		file.WriteUnsignedInt(gf);
+		
+	
+	
 	// Type (0)
 	file.WriteUnsignedChar(RC_CHAT);
 	// Spieler
@@ -227,8 +244,12 @@ void Replay::AddChatCommand(const unsigned gf,const unsigned char player, const 
 	file.WriteLongString(str);
 
 	// bei ungerader 4er position aufrunden
-	while(file.Tell() % 4)
-		file.WriteSignedChar(0);
+	//while(file.() % 4)
+	//	file.WriteSignedChar(0);
+	
+	// Platzhalter für nächste GF-Zahl
+	gf_file_pos = file.Tell();
+	file.WriteUnsignedInt(0xffffffff);
 
 	// Sofort rein damit
 	file.Flush();
@@ -248,7 +269,16 @@ void Replay::AddGameCommand(const unsigned gf,const unsigned short length, const
 	//file.WriteRawData("GCCM", 4);
 
 	// GF-Anzahl
-	file.WriteUnsignedInt(gf);
+	if(gf_file_pos)
+	{
+		unsigned current_pos = file.Tell();
+		file.Seek(gf_file_pos,SEEK_SET);
+		file.WriteUnsignedInt(gf);
+		file.Seek(current_pos,SEEK_SET);
+	}
+	else
+		file.WriteUnsignedInt(gf);
+		
 	// Type (RC_GAME)
 	file.WriteUnsignedChar(RC_GAME);
 
@@ -258,12 +288,31 @@ void Replay::AddGameCommand(const unsigned gf,const unsigned short length, const
 	file.WriteRawData(data,length);
 
 	// bei ungerader 4er position aufrunden
-	while(file.Tell() % 4)
-		file.WriteSignedChar(0);
+	//while(file.Tell() % 4)
+	//	file.WriteSignedChar(0);
+	
+	// Platzhalter für nächste GF-Zahl
+	gf_file_pos = file.Tell();
+	file.WriteUnsignedInt(0xeeeeeeee);
 
 	// Sofort rein damit
 	file.Flush();
 }
+
+/// Fügt Pathfinding-Result hinzu
+void Replay::AddPathfindingResult(const unsigned char data, const unsigned * const length, const Point<MapCoord> * const next_harbor)
+{
+	file.WriteUnsignedChar(data);
+	if(length) file.WriteUnsignedInt(*length);
+	if(next_harbor)
+	{
+		file.WriteUnsignedShort(next_harbor->x);
+		file.WriteUnsignedShort(next_harbor->y);
+	}
+}
+
+
+
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
@@ -273,8 +322,8 @@ void Replay::AddGameCommand(const unsigned gf,const unsigned short length, const
 bool Replay::ReadGF(unsigned * gf)
 {
 	// bei ungerader 4er position aufrunden
-	while(file.Tell() % 4 && !file.EndOfFile())
-		file.Seek(1, SEEK_CUR);
+	//while(file.Tell() % 4 && !file.EndOfFile())
+	//	file.Seek(1, SEEK_CUR);
 
 	//// kein Marker bedeutet das Ende der Welt
 	//if(memcmp(marker, "GCCM", 4) != 0)
@@ -324,6 +373,18 @@ void Replay::ReadGameCommand(unsigned short *length, unsigned char ** data)
 	*length = file.ReadUnsignedShort();
 	*data = new unsigned char[*length];
 	file.ReadRawData(*data,*length);
+}
+
+void Replay::ReadPathfindingResult(unsigned char * data, unsigned * length, Point<MapCoord> * next_harbor)
+{
+	*data = file.ReadUnsignedChar();
+	if(length) *length = file.ReadUnsignedInt();
+	if(next_harbor)
+	{
+		next_harbor->x = file.ReadUnsignedShort();
+		next_harbor->y = file.ReadUnsignedShort();
+	}
+		
 }
 
 ///////////////////////////////////////////////////////////////////////////////

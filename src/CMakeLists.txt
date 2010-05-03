@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 6372 2010-04-30 17:45:33Z FloSoft $
+### $Id: CMakeLists.txt 6389 2010-05-03 15:53:15Z FloSoft $
 ################################################################################
 
 INCLUDE(FindBZip2)
@@ -365,6 +365,9 @@ IF ( "${COMPILEFOR}" STREQUAL "windows" )
 		)
 	ENDIF( IS_DIRECTORY "${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3" )
 ENDIF ( "${COMPILEFOR}" STREQUAL "windows" )
+
+INCLUDE(AddFileDependencies)
+ADD_FILE_DEPENDENCIES(../build_version.cpp ${CMAKE_BINARY_DIR}/build_version.h)
 
 SET(s25client_SRCS 
 	../build_version.cpp

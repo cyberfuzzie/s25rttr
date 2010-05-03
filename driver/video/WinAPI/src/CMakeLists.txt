@@ -1,17 +1,20 @@
 #################################################################################
-### $Id: CMakeLists.txt 6372 2010-04-30 17:45:33Z FloSoft $
+### $Id: CMakeLists.txt 6389 2010-05-03 15:53:15Z FloSoft $
 #################################################################################
 
 IF ("${COMPILEFOR}" STREQUAL "windows" )
 	FIND_LIBRARY(GDI32_LIBRARY    gdi32)
 	FIND_LIBRARY(OPENGL32_LIBRARY opengl32)
 	FIND_LIBRARY(USER32_LIBRARY   user32)
-	
+
 	# bug: cmake cross detection's not implemented, so he never finds anything!
 	
 	#IF (GDI32_LIBRARY AND OPENGL_LIBRARY AND USER32_LIBRARY)
 		INCLUDE_DIRECTORIES(../../../src)
 	
+		INCLUDE(AddFileDependencies)
+		ADD_FILE_DEPENDENCIES(../../../../build_version.cpp ${CMAKE_BINARY_DIR}/build_version.h)
+
 		ADD_LIBRARY(videoWinAPI SHARED WinAPI.cpp WinAPI.h main.h ../../../../build_version.cpp ../../../src/DriverInterface.cpp)
 	
 		TARGET_LINK_LIBRARIES(videoWinAPI videodrv gdi32 opengl32 user32) 
@@ -19,6 +22,7 @@ IF ("${COMPILEFOR}" STREQUAL "windows" )
 	
 		IF ( "${COMPILEFOR}" STREQUAL "windows")
 			ADD_DEFINITIONS(-DBUILD_DLL)
+			SET(CMAKE_SHARED_LIBRARY_PREFIX "")
 		ENDIF ( "${COMPILEFOR}" STREQUAL "windows")
 		
 		ADD_CUSTOM_COMMAND(TARGET videoWinAPI POST_BUILD COMMAND ln -fvs WinAPI/src/${CMAKE_SHARED_LIBRARY_PREFIX}videoWinAPI${CMAKE_SHARED_LIBRARY_SUFFIX} ../../videoWinAPI${CMAKE_SHARED_LIBRARY_SUFFIX})

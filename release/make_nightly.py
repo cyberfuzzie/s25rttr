@@ -12,10 +12,14 @@ time.tzset()
 debug     = int(os.environ.get('DEBUG', 0))
 buildfarm = os.environ.get('BUILDFARM', '/srv/buildfarm')
 target    = os.environ.get('TARGET',    '/www/ra-doersch.de/nightly')
+uploads   = os.environ.get('UPLOADS',    '/srv/buildfarm/uploads_new')
+unknown_version = [ 'unknown', '0' ]
 
 try: os.makedirs(buildfarm)
 except: pass
 try: os.makedirs(target)
+except: pass
+try: os.makedirs(uploads)
 except: pass
 
 ###############################################################################
@@ -25,121 +29,42 @@ projects  = [
 ]
 
 systems = [
-	[ 'common',  [ 'all' ],                                []                       ],
-	[ 'music',   [ 'all' ],                                []                       ],
 	#[ 'linux',   [ 'i386', 'x86_64' ],                     []                       ],
 	#[ 'apple',   [ 'i386', 'x86_64', 'ppc', 'universal' ], [ '--disable-arch=ppc' ] ],
-	#[ 'windows', [ 'i386', 'x86_64' ],                     []                       ],
+	[ 'windows', [ 'i386', 'x86_64' ],                     []                       ],
+	[ 'common',  [ 'linux', 'apple', 'windows' ],                                []                       ],
+	[ 'music',   [ 'linux', 'apple', 'windows' ],                                []                       ],
 ]
 
 flags = [
-	#'-j 3'
+	'-j 3'
 ]
 
+tools = [
+	(
+		'zip',
+		'.zip',
+		'zip -r $TARGET $SOURCE -x .svn',
+	),
+	(
+		'tar',
+		'.tar.bz2',
+		'tar --exclude=.svn -cvjf $TARGET $SOURCE'
+	)
+]
+
+from layout_linux import *
+from layout_apple import *
+from layout_windows import *
+from layout_common import *
+from layout_music import *
+
 layouts = [
-	[ 
-		'linux',
-		[ # paths
-			[ 
-				'bin',
-				[ # include
-					'src/s25client',
-					'release/bin/rttr.sh'
-				]
-			],
-			[ 
-				'share/s25rttr/driver/video', 
-				[ # include
-					'driver/video/*.so',
-				]
-			],
-			[ 
-				'share/s25rttr/driver/audio', 
-				[ # include
-					'driver/audio/*.so',
-				]
-			],
-			[ 
-				'share/s25rttr/RTTR', 
-				[ # include
-					's25update/src/s25update',
-					's-c/src/sound-convert',
-					's-c/resample-1.8.1/src/s-c_resample',
-					'RTTR/languages/*.mo'
-				]
-			],
-		],
-		[ # types
-			'tar',
-			'deb'
-		]
-	],
-	[ 
-		'apple',
-		[ # paths
-		],
-		[ # types
-			'tar',
-		]
-	],
-	[ 
-		'windows',
-		[ # paths
-		],
-		[ # types
-			'zip'
-		]
-	],
-	[
-		'common',
-		[ # paths
-			[
-				'',
-				[ # include
-					'RTTR/texte/readme.txt',
-					'RTTR/texte/keyboardlayout.txt',
-				]
-			],
-			[
-				'share/s25rttr',
-				[ # include
-				],
-				[ # svn export
-					'RTTR',
-				],
-				[ # exclude
-					'RTTR/languages/*.mo',
-					'RTTR/languages/*.po',
-					'RTTR/languages/*.pot',
-					'RTTR/REPLAYS/*.rpl',
-					'RTTR/sound.lst',
-					'RTTR/settings.bin',
-					'RTTR/MUSIC/SNG/SNG_*.OGG',
-				]
-			]
-		],
-		[ # types
-			'zip',
-			'tar',
-		]
-	],
-	[
-		'music',
-		[ # paths
-			[
-				'share/s25rttr/RTTR',
-				[ # include
-				],
-				[ # svn export
-					'RTTR/MUSIC'
-				]
-			]
-		],
-		[ # types
-			'zip',
-			'tar',
-		]
-	],
+	layout_linux,
+	layout_apple,
+	layout_windows,
+	layout_common,
+	layout_music
 ]
 
 ###############################################################################
@@ -168,20 +93,21 @@ def log_msg(log, msg):
 
 ###############################################################################
 
-def run_command(log, command):
+def run_command(log, command, fail_is_critical = True, verbose = True):
 	global debug
 	
 	logger = ""
 	if log != None:
-		if debug == 1:
-			logger = " 2>&1 | tee %s" % log.name
-		else:
+		if debug == 0:
 			logger = " >>%s 2>&1" % log.name
 
-	log_msg(log, "Executing \"%s\"" % command)
+	if verbose:
+		log_msg(log, "Executing \"%s\"" % command)
 	ret = os.system(command + logger)
+
 	if ret != 0:
-		log_msg(log, "Error: \"%s\" returned %d" % (command, socket.ntohs(ret)))
+		if fail_is_critical:
+			log_msg(log, "Error: \"%s\" returned %d" % (command, socket.ntohs(ret)))
 		return False
 		
 	return True
@@ -203,85 +129,157 @@ def make(log, build_dir, arch):
 	
 	make_flags = " ".join(flags)
 	os.chdir(build_dir)
-	return run_command(log, "make %s -C %s" % (make_flags, build_dir))
+	return run_command(log, "make %s" % make_flags)
 
 ###############################################################################
 
 def pack(log, build_dir, arch):
 	global layouts
+	global unknown_version
 	
 	log_msg(log, "Packing %s" % arch)
 	
 	system = arch.split('.')
+	#print system
+	
 	source_dir = os.path.dirname(build_dir)
 
-	pack_dir = "%s/pack_%s" % (source_dir , arch)
+	try:
+		svn_entries =  open(os.path.join(source_dir, '.svn/entries'), "r")
+		lines = svn_entries.readlines()
+
+		version = [
+			time.strftime("%Y%m%d"),
+			lines[3].strip()
+		]
+	except:
+		version = unknown_version
+
+	#print os.getcwd()
+
+	pack_dir = "%s/pack/%s" % (source_dir, arch)
+	upload_dir = "%s/%s_%s_%s" % (uploads, system[0], "-".join(version), system[1])
 	
 	retval = True
 	
 	# cycle pack-dir
 	if os.path.exists(pack_dir):
-		if run_command(log, "rm -rvf %s_old" % pack_dir):
+		if run_command(log, "rm -rf %s_old" % pack_dir):
 			os.rename(pack_dir, pack_dir + "_old")
 		else:
 			retval = False
 
 	os.makedirs(pack_dir)
 
-	for layout in layouts:
+	for arch_of_layout, layout in layouts:
 		if not retval:
 			break;
-
-		if layout[0] == system[0]:
-			#print layout
 			
-			for directory in layout[1]:
-				print directory
-				dir = pack_dir
-				if len(directory[0]) > 0:
-					dir = os.path.join(pack_dir, directory[0])
-					print "creating directory %s" % dir
-					os.makedirs(dir)
-				
-				# copy included files/dirs
-				try:
-					for file in directory[1]:
-						print "copying file/directory %s" % file
-						if not run_command(log, "cp -v %s %s" % (file, os.path.join(dir, os.path.basename(file)))):
-							retval = False
-							break
-				except:
-					pass
-
-				if not retval:
-					break;
-
-				# svn export files/dirs
-				try:
-					for file in directory[2]:
-						print "exporting file/directory %s" % file
-						if not run_command(log, "svn export --force %s %s" % (file, os.path.join(dir, os.path.basename(file)))):
-							retval = False
-							break
-				except:
-					pass
+		if arch_of_layout == system[0]:
+			archives = []
+			
+			# process files
+			for arch_of_files, directories, archive_of_files in layout:
+				if "all" in arch_of_files or system[1] in arch_of_files:
+					archives += archive_of_files
+					#print directories
 					
-				if not retval:
-					break;
+					for directory in directories:
+						#print directory
+						dir = pack_dir
+						if len(directory[0]) > 0:
+							dir = os.path.join(pack_dir, directory[0])
+							print "creating directory %s" % dir
+							os.makedirs(dir)
+						
+						# copy included files/dirs
+						try:
+							for file in directory[1]:
+								#print "Copying file/directory %s" % file
+								if not run_command(log, "cp -rv %s %s" % (file, dir), True, False):
+									retval = False
+									break
+						except:
+							pass
+						
+						if not retval:
+							break;
+						
+						# svn export files/dirs
+						try:
+							for file in directory[2]:
+								print "Exporting file/directory %s" % file
+								if not run_command(log, "svn export --force %s %s" % (file, os.path.join(dir, os.path.basename(file))), True, False):
+									retval = False
+									break
+						except:
+							pass
+							
+						if not retval:
+							break;
+						
+						# remove excluded files/dirs
+						try:
+							for file in directory[3]:
+								print "Removing file/directory %s" % file
+								if not run_command(log, "rm -rf %s" % os.path.join(dir, file), True, False):
+									retval = False
+									break
+						except:
+							pass
+						
+						# create (touch) files/dirs
+						try:
+							for file in directory[4]:
+								if file[-1] == '/':
+									print "Creating directory %s" % file
+									os.makedirs(os.path.join(dir, file))
+								else:
+									print "creating file %s" % file
+									open(os.path.join(dir, file), "w").close()
+						except:
+							pass
 
-				# remove excluded files/dirs
-				try:
-					for file in directory[3]:
-						print "removing file/directory %s" % file
-						if not run_command(log, "rm -rvf %s" % os.path.join(dir, file)):
+						if not retval:
+							break;
+					
+					if not retval:
+						break;
+					
+			archives = list(set(archives))
+			#print archives
+			for tool, suffix, command in tools:
+				if tool in archives:
+					#print tool
+
+					# are old and new identical, then dont create archive
+					if not run_command(log, "diff -qr %s_old %s >/dev/null 2>&1" % (pack_dir, pack_dir), False, False):
+						target = upload_dir + suffix
+					
+						# remove old archive
+						try:
+							os.remove(target)
+						except:
+							pass
+
+						command = command.replace("$SOURCE", ".")
+						command = command.replace("$TARGET", target)
+
+						#print command
+
+						olddir = os.getcwd()
+						os.chdir(pack_dir)
+
+						if not run_command(log, command, True, False):
 							retval = False
-							break
-				except:
-					pass
+						
+						os.chdir(olddir)
+					else:
+						log_msg(log, "Already Up-To-Date")
 
 				if not retval:
 					break;
-
+		
 		if not retval:
 			break;
 
@@ -386,6 +384,8 @@ def build_all():
 					thread = build_thread(arch_log, build_dir, arch, params)
 					threads.append(thread)
 					thread.start()
+					if debug:
+						thread.join()
 	
 			for t in threads:
 				t.join()

@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: CMakeLists.txt 6372 2010-04-30 17:45:33Z FloSoft $
+### $Id: CMakeLists.txt 6389 2010-05-03 15:53:15Z FloSoft $
 #################################################################################
 
 INCLUDE(FindSDL)
@@ -13,6 +13,9 @@ IF (SDL_FOUND)
 
 		INCLUDE_DIRECTORIES(../../../src ../libendian/src)
 		
+		INCLUDE(AddFileDependencies)
+		ADD_FILE_DEPENDENCIES(../../../../build_version.cpp ${CMAKE_BINARY_DIR}/build_version.h)
+		
 		ADD_LIBRARY(audioSDL SHARED SDL.cpp SDL.h main.h SoundSDL_Music.cpp SoundSDL_Music.h SoundSDL_Effect.cpp SoundSDL_Effect.h ../../../../build_version.cpp ../../../src/DriverInterface.cpp ../../../src/tempname.cpp ../../../src/tempname.h)
 	
 		ADD_FLAGS(CMAKE_C_FLAGS -I${SDL_INCLUDE_DIR} -I${SDLMIXER_INCLUDE_DIR})
@@ -22,6 +25,7 @@ IF (SDL_FOUND)
 		
 		IF ( "${COMPILEFOR}" STREQUAL "windows")
 			ADD_DEFINITIONS(-DBUILD_DLL)
+			SET(CMAKE_SHARED_LIBRARY_PREFIX "")
 		ENDIF ( "${COMPILEFOR}" STREQUAL "windows")
 			
 		ADD_CUSTOM_COMMAND(TARGET audioSDL POST_BUILD COMMAND ln -fvs SDL/src/${CMAKE_SHARED_LIBRARY_PREFIX}audioSDL${CMAKE_SHARED_LIBRARY_SUFFIX} ../../audioSDL${CMAKE_SHARED_LIBRARY_SUFFIX})

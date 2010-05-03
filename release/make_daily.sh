@@ -33,7 +33,7 @@ if [ $EXIT != 0 ] ; then
 
   EXIT=1
 else
-	REVISION=$(grep WINDOW_REVISION ../$BUILDDIR/build_version.h | cut -d ' ' -f 3 | cut -d \" -f 2)
+	REVISION=$(grep WINDOW_REVISION $BUILDDIR/build_version.h | cut -d ' ' -f 3 | cut -d \" -f 2)
 	rm -f $TARGET/s25rttr_${VERSION}-*_${ARCH}.tar.bz2
 	rm -f $TARGET/s25rttr_*-${REVISION}_${ARCH}.tar.bz2
 	cp -v s25rttr_$VERSION.tar.bz2 /srv/buildfarm/uploads/s25rttr_${VERSION}-${REVISION}_${ARCH}.tar.bz2 >> $TARGET/build_${ARCH}.log

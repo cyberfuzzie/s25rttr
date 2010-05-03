@@ -5,7 +5,7 @@ if [ -z "$BUILDDIR" ] ; then
 fi
 
 if [ -z "$VERSION" ] ; then
-    export VERSION=$(grep WINDOW_VERSION ../$BUILDDIR/version.h | cut -d ' ' -f 3 | cut -d \" -f 2)
+    export VERSION=$(grep WINDOW_VERSION $BUILDDIR/build_version.h | cut -d ' ' -f 3 | cut -d \" -f 2)
 fi
 
 if [ -z "$TARGET" ] ; then

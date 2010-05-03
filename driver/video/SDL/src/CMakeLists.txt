@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: CMakeLists.txt 6372 2010-04-30 17:45:33Z FloSoft $
+### $Id: CMakeLists.txt 6389 2010-05-03 15:53:15Z FloSoft $
 #################################################################################
 
 INCLUDE(FindSDL)
@@ -11,6 +11,9 @@ IF (SDL_FOUND)
 
 	INCLUDE_DIRECTORIES(../../../src)
 
+	INCLUDE(AddFileDependencies)
+	ADD_FILE_DEPENDENCIES(../../../../build_version.cpp ${CMAKE_BINARY_DIR}/build_version.h)
+
 	ADD_LIBRARY(videoSDL SHARED SDL.cpp SDL.h main.h oem.cpp oem.h ../../../../build_version.cpp ../../../src/DriverInterface.cpp)
 
 	ADD_FLAGS(CMAKE_C_FLAGS -I${SDL_INCLUDE_DIR})
@@ -20,6 +23,7 @@ IF (SDL_FOUND)
 
 	IF ( "${COMPILEFOR}" STREQUAL "windows")
 		ADD_DEFINITIONS(-DBUILD_DLL)
+		SET(CMAKE_SHARED_LIBRARY_PREFIX "")
 	ENDIF ( "${COMPILEFOR}" STREQUAL "windows")
 
 	ADD_CUSTOM_COMMAND(TARGET videoSDL POST_BUILD COMMAND ln -fvs SDL/src/${CMAKE_SHARED_LIBRARY_PREFIX}videoSDL${CMAKE_SHARED_LIBRARY_SUFFIX} ../../videoSDL${CMAKE_SHARED_LIBRARY_SUFFIX})

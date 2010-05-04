@@ -1,4 +1,4 @@
-// $Id: iwAddons.cpp 6368 2010-04-29 18:15:43Z FloSoft $
+// $Id: iwAddons.cpp 6401 2010-05-04 11:07:04Z OLiver $
 //
 // Copyright (c) 2005-2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -155,6 +155,42 @@ void iwAddons::Msg_ButtonClick(const unsigned int ctrl_id)
 	}
 }
 
+/// Aktualisiert die Addons, die angezeigt werden sollen
+void iwAddons::UpdateView(const unsigned short selection)
+{
+	ctrlScrollBar* scrollbar = GetCtrl<ctrlScrollBar>(6);
+	unsigned short y = 90;
+	unsigned short inthiscategory = 0;
+	for(unsigned int i = 0; i < ADDONMANAGER.getCount(); ++i)
+	{
+		unsigned int id = 10 + 20*i;
+		unsigned int status;
+		const Addon *addon = ADDONMANAGER.getAddon(i, status);
+
+		if(!addon)
+			continue;
+
+		unsigned int groups = addon->getGroups();
+
+		if( (groups & selection) == selection)
+			++inthiscategory;
+
+		if( ((groups & selection) != selection) || i < scrollbar->GetPos() 
+		|| i > (unsigned int)(scrollbar->GetPos()+scrollbar->GetPageSize()) )
+		{
+			addon->hideGui(this, id);
+			continue;
+		}
+
+		addon->createGui(this, id, y, (policy == READONLY), status);
+	}
+	if(_inthiscategory != inthiscategory)
+	{
+		_inthiscategory = inthiscategory;
+		scrollbar->SetRange(inthiscategory);
+	}
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 /**
  *
@@ -168,35 +204,9 @@ void iwAddons::Msg_OptionGroupChange(const unsigned int ctrl_id, const unsigned 
 	case 5: // richtige Kategorie anzeigen
 		{
 			ctrlScrollBar* scrollbar = GetCtrl<ctrlScrollBar>(6);
-			unsigned short y = 90;
-			unsigned short inthiscategory = 0;
-			for(unsigned int i = 0; i < ADDONMANAGER.getCount(); ++i)
-			{
-				unsigned int id = 10 + 20*i;
-				unsigned int status;
-				const Addon *addon = ADDONMANAGER.getAddon(i, status);
+			scrollbar->SetPos(0);
+			UpdateView(selection);
 
-				if(!addon)
-					continue;
-
-				unsigned int groups = addon->getGroups();
-
-				if( (groups & selection) == selection)
-					++inthiscategory;
-
-				if( ((groups & selection) != selection) || i < scrollbar->GetPos() || i > (unsigned int)(scrollbar->GetPos()+scrollbar->GetPageSize()) )
-				{
-					addon->hideGui(this, id);
-					continue;
-				}
-
-				addon->createGui(this, id, y, (policy == READONLY), status);
-			}
-			if(_inthiscategory != inthiscategory)
-			{
-				_inthiscategory = inthiscategory;
-				scrollbar->SetRange(inthiscategory);
-			}
 		} break;
 	}
 }
@@ -210,7 +220,7 @@ void iwAddons::Msg_OptionGroupChange(const unsigned int ctrl_id, const unsigned 
 void iwAddons::Msg_ScrollChange(const unsigned int ctrl_id, const unsigned short position)
 {
 	ctrlOptionGroup* optiongroup = GetCtrl<ctrlOptionGroup>(5);
-	optiongroup->SetSelection(optiongroup->GetSelection(), true);
+	UpdateView(optiongroup->GetSelection());
 }
 
 ///////////////////////////////////////////////////////////////////////////////

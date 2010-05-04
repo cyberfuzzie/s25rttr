@@ -1,4 +1,4 @@
-// $Id: dskSelectMap.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: dskSelectMap.h 6401 2010-05-04 11:07:04Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -50,12 +50,16 @@ private:
 	void Msg_ButtonClick(const unsigned int ctrl_id);
 	void Msg_MsgBoxResult(const unsigned msgbox_id, const MsgboxResult mbr);
 	void Msg_TableSelectItem(const unsigned int ctrl_id, const unsigned short selection);
+	void Msg_TableChooseItem(const unsigned ctrl_id, const unsigned short selection);
 
 	void CI_NextConnectState(const ConnectState cs);
 	void CI_Error(const ClientError ce);
 
 	void LC_Created(void);
 	void LC_Status_Error(const std::string &error);
+	
+	/// Startet das Spiel mit einer bestimmten Auswahl in der Tabelle
+	void StartServer();
 
 private:
 	CreateServerInfo csi;

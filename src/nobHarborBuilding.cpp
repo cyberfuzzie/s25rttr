@@ -1,4 +1,4 @@
-// $Id: nobHarborBuilding.cpp 6341 2010-04-21 12:20:31Z OLiver $
+// $Id: nobHarborBuilding.cpp 6401 2010-05-04 11:07:04Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -101,7 +101,7 @@ nobHarborBuilding::nobHarborBuilding(const unsigned short x, const unsigned shor
 	// Post versenden
 	if(GameClient::inst().GetPlayerID() == this->player)
 		GameClient::inst().SendPostMessage(new ImagePostMsgWithLocation(
-		_("New storehouse finished"), PMC_GENERAL, x, y, BLD_HARBORBUILDING, nation));
+		_("New harbor building finished"), PMC_GENERAL, x, y, BLD_HARBORBUILDING, nation));
 }
 
 

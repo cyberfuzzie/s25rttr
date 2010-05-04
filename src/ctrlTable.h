@@ -1,4 +1,4 @@
-// $Id: ctrlTable.h 6177 2010-03-24 10:44:32Z FloSoft $
+// $Id: ctrlTable.h 6401 2010-05-04 11:07:04Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -53,6 +53,7 @@ public:
 	virtual bool Msg_MouseMove(const MouseCoords& mc);
 	virtual void Msg_ButtonClick(const unsigned int ctrl_id);
 	virtual void Msg_ScrollShow(const unsigned int ctrl_id, const bool visible);
+	virtual bool Msg_KeyDown(const KeyEvent& ke);
 
 	enum SortType
 	{

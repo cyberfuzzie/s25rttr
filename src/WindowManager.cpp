@@ -1,4 +1,4 @@
-// $Id: WindowManager.cpp 6354 2010-04-25 19:48:44Z OLiver $
+// $Id: WindowManager.cpp 6401 2010-05-04 11:07:04Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -848,14 +848,16 @@ void WindowManager::Msg_MouseMove(const MouseCoords& mc)
 			// nein, ist das Fenster ok?
 			if( (*windows.end()) != NULL)
 			{
+				// und MouseMove vom Fenster aufrufen
+				(*windows.end())->MouseMove(mc);
+				
 				// ja, dann Msg_MouseMove aufrufen
 				(*windows.end())->Msg_MouseMove(mc);
 
 				// und alles drunter auch benachrichtigen
 				(*windows.end())->RelayMouseMessage(&Window::Msg_MouseMove, mc);
 
-				// und MouseMove vom Fenster aufrufen
-				(*windows.end())->MouseMove(mc);
+				
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.cpp 6307 2010-04-11 08:09:32Z OLiver $
+// $Id: dskGameInterface.cpp 6401 2010-05-04 11:07:04Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -110,7 +110,7 @@ dskGameInterface::dskGameInterface()
 	AddImageButton(3, barx + 37*3, bary, 37, 32, TC_GREEN1, LOADER.GetImageN("io",  62), _("Post office"))
 		->SetBorder(false);
 
-	AddText(4, barx + 37*3 + 18, bary + 24, "0", COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_VCENTER, SmallFont);
+	AddText(4, barx + 37*3 + 18, bary + 24, "", COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_VCENTER, SmallFont);
 
 	LOBBYCLIENT.SetInterface(this);
 	GAMECLIENT.SetInterface(this);
@@ -1235,9 +1235,15 @@ void dskGameInterface::UpdatePostIcon(const unsigned postmessages_count, bool sh
 		GetCtrl<ctrlImageButton>(3)->SetImage(LOADER.GetImageN("io", 59));
 
 	// und Anzahl der Postnachrichten aktualisieren
-	std::stringstream ss;
-	ss << postmessages_count;
-	GetCtrl<ctrlText>(4)->SetText(ss.str());
+	if(postmessages_count > 0)
+	{
+		std::stringstream ss;
+		ss << postmessages_count;
+		GetCtrl<ctrlText>(4)->SetText(ss.str());
+	}
+	else
+		GetCtrl<ctrlText>(4)->SetText("");
+		
 }
 
 ///////////////////////////////////////////////////////////////////////////////

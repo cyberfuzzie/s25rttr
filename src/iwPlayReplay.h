@@ -1,4 +1,4 @@
-// $Id: iwPlayReplay.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: iwPlayReplay.h 6401 2010-05-04 11:07:04Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -34,11 +34,15 @@ private:
 
 	void Msg_ButtonClick(const unsigned int ctrl_id);
 	void Msg_MsgBoxResult(const unsigned msgbox_id, const MsgboxResult mbr);
+	void Msg_TableChooseItem(const unsigned ctrl_id, const unsigned short selection);
 
 	/// Callbackfunktion zum Eintragen einer Replay-Zeile in der Tabelle.
 	static void FillReplayTable(const std::string& filename, void *param);
 	/// Callbackfunktion zum löschen aller Replays
 	static void RemoveReplay(const std::string& filename,void *param);
+	
+	/// Startet das Replay (aktuell ausgewählter Eintrag)
+	void StartReplay();
 };
 
 #endif // !iwPLAYREPLAY_H_INCLUDED

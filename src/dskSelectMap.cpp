@@ -1,4 +1,4 @@
-// $Id: dskSelectMap.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: dskSelectMap.cpp 6401 2010-05-04 11:07:04Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -246,35 +246,44 @@ void dskSelectMap::Msg_ButtonClick(const unsigned int ctrl_id)
 		} break;
 	case 5: // "Weiter"
 		{
-			ctrlTable *table = GetCtrl<ctrlTable>(1);
-			unsigned short selection = table->GetSelection();
-
-			// Ist die Auswahl gültig?
-			if(selection < table->GetRowCount())
-			{
-				// Kartenpfad aus Tabelle holen
-				map_path = table->GetItemText(selection, 5);
-
-				// Server starten
-				if(!GAMESERVER.TryToStart(csi, map_path,MAPTYPE_OLDMAP))
-				{
-					if(LOBBYCLIENT.LoggedIn())
-						// Lobby zeigen, wenn das nich ging
-						WindowManager::inst().Switch(new dskLobby);
-					else
-						// Ansonsten DirekteIP
-						WindowManager::inst().Switch(new dskDirectIP);
-				}
-				else
-				{
-					// Verbindungsfenster anzeigen
-					WindowManager::inst().Show(new iwPleaseWait);
-				}
-
-				/// @todo Fehler abprüfen: Konnte der Server gestartet werden?
-				/// @todo Fehler abprüfen: Konnte der Client gestartet/verbunden werden?
-			}
+			StartServer();
 		} break;
+	}
+}
+
+void dskSelectMap::Msg_TableChooseItem(const unsigned ctrl_id, const unsigned short selection)
+{
+	// Doppelklick auf bestimmte Map -> weiter
+	StartServer();
+}
+
+/// Startet das Spiel mit einer bestimmten Auswahl in der Tabelle
+void dskSelectMap::StartServer()
+{
+	ctrlTable *table = GetCtrl<ctrlTable>(1);
+	unsigned short selection = table->GetSelection();
+
+	// Ist die Auswahl gültig?
+	if(selection < table->GetRowCount())
+	{
+		// Kartenpfad aus Tabelle holen
+		map_path = table->GetItemText(selection, 5);
+
+		// Server starten
+		if(!GAMESERVER.TryToStart(csi, map_path,MAPTYPE_OLDMAP))
+		{
+			if(LOBBYCLIENT.LoggedIn())
+				// Lobby zeigen, wenn das nich ging
+				WindowManager::inst().Switch(new dskLobby);
+			else
+				// Ansonsten DirekteIP
+				WindowManager::inst().Switch(new dskDirectIP);
+		}
+		else
+		{
+			// Verbindungsfenster anzeigen
+			WindowManager::inst().Show(new iwPleaseWait);
+		}
 	}
 }
 

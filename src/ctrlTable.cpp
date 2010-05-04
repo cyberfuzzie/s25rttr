@@ -1,4 +1,4 @@
-// $Id: ctrlTable.cpp 6352 2010-04-25 12:59:33Z OLiver $
+// $Id: ctrlTable.cpp 6401 2010-05-04 11:07:04Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -334,14 +334,12 @@ bool ctrlTable::Msg_LeftDown(const MouseCoords& mc)
 {
 	if(Coll(mc.x, mc.y, GetX(), GetY() + header_height, width - 20, height - header_height))
 	{
-		// Save last selection
-		unsigned short last_selection = row_l_selection;
 		SetSelection((mc.y - header_height - GetY()) / font->getHeight() + GetCtrl<ctrlScrollBar>(0)->GetPos());
 		if(parent)
 			parent->Msg_TableLeftButton(this->id, row_l_selection);
-		// Selection hasnt changed? Then we call an additional event handler for a "pseudo double click"
-		if(parent && last_selection == row_l_selection && row_l_selection != 0xffff)
-			parent->Msg_TableChooseItem(this->id, row_l_selection);
+		// Doppelklick? Dann noch einen extra Eventhandler aufrufen
+		if(mc.dbl_click && parent) 
+			parent->Msg_TableChooseItem(this->id,row_l_selection);
 
 		return true;
 	}
@@ -589,4 +587,24 @@ int ctrlTable::Compare(const std::string &a, const std::string &b, SortType sort
 		break;
 	}
 	return 0;
+}
+
+bool ctrlTable::Msg_KeyDown(const KeyEvent& ke)
+{
+	switch(ke.kt)
+	{
+	default: return false;
+	case KT_UP:
+		{
+			if(row_l_selection < unsigned(rows.size()) && row_l_selection)
+				--row_l_selection;
+			
+		} return true;
+	case KT_DOWN:
+		{
+			if(unsigned(row_l_selection)+1 < unsigned(rows.size()))
+				++row_l_selection;
+			
+		} return true;
+	}
 }

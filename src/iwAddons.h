@@ -1,4 +1,4 @@
-// $Id: iwAddons.h 6366 2010-04-29 17:52:45Z FloSoft $
+// $Id: iwAddons.h 6401 2010-05-04 11:07:04Z OLiver $
 //
 // Copyright (c) 2005-2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -46,6 +46,9 @@ protected:
 	void Msg_ScrollChange(const unsigned int ctrl_id, const unsigned short position);
 	bool Msg_WheelUp(const MouseCoords& mc);
 	bool Msg_WheelDown(const MouseCoords& mc);
+	
+	/// Aktualisiert die Addons, die angezeigt werden sollen
+	void UpdateView(const unsigned short selection);
 
 private:
 	ChangePolicy policy;

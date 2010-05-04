@@ -1,4 +1,4 @@
-// $Id: iwPlayReplay.cpp 6037 2010-02-17 11:26:49Z FloSoft $
+// $Id: iwPlayReplay.cpp 6401 2010-05-04 11:07:04Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -85,31 +85,7 @@ void iwPlayReplay::Msg_ButtonClick(const unsigned int ctrl_id)
 	default: break;
 	case 1:
 		{
-			// Mond malen
-			LOADER.GetImageN("resource", 33)->Draw(VideoDriverWrapper::inst().GetMouseX(), VideoDriverWrapper::inst().GetMouseY() - 40, 0, 0, 0, 0, 0, 0);
-			VideoDriverWrapper::inst().SwapBuffers();
-
-			ctrlTable *table = GetCtrl<ctrlTable>(0);
-			if(table->GetSelection() < table->GetRowCount())
-			{
-				GameWorldViewer * gwv;
-				unsigned int error = GAMECLIENT.StartReplay( table->GetItemText(table->GetSelection(), 4), gwv);
-				std::string replay_errors[] = 
-				{
-					_("Error while playing replay!"),
-					_("Error while opening file!"),
-					_("Invalid Replay!"),
-					_("Error: Replay is too old!"),
-					_("Program version is too old to play that replay!"),
-					"",
-					_("Temporary map file was not found!")
-				};
-
-				if(error)
-					WindowManager::inst().Show( new iwMsgbox(_("Error while playing replay!"), replay_errors[error], this, MSB_OK, MSB_EXCLAMATIONRED) );
-				else
-					WindowManager::inst().Switch(new dskGameLoader(gwv));
-			}
+			StartReplay();
 		} break;
 	case 2:
 		{
@@ -117,6 +93,41 @@ void iwPlayReplay::Msg_ButtonClick(const unsigned int ctrl_id)
 			WindowManager::inst().Show( new iwMsgbox(_("Clear"), _("Are you sure to remove all replays?"), this, MSB_YESNO, MSB_QUESTIONRED,1) );
 
 		} break;
+	}
+}
+
+void iwPlayReplay::Msg_TableChooseItem(const unsigned ctrl_id, const unsigned short selection)
+{
+	StartReplay();
+}
+
+/// Startet das Replay (aktuell ausgewählter Eintrag)
+void iwPlayReplay::StartReplay()
+{
+	// Mond malen
+	LOADER.GetImageN("resource", 33)->Draw(VideoDriverWrapper::inst().GetMouseX(), VideoDriverWrapper::inst().GetMouseY() - 40, 0, 0, 0, 0, 0, 0);
+	VideoDriverWrapper::inst().SwapBuffers();
+
+	ctrlTable *table = GetCtrl<ctrlTable>(0);
+	if(table->GetSelection() < table->GetRowCount())
+	{
+		GameWorldViewer * gwv;
+		unsigned int error = GAMECLIENT.StartReplay( table->GetItemText(table->GetSelection(), 4), gwv);
+		std::string replay_errors[] = 
+		{
+			_("Error while playing replay!"),
+			_("Error while opening file!"),
+			_("Invalid Replay!"),
+			_("Error: Replay is too old!"),
+			_("Program version is too old to play that replay!"),
+			"",
+			_("Temporary map file was not found!")
+		};
+
+		if(error)
+			WindowManager::inst().Show( new iwMsgbox(_("Error while playing replay!"), replay_errors[error], this, MSB_OK, MSB_EXCLAMATIONRED) );
+		else
+			WindowManager::inst().Switch(new dskGameLoader(gwv));
 	}
 }
 

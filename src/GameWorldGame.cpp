@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 6380 2010-05-01 20:38:01Z OLiver $
+// $Id: GameWorldGame.cpp 6404 2010-05-04 20:35:31Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -430,8 +430,9 @@ bool GameWorldGame::IsObjectionableForRoad(const MapCoord x, const MapCoord y)
 		{
 		case 0xFFFF: // map_?_z.lst
 			{
-				if(type == 505 || type == 506 || type == 507 || type == 508 || type == 510 || (type >= 542 && type <= 546)
-					|| type == 536 || type == 541) // abgeerntete Getreidefelder
+				if(type == 505 || type == 506 || type == 507 || type == 508 || type == 510 || (type >= 542 && type <= 546) ||
+					type == 512 || type == 513 || // Kakteen
+					type == 536 || type == 541) // abgeerntete Getreidefelder
 				   return true;
 			} break;
 		case 0:

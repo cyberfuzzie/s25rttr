@@ -1,4 +1,4 @@
-// $Id: Pathfinding.cpp 6394 2010-05-03 19:53:33Z OLiver $
+// $Id: Pathfinding.cpp 6402 2010-05-04 14:00:50Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -331,7 +331,7 @@ bool GameWorldBase::FindPathOnRoads(const noRoadNode * const start, const noRoad
 		// Knoten wurde entfernt, daher erstmal auf das Ende des set setzen (als Alternative zu NULL)
 		pf_nodes[best_id].it_rn = todo.end();
 		
-		unsigned char first_dir_tmp;
+		unsigned char first_dir_tmp = 0xff;
 
 		// Ziel erreicht, allerdings keine Nullwege erlauben?
 		if(best == goal &&  pf_nodes[best_id].way)

@@ -1,4 +1,4 @@
-// $Id: GameClientGF_Replay.cpp 6069 2010-02-22 18:56:35Z FloSoft $
+// $Id: GameClientGF_Replay.cpp 6398 2010-05-04 08:33:25Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -49,6 +49,9 @@ void GameClient::ExecuteGameFrame_Replay()
 				unsigned char player,dest;
 				std::string message;
 				replayinfo.replay.ReadChatCommand(&player,&dest,message);
+				
+				// Nächsten Zeitpunkt lesen
+				replayinfo.replay.ReadGF(&replayinfo.next_gf);
 
 		/*		char from[256];
 				snprintf(from, 256, _("<%s> "), players[player]->name.GetStr());*/
@@ -63,6 +66,8 @@ void GameClient::ExecuteGameFrame_Replay()
 				unsigned short length;
 
 				replayinfo.replay.ReadGameCommand(&length,&data);
+				// Nächsten Zeitpunkt lesen
+				replayinfo.replay.ReadGF(&replayinfo.next_gf);
 				GameMessage_GameCommand msg(data,length);
 
 				// NCs ausführen (4 Bytes Checksumme und 1 Byte Player-ID überspringen)
@@ -91,8 +96,7 @@ void GameClient::ExecuteGameFrame_Replay()
 				delete [] data;
 			}
 
-			// Nächsten Zeitpunkt lesen
-			replayinfo.replay.ReadGF(&replayinfo.next_gf);
+			
 
 			
 		}

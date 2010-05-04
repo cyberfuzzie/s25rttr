@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 6394 2010-05-03 19:53:33Z OLiver $
+// $Id: GameClient.cpp 6398 2010-05-04 08:33:25Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1872,8 +1872,8 @@ bool GameClient::ArePathfindingResultsAvailable() const
 	// Replaymodus?
 	if(replay_mode)
 	{
-		// Unterstützt das Replay das auch?
-		if(replayinfo.replay.pathfinding_results)
+		// Unterstützt das Replay das auch (noch)?
+		if(replayinfo.replay.pathfinding_results && !replayinfo.end)
 			return true;
 	}
 	

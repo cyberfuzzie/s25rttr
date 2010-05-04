@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 6385 2010-05-02 19:32:10Z OLiver $
+// $Id: nobMilitary.cpp 6399 2010-05-04 09:21:48Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -657,7 +657,7 @@ list<nofPassiveSoldier*>::iterator nobMilitary::ChooseSoldier()
 	}
 
 	// ID ausrechnen
-	unsigned rank = ((rank_count-1)*gwg->GetPlayer(player)->military_settings[1])/MILITARY_SETTINGS_SCALE[0];
+	unsigned rank = ((rank_count-1)*gwg->GetPlayer(player)->military_settings[1])/MILITARY_SETTINGS_SCALE[1];
 
 	unsigned r = 0;
 

@@ -1,4 +1,4 @@
-// $Id: iwMusicPlayer.cpp 6380 2010-05-01 20:38:01Z OLiver $
+// $Id: iwMusicPlayer.cpp 6399 2010-05-04 09:21:48Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -80,13 +80,14 @@ iwMusicPlayer::iwMusicPlayer()
 
 	// Buttons für die Musikstücke
 	AddImageButton(7,370,30,40,40,TC_GREY,LOADER.GetImageN("io",138),_("Add track"));
-	AddImageButton(8,370,80,40,40,TC_RED1,LOADER.GetImageN("io",220),_("Remove track"));
-	AddImageButton(9,370,130,40,15,TC_GREY,LOADER.GetImageN("io",33),_("Upwards"));
-	AddImageButton(10,370,145,40,15,TC_GREY,LOADER.GetImageN("io",34),_("Downwards"));
-	AddDeepening(11,370,170,40,20,TC_GREY,"1",NormalFont,COLOR_YELLOW);
-	AddImageButton(12,370,190,20,20,TC_RED1,LOADER.GetImageN("io",139),_("Less repeats"));
-	AddImageButton(13,390,190,20,20,TC_GREY,LOADER.GetImageN("io",138),_("More repeats"));
-	AddImageButton(14,370,220,40,40,TC_GREY,LOADER.GetImageN("io",107),_("Playback in this order")); //225
+	AddImageButton(8,370,80,40,40,TC_GREY,LOADER.GetImageN("io_new",2),_("Add directory of tracks"));
+	AddImageButton(9,370,130,40,40,TC_RED1,LOADER.GetImageN("io",220),_("Remove track"));
+	AddImageButton(10,370,180,40,15,TC_GREY,LOADER.GetImageN("io",33),_("Upwards"));
+	AddImageButton(11,370,195,40,15,TC_GREY,LOADER.GetImageN("io",34),_("Downwards"));
+	AddDeepening(12,370,220,40,20,TC_GREY,"1",NormalFont,COLOR_YELLOW);
+	AddImageButton(13,370,240,20,20,TC_RED1,LOADER.GetImageN("io",139),_("Less repeats"));
+	AddImageButton(14,390,240,20,20,TC_GREY,LOADER.GetImageN("io",138),_("More repeats"));
+	AddImageButton(15,370,270,40,40,TC_GREY,LOADER.GetImageN("io",107),_("Playback in this order")); //225
 
 	// Mit Werten füllen
 	MusicPlayer::inst().GetPlaylist().FillMusicPlayer(this);
@@ -211,8 +212,14 @@ void iwMusicPlayer::Msg_ButtonClick(const unsigned int ctrl_id)
 			WindowManager::inst().Show(new InputWindow(this,0,_("Add track")));
 			changed = true;
 		} break;
-	// Remove Track
+	// Add Directory of tracks
 	case 8:
+		{
+			WindowManager::inst().Show(new InputWindow(this,2,_("Add directory of tracks")));
+			changed = true;
+		} break;
+	// Remove Track
+	case 9:
 		{
 			unsigned short selection = GetCtrl<ctrlList>(0)->GetSelection();
 
@@ -225,7 +232,7 @@ void iwMusicPlayer::Msg_ButtonClick(const unsigned int ctrl_id)
 
 		} break;
 	// Upwards
-	case 9:
+	case 10:
 		{
 			unsigned short selection = GetCtrl<ctrlList>(0)->GetSelection();
 
@@ -234,7 +241,7 @@ void iwMusicPlayer::Msg_ButtonClick(const unsigned int ctrl_id)
 
 		} break;
 	// Downwards
-	case 10:
+	case 11:
 		{
 			unsigned short selection = GetCtrl<ctrlList>(0)->GetSelection();
 
@@ -243,36 +250,36 @@ void iwMusicPlayer::Msg_ButtonClick(const unsigned int ctrl_id)
 
 		} break;
 	// Less Repeats
-	case 12:
+	case 13:
 		{
-			unsigned repeats = atoi(GetCtrl<ctrlDeepening>(11)->GetText().c_str());
+			unsigned repeats = atoi(GetCtrl<ctrlDeepening>(12)->GetText().c_str());
 
 			if(repeats)
 			{
 				--repeats;
 				char str[32];
 				sprintf(str,"%u",repeats);
-				GetCtrl<ctrlDeepening>(11)->SetText(str);
+				GetCtrl<ctrlDeepening>(12)->SetText(str);
 				changed = true;
 			}
 
 		} break;
 	// More Repeats
-	case 13:
+	case 14:
 		{
-			unsigned repeats = atoi(GetCtrl<ctrlDeepening>(11)->GetText().c_str());
+			unsigned repeats = atoi(GetCtrl<ctrlDeepening>(12)->GetText().c_str());
 			++repeats;
 			char str[32];
 			sprintf(str,"%u",repeats);
-			GetCtrl<ctrlDeepening>(11)->SetText(str);
+			GetCtrl<ctrlDeepening>(12)->SetText(str);
 			changed = true;
 		} break;
 	// Play Order
-	case 14:
+	case 15:
 		{
-			GetCtrl<ctrlImageButton>(14)->SetImage(GetCtrl<ctrlImageButton>(14)->GetButtonImage() == 
+			GetCtrl<ctrlImageButton>(15)->SetImage(GetCtrl<ctrlImageButton>(15)->GetButtonImage() == 
 				LOADER.GetImageN("io",107) ? LOADER.GetImageN("io",225) : LOADER.GetImageN("io",107));
-			GetCtrl<ctrlImageButton>(14)->SetTooltip(GetCtrl<ctrlImageButton>(14)->GetButtonImage() == 
+			GetCtrl<ctrlImageButton>(15)->SetTooltip(GetCtrl<ctrlImageButton>(15)->GetButtonImage() == 
 				LOADER.GetImageN("io",107) ? _("Playback in this order") : _("Random playback"));
 			changed = true;
 		} break;
@@ -353,6 +360,18 @@ void iwMusicPlayer::Msg_Input(const unsigned int win_id,const std::string& msg)
 				WindowManager::inst().Show(new iwMsgbox(_("Error"),_("The specified file couldn't be saved!"),this,MSB_OK,MSB_EXCLAMATIONRED));
 			}
 		} break;
+	// Add Track directory of tracks - Window
+	case 2:
+		{
+			std::list<std::string> lst;
+			ListDir(msg + "/*.ogg", false, NULL, NULL, &lst);
+			
+			for(std::list<std::string>::iterator it = lst.begin();it!=lst.end();++it)
+				GetCtrl<ctrlList>(0)->AddString(*it);
+			
+			changed = true;
+
+		} break;
 
 	}
 }
@@ -368,12 +387,12 @@ void iwMusicPlayer::SetRepeats(const unsigned repeats)
 {
 	char repeats_str[32];
 	sprintf(repeats_str,"%u",repeats);
-	GetCtrl<ctrlDeepening>(11)->SetText(repeats_str);
+	GetCtrl<ctrlDeepening>(12)->SetText(repeats_str);
 }
 
 void iwMusicPlayer::SetRandomPlayback(const bool random_playback)
 {
-	GetCtrl<ctrlImageButton>(14)->SetImage(
+	GetCtrl<ctrlImageButton>(15)->SetImage(
 		random_playback ? LOADER.GetImageN("io",225) : LOADER.GetImageN("io",107));
 }
 
@@ -386,12 +405,12 @@ void iwMusicPlayer::GetSegments(std::vector<std::string>& segments) const
 
 unsigned iwMusicPlayer::GetRepeats() const
 {
-	return atoi(GetCtrl<ctrlDeepening>(11)->GetText().c_str());
+	return atoi(GetCtrl<ctrlDeepening>(12)->GetText().c_str());
 }
 
 bool iwMusicPlayer::GetRandomPlayback() const
 {
-	return !(GetCtrl<ctrlImageButton>(14)->GetButtonImage() == 
+	return !(GetCtrl<ctrlImageButton>(15)->GetButtonImage() == 
 				LOADER.GetImageN("io",107));
 }
 

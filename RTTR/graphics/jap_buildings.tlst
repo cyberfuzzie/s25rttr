@@ -1,6 +1,0 @@
-5
-src=charburner/buildings/jap.bmp type=24bit nx=0 ny=0 
-src=charburner/buildings/jap_shadow.bmp type=shadow nx=0 ny=0 
-src=charburner/buildings/jap_construction.bmp type=24bit nx=0 ny=0 
-src=charburner/buildings/jap_construction_shadow.bmp type=shadow nx=0 ny=0 
-src=charburner/buildings/jap_door.bmp type=24bit nx=0 ny=0 

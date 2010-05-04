@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 6377 2010-04-30 20:04:30Z OLiver $
+// $Id: GameWorldBase.cpp 6403 2010-05-04 18:55:27Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -837,7 +837,7 @@ bool GameWorldBase::IsNodeToNodeForFigure(const MapCoord x, const MapCoord y, co
 		return true;
 
 	if((t1 == TT_SNOW || t1 == TT_SWAMPLAND || t1 == TT_LAVA || (t1 == TT_WATER)) && 
-	   (t1 == TT_SNOW || t2 == TT_SWAMPLAND || t2 == TT_LAVA || (t2 == TT_WATER )))
+	   (t2 == TT_SNOW || t2 == TT_SWAMPLAND || t2 == TT_LAVA || (t2 == TT_WATER )))
 		return false;
 	else
 		return true;

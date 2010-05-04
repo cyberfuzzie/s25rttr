@@ -1,4 +1,4 @@
-// $Id: MilitaryConsts.h 6349 2010-04-23 18:11:38Z OLiver $
+// $Id: MilitaryConsts.h 6403 2010-05-04 18:55:27Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -82,10 +82,10 @@ const unsigned MILITARY_SETTINGS_SCALE[MILITARY_SETTINGS_COUNT] =
 	5,
 	5,
 	5,
-	9,
-	9,
-	9,
-	9
+	8,
+	8,
+	8,
+	8
 };
 
 // Besatzungsflaggen für die HQs

@@ -1,4 +1,4 @@
-// $Id: iwShip.cpp 6349 2010-04-23 18:11:38Z OLiver $
+// $Id: iwShip.cpp 6406 2010-05-05 13:58:10Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -146,6 +146,9 @@ void iwShip::Msg_PaintAfter()
 void iwShip::Msg_ButtonClick(const unsigned int ctrl_id)
 {
 	noShip * ship = GameClient::inst().GetPlayer(player)->GetShipByID(ship_id);
+	
+	if(!ship)
+		return;
 
 	// Expeditionskommando? (Schiff weiterfahren lassen, Kolonie gründen)
 	if(ctrl_id >= 10 && ctrl_id <= 17)

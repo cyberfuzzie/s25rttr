@@ -1,4 +1,4 @@
-// $Id: nobHarborBuilding.h 6291 2010-04-08 11:38:30Z OLiver $
+// $Id: nobHarborBuilding.h 6408 2010-05-06 14:33:45Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -161,6 +161,9 @@ public:
 	void AddFigureForShip(noFigure * fig, Point<MapCoord> dest);
 	/// Fügt eine Ware hinzu, die mit dem Schiff verschickt werden soll
 	void AddWareForShip(Ware * ware);
+	
+	/// A ware changed its route and doesn't want to use the ship anymore
+	void WareDontWantToTravelByShip(Ware * ware);
 
 	/// Gibt Anzahl der Schiffe zurück, die noch für ausstehende Aufgaben benötigt werden
 	unsigned GetNeededShipsCount() const;

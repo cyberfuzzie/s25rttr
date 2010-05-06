@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 6404 2010-05-04 20:35:31Z OLiver $
+// $Id: GameWorldGame.cpp 6408 2010-05-06 14:33:45Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -866,7 +866,8 @@ void GameWorldGame::Attack(const unsigned char player_attacker, const MapCoord x
 {
 	// Verzögerungsbug-Abfrage:
 	// Existiert das angegriffenen Gebäude überhaupt noch?
-	if(GetNO(x,y)->GetGOT() != GOT_NOB_MILITARY && GetNO(x,y)->GetGOT() != GOT_NOB_HQ)
+	if(GetNO(x,y)->GetGOT() != GOT_NOB_MILITARY && GetNO(x,y)->GetGOT() != GOT_NOB_HQ
+	&& GetNO(x,y)->GetGOT() != GOT_NOB_HARBORBUILDING)
 		return;
 
 	// Auch noch ein Gebäude von einem Feind (nicht inzwischen eingenommen)?
@@ -992,7 +993,8 @@ void  GameWorldGame::AttackViaSea(const unsigned char player_attacker, const Map
 {
 	// Verzögerungsbug-Abfrage:
 	// Existiert das angegriffenen Gebäude überhaupt noch?
-	if(GetNO(x,y)->GetGOT() != GOT_NOB_MILITARY && GetNO(x,y)->GetGOT() != GOT_NOB_HQ)
+	if(GetNO(x,y)->GetGOT() != GOT_NOB_MILITARY && GetNO(x,y)->GetGOT() != GOT_NOB_HQ
+	&& GetNO(x,y)->GetGOT() != GOT_NOB_HARBORBUILDING)
 		return;
 
 	// Auch noch ein Gebäude von einem Feind (nicht inzwischen eingenommen)?

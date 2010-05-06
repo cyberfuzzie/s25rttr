@@ -1,4 +1,4 @@
-// $Id: nobBaseWarehouse.cpp 6349 2010-04-23 18:11:38Z OLiver $
+// $Id: nobBaseWarehouse.cpp 6408 2010-05-06 14:33:45Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -768,7 +768,7 @@ void nobBaseWarehouse::OrderTroops(nobMilitary * goal, unsigned count)
 	// Soldaten durchgehen und count rausschicken
 
 	// Ränge durchgehen, absteigend, starke zuerst
-	if (gwg->GetPlayer(player)->military_settings[1]*5/MILITARY_SETTINGS_SCALE[0] > 2)
+	if (gwg->GetPlayer(player)->military_settings[1] >= MILITARY_SETTINGS_SCALE[1]/2)
 	{
 		for(unsigned i = 5;i && count;--i)
 		{

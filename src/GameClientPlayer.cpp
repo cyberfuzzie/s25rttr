@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 6349 2010-04-23 18:11:38Z OLiver $
+// $Id: GameClientPlayer.cpp 6408 2010-05-06 14:33:45Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -524,6 +524,16 @@ void GameClientPlayer::RoadDestroyed()
 				// Ware aus der Liste raus
 				it = ware_list.erase(it);
 				continue;
+			}
+		}
+		else if((*it)->LieInHarborBuilding())
+		{
+			// Weg neu berechnen
+			(*it)->RecalcRoute();
+			// Will die Ware nicht mehr aufs Wasser?
+			if((*it)->GetNextDir() != SHIP_DIR)
+			{
+				
 			}
 		}
 

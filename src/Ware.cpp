@@ -1,4 +1,4 @@
-// $Id: Ware.cpp 6360 2010-04-27 11:51:10Z OLiver $
+// $Id: Ware.cpp 6408 2010-05-06 14:33:45Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -93,11 +93,6 @@ void Ware::RecalcRoute()
 	// Nächste Richtung nehmen
 	next_dir = gwg->FindPathForWareOnRoads(location,goal,NULL,&next_harbor);
 
-	//char str[256];
-	//sprintf(str,"gf = %u, obj_id = %u, type = %u, next_dir = %u, goal = %u\n", 
-	//	GameClient::inst().GetGFNumber(), obj_id, type, unsigned(next_dir), goal->GetObjId());
-	//GameClient::inst().AddToGameLog(str);
-
 	// Evtl gibts keinen Weg mehr? Dann wieder zurück ins Lagerhaus (wenns vorher überhaupt zu nem Ziel ging)
 	if(next_dir == 0xFF && goal)
 	{
@@ -124,8 +119,17 @@ void Ware::RecalcRoute()
 
 			return;
 		}
-
-
+	}
+	
+		
+	// If we waited in the harbor for the ship before and don't want to travel now
+	// -> inform the harbor so that it can remove us from its list
+	if(state == STATE_WAITFORSHIP && next_dir != SHIP_DIR)
+	{
+		assert(location);
+		assert(location->GetGOT() == GOT_NOB_HARBORBUILDING);
+		
+		static_cast<nobHarborBuilding*>(location)->WareDontWantToTravelByShip(this);
 	}
 
 	//// Es wurde ein gültiger Weg gefunden! Dann muss aber noch dem nächsten Träger Bescheid gesagt werden

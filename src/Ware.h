@@ -1,4 +1,4 @@
-// $Id: Ware.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: Ware.h 6408 2010-05-06 14:33:45Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -95,6 +95,7 @@ public:
 	/// Gibt Status der Ware zurück
 	bool LieAtFlag() const { return (state == STATE_WAITATFLAG); }
 	bool LieInWarehouse() const { return (state == STATE_WAITINWAREHOUSE); }
+	bool LieInHarborBuilding() const { return (state == STATE_WAITFORSHIP); }
 	/// Sagt dem Träger Bescheid, dass sie in die aktuelle (next_dir) Richtung nicht mehr getragen werden will
 	void RemoveWareJobForCurrentDir(const unsigned char last_next_dir);
 	/// Überprüft, ob es noch ein Weg zum Ziel gibt für Waren, die noch im Lagerhaus liegen

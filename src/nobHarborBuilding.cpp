@@ -1,4 +1,4 @@
-// $Id: nobHarborBuilding.cpp 6401 2010-05-04 11:07:04Z OLiver $
+// $Id: nobHarborBuilding.cpp 6408 2010-05-06 14:33:45Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1086,6 +1086,26 @@ unsigned nobHarborBuilding::CalcDistributionPoints(const GoodType type)
 		points += (expedition.stones + ordered_stones)*30;
 
 	return points;
+}
+
+/// A ware changed its route and doesn't want to use the ship anymore
+void nobHarborBuilding::WareDontWantToTravelByShip(Ware * ware)
+{
+	// Ware aus unserer Liste streichen
+	wares_for_ships.remove(ware);
+	// Will die Ware jetzt vielleicht zu uns?
+	if(ware->goal == this)
+	{
+		// Dann hier gleich einliefern
+		AddWare(ware);
+	}
+	// Oder will sie wieder raus?
+	else
+	{
+		waiting_wares.push_back(ware);
+		AddLeavingEvent();
+	}
+	
 }
 
 

@@ -260,7 +260,6 @@
         <File Name="../src/iwHarborBuilding.h"/>
         <File Name="../src/iwPleaseWait.cpp"/>
         <File Name="../src/iwPleaseWait.h"/>
-        <File Name="../src/iwShip.cpp"/>
         <File Name="../src/iwShip.h"/>
         <File Name="../src/iwSettings.cpp"/>
         <File Name="../src/iwSettings.h"/>
@@ -282,6 +281,7 @@
       <File Name="../src/IngameWindow.cpp"/>
       <File Name="../src/IngameWindow.h"/>
       <File Name="../src/MouseAndKeys.h"/>
+      <File Name="../src/iwShip.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Spiel">
       <File Name="../src/BurnedWarehouse.cpp"/>

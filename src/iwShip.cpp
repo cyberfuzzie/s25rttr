@@ -1,4 +1,4 @@
-// $Id: iwShip.cpp 6406 2010-05-05 13:58:10Z OLiver $
+// $Id: iwShip.cpp 6410 2010-05-06 16:11:24Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -58,7 +58,7 @@ const unsigned IODAT_SHIP_ID = 218;
  */
 iwShip::iwShip(GameWorldViewer * const gwv,dskGameInterface *const gi,noShip *const ship)
 : IngameWindow(CGI_SHIP,(unsigned short)-2, (unsigned short)-2, 252, 238, _("Ship register"), LOADER.GetImageN("resource", 41)),
-gwv(gwv), gi(gi), ship_id(ship ? GameClient::inst().GetPlayer(ship->GetPlayer())->GetShipID(ship) : 0), player(ship ? ship->GetPlayer() : 0xff)
+gwv(gwv), gi(gi), ship_id(ship ? GameClient::inst().GetPlayer(ship->GetPlayer())->GetShipID(ship) : 0), player(ship ? ship->GetPlayer() : GameClient::inst().GetPlayerID())
 {
 	AddImage(  0,126,101, LOADER.GetImageN("io", 228));
 	AddImageButton( 2, 18,192, 30, 35,TC_GREY,LOADER.GetImageN("io", 225));		// Viewer: 226 - Hilfe
@@ -102,7 +102,7 @@ void iwShip::Msg_PaintAfter()
 		ship_id = 0;
 		// Nochmal probieren
 		if(player != 0xff)
-			ship = GameClient::inst().GetPlayer(ship->GetPlayer())->GetShipByID(ship_id);
+			ship = GameClient::inst().GetPlayer(player)->GetShipByID(ship_id);
 		// Immer noch nicht? Dann gibt es keine Schiffe mehr und wir zeigen eine entsprechende Meldung an
 		if(!ship)
 		{

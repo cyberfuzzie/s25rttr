@@ -1,4 +1,4 @@
-// $Id: nofWoodcutter.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: nofWoodcutter.cpp 6412 2010-05-06 22:34:54Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -30,6 +30,7 @@
 #include "Ware.h"
 #include "noTree.h"
 #include "SoundManager.h"
+#include "AIEventManager.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -119,6 +120,9 @@ void nofWoodcutter::WorkFinished()
 {
 	// Holz in die Hand nehmen
 	ware = GD_WOOD;
+
+	// evtl. AIEvent senden
+	GameClient::inst().SendAIEvent(new AIEvent::Location(AIEvent::TreeChopped, x, y), player);
 }
 
 /// Fragt abgeleitete Klasse, ob hier Platz bzw ob hier ein Baum etc steht, den z.B. der Holzfäller braucht

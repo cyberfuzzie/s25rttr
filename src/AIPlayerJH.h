@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.h 6388 2010-05-02 23:35:50Z jh $
+// $Id: AIPlayerJH.h 6412 2010-05-06 22:34:54Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -130,6 +130,9 @@ protected:
 	void HandleBuildingFinished(const Coords& coords, BuildingType bld);
 
 	void HandleExpedition(const Coords& coords);
+
+	// Handle chopped tree, test for new space
+	void HandleTreeChopped(const Coords& coords);
 
 	/// Sends a chat messsage to all players
 	void Chat(std::string message);

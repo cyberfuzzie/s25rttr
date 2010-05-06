@@ -1,4 +1,4 @@
-// $Id: AIJHHelper.cpp 6388 2010-05-02 23:35:50Z jh $
+// $Id: AIJHHelper.cpp 6412 2010-05-06 22:34:54Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -376,6 +376,12 @@ void AIJH::EventJob::ExecuteJob()
 		{
 			AIEvent::Location *lvb = dynamic_cast<AIEvent::Location *>(ev);
 			aijh->HandleExpedition(AIPlayerJH::Coords(lvb->GetX(), lvb->GetY()));
+			status = AIJH::JOB_FINISHED;
+		}
+	case AIEvent::TreeChopped:
+		{
+			AIEvent::Location *lvb = dynamic_cast<AIEvent::Location *>(ev);
+			aijh->HandleTreeChopped(AIPlayerJH::Coords(lvb->GetX(), lvb->GetY()));
 			status = AIJH::JOB_FINISHED;
 		}
 	default:

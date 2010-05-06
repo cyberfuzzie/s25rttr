@@ -1,4 +1,4 @@
-// $Id: AIEventManager.h 5995 2010-02-10 22:57:41Z jh $
+// $Id: AIEventManager.h 6412 2010-05-06 22:34:54Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -38,7 +38,8 @@ namespace AIEvent
 		TerritoryLost,
 		NoMoreResourcesReachable,
 		BuildingFinished,
-		ExpeditionWaiting
+		ExpeditionWaiting,
+		TreeChopped
 	};
 
 

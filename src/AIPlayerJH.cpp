@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.cpp 6388 2010-05-02 23:35:50Z jh $
+// $Id: AIPlayerJH.cpp 6412 2010-05-06 22:34:54Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -846,6 +846,27 @@ void AIPlayerJH::HandleExpedition(const Coords& coords)
 
 }
 
+void AIPlayerJH::HandleTreeChopped(const Coords& coords)
+{
+	MapCoord x = coords.x;
+	MapCoord y = coords.y;
+
+	//std::cout << "Tree chopped." << std::endl;
+
+	nodes[y * gwb->GetWidth() + x].reachable = true;
+
+	UpdateNodesAround(x, y, 3);
+
+	int random = rand();
+
+	
+
+	if (random % 2 == 0)
+		AddBuildJob(new AIJH::BuildJob(this, construction.ChooseMilitaryBuilding(x, y), x, y));
+	else //if (random % 12 == 0)
+		AddBuildJob(new AIJH::BuildJob(this, BLD_WOODCUTTER, x, y));
+
+}
 
 void AIPlayerJH::HandleNoMoreResourcesReachable(const Coords& coords, BuildingType bld)
 {

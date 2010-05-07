@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 6408 2010-05-06 14:33:45Z OLiver $
+// $Id: GameClientPlayer.cpp 6413 2010-05-07 09:57:33Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1706,7 +1706,7 @@ void GameClientPlayer::MakeStartPacts()
 	for(unsigned i = 0;i<GameClient::inst().GetPlayerCount();++i)
 	{
 		GameClientPlayer * p = GameClient::inst().GetPlayer(i);
-		if(team == p->team && team >= TM_TEAM1 && team <= TM_TEAM2)
+		if(team == p->team && team >= TM_TEAM1 && team <= TM_TEAM4)
 		{
 			for(unsigned z = 0;z<PACTS_COUNT;++z)
 			{

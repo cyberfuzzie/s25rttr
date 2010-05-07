@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.cpp 6412 2010-05-06 22:34:54Z jh $
+// $Id: AIPlayerJH.cpp 6414 2010-05-07 13:20:27Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -112,9 +112,9 @@ void AIPlayerJH::RunGF(const unsigned gf)
 		milSettings[2] = 5;
 		milSettings[3] = 5;
 		milSettings[4] = 1;
-		milSettings[5] = 10;
-		milSettings[6] = 10;
-		milSettings[7] = 10;
+		milSettings[5] = 8;
+		milSettings[6] = 8;
+		milSettings[7] = 8;
 		gcs.push_back(new gc::ChangeMilitary(milSettings));
 	}
 

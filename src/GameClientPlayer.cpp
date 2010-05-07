@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 6413 2010-05-07 09:57:33Z OLiver $
+// $Id: GameClientPlayer.cpp 6414 2010-05-07 13:20:27Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1300,7 +1300,11 @@ void GameClientPlayer::ChangeMilitarySettings(const std::vector<unsigned char>& 
 		GameClient::inst().visual_settings.military_settings = military_settings;
 
 	for(unsigned i = 0;i<military_settings.size();++i)
+	{
+		// Sicherstellen, dass im validen Bereich
+		assert(military_settings[i] <= MILITARY_SETTINGS_SCALE[i]); 
 		this->military_settings[i] = military_settings[i];
+	}
 	/// Truppen müssen neu kalkuliert werden
 	RegulateAllTroops();
 	/// Die Verteidigungsliste muss erneuert werden

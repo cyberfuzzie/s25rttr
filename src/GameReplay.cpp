@@ -1,4 +1,4 @@
-// $Id: GameReplay.cpp 6394 2010-05-03 19:53:33Z OLiver $
+// $Id: GameReplay.cpp 6416 2010-05-08 12:57:39Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -34,7 +34,7 @@ const unsigned short Replay::REPLAY_VERSION = 21;
  *
  *  @author OLiver
  */
-Replay::Replay() : nwf_length(0), random_init(0), pathfinding_results(true), map_length(0), map_zip_length(0), map_data(0), 
+Replay::Replay() : nwf_length(0), random_init(0), pathfinding_results(false), map_length(0), map_zip_length(0), map_data(0), 
 	savegame(0), last_gf(0), last_gf_file_pos(0), gf_file_pos(0)
 {
 }
@@ -302,6 +302,9 @@ void Replay::AddGameCommand(const unsigned gf,const unsigned short length, const
 /// Fügt Pathfinding-Result hinzu
 void Replay::AddPathfindingResult(const unsigned char data, const unsigned * const length, const Point<MapCoord> * const next_harbor)
 {
+	if(!pathfinding_results)
+		return;
+		
 	file.WriteUnsignedChar(data);
 	if(length) file.WriteUnsignedInt(*length);
 	if(next_harbor)

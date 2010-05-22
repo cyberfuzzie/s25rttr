@@ -1,4 +1,4 @@
-// $Id: iwAction.cpp 6355 2010-04-25 20:09:12Z OLiver $
+// $Id: iwAction.cpp 6431 2010-05-22 11:45:51Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -205,7 +205,7 @@ iwAction::iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, cons
 		// Mint and Goldmine
 		if(ADDONMANAGER.isEnabled(ADDON_CHANGE_GOLD_DEPOSITS))
 		{
-			building_available[1][7] = false;
+			building_available[1][8] = false;
 			building_available[3][0] = false;
 		}
 

@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.cpp 6414 2010-05-07 13:20:27Z jh $
+// $Id: AIPlayerJH.cpp 6434 2010-05-23 12:39:45Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -722,6 +722,11 @@ void AIPlayerJH::HandleNewMilitaryBuilingOccupied(const Coords& coords)
 			gcs.push_back(new gc::StopGold(x, y));
 		}
 
+		// if near border and gold disabled (by addon): enable it
+		if (mil->GetFrontierDistance() != 0 && mil->IsGoldDisabled())
+		{
+			gcs.push_back(new gc::StopGold(x, y));
+		}
 
 		if (!construction.IsConnectedToRoadSystem(mil->GetFlag()))
 		{

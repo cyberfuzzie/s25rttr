@@ -1,9 +1,13 @@
 ################################################################################
-### $Id: CMakeLists.txt 6372 2010-04-30 17:45:33Z FloSoft $
+### $Id: CMakeLists.txt 6438 2010-05-26 15:49:46Z FloSoft $
 ################################################################################
 
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.6.0)
 CMAKE_POLICY(SET CMP0003 OLD)
+
+IF(${CMAKE_MAJOR_VERSION} EQUAL 2 AND ${CMAKE_MINOR_VERSION} GREATER 8 AND ${CMAKE_PATCH_VERSION} GREATER 0)
+	CMAKE_POLICY(SET CMP0015 OLD)
+ENDIF(${CMAKE_MAJOR_VERSION} EQUAL 2 AND ${CMAKE_MINOR_VERSION} GREATER 8 AND ${CMAKE_PATCH_VERSION} GREATER 0)
 
 SET(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules)
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 ###############################################################################
-## $Id: cmake.sh 6368 2010-04-29 18:15:43Z FloSoft $
+## $Id: cmake.sh 6439 2010-05-26 15:53:11Z FloSoft $
 ###############################################################################
 
 # Editable Variables
@@ -189,6 +189,11 @@ fi
 
 PARAMS=""
 
+if [ "$(uname -s)" = "Darwin" ] ; then
+	echo "Generating files for XCode"
+	PARAMS="$PARAMS -G XCode"
+fi
+
 echo "Setting Path-Prefix to \"$PREFIX\""
 PARAMS="$PARAMS -DPREFIX=$PREFIX -DCMAKE_INSTALL_PREFIX=$PREFIX"
 
@@ -252,7 +257,7 @@ if [ $? != 0 ] ; then
 	exit 1
 fi
 
-mecho --blue "Now type \"make\" to build project"
+mecho --blue "Now type \"make\" or \"xcodebuild\" to build project"
 
 exit 0
 

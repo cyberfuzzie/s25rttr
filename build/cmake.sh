@@ -1,6 +1,6 @@
 #!/bin/bash
 ###############################################################################
-## $Id: cmake.sh 6439 2010-05-26 15:53:11Z FloSoft $
+## $Id: cmake.sh 6440 2010-05-26 16:12:42Z FloSoft $
 ###############################################################################
 
 # Editable Variables
@@ -81,6 +81,7 @@ DATADIR=
 LIBDIR=
 ARCH=
 NOARCH=
+GENERATOR=
 as_cr_letters='abcdefghijklmnopqrstuvwxyz'
 as_cr_LETTERS='ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 as_cr_Letters=$as_cr_letters$as_cr_LETTERS
@@ -125,6 +126,10 @@ while test $# != 0 ; do
 		-no-arch | --no-arch)
 			$ac_shift
 			NOARCH="$NOARCH $ac_optarg"
+		;;
+		-generator | --generator)
+			#$ac_shift
+			GENERATOR="$ac_optarg"
 		;;
 		-enable-* | --enable-*)
 			ac_feature=`expr "x$ac_option" : 'x-*enable-\([^=]*\)'`
@@ -173,6 +178,10 @@ if [ -z "$ARCH" ] ; then
 	fi
 fi
 
+if [ -z "$GENERATOR" ] && [ "$(uname -s)" = "Darwin" ] ; then
+	GENERATOR="XCode"
+fi
+
 if [ -z "$BINDIR" ] ; then
 	BINDIR=$PREFIX/bin
 fi
@@ -188,11 +197,6 @@ fi
 ###############################################################################
 
 PARAMS=""
-
-if [ "$(uname -s)" = "Darwin" ] ; then
-	echo "Generating files for XCode"
-	PARAMS="$PARAMS -G XCode"
-fi
 
 echo "Setting Path-Prefix to \"$PREFIX\""
 PARAMS="$PARAMS -DPREFIX=$PREFIX -DCMAKE_INSTALL_PREFIX=$PREFIX"
@@ -249,15 +253,24 @@ esac
 
 ###############################################################################
 
-mecho --blue "Running \"cmake ${PARAMS}\""
-$CMAKE_COMMAND $PARAMS "${SRCDIR}"
+if [ ! -z "$GENERATOR" ] ; then
+	echo "Generating files for \"$GENERATOR\""
+fi
+
+mecho --blue "Running \"cmake -G '$GENERATOR' ${PARAMS} '${SRCDIR}'\""
+$CMAKE_COMMAND -G "$GENERATOR" $PARAMS "${SRCDIR}"
 
 if [ $? != 0 ] ; then
 	mecho --red "An error occured - please check above!"
 	exit 1
 fi
 
-mecho --blue "Now type \"make\" or \"xcodebuild\" to build project"
+MAKE="make"
+if [ "$(uname -s)" = "Darwin" ] ; then
+	MAKE="xcodebuild"
+fi
+
+mecho --blue "Now type \"$MAKE\" to build project"
 
 exit 0
 

@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 6414 2010-05-07 13:20:27Z jh $
+// $Id: GameClientPlayer.cpp 6444 2010-05-27 10:55:09Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1984,9 +1984,6 @@ bool GameClientPlayer::FindHarborForUnloading(noShip * ship, const MapCoord star
 
 		// Distanz ermitteln zwischen Schiff und Hafen, Schiff kann natürlich auch über Kartenränder fahren
 		unsigned distance = gwg->CalcDistance(ship->GetX(), ship->GetY(), hb->GetX(), hb->GetY());
-		distance = min(distance,gwg->CalcDistance(ship->GetX() + gwg->GetWidth(), ship->GetY(), hb->GetX(), hb->GetY()));
-		distance = min(distance,gwg->CalcDistance(ship->GetX(), ship->GetY() + gwg->GetHeight(), hb->GetX(), hb->GetY()));
-		distance = min(distance,gwg->CalcDistance(ship->GetX() + gwg->GetWidth(), ship->GetY() + gwg->GetHeight(), hb->GetX(), hb->GetY()));
 
 		// Kürzerer Weg als bisher bestes Ziel?
 		if(distance < best_distance)

@@ -1,4 +1,4 @@
-// $Id: noShip.cpp 6343 2010-04-21 17:19:42Z OLiver $
+// $Id: noShip.cpp 6444 2010-05-27 10:55:09Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -858,6 +858,7 @@ void noShip::PrepareTransport(Point<MapCoord> goal, const std::list<noFigure*>& 
 	// ID von Zielhafen herausfinden
 	noBase * nb = gwg->GetNO(goal.x,goal.y);
 	assert(nb->GetGOT() == GOT_NOB_HARBORBUILDING);
+	this->home_harbor = goal_harbor_id;
 	this->goal_harbor_id = static_cast<nobHarborBuilding*>(nb)->GetHarborPosID();
 
 	this->figures = figures;
@@ -987,78 +988,94 @@ void noShip::StartTransport()
 void noShip::HarborDestroyed(nobHarborBuilding * hb)
 {
 	// Ist unser Ziel betroffen?
-	if(hb->GetHarborPosID() == goal_harbor_id && ((state >= STATE_TRANSPORT_LOADING && state <= STATE_TRANSPORT_UNLOADING)))
+	if(hb->GetHarborPosID() == goal_harbor_id)
 	{
-		// Punkt von dem aus berechnet werden soll, ist normalerweise der normale Standpunkt des Schiffes,
-		// allderdings der nächste Punkt, wenn das Schiff gerade am fahren ist (der Zielpunkt der aktuellen
-		// Bewegung
-		MapCoord current_x = x, current_y = y;
-		if(state == STATE_TRANSPORT_DRIVING)
+		// Laden wir gerade ein?
+		if(state == STATE_TRANSPORT_LOADING)
 		{
-			current_x = gwg->GetXA(x,y,dir);
-			current_y = gwg->GetYA(x,y,dir);
-		}
-
-		// Neues Ziel suchen, wo wir ankern können
-		if(players->getElement(player)->FindHarborForUnloading(this,current_x,current_y,&goal_harbor_id,&route,hb))
-		{
-
-			switch(state)
-			{
-			default: return;
-			case STATE_TRANSPORT_LOADING: // Schiff wird mit Waren/Figuren erst noch beladen, bleibt also für kurze Zeit am Hafen
-				{
-					state = STATE_TRANSPORT_DRIVING;
-					// Hafen suchen, wo wir gerade ankern
-					for(unsigned i = 0;i<6;++i)
-					{
-						noBase * nob = gwg->GetNO(gwg->GetXA(x,y,i),gwg->GetYA(x,y,i));
-						if(nob->GetGOT() == GOT_NOB_HARBORBUILDING && nob != hb)
-						{
-							// Waren wieder abladen
-							static_cast<nobHarborBuilding*>(nob)->ReceiveGoodsFromShip(figures,wares);
-							// Neuen Job für mich suchen
-							StartIdling();
-							goal_harbor_id = 0;
-							players->getElement(player)->GetJobForShip(this);
-							return;
-						}
-					}
-					
-					pos = 0;
-					
-					HandleState_TransportDriving();
-				} break;
-			case STATE_TRANSPORT_DRIVING: /// Schiff transportiert Waren/Figuren von einen Ort zum anderen
-				{
-					// Route wird wieder von vorne abgearbeitet
-					pos = 0;
-
-				} break;
-			case STATE_TRANSPORT_UNLOADING: /// Entlädt Schiff am Zielhafen, kurze Zeit ankern, bevor Waren im Hafengebäude ankommen..
-				{
-					// Event zum Abladen abmelden
-					em->RemoveEvent(current_ev);
-					current_ev = NULL;
-					// Route wird wieder von vorne abgearbeitet
-					pos = 0;
-					state = STATE_TRANSPORT_DRIVING;
-					
-					HandleState_TransportDriving();
-				} break;
-
-			}
-
+			// Dann einfach wieder ausladen
+			state =STATE_TRANSPORT_UNLOADING;
+			// Zielpunkt wieder auf Starthafen setzen
+			goal_harbor_id = home_harbor;
+			
 			// Waren und Figure über verändertes Ziel informieren
 			for(std::list<noFigure*>::iterator it = figures.begin();it!=figures.end();++it)
 				(*it)->StartShipJourney(gwg->GetHarborPoint(goal_harbor_id));
 		}
-		else
+		
+		else if(((state >= STATE_TRANSPORT_LOADING && state <= STATE_TRANSPORT_UNLOADING)))
 		{
-			/*// Kein Ziel gefunden, also erstmal idlen
-			StartIdling();
-			em->RemoveEvent(current_ev);
-			current_ev = NULL;*/
+			// Punkt von dem aus berechnet werden soll, ist normalerweise der normale Standpunkt des Schiffes,
+			// allderdings der nächste Punkt, wenn das Schiff gerade am fahren ist (der Zielpunkt der aktuellen
+			// Bewegung
+			MapCoord current_x = x, current_y = y;
+			if(state == STATE_TRANSPORT_DRIVING)
+			{
+				current_x = gwg->GetXA(x,y,dir);
+				current_y = gwg->GetYA(x,y,dir);
+			}
+
+			// Neues Ziel suchen, wo wir ankern können
+			if(players->getElement(player)->FindHarborForUnloading(this,current_x,current_y,&goal_harbor_id,&route,hb))
+			{
+
+				switch(state)
+				{
+				default: return;
+				case STATE_TRANSPORT_LOADING: // Schiff wird mit Waren/Figuren erst noch beladen, bleibt also für kurze Zeit am Hafen
+					{
+						state = STATE_TRANSPORT_DRIVING;
+						// Hafen suchen, wo wir gerade ankern
+						for(unsigned i = 0;i<6;++i)
+						{
+							noBase * nob = gwg->GetNO(gwg->GetXA(x,y,i),gwg->GetYA(x,y,i));
+							if(nob->GetGOT() == GOT_NOB_HARBORBUILDING && nob != hb)
+							{
+								// Waren wieder abladen
+								static_cast<nobHarborBuilding*>(nob)->ReceiveGoodsFromShip(figures,wares);
+								// Neuen Job für mich suchen
+								StartIdling();
+								goal_harbor_id = 0;
+								players->getElement(player)->GetJobForShip(this);
+								return;
+							}
+						}
+						
+						pos = 0;
+						
+						HandleState_TransportDriving();
+					} break;
+				case STATE_TRANSPORT_DRIVING: /// Schiff transportiert Waren/Figuren von einen Ort zum anderen
+					{
+						// Route wird wieder von vorne abgearbeitet
+						pos = 0;
+
+					} break;
+				case STATE_TRANSPORT_UNLOADING: /// Entlädt Schiff am Zielhafen, kurze Zeit ankern, bevor Waren im Hafengebäude ankommen..
+					{
+						// Event zum Abladen abmelden
+						em->RemoveEvent(current_ev);
+						current_ev = NULL;
+						// Route wird wieder von vorne abgearbeitet
+						pos = 0;
+						state = STATE_TRANSPORT_DRIVING;
+						
+						HandleState_TransportDriving();
+					} break;
+
+				}
+
+				// Waren und Figure über verändertes Ziel informieren
+				for(std::list<noFigure*>::iterator it = figures.begin();it!=figures.end();++it)
+					(*it)->StartShipJourney(gwg->GetHarborPoint(goal_harbor_id));
+			}
+			else
+			{
+				/*// Kein Ziel gefunden, also erstmal idlen
+				StartIdling();
+				em->RemoveEvent(current_ev);
+				current_ev = NULL;*/
+			}
 		}
 	}
 }

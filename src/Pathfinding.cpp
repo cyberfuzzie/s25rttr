@@ -1,4 +1,4 @@
-// $Id: Pathfinding.cpp 6402 2010-05-04 14:00:50Z OLiver $
+// $Id: Pathfinding.cpp 6444 2010-05-27 10:55:09Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -146,6 +146,7 @@ bool GameWorldBase::FindFreePath(const MapCoord x_start,const MapCoord y_start,
 				  const unsigned max_route, std::vector<unsigned char> * route, unsigned *length,
 				  unsigned char * first_dir,  FP_Node_OK_Callback IsNodeOK, FP_Node_OK_Callback IsNodeToDestOk, const void * param) const
 {
+	//puts("");
 	// Erst einmal wieder aufräumen
 	for(unsigned i = 0;i<clean_list.size();++i)
 		pf_nodes[clean_list[i]].visited = false;
@@ -171,6 +172,8 @@ bool GameWorldBase::FindFreePath(const MapCoord x_start,const MapCoord y_start,
 		PathfindingPoint best = *todo.begin();
 		// Knoten behandelt --> raus aus der todo Liste
 		todo.erase(todo.begin());
+		
+		//printf("x: %u y: %u\n",best.x,best.y);
 
 		// ID des besten Punktes ausrechnen
 

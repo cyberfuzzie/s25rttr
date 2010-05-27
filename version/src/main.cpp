@@ -1,4 +1,4 @@
-// $Id: main.cpp 6374 2010-04-30 18:52:47Z FloSoft $
+// $Id: main.cpp 6442 2010-05-27 06:12:18Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -51,7 +51,8 @@ std::string getcwd()
 #ifdef _WIN32
 	GetCurrentDirectory(4096, curdir);
 #else
-	getcwd(curdir, 4096);
+	std::string ignorestupidgccwarning = getcwd(curdir, 4096);
+	ignorestupidgccwarning = "";
 #endif
 	
 	return std::string(curdir) + '/';

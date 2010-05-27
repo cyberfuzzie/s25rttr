@@ -1,6 +1,6 @@
 #!/bin/bash
 ###############################################################################
-## $Id: cmake.sh 6440 2010-05-26 16:12:42Z FloSoft $
+## $Id: cmake.sh 6443 2010-05-27 06:13:03Z FloSoft $
 ###############################################################################
 
 # Editable Variables
@@ -255,6 +255,8 @@ esac
 
 if [ ! -z "$GENERATOR" ] ; then
 	echo "Generating files for \"$GENERATOR\""
+else
+	GENERATOR="Unix Makefiles"
 fi
 
 mecho --blue "Running \"cmake -G '$GENERATOR' ${PARAMS} '${SRCDIR}'\""

@@ -1,4 +1,4 @@
-// $Id: nobBaseWarehouse.h 6280 2010-04-06 12:40:52Z OLiver $
+// $Id: nobBaseWarehouse.h 6445 2010-05-27 12:15:03Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -76,8 +76,6 @@ protected:
 
 private:
 
-	/// Stellt Verteidiger zur Verfügung
-	nofDefender * ProvideDefender(nofAttacker * const attacker);
 	/// Prüft, ob alle Bedingungen zum Rekrutieren erfüllt sind
 	bool AreRecruitingConditionsComply();
 	/// Abgeleitete kann eine gerade erzeugte Ware ggf. sofort verwenden 
@@ -92,6 +90,9 @@ private:
 	
 
 protected:
+
+	/// Stellt Verteidiger zur Verfügung
+	virtual nofDefender * ProvideDefender(nofAttacker * const attacker);
 
 	void HandleBaseEvent(const unsigned int id);
 	/// Versucht ein Rekrutierungsevent anzumelden, falls ausreichend Waffen und Bier sowie genügend Gehilfen

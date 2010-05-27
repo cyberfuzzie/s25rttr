@@ -1,4 +1,4 @@
-// $Id: nofAttacker.h 6274 2010-04-05 13:36:09Z OLiver $
+// $Id: nofAttacker.h 6445 2010-05-27 12:15:03Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -179,6 +179,8 @@ public:		void Destroy() { Destroy_nofAttacker(); }
 	/// Fragt einen Schiffs-Angreifer auf dem Schiff, ob er schon einmal
 	/// drauﬂen war und gek‰mpft hat
 	bool IsSeaAttackCompleted() const { return (state != STATE_SEAATTACKING_ONSHIP); }
+	/// Bricht einen Seeangriff ab
+	void CancelSeaAttack();
 
 
 };

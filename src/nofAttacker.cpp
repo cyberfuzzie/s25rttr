@@ -1520,3 +1520,8 @@ void nofAttacker::HandleState_SeaAttack_ReturnToShip()
 
 }
 
+/// Bricht einen Seeangriff ab
+void nofAttacker::CancelSeaAttack()
+{
+	InformTargetsAboutCancelling();
+}

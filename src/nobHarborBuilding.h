@@ -1,4 +1,4 @@
-// $Id: nobHarborBuilding.h 6408 2010-05-06 14:33:45Z OLiver $
+// $Id: nobHarborBuilding.h 6445 2010-05-27 12:15:03Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -98,6 +98,9 @@ private:
 	bool UseFigureAtOnce(noFigure * fig, noRoadNode* const goal); 
 	/// Bestellte Figur, die sich noch inder Warteschlange befindet, kommt nicht mehr und will rausgehauen werden
 	void CancelFigure(noFigure * figure);
+	
+	/// Stellt Verteidiger zur Verfügung
+	virtual nofDefender * ProvideDefender(nofAttacker * const attacker);
 
 public:
 

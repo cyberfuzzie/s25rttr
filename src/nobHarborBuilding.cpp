@@ -1,4 +1,4 @@
-// $Id: nobHarborBuilding.cpp 6408 2010-05-06 14:33:45Z OLiver $
+// $Id: nobHarborBuilding.cpp 6445 2010-05-27 12:15:03Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -35,6 +35,7 @@
 #include "Random.h"
 #include "nobMilitary.h"
 #include "nofAttacker.h"
+#include "nofDefender.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -1108,4 +1109,24 @@ void nobHarborBuilding::WareDontWantToTravelByShip(Ware * ware)
 	
 }
 
+
+/// Stellt Verteidiger zur Verfügung
+nofDefender * nobHarborBuilding::ProvideDefender(nofAttacker * const attacker)
+{
+	// Versuchen, zunächst auf konventionelle Weise Angreifer zu bekoommen
+	nofDefender * defender = nobBaseWarehouse::ProvideDefender(attacker);
+	// Wenn das nicht geklappt hat und noch Soldaten in der Warteschlange für den Seeangriff sind
+	// zweigen wir einfach diese ab
+	if(!defender && soldiers_for_ships.size())
+	{
+		nofAttacker * defender_attacker = soldiers_for_ships.begin()->attacker;
+		defender = new nofDefender(x,y,player,this,defender_attacker->GetRank(),attacker);
+		defender_attacker->CancelSeaAttack();
+		defender_attacker->Destroy();
+		delete defender_attacker;
+		soldiers_for_ships.pop_front();
+	}
+		
+	return defender;
+}
 

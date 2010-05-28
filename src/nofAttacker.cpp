@@ -1248,6 +1248,14 @@ bool nofAttacker::GetFightSpotNear(MapCoord &x, MapCoord &y)
 
 void nofAttacker::WalkingToFightSpot()
 {
+	// Gegner weg?
+	if(!encounteredEnemy)
+	{
+		state = STATE_ATTACKING_WALKINGTOGOAL;
+		MissAttackingWalk();
+		return;
+	}
+	
 	// Schon am Platz angekommen?
 	if (x == fightSpot_x && y == fightSpot_y)
 	{

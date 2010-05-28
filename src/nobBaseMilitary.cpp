@@ -1,4 +1,4 @@
-// $Id: nobBaseMilitary.cpp 6309 2010-04-11 09:09:40Z OLiver $
+// $Id: nobBaseMilitary.cpp 6447 2010-05-28 08:57:57Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -111,10 +111,10 @@ void nobBaseMilitary::Destroy_nobBaseMilitary()
 
 	// Umgebung nach feindlichen Militärgebäuden absuchen und die ihre Grenzflaggen neu berechnen lassen
 	// da, wir ja nicht mehr existieren
-	list<nobBaseMilitary*> buildings;
+	std::list<nobBaseMilitary*> buildings;
 	gwg->LookForMilitaryBuildings(buildings,x,y,4);
 
-	for(list<nobBaseMilitary*>::iterator it = buildings.begin();it.valid();++it)
+	for(std::list<nobBaseMilitary*>::iterator it = buildings.begin();it!=buildings.end();++it)
 	{
 		if((*it)->GetPlayer() != player
 			&& (*it)->GetBuildingType() >= BLD_BARRACKS  && (*it)->GetBuildingType() <= BLD_FORTRESS)

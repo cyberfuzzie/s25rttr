@@ -1,4 +1,4 @@
-// $Id: nobHarborBuilding.cpp 6445 2010-05-27 12:15:03Z OLiver $
+// $Id: nobHarborBuilding.cpp 6447 2010-05-28 08:57:57Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -978,11 +978,11 @@ void nobHarborBuilding::CancelFigure(noFigure * figure)
 void nobHarborBuilding::GetAttackerBuildingsForSeaAttack(std::vector<SeaAttackerBuilding> * buildings,
 											const std::vector<unsigned>& defender_harbors)
 {
-	list<nobBaseMilitary*> all_buildings;
+	std::list<nobBaseMilitary*> all_buildings;
 	gwg->LookForMilitaryBuildings(all_buildings,x,y,3);
 
 	// Und zählen
-	for(list<nobBaseMilitary*>::iterator it = all_buildings.begin();it.valid();++it)
+	for(std::list<nobBaseMilitary*>::iterator it = all_buildings.begin();it!=all_buildings.end();++it)
 	{
 		if((*it)->GetGOT() != GOT_NOB_MILITARY)
 			continue;

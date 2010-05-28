@@ -733,10 +733,10 @@ void nofAttacker::MissAttackingWalk()
 			if(RANDOM.Rand(__FILE__,__LINE__,obj_id,10) < 2)
 			{
 				// Militärgebäude in der Nähe abgrasen
-				list<nobBaseMilitary*> buildings;
+				std::list<nobBaseMilitary*> buildings;
 				gwg->LookForMilitaryBuildings(buildings,x,y,2);
 
-				for(list<nobBaseMilitary*>::iterator it = buildings.begin();it.valid();++it)
+				for(std::list<nobBaseMilitary*>::iterator it = buildings.begin();it!=buildings.end();++it)
 				{
 					// darf kein HQ sein, außer, das HQ wird selbst angegriffen, darf nicht weiter weg als 15 sein
 					// und es darf natürlich auch der entsprechende Feind sein, aber es darf auch nicht derselbe Spieler

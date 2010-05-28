@@ -1,4 +1,4 @@
-// $Id: GameWorldViewer.cpp 6323 2010-04-14 16:46:13Z OLiver $
+// $Id: GameWorldViewer.cpp 6447 2010-05-28 08:57:57Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -479,12 +479,12 @@ unsigned GameWorldViewer::GetAvailableSoldiersForAttack(const unsigned char play
 	}
 
 	// Militärgebäude in der Nähe finden
-	list<nobBaseMilitary*> buildings;
+	std::list<nobBaseMilitary*> buildings;
 	LookForMilitaryBuildings(buildings,x,y,3);
 
 	unsigned total_count = 0;
 
-	for(list<nobBaseMilitary*>::iterator it = buildings.begin();it.valid();++it)
+	for(std::list<nobBaseMilitary*>::iterator it = buildings.begin();it!=buildings.end();++it)
 	{
 		// Muss ein Gebäude von uns sein und darf nur ein "normales Militärgebäude" sein (kein HQ etc.)
 		if((*it)->GetPlayer() == player_attacker && (*it)->GetBuildingType() >= BLD_BARRACKS && (*it)->GetBuildingType() <= BLD_FORTRESS)

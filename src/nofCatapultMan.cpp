@@ -1,4 +1,4 @@
-// $Id: nofCatapultMan.cpp 6269 2010-04-05 12:00:54Z OLiver $
+// $Id: nofCatapultMan.cpp 6447 2010-05-28 08:57:57Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -130,14 +130,14 @@ void nofCatapultMan::HandleDerivedEvent(const unsigned int id)
 	case STATE_WAITING1:
 		{
 			// Fertig mit warten --> anfangen zu arbeiten
-			list<nobBaseMilitary*> buildings;
+			std::list<nobBaseMilitary*> buildings;
 			gwg->LookForMilitaryBuildings(buildings,x,y,3);
 
 			// Liste von potentiellen Zielen
 			list<PossibleTarget> pts;
 
 
-			for(list<nobBaseMilitary*>::iterator it = buildings.begin();it.valid();++it)
+			for(std::list<nobBaseMilitary*>::iterator it = buildings.begin();it!=buildings.end();++it)
 			{
 				// Auch ein richtiges Militärgebäude (kein HQ usw.), 
 				if((*it)->GetGOT() == GOT_NOB_MILITARY && GameClient::inst().GetPlayer(player)->IsPlayerAttackable((*it)->GetPlayer()))

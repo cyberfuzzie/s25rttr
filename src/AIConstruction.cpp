@@ -1,4 +1,4 @@
-// $Id: AIConstruction.cpp 6269 2010-04-05 12:00:54Z OLiver $
+// $Id: AIConstruction.cpp 6447 2010-05-28 08:57:57Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -261,9 +261,9 @@ BuildingType AIConstruction::ChooseMilitaryBuilding(MapCoord x, MapCoord y)
 	if ((rand() % 3) == 0)
 		bld = BLD_GUARDHOUSE;
 
-	list<nobBaseMilitary*> military;
+	std::list<nobBaseMilitary*> military;
 	gwb->LookForMilitaryBuildings(military, x, y, 3);
-	for(list<nobBaseMilitary*>::iterator it = military.begin();it.valid();++it)
+	for(std::list<nobBaseMilitary*>::iterator it = military.begin();it!=military.end();++it)
 	{
 		unsigned distance = gwb->CalcDistance((*it)->GetX(), (*it)->GetY(), x, y);
 

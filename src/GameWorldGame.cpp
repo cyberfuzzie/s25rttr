@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 6408 2010-05-06 14:33:45Z OLiver $
+// $Id: GameWorldGame.cpp 6447 2010-05-28 08:57:57Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -486,7 +486,7 @@ void GameWorldGame::UpgradeRoad(const MapCoord x, const MapCoord y, const unsign
 
 void GameWorldGame::RecalcTerritory(const noBaseBuilding * const building,const unsigned short radius, const bool destroyed, const bool newBuilt)
 {
-	list<nobBaseMilitary*> buildings; // Liste von Militärgebäuden in der Nähe
+	std::list<nobBaseMilitary*> buildings; // Liste von Militärgebäuden in der Nähe
 
 	// alle Militärgebäude in der Nähe abgrasen
 	LookForMilitaryBuildings(buildings,building->GetX(),building->GetY(),3);
@@ -504,9 +504,10 @@ void GameWorldGame::RecalcTerritory(const noBaseBuilding * const building,const 
 
 	TerritoryRegion tr(x1,y1,x2,y2,this);
 
+	buildings.sort(nobBaseMilitary::Compare);
 
 	// Alle Gebäude ihr Terrain in der Nähe neu berechnen
-	for(list<nobBaseMilitary*>::iterator it = buildings.end();it.valid();--it)
+	for(std::list<nobBaseMilitary*>::iterator it = buildings.begin();it!=buildings.end();++it)
 	{
 		// Ist es ein richtiges Militärgebäude?
 		if((*it)->GetBuildingType() >= BLD_BARRACKS && (*it)->GetBuildingType() <= BLD_FORTRESS)
@@ -891,14 +892,14 @@ void GameWorldGame::Attack(const unsigned char player_attacker, const MapCoord x
 	}
 
 	// Militärgebäude in der Nähe finden
-	list<nobBaseMilitary*> buildings;
+	std::list<nobBaseMilitary*> buildings;
 	LookForMilitaryBuildings(buildings,x,y,3);
 
 	// Liste von verfügbaren Soldaten, geordnet einfügen, damit man dann starke oder schwache Soldaten nehmen kann
 	list<PotentialAttacker> soldiers;
 
 
-	for(list<nobBaseMilitary*>::iterator it = buildings.begin();it.valid();++it)
+	for(std::list<nobBaseMilitary*>::iterator it = buildings.begin();it!=buildings.end();++it)
 	{
 		// Muss ein Gebäude von uns sein und darf nur ein "normales Militärgebäude" sein (kein HQ etc.)
 		if((*it)->GetPlayer() == player_attacker && (*it)->GetBuildingType() >= BLD_BARRACKS && (*it)->GetBuildingType() <= BLD_FORTRESS)
@@ -1226,11 +1227,11 @@ bool GameWorldGame::ValidPointForFighting(const MapCoord x, const MapCoord y, no
 
 bool GameWorldGame::IsPointCompletelyVisible(const MapCoord x, const MapCoord y, const unsigned char player, const noBaseBuilding * const exception) const
 { 
-	list<nobBaseMilitary*> buildings;
+	std::list<nobBaseMilitary*> buildings;
 	LookForMilitaryBuildings(buildings,x,y,3);
 
 	// Sichtbereich von Militärgebäuden
-	for(list<nobBaseMilitary*>::iterator it = buildings.begin();it.valid();++it)
+	for(std::list<nobBaseMilitary*>::iterator it = buildings.begin();it!=buildings.end();++it)
 	{
 		if((*it)->GetPlayer() == player && *it != exception)
 		{

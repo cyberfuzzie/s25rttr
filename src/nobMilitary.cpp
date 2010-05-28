@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 6409 2010-05-06 14:59:06Z OLiver $
+// $Id: nobMilitary.cpp 6447 2010-05-28 08:57:57Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -298,12 +298,12 @@ unsigned short nobMilitary::GetMilitaryRadius() const
 void nobMilitary::LookForEnemyBuildings(const nobBaseMilitary * const exception)
 {
 	// Umgebung nach Militärgebäuden absuchen
-	list<nobBaseMilitary*> buildings;
+	std::list<nobBaseMilitary*> buildings;
 	gwg->LookForMilitaryBuildings(buildings,x,y,3);
 	frontier_distance = 0;
 
 
-	for(list<nobBaseMilitary*>::iterator it = buildings.begin();it.valid();++it)
+	for(std::list<nobBaseMilitary*>::iterator it = buildings.begin();it!=buildings.end();++it)
 	{
 		// feindliches Militärgebäude?
 		if(*it != exception && (*it)->GetPlayer() != player && gwg->GetPlayer((*it)->GetPlayer())->IsPlayerAttackable(player))
@@ -815,10 +815,10 @@ void nobMilitary::Capture(const unsigned char new_owner)
 	// Grenzflagge entsprechend neu setzen von den Feinden
 	LookForEnemyBuildings();
 	// und von den Verbündeten (da ja ein Feindgebäude weg ist)!
-	list<nobBaseMilitary*> buildings;
+	std::list<nobBaseMilitary*> buildings;
 	gwg->LookForMilitaryBuildings(buildings,x,y,4);
 
-	for(list<nobBaseMilitary*>::iterator it = buildings.begin();it.valid();++it)
+	for(std::list<nobBaseMilitary*>::iterator it = buildings.begin();it!=buildings.end();++it)
 	{
 		// verbündetes Gebäude?
 		if(gwg->GetPlayer((*it)->GetPlayer())->IsPlayerAttackable(old_player)

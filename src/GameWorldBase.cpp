@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 6403 2010-05-04 18:55:27Z OLiver $
+// $Id: GameWorldBase.cpp 6447 2010-05-28 08:57:57Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -504,7 +504,7 @@ bool GameWorldBase::IsMilitaryBuilding(const MapCoord x, const MapCoord y) const
 	return false;
 }
 
-void GameWorldBase::LookForMilitaryBuildings(list<nobBaseMilitary*>& buildings,const MapCoord x, const MapCoord y, unsigned short radius) const
+void GameWorldBase::LookForMilitaryBuildings(std::list<nobBaseMilitary*>& buildings,const MapCoord x, const MapCoord y, unsigned short radius) const
 {
 	// Radius auf Anzahl der Militärquadrate begrenzen, sonst gibt es Überlappungen
 	radius = min<MapCoord>(width/MILITARY_SQUARE_SIZE+1,radius);
@@ -542,7 +542,7 @@ void GameWorldBase::LookForMilitaryBuildings(list<nobBaseMilitary*>& buildings,c
 			for(list<nobBaseMilitary*>::iterator it = military_squares[ty*(width/MILITARY_SQUARE_SIZE+1)+tx].begin();it.valid();++it)
 			{
 				// Jedes Militärgebäude nur einmal hinzufügen
-				if(!buildings.search(*it).valid())
+				if(std::find(buildings.begin(),buildings.end(),*it) == buildings.end())
 					buildings.push_back(*it);
 			}
 		}

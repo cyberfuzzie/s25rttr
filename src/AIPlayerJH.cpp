@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.cpp 6434 2010-05-23 12:39:45Z jh $
+// $Id: AIPlayerJH.cpp 6447 2010-05-28 08:57:57Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -34,6 +34,7 @@
 #include "MapGeometry.h"
 
 #include <iostream>
+#include <list>
 
 #include "GameMessages.h"
 #include "GameServer.h"
@@ -938,9 +939,9 @@ void AIPlayerJH::TryToAttack()
 		if (mil->GetFrontierDistance() == 0)
 			continue;
 
-		list<nobBaseMilitary *> buildings;
+		std::list<nobBaseMilitary *> buildings;
 		gwb->LookForMilitaryBuildings(buildings,(*it).x, (*it).y, 2);
-		for(list<nobBaseMilitary*>::iterator it2 = buildings.begin(); it2.valid(); ++it2)
+		for(std::list<nobBaseMilitary*>::iterator it2 = buildings.begin(); it2 != buildings.end(); ++it2)
 		{
 			MapCoord dest_x = (*it2)->GetX();
 			MapCoord dest_y = (*it2)->GetY();
@@ -949,9 +950,9 @@ void AIPlayerJH::TryToAttack()
 			{
 				potentialTargets.push_back(std::make_pair((*it2), 0));
 
-				list<nobBaseMilitary *> myBuildings;
+				std::list<nobBaseMilitary *> myBuildings;
 				gwb->LookForMilitaryBuildings(myBuildings,dest_x, dest_y, 2);
-				for(list<nobBaseMilitary*>::iterator it3 = myBuildings.begin(); it3.valid(); ++it3)
+				for(std::list<nobBaseMilitary*>::iterator it3 = myBuildings.begin(); it3!=myBuildings.end(); ++it3)
 				{
 					if ((*it3)->GetPlayer() == playerid)
 					{

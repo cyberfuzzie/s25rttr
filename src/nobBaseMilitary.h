@@ -1,4 +1,4 @@
-// $Id: nobBaseMilitary.h 6150 2010-03-13 23:17:32Z jh $
+// $Id: nobBaseMilitary.h 6447 2010-05-28 08:57:57Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -97,7 +97,8 @@ public: void Serialize(SerializedGameData *sgd) const { Serialize_nobBaseMilitar
 	nofDefender * GetDefender() const { return defender; }
 
 	/// Das Alter wird immer verglichen
-	bool operator < (const nobBaseMilitary& other) const { return age < other.age; }
+	/// absteigend sortieren, da jünger <=> age größer
+	bool operator < (const nobBaseMilitary& other) const { return age > other.age; }
 
 	/// Meldet ein neues "Rausgeh"-Event an, falls gerade keiner rausgeht
 	/// (damit nicht alle auf einmal rauskommen), für Lager- und Militärhäuser)
@@ -151,9 +152,13 @@ public: void Serialize(SerializedGameData *sgd) const { Serialize_nobBaseMilitar
 	/// Debugging
 	bool Test(nofAttacker * attacker); 
 	bool TestOnMission(nofActiveSoldier * soldier);
-
-
-
+	
+	// Vergleicht Gebäude anhand ihrer Bauzeit, um eine geordnete Reihenfolge hinzubekommen
+	static bool Compare(const nobBaseMilitary * const one, const nobBaseMilitary * const two)
+	{ return (*one) < (*two); }
 };
+
+
+
 
 #endif //! NOB_BASEMILITARY_H_

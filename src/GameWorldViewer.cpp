@@ -1,4 +1,4 @@
-// $Id: GameWorldViewer.cpp 6447 2010-05-28 08:57:57Z OLiver $
+// $Id: GameWorldViewer.cpp 6452 2010-05-29 21:30:22Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -66,12 +66,12 @@ void GameWorldViewer::Draw(const unsigned char player, unsigned * water, const b
 
 	tr.Draw(this,water);
 
-	// Draw-Counter der Bäume zurücksetzen vor jedem Zeichnen
+	// Draw-Counter der BÃ¤ume zurÃ¼cksetzen vor jedem Zeichnen
 	noTree::ResetDrawCounter();
 
 	for(int y = fy;y<ly;++y)
 	{
-		// Figuren speichern, die in dieser Zeile gemalt werden m�ssen
+		// Figuren speichern, die in dieser Zeile gemalt werden müssen
 		// und sich zwischen zwei Zeilen befinden, da sie dazwischen laufen
 		std::vector<ObjectBetweenLines> between_lines;
 		
@@ -211,7 +211,7 @@ void GameWorldViewer::Draw(const unsigned char player, unsigned * water, const b
 				int xpos = (int)(tr.GetTerrainX(tx,ty) - xoffset +xo);
 				int ypos = (int)(tr.GetTerrainY(tx,ty) - yoffset +yo);
 
-				// Name bzw Produktivität anzeigen
+				// Name bzw ProduktivitÃ¤t anzeigen
 				GO_Type got = GetNO(tx, ty)->GetGOT();
 				if(IsBaseBuilding(got))
 				{
@@ -249,7 +249,7 @@ void GameWorldViewer::Draw(const unsigned char player, unsigned * water, const b
 								SmallFont->Draw(xpos, py, text, glArchivItem_Font::DF_CENTER | glArchivItem_Font::DF_VCENTER, color);
 							}
 						}
-						// Normales Gebäude?
+						// Normales GebÃ¤ude?
 						else if(got == GOT_NOB_USUAL || got == GOT_NOB_SHIPYARD)
 						{
 							nobUsual *n = dynamic_cast<nobUsual*>(no);
@@ -264,7 +264,7 @@ void GameWorldViewer::Draw(const unsigned char player, unsigned * water, const b
 									snprintf(text, 256, "%s", _("(stopped)"));
 								else
 								{
-									// Bei Katapult und Spähturm keine Produktivität anzeigen!
+									// Bei Katapult und SpÃ¤hturm keine ProduktivitÃ¤t anzeigen!
 									if(n->GetBuildingType() == BLD_CATAPULT || n->GetBuildingType() == BLD_LOOKOUTTOWER)
 										text[0] = 0;
 									else
@@ -282,20 +282,22 @@ void GameWorldViewer::Draw(const unsigned char player, unsigned * water, const b
 								SmallFont->Draw(xpos, py, text, glArchivItem_Font::DF_CENTER | glArchivItem_Font::DF_VCENTER, color);
 							}
 						}
-						// Militärgebäude?
+						// MilitÃ¤rgebÃ¤ude?
 						else if(got == GOT_NOB_MILITARY)
 						{
 							
 				
 							// Dann kommt noch die Soldatenanzahl drunter
+							unsigned soldiers_count = static_cast<nobMilitary*>(no)->GetTroopsCount();
 							char str[64];
-							if(static_cast<nobMilitary*>(no)->GetTroopsCount() == 1)
+							if(soldiers_count == 1)
 								strcpy(str,_("(1 soldier)"));
 							else
-								sprintf(str,_("(%d soldiers)"),static_cast<nobMilitary*>(no)->GetTroopsCount());
+								sprintf(str,_("(%d soldiers)"),soldiers_count);
 
 
-							SmallFont->Draw(xpos, py, str, glArchivItem_Font::DF_CENTER | glArchivItem_Font::DF_VCENTER, COLOR_YELLOW);
+							SmallFont->Draw(xpos, py, str, glArchivItem_Font::DF_CENTER | glArchivItem_Font::DF_VCENTER, 
+								(soldiers_count>0) ? COLOR_YELLOW : COLOR_RED);
 							py += SmallFont->getHeight();
 						}
 					}
@@ -308,7 +310,7 @@ void GameWorldViewer::Draw(const unsigned char player, unsigned * water, const b
 
 	/// GUI-Symbole auf der Map zeichnen
 
-	/// Falls im Straßenbaumodus: Punkte um den aktuellen Straßenbaupunkt herum ermitteln
+	/// Falls im StraÃenbaumodus: Punkte um den aktuellen StraÃenbaupunkt herum ermitteln
 	unsigned short road_points[6*2];
 
 	if(rb.mode)
@@ -457,7 +459,7 @@ void GameWorldViewer::DrawBoundaryStone(const int x, const int y, const MapCoord
 	}
 }
 
-/// Schaltet Produktivitäten/Namen komplett aus oder an
+/// Schaltet ProduktivitÃ¤ten/Namen komplett aus oder an
 void GameWorldViewer::ShowNamesAndProductivity()
 {
 	if(show_productivity && show_names)
@@ -468,7 +470,7 @@ void GameWorldViewer::ShowNamesAndProductivity()
 
 unsigned GameWorldViewer::GetAvailableSoldiersForAttack(const unsigned char player_attacker,const MapCoord x, const MapCoord y)
 {
-	// Ist das angegriffenne ein normales Gebäude?
+	// Ist das angegriffenne ein normales GebÃ¤ude?
 	nobBaseMilitary * attacked_building = GetSpecObj<nobBaseMilitary>(x,y);
 	if(attacked_building->GetBuildingType() >= BLD_BARRACKS && attacked_building->GetBuildingType() <= BLD_FORTRESS)
 	{
@@ -478,7 +480,7 @@ unsigned GameWorldViewer::GetAvailableSoldiersForAttack(const unsigned char play
 			return 0;
 	}
 
-	// Militärgebäude in der Nähe finden
+	// MilitÃ¤rgebÃ¤ude in der NÃ¤he finden
 	std::list<nobBaseMilitary*> buildings;
 	LookForMilitaryBuildings(buildings,x,y,3);
 
@@ -486,7 +488,7 @@ unsigned GameWorldViewer::GetAvailableSoldiersForAttack(const unsigned char play
 
 	for(std::list<nobBaseMilitary*>::iterator it = buildings.begin();it!=buildings.end();++it)
 	{
-		// Muss ein Gebäude von uns sein und darf nur ein "normales Militärgebäude" sein (kein HQ etc.)
+		// Muss ein GebÃ¤ude von uns sein und darf nur ein "normales MilitÃ¤rgebÃ¤ude" sein (kein HQ etc.)
 		if((*it)->GetPlayer() == player_attacker && (*it)->GetBuildingType() >= BLD_BARRACKS && (*it)->GetBuildingType() <= BLD_FORTRESS)
 			total_count += static_cast<nobMilitary*>(*it)->GetSoldiersForAttack(x,y,player_attacker);
 			
@@ -603,7 +605,7 @@ void GameWorldViewer::CalcFxLx()
 	
 }
 
-// Höhe wurde Verändert: TerrainRenderer Bescheid sagen, damit es entsprechend verändert werden kann
+// HÃ¶he wurde VerÃ¤ndert: TerrainRenderer Bescheid sagen, damit es entsprechend verÃ¤ndert werden kann
 void GameWorldViewer::AltitudeChanged(const MapCoord x, const MapCoord y)
 {
 	tr.AltitudeChanged(x,y,this);
@@ -634,22 +636,22 @@ void GameWorldViewer::RecalcAllColors()
 	tr.UpdateAllColors(this);
 }
 
-/// liefert sichtbare Straße, im FoW entsprechend die FoW-Straße
+/// liefert sichtbare StraÃe, im FoW entsprechend die FoW-StraÃe
 unsigned char GameWorldViewer::GetVisibleRoad(const MapCoord x, const MapCoord y, unsigned char dir, const Visibility visibility) const
 {
 	if(visibility == VIS_VISIBLE)
-		// Normal die sichtbaren Straßen zurückliefern
+		// Normal die sichtbaren StraÃen zurÃ¼ckliefern
 		return GetPointRoad(x,y,dir,true);
 	else if(visibility == VIS_FOW)
-		// entsprechende FoW-Straße liefern
+		// entsprechende FoW-StraÃe liefern
 		return GetPointFOWRoad(x,y,dir,GameClient::inst().GetPlayerID());
 	else
-		// Unsichtbar -> keine Straße zeichnen
+		// Unsichtbar -> keine StraÃe zeichnen
 		return 0;
 }
 
 
-/// Gibt das erste Schiff, was gefunden wird von diesem Spieler, zurück, ansonsten NULL, falls es nicht
+/// Gibt das erste Schiff, was gefunden wird von diesem Spieler, zurÃ¼ck, ansonsten NULL, falls es nicht
 /// existiert
 noShip * GameWorldViewer::GetShip(const MapCoord x, const MapCoord y, const unsigned char player) const
 {
@@ -682,7 +684,7 @@ noShip * GameWorldViewer::GetShip(const MapCoord x, const MapCoord y, const unsi
 	return NULL;
 }
 
-/// Gibt die verfügbar Anzahl der Angreifer für einen Seeangriff zurück
+/// Gibt die verfÃ¼gbar Anzahl der Angreifer fÃ¼r einen Seeangriff zurÃ¼ck
 unsigned GameWorldViewer::GetAvailableSoldiersForSeaAttackCount(const unsigned char player_attacker, 
 											const MapCoord x, const MapCoord y) const
 {

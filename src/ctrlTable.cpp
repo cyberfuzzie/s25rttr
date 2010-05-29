@@ -1,4 +1,4 @@
-// $Id: ctrlTable.cpp 6401 2010-05-04 11:07:04Z OLiver $
+// $Id: ctrlTable.cpp 6452 2010-05-29 21:30:22Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -57,7 +57,7 @@ ctrlTable::ctrlTable(Window *parent,
 	header_height = font->getHeight() + 10;
 	line_count = (height - header_height - 2) / font->getHeight();
 
-	// Scrollbar hinzuf¸gen
+	// Scrollbar hinzuf√ºgen
 	AddScrollBar(0, width - 20, 0, 20, height, 20, tc, line_count);
 
 	if(column_count > 0)
@@ -73,7 +73,7 @@ ctrlTable::ctrlTable(Window *parent,
 			c.width = (unsigned short)va_arg(liste, int);
 			c.sortType = (SortType)va_arg(liste, int);
 
-			// Button f¸r die Spalte hinzuf¸gen
+			// Button f√ºr die Spalte hinzuf√ºgen
 			AddTextButton(i+1, 0, 0, 0, header_height, tc, c.title, font);
 
 			columns.push_back(c);
@@ -97,7 +97,7 @@ ctrlTable::~ctrlTable(void)
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  Grˆﬂe ver‰ndern
+ *  Gr√∂√üe ver√§ndern
  *
  *  @author Divan
  */
@@ -130,7 +130,7 @@ void ctrlTable::Resize_(unsigned short width, unsigned short height)
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  lˆscht alle Items.
+ *  l√∂scht alle Items.
  *
  *  @author OLiver
  */
@@ -151,7 +151,7 @@ void ctrlTable::DeleteAllItems(void)
  *  setzt die Auswahl.
  *
  *  @param[in] selection Der Auswahlindex
- *  @param[in] left      Auswahl f¸r linke (@p true) oder rechte (@p false) Maustaste setzen.
+ *  @param[in] left      Auswahl f√ºr linke (@p true) oder rechte (@p false) Maustaste setzen.
  *
  *  @author FloSoft
  *  @author OLiver
@@ -172,10 +172,10 @@ void ctrlTable::SetSelection(unsigned short selection, bool left)
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  f¸gt eine Zeile hinzu.
+ *  f√ºgt eine Zeile hinzu.
  *
- *  @param[in] alwaysnull Immer 0, wird nur f¸r Liste gebraucht
- *  @param[in] ...        Die Werte f¸r die Spalten.
+ *  @param[in] alwaysnull Immer 0, wird nur f√ºr Liste gebraucht
+ *  @param[in] ...        Die Werte f√ºr die Spalten.
  *
  *  @author OLiver
  */
@@ -439,7 +439,7 @@ void ctrlTable::Msg_ScrollShow(const unsigned int ctrl_id, const bool visible)
 	if(visible)
 	{
 		/// Scrollbar wird angezeigt
-		// Breite der letzten Spalte entsprechend anpassen, wenn plˆtzlich ne Scrolleiste sich hier noch reindr‰ngelt	
+		// Breite der letzten Spalte entsprechend anpassen, wenn pl√∂tzlich ne Scrolleiste sich hier noch reindr√§ngelt	
 		// Aufteilen dieser Breite auf die einzelnen Spalten
 		unsigned width_col_minus = unsigned(20/columns.size());
 		// Rest, der nicht aufgeteilt wurde
@@ -477,7 +477,7 @@ void ctrlTable::Msg_ScrollShow(const unsigned int ctrl_id, const bool visible)
 	}
 	else
 	{
-		// Scrollbar wird nicht mehr angezeigt --> Breite und Position wieder zur¸cksetzen
+		// Scrollbar wird nicht mehr angezeigt --> Breite und Position wieder zur√ºcksetzen
 		ResetButtonWidths();
 	}
 }
@@ -486,7 +486,7 @@ void ctrlTable::Msg_ScrollShow(const unsigned int ctrl_id, const bool visible)
 /// Setzt die Breite und Position der Buttons ohne Scrolleiste
 void ctrlTable::ResetButtonWidths()
 {
-	// Scrollbar wird nicht mehr angezeigt --> Breite und Position wieder zur¸cksetzen
+	// Scrollbar wird nicht mehr angezeigt --> Breite und Position wieder zur√ºcksetzen
 	unsigned short x_pos = 0;
 	for(unsigned i = 0;i<columns.size();++i)
 	{
@@ -508,7 +508,7 @@ void ctrlTable::ResetButtonWidths()
 	}
 }
 
-/// Verschiedene Sortiermˆglichkeiten
+/// Verschiedene Sortierm√∂glichkeiten
 int ctrlTable::Compare(const std::string &a, const std::string &b, SortType sortType)
 {
 	switch (sortType)
@@ -517,7 +517,7 @@ int ctrlTable::Compare(const std::string &a, const std::string &b, SortType sort
 	case SRT_STRING:
 		return a.compare(b);
 		break;
-	// Nach Mapgrˆﬂen-String sortieren: ZahlxZahl
+	// Nach Mapgr√∂√üen-String sortieren: ZahlxZahl
 	case SRT_MAPSIZE:
 		{
 		std::stringstream ss_a(a);
@@ -598,12 +598,18 @@ bool ctrlTable::Msg_KeyDown(const KeyEvent& ke)
 		{
 			if(row_l_selection < unsigned(rows.size()) && row_l_selection)
 				--row_l_selection;
+				
+			if(parent)
+				parent->Msg_TableSelectItem(id, row_l_selection);
 			
 		} return true;
 	case KT_DOWN:
 		{
 			if(unsigned(row_l_selection)+1 < unsigned(rows.size()))
 				++row_l_selection;
+			
+			if(parent)
+				parent->Msg_TableSelectItem(id, row_l_selection);
 			
 		} return true;
 	}

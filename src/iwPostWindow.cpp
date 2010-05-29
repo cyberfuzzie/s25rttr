@@ -1,4 +1,4 @@
-// $Id: iwPostWindow.cpp 6178 2010-03-24 10:55:33Z FloSoft $
+// $Id: iwPostWindow.cpp 6452 2010-05-29 21:30:22Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -55,15 +55,15 @@ iwPostWindow::iwPostWindow(GameWorldViewer& gwv)
 	AddImageButton( 5,199, 25, 35, 35,TC_GREY,LOADER.GetImageN("io", 79));		// Viewer:  80 - Notiz
 	AddImage(  6,126,151, LOADER.GetImageN("io", 228));
 	AddImageButton( 7, 18,242, 30, 35,TC_GREY,LOADER.GetImageN("io", 225));		// Viewer: 226 - Hilfe
-	AddImageButton( 8, 51,246, 30, 26,TC_GREY,LOADER.GetImageN("io", 102));		// Viewer: 103 - Schnell zurück
-	AddImageButton( 9, 81,246, 30, 26,TC_GREY,LOADER.GetImageN("io", 103));		// Viewer: 104 - Zurück
+	AddImageButton( 8, 51,246, 30, 26,TC_GREY,LOADER.GetImageN("io", 102));		// Viewer: 103 - Schnell zurÃ¼ck
+	AddImageButton( 9, 81,246, 30, 26,TC_GREY,LOADER.GetImageN("io", 103));		// Viewer: 104 - ZurÃ¼ck
 	AddImageButton(10,111,246, 30, 26,TC_GREY,LOADER.GetImageN("io", 104));		// Viewer: 105 - Vor
 	AddImageButton(11,141,246, 30, 26,TC_GREY,LOADER.GetImageN("io", 105));		// Viewer: 106 - Schnell vor
 
 
 	gotoButton = AddImageButton(14,181,246, 30, 26,TC_GREY,LOADER.GetImageN("io", 107));	// Goto, nur sichtbar wenn Nachricht mit Koordinaten da
 	gotoButton->SetVisible(false);
-	deleteButton = AddImageButton(15,211,246, 30, 26,TC_GREY,LOADER.GetImageN("io", 106));	// Mülleimer, nur sichtbar, wenn Nachricht da
+	deleteButton = AddImageButton(15,211,246, 30, 26,TC_GREY,LOADER.GetImageN("io", 106));	// MÃ¼lleimer, nur sichtbar, wenn Nachricht da
 	deleteButton->SetVisible(false);
 
 
@@ -82,9 +82,9 @@ iwPostWindow::iwPostWindow(GameWorldViewer& gwv)
 
 	SetMessageText(_("No letters!"));
 
-	acceptButton = AddImageButton(16,87,185, 30, 26,TC_GREEN1,LOADER.GetImageN("io", 32));  // Button mit Haken, zum Annehmen von Verträgen
+	acceptButton = AddImageButton(16,87,185, 30, 26,TC_GREEN1,LOADER.GetImageN("io", 32));  // Button mit Haken, zum Annehmen von VertrÃ¤gen
 	acceptButton->SetVisible(false);
-	declineButton = AddImageButton(17,137,185, 30, 26,TC_RED1,LOADER.GetImageN("io", 40));  // Button mit Kreuz, zum Ablehnen von Verträgen
+	declineButton = AddImageButton(17,137,185, 30, 26,TC_RED1,LOADER.GetImageN("io", 40));  // Button mit Kreuz, zum Ablehnen von VertrÃ¤gen
 	declineButton->SetVisible(false);
 
 	currentMessage = 0;
@@ -95,11 +95,11 @@ void iwPostWindow::Msg_ButtonClick(const unsigned int ctrl_id)
 {
 	switch(ctrl_id)
 	{
-		// Schnell zurück
+		// Schnell zurÃ¼ck
 	case 8: currentMessage = 0;
 		DisplayPostMessage();
 		break;
-		// Zurück
+		// ZurÃ¼ck
 	case 9: currentMessage = (currentMessage > 0) ? currentMessage - 1 : 0;
 		DisplayPostMessage();
 		break;
@@ -124,7 +124,7 @@ void iwPostWindow::Msg_ButtonClick(const unsigned int ctrl_id)
 		}
 		break;
 
-		// Löschen
+		// LÃ¶schen
 	case 15:
 		{
 			if(GameClient::inst().GetPostMessages().size())
@@ -170,17 +170,20 @@ void iwPostWindow::Msg_ButtonClick(const unsigned int ctrl_id)
 
 void iwPostWindow::Msg_PaintBefore()
 {
-	// Immer wenn sich die Anzahl der Nachrichten geändert hat neu prüfen was so angezeigt werden muss
+	// Immer wenn sich die Anzahl der Nachrichten geÃ¤ndert hat neu prÃ¼fen was so angezeigt werden muss
 	unsigned currentSize = GameClient::inst().GetPostMessages().size();
 	if (currentSize != lastSize)
 	{
-		// Neue Nachrichten dazugekommen, während das Fenster offen ist: 
-		// Ansicht der vorherigen Nachricht beibehalten, außer es gab vorher gar keine Nachricht
-		if (lastSize < currentSize && lastSize != 0)
+		// Neue Nachrichten dazugekommen, wÃ¤hrend das Fenster offen ist: 
+		// Ansicht der vorherigen Nachricht beibehalten, auÃŸer es gab vorher gar keine Nachricht
+		
+		if (lastSize < currentSize && lastSize != 0
+			// Wenn die erste Nachricht ausgewÃ¤hlt wurde, nehmen bleiben wir bei der ersten (=aktuellsten)
+			&& currentMessage>0)
 		{
 			currentMessage += currentSize - lastSize;
 
-			// Falls das zufällig grad die 20 Nachrichtengrenze überschritten hat: Auf letzte Nachricht springen
+			// Falls das zufÃ¤llig grad die 20 Nachrichtengrenze Ã¼berschritten hat: Auf letzte Nachricht springen
 			if (currentMessage >= MAX_POST_MESSAGES)
 				currentMessage = MAX_POST_MESSAGES - 1;
 		}
@@ -275,13 +278,13 @@ void iwPostWindow::DisplayPostMessage()
 		return;
 	}
 
-	// Falls currentMessage außerhalb der aktuellen Nachrichtenmenge liegt: korrigieren
+	// Falls currentMessage auÃŸerhalb der aktuellen Nachrichtenmenge liegt: korrigieren
 	if (currentMessage >= size)
 		currentMessage = size - 1;
 
 	PostMsg *pm = GetPostMsg(currentMessage);
 
-	// Nachrichten vorhanden, dann geht auf jeden Fall Löschbutton einblenden
+	// Nachrichten vorhanden, dann geht auf jeden Fall LÃ¶schbutton einblenden
 	deleteButton->SetVisible(true);
 
 	// Und ne Info-Zeile haben wir auch;
@@ -290,7 +293,7 @@ void iwPostWindow::DisplayPostMessage()
 	postMsgInfos->SetText(ss.str());
 	postMsgInfos->SetVisible(true);
 
-	// Rest abhängig vom Nachrichten-Typ
+	// Rest abhÃ¤ngig vom Nachrichten-Typ
 	switch (pm->GetType())
 	{
 	case PMT_IMAGE_WITH_LOCATION:

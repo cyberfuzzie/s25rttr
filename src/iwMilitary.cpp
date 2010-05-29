@@ -1,4 +1,4 @@
-// $Id: iwMilitary.cpp 6385 2010-05-02 19:32:10Z OLiver $
+// $Id: iwMilitary.cpp 6452 2010-05-29 21:30:22Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -43,7 +43,7 @@
  *  @author OLiver
  */
 iwMilitary::iwMilitary(void)
-	: IngameWindow(CGI_MILITARY, 0xFFFE, 0xFFFE, 168, 320, _("Military"), LOADER.GetImageN("io", 5)),
+	: IngameWindow(CGI_MILITARY, 0xFFFE, 0xFFFE, 168, 330, _("Military"), LOADER.GetImageN("io", 5)),
 	settings_changed(false)
 {
 	// Einzelne Balken
@@ -61,7 +61,7 @@ iwMilitary::iwMilitary(void)
 	AddImageButton(20,18,282,30,32,TC_GREY, LOADER.GetImageN("io",21), _("Help"));
 	AddImageButton(21,120,282,30,32,TC_GREY, LOADER.GetImageN("io",191),_("Default"));
 
-	// Falls Verteidiger ‰ndern verboten ist, einfach die Bar ausblenden
+	// Falls Verteidiger √§ndern verboten ist, einfach die Bar ausblenden
 	if (ADDONMANAGER.getSelection(ADDON_DEFENDER_BEHAVIOR) == 1)
 	{
 		GetCtrl<ctrlProgress>(2)->SetVisible(false);
@@ -77,10 +77,10 @@ iwMilitary::~iwMilitary()
 	TransmitSettings();
 }
 
-/// Sendet ver‰nderte Einstellungen (an den Client), falls sie ver‰ndert wurden
+/// Sendet ver√§nderte Einstellungen (an den Client), falls sie ver√§ndert wurden
 void iwMilitary::TransmitSettings()
 {
-	// Wurden Einstellungen ge‰ndert?
+	// Wurden Einstellungen ge√§ndert?
 	if(settings_changed)
 	{
 		// Einstellungen speichern
@@ -99,14 +99,14 @@ void iwMilitary::Msg_Timer(const unsigned int ctrl_id)
 		// Im Replay aktualisieren wir die Werte 
 		UpdateSettings();
 	else
-		// Im normalen Spielmodus schicken wir den ganzen Spaﬂ ab
+		// Im normalen Spielmodus schicken wir den ganzen Spa√ü ab
 		TransmitSettings();
 } 
 
 void iwMilitary::Msg_ProgressChange(const unsigned int ctrl_id, const unsigned short position)
 {
 
-	// Einstellungen wurden ge‰ndert
+	// Einstellungen wurden ge√§ndert
 	settings_changed = true;
 }
 

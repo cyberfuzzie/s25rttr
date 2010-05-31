@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# $Author$
+# $Author: FloSoft $
 ###############################################################################
 
 import os, time, socket, sys, glob, threading, shutil
@@ -11,8 +11,8 @@ time.tzset()
 
 debug     = int(os.environ.get('DEBUG', 0))
 buildfarm = os.environ.get('BUILDFARM', '/srv/buildfarm')
-target    = os.environ.get('TARGET',    '/www/ra-doersch.de/nightly')
-uploads   = os.environ.get('UPLOADS',    '/srv/buildfarm/uploads_new')
+target    = os.environ.get('TARGET',    '/www/ra-doersch.de/nightly_new')
+uploads   = os.environ.get('UPLOADS',   '/srv/buildfarm/uploads_new')
 unknown_version = [ 'unknown', '0' ]
 
 try: os.makedirs(buildfarm)
@@ -29,11 +29,11 @@ projects  = [
 ]
 
 systems = [
-	#[ 'linux',   [ 'i386', 'x86_64' ],                     []                       ],
-	#[ 'apple',   [ 'i386', 'x86_64', 'ppc', 'universal' ], [ '--disable-arch=ppc' ] ],
-	[ 'windows', [ 'i386', 'x86_64' ],                     []                       ],
-	[ 'common',  [ 'linux', 'apple', 'windows' ],                                []                       ],
-	[ 'music',   [ 'linux', 'apple', 'windows' ],                                []                       ],
+	#[ 'linux',   [ 'i386', 'x86_64' ],            []                       ],
+	#[ 'apple',   [ 'universal' ],                 [ '--disable-arch=ppc' ] ],
+	[ 'windows', [ 'i386' ],                      []                       ],
+	[ 'common',  [ 'linux', 'apple', 'windows' ], []                       ],
+	[ 'music',   [ 'linux', 'apple', 'windows' ], []                       ],
 ]
 
 flags = [
@@ -85,8 +85,11 @@ def cycle_log(file):
 ###############################################################################
 
 def log_msg(log, msg):
+	global debug
+
 	if debug == 1 or log == None:
 		print msg
+
 	if log != None:
 		print >> log, msg
 		log.flush()
@@ -114,7 +117,7 @@ def run_command(log, command, fail_is_critical = True, verbose = True):
 
 ###############################################################################
 
-def configure(log, build_dir, arch, params):
+def configure(log, build_dir, project, arch, params):
 	log_msg(log, "Configuring %s" % arch)
 	
 	os.chdir(build_dir)
@@ -122,7 +125,7 @@ def configure(log, build_dir, arch, params):
 
 ###############################################################################
 
-def make(log, build_dir, arch):
+def make(log, build_dir, project, arch):
 	global flags
 
 	log_msg(log, "Building %s" % arch)
@@ -133,7 +136,7 @@ def make(log, build_dir, arch):
 
 ###############################################################################
 
-def pack(log, build_dir, arch):
+def pack(log, build_dir, project, arch):
 	global layouts
 	global unknown_version
 	
@@ -239,7 +242,7 @@ def pack(log, build_dir, arch):
 									open(os.path.join(dir, file), "w").close()
 						except:
 							pass
-
+						
 						if not retval:
 							break;
 					
@@ -254,16 +257,16 @@ def pack(log, build_dir, arch):
 
 					# are old and new identical, then dont create archive
 					if not run_command(log, "diff -qr %s_old %s >/dev/null 2>&1" % (pack_dir, pack_dir), False, False):
-						target = upload_dir + suffix
+						tool_target = upload_dir + suffix
 					
 						# remove old archive
 						try:
-							os.remove(target)
+							os.remove(tool_target)
 						except:
 							pass
 
 						command = command.replace("$SOURCE", ".")
-						command = command.replace("$TARGET", target)
+						command = command.replace("$TARGET", tool_target)
 
 						#print command
 
@@ -279,12 +282,49 @@ def pack(log, build_dir, arch):
 
 				if not retval:
 					break;
-		
+			
 		if not retval:
 			break;
 
+	# produce updater directory
+	if retval:
+		update_dir = os.path.join(target, project, arch)
+		
+		print update_dir
+		
+		try:
+			run_command(log, "rm -rf %s_new" % update_dir)
+			os.makedirs(update_dir + "_new")
+		except:
+			pass
+		
+		if run_command(log, "cp -rl %s/* %s" % (pack_dir, update_dir+'_new')):
+			olddir = os.getcwd()
+			os.chdir(update_dir + "_new")
+			
+			open("links", "w").close()
+			
+			retval = False
+			if run_command(log, "find -type l -exec bash -c 'echo \"{} $(readlink {})\" >> links ; rm {}' \;"):
+				if run_command(log, "md5deep -r -l . > files"):
+					if run_command(log, "cat files | grep -v '  ./files' | grep -v '  ./links' | sort -k 2 > files2 ; mv files2 files"):
+						if run_command(log, "find . -type f -a ! -name links -a ! -name files -exec bzip2 -fv {} \;"):
+							retval = True
+			
+			os.chdir(olddir)
+
+			# cycle update-dir
+			if os.path.exists(update_dir):
+				if run_command(log, "rm -rf %s_old" % update_dir):
+					os.rename(update_dir, update_dir + "_old")
+				else:
+					retval = False
+
+			os.rename(update_dir + "_new", update_dir)
+	
 	if not retval:
 		log_msg(log, "Error: \"pack\" failed")
+		
 	return retval
 
 ###############################################################################
@@ -294,9 +334,10 @@ last_error_logs = []
 ###############################################################################
 
 class build_thread( threading.Thread ):
-	def __init__(self, log, build_dir, arch, params):
+	def __init__(self, log, build_dir, project, arch, params):
 		self.log = log
 		self.build_dir = build_dir
+		self.project = project
 		self.arch = arch
 		self.params = params
 		self.retval = False
@@ -313,12 +354,12 @@ class build_thread( threading.Thread ):
 		if os.path.exists(self.build_dir):
 			os.chdir(self.build_dir)
 
-			if not configure(self.log, self.build_dir, self.arch, self.params):
+			if not configure(self.log, self.build_dir, self.project, self.arch, self.params):
 				last_error_logs.append(self.log.name)
 				self.retval = False
 				return False
 			
-			if not make(self.log, self.build_dir, self.arch):
+			if not make(self.log, self.build_dir, self.project, self.arch):
 				last_error_logs.append(self.log.name)
 				self.retval = False
 				return False
@@ -326,7 +367,7 @@ class build_thread( threading.Thread ):
 		else:
 			os.chdir(source_dir)
 
-		if not pack(self.log, self.build_dir, self.arch):
+		if not pack(self.log, self.build_dir, self.project, self.arch):
 			last_error_logs.append(self.log.name)
 			self.retval = False
 			return False
@@ -381,7 +422,7 @@ def build_all():
 
 					params = " ".join(system[2])
 					
-					thread = build_thread(arch_log, build_dir, arch, params)
+					thread = build_thread(arch_log, build_dir, project, arch, params)
 					threads.append(thread)
 					thread.start()
 					if debug:

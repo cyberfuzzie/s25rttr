@@ -1,4 +1,4 @@
-// $Id: nobHQ.cpp 6004 2010-02-12 07:50:42Z FloSoft $
+// $Id: nobHQ.cpp 6458 2010-05-31 11:38:51Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

@@ -1,4 +1,4 @@
-// $Id: Messenger.cpp 6069 2010-02-22 18:56:35Z FloSoft $
+// $Id: Messenger.cpp 6458 2010-05-31 11:38:51Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

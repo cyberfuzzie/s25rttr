@@ -1,4 +1,4 @@
-// $Id: Msgbox.h 4934 2009-05-24 12:47:58Z FloSoft $
+// $Id: Msgbox.h 6458 2010-05-31 11:38:51Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //

@@ -1,4 +1,4 @@
-// $Id: iwBuilding.cpp 6056 2010-02-20 16:08:57Z FloSoft $
+// $Id: iwBuilding.cpp 6458 2010-05-31 11:38:51Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

@@ -1,4 +1,4 @@
-// $Id: GameReplay.cpp 6416 2010-05-08 12:57:39Z OLiver $
+// $Id: GameReplay.cpp 6458 2010-05-31 11:38:51Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

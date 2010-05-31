@@ -1,4 +1,4 @@
-// $Id: ctrlTable.cpp 6452 2010-05-29 21:30:22Z OLiver $
+// $Id: ctrlTable.cpp 6458 2010-05-31 11:38:51Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

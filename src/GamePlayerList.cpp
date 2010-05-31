@@ -1,4 +1,4 @@
-// $Id: GamePlayerList.cpp 4933 2009-05-24 12:29:23Z OLiver $
+// $Id: GamePlayerList.cpp 6458 2010-05-31 11:38:51Z FloSoft $
 //
 // Copyright (c) 2005-2008 Settlers Freaks (sf-team at siedler25.org)
 //

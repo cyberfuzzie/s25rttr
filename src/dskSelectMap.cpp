@@ -1,4 +1,4 @@
-// $Id: dskSelectMap.cpp 6401 2010-05-04 11:07:04Z OLiver $
+// $Id: dskSelectMap.cpp 6458 2010-05-31 11:38:51Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

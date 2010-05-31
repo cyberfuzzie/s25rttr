@@ -1,4 +1,4 @@
-// $Id: nofBuildingWorker.cpp 6120 2010-03-05 23:42:17Z jh $
+// $Id: nofBuildingWorker.cpp 6458 2010-05-31 11:38:51Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

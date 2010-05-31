@@ -1,4 +1,4 @@
-// $Id: nobHarborBuilding.h 6445 2010-05-27 12:15:03Z OLiver $
+// $Id: nobHarborBuilding.h 6458 2010-05-31 11:38:51Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

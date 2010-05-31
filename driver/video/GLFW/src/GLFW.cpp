@@ -1,4 +1,4 @@
-// $Id: GLFW.cpp 6181 2010-03-24 19:37:39Z FloSoft $
+// $Id: GLFW.cpp 6458 2010-05-31 11:38:51Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //

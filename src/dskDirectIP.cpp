@@ -1,4 +1,4 @@
-// $Id: dskDirectIP.cpp 5918 2010-01-21 20:59:19Z FloSoft $
+// $Id: dskDirectIP.cpp 6458 2010-05-31 11:38:51Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

@@ -1,4 +1,4 @@
-// $Id: dskCredits.h 5934 2010-01-25 16:54:21Z FloSoft $
+// $Id: dskCredits.h 6458 2010-05-31 11:38:51Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

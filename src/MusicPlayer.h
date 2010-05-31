@@ -1,4 +1,4 @@
-// $Id: MusicPlayer.h 6352 2010-04-25 12:59:33Z OLiver $
+// $Id: MusicPlayer.h 6458 2010-05-31 11:38:51Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

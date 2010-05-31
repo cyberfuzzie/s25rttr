@@ -1,4 +1,4 @@
-// $Id: noBuildingSite.h 6292 2010-04-08 12:11:50Z OLiver $
+// $Id: noBuildingSite.h 6458 2010-05-31 11:38:51Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

@@ -1,4 +1,4 @@
-// $Id: Settings.h 6179 2010-03-24 14:52:38Z FloSoft $
+// $Id: Settings.h 6458 2010-05-31 11:38:51Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

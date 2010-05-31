@@ -1,4 +1,4 @@
-// $Id: const_gui_ids.h 6109 2010-03-03 22:27:18Z jh $
+// $Id: const_gui_ids.h 6458 2010-05-31 11:38:51Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

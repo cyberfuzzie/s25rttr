@@ -1,4 +1,4 @@
-// $Id: iwAction.cpp 6431 2010-05-22 11:45:51Z jh $
+// $Id: iwAction.cpp 6458 2010-05-31 11:38:51Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

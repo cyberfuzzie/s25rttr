@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.h 6327 2010-04-16 18:28:38Z OLiver $
+// $Id: GameClientPlayer.h 6458 2010-05-31 11:38:51Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

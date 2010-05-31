@@ -1,4 +1,4 @@
-// $Id: Minimap.cpp 5968 2010-02-08 11:35:09Z FloSoft $
+// $Id: Minimap.cpp 6458 2010-05-31 11:38:51Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

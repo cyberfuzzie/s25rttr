@@ -1,4 +1,4 @@
-// $Id: noStaticObject.cpp 6309 2010-04-11 09:09:40Z OLiver $
+// $Id: noStaticObject.cpp 6458 2010-05-31 11:38:51Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

@@ -1,4 +1,4 @@
-// $Id: DoorConsts.h 6305 2010-04-10 21:53:00Z OLiver $
+// $Id: DoorConsts.h 6458 2010-05-31 11:38:51Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

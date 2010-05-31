@@ -1,4 +1,4 @@
-// $Id: ctrlMultiline.cpp 6366 2010-04-29 17:52:45Z FloSoft $
+// $Id: ctrlMultiline.cpp 6458 2010-05-31 11:38:51Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

@@ -1,4 +1,4 @@
-// $Id: noAnimal.cpp 5998 2010-02-11 08:19:47Z FloSoft $
+// $Id: noAnimal.cpp 6458 2010-05-31 11:38:51Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

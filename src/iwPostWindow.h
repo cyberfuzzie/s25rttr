@@ -1,4 +1,4 @@
-// $Id: iwPostWindow.h 6178 2010-03-24 10:55:33Z FloSoft $
+// $Id: iwPostWindow.h 6458 2010-05-31 11:38:51Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

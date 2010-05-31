@@ -1,4 +1,4 @@
-// $Id: ctrlBuildingIcon.cpp 6344 2010-04-21 18:30:29Z OLiver $
+// $Id: ctrlBuildingIcon.cpp 6458 2010-05-31 11:38:51Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

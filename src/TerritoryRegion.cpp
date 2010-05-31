@@ -1,4 +1,4 @@
-// $Id: TerritoryRegion.cpp 6313 2010-04-11 20:29:58Z OLiver $
+// $Id: TerritoryRegion.cpp 6458 2010-05-31 11:38:51Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

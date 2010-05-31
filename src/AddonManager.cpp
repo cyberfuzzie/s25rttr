@@ -1,4 +1,4 @@
-// $Id: AddonManager.cpp 6364 2010-04-28 19:38:37Z FloSoft $
+// $Id: AddonManager.cpp 6458 2010-05-31 11:38:51Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

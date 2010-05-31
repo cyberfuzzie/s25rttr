@@ -1,4 +1,4 @@
-// $Id: noTree.h 6267 2010-04-05 09:16:14Z OLiver $
+// $Id: noTree.h 6458 2010-05-31 11:38:51Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

@@ -1,4 +1,4 @@
-// $Id: GamePlayerInfo.h 6037 2010-02-17 11:26:49Z FloSoft $
+// $Id: GamePlayerInfo.h 6458 2010-05-31 11:38:51Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

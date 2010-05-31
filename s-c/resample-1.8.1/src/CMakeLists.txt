@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: CMakeLists.txt 5596 2009-10-05 17:31:59Z FloSoft $
+### $Id: CMakeLists.txt 6461 2010-05-31 11:46:20Z FloSoft $
 #################################################################################
 
 ADD_EXECUTABLE(s-c_resample resample.c filterkit.c resamplesubs.c sndlibextra.c)

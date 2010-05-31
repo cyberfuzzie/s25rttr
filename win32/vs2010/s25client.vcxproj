@@ -44,6 +44,8 @@
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)..\..\;$(SolutionDir)..\..\libutil\src;$(SolutionDir)..\..\mygettext\src;$(SolutionDir)..\..\liblobby\src;$(SolutionDir)..\..\libsiedler2\src;$(SolutionDir)..\..\libendian\src;$(IncludePath)</IncludePath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.;$(LibraryPath)</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <PreBuildEvent>
@@ -68,7 +70,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>/fixed:no %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>opengl32.lib;libbz2.lib;wsock32.lib;user32.lib;gdi32.lib;advapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OpenGL32.lib;libbz2.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
@@ -110,7 +112,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)..\..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>user32.lib;gdi32.lib;opengl32.lib;winmm.lib;SDL.lib;SDLmain.lib;Ws2_32.lib;advapi32.lib;libbz2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OpenGL32.lib;libbz2.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -663,6 +665,9 @@
     </ProjectReference>
     <ProjectReference Include="..\..\libsiedler2\win32\vs2010\libsiedler2.vcxproj">
       <Project>{290e94f7-c0be-4950-87aa-d269467a82bf}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\libutil\win32\vs2010\libutil.vcxproj">
+      <Project>{74ce1cab-7950-436f-8d27-48f9fb7e9f22}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\mygettext\win32\vs2010\mygettext.vcxproj">
       <Project>{94be9c74-5e13-404e-858b-2cba20d8f5c9}</Project>

@@ -1,4 +1,4 @@
-// $Id: glArchivItem_Font.cpp 6065 2010-02-22 10:32:37Z FloSoft $
+// $Id: glArchivItem_Font.cpp 6457 2010-05-31 08:40:04Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -97,14 +97,14 @@ void glArchivItem_Font::Draw(short x,
 
 	bool enable_end;
 
-	unsigned short text_max = max;
-	unsigned short text_width = getWidth(text, length, &text_max);
+	unsigned short text_max = 0;
+	unsigned short text_width = getWidth(text, length, max, &text_max);
 
 	// text_max ist die maximale Indexzahl, nicht mehr die Breite in Pixel!
 	if(end.length() && text_max < length)
 	{
-		unsigned short end_max = max;
-		unsigned short end_width = getWidth(end, end_length, &end_max);
+		unsigned short end_max = 0;
+		unsigned short end_width = getWidth(end, end_length, max, &end_max);
 		
 		// Bei Überlauf oder kleiner 0 - nix zeichnen ;)
 		if( text_width - end_width > text_width || text_width - end_width <= 0 )
@@ -113,8 +113,8 @@ void glArchivItem_Font::Draw(short x,
 		text_width -= end_width;
 
 		// Wieviele Buchstaben gehen in den "Rest" (ohne "end")
-		text_max = text_width;
-		getWidth(text, length, &text_max);
+		text_max = 0;
+		getWidth(text, length, text_width, &text_max);
 
 		enable_end = true;
 	}
@@ -237,7 +237,7 @@ bool glArchivItem_Font::CharExist(unsigned char c) const
  *
  *  @author OLiver
  */
-unsigned short glArchivItem_Font::getWidth(const std::string& text, unsigned length, unsigned short *max) const
+unsigned short glArchivItem_Font::getWidth(const std::string& text, unsigned length, unsigned max_width, unsigned short *max) const
 {
 	if(length == 0)
 		length = unsigned(text.length());
@@ -255,7 +255,7 @@ unsigned short glArchivItem_Font::getWidth(const std::string& text, unsigned len
 		}
 
 		// haben wir das maximum erreicht?
-		if(max && ((wm > 0 ? wm : w) + cw) > *max)
+		if(unsigned((wm > 0 ? wm : w) + cw) > max_width)
 		{
 			*max = i;
 			if(wm == 0)

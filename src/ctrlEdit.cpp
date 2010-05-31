@@ -1,4 +1,4 @@
-// $Id: ctrlEdit.cpp 6177 2010-03-24 10:44:32Z FloSoft $
+// $Id: ctrlEdit.cpp 6457 2010-05-31 08:40:04Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -111,29 +111,24 @@ bool ctrlEdit::Draw_(void)
 	else
 		dtext = text;
 
-	unsigned short max = width-8-font->getDx();
-	font->getWidth(&dtext[view_start], unsigned(text.length())-view_start, &max);
-	while(max > 0 && text.length()-view_start >= max)
+	const unsigned max_width = width-8-font->getDx();
+	unsigned short max;
+	font->getWidth(dtext.substr(view_start), unsigned(text.length())-view_start, max_width, &max);
+	while(max > 0 && text.length()-view_start > max)
 	{
 		++view_start;
-
-		max = width-8-font->getDx();
-		font->getWidth(&dtext[view_start], unsigned(text.length())-view_start, &max);
+		font->getWidth(&dtext[view_start], unsigned(text.length())-view_start, max_width, &max);
 	}
 
 	if(view_start > 0)
 	{
-		max = width-8-font->getDx();
-		font->getWidth(dtext, unsigned(text.length()), &max);
+		font->getWidth(dtext, unsigned(text.length()), max_width, &max);
 		while(view_start > 0 && unsigned(text.length())-view_start <= max)
 		{
 			--view_start;
 
 			if(max > 0)
-			{
-				max = width-8-font->getDx();
-				font->getWidth(&dtext[view_start], unsigned(text.length())-view_start, &max);
-			}
+				font->getWidth(&dtext[view_start], unsigned(text.length())-view_start, max_width, &max);
 		}
 	}
 
@@ -142,7 +137,8 @@ bool ctrlEdit::Draw_(void)
 		start = cursor_pos-5;
 	if(cursor_pos <= 5)
 		start = 0;
-	font->Draw(GetX() + 4, GetY() + height / 2, &dtext[start], glArchivItem_Font::DF_VCENTER,(focus ? 0xFFFFA000 : COLOR_YELLOW), 0, width-8);
+	font->Draw(GetX() + 4, GetY() + height / 2, dtext.substr(start), glArchivItem_Font::DF_VCENTER,
+		(focus ? 0xFFFFA000 : COLOR_YELLOW), 0, width-8);
 
 	// Alle 500ms Cursor für 500ms anzeigen
 	if(focus && !disabled && VideoDriverWrapper::inst().GetTickCount() % 1000 < 500)

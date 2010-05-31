@@ -1,4 +1,4 @@
-// $Id: glArchivItem_Font.h 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: glArchivItem_Font.h 6457 2010-05-31 08:40:04Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -36,7 +36,7 @@ public:
 	/// prüft ob ein Buchstabe existiert.
 	bool CharExist(unsigned char c) const;
 	/// liefert die Länge einer Zeichenkette.
-	unsigned short getWidth(const std::string& text, unsigned length = 0, unsigned short *max = NULL) const;
+	unsigned short getWidth(const std::string& text, unsigned length = 0, unsigned max_width = 0xffffffff, unsigned short *max = NULL) const;
 	/// liefert die Höhe des Textes ( entspricht @p getDy()+1 )
 	unsigned short getHeight() const { return dy+1; }
 

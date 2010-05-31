@@ -1,4 +1,4 @@
-// $Id: write_char.cpp 5853 2010-01-04 16:14:16Z FloSoft $
+// $Id: write_char.cpp 6459 2010-05-31 11:41:44Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

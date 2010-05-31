@@ -1,4 +1,4 @@
-// $Id: main.h 6372 2010-04-30 17:45:33Z FloSoft $
+// $Id: main.h 6460 2010-05-31 11:42:38Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

@@ -1,4 +1,4 @@
-// $Id: util.h 5855 2010-01-04 16:44:38Z FloSoft $
+// $Id: util.h 6460 2010-05-31 11:42:38Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //

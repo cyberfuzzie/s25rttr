@@ -1,4 +1,4 @@
-// $Id: ArchivItem_Map.cpp 6038 2010-02-17 18:28:38Z FloSoft $
+// $Id: ArchivItem_Map.cpp 6460 2010-05-31 11:42:38Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

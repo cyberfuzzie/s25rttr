@@ -1,4 +1,4 @@
-// $Id: outline.cpp 4652 2009-03-29 10:10:02Z FloSoft $
+// $Id: outline.cpp 6460 2010-05-31 11:42:38Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //

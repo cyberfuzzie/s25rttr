@@ -1,4 +1,4 @@
-// $Id: LobbyMessageInterface.h 6040 2010-02-17 20:12:22Z FloSoft $
+// $Id: LobbyMessageInterface.h 6460 2010-05-31 11:42:38Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

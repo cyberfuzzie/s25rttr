@@ -1,4 +1,4 @@
-// $Id: Log.cpp 6070 2010-02-22 19:07:32Z FloSoft $
+// $Id: Log.cpp 6460 2010-05-31 11:42:38Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

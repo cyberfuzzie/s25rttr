@@ -1,4 +1,4 @@
-// $Id: MySQL.h 6042 2010-02-17 20:49:25Z FloSoft $
+// $Id: MySQL.h 6460 2010-05-31 11:42:38Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //

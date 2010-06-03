@@ -1,4 +1,4 @@
-// $Id: Socket.h 6460 2010-05-31 11:42:38Z FloSoft $
+// $Id: Socket.h 6465 2010-06-03 08:31:48Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -27,8 +27,8 @@
 #else
 	#include <arpa/inet.h>
 	#include <sys/types.h>
-       	#include <sys/socket.h>
-       	#include <netdb.h>
+	#include <sys/socket.h>
+	#include <netdb.h>
 
 	#define SOCKET int
 	#define INVALID_SOCKET -1
@@ -37,6 +37,8 @@
 
 	#define closesocket close
 #endif // !_WIN32
+
+#include "UPnP.h"
 
 ///Socket-Wrapper-Klasse für portable TCP/IP-Verbindungen
 class Socket
@@ -207,6 +209,7 @@ public:
 
 private:
 	SOCKET	sock; ///< Unser Socket
+	UPnP upnp_; ///< UPnP Handle
 };
 
 #endif // SOCKET_H_INCLUDED

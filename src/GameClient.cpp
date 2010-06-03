@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 6458 2010-05-31 11:38:51Z FloSoft $
+// $Id: GameClient.cpp 6465 2010-06-03 08:31:48Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -292,6 +292,9 @@ void GameClient::Stop()
 		players.clear();
 
 	state = CS_STOPPED;
+
+	if (IsHost())
+		GAMESERVER.Stop();
 
 	clientconfig.Clear();
 	mapinfo.Clear();

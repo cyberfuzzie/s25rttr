@@ -1,4 +1,4 @@
-// $Id: Socket.cpp 6460 2010-05-31 11:42:38Z FloSoft $
+// $Id: Socket.cpp 6465 2010-06-03 08:31:48Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -144,6 +144,8 @@ bool Socket::Create(int family)
  */
 void Socket::Close(void)
 {
+	upnp_.ClosePort();
+
 	if(status != INVALID)
 	{
 		// Socket schliessen
@@ -240,6 +242,10 @@ bool Socket::Listen(unsigned short port, bool use_ipv6)
 		error = false;
 	}
 	while(error);
+
+	// try to open portforwarding if we're using ipv4
+	if(!ipv6 && !upnp_.OpenPort(port))
+		LOG.getlasterror("Automatisches Erstellen des Portforwardings mit UPnP fehlgeschlagen\nFehler");
 
 	// Status setzen
 	status = LISTEN;
@@ -616,6 +622,8 @@ Socket &Socket::operator =(const Socket &sock)
 {
 	// Daten setzen
 	Set(sock.sock, sock.status);
+
+	upnp_ = sock.upnp_;
 
 	return *this;
 }

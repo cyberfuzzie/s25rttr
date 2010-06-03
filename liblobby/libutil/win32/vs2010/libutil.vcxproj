@@ -102,8 +102,11 @@
     <ClCompile Include="..\..\src\Serializer.cpp" />
     <ClCompile Include="..\..\src\Socket.cpp" />
     <ClCompile Include="..\..\src\SocketSet.cpp" />
+    <ClCompile Include="..\..\src\UPnP.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\build_paths.h" />
+    <ClInclude Include="..\..\..\build_version.h" />
     <ClInclude Include="..\..\src\colors.h" />
     <ClInclude Include="..\..\src\error.h" />
     <ClInclude Include="..\..\src\files.h" />
@@ -120,6 +123,7 @@
     <ClInclude Include="..\..\src\Singleton.h" />
     <ClInclude Include="..\..\src\Socket.h" />
     <ClInclude Include="..\..\src\SocketSet.h" />
+    <ClInclude Include="..\..\src\UPnP.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,4 +1,4 @@
-// $Id: UPnP.cpp 6469 2010-06-03 09:51:08Z FloSoft $
+// $Id: UPnP.cpp 6474 2010-06-03 12:22:29Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -26,12 +26,21 @@
 	#undef DATADIR
 
 	#include <iphlpapi.h>
-	#include <ole2.h>
-	#include <natupnp.h>
-	#include <atlconv.h>
+	
+	#ifdef _MSC_VER
+		#pragma comment(lib, "iphlpapi.lib")
 
-	#pragma comment(lib, "iphlpapi.lib")
-#else
+		#include <ole2.h>
+		#include <natupnp.h>
+		#include <atlconv.h>
+	#endif
+	
+	#ifndef _WIN32_WINNT
+		#define _WIN32_WINNT 0x501
+	#endif
+#endif
+
+#ifndef _MSC_VER
 	#include <miniupnpc/miniupnpc.h>
 	#include <miniupnpc/upnpcommands.h>
 #endif // _WIN32
@@ -78,11 +87,11 @@ bool UPnP::OpenPort(const unsigned short& port)
 
 	remote_port_ = port;
 
-#ifdef _WIN32
+#ifdef _MSC_VER
 	HRESULT hr;
 	
 	IUPnPNAT* upnpnat;
-	hr = CoCreateInstance (__uuidof(UPnPNAT), NULL, CLSCTX_INPROC_SERVER, __uuidof(IUPnPNAT), (void**)&upnpnat);
+	hr = CoCreateInstance (CLSID_UPnPNAT, NULL, CLSCTX_INPROC_SERVER, IID_IUPnPNAT, (void**)&upnpnat);
 	if(FAILED(hr) || !upnpnat)
 		return false;
 
@@ -90,7 +99,6 @@ bool UPnP::OpenPort(const unsigned short& port)
 	hr = upnpnat->get_StaticPortMappingCollection(&upnpspmc);
 	if(FAILED(hr) || !upnpspmc)
 		return false;
-
 
 	std::string local_address;
 	std::vector<std::string> addresses = GetAllv4Addresses();
@@ -177,11 +185,11 @@ void UPnP::ClosePort()
 	if(remote_port_ == 0)
 		return;
 
-#ifdef _WIN32
+#ifdef _MSC_VER
 	HRESULT hr;
 	
 	IUPnPNAT* upnpnat;
-	hr = CoCreateInstance (__uuidof(UPnPNAT), NULL, CLSCTX_INPROC_SERVER, __uuidof(IUPnPNAT), (void**)&upnpnat);
+	hr = CoCreateInstance (CLSID_UPnPNAT, NULL, CLSCTX_INPROC_SERVER, IID_IUPnPNAT, (void**)&upnpnat);
 	if(FAILED(hr) || !upnpnat)
 		return;
 

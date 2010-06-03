@@ -1,4 +1,4 @@
-// $Id: nobBaseWarehouse.cpp 6458 2010-05-31 11:38:51Z FloSoft $
+// $Id: nobBaseWarehouse.cpp 6466 2010-06-03 09:01:45Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -435,10 +435,15 @@ void nobBaseWarehouse::HandleBaseEvent(const unsigned int id)
 			// Evtl. versuchen nächsten zu rekrutieren
 			TryRecruiting();
 
+			// Wenn vorher keine Soldaten hier waren, Reserve prüfen
+			if(real_goods.people[JOB_PRIVATE] == real_recruits)
+				this->RefreshReserve(0);
+
 			// Wenn vorher keine Soldaten hier waren, Militärgebäude prüfen (evtl kann der Soldat ja wieder in eins gehen)
 			if(real_goods.people[JOB_PRIVATE] == real_recruits)
 				for (unsigned short i = 0; i < real_recruits; ++i)
 					gwg->GetPlayer(player)->NewSoldierAvailable(real_goods.people[JOB_PRIVATE]);
+
 
 		} break;
 	// Auslagerevent

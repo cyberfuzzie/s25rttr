@@ -1,4 +1,4 @@
-// $Id: UPnP.cpp 6465 2010-06-03 08:31:48Z FloSoft $
+// $Id: UPnP.cpp 6469 2010-06-03 09:51:08Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -31,6 +31,9 @@
 	#include <atlconv.h>
 
 	#pragma comment(lib, "iphlpapi.lib")
+#else
+	#include <miniupnpc/miniupnpc.h>
+	#include <miniupnpc/upnpcommands.h>
 #endif // _WIN32
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -143,7 +146,28 @@ bool UPnP::OpenPort(const unsigned short& port)
 	if(SUCCEEDED(hr) && upnpspm)
 		return true;
 #else
-	#warning "OpenPort: not implemented"
+	int hr;
+	UPNPDev* devicelist = NULL;
+	devicelist = upnpDiscover(2000, NULL, NULL, 0);
+	if(!devicelist)
+		return false;
+
+	UPNPUrls urls;
+	IGDdatas data;
+	char lanAddr[64];
+	hr = UPNP_GetValidIGD(devicelist, &urls, &data, lanAddr, sizeof(lanAddr));
+
+	if(hr == 1 || hr == 2)
+	{
+		std::stringstream p;
+		p << port;
+		hr = UPNP_AddPortMapping(urls.controlURL, data.first.servicetype, p.str().c_str(), p.str().c_str(), lanAddr, "Return To The Roots", "TCP", NULL);
+	}
+
+	freeUPNPDevlist(devicelist);
+
+	if(hr == 0)
+		return true;
 #endif
 	return false;
 }
@@ -178,7 +202,26 @@ void UPnP::ClosePort()
 	if(FAILED(hr))
 		return;
 #else
-	#warning "ClosePort: not implemented"
+	int hr;
+	UPNPDev* devicelist = NULL;
+	devicelist = upnpDiscover(2000, NULL, NULL, 0);
+	if(!devicelist)
+		return;
+
+	UPNPUrls urls;
+	IGDdatas data;
+	hr = UPNP_GetValidIGD(devicelist, &urls, &data, NULL, 0);
+	if(hr == 1 || hr == 2)
+	{
+		std::stringstream p;
+		p << remote_port_;
+		hr = UPNP_DeletePortMapping(urls.controlURL, data.first.servicetype, p.str().c_str(), "TCP", NULL);
+	}
+
+	freeUPNPDevlist(devicelist);
+
+	if(hr != 0)
+		return;
 #endif
 
 	remote_port_ = 0;
@@ -233,7 +276,8 @@ std::vector<std::string> UPnP::GetAllv4Addresses()
 		}
 	}
 #else
-	#warning "GetAllAddresses: not implemented"
+	//#warning "GetAllAddresses: not implemented"
+	// getifaddrs ...
 #endif
 
 	// remove duplicates

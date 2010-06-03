@@ -11,6 +11,8 @@ cp -v ../../$BUILDDIR/s25update/src/s25update share/s25rttr/RTTR
 cp -v ../../$BUILDDIR/s-c/src/sound-convert share/s25rttr/RTTR
 cp -v ../../$BUILDDIR/s-c/resample-1.8.1/src/s-c_resample share/s25rttr/RTTR
 
+cp -v /usr/lib/libminiupnpc.so.5 lib/
+
 # make deb-package
 PKGARCH=i386
 
@@ -52,7 +54,7 @@ if [ ! -z "$TARGET" ] ; then
 	
 	mkdir -p $TARGET/$ARCH.new
 	
-	BINARIES="bin/rttr.sh share/s25rttr/RTTR/s25update bin/s25client share/s25rttr/RTTR/sound-convert"
+	BINARIES="bin/rttr.sh share/s25rttr/RTTR/s25update bin/s25client share/s25rttr/RTTR/sound-convert lib/libminiupnpc.so.5"
 	rm -rv $TARGET/$ARCH.new/binaries.tar.bz2
 	tar --exclude=.svn -cvjf $TARGET/$ARCH.new/binaries.tar.bz2 $BINARIES
 	

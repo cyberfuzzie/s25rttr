@@ -1,4 +1,4 @@
-// $Id: LobbyClient.cpp 6460 2010-05-31 11:42:38Z FloSoft $
+// $Id: LobbyClient.cpp 6468 2010-06-03 09:50:11Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -126,15 +126,16 @@ void LobbyClient::Run(void)
  */
 void LobbyClient::Stop()
 {
-	// Queue leeren
-
-	send_queue.push(new Message_Dead(1));
-
-	send_queue.flush(&socket);
+	if(state != CS_CONNECT)
+	{
+		send_queue.push(new Message_Dead(1));
+		send_queue.flush(&socket);
+	}
 
 	// Verbindung trennen
 	socket.Close();
 
+	// Queues leeren
 	recv_queue.clear();
 	send_queue.clear();
 

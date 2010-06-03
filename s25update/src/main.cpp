@@ -1,4 +1,4 @@
-// $Id: main.cpp 6461 2010-05-31 11:46:20Z FloSoft $
+// $Id: main.cpp 6470 2010-06-03 09:51:41Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -465,7 +465,8 @@ int main(int argc, char *argv[])
 		CopyFileA(it->first.c_str(), target.c_str(), FALSE);
 #else
 		//cout << "creating symlink " << it->second << endl;
-		symlink(it->second.c_str(), it->first.c_str());
+		int avoid_unused_retval_warn = symlink(it->second.c_str(), it->first.c_str());
+		avoid_unused_retval_warn = 0;
 #endif
 		++it;
 	}

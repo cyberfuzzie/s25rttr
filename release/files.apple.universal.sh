@@ -26,6 +26,9 @@ rm -rv s25client.app/Contents/MacOS/Frameworks/SDL_mixer.framework/Versions/*/*/
 rm -rv s25client.app/Contents/MacOS/Frameworks/SDL.framework/Versions/*/{Headers,Resources}
 rm -rv s25client.app/Contents/MacOS/Frameworks/SDL.framework/Versions/*/*/{Headers,Resources}
 
+# copy miniupnp
+cp -rv /srv/buildfarm/SDKs/MacOSX10.5.sdk/usr/lib/libminiupnpc.5.dylib bin/
+
 mkdir -vp s25client.app/Contents/MacOS/bin
 
 # binaries und paketdaten kopieren

@@ -1,4 +1,4 @@
-// $Id: LobbyMessages.h 6478 2010-06-04 13:08:35Z FloSoft $
+// $Id: LobbyMessages.h 6479 2010-06-04 13:27:20Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -186,9 +186,12 @@ public:
 		else
 			revision = htonl(*((unsigned int*)rev));
 
-		user = PopString();
-		pass = PopString();
-		email = PopString();
+		if(revision == LOBBYPROTOCOL_VERSION)
+		{
+			user = PopString();
+			pass = PopString();
+			email = PopString();
+		}
 
 		LOG.write("<<< NMS_LOBBY_REGISTER(%d, %s, %s, %s)\n", revision, user.c_str(), "********", email.c_str());
 		cb->OnNMSLobbyRegister(id, revision, user, pass, email);

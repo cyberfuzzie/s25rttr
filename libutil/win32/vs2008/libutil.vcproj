@@ -25,6 +25,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				CommandLine="&quot;$(OutDir)\prebuild-mutex.exe&quot; &quot;prebuild&quot; &quot;$(SolutionName)&quot; &quot;$(SolutionDir)..\..&quot; &quot;$(OutDir)&quot;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -78,6 +79,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="&quot;$(OutDir)\prebuild-mutex.exe&quot; &quot;postbuild&quot; &quot;$(SolutionName)&quot; &quot;$(SolutionDir)..\..&quot; &quot;$(OutDir)&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -90,6 +92,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				CommandLine="&quot;$(OutDir)prebuild-mutex.exe&quot; &quot;postbuild&quot; &quot;$(SolutionName)&quot; &quot;$(SolutionDir)..\..&quot; &quot;$(OutDir)&quot;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -233,6 +236,10 @@
 				RelativePath="..\..\src\SocketSet.cpp"
 				>
 			</File>
+			<File
+				RelativePath="..\..\src\UPnP.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Headerdateien"
@@ -297,6 +304,10 @@
 			</File>
 			<File
 				RelativePath="..\..\src\SocketSet.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\UPnP.h"
 				>
 			</File>
 		</Filter>

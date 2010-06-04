@@ -1,4 +1,4 @@
-// $Id: UPnP.cpp 6474 2010-06-03 12:22:29Z FloSoft $
+// $Id: UPnP.cpp 6477 2010-06-04 12:06:26Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -89,16 +89,28 @@ bool UPnP::OpenPort(const unsigned short& port)
 
 #ifdef _MSC_VER
 	HRESULT hr;
+
+	CoInitialize(NULL);
 	
 	IUPnPNAT* upnpnat;
 	hr = CoCreateInstance (CLSID_UPnPNAT, NULL, CLSCTX_INPROC_SERVER, IID_IUPnPNAT, (void**)&upnpnat);
 	if(FAILED(hr) || !upnpnat)
+	{
+		if(!upnpnat)
+			hr = E_NOINTERFACE;
+		SetLastError(hr);
 		return false;
+	}
 
 	IStaticPortMappingCollection* upnpspmc = NULL;
 	hr = upnpnat->get_StaticPortMappingCollection(&upnpspmc);
 	if(FAILED(hr) || !upnpspmc)
+	{
+		if(!upnpspmc)
+			hr = E_NOINTERFACE;
+		SetLastError(hr);
 		return false;
+	}
 
 	std::string local_address;
 	std::vector<std::string> addresses = GetAllv4Addresses();
@@ -136,7 +148,10 @@ bool UPnP::OpenPort(const unsigned short& port)
 
 	// I hope we found one ...
 	if(local_address == "")
+	{
+		SetLastError(E_FAIL);
 		return false;
+	}
 
 	BSTR bstrProtocol = A2BSTR("TCP");
 	BSTR bstrLocalAddress = A2BSTR(local_address.c_str());
@@ -148,6 +163,9 @@ bool UPnP::OpenPort(const unsigned short& port)
 	SysFreeString(bstrProtocol);
 	SysFreeString(bstrLocalAddress);
 	SysFreeString(bstrDescription);
+
+	if(SUCCEEDED(hr) && !upnpspm)
+		hr = E_NOINTERFACE;
 
 	SetLastError(hr);
 	

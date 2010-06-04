@@ -1,4 +1,4 @@
-// $Id: LobbyMessages.h 6460 2010-05-31 11:42:38Z FloSoft $
+// $Id: LobbyMessages.h 6478 2010-06-04 13:08:35Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -136,6 +136,21 @@ public:
 };
 
 ///////////////////////////////////////////////////////////////////////////////
+/** eingehende Login-Error-Nachricht. (0.6 compat mode)
+ *  sollte niemals empfangen werden (außer es ist ein pre 0.6 client!)
+ */
+class LobbyMessage_Login_Error06 : public LobbyMessage
+{
+public:
+	LobbyMessage_Login_Error06(const std::string &error) : LobbyMessage(NMS_LOBBY_LOGIN_ERROR)
+	{
+		LOG.write(">>> NMS_LOBBY_LOGIN_ERROR(compat: %s)\n", error.c_str());
+		PushRawData(error.c_str(), error.size());
+	}
+	void run(MessageInterface *callback, unsigned int id) {}
+};
+
+///////////////////////////////////////////////////////////////////////////////
 /// ausgehende Register-Nachricht.
 class LobbyMessage_Register : public LobbyMessage
 {
@@ -225,6 +240,21 @@ public:
 		LOG.write("<<< NMS_LOBBY_REGISTER_ERROR(%s)\n", error.c_str());
 		cb->OnNMSLobbyRegisterError(id, error);
 	}
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/** eingehende Register-Error-Nachricht. (0.6 compat mode)
+ *  sollte niemals empfangen werden (außer es ist ein pre 0.6 client!)
+ */
+class LobbyMessage_Register_Error06 : public LobbyMessage
+{
+public:
+	LobbyMessage_Register_Error06(const std::string &error) : LobbyMessage(NMS_LOBBY_LOGIN_ERROR)
+	{
+		LOG.write(">>> NMS_LOBBY_REGISTER_ERROR(compat: %s)\n", error.c_str());
+		PushRawData(error.c_str(), error.size());
+	}
+	void run(MessageInterface *callback, unsigned int id) {}
 };
 
 ///////////////////////////////////////////////////////////////////////////////

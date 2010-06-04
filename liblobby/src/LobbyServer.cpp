@@ -1,4 +1,4 @@
-// $Id: LobbyServer.cpp 6460 2010-05-31 11:42:38Z FloSoft $
+// $Id: LobbyServer.cpp 6478 2010-06-04 13:08:35Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -312,9 +312,19 @@ void LobbyServer::OnNMSLobbyLogin(unsigned int id, const unsigned int revision, 
 	if(revision != LOBBYPROTOCOL_VERSION)
 	{
 		// zu alt
-		LOG.lprintf("User %s invalid (protocoll version wrong)", user.c_str());
+		LOG.lprintf("User %s invalid (protocoll version wrong)\n", user.c_str());
 
-		player.Send(new LobbyMessage_Login_Error("Falsche Protokollversion! Programmversion ist zu alt."));
+		// do we've got a revision? or is it so damn old that it does not send a revision?
+		if( (revision & 0xFF0000FF) == 0xFF0000FF)
+		{
+			// newer client
+			player.Send(new LobbyMessage_Login_Error("Falsche Protokollversion! Programmversion ist zu alt."));
+		}
+		else
+		{
+			// really old client (<= 0.6)
+			player.Send(new LobbyMessage_Login_Error06("Falsche Protokollversion! Programmversion ist zu alt."));
+		}
 
 		Disconnect(player);
 	}
@@ -389,9 +399,19 @@ void LobbyServer::OnNMSLobbyRegister(unsigned int id, const unsigned int revisio
 	if(revision != LOBBYPROTOCOL_VERSION)
 	{
 		// zu alt
-		LOG.lprintf("User %s invalid (protocoll version wrong)", user.c_str());
+		LOG.lprintf("User %s invalid (protocoll version wrong)\n", user.c_str());
 
-		player.Send(new LobbyMessage_Login_Error("Falsche Protokollversion! Programmversion ist zu alt."));
+		// do we've got a revision? or is it so damn old that it does not send a revision?
+		if( (revision & 0xFF0000FF) == 0xFF0000FF)
+		{
+			// newer client
+			player.Send(new LobbyMessage_Register_Error("Falsche Protokollversion! Programmversion ist zu alt."));
+		}
+		else
+		{
+			// really old client (<= 0.6)
+			player.Send(new LobbyMessage_Register_Error06("Falsche Protokollversion! Programmversion ist zu alt."));
+		}
 
 		Disconnect(player);
 	}

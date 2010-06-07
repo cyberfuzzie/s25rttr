@@ -1,4 +1,4 @@
-// $Id: UPnP.cpp 6477 2010-06-04 12:06:26Z FloSoft $
+// $Id: UPnP.cpp 6486 2010-06-07 18:58:07Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -38,6 +38,8 @@
 	#ifndef _WIN32_WINNT
 		#define _WIN32_WINNT 0x501
 	#endif
+#else
+     #include <ifaddrs.h>
 #endif
 
 #ifndef _MSC_VER
@@ -284,8 +286,30 @@ std::vector<std::string> UPnP::GetAllv4Addresses()
 	}
 
 	HeapFree(GetProcessHeap(), 0, pAdapterInfo);
+#else
+     struct ifaddrs *ifaddr, *ifa;
+     int family, s;
+     char host[NI_MAXHOST];
 
-	// and failback solution: read address from hostname
+     if (getifaddrs(&ifaddr) > 0)
+	 {
+		 for (ifa = ifaddr; ifa != NULL; ifa = ifa->ifa_next)
+		 {
+			 family = ifa->ifa_addr->sa_family;
+
+			 if (family == AF_INET || family == AF_INET6)
+			 {
+				 if( getnameinfo(ifa->ifa_addr, 
+								 (family == AF_INET) ? sizeof(struct sockaddr_in) : sizeof(struct sockaddr_in6),
+								 host, NI_MAXHOST, NULL, 0, NI_NUMERICHOST) == 0)
+					 addresses.push_back(host);
+			 }
+		 }
+		 freeifaddrs(&ifaddr);
+	 }
+#endif
+
+		// and failback solution: read address from hostname
 	char host[512];
 	gethostname(host, 512);
 
@@ -301,10 +325,6 @@ std::vector<std::string> UPnP::GetAllv4Addresses()
 				addresses.push_back(address);
 		}
 	}
-#else
-	//#warning "GetAllAddresses: not implemented"
-	// getifaddrs ...
-#endif
 
 	// remove duplicates
 	std::sort(addresses.begin(), addresses.end());

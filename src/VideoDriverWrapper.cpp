@@ -1,4 +1,4 @@
-// $Id: VideoDriverWrapper.cpp 6458 2010-05-31 11:38:51Z FloSoft $
+// $Id: VideoDriverWrapper.cpp 6485 2010-06-07 18:43:17Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -354,6 +354,9 @@ bool VideoDriverWrapper::Initialize()
 	// Dither abstellen
 	glDisable(GL_DITHER);
 
+	// Scissoring aktivieren
+	glEnable(GL_SCISSOR_TEST);
+
 	// Nur obere Seite von Dreiecke rendern --> Performance
 	glEnable(GL_CULL_FACE);
 
@@ -383,6 +386,7 @@ void VideoDriverWrapper::RenewViewport(bool onlyRenew)
 
 	// Viewport mit widthxheight setzen
 	glViewport(0, 0, width, height);
+	glScissor(0, 0, width, height);
 
 	// Orthogonale Matrix erstellen
 	glMatrixMode(GL_PROJECTION);

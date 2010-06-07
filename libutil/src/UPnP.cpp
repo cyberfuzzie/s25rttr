@@ -1,4 +1,4 @@
-// $Id: UPnP.cpp 6486 2010-06-07 18:58:07Z FloSoft $
+// $Id: UPnP.cpp 6487 2010-06-07 19:04:16Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -287,29 +287,29 @@ std::vector<std::string> UPnP::GetAllv4Addresses()
 
 	HeapFree(GetProcessHeap(), 0, pAdapterInfo);
 #else
-     struct ifaddrs *ifaddr, *ifa;
-     int family, s;
-     char host[NI_MAXHOST];
+	struct ifaddrs *ifaddr, *ifa;
+	int family;
+	char address[NI_MAXHOST];
 
-     if (getifaddrs(&ifaddr) > 0)
-	 {
-		 for (ifa = ifaddr; ifa != NULL; ifa = ifa->ifa_next)
-		 {
-			 family = ifa->ifa_addr->sa_family;
+	if (getifaddrs(&ifaddr) > 0)
+	{
+		for (ifa = ifaddr; ifa != NULL; ifa = ifa->ifa_next)
+		{
+			family = ifa->ifa_addr->sa_family;
 
-			 if (family == AF_INET || family == AF_INET6)
-			 {
-				 if( getnameinfo(ifa->ifa_addr, 
-								 (family == AF_INET) ? sizeof(struct sockaddr_in) : sizeof(struct sockaddr_in6),
-								 host, NI_MAXHOST, NULL, 0, NI_NUMERICHOST) == 0)
-					 addresses.push_back(host);
-			 }
-		 }
-		 freeifaddrs(&ifaddr);
-	 }
+			if (family == AF_INET || family == AF_INET6)
+			{
+				if( getnameinfo(ifa->ifa_addr, 
+						(family == AF_INET) ? sizeof(struct sockaddr_in) : sizeof(struct sockaddr_in6),
+						address, NI_MAXHOST, NULL, 0, NI_NUMERICHOST) == 0)
+					addresses.push_back(address);
+			}
+		}
+		freeifaddrs(ifaddr);
+	}
 #endif
 
-		// and failback solution: read address from hostname
+	// and failback solution: read address from hostname
 	char host[512];
 	gethostname(host, 512);
 

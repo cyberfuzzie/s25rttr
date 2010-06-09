@@ -27,7 +27,7 @@ rm -rv s25client.app/Contents/MacOS/Frameworks/SDL.framework/Versions/*/{Headers
 rm -rv s25client.app/Contents/MacOS/Frameworks/SDL.framework/Versions/*/*/{Headers,Resources}
 
 # copy miniupnp
-cp -rv /srv/buildfarm/SDKs/MacOSX10.5.sdk/usr/lib/libminiupnpc.5.dylib s25client.app/Contents/MacOS/Frameworks
+cp -rv /srv/buildfarm/SDKs/MacOSX10.5.sdk/usr/lib/libminiupnpc.5.dylib s25client.app/Contents/MacOS
 
 mkdir -vp s25client.app/Contents/MacOS/bin
 

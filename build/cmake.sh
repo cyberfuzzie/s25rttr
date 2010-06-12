@@ -1,6 +1,6 @@
 #!/bin/bash
 ###############################################################################
-## $Id: cmake.sh 6443 2010-05-27 06:13:03Z FloSoft $
+## $Id: cmake.sh 6496 2010-06-12 08:19:23Z FloSoft $
 ###############################################################################
 
 # Editable Variables
@@ -179,7 +179,7 @@ if [ -z "$ARCH" ] ; then
 fi
 
 if [ -z "$GENERATOR" ] && [ "$(uname -s)" = "Darwin" ] ; then
-	GENERATOR="XCode"
+	GENERATOR="Xcode"
 fi
 
 if [ -z "$BINDIR" ] ; then

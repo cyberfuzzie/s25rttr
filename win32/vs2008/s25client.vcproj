@@ -142,7 +142,7 @@
 				BrowseInformation="1"
 				WarningLevel="3"
 				WarnAsError="true"
-				DebugInformationFormat="0"
+				DebugInformationFormat="3"
 				DisableSpecificWarnings="4996;4355;4250"
 			/>
 			<Tool
@@ -158,13 +158,14 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="user32.lib gdi32.lib opengl32.lib winmm.lib SDL.lib SDLmain.lib Ws2_32.lib advapi32.lib libbz2.lib"
 				LinkIncremental="1"
-				GenerateDebugInformation="false"
+				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
 				TargetMachine="1"
+				Profile="true"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -2147,6 +2148,14 @@
 				</File>
 				<File
 					RelativePath="..\..\src\AIEventManager.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\AIInterface.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\AIInterface.h"
 					>
 				</File>
 				<File

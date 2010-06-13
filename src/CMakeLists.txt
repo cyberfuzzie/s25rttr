@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 6458 2010-05-31 11:38:51Z FloSoft $
+### $Id: CMakeLists.txt 6498 2010-06-13 12:25:12Z jh $
 ################################################################################
 
 INCLUDE(FindBZip2)
@@ -127,6 +127,7 @@ SET(SOURCES_AI
 	AIJHHelper.cpp                      AIJHHelper.h
 	AIEventManager.cpp                  AIEventManager.h
 	AIConstruction.cpp                  AIConstruction.h
+	AIInterface.cpp                     AIInterface.h
    )
    
 SET(SOURCES_NO

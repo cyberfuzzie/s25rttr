@@ -1,4 +1,4 @@
-// $Id: AIBase.h 6458 2010-05-31 11:38:51Z FloSoft $
+// $Id: AIBase.h 6498 2010-06-13 12:25:12Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -22,6 +22,7 @@
 #pragma once
 
 #include "AIEventManager.h"
+#include "AIInterface.h"
 
 class GameWorldBase;
 class GameClientPlayer;
@@ -58,12 +59,14 @@ protected:
 	std::vector<gc::GameCommand*> gcs;
 	/// Stärke der KI
 	const AI::Level level;
+	/// Abstrahiertes Interfaces, leitet Befehle weiter an
+	AIInterface *aii;
 
 public:
 
 	AIBase(const unsigned char playerid, const GameWorldBase * const gwb, const GameClientPlayer * const player,
 		const GameClientPlayerList * const players, const GlobalGameSettings * const ggs, const AI::Level level)
-		: playerid(playerid), gwb(gwb), player(player), players(players), ggs(ggs), level(level) {}
+		: playerid(playerid), gwb(gwb), player(player), players(players), ggs(ggs), level(level), aii(new AIInterface(gwb, player, players, &gcs, playerid)) {}
 
 	virtual ~AIBase() {}
 

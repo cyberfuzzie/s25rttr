@@ -1,4 +1,4 @@
-// $Id: AIJHHelper.cpp 6458 2010-05-31 11:38:51Z FloSoft $
+// $Id: AIJHHelper.cpp 6500 2010-06-13 20:33:13Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -30,8 +30,16 @@
 #include "nobHQ.h"
 #include "noBuildingSite.h"
 #include "MapGeometry.h"
+#include "AIInterface.h"
 
 #include <iostream>
+
+
+AIJH::Job::Job(AIPlayerJH *aijh) 
+: aijh(aijh), status(AIJH::JOB_WAITING)
+{
+ aii = aijh->GetInterface();
+}
 
 void AIJH::BuildJob::ExecuteJob()
 {
@@ -75,14 +83,14 @@ void AIJH::BuildJob::ExecuteJob()
 	// Evil harbour-hack
 	if (type == BLD_HARBORBUILDING && status == AIJH::JOB_FINISHED && target_x != 0xFFFF)
 	{
-		aijh->AddBuildJob(new AIJH::BuildJob(aijh, BLD_SHIPYARD, target_x, target_y), true);
+		aijh->AddBuildJob(BLD_SHIPYARD, target_x, target_y, true);
 	}
 
 	// Fertig?
 	if (status == AIJH::JOB_FAILED || status == AIJH::JOB_FINISHED)
 		return;
 
-	if (aijh->GetGWB()->IsMilitaryBuildingNearNode(target_x, target_y) && type >= BLD_BARRACKS && type <= BLD_FORTRESS)
+	if (aii->IsMilitaryBuildingNearNode(target_x, target_y) && type >= BLD_BARRACKS && type <= BLD_FORTRESS)
 	{
 		status = AIJH::JOB_FAILED;
 #ifdef DEBUG_AI
@@ -98,8 +106,7 @@ void AIJH::BuildJob::TryToBuild()
 	MapCoord bx = around_x;
 	MapCoord by = around_y;
 
-
-	if (aijh->GetPlayer()->GetBuildingSites().size() > 15)
+	if (aii->GetBuildingSites().size() > 15)
 	{
 		return;
 	}
@@ -174,7 +181,7 @@ void AIJH::BuildJob::TryToBuild()
 		std::cout << " Player " << (unsigned)aijh->GetPlayerID() << " built farm at " << bx << "/" << by << " on value of " << aijh->resourceMaps[AIJH::PLANTSPACE][bx+by*aijh->GetGWB()->GetWidth()] << std::endl;
 #endif
 
-	aijh->GetGCS().push_back(new gc::SetBuildingSite(bx, by, type));
+	aii->SetBuildingSite(bx, by, type);
 	target_x = bx;
 	target_y = by;
 	status = AIJH::JOB_EXECUTING_ROAD1;
@@ -184,10 +191,10 @@ void AIJH::BuildJob::TryToBuild()
 void AIJH::BuildJob::BuildMainRoad()
 {
 	const noBuildingSite *bld;
-	if (!(bld = aijh->GetGWB()->GetSpecObj<noBuildingSite>(target_x, target_y)))
+	if (!(bld = aii->GetSpecObj<noBuildingSite>(target_x, target_y)))
 	{
 		// Prüfen ob sich vielleicht die BQ geändert hat und damit Bau unmöglich ist
-		BuildingQuality bq = aijh->GetGWB()->CalcBQ(target_x, target_y, aijh->playerid);
+		BuildingQuality bq = aii->GetBuildingQuality(target_x, target_y);
 		if (!(bq >= BUILDING_SIZE[type] && bq < BQ_MINE) // normales Gebäude
 							&& !(bq == BUILDING_SIZE[type]))	// auch Bergwerke
 		{
@@ -195,7 +202,7 @@ void AIJH::BuildJob::BuildMainRoad()
 #ifdef DEBUG_AI
 			std::cout << "Player " << (unsigned)aijh->GetPlayerID() << ", Job failed: BQ changed for " << BUILDING_NAMES[type] << " at " << target_x << "/" << target_y << ". Retrying..." << std::endl;
 #endif
-			aijh->nodes[target_x + target_y * aijh->GetGWB()->GetWidth()].bq = bq;
+			aijh->nodes[target_x + target_y * aii->GetMapWidth()].bq = bq;
 			aijh->AddBuildJob(new AIJH::BuildJob(aijh, type, around_x, around_y));
 			return;
 		}
@@ -210,8 +217,8 @@ void AIJH::BuildJob::BuildMainRoad()
 		status = AIJH::JOB_FAILED;
 		return;
 	}
-	const noFlag *houseFlag = aijh->GetGWB()->GetSpecObj<noFlag>(aijh->GetGWB()->GetXA(target_x, target_y, 4), 
-		aijh->GetGWB()->GetYA(target_x, target_y, 4));
+	const noFlag *houseFlag = aii->GetSpecObj<noFlag>(aii->GetXA(target_x, target_y, 4), 
+		aii->GetYA(target_x, target_y, 4));
 	// Gucken noch nicht ans Wegnetz angeschlossen
 	if (!aijh->GetConstruction()->IsConnectedToRoadSystem(houseFlag))
 	{
@@ -222,10 +229,9 @@ void AIJH::BuildJob::BuildMainRoad()
 #ifdef DEBUG_AI
 			std::cout << "Player " << (unsigned)aijh->GetPlayerID() << ", Job failed: Cannot connect " << BUILDING_NAMES[type] << " at " << target_x << "/" << target_y << ". Retrying..." << std::endl;
 #endif
-			aijh->nodes[target_x + target_y * aijh->GetGWB()->GetWidth()].reachable = false;
-			aijh->GetGCS().push_back(new gc::DestroyBuilding(target_x, target_y));
-			aijh->GetGCS().push_back(new gc::DestroyFlag(houseFlag->GetX(), houseFlag->GetY()));
-
+			aijh->nodes[target_x + target_y * aii->GetMapWidth()].reachable = false;
+			aii->DestroyBuilding(target_x, target_y);
+			aii->DestroyFlag(houseFlag->GetX(), houseFlag->GetY());
 			aijh->AddBuildJob(new AIJH::BuildJob(aijh, type, around_x, around_y));
 			return;
 		}
@@ -304,7 +310,7 @@ void AIJH::BuildJob::BuildMainRoad()
 		// Just 4 Fun Gelehrten rufen
 		if (BUILDING_SIZE[type] == BQ_MINE)
 		{
-			aijh->GetGCS().push_back(new gc::CallGeologist(houseFlag->GetX(), houseFlag->GetY()));
+			aii->CallGeologist(houseFlag->GetX(), houseFlag->GetY());
 		}
 
 		status = AIJH::JOB_EXECUTING_ROAD2;
@@ -314,8 +320,8 @@ void AIJH::BuildJob::BuildMainRoad()
 	
 void AIJH::BuildJob::TryToBuildSecondaryRoad()
 {
-	const noFlag *houseFlag = aijh->GetGWB()->GetSpecObj<noFlag>(aijh->GetGWB()->GetXA(target_x, target_y, 4), 
-		aijh->GetGWB()->GetYA(target_x, target_y, 4));
+	const noFlag *houseFlag = aii->GetSpecObj<noFlag>(aii->GetXA(target_x, target_y, 4), 
+		aii->GetYA(target_x, target_y, 4));
 
 	if (!houseFlag)
 	{
@@ -398,7 +404,7 @@ void AIJH::ConnectJob::ExecuteJob()
 #ifdef DEBUG_AI
 			std::cout << "Player " << (unsigned)aijh->GetPlayerID() << ", ConnectJob executed..." << std::endl;
 #endif
-	const noFlag *flag = aijh->GetGWB()->GetSpecObj<noFlag>(flag_x, flag_y);
+	const noFlag *flag = aii->GetSpecObj<noFlag>(flag_x, flag_y);
 
 	if (!flag)
 	{

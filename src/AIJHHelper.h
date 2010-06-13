@@ -1,4 +1,4 @@
-// $Id: AIJHHelper.h 6498 2010-06-13 12:25:12Z jh $
+// $Id: AIJHHelper.h 6500 2010-06-13 20:33:13Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -35,6 +35,7 @@
 class AIPlayerJH;
 class AIConstruction;
 class GameWorldBase;
+class AIInterface;
 namespace gc { class GameCommand; }
 
 namespace AIJH
@@ -101,12 +102,13 @@ class Job
 {
 	friend class iwAIDebug;
 public:
-	Job(AIPlayerJH *aijh) : aijh(aijh), status(AIJH::JOB_WAITING) { }
+	Job(AIPlayerJH *aijh);
 	virtual ~Job() { }
 	virtual void ExecuteJob() { return; }
 	JobStatus GetStatus() { return status; }
 protected:
 	AIPlayerJH *aijh;
+	AIInterface *aii;
 	JobStatus status;
 };
 

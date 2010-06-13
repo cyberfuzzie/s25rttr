@@ -1,4 +1,4 @@
-// $Id: AIConstruction.h 6458 2010-05-31 11:38:51Z FloSoft $
+// $Id: AIConstruction.h 6500 2010-06-13 20:33:13Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -27,13 +27,16 @@
 #include "AIJHHelper.h"
 #include "GameWorld.h"
 #include "noFlag.h"
+#include "AIInterface.h"
+
+class AIPlayerJH;
 
 namespace gc { class GameCommand; }
 
 class AIConstruction
 {
 public:
-	AIConstruction(const GameWorldBase * const gwb, std::vector<gc::GameCommand*> &gcs, const GameClientPlayer * const player, unsigned char playerid);
+	AIConstruction(AIInterface *aii, AIPlayerJH *aijh);
 	~AIConstruction(void);
 
 	/// Adds a build job to the queue
@@ -42,7 +45,7 @@ public:
 	AIJH::Job *GetBuildJob();
 	unsigned GetBuildJobNum() const { return buildJobs.size(); }
 
-	void AddConnectFlagJob(AIPlayerJH *aijh, const noFlag *flag); // todo aijh als param suckt
+	void AddConnectFlagJob(const noFlag *flag); // todo aijh als param suckt
 
 	bool BuildJobAvailable() const { return buildJobs.size() > 0;}
 
@@ -100,16 +103,15 @@ private:
 	/// Contains the jobs the AI should try to execute, for example build jobs
 	std::deque<AIJH::Job*> buildJobs;
 
-	const GameWorldBase * const gwb;
-	std::vector<gc::GameCommand*> &gcs;
-	const GameClientPlayer * const player;
+	AIInterface *aii;
+	AIPlayerJH *aijh;
 
 	/// Number of buildings and building sites of this player (refreshed by RefreshBuildingCount())
 	BuildingCount buildingCounts;
 
 	std::list<AIJH::Coords> storeHouses;
 
-	unsigned char playerid;
+	unsigned char playerID;
 };
 
 #endif //! AICONSTRUCTION_H_INCLUDED

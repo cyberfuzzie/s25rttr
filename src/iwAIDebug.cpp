@@ -1,4 +1,4 @@
-// $Id: iwAIDebug.cpp 6458 2010-05-31 11:38:51Z FloSoft $
+// $Id: iwAIDebug.cpp 6500 2010-06-13 20:33:13Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -74,7 +74,7 @@ iwAIDebug::iwAIDebug(GameWorldViewer * const gwv)
 	ctrlComboBox *players = AddComboBox(0, 15, 30, 250, 20, TC_GREY, NormalFont, 100);
 	for (std::vector<AIPlayerJH *>::iterator it = ais.begin(); it != ais.end(); it++)
 	{
-		players->AddString(_((*it)->GetPlayer()->name));
+		players->AddString(_((*it)->GetPlayerName()));
 	}
 
 	selection = 0;

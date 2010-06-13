@@ -1,4 +1,4 @@
-// $Id: AIConstruction.cpp 6458 2010-05-31 11:38:51Z FloSoft $
+// $Id: AIConstruction.cpp 6500 2010-06-13 20:33:13Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -22,18 +22,19 @@
 #include "nobBaseMilitary.h"
 #include "MapGeometry.h"
 #include <iostream>
+#include "nobHQ.h"
 
 // from Pathfinding.cpp
 bool IsPointOK_RoadPath(const GameWorldBase& gwb, const MapCoord x, const MapCoord y, const unsigned char dir, const void *param);
 
-AIConstruction::AIConstruction(const GameWorldBase * const gwb, std::vector<gc::GameCommand*> &gcs, const GameClientPlayer * const player, 
-															 unsigned char playerid)
-: gwb(gwb), gcs(gcs), player(player), playerid(playerid)
+AIConstruction::AIConstruction(AIInterface *aii, AIPlayerJH *aijh)
+: aii(aii), aijh(aijh)
 {
+	playerID = aii->GetPlayerID();
 	buildingsWanted.resize(BUILDING_TYPES_COUNT);
 	RefreshBuildingCount();
 	InitBuildingsWanted();
-	AddStoreHouse(player->hqx, player->hqy);
+	AddStoreHouse(aii->GetHeadquarter()->GetX(), aii->GetHeadquarter()->GetY());
 }
 
 AIConstruction::~AIConstruction(void)
@@ -58,7 +59,7 @@ AIJH::Job *AIConstruction::GetBuildJob()
 	return job;
 }
 
-void AIConstruction::AddConnectFlagJob(AIPlayerJH *aijh, const noFlag *flag)
+void AIConstruction::AddConnectFlagJob(const noFlag *flag)
 {
 	buildJobs.push_front(new AIJH::ConnectJob(aijh, flag->GetX(), flag->GetY()));
 }
@@ -70,16 +71,16 @@ void AIConstruction::FindFlags(std::vector<const noFlag*>& flags, unsigned short
 	if (clear)
 		flags.clear();
 
-	for(MapCoord tx=gwb->GetXA(x,y,0), r=1;r<=radius;tx=gwb->GetXA(tx,y,0),++r)
+	for(MapCoord tx=aii->GetXA(x,y,0), r=1;r<=radius;tx=aii->GetXA(tx,y,0),++r)
 	{
 		MapCoord tx2 = tx, ty2 = y;
 		for(unsigned i = 2;i<8;++i)
 		{
-			for(MapCoord r2=0;r2<r;gwb->GetPointA(tx2,ty2,i%6),++r2)
+			for(MapCoord r2=0;r2<r;aii->GetPointA(tx2,ty2,i%6),++r2)
 			{
-				if(gwb->CalcDistance(tx2, ty2, real_x, real_y) <= real_radius && gwb->GetSpecObj<noFlag>(tx2,ty2))
+				if(aii->GetDistance(tx2, ty2, real_x, real_y) <= real_radius && aii->GetSpecObj<noFlag>(tx2,ty2))
 				{
-					flags.push_back(gwb->GetSpecObj<noFlag>(tx2,ty2));
+					flags.push_back(aii->GetSpecObj<noFlag>(tx2,ty2));
 				}
 			}
 		}
@@ -108,15 +109,15 @@ void AIConstruction::FindFlags(std::vector<const noFlag*>& flags, unsigned short
 	}
 	*/
 
-	for(MapCoord tx=gwb->GetXA(x,y,0), r=1;r<=radius;tx=gwb->GetXA(tx,y,0),++r)
+	for(MapCoord tx=aii->GetXA(x,y,0), r=1;r<=radius;tx=aii->GetXA(tx,y,0),++r)
 	{
 		MapCoord tx2 = tx, ty2 = y;
 		for(unsigned i = 2;i<8;++i)
 		{
-			for(MapCoord r2=0;r2<r;gwb->GetPointA(tx2,ty2,i%6),++r2)
+			for(MapCoord r2=0;r2<r;aii->GetPointA(tx2,ty2,i%6),++r2)
 			{
-				const noFlag *flag = gwb->GetSpecObj<noFlag>(tx2,ty2);
-				if(flag && flag->GetPlayer() == player->getPlayerID())
+				const noFlag *flag = aii->GetSpecObj<noFlag>(tx2,ty2);
+				if(flag && flag->GetPlayer() == playerID)
 				{
 					flags.push_back(flag);
 					if (flags.size() > 30)
@@ -161,17 +162,15 @@ bool AIConstruction::ConnectFlagToRoadSytem(const noFlag *flag, std::vector<unsi
 		
 		bool boat = false;
 		// Gibts ¸berhaupt einen Pfad zu dieser Flagge
-		bool pathFound = gwb->FindFreePath(flag->GetX(),flag->GetY(),
-		                  flags[i]->GetX(),flags[i]->GetY(),false,100,&tmpRoute,&length,NULL,IsPointOK_RoadPath,NULL, (void *) &boat);
+		bool pathFound = aii->FindFreePathForNewRoad(flag->GetX(), flag->GetY(), flags[i]->GetX(), flags[i]->GetY(), &tmpRoute, &length);
 
 		// Wenn ja, dann gucken ob dieser Pfad mˆglichst kurz zum "hˆheren" Ziel (allgemeines Lager im Moment) ist
 		if (pathFound)
 		{
-			unsigned char first_dir;
 			unsigned int distance = 0;
 
 			// Strecke von der potenziellen Zielfahne bis zum Lager
-			bool pathFound = gwb->FindPathOnRoads(flags[i], targetFlag, false, &distance, &first_dir, NULL, NULL);
+			bool pathFound = aii->FindPathOnRoads(flags[i], targetFlag, &distance);
 
 			// Gew‰hlte Fahne hat leider auch kein Anschluﬂ an ein Lager, zu schade!
 			if (!pathFound)
@@ -180,8 +179,7 @@ bool AIConstruction::ConnectFlagToRoadSytem(const noFlag *flag, std::vector<unsi
 					continue;
 
 			// Sind wir mit der Fahne schon verbunden? Einmal reicht!
-			bool alreadyConnected = gwb->FindPathOnRoads(flags[i], flag, false, NULL, &first_dir, NULL, NULL);
-			if (alreadyConnected)
+			if (aii->FindPathOnRoads(flags[i], flag))
 				continue;
 			
 			// Ansonsten haben wir einen Pfad!
@@ -212,9 +210,7 @@ bool AIConstruction::BuildRoad(const noRoadNode *start, const noRoadNode *target
 	// Gucken obs einen Weg gibt
 	if (route.empty())
 	{
-		bool boat = false;
-		foundPath = gwb->FindFreePath(start->GetX(),start->GetY(),
-											target->GetX(),target->GetY(),false,100,&route,NULL,NULL,IsPointOK_RoadPath,NULL, (void *) &boat);
+		foundPath = aii->FindFreePathForNewRoad(start->GetX(), start->GetY(), target->GetX(), target->GetY(), &route);
 	}
 	else
 	{
@@ -227,17 +223,16 @@ bool AIConstruction::BuildRoad(const noRoadNode *start, const noRoadNode *target
 	{
 		MapCoord x = start->GetX();
 		MapCoord y = start->GetY();
-		gcs.push_back(new gc::BuildRoad(x, y, false, route));
-
+		aii->BuildRoad(x, y, route);
 
 		// Flaggen auf der Straﬂe setzen
 		for(unsigned i=0; i<route.size(); ++i)
 		{
-			gwb->GetPointA(x, y, route[i]);
+			aii->GetPointA(x, y, route[i]);
 			// Alle zwei Teilst¸cke versuchen eine Flagge zu bauen
 			if (i % 2 == 1)
 			{
-				gcs.push_back(new gc::SetFlag(x,y));
+				aii->SetFlag(x, y);
 			}
 		}
 		return true;
@@ -249,7 +244,7 @@ bool AIConstruction::IsConnectedToRoadSystem(const noFlag *flag)
 {
 	noFlag *targetFlag = this->FindTargetStoreHouseFlag(flag->GetX(), flag->GetY());
 	if (targetFlag)
-		return gwb->FindPathOnRoads(flag, targetFlag, false, NULL, NULL, NULL, NULL);
+		return aii->FindPathOnRoads(flag, targetFlag);
 	else 
 		return false;
 }
@@ -262,17 +257,17 @@ BuildingType AIConstruction::ChooseMilitaryBuilding(MapCoord x, MapCoord y)
 		bld = BLD_GUARDHOUSE;
 
 	std::list<nobBaseMilitary*> military;
-	gwb->LookForMilitaryBuildings(military, x, y, 3);
+	aii->GetMilitaryBuildings(x, y, 3, military);
 	for(std::list<nobBaseMilitary*>::iterator it = military.begin();it!=military.end();++it)
 	{
-		unsigned distance = gwb->CalcDistance((*it)->GetX(), (*it)->GetY(), x, y);
+		unsigned distance = aii->GetDistance((*it)->GetX(), (*it)->GetY(), x, y);
 
 		// Pr¸fen ob Feind in der N‰he
-		if ((*it)->GetPlayer() != playerid && distance < 35)
+		if ((*it)->GetPlayer() != playerID && distance < 35)
 		{
 			int randmil = rand();
 
-			if (randmil % 8 == 0 && player->CanBuildCatapult())
+			if (randmil % 8 == 0 && aii->CanBuildCatapult())
 				bld = BLD_CATAPULT;
 			else if (randmil % 2 == 0)
 				bld = BLD_FORTRESS;
@@ -293,7 +288,7 @@ unsigned AIConstruction::GetBuildingCount(BuildingType type)
 
 bool AIConstruction::Wanted(BuildingType type)
 {
-	if (type == BLD_CATAPULT && !player->CanBuildCatapult())
+	if (type == BLD_CATAPULT && !aii->CanBuildCatapult())
 		return false;
 	if ((type >= BLD_BARRACKS && type <= BLD_FORTRESS) || type == BLD_STOREHOUSE)
 		return true;
@@ -302,7 +297,7 @@ bool AIConstruction::Wanted(BuildingType type)
 
 void AIConstruction::RefreshBuildingCount()
 {
-	player->GetBuildingCount(buildingCounts);
+	aii->GetBuildingCount(buildingCounts);
 
 	buildingsWanted[BLD_SAWMILL] = 1 + GetBuildingCount(BLD_WOODCUTTER) / 2;
 	buildingsWanted[BLD_IRONSMELTER] = GetBuildingCount(BLD_IRONMINE);
@@ -341,7 +336,7 @@ void AIConstruction::InitBuildingsWanted()
 	buildingsWanted[BLD_FISHERY] = 6;
 	buildingsWanted[BLD_QUARRY] = 6;
 	buildingsWanted[BLD_HUNTER] = 2;
-	buildingsWanted[BLD_FARM] = player->GetInventory()->goods[GD_SCYTHE] + player->GetInventory()->people[JOB_FARMER];
+	buildingsWanted[BLD_FARM] = aii->GetInventory()->goods[GD_SCYTHE] + aii->GetInventory()->people[JOB_FARMER];
 	buildingsWanted[BLD_HARBORBUILDING] = 99;
 	buildingsWanted[BLD_SHIPYARD] = 1;
 }
@@ -367,8 +362,7 @@ bool AIConstruction::BuildAlternativeRoad(const noFlag *flag, std::vector<unsign
 		
 		bool boat = false;
 		// Gibts ¸berhaupt einen Pfad zu dieser Flagge
-		bool pathFound = gwb->FindFreePath(flag->GetX(),flag->GetY(),
-		                  flags[i]->GetX(),flags[i]->GetY(),false,100,&route,&newLength,NULL,IsPointOK_RoadPath,NULL, (void *) &boat);
+		bool pathFound = aii->FindFreePathForNewRoad(flag->GetX(), flag->GetY(), flags[i]->GetX(), flags[i]->GetY(),&route,&newLength);
 
 		// Wenn ja, dann gucken ob unser momentaner Weg zu dieser Flagge vielleicht voll weit ist und sich eine Straﬂe lohnt
 		if (pathFound)
@@ -376,7 +370,7 @@ bool AIConstruction::BuildAlternativeRoad(const noFlag *flag, std::vector<unsign
 			unsigned int oldLength = 0;
 
 			// Aktuelle Strecke zu der Flagge
-			bool pathAvailable = gwb->FindPathOnRoads(flags[i], flag, false, &oldLength, NULL, NULL, NULL);
+			bool pathAvailable = aii->FindPathOnRoads(flags[i], flag, &oldLength);
 
 			// Lohnt sich die Straﬂe?
 			if (!pathAvailable || newLength * lengthFactor < oldLength)
@@ -394,21 +388,21 @@ bool AIConstruction::FindStoreHousePosition(MapCoord &x, MapCoord &y, unsigned r
 	// max distance to warehouse/hq
 	const unsigned maxDistance = 20;
 
-	MapCoord fx = gwb->GetXA(x,y,4);
-	MapCoord fy = gwb->GetYA(x,y,4);
+	MapCoord fx = aii->GetXA(x,y,4);
+	MapCoord fy = aii->GetYA(x,y,4);
 
 	unsigned minDist = std::numeric_limits<unsigned>::max();
 	for (std::list<AIJH::Coords>::iterator it = storeHouses.begin(); it != storeHouses.end(); it++)
 	{
 		const noBaseBuilding *bld;
-		if ((bld = gwb->GetSpecObj<noBaseBuilding>((*it).x, (*it).y)))
+		if ((bld = aii->GetSpecObj<noBaseBuilding>((*it).x, (*it).y)))
 		{
 			if (bld->GetBuildingType() != BLD_STOREHOUSE && bld->GetBuildingType() != BLD_HEADQUARTERS)
 				continue;
 
-			const noFlag *targetFlag = gwb->GetSpecObj<noFlag>(fx,fy);
+			const noFlag *targetFlag = aii->GetSpecObj<noFlag>(fx,fy);
 			unsigned dist;
-			bool pathAvailable = gwb->FindPathOnRoads(bld->GetFlag(), targetFlag, false, &dist, NULL, NULL, NULL);
+			bool pathAvailable = aii->FindPathOnRoads(bld->GetFlag(), targetFlag, &dist);
 
 			if (!pathAvailable)
 				continue;
@@ -435,12 +429,12 @@ noFlag *AIConstruction::FindTargetStoreHouseFlag(MapCoord x, MapCoord y)
 	const noBaseBuilding *bld;
 	for (std::list<AIJH::Coords>::iterator it = storeHouses.begin(); it != storeHouses.end(); it++)
 	{
-		if ((bld = gwb->GetSpecObj<noBaseBuilding>((*it).x, (*it).y)))
+		if ((bld = aii->GetSpecObj<noBaseBuilding>((*it).x, (*it).y)))
 		{
 			if (bld->GetBuildingType() != BLD_STOREHOUSE && bld->GetBuildingType() != BLD_HEADQUARTERS)
 				continue;
 		
-			unsigned dist = gwb->CalcDistance(x, y, (*it).x, (*it).y);
+			unsigned dist = aii->GetDistance(x, y, (*it).x, (*it).y);
 
 			if (dist < minDistance)
 			{
@@ -454,7 +448,7 @@ noFlag *AIConstruction::FindTargetStoreHouseFlag(MapCoord x, MapCoord y)
 		return NULL;
 	else
 	{
-		bld = gwb->GetSpecObj<noBaseBuilding>(minTarget.x, minTarget.y);
+		bld = aii->GetSpecObj<noBaseBuilding>(minTarget.x, minTarget.y);
 		return bld->GetFlag();
 	}
 }

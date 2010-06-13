@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.cpp 6498 2010-06-13 12:25:12Z jh $
+// $Id: AIPlayerJH.cpp 6500 2010-06-13 20:33:13Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -45,7 +45,7 @@ bool IsPointOK_RoadPath(const GameWorldBase& gwb, const MapCoord x, const MapCoo
 AIPlayerJH::AIPlayerJH(const unsigned char playerid, const GameWorldBase * const gwb, const GameClientPlayer * const player,
 		const GameClientPlayerList * const players, const GlobalGameSettings * const ggs,
 		const AI::Level level) : AIBase(playerid, gwb, player, players, ggs, level), defeated(false), 
-		construction(AIConstruction(gwb, gcs, player, playerid))
+		construction(AIConstruction(aii, this))
 {
 	currentJob = 0;
 	InitNodes();
@@ -87,17 +87,17 @@ void AIPlayerJH::RunGF(const unsigned gf)
 		MapCoord hqx = hq->GetX();
 		MapCoord hqy = hq->GetY();
 
-		AddBuildJob(new AIJH::BuildJob(this, BLD_HARBORBUILDING, hqx, hqy));
-		AddBuildJob(new AIJH::BuildJob(this, BLD_SAWMILL));
-		AddBuildJob(new AIJH::BuildJob(this, BLD_FORESTER));
-		AddBuildJob(new AIJH::BuildJob(this, BLD_WOODCUTTER));
-		AddBuildJob(new AIJH::BuildJob(this, BLD_WOODCUTTER));
-		AddBuildJob(new AIJH::BuildJob(this, construction.ChooseMilitaryBuilding(hqx, hqy)));
-		AddBuildJob(new AIJH::BuildJob(this, construction.ChooseMilitaryBuilding(hqx, hqy)));
-		AddBuildJob(new AIJH::BuildJob(this, construction.ChooseMilitaryBuilding(hqx, hqy)));
-		AddBuildJob(new AIJH::BuildJob(this, construction.ChooseMilitaryBuilding(hqx, hqy)));
-		AddBuildJob(new AIJH::BuildJob(this, BLD_QUARRY));
-		AddBuildJob(new AIJH::BuildJob(this, BLD_FISHERY));
+		AddBuildJob(BLD_HARBORBUILDING, hqx, hqy);
+		AddBuildJob(BLD_SAWMILL);
+		AddBuildJob(BLD_FORESTER);
+		AddBuildJob(BLD_WOODCUTTER);
+		AddBuildJob(BLD_WOODCUTTER);
+		AddBuildJob(construction.ChooseMilitaryBuilding(hqx, hqy));
+		AddBuildJob(construction.ChooseMilitaryBuilding(hqx, hqy));
+		AddBuildJob(construction.ChooseMilitaryBuilding(hqx, hqy));
+		AddBuildJob(construction.ChooseMilitaryBuilding(hqx, hqy));
+		AddBuildJob(BLD_QUARRY);
+		AddBuildJob(BLD_FISHERY);
 		
 	}
 
@@ -120,14 +120,14 @@ void AIPlayerJH::RunGF(const unsigned gf)
 		milSettings[5] = 8;
 		milSettings[6] = 8;
 		milSettings[7] = 8;
-		gcs.push_back(new gc::ChangeMilitary(milSettings));
+		aii->SetMilitarySettings(milSettings);
 	}
 
 	if ((gf % 1000) == 0)
 	{
 		if (construction.Wanted(BLD_SAWMILL))
 		{
-			AddBuildJob(new AIJH::BuildJob(this, BLD_SAWMILL));
+			AddBuildJob(BLD_SAWMILL);
 		}
 	}
 }
@@ -144,23 +144,19 @@ bool AIPlayerJH::TestDefeat()
 	return false;
 }
 
+void AIPlayerJH::AddBuildJob(BuildingType type, MapCoord x, MapCoord y, bool front)
+{
+	construction.AddBuildJob(new AIJH::BuildJob(this, type, x, y), front);
+}
+
+void AIPlayerJH::AddBuildJob(BuildingType type)
+{
+	construction.AddBuildJob(new AIJH::BuildJob(this, type), false);
+}
+
 AIJH::Resource AIPlayerJH::CalcResource(MapCoord x, MapCoord y)
 {
-	AIJH::Resource res = AIJH::NOTHING;
-
-	// subsurface resources
-	unsigned char subres = gwb->GetNode(x,y).resources;
-	if (subres > 0x40+0*8 && subres < 0x48+0*8)
-		res = AIJH::COAL;
-	else if (subres > 0x40+1*8 && subres < 0x48+1*8)
-		res = AIJH::IRONORE;
-	else if (subres > 0x40+2*8 && subres < 0x48+2*8)
-		res = AIJH::GOLD;
-	else if (subres > 0x40+3*8 && subres < 0x48+3*8)
-		res = AIJH::GRANITE;
-
-	if (subres > 0x80 && subres < 0x90)
-		res = AIJH::FISH;
+	AIJH::Resource res = aii->GetSubsurfaceResource(x, y);
 
 	// resources on surface
 	if (res == AIJH::NOTHING)
@@ -188,6 +184,11 @@ AIJH::Resource AIPlayerJH::CalcResource(MapCoord x, MapCoord y)
 				res = AIJH::PLANTSPACE;
 			}
 		}
+	}
+
+	if (res == AIJH::BLOCKED)
+	{
+		res = AIJH::NOTHING; // nicht so ganz logisch... aber Blocked als res is doof TODO
 	}
 	return res;
 }
@@ -733,45 +734,45 @@ void AIPlayerJH::HandleNewMilitaryBuilingOccupied(const Coords& coords)
 
 		if (!construction.IsConnectedToRoadSystem(mil->GetFlag()))
 		{
-			construction.AddConnectFlagJob(this, mil->GetFlag());
+			construction.AddConnectFlagJob(mil->GetFlag());
 		}
 	}
 
-	AddBuildJob(new AIJH::BuildJob(this, BLD_HARBORBUILDING, x, y));
+	AddBuildJob(BLD_HARBORBUILDING, x, y);
 
-	AddBuildJob(new AIJH::BuildJob(this, construction.ChooseMilitaryBuilding(x, y), x, y));
-	AddBuildJob(new AIJH::BuildJob(this, construction.ChooseMilitaryBuilding(x, y), x, y));
-	AddBuildJob(new AIJH::BuildJob(this, construction.ChooseMilitaryBuilding(x, y), x, y));
+	AddBuildJob(construction.ChooseMilitaryBuilding(x, y), x, y);
+	AddBuildJob(construction.ChooseMilitaryBuilding(x, y), x, y);
+	AddBuildJob(construction.ChooseMilitaryBuilding(x, y), x, y);
 
 	// Temporär only
-	AddBuildJob(new AIJH::BuildJob(this, BLD_FORESTER, x, y));
-	AddBuildJob(new AIJH::BuildJob(this, BLD_WOODCUTTER, x, y));
+	AddBuildJob(BLD_FORESTER, x, y);
+	AddBuildJob(BLD_WOODCUTTER, x, y);
 
-	AddBuildJob(new AIJH::BuildJob(this, BLD_QUARRY, x, y));
+	AddBuildJob(BLD_QUARRY, x, y);
 
-	AddBuildJob(new AIJH::BuildJob(this, BLD_GOLDMINE, x, y));
-	AddBuildJob(new AIJH::BuildJob(this, BLD_COALMINE, x, y));
-	AddBuildJob(new AIJH::BuildJob(this, BLD_IRONMINE, x, y));
+	AddBuildJob(BLD_GOLDMINE, x, y);
+	AddBuildJob(BLD_COALMINE, x, y);
+	AddBuildJob(BLD_IRONMINE, x, y);
 
-	AddBuildJob(new AIJH::BuildJob(this, BLD_SAWMILL, x, y));
+	AddBuildJob(BLD_SAWMILL, x, y);
 
-	AddBuildJob(new AIJH::BuildJob(this, BLD_IRONSMELTER, x, y));
-	AddBuildJob(new AIJH::BuildJob(this, BLD_MINT, x, y));
-	AddBuildJob(new AIJH::BuildJob(this, BLD_ARMORY, x, y));
+	AddBuildJob(BLD_IRONSMELTER, x, y);
+	AddBuildJob(BLD_MINT, x, y);
+	AddBuildJob(BLD_ARMORY, x, y);
 
-	AddBuildJob(new AIJH::BuildJob(this, BLD_FISHERY, x, y));
+	AddBuildJob(BLD_FISHERY, x, y);
 
-	AddBuildJob(new AIJH::BuildJob(this, BLD_HUNTER, x, y));
+	AddBuildJob(BLD_HUNTER, x, y);
 
-	AddBuildJob(new AIJH::BuildJob(this, BLD_STOREHOUSE, x, y));
-
-
-	AddBuildJob(new AIJH::BuildJob(this, BLD_FARM, x, y));
+	AddBuildJob(BLD_STOREHOUSE, x, y);
 
 
-	AddBuildJob(new AIJH::BuildJob(this, BLD_BREWERY, x, y));
-	AddBuildJob(new AIJH::BuildJob(this, BLD_MILL, x, y));
-	AddBuildJob(new AIJH::BuildJob(this, BLD_PIGFARM, x, y));
+	AddBuildJob(BLD_FARM, x, y);
+
+
+	AddBuildJob(BLD_BREWERY, x, y);
+	AddBuildJob(BLD_MILL, x, y);
+	AddBuildJob(BLD_PIGFARM, x, y);
 }
 
 void AIPlayerJH::HandleBuildingFinished(const Coords& coords, BuildingType bld)
@@ -781,10 +782,10 @@ void AIPlayerJH::HandleBuildingFinished(const Coords& coords, BuildingType bld)
 	case BLD_HARBORBUILDING:
 		UpdateNodesAround(coords.x, coords.y, 8); // todo: fix radius
 
-		AddBuildJob(new AIJH::BuildJob(this, BLD_BARRACKS, coords.x, coords.y));
-		AddBuildJob(new AIJH::BuildJob(this, BLD_WOODCUTTER, coords.x, coords.y));
-		AddBuildJob(new AIJH::BuildJob(this, BLD_SAWMILL, coords.x, coords.y));
-		AddBuildJob(new AIJH::BuildJob(this, BLD_QUARRY, coords.x, coords.y));
+		AddBuildJob(BLD_BARRACKS, coords.x, coords.y);
+		AddBuildJob(BLD_WOODCUTTER, coords.x, coords.y);
+		AddBuildJob(BLD_SAWMILL, coords.x, coords.y);
+		AddBuildJob(BLD_QUARRY, coords.x, coords.y);
 
 		// stop beer, swords and shields -> hq only (todo: hq destroyed -> use another storehouse)
 		// can't do that on harbors... maybe production is on an island which is not the hq's
@@ -792,15 +793,16 @@ void AIPlayerJH::HandleBuildingFinished(const Coords& coords, BuildingType bld)
 		//gcs.push_back(new gc::ChangeInventorySetting(coords.x, coords.y, 0, 2, 16));
 		//gcs.push_back(new gc::ChangeInventorySetting(coords.x, coords.y, 0, 2, 21));
 
-		gcs.push_back(new gc::StartExpedition(coords.x, coords.y));
+		aii->StartExpedition(coords.x, coords.y);
 		break;
 
 	case BLD_SHIPYARD:
-		gcs.push_back(new gc::ChangeShipYardMode(coords.x, coords.y));
+		aii->ToggleShipyardMode(coords.x, coords.y);
 		break;
 
 	case BLD_STOREHOUSE:
 		// stop beer, swords and shields -> hq only (todo: hq destroyed -> use another storehouse)
+		//aii->ChangeInventorySetting( TODO
 		gcs.push_back(new gc::ChangeInventorySetting(coords.x, coords.y, 0, 2, 0));
 		gcs.push_back(new gc::ChangeInventorySetting(coords.x, coords.y, 0, 2, 16));
 		gcs.push_back(new gc::ChangeInventorySetting(coords.x, coords.y, 0, 2, 21));
@@ -868,9 +870,9 @@ void AIPlayerJH::HandleTreeChopped(const Coords& coords)
 	
 
 	if (random % 2 == 0)
-		AddBuildJob(new AIJH::BuildJob(this, construction.ChooseMilitaryBuilding(x, y), x, y));
+		AddBuildJob(construction.ChooseMilitaryBuilding(x, y), x, y);
 	else //if (random % 12 == 0)
-		AddBuildJob(new AIJH::BuildJob(this, BLD_WOODCUTTER, x, y));
+		AddBuildJob(BLD_WOODCUTTER, x, y);
 
 }
 
@@ -890,14 +892,14 @@ void AIPlayerJH::HandleNoMoreResourcesReachable(const Coords& coords, BuildingTy
 	RemoveUnusedRoad(aii->GetSpecObj<noFlag>(aii->GetXA(x,y,4),aii->GetYA(x,y,4)), 1);
 
 	// try to expand, maybe res blocked a passage
-	AddBuildJob(new AIJH::BuildJob(this, construction.ChooseMilitaryBuilding(x, y), x, y));
-	AddBuildJob(new AIJH::BuildJob(this, construction.ChooseMilitaryBuilding(x, y), x, y));
+	AddBuildJob(construction.ChooseMilitaryBuilding(x, y), x, y);
+	AddBuildJob(construction.ChooseMilitaryBuilding(x, y), x, y);
 
 	// and try to rebuild the same building
-	AddBuildJob(new AIJH::BuildJob(this, bld));
+	AddBuildJob(bld);
 
 	// farm is always good!
-	AddBuildJob(new AIJH::BuildJob(this, BLD_FARM, x, y));
+	AddBuildJob(BLD_FARM, x, y);
 }
 
 void AIPlayerJH::HandleBorderChanged(const Coords& coords)
@@ -911,11 +913,11 @@ void AIPlayerJH::HandleBorderChanged(const Coords& coords)
 	{
 		if (mil->GetFrontierDistance() != 0 && mil->IsGoldDisabled())
 		{
-			gcs.push_back(new gc::StopGold(x, y));
+			aii->ToggleCoins(x, y);
 		}
 		if (mil->GetBuildingType() == BLD_BARRACKS || mil->GetBuildingType() == BLD_GUARDHOUSE)
 		{
-			AddBuildJob(new AIJH::BuildJob(this, construction.ChooseMilitaryBuilding(x, y), x, y));
+			AddBuildJob(construction.ChooseMilitaryBuilding(x, y), x, y);
 		}
 	}
 }

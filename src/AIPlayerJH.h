@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.h 6458 2010-05-31 11:38:51Z FloSoft $
+// $Id: AIPlayerJH.h 6500 2010-06-13 20:33:13Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -57,7 +57,7 @@ public:
 
 
 	int GetResMapValue(MapCoord x, MapCoord y, AIJH::Resource res);
-
+	AIInterface *GetInterface() { return aii; }
 protected:
 	struct Coords
 	{
@@ -80,6 +80,8 @@ protected:
 	/// Executes a job form the job queue
 	void ExecuteAIJob();
 	void AddBuildJob(AIJH::BuildJob *job, bool front = false) { construction.AddBuildJob(job, front); }
+	void AddBuildJob(BuildingType type, MapCoord x, MapCoord y, bool front = false);
+	void AddBuildJob(BuildingType type);
 
 	/// Checks the list of military buildingsites and puts the coordinates into the list of military buildings if building is finished
 	void CheckNewMilitaryBuildings();
@@ -175,9 +177,8 @@ protected:
 
 	// Required by the AIJobs:
 
-	std::vector<gc::GameCommand*> &GetGCS() { return gcs; }
-	const GameClientPlayer * const GetPlayer() const { return player; }
-	const GameWorldBase *GetGWB() { return gwb; }
+
+	const std::string &GetPlayerName() { return player->name; }
 	unsigned char GetPlayerID() { return playerid; }
 	AIConstruction *GetConstruction() { return &construction; }
 	AIJH::Job *GetCurrentJob() { return currentJob; }

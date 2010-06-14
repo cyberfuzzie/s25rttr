@@ -1,4 +1,4 @@
-// $Id: AIConstruction.cpp 6500 2010-06-13 20:33:13Z jh $
+// $Id: AIConstruction.cpp 6502 2010-06-14 10:07:52Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -160,7 +160,6 @@ bool AIConstruction::ConnectFlagToRoadSytem(const noFlag *flag, std::vector<unsi
 		tmpRoute.clear();
 		unsigned int length;
 		
-		bool boat = false;
 		// Gibts überhaupt einen Pfad zu dieser Flagge
 		bool pathFound = aii->FindFreePathForNewRoad(flag->GetX(), flag->GetY(), flags[i]->GetX(), flags[i]->GetY(), &tmpRoute, &length);
 
@@ -360,7 +359,6 @@ bool AIConstruction::BuildAlternativeRoad(const noFlag *flag, std::vector<unsign
 		route.clear();
 		unsigned int newLength;
 		
-		bool boat = false;
 		// Gibts überhaupt einen Pfad zu dieser Flagge
 		bool pathFound = aii->FindFreePathForNewRoad(flag->GetX(), flag->GetY(), flags[i]->GetX(), flags[i]->GetY(),&route,&newLength);
 

@@ -1,4 +1,4 @@
-// $Id: nobBaseWarehouse.cpp 6466 2010-06-03 09:01:45Z OLiver $
+// $Id: nobBaseWarehouse.cpp 6517 2010-06-26 17:11:37Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -319,8 +319,8 @@ void nobBaseWarehouse::HandleBaseEvent(const unsigned int id)
 					Ware * ware = *waiting_wares.begin();
 					nofWarehouseWorker * worker = new nofWarehouseWorker(x,y,player,ware,0);
 					gwg->AddFigure(worker,x,y);
-					assert(goods.goods[ware->type]>0);
-					--goods.goods[ware->type];
+					assert(goods.goods[ConvertShields(ware->type)]>0);
+					--goods.goods[ConvertShields(ware->type)];
 					worker->WalkToGoal();
 					ware->Carry(GetFlag());
 					waiting_wares.pop_front();

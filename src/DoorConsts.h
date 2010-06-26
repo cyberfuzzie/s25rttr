@@ -1,4 +1,4 @@
-// $Id: DoorConsts.h 6458 2010-05-31 11:38:51Z FloSoft $
+// $Id: DoorConsts.h 6517 2010-06-26 17:11:37Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -110,8 +110,8 @@ const signed char DOOR_CONSTS[4][40] =
 	16},
 
 
-	// Räcer
-	{11,
+	// Römer
+	{4,
 	6,
 	8,
 	0,

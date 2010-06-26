@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.h 6458 2010-05-31 11:38:51Z FloSoft $
+// $Id: GameClientPlayer.h 6517 2010-06-26 17:11:37Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -100,6 +100,9 @@ private:
 	std::list<nofFlagWorker*> flagworkers;
 	/// Liste von Schiffen dieses Spielers
 	std::vector<noShip*> ships;
+
+	/// Liste mit Punkten, die schon von Schiffen entdeckt wurden
+	std::vector< Point<MapCoord> > enemies_discovered_by_ships;
 	
 
 
@@ -128,27 +131,6 @@ private:
 	};
 	/// Bündnisse dieses Spielers mit anderen Spielern
 	Pact pacts[MAX_PLAYERS][PACTS_COUNT];
-
-	/*/// Bündnisvorschläge, die von einem anderen Spieler an diesen Spieler gemacht wurden
-	struct PactSuggestion
-	{
-		/// Zeitpunkt des Vorschlags durch den Spieler (damit nicht weit im Nachhinein der Vertrag durch
-		/// den anderen Spieler getätigt werden kann, obwohl ersterer vielleicht gar nicht mehr dazu bereit ist
-		unsigned suggestion_time;
-		/// Der andere Spieler
-		unsigned char player;
-		/// Bündnisart
-		PactType pt;
-		/// Dauer des Bündnisses 
-		unsigned duration;
-
-		PactSuggestion(const unsigned suggestion_time, const unsigned char player, const PactType pt, const unsigned duration) 
-			: suggestion_time(suggestion_time), player(player), pt(pt), duration(duration) {}
-		PactSuggestion(Serializer * ser);
-		void Serialize(Serializer * ser);
-	};
-
-	std::list<PactSuggestion> pact_suggestions;*/
 
 public:
 
@@ -376,6 +358,8 @@ public:
 	/// gibt true zurück, falls erfolgreich
 	bool FindHarborForUnloading(noShip * ship, const MapCoord start_x, const MapCoord start_y, unsigned * goal_harbor_id, std::vector<unsigned char> * route,
 		nobHarborBuilding * exception);
+	/// Ein Schiff hat feindliches Land entdeckt --> ggf. f�r Postnachrichten ausl�sen
+	void ShipDiscoveredHostileTerritory(const Point<MapCoord> location);
 
 	/// Gibt eine Liste der verfügbaren Häfen zurück
 	const std::list<nobHarborBuilding*>& GetHarbors() const { return harbors; }

@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 6458 2010-05-31 11:38:51Z FloSoft $
+// $Id: GameWorldGame.cpp 6517 2010-06-26 17:11:37Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1484,7 +1484,7 @@ void GameWorldGame::SetVisibilitiesAroundPoint(const MapCoord x, const MapCoord 
 /// Bestimmt bei der Bewegung eines spähenden Objekts die Sichtbarkeiten an
 /// den Rändern neu
 void GameWorldGame::RecalcMovingVisibilities(const MapCoord x, const MapCoord y, const unsigned char player, const MapCoord radius, 
-const unsigned char moving_dir)
+const unsigned char moving_dir, Point<MapCoord> * enemy_territory)
 {
 	// Neue Sichtbarkeiten zuerst setzen
 	// Zum Eckpunkt der beiden neuen sichtbaren Kanten gehen
@@ -1499,7 +1499,24 @@ const unsigned char moving_dir)
 	for(MapCoord i = 0;i<radius;++i)
 	{
 		this->GetPointA(ttx,tty,dir);
+		// Sichtbarkeit und für FOW-Gebiet vorherigen Besitzer merken
+		// (d.h. der dort  zuletzt war, als es für Spieler player sichtbar war)
+		Visibility old_vis = GetNode(ttx,tty).fow[player].visibility;
+		unsigned char old_owner = GetNode(ttx,tty).fow[player].owner;
 		SetVisibility(ttx,tty,player);
+		// Neues feindliches Gebiet entdeckt?
+		// Muss vorher undaufgedeckt oder FOW gewesen sein, aber in dem Fall darf dort vorher noch kein 
+		// Territorium entdeckt worden sein
+		unsigned char current_owner = GetNode(ttx,tty).owner;
+		if(current_owner && (old_vis == VIS_INVISIBLE ||
+			(old_vis == VIS_FOW && old_owner != current_owner)))
+		{
+			if(GameClient::inst().GetPlayer(player)->IsPlayerAttackable(current_owner))
+			{
+				enemy_territory->x = ttx;
+				enemy_territory->y = tty;
+			}
+		}
 	}
 	
 	ttx = tx;
@@ -1508,7 +1525,24 @@ const unsigned char moving_dir)
 	for(MapCoord i = 0;i<radius;++i)
 	{
 		this->GetPointA(ttx,tty,dir);
+		// Sichtbarkeit und für FOW-Gebiet vorherigen Besitzer merken
+		// (d.h. der dort  zuletzt war, als es für Spieler player sichtbar war)
+		Visibility old_vis = GetNode(ttx,tty).fow[player].visibility;
+		unsigned char old_owner = GetNode(ttx,tty).fow[player].owner;
 		SetVisibility(ttx,tty,player);
+		// Neues feindliches Gebiet entdeckt?
+		// Muss vorher undaufgedeckt oder FOW gewesen sein, aber in dem Fall darf dort vorher noch kein 
+		// Territorium entdeckt worden sein
+		unsigned char current_owner = GetNode(ttx,tty).owner;
+		if(current_owner && (old_vis == VIS_INVISIBLE ||
+			(old_vis == VIS_FOW && old_owner != current_owner)))
+		{
+			if(GameClient::inst().GetPlayer(player)->IsPlayerAttackable(current_owner))
+			{
+				enemy_territory->x = ttx;
+				enemy_territory->y = tty;
+			}
+		}
 	}
 	
 	// Dasselbe für die zurückgebliebenen Punkte

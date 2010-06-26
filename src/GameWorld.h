@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 6458 2010-05-31 11:38:51Z FloSoft $
+// $Id: GameWorld.h 6517 2010-06-26 17:11:37Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -701,7 +701,8 @@ public:
 	void RecalcAllVisibilities();
 	/// Bestimmt bei der Bewegung eines spähenden Objekts die Sichtbarkeiten an
 	/// den Rändern neu
-	void RecalcMovingVisibilities(const MapCoord x, const MapCoord y, const unsigned char player, const MapCoord radius, const unsigned char moving_dir);
+	void RecalcMovingVisibilities(const MapCoord x, const MapCoord y, const unsigned char player, const MapCoord radius, 
+		const unsigned char moving_dir, Point<MapCoord> * enemy_territory = NULL);
 
 	/// Stellt fest, ob auf diesem Punkt ein Grenzstein steht (ob das Grenzgebiet ist)
 	bool IsBorderNode(const MapCoord x, const MapCoord y, const unsigned char player) const;

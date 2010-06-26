@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 6458 2010-05-31 11:38:51Z FloSoft $
+// $Id: GameClientPlayer.cpp 6517 2010-06-26 17:11:37Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -2100,3 +2100,17 @@ bool GameClientPlayer::CanBuildCatapult() const
 		return true;
 }
 
+/// Ein Schiff hat feindliches Land entdeckt --> ggf. für Postnachrichten auslösen
+void GameClientPlayer::ShipDiscoveredHostileTerritory(const Point<MapCoord> location)
+{
+	// Prüfen, ob Abstand zu bisherigen Punkten nicht zu klein
+	for(unsigned i = 0;i<enemies_discovered_by_ships.size();++i)
+	{
+		if(gwg->CalcDistance(enemies_discovered_by_ships[i].x,enemies_discovered_by_ships[i].y,location.x,location.y) < 30)
+			return;
+	}
+
+	// Nein? Dann haben wir ein neues Territorium gefunden
+	enemies_discovered_by_ships.push_back(location);
+
+}

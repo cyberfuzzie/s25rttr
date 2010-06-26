@@ -1,4 +1,4 @@
-// $Id: noShip.cpp 6458 2010-05-31 11:38:51Z FloSoft $
+// $Id: noShip.cpp 6517 2010-06-26 17:11:37Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -434,11 +434,16 @@ void noShip::StartDriving(const unsigned char dir)
 
 void noShip::Driven()
 {
-	gwg->RecalcMovingVisibilities(x,y,player,GetVisualRange(),dir);
-	//gwg->RecalcVisibilitiesAroundPoint(gwg->GetXA(x,y,(dir+3)%6),gwg->GetYA(x,y,(dir+3)%6),
-	//	GetVisualRange()+2,player,NULL);
-	//gwg->RecalcVisibilitiesAroundPoint(x,y,GetVisualRange()+2,player,NULL);
+	Point<MapCoord> enemy_territory_discovered(0xffff,0xffff);
+	gwg->RecalcMovingVisibilities(x,y,player,GetVisualRange(),dir,&enemy_territory_discovered);
 
+	// Feindliches Territorium entdeckt?
+	if(enemy_territory_discovered.x != 0xffff)
+	{
+		// Dann Nachricht senden
+		GameClient::inst().SendPostMessage(new PostMsgWithLocation(_("A ship disovered an enemy territory"), PMC_MILITARY, enemy_territory_discovered.x, enemy_territory_discovered.y));
+
+	}
 
 	switch(state)
 	{

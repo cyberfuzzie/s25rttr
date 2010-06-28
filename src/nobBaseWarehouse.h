@@ -1,4 +1,4 @@
-// $Id: nobBaseWarehouse.h 6520 2010-06-28 09:12:34Z OLiver $
+// $Id: nobBaseWarehouse.h 6521 2010-06-28 20:32:17Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -252,6 +252,10 @@ namespace FW
 	bool Condition_Troops(nobBaseWarehouse * wh, const void * param); // param = &unsigned --> count
 	bool Condition_StoreWare(nobBaseWarehouse * wh, const void * param); // param = &GoodType -> Warentyp
 	bool Condition_StoreFigure(nobBaseWarehouse * wh, const void * param); // param = &Job -> Jobtyp
+
+	// Die Lagerhäuser lagern die jeweiligen Waren ein
+	bool Condition_WantStoreWare(nobBaseWarehouse * wh, const void * param); // param = &GoodType -> Warentyp
+	bool Condition_WantStoreFigure(nobBaseWarehouse * wh, const void * param); // param = &Job -> Jobtyp
 
 	bool NoCondition(nobBaseWarehouse * wh, const void * param);
 }

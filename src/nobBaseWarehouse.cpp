@@ -1,4 +1,4 @@
-// $Id: nobBaseWarehouse.cpp 6520 2010-06-28 09:12:34Z OLiver $
+// $Id: nobBaseWarehouse.cpp 6521 2010-06-28 20:32:17Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1041,6 +1041,7 @@ bool FW::Condition_StoreWare(nobBaseWarehouse * wh, const void * param)
 		return (!wh->CheckRealInventorySettings(0,2,*static_cast<const GoodType*>(param)));
 }
 
+
 bool FW::Condition_StoreFigure(nobBaseWarehouse * wh, const void * param)
 {
 	// Einlagern darf nicht verboten sein, Bootstypen zu normalen Trägern machen
@@ -1049,6 +1050,22 @@ bool FW::Condition_StoreFigure(nobBaseWarehouse * wh, const void * param)
 	else
 		return (!wh->CheckRealInventorySettings(1,2,*static_cast<const Job*>(param)));
 }
+
+bool FW::Condition_WantStoreFigure(nobBaseWarehouse * wh, const void * param)
+{
+	// Einlagern muss gewollt sein
+	Job job = (*static_cast<const Job*>(param) == JOB_BOATCARRIER) ? JOB_HELPER : *static_cast<const Job*>(param);
+	return (wh->CheckRealInventorySettings(1,8,JOB_HELPER));
+}
+
+bool FW::Condition_WantStoreWare(nobBaseWarehouse * wh, const void * param)
+{
+	// Einlagern muss gewollt sein
+	// Schilder beachten!
+	GoodType gt = ConvertShields(*static_cast<const GoodType*>(param));
+	return (wh->CheckRealInventorySettings(0,8,gt));
+}
+
 
 const Goods *nobBaseWarehouse::GetInventory() const
 {

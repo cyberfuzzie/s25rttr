@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 6517 2010-06-26 17:11:37Z OLiver $
+// $Id: GameClientPlayer.cpp 6521 2010-06-28 20:32:17Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -951,9 +951,16 @@ noBaseBuilding * GameClientPlayer::FindClientForWare(Ware * ware)
 	if(bb && distribution[gt].goals.size())
 		distribution[gt].selected_goal = (distribution[gt].selected_goal + 1) % unsigned(distribution[gt].goals.size());
 
+	
+
 	// Wenn kein Abnehmer gefunden wurde, muss es halt in ein Lagerhaus
 	if(!bb)
-		bb = FindWarehouse(ware->GetLocation(),FW::Condition_StoreWare,0,true,&gt,true);
+	{	// Zuerst Einlagernde Lagerhäuser durchgehen
+		bb = FindWarehouse(ware->GetLocation(),FW::Condition_WantStoreWare,0,true,&gt,true);
+		// Wenn das nichts wurde, dann auch restliche Lagerhäuser mit einbeziehen
+		if(!bb)
+			bb = FindWarehouse(ware->GetLocation(),FW::Condition_StoreWare,0,true,&gt,true);
+	}
 
 	// Abnehmer Bescheid sagen
 	if(bb)

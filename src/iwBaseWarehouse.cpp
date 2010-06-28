@@ -1,4 +1,4 @@
-// $Id: iwBaseWarehouse.cpp 6458 2010-05-31 11:38:51Z FloSoft $
+// $Id: iwBaseWarehouse.cpp 6520 2010-06-28 09:12:34Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -91,6 +91,12 @@ iwBaseWarehouse::iwBaseWarehouse(GameWorldViewer * const gwv,const char *const t
 			if(image)
 				image->SetVisible(GAMECLIENT.IsReplayModeOn()?wh->CheckRealInventorySettings(category,4,i):
 				wh->CheckVisualInventorySettings(category,4,i));
+
+			// Einlagern-Bild (de)aktivieren
+			image = GetCtrl<ctrlGroup>(100+category)->GetCtrl<ctrlImage>(700+i);
+			if(image)
+				image->SetVisible(GAMECLIENT.IsReplayModeOn()?wh->CheckRealInventorySettings(category,8,i):
+				wh->CheckVisualInventorySettings(category,8,i));
 		}
 	}
 
@@ -124,7 +130,7 @@ void iwBaseWarehouse::Msg_Group_ButtonClick(const unsigned int group_id, const u
 			unsigned int data = 0;
 			switch(optiongroup->GetSelection())
 			{
-			case 0: data = 0; break;
+			case 0: data = 8; break;
 			case 1: data = 4; break;
 			case 2: data = 2; break;
 			}
@@ -157,7 +163,7 @@ void iwBaseWarehouse::Msg_ButtonClick(const unsigned int ctrl_id)
 				unsigned int data = 0;
 				switch(optiongroup->GetSelection())
 				{
-				case 0: data = 0; break;
+				case 0: data = 8; break;
 				case 1: data = 4; break;
 				case 2: data = 2; break;
 				}
@@ -217,4 +223,9 @@ void iwBaseWarehouse::ChangeOverlay(unsigned int i, unsigned int what)
 	image = GetCtrl<ctrlGroup>(100+this->page)->GetCtrl<ctrlImage>(500+i);
 	if(image)
 		image->SetVisible(wh->CheckVisualInventorySettings(page,4,i));
+
+	// Einlagern-Bild (de)aktivieren
+	image = GetCtrl<ctrlGroup>(100+this->page)->GetCtrl<ctrlImage>(700+i);
+	if(image)
+		image->SetVisible(wh->CheckVisualInventorySettings(page,8,i));
 }

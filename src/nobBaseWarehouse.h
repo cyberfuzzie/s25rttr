@@ -1,4 +1,4 @@
-// $Id: nobBaseWarehouse.h 6458 2010-05-31 11:38:51Z FloSoft $
+// $Id: nobBaseWarehouse.h 6520 2010-06-28 09:12:34Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -135,11 +135,9 @@ public: void Serialize(SerializedGameData *sgd) const { Serialize_nobBaseWarehou
 	unsigned GetVisualFiguresCount(Job type) const { return goods.people[type]; }
 
 	/// Verändert Ein/Auslagerungseinstellungen (visuell)
-	void ChangeVisualInventorySettings(unsigned char category,unsigned char state,unsigned char type)
-	{ ((category == 0)?inventory_settings_visual.wares[type]:inventory_settings_visual.figures[type]) ^= state; }
+	void ChangeVisualInventorySettings(unsigned char category,unsigned char state,unsigned char type);
 	/// Gibt Ein/Auslagerungseinstellungen zurück (visuell)
-	bool CheckVisualInventorySettings(unsigned char category,unsigned char state,unsigned char type) const
-	{ return ((((category == 0)?inventory_settings_visual.wares[type]:inventory_settings_visual.figures[type]) & state) == state); }
+	bool CheckVisualInventorySettings(unsigned char category,unsigned char state,unsigned char type) const;
 	///// Generiert einen NC-Befehl für eine Inventory Settings Änderung und führt noch entsprechend eigene Änderungen aus
 	//void SubmitInventorySettings();
 

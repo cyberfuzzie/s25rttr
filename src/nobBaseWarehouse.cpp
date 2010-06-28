@@ -1,4 +1,4 @@
-// $Id: nobBaseWarehouse.cpp 6517 2010-06-26 17:11:37Z OLiver $
+// $Id: nobBaseWarehouse.cpp 6520 2010-06-28 09:12:34Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1087,6 +1087,27 @@ void nobBaseWarehouse::AddToInventory()
 
 }
 
+/// Verändert Ein/Auslagerungseinstellungen (visuell)
+void nobBaseWarehouse::ChangeVisualInventorySettings(unsigned char category,unsigned char state,unsigned char type)
+{
+	((category == 0)?inventory_settings_visual.wares[type]:inventory_settings_visual.figures[type]) ^= state;
+
+	// Einlagern -> Einlagern verbieten / Auslagern auf false setzen, weil es keinen Sinn macht
+	if(state == 8)
+		((category == 0)?inventory_settings_visual.wares[type]:inventory_settings_visual.figures[type]) &= 8;
+	else
+		// Und jeweils umgekehrt
+		((category == 0)?inventory_settings_visual.wares[type]:inventory_settings_visual.figures[type]) &= ( 2 | 4 );
+
+}
+	
+/// Gibt Ein/Auslagerungseinstellungen zurück (visuell)
+bool nobBaseWarehouse::CheckVisualInventorySettings(unsigned char category,unsigned char state,unsigned char type) const
+{ 
+	return ((((category == 0)?inventory_settings_visual.wares[type]:inventory_settings_visual.figures[type]) & state) == state); 
+}
+
+
 //void nobBaseWarehouse::ChangeRealInventorySetting(const unsigned char * const wares,const unsigned char * const figures)
 //{
 //	memcpy(inventory_settings_real.wares,wares,36);
@@ -1106,6 +1127,14 @@ void nobBaseWarehouse::ChangeRealInventorySetting(unsigned char category,unsigne
 {
 	/// Einstellung ändern
 	((category == 0)?inventory_settings_real.wares[type]:inventory_settings_real.figures[type]) ^= state; 
+
+	// Einlagern -> Einlagern verbieten / Auslagern auf false setzen, weil es keinen Sinn macht
+	if(state == 8)
+		((category == 0)?inventory_settings_real.wares[type]:inventory_settings_real.figures[type]) &= 8;
+	else
+		// Und jeweils umgekehrt
+		((category == 0)?inventory_settings_real.wares[type]:inventory_settings_real.figures[type]) &= ( 2 | 4 );
+
 
 	/// Bei anderen Spielern als dem lokalen, der das in Auftrag gegeben hat, müssen die visuellen ebenfalls
 	/// geändert werden oder auch bei Replays

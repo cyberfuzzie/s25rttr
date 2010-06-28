@@ -1,4 +1,4 @@
-// $Id: iwWares.cpp 6458 2010-05-31 11:38:51Z FloSoft $
+// $Id: iwWares.cpp 6520 2010-06-28 09:12:34Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -158,6 +158,15 @@ iwWares::iwWares(unsigned int id, unsigned short x , unsigned short y,
 			figures->AddVarText(600+INVENTORY_IDS[1][ware_id], (four ? 53 : 39)+x*28, 61+y*42, _("%d"), COLOR_YELLOW, 
 			glArchivItem_Font::DF_BOTTOM | glArchivItem_Font::DF_RIGHT, font, 1,
 			&inventory->people[INVENTORY_IDS[1][ware_id]]);
+
+		// Overlay für "Einlagern"
+		image = wares->AddImage(700+INVENTORY_IDS[0][ware_id], (four ? 40 : 26)+x*28, 44+y*42, LOADER.GetImageN("io_new", 3));
+		image->SetVisible(false);
+		if(INVENTORY_IDS[1][ware_id] != 0xFFFF)
+		{
+			image = figures->AddImage(500+INVENTORY_IDS[1][ware_id], (four ? 40 : 26)+x*28, 44+y*42, LOADER.GetImageN("io_new", 3));
+			image->SetVisible(false);
+		}
 	}
 
 	wares->SetVisible(true);

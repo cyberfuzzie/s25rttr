@@ -1,16 +1,18 @@
 #!/bin/bash
 
-cd $(dirname $0)
+DIR=$(dirname $0)
 
-chmod 0755 ../bin/rttr.sh ../share/s25rttr/RTTR/s25update ../bin/s25client ../share/s25rttr/RTTR/sound-convert >/dev/null 2>/dev/null
+cd $DIR
+
+chmod 0755 $DIR/bin/rttr.sh $DIR/share/s25rttr/RTTR/s25update $DIR/bin/s25client $DIR/share/s25rttr/RTTR/sound-convert >/dev/null 2>/dev/null
 
 if [ "$LD_LIBRARY_PATH" = "" ] ; then
-	export LD_LIBRARY_PATH="../lib"
+	export LD_LIBRARY_PATH="$DIR/lib"
 else
-	export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:../lib"
+	export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$DIR/lib"
 fi
 
-cd ..
+cd $DIR/..
 
 if [ ! "$1" = "noupdate" ] ; then
 	if [ -f ./share/s25rttr/RTTR/s25update ] ; then

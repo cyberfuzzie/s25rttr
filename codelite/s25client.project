@@ -537,6 +537,8 @@
       <File Name="../src/GameServer.h"/>
       <File Name="../src/GameServerPlayer.cpp"/>
       <File Name="../src/GameServerPlayer.h"/>
+      <File Name="../libutil/src/UPnP.cpp"/>
+      <File Name="../libutil/src/UPnP.h"/>
     </VirtualDirectory>
     <VirtualDirectory Name="KI">
       <File Name="../src/AIBase.h"/>
@@ -552,6 +554,8 @@
       <File Name="../src/AIConstruction.h"/>
       <File Name="../src/AIResourceMap.cpp"/>
       <File Name="../src/AIResourceMap.h"/>
+      <File Name="../src/AIInterface.cpp"/>
+      <File Name="../src/AIInterface.h"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Treiber">
       <File Name="../src/AudioDriverLoaderInterface.h"/>
@@ -698,6 +702,7 @@
         <Library Value="mygettext"/>
         <Library Value="endian"/>
         <Library Value="bz2"/>
+        <Library Value="libminiupnpc"/>
       </Linker>
       <ResourceCompiler Options=""/>
     </GlobalSettings>

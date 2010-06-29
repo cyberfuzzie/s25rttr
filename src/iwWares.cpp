@@ -1,4 +1,4 @@
-// $Id: iwWares.cpp 6520 2010-06-28 09:12:34Z OLiver $
+// $Id: iwWares.cpp 6523 2010-06-29 14:42:02Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -164,7 +164,7 @@ iwWares::iwWares(unsigned int id, unsigned short x , unsigned short y,
 		image->SetVisible(false);
 		if(INVENTORY_IDS[1][ware_id] != 0xFFFF)
 		{
-			image = figures->AddImage(500+INVENTORY_IDS[1][ware_id], (four ? 40 : 26)+x*28, 44+y*42, LOADER.GetImageN("io_new", 3));
+			image = figures->AddImage(700+INVENTORY_IDS[1][ware_id], (four ? 40 : 26)+x*28, 44+y*42, LOADER.GetImageN("io_new", 3));
 			image->SetVisible(false);
 		}
 	}

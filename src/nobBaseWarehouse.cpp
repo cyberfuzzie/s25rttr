@@ -1,4 +1,4 @@
-// $Id: nobBaseWarehouse.cpp 6521 2010-06-28 20:32:17Z OLiver $
+// $Id: nobBaseWarehouse.cpp 6523 2010-06-29 14:42:02Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -52,6 +52,8 @@
 
 /// Intervall für Ausleerung (in gf)
 const unsigned EMPTY_INTERVAL = 100;
+/// Intervall für Einlieferung
+const unsigned STORE_INTERVAL = 100;
 /// Dauer für das Erstellen von Trägern
 const unsigned short PRODUCE_HELPERS_GF = 300;
 const unsigned short PRODUCE_HELPERS_RANDOM_GF = 20;
@@ -61,7 +63,7 @@ const unsigned short RECRUITE_RANDOM_GF = 200;
 
 nobBaseWarehouse::nobBaseWarehouse(const BuildingType type,const unsigned short x, const unsigned short y,const unsigned char player,const Nation nation)
 : nobBaseMilitary(type,x,y,player,nation), fetch_double_protection(false), producinghelpers_event(em->AddEvent(this,PRODUCE_HELPERS_GF+RANDOM.Rand(__FILE__,__LINE__,obj_id,PRODUCE_HELPERS_RANDOM_GF),1)), recruiting_event(0),
-empty_event(0)
+empty_event(0), store_event(0)
 {
 	// Reserve nullen
 	for(unsigned i = 0;i<5;++i)
@@ -91,6 +93,7 @@ void nobBaseWarehouse::Destroy_nobBaseWarehouse()
 	em->RemoveEvent(recruiting_event);
 	em->RemoveEvent(producinghelpers_event);
 	em->RemoveEvent(empty_event);
+	em->RemoveEvent(store_event);
 
 	// Waiting Wares löschen
 	for(list<Ware*>::iterator it = waiting_wares.begin();it.valid();++it)
@@ -126,6 +129,7 @@ void nobBaseWarehouse::Serialize_nobBaseWarehouse(SerializedGameData * sgd) cons
 	sgd->PushObject(producinghelpers_event,true);
 	sgd->PushObject(recruiting_event,true);
 	sgd->PushObject(empty_event,true);
+	sgd->PushObject(store_event,true);
 
 	for(unsigned i = 0;i<5;++i)
 	{
@@ -157,6 +161,7 @@ nobBaseWarehouse::nobBaseWarehouse(SerializedGameData * sgd, const unsigned obj_
 	producinghelpers_event = sgd->PopObject<EventManager::Event>(GOT_EVENT);
 	recruiting_event = sgd->PopObject<EventManager::Event>(GOT_EVENT);
 	empty_event = sgd->PopObject<EventManager::Event>(GOT_EVENT);
+	store_event = sgd->PopObject<EventManager::Event>(GOT_EVENT);
 
 	for(unsigned i = 0;i<5;++i)
 	{
@@ -194,17 +199,16 @@ void nobBaseWarehouse::OrderCarrier(noRoadNode* const goal, RoadSegment * workpl
 	TryStopRecruiting();
 }
 
-void nobBaseWarehouse::OrderJob(const Job job, noRoadNode* const goal)
+void nobBaseWarehouse::OrderJob(const Job job, noRoadNode* const goal, const bool allow_recruiting)
 {
 	// Job überhaupt hier vorhanden
 	if(!real_goods.people[job])
 	{
 		// Evtl das Werkzeug der Person vorhanden sowie ein Träger?
 		bool tool_available = (JOB_CONSTS[job].tool == GD_NOTHING) ? true : (real_goods.goods[JOB_CONSTS[job].tool]!=0);
-		if(!(real_goods.people[JOB_HELPER] && tool_available))
+		if(!(real_goods.people[JOB_HELPER] && tool_available) || !allow_recruiting)
 		{
 			// nein --> dann tschüss
-			LOG.lprintf("nobBaseWarehouse::OrderJob: WARNING: No JobType %u (or his tool) in warehouse!\n",static_cast<unsigned>(job));
 			return;
 		}
 	}
@@ -526,6 +530,58 @@ void nobBaseWarehouse::HandleBaseEvent(const unsigned int id)
 			if(AreWaresToEmpty())
 				// --> Nächstes Event
 				empty_event = em->AddEvent(this,EMPTY_INTERVAL,3);
+
+		} break;
+	// Einlagerevent
+	case 4:
+		{
+			// Merken, ob hier was passiert ist und es noch Waren/Figuren gab,
+			// die eingeliefert werden sollen
+			bool store = false;
+
+			// Untersuchen, welche Waren und Figuren eingelagert werden sollen
+			for(unsigned i = 0;i<WARE_TYPES_COUNT;++i)
+			{
+				// Soll Ware eingeliefert werden?
+				if(inventory_settings_real.wares[i] & 8)
+				{
+					store = true;
+
+					// Lagerhaus suchen, das diese Ware enthält
+					nobBaseWarehouse * wh = players->getElement(player)
+						->FindWarehouse(this,FW::Condition_StoreAndDontWantWare,NULL,false,(void*)&i,false);
+					// Gefunden?
+					if(wh)
+					{
+						// Dann bestellen
+						Ware * ware = wh->OrderWare(GoodType(i),this);
+						if(ware)
+							dependent_wares.push_back(ware);
+					}
+				}
+			}
+
+			// Menschen "bestellen"
+			for(unsigned i = 0;i<JOB_TYPES_COUNT;++i)
+			{
+				// Soll dieser Typ von Mensch bestellt werden?
+				if(inventory_settings_real.figures[i] & 8)
+				{
+					store = true;
+
+					// Lagerhaus suchen, das diesen Job enthält
+					nobBaseWarehouse * wh = players->getElement(player)
+						->FindWarehouse(this,FW::Condition_StoreAndDontWantFigure,NULL,false,(void*)&i,false);
+					// Gefunden?
+					if(wh)
+						// Dann bestellen
+						wh->OrderJob(Job(i),this,false);
+				}
+			}
+
+			// Gibt es noch weitere? Dann schön weiter Events anmelden
+			store_event = em->AddEvent(this,STORE_INTERVAL,4);
+
 
 		} break;
 	}
@@ -1066,6 +1122,19 @@ bool FW::Condition_WantStoreWare(nobBaseWarehouse * wh, const void * param)
 	return (wh->CheckRealInventorySettings(0,8,gt));
 }
 
+// Lagerhäuser enthalten die jeweilien Waren, liefern sie aber NICHT gleichzeitig ein
+bool FW::Condition_StoreAndDontWantWare(nobBaseWarehouse * wh, const void * param)
+{
+	return (Condition_StoreWare(wh,param) && !Condition_WantStoreWare(wh,param));
+}// param = &GoodType -> Warentyp
+
+bool FW::Condition_StoreAndDontWantFigure(nobBaseWarehouse * wh, const void * param)
+{
+	return (Condition_StoreFigure(wh,param) && !Condition_WantStoreFigure(wh,param));
+}
+// param = &Job -> Jobtyp
+
+
 
 const Goods *nobBaseWarehouse::GetInventory() const
 {
@@ -1165,22 +1234,37 @@ void nobBaseWarehouse::ChangeRealInventorySetting(unsigned char category,unsigne
 	// Sind Waren vorhanden, die ausgelagert werden müssen und ist noch kein Auslagerungsevent vorhanden --> neues anmelden
 	if(state == 4 && ((category == 0)?real_goods.goods[type]:real_goods.people[type]) && !empty_event)
 		empty_event = em->AddEvent(this,EMPTY_INTERVAL,3);
+
+	// Sollen Waren eingelagert werden? Dann müssen wir neue bestellen
+	if(state == 8 && !store_event && ((category == 0)?inventory_settings_real.wares[type]:inventory_settings_real.figures[type]) & 8)
+		store_event = em->AddEvent(this,STORE_INTERVAL,4);
 }
 
 /// Verändert alle Ein/Auslagerungseinstellungen einer Kategorie (also Waren oder Figuren)(real)
 void nobBaseWarehouse::ChangeAllRealInventorySettings(unsigned char category,unsigned char state)
 {
+	// Merken, ob Waren/Figuren eingelagert werden sollen
+	bool store = false;
+
 	if(category == 0)
 	{
 		// Waren ändern
 		for(unsigned i = 0;i<WARE_TYPES_COUNT;++i)
+		{
 			inventory_settings_real.wares[i] ^= state;
+			if(state == 8 && inventory_settings_real.wares[i] & state)
+				store = true;
+		}
 	}
 	else
 	{
 		// Figuren ändern
 		for(unsigned i = 0;i<JOB_TYPES_COUNT;++i)
+		{
 			inventory_settings_real.figures[i] ^= state;
+			if(state == 8 && inventory_settings_real.figures[i] & state)
+				store = true;
+		}
 	}
 
 	// Evtl gabs verlorene Waren, die jetzt in das HQ wieder reinkönnen
@@ -1190,6 +1274,11 @@ void nobBaseWarehouse::ChangeAllRealInventorySettings(unsigned char category,uns
 	// Sind Waren vorhanden, die ausgelagert werden müssen und ist noch kein Auslagerungsevent vorhanden --> neues anmelden
 	if(state == 4 && AreWaresToEmpty() && !empty_event)
 		empty_event = em->AddEvent(this,EMPTY_INTERVAL,3);
+
+	// Sollen Waren eingelagert werden? Dann müssen wir neue bestellen
+	if(store && !store_event)
+		store_event = em->AddEvent(this,STORE_INTERVAL,4);
+
 }
 
 

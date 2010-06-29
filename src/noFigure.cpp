@@ -105,6 +105,13 @@ noFigure::noFigure(const Job job,const unsigned short x, const unsigned short y,
 {
 	if(GetVisualRange())
 		gwg->SetVisibilitiesAroundPoint(x,y,GetVisualRange(),player);
+
+	// Gehen wir in ein Lagerhaus? Dann dürfen wir da nicht unsere Arbeit ausführen, sondern 
+	// gehen quasi nach Hause von Anfang an aus
+	if(goal->GetGOT() == GOT_NOB_HARBORBUILDING || goal->GetGOT() == GOT_NOB_STOREHOUSE 
+		|| goal->GetGOT() == GOT_NOB_HQ)
+		fs = FS_GOHOME;
+
 }
 
 noFigure::noFigure(const Job job,const unsigned short x, const unsigned short y,const unsigned char player)
@@ -929,6 +936,9 @@ noFigure * CreateJob(const Job job_id,const unsigned short x, const unsigned sho
 		{
 			// Wenn goal = 0 oder Lagerhaus, dann Auslagern anscheinend und mann kann irgendeinen Typ nehmen
 			if(!goal)
+				return new nofWellguy(x,y,player,static_cast<nobUsual*>(goal));
+			if(goal->GetGOT() == GOT_NOB_STOREHOUSE || goal->GetGOT() == GOT_NOB_HARBORBUILDING 
+				|| goal->GetGOT() == GOT_NOB_HQ)
 				return new nofWellguy(x,y,player,static_cast<nobUsual*>(goal));
 			else if(static_cast<nobUsual*>(goal)->GetBuildingType() == BLD_WELL)
 				return new nofWellguy(x,y,player,static_cast<nobUsual*>(goal));

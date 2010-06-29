@@ -1,4 +1,4 @@
-// $Id: nobBaseWarehouse.h 6521 2010-06-28 20:32:17Z OLiver $
+// $Id: nobBaseWarehouse.h 6523 2010-06-29 14:42:02Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -61,6 +61,9 @@ protected:
 	EventManager::EventPointer recruiting_event;
 	/// Auslagerevent für Waren und Figuren
 	EventManager::EventPointer empty_event;
+	/// Einlagerevent für Waren und Figuren
+	EventManager::EventPointer store_event;
+
 
 protected:
 
@@ -155,8 +158,8 @@ public: void Serialize(SerializedGameData *sgd) const { Serialize_nobBaseWarehou
 
 	/// Bestellt einen Träger
 	void OrderCarrier(noRoadNode* const goal, RoadSegment * workplace);
-	/// Bestellt irgendeinen Beruf
-	void OrderJob(const Job job, noRoadNode* const goal);
+	/// Bestellt irgendeinen Beruf (ggf. stellt er ihn noch mit einem Werkzeug her)
+	void OrderJob(const Job job, noRoadNode* const goal, const bool allow_recruiting);
 	/// Bestellt einen Esel
 	nofCarrier * OrderDonkey(RoadSegment * road,noRoadNode * const goal_flag);
 	
@@ -256,6 +259,11 @@ namespace FW
 	// Die Lagerhäuser lagern die jeweiligen Waren ein
 	bool Condition_WantStoreWare(nobBaseWarehouse * wh, const void * param); // param = &GoodType -> Warentyp
 	bool Condition_WantStoreFigure(nobBaseWarehouse * wh, const void * param); // param = &Job -> Jobtyp
+
+	// Lagerhäuser enthalten die jeweilien Waren, liefern sie aber NICHT gleichzeitig ein
+	bool Condition_StoreAndDontWantWare(nobBaseWarehouse * wh, const void * param); // param = &GoodType -> Warentyp
+	bool Condition_StoreAndDontWantFigure(nobBaseWarehouse * wh, const void * param); // param = &Job -> Jobtyp
+
 
 	bool NoCondition(nobBaseWarehouse * wh, const void * param);
 }

@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 6521 2010-06-28 20:32:17Z OLiver $
+// $Id: GameClientPlayer.cpp 6523 2010-06-29 14:42:02Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -704,7 +704,7 @@ bool GameClientPlayer::FindWarehouseForJob(const Job job, noRoadNode * goal)
 	if(wh)
 	{
 		// Es wurde ein Lagerhaus gefunden, wo es den geforderten Beruf gibt, also den Typen zur Arbeit rufen
-		wh->OrderJob(job,goal);
+		wh->OrderJob(job,goal,true);
 		return true;
 	}
 
@@ -1269,7 +1269,7 @@ void GameClientPlayer::CallFlagWorker(const unsigned short x, const unsigned sho
 
 	/// Wenns eins gibt, dann rufen
 	if(wh)
-		wh->OrderJob(job,flag);
+		wh->OrderJob(job,flag,true);
 }
 
 

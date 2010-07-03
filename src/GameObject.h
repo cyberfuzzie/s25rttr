@@ -1,4 +1,4 @@
-// $Id: GameObject.h 6458 2010-05-31 11:38:51Z FloSoft $
+// $Id: GameObject.h 6535 2010-07-03 08:12:55Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -26,7 +26,7 @@ class GameWorldGame;
 class EventManager;
 class GameClientPlayerList;
 
-/// IDs fÃ¼r jede Klasse AM ENDE DER Hierarchie fÃ¼r die Speicherfunktionen
+/// IDs für jede Klasse AM ENDE DER Hierarchie für die Speicherfunktionen
 enum GO_Type
 {
 	GOT_UNKNOWN = 0,
@@ -114,7 +114,7 @@ public:
 	/// Benachrichtigen, wenn neuer GF erreicht wurde.
 	virtual void HandleEvent(const unsigned int id) {}
 
-	/// Gibt Objekt-ID zurÃ¼ck.
+	/// Gibt Objekt-ID zurück.
 	unsigned GetObjId() const { return obj_id; }
 
 	/// Serialisierungsfunktion.
@@ -125,14 +125,14 @@ public:
 	/// Setzt Pointer auf GameWorld und EventManager
 	static void SetPointers(GameWorldGame * const gwg,EventManager * const em, GameClientPlayerList* players) 
 	{ GameObject::gwg = gwg; GameObject::em = em; GameObject::players = players; }
-	/// setzt den Objekt und Objekt-ID-Counter zurÃ¼ck
+	/// setzt den Objekt und Objekt-ID-Counter zurück
 	static void ResetCounter(void) { obj_id_counter = 1; obj_counter = 0; };
-	/// Gibt Anzahl Objekte zurÃ¼ck.
+	/// Gibt Anzahl Objekte zurück.
 	static unsigned GetObjCount() { return obj_counter; }
 	/// Setzt Anzahl der Objekte (NUR FÃœR DAS LADEN!)
 	static void SetObjCount(const unsigned obj_count) 
 	{ obj_counter = obj_count; }
-	/// Gibt Obj-ID-Counter zurÃ¼ck (NUR FÃœR DAS SPEICHERN!)
+	/// Gibt Obj-ID-Counter zurück (NUR FÃœR DAS SPEICHERN!)
 	static unsigned GetObjIDCounter() { return obj_id_counter; }
 	/// Setzt Counter (NUR FÃœR DAS LADEN!)
 	static void SetObjIDCounter(const unsigned obj_id_counter) 
@@ -146,7 +146,7 @@ protected:
 protected:
 	const unsigned int obj_id; ///< eindeutige Objekt-ID
 
-	/// Zugriff auf Ã¼brige Spielwelt
+	/// Zugriff auf übrige Spielwelt
 	static GameWorldGame *gwg;
 	static EventManager *em;
 	static GameClientPlayerList *players;

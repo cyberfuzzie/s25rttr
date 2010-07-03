@@ -146,6 +146,7 @@
     <ClInclude Include="..\..\src\AIBase.h" />
     <ClInclude Include="..\..\src\AIConstruction.h" />
     <ClInclude Include="..\..\src\AIEventManager.h" />
+    <ClInclude Include="..\..\src\AIInterface.h" />
     <ClInclude Include="..\..\src\AIJHHelper.h" />
     <ClInclude Include="..\..\src\AIPlayer.h" />
     <ClInclude Include="..\..\src\AIPlayerJH.h" />
@@ -407,6 +408,7 @@
     <ClCompile Include="..\..\src\Addons.cpp" />
     <ClCompile Include="..\..\src\AIConstruction.cpp" />
     <ClCompile Include="..\..\src\AIEventManager.cpp" />
+    <ClCompile Include="..\..\src\AIInterface.cpp" />
     <ClCompile Include="..\..\src\AIJHHelper.cpp" />
     <ClCompile Include="..\..\src\AIPlayer.cpp" />
     <ClCompile Include="..\..\src\AIPlayerJH.cpp" />

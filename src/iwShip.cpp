@@ -1,4 +1,4 @@
-// $Id: iwShip.cpp 6458 2010-05-31 11:38:51Z FloSoft $
+// $Id: iwShip.cpp 6535 2010-07-03 08:12:55Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -44,7 +44,7 @@
 	static char THIS_FILE[] = __FILE__;
 #endif
 
-/// IDs in der IO_DAT von Boot und Schiffs-Bild fÃ¼r den Umschaltebutton beim Schiffsbauer
+/// IDs in der IO_DAT von Boot und Schiffs-Bild für den Umschaltebutton beim Schiffsbauer
 const unsigned IODAT_BOAT_ID = 219;
 const unsigned IODAT_SHIP_ID = 218;
 
@@ -52,7 +52,7 @@ const unsigned IODAT_SHIP_ID = 218;
 /**
  *  Konstruktor von @p iwShip.
  *
- *  @todo Ã¼berprÃ¼fen und die restlichen Steuerelemente zur Funktion bringen
+ *  @todo überprüfen und die restlichen Steuerelemente zur Funktion bringen
  *
  *  @author OLiver
  */
@@ -62,8 +62,8 @@ gwv(gwv), gi(gi), ship_id(ship ? GameClient::inst().GetPlayer(ship->GetPlayer())
 {
 	AddImage(  0,126,101, LOADER.GetImageN("io", 228));
 	AddImageButton( 2, 18,192, 30, 35,TC_GREY,LOADER.GetImageN("io", 225));		// Viewer: 226 - Hilfe
-	AddImageButton( 3, 51,196, 30, 26,TC_GREY,LOADER.GetImageN("io", 102));		// Viewer: 103 - Schnell zurÃ¼ck
-	AddImageButton( 4, 81,196, 30, 26,TC_GREY,LOADER.GetImageN("io", 103));		// Viewer: 104 - ZurÃ¼ck
+	AddImageButton( 3, 51,196, 30, 26,TC_GREY,LOADER.GetImageN("io", 102));		// Viewer: 103 - Schnell zurück
+	AddImageButton( 4, 81,196, 30, 26,TC_GREY,LOADER.GetImageN("io", 103));		// Viewer: 104 - Zurück
 	AddImageButton( 5,111,196, 30, 26,TC_GREY,LOADER.GetImageN("io", 104));		// Viewer: 105 - Vor
 	AddImageButton( 6,141,196, 30, 26,TC_GREY,LOADER.GetImageN("io", 105));		// Viewer: 106 - Schnell vor
 	AddImageButton( 7, 181, 196, 30, 26, TC_GREY, LOADER.GetImageN("io", 107), _("Go to place")); // "Gehe Zu Ort"
@@ -150,7 +150,7 @@ void iwShip::Msg_ButtonClick(const unsigned int ctrl_id)
 	if(!ship)
 		return;
 
-	// Expeditionskommando? (Schiff weiterfahren lassen, Kolonie grÃ¼nden)
+	// Expeditionskommando? (Schiff weiterfahren lassen, Kolonie gründen)
 	if(ctrl_id >= 10 && ctrl_id <= 17)
 	{
 		GameClient::inst().AddGC(new gc::ExpeditionCommand(gc::ExpeditionCommand::Action(ctrl_id-10),ship_id));
@@ -165,7 +165,7 @@ void iwShip::Msg_ButtonClick(const unsigned int ctrl_id)
 		{
 			ship_id = 0;
 		} break;
-	// Eins zurÃ¼ck
+	// Eins zurück
 	case 4:
 		{
 			if(ship_id == 0)

@@ -91,7 +91,7 @@ const unsigned short WANDER_WAY_MAX = 40;
 const unsigned short WANDER_TRYINGS = 3;
 // GrÃ¶Ãe des Rechtecks um den Punkt, wo er die Flaggen sucht beim Rumirren
 const unsigned short WANDER_RADIUS = 10;
-/// Dasselbe nochmal für Soldaten
+/// Dasselbe nochmal f�r Soldaten
 const unsigned short WANDER_TRYINGS_SOLDIERS = 6;
 const unsigned short WANDER_RADIUS_SOLDIERS = 15;
 
@@ -209,7 +209,7 @@ void noFigure::ActAtFirst()
 }
 
 
-/// Gibt den Sichtradius dieser Figur zurück (0, falls nicht-spähend)
+/// Gibt den Sichtradius dieser Figur zur�ck (0, falls nicht-spähend)
 unsigned noFigure::GetVisualRange() const
 {
 	return 0;
@@ -231,7 +231,7 @@ bool noFigure::CalcFigurRelative(int &x, int &y)
 	int y2 = static_cast<int>(gwg->GetTerrainY(gwg->GetXA(this->x,this->y,dir),gwg->GetYA(this->x,this->y,dir)));
 	
 	
-	// Gehen wir über einen Kartenrand (horizontale Richung?)
+	// Gehen wir �ber einen Kartenrand (horizontale Richung?)
 	if(abs(x1-x2) >= gwg->GetWidth() * TR_W / 2)
 	{
 		if(abs(x1-int(gwg->GetWidth())*TR_W-x2) < abs(x1-x2))
@@ -239,7 +239,7 @@ bool noFigure::CalcFigurRelative(int &x, int &y)
 		else
 			x1 += gwg->GetWidth()*TR_W;
 	}
-	// Und dasselbe für vertikale Richtung
+	// Und dasselbe f�r vertikale Richtung
 	if(abs(y1-y2) >= gwg->GetHeight() * TR_H / 2)
 	{
 		if(abs(y1-int(gwg->GetHeight())*TR_H-y2) < abs(y1-y2))
@@ -484,7 +484,7 @@ void noFigure::HandleEvent(const unsigned int id)
 
 		//CalcVisibilities(gwg->GetXA(x,y,(dir+3)%6),gwg->GetYA(x,y,(dir+3)%6));
 		
-		// Alte Richtung für die Berechnung der Sichtbarkeiten merken
+		// Alte Richtung f�r die Berechnung der Sichtbarkeiten merken
 		unsigned char old_dir = dir;
 
 		switch(fs)
@@ -903,7 +903,7 @@ void noFigure::CorrectSplitData(const RoadSegment * const rs2)
 	CorrectSplitData_Derived();
 }
 
-/// Wird aufgerufen, wenn die Straße unter der Figur geteilt wurde (für abgeleitete Klassen)
+/// Wird aufgerufen, wenn die Straße unter der Figur geteilt wurde (f�r abgeleitete Klassen)
 void noFigure::CorrectSplitData_Derived()
 {
 }

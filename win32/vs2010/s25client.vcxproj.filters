@@ -900,6 +900,9 @@
     <ClInclude Include="..\resource.h">
       <Filter>Resourcendateien</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\AIInterface.h">
+      <Filter>Quelldateien\KI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\AddonManager.cpp">
@@ -1639,6 +1642,9 @@
     </ClCompile>
     <ClCompile Include="..\..\build_version.cpp">
       <Filter>Quelldateien\Allgemein</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\AIInterface.cpp">
+      <Filter>Quelldateien\KI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 6517 2010-06-26 17:11:37Z OLiver $
+// $Id: GameWorld.h 6535 2010-07-03 08:12:55Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -76,13 +76,13 @@ struct MapNode
 	unsigned char resources;
 	/// Reservierungen
 	bool reserved;
-	/// EigentÃ¼mer (Spieler)
+	/// Eigentümer (Spieler)
 	unsigned char owner;
 	/// Grenzsteine (der Punkt, und dann jeweils nach rechts, unten-links und unten-rechts die Zwischensteine)
 	unsigned char boundary_stones[4];
 	/// BauqualitÃ¤t
 	BuildingQuality bq;
-	/// Visuelle Sachen fÃ¼r alle Spieler, die in Zusammenhang mit dem FoW stehen
+	/// Visuelle Sachen für alle Spieler, die in Zusammenhang mit dem FoW stehen
 	struct
 	{
 		/// Sichtbarkeit des Punktes
@@ -138,7 +138,7 @@ protected:
 	/// Rendert das Terrain
 	TerrainRenderer tr;
 
-	/// Informationen Ã¼ber die Weltmeere
+	/// Informationen über die Weltmeere
 	struct Sea
 	{
 		/// Anzahl der Knoten, welches sich in diesem Meer befinden
@@ -208,9 +208,9 @@ public:
 	/// Landschaftstyp abfragen
 	LandscapeType GetLandscapeType() const { return lt; }
 
-	/// Gibt Punkt um diesen Punkt (X-Koordinate) direkt zurÃ¼ck in einer Richtung von 0-5
+	/// Gibt Punkt um diesen Punkt (X-Koordinate) direkt zurück in einer Richtung von 0-5
 	MapCoord GetXA(const MapCoord x, const MapCoord y, unsigned dir) const;
-	/// Gibt Punkt um diesen Punkt (Y-Koordinate)  direkt zurÃ¼ck in einer Richtung von 0-5
+	/// Gibt Punkt um diesen Punkt (Y-Koordinate)  direkt zurück in einer Richtung von 0-5
 	MapCoord GetYA(const MapCoord x, const MapCoord y, unsigned dir) const;
 	/// Wie GetXA, bloÃŸ 2. AuÃŸenschale (dir zwischen 0 bis 11)
 	MapCoord GetXA2(const MapCoord x, const MapCoord y, unsigned dir) const;
@@ -218,7 +218,7 @@ public:
 	MapCoord GetYA2(const MapCoord x, const MapCoord y, unsigned dir) const;
 	/// Wandelt einen Punkt in einen Nachbarpunkt um
 	void GetPointA(MapCoord& x, MapCoord& y, unsigned dir) const;
-	/// Berechnet die Differenz zweier Koordinaten von x1 zu x2, wenn man berÃ¼cksichtigt, dass man Ã¼ber den 
+	/// Berechnet die Differenz zweier Koordinaten von x1 zu x2, wenn man berücksichtigt, dass man über den 
 	/// Rand weitergehen kann
 	MapCoord CalcDistanceAroundBorderX(const MapCoord x1, const MapCoord x2) const;
 	MapCoord CalcDistanceAroundBorderY(const MapCoord y1, const MapCoord y2) const;
@@ -231,43 +231,43 @@ public:
 	unsigned MakeCoordID(const MapCoord x, const MapCoord y) const
 	{ return y*width+x; }
 
-	/// Gibt Map-Knotenpunkt zurÃ¼ck
+	/// Gibt Map-Knotenpunkt zurück
 	const MapNode& GetNode(const MapCoord x, const MapCoord y) const { assert(x<width && y<height);  return nodes[y*width+x]; }
 	MapNode& GetNode(const MapCoord x, const MapCoord y) { assert(x<width && y<height); return nodes[y*width+x]; }
-	/// Gibt MapKnotenpunkt darum zurÃ¼ck
+	/// Gibt MapKnotenpunkt darum zurück
 	const MapNode& GetNodeAround(const MapCoord x, const MapCoord y, const unsigned i) const
 	{ return GetNode(GetXA(x,y,i),GetYA(x,y,i));  }
 	MapNode& GetNodeAround(const MapCoord x, const MapCoord y, const unsigned i)
 	{ return GetNode(GetXA(x,y,i),GetYA(x,y,i));  }
 
-	// Gibt ein NO zurÃ¼ck, falls keins existiert, wird ein "Nothing-Objekt" zurÃ¼ckgegeben
+	// Gibt ein NO zurück, falls keins existiert, wird ein "Nothing-Objekt" zurückgegeben
 	noBase * GetNO(const MapCoord x, const MapCoord y);
-	// Gibt ein NO zurÃ¼ck, falls keins existiert, wird ein "Nothing-Objekt" zurÃ¼ckgegeben
+	// Gibt ein NO zurück, falls keins existiert, wird ein "Nothing-Objekt" zurückgegeben
 	const noBase * GetNO(const MapCoord x, const MapCoord y) const;
-	/// Gibt ein FOW-Objekt zurÃ¼ck, falls keins existiert, wird ein "Nothing-Objekt" zurÃ¼ckgegeben
+	/// Gibt ein FOW-Objekt zurück, falls keins existiert, wird ein "Nothing-Objekt" zurückgegeben
 	const FOWObject * GetFOWObject(const MapCoord x, const MapCoord y, const unsigned spectator_player) const;
-	/// Gibt den GOT des an diesem Punkt befindlichen Objekts zurÃ¼ck bzw. GOT_NOTHING, wenn keins existiert
+	/// Gibt den GOT des an diesem Punkt befindlichen Objekts zurück bzw. GOT_NOTHING, wenn keins existiert
 	GO_Type GetGOT(const MapCoord x, const MapCoord y) const;
 
-	/// Gibt Figuren, die sich auf einem bestimmten Punkt befinden, zurÃ¼ck
+	/// Gibt Figuren, die sich auf einem bestimmten Punkt befinden, zurück
 	/// nicht bei laufenden Figuren oder
 	list<noBase*>& GetFigures(const MapCoord x, const MapCoord y) const { return nodes[y*width+x].figures; }
 	/// Gibt Dynamische Objekte, die von einem bestimmten Punkt aus laufen oder dort stehen sowie andere Objekte,
-	/// die sich dort befinden, zurÃ¼ck
+	/// die sich dort befinden, zurück
 	void GetDynamicObjectsFrom(const MapCoord x, const MapCoord y,list<noBase*>& objects) const;
 
-	// Gibt ein spezifisches Objekt zurÃ¼ck
+	// Gibt ein spezifisches Objekt zurück
 	template<typename T> T * GetSpecObj(MapCoord x, MapCoord y) { return dynamic_cast<T*>( GetNode(x,y).obj ); }
-		// Gibt ein spezifisches Objekt zurÃ¼ck
+		// Gibt ein spezifisches Objekt zurück
 	template<typename T> const T * GetSpecObj(MapCoord x, MapCoord y) const { return dynamic_cast<const T*>( GetNode(x,y).obj ); }
 
-	/// Gibt ein Terrain-Dreieck um einen Punkt herum zurÃ¼ck.
+	/// Gibt ein Terrain-Dreieck um einen Punkt herum zurück.
 	unsigned char GetTerrainAround(int x, int y, unsigned char dir) const;
-	/// Gibt das Terrain zurÃ¼ck, Ã¼ber das ein Mensch/Tier laufen mÃ¼sste, von X,Y in Richtung DIR (VorwÃ¤rts).
+	/// Gibt das Terrain zurück, über das ein Mensch/Tier laufen müsste, von X,Y in Richtung DIR (VorwÃ¤rts).
 	unsigned char GetWalkingTerrain1(MapCoord x, MapCoord y, unsigned char dir) const;
-	/// Gibt das Terrain zurÃ¼ck, Ã¼ber das ein Mensch/Tier laufen mÃ¼sste, von X,Y in Richtung DIR (RÃ¼ckwÃ¤rts).
+	/// Gibt das Terrain zurück, über das ein Mensch/Tier laufen müsste, von X,Y in Richtung DIR (RückwÃ¤rts).
 	unsigned char GetWalkingTerrain2(MapCoord x, MapCoord y, unsigned char dir) const;
-	/// Gibt zurÃ¼ck, ob ein Punkt vollstÃ¤ndig von Wasser umgeben ist
+	/// Gibt zurück, ob ein Punkt vollstÃ¤ndig von Wasser umgeben ist
 	bool IsSeaPoint(MapCoord x, MapCoord y) const;
 
 	/// liefert den StraÃŸen-Wert an der Stelle X,Y
@@ -279,21 +279,21 @@ public:
 
 	/// Kann dorthin eine StraÃŸe gebaut werden?
 	bool RoadAvailable(const bool boat_road,const int x, const int y,unsigned char to_dir,const bool visual = true) const;
-	/// PrÃ¼ft ob exakt die gleiche StraÃŸe schon gebaut wurde
+	/// Prüft ob exakt die gleiche StraÃŸe schon gebaut wurde
 	bool RoadAlreadyBuilt(const bool boat_road, unsigned short start_x, unsigned short start_y, const std::vector<unsigned char>& route);
-	/// BauqualitÃ¤ten berechnen, bei flagonly gibt er nur 1 zurÃ¼ck, wenn eine Flagge mÃ¶glich ist
+	/// BauqualitÃ¤ten berechnen, bei flagonly gibt er nur 1 zurück, wenn eine Flagge mÃ¶glich ist
 	BuildingQuality CalcBQ(const MapCoord x, const MapCoord y,const unsigned char player,const bool flagonly = false,const bool visual = true, const bool ignore_player = false) const;
 	/// Setzt die errechnete BQ gleich mit
 	void SetBQ(const MapCoord x, const MapCoord y,const unsigned char player,const bool flagonly = false,const bool visual = true)
 	{ GetNode(x,y).bq = CalcBQ(x,y,player,flagonly,visual); }
 
-	/// PrÃ¼ft, ob der Pkut zu dem Spieler gehÃ¶rt (wenn er der Besitzer ist und es false zurÃ¼ckliefert, ist es Grenzgebiet)
+	/// Prüft, ob der Pkut zu dem Spieler gehÃ¶rt (wenn er der Besitzer ist und es false zurückliefert, ist es Grenzgebiet)
 	bool IsPlayerTerritory(const MapCoord x, const MapCoord y) const;
 	/// Berechnet BQ bei einer gebauten StraÃŸe
 	void CalcRoad(const MapCoord x, const MapCoord y,const unsigned char player);
 	/// Ist eine Flagge irgendwo um x,y ?
 	bool FlagNear(const int x, const int y) const;
-	/// PrÃ¼ft, ob sich in unmittelbarer NÃ¤he (im Radius von 4) MilitÃ¤rgebÃ¤ude befinden
+	/// Prüft, ob sich in unmittelbarer NÃ¤he (im Radius von 4) MilitÃ¤rgebÃ¤ude befinden
 	bool IsMilitaryBuildingNearNode(const MapCoord nx, const MapCoord ny) const;
 
 	/// setzt den virtuellen StraÃŸen-Wert an der Stelle X,Y (berichtigt).
@@ -307,10 +307,10 @@ public:
 	/// Erstellt eine Liste mit allen MilitÃ¤rgebÃ¤uden in der Umgebung, radius bestimmt wie viele KÃ¤stchen nach einer Richtung im Umkreis
 	void LookForMilitaryBuildings(std::list<nobBaseMilitary*>& buildings,const MapCoord x, const MapCoord y, unsigned short radius) const;
 
-	/// PrÃ¼ft, ob von einem bestimmten Punkt aus der Untergrund fÃ¼r Figuren zugÃ¤nglich ist (kein Wasser,Lava,Sumpf)
+	/// Prüft, ob von einem bestimmten Punkt aus der Untergrund für Figuren zugÃ¤nglich ist (kein Wasser,Lava,Sumpf)
 	bool IsNodeToNodeForFigure(const MapCoord x, const MapCoord y, const unsigned dir) const;
 
-	/// Informationen, ob Grenzen Ã¼berquert wurden
+	/// Informationen, ob Grenzen überquert wurden
 	struct CrossBorders
 	{
 		CrossBorders(void) : left(false), top(false), right(false), bottom(false) { }
@@ -323,7 +323,7 @@ public:
 				  const MapCoord x_dest, const MapCoord y_dest, const bool random_route, 
 				  const unsigned max_route, std::vector<unsigned char> * route, unsigned *length, unsigned char * first_dir, 
 				  FP_Node_OK_Callback IsNodeOK, FP_Node_OK_Callback IsNodeToDestOk, const void * param) const;
-	/// Ermittelt, ob eine freie Route noch passierbar ist und gibt den Endpunkt der Route zurÃ¼ck
+	/// Ermittelt, ob eine freie Route noch passierbar ist und gibt den Endpunkt der Route zurück
 	bool CheckFreeRoute(const MapCoord x_start,const MapCoord y_start, const std::vector<unsigned char>& route,
 		const unsigned pos, FP_Node_OK_Callback IsNodeOK, FP_Node_OK_Callback IsNodeToDestOk,
 		 MapCoord* x_dest,  MapCoord* y_dest, const void * const param = NULL);
@@ -331,27 +331,27 @@ public:
 	bool FindPathOnRoads(const noRoadNode * const start, const noRoadNode * const goal,
 									const bool ware_mode, unsigned * length,
 									unsigned char * first_dir, Point<MapCoord> * next_harbor, const RoadSegment * const forbidden) const;
-	/// Findet einen Weg fÃ¼r Figuren
+	/// Findet einen Weg für Figuren
 	unsigned char FindHumanPath(const MapCoord x_start,const MapCoord y_start,
 		  const MapCoord x_dest, const MapCoord y_dest, const unsigned max_route = 0xFFFFFFFF, const bool random_route = false, unsigned *length = NULL);
-	/// Wegfindung fÃ¼r Schiffe auf dem Wasser
+	/// Wegfindung für Schiffe auf dem Wasser
 	bool FindShipPath(const MapCoord x_start,const MapCoord y_start, const MapCoord x_dest, const MapCoord y_dest, std::vector<unsigned char> * route, unsigned * length, const unsigned max_length = 200,
 								 CrossBorders * cb = NULL);
 
 
-	/// Baut eine (bisher noch visuell gebaute) StraÃŸe wieder zurÃ¼ck
+	/// Baut eine (bisher noch visuell gebaute) StraÃŸe wieder zurück
 	void RemoveVisualRoad(unsigned short start_x, unsigned short start_y, const std::vector<unsigned char>& route);
 
-	/// x,y ist ein Punkt auf irgendeinem Wegstck, gibt die Flagge zurÃ¼ck
+	/// x,y ist ein Punkt auf irgendeinem Wegstck, gibt die Flagge zurück
 	noFlag * GetRoadFlag(int x, int y,unsigned char& dir,unsigned last_i=255);
 
 	/// Konvertiert die Koordinaten.
 	void ConvertCoords(int x, int y, unsigned short * x_out, unsigned short * y_out) const;
 
-	/// Erzeugt eine GUI-ID fÃ¼r die Fenster von Map-Objekten
+	/// Erzeugt eine GUI-ID für die Fenster von Map-Objekten
 	unsigned CreateGUIID(const MapCoord x, const MapCoord y) const
 	{ return 1000 + width*y+x; }
-	/// Gibt Terrainkoordinaten zurÃ¼ck
+	/// Gibt Terrainkoordinaten zurück
 	float GetTerrainX(const MapCoord x, const MapCoord y)
 	{ return tr.GetTerrainX(x,y); }
 	float GetTerrainY(const MapCoord x, const MapCoord y)
@@ -360,22 +360,22 @@ public:
 	/// VerÃ¤ndert die HÃ¶he eines Punktes und die damit verbundenen Schatten
 	void ChangeAltitude(const MapCoord x, const MapCoord y, const unsigned char altitude);
 	
-	/// Ermittelt Sichtbarkeit eines Punktes auch unter Einbeziehung der VerbÃ¼ndeten des jeweiligen Spielers
+	/// Ermittelt Sichtbarkeit eines Punktes auch unter Einbeziehung der Verbündeten des jeweiligen Spielers
 	Visibility CalcWithAllyVisiblity(const MapCoord x, const MapCoord y, const unsigned char player) const; 
 
 	/// Gibt die Anzahl an Hafenpunkten zurück
 	unsigned GetHarborPointCount() const 
 	{ return harbor_pos.size()-1; }
-	/// Ist es an dieser Stelle fÃ¼r einen Spieler mÃ¶glich einen Hafen zu bauen
+	/// Ist es an dieser Stelle für einen Spieler mÃ¶glich einen Hafen zu bauen
 	bool IsHarborPointFree(const unsigned harbor_id, const unsigned char player, 
 		const unsigned short sea_id) const;
-	/// Gibt die Koordinaten eines bestimmten Hafenpunktes zurÃ¼ck
+	/// Gibt die Koordinaten eines bestimmten Hafenpunktes zurück
 	Point<MapCoord> GetHarborPoint(const unsigned harbor_id) const;
-	/// Gibt die ID eines Hafenpunktes zurÃ¼ck
+	/// Gibt die ID eines Hafenpunktes zurück
 	unsigned GetHarborPointID(const MapCoord x, const MapCoord y) const
 	{ return GetNode(x,y).harbor_id; }
-	/// Ermittelt, ob ein Punkt KÃ¼stenpunkt ist, d.h. Zugang zu einem schiffbaren Meer hat 
-	/// und gibt ggf. die Meeres-ID zurÃ¼ck, ansonsten 0
+	/// Ermittelt, ob ein Punkt Küstenpunkt ist, d.h. Zugang zu einem schiffbaren Meer hat 
+	/// und gibt ggf. die Meeres-ID zurück, ansonsten 0
 	unsigned short IsCoastalPoint(const MapCoord x, const MapCoord y) const;
 		/// Grenzt der Hafen an ein bestimmtes Meer an?
 	bool IsAtThisSea(const unsigned harbor_id, const unsigned short sea_id) const;
@@ -384,7 +384,7 @@ public:
 	/// Sucht freie Hafenpunkte, also wo noch ein Hafen gebaut werden kann
 	unsigned GetNextFreeHarborPoint(const MapCoord x, const MapCoord y, const unsigned origin_harbor_id, const unsigned char dir,
 										   const unsigned char player) const;
-	/// Gibt die angrenzenden Sea-IDs eines Hafenpunktes zurÃ¼ck
+	/// Gibt die angrenzenden Sea-IDs eines Hafenpunktes zurück
 	void GetSeaIDs(const unsigned harbor_id, unsigned short * sea_ids) const;
 	/// Berechnet die Entfernung zwischen 2 Hafenpunkten
 	unsigned CalcHarborDistance(const unsigned habor_id1, const unsigned harbor_id2) const;
@@ -394,7 +394,7 @@ public:
 	
 
 	void SetPlayers(GameClientPlayerList *pls) { players = pls; }
-	/// Liefert einen Player zurÃ¼ck
+	/// Liefert einen Player zurück
 	inline GameClientPlayer * GetPlayer(const unsigned int id) const { return players->getElement(id); }
 	
 	struct PotentialSeaAttacker
@@ -414,7 +414,7 @@ public:
 	/// Liefert Hafenpunkte im Umkreis von einem bestimmten Militärgebäude
 	void GetHarborPointsAroundMilitaryBuilding(const MapCoord x, const MapCoord y, std::vector<unsigned> * harbor_points) const;
 
-	/// Sucht verfÃ¼gbare Soldaten, um dieses MilitÃ¤rgebÃ¤ude mit einem Seeangriff anzugreifen
+	/// Sucht verfügbare Soldaten, um dieses MilitÃ¤rgebÃ¤ude mit einem Seeangriff anzugreifen
 	void GetAvailableSoldiersForSeaAttack(const unsigned char player_attacker, 
 	const MapCoord x, const MapCoord y, std::list<PotentialSeaAttacker> * attackers) const;
 
@@ -423,12 +423,12 @@ protected:
 	/// Berechnet die Schattierung eines Punktes neu
 	void RecalcShadow(const MapCoord x, const MapCoord y);
 
-	/// FÃ¼r abgeleitete Klasse, die dann das Terrain entsprechend neu generieren kann
+	/// Für abgeleitete Klasse, die dann das Terrain entsprechend neu generieren kann
 	virtual void AltitudeChanged(const MapCoord x, const MapCoord y) = 0;
-	/// FÃ¼r abgeleitete Klasse, die dann das Terrain entsprechend neu generieren kann
+	/// Für abgeleitete Klasse, die dann das Terrain entsprechend neu generieren kann
 	virtual void VisibilityChanged(const MapCoord x, const MapCoord y) = 0;
 
-	/// Gibt nÃ¤chsten Hafenpunkt in einer bestimmten Richtung zurÃ¼ck, bzw. 0, wenn es keinen gibt 
+	/// Gibt nÃ¤chsten Hafenpunkt in einer bestimmten Richtung zurück, bzw. 0, wenn es keinen gibt 
 	unsigned GetNextHarborPoint(const MapCoord x, const MapCoord y, const unsigned origin_harbor_id, const unsigned char dir,
 										   const unsigned char player, bool (GameWorldBase::*IsPointOK)(const unsigned, const unsigned char, const unsigned short) const) const;
 
@@ -437,7 +437,7 @@ private:
 
 };
 
-/// "Interface-Klasse" fÃ¼r GameWorldBase, die die Daten grafisch anzeigt
+/// "Interface-Klasse" für GameWorldBase, die die Daten grafisch anzeigt
 class GameWorldViewer : public virtual GameWorldBase
 {
 	bool show_bq;    ///< BauqualitÃ¤ten-Anzeigen ein oder aus
@@ -480,7 +480,7 @@ public:
 
 	/// Wegfinden ( A* ) --> Wegfindung auf allgemeinen Terrain ( ohne StraÃ¤cn ) ( fr Wegebau oder frei herumlaufende )
 	bool FindRoadPath(const MapCoord x_start,const MapCoord y_start, const MapCoord x_dest, const MapCoord y_dest,std::vector<unsigned char>& route, const bool boat_road);
-	/// Sucht die Anzahl der verfÃ¼gbaren Soldaten, um das MilitÃ¤rgebÃ¤ude an diesem Punkt anzugreifen
+	/// Sucht die Anzahl der verfügbaren Soldaten, um das MilitÃ¤rgebÃ¤ude an diesem Punkt anzugreifen
 	unsigned GetAvailableSoldiersForAttack(const unsigned char player_attacker,const MapCoord x, const MapCoord y);
 	/// Zeichnet die Objekte
 	void Draw(const unsigned char player, unsigned * water, const bool draw_selected, const MapCoord selected_x, const MapCoord selected_y,const RoadsBuilding& rb);
@@ -504,14 +504,14 @@ public:
 	/// Koordinatenanzeige ein/aus
 	void ShowCoordinates() { show_coordinates = !show_coordinates; }
 
-	/// Gibt selektierten Punkt zurÃ¼ck
+	/// Gibt selektierten Punkt zurück
 	unsigned short GetSelX() const { return selx; }
 	unsigned short GetSelY() const { return sely; }
 
 	int GetSelXo() const { return selxo; }
 	int GetSelYo() const { return selyo; }
 
-	/// Gibt Scrolling-Offset zurÃ¼ck
+	/// Gibt Scrolling-Offset zurück
 	int GetXOffset() const { return xoffset; }
 	int GetYOffset() const { return yoffset; }
 	/// Gibt ersten Punkt an, der beim Zeichnen angezeigt wird
@@ -521,7 +521,7 @@ public:
 	int GetLastX() const { return lx; }
 	int GetLastY() const { return ly; }
 
-	/// Ermittelt Sichtbarkeit eines Punktes fÃ¼r den lokalen Spieler, berÃ¼cksichtigt ggf. Teamkameraden
+	/// Ermittelt Sichtbarkeit eines Punktes für den lokalen Spieler, berücksichtigt ggf. Teamkameraden
 	Visibility GetVisibility(const MapCoord x, const MapCoord y) const; 
 
 	/// HÃ¶he wurde verÃ¤ndert: TerrainRenderer Bescheid sagen, damit es entsprechend verÃ¤ndert werden kann
@@ -535,11 +535,11 @@ public:
 	/// liefert sichtbare StraÃŸe, im Nebel entsprechend die FoW-StraÃŸe
 	unsigned char GetVisibleRoad(const MapCoord x, const MapCoord y, unsigned char dir, const Visibility visibility) const;
 
-	/// Gibt das erste Schiff, was gefunden wird von diesem Spieler, zurÃ¼ck, ansonsten NULL, falls es nicht
+	/// Gibt das erste Schiff, was gefunden wird von diesem Spieler, zurück, ansonsten NULL, falls es nicht
 	/// existiert
 	noShip * GetShip(const MapCoord x, const MapCoord y, const unsigned char player) const;
 	
-	/// Gibt die verfÃ¼gbar Anzahl der Angreifer fÃ¼r einen Seeangriff zurÃ¼ck
+	/// Gibt die verfügbar Anzahl der Angreifer für einen Seeangriff zurück
 	unsigned GetAvailableSoldiersForSeaAttackCount(const unsigned char player_attacker, const MapCoord x, const MapCoord y) const;
 
 	void Resize(unsigned short displayWidth, unsigned short displayHeight);
@@ -562,34 +562,34 @@ protected:
 
 };
 
-/// "Interface-Klasse" fÃ¼r das Spiel
+/// "Interface-Klasse" für das Spiel
 class GameWorldGame : public virtual GameWorldBase
 {
 private:
 
 	/// vergleicht 2 Punkte, ob sie von unterschiedlichen Spielern sind und setzt
-	/// Punkt ggf. zu gar keinem Spieler, 2. Funktion wird fÃ¼r Punkte im 2er Abstand verwendet, da es dort ein bisschen anders lÃ¤uft!
+	/// Punkt ggf. zu gar keinem Spieler, 2. Funktion wird für Punkte im 2er Abstand verwendet, da es dort ein bisschen anders lÃ¤uft!
 	void AdjustNodes(const MapCoord x1, const MapCoord y1, const MapCoord x2, const MapCoord y2);
 	void AdjustNodes2(const MapCoord x1, const MapCoord y1, const MapCoord x2, const MapCoord y2);
 	/// ZerstÃ¶rt Spielerteile auf einem Punkt, wenn der Punkt dem Spieler nun nich mehr gehÃ¶rt
 	void DestroyPlayerRests(const MapCoord x, const MapCoord y, const unsigned char new_player,const noBaseBuilding * exception);
 
-	/// PrÃ¼ft, ob auf diesem Punkt Deko-Objekte liegen, die fÃ¼r den Wegbau entfernt werden kÃ¶nnen
+	/// Prüft, ob auf diesem Punkt Deko-Objekte liegen, die für den Wegbau entfernt werden kÃ¶nnen
 	bool IsObjectionableForRoad(const MapCoord x, const MapCoord y);
 
 	
 	/// Punkt vollstÃ¤ndig sichtbar?
 	bool IsPointCompletelyVisible(const MapCoord x, const MapCoord y, const unsigned char player, const noBaseBuilding * const exception) const;
-	/// PrÃ¼ft, ob auf angegebenen Punkt sich ein SpÃ¤her von player befindet
+	/// Prüft, ob auf angegebenen Punkt sich ein SpÃ¤her von player befindet
 	bool IsScoutingFigureOnNode(const MapCoord x, const MapCoord y, const unsigned player, const unsigned distance) const;
-	/// Berechnet die Sichtbarkeit eines Punktes neu fÃ¼r den angegebenen Spieler
+	/// Berechnet die Sichtbarkeit eines Punktes neu für den angegebenen Spieler
 	/// exception ist ein GebÃ¤ude (SpÃ¤hturm, MilitÃ¤rgebÃ¤ude), was nicht mit in die Berechnugn einbezogen
 	/// werden soll, z.b. weil es abgerissen wird
 	void RecalcVisibility(const MapCoord x, const MapCoord y, const unsigned char player, const noBaseBuilding * const exception);
 	/// Setzt Punkt auf jeden Fall auf sichtbar
 	void SetVisibility(const MapCoord x, const MapCoord y,  const unsigned char player);
 	
-	/// PrÃ¼fen, ob zu einem bestimmten KÃ¼senpunkt ein Hafenpunkt gehÃ¶rt und wenn ja, wird dieser zurÃ¼ckgegeben
+	/// Prüfen, ob zu einem bestimmten Küsenpunkt ein Hafenpunkt gehÃ¶rt und wenn ja, wird dieser zurückgegeben
 	unsigned short GetHarborPosID(const MapCoord x, const MapCoord y);
 	/// Bestimmt die Schifffahrtrichtung, in der ein Punkt relativ zu einem anderen liegt 
 	unsigned char GetShipDir(Point<int> pos1, Point<int> pos2);
@@ -597,16 +597,16 @@ private:
 
 protected:
 
-	/// Erzeugt FOW-Objekte, -StraÃŸen und -Grensteine von aktuellen Punkt fÃ¼r einen bestimmten Spieler
+	/// Erzeugt FOW-Objekte, -StraÃŸen und -Grensteine von aktuellen Punkt für einen bestimmten Spieler
 	void SaveFOWNode(const MapCoord x, const MapCoord y, const unsigned player);
-	/// Berechnet fÃ¼r alle Hafenpunkt jeweils die Richtung und Entfernung zu allen anderen Hafenpunkten
-	/// Ã¼ber die KartenrÃ¤nder hinweg
+	/// Berechnet für alle Hafenpunkt jeweils die Richtung und Entfernung zu allen anderen Hafenpunkten
+	/// über die KartenrÃ¤nder hinweg
 	void CalcHarborPosNeighbors();
 
 
 public:
 
-	/// Stellt anderen Spielern/Spielobjekten das Game-GUI-Interface zur VerfÃ¼ung
+	/// Stellt anderen Spielern/Spielobjekten das Game-GUI-Interface zur Verfüung
 	GameInterface * GetGameInterface() const { return gi; }
 
 	void SetNO(noBase * obj, const MapCoord x, const MapCoord y) { GetNode(x,y).obj = obj; }
@@ -618,7 +618,7 @@ public:
 	/// Berechnet BauqualitÃ¤ten wie bei letzterer Funktion, bloÃŸ noch den 2. Kreis um x;y herum
 	void RecalcBQAroundPointBig(const MapCoord x, const MapCoord y);
 
-	/// PrÃ¼ft, ob dieser Punkt von Menschen betreten werden kann
+	/// Prüft, ob dieser Punkt von Menschen betreten werden kann
 	bool IsNodeForFigures(const MapCoord x, const MapCoord y);
 	/// Kann dieser Punkt von auf StraÃŸen laufenden Menschen betreten werden? (KÃ¤mpfe!)
 	bool IsRoadNodeForFigures(const MapCoord x, const MapCoord y,const unsigned char dir);
@@ -638,11 +638,11 @@ public:
 	/// GebÃ¤ude bzw Baustelle abreiÃŸen
 	void DestroyBuilding(const MapCoord x, const MapCoord y, const unsigned char playe);
 
-	/// Wegfindung fÃ¼r Menschen im StraÃŸennetz
+	/// Wegfindung für Menschen im StraÃŸennetz
 	unsigned char FindHumanPathOnRoads(const noRoadNode * const start, const noRoadNode * const goal,unsigned * length = NULL, Point<MapCoord> * next_harbor = NULL, const RoadSegment * const forbidden = NULL);
-	/// Wegfindung fÃ¼r Waren im StraÃŸennetz
+	/// Wegfindung für Waren im StraÃŸennetz
 	unsigned char FindPathForWareOnRoads(const noRoadNode * const start, const noRoadNode * const goal,unsigned * length = NULL, Point<MapCoord> * next_harbor = NULL);
-	/// PrÃ¼ft, ob eine Schiffsroute noch GÃ¼ltigkeit hat
+	/// Prüft, ob eine Schiffsroute noch Gültigkeit hat
 	bool CheckShipRoute(const MapCoord x_start,const MapCoord y_start, const std::vector<unsigned char>& route, const unsigned pos, 
 		 MapCoord* x_dest,  MapCoord* y_dest);
 
@@ -664,15 +664,15 @@ public:
 	/// Berechnet das Land in einem bestimmten Bereich (um ein neues, abgerissenes oder eingenommenes
 	/// MilitÃ¤rgebÃ¤ude rum) neu, destroyed gibt an, ob building abgerissen wurde und somit nicht einberechnet werden soll
 	void RecalcTerritory(const noBaseBuilding * const building,const unsigned short radius, const bool destroyed, const bool newBuilt);
-	/// Greift ein MilitÃ¤rgebÃ¤ude auf x,y an (entsendet dafÃ¼r die Soldaten etc.)
+	/// Greift ein MilitÃ¤rgebÃ¤ude auf x,y an (entsendet dafür die Soldaten etc.)
 	void Attack(const unsigned char player_attacker, const MapCoord x, const MapCoord y, const unsigned short soldiers_count, const bool strong_soldiers);
 	/// Greift ein MilitÃ¤regebÃ¤ude mit Schiffen an 
 	void AttackViaSea(const unsigned char player_attacker, const MapCoord x, const MapCoord y, const unsigned short soldiers_count, const bool strong_soldiers);
-	// Liefert das entsprechende MilitÃ¤rquadrat fÃ¼r einen bestimmten Punkt auf der Karte zurÃ¼ck (normale Koordinaten)
+	// Liefert das entsprechende MilitÃ¤rquadrat für einen bestimmten Punkt auf der Karte zurück (normale Koordinaten)
 	list<nobBaseMilitary*>& GetMilitarySquare(const MapCoord x, const MapCoord y)
 	{ return military_squares[(y/MILITARY_SQUARE_SIZE)*(width/MILITARY_SQUARE_SIZE+1)+x/MILITARY_SQUARE_SIZE]; }
 
-	/// FÃ¼gt einen Katapultstein der Welt hinzu, der gezeichnt werden will
+	/// Fügt einen Katapultstein der Welt hinzu, der gezeichnt werden will
 	void AddCatapultStone(CatapultStone * cs) {catapult_stones.push_back(cs); }
 	void RemoveCatapultStone(CatapultStone * cs) {catapult_stones.erase(cs); }
 
@@ -690,12 +690,12 @@ public:
 
 	/// Ist der Punkt ein geeigneter Platz zum Warten vor dem MilitÃ¤rgebÃ¤ude
 	bool ValidWaitingAroundBuildingPoint(const MapCoord x, const MapCoord y, nofAttacker * attacker);
-	/// Geeigneter Punkt fÃ¼r KÃ¤mpfe?
+	/// Geeigneter Punkt für KÃ¤mpfe?
 	bool ValidPointForFighting(const MapCoord x, const MapCoord y, nofActiveSoldier *exception = NULL);
 
 	/// Berechnet die Sichtbarkeiten neu um einen Punkt mit radius
 	void RecalcVisibilitiesAroundPoint(const MapCoord x, const MapCoord y, const MapCoord radius, const unsigned char player, const noBaseBuilding * const exception);
-	/// Setzt die Sichtbarkeiten um einen Punkt auf sichtbar (aus PerformancegrÃ¼nden Alternative zu oberem)
+	/// Setzt die Sichtbarkeiten um einen Punkt auf sichtbar (aus Performancegründen Alternative zu oberem)
 	void SetVisibilitiesAroundPoint(const MapCoord x, const MapCoord y, const MapCoord radius, const unsigned char player);
 	/// Berechet die ganzen Sichtbarkeiten der Karte neu
 	void RecalcAllVisibilities();
@@ -708,10 +708,10 @@ public:
 	bool IsBorderNode(const MapCoord x, const MapCoord y, const unsigned char player) const;
 	
 	// Konvertiert Ressourcen zwischen Typen hin und her oder lÃ¶scht sie.
-	// FÃ¼r Spiele ohne Gold.
+	// Für Spiele ohne Gold.
 	void ConvertMineResourceTypes(unsigned char from, unsigned char to);
 
-	/// GrÃ¼ndet vom Schiff aus eine neue Kolonie, gibt true zurÃ¼ck bei Erfolg
+	/// Gründet vom Schiff aus eine neue Kolonie, gibt true zurück bei Erfolg
 	bool FoundColony(const unsigned harbor_point, const unsigned char player, const unsigned short sea_id);
 	/// Registriert eine Baustelle eines Hafens, die vom Schiff aus gesetzt worden ist
 	void AddHarborBuildingSiteFromSea(noBuildingSite * building_site)
@@ -745,7 +745,7 @@ public:
 
 private:
 	/// Vermisst ein neues Weltmeer von einem Punkt aus, indem es alle mit diesem Punkt verbundenen
-	/// Wasserpunkte mit der gleichen sea_id belegt und die Anzahl zurÃ¼ckgibt
+	/// Wasserpunkte mit der gleichen sea_id belegt und die Anzahl zurückgibt
 	unsigned MeasureSea(const MapCoord x, const MapCoord y, const unsigned short sea_id);
 
 	/// Erstellt Objekte anhand der ausgelesenen S2map

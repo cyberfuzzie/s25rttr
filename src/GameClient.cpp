@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 6465 2010-06-03 08:31:48Z FloSoft $
+// $Id: GameClient.cpp 6535 2010-07-03 08:12:55Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -223,10 +223,10 @@ void GameClient::Run()
 
 	SocketSet set;
 
-	// erstmal auf Daten Ã¼berprÃ¼fen
+	// erstmal auf Daten überprüfen
 	set.Clear();
 
-	// zum set hinzufÃ¼gen
+	// zum set hinzufügen
 	set.Add(socket);
 	if(set.Select(0, 0) > 0)
 	{
@@ -238,13 +238,13 @@ void GameClient::Run()
 		}
 	}
 
-	// nun auf Fehler prÃ¼fen
+	// nun auf Fehler prüfen
 	set.Clear();
 
-	// zum set hinzufÃ¼gen
+	// zum set hinzufügen
 	set.Add(socket);
 
-	// auf fehler prÃ¼fen
+	// auf fehler prüfen
 	if(set.Select(0, 2) > 0)
 	{
 		if(set.InSet(socket))
@@ -286,7 +286,7 @@ void GameClient::Stop()
 	}
 
 	// Nicht im Spiel --> Spieler lÃ¶schen
-	// (im Spiel wird das dann von ExitGame Ã¼bernommen, da die Spielerdaten evtl noch fÃ¼r
+	// (im Spiel wird das dann von ExitGame übernommen, da die Spielerdaten evtl noch für
 	// Statistiken usw. benÃ¶tigt werden
 	if(state != CS_GAME)
 		players.clear();
@@ -320,11 +320,11 @@ void GameClient::StartGame(const unsigned int random_init)
 {
 	state = CS_GAME; // zu gamestate wechseln
 
-	// Daten zurÃ¼cksetzen
+	// Daten zurücksetzen
 	randcheckinfo.Clear();
 
 	// framesinfo vorinitialisieren
-	// bei gespeicherten Spielen mit einem bestimmten GF natÃ¼rlich beginnen!
+	// bei gespeicherten Spielen mit einem bestimmten GF natürlich beginnen!
 	framesinfo.nr = (mapinfo.map_type == MAPTYPE_SAVEGAME) ? mapinfo.savegame.start_gf : 0;
 	framesinfo.pause = true;
 
@@ -356,8 +356,8 @@ void GameClient::StartGame(const unsigned int random_init)
 			GetPlayer(i)->Deserialize(&savegame->sgd);
 
 		// TODO: schÃ¶ner machen: 
-		// Die FlÃ¤che, die nur von einem Allierten des Spielers gesehen werden, mÃ¼ssen noch dem TerrainRenderer mitgeteilt werden
-		// oder entsprechende FlÃ¤chen mÃ¼ssen vorher bekannt gemacht werden
+		// Die FlÃ¤che, die nur von einem Allierten des Spielers gesehen werden, müssen noch dem TerrainRenderer mitgeteilt werden
+		// oder entsprechende FlÃ¤chen müssen vorher bekannt gemacht werden
 		// Die folgende Schleife aktualisiert einfach *alle* Punkt, ist also ziemlich ineffizient
 		unsigned short height = gw->GetHeight();
 		unsigned short width =  gw->GetWidth();
@@ -373,7 +373,7 @@ void GameClient::StartGame(const unsigned int random_init)
 	}
 	else
 	{
-		/// StartbÃ¼ndnisse setzen
+		/// Startbündnisse setzen
 		for(unsigned i = 0;i<GetPlayerCount();++i)
 			players[i].MakeStartPacts();
 
@@ -427,7 +427,7 @@ void GameClient::RealStart()
 {
 	framesinfo.pause = false;
 
-	/// Wenn Replay, evtl erstes Command vom Start-Frame auslesen, was sonst ignoriert werden wÃ¼rde
+	/// Wenn Replay, evtl erstes Command vom Start-Frame auslesen, was sonst ignoriert werden würde
 	if(replay_mode)
 		ExecuteGameFrame_Replay();
 
@@ -481,7 +481,7 @@ void GameClient::OnNMSPing(const GameMessage_Ping& msg)
  */
 void GameClient::OnNMSPlayerId(const GameMessage_Player_Id& msg)
 {
-	// haben wir eine ungÃ¼ltige ID erhalten? (aka Server-Voll)
+	// haben wir eine ungültige ID erhalten? (aka Server-Voll)
 	if(msg.playerid == 0xFFFFFFFF)
 	{
 		if(ci)
@@ -537,7 +537,7 @@ void GameClient::OnNMSPlayerList(const GameMessage_Player_List& msg)
 
 ///////////////////////////////////////////////////////////////////////////////
 /// player joined
-/// @param message	Nachricht, welche ausgefÃ¼hrt wird
+/// @param message	Nachricht, welche ausgeführt wird
 inline void GameClient::OnNMSPlayerNew(const GameMessage_Player_New& msg)
 {
 	LOG.write("<<< NMS_PLAYER_NEW(%d)\n", msg.player );
@@ -559,7 +559,7 @@ inline void GameClient::OnNMSPlayerNew(const GameMessage_Player_New& msg)
 
 ///////////////////////////////////////////////////////////////////////////////
 /// player joined
-/// @param message	Nachricht, welche ausgefÃ¼hrt wird
+/// @param message	Nachricht, welche ausgeführt wird
 void GameClient::OnNMSPlayerPing(const GameMessage_Player_Ping& msg)
 {
 	if(msg.player != 0xFF)
@@ -651,8 +651,8 @@ void GameClient::OnNMSPlayerToggleState(const GameMessage_Player_Toggle_State& m
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-/// nation button gedrÃ¼ckt
-/// @param message	Nachricht, welche ausgefÃ¼hrt wird
+/// nation button gedrückt
+/// @param message	Nachricht, welche ausgeführt wird
 inline void GameClient::OnNMSPlayerToggleNation(const GameMessage_Player_Toggle_Nation& msg)
 {
 	if(msg.player != 0xFF)
@@ -668,8 +668,8 @@ inline void GameClient::OnNMSPlayerToggleNation(const GameMessage_Player_Toggle_
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-/// team button gedrÃ¼ckt
-/// @param message	Nachricht, welche ausgefÃ¼hrt wird
+/// team button gedrückt
+/// @param message	Nachricht, welche ausgeführt wird
 inline void GameClient::OnNMSPlayerToggleTeam(const GameMessage_Player_Toggle_Team& msg)
 {
 	if(msg.player != 0xFF)
@@ -685,8 +685,8 @@ inline void GameClient::OnNMSPlayerToggleTeam(const GameMessage_Player_Toggle_Te
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-/// color button gedrÃ¼ckt
-/// @param message	Nachricht, welche ausgefÃ¼hrt wird
+/// color button gedrückt
+/// @param message	Nachricht, welche ausgeführt wird
 inline void GameClient::OnNMSPlayerToggleColor(const GameMessage_Player_Toggle_Color& msg)
 {
 	if(msg.player != 0xFF)
@@ -705,7 +705,7 @@ inline void GameClient::OnNMSPlayerToggleColor(const GameMessage_Player_Toggle_C
 /**
  *  Ready-state eines Spielers hat sich geÃ¤ndert.
  *
- *  @param[in] message Nachricht, welche ausgefÃ¼hrt wird
+ *  @param[in] message Nachricht, welche ausgeführt wird
  *
  *  @author FloSoft
  */
@@ -727,7 +727,7 @@ inline void GameClient::OnNMSPlayerReady(const GameMessage_Player_Ready& msg)
 
 ///////////////////////////////////////////////////////////////////////////////
 /// player gekickt
-/// @param message	Nachricht, welche ausgefÃ¼hrt wird
+/// @param message	Nachricht, welche ausgeführt wird
 inline void GameClient::OnNMSPlayerKicked(const GameMessage_Player_Kicked& msg)
 {
 	LOG.write("<<< NMS_PLAYER_KICKED(%d, %d, %d)\n", msg.player, msg.cause, msg.param);
@@ -854,7 +854,7 @@ inline void GameClient::OnNMSServerStart(const GameMessage_Server_Start& msg)
 	if(!IsHost())
 		StartGame(msg.random_init);
 
-	// Nothing-Command fÃ¼r ersten Network-Frame senden
+	// Nothing-Command für ersten Network-Frame senden
 	SendNothingNC(0);
 }
 
@@ -964,9 +964,9 @@ void GameClient::OnNMSServerCancelCountdown(const GameMessage_Server_CancelCount
 ///////////////////////////////////////////////////////////////////////////////
 /**
  *  verarbeitet die MapInfo-Nachricht, in der die gepackte GrÃ¶ÃŸe,
- *  die normale GrÃ¶ÃŸe und Teilanzahl der Karte Ã¼bertragen wird.
+ *  die normale GrÃ¶ÃŸe und Teilanzahl der Karte übertragen wird.
  *
- *  @param message Nachricht, welche ausgefÃ¼hrt wird
+ *  @param message Nachricht, welche ausgeführt wird
  *
  *  @author FloSoft
  */
@@ -992,7 +992,7 @@ inline void GameClient::OnNMSMapInfo(const GameMessage_Map_Info& msg)
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Kartendaten
-/// @param message	Nachricht, welche ausgefÃ¼hrt wird
+/// @param message	Nachricht, welche ausgeführt wird
 inline void GameClient::OnNMSMapData(const GameMessage_Map_Data& msg)
 {
 	LOG.write("<<< NMS_MAP_DATA(%u)\n", msg.GetNetLength());
@@ -1089,7 +1089,7 @@ inline void GameClient::OnNMSMapData(const GameMessage_Map_Data& msg)
 
 ///////////////////////////////////////////////////////////////////////////////
 /// map-checksum
-/// @param message	Nachricht, welche ausgefÃ¼hrt wird
+/// @param message	Nachricht, welche ausgeführt wird
 inline void GameClient::OnNMSMapChecksumOK(const GameMessage_Map_ChecksumOK& msg)
 {
 	LOG.write("<<< NMS_MAP_CHECKSUM(%d)\n", msg.correct ? 1 :0);
@@ -1107,7 +1107,7 @@ inline void GameClient::OnNMSMapChecksumOK(const GameMessage_Map_ChecksumOK& msg
 
 ///////////////////////////////////////////////////////////////////////////////
 /// server typ
-/// @param message	Nachricht, welche ausgefÃ¼hrt wird
+/// @param message	Nachricht, welche ausgeführt wird
 void GameClient::OnNMSGGSChange(const GameMessage_GGSChange& msg)
 {
 	LOG.write("<<< NMS_GGS_CHANGE\n");
@@ -1120,7 +1120,7 @@ void GameClient::OnNMSGGSChange(const GameMessage_GGSChange& msg)
 
 ///////////////////////////////////////////////////////////////////////////////
 /// NFC Antwort vom Server
-/// @param message	Nachricht, welche ausgefÃ¼hrt wird
+/// @param message	Nachricht, welche ausgeführt wird
 void GameClient::OnNMSGameCommand(const GameMessage_GameCommand& msg)
 {
 
@@ -1131,7 +1131,7 @@ void GameClient::OnNMSGameCommand(const GameMessage_GameCommand& msg)
 
 ///////////////////////////////////////////////////////////////////////////////
 /// NFC Done vom Server
-/// @param message	Nachricht, welche ausgefÃ¼hrt wird
+/// @param message	Nachricht, welche ausgeführt wird
 void GameClient::OnNMSServerDone(const GameMessage_Server_NWFDone& msg)
 {
 }
@@ -1140,7 +1140,7 @@ void GameClient::OnNMSServerDone(const GameMessage_Server_NWFDone& msg)
 /**
  *  NFC Pause-Nachricht von Server
  *
- *  @param[in] message Nachricht, welche ausgefÃ¼hrt wird
+ *  @param[in] message Nachricht, welche ausgeführt wird
  *
  *  @author FloSoft
  */
@@ -1180,7 +1180,7 @@ bool GameClient::IsPlayerLagging()
 	return is_lagging;
 }
 
-/// FÃ¼hrt fÃ¼r alle Spieler einen Statistikschritt aus, wenn die Zeit es verlangt
+/// Führt für alle Spieler einen Statistikschritt aus, wenn die Zeit es verlangt
 void GameClient::StatisticStep()
 {
 	// Soll alle 750 GFs (30 Sekunden auf 'Schnell') aufgerufen werden
@@ -1192,7 +1192,7 @@ void GameClient::StatisticStep()
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-/// testet ob ein Netwerkframe abgelaufen ist und fÃ¼hrt dann ggf die Befehle aus
+/// testet ob ein Netwerkframe abgelaufen ist und führt dann ggf die Befehle aus
 void GameClient::ExecuteGameFrame(const bool skipping)
 {
 	unsigned int currenttime = VideoDriverWrapper::inst().GetTickCount();
@@ -1212,7 +1212,7 @@ void GameClient::ExecuteGameFrame(const bool skipping)
 		return;
 	}
 
-	// Wurde der nÃ¤chsten Game-Frame zeitlich erreicht (bzw. wenn nur Frames Ã¼bersprungen werden sollen,
+	// Wurde der nÃ¤chsten Game-Frame zeitlich erreicht (bzw. wenn nur Frames übersprungen werden sollen,
 	// brauchen wir nicht zu warten)?
 	  if(skipping || (currenttime - framesinfo.lasttime) > framesinfo.gf_length)
 	  {
@@ -1237,7 +1237,7 @@ void GameClient::ExecuteGameFrame(const bool skipping)
 		// Ist jetzt auch ein NWF dran?
 		else if(framesinfo.nr % framesinfo.nwf_length == 0)
 		{
-			// entsprechenden NC fÃ¼r diesen NWF ausfÃ¼hren
+			// entsprechenden NC für diesen NWF ausführen
 			// Beim Replay geht das etwas anderes, da werden die NFCs aus der Datei gelesen
 
 			// Schauen wir mal ob alles angekommen ist
@@ -1268,7 +1268,7 @@ void GameClient::ExecuteGameFrame(const bool skipping)
 			// NÃ¤chster Game-Frame erreicht
 			++framesinfo.nr;
 
-			// Frame ausfÃ¼hren
+			// Frame ausführen
 			NextGF();
 
 			// Frame-Time setzen zum Zeichnen, (immer auÃŸer bei Lags)
@@ -1303,7 +1303,7 @@ void GameClient::ExecuteGameFrame(const bool skipping)
 	}
 }
 
-/// FÃ¼hrt notwendige Dinge fÃ¼r nÃ¤chsten GF aus
+/// Führt notwendige Dinge für nÃ¤chsten GF aus
 void GameClient::NextGF()
 {
 	// Statistiken aktualisieren
@@ -1318,7 +1318,7 @@ void GameClient::NextGF()
 			players[i].TestForEmergencyProgramm();
 		if(players[i].ps == PS_OCCUPIED || players[i].ps == PS_KI)
 		{
-			// BÃ¼ndnisse auf AktualitÃ¤t Ã¼berprÃ¼fen
+			// Bündnisse auf AktualitÃ¤t überprüfen
 			players[i].TestPacts();
 		}
 	}
@@ -1329,12 +1329,12 @@ void GameClient::ExecuteAllGCs(const GameMessage_GameCommand& gcs, unsigned char
 {
 	for(unsigned char i = 0;i<gcs.gcs.size();++i)
 	{
-		// NC ausfÃ¼hren
+		// NC ausführen
 		gcs.gcs[i]->Execute(*gw,players[gcs.player],gcs.player);
 		//// Wenn ein Spieler gewechselt werden soll...
 		if(gcs.gcs[i]->GetType() == gc::SWITCHPLAYER && player_switch_old_id && player_switch_new_id)
 		{
-			// ...mÃ¼ssen wir uns das merken
+			// ...müssen wir uns das merken
 			*player_switch_old_id = gcs.player;
 			*player_switch_new_id = dynamic_cast<gc::SwitchPlayer*>(gcs.gcs[i])->GetNewPlayerId();
 		}
@@ -1368,7 +1368,7 @@ void GameClient::WriteReplayHeader(const unsigned random_init)
 
 	sprintf(filename,"%s%s.rpl", GetFilePath(FILE_PATHS[51]).c_str(), time);
 
-	// Headerinfos fÃ¼llen
+	// Headerinfos füllen
 
 	// Timestamp der Aufzeichnung
 	replayinfo.replay.save_time = temp;
@@ -1571,7 +1571,7 @@ void GameClient::ServerLost()
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  Ã¼berspringt eine bestimmte Anzahl von Gameframes.
+ *  überspringt eine bestimmte Anzahl von Gameframes.
  *
  *  @param[in] dest_gf Zielgameframe
  *
@@ -1586,7 +1586,7 @@ void GameClient::SkipGF(unsigned int gf)
 	// Spiel entpausieren
 	SetReplayPause(false);
 
-	// GFs Ã¼berspringen
+	// GFs überspringen
 	for(unsigned int i = framesinfo.nr; i < gf; ++i)
 	{
 		if(i % 1000 == 0)
@@ -1733,7 +1733,7 @@ void GameClient::GetVisualSettings()
 
 	visual_settings.order_type = player->order_type;
 
-	// Baureihenfolge fÃ¼llen (0 ist das HQ!)
+	// Baureihenfolge füllen (0 ist das HQ!)
 	for(unsigned char i = 0; i < 31; ++i)
 		visual_settings.build_order[i] = player->build_order[i];
 }
@@ -1759,7 +1759,7 @@ bool GameClient::AddGC(gc::GameCommand * gc)
 	return true;
 }
 
-/// Erzeugt einen KI-Player, der mit den Daten vom GameClient gefÃ¼ttert werden muss (zusÃ¤tzlich noch mit den GameServer)
+/// Erzeugt einen KI-Player, der mit den Daten vom GameClient gefüttert werden muss (zusÃ¤tzlich noch mit den GameServer)
 AIBase * GameClient::CreateAIPlayer(const unsigned playerid)
 {
 	/*

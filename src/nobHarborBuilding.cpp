@@ -1,4 +1,4 @@
-// $Id: nobHarborBuilding.cpp 6527 2010-06-29 20:55:36Z OLiver $
+// $Id: nobHarborBuilding.cpp 6535 2010-07-03 08:12:55Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -687,7 +687,7 @@ void nobHarborBuilding::CheckExpeditionReady()
 		players->getElement(player)->OrderShip(this);
 }
 
-/// PrÃ¼ft, ob eine Expedition von den Spähern her vollstÃ¤ndig ist und ruft ggf. das Schiff
+/// Prüft, ob eine Expedition von den Spähern her vollstÃ¤ndig ist und ruft ggf. das Schiff
 void nobHarborBuilding::CheckExplorationExpeditionReady()
 {
 	// Alles da?

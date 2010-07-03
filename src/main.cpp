@@ -1,4 +1,4 @@
-// $Id: main.cpp 6458 2010-05-31 11:38:51Z FloSoft $
+// $Id: main.cpp 6535 2010-07-03 08:12:55Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -30,6 +30,10 @@
 #ifdef __APPLE__
 #	include <SDL_main.h>
 #endif // __APPLE__
+
+#ifdef _WIN32
+#	include "../win32/resource.h"
+#endif
 
 #if defined _WIN32 && defined _DEBUG && defined _MSC_VER && !defined NOHWETRANS
 #	include <windows.h>
@@ -137,6 +141,9 @@ int main(int argc, char *argv[])
 	// Signal-Handler setzen
 #ifdef _WIN32
 	SetConsoleCtrlHandler(HandlerRoutine, TRUE);
+
+	// set console window icon
+	SendMessage(GetConsoleWindow(), WM_SETICON, (WPARAM)TRUE, (LPARAM)LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_SYMBOL)));
 #else
 	struct sigaction sa;
 	sa.sa_handler = HandlerRoutine;

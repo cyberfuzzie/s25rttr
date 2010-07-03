@@ -1,4 +1,4 @@
-// $Id: MilitaryConsts.h 6458 2010-05-31 11:38:51Z FloSoft $
+// $Id: MilitaryConsts.h 6535 2010-07-03 08:12:55Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -20,20 +20,20 @@
 #ifndef MILITARY_CONSTS_H_
 #define MILITARY_CONSTS_H_
 
-/// Größe der Militärquadrate (in Knotenpunkten), in die die Welt eingeteilt wurde für Militärgebäude
+/// Größe der Militärquadrate (in Knotenpunkten), in die die Welt eingeteilt wurde f�r Militärgebäude
 const unsigned short MILITARY_SQUARE_SIZE = 20;
 
-/// Maximale Entfernungen für "nahe Militärgebäudedistanz" und "mittlere Militärgebäudedistanz"
+/// Maximale Entfernungen f�r "nahe Militärgebäudedistanz" und "mittlere Militärgebäudedistanz"
 const unsigned MAX_MILITARY_DISTANCE_NEAR = 18;
 const unsigned MAX_MILITARY_DISTANCE_MIDDLE = 26;
 
 /// Basisangriffsreichweite (Angriff mit allen Soldaten möglich)
 const unsigned BASE_ATTACKING_DISTANCE = 21;
 
-/// Erweiterte Reichweite, für die jeweils ein Soldat von der Angriffsarmee abgezogen wird
+/// Erweiterte Reichweite, f�r die jeweils ein Soldat von der Angriffsarmee abgezogen wird
 const unsigned EXTENDED_ATTACKING_DISTANCE = 1;
 
-/// Maximale Länge für den Laufweg beim Angriff
+/// Maximale Länge f�r den Laufweg beim Angriff
 const unsigned MAX_ATTACKING_RUN_DISTANCE = 70;
 
 /// Besatzung in den einzelnen Militärgebäuden und nach Nation 
@@ -58,7 +58,7 @@ const unsigned short GOLD_COUNT[4][4] =
 const unsigned MILITARY_RADIUS[6] =
 { 8,9,10,11,9,4 };
 
-// Radius für einzelne Hafen(baustellen)
+// Radius f�r einzelne Hafen(baustellen)
 const unsigned HARBOR_ALONE_RADIUS = 8;
 
 /// Fahnenpositionen bei den Militärgebäuden
@@ -88,7 +88,7 @@ const unsigned MILITARY_SETTINGS_SCALE[MILITARY_SETTINGS_COUNT] =
 	8
 };
 
-// Besatzungsflaggen für die HQs
+// Besatzungsflaggen f�r die HQs
 const signed char TROOPS_FLAGS_HQ[4][2] =
 {
 	{-12,-102},{-19,-94},{-18,-112},{20,-54},
@@ -115,7 +115,7 @@ const unsigned char HITPOINTS[4][5] =
 
 /// Sichtweite der Militärgebäude (relativ); wird auf die normale Grenzweite draufaddiert
 const unsigned VISUALRANGE_MILITARY = 3;
-/// Sichtweite von Spähtürmen (absolut)
+/// Sichtweite von Späht�rmen (absolut)
 const unsigned VISUALRANGE_LOOKOUTTOWER = 20;
 /// Sichtweite von Spähern
 const unsigned VISUALRANGE_SCOUT = 3;

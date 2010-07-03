@@ -1,4 +1,4 @@
-// $Id: GameWorldViewer.cpp 6458 2010-05-31 11:38:51Z FloSoft $
+// $Id: GameWorldViewer.cpp 6535 2010-07-03 08:12:55Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -66,7 +66,7 @@ void GameWorldViewer::Draw(const unsigned char player, unsigned * water, const b
 
 	tr.Draw(this,water);
 
-	// Draw-Counter der BÃ¤ume zurÃ¼cksetzen vor jedem Zeichnen
+	// Draw-Counter der BÃ¤ume zurücksetzen vor jedem Zeichnen
 	noTree::ResetDrawCounter();
 
 	for(int y = fy;y<ly;++y)
@@ -640,7 +640,7 @@ void GameWorldViewer::RecalcAllColors()
 unsigned char GameWorldViewer::GetVisibleRoad(const MapCoord x, const MapCoord y, unsigned char dir, const Visibility visibility) const
 {
 	if(visibility == VIS_VISIBLE)
-		// Normal die sichtbaren StraÃen zurÃ¼ckliefern
+		// Normal die sichtbaren StraÃen zurückliefern
 		return GetPointRoad(x,y,dir,true);
 	else if(visibility == VIS_FOW)
 		// entsprechende FoW-StraÃe liefern
@@ -651,7 +651,7 @@ unsigned char GameWorldViewer::GetVisibleRoad(const MapCoord x, const MapCoord y
 }
 
 
-/// Gibt das erste Schiff, was gefunden wird von diesem Spieler, zurÃ¼ck, ansonsten NULL, falls es nicht
+/// Gibt das erste Schiff, was gefunden wird von diesem Spieler, zurück, ansonsten NULL, falls es nicht
 /// existiert
 noShip * GameWorldViewer::GetShip(const MapCoord x, const MapCoord y, const unsigned char player) const
 {
@@ -684,7 +684,7 @@ noShip * GameWorldViewer::GetShip(const MapCoord x, const MapCoord y, const unsi
 	return NULL;
 }
 
-/// Gibt die verfÃ¼gbar Anzahl der Angreifer fÃ¼r einen Seeangriff zurÃ¼ck
+/// Gibt die verfügbar Anzahl der Angreifer für einen Seeangriff zurück
 unsigned GameWorldViewer::GetAvailableSoldiersForSeaAttackCount(const unsigned char player_attacker, 
 											const MapCoord x, const MapCoord y) const
 {

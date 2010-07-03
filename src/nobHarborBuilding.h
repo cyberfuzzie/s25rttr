@@ -1,4 +1,4 @@
-// $Id: nobHarborBuilding.h 6458 2010-05-31 11:38:51Z FloSoft $
+// $Id: nobHarborBuilding.h 6535 2010-07-03 08:12:55Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -58,7 +58,7 @@ class nobHarborBuilding : public nobBaseWarehouse
 
 	/// Bestell-Ware-Event
 	EventManager::EventPointer orderware_ev;
-	/// Die Meeres-IDs aller angrenzenden Meere (jeweils fÃ¼r die 6 drumherumliegenden KÃ¼stenpunkte)
+	/// Die Meeres-IDs aller angrenzenden Meere (jeweils für die 6 drumherumliegenden Küstenpunkte)
 	unsigned short sea_ids[6];
 	/// Liste von Waren, die weggeschifft werden sollen
 	std::list<Ware*> wares_for_ships;
@@ -81,20 +81,20 @@ class nobHarborBuilding : public nobBaseWarehouse
 
 private:
 
-	/// Bestellt die zusÃ¤tzlichen erforderlichen Waren fÃ¼r eine Expedition
+	/// Bestellt die zusÃ¤tzlichen erforderlichen Waren für eine Expedition
 	void OrderExpeditionWares();
-	/// PrÃ¼ft, ob eine Expedition von den Waren her vollstÃ¤ndig ist und ruft ggf. das Schiff
+	/// Prüft, ob eine Expedition von den Waren her vollstÃ¤ndig ist und ruft ggf. das Schiff
 	void CheckExpeditionReady();
-	/// PrÃ¼ft, ob eine Expedition von den Spähern her vollstÃ¤ndig ist und ruft ggf. das Schiff
+	/// Prüft, ob eine Expedition von den Spähern her vollstÃ¤ndig ist und ruft ggf. das Schiff
 	void CheckExplorationExpeditionReady();
-	/// Gibt zurÃ¼ck, ob Expedition vollstÃ¤ndig ist
+	/// Gibt zurück, ob Expedition vollstÃ¤ndig ist
 	bool IsExpeditionReady() const;
-	/// Gibt zurÃ¼ck, ob Erkundungs-Expedition vollstÃ¤ndig ist
+	/// Gibt zurück, ob Erkundungs-Expedition vollstÃ¤ndig ist
 	bool IsExplorationExpeditionReady() const;
 	/// Abgeleitete kann eine gerade erzeugte Ware ggf. sofort verwenden 
-	/// (muss in dem Fall true zurÃ¼ckgeben)
+	/// (muss in dem Fall true zurückgeben)
 	bool UseWareAtOnce(Ware * ware, noBaseBuilding* const goal);
-	/// Dasselbe fÃ¼r Menschen
+	/// Dasselbe für Menschen
 	bool UseFigureAtOnce(noFigure * fig, noRoadNode* const goal); 
 	/// Bestellte Figur, die sich noch inder Warteschlange befindet, kommt nicht mehr und will rausgehauen werden
 	void CancelFigure(noFigure * figure);
@@ -127,7 +127,7 @@ public:
 	/// benötigt!)
 	unsigned CalcDistributionPoints(const GoodType type);
 	
-	/// Storniert die Bestellung fÃ¼r eine bestimmte Ware, die mit einem Schiff transportiert werden soll
+	/// Storniert die Bestellung für eine bestimmte Ware, die mit einem Schiff transportiert werden soll
 	void CancelWareForShip(Ware * ware);
 	
 	/// Startet eine Expedition oder stoppt sie, wenn bereits eine stattfindet
@@ -144,33 +144,33 @@ public:
 	void ShipLost(noShip * ship);
 
 	/// Abfangen, wenn ein Mann nicht mehr kommen kann --> kÃ¶nnte ein Bauarbeiter sein und
-	/// wenn wir einen benÃ¶tigen, mÃ¼ssen wir einen neuen bestellen
+	/// wenn wir einen benÃ¶tigen, müssen wir einen neuen bestellen
 	void RemoveDependentFigure(noFigure * figure);
 
-	/// Gibt die Hafenplatz-ID zurÃ¼ck, auf der der Hafen steht
+	/// Gibt die Hafenplatz-ID zurück, auf der der Hafen steht
 	unsigned GetHarborPosID() const;
 
 	struct ShipConnection
 	{
 		/// Zielhafen
 		noRoadNode * dest;
-		/// Kosten fÃ¼r die Strecke in WeglÃ¤nge eines einfachen TrÃ¤gers
+		/// Kosten für die Strecke in WeglÃ¤nge eines einfachen TrÃ¤gers
 		unsigned way_costs;
 	};
-	/// Gibt eine Liste mit mÃ¶glichen Verbindungen zurÃ¼ck
+	/// Gibt eine Liste mit mÃ¶glichen Verbindungen zurück
 	void GetShipConnections(std::vector<ShipConnection>& connections) const;
 
-	/// FÃ¼gt einen Mensch hinzu, der mit dem Schiff irgendwo hin fahren will
+	/// Fügt einen Mensch hinzu, der mit dem Schiff irgendwo hin fahren will
 	void AddFigureForShip(noFigure * fig, Point<MapCoord> dest);
-	/// FÃ¼gt eine Ware hinzu, die mit dem Schiff verschickt werden soll
+	/// Fügt eine Ware hinzu, die mit dem Schiff verschickt werden soll
 	void AddWareForShip(Ware * ware);
 	
 	/// A ware changed its route and doesn't want to use the ship anymore
 	void WareDontWantToTravelByShip(Ware * ware);
 
-	/// Gibt Anzahl der Schiffe zurÃ¼ck, die noch fÃ¼r ausstehende Aufgaben benÃ¶tigt werden
+	/// Gibt Anzahl der Schiffe zurück, die noch für ausstehende Aufgaben benÃ¶tigt werden
 	unsigned GetNeededShipsCount() const;
-	/// Gibt die Wichtigkeit an, dass ein Schiff kommen muss (0 -> keine BedÃ¼rftigkeit)
+	/// Gibt die Wichtigkeit an, dass ein Schiff kommen muss (0 -> keine Bedürftigkeit)
 	int GetNeedForShip(unsigned ships_coming) const;
 
 	/// ErhÃ¤lt die Waren von einem Schiff und nimmt diese in den Warenbestand auf
@@ -191,7 +191,7 @@ public:
 		};
 	};
 	
-	/// Gibt die Angreifer zurÃ¼ck, die dieser Hafen fÃ¼r einen Seeangriff zur VerfÃ¼gung stellen kann
+	/// Gibt die Angreifer zurück, die dieser Hafen für einen Seeangriff zur Verfügung stellen kann
 	/// defender_harbors sind dabei mÃ¶gliche ZielhÃ¤fen
 	void GetAttackerBuildingsForSeaAttack(std::vector<SeaAttackerBuilding> * buildings,
 											const std::vector<unsigned>& defender_harbors);

@@ -1,4 +1,4 @@
-// $Id: iwPlayReplay.cpp 6458 2010-05-31 11:38:51Z FloSoft $
+// $Id: iwPlayReplay.cpp 6535 2010-07-03 08:12:55Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -155,7 +155,7 @@ void iwPlayReplay::Msg_MsgBoxResult(const unsigned msgbox_id, const MsgboxResult
  *  @param[in] filename Der Dateiname
  *  @param[in] param    Ein benutzerdefinierter Parameter
  *
- *  @todo Noch korrekt dokumentieren (was wird da so Ã¼bersprungen usw)
+ *  @todo Noch korrekt dokumentieren (was wird da so übersprungen usw)
  *  @todo Fehlerabfrage der freads!!!
  *
  *  @author OLiver
@@ -177,10 +177,10 @@ void iwPlayReplay::FillReplayTable(const std::string& filename, void *param)
 	unsigned char j = 0;
 	for(unsigned char i = 0; i < replay.player_count; ++i)
 	{
-		// Was fÃ¼r ein State, wenn es nen KI Spieler oder ein normaler ist, muss das Zeug ausgelesen werden
+		// Was für ein State, wenn es nen KI Spieler oder ein normaler ist, muss das Zeug ausgelesen werden
 		if(replay.players[i].ps == PS_OCCUPIED || replay.players[i].ps == PS_KI)
 		{
-			// und in unsere "Namensliste" hinzufÃ¼gen (beim ersten Spieler muss kein Komma hin)
+			// und in unsere "Namensliste" hinzufügen (beim ersten Spieler muss kein Komma hin)
 			if(j > 0)
 				tmp_players+=", ";
 
@@ -205,13 +205,13 @@ void iwPlayReplay::FillReplayTable(const std::string& filename, void *param)
 	char gfl[50];
 	snprintf(gfl, 50, "%u", replay.last_gf);
 
-	// Und das Zeug zur Tabelle hinzufÃ¼gen
+	// Und das Zeug zur Tabelle hinzufügen
 	static_cast<ctrlTable*>(param)->AddRow(0, extracted_filename.c_str(), datestring, tmp_players.c_str(), gfl, filename.c_str());
 }
 
 
 void iwPlayReplay::RemoveReplay(const std::string& filename,void *param)
 {
-	// und tschÃ¼ss
+	// und tschüss
 	unlink(filename.c_str());
 }

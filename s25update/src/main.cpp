@@ -1,4 +1,4 @@
-// $Id: main.cpp 6470 2010-06-03 09:51:41Z FloSoft $
+// $Id: main.cpp 6532 2010-07-03 07:09:57Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -258,14 +258,22 @@ string md5sum(string file)
 int main(int argc, char *argv[])
 {
 	bool verbose = false;
+	std::string path = argv[0];
+	path = path.substr(0, path.find_last_of("/\\"));
+
 	if(argc > 1)
 	{
 		for(int i = 1; i < argc; ++i)
 		{
 			if(strcmp(argv[i], "--verbose") == 0 || strcmp(argv[i], "-v") == 0 )
-			   verbose = true;
+				verbose = true;
+			if(strcmp(argv[i], "--dir") == 0 || strcmp(argv[i], "-d") == 0 )
+				path = argv[++i];
 		}
 	}
+
+	if(chdir(path.c_str()) < 0)
+		std::cerr << "Warning: Failed to set working directory: " << strerror(errno) << std::endl;
 
 	// initialize curl
 	curl_global_init(CURL_GLOBAL_ALL);
@@ -370,7 +378,7 @@ int main(int argc, char *argv[])
 
 		// check hash of file
 		string nhash = md5sum(tfile);
-		cerr << hash << " - " << nhash << endl;
+		//cerr << hash << " - " << nhash << endl;
 		if(hash != nhash)
 		{
 			string name = file.substr(file.rfind('/') + 1);
@@ -464,7 +472,7 @@ int main(int argc, char *argv[])
 
 		CopyFileA(it->first.c_str(), target.c_str(), FALSE);
 #else
-		//cout << "creating symlink " << it->second << endl;
+		cout << "creating symlink " << it->second << endl;
 		int avoid_unused_retval_warn = symlink(it->second.c_str(), it->first.c_str());
 		avoid_unused_retval_warn = 0;
 #endif

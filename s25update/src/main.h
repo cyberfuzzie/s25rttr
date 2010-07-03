@@ -1,4 +1,4 @@
-// $Id: main.h 6461 2010-05-31 11:46:20Z FloSoft $
+// $Id: main.h 6532 2010-07-03 07:09:57Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -31,12 +31,14 @@
     #include <assert.h>
 #endif
 	
+	int chdir(const char *p) { return (SetCurrentDirectory(p) == TRUE ? 0 : -1); }
 	int mkdir(const char *p, int unused) { return (CreateDirectoryA(p, NULL) == TRUE ? 0 : 1); }
 
 	#undef PlaySound
 #else
 	#include <sys/stat.h>
 	#include <unistd.h>
+	#include <cerrno>
 #endif // !_WIN32
 
 #if defined _WIN32 && defined _DEBUG

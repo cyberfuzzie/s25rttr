@@ -77,14 +77,15 @@ else
 	
 	OPWD=$PWD
 	cd $TARGET/$ARCH.new
-	echo -n > $TARGET/$ARCH.new/links
-	find -type l -exec bash -c 'echo "{} $(readlink {})" >> $TARGET/$ARCH.new/links ; rm {}' \;
+	echo -n > /tmp/links.$$
+	find -type l -exec bash -c 'echo "{} $(readlink {})" >> /tmp/links.$$ ; rm {}' \;
 	md5deep -r -l . > /tmp/files.$$
 	cd $OPWD
 
 	find $TARGET/$ARCH.new -type f -exec bzip2 -v {} >> $TARGET/build_${ARCH}.log 2>&1 \;
 
 	mv /tmp/files.$$ $TARGET/$ARCH.new/files
+	mv /tmp/links.$$ $TARGET/$ARCH.new/links
 	
 	touch $TARGET/$ARCH.new/revision-$REVISION
 	touch $TARGET/$ARCH.new/version-$VERSION

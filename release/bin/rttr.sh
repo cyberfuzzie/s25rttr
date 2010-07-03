@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DIR=$(dirname $0)
+DIR=$(dirname "$0")
 
 chmod 0755 $DIR/../bin/rttr.sh $DIR/../share/s25rttr/RTTR/s25update $DIR/../bin/s25client $DIR/../share/s25rttr/RTTR/sound-convert >/dev/null 2>/dev/null
 

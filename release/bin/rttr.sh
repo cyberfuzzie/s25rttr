@@ -28,7 +28,7 @@ for I in $1; do
 	esac
 done
 
-if [ noupdate -eq 0 ] ; then
+if [ $noupdate -eq 0 ] ; then
 	if [ -f $DIR/../share/s25rttr/RTTR/s25update ] ; then
 		echo "checking for an update ..."
 		cp $DIR/../share/s25rttr/RTTR/s25update /tmp/s25update.$$

@@ -13,7 +13,7 @@ fi
 cmd=
 noupdate=0
 for I in $1; do
-	case I in
+	case $I in
 		debug)
 			noupdate=1
 			cmd=gdb

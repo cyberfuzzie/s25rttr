@@ -1,4 +1,4 @@
-// $Id: main.h 6458 2010-05-31 11:38:51Z FloSoft $
+// $Id: main.h 6545 2010-07-04 09:12:54Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -30,7 +30,7 @@
 #ifdef _WIN32
 	#include <windows.h>
 	#include <ws2tcpip.h>
-	
+	#include <shlwapi.h>
 	#ifndef __CYGWIN__
 		#include <conio.h>
 	#endif

@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 6498 2010-06-13 12:25:12Z jh $
+### $Id: CMakeLists.txt 6545 2010-07-04 09:12:54Z FloSoft $
 ################################################################################
 
 INCLUDE(FindBZip2)
@@ -417,7 +417,7 @@ IF ( "${COMPILEFOR}" STREQUAL "apple")
 ENDIF ( "${COMPILEFOR}" STREQUAL "apple")
 
 IF ( "${COMPILEFOR}" STREQUAL "windows")
-	TARGET_LINK_LIBRARIES(s25client ole32 wsock32 bz2 ${TARGET_LINK_LIBRARIES} )
+	TARGET_LINK_LIBRARIES(s25client ole32 wsock32 shlwapi bz2 ${TARGET_LINK_LIBRARIES} )
 ENDIF ( "${COMPILEFOR}" STREQUAL "windows")
 
 INSTALL(TARGETS s25client RUNTIME DESTINATION ${BINDIR})

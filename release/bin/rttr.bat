@@ -1,8 +1,7 @@
 @ECHO OFF
 
 IF EXIST RTTR\s25update.exe GOTO UPDATE
-
-GOTO END
+GOTO START
 
 :UPDATE
 mkdir update
@@ -12,6 +11,10 @@ xcopy /Y RTTR\zlib1.dll update
 
 update\s25update.exe
 
-:END
-
+:START
 s25client.exe
+
+IF %ERRORLEVEL% EQU 0 GOTO END
+PAUSE
+
+:END

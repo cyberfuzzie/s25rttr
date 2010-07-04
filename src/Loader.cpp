@@ -1,4 +1,4 @@
-// $Id: Loader.cpp 6545 2010-07-04 09:12:54Z FloSoft $
+// $Id: Loader.cpp 6546 2010-07-04 09:22:52Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -366,7 +366,10 @@ bool Loader::LoadFile(const char *pfad, const libsiedler2::ArchivItem_Palette *p
 	bool directory = false;
 #ifdef _WIN32
 	if(!PathFileExists(GetFilePath(pfad).c_str()))
+	{
+		LOG.lprintf("Fehler: Datei oder Verzeichnis \"%s\" existiert nicht.\n", GetFilePath(pfad).c_str());
 		return false;
+	}
 	if ( (GetFileAttributes(GetFilePath(pfad).c_str()) & FILE_ATTRIBUTE_DIRECTORY) == FILE_ATTRIBUTE_DIRECTORY)
 		directory = true;
 #else

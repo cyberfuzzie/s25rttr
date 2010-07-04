@@ -1,4 +1,4 @@
-// $Id: AudioInterface.h 6458 2010-05-31 11:38:51Z FloSoft $
+// $Id: AudioInterface.h 6543 2010-07-04 08:39:32Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -24,6 +24,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
+#undef DRIVERDLLAPI
 #ifdef _WIN32
 #	if defined _USRDLL || defined _LIB || defined BUILD_DLL
 #		define DRIVERDLLAPI extern "C" __declspec(dllexport)

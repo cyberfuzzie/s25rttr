@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: apple.common.cmake 6196 2010-03-25 12:27:15Z FloSoft $
+### $Id: apple.common.cmake 6544 2010-07-04 08:49:25Z FloSoft $
 ################################################################################
 
 IF ( "${CMAKE_OSX_DEPLOYMENT_TARGET}" STREQUAL "" )
@@ -44,6 +44,11 @@ IF ( NOT "${COMPILEARCH}" STREQUAL "" )
 	IF ( NOT "${CMAKE_OSX_ARCHITECTURES}" MATCHES "x86_64" AND NOT "${CMAKE_OSX_ARCHITECTURES}" MATCHES "i386" )
 		ADD_FLAGS(APPLE_CFLAGS -faltivec)
 	ENDIF ( NOT "${CMAKE_OSX_ARCHITECTURES}" MATCHES "x86_64" AND NOT "${CMAKE_OSX_ARCHITECTURES}" MATCHES "i386" )
+
+	# x86_64 only?
+    IF ( NOT "${CMAKE_OSX_ARCHITECTURES}" MATCHES "ppc" AND NOT "${CMAKE_OSX_ARCHITECTURES}" MATCHES "i386" )
+        ADD_FLAGS(APPLE_CFLAGS -mtune=core2)
+    ENDIF ( NOT "${CMAKE_OSX_ARCHITECTURES}" MATCHES "ppc" AND NOT "${CMAKE_OSX_ARCHITECTURES}" MATCHES "i386" )
 
 	ADD_FLAGS(APPLE_CFLAGS -mmacosx-version-min=${CMAKE_OSX_DEPLOYMENT_TARGET} -fexceptions -ffast-math -msse -fomit-frame-pointer)
 	ADD_FLAGS(APPLE_LDFLAGS -mmacosx-version-min=${CMAKE_OSX_DEPLOYMENT_TARGET} -fexceptions)

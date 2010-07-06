@@ -21,7 +21,7 @@ for I in $1; do
 		noupdate)
 			noupdate=1
 		;;
-		gdb|ldd|valgrind)
+		gdb|ldd|valgrind|strace)
 			noupdate=1
 			cmd=$I
 		;;

@@ -46,7 +46,7 @@ fi
 
 chmod 0755 $DIR/../bin/rttr.sh $DIR/../share/s25rttr/RTTR/s25update $DIR/../bin/s25client $DIR/../share/s25rttr/RTTR/sound-convert >/dev/null 2>/dev/null
 
-cd $DIR
+cd $DIR/../
 $cmd $DIR/../bin/s25client $*
 
 exit $?

@@ -1,4 +1,4 @@
-// $Id: nofDefender.h 6458 2010-05-31 11:38:51Z FloSoft $
+// $Id: nofDefender.h 6557 2010-07-08 21:19:20Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -42,6 +42,9 @@ private:
 	/// Sagt den verschiedenen Zielen Bescheid, dass wir doch nicht mehr kommen können
 	void InformTargetsAboutCancelling();
 
+	/// The derived classes regain control after a fight of nofActiveSoldier
+	void FreeFightEnded();
+
 public:
 
 	nofDefender(const unsigned short x, const unsigned short y,const unsigned char player,nobBaseMilitary * const building,
@@ -77,6 +80,15 @@ public:		void Destroy() { Destroy_nofDefender(); }
 	/// Guckt, ob der Verteidiger gerade rausläuft zum Kampf an die Flagge und ob ein anderen Mensch
 	/// es noch schaffen könnte, vorbeizukommen, bevor der Kampf losgeht (siehe CanPassBeforeFight bei nofAttacker)
 	bool CanPassBeforeFight() const;
+
+	/// Is the defender waiting at the flag for an attacker?
+	bool IsWaitingAtFlag() const
+	{ return (state == STATE_DEFENDING_WAITING); }
+	/// Informs the defender that a fight between him and an attacker has started
+	void FightStarted() 
+	{ state = STATE_FIGHTING; }
+
+
 };
 
 

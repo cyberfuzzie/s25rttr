@@ -1,4 +1,4 @@
-// $Id: MilitaryConsts.h 6535 2010-07-03 08:12:55Z FloSoft $
+// $Id: MilitaryConsts.h 6557 2010-07-08 21:19:20Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -35,6 +35,9 @@ const unsigned EXTENDED_ATTACKING_DISTANCE = 1;
 
 /// Maximale Länge f�r den Laufweg beim Angriff
 const unsigned MAX_ATTACKING_RUN_DISTANCE = 70;
+
+/// Distanz zwischen zwei Gegnern, sodass diese aufeinander zugehen
+const unsigned MEET_FOR_FIGHT_DISTANCE = 5;
 
 /// Besatzung in den einzelnen Militärgebäuden und nach Nation 
 const int TROOPS_COUNT[4][4] =

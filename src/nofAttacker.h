@@ -1,4 +1,4 @@
-// $Id: nofAttacker.h 6458 2010-05-31 11:38:51Z FloSoft $
+// $Id: nofAttacker.h 6557 2010-07-08 21:19:20Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -34,12 +34,9 @@ class nofAttacker : public nofActiveSoldier
 	friend class nofDefender;
 
 private:
-	/// Gebäude, welches der Soldat angreift
+	
+	/// Building which is attacked by the soldier
 	nobBaseMilitary * attacked_goal;
-	/// Ist er schon von einem Verteidiger ins Visier genommen wurden? Wenn ja, dann ist das hier
-	/// der Pointer zu diesem, wenn nicht, dann 0
-	/// kann auch der aggressive Verteidiger sein!
-	nofActiveSoldier * defender;
 	/// Soll er von nem Verteidiger gejagt werden? (wenn nicht wurde er schon gejagt oder er soll
 	/// wegen den Militäreinstellungen nicht gejagt werden
 	bool should_haunted;
@@ -48,10 +45,7 @@ private:
 	/// Nach einer bestimmten Zeit, in der der Angreifer an der Flagge des Gebäudes steht, blockt er den Weg
 	/// nur benutzt bei STATE_ATTACKING_WAITINGFORDEFENDER
 	EventManager::EventPointer blocking_event;
-	/// Feind, der uns auf dem Weg zu Nahe gekommen ist und bekämpft werden muss //TODO maybe zusammen mit defender behandeln?
-	nofActiveSoldier *encounteredEnemy;
-	/// vereinbarter Treffpunkt um den encounteredEnemy zu bekämpfen
-	MapCoord fightSpot_x, fightSpot_y;
+
 	/// Für Seeangreifer: Stelle, wo sich der Hafen befindet, von wo aus sie losfahren sollen
 	MapCoord harbor_x, harbor_y;
 	/// Für Seeangreifer: Landepunkt, wo sich das Schiff befindet, mit dem der Angreifer
@@ -67,6 +61,12 @@ private:
 	void ReturnHomeMissionAttacking();
 	/// Läuft weiter
 	void MissAttackingWalk();
+	/// Ist am Militärgebäude angekommen
+	void ReachedDestination();
+	/// Versucht, eine aggressiven Verteidiger für uns zu bestellen
+	void TryToOrderAggressiveDefender();
+	/// Doesn't find a defender at the flag -> Send defenders or capture it
+	void ContinueAtFlag();
 
 	/// Geht zum STATE_ATTACKING_WAITINGFORDEFENDER über und meldet gleichzeitig ein Block-Event an
 	void SwitchStateAttackingWaitingForDefender();
@@ -74,23 +74,15 @@ private:
 	/// Sagt den verschiedenen Zielen Bescheid, dass wir doch nicht mehr kommen können
 	void InformTargetsAboutCancelling();
 
-	/// Sucht nach feindlichen nofAttackern in der Nähe (gibt NULL zurück wenn keiner da)
-	nofActiveSoldier *FindValidEnemyNearby();
-	/// Geht zu einem anderen nofAttacker und kämpft mit ihm bzw. versucht das
-	bool GoToFightEncounteredAttacker(nofAttacker *enemy, MapCoord tx, MapCoord ty);
-	/// Gibt einen Platz zurück, an dem Kampf möglich ist (nur die 6 angrenzenden werden getestet)
-	bool GetFightSpotNear(MapCoord &x, MapCoord &y);
-	/// Lässt Soldaten zu einem Kampfplatz laufen, um mit einem anderen nofAttacker zu kämpfen
-	void WalkingToFightSpot();
-	/// Trifft auf anderen Attacker der in der Nähe rumläuft und vereinbart Kampf
-	bool EncounterEnemy();
-	/// Entfernt den encountered Enemy, setzt normale Tätigkeit fort
-	void LostEncounteredEnemy();
+	
 
 	/// Für Schiffsangreifer: Sagt dem Schiff Bescheid, dass wir nicht mehr kommen
 	void CancelAtShip();
 	/// Behandelt das Laufen zurück zum Schiff
 	void HandleState_SeaAttack_ReturnToShip();
+
+	/// The derived classes regain control after a fight of nofActiveSoldier
+	void FreeFightEnded();
 
 public:
 
@@ -153,7 +145,7 @@ public:		void Destroy() { Destroy_nofAttacker(); }
 	void SucceedingWalk();
 
 	/// aggressiv-verteidigender Soldat fragt einen Angreifer, ob er Lust zum Kämpfen hätte
-	bool WannaFight() const { return (!defender && (state == STATE_ATTACKING_WALKINGTOGOAL
+	bool WannaFight() const { return (!enemy && (state == STATE_ATTACKING_WALKINGTOGOAL
 		|| state == STATE_ATTACKING_WAITINGAROUNDBUILDING )); }
 	/// aggressiv-verteidigender Soldat will mit einem Angreifer kämpfen oder umgekehrt
 	void LetsFight(nofAggressiveDefender * other);

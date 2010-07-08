@@ -1,4 +1,4 @@
-// $Id: noCoordBase.h 6458 2010-05-31 11:38:51Z FloSoft $
+// $Id: noCoordBase.h 6557 2010-07-08 21:19:20Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -22,6 +22,7 @@
 #pragma once
 
 #include "noBase.h"
+#include "MapConsts.h"
 
 class noCoordBase : public noBase
 {
@@ -29,7 +30,7 @@ class noCoordBase : public noBase
 public:
 
 	/// Konstruktor von @p noCoordBase.
-	noCoordBase(const NodalObjectType nop, const unsigned short x, const unsigned short y) : noBase(nop), x(x), y(y) {}
+	noCoordBase(const NodalObjectType nop, const MapCoord x, const MapCoord y) : noBase(nop), x(x), y(y) {}
 	noCoordBase(SerializedGameData * sgd, const unsigned obj_id);
 
 	/// Aufräummethoden
@@ -41,16 +42,20 @@ public:		void Destroy(void) { Destroy_noCoordBase(); }
 	public:		void Serialize(SerializedGameData *sgd) const { Serialize_noCoordBase(sgd); }
 
 	/// liefert die X-Koordinate.
-	unsigned short GetX(void) const { return x; }
+	MapCoord GetX(void) const { return x; }
 	/// liefert die Y-Koordinate.
-	unsigned short GetY(void) const { return y; }
+	MapCoord GetY(void) const { return y; }
+
+	/// Returns position
+	Point<MapCoord> GetPos() const
+	{ return Point<MapCoord>(x,y); }
 
 	/// Liefert GUI-ID zurück für die Fenster
 	unsigned CreateGUIID() const;
 
 protected:
-	unsigned short x; ///< X-Koordinate
-	unsigned short y; ///< Y-Koordinate
+	MapCoord x; ///< X-Koordinate
+	MapCoord y; ///< Y-Koordinate
 };
 
 #endif // !NOCOORDBASE_H_INCLUDED

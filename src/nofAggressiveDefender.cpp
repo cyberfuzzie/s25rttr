@@ -103,36 +103,18 @@ void nofAggressiveDefender::Walked()
 	// Was bestimmtes machen, je nachdem welchen Status wir gerade haben
 	switch(state)
 	{
-	case STATE_WALKINGHOME:
-		{
-			WalkingHome();
-		} break;
+	default: nofActiveSoldier::Walked(); return;
 	case STATE_AGGRESSIVEDEFENDING_WALKINGTOAGGRESSOR:
 		{
 			MissAggressiveDefendingWalk();
-		} break;
-	default:
-		break;
+		} return;
 	}
 }
 
 /// Wenn ein Heimat-Militärgebäude bei Missionseinsätzen zerstört wurde
 void nofAggressiveDefender::HomeDestroyed()
 {
-	switch(state)
-	{
-	case STATE_WALKINGHOME:
-	case STATE_WAITINGFORFIGHT:
-	case STATE_AGGRESSIVEDEFENDING_WALKINGTOAGGRESSOR:
-	case STATE_AGGRESSIVEDEFENDING_FIGHTING:
-		{
-			// Die normale Tätigkeit wird erstmal fortgesetzt (Laufen, Kämpfen, wenn er schon an der Fahne ist
-			// wird er auch nicht mehr zurückgehen)
-			building = 0;
-		} break;
-	default:
-		break;
-	}
+	building = NULL;
 }
 
 void nofAggressiveDefender::HomeDestroyedAtBegin()
@@ -148,13 +130,6 @@ void nofAggressiveDefender::HomeDestroyedAtBegin()
 
 	state = STATE_FIGUREWORK;
 
-	// Angreifer Bescheid sagen, dass wir nicht mehr kommen
-	if(attacker)
-	{
-		attacker->AggressiveDefenderLost();
-		attacker = 0;
-	}
-
 	// Rumirren
 	StartWandering();
 	StartWalking(RANDOM.Rand(__FILE__,__LINE__,obj_id,6));
@@ -164,7 +139,7 @@ void nofAggressiveDefender::HomeDestroyedAtBegin()
 void nofAggressiveDefender::WonFighting()
 {
 	// Angreifer tot
-	attacker  = 0;
+	attacker  = NULL;
 
 	// Ist evtl. unser Heimatgebäude zerstört?
 	if(!building)
@@ -228,12 +203,8 @@ void nofAggressiveDefender::MissionAggressiveDefendingLookForNewAggressor()
 
 void nofAggressiveDefender::AttackedGoalDestroyed()
 {
-	if(attacker)
-	{
-		attacker->AggressiveDefenderLost();
-		attacker = 0;
-	}
-	attacked_goal = 0;
+	attacker = NULL;
+	attacked_goal = NULL;
 
 	// Stehen wir? Dann losgehen
 	if(state == STATE_WAITINGFORFIGHT)
@@ -252,12 +223,7 @@ void nofAggressiveDefender::MissAggressiveDefendingWalk()
 	// Ist evtl. unser Heimatgebäude zerstört?
 	if(!building)
 	{
-		// evtl. noch dem Angreifer Bescheid sagen, falls einer existiert
-		if(attacker)
-		{
-			attacker->AggressiveDefenderLost();
-			attacker = 0;
-		}
+		attacker = NULL;
 
 		// Ziel Bescheid sagen
 		if(attacked_goal)
@@ -283,56 +249,41 @@ void nofAggressiveDefender::MissAggressiveDefendingWalk()
 		return;
 	}
 
-	// Gibts den Angreifer überhaupt noch?
+	// Does the attacker still exists?
 	if(!attacker)
 	{
-		// Ansonsten gehts wieder zurück nach Hause
-		ReturnHomeMissionAggressiveDefending();
+		// Look for a new one
+		MissionAggressiveDefendingLookForNewAggressor();
 		return;
 	}
 
-	// Bin ich schon beim Angreifer, der wartet?
-	if(x == attacker->GetX() && y == attacker->GetY() 
-		&& (attacker->GetState() == nofActiveSoldier::STATE_WAITINGFORFIGHT 
-		|| attacker->GetState() == nofActiveSoldier::STATE_ATTACKING_WAITINGAROUNDBUILDING))
+	// Does he still want to fight?
+	if(!attacker->IsReadyForFight())
 	{
-		// Dann die Köpfe rollen lassen...
-		gwg->AddFigure(new noFighting(attacker,this),x,y);
-
-		state = STATE_AGGRESSIVEDEFENDING_FIGHTING;
-		attacker->state = STATE_ATTACKING_FIGHTINGVSAGGRESSIVEDEFENDER;
+		// Look for a new one
+		MissionAggressiveDefendingLookForNewAggressor();
 		return;
 	}
 
-	// Laufrichtung bestimmen
+	// Look for enemies
+	if(FindEnemiesNearby())
+		// Enemy found -> abort, because nofActiveSoldier handles all things now
+		return;
+
+	// Calc next walking direction
 	dir = gwg->FindHumanPath(x,y,attacker->GetX(),
 			attacker->GetY(),100,true);
 
 	if(dir == 0xFF)
 	{
-		// Nach Hause zurück gehen
-		ReturnHomeMissionAggressiveDefending();
+		// No route found
+		// Look for new attacker
+		MissionAggressiveDefendingLookForNewAggressor();
 	}
 	else
 	{
-		// ist der Angreifer in meiner Nähe und wartet er noch nicht auf mich
-		// und ist da noch Platz für einen Kampf?
-		// Wenn er schon vor dem Militärgebäude wartet, kann ich nicht auf ihn warten
-		if(gwg->CalcDistance(x,y,attacker->GetX(),attacker->GetY())<3 &&
-			attacker->state != STATE_WAITINGFORFIGHT &&
-			attacker->state != STATE_ATTACKING_WAITINGAROUNDBUILDING &&
-			gwg->ValidPointForFighting(x,y) &&
-			!(x == attacked_goal->GetX()+(attacked_goal->GetY()&1)
-			&& y == attacked_goal->GetY()+1))
-		{
-			// Dann warte ich ganz fein auf ihn
-			state = STATE_WAITINGFORFIGHT;
-		}
-		else
-		{
-			// hinlaufen
-			StartWalking(dir);
-		}
+		// Continue walking towards him
+		StartWalking(dir);
 	}
 }
 
@@ -346,7 +297,7 @@ void nofAggressiveDefender::ReturnHomeMissionAggressiveDefending()
 
 void nofAggressiveDefender::AttackerLost()
 {
-	attacker = 0;
+	attacker = NULL;
 
 	// Wenn wir auf die gewartet hatten, müssen wir uns einen neuen Angreifer suchen
 	if(state == STATE_WAITINGFORFIGHT)
@@ -357,11 +308,8 @@ void nofAggressiveDefender::AttackerLost()
 void nofAggressiveDefender::NeedForHomeDefence()
 {
 	// Angreifer Bescheid sagen
-	if(attacker)
-	{
-		attacker->AggressiveDefenderLost();
-		attacker = 0;
-	}
+	attacker = NULL;
+
 	// Ziel Bescheid sagen
 	if(attacked_goal)
 	{
@@ -374,16 +322,20 @@ void nofAggressiveDefender::NeedForHomeDefence()
 void nofAggressiveDefender::InformTargetsAboutCancelling()
 {
 	// Angreifer Bescheid sagen
-	if(attacker)
-	{
-		attacker->AggressiveDefenderLost();
-		attacker = 0;
-	}
+	attacker = NULL;
 	// Ziel Bescheid sagen
 	if(attacked_goal)
 	{
 		attacked_goal->UnlinkAggressiveDefender(this);
 		attacked_goal = 0;
 	}
+}
+
+
+/// The derived classes regain control after a fight of nofActiveSoldier
+void nofAggressiveDefender::FreeFightEnded()
+{
+	// Continue with normal walking towards our goal
+	state = STATE_AGGRESSIVEDEFENDING_WALKINGTOAGGRESSOR;
 }
 

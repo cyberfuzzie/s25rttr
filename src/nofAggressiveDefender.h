@@ -1,4 +1,4 @@
-// $Id: nofAggressiveDefender.h 6458 2010-05-31 11:38:51Z FloSoft $
+// $Id: nofAggressiveDefender.h 6557 2010-07-08 21:19:20Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -49,6 +49,9 @@ private:
 	void MissionAggressiveDefendingLookForNewAggressor();
 	/// Sagt den verschiedenen Zielen Bescheid, dass wir doch nicht mehr kommen können
 	void InformTargetsAboutCancelling();
+
+	/// The derived classes regain control after a fight of nofActiveSoldier
+	void FreeFightEnded();
 
 public:
 

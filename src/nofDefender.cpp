@@ -1,4 +1,4 @@
-// $Id: nofDefender.cpp 6458 2010-05-31 11:38:51Z FloSoft $
+// $Id: nofDefender.cpp 6557 2010-07-08 21:19:20Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -79,7 +79,7 @@ void nofDefender::Walked()
 		{
 			// Mit Angreifer den Kampf beginnen
 			gwg->AddFigure(new noFighting(attacker,this),x,y);
-			state = STATE_DEFENDING_FIGHTING;
+			state = STATE_FIGHTING;
 			attacker->state = STATE_ATTACKING_FIGHTINGVSDEFENDER;
 
 		} break;
@@ -153,7 +153,7 @@ void nofDefender::HomeDestroyed()
 			state = STATE_FIGUREWORK;
 
 		} break;
-	case STATE_DEFENDING_FIGHTING:
+	case STATE_FIGHTING:
 		{
 			// Die normale Tätigkeit wird erstmal fortgesetzt (Laufen, Kämpfen, wenn er schon an der Fahne ist
 			// wird er auch nicht mehr zurückgehen)
@@ -263,4 +263,12 @@ bool nofDefender::CanPassBeforeFight() const
 /// Sagt den verschiedenen Zielen Bescheid, dass wir doch nicht mehr kommen können
 void nofDefender::InformTargetsAboutCancelling()
 {
+}
+
+
+/// The derived classes regain control after a fight of nofActiveSoldier
+void nofDefender::FreeFightEnded()
+{
+	// This is not supposed to happen
+	assert(false);
 }

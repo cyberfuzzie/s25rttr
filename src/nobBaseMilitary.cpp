@@ -1,4 +1,4 @@
-// $Id: nobBaseMilitary.cpp 6458 2010-05-31 11:38:51Z FloSoft $
+// $Id: nobBaseMilitary.cpp 6559 2010-07-09 10:05:58Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -174,7 +174,7 @@ nofAttacker * nobBaseMilitary::FindAggressor(nofAggressiveDefender * defender)
 	for(list<nofAttacker*>::iterator it = aggressors.begin();it.valid();++it)
 	{
 		// Überhaupt Lust zum Kämpfen?
-		if((*it)->WannaFight())
+		if((*it)->IsReadyForFight())
 		{
 			// Mal sehen, ob er auch nicht so weit entfernt ist (erstmal grob)
 			if(gwg->CalcDistance((*it)->GetX(),(*it)->GetY(),defender->GetX(),defender->GetY()) < 5)

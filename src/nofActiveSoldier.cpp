@@ -1,4 +1,4 @@
-// $Id: nofActiveSoldier.cpp 6557 2010-07-08 21:19:20Z OLiver $
+// $Id: nofActiveSoldier.cpp 6559 2010-07-09 10:05:58Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -67,26 +67,29 @@ state(SoldierState(sgd->PopUnsignedChar()))
 
 void nofActiveSoldier::GoalReached()
 {
-	// mich hinzufügen
+	// We reached the military building
+	// Add myself to the building
 	static_cast<nobMilitary*>(building)->AddActiveSoldier(this);
 
-	// und wir können uns auch aus der Laufliste erstmal entfernen
+	// And remove myself from the map
 	gwg->RemoveFigure(this,x,y);
 }
 
 void nofActiveSoldier::ReturnHome()
 {
+	// Set appropriate state
 	state = STATE_WALKINGHOME;
+	// Start walking
 	WalkingHome();
 }
 
 
 void nofActiveSoldier::WalkingHome()
 {
-	// Ist evtl. unser Heimatgebäude zerstört?
+	// Is our home military building destroyed?
 	if(!building)
 	{
-		// Rumirren
+		// Start wandering around
 		state = STATE_FIGUREWORK;
 		StartWandering();
 		Wander();
@@ -95,44 +98,43 @@ void nofActiveSoldier::WalkingHome()
 	}
 
 
-	// Wieder zurück nach Hause laufen
+	// Walking home to our military building
 
-	// Sind wir schon an der Flagge?
-	if(x == building->GetFlag()->GetX() && y == building->GetFlag()->GetY())
+	// Are we already at the flag?
+	if(GetPos() == building->GetFlag()->GetPos())
 	{
-		// Dann INS Gebäude laufen
+		// Enter via the door
 		StartWalking(1);
 	}
-	// oder vielleicht auch schon im Gebäude drin?
-	else if(x == building->GetX() && y == building->GetY())
+	// or are have we come into the building?
+	else if(GetPos() == building->GetPos())
 	{
-		// Wir sind da!
+		// We're there!
 		building->AddActiveSoldier(this);
-		// Mich entfernen hier
+		// Remove myself from the map
 		gwg->RemoveFigure(this,x,y);
 	}
-	// oder finden wir gar keinen Weg mehr?
+	// Or we don't find a route?
 	else if((dir = gwg->FindHumanPath(x,y,building->GetFlag()->GetX(),building->GetFlag()->GetY(),100)) == 0xFF)
 	{
-		// Kein Weg gefunden --> Rumirren
+		// Start wandering around then
 		StartWandering();
 		state = STATE_FIGUREWORK;
 		Wander();
 
-		// Dem Heimatgebäude Bescheid sagen
+		// Inform our home building that we're not coming anymore
 		building->SoldierLost(this);
 	}
-	// oder ist alles ok? :)
+	// All ok?
 	else
 	{
-		// nach Hause laufen
+		// Start walking
 		StartWalking(dir);
 	}
 }
 
 
 void nofActiveSoldier::Draw(int x, int y)
-
 {
 	switch(state)
 	{
@@ -142,7 +144,7 @@ void nofActiveSoldier::Draw(int x, int y)
 	case STATE_ATTACKING_WAITINGAROUNDBUILDING:
 	case STATE_ATTACKING_WAITINGFORDEFENDER:
 		{
-			// wenn er wartet, steht er nur rum
+			// Draw waiting states
 			LOADER.GetBobN("jobs")->Draw(30+NATION_RTTR_TO_S2[GAMECLIENT.GetPlayer(player)->nation]*6+job-JOB_PRIVATE,
 				dir,false,2,x,y,COLORS[GAMECLIENT.GetPlayer(player)->color]);
 			DrawShadow(x,y,2,dir);
@@ -156,9 +158,10 @@ void nofActiveSoldier::Draw(int x, int y)
 	case STATE_ATTACKING_CAPTURINGFIRST:
 	case STATE_ATTACKING_CAPTURINGNEXT:
 	case STATE_ATTACKING_ATTACKINGFLAG:
-	case STATE_SEAATTACKING_GOTOHARBOR: // geht von seinem Heimatmilitärgebäude zum Starthafen
-	case STATE_SEAATTACKING_RETURNTOSHIP: // befindet sich an der Zielposition auf dem Weg zurück zum Schiff
+	case STATE_SEAATTACKING_GOTOHARBOR:
+	case STATE_SEAATTACKING_RETURNTOSHIP:
 		{
+			// Draw walking states
 			DrawSoldierWalking(x,y);
 		} break;
 	}
@@ -170,40 +173,40 @@ void nofActiveSoldier::Draw(int x, int y)
 
 void nofActiveSoldier::HandleDerivedEvent(const unsigned int id)
 {
-	// Das dürfte nich aufgerufen werden!
+	// That's not supposed to happen!
 	assert(false);
 }
 
-/// Gibt den Sichtradius dieser Figur zurück (0, falls nicht-spähend)
+/// Gets the visual range radius of this soldier
 unsigned nofActiveSoldier::GetVisualRange() const
 {
 	return VISUALRANGE_SOLDIER;
 }
 
-/// Prüft feindliche Leute auf Straßen in der Umgebung und vertreibt diese
+/// Examines hostile people on roads and expels them
 void nofActiveSoldier::ExpelEnemies()
 {
-	// Figuren sammeln aus der Umgebung
+	// Collect the figures nearby in a large bucket
 	std::vector<noFigure*> figures;
 	
-	// Am Punkt selbst
+	// At the position of the soldier
 	for(list<noBase*>::iterator it = gwg->GetFigures(x,y).begin();it.valid();++it)
 	{
 		if((*it)->GetType() == NOP_FIGURE)
 			figures.push_back(static_cast<noFigure*>(*it));
 	}
 	
-	// Und rund herum
+	// And around this point
 	for(unsigned i = 0;i<6;++i)
 	{
-		// Diese müssen sich entweder auf dem Punkt befinden oder zu diesem laufen
 		for(list<noBase*>::iterator it = gwg->GetFigures(gwg->GetXA(x,y,i),gwg->GetYA(x,y,i)).begin();it.valid();++it)
 		{
-			// Figur?
-			// Nicht dass wir noch Hase und Igel stören (Naturschutz!)
+			// Normal settler?
+			// Don't disturb hedgehogs and rabbits!
 			if((*it)->GetType() == NOP_FIGURE)
 			{
 				noFigure * fig = static_cast<noFigure*>(*it);
+				// The people have to be either on the point itself or they have to walk there
 				if(fig->GetX() == x && fig->GetY() == y)
 					figures.push_back(fig);
 				else if(fig->GetDestinationForCurrentMove() == Point<MapCoord>(x,y))
@@ -212,29 +215,26 @@ void nofActiveSoldier::ExpelEnemies()
 		}
 	}
 	
-	// Mal gucken, was uns alles ins Netz gegangen ist, und aussieben
-	// Nicht, dass Erika Steinbach noch böse wird
+	// Let's see which things are netted and sort the wrong things out
+	// ( Don't annoy Erika Steinbach! )
 	for(unsigned i = 0;i<figures.size();++i)
 	{
 		noFigure * fig = figures[i];
-		// Feind von uns und kein Soldat?
-		// Außerdem muss er auf der Straße unterwegs sein (keine freiarbeitenden Berufe durcheinanderbringen..)
+		// Enemy of us and no soldier?
+		// And he has to walking on the road (don't disturb free workers like woodcutters etc.)
 		if(!players->getElement(player)->IsAlly(fig->GetPlayer()) &&
 		!(fig->GetJobType() >= JOB_PRIVATE && fig->GetJobType() <= JOB_GENERAL)
 		&& fig->IsWalkingOnRoad())
 		{
-			// Dann weg mit dem!
+			// Then he should start wandering around
 			fig->Abrogate();
 			fig->StartWandering();
-			// Läuft der immer noch nicht? (Träger, die auf Wegen stehen und auf Waren warten)
+			// Not walking? (Could be carriers who are waiting for wares on roads)
 			if(!fig->IsMoving())
-				// Dann machen wir dir aber Beine
+				// Go, go, go
 				fig->StartWalking(Random::inst().Rand(__FILE__,__LINE__,obj_id,6));
 		}
 	}
-	
-	// Straße ist gesäubert, vielleicht nützt dem Feind das ja sogar was..
-	//gwg->RoadNodeAvailable(x, y);
 }
 
 
@@ -258,10 +258,10 @@ bool nofActiveSoldier::FindEnemiesNearby()
 {
 	MapCoord tx, ty;
 
-	// Vektor mit potenziellen Opfern
+	// Vector with potential victims
 	std::vector<nofActiveSoldier*> soldiersNearby;
 
-	// Im Radius 1 suchen...
+	// Look in radius 1
 	for(unsigned dir=0; dir<6; ++dir)
 	{
 		tx = gwg->GetXA(x, y, dir);
@@ -273,7 +273,7 @@ bool nofActiveSoldier::FindEnemiesNearby()
 				soldiersNearby.push_back(dynamic_cast<nofActiveSoldier*>(*it));
 	}
 
-	// ... und im Radius 2
+	// ... and radius 2
 	for(unsigned dir=0; dir<12; ++dir)
 	{
 		tx = gwg->GetXA2(x, y, dir);
@@ -288,10 +288,10 @@ bool nofActiveSoldier::FindEnemiesNearby()
 
 	enemy = NULL;
 
-	// Prüfen ob die Gefundenen gerade nix besseres zu tun haben
+	// Check if the victims have nothing better to do
 	for(unsigned i=0; i<soldiersNearby.size(); ++i)
 	{
-		// Wenn einer zu einem Angriffsziel läuft oder um ein Angriffsziel rumsteht und Feind ist, ist er ein gutes Opfer
+		// Ready for fight and good enemy = Good victim
 		if (soldiersNearby[i]->IsReadyForFight() && !GAMECLIENT.GetPlayer(soldiersNearby[i]->GetPlayer())->IsAlly(this->player))
 		{
 			enemy = soldiersNearby[i];

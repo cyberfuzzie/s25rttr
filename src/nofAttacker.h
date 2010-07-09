@@ -1,4 +1,4 @@
-// $Id: nofAttacker.h 6557 2010-07-08 21:19:20Z OLiver $
+// $Id: nofAttacker.h 6559 2010-07-09 10:05:58Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -144,9 +144,6 @@ public:		void Destroy() { Destroy_nofAttacker(); }
 	/// Siehe oben, wird nach jeder Wegeinheit aufgerufen
 	void SucceedingWalk();
 
-	/// aggressiv-verteidigender Soldat fragt einen Angreifer, ob er Lust zum Kämpfen hätte
-	bool WannaFight() const { return (!enemy && (state == STATE_ATTACKING_WALKINGTOGOAL
-		|| state == STATE_ATTACKING_WAITINGAROUNDBUILDING )); }
 	/// aggressiv-verteidigender Soldat will mit einem Angreifer kämpfen oder umgekehrt
 	void LetsFight(nofAggressiveDefender * other);
 
@@ -155,11 +152,6 @@ public:		void Destroy() { Destroy_nofAttacker(); }
 
 	/// Liefert das angegriffene Gebäude zurück
 	nobBaseMilitary * GetAttackedGoal() const { return attacked_goal; }
-
-	/// Fragt ab, ob der Angreifer direkt vor einem Gebäude wartet, dieses angreift und ob gerade
-	/// der Verteidiger des Gebäudes zur Tür rauskommt und wenn ja, ob ein wartender vor der Flagge, der am
-	/// potenziellen Kampf vorbei will, es noch schafft vorbeizukommen, bevor der Kampf wieder anfängt
-	bool CanPassBeforeFight() const;
 
 	/// Startet den Angriff am Landungspunkt vom Schiff
 	void StartAttackOnOtherIsland(const MapCoord ship_x, const MapCoord ship_y, const unsigned ship_id);

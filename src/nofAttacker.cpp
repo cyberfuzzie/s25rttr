@@ -174,25 +174,29 @@ void nofAttacker::Walked()
 
 			unsigned short flag_x = attacked_goal->GetFlag()->GetX(),
 				flag_y = attacked_goal->GetFlag()->GetY();
-			assert(enemy->GetGOT() == GOT_NOF_DEFENDER);
+			//assert(enemy->GetGOT() == GOT_NOF_DEFENDER);
 			// Are we at the flag?
-			if(x == flag_x && y == flag_y)
+
+			nofDefender * defender = NULL;
+			// Look for defenders at this position
+			for(list<noBase*>::iterator it = gwg->GetFigures(flag_x,flag_y).begin();
+				it != gwg->GetFigures(flag_x,flag_y).end();++it)
 			{
-				nofDefender * defender = NULL;
-				// Look for defenders at this position
-				for(list<noBase*>::iterator it = gwg->GetFigures(x,y).begin();
-					it != gwg->GetFigures(x,y).end();++it)
+				if((*it)->GetGOT() == GOT_NOF_DEFENDER)
 				{
-					if((*it)->GetGOT() == GOT_NOF_DEFENDER)
+					// Is the defender waiting at the flag?
+					// (could be wandering around or something)
+					if(static_cast<nofDefender*>(*it)->IsWaitingAtFlag())
 					{
-						// Is the defender waiting at the flag?
-						// (could be wandering around or something)
-						if(static_cast<nofDefender*>(*it)->IsWaitingAtFlag())
-						{
-							defender = static_cast<nofDefender*>(*it);
-						}
+						defender = static_cast<nofDefender*>(*it);
 					}
 				}
+			}
+
+
+			if(x == flag_x && y == flag_y)
+			{
+			
 
 				if(defender)
 				{
@@ -216,7 +220,8 @@ void nofAttacker::Walked()
 					state = STATE_ATTACKING_WALKINGTOGOAL;
 					MissAttackingWalk();
 					// der Verteidiger muss darüber informiert werden
-					static_cast<nofDefender*>(enemy)->AttackerArrested();
+					if(defender)
+						defender->AttackerArrested();
 				}
 				else
 				{
@@ -426,8 +431,6 @@ void nofAttacker::CancelAtHomeMilitaryBuilding()
 /// Wenn ein Kampf gewonnen wurde
 void nofAttacker::WonFighting()
 {
-	enemy = NULL;
-
 	// Ist evtl. unser Heimatgebäude zerstört?
 	if(!building && state != STATE_ATTACKING_FIGHTINGVSDEFENDER)
 	{
@@ -667,7 +670,7 @@ void nofAttacker::TryToOrderAggressiveDefender()
 {
 	// Haben wir noch keinen Gegner?
 	// Könnte mir noch ein neuer Verteidiger entgegenlaufen?
-	if(!enemy && should_haunted)
+	if(should_haunted && state >= STATE_ATTACKING_WALKINGTOGOAL)
 	{
 		// 20%ige Chance, dass wirklich jemand angreift
 		if(RANDOM.Rand(__FILE__,__LINE__,obj_id,10) < 2)
@@ -687,7 +690,7 @@ void nofAttacker::TryToOrderAggressiveDefender()
 					GameClient::inst().GetPlayer(player)->IsPlayerAttackable((*it)->GetPlayer()))
 				{
 					// ggf. Verteidiger rufen
-					if( (enemy = (*it)->SendDefender(this)))
+					if( ((*it)->SendDefender(this)))
 					{
 						// nun brauchen wir keinen Verteidiger mehr
 						should_haunted = false;
@@ -742,7 +745,6 @@ bool nofAttacker::AttackFlag(nofDefender * defender)
 			StartWalking(tmp_dir);
 
 		state = STATE_ATTACKING_ATTACKINGFLAG;
-		this->enemy = defender;
 
 		// Hatte er ums Gebäude gewartet?
 		if(waiting_around_building)
@@ -912,9 +914,6 @@ void nofAttacker::StartSucceeding(const unsigned short x, const unsigned short y
 
 void nofAttacker::LetsFight(nofAggressiveDefender * other)
 {
-	// Mein neues Ziel
-	enemy = other;
-
 	// wir werden jetzt "gejagt"
 	should_haunted = false;
 
@@ -928,29 +927,12 @@ void nofAttacker::LetsFight(nofAggressiveDefender * other)
 
 void nofAttacker::AggressiveDefenderLost()
 {
-	enemy = NULL;
-
 	// Wenn wir auf die gewartet hatten, müssen wir uns nun bewegen
 	if(state == STATE_WAITINGFORFIGHT)
 	{
 		state = STATE_ATTACKING_WALKINGTOGOAL;
 		MissAttackingWalk();
 	}
-}
-
-bool nofAttacker::CanPassBeforeFight() const
-{
-	// Warte ich auf einen Kampf?
-	if(state == STATE_WAITINGFORFIGHT)
-	{
-		assert(enemy);
-
-		// Ist mein Verteidiger ein normaler Verteidiger, der aus der Hütte rauskommt?
-		if(enemy->GetGOT() == GOT_NOF_DEFENDER)
-			return static_cast<nofDefender*>(enemy)->CanPassBeforeFight();
-	}
-
-	return true;
 }
 
 void nofAttacker::SwitchStateAttackingWaitingForDefender()

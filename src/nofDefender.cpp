@@ -1,4 +1,4 @@
-// $Id: nofDefender.cpp 6557 2010-07-08 21:19:20Z OLiver $
+// $Id: nofDefender.cpp 6559 2010-07-09 10:05:58Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -239,25 +239,6 @@ void nofDefender::AttackerArrested()
 		// Angreifer auf 0 setzen, er ist ja tot
 		attacker = 0;
 	}
-}
-
-
-bool nofDefender::CanPassBeforeFight() const
-{
-	// Laufe ich gerade raus?
-	if(state == STATE_DEFENDING_WALKINGTO)
-	{
-		// Läuft er auch wirklich, gibts also ein Laufevent (er könnte auch noch im Haus hängen z.B.)
-		if(current_ev)
-		{
-			// Ist nicht mehr genügend Zeit, bis ich ankomme, 20 normale Rausgehdauer
-			if(current_ev->gf_length - (GameClient::inst().GetGFNumber()-current_ev->gf) < 20)
-				// Dann muss der Soldat anhalten
-				return false;
-		}
-	}
-
-	return true;
 }
 
 /// Sagt den verschiedenen Zielen Bescheid, dass wir doch nicht mehr kommen können

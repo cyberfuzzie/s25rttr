@@ -1,4 +1,4 @@
-// $Id: nofDefender.h 6557 2010-07-08 21:19:20Z OLiver $
+// $Id: nofDefender.h 6559 2010-07-09 10:05:58Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -76,10 +76,6 @@ public:		void Destroy() { Destroy_nofDefender(); }
 	void WonFighting();
 	/// Wenn ein Kampf verloren wurde (Tod)
 	void LostFighting();
-
-	/// Guckt, ob der Verteidiger gerade rausläuft zum Kampf an die Flagge und ob ein anderen Mensch
-	/// es noch schaffen könnte, vorbeizukommen, bevor der Kampf losgeht (siehe CanPassBeforeFight bei nofAttacker)
-	bool CanPassBeforeFight() const;
 
 	/// Is the defender waiting at the flag for an attacker?
 	bool IsWaitingAtFlag() const

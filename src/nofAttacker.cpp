@@ -568,6 +568,14 @@ void nofAttacker::MissAttackingWalk()
 		return;
 	}
 
+	// Is it still a hostile destination?
+	// (Could be captured in the meantime)
+	if(!players->getElement(player)->IsPlayerAttackable(attacked_goal->GetPlayer()))
+	{
+		ReturnHomeMissionAttacking();
+		return;
+	}
+
 
 	// Eine Position rund um das Militärgebäude suchen
 	unsigned short goal_x,goal_y;
@@ -603,7 +611,13 @@ void nofAttacker::MissAttackingWalk()
 	dir = gwg->FindHumanPath(x,y,goal_x,goal_y,MAX_ATTACKING_RUN_DISTANCE,true);
 	// Keiner gefunden? Nach Hause gehen
 	if(dir == 0xff)
+	{
 		ReturnHomeMissionAttacking();
+		return;
+	}
+
+	// Start walking
+	StartWalking(dir);
 }
 
 /// Ist am Militärgebäude angekommen

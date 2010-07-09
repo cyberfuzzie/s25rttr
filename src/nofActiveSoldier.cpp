@@ -1,4 +1,4 @@
-// $Id: nofActiveSoldier.cpp 6559 2010-07-09 10:05:58Z OLiver $
+// $Id: nofActiveSoldier.cpp 6560 2010-07-09 11:11:12Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -41,13 +41,13 @@
 
 nofActiveSoldier::nofActiveSoldier(const unsigned short x, const unsigned short y,const unsigned char player,
 				 nobBaseMilitary * const home,const unsigned char rank, const SoldierState init_state)
-				 : nofSoldier(x,y,player,home,rank), state(init_state)
+				 : nofSoldier(x,y,player,home,rank), state(init_state), enemy(NULL)
 
 {
 }
 
 nofActiveSoldier::nofActiveSoldier(const nofSoldier& other, const SoldierState init_state) :
-  nofSoldier(other), state(init_state) {}
+  nofSoldier(other), state(init_state), enemy(NULL) {}
 
 
 void nofActiveSoldier::Serialize_nofActiveSoldier(SerializedGameData * sgd) const
@@ -55,12 +55,18 @@ void nofActiveSoldier::Serialize_nofActiveSoldier(SerializedGameData * sgd) cons
 	Serialize_nofSoldier(sgd);
 
 	sgd->PushUnsignedChar(static_cast<unsigned char>(state));
+	sgd->PushObject(enemy,false);
+	sgd->PushUnsignedShort(fight_spot.x);
+	sgd->PushUnsignedShort(fight_spot.y);
 }
 
 
 nofActiveSoldier::nofActiveSoldier(SerializedGameData * sgd, const unsigned obj_id) : nofSoldier(sgd,obj_id),
-state(SoldierState(sgd->PopUnsignedChar()))
+state(SoldierState(sgd->PopUnsignedChar())),
+enemy(sgd->PopObject<nofActiveSoldier>(GOT_UNKNOWN))
 {
+	fight_spot.x = sgd->PopUnsignedShort();
+	fight_spot.y = sgd->PopUnsignedShort();
 }
 
 
@@ -128,6 +134,12 @@ void nofActiveSoldier::WalkingHome()
 	// All ok?
 	else
 	{
+		// Find all sorts of enemies (attackers, aggressive defenders..) nearby
+		if(FindEnemiesNearby())
+			// Enemy found -> abort, because nofActiveSoldier handles all things now (inclusive one walking step)
+			return;
+
+
 		// Start walking
 		StartWalking(dir);
 	}
@@ -150,6 +162,7 @@ void nofActiveSoldier::Draw(int x, int y)
 			DrawShadow(x,y,2,dir);
 		} break;
 	case STATE_FIGUREWORK:
+	case STATE_MEETENEMY:
 	case STATE_ATTACKING_WALKINGTOGOAL:
 	case STATE_AGGRESSIVEDEFENDING_WALKINGTOAGGRESSOR:
 	case STATE_WALKINGHOME:
@@ -338,8 +351,10 @@ void nofActiveSoldier::MeetingEnemy()
 		{
 			// Start fighting
 			gwg->AddFigure(new noFighting(enemy, this), x, y);
+			
 			state = STATE_FIGHTING;
 			enemy->state = STATE_FIGHTING;
+			enemy = NULL;
 			return;
 		}
 		else
@@ -398,6 +413,8 @@ void nofActiveSoldier::MeetEnemy(nofActiveSoldier * other, const Point<MapCoord>
 	{
 		MeetingEnemy();
 	}
+
+	state = STATE_MEETENEMY;
 	
 }
 
@@ -434,7 +451,18 @@ bool nofActiveSoldier::GetFightSpotNear(nofActiveSoldier * other, Point<MapCoord
 	gwg->ConvertCoords(middle.x,middle.y,&middle.x,&middle.y);
 
 
+	// Test Middle point first
+	if(gwg->ValidPointForFighting(middle.x,middle.y,NULL)
+		&& gwg->FindHumanPath(x,y,middle.x,middle.y,MEET_FOR_FIGHT_DISTANCE*2,true,NULL) != 0xff
+		&& gwg->FindHumanPath(other->GetX(),other->GetY(),middle.x,middle.y,MEET_FOR_FIGHT_DISTANCE*2,true,NULL) != 0xff)
+	{
+		// Great, then let's take this one
+		*fight_spot = middle;
+		return true;
 
+	}
+
+	// Points around
 	for(MapCoord tx=gwg->GetXA(middle.x,middle.y,0), r=1;r<=MEET_FOR_FIGHT_DISTANCE;tx=gwg->GetXA(tx,middle.y,0),++r)
 	{
 		// Wurde ein Punkt in diesem Radius gefunden?
@@ -446,7 +474,9 @@ bool nofActiveSoldier::GetFightSpotNear(nofActiveSoldier * other, Point<MapCoord
 			for(MapCoord r2=0;r2<r;gwg->GetPointA(tx2,ty2,i%6),++r2)
 			{
 				// Did we find a good spot?
-				if(gwg->ValidPointForFighting(tx2,ty2,NULL))
+				if(gwg->ValidPointForFighting(tx2,ty2,NULL)
+					&& gwg->FindHumanPath(x,y,tx2,ty2,MEET_FOR_FIGHT_DISTANCE*2,true,NULL) != 0xff
+					&& gwg->FindHumanPath(other->GetX(),other->GetY(),tx2,ty2,MEET_FOR_FIGHT_DISTANCE*2,true,NULL) != 0xff)
 
 				{
 					// Great, then let's take this one

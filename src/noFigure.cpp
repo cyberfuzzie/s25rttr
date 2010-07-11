@@ -514,8 +514,17 @@ void noFigure::HandleEvent(const unsigned int id)
 			list<noBase*> figures;
 			gwg->GetDynamicObjectsFrom(x,y,figures);
 			
-			gwg->RecalcMovingVisibilities(x,y,player,GetVisualRange(),old_dir);
+			Point<MapCoord> enemy_territory_discovered(0xffff,0xffff);
+
+			gwg->RecalcMovingVisibilities(x,y,player,GetVisualRange(),old_dir, &enemy_territory_discovered);
 			
+			// Feindliches Territorium entdeckt?
+			if(enemy_territory_discovered.x != 0xffff)
+			{
+				// Dann Nachricht senden TODO: das sendet irgendwie zuviele nachrichten
+				//GameClient::inst().SendPostMessage(new PostMsgWithLocation(_("Someone disovered an enemy territory"), PMC_MILITARY, enemy_territory_discovered.x, enemy_territory_discovered.y));
+			}
+
 			// Wenn Figur verschwunden ist, muss ihr ehemaliger gesamter Sichtbereich noch einmal
 			// neue berechnet werden
 			if(!figures.search(this).valid())

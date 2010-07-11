@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DIR=$(dirname "$0")
+DIR=$(cd ${0%/*} && pwd -P)
 
 chmod 0755 $DIR/../bin/rttr.sh $DIR/../share/s25rttr/RTTR/s25update $DIR/../bin/s25client $DIR/../share/s25rttr/RTTR/sound-convert >/dev/null 2>/dev/null
 
@@ -12,7 +12,8 @@ fi
 
 cmd=
 noupdate=0
-for I in $1; do
+updateonly=0
+for I in $*; do
 	case $I in
 		debug)
 			noupdate=1
@@ -20,6 +21,9 @@ for I in $1; do
 		;;
 		noupdate)
 			noupdate=1
+		;;
+		updateonly)
+			updateonly=1
 		;;
 		gdb|ldd|valgrind|strace)
 			noupdate=1
@@ -46,7 +50,9 @@ fi
 
 chmod 0755 $DIR/../bin/rttr.sh $DIR/../share/s25rttr/RTTR/s25update $DIR/../bin/s25client $DIR/../share/s25rttr/RTTR/sound-convert >/dev/null 2>/dev/null
 
-cd $DIR/../
-$cmd $DIR/../bin/s25client $*
+if [ $updateonly -eq 0 ] ; then
+	cd $DIR/../
+	$cmd $DIR/../bin/s25client $*
+fi
 
 exit $?

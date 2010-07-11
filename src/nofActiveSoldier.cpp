@@ -1,4 +1,4 @@
-// $Id: nofActiveSoldier.cpp 6560 2010-07-09 11:11:12Z OLiver $
+// $Id: nofActiveSoldier.cpp 6564 2010-07-11 10:51:18Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -466,7 +466,7 @@ bool nofActiveSoldier::GetFightSpotNear(nofActiveSoldier * other, Point<MapCoord
 	for(MapCoord tx=gwg->GetXA(middle.x,middle.y,0), r=1;r<=MEET_FOR_FIGHT_DISTANCE;tx=gwg->GetXA(tx,middle.y,0),++r)
 	{
 		// Wurde ein Punkt in diesem Radius gefunden?
-		bool found_in_radius = false;
+		// bool found_in_radius = false;
 
 		MapCoord tx2 = tx, ty2 = middle.y;
 		for(unsigned i = 2;i<8;++i)

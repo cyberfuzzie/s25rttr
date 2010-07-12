@@ -1,4 +1,4 @@
-// $Id: nofDefender.cpp 6559 2010-07-09 10:05:58Z OLiver $
+// $Id: nofDefender.cpp 6568 2010-07-12 19:13:12Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

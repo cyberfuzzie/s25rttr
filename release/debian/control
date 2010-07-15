@@ -6,7 +6,7 @@ Bugs: <https://bugs.siedler25.org/>
 Homepage: <https://www.siedler25.org>
 Architecture: x
 Essential: no
-Depends: libsdl1.2debian, libsdl-mixer1.2, libsndfile1 (>=0.1.17), libsamplerate0 (>= 0.1.2), gettext
+Depends: libsdl1.2debian, libsdl-mixer1.2, gettext
 Installed-Size: x
 Maintainer: Florian Doersch <sf-team@siedler25.org>
 Replaces: s25client

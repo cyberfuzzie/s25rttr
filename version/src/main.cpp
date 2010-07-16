@@ -1,4 +1,4 @@
-// $Id: main.cpp 6461 2010-05-31 11:46:20Z FloSoft $
+// $Id: main.cpp 6577 2010-07-16 09:45:08Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -174,7 +174,7 @@ int main(int argc, char *argv[])
 
 			char tv[64];
 			strftime(tv, 63, "%Y%m%d", localtime(&t) );
-			if(v > 20000101 && v < atoi(tv))
+			if(v >= 20000101 && v < atoi(tv))
 			{
 				// set new day
 				ll.clear();

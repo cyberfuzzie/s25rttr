@@ -1,4 +1,4 @@
-// $Id: unpack.cpp 6460 2010-05-31 11:42:38Z FloSoft $
+// $Id: unpack.cpp 6584 2010-07-16 16:47:23Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -109,6 +109,8 @@ void unpack(const string &directory, const ArchivInfo &lst, const ArchivItem_Pal
 			} break;
 		case BOBTYPE_BOB: // Bobfiles
 			{
+				const ArchivItem_Bob* bob = dynamic_cast<const ArchivItem_Bob*>(item);
+				unpack(directory, bob, palette);
 			} break;
 		case BOBTYPE_MAP: // Mapfiles
 			{

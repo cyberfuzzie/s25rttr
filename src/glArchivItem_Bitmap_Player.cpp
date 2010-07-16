@@ -1,4 +1,4 @@
-// $Id: glArchivItem_Bitmap_Player.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: glArchivItem_Bitmap_Player.cpp 6583 2010-07-16 12:00:38Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -78,7 +78,8 @@ void glArchivItem_Bitmap_Player::GenerateTexture(void)
 {
 	texture = VideoDriverWrapper::inst().GenerateTexture();
 
-	// wieso nicht pal5???
+	// Spezialpalette (blaue Spielerfarben sind Grau) verwenden,
+	// damit man per OpenGL einfärben kann!
 	setPalette(LOADER.GetPaletteN("colors"));
 
 	int iformat = GL_RGBA, dformat = GL_BGRA; //GL_BGRA_EXT;

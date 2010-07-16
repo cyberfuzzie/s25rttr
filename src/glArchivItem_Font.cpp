@@ -1,4 +1,4 @@
-// $Id: glArchivItem_Font.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: glArchivItem_Font.cpp 6583 2010-07-16 12:00:38Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -449,12 +449,16 @@ void glArchivItem_Font::initFont()
 		const glArchivItem_Bitmap_Player *c = dynamic_cast<const glArchivItem_Bitmap_Player *>(get(i));
 		if(c)
 		{
+			// Spezialpalette (blaue Spielerfarben sind Grau) verwenden,
+			// damit man per OpenGL einfärben kann!
 			c->print(buffer, w, h, libsiedler2::FORMAT_RGBA, LOADER.GetPaletteN("colors"), 128, x, y);
 			_charwidths[i] = c->getWidth();
 		}
 		x += dx+2;
 	}
 
+	// Spezialpalette (blaue Spielerfarben sind Grau) verwenden,
+	// damit man per OpenGL einfärben kann!
 	_font->create(w, h, buffer, w, h, libsiedler2::FORMAT_RGBA, LOADER.GetPaletteN("colors"), 128);
 	_font->setFilter(GL_LINEAR);
 }

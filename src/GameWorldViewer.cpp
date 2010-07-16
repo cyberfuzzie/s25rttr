@@ -1,4 +1,4 @@
-// $Id: GameWorldViewer.cpp 6535 2010-07-03 08:12:55Z FloSoft $
+// $Id: GameWorldViewer.cpp 6574 2010-07-16 09:10:15Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -66,7 +66,7 @@ void GameWorldViewer::Draw(const unsigned char player, unsigned * water, const b
 
 	tr.Draw(this,water);
 
-	// Draw-Counter der BÃ¤ume zurücksetzen vor jedem Zeichnen
+	// Draw-Counter der Bäume zurücksetzen vor jedem Zeichnen
 	noTree::ResetDrawCounter();
 
 	for(int y = fy;y<ly;++y)
@@ -211,7 +211,7 @@ void GameWorldViewer::Draw(const unsigned char player, unsigned * water, const b
 				int xpos = (int)(tr.GetTerrainX(tx,ty) - xoffset +xo);
 				int ypos = (int)(tr.GetTerrainY(tx,ty) - yoffset +yo);
 
-				// Name bzw ProduktivitÃ¤t anzeigen
+				// Name bzw Produktivität anzeigen
 				GO_Type got = GetNO(tx, ty)->GetGOT();
 				if(IsBaseBuilding(got))
 				{
@@ -249,7 +249,7 @@ void GameWorldViewer::Draw(const unsigned char player, unsigned * water, const b
 								SmallFont->Draw(xpos, py, text, glArchivItem_Font::DF_CENTER | glArchivItem_Font::DF_VCENTER, color);
 							}
 						}
-						// Normales GebÃ¤ude?
+						// Normales Gebäude?
 						else if(got == GOT_NOB_USUAL || got == GOT_NOB_SHIPYARD)
 						{
 							nobUsual *n = dynamic_cast<nobUsual*>(no);
@@ -264,7 +264,7 @@ void GameWorldViewer::Draw(const unsigned char player, unsigned * water, const b
 									snprintf(text, 256, "%s", _("(stopped)"));
 								else
 								{
-									// Bei Katapult und SpÃ¤hturm keine ProduktivitÃ¤t anzeigen!
+									// Bei Katapult und Spähturm keine Produktivität anzeigen!
 									if(n->GetBuildingType() == BLD_CATAPULT || n->GetBuildingType() == BLD_LOOKOUTTOWER)
 										text[0] = 0;
 									else
@@ -282,7 +282,7 @@ void GameWorldViewer::Draw(const unsigned char player, unsigned * water, const b
 								SmallFont->Draw(xpos, py, text, glArchivItem_Font::DF_CENTER | glArchivItem_Font::DF_VCENTER, color);
 							}
 						}
-						// MilitÃ¤rgebÃ¤ude?
+						// Militärgebäude?
 						else if(got == GOT_NOB_MILITARY)
 						{
 							
@@ -459,7 +459,7 @@ void GameWorldViewer::DrawBoundaryStone(const int x, const int y, const MapCoord
 	}
 }
 
-/// Schaltet ProduktivitÃ¤ten/Namen komplett aus oder an
+/// Schaltet Produktivitäten/Namen komplett aus oder an
 void GameWorldViewer::ShowNamesAndProductivity()
 {
 	if(show_productivity && show_names)
@@ -470,7 +470,7 @@ void GameWorldViewer::ShowNamesAndProductivity()
 
 unsigned GameWorldViewer::GetAvailableSoldiersForAttack(const unsigned char player_attacker,const MapCoord x, const MapCoord y)
 {
-	// Ist das angegriffenne ein normales GebÃ¤ude?
+	// Ist das angegriffenne ein normales Gebäude?
 	nobBaseMilitary * attacked_building = GetSpecObj<nobBaseMilitary>(x,y);
 	if(attacked_building->GetBuildingType() >= BLD_BARRACKS && attacked_building->GetBuildingType() <= BLD_FORTRESS)
 	{
@@ -480,7 +480,7 @@ unsigned GameWorldViewer::GetAvailableSoldiersForAttack(const unsigned char play
 			return 0;
 	}
 
-	// MilitÃ¤rgebÃ¤ude in der NÃ¤he finden
+	// Militärgebäude in der Nähe finden
 	std::list<nobBaseMilitary*> buildings;
 	LookForMilitaryBuildings(buildings,x,y,3);
 
@@ -488,7 +488,7 @@ unsigned GameWorldViewer::GetAvailableSoldiersForAttack(const unsigned char play
 
 	for(std::list<nobBaseMilitary*>::iterator it = buildings.begin();it!=buildings.end();++it)
 	{
-		// Muss ein GebÃ¤ude von uns sein und darf nur ein "normales MilitÃ¤rgebÃ¤ude" sein (kein HQ etc.)
+		// Muss ein Gebäude von uns sein und darf nur ein "normales Militärgebäude" sein (kein HQ etc.)
 		if((*it)->GetPlayer() == player_attacker && (*it)->GetBuildingType() >= BLD_BARRACKS && (*it)->GetBuildingType() <= BLD_FORTRESS)
 			total_count += static_cast<nobMilitary*>(*it)->GetSoldiersForAttack(x,y,player_attacker);
 			
@@ -605,7 +605,7 @@ void GameWorldViewer::CalcFxLx()
 	
 }
 
-// HÃ¶he wurde VerÃ¤ndert: TerrainRenderer Bescheid sagen, damit es entsprechend verÃ¤ndert werden kann
+// HÃ¶he wurde Verändert: TerrainRenderer Bescheid sagen, damit es entsprechend verändert werden kann
 void GameWorldViewer::AltitudeChanged(const MapCoord x, const MapCoord y)
 {
 	tr.AltitudeChanged(x,y,this);

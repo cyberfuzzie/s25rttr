@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 6535 2010-07-03 08:12:55Z FloSoft $
+// $Id: GameClient.cpp 6574 2010-07-16 09:10:15Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -302,7 +302,7 @@ void GameClient::Stop()
 
 	replayinfo.replay.StopRecording();
 
-	// NFC-Queues aufrÃ¤umen
+	// NFC-Queues aufräumen
 	gcs.clear();
 
 	socket.Close();
@@ -328,7 +328,7 @@ void GameClient::StartGame(const unsigned int random_init)
 	framesinfo.nr = (mapinfo.map_type == MAPTYPE_SAVEGAME) ? mapinfo.savegame.start_gf : 0;
 	framesinfo.pause = true;
 
-	// Je nach Geschwindigkeit GF-LÃ¤nge einstellen
+	// Je nach Geschwindigkeit GF-Länge einstellen
 	framesinfo.gf_length = SPEED_GF_LENGTHS[ggs.game_speed];
 
 	// Random-Generator initialisieren
@@ -356,8 +356,8 @@ void GameClient::StartGame(const unsigned int random_init)
 			GetPlayer(i)->Deserialize(&savegame->sgd);
 
 		// TODO: schÃ¶ner machen: 
-		// Die FlÃ¤che, die nur von einem Allierten des Spielers gesehen werden, müssen noch dem TerrainRenderer mitgeteilt werden
-		// oder entsprechende FlÃ¤chen müssen vorher bekannt gemacht werden
+		// Die Fläche, die nur von einem Allierten des Spielers gesehen werden, müssen noch dem TerrainRenderer mitgeteilt werden
+		// oder entsprechende Flächen müssen vorher bekannt gemacht werden
 		// Die folgende Schleife aktualisiert einfach *alle* Punkt, ist also ziemlich ineffizient
 		unsigned short height = gw->GetHeight();
 		unsigned short width =  gw->GetWidth();
@@ -379,7 +379,7 @@ void GameClient::StartGame(const unsigned int random_init)
 
 		gw->LoadMap(clientconfig.mapfilepath);
 
-		/// Evtl. Goldvorkommen Ã¤ndern
+		/// Evtl. Goldvorkommen ändern
 		unsigned char target = 0xFF; // lÃ¶schen
 		switch(ADDONMANAGER.getSelection(ADDON_CHANGE_GOLD_DEPOSITS))
 		{
@@ -703,7 +703,7 @@ inline void GameClient::OnNMSPlayerToggleColor(const GameMessage_Player_Toggle_C
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  Ready-state eines Spielers hat sich geÃ¤ndert.
+ *  Ready-state eines Spielers hat sich geändert.
  *
  *  @param[in] message Nachricht, welche ausgeführt wird
  *
@@ -847,7 +847,7 @@ void GameClient::OnNMSServerName(const GameMessage_Server_Name& msg)
  */
 inline void GameClient::OnNMSServerStart(const GameMessage_Server_Start& msg)
 {
-	// NWF-LÃ¤nge bekommen wir vom Server
+	// NWF-Länge bekommen wir vom Server
 	framesinfo.nwf_length = msg.nwf_length;
 
 	/// Beim Host muss das Spiel nicht nochmal gestartet werden, das hat der Server schon erledigt
@@ -1125,7 +1125,7 @@ void GameClient::OnNMSGameCommand(const GameMessage_GameCommand& msg)
 {
 
 	if(msg.player != 0xFF)
-		// Nachricht in Queue einhÃ¤ngen
+		// Nachricht in Queue einhängen
 		players[msg.player].gc_queue.push_back(msg);
 }
 
@@ -1212,7 +1212,7 @@ void GameClient::ExecuteGameFrame(const bool skipping)
 		return;
 	}
 
-	// Wurde der nÃ¤chsten Game-Frame zeitlich erreicht (bzw. wenn nur Frames übersprungen werden sollen,
+	// Wurde der nächsten Game-Frame zeitlich erreicht (bzw. wenn nur Frames übersprungen werden sollen,
 	// brauchen wir nicht zu warten)?
 	  if(skipping || (currenttime - framesinfo.lasttime) > framesinfo.gf_length)
 	  {
@@ -1222,7 +1222,7 @@ void GameClient::ExecuteGameFrame(const bool skipping)
 		
 			// Diesen Zeitpunkt merken
 			framesinfo.lasttime += framesinfo.gf_length;
-			// NÃ¤chster Game-Frame erreicht
+			// Nächster Game-Frame erreicht
 			++framesinfo.nr;
 
 			ExecuteGameFrame_Replay();
@@ -1248,7 +1248,7 @@ void GameClient::ExecuteGameFrame(const bool skipping)
 
 				// Diesen Zeitpunkt merken
 				framesinfo.lasttime = currenttime;
-				// NÃ¤chster Game-Frame erreicht
+				// Nächster Game-Frame erreicht
 				++framesinfo.nr;
 
 				ExecuteGameFrame_Game();
@@ -1261,11 +1261,11 @@ void GameClient::ExecuteGameFrame(const bool skipping)
 		} // if(framesinfo.nr % framesinfo.nwf_length == 0)
 		else
 		{
-			// NÃ¤hster GameFrame zwischen framesinfos
+			// Nähster GameFrame zwischen framesinfos
 
 			// Diesen Zeitpunkt merken
 			framesinfo.lasttime = currenttime;
-			// NÃ¤chster Game-Frame erreicht
+			// Nächster Game-Frame erreicht
 			++framesinfo.nr;
 
 			// Frame ausführen
@@ -1303,7 +1303,7 @@ void GameClient::ExecuteGameFrame(const bool skipping)
 	}
 }
 
-/// Führt notwendige Dinge für nÃ¤chsten GF aus
+/// Führt notwendige Dinge für nächsten GF aus
 void GameClient::NextGF()
 {
 	// Statistiken aktualisieren
@@ -1318,7 +1318,7 @@ void GameClient::NextGF()
 			players[i].TestForEmergencyProgramm();
 		if(players[i].ps == PS_OCCUPIED || players[i].ps == PS_KI)
 		{
-			// Bündnisse auf AktualitÃ¤t überprüfen
+			// Bündnisse auf Aktualität überprüfen
 			players[i].TestPacts();
 		}
 	}
@@ -1372,7 +1372,7 @@ void GameClient::WriteReplayHeader(const unsigned random_init)
 
 	// Timestamp der Aufzeichnung
 	replayinfo.replay.save_time = temp;
-	/// NWF-LÃ¤nge
+	/// NWF-Länge
 	replayinfo.replay.nwf_length = framesinfo.nwf_length;
 	// Random-Init
 	replayinfo.replay.random_init = random_init;
@@ -1442,7 +1442,7 @@ unsigned GameClient::StartReplay(const std::string &path, GameWorldViewer * &gwv
 		return false;
 
 
-	// NWF-LÃ¤nge
+	// NWF-Länge
 	framesinfo.nwf_length = replayinfo.replay.nwf_length;
 
 	//players.resize(replayinfo.replay.players.getCount());
@@ -1759,7 +1759,7 @@ bool GameClient::AddGC(gc::GameCommand * gc)
 	return true;
 }
 
-/// Erzeugt einen KI-Player, der mit den Daten vom GameClient gefüttert werden muss (zusÃ¤tzlich noch mit den GameServer)
+/// Erzeugt einen KI-Player, der mit den Daten vom GameClient gefüttert werden muss (zusätzlich noch mit den GameServer)
 AIBase * GameClient::CreateAIPlayer(const unsigned playerid)
 {
 	/*

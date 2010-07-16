@@ -1,4 +1,4 @@
-// $Id: nobStorehouse.cpp 6458 2010-05-31 11:38:51Z FloSoft $
+// $Id: nobStorehouse.cpp 6574 2010-07-16 09:10:15Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -41,15 +41,14 @@ nobStorehouse::nobStorehouse(const unsigned short x, const unsigned short y,cons
 : nobBaseWarehouse(BLD_STOREHOUSE,x,y,player,nation)
 {
 	// Alle Waren 0, außer 100 Träger
-	memset(&goods,0,sizeof(goods));
-	memset(&real_goods,0,sizeof(real_goods));
-
-	// Der Wirtschaftsverwaltung Bescheid sagen
-	gwg->GetPlayer(player)->AddWarehouse(this);
+	goods.clear();
+	real_goods.clear();
 
 	// Aktuellen Warenbestand zur aktuellen Inventur dazu addieren
 	AddToInventory();
 
+	// Der Wirtschaftsverwaltung Bescheid sagen
+	gwg->GetPlayer(player)->AddWarehouse(this);
 
 	// Post versenden
 	if(GameClient::inst().GetPlayerID() == this->player)

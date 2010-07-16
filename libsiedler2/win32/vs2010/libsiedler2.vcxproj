@@ -196,7 +196,7 @@
     <None Include="..\libsiedler2.def" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\libendian\win32\vs2010\libendian.vcxproj">
+    <ProjectReference Include="..\..\libendian\win32\vs2010\libendian.vcxproj">
       <Project>{1c4d182c-4502-4a05-b1f3-9dd5214c3dee}</Project>
     </ProjectReference>
   </ItemGroup>

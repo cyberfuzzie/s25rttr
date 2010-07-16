@@ -1,4 +1,4 @@
-// $Id: Ware.cpp 6458 2010-05-31 11:38:51Z FloSoft $
+// $Id: Ware.cpp 6574 2010-07-16 09:10:15Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

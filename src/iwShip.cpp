@@ -1,4 +1,4 @@
-// $Id: iwShip.cpp 6535 2010-07-03 08:12:55Z FloSoft $
+// $Id: iwShip.cpp 6574 2010-07-16 09:10:15Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -205,14 +205,14 @@ void iwShip::DrawCargo()
 	std::vector<unsigned short> orderedWares = std::vector<unsigned short>(WARE_TYPES_COUNT);
 	std::vector<unsigned short> orderedFigures = std::vector<unsigned short>(JOB_TYPES_COUNT);
 
-	// Alle Figuren in Gruppen z√§hlen
+	// Alle Figuren in Gruppen z‰hlen
 	const std::list<noFigure *> figures = ship->GetFigures();
 	for(std::list<noFigure*>::const_iterator it = figures.begin(); it != figures.end(); ++it)
 	{
 		orderedFigures[(*it)->GetJobType()]++;
 	}
 
-	// Alle Waren in Gruppen z√§hlen
+	// Alle Waren in Gruppen z‰hlen
 	const std::list<Ware *> wares = ship->GetWares();
 	for(std::list<Ware*>::const_iterator it = wares.begin(); it != wares.end(); ++it)
 	{

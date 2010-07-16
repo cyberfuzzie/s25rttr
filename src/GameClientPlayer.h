@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.h 6535 2010-07-03 08:12:55Z FloSoft $
+// $Id: GameClientPlayer.h 6574 2010-07-16 09:10:15Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -50,7 +50,7 @@ class GameMessage_GameCommand;
 class nofPassiveSoldier;
 
 
-/// Informationen über GebÃ¤ude-Anzahlen
+/// Informationen über Gebäude-Anzahlen
 struct BuildingCount
 {
 	unsigned building_counts[40];
@@ -64,11 +64,11 @@ private:
 
 	// Zugriff der Spieler auf die Spielwelt
 	GameWorldGame * gwg;
-	/// Liste der WarenhÃ¤user des Spielers
+	/// Liste der Warenhäuser des Spielers
 	std::list<nobBaseWarehouse*> warehouses;
-	/// Liste von HÃ¤fen
+	/// Liste von Häfen
 	std::list<nobHarborBuilding*> harbors;
-	///// Liste von unbesetzten StraÃŸen (ohne TrÃ¤ger) von dem Spieler
+	///// Liste von unbesetzten StraÃŸen (ohne Träger) von dem Spieler
 	//std::list<RoadSegment*> unoccupied_roads;
 	/// Lister aller StraÃŸen von dem Spieler
 	std::list<RoadSegment*> roads;
@@ -85,18 +85,18 @@ private:
 		unsigned char building;
 	};
 
-	/// Liste von Baustellen/GebÃ¤uden, die bestimmten Beruf wollen
+	/// Liste von Baustellen/Gebäuden, die bestimmten Beruf wollen
 	std::list<JobNeeded> jobs_wanted;
 
-	/// Listen der einzelnen GebÃ¤udetypen (nur nobUsuals!)
+	/// Listen der einzelnen Gebäudetypen (nur nobUsuals!)
 	std::list<nobUsual*> buildings[30];
-	/// Liste von sÃ¤mtlichen Baustellen
+	/// Liste von sämtlichen Baustellen
 	std::list<noBuildingSite*> building_sites;
-	/// Liste von allen MilitÃ¤rgebÃ¤uden
+	/// Liste von allen Militärgebäuden
 	std::list<nobMilitary*> military_buildings;
-	/// Liste von sÃ¤mtlichen Waren, die herumgetragen werden und an Fahnen liegen
+	/// Liste von sämtlichen Waren, die herumgetragen werden und an Fahnen liegen
 	std::list<Ware*> ware_list;
-	/// Liste von Geologen und SpÃ¤hern, die an eine Flagge gebunden sind
+	/// Liste von Geologen und Spähern, die an eine Flagge gebunden sind
 	std::list<nofFlagWorker*> flagworkers;
 	/// Liste von Schiffen dieses Spielers
 	std::vector<noShip*> ships;
@@ -106,7 +106,7 @@ private:
 	
 
 
-	/// Liste, welchen nÃ¤chsten 10 Angreifern Verteidiger entgegenlaufen sollen
+	/// Liste, welchen nächsten 10 Angreifern Verteidiger entgegenlaufen sollen
 	bool defenders[5];
 	unsigned short defenders_pos;
 
@@ -146,7 +146,7 @@ public:
 	struct
 	{
 		unsigned char percent_buildings[40];
-		std::list<BuildingType> client_buildings; // alle GebÃ¤ude, die diese Ware bekommen, zusammengefasst
+		std::list<BuildingType> client_buildings; // alle Gebäude, die diese Ware bekommen, zusammengefasst
 		std::vector<unsigned char> goals;
 		unsigned selected_goal;
 	} distribution[WARE_TYPES_COUNT];
@@ -155,9 +155,9 @@ public:
 	unsigned char order_type;
 	/// Baureihenfolge
 	std::vector <unsigned char> build_order;
-	/// PrioritÃ¤ten der Waren im Transport
+	/// Prioritäten der Waren im Transport
 	unsigned char transport[WARE_TYPES_COUNT];
-	/// MilitÃ¤reinstellungen (die vom MilitÃ¤rmenü)
+	/// Militäreinstellungen (die vom Militärmenü)
 	std::vector <unsigned char> military_settings;
 	/// Werkzeugeinstellungen (in der Reihenfolge wie im Fenster!)
 	std::vector <unsigned char> tools_settings;
@@ -190,10 +190,10 @@ public:
 	void GetInventory(unsigned int *wares, unsigned int *figures);*/
 
 
-	/// Sucht ein nÃ¤chstgelegenes Warenhaus für den Punkt 'start', das die Bedingung der Ãœbergebenen Funktion
-	/// IsWarehouseGood erfüllt, als letzen Parameter erhÃ¤lt jene Funktion param
+	/// Sucht ein nächstgelegenes Warenhaus für den Punkt 'start', das die Bedingung der Ãœbergebenen Funktion
+	/// IsWarehouseGood erfüllt, als letzen Parameter erhält jene Funktion param
 	/// - forbidden ist ein optionales StraÃŸenstück, das nicht betreten werden darf,
-	/// - to_wh muss auf true gesetzt werden, wenn es zum Lagerhaus geht, ansonsten auf false, in length wird die WegeslÃ¤nge zurückgegeben
+	/// - to_wh muss auf true gesetzt werden, wenn es zum Lagerhaus geht, ansonsten auf false, in length wird die Wegeslänge zurückgegeben
 	nobBaseWarehouse * FindWarehouse(const noRoadNode * const start,bool (*IsWarehouseGood)(nobBaseWarehouse*,const void*),const RoadSegment * const forbidden,const bool to_wh,const void * param,const bool use_boat_roads,unsigned * const length = 0);
 	/// Gibt dem Spieler bekannt, das eine neue StraÃŸe gebaut wurde
 	void NewRoad(RoadSegment * const rs);
@@ -201,7 +201,7 @@ public:
 	void AddRoad(RoadSegment * const rs) { roads.push_back(rs); }
 	/// Gibt dem Spieler brekannt, das eine StraÃŸe abgerissen wurde
 	void RoadDestroyed();
-	/// Sucht einen TrÃ¤ger für die StraÃŸe und ruft ggf den TrÃ¤ger aus dem jeweiligen nÃ¤chsten Lagerhaus
+	/// Sucht einen Träger für die StraÃŸe und ruft ggf den Träger aus dem jeweiligen nächsten Lagerhaus
 	bool FindCarrierForRoad(RoadSegment * rs);
 	/// Warenhaus zur Warenhausliste hinzufügen
 	void AddWarehouse(nobBaseWarehouse * wh) { warehouses.push_back(wh); }
@@ -217,13 +217,13 @@ public:
 
 	/// Für alle unbesetzen StraÃŸen Weg neu berechnen
 	void FindWarehouseForAllRoads();
-	/// LÃ¤sst alle Baustellen ggf. noch vorhandenes Baumaterial bestellen
+	/// Lässt alle Baustellen ggf. noch vorhandenes Baumaterial bestellen
 	void FindMaterialForBuildingSites();
 	/// Fügt ein RoadNode hinzu, der einen bestimmten Job braucht
 	void AddJobWanted(const Job job,noRoadNode * workplace);
 	/// Entfernt ihn wieder aus der Liste (wenn er dann doch nich mehr gebraucht wird)
 	void JobNotWanted(noRoadNode * workplace);
-	/// Versucht für alle ArbeitsplÃ¤tze eine Arbeitskraft zu suchen
+	/// Versucht für alle Arbeitsplätze eine Arbeitskraft zu suchen
 	void FindWarehouseForAllJobs(const Job job);
 	/// Versucht für alle verlorenen Waren ohne Ziel Lagerhaus zu finden
 	void FindClientForLostWares();
@@ -239,16 +239,16 @@ public:
 	/// Sucht für eine (neuproduzierte) Ware einen Abnehmer (wenns keinen gibt, wird ein Lagerhaus gesucht, wenn
 	/// es auch dorthin keinen Weg gibt, wird 0 zurückgegeben
 	noBaseBuilding * FindClientForWare(Ware * ware);
-	/// Sucht einen Abnehmer (sprich MilitÃ¤rgebÃ¤ude), wenn es keinen findet, wird ein Warenhaus zurückgegeben bzw. 0
+	/// Sucht einen Abnehmer (sprich Militärgebäude), wenn es keinen findet, wird ein Warenhaus zurückgegeben bzw. 0
 	nobBaseMilitary * FindClientForCoin(Ware * ware);
 
-	/// Speichert Baustellen GebÃ¤ude etc, erklÃ¤rt sich von selbst
+	/// Speichert Baustellen Gebäude etc, erklärt sich von selbst
 	void AddBuildingSite(noBuildingSite * building_site);
 	void RemoveBuildingSite(noBuildingSite * building_site);
-	/// Speichert normale GebÃ¤ude
+	/// Speichert normale Gebäude
 	void AddUsualBuilding(nobUsual * building);
 	void RemoveUsualBuilding(nobUsual * building);
-	/// Speichert MilitÃ¤rgebÃ¤ude
+	/// Speichert Militärgebäude
 	void AddMilitaryBuilding(nobMilitary * building);
 	void RemoveMilitaryBuilding(nobMilitary * building);
 
@@ -256,27 +256,27 @@ public:
 
 	const std::list<nobMilitary *>& GetMilitaryBuildings() const { return military_buildings; }
 
-	/// Gibt Liste von GebÃ¤uden des Spieler zurück
+	/// Gibt Liste von Gebäuden des Spieler zurück
 	const std::list<nobUsual*>& GetBuildings(const BuildingType type);
-	/// Liefert die Anzahl aller GebÃ¤ude einzeln
+	/// Liefert die Anzahl aller Gebäude einzeln
 	void GetBuildingCount(BuildingCount& bc) const;
-	/// Berechnet die durschnittlichen ProduktivitÃ¤t eines jeden GebÃ¤udetyps
+	/// Berechnet die durschnittlichen Produktivität eines jeden Gebäudetyps
 	/// (erwartet als Argument ein 40-er Array!)
 	void CalcProductivities(std::vector<unsigned short>& productivities); 
 
-	/// Berechnet die durschnittlichen ProduktivitÃ¤t aller GebÃ¤ude
+	/// Berechnet die durschnittlichen Produktivität aller Gebäude
 	unsigned short CalcAverageProductivitiy();
 
 
-	/// Gibt PrioritÃ¤t der Baustelle zurück (entscheidet selbstÃ¤ndig, welche Reihenfolge usw)
-	/// je kleiner die Rückgabe, destro grÃ¶ÃŸer die PrioritÃ¤t!
+	/// Gibt Priorität der Baustelle zurück (entscheidet selbständig, welche Reihenfolge usw)
+	/// je kleiner die Rückgabe, destro grÃ¶ÃŸer die Priorität!
 	unsigned GetBuidingSitePriority(const noBuildingSite * building_site);
 
-	/// Berechnet die Verteilung der Waren auf die einzelnen GebÃ¤ude neu
+	/// Berechnet die Verteilung der Waren auf die einzelnen Gebäude neu
 	void RecalcDistribution();
 	/// Berechnet die Verteilung einer (bestimmten) Ware
 	void RecalcDistributionOfWare(const GoodType ware);
-	/// Konvertiert die Daten vom wp_transport in "unser" PrioritÃ¤ten-Format und setzt es
+	/// Konvertiert die Daten vom wp_transport in "unser" Prioritäten-Format und setzt es
 	void ConvertTransportData(const std::vector<unsigned char>& transport_data);
 
 	/// Ware zur globalen Warenliste hinzufügen und entfernen
@@ -294,7 +294,7 @@ public:
 	/// Gibt Inventory-Settings zurück
 	const Goods * GetInventory() const { return &global_inventory; }
 
-	/// Setzt neue MilitÃ¤reinstellungen
+	/// Setzt neue Militäreinstellungen
 	void ChangeMilitarySettings(const std::vector<unsigned char>& military_settings);
 	/// Setzt neue Werkzeugeinstellungen
 	void ChangeToolsSettings(const std::vector<unsigned char>& tools_settings);
@@ -309,11 +309,11 @@ public:
 	bool IsAlly(const unsigned char player) const;
 	/// Truppen bestellen
 	void OrderTroops(nobMilitary * goal, unsigned count);
-	/// Prüft die Besatzung von allen MilitÃ¤rgebÃ¤uden und reguliert entsprechend (bei VerÃ¤nderung der MilitÃ¤reinstellungen)
+	/// Prüft die Besatzung von allen Militärgebäuden und reguliert entsprechend (bei Veränderung der Militäreinstellungen)
 	void RegulateAllTroops();
 	/// Prüft von allen Militärgebäuden die Fahnen neu
 	void RecalcMilitaryFlags();
-	/// Sucht für EINEN Soldaten ein neues MilitÃ¤rgebÃ¤ude, als Argument wird Referenz auf die 
+	/// Sucht für EINEN Soldaten ein neues Militärgebäude, als Argument wird Referenz auf die 
 	/// entsprechende Soldatenanzahl im Lagerhaus verlangt
 	void NewSoldierAvailable(const unsigned& soldier_count);
 	/// Aktualisiert die Verteidiger-Liste
@@ -323,7 +323,7 @@ public:
 
 	/// Ruft einen Geologen
 	void CallFlagWorker(const unsigned short x, const unsigned short y, const Job job);
-	/// Registriert einen Geologen bzw. einen SpÃ¤her an einer bestimmten Flagge, damit diese informiert werden,
+	/// Registriert einen Geologen bzw. einen Späher an einer bestimmten Flagge, damit diese informiert werden,
 	/// wenn die Flagge abgerissen wird
 	void RegisterFlagWorker(nofFlagWorker * flagworker) { flagworkers.push_back(flagworker); }
 	void RemoveFlagWorker(nofFlagWorker * flagworker) { flagworkers.remove(flagworker); }
@@ -337,7 +337,7 @@ public:
 	void RegisterShip(noShip * ship);
 	/// Meldet das Schiff wieder ab
 	void RemoveShip(noShip * ship);
-	/// Versucht, für ein untÃ¤tiges Schiff eine Arbeit zu suchen
+	/// Versucht, für ein untätiges Schiff eine Arbeit zu suchen
 	void GetJobForShip(noShip * ship);
 	/// Schiff für Hafen bestellen, zweiter Parameter gibt an, ob das Schiff in einer Jobliste
 	/// vermerkt werden soll, also unbedingt eins gebraucht wird 
@@ -348,20 +348,20 @@ public:
 	noShip * GetShipByID(const unsigned ship_id) const;
 	/// Gibt die Gesamtanzahl von Schiffen zurück
 	unsigned GetShipCount() const { return ships.size(); }
-	/// Gibt eine Liste mit allen HÃ¤fen dieses Spieler zurück, die an ein bestimmtes Meer angrenzen
+	/// Gibt eine Liste mit allen Häfen dieses Spieler zurück, die an ein bestimmtes Meer angrenzen
 	void GetHarborBuildings(std::vector<nobHarborBuilding*>& harbor_buildings, const unsigned short sea_id) const;
 	/// Gibt die Anzahl der Schiffe, die einen bestimmten Hafen ansteuern, zurück
 	unsigned GetShipsToHarbor(nobHarborBuilding * hb) const;
 	/// Gibt der Wirtschaft Bescheid, dass ein Hafen zerstÃ¶rt wurde
 	void HarborDestroyed(nobHarborBuilding * hb);
-	/// Sucht einen Hafen in der NÃ¤he, wo dieses Schiff seine Waren abladen kann
+	/// Sucht einen Hafen in der Nähe, wo dieses Schiff seine Waren abladen kann
 	/// gibt true zurück, falls erfolgreich
 	bool FindHarborForUnloading(noShip * ship, const MapCoord start_x, const MapCoord start_y, unsigned * goal_harbor_id, std::vector<unsigned char> * route,
 		nobHarborBuilding * exception);
 	/// Ein Schiff hat feindliches Land entdeckt --> ggf. für Postnachrichten auslösen
 	void ShipDiscoveredHostileTerritory(const Point<MapCoord> location);
 
-	/// Gibt eine Liste der verfügbaren HÃ¤fen zurück
+	/// Gibt eine Liste der verfügbaren Häfen zurück
 	const std::list<nobHarborBuilding*>& GetHarbors() const { return harbors; }
 
 	/// Er gibt auf
@@ -371,7 +371,7 @@ public:
 	void SuggestPact(const unsigned char other_player, const PactType pt, const unsigned duration);
 	/// Akzeptiert ein bestimmtes Bündnis, welches an diesen Spieler gemacht wurde
 	void AcceptPact(const unsigned id, const PactType pt, const unsigned char other_player);
-	/// Gibt EinverstÃ¤ndnis, dass dieser Spieler den Pakt auflÃ¶sen will
+	/// Gibt Einverständnis, dass dieser Spieler den Pakt auflÃ¶sen will
 	/// Falls dieser Spieler einen Bündnisvorschlag gemacht hat, wird dieser dagegen zurückgenommen
 	void CancelPact(const PactType pt, const unsigned char other_player);
 	/// Zeigt an, ob ein Pakt besteht
@@ -402,13 +402,13 @@ public:
   
   struct Statistic
   {
-    // 30 DatensÃ¤tze pro Typ
+    // 30 Datensätze pro Typ
     unsigned int data[STAT_TYPE_COUNT][STAT_STEP_COUNT];
 		// und das gleiche für die Warenstatistik
 		unsigned short merchandiseData[STAT_MERCHANDISE_TYPE_COUNT][STAT_STEP_COUNT];
     // Index, der gerade 'vorne' (rechts im Statistikfenster) ist
     unsigned short currentIndex;
-    // Counter, bei jedem vierten Update jeweils Daten zu den lÃ¤ngerfristigen Statistiken kopieren
+    // Counter, bei jedem vierten Update jeweils Daten zu den längerfristigen Statistiken kopieren
     unsigned short counter;
   };
 
@@ -429,7 +429,7 @@ private:
   unsigned short decrStatIndex(unsigned short i) { return (i==0) ? STAT_STEP_COUNT-1 : --i; }
 	unsigned short decrStatIndex(unsigned short i, unsigned short amount) { return (i < amount) ? STAT_STEP_COUNT - (amount - i) - 1 : i - amount; }
 
-	// Notfall-Programm aktiviert ja/nein (Es gehen nur noch Res an HolzfÃ¤ller- und SÃ¤gewerk-Baustellen raus)
+	// Notfall-Programm aktiviert ja/nein (Es gehen nur noch Res an Holzfäller- und Sägewerk-Baustellen raus)
 	bool emergency;
 
 public:

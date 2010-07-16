@@ -1,4 +1,4 @@
-// $Id: nobHarborBuilding.h 6535 2010-07-03 08:12:55Z FloSoft $
+// $Id: nobHarborBuilding.h 6574 2010-07-16 09:10:15Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -81,15 +81,15 @@ class nobHarborBuilding : public nobBaseWarehouse
 
 private:
 
-	/// Bestellt die zusÃ¤tzlichen erforderlichen Waren für eine Expedition
+	/// Bestellt die zusätzlichen erforderlichen Waren für eine Expedition
 	void OrderExpeditionWares();
-	/// Prüft, ob eine Expedition von den Waren her vollstÃ¤ndig ist und ruft ggf. das Schiff
+	/// Prüft, ob eine Expedition von den Waren her vollständig ist und ruft ggf. das Schiff
 	void CheckExpeditionReady();
-	/// Prüft, ob eine Expedition von den Spähern her vollstÃ¤ndig ist und ruft ggf. das Schiff
+	/// Prüft, ob eine Expedition von den Spähern her vollständig ist und ruft ggf. das Schiff
 	void CheckExplorationExpeditionReady();
-	/// Gibt zurück, ob Expedition vollstÃ¤ndig ist
+	/// Gibt zurück, ob Expedition vollständig ist
 	bool IsExpeditionReady() const;
-	/// Gibt zurück, ob Erkundungs-Expedition vollstÃ¤ndig ist
+	/// Gibt zurück, ob Erkundungs-Expedition vollständig ist
 	bool IsExplorationExpeditionReady() const;
 	/// Abgeleitete kann eine gerade erzeugte Ware ggf. sofort verwenden 
 	/// (muss in dem Fall true zurückgeben)
@@ -109,7 +109,7 @@ public:
 
 	MapCoord GetMilitaryRadius() const { return HARBOR_ALONE_RADIUS; }
 
-	/// AufrÃ¤ummethoden
+	/// Aufräummethoden
 	void Destroy();
 	/// Serialisierung
 	void Serialize(SerializedGameData *sgd) const;
@@ -154,7 +154,7 @@ public:
 	{
 		/// Zielhafen
 		noRoadNode * dest;
-		/// Kosten für die Strecke in WeglÃ¤nge eines einfachen TrÃ¤gers
+		/// Kosten für die Strecke in Weglänge eines einfachen Trägers
 		unsigned way_costs;
 	};
 	/// Gibt eine Liste mit mÃ¶glichen Verbindungen zurück
@@ -173,12 +173,12 @@ public:
 	/// Gibt die Wichtigkeit an, dass ein Schiff kommen muss (0 -> keine Bedürftigkeit)
 	int GetNeedForShip(unsigned ships_coming) const;
 
-	/// ErhÃ¤lt die Waren von einem Schiff und nimmt diese in den Warenbestand auf
+	/// Erhält die Waren von einem Schiff und nimmt diese in den Warenbestand auf
 	void ReceiveGoodsFromShip(const std::list<noFigure*> figures, const std::list<Ware*> wares);
 
 	struct SeaAttackerBuilding
 	{
-		/// Das GebÃ¤ude selbst
+		/// Das Gebäude selbst
 		nobMilitary * building;
 		// DazugehÃ¶riger Hafen, wo die Angreifer dann auf das Schiff warten sollen
 		nobHarborBuilding * harbor;
@@ -192,7 +192,7 @@ public:
 	};
 	
 	/// Gibt die Angreifer zurück, die dieser Hafen für einen Seeangriff zur Verfügung stellen kann
-	/// defender_harbors sind dabei mÃ¶gliche ZielhÃ¤fen
+	/// defender_harbors sind dabei mÃ¶gliche Zielhäfen
 	void GetAttackerBuildingsForSeaAttack(std::vector<SeaAttackerBuilding> * buildings,
 											const std::vector<unsigned>& defender_harbors);
 											

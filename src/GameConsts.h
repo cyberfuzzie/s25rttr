@@ -1,4 +1,4 @@
-// $Id: GameConsts.h 6458 2010-05-31 11:38:51Z FloSoft $
+// $Id: GameConsts.h 6574 2010-07-16 09:10:15Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -350,10 +350,16 @@ const std::string JOB_NAMES[JOB_TYPES_COUNT] =
 /// Waren- und Berufsstruktur ( für HQs, Lagerhäüser usw )
 struct Goods
 {
-	unsigned goods[WARE_TYPES_COUNT];
-	unsigned people[JOB_TYPES_COUNT];
+	unsigned int goods[WARE_TYPES_COUNT];
+	unsigned int people[JOB_TYPES_COUNT];
 
-	Goods() { memset(goods,0,sizeof(goods)); memset(people,0,sizeof(people)); }
+	void clear()
+	{
+		 memset(goods, 0, sizeof(goods)); 
+		 memset(people, 0, sizeof(people));
+	}
+
+	Goods() { clear(); }
 };
 
 /// Verfügbare Statistikarten
@@ -406,7 +412,7 @@ const unsigned SPEED_GF_LENGTHS[5] = {80,60,50,40,30};
 
 /// Macht ggf. aus den verschiedenen Schilden der Nationen jeweils immer das römische normale Schild für
 /// die Warensysteme usw
-inline GoodType ConvertShields(const GoodType good) { return (good == GD_SHIELDVIKINGS ||
+inline GoodType ConvertShields(const GoodType& good) { return (good == GD_SHIELDVIKINGS ||
 											   good == GD_SHIELDAFRICANS ||
 											   good == GD_SHIELDJAPANESE) ? GD_SHIELDROMANS : good; }
 											   

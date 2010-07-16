@@ -1,4 +1,4 @@
-// $Id: iwPlayReplay.cpp 6535 2010-07-03 08:12:55Z FloSoft $
+// $Id: iwPlayReplay.cpp 6574 2010-07-16 09:10:15Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -64,7 +64,7 @@ iwPlayReplay::iwPlayReplay(void)
 
 	// Starten
 	AddTextButton(1, 195, 260, 100, 22, TC_GREEN2, _("Start"),NormalFont);
-	// Aufr√§umen
+	// Aufr‰umen
 	AddTextButton(2, 305, 260, 100, 22, TC_RED1, _("Clear"),NormalFont);
 
 	// Verzeichnis auflisten

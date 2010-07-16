@@ -290,7 +290,7 @@ void nofShipWright::WorkFinished()
 
 		// Baustelle setzen
 		gwg->SetNO(new noShipBuildingSite(x,y,player),x,y);
-		// BauplÃ¤tze drumrum neu berechnen
+		// Bauplätze drumrum neu berechnen
 		gwg->RecalcBQAroundPointBig(x,y);
 	}
 

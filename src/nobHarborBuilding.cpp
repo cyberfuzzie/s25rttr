@@ -1,4 +1,4 @@
-// $Id: nobHarborBuilding.cpp 6535 2010-07-03 08:12:55Z FloSoft $
+// $Id: nobHarborBuilding.cpp 6574 2010-07-16 09:10:15Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -84,17 +84,15 @@ nobHarborBuilding::nobHarborBuilding(const unsigned short x, const unsigned shor
 	gwg->RecalcTerritory(this,GetMilitaryRadius(),false,true);
 
 	// Alle Waren 0, außer 100 Träger
-	memset(&goods,0,sizeof(goods));
-	memset(&real_goods,0,sizeof(real_goods));
-
-	// Der Wirtschaftsverwaltung Bescheid sagen
-	gwg->GetPlayer(player)->AddWarehouse(this);
-	
+	goods.clear();
+	real_goods.clear();
 
 	// Aktuellen Warenbestand zur aktuellen Inventur dazu addieren
 	AddToInventory();
 
-
+	// Der Wirtschaftsverwaltung Bescheid sagen
+	gwg->GetPlayer(player)->AddWarehouse(this);
+	
 	/// Die Meere herausfinden, an die dieser Hafen grenzt
 	for(unsigned i = 0;i<6;++i)
 		sea_ids[i] = gwg->IsCoastalPoint(gwg->GetXA(x,y,i), gwg->GetYA(x,y,i));
@@ -687,7 +685,7 @@ void nobHarborBuilding::CheckExpeditionReady()
 		players->getElement(player)->OrderShip(this);
 }
 
-/// Prüft, ob eine Expedition von den Spähern her vollstÃ¤ndig ist und ruft ggf. das Schiff
+/// Prüft, ob eine Expedition von den Spähern her vollständig ist und ruft ggf. das Schiff
 void nobHarborBuilding::CheckExplorationExpeditionReady()
 {
 	// Alles da?

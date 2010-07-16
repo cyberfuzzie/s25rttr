@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 6535 2010-07-03 08:12:55Z FloSoft $
+// $Id: GameWorldGame.cpp 6574 2010-07-16 09:10:15Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -57,7 +57,7 @@
 
 void GameWorldGame::RecalcBQAroundPoint(const MapCoord x, const MapCoord y)
 {
-	// Drumherum BQ neu berechnen, da diese sich ja jetzt h√§tten √§ndern k√∂nnen
+	// Drumherum BQ neu berechnen, da diese sich ja jetzt h‰tten ‰ndern k√∂nnen
 	GetNode(x,y).bq = CalcBQ(x,y,GAMECLIENT.GetPlayerID());
 	for(unsigned char i = 0;i<6;++i)
 		GetNode(GetXA(x,y,i),GetYA(x,y,i)).bq = CalcBQ(GetXA(x,y,i), GetYA(x,y,i),GAMECLIENT.GetPlayerID());
@@ -74,18 +74,18 @@ void GameWorldGame::RecalcBQAroundPointBig(const MapCoord x, const MapCoord y)
 
 void GameWorldGame::SetFlag(const MapCoord x, const MapCoord y, const unsigned char player,const unsigned char dis_dir)
 {
-	// TODO: Verz√∂gerungsbugabfrage, kann sp√§ter ggf. weg
+	// TODO: Verz√∂gerungsbugabfrage, kann sp‰ter ggf. weg
 	if(CalcBQ(x,y,player,true,false) != BQ_FLAG)
 		return;
 	//
-	//// Abfragen, ob schon eine Flagge in der N√§he ist (keine Mini-1-Wege)
+	//// Abfragen, ob schon eine Flagge in der N‰he ist (keine Mini-1-Wege)
 	//for(unsigned char i = 0;i<6;++i)
 	//{
 	//	if(GetNO(GetXA(x,y,i), GetYA(x,y,i))->GetType() == NOP_FLAG)
 	//		return;
 	//}
 
-	//// TODO: Verz√∂gerungsbugabfrage, kann sp√§ter ggf. weg
+	//// TODO: Verz√∂gerungsbugabfrage, kann sp‰ter ggf. weg
 	//// Abfragen, ob evtl ein Baum gepflanzt wurde, damit der nicht ¸berschrieben wird
 	//if(GetNO(x,y)->GetType() == NOP_TREE)
 	//	return;
@@ -112,7 +112,7 @@ void GameWorldGame::DestroyFlag(const MapCoord x, const MapCoord y)
 	// Gucken, ob sich da auch eine Flagge befindet
 	if(GetNO(x,y)->GetType() == NOP_FLAG)
 	{
-		// Dann abrei√üen mitsamt Geb√§ude
+		// Dann abrei√üen mitsamt Geb‰ude
 		noFlag * flag = GetSpecObj<noFlag>(x,y);
 		SetNO(NULL, x, y);
 		flag->DestroyAttachedBuilding();
@@ -217,7 +217,7 @@ void GameWorldGame::RemoveFigure(const noBase * fig,const MapCoord x, const MapC
 
 void GameWorldGame::SetBuildingSite(const BuildingType type,const MapCoord x, const MapCoord y, const unsigned char player)
 {
-	// Gucken, ob das Geb√§ude hier ¸berhaupt noch gebaut wrden kann
+	// Gucken, ob das Geb‰ude hier ¸berhaupt noch gebaut wrden kann
 	BuildingQuality bq = CalcBQ(x,y,player,false,false);
 
 	switch(BUILDING_SIZE[type])
@@ -230,8 +230,8 @@ void GameWorldGame::SetBuildingSite(const BuildingType type,const MapCoord x, co
 	default: break;
 	}
 
-	// TODO: Verz√∂gerungsbugabfrage, kann sp√§ter ggf. weg
-	// Wenn das ein Milit√§rgeb√§ude ist und andere Milit√§rgeb√§ude bereits in der N√§he sind, darf dieses nicht gebaut werden
+	// TODO: Verz√∂gerungsbugabfrage, kann sp‰ter ggf. weg
+	// Wenn das ein Milit‰rgeb‰ude ist und andere Milit‰rgeb‰ude bereits in der N‰he sind, darf dieses nicht gebaut werden
 	if(type >= BLD_BARRACKS && type <= BLD_FORTRESS)
 	{
 		if(IsMilitaryBuildingNearNode(x,y))
@@ -254,27 +254,27 @@ void GameWorldGame::SetBuildingSite(const BuildingType type,const MapCoord x, co
 	SetNO(new noBuildingSite(type, x, y, player), x, y);
 	gi->GI_UpdateMinimap(x,y);
 
-	// Baupl√§tze drumrum neu berechnen
+	// Baupl‰tze drumrum neu berechnen
 	RecalcBQAroundPointBig(x,y);
 }
 
 void GameWorldGame::DestroyBuilding(const MapCoord x, const MapCoord y, const unsigned char player)
 {
-	// Steht da auch ein Geb√§ude oder eine Baustelle, nicht dass wir aus Verz√∂gerung Feuer abrei√üen wollen, das geht schief
+	// Steht da auch ein Geb‰ude oder eine Baustelle, nicht dass wir aus Verz√∂gerung Feuer abrei√üen wollen, das geht schief
 	if(GetNO(x,y)->GetType() == NOP_BUILDING || 
 		GetNO(x,y)->GetType() == NOP_BUILDINGSITE)
 	{
 		
 		noBaseBuilding * nbb  = GetSpecObj<noBaseBuilding>(x,y);
 
-		// Ist das Geb√§ude auch von dem Spieler, der es abrei√üen will?
+		// Ist das Geb‰ude auch von dem Spieler, der es abrei√üen will?
 		if(nbb->GetPlayer() != player)
 			return;
 
-		// Milit√§rgeb√§ude?
+		// Milit‰rgeb‰ude?
 		if(nbb->GetGOT() == GOT_NOB_MILITARY)
 		{
-			// Darf das Geb√§ude abgerissen werden?
+			// Darf das Geb‰ude abgerissen werden?
 			if(!static_cast<nobMilitary*>(nbb)->IsDemolitionAllowed())
 				// Nein, darf nicht abgerissen werden
 				return;
@@ -283,7 +283,7 @@ void GameWorldGame::DestroyBuilding(const MapCoord x, const MapCoord y, const un
 		
 		nbb->Destroy();
 		delete nbb;
-		// Baupl√§tze drumrum neu berechnen
+		// Baupl‰tze drumrum neu berechnen
 		RecalcBQAroundPointBig(x,y);
 	}
 	else
@@ -294,7 +294,7 @@ void GameWorldGame::DestroyBuilding(const MapCoord x, const MapCoord y, const un
 void GameWorldGame::BuildRoad(const unsigned char playerid,const bool boat_road,
 							  unsigned short start_x,unsigned short start_y, const std::vector<unsigned char>& route)
 {
-	// TODO: Verz√∂gerungsbugabfrage, kann sp√§ter ggf. weg
+	// TODO: Verz√∂gerungsbugabfrage, kann sp‰ter ggf. weg
 	if(!GetSpecObj<noFlag>(start_x,start_y))
 	{
 		RemoveVisualRoad(start_x,start_y,route);
@@ -310,7 +310,7 @@ void GameWorldGame::BuildRoad(const unsigned char playerid,const bool boat_road,
 
 	unsigned short tmpx = start_x, tmpy = start_y;
 
-	// TODO: Verz√∂gerungsbugabfrage, kann sp√§ter ggf. weg
+	// TODO: Verz√∂gerungsbugabfrage, kann sp‰ter ggf. weg
 	// Gucken, ob der Weg ¸berhaupt noch gebaut werden kann
 	unsigned short testx = start_x, testy = start_y;
 	assert(route.size() > 1);
@@ -355,8 +355,8 @@ void GameWorldGame::BuildRoad(const unsigned char playerid,const bool boat_road,
 	{
 		// Es ist keine Flagge dort, dann muss getestet werden, ob da wenigstens eine gebaut werden kann
 
-		// TODO: Verz√∂gerungsbugabfrage, kann sp√§ter ggf. weg
-		// Abfragen, ob schon eine Flagge in der N√§he ist (keine Mini-1-Wege)
+		// TODO: Verz√∂gerungsbugabfrage, kann sp‰ter ggf. weg
+		// Abfragen, ob schon eine Flagge in der N‰he ist (keine Mini-1-Wege)
 		for(unsigned char i = 0;i<6;++i)
 		{
 			if(GetNO(GetXA(testx,testy,i), GetYA(testx,testy,i))->GetGOT() == GOT_FLAG)
@@ -367,7 +367,7 @@ void GameWorldGame::BuildRoad(const unsigned char playerid,const bool boat_road,
 			}
 		}
 
-		// TODO: Verz√∂gerungsbugabfrage, kann sp√§ter ggf. weg
+		// TODO: Verz√∂gerungsbugabfrage, kann sp‰ter ggf. weg
 		// Abfragen, ob evtl ein Baum gepflanzt wurde, damit der nicht ¸berschrieben wird
 		if(GetNO(testx,testy)->GetType() == NOP_TREE)
 		{
@@ -413,7 +413,7 @@ void GameWorldGame::BuildRoad(const unsigned char playerid,const bool boat_road,
 	GetSpecObj<noFlag>(tmpx,tmpy)->routes[route.front()] = rs;
 	GetSpecObj<noFlag>(start_x,start_y)->routes[(route.back()+3)%6] = rs;
 
-	// Der Wirtschaft mitteilen, dass eine neue Stra√üe gebaut wurde, damit sie alles N√§cige macht
+	// Der Wirtschaft mitteilen, dass eine neue Stra√üe gebaut wurde, damit sie alles N‰cige macht
 	GetPlayer(playerid)->NewRoad(rs);
 
 }
@@ -469,7 +469,7 @@ bool GameWorldGame::IsObjectionableForRoad(const MapCoord x, const MapCoord y)
 
 void GameWorldGame::DestroyRoad(const MapCoord x, const MapCoord y, const unsigned char dir)
 {
-	// TODO: Verz√∂gerungsbugabfrage, kann sp√§ter ggf. weg
+	// TODO: Verz√∂gerungsbugabfrage, kann sp‰ter ggf. weg
 	if(!GetSpecObj<noFlag>(x,y))
 		return;
 
@@ -486,9 +486,9 @@ void GameWorldGame::UpgradeRoad(const MapCoord x, const MapCoord y, const unsign
 
 void GameWorldGame::RecalcTerritory(const noBaseBuilding * const building,const unsigned short radius, const bool destroyed, const bool newBuilt)
 {
-	std::list<nobBaseMilitary*> buildings; // Liste von Milit√§rgeb√§uden in der N√§he
+	std::list<nobBaseMilitary*> buildings; // Liste von Milit‰rgeb‰uden in der N‰he
 
-	// alle Milit√§rgeb√§ude in der N√§he abgrasen
+	// alle Milit‰rgeb‰ude in der N‰he abgrasen
 	LookForMilitaryBuildings(buildings,building->GetX(),building->GetY(),3);
 
 	// Radius der noch draufaddiert wird auf den eigentlich ausreichenden Bereich, f¸r das Eliminieren von
@@ -506,10 +506,10 @@ void GameWorldGame::RecalcTerritory(const noBaseBuilding * const building,const 
 
 	buildings.sort(nobBaseMilitary::Compare);
 
-	// Alle Geb√§ude ihr Terrain in der N√§he neu berechnen
+	// Alle Geb‰ude ihr Terrain in der N‰he neu berechnen
 	for(std::list<nobBaseMilitary*>::iterator it = buildings.begin();it!=buildings.end();++it)
 	{
-		// Ist es ein richtiges Milit√§rgeb√§ude?
+		// Ist es ein richtiges Milit‰rgeb‰ude?
 		if((*it)->GetBuildingType() >= BLD_BARRACKS && (*it)->GetBuildingType() <= BLD_FORTRESS)
 		{
 			// Wenn es noch nicht besetzt war(also gerade neu gebaut), darf es nicht mit einberechnet werden!
@@ -517,12 +517,12 @@ void GameWorldGame::RecalcTerritory(const noBaseBuilding * const building,const 
 				continue;
 		}
 
-		// Wenn das Geb√§ude abgerissen wird oder wenn es noch nicht besetzt war, nat¸rlich nicht mit einberechnen
+		// Wenn das Geb‰ude abgerissen wird oder wenn es noch nicht besetzt war, nat¸rlich nicht mit einberechnen
 		if(*it != building || !destroyed)
 			tr.CalcTerritoryOfBuilding(*it);
 	}
 
-	// Baustellen von H√§fen mit einschlie√üen
+	// Baustellen von H‰fen mit einschlie√üen
 	for(std::list<noBuildingSite*>::iterator it = harbor_building_sites_from_sea.begin();
 		it != harbor_building_sites_from_sea.end();++it)
 	{
@@ -532,7 +532,7 @@ void GameWorldGame::RecalcTerritory(const noBaseBuilding * const building,const 
 		
 
 
-	// Merken, wo sich der Besitzer ge√§ndert hat
+	// Merken, wo sich der Besitzer ge‰ndert hat
 	bool * owner_changed = new bool[(x2-x1)*(y2-y1)];
 
 
@@ -546,7 +546,7 @@ void GameWorldGame::RecalcTerritory(const noBaseBuilding * const building,const 
 			unsigned char prev_player,player;
 			MapCoord tx,ty;
 			ConvertCoords(x,y,&tx,&ty);
-			// Wenn der Punkt den Besitz ge√§ndert hat
+			// Wenn der Punkt den Besitz ge‰ndert hat
 			if((prev_player=GetNode(tx,ty).owner) != (player=tr.GetOwner(x,y)))
 			{
 				// Dann entsprechend neuen Besitzer setzen
@@ -566,7 +566,7 @@ void GameWorldGame::RecalcTerritory(const noBaseBuilding * const building,const 
 	{
 		GetPlayer(i)->ChangeStatisticValue(STAT_COUNTRY, sizeChanges[i]);
 
-		// Negatives Wachstum per Post dem/der jeweiligen Landesherren/dame melden, nur bei neugebauten Geb√§uden
+		// Negatives Wachstum per Post dem/der jeweiligen Landesherren/dame melden, nur bei neugebauten Geb‰uden
 		if (newBuilt && sizeChanges[i] < 0)
 		{
 			if(GameClient::inst().GetPlayerID() == i)
@@ -598,7 +598,7 @@ void GameWorldGame::RecalcTerritory(const noBaseBuilding * const building,const 
 				GetNode(tx,ty).owner = 0;
 
 			// Drumherum (da ja Grenzen mit einberechnet werden ins Gebiet, da darf trotzdem nichts stehen) alles vom Spieler zerst√∂ren
-			// nicht das Milit√§rgeb√§ude oder dessen Flagge nochmal abrei√üen
+			// nicht das Milit‰rgeb‰ude oder dessen Flagge nochmal abrei√üen
 			if(owner_changed[(x2-x1)*(y-y1)+(x-x1)])
 			{
 				for(unsigned char i = 0;i<6;++i)
@@ -609,7 +609,7 @@ void GameWorldGame::RecalcTerritory(const noBaseBuilding * const building,const 
 
 					// BQ neu berechnen
 					GetNode(ttx,tty).bq = CalcBQ(ttx,tty,GAMECLIENT.GetPlayerID());
-					// ggf den noch dar¸ber, falls es eine Flagge war (kann ja ein Geb√§ude entstehen)
+					// ggf den noch dar¸ber, falls es eine Flagge war (kann ja ein Geb‰ude entstehen)
 					if(GetNodeAround(ttx,tty,1).bq)
 						SetBQ(GetXA(ttx,tty,1),GetYA(ttx,tty,1),GAMECLIENT.GetPlayerID());
 				}
@@ -745,7 +745,7 @@ void GameWorldGame::DestroyPlayerRests(const MapCoord x, const MapCoord y, const
 	noBase * no = GetNO(x,y);
 
 
-	// Flaggen, Geb√§ude und Baustellen zerst√∂ren, aber keine ¸bernommenen und nicht die Ausahme oder dessen Flagge!
+	// Flaggen, Geb‰ude und Baustellen zerst√∂ren, aber keine ¸bernommenen und nicht die Ausahme oder dessen Flagge!
 	if((no->GetType() == NOP_FLAG || no->GetType() == NOP_BUILDING || no->GetType() == NOP_BUILDINGSITE) && exception != no)
 	{
 		// Wurde das Objekt auch nicht vom Gegner ¸bernommen?
@@ -769,7 +769,7 @@ void GameWorldGame::DestroyPlayerRests(const MapCoord x, const MapCoord y, const
 	noFlag * flag = GetRoadFlag(x,y,dir,0xFF);
 	if(flag)
 	{
-		// Die Ministra√üe von dem Milit√§rgeb√§ude nich abrei√üen!
+		// Die Ministra√üe von dem Milit‰rgeb‰ude nich abrei√üen!
 		if(flag->routes[dir]->GetLength() == 1)
 		{
 			if(flag->routes[dir]->GetF2() == exception)
@@ -801,7 +801,7 @@ bool GameWorldGame::IsNodeForFigures(const MapCoord x, const MapCoord y)
 	{
 		t = GetTerrainAround(x,y,i);
 		if(TERRAIN_BQ[t] == BQ_CASTLE || TERRAIN_BQ[t] == BQ_MINE || TERRAIN_BQ[t] == BQ_FLAG) ++good_terrains;
-		else if(TERRAIN_BQ[t] == BQ_DANGER) return false; // in die N√§he von Lava usw. d¸rfen die Figuren gar nich kommen!
+		else if(TERRAIN_BQ[t] == BQ_DANGER) return false; // in die N‰he von Lava usw. d¸rfen die Figuren gar nich kommen!
 	}
 
 	// Darf nicht im Wasser liegen,
@@ -859,27 +859,27 @@ void GameWorldGame::RoadNodeAvailable(const MapCoord x, const MapCoord y)
 struct PotentialAttacker
 {
 	nofPassiveSoldier * soldier;
-	/// Wegl√§nge zum Angriffsziel
+	/// Wegl‰nge zum Angriffsziel
 	unsigned distance;
 };
 
 void GameWorldGame::Attack(const unsigned char player_attacker, const MapCoord x, const MapCoord y, const unsigned short soldiers_count, const bool strong_soldiers)
 {
 	// Verz√∂gerungsbug-Abfrage:
-	// Existiert das angegriffenen Geb√§ude ¸berhaupt noch?
+	// Existiert das angegriffenen Geb‰ude ¸berhaupt noch?
 	if(GetNO(x,y)->GetGOT() != GOT_NOB_MILITARY && GetNO(x,y)->GetGOT() != GOT_NOB_HQ
 	&& GetNO(x,y)->GetGOT() != GOT_NOB_HARBORBUILDING)
 		return;
 
-	// Auch noch ein Geb√§ude von einem Feind (nicht inzwischen eingenommen)?
+	// Auch noch ein Geb‰ude von einem Feind (nicht inzwischen eingenommen)?
 	if(!GetPlayer(player_attacker)->IsPlayerAttackable(GetSpecObj<noBuilding>(x,y)->GetPlayer()))
 		return;
 
-	// Pr¸fen, ob der angreifende Spieler das Geb√§ude ¸berhaupt sieht (Cheatvorsorge)
+	// Pr¸fen, ob der angreifende Spieler das Geb‰ude ¸berhaupt sieht (Cheatvorsorge)
 	if(CalcWithAllyVisiblity(x,y,player_attacker) != VIS_VISIBLE)
 		return;
 
-	// Ist das angegriffenne ein normales Geb√§ude?
+	// Ist das angegriffenne ein normales Geb‰ude?
 	nobBaseMilitary * attacked_building = GetSpecObj<nobBaseMilitary>(x,y);
 	if(attacked_building->GetBuildingType() >= BLD_BARRACKS && attacked_building->GetBuildingType() <= BLD_FORTRESS)
 	{
@@ -891,7 +891,7 @@ void GameWorldGame::Attack(const unsigned char player_attacker, const MapCoord x
 			return;
 	}
 
-	// Milit√§rgeb√§ude in der N√§he finden
+	// Milit‰rgeb‰ude in der N‰he finden
 	std::list<nobBaseMilitary*> buildings;
 	LookForMilitaryBuildings(buildings,x,y,3);
 
@@ -901,12 +901,12 @@ void GameWorldGame::Attack(const unsigned char player_attacker, const MapCoord x
 
 	for(std::list<nobBaseMilitary*>::iterator it = buildings.begin();it!=buildings.end();++it)
 	{
-		// Muss ein Geb√§ude von uns sein und darf nur ein "normales Milit√§rgeb√§ude" sein (kein HQ etc.)
+		// Muss ein Geb‰ude von uns sein und darf nur ein "normales Milit‰rgeb‰ude" sein (kein HQ etc.)
 		if((*it)->GetPlayer() == player_attacker && (*it)->GetBuildingType() >= BLD_BARRACKS && (*it)->GetBuildingType() <= BLD_FORTRESS)
 		{
 
 			// Soldaten ausrechnen, wie viel man davon nehmen k√∂nnte, je nachdem wie viele in den
-			// Milit√§reinstellungen zum Angriff eingestellt wurden
+			// Milit‰reinstellungen zum Angriff eingestellt wurden
 			unsigned short soldiers_count =
 				(static_cast<nobMilitary*>(*it)->GetTroopsCount()>1)?
 				((static_cast<nobMilitary*>(*it)->GetTroopsCount()-1)*GetPlayer(player_attacker)->military_settings[3]/MILITARY_SETTINGS_SCALE[3]):0;
@@ -993,16 +993,16 @@ void GameWorldGame::Attack(const unsigned char player_attacker, const MapCoord x
 void  GameWorldGame::AttackViaSea(const unsigned char player_attacker, const MapCoord x, const MapCoord y, const unsigned short soldiers_count, const bool strong_soldiers)
 {
 	// Verz√∂gerungsbug-Abfrage:
-	// Existiert das angegriffenen Geb√§ude ¸berhaupt noch?
+	// Existiert das angegriffenen Geb‰ude ¸berhaupt noch?
 	if(GetNO(x,y)->GetGOT() != GOT_NOB_MILITARY && GetNO(x,y)->GetGOT() != GOT_NOB_HQ
 	&& GetNO(x,y)->GetGOT() != GOT_NOB_HARBORBUILDING)
 		return;
 
-	// Auch noch ein Geb√§ude von einem Feind (nicht inzwischen eingenommen)?
+	// Auch noch ein Geb‰ude von einem Feind (nicht inzwischen eingenommen)?
 	if(!GetPlayer(player_attacker)->IsPlayerAttackable(GetSpecObj<noBuilding>(x,y)->GetPlayer()))
 		return;
 
-	// Pr¸fen, ob der angreifende Spieler das Geb√§ude ¸berhaupt sieht (Cheatvorsorge)
+	// Pr¸fen, ob der angreifende Spieler das Geb‰ude ¸berhaupt sieht (Cheatvorsorge)
 	if(CalcWithAllyVisiblity(x,y,player_attacker) != VIS_VISIBLE)
 		return;
 		
@@ -1010,7 +1010,7 @@ void  GameWorldGame::AttackViaSea(const unsigned char player_attacker, const Map
 	std::list<GameWorldBase::PotentialSeaAttacker> attackers;
 	GetAvailableSoldiersForSeaAttack(player_attacker,x,y,&attackers);
 	
-	// Ist das angegriffenne ein normales Geb√§ude?
+	// Ist das angegriffenne ein normales Geb‰ude?
 	nobBaseMilitary * attacked_building = GetSpecObj<nobBaseMilitary>(x,y);
 	if(attacked_building->GetBuildingType() >= BLD_BARRACKS && attacked_building->GetBuildingType() <= BLD_FORTRESS)
 	{
@@ -1052,7 +1052,7 @@ bool GameWorldGame::IsRoadNodeForFigures(const MapCoord x, const MapCoord y,cons
 	list<noBase*> objects;
 	GetDynamicObjectsFrom(x,y,objects);
 
-	// Figuren durchgehen, bei K√§mpfen und wartenden Angreifern sowie anderen wartenden Figuren stoppen!
+	// Figuren durchgehen, bei K‰mpfen und wartenden Angreifern sowie anderen wartenden Figuren stoppen!
 	for(list<noBase*>::iterator it = objects.begin();it.valid();++it)
 	{
 		// andere wartende Figuren
@@ -1084,13 +1084,13 @@ bool GameWorldGame::IsRoadNodeForFigures(const MapCoord x, const MapCoord y,cons
 	return true;
 }
 
-/// L√§sst alle Figuren, die auf diesen Punkt  auf Wegen zulaufen, anhalten auf dem Weg (wegen einem Kampf)
+/// L‰sst alle Figuren, die auf diesen Punkt  auf Wegen zulaufen, anhalten auf dem Weg (wegen einem Kampf)
 void GameWorldGame::StopOnRoads(const MapCoord x, const MapCoord y, const unsigned char dir)
 {
 	// Figuren drumherum sammeln (auch von dem Punkt hier aus)
 	list<noBase*> figures;
 
-	// Auch vom Ausgangspunkt aus, da sie im GameWorldGame wegem Zeichnen auch hier h√§ngen k√∂nnen!
+	// Auch vom Ausgangspunkt aus, da sie im GameWorldGame wegem Zeichnen auch hier h‰ngen k√∂nnen!
 	for(list<noBase*>::iterator it = GetFigures(x,y).begin();it.valid();++it)
 		if((*it)->GetType() == NOP_FIGURE)
 			figures.push_back(*it);
@@ -1217,7 +1217,7 @@ bool GameWorldGame::ValidPointForFighting(const MapCoord x, const MapCoord y, no
 			return false;
 		}
 	}
-	// Liegt hier was rum auf dem man nicht k√§mpfen sollte?
+	// Liegt hier was rum auf dem man nicht k‰mpfen sollte?
 	noBase::BlockingManner bm = GetNO(x,y)->GetBM();
 	if(bm != noBase::BM_NOTBLOCKING && bm != noBase::BM_TREE && bm != noBase::BM_FLAG)
 		return false;
@@ -1230,7 +1230,7 @@ bool GameWorldGame::IsPointCompletelyVisible(const MapCoord x, const MapCoord y,
 	std::list<nobBaseMilitary*> buildings;
 	LookForMilitaryBuildings(buildings,x,y,3);
 
-	// Sichtbereich von Milit√§rgeb√§uden
+	// Sichtbereich von Milit‰rgeb‰uden
 	for(std::list<nobBaseMilitary*>::iterator it = buildings.begin();it!=buildings.end();++it)
 	{
 		if((*it)->GetPlayer() == player && *it != exception)
@@ -1261,20 +1261,20 @@ bool GameWorldGame::IsPointCompletelyVisible(const MapCoord x, const MapCoord y,
 		}
 	}
 
-	// Sichtbereich von Sp√§ht¸rmen
+	// Sichtbereich von Sp‰ht¸rmen
 
 	for(std::list<nobUsual*>::const_iterator it = GetPlayer(player)->GetBuildings(BLD_LOOKOUTTOWER).begin();
 		it!=GetPlayer(player)->GetBuildings(BLD_LOOKOUTTOWER).end(); ++it)
 	{
-		// Ist Sp√§turm ¸berhaupt besetzt?
+		// Ist Sp‰turm ¸berhaupt besetzt?
 		if(!(*it)->HasWorker())
 			continue;
 
-		// Nicht die Ausnahme w√§hlen
+		// Nicht die Ausnahme w‰hlen
 		if(*it == exception)
 			continue;
 
-		// Liegt Sp√§hturm innerhalb des Sichtradius?
+		// Liegt Sp‰hturm innerhalb des Sichtradius?
 		if(CalcDistance(x,y,(*it)->GetX(),(*it)->GetY()) <= VISUALRANGE_LOOKOUTTOWER)
 				return true;
 	}
@@ -1283,7 +1283,7 @@ bool GameWorldGame::IsPointCompletelyVisible(const MapCoord x, const MapCoord y,
 
 	// Erkunder pr¸fen
 
-	// Zun√§chst auf dem Punkt selbst
+	// Zun‰chst auf dem Punkt selbst
 	if(IsScoutingFigureOnNode(x,y,player,0))
 		return true;
 
@@ -1315,12 +1315,12 @@ bool GameWorldGame::IsScoutingFigureOnNode(const MapCoord x, const MapCoord y, c
 	list<noBase*> objects;
 	GetDynamicObjectsFrom(x,y,objects);
 
-	// Sp√§her/Soldaten in der N√§he pr¸fen und direkt auf dem Punkt
+	// Sp‰her/Soldaten in der N‰he pr¸fen und direkt auf dem Punkt
 	for(list<noBase*>::iterator it = objects.begin();it.valid();++it)
 	{
 		if(distance <= VISUALRANGE_SCOUT)
 		{
-			// Sp√§her?
+			// Sp‰her?
 			if((*it)->GetGOT() == GOT_NOF_SCOUT_FREE)
 			{
 				// Pr¸fen, ob er auch am Erkunden ist und an der Position genau und ob es vom richtigen Spieler ist
@@ -1340,7 +1340,7 @@ bool GameWorldGame::IsScoutingFigureOnNode(const MapCoord x, const MapCoord y, c
 				if(soldier->GetX() == x && soldier->GetY() == y && soldier->GetPlayer() == player)
 					return true;
 			}
-			// K√§mpfe (wo auch Soldaten drin sind)
+			// K‰mpfe (wo auch Soldaten drin sind)
 			else if((*it)->GetGOT() == GOT_FIGHTING)
 			{
 				// Pr¸fen, ob da ein Soldat vom angegebenen Spieler dabei ist
@@ -1377,10 +1377,10 @@ void GameWorldGame::RecalcVisibility(const MapCoord x, const MapCoord y, const u
 	/// Zustand davor merken
 	Visibility visibility_before = GetNode(x,y).fow[player].visibility;
 
-	/// Herausfinden, ob vollst√§ndig sichtbar
+	/// Herausfinden, ob vollst‰ndig sichtbar
 	bool visible = IsPointCompletelyVisible(x,y,player,exception);
 
-	// Vollst√§ndig sichtbar --> vollst√§ndig sichtbar logischerweise
+	// Vollst‰ndig sichtbar --> vollst‰ndig sichtbar logischerweise
 	if(visible)
 	{
 		GetNode(x,y).fow[player].visibility = VIS_VISIBLE;
@@ -1594,7 +1594,7 @@ void GameWorldGame::SaveFOWNode(const MapCoord x, const MapCoord y, const unsign
 			GetNode(x,y).fow[player].roads[i] = 0;
 	}
 
-	// Besitzverh√§ltnisse speichern, damit auch die Grenzsteine im FoW gezeichnet werden k√∂nnen
+	// Besitzverh‰ltnisse speichern, damit auch die Grenzsteine im FoW gezeichnet werden k√∂nnen
 	GetNode(x,y).fow[player].owner = GetNode(x,y).owner;
 	// Grenzsteine merken
 	for(unsigned i =0;i<4;++i)
@@ -1622,7 +1622,7 @@ void GameWorldGame::ConvertMineResourceTypes(unsigned char from, unsigned char t
 	from = RESOURCES_MINE_TO_MAP[from];
 	to = ((to != 0xFF) ? RESOURCES_MINE_TO_MAP[to] : 0xFF);
 
-	// Zeiger auf zu ver√§nderte Daten
+	// Zeiger auf zu ver‰nderte Daten
 	unsigned char *resources;
 	
 	//LOG.lprintf("Convert map resources from %i to %i\n", from, to);
@@ -1660,7 +1660,7 @@ struct DepthFirstSearchNode
 {
 	// Richtige Position des Punktes
 	Point<int> real_pos;
-	// Vorg√§nger
+	// Vorg‰nger
 	Point<MapCoord> pre;
 	// Entfernung bis hierhin
 	unsigned way;
@@ -1703,14 +1703,14 @@ unsigned char GameWorldGame::GetShipDir(Point<int> pos1, Point<int> pos2)
 }
 
 /// Berechnet f¸r alle Hafenpunkt jeweils die Richtung und Entfernung zu allen anderen Hafenpunkten
-/// ¸ber die Kartenr√§nder hinweg
+/// ¸ber die Kartenr‰nder hinweg
 void GameWorldGame::CalcHarborPosNeighbors()
 {
 	std::vector<DepthFirstSearchNode> nodes(width*height);
 	
 	for(unsigned i = 1;i<harbor_pos.size();++i)
 	{
-		// H√§fen, die gefunden wurden
+		// H‰fen, die gefunden wurden
 		std::vector<bool> visited_harbor_pos(harbor_pos.size(),false);
 		// Den Ausgangshafen als gefunden setzen, damit wir diesen nicht als Nachbar ansehen
 		visited_harbor_pos[i] = true;
@@ -1723,7 +1723,7 @@ void GameWorldGame::CalcHarborPosNeighbors()
 		nodes[start.y*width+start.x].way = 0;
 		nodes[start.y*width+start.x].real_pos = Point<int>(start.x,start.y);
 
-		// Knoten z√§hlen (Startknoten schon mit inbegriffen)
+		// Knoten z‰hlen (Startknoten schon mit inbegriffen)
 		//unsigned count = 0; (war unused - n√∂tig f¸r irgendwas? - jh)
 		
 		// Am Anfang m¸ssen wir auch K¸stenpunkte zulassen

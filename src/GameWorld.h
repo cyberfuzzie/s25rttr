@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: GameWorld.h 6587 2010-07-17 13:26:53Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -757,3 +757,4 @@ private:
 
 
 #endif
+

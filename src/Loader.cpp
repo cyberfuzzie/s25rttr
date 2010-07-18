@@ -1,4 +1,4 @@
-// $Id: Loader.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: Loader.cpp 6591 2010-07-18 17:13:01Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -409,8 +409,8 @@ bool Loader::LoadFile(const char *pfad, const libsiedler2::ArchivItem_Palette *p
 		unsigned char *buffer = new unsigned char[1000*1000*4];
 		for(std::list<std::string>::iterator i = lst.begin(); i != lst.end(); ++i)
 		{
-			/*// empty-file filler
-			std::string lf = i->substr(i->find_last_of('/')+1);
+			// empty-file filler
+			/*std::string lf = i->substr(i->find_last_of('/')+1);
 			std::stringstream aa;
 			unsigned int a = 0, b = 0;
 			aa << lf;
@@ -425,6 +425,14 @@ bool Loader::LoadFile(const char *pfad, const libsiedler2::ArchivItem_Palette *p
 				}
 				b = a + 1;
 			}*/
+
+			// read file number, to set the index correctly
+			std::string filename = i->substr(i->find_last_of('/')+1);
+			std::stringstream nrs;
+			int nr = -1;
+			nrs << filename;
+			if(! (nrs >> nr) )
+				nr = -1;
 
 			std::string filetype = "empty";
 			unsigned int bobtype = 0;
@@ -512,7 +520,15 @@ bool Loader::LoadFile(const char *pfad, const libsiedler2::ArchivItem_Palette *p
 
 				neu = out;
 
-				to->pushC(neu);
+				// had the filename a number? then set it to the corresponding item.
+				if(nr >= 0)
+				{
+					if(nr > to->getCount())
+						to->alloc_inc(nr - to->getCount() + 1);
+					to->setC(nr, neu);
+				}
+				else
+					to->pushC(neu);
 			}
 			else // Paletten der Bitmaps nicht mitladen
 			{
@@ -538,12 +554,17 @@ bool Loader::LoadFile(const char *pfad, const libsiedler2::ArchivItem_Palette *p
 	{
 		LOG.lprintf("Ersetze Daten der vorher geladenen Datei\n");
 		to = &files.find(p)->second;
+
+		if(archiv.getCount() > to->getCount())
+			to->alloc_inc(archiv.getCount()-to->getCount());
+
 		for(unsigned int i = 0; i < archiv.getCount(); ++i)
 		{
 			if(archiv.get(i))
 			{
 				if(to->get(i))
 					delete to->get(i);
+				LOG.lprintf("Ersetze Eintrag %d durch %s\n", i, archiv.get(i)->getName());
 				to->setC(i, archiv.get(i));
 			}
 		}

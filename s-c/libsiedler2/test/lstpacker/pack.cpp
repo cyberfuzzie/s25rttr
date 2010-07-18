@@ -1,4 +1,4 @@
-// $Id: pack.cpp 6460 2010-05-31 11:42:38Z FloSoft $
+// $Id: pack.cpp 6591 2010-07-18 17:13:01Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -155,16 +155,37 @@ void pack(const string &directory, const string &file, const ArchivItem_Palette*
 	{
 		string whole_path = it->path;
 
+		// read file number, to set the index correctly
+		std::string filename = whole_path.substr(whole_path.find_last_of("/\\")+1);
+		std::stringstream nrs;
+		int nr = -1;
+		nrs << filename;
+		if(! (nrs >> nr) )
+			nr = -1;
+
 		ArchivInfo items;
 
-		cout << "Reading file " << whole_path << ": ";
+		cout << "Reading file " << whole_path;
+		if( nr >= 0 )
+			cout << " to " << nr;
+		std::cout << ": ";
+
 		if(it->type == "font")
 		{
 			ArchivItem_Font font;
 			font.setDx(it->nx & 0xFF);
 			font.setDy(it->ny & 0xFF);
 			pack(whole_path, "", palette, &font);
-			lst->pushC(&font);
+
+			// had the filename a number? then set it to the corresponding item.
+			if(nr >= 0)
+			{
+				if(nr > lst->getCount())
+					lst->alloc_inc(nr - lst->getCount() + 1);
+				lst->setC(nr, &font);
+			}
+			else
+				lst->pushC(&font);
 		}
 		else if(it->type == "empty" || Load(whole_path.c_str(), &items, palette) != 0)
 		{
@@ -221,7 +242,15 @@ void pack(const string &directory, const string &file, const ArchivItem_Palette*
 				neu = n;
 			}
 
-			lst->pushC(neu);
+			// had the filename a number? then set it to the corresponding item.
+			if(nr >= 0)
+			{
+				if(nr > lst->getCount())
+					lst->alloc_inc(nr - lst->getCount() + 1);
+				lst->setC(nr, neu);
+			}
+			else
+				lst->pushC(neu);
 		}
 	}
 	delete[] buffer;

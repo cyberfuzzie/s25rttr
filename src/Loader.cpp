@@ -1,4 +1,4 @@
-// $Id: Loader.cpp 6591 2010-07-18 17:13:01Z FloSoft $
+// $Id: Loader.cpp 6594 2010-07-19 08:04:39Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -523,7 +523,7 @@ bool Loader::LoadFile(const char *pfad, const libsiedler2::ArchivItem_Palette *p
 				// had the filename a number? then set it to the corresponding item.
 				if(nr >= 0)
 				{
-					if(nr > to->getCount())
+					if(nr > (int)to->getCount())
 						to->alloc_inc(nr - to->getCount() + 1);
 					to->setC(nr, neu);
 				}

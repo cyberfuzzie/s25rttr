@@ -1,4 +1,4 @@
-// $Id: UPnP.h 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: UPnP.h 6600 2010-07-19 13:52:33Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //

@@ -9,6 +9,12 @@ else
 	CMAKE_VERBOSE=
 endif
 
+ifeq ($(DEB_HOST_ARCH),amd64)
+	CMAKE_ARCH=--arch=c.linux.x86_64
+else
+	CMAKE_ARCH=
+endif
+
 # create .svn/entries with values from debian/changelog for version tool
 .svn/entries:
 	mkdir -p .svn && \
@@ -23,7 +29,7 @@ build/Makefile:  .svn/entries
 
 	# Add here commands to configure the package.
 	chmod 0755 ./build/cmake.sh && \
-	cd build && ./cmake.sh --prefix=/usr $(CMAKE_VERBOSE) -DCMAKE_C_FLAGS="$(CFLAGS)" -DCMAKE_LD_FLAGS="-Wl,-z,defs" -DCMAKE_CXX_FLAGS="$(CXXFLAGS)" -DCMAKE_SKIP_RPATH=ON
+	cd build && ./cmake.sh --prefix=/usr $(CMAKE_VERBOSE) $(CMAKE_ARCH) -DCMAKE_C_FLAGS="$(CFLAGS)" -DCMAKE_LD_FLAGS="-Wl,-z,defs" -DCMAKE_CXX_FLAGS="$(CXXFLAGS)" -DCMAKE_SKIP_RPATH=ON
 
 # and make
 build: build-stamp

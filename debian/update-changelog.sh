@@ -18,42 +18,47 @@ do
 	echo "processing revision $r"
 
 	LOG=$(cd .. && LANG=C svn2cl -a -i -r $r --authors=debian/authors.xml --break-before-msg=1 --stdout)
-
-	# parse date	
-	D=$(LANG=C date --date="$(echo "$LOG" | head -n 1 | sed "s/\(.*\)  \(.*\)/\1/g")" +"%a, %d %b %Y %H:%M:%S %z")
-	UD=$(LANG=C date --date="$(echo "$LOG" | head -n 1 | sed "s/\(.*\)  \(.*\)/\1/g")" +"%Y%m%d")
-
-	echo "s25rttr ($UD-$r) unstable; urgency=low" > $msg
-	
-	# parse logmessage
-	echo "" >> $msg
-	if [ $r = $HEAD ] ; then
-		echo "  * New upstream snapshot" >> $msg
-	fi
-
-	L=$(echo "$LOG" | tail -n +3 | sed "s/\t/  /g")
-	if [ -z "$L"  ] ; then
-		echo "  * [r$r] .:" >> $msg
-		echo "    Empty log message" >> $msg
+	if [ -z "$LOG" ] ; then
+		echo "skipped"
 	else
-		echo "$L" >> $msg
+		# parse date	
+		D=$(LANG=C date --date="$(echo "$LOG" | head -n 1 | sed "s/\(.*\)  \(.*\)/\1/g")" +"%a, %d %b %Y %H:%M:%S %z")
+		UD=$(LANG=C date --date="$(echo "$LOG" | head -n 1 | sed "s/\(.*\)  \(.*\)/\1/g")" +"%Y%m%d")
+	
+		echo "s25rttr ($UD-$r) unstable; urgency=low" > $msg
+		
+		# parse logmessage
+		echo "" >> $msg
+		if [ $r = $HEAD ] ; then
+			echo "  * New upstream snapshot" >> $msg
+		fi
+	
+		L=$(echo "$LOG" | tail -n +3 | sed "s/\t/  /g")
+		if [ -z "$L"  ] ; then
+			echo "  * [r$r] .:" >> $msg
+			echo "    Empty log message" >> $msg
+		else
+			echo "$L" >> $msg
+		fi
+	
+		echo "" >> $msg
+		
+		# parse author
+		A=$(echo "$LOG" | head -n 1 | sed "s/\(.*\)  \(.*\)/\2/g")
+		if [ -z "$A" ] ; then
+			A="Return To The Roots Team <sf-team@siedler25.org>"
+		fi
+		
+		# add author and date
+		echo " -- $A  $D" >> $msg
+		echo "" >> $msg
+		
+		mv changelog /tmp/changelog.$$
+		cat $msg /tmp/changelog.$$ > changelog
 	fi
-
-	echo "" >> $msg
-	
-	# parse author
-	A=$(echo "$LOG" | head -n 1 | sed "s/\(.*\)  \(.*\)/\2/g")
-	if [ -z "$A" ] ; then
-		A="Return To The Roots Team <sf-team@siedler25.org>"
-	fi
-	
-	# add author and date
-	echo " -- $A  $D" >> $msg
-	echo "" >> $msg
-	
-	mv changelog /tmp/changelog.$$
-	cat $msg /tmp/changelog.$$ > changelog
 done
 
 rm -f $msg
 rm -f /tmp/changelog.$$
+
+php update-changelog.php

@@ -65,7 +65,7 @@ install: build
 	$(MAKE) -C build DESTDIR=$(CURDIR)/debian/s25rttr install
 	
 	# remove updater
-	rm -vf $(CURDIR)/debian/s25rttr/usr/share/s25rttr/s25update
+	rm -vf $(CURDIR)/debian/s25rttr/usr/share/s25rttr/RTTR/s25update
 
 # Build architecture-independent files here.
 binary-indep: install

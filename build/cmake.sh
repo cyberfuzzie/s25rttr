@@ -1,6 +1,6 @@
 #!/bin/bash
 ###############################################################################
-## $Id: cmake.sh 6496 2010-06-12 08:19:23Z FloSoft $
+## $Id: cmake.sh 6598 2010-07-19 13:10:38Z FloSoft $
 ###############################################################################
 
 # Editable Variables
@@ -82,6 +82,7 @@ LIBDIR=
 ARCH=
 NOARCH=
 GENERATOR=
+PARAMS=""
 as_cr_letters='abcdefghijklmnopqrstuvwxyz'
 as_cr_LETTERS='ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 as_cr_Letters=$as_cr_letters$as_cr_LETTERS
@@ -159,6 +160,9 @@ while test $# != 0 ; do
                         fi
                         eval disable_$ac_feature=\$ac_optarg
 		;;
+		-D*)
+			PARAMS="$ac_option=$ac_optarg"
+		;;
 		*)
 			echo "Unknown option: $ac_option"
 			exit 1
@@ -195,8 +199,6 @@ if [ -z "$LIBDIR" ] ; then
 fi
 
 ###############################################################################
-
-PARAMS=""
 
 echo "Setting Path-Prefix to \"$PREFIX\""
 PARAMS="$PARAMS -DPREFIX=$PREFIX -DCMAKE_INSTALL_PREFIX=$PREFIX"

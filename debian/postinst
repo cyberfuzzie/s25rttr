@@ -17,18 +17,22 @@ set -e
 # for details, see http://www.debian.org/doc/debian-policy/ or
 # the debian-policy package
 
-
 case "$1" in
-    configure)
-    ;;
+	configure)
+		echo "Trying to copy necessary \"The Settlers II Gold\"-files from /media/cdrom0 to /usr/share/s25rttr/S2"
+		if [ -d /media/cdrom0/s2 ] ; then
+			cp -vR /media/cdrom0/s2/* /opt/s25rttr/share/s25rttr/S2/
+		fi
+		echo "done"
+	;;
 
-    abort-upgrade|abort-remove|abort-deconfigure)
-    ;;
+	abort-upgrade|abort-remove|abort-deconfigure)
+	;;
 
-    *)
-        echo "postinst called with unknown argument \`$1'" >&2
-        exit 1
-    ;;
+	*)
+		echo "postinst called with unknown argument \`$1'" >&2
+		exit 1
+	;;
 esac
 
 # dh_installdeb will replace this with shell code automatically

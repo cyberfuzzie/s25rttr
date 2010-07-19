@@ -1,39 +1,54 @@
 #!/usr/bin/make -f
-# -*- makefile -*-
-# Sample debian/rules that uses debhelper.
-# This file was originally written by Joey Hess and Craig Small.
-# As a special exception, when this file is copied by dh-make into a
-# dh-make output file, you may use that output file without restriction.
-# This special exception was added by Craig Small in version 0.37 of dh-make.
 
 # Uncomment this to turn on verbose mode.
-export DH_VERBOSE=1
+#export DH_VERBOSE=1
 
-build/Makefile:
+ifeq ($(DH_VERBOSE),1)
+	CMAKE_VERBOSE=--enable-verbose
+else
+	CMAKE_VERBOSE=
+endif
+
+# create .svn/entries with values from debian/changelog for version tool
+.svn/entries:
+	mkdir -p .svn && \
+	echo "10" > .svn/entries && \
+	echo "" >> .svn/entries && \
+	echo "dir" >> .svn/entries && \
+	echo "$$(head debian/changelog -n 1 | cut -d '-' -f 2 | cut -d ')' -f 1)" >> .svn/entries
+
+# configure
+build/Makefile:  .svn/entries
 	dh_testdir
-	# Add here commands to configure the package.
-	cd build && cmake .. -DPREFIX=/usr -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_C_FLAGS="$(CFLAGS)" -DCMAKE_LD_FLAGS="-Wl,-z,defs" -DCMAKE_CXX_FLAGS="$(CXXFLAGS)" -DCMAKE_SKIP_RPATH=ON -DCMAKE_VERBOSE_MAKEFILE=ON
 
+	# Add here commands to configure the package.
+	chmod 0755 ./build/cmake.sh && \
+	cd build && ./cmake.sh --prefix=/usr $(CMAKE_VERBOSE) -DCMAKE_C_FLAGS="$(CFLAGS)" -DCMAKE_LD_FLAGS="-Wl,-z,defs" -DCMAKE_CXX_FLAGS="$(CXXFLAGS)" -DCMAKE_SKIP_RPATH=ON
+
+# and make
 build: build-stamp
 
 build-stamp:  build/Makefile 
 	dh_testdir
 
 	# Add here commands to compile the package.
-	$(MAKE) -C build
+	$(MAKE) -C build -j 3
 
 	touch $@
 
+# clean up
 clean: 
 	dh_testdir
 	dh_testroot
 	rm -f build-stamp 
 
 	# Add here commands to clean up after the build process.
-	$(MAKE) -C build mrproper
+	chmod 0755 ./build/cleanup.sh
+	cd build && ./cleanup.sh
 
 	dh_clean 
 
+# install
 install: build
 	dh_testdir
 	dh_testroot
@@ -42,21 +57,22 @@ install: build
 
 	# Add here commands to install the package into debian/s25rttr.
 	$(MAKE) -C build DESTDIR=$(CURDIR)/debian/s25rttr install
-
+	
+	# remove updater
+	rm -vf $(CURDIR)/debian/s25rttr/usr/share/s25rttr/s25update
 
 # Build architecture-independent files here.
 binary-indep: install
-# We have nothing to do by default.
 
 # Build architecture-dependent files here.
 binary-arch: install
 	dh_testdir
 	dh_testroot
 	dh_installchangelogs 
-	dh_installdocs
-	dh_installexamples
+#	dh_installdocs
+#	dh_installexamples
 #	dh_install
-#	dh_installmenu
+	dh_installmenu
 #	dh_installdebconf
 #	dh_installlogrotate
 #	dh_installemacsen
@@ -66,7 +82,7 @@ binary-arch: install
 #	dh_installinit
 #	dh_installcron
 #	dh_installinfo
-	dh_installman
+#	dh_installman
 	dh_link
 	dh_strip
 	dh_compress

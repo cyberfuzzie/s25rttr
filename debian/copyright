@@ -1,24 +1,27 @@
-This package was debianized by Florian Doersch <sifldoer@unknown> on
+This package was debianized by Florian Doersch <sf-team@siedler25.org> on
 Sat, 22 Aug 2009 13:29:54 +0200.
 
-It was downloaded from <url://example.com>
+It was downloaded from <http://www.siedler25.org>
 
 Upstream Author(s):
 
-    <put author's name and email here>
-    <likewise for another author>
+    Florian Doersch <sf-team@siedler25.org>
 
 Copyright:
 
-    <Copyright (C) YYYY Name OfAuthor>
-    <likewise for another author>
+    Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 
 License:
 
-    <Put the license of the package here indented by 4 spaces>
-
-The Debian packaging is copyright 2009, Florian Doersch <sifldoer@unknown> and
-is licensed under the GPL, see `/usr/share/common-licenses/GPL'.
-
-# Please also look if there are files or directories which have a
-# different copyright/license attached and list them here.
+    Return To The Roots is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+    
+    Return To The Roots is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    GNU General Public License for more details.
+    
+    You should have received a copy of the GNU General Public License
+    along with Return To The Roots. If not, see <http://www.gnu.org/licenses/>.

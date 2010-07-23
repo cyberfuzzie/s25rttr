@@ -1,6 +1,6 @@
 #!/bin/bash
 ###############################################################################
-## $Id: postinstall.sh.cmake 5627 2009-10-12 17:17:06Z FloSoft $
+## $Id: postinstall.sh.cmake 6612 2010-07-23 10:38:37Z FloSoft $
 ###############################################################################
 
 # Editable Variables
@@ -32,6 +32,7 @@ mecho()
 
 ###############################################################################
 
+COMPILEFOR=@COMPILEFOR@
 PREFIX=@PREFIX@
 BINDIR=@BINDIR@
 DATADIR=@DATADIR@
@@ -54,6 +55,10 @@ while test $# != 0 ; do
 	esac
 
 	case $ac_option in
+	-compilefor | --compilefor)
+		$ac_shift
+		COMPILEFOR=$ac_optarg
+	;;
 	-prefix | --prefix)
 		$ac_shift
 		PREFIX=$ac_optarg
@@ -79,6 +84,10 @@ while test $# != 0 ; do
 	shift
 done
 
+if [ -z "${COMPILEFOR}" ] ; then
+	COMPILEFOR=$(uname -s | tr '[:upper:]' '[:lower:]')
+fi
+
 if [ -z "${PREFIX}" ] ; then
 	PREFIX=/usr/local
 fi
@@ -95,6 +104,7 @@ if [ -z "${LIBDIR}" ] ; then
 	LIBDIR=${DATADIR}
 fi
 
+echo "## Installing for \"${COMPILEFOR}\""
 echo "## Using Path-Prefix \"${PREFIX}\""
 echo "## Using Binary Dir \"${BINDIR}\""
 echo "## Using Data Dir \"${DATADIR}\""
@@ -108,14 +118,14 @@ DESTDIR=${DESTDIR%/}
 # adding the slash again if DESTDIR is not empty
 if [ ! -z "$DESTDIR" ] ; then
 	DESTDIR=${DESTDIR}/
-	mecho --red "Using Destination Dir \"${DESTDIR}\""
+	mecho --red "## Using Destination Dir \"${DESTDIR}\""
 fi
 
 ###############################################################################
 
 mecho --blue "## Removing files which are unused (but installed by cmake)"
-rm -vf ${LIBDIR}/driver/video/libvideo*.a
-rm -vf ${LIBDIR}/driver/audio/libaudio*.a
+rm -vf ${LIBDIR}/driver/video/libvideo*.{a,lib}
+rm -vf ${LIBDIR}/driver/audio/libaudio*.{a,lib}
 
 exit 0
 

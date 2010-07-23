@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 6458 2010-05-31 11:38:51Z FloSoft $
+### $Id: CMakeLists.txt 6612 2010-07-23 10:38:37Z FloSoft $
 ################################################################################
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6.0)
@@ -36,6 +36,15 @@ ENDIF (PREFIX AND NOT DATADIR)
 IF (PREFIX AND NOT BINDIR)
 	SET(BINDIR ${PREFIX}/bin)
 ENDIF (PREFIX AND NOT BINDIR)
+
+IF(NOT "$ENV{CMAKE_INSTALL_PREFIX}" STREQUAL "")
+	SET(ENV{DESTDIR} "$ENV{CMAKE_INSTALL_PREFIX}")
+ENDIF(NOT "$ENV{CMAKE_INSTALL_PREFIX}" STREQUAL "")
+
+IF(NOT "$ENV{DESTDIR}" STREQUAL "")
+	SET(ENV{DESTDIR} "$ENV{DESTDIR}/")
+	SET(CMAKE_INSTALL_PREFIX "" CACHE PATH "" FORCE)
+ENDIF(NOT "$ENV{DESTDIR}" STREQUAL "")
 
 # ensure out of source build
 ENSURE_OUT_OF_SOURCE_BUILD("${PROJECT_NAME} requires an out of source build. Please go to the build directory and run './cmake.sh [options]' there.")

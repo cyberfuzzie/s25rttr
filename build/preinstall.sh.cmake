@@ -32,6 +32,7 @@ mecho()
 
 ###############################################################################
 
+COMPILEFOR=@COMPILEFOR@
 PREFIX=@PREFIX@
 BINDIR=@BINDIR@
 DATADIR=@DATADIR@
@@ -54,6 +55,10 @@ while test $# != 0 ; do
 	esac
 
 	case $ac_option in
+	-compilefor | --compilefor)
+		$ac_shift
+		COMPILEFOR=$ac_optarg
+	;;
 	-prefix | --prefix)
 		$ac_shift
 		PREFIX=$ac_optarg
@@ -79,6 +84,10 @@ while test $# != 0 ; do
 	shift
 done
 
+if [ -z "${COMPILEFOR}" ] ; then
+	COMPILEFOR=$(uname -s | tr '[:upper:]' '[:lower:]')
+fi
+
 if [ -z "${PREFIX}" ] ; then
 	PREFIX=/usr/local
 fi
@@ -95,6 +104,7 @@ if [ -z "${LIBDIR}" ] ; then
 	LIBDIR=${DATADIR}
 fi
 
+echo "## Installing for \"${COMPILEFOR}\""
 echo "## Using Path-Prefix \"${PREFIX}\""
 echo "## Using Binary Dir \"${BINDIR}\""
 echo "## Using Data Dir \"${DATADIR}\""
@@ -123,7 +133,12 @@ mkdir -vp ${DESTDIR}${LIBDIR}/driver/video || exit 1
 mkdir -vp ${DESTDIR}${LIBDIR}/driver/audio || exit 1
 
 mecho --blue "## Installing binaries"
-cp -v ${SRCDIR}/release/bin/rttr.sh ${DESTDIR}${BINDIR} || exit 1
+
+if [ "$COMPILEFOR" = "windows" ] ; then
+	cp -v ${SRCDIR}/release/bin/rttr.bat ${DESTDIR}${BINDIR} || exit 1
+else
+	cp -v ${SRCDIR}/release/bin/rttr.sh ${DESTDIR}${BINDIR} || exit 1
+fi
 
 mecho --blue "## Installing RTTR directory"
 if [ -d ${SRCDIR}/RTTR/.svn ] ; then

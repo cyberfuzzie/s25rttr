@@ -67,11 +67,19 @@ install: build
 	# remove updater
 	rm -vf $(CURDIR)/debian/s25rttr/usr/share/s25rttr/RTTR/s25update
 	
-	# move data to common (except drivers)
+	# move maps to maps-package
+	mkdir -vp $(CURDIR)/debian/s25rttr-maps/usr/share/s25rttr/RTTR
+	mv -v $(CURDIR)/debian/s25rttr/usr/share/s25rttr/RTTR/MAPS $(CURDIR)/debian/s25rttr-maps/usr/share/s25rttr/RTTR
+
+	# move music to music-package
+	mkdir -vp $(CURDIR)/debian/s25rttr-music/usr/share/s25rttr/RTTR
+	mv -v $(CURDIR)/debian/s25rttr/usr/share/s25rttr/RTTR/MUSIC $(CURDIR)/debian/s25rttr-music/usr/share/s25rttr/RTTR
+
+	# move data to common-package (except drivers)
 	mkdir -vp $(CURDIR)/debian/s25rttr-common/usr/share/s25rttr
 	mv -v $(CURDIR)/debian/s25rttr/usr/share/s25rttr/S2 $(CURDIR)/debian/s25rttr-common/usr/share/s25rttr/S2
 	mv -v $(CURDIR)/debian/s25rttr/usr/share/s25rttr/RTTR $(CURDIR)/debian/s25rttr-common/usr/share/s25rttr/RTTR
-	
+		
 	# move sound-convert binaries back ...
 	mkdir -vp $(CURDIR)/debian/s25rttr/usr/share/s25rttr/RTTR
 	mv -v $(CURDIR)/debian/s25rttr-common/usr/share/s25rttr/RTTR/s-c_resample $(CURDIR)/debian/s25rttr/usr/share/s25rttr/RTTR
@@ -106,7 +114,7 @@ binary-arch: install
 #	dh_perl
 #	dh_makeshlibs
 	dh_installdeb
-	dh_shlibdeps
+#	dh_shlibdeps
 	dh_gencontrol
 	dh_md5sums
 	dh_builddeb

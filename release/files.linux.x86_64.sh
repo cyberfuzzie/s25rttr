@@ -25,6 +25,7 @@ cp -rv ../../debian/control ../deb/s25rttr_$VERSION/DEBIAN/control
 
 # updater entfernen
 rm -vf ../deb/s25rttr_$VERSION/usr/share/s25rttr/RTTR/s25update
+rm -vf ../deb/s25rttr_$VERSION/usr/lib/libminiupnpc*
 
 cp -v ../../debian/s25rttr.png ../deb/s25rttr_$VERSION/usr/share/pixmaps/s25rttr.png
 cp -v ../../debian/s25rttr.desktop ../deb/s25rttr_$VERSION/usr/share/applications/s25rttr.desktop

@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: apple.common.cmake 6544 2010-07-04 08:49:25Z FloSoft $
+### $Id: apple.common.cmake 6614 2010-07-23 11:28:57Z FloSoft $
 ################################################################################
 
 IF ( "${CMAKE_OSX_DEPLOYMENT_TARGET}" STREQUAL "" )
@@ -8,7 +8,7 @@ ENDIF ( "${CMAKE_OSX_DEPLOYMENT_TARGET}" STREQUAL "" )
 
 IF ( NOT "${COMPILEARCH}" STREQUAL "" )
 	IF ( "${CMAKE_OSX_ARCHITECTURES}" STREQUAL "" )
-        	SET(CMAKE_OSX_ARCHITECTURES "${COMPILEARCHS}" CACHE STRING "OSX-Architectures" FORCE)
+		SET(CMAKE_OSX_ARCHITECTURES "${COMPILEARCHS}" CACHE STRING "OSX-Architectures" FORCE)
 	ENDIF ( "${CMAKE_OSX_ARCHITECTURES}" STREQUAL "" )
 
 	IF ( "${CMAKE_OSX_ARCHITECTURES}" STREQUAL "" )
@@ -77,3 +77,6 @@ SET(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
 # for libraries and headers in the target directories
 SET(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
 SET(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+
+# disable cmake's own -arch parameter generation
+SET(CMAKE_OSX_ARCHITECTURES "" CACHE STRING "" FORCE)

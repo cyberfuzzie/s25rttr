@@ -136,7 +136,7 @@ mecho --blue "## Installing binaries"
 
 if [ "$COMPILEFOR" = "windows" ] ; then
 	cp -v ${SRCDIR}/release/bin/rttr.bat ${DESTDIR}${BINDIR} || exit 1
-else
+elif [ "$COMPILEFOR" = "linux" ] ; then
 	cp -v ${SRCDIR}/release/bin/rttr.sh ${DESTDIR}${BINDIR} || exit 1
 fi
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 ###############################################################################
-## $Id: postinstall.sh.cmake 6621 2010-07-27 19:57:14Z FloSoft $
+## $Id: postinstall.sh.cmake 6622 2010-07-27 20:54:32Z FloSoft $
 ###############################################################################
 
 # Editable Variables
@@ -172,6 +172,17 @@ if [ "$COMPILEFOR" = "apple" ] ; then
 	
 	# RTTR-Ordner kopieren	
 	mv -v ${DESTDIR}share ${DESTDIR}s25client.app/Contents/MacOS/ || exit 1
+
+elif [ "$COMPILEFOR" = "windows" ] ; then
+	cp -v /usr/i586-mingw32msvc/bin/libiconv2.dll ${DESTDIR} || exit 1
+	cp -v /usr/i586-mingw32msvc/bin/libintl3.dll ${DESTDIR} || exit 1
+	cp -v /usr/i586-mingw32msvc/bin/libogg-0.dll ${DESTDIR} || exit 1
+	cp -v /usr/i586-mingw32msvc/bin/SDL_mixer.dll ${DESTDIR} || exit 1
+	cp -v /usr/i586-mingw32msvc/bin/SDL.dll ${DESTDIR} || exit 1
+	cp -v /usr/i586-mingw32msvc/bin/libvorbis-0.dll ${DESTDIR} || exit 1
+	cp -v /usr/i586-mingw32msvc/bin/libvorbisfile-3.dll ${DESTDIR} || exit 1
+	cp -v /usr/i586-mingw32msvc/bin/libcurl-4.dll ${DESTDIR}RTTR || exit 1
+	cp -v /usr/i586-mingw32msvc/bin/zlib1.dll ${DESTDIR}RTTR || exit 1
 fi
 
 exit 0

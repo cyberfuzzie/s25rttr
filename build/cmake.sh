@@ -1,6 +1,6 @@
 #!/bin/bash
 ###############################################################################
-## $Id: cmake.sh 6612 2010-07-23 10:38:37Z FloSoft $
+## $Id: cmake.sh 6622 2010-07-27 20:54:32Z FloSoft $
 ###############################################################################
 
 # Editable Variables
@@ -261,7 +261,7 @@ else
 	GENERATOR="Unix Makefiles"
 fi
 
-mecho --blue "Running \"cmake -G '$GENERATOR' ${PARAMS} '${SRCDIR}'\""
+mecho --blue "Running \"cmake -G '$GENERATOR' -DCMAKE_INSTALL_PREFIX= ${PARAMS} '${SRCDIR}'\""
 $CMAKE_COMMAND -G "$GENERATOR" $PARAMS "${SRCDIR}"
 
 if [ $? != 0 ] ; then

@@ -29,51 +29,57 @@ EXIT=$?
 echo "Build completed: $(date)" >>$TARGET/build_${ARCH}.log
 
 if [ $EXIT != 0 ] ; then
-  cat $TARGET/build_${ARCH}.log | /usr/bin/mail -s "Daily Build $VERSION Failed" -c bugs@siedler25.org sf-team@siedler25.org
+	cat $TARGET/build_${ARCH}.log | /usr/bin/mail -s "Daily Build $VERSION Failed" -c bugs@siedler25.org sf-team@siedler25.org
 
-  EXIT=1
+	EXIT=1
 else
 	REVISION=$(grep WINDOW_REVISION $BUILDDIR/build_version.h | cut -d ' ' -f 3 | cut -d \" -f 2)
 	rm -f $TARGET/s25rttr_${VERSION}-*_${ARCH}.tar.bz2
 	rm -f $TARGET/s25rttr_*-${REVISION}_${ARCH}.tar.bz2
-	cp -v s25rttr_$VERSION.tar.bz2 /srv/buildfarm/uploads/s25rttr_${VERSION}-${REVISION}_${ARCH}.tar.bz2 >> $TARGET/build_${ARCH}.log
-	rm -f s25rttr_$VERSION.tar.bz2
-
-	rm -f $TARGET/$ARCH.new/music.tar.bz2
-	cp -v s25rttr_music.tar.bz2 $TARGET/$ARCH.new/music.tar.bz2 >> $TARGET/build_${ARCH}.log
-	rm -f s25rttr_music.tar.bz2
-
-	if [ -f $TARGET/$ARCH.new/binaries.tar.bz2 ] ; then
-		tar -C $TARGET/$ARCH.new -xf $TARGET/$ARCH.new/binaries.tar.bz2 >> $TARGET/build_${ARCH}.log
-	fi
+	cp -v ${ARCH}/s25rttr_$VERSION.tar.bz2 /srv/buildfarm/uploads/s25rttr_${VERSION}-${REVISION}_${ARCH}.tar.bz2 >> $TARGET/build_${ARCH}.log
 	
-	if [ -f $TARGET/$ARCH.new/drivers.tar.bz2 ] ; then
-		tar -C $TARGET/$ARCH.new -xf $TARGET/$ARCH.new/drivers.tar.bz2 >> $TARGET/build_${ARCH}.log
-	fi
+	tar -C $TARGET/$ARCH.new --strip 1 -xf ${ARCH}/s25rttr-music_$VERSION.tar.bz2 >> $TARGET/build_${ARCH}.log
+	tar -C $TARGET/$ARCH.new --strip 1 -xf ${ARCH}/s25rttr_$VERSION.tar.bz2 >> $TARGET/build_${ARCH}.log
+	
+	#mv $TARGET/$ARCH.new/s25rttr_$VERSION/ $TARGET/$ARCH.new/
 
-	if [ -f $TARGET/$ARCH.new/libraries.tar.bz2 ] ; then
-		tar -C $TARGET/$ARCH.new -xf $TARGET/$ARCH.new/libraries.tar.bz2 >> $TARGET/build_${ARCH}.log
-	fi
+	rm -f ${ARCH}/s25rttr_$VERSION.tar.bz2
 
-	if [ -f $TARGET/$ARCH.new/RTTR.tar.bz2 ] ; then
-		tar -C $TARGET/$ARCH.new -xf $TARGET/$ARCH.new/RTTR.tar.bz2 >> $TARGET/build_${ARCH}.log
-	fi
+#	rm -f $TARGET/$ARCH.new/music.tar.bz2
+#	cp -v s25rttr_music.tar.bz2 $TARGET/$ARCH.new/music.tar.bz2 >> $TARGET/build_${ARCH}.log
+#	rm -f s25rttr_music.tar.bz2
+#
+#	if [ -f $TARGET/$ARCH.new/binaries.tar.bz2 ] ; then
+#		tar -C $TARGET/$ARCH.new -xf $TARGET/$ARCH.new/binaries.tar.bz2 >> $TARGET/build_${ARCH}.log
+#	fi
+#	
+#	if [ -f $TARGET/$ARCH.new/drivers.tar.bz2 ] ; then
+#		tar -C $TARGET/$ARCH.new -xf $TARGET/$ARCH.new/drivers.tar.bz2 >> $TARGET/build_${ARCH}.log
+#	fi
+#
+#	if [ -f $TARGET/$ARCH.new/libraries.tar.bz2 ] ; then
+#		tar -C $TARGET/$ARCH.new -xf $TARGET/$ARCH.new/libraries.tar.bz2 >> $TARGET/build_${ARCH}.log
+#	fi
+#
+#	if [ -f $TARGET/$ARCH.new/RTTR.tar.bz2 ] ; then
+#		tar -C $TARGET/$ARCH.new -xf $TARGET/$ARCH.new/RTTR.tar.bz2 >> $TARGET/build_${ARCH}.log
+#	fi
+#
+#	if [ -f $TARGET/$ARCH.new/music.tar.bz2 ] ; then
+#		if [ -d  $TARGET/$ARCH.new/share/s25rttr ] ; then
+#			tar -C $TARGET/$ARCH.new/share/s25rttr -xf $TARGET/$ARCH.new/music.tar.bz2 >> $TARGET/build_${ARCH}.log
+#		elif [ -d $TARGET/$ARCH.new/s25client.app/Contents/MacOS/share/s25rttr ] ; then
+#			tar -C $TARGET/$ARCH.new/s25client.app/Contents/MacOS/share/s25rttr -xf $TARGET/$ARCH.new/music.tar.bz2 >> $TARGET/build_${ARCH}.log
+#		else
+#			tar -C $TARGET/$ARCH.new -xf $TARGET/$ARCH.new/music.tar.bz2 >> $TARGET/build_${ARCH}.log
+#		fi
+#	fi
 
-	if [ -f $TARGET/$ARCH.new/music.tar.bz2 ] ; then
-		if [ -d  $TARGET/$ARCH.new/share/s25rttr ] ; then
-			tar -C $TARGET/$ARCH.new/share/s25rttr -xf $TARGET/$ARCH.new/music.tar.bz2 >> $TARGET/build_${ARCH}.log
-		elif [ -d $TARGET/$ARCH.new/s25client.app/Contents/MacOS/share/s25rttr ] ; then
-			tar -C $TARGET/$ARCH.new/s25client.app/Contents/MacOS/share/s25rttr -xf $TARGET/$ARCH.new/music.tar.bz2 >> $TARGET/build_${ARCH}.log
-		else
-			tar -C $TARGET/$ARCH.new -xf $TARGET/$ARCH.new/music.tar.bz2 >> $TARGET/build_${ARCH}.log
-		fi
-	fi
-
-	rm -f $TARGET/$ARCH.new/*.tar.bz2
+#	rm -f $TARGET/$ARCH.new/*.tar.bz2
 
  	echo "${REVISION}" > $TARGET/.revision
 	echo "${VERSION}" > $TARGET/.version
-	echo "s25rttr_${VERSION}-${REVISION}_${ARCH}.tar.bz2" >> $TARGET/.files
+#	echo "s25rttr_${VERSION}-${REVISION}_${ARCH}.tar.bz2" >> $TARGET/.files
 	
 	OPWD=$PWD
 	cd $TARGET/$ARCH.new
@@ -95,18 +101,7 @@ else
 	mv $TARGET/$ARCH $TARGET/$ARCH.old
 	mv $TARGET/$ARCH.new $TARGET/$ARCH
 	
-	#if [ -z "$NORS" ] ; then
-		#gpg -u 6D09334C --armor --sign --detach-sig $TARGET/s25rttr_${VERSION}-${REVISION}_${ARCH}.tar.bz2 >> $TARGET/build_${ARCH}.log
-		#OUTPUT=$(/srv/buildfarm/uploadlp.py s25rttr s25client nightly $TARGET/s25rttr_${VERSION}-${REVISION}_${ARCH}.tar.bz2)
-		#echo $OUTPUT >> $TARGET/build_${ARCH}.log
-		#if [ "$(echo $OUTPUT | head -n 1)" = "Success!" ] ; then
-		#	echo $OUTPUT | tail -n 1 >> $TARGET/rapidshare.txt
-		#	/srv/buildfarm/remoters.sh "http://launchpad.net/s25rttr/s25client/nightly/+download/s25rttr_${VERSION}-${REVISION}_${ARCH}.tar.bz2" >> $TARGET/build_${ARCH}.log
-		#fi
-	#	/srv/buildfarm/uploadrs.sh $TARGET/s25rttr_${VERSION}-${REVISION}_${ARCH}.tar.bz2 >> $TARGET/build_${ARCH}.log
-		#rm -f $TARGET/s25rttr_${VERSION}-${REVISION}_${ARCH}.tar.bz2.asc >> $TARGET/build_${ARCH}.log
-	#	rm -f $TARGET/s25rttr_${VERSION}-${REVISION}_${ARCH}.tar.bz2 >> $TARGET/build_${ARCH}.log
-	#fi
+	echo "New updater-tree created for $VERSION-$REVISION" >> $TARGET/build_${ARCH}.log
 	
 	EXIT=0
 fi

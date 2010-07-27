@@ -22,6 +22,7 @@ mkdir -vp ../deb/s25rttr_$VERSION/DEBIAN
 
 cp -rv . ../deb/s25rttr_$VERSION/usr
 cp -rv ../../debian/control ../deb/s25rttr_$VERSION/DEBIAN/control
+cp -rv ../../debian/postinst ../deb/s25rttr_$VERSION/DEBIAN/postinst
 
 # updater entfernen
 rm -vf ../deb/s25rttr_$VERSION/usr/share/s25rttr/RTTR/s25update

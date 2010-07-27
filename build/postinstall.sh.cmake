@@ -1,6 +1,6 @@
 #!/bin/bash
 ###############################################################################
-## $Id: postinstall.sh.cmake 6614 2010-07-23 11:28:57Z FloSoft $
+## $Id: postinstall.sh.cmake 6621 2010-07-27 19:57:14Z FloSoft $
 ###############################################################################
 
 # Editable Variables
@@ -124,19 +124,19 @@ fi
 ###############################################################################
 
 mecho --blue "## Removing files which are unused (but installed by cmake)"
-rm -vf ${LIBDIR}/driver/video/libvideo*.{a,lib}
-rm -vf ${LIBDIR}/driver/audio/libaudio*.{a,lib}
+rm -vf ${DESTDIR}${LIBDIR}/driver/video/libvideo*.{a,lib}
+rm -vf ${DESTDIR}${LIBDIR}/driver/audio/libaudio*.{a,lib}
 
 # create app-bundle for apple
 if [ "$COMPILEFOR" = "apple" ] ; then
 	# app anlegen
-	mkdir -vp ${DESTDIR}s25client.app/Contents/{MacOS,Resources}
+	mkdir -vp ${DESTDIR}s25client.app/Contents/{MacOS,Resources} || exit 1
 	
 	# frameworks kopieren (da updater nicht mit symlinks umgehen kann, nur lib kopieren
-	mkdir -vp ${DESTDIR}s25client.app/Contents/MacOS/Frameworks
-	mkdir -vp ${DESTDIR}s25client.app/Contents/MacOS/Frameworks/{SDL,SDL_mixer}.framework
-	cp -r /Library/Frameworks/SDL.framework ${DESTDIR}s25client.app/Contents/MacOS/Frameworks
-	cp -r /Library/Frameworks/SDL_mixer.framework ${DESTDIR}s25client.app/Contents/MacOS/Frameworks
+	mkdir -vp ${DESTDIR}s25client.app/Contents/MacOS/Frameworks || exit 1
+	mkdir -vp ${DESTDIR}s25client.app/Contents/MacOS/Frameworks/{SDL,SDL_mixer}.framework || exit 1
+	cp -r /Library/Frameworks/SDL.framework ${DESTDIR}s25client.app/Contents/MacOS/Frameworks || exit 1
+	cp -r /Library/Frameworks/SDL_mixer.framework ${DESTDIR}s25client.app/Contents/MacOS/Frameworks || exit 1
 	
 	# remove headers and additional libraries from the frameworks
 	rm -rf ${DESTDIR}s25client.app/Contents/MacOS/Frameworks/SDL_mixer.framework/Versions/*/{Headers,Resources}
@@ -148,29 +148,30 @@ if [ "$COMPILEFOR" = "apple" ] ; then
 	
 	# copy miniupnp
 	if [ -f /Developer/SDKs/MacOSX10.5.sdk/usr/lib/libminiupnpc.5.dylib ] ; then
-		cp -rv /Developer/SDKs/MacOSX10.5.sdk/usr/lib/libminiupnpc.5.dylib ${DESTDIR}s25client.app/Contents/MacOS
+		cp -rv /Developer/SDKs/MacOSX10.5.sdk/usr/lib/libminiupnpc.5.dylib ${DESTDIR}s25client.app/Contents/MacOS || exit 1
 	elif  [ -f /srv/buildfarm/SDKs/MacOSX10.5.sdk/usr/lib/libminiupnpc.5.dylib ] ; then
-		cp -rv /srv/buildfarm/SDKs/MacOSX10.5.sdk/usr/lib/libminiupnpc.5.dylib ${DESTDIR}s25client.app/Contents/MacOS
+		cp -rv /srv/buildfarm/SDKs/MacOSX10.5.sdk/usr/lib/libminiupnpc.5.dylib ${DESTDIR}s25client.app/Contents/MacOS || exit 1
 	else
 		echo "libminiupnpc.5.dylib was not found"
 		exit 1
 	fi
 
-	mkdir -vp ${DESTDIR}s25client.app/Contents/MacOS/bin
+	mkdir -vp ${DESTDIR}s25client.app/Contents/MacOS/bin || exit 1
 
 	# binaries und paketdaten kopieren
-	cp -v ${SRCDIR}/release/bin/macos/rttr.command ${DESTDIR}s25client.app/Contents/MacOS/
-	cp -v ${SRCDIR}/release/bin/macos/rttr.terminal ${DESTDIR}s25client.app/Contents/MacOS/
-	cp -v ${SRCDIR}/release/bin/macos/icon.icns ${DESTDIR}s25client.app/Contents/Resources/
-	cp -v ${SRCDIR}/release/bin/macos/PkgInfo ${DESTDIR}s25client.app/Contents/
-	cp -v ${SRCDIR}/release/bin/macos/Info.plist ${DESTDIR}s25client.app/Contents/
-	mv -v ${DESTDIR}bin/* ${DESTDIR}s25client.app/Contents/MacOS/bin
+	cp -v ${SRCDIR}/release/bin/macos/rttr.command ${DESTDIR}s25client.app/Contents/MacOS/ || exit 1
+	cp -v ${SRCDIR}/release/bin/macos/rttr.terminal ${DESTDIR}s25client.app/Contents/MacOS/ || exit 1
+	cp -v ${SRCDIR}/release/bin/macos/icon.icns ${DESTDIR}s25client.app/Contents/Resources/ || exit 1
+	cp -v ${SRCDIR}/release/bin/macos/PkgInfo ${DESTDIR}s25client.app/Contents/ || exit 1
+	cp -v ${SRCDIR}/release/bin/macos/Info.plist ${DESTDIR}s25client.app/Contents/ || exit 1
+	mv -v ${DESTDIR}bin/* ${DESTDIR}s25client.app/Contents/MacOS/bin/ || exit 1
 	
-	rm -rf ${DESTDIR}bin
-	rm -rf ${DESTDIR}lib
+	# remove dirs if empty
+	rmdir ${DESTDIR}bin
+	rmdir ${DESTDIR}lib
 	
 	# RTTR-Ordner kopieren	
-	mv -v ${DESTDIR}share ${DESTDIR}s25client.app/Contents/MacOS/
+	mv -v ${DESTDIR}share ${DESTDIR}s25client.app/Contents/MacOS/ || exit 1
 fi
 
 exit 0

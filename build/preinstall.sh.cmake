@@ -131,6 +131,7 @@ mkdir -vp ${DESTDIR}${DATADIR}/RTTR || exit 1
 mkdir -vp ${DESTDIR}${LIBDIR} || exit 1
 mkdir -vp ${DESTDIR}${LIBDIR}/driver/video || exit 1
 mkdir -vp ${DESTDIR}${LIBDIR}/driver/audio || exit 1
+mkdir -vp ${DESTDIR}${DATADIR}/../doc/s25rttr || exit 1
 
 mecho --blue "## Installing binaries"
 
@@ -153,9 +154,24 @@ rm -f ${DESTDIR}${DATADIR}/RTTR/languages/*.po
 mecho --blue "## Installing language files"
 cp -v ${SRCDIR}/RTTR/languages/*.mo ${DESTDIR}${DATADIR}/RTTR/languages/ || exit 1
 
+mecho --blue "## Installing additional documents"
+if [ "$COMPILEFOR" = "windows" ] ; then
+	cp -v ${SRCDIR}/RTTR/texte/readme.txt ${DESTDIR} || exit 1
+	cp -v ${SRCDIR}/RTTR/texte/keyboardlayout.txt ${DESTDIR} || exit 1
+else
+	cp -v ${SRCDIR}/RTTR/texte/readme.txt ${DESTDIR}${DATADIR}/../doc/s25rttr || exit 1
+	cp -v ${SRCDIR}/RTTR/texte/keyboardlayout.txt ${DESTDIR}${DATADIR}/../doc/s25rttr || exit 1
+fi
+
 mecho --blue "## Installing S2 placeholder"
-echo "creating ${DESTDIR}${DATADIR}/S2/put\ your\ S2-Installation\ in\ here"
-touch ${DESTDIR}${DATADIR}/S2/put\ your\ S2-Installation\ in\ here || exit 1
+
+if [ "$COMPILEFOR" = "windows" ] ; then
+	echo "creating ${DESTDIR}put\ your\ S2-Installation\ in\ here"
+	touch ${DESTDIR}put\ your\ S2-Installation\ in\ here || exit 1
+else
+	echo "creating ${DESTDIR}${DATADIR}/S2/put\ your\ S2-Installation\ in\ here"
+	touch ${DESTDIR}${DATADIR}/S2/put\ your\ S2-Installation\ in\ here || exit 1
+fi
 
 exit 0
 

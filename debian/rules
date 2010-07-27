@@ -78,7 +78,7 @@ install: build
 	# move data to common-package (except drivers)
 	mkdir -vp $(CURDIR)/debian/s25rttr-common/usr/share/s25rttr
 	mv -v $(CURDIR)/debian/s25rttr/usr/share/s25rttr/S2 $(CURDIR)/debian/s25rttr-common/usr/share/s25rttr/S2
-	mv -v $(CURDIR)/debian/s25rttr/usr/share/s25rttr/RTTR $(CURDIR)/debian/s25rttr-common/usr/share/s25rttr/RTTR
+	mv -v $(CURDIR)/debian/s25rttr/usr/share/s25rttr/RTTR/* $(CURDIR)/debian/s25rttr-common/usr/share/s25rttr/RTTR
 		
 	# move sound-convert binaries back ...
 	mkdir -vp $(CURDIR)/debian/s25rttr/usr/share/s25rttr/RTTR

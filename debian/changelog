@@ -1,3 +1,23 @@
+s25rttr (20100728-6623) hardy; urgency=low
+
+  * New upstream snapshot
+  * Empty log message
+
+ -- Return To The Roots Team <sf-team@siedler25.org>  Wed, 28 Jul 2010 00:00:00 +0200
+
+s25rttr (20100727-6622) hardy; urgency=low
+
+  * nightly-script vereinfacht, hoffe es funktioniert nach wie vor
+    alles
+
+ -- Florian Doersch <flosoft@siedler25.org>  Tue, 27 Jul 2010 20:54:00 +0200
+
+s25rttr (20100727-6621) hardy; urgency=low
+
+  * paar deb-file fixes etc
+
+ -- Florian Doersch <flosoft@siedler25.org>  Tue, 27 Jul 2010 19:57:00 +0200
+
 s25rttr (20100723-6614) hardy; urgency=low
 
   * apple postinstall funzt nun auch so das es eine app anlegt

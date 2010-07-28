@@ -1,3 +1,16 @@
+s25rttr (20100728-6628) hardy; urgency=low
+
+  * New upstream snapshot
+  * postinst etc korrigiert
+
+ -- Florian Doersch <flosoft@siedler25.org>  Wed, 28 Jul 2010 18:52:00 +0200
+
+s25rttr (20100728-6627) hardy; urgency=low
+
+  * Automatic debian/changelog update
+
+ -- Florian Doersch <flosoft@siedler25.org>  Wed, 28 Jul 2010 18:12:00 +0200
+
 s25rttr (20100728-6626) hardy; urgency=low
 
   * New upstream snapshot

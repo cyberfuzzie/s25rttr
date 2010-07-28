@@ -24,7 +24,7 @@ case "$1" in
 		while true ; do
 			echo -n "Please press enter after inserting your S2 Gold CD or enter \"exit\" to cancel"
 			read N
-			if [ ! -z "$N ] ; then
+			if [ ! -z "$N" ] ; then
 				break
 			fi
 			

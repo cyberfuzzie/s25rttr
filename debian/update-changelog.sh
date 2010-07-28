@@ -18,7 +18,7 @@ do
 	echo "processing revision $r"
 
 	LOG=$(cd .. && LANG=C svn2cl -a -i -r $r --authors=debian/authors.xml --break-before-msg=1 --stdout)
-	if [ -z "$LOG" ] ; then
+	if [ -z "$LOG" ] && [ ! $r = $HEAD ] ; then
 		echo "skipped"
 	else
 		# parse date	

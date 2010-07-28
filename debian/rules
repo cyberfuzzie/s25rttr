@@ -9,11 +9,15 @@ else
 	CMAKE_VERBOSE=
 endif
 
+# todo: if we're doing a native amd64 build, the 32bit build will be cross!
 ifeq ($(DEB_HOST_ARCH),amd64)
 	CMAKE_ARCH=--arch=c.linux.x86_64
 else
 	CMAKE_ARCH=
 endif
+
+VERSION="$$(head debian/changelog -n 1 | cut -d '-' -f 1 | cut -d '(' -f 2)"
+REVISION="$$(head debian/changelog -n 1 | cut -d '-' -f 2 | cut -d ')' -f 1)"
 
 # create .svn/entries with values from debian/changelog for version tool
 .svn/entries:
@@ -30,6 +34,11 @@ build/Makefile: .svn/entries
 	# Add here commands to configure the package.
 	chmod 0755 ./build/cmake.sh && \
 	cd build && ./cmake.sh --prefix=/usr $(CMAKE_VERBOSE) $(CMAKE_ARCH) -DCMAKE_C_FLAGS="$(CFLAGS)" -DCMAKE_LD_FLAGS="-Wl,-z,defs" -DCMAKE_CXX_FLAGS="$(CXXFLAGS)" -DCMAKE_SKIP_RPATH=ON
+
+	# force version
+	cp ./build_version.h.cmake ./build/build_version.h
+	sed -i "s/\"20000211\"/\"${VERSION}\"/g;s/\"0\"/\"${REVISION}\"/g" ./build/build_version.h
+	touch ./build/build_version.h.force
 
 # and make
 build: build-stamp
@@ -63,6 +72,10 @@ install: build
 
 	# Add here commands to install the package into debian/s25rttr.
 	$(MAKE) -C build DESTDIR=$(CURDIR)/debian/s25rttr install
+	
+	# copy menu items
+	cp -v $(CURDIR)/debian/s25rttr.png $(CURDIR)/debian/s25rttr/usr/share/pixmaps
+	cp -v $(CURDIR)/debian/s25rttr.desktop $(CURDIR)/debian/s25rttr/usr/share/applications
 	
 	# remove updater
 	rm -vf $(CURDIR)/debian/s25rttr/usr/share/s25rttr/RTTR/s25update

@@ -41,45 +41,12 @@ else
 	tar -C $TARGET/$ARCH.new --strip 1 -xf ${ARCH}/s25rttr-music_$VERSION.tar.bz2 >> $TARGET/build_${ARCH}.log
 	tar -C $TARGET/$ARCH.new --strip 1 -xf ${ARCH}/s25rttr_$VERSION.tar.bz2 >> $TARGET/build_${ARCH}.log
 	
-	#mv $TARGET/$ARCH.new/s25rttr_$VERSION/ $TARGET/$ARCH.new/
-
 	rm -f ${ARCH}/s25rttr_$VERSION.tar.bz2
 
-#	rm -f $TARGET/$ARCH.new/music.tar.bz2
-#	cp -v s25rttr_music.tar.bz2 $TARGET/$ARCH.new/music.tar.bz2 >> $TARGET/build_${ARCH}.log
-#	rm -f s25rttr_music.tar.bz2
-#
-#	if [ -f $TARGET/$ARCH.new/binaries.tar.bz2 ] ; then
-#		tar -C $TARGET/$ARCH.new -xf $TARGET/$ARCH.new/binaries.tar.bz2 >> $TARGET/build_${ARCH}.log
-#	fi
-#	
-#	if [ -f $TARGET/$ARCH.new/drivers.tar.bz2 ] ; then
-#		tar -C $TARGET/$ARCH.new -xf $TARGET/$ARCH.new/drivers.tar.bz2 >> $TARGET/build_${ARCH}.log
-#	fi
-#
-#	if [ -f $TARGET/$ARCH.new/libraries.tar.bz2 ] ; then
-#		tar -C $TARGET/$ARCH.new -xf $TARGET/$ARCH.new/libraries.tar.bz2 >> $TARGET/build_${ARCH}.log
-#	fi
-#
-#	if [ -f $TARGET/$ARCH.new/RTTR.tar.bz2 ] ; then
-#		tar -C $TARGET/$ARCH.new -xf $TARGET/$ARCH.new/RTTR.tar.bz2 >> $TARGET/build_${ARCH}.log
-#	fi
-#
-#	if [ -f $TARGET/$ARCH.new/music.tar.bz2 ] ; then
-#		if [ -d  $TARGET/$ARCH.new/share/s25rttr ] ; then
-#			tar -C $TARGET/$ARCH.new/share/s25rttr -xf $TARGET/$ARCH.new/music.tar.bz2 >> $TARGET/build_${ARCH}.log
-#		elif [ -d $TARGET/$ARCH.new/s25client.app/Contents/MacOS/share/s25rttr ] ; then
-#			tar -C $TARGET/$ARCH.new/s25client.app/Contents/MacOS/share/s25rttr -xf $TARGET/$ARCH.new/music.tar.bz2 >> $TARGET/build_${ARCH}.log
-#		else
-#			tar -C $TARGET/$ARCH.new -xf $TARGET/$ARCH.new/music.tar.bz2 >> $TARGET/build_${ARCH}.log
-#		fi
-#	fi
-
-#	rm -f $TARGET/$ARCH.new/*.tar.bz2
-
- 	echo "${REVISION}" > $TARGET/.revision
+	# for mailer-script
+	echo "${REVISION}" > $TARGET/.revision
 	echo "${VERSION}" > $TARGET/.version
-#	echo "s25rttr_${VERSION}-${REVISION}_${ARCH}.tar.bz2" >> $TARGET/.files
+	echo "s25rttr_${VERSION}-${REVISION}_${ARCH}.tar.bz2" >> $TARGET/.files
 	
 	OPWD=$PWD
 	cd $TARGET/$ARCH.new

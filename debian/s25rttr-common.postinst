@@ -20,10 +20,16 @@ set -e
 case "$1" in
 	configure)
 		echo "Trying to copy necessary \"The Settlers II Gold\"-files from /media/cdrom0 to /usr/share/s25rttr/S2"
+		echo -n "Please press enter after inserting your S2 Gold CD"
+		read
+		sleep 5
 		if [ -d /media/cdrom0/s2 ] ; then
 			cp -vR /media/cdrom0/s2/* /opt/s25rttr/share/s25rttr/S2/
+			echo "done"
+		else
+			echo "failed"
+			echo "You have to copy the files manually to /opt/s25rttr/share/s25rttr/S2/"
 		fi
-		echo "done"
 	;;
 
 	abort-upgrade|abort-remove|abort-deconfigure)

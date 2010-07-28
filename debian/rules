@@ -74,8 +74,9 @@ install: build
 	$(MAKE) -C build DESTDIR=$(CURDIR)/debian/s25rttr install
 	
 	# copy menu items
-	cp -v $(CURDIR)/debian/s25rttr.png $(CURDIR)/debian/s25rttr/usr/share/pixmaps
-	cp -v $(CURDIR)/debian/s25rttr.desktop $(CURDIR)/debian/s25rttr/usr/share/applications
+	mkdir -vp $(CURDIR)/debian/s25rttr/usr/share/pixmaps $(CURDIR)/debian/s25rttr/usr/share/applications
+	cp -v $(CURDIR)/debian/s25rttr.png $(CURDIR)/debian/s25rttr/usr/share/pixmaps/
+	cp -v $(CURDIR)/debian/s25rttr.desktop $(CURDIR)/debian/s25rttr/usr/share/applications/
 	
 	# remove updater
 	rm -vf $(CURDIR)/debian/s25rttr/usr/share/s25rttr/RTTR/s25update

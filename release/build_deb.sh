@@ -23,7 +23,7 @@ mv -v ../build-area/s25rttr_${VERSION}-${REVISION}_amd64.changes release/deb || 
 mv -v ../build-area/s25rttr*_${VERSION}-${REVISION}_amd64.deb release/deb || exit 1
 
 # add to repository
-PARAMS="-b release/deb/repository"
+PARAMS="-b release/deb/repository $*"
 DISTRI=hardy
 
 reprepro $PARAMS -S games -P optional includedsc $DISTRI release/deb/s25rttr_${VERSION}-${REVISION}.dsc || exit 1

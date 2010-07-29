@@ -1,4 +1,4 @@
-// $Id: lstpacker.cpp 6460 2010-05-31 11:42:38Z FloSoft $
+// $Id: lstpacker.cpp 6638 2010-07-29 14:35:45Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -125,8 +125,7 @@ int main(int argc, char* argv[])
 
 	cerr << "done" << endl;
 
-#ifdef _DEBUG
+	cerr << "press enter to exit" << endl;
 	cin.get();
-#endif
 	return 0;
 }

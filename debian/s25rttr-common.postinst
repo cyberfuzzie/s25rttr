@@ -26,6 +26,7 @@ copyuppercase()
 	echo "$SRC -> $DST"
 	find $SRC -type d -exec bash -c "mkdir -vp \"/usr/share/s25rttr/S2/$DST/\$(echo '{}' | sed s#$SRC##g | tr '[:lower:]' '[:upper:]')\"" \; || true
 	find $SRC -type f -exec bash -c "cp -v '{}' \"/usr/share/s25rttr/S2/$DST/\$(echo '{}' | sed s#$SRC##g | tr '[:lower:]' '[:upper:]')\"" \; || true
+	chmod 0755 /usr/share/s25rttr/S2 || true
 	
 	return 0
 }

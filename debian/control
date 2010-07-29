@@ -13,19 +13,55 @@ Package: s25rttr-common
 Architecture: all
 Depends: debconf (>=0.2.17)
 Suggests: s25rttr
-Description: Return To The Roots (s25rttr) common files
+Description: Dies ist das Allgemeine Paket von Return To The Roots
+ .
+ This is the common package of Return To The Roots
+ .
+ Return To The Roots ist eine Nachprogrammierung des bekannten Spieles "Die Siedler II" von Bluebyte. 
+ Es unterstützt Multiplayer-Spiele im Internet und LAN. 
+ .
+ Nicht vergessen: Die Originaldateien von Die Siedler II Gold müssen nach /usr/share/s25rttr/S2 kopiert werden und müssen für den Nutzer lesbar sein.
+ .
+ Return To The Roots is a remake of the game The Settlers 2 of Bluebyte. 
+ It supports multiplayer games via ethernet and internet. 
+ .
+ Don't forget: The original game files of The Settlers II Gold must be copied to /usr/share/s25rttr/S2 and must be readably for the user to play this game.
 
 Package: s25rttr-maps
 Architecture: all
 Depends: s25rttr-common
 Suggests: s25rttr
-Description: Return To The Roots (s25rttr) map files
+Description: Dies ist das Kartenpaket von Return To The Roots
+ .
+ This is the Map package of Return To The Roots
+ .
+ Return To The Roots ist eine Nachprogrammierung des bekannten Spieles "Die Siedler II" von Bluebyte. 
+ Es unterstützt Multiplayer-Spiele im Internet und LAN. 
+ .
+ Nicht vergessen: Die Originaldateien von Die Siedler II Gold müssen nach /usr/share/s25rttr/S2 kopiert werden und müssen für den Nutzer lesbar sein.
+ .
+ Return To The Roots is a remake of the game The Settlers 2 of Bluebyte. 
+ It supports multiplayer games via ethernet and internet. 
+ .
+ Don't forget: The original game files of The Settlers II Gold must be copied to /usr/share/s25rttr/S2 and must be readably for the user to play this game.
 
 Package: s25rttr-music
 Architecture: all
 Depends: s25rttr-common
 Suggests: s25rttr
-Description: Return To The Roots (s25rttr) music files
+Description: Dies ist das Musikpaket von Return To The Roots
+ .
+ This is the Music package of Return To The Roots
+ .
+ Return To The Roots ist eine Nachprogrammierung des bekannten Spieles "Die Siedler II" von Bluebyte. 
+ Es unterstützt Multiplayer-Spiele im Internet und LAN. 
+ .
+ Nicht vergessen: Die Originaldateien von Die Siedler II Gold müssen nach /usr/share/s25rttr/S2 kopiert werden und müssen für den Nutzer lesbar sein.
+ .
+ Return To The Roots is a remake of the game The Settlers 2 of Bluebyte. 
+ It supports multiplayer games via ethernet and internet. 
+ .
+ Don't forget: The original game files of The Settlers II Gold must be copied to /usr/share/s25rttr/S2 and must be readably for the user to play this game.
 
 Package: s25rttr
 Architecture: any

@@ -1,3 +1,16 @@
+s25rttr (20100729-6640) hardy; urgency=low
+
+  * New upstream snapshot
+  * deb-package zeugs noch ergänzt ...
+
+ -- Florian Doersch <flosoft@siedler25.org>  Thu, 29 Jul 2010 18:49:00 +0200
+
+s25rttr (20100729-6639) hardy; urgency=low
+
+  * Automatic debian/changelog update
+
+ -- Florian Doersch <flosoft@siedler25.org>  Thu, 29 Jul 2010 15:06:00 +0200
+
 s25rttr (20100729-6638) hardy; urgency=low
 
   * New upstream snapshot

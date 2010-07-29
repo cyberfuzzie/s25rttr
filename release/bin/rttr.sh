@@ -52,7 +52,11 @@ chmod 0755 $DIR/../bin/rttr.sh $DIR/../share/s25rttr/RTTR/s25update $DIR/../bin/
 
 if [ $updateonly -eq 0 ] ; then
 	cd $DIR/../
-	$cmd $DIR/../bin/s25client $*
+	if ! $cmd $DIR/../bin/s25client $* ; then
+		echo "An error occured: press enter to continue"
+		read N
+		exit 1
+	fi
 fi
 
-exit $?
+exit 0

@@ -19,26 +19,29 @@ set -e
 
 case "$1" in
 	configure)
-		echo "Trying to copy necessary \"The Settlers II Gold\"-files from /media/cdrom0 to /usr/share/s25rttr/S2"
-		COPY=0
-		while true ; do
-			echo -n "Please press enter after inserting your S2 Gold CD or enter \"exit\" to cancel: "
-			read N
-			if [ ! -z "$N" ] ; then
-				break
+		if [ ! -d /usr/share/s25rttr/S2/DATA ] || [ ! -d /usr/share/s25rttr/S2/GFX ] ; then
+			echo "Trying to copy necessary \"The Settlers II Gold\"-files from /media/cdrom0 to /usr/share/s25rttr/S2"
+			COPY=0
+			while true ; do
+				echo -n "Please press enter after inserting your S2 Gold CD or enter \"exit\" to cancel: "
+				read N
+				if [ ! -z "$N" ] ; then
+					break
+				fi
+				
+				sleep 2
+				if [ -d /media/cdrom0/s2 ] ; then
+					COPY=1
+					mkdir -vp /usr/share/s25rttr/S2/
+					cp -vR /media/cdrom0/s2/* /usr/share/s25rttr/S2/
+					echo "done"
+				else
+					echo "failed: /media/cdrom0/s2 not readable"
+				fi
+			done
+			if [ $COPY -eq 0 ] ; then
+				echo "You have to copy the files manually to /usr/share/s25rttr/S2/"
 			fi
-			
-			sleep 2
-			if [ -d /media/cdrom0/s2 ] ; then
-				COPY=1
-				cp -vR /media/cdrom0/s2/* /opt/s25rttr/share/s25rttr/S2/
-				echo "done"
-			else
-				echo "failed: /media/cdrom0/s2 not readable"
-			fi
-		done
-		if [ $COPY -eq 0 ] ; then
-			echo "You have to copy the files manually to /opt/s25rttr/share/s25rttr/S2/"
 		fi
 	;;
 

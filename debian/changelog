@@ -1,3 +1,35 @@
+s25rttr (20100729-6638) hardy; urgency=low
+
+  * New upstream snapshot
+  * Empty log message
+
+ -- Return To The Roots Team <sf-team@siedler25.org>  Thu, 29 Jul 2010 00:00:00 +0200
+
+s25rttr (20100729-6637) hardy; urgency=low
+
+  * language update
+
+ -- Florian Doersch <flosoft@siedler25.org>  Thu, 29 Jul 2010 13:28:00 +0200
+
+s25rttr (20100729-6636) hardy; urgency=low
+
+  * postinstall script gefixt, startscript ebenfalls geringfügig
+    modifiziert
+
+ -- Florian Doersch <flosoft@siedler25.org>  Thu, 29 Jul 2010 13:12:00 +0200
+
+s25rttr (20100728-6634) hardy; urgency=low
+
+  * another script bites the dust ...
+
+ -- Florian Doersch <flosoft@siedler25.org>  Wed, 28 Jul 2010 19:53:00 +0200
+
+s25rttr (20100728-6633) hardy; urgency=low
+
+  * Automatic debian/changelog update
+
+ -- Florian Doersch <flosoft@siedler25.org>  Wed, 28 Jul 2010 19:52:00 +0200
+
 s25rttr (20100728-6632) hardy; urgency=low
 
   * New upstream snapshot

@@ -1,3 +1,23 @@
+s25rttr (20100731-6646) hardy; urgency=low
+
+  * New upstream snapshot
+  * Empty log message
+
+ -- Return To The Roots Team <sf-team@siedler25.org>  Sat, 31 Jul 2010 00:00:00 +0200
+
+s25rttr (20100730-6645) hardy; urgency=low
+
+  * KI Bugs gefixt: Falscher Wegbau und nicht funktionierende
+    Militärgebäudeauswahl (fehlende Parameter im AIInterface)
+
+ -- Jan-Henrik Kluth <sf-team@siedler25.org>  Fri, 30 Jul 2010 10:46:00 +0200
+
+s25rttr (20100729-6644) hardy; urgency=low
+
+  * Automatic debian/changelog update
+
+ -- Florian Doersch <flosoft@siedler25.org>  Thu, 29 Jul 2010 23:18:00 +0200
+
 s25rttr (20100730-6643) hardy; urgency=low
 
   * New upstream snapshot

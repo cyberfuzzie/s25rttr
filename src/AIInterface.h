@@ -138,7 +138,7 @@ public:
 
 
 	/// Returns a list of military buildings around a given point and a given radius
-	void GetMilitaryBuildings(MapCoord x, MapCoord y, unsigned radius, std::list<nobBaseMilitary *> miliaryBuildings) const { gwb->LookForMilitaryBuildings(miliaryBuildings, x, y, radius); }
+	void GetMilitaryBuildings(MapCoord x, MapCoord y, unsigned radius, std::list<nobBaseMilitary *> &miliaryBuildings) const { gwb->LookForMilitaryBuildings(miliaryBuildings, x, y, radius); }
 
 	/// Returns the headquarter of the player (or null if destroyed)
 	const nobHQ *GetHeadquarter() const;

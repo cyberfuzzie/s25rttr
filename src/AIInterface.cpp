@@ -87,7 +87,7 @@ bool AIInterface::FindFreePathForNewRoad(MapCoord startX, MapCoord startY, MapCo
 		unsigned *length) const
 {
 	bool boat = false;
-	return gwb->FindFreePath(startX, startY, targetX, targetY, false, 100, route, NULL, NULL, IsPointOK_RoadPath, NULL, (void *) &boat);
+	return gwb->FindFreePath(startX, startY, targetX, targetY, false, 100, route, length, NULL, IsPointOK_RoadPath, NULL, (void *) &boat);
 }
 
 

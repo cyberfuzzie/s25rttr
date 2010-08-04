@@ -1,3 +1,23 @@
+s25rttr (20100805-6657) hardy; urgency=low
+
+  * New upstream snapshot
+  * Empty log message
+
+ -- Return To The Roots Team <sf-team@siedler25.org>  Thu, 05 Aug 2010 00:00:00 +0200
+
+s25rttr (20100804-6656) hardy; urgency=low
+
+  * https://code.launchpad.net/~torotil/s25rttr/fix-cmake/+merge/31695
+    gemerged (mit einigen anpassungen)
+
+ -- Florian Doersch <flosoft@siedler25.org>  Wed, 04 Aug 2010 10:53:00 +0200
+
+s25rttr (20100803-6655) hardy; urgency=low
+
+  * Automatic debian/changelog update
+
+ -- Florian Doersch <flosoft@siedler25.org>  Tue, 03 Aug 2010 23:17:00 +0200
+
 s25rttr (20100804-6654) hardy; urgency=low
 
   * New upstream snapshot

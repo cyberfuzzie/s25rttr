@@ -1,4 +1,4 @@
-// $Id: BuildingConsts.h 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: BuildingConsts.h 6671 2010-08-10 20:47:44Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -100,7 +100,7 @@ const BuildingQuality BUILDING_SIZE[40] =
 	BQ_HOUSE,
 	BQ_HOUSE,
 	BQ_HOUSE,
-	BQ_NOTHING,
+	BQ_CASTLE,
 	BQ_CASTLE,
 	BQ_HOUSE,
 	BQ_NOTHING,

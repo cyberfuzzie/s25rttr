@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: GameWorldGame.cpp 6671 2010-08-10 20:47:44Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -680,7 +680,7 @@ void GameWorldGame::RecalcTerritory(const noBaseBuilding * const building,const 
 		}
 	}
 	
-	// Nochmal durchgehen und bei Grenzsteinen mit mehr als 3 Nachbarn welche löschen
+/*	// Nochmal durchgehen und bei Grenzsteinen mit mehr als 3 Nachbarn welche löschen
 	// da sich sonst gelegentlich solche "Klötzchen" bilden können
 	for(int y = y1-3;y < y2+3;++y)
 	{
@@ -724,7 +724,7 @@ void GameWorldGame::RecalcTerritory(const noBaseBuilding * const building,const 
 				
 			}
 		}
-	}
+	}*/
 
 	// Sichtbarkeiten berechnen
 	

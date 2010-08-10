@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 6591 2010-07-18 17:13:01Z FloSoft $
+// $Id: nobMilitary.cpp 6671 2010-08-10 20:47:44Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -810,7 +810,7 @@ void nobMilitary::Capture(const unsigned char new_owner)
 	gwg->RecalcTerritory(this,MILITARY_RADIUS[size],false, false);
 
 	// Sichtbarkeiten berechnen für alten Spieler
-	gwg->RecalcVisibilitiesAroundPoint(GetX(),GetY(),GetMilitaryRadius()+VISUALRANGE_MILITARY+1,old_player, false);
+	gwg->RecalcVisibilitiesAroundPoint(GetX(),GetY(),GetMilitaryRadius()+VISUALRANGE_MILITARY+1,old_player, NULL);
 
 	// Grenzflagge entsprechend neu setzen von den Feinden
 	LookForEnemyBuildings();

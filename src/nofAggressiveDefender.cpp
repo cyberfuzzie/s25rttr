@@ -206,9 +206,9 @@ void nofAggressiveDefender::AttackedGoalDestroyed()
 	attacker = NULL;
 	attacked_goal = NULL;
 
-	// Stehen wir? Dann losgehen
+	/*// Stehen wir? Dann losgehen
 	if(state == STATE_WAITINGFORFIGHT)
-		ReturnHome();
+		ReturnHome();*/
 }
 
 void nofAggressiveDefender::MissAggressiveDefendingContinueWalking()

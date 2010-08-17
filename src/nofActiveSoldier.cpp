@@ -1,4 +1,4 @@
-// $Id: nofActiveSoldier.cpp 6679 2010-08-17 10:35:52Z OLiver $
+// $Id: nofActiveSoldier.cpp 6680 2010-08-17 21:24:50Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -360,8 +360,9 @@ void nofActiveSoldier::MeetingEnemy()
 		}
 		else
 		{
-			// Is the fighting point still valid (could be another fight there already e.g.)
-			if (!gwg->ValidPointForFighting(x, y))
+			// Is the fighting point still valid (could be another fight there already e.g.)?
+			// And the enemy still on the way?
+			if (!gwg->ValidPointForFighting(x, y) || !enemy->GetState() == STATE_MEETENEMY)
 			{
 				// No
 				// Abort the whole fighting fun with the enemy

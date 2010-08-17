@@ -1,4 +1,4 @@
-// $Id: nobBaseWarehouse.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: nobBaseWarehouse.cpp 6679 2010-08-17 10:35:52Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1125,12 +1125,14 @@ bool FW::Condition_WantStoreWare(nobBaseWarehouse * wh, const void * param)
 // Lagerhäuser enthalten die jeweilien Waren, liefern sie aber NICHT gleichzeitig ein
 bool FW::Condition_StoreAndDontWantWare(nobBaseWarehouse * wh, const void * param)
 {
-	return (Condition_StoreWare(wh,param) && !Condition_WantStoreWare(wh,param));
+	Param_Ware pw = { *static_cast<const GoodType*>(param), 1 };
+	return (Condition_Ware(wh,&pw) && !Condition_WantStoreWare(wh,param));
 }// param = &GoodType -> Warentyp
 
 bool FW::Condition_StoreAndDontWantFigure(nobBaseWarehouse * wh, const void * param)
 {
-	return (Condition_StoreFigure(wh,param) && !Condition_WantStoreFigure(wh,param));
+	Param_Job pj = { *static_cast<const Job*>(param), 1 };
+	return (Condition_Job(wh,&pj) && !Condition_WantStoreFigure(wh,param));
 }
 // param = &Job -> Jobtyp
 

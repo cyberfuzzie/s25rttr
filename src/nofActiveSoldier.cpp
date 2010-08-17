@@ -1,4 +1,4 @@
-// $Id: nofActiveSoldier.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: nofActiveSoldier.cpp 6679 2010-08-17 10:35:52Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -155,6 +155,7 @@ void nofActiveSoldier::Draw(int x, int y)
 	case STATE_WAITINGFORFIGHT:
 	case STATE_ATTACKING_WAITINGAROUNDBUILDING:
 	case STATE_ATTACKING_WAITINGFORDEFENDER:
+	case STATE_DEFENDING_WAITING:
 		{
 			// Draw waiting states
 			LOADER.GetBobN("jobs")->Draw(30+NATION_RTTR_TO_S2[GAMECLIENT.GetPlayer(player)->nation]*6+job-JOB_PRIVATE,

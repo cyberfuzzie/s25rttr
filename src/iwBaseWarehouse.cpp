@@ -1,4 +1,4 @@
-// $Id: iwBaseWarehouse.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: iwBaseWarehouse.cpp 6696 2010-08-31 12:12:11Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -58,8 +58,8 @@ iwBaseWarehouse::iwBaseWarehouse(GameWorldViewer * const gwv,const char *const t
 
 	// Auswahl für Auslagern/Einlagern Verbieten-Knöpfe
 	ctrlOptionGroup *group = AddOptionGroup(10, ctrlOptionGroup::CHECK);
-	// nix tun
-	group->AddImageButton(0, 16, 335, 32, 32, TC_GREY, LOADER.GetImageN("io", 214), _("do nothing"));
+	// Einlagern
+	group->AddImageButton(0, 16, 335, 32, 32, TC_GREY, LOADER.GetImageN("io_new", 2), _("Collect"));
 	// Auslagern
 	group->AddImageButton(1, 52, 335, 32, 32, TC_GREY, LOADER.GetImageN("io", 211), _("Take out of store"));
 	// Einlagern verbieten

@@ -1,4 +1,4 @@
-// $Id: const_addons.h 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: const_addons.h 6699 2010-09-01 17:12:06Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -54,6 +54,7 @@ enum AddonId
 	ADDON_STATISTICS_VISIBILITY		= 0x00200003,
 
 	ADDON_DEFENDER_BEHAVIOR			= 0x00300000,
+	ADDON_AI_DEBUG_WINDOW			= 0x00300001,
 
 	ADDON_NO_COINS_DEFAULT			= 0x00400000
 };

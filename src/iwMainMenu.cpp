@@ -1,4 +1,4 @@
-// $Id: iwMainMenu.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: iwMainMenu.cpp 6699 2010-09-01 17:12:06Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -93,7 +93,7 @@ iwMainMenu::iwMainMenu(GameWorldViewer * const gwv, dskGameInterface * const gi)
 	AddImageButton( 11,  68, 166,  53, 44, TC_GREY, LOADER.GetImageN("io", 190), _("Diplomacy"));
 
 	// AI-Debug
-	if(GameClient::inst().IsHost())
+	if(GameClient::inst().IsHost() && ADDONMANAGER.isEnabled(ADDON_AI_DEBUG_WINDOW))
 		AddImageButton( 13,  80, 210,  20, 20, TC_GREY, NULL, _("AI Debug Window"));
 
 	// Optionen

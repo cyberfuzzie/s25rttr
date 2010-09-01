@@ -903,6 +903,9 @@
     <ClInclude Include="..\..\src\AIInterface.h">
       <Filter>Quelldateien\KI</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\AddonAIDebugWindow.h">
+      <Filter>Quelldateien\Spiel\Addons</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\AddonManager.cpp">

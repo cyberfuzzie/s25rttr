@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 6545 2010-07-04 09:12:54Z FloSoft $
+### $Id: CMakeLists.txt 6699 2010-09-01 17:12:06Z jh $
 ################################################################################
 
 INCLUDE(FindBZip2)
@@ -302,6 +302,7 @@ SET(SOURCES_OTHER
 										AddonLimitCatapults.h
 										AddonInexhaustibleMines.h
 										AddonDefenderBehavior.h
+										AddonAIDebugWindow.h
 										const_addons.h
 	win32_nanosleep.cpp                 win32_nanosleep.h
    )

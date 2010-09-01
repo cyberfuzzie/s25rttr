@@ -1,4 +1,4 @@
-// $Id: GameClient.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: GameClient.cpp 6701 2010-09-01 17:44:59Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -384,9 +384,10 @@ void GameClient::StartGame(const unsigned int random_init)
 		switch(ADDONMANAGER.getSelection(ADDON_CHANGE_GOLD_DEPOSITS))
 		{
 		case 0: target = 3; break; //in Gold   konvertieren bzw. nichts tun
-		case 1: target = 2; break; //in Eisen  konvertieren
-		case 2: target = 1; break; //in Kohle  konvertieren
-		case 3: target = 0; break; //in Granit konvertieren
+		case 1: target = 0xFF; break; // löschen
+		case 2: target = 2; break; //in Eisen  konvertieren
+		case 3: target = 1; break; //in Kohle  konvertieren
+		case 4: target = 0; break; //in Granit konvertieren 
 		}
 		if (target != 3)
 			gw->ConvertMineResourceTypes(3, target);

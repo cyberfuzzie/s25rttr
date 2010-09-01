@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: GameClientPlayer.cpp 6700 2010-09-01 17:24:02Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -2097,7 +2097,7 @@ bool GameClientPlayer::CanBuildCatapult() const
 	}
 	else
 	{
-		const unsigned int limits[6] = { 0, 10, 20, 30, 40, 50 };
+		const unsigned int limits[6] = { 0, 3, 5, 10, 20, 30};
 		max = limits[ADDONMANAGER.getSelection(ADDON_LIMIT_CATAPULTS) - 2];
 	}
 

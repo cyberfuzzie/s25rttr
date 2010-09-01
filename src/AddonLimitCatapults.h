@@ -1,4 +1,4 @@
-// $Id: AddonLimitCatapults.h 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: AddonLimitCatapults.h 6700 2010-09-01 17:24:02Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -46,11 +46,11 @@ public:
 		addOption(gettext_noop("Unlimited"));
 		addOption(gettext_noop("Proportional"));
 		addOption(gettext_noop("No catapults"));
+		addOption(gettext_noop("3 catapults"));
+		addOption(gettext_noop("5 catapults"));
 		addOption(gettext_noop("10 catapults"));
 		addOption(gettext_noop("20 catapults"));
 		addOption(gettext_noop("30 catapults"));
-		addOption(gettext_noop("40 catapults"));
-		addOption(gettext_noop("50 catapults"));
 	}
 };
 

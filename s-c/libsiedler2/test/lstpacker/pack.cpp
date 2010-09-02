@@ -1,4 +1,4 @@
-// $Id: pack.cpp 6591 2010-07-18 17:13:01Z FloSoft $
+// $Id: pack.cpp 6703 2010-09-02 11:23:47Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -180,7 +180,7 @@ void pack(const string &directory, const string &file, const ArchivItem_Palette*
 			// had the filename a number? then set it to the corresponding item.
 			if(nr >= 0)
 			{
-				if(nr > lst->getCount())
+				if(nr >= lst->getCount())
 					lst->alloc_inc(nr - lst->getCount() + 1);
 				lst->setC(nr, &font);
 			}
@@ -245,7 +245,7 @@ void pack(const string &directory, const string &file, const ArchivItem_Palette*
 			// had the filename a number? then set it to the corresponding item.
 			if(nr >= 0)
 			{
-				if(nr > lst->getCount())
+				if(nr >= lst->getCount())
 					lst->alloc_inc(nr - lst->getCount() + 1);
 				lst->setC(nr, neu);
 			}

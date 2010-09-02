@@ -1,4 +1,4 @@
-// $Id: lstpacker.cpp 6638 2010-07-29 14:35:45Z FloSoft $
+// $Id: lstpacker.cpp 6703 2010-09-02 11:23:47Z FloSoft $
 //
 // Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -60,16 +60,19 @@ int main(int argc, char* argv[])
 
 	if(LoadBBM("GFX/PALETTE/PAL5.BBM", &bbm) != 0)
 	{
-		stringstream msg;
-
-		msg << "Fatal Error: " << endl;
-		msg << "GFX/PALETTE/PAL5.BBM was not found or cannot be opened" << endl;
-
-		cerr << msg.str();
-
-		MessageBox(NULL, msg.str().c_str(), "Fatal Error", MB_OK|MB_ICONSTOP);
-
-		return 2;
+		if(LoadBBM("pal5.act", &bbm) != 0)
+		{
+			stringstream msg;
+	
+			msg << "Fatal Error: " << endl;
+			msg << "GFX/PALETTE/PAL5.BBM nor pal5.act was not found or cannot be opened" << endl;
+	
+			cerr << msg.str();
+	
+			MessageBox(NULL, msg.str().c_str(), "Fatal Error", MB_OK|MB_ICONSTOP);
+	
+			return 2;
+		}
 	}
 
 	ArchivItem_Palette* palette = (ArchivItem_Palette*)bbm.get(0);

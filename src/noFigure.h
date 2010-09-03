@@ -1,4 +1,4 @@
-// $Id: noFigure.h 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: noFigure.h 6706 2010-09-03 09:35:55Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -150,6 +150,8 @@ public:		void Destroy() { Destroy_noFigure(); }
 	Job GetJobType() const { return job; }
 	/// Zeichnet standardm‰ﬂig die Figur, wenn sie l‰uft 
 	void DrawWalking(int x, int y, glArchivItem_Bob *file, unsigned int item, bool fat);
+	/// Zeichnet standardm‰ﬂig die Figur, wenn sie l‰uft aus einem bestimmten normalen LST Archiv
+	void DrawWalking(int x, int y, const char * const file, unsigned int id);
 	/// Zeichnet standardm‰ﬂig die Figur, wenn sie l‰uft, nimmt automatisch richtige Job-ID/Datei
 	void DrawWalking(int x, int y);
 	/// Interpoliert die Positon zwischen zwei Knotenpunkten

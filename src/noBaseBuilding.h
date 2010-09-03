@@ -1,4 +1,4 @@
-// $Id: noBaseBuilding.h 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: noBaseBuilding.h 6706 2010-09-03 09:35:55Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -44,19 +44,6 @@ protected:
 	void WareNotNeeded(Ware * ware);
 	/// Zerstört Anbauten, falls es sich um ein großes Gebäude handelt (wo es diese auch gibt)
 	void DestroyBuildingExtensions();
-	
-	/// Gibt ein Bild zurück für das normale Gebäude
-	glArchivItem_Bitmap * GetBuildingImage() const;
-	/// Gibt ein Bild zurück für das Gebäudegerüst
-	glArchivItem_Bitmap * GetBuildingSkeletonImage() const;
-	/// Gibt ein Bild zurück für das normale Gebäude
-	glArchivItem_Bitmap * GetBuildingImageShadow() const;
-	/// Gibt ein Bild zurück für das Gebäudegerüst
-	glArchivItem_Bitmap * GetBuildingSkeletonImageShadow() const;
-	/// Gibt ein Bild zurück für die Tür des Gebäudes
-	glArchivItem_Bitmap * GetDoorImage() const;
-	
-	
 
 public:
 
@@ -94,6 +81,18 @@ public:		void Destroy() { Destroy_noBaseBuilding(); }
 	virtual void TakeWare(Ware * ware) = 0;
 	/// Wird aufgerufen, wenn ein bestimmter Arbeiter für das hier gerufen wurde
 	virtual void GotWorker(Job job, noFigure * worker) {};
+
+
+	/// Gibt ein Bild zurück für das normale Gebäude
+	glArchivItem_Bitmap * GetBuildingImage() const;
+	/// Gibt ein Bild zurück für das Gebäudegerüst
+	glArchivItem_Bitmap * GetBuildingSkeletonImage() const;
+	/// Gibt ein Bild zurück für das normale Gebäude
+	glArchivItem_Bitmap * GetBuildingImageShadow() const;
+	/// Gibt ein Bild zurück für das Gebäudegerüst
+	glArchivItem_Bitmap * GetBuildingSkeletonImageShadow() const;
+	/// Gibt ein Bild zurück für die Tür des Gebäudes
+	glArchivItem_Bitmap * GetDoorImage() const;
 	
 };
 

@@ -1,4 +1,4 @@
-// $Id: nofCharburner.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: nofCharburner.cpp 6706 2010-09-03 09:35:55Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -43,7 +43,7 @@
 #endif
 
 nofCharburner::nofCharburner(const unsigned short x, const unsigned short y,const unsigned char player,nobUsual * workplace)
-: nofFarmhand(JOB_FORESTER,x,y,player,workplace)
+: nofFarmhand(JOB_CHARBURNER,x,y,player,workplace)
 {
 }
 

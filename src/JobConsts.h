@@ -1,4 +1,4 @@
-// $Id: JobConsts.h 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: JobConsts.h 6709 2010-09-05 12:56:24Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -74,7 +74,7 @@ const JobConst JOB_CONSTS[JOB_TYPES_COUNT] =
 	{GD_BOW,false,35,0,0,0},         //JOB_SCOUT
 	{GD_NOTHING,false,37,0,0,0},      //JOB_PACKDONKEY
 	{GD_NOTHING,false,37,0,0,0},      //JOB_BOATCARRIER
-	{GD_SHOVEL,false,37,0,0,0}      //JOB_CHARBURNER
+	{GD_SHOVEL,false,37,117,106,5}      //JOB_CHARBURNER
 };
 
 /// Katapultmann-Wartezeit

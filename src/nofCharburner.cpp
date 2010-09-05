@@ -1,4 +1,4 @@
-// $Id: nofCharburner.cpp 6706 2010-09-03 09:35:55Z OLiver $
+// $Id: nofCharburner.cpp 6709 2010-09-05 12:56:24Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -43,25 +43,40 @@
 #endif
 
 nofCharburner::nofCharburner(const unsigned short x, const unsigned short y,const unsigned char player,nobUsual * workplace)
-: nofFarmhand(JOB_CHARBURNER,x,y,player,workplace)
+: nofFarmhand(JOB_CHARBURNER,x,y,player,workplace), harvest(false)
 {
 }
 
-nofCharburner::nofCharburner(SerializedGameData * sgd, const unsigned obj_id) : nofFarmhand(sgd,obj_id)
+nofCharburner::nofCharburner(SerializedGameData * sgd, const unsigned obj_id) : nofFarmhand(sgd,obj_id),
+harvest(sgd->PopBool())
 {
 }
 
 /// Malt den Arbeiter beim Arbeiten
 void nofCharburner::DrawWorking(int x,int y)
 {
-	/*unsigned short now_id;
-
-	// Schaufel-Sound
-	if(now_id == 7 || now_id == 18)
+	if(harvest)
 	{
-		SoundManager::inst().PlayNOSound(76,this,(now_id == 7)?0:1,200);
-		was_sounding = true;
-	}*/
+		unsigned short now_id = GameClient::inst().Interpolate(39,current_ev);
+
+		// Schaufel-Sound
+		if(now_id == 6 || now_id == 18 || now_id == 30)
+		{
+			SoundManager::inst().PlayNOSound(76,this,now_id/12,200);
+			was_sounding = true;
+		}
+
+		unsigned draw_id;
+		if(now_id < 36)
+			draw_id = 9 + now_id % 12;
+		else
+			draw_id = 9 + 12 + (now_id-36);
+
+
+		LOADER.GetImageN("charburner_bobs",draw_id)->Draw(x,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[gwg->GetPlayer(player)->color]);
+	}
+	else
+		LOADER.GetImageN("charburner_bobs",1+GameClient::inst().Interpolate(18,current_ev)%6)->Draw(x,y,0,0,0,0,0,0, COLOR_WHITE, COLORS[gwg->GetPlayer(player)->color]);
 
 }
 
@@ -81,33 +96,57 @@ void nofCharburner::WorkFinished()
 {
 	noBase * no = gwg->GetNO(x,y);
 
-	// Wenn irgendwo ne Straße schon ist, NICHT einsetzen!
-	for(unsigned i = 0;i<6;++i)
+	// Is a charburner pile is already there?
+	if(no->GetGOT() == GOT_CHARBURNERPILE)
 	{
-		if(gwg->GetPointRoad(x,y,i))
-			return;
+		// One step further
+		static_cast<noCharburnerPile*>(no)->NextStep();
+		return;
+	
 	}
 
-	// Wenn Objekt ein Zierobjekt ist, dann löschen, ansonsten den Holzberg nicht setzen
-	if(no->GetType() == NOP_ENVIRONMENT || no->GetType() == NOP_NOTHING)
+	// Point still good?
+	if(IsPointGood(x,y))
 	{
-		if(no->GetType() == NOP_ENVIRONMENT)
-		{
-			no->Destroy();
-			delete no;
-		}
-		
-		// Holzberg setzen
+		// Delete previous elements
+		// Only environt objects and signs are allowed to be removed by the worker!
+		// Otherwise just do nothing
+		NodalObjectType nop = no->GetType();
 
-	
-		// BQ drumherum neu berechnen
-		gwg->RecalcBQAroundPoint(x,y);
+		if(nop == NOP_ENVIRONMENT || nop == NOP_NOTHING)
+		{
+			no = gwg->GetSpecObj<noBase>(x,y);
+			if(no)
+			{
+				no->Destroy();
+				delete no;
+			}
+
+			// Plant charburner pile
+			gwg->SetNO(new noCharburnerPile(x,y),x,y);
+
+			// BQ drumrum neu berechnen
+			gwg->RecalcBQAroundPoint(x,y);
+		}
 	}
 }
 
 /// Fragt abgeleitete Klasse, ob hier Platz bzw ob hier ein Baum etc steht, den z.B. der Holzfäller braucht
 bool nofCharburner::IsPointGood(const MapCoord x, const MapCoord y)
 {
+	noBase * no = gwg->GetNO(x,y);
+
+	// Is a charburner pile already here?
+	if(no->GetGOT() == GOT_CHARBURNERPILE)
+	{
+		// Can it be harvested?
+		if(!static_cast<noCharburnerPile*>(no)->IsSmoldering())
+		{
+			// Then let's take it
+			return true;
+		}
+	}
+
 	// Der Platz muss frei sein
 	noBase::BlockingManner bm = gwg->GetNO(x,y)->GetBM();
 
@@ -126,10 +165,11 @@ bool nofCharburner::IsPointGood(const MapCoord x, const MapCoord y)
 			return false;
 	}
 
-	// es dürfen außerdem keine Gebäude rund um den Baum stehen
 	for(unsigned char i = 0;i<6;++i)
 	{
-		if(gwg->GetNO(gwg->GetXA(x,y,i),gwg->GetYA(x,y,i))->GetType() ==  NOP_BUILDING)
+		// Don't set it next to buildings and other charburner piles and grain fields
+		BlockingManner bm = gwg->GetNO(gwg->GetXA(x,y,i),gwg->GetYA(x,y,i))->GetBM();
+		if(bm == BM_GRANITE || bm == BM_CASTLE || bm == BM_HOUSE || bm == BM_HUT)
 			return false;
 	}
 
@@ -144,4 +184,12 @@ bool nofCharburner::IsPointGood(const MapCoord x, const MapCoord y)
 	}
 
 	return (good_terrains == 6);
+}
+
+
+void nofCharburner::Serialize(SerializedGameData *sgd) const
+{
+	Serialize_nofFarmhand(sgd);
+
+	sgd->PushBool(harvest);
 }

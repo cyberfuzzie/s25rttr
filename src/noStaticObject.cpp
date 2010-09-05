@@ -1,4 +1,4 @@
-// $Id: noStaticObject.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: noStaticObject.cpp 6709 2010-09-05 12:56:24Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -104,13 +104,13 @@ void noStaticObject::Draw(int x, int y)
 		bitmap = LOADER.GetMapImageN(id);
 		shadow = LOADER.GetMapImageN(id+100);
 	}
-	else if(file < 6)
+	else if(file < 7)
 	{
-		static const std::string misxbobs[6] = {
-			"mis0bobs", "mis1bobs", "mis2bobs", "mis3bobs", "mis4bobs", "mis5bobs"
+		static const std::string files[7] = {
+			"mis0bobs", "mis1bobs", "mis2bobs", "mis3bobs", "mis4bobs", "mis5bobs", "charburner_bobs"
 		};
-		bitmap = LOADER.GetImageN(misxbobs[file], id);
-		shadow = LOADER.GetImageN(misxbobs[file], id+1);
+		bitmap = LOADER.GetImageN(files[file], id);
+		shadow = LOADER.GetImageN(files[file], id+1);
 	}
 
 	assert(bitmap);

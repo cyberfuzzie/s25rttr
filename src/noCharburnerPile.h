@@ -1,4 +1,4 @@
-// $Id: noCharburnerPile.h 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: noCharburnerPile.h 6709 2010-09-05 12:56:24Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -23,6 +23,7 @@
 #include "noCoordBase.h"
 #include "EventManager.h"
 
+/// The wood/coal piles made by the charburner
 class noCharburnerPile : public noCoordBase
 {
 private:
@@ -30,13 +31,18 @@ private:
 	/// Status
 	enum State
 	{
-		STATE_GROWING_WAITING, /// Wachsphase, wartet auf den nächsten Wachstumsschub
-		STATE_GROWING, /// wächst 
-		STATE_NORMAL, /// ist ausgewachsen und verdorrt nach einer Weile
-		STATE_WITHERING /// verdorrt (verschwindet)
+		STATE_WOOD, // Wood stack is constructed
+		STATE_SMOLDERING, // Smolder slightly
+		STATE_REMOVECOVER, // Charburner removes the earth cover
+		STATE_HARVEST // Coal is "harvested"
 	} state;
 
-	/// Wachs-Event
+	/// Current (graphical) step
+	unsigned short step;
+	/// Current step of the step (same graphics during the different sub steps) 
+	unsigned short sub_step;
+
+	/// Event for glowing
 	EventManager::EventPointer event;
 
 public:
@@ -60,6 +66,12 @@ public:		void Destroy() { Destroy_noGrainfield(); }
 	void HandleEvent(const unsigned int id);
 
 	BlockingManner GetBM() const { return BM_GRANITE; }
+
+	/// Is the pile currently smoldering? (i.e. charburner can't work on it at the moment=
+	bool IsSmoldering() const { return (state == STATE_SMOLDERING); }
+
+	/// Charburner has worked on it --> Goto next step
+	void NextStep();
 	
 };
 

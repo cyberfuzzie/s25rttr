@@ -1,4 +1,4 @@
-// $Id: nofCharburner.h 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: nofCharburner.h 6709 2010-09-05 12:56:24Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -24,6 +24,8 @@
 
 class nofCharburner : public nofFarmhand
 {
+	/// Is he harvesting a charburner pile (or planting?) 
+	bool harvest;
 private:
 
 	/// Malt den Arbeiter beim Arbeiten
@@ -43,6 +45,8 @@ public:
 
 	nofCharburner(const MapCoord x, MapCoord y,const unsigned char player,nobUsual * workplace);
 	nofCharburner(SerializedGameData * sgd, const unsigned obj_id);
+
+	void Serialize(SerializedGameData *sgd) const;
 
 	GO_Type GetGOT() const { return GOT_NOF_CHARBURNER; }
 

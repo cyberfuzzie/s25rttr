@@ -1021,7 +1021,7 @@ void noFigure::DrawWalking(int x, int y, const char * const file, unsigned int i
 	if(!waiting_for_free_node || pause_walked_gf)
 		CalcFigurRelative(x,y);
 
-	LOADER.GetImageN(file,id+((dir+3)%6)*8+ani_step)->Draw(x,y,0,0,0,0,0,0,COLORS[gwg->GetPlayer(player)->color]);
+	LOADER.GetImageN(file,id+((dir+3)%6)*8+ani_step)->Draw(x,y,0,0,0,0,0,0,COLOR_WHITE,COLORS[gwg->GetPlayer(player)->color]);
 	DrawShadow(x,y,ani_step,dir);
 }
 

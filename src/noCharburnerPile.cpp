@@ -1,4 +1,4 @@
-// $Id: noCharburnerPile.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: noCharburnerPile.cpp 6709 2010-09-05 12:56:24Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -27,6 +27,7 @@
 #include "Random.h"
 #include "GameWorld.h"
 #include "SerializedGameData.h"
+#include "noEnvObject.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -37,13 +38,18 @@
 #endif
 
 
-/// Länge des Wachs-Wartens
-const unsigned GROWING_WAITING_LENGTH = 1100;
-/// Länge des Wachsens
-const unsigned GROWING_LENGTH = 16;
+/// Length of the smoldering
+const unsigned SMOLDERING_LENGTH = 200;
+
+/// Work steps for one graphical step during the construction
+const unsigned short CONSTRUCTION_WORKING_STEPS = 1;
+/// Work steps for one graphical step during the remove of the cover
+const unsigned short REMOVECOVER_WORK_STEPS = 1;
+/// Work steps for one graphical step during the "harvest"
+const unsigned short HARVEST_WORK_STEPS = 1;
 
 noCharburnerPile::noCharburnerPile(const unsigned short x, const unsigned short y) : noCoordBase(NOP_CHARBURNERPILE,x,y),
-state(STATE_GROWING_WAITING), event(em->AddEvent(this,GROWING_WAITING_LENGTH))
+state(STATE_WOOD), event(NULL), step(0), sub_step(0)
 {
 }
 
@@ -78,14 +84,108 @@ event(sgd->PopObject<EventManager::Event>(GOT_EVENT))
 
 void noCharburnerPile::Draw( int x,	int y)
 {
+	switch(state)
+	{
+	case STATE_WOOD:
+		{
+			unsigned draw_id;
+			if(step < 5)
+				draw_id = 51-step;
+			else 
+				draw_id = 26;
 
+			LOADER.GetImageN("charburner_bobs",draw_id)->Draw(x,y);
+		} return;
+	case STATE_SMOLDERING:
+		{
+			LOADER.GetImageN("charburner_bobs",27+GameClient::inst().
+				GetGlobalAnimation(2,10,1,obj_id+this->x*10+this->y*10))->Draw(x,y);
+		} return;
+	case STATE_REMOVECOVER:
+		{
+			LOADER.GetImageN("charburner_bobs",28+step)->Draw(x,y);
+		} return;
+	case STATE_HARVEST:
+		{
+			LOADER.GetImageN("charburner_bobs",27+GameClient::inst().
+				GetGlobalAnimation(2,1,10,obj_id+this->x*10+this->y*10))->Draw(x,y);
 
+		} return;
+	default: return;
+	}
 }
 
 void noCharburnerPile::HandleEvent(const unsigned int id)
 {
-
+	// Smoldering is over 
+	// Pile is ready for the remove of the cover
+	state = STATE_REMOVECOVER;
+	event = NULL;
 }
 
+
+/// Charburner has worked on it --> Goto next step
+void noCharburnerPile::NextStep()
+{
+	switch(state)
+	{
+	case STATE_WOOD:
+		{
+			++sub_step;
+			if(sub_step == CONSTRUCTION_WORKING_STEPS)
+			{
+				++step;
+				sub_step = 0;
+
+				// Reached new state?
+				if(step == 6)
+				{
+					step = 0;
+					state = STATE_SMOLDERING;
+					event = em->AddEvent(this,SMOLDERING_LENGTH,0);
+				}
+			}
+
+		} return;
+	case STATE_REMOVECOVER:
+		{
+			++sub_step;
+			if(sub_step == REMOVECOVER_WORK_STEPS)
+			{
+				++step;
+				sub_step = 0;
+
+				// Reached new state?
+				if(step == 6)
+				{
+					state = STATE_HARVEST;
+					step = 0;
+				}
+			}
+
+		} return;
+	case STATE_HARVEST:
+		{
+			++sub_step;
+			if(sub_step == HARVEST_WORK_STEPS)
+			{
+				++step;
+				sub_step = 0;
+
+				// Reached new state?
+				if(step == 6)
+				{
+					// Add an empty pile as environmental object
+					gwg->SetNO(new noEnvObject(x,y,40,6),x,y);
+					em->AddToKillList(this);
+
+					// BQ drumrum neu berechnen
+					gwg->RecalcBQAroundPoint(x,y);
+				}
+			}
+		} return;
+
+	}
+}
 
 

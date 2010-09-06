@@ -1,4 +1,4 @@
-// $Id: noCharburnerPile.cpp 6709 2010-09-05 12:56:24Z OLiver $
+// $Id: noCharburnerPile.cpp 6711 2010-09-06 14:42:33Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -49,7 +49,7 @@ const unsigned short REMOVECOVER_WORK_STEPS = 1;
 const unsigned short HARVEST_WORK_STEPS = 1;
 
 noCharburnerPile::noCharburnerPile(const unsigned short x, const unsigned short y) : noCoordBase(NOP_CHARBURNERPILE,x,y),
-state(STATE_WOOD), event(NULL), step(0), sub_step(0)
+state(STATE_WOOD), step(0), sub_step(0), event(NULL)
 {
 }
 
@@ -184,7 +184,7 @@ void noCharburnerPile::NextStep()
 				}
 			}
 		} return;
-
+	default: return;
 	}
 }
 

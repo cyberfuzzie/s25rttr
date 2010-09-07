@@ -1,4 +1,4 @@
-// $Id: nofCharburner.cpp 6709 2010-09-05 12:56:24Z OLiver $
+// $Id: nofCharburner.cpp 6713 2010-09-07 06:57:58Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -193,3 +193,4 @@ void nofCharburner::Serialize(SerializedGameData *sgd) const
 
 	sgd->PushBool(harvest);
 }
+

@@ -1,4 +1,4 @@
-// $Id: nofFarmer.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: nofFarmer.cpp 6718 2010-09-09 21:39:46Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -146,14 +146,17 @@ void nofFarmer::WorkFinished()
 	gwg->RecalcBQAroundPoint(x,y);
 }
 
-/// Fragt abgeleitete Klasse, ob hier Platz bzw ob hier ein Baum etc steht, den z.B. der Holzfäller braucht
-bool nofFarmer::IsPointGood(const unsigned short x, const unsigned short y)
+/// Returns the quality of this working point or determines if the worker can work here at all
+nofFarmhand::PointQuality nofFarmer::GetPointQuality(const MapCoord x, const MapCoord y) 
 {
 	
 	// Entweder gibts ein Getreidefeld, das wir abernten können...
 	if(gwg->GetNO(x,y)->GetType() == NOP_GRAINFIELD)
 	{
-		return (gwg->GetSpecObj<noGrainfield>(x,y)->IsHarvestable());
+		if(gwg->GetSpecObj<noGrainfield>(x,y)->IsHarvestable())
+			return PQ_CLASS1;
+		else
+			return PQ_NOTPOSSIBLE;
 	}
 	// oder einen freien Platz, wo wir ein neues sähen können
 	else
@@ -162,7 +165,7 @@ bool nofFarmer::IsPointGood(const unsigned short x, const unsigned short y)
 		for(unsigned char i = 0;i<6;++i)
 		{
 			if(gwg->GetPointRoad(x,y,i))
-				return false;
+				return PQ_NOTPOSSIBLE;
 		}
 
 		// Terrain untersuchen (nur auf Wiesen und Savanne und Steppe pflanzen
@@ -174,27 +177,27 @@ bool nofFarmer::IsPointGood(const unsigned short x, const unsigned short y)
 				++good_terrains;
 		}
 		if (good_terrains != 6) 
-			return false;
+			return PQ_NOTPOSSIBLE;
 
 
 		// Ist Platz frei?
 		NodalObjectType nop = gwg->GetNO(x,y)->GetType();
 		if(nop != NOP_ENVIRONMENT && nop && nop != NOP_NOTHING)
-			return false;
+			return PQ_NOTPOSSIBLE;
 
 		for(unsigned char i = 0;i<6;++i)
 		{
 			// Nicht direkt neben andere Getreidefelder und Gebäude setzen!
 			nop = gwg->GetNO(gwg->GetXA(x,y,i),gwg->GetYA(x,y,i))->GetType();
 			if(nop == NOP_GRAINFIELD || nop == NOP_BUILDING || nop == NOP_BUILDINGSITE)
-				return false;
+				return PQ_NOTPOSSIBLE;
 		}
 
 		// Nicht direkt neben den Bauernhof pflanzen!
 		if(x == workplace->GetX()+1)
-			return false;
+			return PQ_NOTPOSSIBLE;
 
-		return true;
+		return PQ_CLASS2;
 	}
 
 }

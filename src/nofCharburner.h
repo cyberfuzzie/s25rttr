@@ -1,4 +1,4 @@
-// $Id: nofCharburner.h 6709 2010-09-05 12:56:24Z OLiver $
+// $Id: nofCharburner.h 6718 2010-09-09 21:39:46Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -26,6 +26,12 @@ class nofCharburner : public nofFarmhand
 {
 	/// Is he harvesting a charburner pile (or planting?) 
 	bool harvest;
+	/// If stacking wood pile: Determines which ware he carries (wood or grain?) 
+	enum WareType
+	{
+		WT_WOOD,
+		WT_GRAIN
+	} wt;
 private:
 
 	/// Malt den Arbeiter beim Arbeiten
@@ -38,8 +44,17 @@ private:
 	/// Abgeleitete Klasse informieren, wenn fertig ist mit Arbeiten
 	void WorkFinished();
 
-	/// Fragt abgeleitete Klasse, ob hier Platz bzw ob hier ein Baum etc steht, den z.B. der Holzfäller braucht
-	bool IsPointGood(const MapCoord x, const MapCoord y);
+	/// Returns the quality of this working point or determines if the worker can work here at all
+	PointQuality GetPointQuality(const MapCoord x, const MapCoord y);
+
+	/// Inform derived class about the start of the whole working process (at the beginning when walking out of the house)
+	void WalkingStarted();
+
+	/// Draws the figure while returning home / entering the building (often carrying wares)
+	void DrawReturnStates(const int x, const int y);
+	/// Draws the charburner while walking
+	/// (overriding standard method of nofFarmhand)
+	void DrawOtherStates(const int x, const int y);
 
 public:
 

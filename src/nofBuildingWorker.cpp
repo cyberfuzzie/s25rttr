@@ -1,4 +1,4 @@
-// $Id: nofBuildingWorker.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: nofBuildingWorker.cpp 6718 2010-09-09 21:39:46Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -129,11 +129,8 @@ void nofBuildingWorker::Draw(int x,int y)
 	case STATE_WALKINGHOME:
 	case STATE_ENTERBUILDING:
 		{
-			// Beim Nachhausegehen (Landarbeiter) und beim Reingehen kann entweder eine Ware getragen werden oder nicht
-			if(ware != GD_NOTHING)
-				DrawWalking(x,y,LOADER.GetBobN("jobs"),GetCarryID(),JOB_CONSTS[job].fat);
-			else
-				DrawWalking(x,y);
+			DrawReturnStates(x,y);
+		
 		} break;
     default:
 		DrawOtherStates(x,y);
@@ -504,4 +501,15 @@ void nofBuildingWorker::WorkplaceReached()
 /// Zeichnen der Figur in sonstigen Arbeitslagen
 void nofBuildingWorker::DrawOtherStates(const int x, const int y)
 {
+}
+
+
+/// Zeichnet Figur beim Hereinlaufen/nach Hause laufen mit evtl. getragenen Waren
+void nofBuildingWorker::DrawReturnStates(const int x, const int y)
+{
+	// Beim Nachhausegehen (Landarbeiter) und beim Reingehen kann entweder eine Ware getragen werden oder nicht
+	if(ware != GD_NOTHING)
+		DrawWalking(x,y,LOADER.GetBobN("jobs"),GetCarryID(),JOB_CONSTS[job].fat);
+	else
+		DrawWalking(x,y);
 }

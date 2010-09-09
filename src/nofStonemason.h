@@ -1,4 +1,4 @@
-// $Id: nofStonemason.h 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: nofStonemason.h 6718 2010-09-09 21:39:46Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -36,8 +36,8 @@ private:
 	/// Abgeleitete Klasse informieren, wenn fertig ist mit Arbeiten
 	void WorkFinished();
 
-	/// Fragt abgeleitete Klasse, ob hier Platz bzw ob hier ein Baum etc steht, den z.B. der Holzfäller braucht
-	bool IsPointGood(const unsigned short x, const unsigned short y);
+	/// Returns the quality of this working point or determines if the worker can work here at all
+	PointQuality GetPointQuality(const MapCoord x, const MapCoord y);
 
 public:
 

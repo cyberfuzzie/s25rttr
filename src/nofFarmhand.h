@@ -1,4 +1,4 @@
-// $Id: nofFarmhand.h 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: nofFarmhand.h 6718 2010-09-09 21:39:46Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -31,6 +31,13 @@ protected:
 	/// Arbeitsziel, das der Arbeiter ansteuert
 	unsigned short dest_x,dest_y;
 
+	enum PointQuality
+	{
+		PQ_NOTPOSSIBLE, // Work is not possible at this position
+		PQ_CLASS1, /// Work is possible, points are prefered to other points
+		PQ_CLASS2 /// Work is possible, points are only chosen if there are no other class 1's
+	};
+
 private:
 
 	/// Funktionen, die nur von der Basisklasse (noFigure) aufgerufen werden, wenn...
@@ -46,8 +53,8 @@ private:
 	//void TryToWork();
 	/// Findet heraus, ob der Beruf an diesem Punkt arbeiten kann
 	bool IsPointAvailable(const unsigned short x, const unsigned short y);
-	/// Fragt abgeleitete Klasse, ob hier Platz bzw ob hier ein Baum etc steht, den z.B. der Holzfäller braucht
-	virtual bool IsPointGood(const unsigned short x, const unsigned short y) = 0;
+	/// Returns the quality of this working point or determines if the worker can work here at all
+	virtual PointQuality GetPointQuality(const unsigned short x, const unsigned short y) = 0;
 
 	/// Läuft zum Arbeitspunkt
 	void WalkToWorkpoint();
@@ -56,16 +63,15 @@ private:
 	/// Läuft wieder zu seiner Hütte zurück
 	void WalkHome();
 
-	///// Abgeleitete Klasse informieren, wenn man anfängt zum Arbeitspunkt zu laufen (Reservierungen)
-	//virtual void WalkingStarted() = 0;
+	/// Inform derived class about the start of the whole working process (at the beginning when walking out of the house)
+	virtual void WalkingStarted();
 	/// Abgeleitete Klasse informieren, wenn sie anfängt zu arbeiten (Vorbereitungen)
 	virtual void WorkStarted() = 0;
 	/// Abgeleitete Klasse informieren, wenn fertig ist mit Arbeiten
 	virtual void WorkFinished() = 0;
-	/// Wird aufgerufen, wenn der Arbeiter seine Arbeit plötzlich abrechen
-
+	
 	/// Zeichnen der Figur in sonstigen Arbeitslagen
-	void DrawOtherStates(const int x, const int y);
+	virtual void DrawOtherStates(const int x, const int y);
 
 public:
 

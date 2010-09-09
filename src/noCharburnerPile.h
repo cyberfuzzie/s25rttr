@@ -1,4 +1,4 @@
-// $Id: noCharburnerPile.h 6709 2010-09-05 12:56:24Z OLiver $
+// $Id: noCharburnerPile.h 6718 2010-09-09 21:39:46Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -26,16 +26,20 @@
 /// The wood/coal piles made by the charburner
 class noCharburnerPile : public noCoordBase
 {
-private:
-
-	/// Status
+public:
+		/// Status
 	enum State
 	{
 		STATE_WOOD, // Wood stack is constructed
 		STATE_SMOLDERING, // Smolder slightly
 		STATE_REMOVECOVER, // Charburner removes the earth cover
 		STATE_HARVEST // Coal is "harvested"
-	} state;
+	};
+
+private:
+
+	/// Status
+	State state;
 
 	/// Current (graphical) step
 	unsigned short step;
@@ -67,11 +71,20 @@ public:		void Destroy() { Destroy_noGrainfield(); }
 
 	BlockingManner GetBM() const { return BM_GRANITE; }
 
-	/// Is the pile currently smoldering? (i.e. charburner can't work on it at the moment=
-	bool IsSmoldering() const { return (state == STATE_SMOLDERING); }
+	/// Get the current state of the charburner pile
+	State GetState() const { return state; }
 
 	/// Charburner has worked on it --> Goto next step
 	void NextStep();
+
+	/// Dertermines if the charburner pile needs wood or grain 
+	/// Only graphical "effect", dertermines which ware the charburner will be carrying
+	enum WareType
+	{
+		WT_WOOD,
+		WT_GRAIN
+	};
+	WareType GetNeededWareType() const;
 	
 };
 

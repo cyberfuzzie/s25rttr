@@ -1,4 +1,4 @@
-// $Id: nofCharburner.cpp 6713 2010-09-07 06:57:58Z FloSoft $
+// $Id: nofCharburner.cpp 6718 2010-09-09 21:39:46Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -33,6 +33,7 @@
 #include "GameWorld.h"
 #include "GameInterface.h"
 #include "noCharburnerPile.h"
+#include "nobUsual.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -43,12 +44,13 @@
 #endif
 
 nofCharburner::nofCharburner(const unsigned short x, const unsigned short y,const unsigned char player,nobUsual * workplace)
-: nofFarmhand(JOB_CHARBURNER,x,y,player,workplace), harvest(false)
+: nofFarmhand(JOB_CHARBURNER,x,y,player,workplace), harvest(false), wt(WT_WOOD)
 {
 }
 
 nofCharburner::nofCharburner(SerializedGameData * sgd, const unsigned obj_id) : nofFarmhand(sgd,obj_id),
-harvest(sgd->PopBool())
+harvest(sgd->PopBool()),
+wt(WareType(sgd->PopUnsignedChar()))
 {
 }
 
@@ -99,6 +101,10 @@ void nofCharburner::WorkFinished()
 	// Is a charburner pile is already there?
 	if(no->GetGOT() == GOT_CHARBURNERPILE)
 	{
+		// Is Pile already in the normal "coal harvest mode"?
+		if(static_cast<noCharburnerPile*>(no)->GetState() == noCharburnerPile::STATE_HARVEST)
+			// Then let's bring a coal to our house
+			ware = GD_COAL;
 		// One step further
 		static_cast<noCharburnerPile*>(no)->NextStep();
 		return;
@@ -106,7 +112,7 @@ void nofCharburner::WorkFinished()
 	}
 
 	// Point still good?
-	if(IsPointGood(x,y))
+	if(GetPointQuality(x,y) != PQ_NOTPOSSIBLE)
 	{
 		// Delete previous elements
 		// Only environt objects and signs are allowed to be removed by the worker!
@@ -132,37 +138,47 @@ void nofCharburner::WorkFinished()
 }
 
 /// Fragt abgeleitete Klasse, ob hier Platz bzw ob hier ein Baum etc steht, den z.B. der Holzf‰ller braucht
-bool nofCharburner::IsPointGood(const MapCoord x, const MapCoord y)
+nofFarmhand::PointQuality nofCharburner::GetPointQuality(const unsigned short x, const unsigned short y)
 {
 	noBase * no = gwg->GetNO(x,y);
 
 	// Is a charburner pile already here?
 	if(no->GetGOT() == GOT_CHARBURNERPILE)
 	{
-		// Can it be harvested?
-		if(!static_cast<noCharburnerPile*>(no)->IsSmoldering())
-		{
-			// Then let's take it
-			return true;
-		}
+		noCharburnerPile::State state = static_cast<noCharburnerPile*>(no)->GetState();
+		// Can't it be harvested?
+		if(state == noCharburnerPile::STATE_SMOLDERING)
+			return PQ_NOTPOSSIBLE;
+
+		// Does it need resources and I don't have them hen starting new work (state = STATE_WAITING1)?
+		if(state == noCharburnerPile::STATE_WOOD && !workplace->WaresAvailable() && state == STATE_WAITING1)
+			return PQ_NOTPOSSIBLE;
+
+		// All ok, work on this pile
+		return PQ_CLASS1;
 	}
+
+	// Try to "plant" a new pile
+	// Still enough wares when starting new work (state = STATE_WAITING1)?
+	if(!workplace->WaresAvailable() && state == STATE_WAITING1)
+		return PQ_NOTPOSSIBLE;
 
 	// Der Platz muss frei sein
 	noBase::BlockingManner bm = gwg->GetNO(x,y)->GetBM();
 
 	if(bm != noBase::BM_NOTBLOCKING)
-		return false;
+		return PQ_NOTPOSSIBLE;
 
 	// Kein Grenzstein darf da stehen
 	if(gwg->GetNode(x,y).boundary_stones[0])
-		return false;
+		return PQ_NOTPOSSIBLE;
 
 
 	// darf auﬂerdem nich auf einer Straﬂe liegen
 	for(unsigned char i = 0;i<6;++i)
 	{
 		if(gwg->GetPointRoad(x,y,i))
-			return false;
+			return PQ_NOTPOSSIBLE;
 	}
 
 	for(unsigned char i = 0;i<6;++i)
@@ -170,7 +186,7 @@ bool nofCharburner::IsPointGood(const MapCoord x, const MapCoord y)
 		// Don't set it next to buildings and other charburner piles and grain fields
 		BlockingManner bm = gwg->GetNO(gwg->GetXA(x,y,i),gwg->GetYA(x,y,i))->GetBM();
 		if(bm == BM_GRANITE || bm == BM_CASTLE || bm == BM_HOUSE || bm == BM_HUT)
-			return false;
+			return PQ_NOTPOSSIBLE;
 	}
 
 	// Terrain untersuchen (nur auf Wiesen und Savanne und Steppe pflanzen
@@ -183,7 +199,10 @@ bool nofCharburner::IsPointGood(const MapCoord x, const MapCoord y)
 			++good_terrains;
 	}
 
-	return (good_terrains == 6);
+	if(good_terrains != 6)
+		return PQ_NOTPOSSIBLE;
+
+	return PQ_CLASS2;
 }
 
 
@@ -192,5 +211,63 @@ void nofCharburner::Serialize(SerializedGameData *sgd) const
 	Serialize_nofFarmhand(sgd);
 
 	sgd->PushBool(harvest);
+	sgd->PushUnsignedChar(static_cast<unsigned char>(wt));
 }
 
+/// Inform derived class about the start of the whole working process (at the beginning when walking out of the house)
+void nofCharburner::WalkingStarted()
+{
+	noBase * nob = gwg->GetNO(dest_x,dest_y);
+	if(nob->GetGOT() == GOT_CHARBURNERPILE)
+		harvest = !(static_cast<noCharburnerPile*>(nob)->GetState() == noCharburnerPile::STATE_WOOD);
+	else
+		harvest = false;
+
+	// Consume wares if we carry a ware
+	if(!harvest)
+	{
+		workplace->ConsumeWares();
+		// Dertermine ware which we should carry to the pile
+		if(nob->GetGOT() != GOT_CHARBURNERPILE)
+			wt = WT_WOOD;
+		else
+			wt = WareType(static_cast<noCharburnerPile*>(nob)->GetNeededWareType());
+	}
+	
+}
+
+/// Draws the figure while returning home / entering the building (often carrying wares)
+void nofCharburner::DrawReturnStates(const int x, const int y)
+{
+	// Carry coal?
+	if(ware == GD_COAL)
+		DrawWalking(x,y,"charburner_bobs",200);
+	else
+		// Draw normal walking otherwise
+		DrawWalking(x,y);
+}
+
+
+/// Draws the charburner while walking
+/// (overriding standard method of nofFarmhand)
+void nofCharburner::DrawOtherStates(const int x, const int y)
+{
+	switch(state)
+	{
+	case STATE_WALKTOWORKPOINT:
+		{
+			// Carry ware?
+			if(!harvest)
+			{
+				if(wt == WT_WOOD)
+					DrawWalking(x,y,"charburner_bobs",102);
+				else
+					DrawWalking(x,y,"charburner_bobs",151);
+			}
+			else
+				// Draw normal walking
+				DrawWalking(x,y);
+		} break;
+	default: return;
+	}
+}

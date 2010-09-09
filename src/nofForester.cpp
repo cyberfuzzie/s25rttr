@@ -1,4 +1,4 @@
-// $Id: nofForester.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: nofForester.cpp 6718 2010-09-09 21:39:46Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -130,32 +130,32 @@ void nofForester::WorkFinished()
 	}
 }
 
-/// Fragt abgeleitete Klasse, ob hier Platz bzw ob hier ein Baum etc steht, den z.B. der Holzfäller braucht
-bool nofForester::IsPointGood(const unsigned short x, const unsigned short y)
+/// Returns the quality of this working point or determines if the worker can work here at all
+nofFarmhand::PointQuality nofForester::GetPointQuality(const MapCoord x, const MapCoord y)
 {
 	// Der Platz muss frei sein
 	noBase::BlockingManner bm = gwg->GetNO(x,y)->GetBM();
 
 	if(bm != noBase::BM_NOTBLOCKING)
-		return false;
+		return PQ_NOTPOSSIBLE;
 
 	// Kein Grenzstein darf da stehen
 	if(gwg->GetNode(x,y).boundary_stones[0])
-		return false;
+		return PQ_NOTPOSSIBLE;
 
 
 	// darf außerdem nich auf einer Straße liegen
 	for(unsigned char i = 0;i<6;++i)
 	{
 		if(gwg->GetPointRoad(x,y,i))
-			return false;
+			return PQ_NOTPOSSIBLE;
 	}
 
 	// es dürfen außerdem keine Gebäude rund um den Baum stehen
 	for(unsigned char i = 0;i<6;++i)
 	{
 		if(gwg->GetNO(gwg->GetXA(x,y,i),gwg->GetYA(x,y,i))->GetType() ==  NOP_BUILDING)
-			return false;
+			return PQ_NOTPOSSIBLE;
 	}
 
 	// Terrain untersuchen (nur auf Wiesen und Savanne und Steppe pflanzen
@@ -167,6 +167,9 @@ bool nofForester::IsPointGood(const unsigned short x, const unsigned short y)
 		if(t == 3 || (t>=8 && t<=12))
 			++good_terrains;
 	}
+	if(good_terrains != 6)
+		return PQ_NOTPOSSIBLE;
 
-	return (good_terrains == 6);
+
+	return PQ_CLASS1;
 }

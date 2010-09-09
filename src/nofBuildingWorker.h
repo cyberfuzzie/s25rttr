@@ -1,4 +1,4 @@
-// $Id: nofBuildingWorker.h 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: nofBuildingWorker.h 6718 2010-09-09 21:39:46Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -101,6 +101,9 @@ private:
 	virtual void WorkAborted();
 	/// Arbeitsplatz wurde erreicht
 	virtual void WorkplaceReached();
+
+	/// Draws the figure while returning home / entering the building (often carrying wares)
+	virtual void DrawReturnStates(const int x, const int y);
 	/// Zeichnen der Figur in sonstigen Arbeitslagen
 	virtual void DrawOtherStates(const int x, const int y);
 

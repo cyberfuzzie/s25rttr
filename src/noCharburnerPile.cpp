@@ -1,4 +1,4 @@
-// $Id: noCharburnerPile.cpp 6711 2010-09-06 14:42:33Z FloSoft $
+// $Id: noCharburnerPile.cpp 6718 2010-09-09 21:39:46Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -39,17 +39,17 @@
 
 
 /// Length of the smoldering
-const unsigned SMOLDERING_LENGTH = 200;
+const unsigned SMOLDERING_LENGTH = 3000;
 
-/// Work steps for one graphical step during the construction
-const unsigned short CONSTRUCTION_WORKING_STEPS = 1;
+/// Work steps for the construction of the wood pile and the cover
+const unsigned short CONSTRUCTION_WORKING_STEPS[2] = {6,6};
 /// Work steps for one graphical step during the remove of the cover
 const unsigned short REMOVECOVER_WORK_STEPS = 1;
 /// Work steps for one graphical step during the "harvest"
 const unsigned short HARVEST_WORK_STEPS = 1;
 
 noCharburnerPile::noCharburnerPile(const unsigned short x, const unsigned short y) : noCoordBase(NOP_CHARBURNERPILE,x,y),
-state(STATE_WOOD), step(0), sub_step(0), event(NULL)
+state(STATE_WOOD), step(0), sub_step(1), event(NULL)
 {
 }
 
@@ -88,13 +88,21 @@ void noCharburnerPile::Draw( int x,	int y)
 	{
 	case STATE_WOOD:
 		{
-			unsigned draw_id;
-			if(step < 5)
-				draw_id = 51-step;
+			glArchivItem_Bitmap * image;
+			if(step == 0)
+				image = LOADER.GetImageN("charburner_bobs",26);
 			else 
-				draw_id = 26;
+			{
+				image = LOADER.GetImageN("charburner_bobs",28);
 
-			LOADER.GetImageN("charburner_bobs",draw_id)->Draw(x,y);
+				// Draw wood pile beneath the cover
+				 LOADER.GetImageN("charburner_bobs",26)->Draw(x,y);
+			}
+
+			unsigned short progress = sub_step*image->getHeight() / CONSTRUCTION_WORKING_STEPS[step];
+			unsigned short height = image->getHeight() - progress;
+			if(progress != 0)
+				image->Draw(x, y+height, 0, 0, 0, height, 0, progress);
 		} return;
 	case STATE_SMOLDERING:
 		{
@@ -107,8 +115,7 @@ void noCharburnerPile::Draw( int x,	int y)
 		} return;
 	case STATE_HARVEST:
 		{
-			LOADER.GetImageN("charburner_bobs",27+GameClient::inst().
-				GetGlobalAnimation(2,1,10,obj_id+this->x*10+this->y*10))->Draw(x,y);
+			LOADER.GetImageN("charburner_bobs",34+step)->Draw(x,y);
 
 		} return;
 	default: return;
@@ -129,16 +136,17 @@ void noCharburnerPile::NextStep()
 {
 	switch(state)
 	{
+	default: return;
 	case STATE_WOOD:
 		{
 			++sub_step;
-			if(sub_step == CONSTRUCTION_WORKING_STEPS)
+			if(sub_step == CONSTRUCTION_WORKING_STEPS[step])
 			{
 				++step;
 				sub_step = 0;
 
 				// Reached new state?
-				if(step == 6)
+				if(step == 2)
 				{
 					step = 0;
 					state = STATE_SMOLDERING;
@@ -184,8 +192,15 @@ void noCharburnerPile::NextStep()
 				}
 			}
 		} return;
-	default: return;
+
 	}
 }
 
 
+noCharburnerPile::WareType noCharburnerPile::GetNeededWareType() const
+{
+	if(sub_step % 2 == 0)
+		return WT_WOOD;
+	else 
+		return WT_GRAIN;
+}

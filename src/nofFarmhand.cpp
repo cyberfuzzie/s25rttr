@@ -1,4 +1,4 @@
-// $Id: nofFarmhand.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: nofFarmhand.cpp 6718 2010-09-09 21:39:46Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -103,7 +103,8 @@ void nofFarmhand::HandleDerivedEvent(const unsigned int id)
 			// Anzahl der Radien, wo wir gültige Punkte gefunden haben
 			unsigned radius_count = 0;
 
-			list< Point<MapCoord> > available_points;
+			// Available points: 1st class and 2st class
+			list< Point<MapCoord> > available_points[2];
 
 			for(MapCoord tx=gwg->GetXA(x,y,0), r=1;r<=RADIUS[job-JOB_WOODCUTTER];tx=gwg->GetXA(tx,y,0),++r)
 			{
@@ -117,7 +118,7 @@ void nofFarmhand::HandleDerivedEvent(const unsigned int id)
 					{
 						if(IsPointAvailable(tx2,ty2) && !gwg->GetNode(tx2,ty2).reserved)
 						{
-							available_points.push_back(Point<MapCoord>(tx2, ty2));
+							available_points[GetPointQuality(tx2,ty2)-PQ_CLASS1].push_back(Point<MapCoord>(tx2, ty2));
 							found_in_radius = true;
 						}
 					}
@@ -132,11 +133,15 @@ void nofFarmhand::HandleDerivedEvent(const unsigned int id)
 				}
 			}
 
-			// Gibt es überhaupt ein Objekt, wo ich hingehen kann?
-			if(available_points.size())
+			// Are there any objects at all?
+			if(available_points[0].size() || available_points[1].size())
 			{
-				// Ein Objekt zufällig heraussuchen
-				Point<MapCoord> p = *available_points[RANDOM.Rand(__FILE__,__LINE__,obj_id,available_points.size())];
+				// Prefer 1st class objects and use only 2nd class objects if there are no more other objects anymore
+				Point<MapCoord> p;
+				if(available_points[0].size())
+					p = *available_points[0][RANDOM.Rand(__FILE__,__LINE__,obj_id,available_points[0].size())];
+				else
+					p = *available_points[1][RANDOM.Rand(__FILE__,__LINE__,obj_id,available_points[1].size())];
 
 				// Als neues Ziel nehmen
 				dest_x = p.x;
@@ -154,6 +159,8 @@ void nofFarmhand::HandleDerivedEvent(const unsigned int id)
 				StartWalking(4);
 
 				StopNotWorking();
+
+				WalkingStarted();
 			}
 			else
 			{
@@ -212,7 +219,7 @@ void nofFarmhand::HandleDerivedEvent(const unsigned int id)
 bool nofFarmhand::IsPointAvailable(const unsigned short x, const unsigned short y)
 {
 	// Gibts an diesen Punkt überhaupt die nötigen Vorraussetzungen für den Beruf?
-	if(IsPointGood(x,y))
+	if(GetPointQuality(x,y) != PQ_NOTPOSSIBLE)
 	{
 		// Gucken, ob ein Weg hinführt
 		if(gwg->FindHumanPath(this->x,this->y,x,y,20) != 0xFF)
@@ -235,7 +242,7 @@ void nofFarmhand::WalkToWorkpoint()
 		WorkStarted();
 	}
 	// Weg suchen und gucken ob der Punkt noch in Ordnung ist
-	else if((dir = gwg->FindHumanPath(x,y,dest_x,dest_y,20)) == 0xFF || !IsPointGood(dest_x,dest_y))
+	else if((dir = gwg->FindHumanPath(x,y,dest_x,dest_y,20)) == 0xFF || GetPointQuality(dest_x,dest_y) == PQ_NOTPOSSIBLE)
 	{
 		// Punkt freigeben
 		gwg->GetNode(dest_x,dest_y).reserved = false;
@@ -313,4 +320,10 @@ void nofFarmhand::DrawOtherStates(const int x, const int y)
 		} break;
 	default: return;
 	}
+}
+
+
+/// Inform derived class about the start of the whole working process (at the beginning when walking out of the house)
+void nofFarmhand::WalkingStarted()
+{
 }

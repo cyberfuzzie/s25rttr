@@ -1,4 +1,4 @@
-// $Id: nofStonemason.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: nofStonemason.cpp 6718 2010-09-09 21:39:46Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -101,10 +101,10 @@ void nofStonemason::WorkFinished()
 	ware = GD_STONES;
 }
 
-/// Fragt abgeleitete Klasse, ob hier Platz bzw ob hier ein Baum etc steht, den z.B. der Holzfäller braucht
-bool nofStonemason::IsPointGood(const unsigned short x, const unsigned short y)
+/// Returns the quality of this working point or determines if the worker can work here at all
+nofFarmhand::PointQuality nofStonemason::GetPointQuality(const MapCoord x, const MapCoord y)
 {
 	// An dieser Position muss es nur Stein geben
-	return (gwg->GetNO(x,y)->GetType() == NOP_GRANITE);
+	return ((gwg->GetNO(x,y)->GetType() == NOP_GRANITE) ? PQ_CLASS1 : PQ_NOTPOSSIBLE);
 }
 

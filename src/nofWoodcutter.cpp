@@ -1,4 +1,4 @@
-// $Id: nofWoodcutter.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: nofWoodcutter.cpp 6718 2010-09-09 21:39:46Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -125,8 +125,8 @@ void nofWoodcutter::WorkFinished()
 	GameClient::inst().SendAIEvent(new AIEvent::Location(AIEvent::TreeChopped, x, y), player);
 }
 
-/// Fragt abgeleitete Klasse, ob hier Platz bzw ob hier ein Baum etc steht, den z.B. der Holzfäller braucht
-bool nofWoodcutter::IsPointGood(const unsigned short x, const unsigned short y)
+/// Returns the quality of this working point or determines if the worker can work here at all
+nofFarmhand::PointQuality nofWoodcutter::GetPointQuality(const MapCoord x, const MapCoord y)
 {
 	// Gibt es hier an dieser Position einen Baum und ist dieser ausgewachsen?
 	// außerdem keine Ananas fällen!
@@ -134,10 +134,10 @@ bool nofWoodcutter::IsPointGood(const unsigned short x, const unsigned short y)
 	if((no = gwg->GetNO(x,y))->GetType() == NOP_TREE)
 	{
 		if(static_cast<noTree*>(no)->size == 3 && static_cast<noTree*>(no)->type != 5)
-			return true;
+			return PQ_CLASS1;
 	}
 
-	return false;
+	return PQ_NOTPOSSIBLE;
 }
 
 

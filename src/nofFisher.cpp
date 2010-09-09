@@ -1,4 +1,4 @@
-// $Id: nofFisher.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: nofFisher.cpp 6718 2010-09-09 21:39:46Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -148,21 +148,21 @@ void nofFisher::WorkFinished()
 		ware = GD_NOTHING;
 }
 
-/// Fragt abgeleitete Klasse, ob hier Fisch gefangen wrden kann
-bool nofFisher::IsPointGood(const unsigned short x, const unsigned short y)
+/// Returns the quality of this working point or determines if the worker can work here at all
+nofFarmhand::PointQuality nofFisher::GetPointQuality(const MapCoord x, const MapCoord y)
 {
 	// Der Punkt muss passierbar sein für Figuren
 	if(!gwg->IsNodeForFigures(x,y))
-		return false;
+		return PQ_NOTPOSSIBLE;
 
 	// irgendwo drumherum muss es Fisch geben
 	for(unsigned char i = 0;i<6;++i)
 	{
 		if(gwg->GetNode(gwg->GetXA(x,y,i),gwg->GetYA(x,y,i)).resources > 0x80 && 
 			gwg->GetNode(gwg->GetXA(x,y,i),gwg->GetYA(x,y,i)).resources < 0x90)
-			return true;
+			return PQ_CLASS1;
 	}
 
-	return false;
+	return PQ_NOTPOSSIBLE;
 }
 

@@ -212,7 +212,7 @@ class ChangeDistribution : public GameCommand
 {
 	friend class GameClient;
 	/// Größe der Distributionsdaten
-	static const unsigned DATA_SIZE = 20;
+	static const unsigned DATA_SIZE = 23;
 	/// Daten der Distribution (einzelne Prozente der Waren in Gebäuden)
 	std::vector<unsigned char> data;
 public:

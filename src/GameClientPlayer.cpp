@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 6700 2010-09-01 17:24:02Z jh $
+// $Id: GameClientPlayer.cpp 6720 2010-09-10 08:53:20Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -73,7 +73,6 @@ GameClientPlayer::GameClientPlayer(const unsigned playerid) : GamePlayerInfo(pla
 
 	// Verteilung mit Standardwerten füllen bei Waren mit nur einem Ziel (wie z.B. Mehl, Holz...)
 	distribution[GD_FLOUR].client_buildings.push_back(BLD_BAKERY);
-	distribution[GD_WOOD].client_buildings.push_back(BLD_SAWMILL);
 	distribution[GD_GOLD].client_buildings.push_back(BLD_MINT);
 	distribution[GD_IRONORE].client_buildings.push_back(BLD_IRONSMELTER);
 	distribution[GD_HAM].client_buildings.push_back(BLD_SLAUGHTERHOUSE);
@@ -98,22 +97,26 @@ GameClientPlayer::GameClientPlayer(const unsigned playerid) : GamePlayerInfo(pla
 	GAMECLIENT.visual_settings.distribution[5] = distribution[GD_GRAIN].percent_buildings[BLD_PIGFARM] = 3;
 	GAMECLIENT.visual_settings.distribution[6] = distribution[GD_GRAIN].percent_buildings[BLD_DONKEYBREEDER] = 2;
 	GAMECLIENT.visual_settings.distribution[7] = distribution[GD_GRAIN].percent_buildings[BLD_BREWERY] = 3;
+	GAMECLIENT.visual_settings.distribution[8] = distribution[GD_GRAIN].percent_buildings[BLD_CHARBURNER] = 3;
 
-	GAMECLIENT.visual_settings.distribution[8] = distribution[GD_IRON].percent_buildings[BLD_ARMORY] = 8;
-	GAMECLIENT.visual_settings.distribution[9] = distribution[GD_IRON].percent_buildings[BLD_METALWORKS] = 4;
+	GAMECLIENT.visual_settings.distribution[9] = distribution[GD_IRON].percent_buildings[BLD_ARMORY] = 8;
+	GAMECLIENT.visual_settings.distribution[10] = distribution[GD_IRON].percent_buildings[BLD_METALWORKS] = 4;
 
-	GAMECLIENT.visual_settings.distribution[10] = distribution[GD_COAL].percent_buildings[BLD_ARMORY] = 8;
-	GAMECLIENT.visual_settings.distribution[11] = distribution[GD_COAL].percent_buildings[BLD_IRONSMELTER] = 7;
-	GAMECLIENT.visual_settings.distribution[12] = distribution[GD_COAL].percent_buildings[BLD_MINT] = 10;
+	GAMECLIENT.visual_settings.distribution[11] = distribution[GD_COAL].percent_buildings[BLD_ARMORY] = 8;
+	GAMECLIENT.visual_settings.distribution[12] = distribution[GD_COAL].percent_buildings[BLD_IRONSMELTER] = 7;
+	GAMECLIENT.visual_settings.distribution[13] = distribution[GD_COAL].percent_buildings[BLD_MINT] = 10;
 
-	GAMECLIENT.visual_settings.distribution[13] = distribution[GD_BOARDS].percent_buildings[BLD_HEADQUARTERS] = 10;
-	GAMECLIENT.visual_settings.distribution[14] = distribution[GD_BOARDS].percent_buildings[BLD_METALWORKS] = 4;
-	GAMECLIENT.visual_settings.distribution[15] = distribution[GD_BOARDS].percent_buildings[BLD_SHIPYARD] = 2;
+	GAMECLIENT.visual_settings.distribution[14] = distribution[GD_GRAIN].percent_buildings[BLD_SAWMILL] = 8;
+	GAMECLIENT.visual_settings.distribution[15] = distribution[GD_GRAIN].percent_buildings[BLD_CHARBURNER] = 3;
 
-	GAMECLIENT.visual_settings.distribution[16] = distribution[GD_WATER].percent_buildings[BLD_BAKERY] = 6;
-	GAMECLIENT.visual_settings.distribution[17] = distribution[GD_WATER].percent_buildings[BLD_BREWERY] = 3;
-	GAMECLIENT.visual_settings.distribution[18] = distribution[GD_WATER].percent_buildings[BLD_PIGFARM] = 2;
-	GAMECLIENT.visual_settings.distribution[19] = distribution[GD_WATER].percent_buildings[BLD_DONKEYBREEDER] = 3;
+	GAMECLIENT.visual_settings.distribution[16] = distribution[GD_BOARDS].percent_buildings[BLD_HEADQUARTERS] = 10;
+	GAMECLIENT.visual_settings.distribution[17] = distribution[GD_BOARDS].percent_buildings[BLD_METALWORKS] = 4;
+	GAMECLIENT.visual_settings.distribution[18] = distribution[GD_BOARDS].percent_buildings[BLD_SHIPYARD] = 2;
+
+	GAMECLIENT.visual_settings.distribution[19] = distribution[GD_WATER].percent_buildings[BLD_BAKERY] = 6;
+	GAMECLIENT.visual_settings.distribution[20] = distribution[GD_WATER].percent_buildings[BLD_BREWERY] = 3;
+	GAMECLIENT.visual_settings.distribution[21] = distribution[GD_WATER].percent_buildings[BLD_PIGFARM] = 2;
+	GAMECLIENT.visual_settings.distribution[22] = distribution[GD_WATER].percent_buildings[BLD_DONKEYBREEDER] = 3;
 
 	RecalcDistribution();
 
@@ -592,6 +595,7 @@ void GameClientPlayer::RecalcDistribution()
 	RecalcDistributionOfWare(GD_GRAIN);
 	RecalcDistributionOfWare(GD_IRON);
 	RecalcDistributionOfWare(GD_COAL);
+	RecalcDistributionOfWare(GD_WOOD);
 	RecalcDistributionOfWare(GD_BOARDS);
 	RecalcDistributionOfWare(GD_WATER);
 }
@@ -1344,22 +1348,26 @@ void GameClientPlayer::ChangeDistribution(const std::vector<unsigned char>& dist
 	distribution[GD_GRAIN].percent_buildings[BLD_PIGFARM] = distribution_settings[5];
 	distribution[GD_GRAIN].percent_buildings[BLD_DONKEYBREEDER] = distribution_settings[6];
 	distribution[GD_GRAIN].percent_buildings[BLD_BREWERY] = distribution_settings[7];
+	distribution[GD_GRAIN].percent_buildings[BLD_CHARBURNER] = distribution_settings[8];
 
-	distribution[GD_IRON].percent_buildings[BLD_ARMORY] = distribution_settings[8];
-	distribution[GD_IRON].percent_buildings[BLD_METALWORKS] = distribution_settings[9];
+	distribution[GD_IRON].percent_buildings[BLD_ARMORY] = distribution_settings[9];
+	distribution[GD_IRON].percent_buildings[BLD_METALWORKS] = distribution_settings[10];
 
-	distribution[GD_COAL].percent_buildings[BLD_ARMORY] = distribution_settings[10];
-	distribution[GD_COAL].percent_buildings[BLD_IRONSMELTER] = distribution_settings[11];
-	distribution[GD_COAL].percent_buildings[BLD_MINT] = distribution_settings[12];
+	distribution[GD_COAL].percent_buildings[BLD_ARMORY] = distribution_settings[11];
+	distribution[GD_COAL].percent_buildings[BLD_IRONSMELTER] = distribution_settings[12];
+	distribution[GD_COAL].percent_buildings[BLD_MINT] = distribution_settings[13];
 
-	distribution[GD_BOARDS].percent_buildings[BLD_HEADQUARTERS] = distribution_settings[13];
-	distribution[GD_BOARDS].percent_buildings[BLD_METALWORKS] = distribution_settings[14];
-	distribution[GD_BOARDS].percent_buildings[BLD_SHIPYARD] = distribution_settings[15];
+	distribution[GD_COAL].percent_buildings[BLD_SAWMILL] = distribution_settings[14];
+	distribution[GD_COAL].percent_buildings[BLD_CHARBURNER] = distribution_settings[15];
 
-	distribution[GD_WATER].percent_buildings[BLD_MILL] = distribution_settings[16];
-	distribution[GD_WATER].percent_buildings[BLD_BREWERY] = distribution_settings[17];
-	distribution[GD_WATER].percent_buildings[BLD_PIGFARM] = distribution_settings[18];
-	distribution[GD_WATER].percent_buildings[BLD_DONKEYBREEDER] = distribution_settings[19];
+	distribution[GD_BOARDS].percent_buildings[BLD_HEADQUARTERS] = distribution_settings[16];
+	distribution[GD_BOARDS].percent_buildings[BLD_METALWORKS] = distribution_settings[17];
+	distribution[GD_BOARDS].percent_buildings[BLD_SHIPYARD] = distribution_settings[18];
+
+	distribution[GD_WATER].percent_buildings[BLD_MILL] = distribution_settings[19];
+	distribution[GD_WATER].percent_buildings[BLD_BREWERY] = distribution_settings[20];
+	distribution[GD_WATER].percent_buildings[BLD_PIGFARM] = distribution_settings[21];
+	distribution[GD_WATER].percent_buildings[BLD_DONKEYBREEDER] = distribution_settings[22];
 
 	RecalcDistribution();
 }

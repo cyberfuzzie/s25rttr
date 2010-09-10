@@ -1,4 +1,4 @@
-// $Id: iwDistribution.h 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: iwDistribution.h 6720 2010-09-10 08:53:20Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -32,6 +32,7 @@ private:
 		TAB_CORN,
 		TAB_IRON,
 		TAB_COAL,
+		TAB_WOOD,
 		TAB_BOARD,
 		TAB_WATER
 	};

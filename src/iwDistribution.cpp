@@ -1,4 +1,4 @@
-// $Id: iwDistribution.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: iwDistribution.cpp 6720 2010-09-10 08:53:20Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -39,10 +39,13 @@
 
 /// Anzahl der einzelnen Einstellungen in den Gruppen
 // Nahrungsgruppe
-const unsigned GROUP_SIZES[6] =
+const unsigned GROUP_SIZES[7] =
 {
-	4, 4, 2, 3, 3, 4
+  4, 5, 2, 3, 2, 3, 4 
 };
+
+/// Dertermines width of the progress bars: distance to the window borders
+const unsigned PROGRESS_BORDER_DISTANCE = 20;
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
@@ -51,7 +54,7 @@ const unsigned GROUP_SIZES[6] =
  *  @author OLiver
  */
 iwDistribution::iwDistribution(void)
-	: IngameWindow(CGI_DISTRIBUTION, 0xFFFF, 0xFFFF, 260, 272, _("Distribution of goods"), LOADER.GetImageN("resource", 41)),
+	: IngameWindow(CGI_DISTRIBUTION, 0xFFFF, 0xFFFF, 290, 312, _("Distribution of goods"), LOADER.GetImageN("resource", 41)),
 	settings_changed(false)
 {
 	ctrlGroup *group;
@@ -61,89 +64,107 @@ iwDistribution::iwDistribution(void)
 	//const GameClientPlayer *player = GAMECLIENT.GetLocalPlayer();
 
 	// Tab Control
-	ctrlTab *tab = AddTabCtrl(0, 10, 20, 240);
+	ctrlTab *tab = AddTabCtrl(0, 10, 20, 270);
 	
 	// Nahrungsgruppe
 	group = tab->AddTab(LOADER.GetImageN("io", 80), _("Foodstuff"), TAB_FOOD);
 	// Granitbergwerk
-	group->AddText(11, 120,  60, _("Granite mine"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
-	progress = group->AddProgress(12, 20,  60, 200, 20, TC_GREY, 139, 138, 10);
+	group->AddText(0, width/2,  60, _("Granite mine"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
+	progress = group->AddProgress(1, PROGRESS_BORDER_DISTANCE-tab->GetX(false),  60, width-2*PROGRESS_BORDER_DISTANCE, 20, TC_GREY, 139, 138, 10);
 	// Kohlebergwerk
-	group->AddText(13, 120, 100, _("Coal mine"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
-	progress = group->AddProgress(14, 20, 100, 200, 20, TC_GREY, 139, 138, 10);
+	group->AddText(2, width/2, 100, _("Coal mine"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
+	progress = group->AddProgress(3, PROGRESS_BORDER_DISTANCE-tab->GetX(false), 100, width-2*PROGRESS_BORDER_DISTANCE, 20, TC_GREY, 139, 138, 10);
 	// Eisenbergwerk	
-	group->AddText(15, 120, 140, _("Iron mine"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
-	progress = group->AddProgress(16, 20, 140, 200, 20, TC_GREY, 139, 138, 10);
+	group->AddText(4, width/2, 140, _("Iron mine"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
+	progress = group->AddProgress(5, PROGRESS_BORDER_DISTANCE-tab->GetX(false), 140, width-2*PROGRESS_BORDER_DISTANCE, 20, TC_GREY, 139, 138, 10);
 	// Goldbergwerk	
-	group->AddText(17, 120, 180, _("Gold mine"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
-	progress = group->AddProgress(18, 20, 180, 200, 20, TC_GREY, 139, 138, 10);
+	group->AddText(6, width/2, 180, _("Gold mine"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
+	progress = group->AddProgress(7, PROGRESS_BORDER_DISTANCE-tab->GetX(false), 180, width-2*PROGRESS_BORDER_DISTANCE, 20, TC_GREY, 139, 138, 10);
 
 	// Getreidegruppe
 	group = tab->AddTab(LOADER.GetImageN("io", 90), _("Grain"), TAB_CORN);
 
 	// Mühle
-	group->AddText(21, 120,  60, _("Mill"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
-	progress = group->AddProgress(22, 20,  60, 200, 20, TC_GREY, 139, 138, 10);
+	group->AddText(0, width/2,  60, _("Mill"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
+	progress = group->AddProgress(1, PROGRESS_BORDER_DISTANCE-tab->GetX(false),  60, width-2*PROGRESS_BORDER_DISTANCE, 20, TC_GREY, 139, 138, 10);
 	// Schweinezucht
-	group->AddText(23, 120, 100, _("Pig farm"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
-	progress = group->AddProgress(24, 20, 100, 200, 20, TC_GREY, 139, 138, 10);
+	group->AddText(2, width/2, 100, _("Pig farm"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
+	progress = group->AddProgress(3, PROGRESS_BORDER_DISTANCE-tab->GetX(false), 100, width-2*PROGRESS_BORDER_DISTANCE, 20, TC_GREY, 139, 138, 10);
 	// Eselzucht
-	group->AddText(25, 120, 140, _("Donkey breeding"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
-	progress = group->AddProgress(26, 20, 140, 200, 20, TC_GREY, 139, 138, 10);
+	group->AddText(4, width/2, 140, _("Donkey breeding"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
+	progress = group->AddProgress(5, PROGRESS_BORDER_DISTANCE-tab->GetX(false), 140, width-2*PROGRESS_BORDER_DISTANCE, 20, TC_GREY, 139, 138, 10);
 	// Brauerei
-	group->AddText(27, 120, 180, _("Brewery"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
-	progress = group->AddProgress(28, 20, 180, 200, 20, TC_GREY, 139, 138, 10);
+	group->AddText(6, width/2, 180, _("Brewery"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
+	progress = group->AddProgress(7, PROGRESS_BORDER_DISTANCE-tab->GetX(false), 180, width-2*PROGRESS_BORDER_DISTANCE, 20, TC_GREY, 139, 138, 10);
+	// Charburner
+	group->AddText(8, width/2, 220, _("Charburner"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
+	progress = group->AddProgress(9, PROGRESS_BORDER_DISTANCE-tab->GetX(false), 220, width-2*PROGRESS_BORDER_DISTANCE, 20, TC_GREY, 139, 138, 10);
 
 	// Eisengruppe
 	group = tab->AddTab(LOADER.GetImageN("io", 81), _("Iron"), TAB_IRON);
 
 	// Schmiede
-	group->AddText(31, 120,  60, _("Armory"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
-	progress = group->AddProgress(32, 20,  60, 200, 20, TC_GREY, 139, 138, 10);
+	group->AddText(0, width/2,  60, _("Armory"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
+	progress = group->AddProgress(1, PROGRESS_BORDER_DISTANCE-tab->GetX(false),  60, width-2*PROGRESS_BORDER_DISTANCE, 20, TC_GREY, 139, 138, 10);
 	// Schlosserei
-	group->AddText(33, 120, 100, _("Metalworks"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
-	progress = group->AddProgress(34, 20, 100, 200, 20, TC_GREY, 139, 138, 10);
+	group->AddText(2, width/2, 100, _("Metalworks"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
+	progress = group->AddProgress(3, PROGRESS_BORDER_DISTANCE-tab->GetX(false), 100, width-2*PROGRESS_BORDER_DISTANCE, 20, TC_GREY, 139, 138, 10);
 
 	// Kohlegruppe
 	group = tab->AddTab(LOADER.GetImageN("io", 91), _("Coal"), TAB_COAL);
 
 	// Schmiede
-	group->AddText(41, 120,  60, _("Armory"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
-	progress = group->AddProgress(42, 20,  60, 200, 20, TC_GREY, 139, 138, 10);
+	group->AddText(0, width/2,  60, _("Armory"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
+	progress = group->AddProgress(1, PROGRESS_BORDER_DISTANCE-tab->GetX(false),  60, width-2*PROGRESS_BORDER_DISTANCE, 20, TC_GREY, 139, 138, 10);
 	// Eisenschmelze
-	group->AddText(43, 120, 100, _("Iron smelter"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
-	progress = group->AddProgress(44, 20, 100, 200, 20, TC_GREY, 139, 138, 10);
+	group->AddText(2, width/2, 100, _("Iron smelter"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
+	progress = group->AddProgress(3, PROGRESS_BORDER_DISTANCE-tab->GetX(false), 100, width-2*PROGRESS_BORDER_DISTANCE, 20, TC_GREY, 139, 138, 10);
 	// Münzprägerei
-	group->AddText(45, 120, 140, _("Mint"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
-	progress = group->AddProgress(46, 20, 140, 200, 20, TC_GREY, 139, 138, 10);
+	group->AddText(4, width/2, 140, _("Mint"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
+	progress = group->AddProgress(5, PROGRESS_BORDER_DISTANCE-tab->GetX(false), 140, width-2*PROGRESS_BORDER_DISTANCE, 20, TC_GREY, 139, 138, 10);
+
+	// Wood group
+	group = tab->AddTab(LOADER.GetImageN("io", 89), _("Wood"), TAB_WOOD);
+
+	// Sawmill
+	group->AddText(0, width/2,  60, _("Sawmill"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
+	progress = group->AddProgress(1, PROGRESS_BORDER_DISTANCE-tab->GetX(false),  60, width-2*PROGRESS_BORDER_DISTANCE, 20, TC_GREY, 139, 138, 10);
+	// Charburner
+	group->AddText(2, width/2, 100, _("Charburner"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
+	progress = group->AddProgress(3, PROGRESS_BORDER_DISTANCE-tab->GetX(false), 100, width-2*PROGRESS_BORDER_DISTANCE, 20, TC_GREY, 139, 138, 10);
 
 	// Brettergruppe
 	group = tab->AddTab(LOADER.GetImageN("io", 82), _("Boards"), TAB_BOARD);
 
 	// Baustellen
-	group->AddText(51, 120,  60, _("Construction"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
-	progress = group->AddProgress(52, 20,  60, 200, 20, TC_GREY, 139, 138, 10);
+	group->AddText(0, width/2,  60, _("Construction"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
+	progress = group->AddProgress(1, PROGRESS_BORDER_DISTANCE-tab->GetX(false),  60, width-2*PROGRESS_BORDER_DISTANCE, 20, TC_GREY, 139, 138, 10);
 	// Schlosserei
-	group->AddText(53, 120, 100, _("Metalworks"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
-	progress = group->AddProgress(54, 20, 100, 200, 20, TC_GREY, 139, 138, 10);
+	group->AddText(2, width/2, 100, _("Metalworks"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
+	progress = group->AddProgress(3, PROGRESS_BORDER_DISTANCE-tab->GetX(false), 100, width-2*PROGRESS_BORDER_DISTANCE, 20, TC_GREY, 139, 138, 10);
 	// Werft
-	group->AddText(55, 120, 140, _("Shipyard"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
-	progress = group->AddProgress(56, 20, 140, 200, 20, TC_GREY, 139, 138, 10);
+	group->AddText(4, 120, 140, _("Shipyard"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
+	progress = group->AddProgress(5, PROGRESS_BORDER_DISTANCE-tab->GetX(false), 140, width-2*PROGRESS_BORDER_DISTANCE, 20, TC_GREY, 139, 138, 10);
+
 	// Wasserbüffel äh -gruppe ;-)
 	group = tab->AddTab(LOADER.GetImageN("io", 92), _("Water"), TAB_WATER);
 
 	// Bäckerei
-	group->AddText(61, 120,  60, _("Bakery"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
-	progress = group->AddProgress(62, 20,  60, 200, 20, TC_GREY, 139, 138, 10);
+	group->AddText(0, width/2,  60, _("Bakery"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
+	progress = group->AddProgress(1, PROGRESS_BORDER_DISTANCE-tab->GetX(false),  60, width-2*PROGRESS_BORDER_DISTANCE, 20, TC_GREY, 139, 138, 10);
 	// Brauerei
-	group->AddText(63, 120, 100, _("Brewery"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
-	progress = group->AddProgress(64, 20, 100, 200, 20, TC_GREY, 139, 138, 10);
+	group->AddText(2, width/2, 100, _("Brewery"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
+	progress = group->AddProgress(3, PROGRESS_BORDER_DISTANCE-tab->GetX(false), 100, width-2*PROGRESS_BORDER_DISTANCE, 20, TC_GREY, 139, 138, 10);
 	// Schweinezucht
-	group->AddText(65, 120, 140, _("Pig farm"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
-	progress = group->AddProgress(66, 20, 140, 200, 20, TC_GREY, 139, 138, 10);
+	group->AddText(4, width/2, 140, _("Pig farm"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
+	progress = group->AddProgress(5, PROGRESS_BORDER_DISTANCE-tab->GetX(false), 140, width-2*PROGRESS_BORDER_DISTANCE, 20, TC_GREY, 139, 138, 10);
 	// Eselzucht
-	group->AddText(67, 120, 180, _("Donkey breeding"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
-	progress = group->AddProgress(68, 20, 180, 200, 20, TC_GREY, 139, 138, 10);
+	group->AddText(6, width/2, 180, _("Donkey breeding"), COLOR_YELLOW, glArchivItem_Font::DF_CENTER|glArchivItem_Font::DF_BOTTOM, SmallFont);
+	progress = group->AddProgress(7, PROGRESS_BORDER_DISTANCE-tab->GetX(false), 180, width-2*PROGRESS_BORDER_DISTANCE, 20, TC_GREY, 139, 138, 10);
+
+	
+	
+
 
 	UpdateSettings();
 
@@ -171,16 +192,15 @@ void iwDistribution::TransmitSettings()
 	if(settings_changed)
 	{
 		// Werte aus den Progress-Controls auslesen
-		unsigned char groups[] = { 4, 4, 2, 3, 3, 4 };
 
-		for(unsigned char i = 1, j = 0; i <= 6; ++i)
+		for(unsigned char i = 1, j = 0; i <= 7; ++i)
 		{
 			// Werte der Gruppen auslesen
-			for(unsigned char k = 0; k < groups[i-1]; ++k)
+			for(unsigned char k = 0; k < GROUP_SIZES[i-1]; ++k)
 				GAMECLIENT.visual_settings.distribution[j+k]
-			= (unsigned char)GetCtrl<ctrlTab>(0)->GetGroup(i)->GetCtrl<ctrlProgress>(i*10+k*2+2)->
+			= (unsigned char)GetCtrl<ctrlTab>(0)->GetGroup(i)->GetCtrl<ctrlProgress>(k*2+1)->
 				GetPosition();
-			j += groups[i-1];
+			j += GROUP_SIZES[i-1];
 		}
 
 		// und übermitteln
@@ -210,10 +230,10 @@ void iwDistribution::UpdateSettings()
 	// Globale Id für alle Gruppen für die visual_settings
 	unsigned vsi = 0;
 	// Alle Gruppen durchgehen und Einstellungen festlegen
-	for(unsigned g = 0;g<6;++g)
+	for(unsigned g = 0;g<7;++g)
 	{
 		ctrlGroup * group = GetCtrl<ctrlTab>(0)->GetGroup(TAB_FOOD+g);
 		for(unsigned i = 0;i<GROUP_SIZES[g];++i,++vsi)
-			group->GetCtrl<ctrlProgress>(10*(g+1)+2*(i+1))->SetPosition(GAMECLIENT.visual_settings.distribution[vsi]);
+			group->GetCtrl<ctrlProgress>(i*2+1)->SetPosition(GAMECLIENT.visual_settings.distribution[vsi]);
 	}
 }

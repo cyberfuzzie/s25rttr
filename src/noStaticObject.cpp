@@ -1,4 +1,4 @@
-// $Id: noStaticObject.cpp 6709 2010-09-05 12:56:24Z OLiver $
+// $Id: noStaticObject.cpp 6721 2010-09-10 09:33:56Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -110,7 +110,9 @@ void noStaticObject::Draw(int x, int y)
 			"mis0bobs", "mis1bobs", "mis2bobs", "mis3bobs", "mis4bobs", "mis5bobs", "charburner_bobs"
 		};
 		bitmap = LOADER.GetImageN(files[file], id);
-		shadow = LOADER.GetImageN(files[file], id+1);
+		// Use only shadows where available
+		if(file < 6)
+			shadow = LOADER.GetImageN(files[file], id+1);
 	}
 
 	assert(bitmap);

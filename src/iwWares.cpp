@@ -1,4 +1,4 @@
-// $Id: iwWares.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: iwWares.cpp 6721 2010-09-10 09:33:56Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -72,8 +72,8 @@ iwWares::iwWares(unsigned int id, unsigned short x , unsigned short y,
 			 7, 13, 14,  8,
 			 9, 10, 12, 11, 15,
 			18, 16, 17, 27,
-			26, 28, 29, 21, 22,
-			23, 24, 25, 0xFFFF
+			26, 28, 29, JOB_CHARBURNER, 21, 
+			22, 23, 24, 25
 		}, // 0xFFFF = unused
 	};
 
@@ -118,7 +118,10 @@ iwWares::iwWares(unsigned int id, unsigned short x , unsigned short y,
 				b->SetBorder(false);
 			}
 			else
+			{
+				
 				figures->AddImage(100+INVENTORY_IDS[1][ware_id], (four ? 27 : 13)+x*28+13, 21+y*42+13, LOADER.GetMapImageN(2298),_(JOB_NAMES[INVENTORY_IDS[1][ware_id]]));
+			}
 		}
 
 		// Hintergrundbild hinter Anzahl
@@ -129,7 +132,16 @@ iwWares::iwWares(unsigned int id, unsigned short x , unsigned short y,
 		// die jeweilige Ware
 		wares->AddImage(300+INVENTORY_IDS[0][ware_id], (four ? 40 : 26)+x*28, 34+y*42, LOADER.GetMapImageN(2250 + (INVENTORY_IDS[0][ware_id] == GD_SHIELDROMANS ? shield_INVENTORY_IDS[player->nation] : INVENTORY_IDS[0][ware_id])));
 		if(INVENTORY_IDS[1][ware_id] != 0xFFFF)
-			figures->AddImage(300+INVENTORY_IDS[1][ware_id], (four ? 40 : 26)+x*28, 34+y*42, LOADER.GetMapImageN(2300 + INVENTORY_IDS[1][ware_id]));
+		{
+			glArchivItem_Bitmap * image;
+			// Exception: charburner
+			if(INVENTORY_IDS[1][ware_id] != JOB_CHARBURNER)
+				image = LOADER.GetMapImageN(2300 + INVENTORY_IDS[1][ware_id]);
+			else
+				image = LOADER.GetImageN("charburner",50);
+
+			figures->AddImage(300+INVENTORY_IDS[1][ware_id], (four ? 40 : 26)+x*28, 34+y*42, image);
+		}
 
 		// Overlay für "Nicht Einlagern"
 		
@@ -200,7 +212,7 @@ void iwWares::Msg_PaintBefore()
 	ctrlGroup *group = GetCtrl<ctrlGroup>(100+page);
 	if(group)
 	{
-		unsigned count = (page == 0)?36:31;
+		unsigned count = (page == 0)?36:32;
 
 		for(unsigned int i = 0; i < count; ++i)
 		{

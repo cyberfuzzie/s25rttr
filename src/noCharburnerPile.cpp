@@ -1,4 +1,4 @@
-// $Id: noCharburnerPile.cpp 6718 2010-09-09 21:39:46Z OLiver $
+// $Id: noCharburnerPile.cpp 6721 2010-09-10 09:33:56Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -88,6 +88,9 @@ void noCharburnerPile::Draw( int x,	int y)
 	{
 	case STATE_WOOD:
 		{
+			// Draw sand on which the wood stack is constructed
+			LOADER.GetImageN("charburner_bobs",25)->Draw(x,y);
+
 			glArchivItem_Bitmap * image;
 			if(step == 0)
 				image = LOADER.GetImageN("charburner_bobs",26);

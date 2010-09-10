@@ -1,4 +1,4 @@
-// $Id: iwBuilding.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: iwBuilding.cpp 6721 2010-09-10 09:33:56Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -64,7 +64,15 @@ iwBuilding::iwBuilding(GameWorldViewer * const gwv,dskGameInterface *const gi,no
 {
 	// Arbeitersymbol
 	AddImage(0, 28, 39, LOADER.GetMapImageN(2298));
-	AddImage(1, 28, 39, LOADER.GetMapImageN(2300 + USUAL_BUILDING_CONSTS[building->GetBuildingType()-10].job));
+	// Arbeitersymbol
+	glArchivItem_Bitmap * image;
+	// Exception: charburner
+	if(building->GetBuildingType() != BLD_CHARBURNER)
+		image = LOADER.GetMapImageN(2300 + USUAL_BUILDING_CONSTS[building->GetBuildingType()-10].job);
+	else
+		image = LOADER.GetImageN("charburner",50);
+	AddImage(1, 28, 39, image);
+
 
 	// Symbol der produzierten Ware (falls hier was produziert wird)
 	if(USUAL_BUILDING_CONSTS[building->GetBuildingType()-10].produced_ware != GD_NOTHING)

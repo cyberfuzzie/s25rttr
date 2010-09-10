@@ -1,4 +1,4 @@
-// $Id: nofCharburner.cpp 6718 2010-09-09 21:39:46Z OLiver $
+// $Id: nofCharburner.cpp 6722 2010-09-10 09:46:45Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -195,7 +195,7 @@ nofFarmhand::PointQuality nofCharburner::GetPointQuality(const unsigned short x,
 	for(unsigned char i = 0;i<6;++i)
 	{
 		t = gwg->GetTerrainAround(x,y,i);
-		if(t == 3 || (t>=8 && t<=12))
+		if(t == 1 || t == 3 || (t>=8 && t<=13))
 			++good_terrains;
 	}
 

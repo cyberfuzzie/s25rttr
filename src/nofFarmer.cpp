@@ -1,4 +1,4 @@
-// $Id: nofFarmer.cpp 6718 2010-09-09 21:39:46Z OLiver $
+// $Id: nofFarmer.cpp 6725 2010-09-11 11:57:54Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -86,19 +86,19 @@ void nofFarmer::DrawWorking(int x,int y)
 
 }
 
-/// Fragt die abgeleitete Klasse um die ID in JOBS.BOB, wenn der Beruf Waren raustr‰gt (bzw rein)
+/// Fragt die abgeleitete Klasse um die ID in JOBS.BOB, wenn der Beruf Waren raustr√§gt (bzw rein)
 unsigned short nofFarmer::GetCarryID() const
 {
 	return 71;
 }
 
-/// Abgeleitete Klasse informieren, wenn sie anf‰ngt zu arbeiten (Vorbereitungen)
+/// Abgeleitete Klasse informieren, wenn sie anf√§ngt zu arbeiten (Vorbereitungen)
 void nofFarmer::WorkStarted()
 {
-	// Wenn ich zu einem Getreidefeld gehe, ernte ich es ab, ansonsten s‰he ich
+	// Wenn ich zu einem Getreidefeld gehe, ernte ich es ab, ansonsten s√§he ich
 	harvest = (gwg->GetNO(x,y)->GetType() == NOP_GRAINFIELD);
 
-	// Getreidefeld Bescheid sagen, damits nicht plˆtzlich verschwindet, w‰hrend wir arbeiten
+	// Getreidefeld Bescheid sagen, damits nicht pl√∂tzlich verschwindet, w√§hrend wir arbeiten
 	if(harvest)
 		gwg->GetSpecObj<noGrainfield>(x,y)->BeginHarvesting();
 }
@@ -110,7 +110,11 @@ void nofFarmer::WorkFinished()
 	{
 		// Getreidefeld vernichten und vorher noch die ID von dem abgeernteten Feld holen, was dann als
 		// normales Zierobjekt gesetzt wird
-		noGrainfield * gf = gwg->GetSpecObj<noGrainfield>(x,y);
+		noBase * nob = gwg->GetNO(x,y);
+		// Check if there is still a grain field at this position
+		if(nob->GetGOT() != GOT_GRAINFIELD)
+			return;
+		noGrainfield * gf = static_cast<noGrainfield*>(nob);
         //unsigned env_obj_id = gf->GetHarvestMapLstID();
         gwg->SetNO(new noEnvObject(x, y, gf->GetHarvestMapLstID()), x, y);
 		gf->Destroy();
@@ -121,13 +125,20 @@ void nofFarmer::WorkFinished()
     }
 	else
 	{
+		// If there is any road now, don't set the grain field
+		for(unsigned i = 0;i<6;++i)
+		{
+			if(gwg->GetPointRoad(x,y,i))
+				return;
+		}
+		
 		// Was stand hier vorher?
 		NodalObjectType nop = gwg->GetNO(x,y)->GetType();
 
-		// Nur Zierobjekte und Schilder d¸rfen weggerissen werden
+		// Nur Zierobjekte und Schilder d√ºrfen weggerissen werden
 		if(nop == NOP_ENVIRONMENT || nop == NOP_NOTHING)
 		{
-			// ggf. vorher wegreiﬂen
+			// ggf. vorher wegrei√üen
 			noBase * no = gwg->GetSpecObj<noBase>(x,y);
 			if(no)
 			{
@@ -138,7 +149,7 @@ void nofFarmer::WorkFinished()
 			gwg->SetNO(new noGrainfield(x,y),x,y);
 		}
 
-		// Wir haben nur ges‰ht (gar nichts in die Hand nehmen)
+		// Wir haben nur ges√§ht (gar nichts in die Hand nehmen)
 		ware = GD_NOTHING;
     }
 
@@ -150,7 +161,7 @@ void nofFarmer::WorkFinished()
 nofFarmhand::PointQuality nofFarmer::GetPointQuality(const MapCoord x, const MapCoord y) 
 {
 	
-	// Entweder gibts ein Getreidefeld, das wir abernten kˆnnen...
+	// Entweder gibts ein Getreidefeld, das wir abernten k√∂nnen...
 	if(gwg->GetNO(x,y)->GetType() == NOP_GRAINFIELD)
 	{
 		if(gwg->GetSpecObj<noGrainfield>(x,y)->IsHarvestable())
@@ -158,10 +169,10 @@ nofFarmhand::PointQuality nofFarmer::GetPointQuality(const MapCoord x, const Map
 		else
 			return PQ_NOTPOSSIBLE;
 	}
-	// oder einen freien Platz, wo wir ein neues s‰hen kˆnnen
+	// oder einen freien Platz, wo wir ein neues s√§hen k√∂nnen
 	else
 	{
-		// Nicht auf Straﬂen bauen!
+		// Nicht auf Stra√üen bauen!
 		for(unsigned char i = 0;i<6;++i)
 		{
 			if(gwg->GetPointRoad(x,y,i))
@@ -187,7 +198,7 @@ nofFarmhand::PointQuality nofFarmer::GetPointQuality(const MapCoord x, const Map
 
 		for(unsigned char i = 0;i<6;++i)
 		{
-			// Nicht direkt neben andere Getreidefelder und Geb‰ude setzen!
+			// Nicht direkt neben andere Getreidefelder und Geb√§ude setzen!
 			nop = gwg->GetNO(gwg->GetXA(x,y,i),gwg->GetYA(x,y,i))->GetType();
 			if(nop == NOP_GRAINFIELD || nop == NOP_BUILDING || nop == NOP_BUILDINGSITE)
 				return PQ_NOTPOSSIBLE;

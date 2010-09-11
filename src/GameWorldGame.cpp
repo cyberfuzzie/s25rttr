@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 6724 2010-09-11 11:08:48Z OLiver $
+// $Id: GameWorldGame.cpp 6725 2010-09-11 11:57:54Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -466,6 +466,7 @@ bool GameWorldGame::IsObjectionableForRoad(const MapCoord x, const MapCoord y)
 			{
 				return true;
 			} break;
+		}
 	}
 
 	return false;

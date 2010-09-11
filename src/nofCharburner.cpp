@@ -1,4 +1,4 @@
-// $Id: nofCharburner.cpp 6722 2010-09-10 09:46:45Z OLiver $
+// $Id: nofCharburner.cpp 6725 2010-09-11 11:57:54Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -82,13 +82,13 @@ void nofCharburner::DrawWorking(int x,int y)
 
 }
 
-/// Fragt die abgeleitete Klasse um die ID in JOBS.BOB, wenn der Beruf Waren raustr‰gt (bzw rein)
+/// Fragt die abgeleitete Klasse um die ID in JOBS.BOB, wenn der Beruf Waren raustr√§gt (bzw rein)
 unsigned short nofCharburner::GetCarryID() const
 {
 	return 1000;
 }
 
-/// Abgeleitete Klasse informieren, wenn sie anf‰ngt zu arbeiten (Vorbereitungen)
+/// Abgeleitete Klasse informieren, wenn sie anf√§ngt zu arbeiten (Vorbereitungen)
 void nofCharburner::WorkStarted()
 {
 }
@@ -137,7 +137,7 @@ void nofCharburner::WorkFinished()
 	}
 }
 
-/// Fragt abgeleitete Klasse, ob hier Platz bzw ob hier ein Baum etc steht, den z.B. der Holzf‰ller braucht
+/// Fragt abgeleitete Klasse, ob hier Platz bzw ob hier ein Baum etc steht, den z.B. der Holzf√§ller braucht
 nofFarmhand::PointQuality nofCharburner::GetPointQuality(const unsigned short x, const unsigned short y)
 {
 	noBase * no = gwg->GetNO(x,y);
@@ -151,7 +151,7 @@ nofFarmhand::PointQuality nofCharburner::GetPointQuality(const unsigned short x,
 			return PQ_NOTPOSSIBLE;
 
 		// Does it need resources and I don't have them hen starting new work (state = STATE_WAITING1)?
-		if(state == noCharburnerPile::STATE_WOOD && !workplace->WaresAvailable() && state == STATE_WAITING1)
+		if(state == noCharburnerPile::STATE_WOOD && !workplace->WaresAvailable() && this->state == STATE_WAITING1)
 			return PQ_NOTPOSSIBLE;
 
 		// All ok, work on this pile
@@ -174,7 +174,7 @@ nofFarmhand::PointQuality nofCharburner::GetPointQuality(const unsigned short x,
 		return PQ_NOTPOSSIBLE;
 
 
-	// darf auﬂerdem nich auf einer Straﬂe liegen
+	// darf au√üerdem nich auf einer Stra√üe liegen
 	for(unsigned char i = 0;i<6;++i)
 	{
 		if(gwg->GetPointRoad(x,y,i))

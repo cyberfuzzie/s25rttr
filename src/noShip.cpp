@@ -1,4 +1,4 @@
-// $Id: noShip.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: noShip.cpp 6725 2010-09-11 11:57:54Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -44,7 +44,7 @@ const unsigned LOADING_TIME = 200;
 /// Zeit zum Entladen des Schiffes
 const unsigned UNLOADING_TIME = 200;
 
-/// Maximaler Weg, der zurückgelegt werden kann bei einem Erkundungsschiff 
+/// Maximaler Weg, der zurÃ¼ckgelegt werden kann bei einem Erkundungsschiff 
 const unsigned MAX_EXPLORATION_EXPEDITION_DISTANCE = 100;
 /// Zeit (in GF), die das Schiff bei der Erkundungs-Expedition jeweils an einem Punkt ankert
 const unsigned EXPLORATION_EXPEDITION_WAITING_TIME = 300;
@@ -52,13 +52,13 @@ const unsigned EXPLORATION_EXPEDITION_WAITING_TIME = 300;
 const std::string ship_names[NATION_COUNT][ship_count] = {
 	/* Nubier */	{ "Aica", "Aida", "Ainra", "Alayna", "Alisha", "Alma", "Amila", "Anina", "Armina", "Banu", "Baya", "Bea", "Bia", "Bisa", "Cheche", "Dafina", "Daria", "Dina", "Do", "Dofi", "Efia", "Erin", "Esi", "Esra", "Fahari", "Faraya", "Fujo", "Ghiday", "Habiaba", "Hajunza", "Ina", "Layla", "Lenia", "Lillian", "Malika", "Mona", "Naja", "Neriman", "Nyela", "Olufunmilayo", "Panyin", "Rayyan", "Rhiannon", "Safiya", "Sahra", "Selda", "Senna", "Shaira", "Shakira", "Sharina", "Sinah", "Suada", "Sulamith", "Tiada", "Yelda" },
 	/* Japaner */	{ "Ai", "Aiko", "Aimi", "Akemi", "Amaya", "Aoi", "Ayaka", "Ayano", "Beniko", "Chiyo", "Chiyoko", "Emi", "Fumiko", "Haruka", "Hiroko", "Hotaru", "Kaori", "Kasumi", "Kazuko", "Kazumi", "Keiko", "Kiriko", "Kumiko", "Mai", "Mayumi", "Megumi", "Midori", "Misaki", "Miu", "Moe", "Nanami", "Naoko", "Naomi", "Natsuki", "Noriko", "Reika", "Sachiko", "Sadako", "Sakura", "Satsuki", "Sayuri", "Setsuko", "Shigeko", "Teiko", "Tomomi", "Umeko", "Yoko", "Yoshiko", "Youko", "Yukiko", "Yumi", "Yumiko", "Yuna", "Yuuka", "Yuzuki" },
-	/* Römer */		{ "Antia", "Ateia", "Aurelia", "Camilia", "Claudia", "Duccia", "Epidia", "Equitia", "Fabia", "Galeria", "Helvetia", "Iunia", "Iusta", "Iuventia", "Lafrenia", "Livia", "Longinia", "Maelia", "Maxima", "Nigilia", "Nipia", "Norbana", "Novia", "Orania", "Otacilia", "Petronia", "Pinaria", "Piscia", "Pisentia", "Placidia", "Quintia", "Quirinia", "Rusonia", "Rutilia", "Sabucia", "Sallustia", "Salonia", "Salvia", "Scribonia", "Secundia", "Secundinia", "Tadia", "Talmudia", "Tanicia", "Tertinia", "Tita", "Ulpia", "Umbrenia", "Valeria", "Varia", "Vassenia", "Vatinia", "Vedia", "Velia", "Verania" },
+	/* RÃ¶mer */		{ "Antia", "Ateia", "Aurelia", "Camilia", "Claudia", "Duccia", "Epidia", "Equitia", "Fabia", "Galeria", "Helvetia", "Iunia", "Iusta", "Iuventia", "Lafrenia", "Livia", "Longinia", "Maelia", "Maxima", "Nigilia", "Nipia", "Norbana", "Novia", "Orania", "Otacilia", "Petronia", "Pinaria", "Piscia", "Pisentia", "Placidia", "Quintia", "Quirinia", "Rusonia", "Rutilia", "Sabucia", "Sallustia", "Salonia", "Salvia", "Scribonia", "Secundia", "Secundinia", "Tadia", "Talmudia", "Tanicia", "Tertinia", "Tita", "Ulpia", "Umbrenia", "Valeria", "Varia", "Vassenia", "Vatinia", "Vedia", "Velia", "Verania" },
 	/* Wikinger */	{ "Adelberga", "Adelgund", "Adelheid", "Adelinde", "Alsuna", "Alwina", "Amelinde", "Astrid", "Baltrun", "Bernhild", "Bothilde", "Dagny", "Dankrun", "Eldrid", "Erlgard", "Fehild ", "Ferun", "Frauke ", "Freya", "Gerda ", "Gesa", "Gismara", "Hella", "Henrike ", "Hilke", "Ida", "Irma", "Irmlinde", "Isantrud ", "Kunheide", "Kunigunde", "Lioba", "Lykke", "Marada", "Margard ", "Merlinde", "Minnegard", "Nanna", "Norwiga", "Oda", "Odarike", "Osrun ", "Raginhild ", "Raskild ", "Rinelda", "Runa", "Runhild ", "Salgard", "Sarhild", "Tanka", "Tyra", "Ulla", "Uta", "Walda", "Wiebke" }
 };
 
 //{"FloSoftius", "Demophobius", "Olivianus", "Spikeonius", "Nastius"};
 
-/// Positionen der Flaggen am Schiff für die 6 unterschiedlichen Richtungen jeweils#
+/// Positionen der Flaggen am Schiff fÃ¼r die 6 unterschiedlichen Richtungen jeweils#
 const Point<int> SHIPS_FLAG_POS[12] =
 {
 	// Und wenn das Schiff steht und Segel nicht gehisst hat
@@ -69,7 +69,7 @@ const Point<int> SHIPS_FLAG_POS[12] =
 	Point<int>(-1,-70),
 	Point<int>(-1,-70),
 
-	// Und wenn es fährt
+	// Und wenn es fÃ¤hrt
 	Point<int>(3,-70),
 	Point<int>(0,-64),
 	Point<int>(3,-64),
@@ -85,7 +85,7 @@ noShip::noShip(const unsigned short x, const unsigned short y, const unsigned ch
 	name(ship_names[gwg->GetPlayer(player)->nation][Random::inst().Rand(__FILE__, __LINE__, this->obj_id, ship_count)]),
 	lost(false), remaining_sea_attackers(0), home_harbor(0), covered_distance(0)
 {
-	// Meer ermitteln, auf dem dieses Schiff fährt
+	// Meer ermitteln, auf dem dieses Schiff fÃ¤hrt
 	for(unsigned i = 0;i<6;++i)
 	{
 		unsigned short sea_id = gwg->GetNodeAround(x,y,i).sea_id;
@@ -93,7 +93,7 @@ noShip::noShip(const unsigned short x, const unsigned short y, const unsigned ch
 			this->sea_id = sea_id;
 	}
 
-	// Auf irgendeinem Meer müssen wir ja sein
+	// Auf irgendeinem Meer mÃ¼ssen wir ja sein
 	assert(sea_id > 0);
 
 	gwg->AddFigure(this,x,y);
@@ -232,7 +232,7 @@ void noShip::Draw(int x, int y)
 		Draw(x+SHIPS_FLAG_POS[dir+flag_drawing_type*6].x,y+4+SHIPS_FLAG_POS[dir+flag_drawing_type*6].y,0,0,0,0,0,0,COLOR_WHITE, COLOR_WHITE);
 
 }
-/// Zeichnet normales Fahren auf dem Meer ohne irgendwelche Güter
+/// Zeichnet normales Fahren auf dem Meer ohne irgendwelche GÃ¼ter
 void noShip::DrawDriving(int& x, int& y)
 {
 	// Interpolieren zwischen beiden Knotenpunkten
@@ -242,7 +242,7 @@ void noShip::DrawDriving(int& x, int& y)
 	LOADER.GetImageN("boot_z", 12+((dir+3)%6)*2)->Draw(x,y);
 }
 
-/// Zeichnet normales Fahren auf dem Meer mit Gütern
+/// Zeichnet normales Fahren auf dem Meer mit GÃ¼tern
 void noShip::DrawDrivingWithWares(int& x, int& y)
 {
 	// Interpolieren zwischen beiden Knotenpunkten
@@ -267,7 +267,7 @@ void noShip::HandleEvent(const unsigned int id)
 			// neue Position einnehmen
 			Walk();
 
-			// entscheiden, was als nächstes zu tun ist
+			// entscheiden, was als nÃ¤chstes zu tun ist
 			Driven();
 		} break;
 	default:
@@ -325,7 +325,7 @@ void noShip::HandleEvent(const unsigned int id)
 							(this,x,y,&goal_harbor_id,&route,NULL))
 							HandleState_ExpeditionDriving();
 						else
-							// Ansonsten als verloren markieren, damit uns später Bescheid gesagt wird
+							// Ansonsten als verloren markieren, damit uns spÃ¤ter Bescheid gesagt wird
 							// wenn es einen neuen Hafen gibt
 							lost = true;
 					}
@@ -341,7 +341,7 @@ void noShip::HandleEvent(const unsigned int id)
 					
 					if(hb->GetGOT() == GOT_NOB_HARBORBUILDING)
 					{
-						// Späher wieder entladen
+						// SpÃ¤her wieder entladen
 						Goods goods;
 						memset(&goods,0,sizeof(Goods));
 						goods.people[JOB_SCOUT] = SCOUTS_EXPLORATION_EXPEDITION;
@@ -358,7 +358,7 @@ void noShip::HandleEvent(const unsigned int id)
 							(this,x,y,&goal_harbor_id,&route,NULL))
 							HandleState_ExplorationExpeditionDriving();
 						else
-							// Ansonsten als verloren markieren, damit uns später Bescheid gesagt wird
+							// Ansonsten als verloren markieren, damit uns spÃ¤ter Bescheid gesagt wird
 							// wenn es einen neuen Hafen gibt
 							lost = true;
 					}
@@ -399,14 +399,14 @@ void noShip::HandleEvent(const unsigned int id)
 				} break;
 			case STATE_SEAATTACK_WAITING:
 				{
-					// Nächsten Soldaten nach draußen beordern
+					// NÃ¤chsten Soldaten nach drauÃŸen beordern
 					if(!figures.size())
 						break;
 
 					nofAttacker * attacker = static_cast<nofAttacker*>(*figures.begin());
 					// Evtl. ist ein Angreifer schon fertig und wieder an Board gegangen
-					// der darf dann natürlich nicht noch einmal raus, sonst kann die schöne Reise
-					// böse enden
+					// der darf dann natÃ¼rlich nicht noch einmal raus, sonst kann die schÃ¶ne Reise
+					// bÃ¶se enden
 					if(attacker->IsSeaAttackCompleted())
 						break;
 
@@ -440,8 +440,9 @@ void noShip::Driven()
 	// Feindliches Territorium entdeckt?
 	if(enemy_territory_discovered.x != 0xffff)
 	{
-		// Dann Nachricht senden
-		GameClient::inst().SendPostMessage(new PostMsgWithLocation(_("A ship disovered an enemy territory"), PMC_MILITARY, enemy_territory_discovered.x, enemy_territory_discovered.y));
+		// Send message if necessary
+		if(players->getElement(player)->ShipDiscoveredHostileTerritory(enemy_territory_discovered))
+			GameClient::inst().SendPostMessage(new PostMsgWithLocation(_("A ship disovered an enemy territory"), PMC_MILITARY, enemy_territory_discovered.x, enemy_territory_discovered.y));
 
 	}
 
@@ -458,10 +459,10 @@ void noShip::Driven()
 	}
 }
 
-/// Gibt Sichtradius dieses Schiffes zurück
+/// Gibt Sichtradius dieses Schiffes zurÃ¼ck
 unsigned noShip::GetVisualRange() const
 {
-	// Erkundungsschiffe haben einen größeren Sichtbereich
+	// Erkundungsschiffe haben einen grÃ¶ÃŸeren Sichtbereich
 	if(state >= STATE_EXPLORATIONEXPEDITION_LOADING && state <= STATE_EXPLORATIONEXPEDITION_DRIVING)
 		return VISUALRANGE_EXPLORATION_SHIP;
 	else
@@ -471,7 +472,7 @@ unsigned noShip::GetVisualRange() const
 
 
 
-/// Fährt zum Hafen, um dort eine Mission (Expedition) zu erledigen
+/// FÃ¤hrt zum Hafen, um dort eine Mission (Expedition) zu erledigen
 void noShip::GoToHarbor(nobHarborBuilding * hb, const std::vector<unsigned char>& route)
 {
 	state = STATE_GOTOHARBOR;
@@ -488,7 +489,7 @@ void noShip::GoToHarbor(nobHarborBuilding * hb, const std::vector<unsigned char>
 
 void noShip::HandleState_GoToHarbor()
 {
-	// Hafen schon zerstört?
+	// Hafen schon zerstÃ¶rt?
 	if(goal_harbor_id == 0)
 	{
 		StartIdling();
@@ -505,7 +506,7 @@ void noShip::HandleState_GoToHarbor()
 				Point<MapCoord> goal(gwg->GetHarborPoint(goal_harbor_id));
 				// Erstmal nichts machen und idlen
 				StartIdling();
-				// Hafen Bescheid sagen, dass wir da sind (falls er überhaupt noch existiert)
+				// Hafen Bescheid sagen, dass wir da sind (falls er Ã¼berhaupt noch existiert)
 				noBase * nb = gwg->GetNO(goal.x,goal.y);
 				if(nb->GetGOT() == GOT_NOB_HARBORBUILDING)
 					static_cast<nobHarborBuilding*>(nb)->ShipArrived(this);
@@ -551,12 +552,12 @@ void noShip::StartExplorationExpedition()
 }
 
 
-/// Fährt weiter zu einem Hafen
+/// FÃ¤hrt weiter zu einem Hafen
 noShip::Result noShip::DriveToHarbour()
 {
 	Point<MapCoord> goal(gwg->GetHarborPoint(goal_harbor_id));
 	
-	// Existiert der Hafen überhaupt noch?
+	// Existiert der Hafen Ã¼berhaupt noch?
 	if(gwg->GetGOT(goal.x,goal.y) != GOT_NOB_HARBORBUILDING)
 		return HARBOR_DOESNT_EXIST;
 
@@ -565,7 +566,7 @@ noShip::Result noShip::DriveToHarbour()
 	//nobHarborBuilding * hb = gwg->GetSpecObj<nobHarborBuilding>(goal.x,goal.y);
 }
 
-/// Fährt weiter zu Hafenbauplatz
+/// FÃ¤hrt weiter zu Hafenbauplatz
 noShip::Result noShip::DriveToHarbourPlace()
 {
 	// Sind wir schon da?
@@ -573,13 +574,13 @@ noShip::Result noShip::DriveToHarbourPlace()
 		return GOAL_REACHED;
 	else
 	{
-		// Punkt, zu dem uns der Hafen hinführen will (Küstenpunkt)
+		// Punkt, zu dem uns der Hafen hinfÃ¼hren will (KÃ¼stenpunkt)
 		MapCoord coastal_x, coastal_y;
 		gwg->GetCoastalPoint(goal_harbor_id,&coastal_x, &coastal_y,sea_id);
 
 		MapCoord goal_x_route, goal_y_route;
 
-		// Route überprüfen
+		// Route Ã¼berprÃ¼fen
 		if(!gwg->CheckShipRoute(x,y,route,pos,&goal_x_route,&goal_y_route))
 		{
 			// Route kann nicht mehr passiert werden --> neue Route suchen
@@ -593,10 +594,10 @@ noShip::Result noShip::DriveToHarbourPlace()
 			pos = 0;
 		}
 
-		// Kommen wir auch mit unser bisherigen Route an dem ursprünglich anvisierten Hafenplatz an?
+		// Kommen wir auch mit unser bisherigen Route an dem ursprÃ¼nglich anvisierten Hafenplatz an?
 		if(!(coastal_x == goal_x_route && coastal_y == goal_y_route))
 		{
-			// Nein, d.h. wenn wir schon nah dran sind, müssen wir die Route neu berechnen
+			// Nein, d.h. wenn wir schon nah dran sind, mÃ¼ssen wir die Route neu berechnen
 			if(route.size()-pos < 10)
 			{
 				if(!gwg->FindShipPath(x,y,coastal_x,coastal_y,&route,NULL))
@@ -629,7 +630,7 @@ void noShip::ContinueExpedition(const unsigned char dir)
 
 	assert(state == STATE_EXPEDITION_WAITING);
 
-	// Nächsten Hafenpunkt in dieser Richtung suchen
+	// NÃ¤chsten Hafenpunkt in dieser Richtung suchen
 	unsigned new_goal = gwg->GetNextFreeHarborPoint(x,y,goal_harbor_id,dir,player);
 
 	// Auch ein Ziel gefunden?
@@ -652,10 +653,10 @@ void noShip::ContinueExpedition(const unsigned char dir)
 }
 
 /// Weist das Schiff an, eine Expedition abzubrechen (nur wenn es steht) und zum
-/// Hafen zurückzukehren
+/// Hafen zurÃ¼ckzukehren
 void noShip::CancelExpedition()
 {
-	// Zum Heimathafen zurückkehren
+	// Zum Heimathafen zurÃ¼ckkehren
 	
 	// Oder sind wir schon dort?
 	if(goal_harbor_id == home_harbor)
@@ -673,13 +674,13 @@ void noShip::CancelExpedition()
 	}
 }
 
-/// Weist das Schiff an, an der aktuellen Position einen Hafen zu gründen
+/// Weist das Schiff an, an der aktuellen Position einen Hafen zu grÃ¼nden
 void noShip::FoundColony()
 {
 	if(state != STATE_EXPEDITION_WAITING)
 		return;
 
-	// Kolonie gründen
+	// Kolonie grÃ¼nden
 	if(gwg->FoundColony(goal_harbor_id,player,sea_id))
 	{
 		// Dann idlen wir wieder
@@ -782,7 +783,7 @@ void noShip::HandleState_ExplorationExpeditionDriving()
 				(this,x,y,&goal_harbor_id,&route,NULL))
 				HandleState_TransportDriving();
 			else
-				// Ansonsten als verloren markieren, damit uns später Bescheid gesagt wird
+				// Ansonsten als verloren markieren, damit uns spÃ¤ter Bescheid gesagt wird
 				// wenn es einen neuen Hafen gibt
 				lost = true;
 			
@@ -798,7 +799,7 @@ void noShip::HandleState_TransportDriving()
 	default: return;
 	case GOAL_REACHED:
 		{
-			// Waren abladen, dafür wieder kurze Zeit hier ankern
+			// Waren abladen, dafÃ¼r wieder kurze Zeit hier ankern
 			state = STATE_TRANSPORT_UNLOADING;
 			current_ev = em->AddEvent(this,UNLOADING_TIME,1);
 			
@@ -811,7 +812,7 @@ void noShip::HandleState_TransportDriving()
 	case HARBOR_DOESNT_EXIST:
 		{
 			// Kein Hafen mehr?
-			// Dann müssen alle Leute ihren Heimatgebäuden Bescheid geben, dass sie
+			// Dann mÃ¼ssen alle Leute ihren HeimatgebÃ¤uden Bescheid geben, dass sie
 			// nun nicht mehr kommen
 			// Das Schiff muss einen Notlandeplatz ansteuern
 			for(std::list<noFigure*>::iterator it = figures.begin();it!=figures.end();++it)
@@ -827,7 +828,7 @@ void noShip::HandleState_TransportDriving()
 				(this,x,y,&goal_harbor_id,&route,NULL))
 				HandleState_TransportDriving();
 			else
-				// Ansonsten als verloren markieren, damit uns später Bescheid gesagt wird
+				// Ansonsten als verloren markieren, damit uns spÃ¤ter Bescheid gesagt wird
 				// wenn es einen neuen Hafen gibt
 				lost = true;
 			
@@ -835,7 +836,7 @@ void noShip::HandleState_TransportDriving()
 	}
 }
 
-/// Gibt zurück, ob das Schiff jetzt in der Lage wäre, eine Kolonie zu gründen
+/// Gibt zurÃ¼ck, ob das Schiff jetzt in der Lage wÃ¤re, eine Kolonie zu grÃ¼nden
 bool noShip::IsAbleToFoundColony() const
 {
 	// Warten wir gerade?
@@ -849,7 +850,7 @@ bool noShip::IsAbleToFoundColony() const
 	return false;
 }
 
-/// Gibt zurück, ob das Schiff einen bestimmten Hafen ansteuert
+/// Gibt zurÃ¼ck, ob das Schiff einen bestimmten Hafen ansteuert
 bool noShip::IsGoingToHarbor(nobHarborBuilding * hb) const
 {
 	return (goal_harbor_id == hb->GetHarborPosID() && 
@@ -857,7 +858,7 @@ bool noShip::IsGoingToHarbor(nobHarborBuilding * hb) const
 		|| state == STATE_TRANSPORT_LOADING || state == STATE_TRANSPORT_UNLOADING));
 }
 
-/// Belädt das Schiff mit Waren und Figuren, um eine Transportfahrt zu starten
+/// BelÃ¤dt das Schiff mit Waren und Figuren, um eine Transportfahrt zu starten
 void noShip::PrepareTransport(Point<MapCoord> goal, const std::list<noFigure*>& figures, const std::list<Ware*>& wares)
 {
 	// ID von Zielhafen herausfinden
@@ -873,7 +874,7 @@ void noShip::PrepareTransport(Point<MapCoord> goal, const std::list<noFigure*>& 
 	current_ev = em->AddEvent(this,LOADING_TIME,1);
 }
 
-/// Belädt das Schiff mit Schiffs-Angreifern
+/// BelÃ¤dt das Schiff mit Schiffs-Angreifern
 void noShip::PrepareSeaAttack(Point<MapCoord> goal, const std::list<noFigure*>& figures)
 {
 	// Heimathafen merken
@@ -936,7 +937,7 @@ void noShip::HandleState_SeaAttackReturn()
 	case HARBOR_DOESNT_EXIST:
 		{
 			// Kein Hafen mehr?
-			// Dann müssen alle Angreifer ihren Heimatgebäuden Bescheid geben, dass sie
+			// Dann mÃ¼ssen alle Angreifer ihren HeimatgebÃ¤uden Bescheid geben, dass sie
 			// nun nicht mehr kommen
 			// Das Schiff muss einen Notlandeplatz ansteuern
 			for(std::list<noFigure*>::iterator it = figures.begin();it!=figures.end();++it)
@@ -962,7 +963,7 @@ void noShip::HandleState_SeaAttackReturn()
 	}
 }
 
-/// Fängt an zu einem Hafen zu fahren (berechnet Route usw.)
+/// FÃ¤ngt an zu einem Hafen zu fahren (berechnet Route usw.)
 void noShip::StartDrivingToHarborPlace()
 {
 	MapCoord coastal_x, coastal_y;
@@ -989,7 +990,7 @@ void noShip::StartTransport()
 	HandleState_TransportDriving(); 
 }
 
-/// Sagt dem Schiff, das ein bestimmter Hafen zerstört wurde
+/// Sagt dem Schiff, das ein bestimmter Hafen zerstÃ¶rt wurde
 void noShip::HarborDestroyed(nobHarborBuilding * hb)
 {
 	// Ist unser Ziel betroffen?
@@ -1003,7 +1004,7 @@ void noShip::HarborDestroyed(nobHarborBuilding * hb)
 			// Zielpunkt wieder auf Starthafen setzen
 			goal_harbor_id = home_harbor;
 			
-			// Waren und Figure über verändertes Ziel informieren
+			// Waren und Figure Ã¼ber verÃ¤ndertes Ziel informieren
 			for(std::list<noFigure*>::iterator it = figures.begin();it!=figures.end();++it)
 				(*it)->StartShipJourney(gwg->GetHarborPoint(goal_harbor_id));
 		}
@@ -1011,7 +1012,7 @@ void noShip::HarborDestroyed(nobHarborBuilding * hb)
 		else if(((state >= STATE_TRANSPORT_LOADING && state <= STATE_TRANSPORT_UNLOADING)))
 		{
 			// Punkt von dem aus berechnet werden soll, ist normalerweise der normale Standpunkt des Schiffes,
-			// allderdings der nächste Punkt, wenn das Schiff gerade am fahren ist (der Zielpunkt der aktuellen
+			// allderdings der nÃ¤chste Punkt, wenn das Schiff gerade am fahren ist (der Zielpunkt der aktuellen
 			// Bewegung
 			MapCoord current_x = x, current_y = y;
 			if(state == STATE_TRANSPORT_DRIVING)
@@ -1020,14 +1021,14 @@ void noShip::HarborDestroyed(nobHarborBuilding * hb)
 				current_y = gwg->GetYA(x,y,dir);
 			}
 
-			// Neues Ziel suchen, wo wir ankern können
+			// Neues Ziel suchen, wo wir ankern kÃ¶nnen
 			if(players->getElement(player)->FindHarborForUnloading(this,current_x,current_y,&goal_harbor_id,&route,hb))
 			{
 
 				switch(state)
 				{
 				default: return;
-				case STATE_TRANSPORT_LOADING: // Schiff wird mit Waren/Figuren erst noch beladen, bleibt also für kurze Zeit am Hafen
+				case STATE_TRANSPORT_LOADING: // Schiff wird mit Waren/Figuren erst noch beladen, bleibt also fÃ¼r kurze Zeit am Hafen
 					{
 						state = STATE_TRANSPORT_DRIVING;
 						// Hafen suchen, wo wir gerade ankern
@@ -1038,7 +1039,7 @@ void noShip::HarborDestroyed(nobHarborBuilding * hb)
 							{
 								// Waren wieder abladen
 								static_cast<nobHarborBuilding*>(nob)->ReceiveGoodsFromShip(figures,wares);
-								// Neuen Job für mich suchen
+								// Neuen Job fÃ¼r mich suchen
 								StartIdling();
 								goal_harbor_id = 0;
 								players->getElement(player)->GetJobForShip(this);
@@ -1056,7 +1057,7 @@ void noShip::HarborDestroyed(nobHarborBuilding * hb)
 						pos = 0;
 
 					} break;
-				case STATE_TRANSPORT_UNLOADING: /// Entlädt Schiff am Zielhafen, kurze Zeit ankern, bevor Waren im Hafengebäude ankommen..
+				case STATE_TRANSPORT_UNLOADING: /// EntlÃ¤dt Schiff am Zielhafen, kurze Zeit ankern, bevor Waren im HafengebÃ¤ude ankommen..
 					{
 						// Event zum Abladen abmelden
 						em->RemoveEvent(current_ev);
@@ -1070,7 +1071,7 @@ void noShip::HarborDestroyed(nobHarborBuilding * hb)
 
 				}
 
-				// Waren und Figure über verändertes Ziel informieren
+				// Waren und Figure Ã¼ber verÃ¤ndertes Ziel informieren
 				for(std::list<noFigure*>::iterator it = figures.begin();it!=figures.end();++it)
 					(*it)->StartShipJourney(gwg->GetHarborPoint(goal_harbor_id));
 			}
@@ -1085,7 +1086,7 @@ void noShip::HarborDestroyed(nobHarborBuilding * hb)
 	}
 }
 
-/// Fängt an mit idlen und setzt nötigen Sachen auf NULL
+/// FÃ¤ngt an mit idlen und setzt nÃ¶tigen Sachen auf NULL
 void noShip::StartIdling()
 {
 	//goal_harbor_id = 0;
@@ -1115,7 +1116,7 @@ void noShip::SeaAttackerWishesNoReturn()
 		}
 		else
 		{
-			// Wenn keine Soldaten mehr da sind können wir auch erstmal idlen
+			// Wenn keine Soldaten mehr da sind kÃ¶nnen wir auch erstmal idlen
 			StartIdling();
 			players->getElement(player)->GetJobForShip(this);
 		}
@@ -1123,7 +1124,7 @@ void noShip::SeaAttackerWishesNoReturn()
 
 }
 
-/// Schiffs-Angreifer sind nach dem Angriff wieder zurückgekehrt
+/// Schiffs-Angreifer sind nach dem Angriff wieder zurÃ¼ckgekehrt
 void noShip::AddAttacker(nofAttacker * attacker)
 {
 	assert(std::find(figures.begin(), figures.end(),attacker) == figures.end());
@@ -1136,7 +1137,7 @@ void noShip::AddAttacker(nofAttacker * attacker)
 /// Weist das Schiff an, seine Erkundungs-Expedition fortzusetzen
 void noShip::ContinueExplorationExpedition()
 {
-	// Sind wir schon über unserem Limit, also zu weit gefahren
+	// Sind wir schon Ã¼ber unserem Limit, also zu weit gefahren
 	if(covered_distance >= MAX_EXPLORATION_EXPEDITION_DISTANCE)
 	{
 		// Ggf. sind wir schon da?
@@ -1156,17 +1157,17 @@ void noShip::ContinueExplorationExpedition()
 	}
 	else
 	{
-		// Nächsten Zielpunkt bestimmen
+		// NÃ¤chsten Zielpunkt bestimmen
 		std::vector<unsigned> hps;
 		gwg->GetHarborPointsWithinReach(goal_harbor_id,hps);
 		
-		// Keine möglichen Häfen gefunden?
+		// Keine mÃ¶glichen HÃ¤fen gefunden?
 		if(hps.size() == 0)
 			// Dann wieder Heimathafen ansteuern
 			goal_harbor_id = home_harbor;
 
 		else
-			// Zufällig den nächsten Hafen auswählen
+			// ZufÃ¤llig den nÃ¤chsten Hafen auswÃ¤hlen
 			goal_harbor_id = hps[Random::inst().Rand(__FILE__,__LINE__,obj_id,hps.size())];
 	}
 

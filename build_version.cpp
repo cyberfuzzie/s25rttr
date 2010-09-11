@@ -1,4 +1,4 @@
-// $Id: build_version.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: build_version.cpp 6724 2010-09-11 11:08:48Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -43,7 +43,7 @@ const char *GetWindowVersion()
 {
 	static char version[256];
 	memset(version, 0, 256);
-	strncpy(version, WINDOW_VERSION, 256);
+	strncpy(version, "20100811", 256);
 	return version;
 }
 

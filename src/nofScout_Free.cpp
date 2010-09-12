@@ -1,4 +1,4 @@
-// $Id: nofScout_Free.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: nofScout_Free.cpp 6727 2010-09-12 20:33:56Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -59,6 +59,7 @@ next_y(sgd->PopUnsignedShort())
 
 void nofScout_Free::Draw(int x, int y)
 {
+	//assert(this->GetObjId()!= 8215505);
 	// normales Laufen zeichnen
 	DrawWalking(x,y);
 }
@@ -102,7 +103,7 @@ void nofScout_Free::LostWork()
 	switch(state)
 	{
 	default: break;
-	// Wenn wir noch hingehen, dann zurückgehen
+	// Wenn wir noch hingehen, dann zurÃ¼ckgehen
 	case STATE_FIGUREWORK:
 		{
 			GoHome();
@@ -123,7 +124,7 @@ void nofScout_Free::Scout()
 	// Erkundet er noch, ist aber schon seine maximale Wegstrecke abgelaufen?
 	if(--rest_way == 0)
 	{
-		// Wieder zur Flagge zurückgehen
+		// Wieder zur Flagge zurÃ¼ckgehen
 		state = STATE_GOTOFLAG;
 		GoToFlag();
 		return;
@@ -132,7 +133,7 @@ void nofScout_Free::Scout()
 	// Bin ich schon an dem Punkt angekommen?
 	if(x == next_x && y == next_y)
 	{
-		// Nächsten Punkt suchen
+		// NÃ¤chsten Punkt suchen
 		GoToNewNode();
 	}
 	else
@@ -163,7 +164,7 @@ void nofScout_Free::GoToNewNode()
 		{
 			for(MapCoord r2=0;r2<r;gwg->GetPointA(tx2,ty2,i%6),++r2)
 			{
-				// Liegt Punkt im Nebel und für Figuren begehbar?
+				// Liegt Punkt im Nebel und fÃ¼r Figuren begehbar?
 				if(gwg->GetNode(tx2,ty2).fow[player].visibility != VIS_VISIBLE
 					&& gwg->IsNodeForFigures(tx2,ty2))
 				{
@@ -174,14 +175,14 @@ void nofScout_Free::GoToNewNode()
 		}
 	}
 
-	// Ein Objekt zufällig heraussuchen
+	// Ein Objekt zufÃ¤llig heraussuchen
 	bool found_point = false;
 	while(available_points.size() && !found_point)
 	{
 		list< Point<MapCoord> >::iterator p = available_points[RANDOM.Rand(__FILE__,__LINE__,obj_id,available_points.size())];
 
 		// Existiert ein Weg zu diesem Punkt und ist dieser Punkt auch noch von der Flagge noch in
-		// einigermaßen vernünftiger Entfernung zu erreichen, um das Drumherumlaufen um Berge usw. zu
+		// einigermaÃŸen vernÃ¼nftiger Entfernung zu erreichen, um das Drumherumlaufen um Berge usw. zu
 		// verhindern
 		if(gwg->FindHumanPath(x,y,p->x,p->y,SCOUT_RANGE*2) != 0xFF && gwg->FindHumanPath(flag->GetX(),flag->GetY(),p->x,p->y,SCOUT_RANGE+SCOUT_RANGE/4) != 0xFF)
 		{
@@ -201,16 +202,16 @@ void nofScout_Free::GoToNewNode()
 
 	}
 
-	// Gibt es überhaupt einen Punkt, wo ich hingehen kann?
+	// Gibt es Ã¼berhaupt einen Punkt, wo ich hingehen kann?
 	if(!found_point)
 	{
-		// Wieder zur Flagge zurückgehen
+		// Wieder zur Flagge zurÃ¼ckgehen
 		state = STATE_GOTOFLAG;
 		GoToFlag();
 	}
 }
 
-/// Gibt den Sichtradius dieser Figur zurück (0, falls nicht-spähend)
+/// Gibt den Sichtradius dieser Figur zurÃ¼ck (0, falls nicht-spÃ¤hend)
 unsigned nofScout_Free::GetVisualRange() const
 {
 	return VISUALRANGE_SCOUT;

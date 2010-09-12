@@ -1,4 +1,4 @@
-// $Id: nobBaseWarehouse.cpp 6679 2010-08-17 10:35:52Z OLiver $
+// $Id: nobBaseWarehouse.cpp 6727 2010-09-12 20:33:56Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -158,6 +158,7 @@ nobBaseWarehouse::nobBaseWarehouse(SerializedGameData * sgd, const unsigned obj_
 	fetch_double_protection = sgd->PopBool();
 	sgd->PopObjectList(dependent_figures,GOT_UNKNOWN);
 	sgd->PopObjectList(dependent_wares,GOT_WARE);
+	
 	producinghelpers_event = sgd->PopObject<EventManager::Event>(GOT_EVENT);
 	recruiting_event = sgd->PopObject<EventManager::Event>(GOT_EVENT);
 	empty_event = sgd->PopObject<EventManager::Event>(GOT_EVENT);
@@ -770,6 +771,7 @@ void nobBaseWarehouse::AddFigure(noFigure * figure)
 			++real_goods.people[figure->GetJobType()];
 		}
 	}
+	
 	RemoveDependentFigure(figure);
 	em->AddToKillList(figure);
 
@@ -1389,4 +1391,16 @@ void nobBaseWarehouse::CheckOuthousing(unsigned char category, unsigned job_ware
 
 	if(CheckRealInventorySettings(category,4,job_ware_id) && !empty_event)
 		empty_event = em->AddEvent(this,EMPTY_INTERVAL,3);
+}
+
+/// For debug only
+bool nobBaseWarehouse::CheckDependentFigure(noFigure * fig)
+{
+	for(list<noFigure*>::iterator it = dependent_figures.begin();it.valid();++it)
+	{
+		if(*it == fig)
+			return true;
+	}
+	
+	return false;
 }

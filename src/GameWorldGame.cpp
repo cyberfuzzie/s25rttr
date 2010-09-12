@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 6725 2010-09-11 11:57:54Z OLiver $
+// $Id: GameWorldGame.cpp 6727 2010-09-12 20:33:56Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1516,7 +1516,7 @@ const unsigned char moving_dir, Point<MapCoord> * enemy_territory)
 		if(current_owner && (old_vis == VIS_INVISIBLE ||
 			(old_vis == VIS_FOW && old_owner != current_owner)))
 		{
-			if(GameClient::inst().GetPlayer(player)->IsPlayerAttackable(current_owner))
+			if(GameClient::inst().GetPlayer(player)->IsPlayerAttackable(current_owner) && enemy_territory)
 			{
 				enemy_territory->x = ttx;
 				enemy_territory->y = tty;
@@ -1542,7 +1542,7 @@ const unsigned char moving_dir, Point<MapCoord> * enemy_territory)
 		if(current_owner && (old_vis == VIS_INVISIBLE ||
 			(old_vis == VIS_FOW && old_owner != current_owner)))
 		{
-			if(GameClient::inst().GetPlayer(player)->IsPlayerAttackable(current_owner))
+			if(GameClient::inst().GetPlayer(player)->IsPlayerAttackable(current_owner) && enemy_territory)
 			{
 				enemy_territory->x = ttx;
 				enemy_territory->y = tty;

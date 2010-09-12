@@ -13,7 +13,7 @@
   <Project Name="libendian" Path="../libsiedler2/libendian/codelite/libendian.project"/>
   <Project Name="mygettext" Path="../mygettext/codelite/mygettext.project"/>
   <BuildMatrix>
-    <WorkspaceConfiguration Name="Debug" Selected="no">
+    <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Project Name="video" ConfigName="Debug"/>
       <Project Name="audio" ConfigName="Debug"/>
       <Project Name="mygettext" ConfigName="Debug"/>
@@ -27,7 +27,7 @@
       <Project Name="libendian" ConfigName="Debug"/>
       <Project Name="mygettext" ConfigName="Debug"/>
     </WorkspaceConfiguration>
-    <WorkspaceConfiguration Name="Release" Selected="yes">
+    <WorkspaceConfiguration Name="Release" Selected="no">
       <Project Name="video" ConfigName="Release"/>
       <Project Name="audio" ConfigName="Release"/>
       <Project Name="mygettext" ConfigName="Release"/>

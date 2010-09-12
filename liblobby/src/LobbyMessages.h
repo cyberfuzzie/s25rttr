@@ -1,4 +1,4 @@
-// $Id: LobbyMessages.h 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: LobbyMessages.h 6727 2010-09-12 20:33:56Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -61,7 +61,7 @@ public:
 		unsigned char rev[4];
 		PopRawData(rev,4);
 
-		// haben wir eine g¸ltige Revision erhalten?
+		// haben wir eine g√ºltige Revision erhalten?
 		if(rev[0] != 0xFF || rev[3] != 0xFF)
 			revision = 0;
 		else
@@ -137,7 +137,7 @@ public:
 
 ///////////////////////////////////////////////////////////////////////////////
 /** eingehende Login-Error-Nachricht. (0.6 compat mode)
- *  sollte niemals empfangen werden (auﬂer es ist ein pre 0.6 client!)
+ *  sollte niemals empfangen werden (au√üer es ist ein pre 0.6 client!)
  */
 class LobbyMessage_Login_Error06 : public LobbyMessage
 {
@@ -180,11 +180,11 @@ public:
 		unsigned char rev[4];
 		PopRawData(rev,4);
 
-		// haben wir eine g¸ltige Revision erhalten?
+		// haben wir eine g√ºltige Revision erhalten?
 		if(rev[0] != 0xFF || rev[3] != 0xFF)
 			revision = 0;
 		else
-			revision = htonl(*((unsigned int*)rev));
+			revision = htonl(*((unsigned int*)(&rev[0])));
 
 		if(revision == LOBBYPROTOCOL_VERSION)
 		{
@@ -247,7 +247,7 @@ public:
 
 ///////////////////////////////////////////////////////////////////////////////
 /** eingehende Register-Error-Nachricht. (0.6 compat mode)
- *  sollte niemals empfangen werden (auﬂer es ist ein pre 0.6 client!)
+ *  sollte niemals empfangen werden (au√üer es ist ein pre 0.6 client!)
  */
 class LobbyMessage_Register_Error06 : public LobbyMessage
 {

@@ -126,6 +126,8 @@ noFigure::noFigure(const Job job,const unsigned short x, const unsigned short y,
 void noFigure::Destroy_noFigure()
 {
 	Destroy_noMovable(); 
+	
+	assert(players->getElement(player)->CheckDependentFigure(this) == false);
 }
 
 void noFigure::Serialize_noFigure(SerializedGameData * sgd) const
@@ -483,10 +485,10 @@ void noFigure::HandleEvent(const unsigned int id)
 		current_ev = 0;
 		WalkFigure();
 
-		//CalcVisibilities(gwg->GetXA(x,y,(dir+3)%6),gwg->GetYA(x,y,(dir+3)%6));
-		
-		// Alte Richtung für die Berechnung der Sichtbarkeiten merken
+		// Alte Richtung und Position für die Berechnung der Sichtbarkeiten merken
 		unsigned char old_dir = dir;
+		
+		Point<MapCoord> old_pos(x,y);
 
 		switch(fs)
 		{
@@ -511,24 +513,19 @@ void noFigure::HandleEvent(const unsigned int id)
 		// Ggf. Sichtbereich testen
 		if(GetVisualRange())
 		{
+		
+			// Use old position (don't use this->x/y because it might be different now
+			// Figure could be in a ship etc.)
+			gwg->RecalcMovingVisibilities(old_pos.x,old_pos.y,player,GetVisualRange(),old_dir, NULL);
+
+			
 			list<noBase*> figures;
-			gwg->GetDynamicObjectsFrom(x,y,figures);
+			gwg->GetDynamicObjectsFrom(old_pos.x,old_pos.y,figures);
 			
-			Point<MapCoord> enemy_territory_discovered(0xffff,0xffff);
-
-			gwg->RecalcMovingVisibilities(x,y,player,GetVisualRange(),old_dir, &enemy_territory_discovered);
-			
-			// Feindliches Territorium entdeckt?
-			if(enemy_territory_discovered.x != 0xffff)
-			{
-				// Dann Nachricht senden TODO: das sendet irgendwie zuviele nachrichten
-				//GameClient::inst().SendPostMessage(new PostMsgWithLocation(_("Someone disovered an enemy territory"), PMC_MILITARY, enemy_territory_discovered.x, enemy_territory_discovered.y));
-			}
-
 			// Wenn Figur verschwunden ist, muss ihr ehemaliger gesamter Sichtbereich noch einmal
 			// neue berechnet werden
 			if(!figures.search(this).valid())
-				CalcVisibilities(x,y);
+				CalcVisibilities(old_pos.x,old_pos.y);
 		}
 		
 	}

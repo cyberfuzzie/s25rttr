@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 6725 2010-09-11 11:57:54Z OLiver $
+// $Id: GameClientPlayer.cpp 6727 2010-09-12 20:33:56Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -2127,8 +2127,21 @@ bool GameClientPlayer::ShipDiscoveredHostileTerritory(const Point<MapCoord> loca
 			return false;
 	}
 
+
 	// Nein? Dann haben wir ein neues Territorium gefunden
 	enemies_discovered_by_ships.push_back(location);
 	
 	return true;
 }
+
+/// For debug only
+bool GameClientPlayer::CheckDependentFigure(noFigure * fig)
+{
+	for(std::list<nobBaseWarehouse*>::iterator it = warehouses.begin();it!=warehouses.end();++it)
+	{
+		if((*it)->CheckDependentFigure(fig))
+			return true;
+	}
+	return false;
+}
+	

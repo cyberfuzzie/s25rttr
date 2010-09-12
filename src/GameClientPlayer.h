@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.h 6725 2010-09-11 11:57:54Z OLiver $
+// $Id: GameClientPlayer.h 6727 2010-09-12 20:33:56Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -48,6 +48,7 @@ class nobHarborBuilding;
 class GameWorldGame;
 class GameMessage_GameCommand;
 class nofPassiveSoldier;
+class noFigure;
 
 
 /// Informationen über Gebäude-Anzahlen
@@ -439,6 +440,9 @@ public:
 
 	/// Testet ob der Spieler noch mehr Katapulte bauen darf
 	bool CanBuildCatapult() const;
+	
+	/// For debug only
+	bool CheckDependentFigure(noFigure * fig);
 
 };
 

@@ -280,6 +280,17 @@ void nofAttacker::Walked()
 				// oder ein Hauptquartier oder Hafen?
 				else
 				{
+					// Inform the owner of the building
+					if(GameClient::inst().GetPlayerID() == attacked_goal->GetPlayer())
+					{
+						if(attacked_goal->GetGOT() == GOT_NOB_HQ)
+							GameClient::inst().SendPostMessage(new 
+							ImagePostMsgWithLocation(_("Our headquarters was destroyed!"), PMC_MILITARY, x, y, attacked_goal->GetBuildingType(), attacked_goal->GetNation()));
+						else
+							GameClient::inst().SendPostMessage(new 
+							ImagePostMsgWithLocation(_("This harbor building was destroyed"), PMC_MILITARY, x, y, attacked_goal->GetBuildingType(), attacked_goal->GetNation()));
+					}
+					
 					// abreißen
 					nobBaseMilitary * tmp_goal = attacked_goal; // attacked_goal wird evtl auf 0 gesetzt!
 					tmp_goal->Destroy();

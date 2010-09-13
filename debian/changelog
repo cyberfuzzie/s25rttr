@@ -1,3 +1,280 @@
+s25rttr (20100913-6729) hardy; urgency=low
+
+  * New upstream snapshot
+  * nightly-build fix
+
+ -- Florian Doersch <flosoft@siedler25.org>  Mon, 13 Sep 2010 07:37:00 +0200
+
+s25rttr (20100913-6728) hardy; urgency=low
+
+  * New upstream snapshot
+  * Empty log message
+
+ -- Return To The Roots Team <sf-team@siedler25.org>  Mon, 13 Sep 2010 00:00:00 +0200
+
+s25rttr (20100912-6727) hardy; urgency=low
+
+  * Fixed #635749 + einige Bugfallen aufgestellt
+
+ -- OLiver Siebert <oliver@siedler25.org>  Sun, 12 Sep 2010 20:33:00 +0200
+
+s25rttr (20100912-6726) hardy; urgency=low
+
+  * New upstream snapshot
+  * Empty log message
+
+ -- Return To The Roots Team <sf-team@siedler25.org>  Sun, 12 Sep 2010 00:00:00 +0200
+
+s25rttr (20100911-6725) hardy; urgency=low
+
+  * Fixed #620960, #620964 and a little charburner bug
+
+ -- OLiver Siebert <oliver@siedler25.org>  Sat, 11 Sep 2010 11:57:00 +0200
+
+s25rttr (20100911-6724) hardy; urgency=low
+
+  * Köhler-Haufen-Reste sollten verschwinden beim Straßenbauen
+
+ -- OLiver Siebert <oliver@siedler25.org>  Sat, 11 Sep 2010 11:08:00 +0200
+
+s25rttr (20100911-6723) hardy; urgency=low
+
+  * New upstream snapshot
+  * Empty log message
+
+ -- Return To The Roots Team <sf-team@siedler25.org>  Sat, 11 Sep 2010 00:00:00 +0200
+
+s25rttr (20100910-6722) hardy; urgency=low
+
+  * Köhler baut auch auf Steppe und Bergwiese
+
+ -- OLiver Siebert <oliver@siedler25.org>  Fri, 10 Sep 2010 09:46:00 +0200
+
+s25rttr (20100910-6721) hardy; urgency=low
+
+  * Charburner mit in die Warenhäuser/Inventuranzeige eingebaut, noch
+    kleinere grafische Anpassungen
+
+ -- OLiver Siebert <oliver@siedler25.org>  Fri, 10 Sep 2010 09:33:00 +0200
+
+s25rttr (20100910-6720) hardy; urgency=low
+
+  * Verteilung wird beim Köhler mit berücksichtigt
+
+ -- OLiver Siebert <oliver@siedler25.org>  Fri, 10 Sep 2010 08:53:00 +0200
+
+s25rttr (20100910-6719) hardy; urgency=low
+
+  * New upstream snapshot
+  * Empty log message
+
+ -- Return To The Roots Team <sf-team@siedler25.org>  Fri, 10 Sep 2010 00:00:00 +0200
+
+s25rttr (20100909-6718) hardy; urgency=low
+
+  * Köhler arbeitet nun schon recht korrekt, 1. und 2. - Wagenklasse
+    eingeführt bei nofFarmhand
+
+ -- OLiver Siebert <oliver@siedler25.org>  Thu, 09 Sep 2010 21:39:00 +0200
+
+s25rttr (20100908-6716) hardy; urgency=low
+
+  * New upstream snapshot
+  * Empty log message
+
+ -- Return To The Roots Team <sf-team@siedler25.org>  Wed, 08 Sep 2010 00:00:00 +0200
+
+s25rttr (20100907-6715) hardy; urgency=low
+
+  * charburner_bobs.LST nochmals aktualisiert
+
+ -- Florian Doersch <flosoft@siedler25.org>  Tue, 07 Sep 2010 20:31:00 +0200
+
+s25rttr (20100907-6714) hardy; urgency=low
+
+  * antigrafikjump-bilder in charburner_bobs.lst eingefügt
+
+ -- Florian Doersch <flosoft@siedler25.org>  Tue, 07 Sep 2010 16:34:00 +0200
+
+s25rttr (20100907-6713) hardy; urgency=low
+
+  * newline ergänzt
+
+ -- Florian Doersch <flosoft@siedler25.org>  Tue, 07 Sep 2010 06:57:00 +0200
+
+s25rttr (20100907-6712) hardy; urgency=low
+
+  * New upstream snapshot
+  * Empty log message
+
+ -- Return To The Roots Team <sf-team@siedler25.org>  Tue, 07 Sep 2010 00:00:00 +0200
+
+s25rttr (20100906-6711) hardy; urgency=low
+
+  * paar svn-eigenschaften ergänzt
+    warnungen in noCharburnerPile entfernt
+
+ -- Florian Doersch <flosoft@siedler25.org>  Mon, 06 Sep 2010 14:42:00 +0200
+
+s25rttr (20100906-6710) hardy; urgency=low
+
+  * New upstream snapshot
+  * Empty log message
+
+ -- Return To The Roots Team <sf-team@siedler25.org>  Mon, 06 Sep 2010 00:00:00 +0200
+
+s25rttr (20100905-6709) hardy; urgency=low
+
+  * Köhler arbeitet schon ein bisschen
+
+ -- OLiver Siebert <oliver@siedler25.org>  Sun, 05 Sep 2010 12:56:00 +0200
+
+s25rttr (20100905-6708) hardy; urgency=low
+
+  * New upstream snapshot
+  * Empty log message
+
+ -- Return To The Roots Team <sf-team@siedler25.org>  Sun, 05 Sep 2010 00:00:00 +0200
+
+s25rttr (20100904-6707) hardy; urgency=low
+
+  * New upstream snapshot
+  * Empty log message
+
+ -- Return To The Roots Team <sf-team@siedler25.org>  Sat, 04 Sep 2010 00:00:00 +0200
+
+s25rttr (20100903-6706) hardy; urgency=low
+
+  * Köhler geht zu seiner Arbeit, erblüht allerdings in
+    Spielerfarbe..
+
+ -- OLiver Siebert <oliver@siedler25.org>  Fri, 03 Sep 2010 09:35:00 +0200
+
+s25rttr (20100903-6705) hardy; urgency=low
+
+  * charburner.LST nochmals aktualisiert (fehlendes bild ergänzt)
+
+ -- Florian Doersch <flosoft@siedler25.org>  Fri, 03 Sep 2010 08:52:00 +0200
+
+s25rttr (20100903-6704) hardy; urgency=low
+
+  * New upstream snapshot
+  * Empty log message
+
+ -- Return To The Roots Team <sf-team@siedler25.org>  Fri, 03 Sep 2010 00:00:00 +0200
+
+s25rttr (20100902-6703) hardy; urgency=low
+
+  * charburner.lst und charburner_bobs.lst korrigiert/aktualisiert
+    lstpacker korrigiert (gleicher loader->=-bug)
+
+ -- Florian Doersch <flosoft@siedler25.org>  Thu, 02 Sep 2010 11:23:00 +0200
+
+s25rttr (20100902-6702) hardy; urgency=low
+
+  * New upstream snapshot
+  * Empty log message
+
+ -- Return To The Roots Team <sf-team@siedler25.org>  Thu, 02 Sep 2010 00:00:00 +0200
+
+s25rttr (20100901-6701) hardy; urgency=low
+
+  * Goldaustausch-Addon gefixt Bug #610770
+
+ -- Jan-Henrik Kluth <sf-team@siedler25.org>  Wed, 01 Sep 2010 17:44:00 +0200
+
+s25rttr (20100901-6700) hardy; urgency=low
+
+  * Neue Katapultanzahlen nach Bug #626181 hinzugefügt
+
+ -- Jan-Henrik Kluth <sf-team@siedler25.org>  Wed, 01 Sep 2010 17:24:00 +0200
+
+s25rttr (20100901-6699) hardy; urgency=low
+
+  * AI Debug Window als Addon ausschaltbar gemacht (gegen Cheating)
+
+ -- Jan-Henrik Kluth <sf-team@siedler25.org>  Wed, 01 Sep 2010 17:12:00 +0200
+
+s25rttr (20100901-6698) hardy; urgency=low
+
+  * Fehler im Loader behoben, wodurch nur jedes 2. Item geladen wurde
+    in den Verzeichnissen
+
+ -- OLiver Siebert <oliver@siedler25.org>  Wed, 01 Sep 2010 10:34:00 +0200
+
+s25rttr (20100901-6697) hardy; urgency=low
+
+  * New upstream snapshot
+  * Empty log message
+
+ -- Return To The Roots Team <sf-team@siedler25.org>  Wed, 01 Sep 2010 00:00:00 +0200
+
+s25rttr (20100831-6696) hardy; urgency=low
+
+  * Einlager-Icons von Spike eingebaut
+
+ -- OLiver Siebert <oliver@siedler25.org>  Tue, 31 Aug 2010 12:12:00 +0200
+
+s25rttr (20100819-6683) hardy; urgency=low
+
+  * New upstream snapshot
+  * Empty log message
+
+ -- Return To The Roots Team <sf-team@siedler25.org>  Thu, 19 Aug 2010 00:00:00 +0200
+
+s25rttr (20100818-6682) hardy; urgency=low
+
+  * Fix vom fix
+
+ -- OLiver Siebert <oliver@siedler25.org>  Wed, 18 Aug 2010 08:32:00 +0200
+
+s25rttr (20100818-6681) hardy; urgency=low
+
+  * New upstream snapshot
+  * Empty log message
+
+ -- Return To The Roots Team <sf-team@siedler25.org>  Wed, 18 Aug 2010 00:00:00 +0200
+
+s25rttr (20100817-6680) hardy; urgency=low
+
+  * #611369 fixed
+
+ -- OLiver Siebert <oliver@siedler25.org>  Tue, 17 Aug 2010 21:24:00 +0200
+
+s25rttr (20100817-6679) hardy; urgency=low
+
+  * - Einlagerbug behoben
+    - Unsichtbare Verteidiger behoben
+
+ -- OLiver Siebert <oliver@siedler25.org>  Tue, 17 Aug 2010 10:35:00 +0200
+
+s25rttr (20100811-6672) hardy; urgency=low
+
+  * New upstream snapshot
+  * Empty log message
+
+ -- Return To The Roots Team <sf-team@siedler25.org>  Wed, 11 Aug 2010 00:00:00 +0200
+
+s25rttr (20100810-6671) hardy; urgency=low
+
+  * Köhlerei in großes Gebäude umgewandelt, kleine Warnung bzgl Frage
+    im Launchpad gefixt
+
+ -- OLiver Siebert <oliver@siedler25.org>  Tue, 10 Aug 2010 20:47:00 +0200
+
+s25rttr (20100810-6670) hardy; urgency=low
+
+  * miniupnpc zu libminiupnpc
+
+ -- Florian Doersch <flosoft@siedler25.org>  Tue, 10 Aug 2010 07:51:00 +0200
+
+s25rttr (20100809-6669) hardy; urgency=low
+
+  * New upstream snapshot
+  * Automatic debian/changelog update
+
+ -- Florian Doersch <flosoft@siedler25.org>  Mon, 09 Aug 2010 23:18:00 +0200
+
 s25rttr (20100810-6668) hardy; urgency=low
 
   * New upstream snapshot

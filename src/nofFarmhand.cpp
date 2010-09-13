@@ -1,4 +1,4 @@
-// $Id: nofFarmhand.cpp 6718 2010-09-09 21:39:46Z OLiver $
+// $Id: nofFarmhand.cpp 6730 2010-09-13 08:12:35Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -327,3 +327,4 @@ void nofFarmhand::DrawOtherStates(const int x, const int y)
 void nofFarmhand::WalkingStarted()
 {
 }
+

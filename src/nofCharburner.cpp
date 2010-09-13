@@ -1,4 +1,4 @@
-// $Id: nofCharburner.cpp 6725 2010-09-11 11:57:54Z OLiver $
+// $Id: nofCharburner.cpp 6730 2010-09-13 08:12:35Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -271,3 +271,4 @@ void nofCharburner::DrawOtherStates(const int x, const int y)
 	default: return;
 	}
 }
+

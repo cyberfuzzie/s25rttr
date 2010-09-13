@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 6671 2010-08-10 20:47:44Z OLiver $
+// $Id: nobMilitary.cpp 6733 2010-09-13 20:41:11Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -55,11 +55,11 @@
 nobMilitary::nobMilitary(const BuildingType type,const unsigned short x, const unsigned short y,const unsigned char player,const Nation nation)
 : nobBaseMilitary(type,x,y,player,nation), new_built(true), coins(0), disable_coins(false), disable_coins_virtual(false), capturing(false), capturing_soldiers(0), goldorder_event(0), upgrade_event(0)
 {
-	// Gebäude entsprechend als Militärgebäude registrieren und in ein Militärquadrat eintragen
+	// GebÃ¤ude entsprechend als MilitÃ¤rgebÃ¤ude registrieren und in ein MilitÃ¤rquadrat eintragen
 	gwg->GetPlayer(player)->AddMilitaryBuilding(this);
 	gwg->GetMilitarySquare(x,y).push_back(this);
 
-	// Größe ermitteln
+	// GrÃ¶ÃŸe ermitteln
 	switch(type)
 	{
 	case BLD_BARRACKS: size = 0; break;
@@ -71,11 +71,11 @@ nobMilitary::nobMilitary(const BuildingType type,const unsigned short x, const u
 
 	LookForEnemyBuildings();
 
-	// Tür aufmachen, bis Gebäude besetzt ist
+	// TÃ¼r aufmachen, bis GebÃ¤ude besetzt ist
 	OpenDoor();
 
-	// Wenn kein Gold in neu gebaute Militärgebäude eingeliefert werden soll, wird die Goldzufuhr gestoppt
-	// Ansonsten neue Goldmünzen anfordern
+	// Wenn kein Gold in neu gebaute MilitÃ¤rgebÃ¤ude eingeliefert werden soll, wird die Goldzufuhr gestoppt
+	// Ansonsten neue GoldmÃ¼nzen anfordern
 	if(ADDONMANAGER.isEnabled(ADDON_NO_COINS_DEFAULT))
 	{
 		disable_coins = true;
@@ -108,17 +108,17 @@ void nobMilitary::Destroy_nobMilitary()
 	em->RemoveEvent(goldorder_event);
 	em->RemoveEvent(upgrade_event);
 
-	// übriggebliebene Goldmünzen in der Inventur abmelden
+	// Ã¼briggebliebene GoldmÃ¼nzen in der Inventur abmelden
 	gwg->GetPlayer(player)->DecreaseInventoryWare(GD_COINS,coins);
 
 	Destroy_nobBaseMilitary();
 
 	// Land drumherum neu berechnen (nur wenn es schon besetzt wurde!)
-	// Nach dem BaseDestroy erst, da in diesem erst das Feuer gesetzt, die Straße gelöscht wird usw.
+	// Nach dem BaseDestroy erst, da in diesem erst das Feuer gesetzt, die StraÃŸe gelÃ¶scht wird usw.
 	if(!new_built)
 		gwg->RecalcTerritory(this,MILITARY_RADIUS[size],true, false);
 
-	// Wieder aus dem Militärquadrat rauswerfen
+	// Wieder aus dem MilitÃ¤rquadrat rauswerfen
 	gwg->GetPlayer(player)->RemoveMilitaryBuilding(this);
 	gwg->GetMilitarySquare(x,y).erase(this);
 
@@ -144,6 +144,7 @@ void nobMilitary::Serialize_nobMilitary(SerializedGameData * sgd) const
 	sgd->PushObjectList(ordered_troops,true);
 	sgd->PushObjectList(ordered_coins,true);
 	sgd->PushObjectList(troops,true);
+	sgd->PushObjectList(far_away_capturers,true);
 }
 
 nobMilitary::nobMilitary(SerializedGameData * sgd, const unsigned obj_id) : nobBaseMilitary(sgd,obj_id),
@@ -161,25 +162,26 @@ upgrade_event(sgd->PopObject<EventManager::Event>(GOT_EVENT))
 	sgd->PopObjectList(ordered_troops,GOT_NOF_PASSIVESOLDIER);
 	sgd->PopObjectList(ordered_coins,GOT_WARE);
 	sgd->PopObjectList(troops,GOT_NOF_PASSIVESOLDIER);
+	//sgd->PopObjectList(far_away_capturers,GOT_NOF_ATTACKER);
 
-	// ins Militärquadrat einfügen
+	// ins MilitÃ¤rquadrat einfÃ¼gen
 	gwg->GetMilitarySquare(x,y).push_back(this);
 }
 
 
 void nobMilitary::Draw(int x, int y)
 {
-	// Gebäude an sich zeichnen
+	// GebÃ¤ude an sich zeichnen
 	DrawBaseBuilding(x,y);
 
 
-	// (max 4) Besatzungs-Fähnchen zeichnen
+	// (max 4) Besatzungs-FÃ¤hnchen zeichnen
 	unsigned flags = min<unsigned>(troops.size()+this->leave_house.size(),4);
 
 	for(unsigned i = 0;i<flags;++i)
 		LOADER.GetMapImageN(3162+GAMECLIENT.GetGlobalAnimation(8,2,1,this->x*this->y*i))->Draw(x+TROOPS_FLAGS[nation][size][0],y+TROOPS_FLAGS[nation][size][1]+(i)*3,0,0,0,0,0,0,COLOR_WHITE, COLORS[gwg->GetPlayer(player)->color]);
 
-	// Die Fahne, die anzeigt wie weit das Gebäude von der Grenze entfernt ist, zeichnen
+	// Die Fahne, die anzeigt wie weit das GebÃ¤ude von der Grenze entfernt ist, zeichnen
 	unsigned frontier_distance_tmp = frontier_distance;
 	glArchivItem_Bitmap * bitmap = NULL;
 	if(frontier_distance_tmp == 2)
@@ -196,7 +198,7 @@ void nobMilitary::Draw(int x, int y)
 	if(bitmap)
 		bitmap->Draw(x+BORDER_FLAGS[nation][size][0],y+BORDER_FLAGS[nation][size][1],0,0,0,0,0,0);
 
-	// Wenn Goldzufuhr gestoppt ist, Schild außen am Gebäude zeichnen zeichnen
+	// Wenn Goldzufuhr gestoppt ist, Schild auÃŸen am GebÃ¤ude zeichnen zeichnen
 	if(disable_coins_virtual)
 		LOADER.GetMapImageN(46)->Draw(x+BUILDING_SIGN_CONSTS[nation][type].x,y+BUILDING_SIGN_CONSTS[nation][type].y,0,0,0,0,0,0);
 
@@ -231,7 +233,7 @@ void nobMilitary::HandleEvent(const unsigned int id)
 				go_out = false;
 			}
 
-			// Wenn noch weitere drin sind, die müssen auch noch raus
+			// Wenn noch weitere drin sind, die mÃ¼ssen auch noch raus
 			if(leave_house.size())
 				leaving_event = em->AddEvent(this,30+RANDOM.Rand(__FILE__,__LINE__,obj_id,10));
 			else
@@ -243,46 +245,46 @@ void nobMilitary::HandleEvent(const unsigned int id)
 		{
 			goldorder_event = 0;
 
-			// ggf. nach neuen Goldmünzen suchen
+			// ggf. nach neuen GoldmÃ¼nzen suchen
 			SearchCoins();
 		} break;
-	// Beförderungs-Event
+	// BefÃ¶rderungs-Event
 	case 2:
 		{
 			upgrade_event = 0;
 
-			// Soldaten befördern
+			// Soldaten befÃ¶rdern
 			// Von hinten durchgehen
-			// Wenn der nachfolgende (schwächere) Soldat einen niedrigeren Rang hat,
-			// wird dieser ebenfalls befördert usw.!
+			// Wenn der nachfolgende (schwÃ¤chere) Soldat einen niedrigeren Rang hat,
+			// wird dieser ebenfalls befÃ¶rdert usw.!
 
-			// Rang des letzten beförderten Soldaten, 4 am Anfang setzen, damit keine Generäle befördert werden
+			// Rang des letzten befÃ¶rderten Soldaten, 4 am Anfang setzen, damit keine GenerÃ¤le befÃ¶rdert werden
 			unsigned char last_rank = 4;
 
 			for(list<nofPassiveSoldier*>::iterator it = troops.end();it.valid();--it)
 			{
-				// Es wurde schon einer befördert, dieser Soldat muss nun einen niedrigeren Rang
-				// als der letzte haben, damit er auch noch befördert werden kann
+				// Es wurde schon einer befÃ¶rdert, dieser Soldat muss nun einen niedrigeren Rang
+				// als der letzte haben, damit er auch noch befÃ¶rdert werden kann
 				if((*it)->GetRank() < last_rank)
 				{
 					// Rang merken
 					last_rank = (*it)->GetRank();
-					// Dann befördern
+					// Dann befÃ¶rdern
 					(*it)->Upgrade();
 				}
 			}
 
-			// Wurde jemand befördert?
+			// Wurde jemand befÃ¶rdert?
 			if(last_rank < 4)
 			{
-				// Goldmünze verbrauchen
+				// GoldmÃ¼nze verbrauchen
 				--coins;
 				gwg->GetPlayer(player)->DecreaseInventoryWare(GD_COINS,1);
 
-				// Evtl neues Beförderungsevent anmelden
+				// Evtl neues BefÃ¶rderungsevent anmelden
 				PrepareUpgrading();
 
-				// Ggf. neue Goldmünzen bestellen
+				// Ggf. neue GoldmÃ¼nzen bestellen
 				SearchCoins();
 			}
 
@@ -297,7 +299,7 @@ unsigned short nobMilitary::GetMilitaryRadius() const
 
 void nobMilitary::LookForEnemyBuildings(const nobBaseMilitary * const exception)
 {
-	// Umgebung nach Militärgebäuden absuchen
+	// Umgebung nach MilitÃ¤rgebÃ¤uden absuchen
 	std::list<nobBaseMilitary*> buildings;
 	gwg->LookForMilitaryBuildings(buildings,x,y,3);
 	frontier_distance = 0;
@@ -305,18 +307,18 @@ void nobMilitary::LookForEnemyBuildings(const nobBaseMilitary * const exception)
 
 	for(std::list<nobBaseMilitary*>::iterator it = buildings.begin();it!=buildings.end();++it)
 	{
-		// feindliches Militärgebäude?
+		// feindliches MilitÃ¤rgebÃ¤ude?
 		if(*it != exception && (*it)->GetPlayer() != player && gwg->GetPlayer((*it)->GetPlayer())->IsPlayerAttackable(player))
 		{
 			unsigned distance = gwg->CalcDistance(x,y,(*it)->GetX(),(*it)->GetY());
 
-			// in nahem Umkreis, also Grenzen berühren sich
+			// in nahem Umkreis, also Grenzen berÃ¼hren sich
 			if(distance <= MILITARY_RADIUS[size] + (*it)->GetMilitaryRadius()) // warum erzeugtn das ne warning in vs2008?
 			{
-				// Grenznähe entsprechend setzen
+				// GrenznÃ¤he entsprechend setzen
 				frontier_distance = 3;
 
-				// Wenns ein richtiges Militärgebäude ist, dann dort auch entsprechend setzen
+				// Wenns ein richtiges MilitÃ¤rgebÃ¤ude ist, dann dort auch entsprechend setzen
 				if((*it)->GetBuildingType() >= BLD_BARRACKS && (*it)->GetBuildingType() <= BLD_FORTRESS)
 					static_cast<nobMilitary*>(*it)->NewEnemyMilitaryBuilding(3);
 			}
@@ -324,21 +326,21 @@ void nobMilitary::LookForEnemyBuildings(const nobBaseMilitary * const exception)
 			else if(distance < BASE_ATTACKING_DISTANCE 
 				+ (TROOPS_COUNT[nation][size] - 1) * EXTENDED_ATTACKING_DISTANCE)
 			{
-				// Grenznähe entsprechend setzen
+				// GrenznÃ¤he entsprechend setzen
 				if(!frontier_distance)
 					frontier_distance = 1;
 
-				// Wenns ein richtiges Militärgebäude ist, dann dort auch entsprechend setzen
+				// Wenns ein richtiges MilitÃ¤rgebÃ¤ude ist, dann dort auch entsprechend setzen
 				if((*it)->GetBuildingType() >= BLD_BARRACKS && (*it)->GetBuildingType() <= BLD_FORTRESS)
 					static_cast<nobMilitary*>(*it)->NewEnemyMilitaryBuilding(1);
 			}
-			// andere Richtung muss auch getestet werden, zumindest wenns eine normaler Militärgebäude ist, Bug 389843
+			// andere Richtung muss auch getestet werden, zumindest wenns eine normaler MilitÃ¤rgebÃ¤ude ist, Bug 389843
 			else if ((*it)->GetGOT() == GOT_NOB_MILITARY)
 			{
 				nobMilitary *mil = dynamic_cast<nobMilitary*>(*it);
 				if(distance < BASE_ATTACKING_DISTANCE + (TROOPS_COUNT[mil->nation][mil->size] - 1) * EXTENDED_ATTACKING_DISTANCE)
 				{
-					// Grenznähe entsprechend setzen
+					// GrenznÃ¤he entsprechend setzen
 					if(!frontier_distance)
 						frontier_distance = 1;
 
@@ -364,7 +366,7 @@ void nobMilitary::LookForEnemyBuildings(const nobBaseMilitary * const exception)
 
 void nobMilitary::NewEnemyMilitaryBuilding(const unsigned short distance)
 {
-	// Neues Grenzgebäude in der Nähe --> Distanz entsprechend setzen
+	// Neues GrenzgebÃ¤ude in der NÃ¤he --> Distanz entsprechend setzen
 	if(distance == 3)
 	{
 		// Nah
@@ -387,18 +389,19 @@ void nobMilitary::NewEnemyMilitaryBuilding(const unsigned short distance)
 
 void nobMilitary::RegulateTroops()
 {
-	// Wenn das Gebäude eingenommen wird, erstmal keine neuen Truppen und warten, wieviele noch reinkommen
+	// Wenn das GebÃ¤ude eingenommen wird, erstmal keine neuen Truppen und warten, wieviele noch reinkommen
 	if(capturing)
 		return;
 
 	// Zu viele oder zu wenig Truppen?
 	int diff;
-	if((diff = CalcTroopsCount() - int(troops.size()+ordered_troops.size()+troops_on_mission.size()+((defender)?1:0) + capturing_soldiers)) < 0)
+	if((diff = CalcTroopsCount() - int(troops.size()+ordered_troops.size()+troops_on_mission.size()+((defender)?1:0)
+	+ capturing_soldiers + far_away_capturers.size())) < 0)
 	{
-		// Zu viel --> überflüssige Truppen nach Hause schicken
+		// Zu viel --> Ã¼berflÃ¼ssige Truppen nach Hause schicken
 
 		// Zuerst die bestellten Soldaten wegschicken
-		// Schwache zuerst zurück
+		// Schwache zuerst zurÃ¼ck
 		if (gwg->GetPlayer(player)->military_settings[1] > MILITARY_SETTINGS_SCALE[1]/2)
 		{
 			for(list<nofPassiveSoldier*>::iterator it = ordered_troops.begin();diff&&ordered_troops.size();++diff,++it)
@@ -407,7 +410,7 @@ void nobMilitary::RegulateTroops()
 				ordered_troops.erase(&it);
 			}
 		}
-		// Starke zuerst zurück
+		// Starke zuerst zurÃ¼ck
 		else
 		{
 			for(list<nofPassiveSoldier*>::iterator it = ordered_troops.end();diff&&ordered_troops.size();++diff)
@@ -462,7 +465,7 @@ void nobMilitary::RegulateTroops()
 	{
 		// Zu wenig Truppen
 
-		// Gebäude wird angegriffen und
+		// GebÃ¤ude wird angegriffen und
 		// Addon aktiv, nur soviele Leute zum Nachbesetzen schicken wie Verteidiger eingestellt
 		if (aggressors.size() > 0 && ADDONMANAGER.getSelection(ADDON_DEFENDER_BEHAVIOR) == 2)	
 		{
@@ -480,14 +483,14 @@ int nobMilitary::CalcTroopsCount()
 
 void nobMilitary::TakeWare(Ware * ware)
 {
-	// Goldmünze in Bestellliste aufnehmen
+	// GoldmÃ¼nze in Bestellliste aufnehmen
 	ordered_coins.push_back(ware);
 }
 
 
 void nobMilitary::AddWare(Ware * ware)
 {
-	// Ein Golstück mehr
+	// Ein GolstÃ¼ck mehr
 	++coins;
 	// aus der Bestellliste raushaun
 	ordered_coins.erase(ware);
@@ -496,13 +499,13 @@ void nobMilitary::AddWare(Ware * ware)
 	gwg->GetPlayer(player)->RemoveWare(ware);
 	delete ware;
 
-	// Evtl. Soldaten befördern
+	// Evtl. Soldaten befÃ¶rdern
 	PrepareUpgrading();
 }
 
 void nobMilitary::WareLost(Ware * ware)
 {
-	// Ein Goldstück konnte nicht kommen --> aus der Bestellliste entfernen
+	// Ein GoldstÃ¼ck konnte nicht kommen --> aus der Bestellliste entfernen
 	ordered_coins.erase(ware);
 }
 
@@ -515,13 +518,13 @@ void nobMilitary::GotWorker(Job job, noFigure * worker)
 	// Soldaten in ordered_troops einsortieren, vorne die schwachen, hinten die starken
 	nofPassiveSoldier *soldier = static_cast<nofPassiveSoldier*>(worker);
 
-	// Nach Rang sortiert einfügen!
+	// Nach Rang sortiert einfÃ¼gen!
 	for(list<nofPassiveSoldier*>::iterator it = ordered_troops.end(); it.valid(); --it)
 	{
-		// Ist das einzufügende Item größer als das aktuelle?
+		// Ist das einzufÃ¼gende Item grÃ¶ÃŸer als das aktuelle?
 		if(soldier->GetRank() >= (*it)->GetRank())
 		{
-			// ja dann hier einfügen
+			// ja dann hier einfÃ¼gen
 			ordered_troops.insert(it, soldier);
 			return;
 		}
@@ -533,13 +536,13 @@ void nobMilitary::GotWorker(Job job, noFigure * worker)
 
 void nobMilitary::CancelOrders()
 {
-	// Soldaten zurückschicken
+	// Soldaten zurÃ¼ckschicken
 	for(list<nofPassiveSoldier*>::iterator it = ordered_troops.begin();it.valid();++it)
 		(*it)->NotNeeded();
 
 	ordered_troops.clear();
 
-	// Goldmünzen zurückschicken
+	// GoldmÃ¼nzen zurÃ¼ckschicken
 	for(list<Ware*>::iterator it = ordered_coins.begin();it.valid();++it)
 		WareNotNeeded(*it);
 
@@ -551,13 +554,13 @@ void nobMilitary::AddActiveSoldier(nofActiveSoldier * soldier)
 	
 
 	// aktiver Soldat, eingetroffen werden --> dieser muss erst in einen passiven Soldaten 
-	// umoperiert werden (neu erzeugt und alter zerstört) werden
+	// umoperiert werden (neu erzeugt und alter zerstÃ¶rt) werden
 	nofPassiveSoldier * passive_soldier = new nofPassiveSoldier(*soldier);
 
-	// neuen Soldaten einhängen
+	// neuen Soldaten einhÃ¤ngen
 	AddPassiveSoldier(passive_soldier);
 
-	// alten Soldaten später vernichten
+	// alten Soldaten spÃ¤ter vernichten
 	em->AddToKillList(soldier);
 
 	// Soldat ist wie tot, d.h. er muss aus allen Missionslisten etc. wieder rausgenommen werden
@@ -571,13 +574,13 @@ void nobMilitary::AddPassiveSoldier(nofPassiveSoldier * soldier)
 
 	bool inserted = false;
 
-	// Nach Rang sortiert einfügen!
+	// Nach Rang sortiert einfÃ¼gen!
 	for(list<nofPassiveSoldier*>::iterator it = troops.end(); it.valid(); --it)
 	{
-		// Ist das einzufügende Item größer als das aktuelle?
+		// Ist das einzufÃ¼gende Item grÃ¶ÃŸer als das aktuelle?
 		if(soldier->GetRank() >= (*it)->GetRank())
 		{
-			// ja dann hier einfügen
+			// ja dann hier einfÃ¼gen
 			troops.insert(it, soldier);
 			inserted = true;
 			break;
@@ -593,7 +596,7 @@ void nobMilitary::AddPassiveSoldier(nofPassiveSoldier * soldier)
 	ordered_troops.erase(soldier);
 
 
-	// Wurde dieses Gebäude zum ersten Mal besetzt?
+	// Wurde dieses GebÃ¤ude zum ersten Mal besetzt?
 	if(new_built)
 	{
 		if(GameClient::inst().GetPlayerID() == this->player)
@@ -604,18 +607,18 @@ void nobMilitary::AddPassiveSoldier(nofPassiveSoldier * soldier)
 		SetAge();
 		// Landgrenzen verschieben
 		gwg->RecalcTerritory(this,MILITARY_RADIUS[size],false, true);
-		// Tür zumachen
+		// TÃ¼r zumachen
 		CloseDoor();
-		// Fanfarensound abspieln, falls das Militärgebäude im Sichtbereich ist und unseres ist
+		// Fanfarensound abspieln, falls das MilitÃ¤rgebÃ¤ude im Sichtbereich ist und unseres ist
 		gwg->MilitaryBuildingCaptured(x,y,player);
 	}
 	else
 	{
-		// Evtl. Soldaten befördern
+		// Evtl. Soldaten befÃ¶rdern
 		PrepareUpgrading();
 	}
 
-	// Goldmünzen suchen, evtl sinds ja neue Soldaten
+	// GoldmÃ¼nzen suchen, evtl sinds ja neue Soldaten
 	SearchCoins();
 }
 
@@ -637,14 +640,14 @@ void nobMilitary::SoldierOnMission(nofPassiveSoldier * passive_soldier,nofActive
 
 list<nofPassiveSoldier*>::iterator nobMilitary::ChooseSoldier()
 {
-	// Überhaupt Soldaten da?
+	// Ãœberhaupt Soldaten da?
 	if(!troops.size())
 		return 0;
 
-	// verschiedene Ränge zählen
-	list<nofPassiveSoldier*>::iterator candidates[5] = {0,0,0,0,0}; // Kandidaten für die einzelnen Ränge
+	// verschiedene RÃ¤nge zÃ¤hlen
+	list<nofPassiveSoldier*>::iterator candidates[5] = {0,0,0,0,0}; // Kandidaten fÃ¼r die einzelnen RÃ¤nge
 
-	// wie viele verschiedene Ränge?
+	// wie viele verschiedene RÃ¤nge?
 	unsigned rank_count = 0;
 
 	for(list<nofPassiveSoldier*>::iterator it = troops.begin();it.valid();++it)
@@ -682,7 +685,7 @@ nofAggressiveDefender * nobMilitary::SendDefender(nofAttacker * attacker)
 	// Sind noch Soldaten da?
 	if(troops.size() > 1)
 	{
-		// Verteidiger auswählen
+		// Verteidiger auswÃ¤hlen
 		list<nofPassiveSoldier*>::iterator soldier = ChooseSoldier();
 		// neuen aggressiven Verteidiger daraus erzeugen
 		nofAggressiveDefender * ad = new nofAggressiveDefender(*soldier,attacker);
@@ -702,21 +705,21 @@ nofAggressiveDefender * nobMilitary::SendDefender(nofAttacker * attacker)
 		return 0;
 }
 
-/// Gibt die Anzahl der Soldaten zurück, die für einen Angriff auf ein bestimmtes Ziel zur Verfügung stehen
+/// Gibt die Anzahl der Soldaten zurÃ¼ck, die fÃ¼r einen Angriff auf ein bestimmtes Ziel zur VerfÃ¼gung stehen
 unsigned nobMilitary::GetSoldiersForAttack(const MapCoord dest_x, const MapCoord dest_y, const unsigned char player_attacker) const
 {
-	// Soldaten ausrechnen, wie viel man davon nehmen könnte, je nachdem wie viele in den
-	// Militäreinstellungen zum Angriff eingestellt wurden
+	// Soldaten ausrechnen, wie viel man davon nehmen kÃ¶nnte, je nachdem wie viele in den
+	// MilitÃ¤reinstellungen zum Angriff eingestellt wurden
 	unsigned short soldiers_count =
 		(GetTroopsCount()>1)?
 		((GetTroopsCount()-1)*players->getElement(player_attacker)->military_settings[3]/5):0;
 
 	unsigned int distance = gwg->CalcDistance(x,y,dest_x,dest_y);
 
-	// Falls Entfernung größer als Basisreichweite, Soldaten subtrahieren
+	// Falls Entfernung grÃ¶ÃŸer als Basisreichweite, Soldaten subtrahieren
 	if (distance > BASE_ATTACKING_DISTANCE)
 	{
-		// je einen soldaten zum entfernen vormerken für jeden EXTENDED_ATTACKING_DISTANCE großen Schritt
+		// je einen soldaten zum entfernen vormerken fÃ¼r jeden EXTENDED_ATTACKING_DISTANCE groÃŸen Schritt
 		unsigned short soldiers_to_remove = ((distance - BASE_ATTACKING_DISTANCE + EXTENDED_ATTACKING_DISTANCE - 1) / EXTENDED_ATTACKING_DISTANCE);
 		if (soldiers_to_remove < soldiers_count)
 			soldiers_count -= soldiers_to_remove;
@@ -724,7 +727,7 @@ unsigned nobMilitary::GetSoldiersForAttack(const MapCoord dest_x, const MapCoord
 			return 0;
 	}
 
-	// und auch der Weg zu Fuß darf dann nicht so weit sein, wenn das alles bestanden ist, können wir ihn nehmen..
+	// und auch der Weg zu FuÃŸ darf dann nicht so weit sein, wenn das alles bestanden ist, kÃ¶nnen wir ihn nehmen..
 	if(soldiers_count && gwg->FindHumanPath(x,y,dest_x,dest_y,MAX_ATTACKING_RUN_DISTANCE,false) != 0xFF)
 		// Soldaten davon nehmen
 		return soldiers_count;
@@ -732,7 +735,7 @@ unsigned nobMilitary::GetSoldiersForAttack(const MapCoord dest_x, const MapCoord
 		return 0;
 }
 
-/// Gibt die Soldaten zurück, die für einen Angriff auf ein bestimmtes Ziel zur Verfügung stehen
+/// Gibt die Soldaten zurÃ¼ck, die fÃ¼r einen Angriff auf ein bestimmtes Ziel zur VerfÃ¼gung stehen
 void nobMilitary::GetSoldiersForAttack(const MapCoord dest_x, const MapCoord dest_y, 
 	const unsigned char player_attacker, std::vector<nofPassiveSoldier*> * soldiers) const
 {
@@ -747,10 +750,10 @@ void nobMilitary::GetSoldiersForAttack(const MapCoord dest_x, const MapCoord des
 
 nofDefender * nobMilitary::ProvideDefender(nofAttacker * const attacker)
 {
-	// Überhaupt Soldaten da?
+	// Ãœberhaupt Soldaten da?
 	if(!troops.size())
 	{
-		/// Soldaten, die noch auf Mission gehen wollen, canceln und für die Verteidigung mit einziehen
+		/// Soldaten, die noch auf Mission gehen wollen, canceln und fÃ¼r die Verteidigung mit einziehen
 		CancelJobs();
 		// Nochmal versuchen
 		if(!troops.size())
@@ -775,7 +778,7 @@ nofDefender * nobMilitary::ProvideDefender(nofAttacker * const attacker)
 
 void nobMilitary::Capture(const unsigned char new_owner)
 {
-	// Goldmünzen in der Inventur vom alten Spieler abziehen und dem neuen hinzufügen
+	// GoldmÃ¼nzen in der Inventur vom alten Spieler abziehen und dem neuen hinzufÃ¼gen
 	gwg->GetPlayer(player)->DecreaseInventoryWare(GD_COINS,coins);
 	gwg->GetPlayer(new_owner)->IncreaseInventoryWare(GD_COINS,coins);
 
@@ -786,14 +789,14 @@ void nobMilitary::Capture(const unsigned char new_owner)
 	// Bestellungen die hierher unterwegs sind canceln
 	CancelOrders();
 
-	// Aggressiv-Verteidigenden Soldaten Bescheid sagen, dass sie nach Hause gehen können
+	// Aggressiv-Verteidigenden Soldaten Bescheid sagen, dass sie nach Hause gehen kÃ¶nnen
 	for(list<nofAggressiveDefender*>::iterator it = aggressive_defenders.begin();it.valid();++it)
 		(*it)->AttackedGoalDestroyed();
 
 	troops_on_mission.clear();
 	aggressive_defenders.clear();
 
-	// In der Wirtschaftsverwaltung dieses Gebäude jetzt zum neuen Spieler zählen und beim alten raushauen
+	// In der Wirtschaftsverwaltung dieses GebÃ¤ude jetzt zum neuen Spieler zÃ¤hlen und beim alten raushauen
 	gwg->GetPlayer(player)->RemoveMilitaryBuilding(this);
 	gwg->GetPlayer(new_owner)->AddMilitaryBuilding(this);
 
@@ -803,31 +806,31 @@ void nobMilitary::Capture(const unsigned char new_owner)
 	// neuer Spieler
 	player = new_owner;
 
-	// Flagge davor auch übernehmen
+	// Flagge davor auch Ã¼bernehmen
 	GetFlag()->Capture(new_owner);
 
 	// Territorium neu berechnen
 	gwg->RecalcTerritory(this,MILITARY_RADIUS[size],false, false);
 
-	// Sichtbarkeiten berechnen für alten Spieler
+	// Sichtbarkeiten berechnen fÃ¼r alten Spieler
 	gwg->RecalcVisibilitiesAroundPoint(GetX(),GetY(),GetMilitaryRadius()+VISUALRANGE_MILITARY+1,old_player, NULL);
 
 	// Grenzflagge entsprechend neu setzen von den Feinden
 	LookForEnemyBuildings();
-	// und von den Verbündeten (da ja ein Feindgebäude weg ist)!
+	// und von den VerbÃ¼ndeten (da ja ein FeindgebÃ¤ude weg ist)!
 	std::list<nobBaseMilitary*> buildings;
 	gwg->LookForMilitaryBuildings(buildings,x,y,4);
 
 	for(std::list<nobBaseMilitary*>::iterator it = buildings.begin();it!=buildings.end();++it)
 	{
-		// verbündetes Gebäude?
+		// verbÃ¼ndetes GebÃ¤ude?
 		if(gwg->GetPlayer((*it)->GetPlayer())->IsPlayerAttackable(old_player)
 			&& (*it)->GetBuildingType() >= BLD_BARRACKS && (*it)->GetBuildingType() <= BLD_FORTRESS)
 			// Grenzflaggen von dem neu berechnen
 			static_cast<nobMilitary*>(*it)->LookForEnemyBuildings();
 	}
 
-	// ehemalige Leute dieses Gebäudes nach Hause schicken, die ggf. grad auf dem Weg rein/raus waren
+	// ehemalige Leute dieses GebÃ¤udes nach Hause schicken, die ggf. grad auf dem Weg rein/raus waren
 	unsigned short coords[4] = {x,y,gwg->GetXA(x,y,4),gwg->GetYA(x,y,4)};
 	for(unsigned short i = 0;i<2;++i)
 	{
@@ -844,14 +847,14 @@ void nobMilitary::Capture(const unsigned char new_owner)
 		}
 	}
 
-	// Gebäude wird nun eingenommen
+	// GebÃ¤ude wird nun eingenommen
 	capturing = true;
 
-	// Soldat, der zum Erobern reinläuft, ist nun drinne --> Anzahl der erobernden Soldaten entsprechend verringern
+	// Soldat, der zum Erobern reinlÃ¤uft, ist nun drinne --> Anzahl der erobernden Soldaten entsprechend verringern
 	assert(capturing_soldiers);
 	--capturing_soldiers;
 
-	// Fanfarensound abspieln, falls das Militärgebäude im Sichtbereich ist und unseres ist
+	// Fanfarensound abspieln, falls das MilitÃ¤rgebÃ¤ude im Sichtbereich ist und unseres ist
 	gwg->MilitaryBuildingCaptured(x,y,player);
 
 	// Post verschicken, an den alten Besitzer und an den neuen Besitzer
@@ -862,7 +865,7 @@ void nobMilitary::Capture(const unsigned char new_owner)
 		GameClient::inst().SendPostMessage(
 			new ImagePostMsgWithLocation(_("Military building captured"), PMC_MILITARY, x, y, GetBuildingType(), GetNation()));
 
-	// ggf. Fenster schließen vom alten Spieler
+	// ggf. Fenster schlieÃŸen vom alten Spieler
 	gwg->ImportantObjectDestroyed(x,y);
 
 	// evtl. AIEvent senden
@@ -873,25 +876,27 @@ void nobMilitary::Capture(const unsigned char new_owner)
 void nobMilitary::NeedOccupyingTroops(const unsigned char new_owner)
 {
 	// Brauchen wir noch Soldaten (ein Soldat kommt ja noch rein), keine Soldaten von anderen Spielern 
-	// wählen (z.B. "Kollektivangriffen"), manchmal ist es egal, wer reinkommt (new_owner == 0xFF)
+	// wÃ¤hlen (z.B. "Kollektivangriffen"), manchmal ist es egal, wer reinkommt (new_owner == 0xFF)
 
-	// Soldaten wählen, der am nächsten an der Flagge steht, damit nicht welche von ganze hinten ewige Zeit vor
-	// latschen müssen
+	// Soldaten wÃ¤hlen, der am nÃ¤chsten an der Flagge steht, damit nicht welche von ganze hinten ewige Zeit vor
+	// latschen mÃ¼ssen
 	nofAttacker * best_attacker = 0;
 	unsigned best_radius = 0xFFFFFFFF;
+	
+	unsigned needed_soldiers = unsigned(CalcTroopsCount());
 
-	if(unsigned(CalcTroopsCount()) > troops.size() + capturing_soldiers + troops_on_mission.size() + ordered_troops.size())
+	if(needed_soldiers > troops.size() + capturing_soldiers + troops_on_mission.size() + ordered_troops.size())
 	{
 		// Soldaten absuchen
 		for(list<nofAttacker*>::iterator it = aggressors.begin();it.valid();++it)
 		{
-			// Steht der Soldat überhaupt um das Gebäude rum?
+			// Steht der Soldat Ã¼berhaupt um das GebÃ¤ude rum?
 			if((*it)->IsAttackerReady() && ((*it)->GetPlayer() == new_owner || new_owner == 0xFF))
 			{
-				// Näher als der bisher beste?
+				// NÃ¤her als der bisher beste?
 				if((*it)->GetRadius() < best_radius)
 				{
-					// Und kommt er überhaupt zur Flagge (könnte ja in der 2. Reihe stehen, sodass die
+					// Und kommt er Ã¼berhaupt zur Flagge (kÃ¶nnte ja in der 2. Reihe stehen, sodass die
 					// vor ihm ihn den Weg versperren)?
 					if(gwg->FindHumanPath((*it)->GetX(),(*it)->GetY(),gwg->GetXA(x,y,4),gwg->GetYA(x,y,4),10,false) != 0xFF)
 					{
@@ -912,15 +917,33 @@ void nobMilitary::NeedOccupyingTroops(const unsigned char new_owner)
 			// und raus hier
 			return;
 		}
+		
+		
 
 		// keine Soldaten mehr gefunden, der Rest (der noch nicht da ist) kann wieder nach Hause gehen
-		// Achtung: Hier können Iteratoren gelöscht werden in CapturedBuildingFull, daher Sicherheitsschleife!
+		// Achtung: Hier kÃ¶nnen Iteratoren gelÃ¶scht werden in CapturedBuildingFull, daher Sicherheitsschleife!
 		list<nofAttacker*>::iterator next_it;
 		for(list<nofAttacker*>::iterator it = aggressors.begin();it.valid();it = next_it)
 		{
 			next_it = it.GetNext();
 			nofAttacker * attacker = *it;
-			// Nicht gerade Soldaten löschen, die das Gebäude noch einnehmen!
+			
+			// If necessary look for further soldiers who are not standing around the building
+			if(needed_soldiers > troops.size() + capturing_soldiers +
+			troops_on_mission.size() + ordered_troops.size() + far_away_capturers.size()
+				&& attacker->GetPlayer() == player)
+			{
+				// Ask attacker if this is possible
+				if(attacker->TryToStartFarAwayCapturing(this))
+				{
+					aggressors.erase(it);
+					far_away_capturers.push_back(attacker);
+					continue;
+				}
+			}
+			
+			
+			// Nicht gerade Soldaten lÃ¶schen, die das GebÃ¤ude noch einnehmen!
 			if(attacker->GetState() != nofActiveSoldier::STATE_ATTACKING_CAPTURINGNEXT)
 			{
 				aggressors.erase(it);
@@ -934,14 +957,14 @@ void nobMilitary::NeedOccupyingTroops(const unsigned char new_owner)
 	}
 	else
 	{
-		// keine Soldaten mehr benötigt, der Rest kann wieder nach Hause gehen
-		// Achtung: Hier können Iteratoren gelöscht werden in CapturedBuildingFull, daher Sicherheitsschleife!
+		// keine Soldaten mehr benÃ¶tigt, der Rest kann wieder nach Hause gehen
+		// Achtung: Hier kÃ¶nnen Iteratoren gelÃ¶scht werden in CapturedBuildingFull, daher Sicherheitsschleife!
 		list<nofAttacker*>::iterator next_it;
 		for(list<nofAttacker*>::iterator it = aggressors.begin();it.valid();it = next_it)
 		{
 			next_it = it.GetNext();
 			nofAttacker * attacker = *it;
-			// Nicht gerade Soldaten löschen, die das Gebäude noch einnehmen!
+			// Nicht gerade Soldaten lÃ¶schen, die das GebÃ¤ude noch einnehmen!
 			if(attacker->GetState() != nofActiveSoldier::STATE_ATTACKING_CAPTURINGNEXT)
 			{
 				aggressors.erase(it);
@@ -952,7 +975,7 @@ void nobMilitary::NeedOccupyingTroops(const unsigned char new_owner)
 		// Einnahme beendet
 		capturing = false;
 
-		// Nun die Besetzung prüfen
+		// Nun die Besetzung prÃ¼fen
 		RegulateTroops();
 
 	}
@@ -966,13 +989,13 @@ void nobMilitary::StopGold()
 	if(GAMECLIENT.GetPlayerID() != player || GAMECLIENT.IsReplayModeOn())
 		disable_coins_virtual = !disable_coins_virtual;
 
-	// Evtl neue Goldmünzen bestellen, wenn das umgestellt wurde
+	// Evtl neue GoldmÃ¼nzen bestellen, wenn das umgestellt wurde
 	if(!disable_coins)
 		SearchCoins();
 	// Goldzufuhr dagegen deaktiviert?
 	else
 	{
-		// Goldmünzen zurückschicken
+		// GoldmÃ¼nzen zurÃ¼ckschicken
 		for(list<Ware*>::iterator it = ordered_coins.begin();it.valid();++it)
 			WareNotNeeded(*it);
 
@@ -983,20 +1006,20 @@ void nobMilitary::StopGold()
 
 unsigned nobMilitary::CalcCoinsPoints()
 {
-	// Will ich überhaupt Goldmünzen, wenn nich, sofort raus
+	// Will ich Ã¼berhaupt GoldmÃ¼nzen, wenn nich, sofort raus
 	if(!WantCoins())
 		return 0;
 
-	// 10000 als Basis wählen, damit man auch noch was abziehen kann
+	// 10000 als Basis wÃ¤hlen, damit man auch noch was abziehen kann
 	unsigned short points = 10000;
 
-	// Wenn hier schon Münzen drin sind oder welche bestellt sind, wirkt sich das natürlich negativ auf die "Wichtigkeit" aus
+	// Wenn hier schon MÃ¼nzen drin sind oder welche bestellt sind, wirkt sich das natÃ¼rlich negativ auf die "Wichtigkeit" aus
 	points -= (coins+ordered_coins.size())*30;
 
-	// Beförderbare Soldaten zählen
+	// BefÃ¶rderbare Soldaten zÃ¤hlen
 	for(list<nofPassiveSoldier*>::iterator it = troops.begin();it.valid();++it)
 	{
-		// Solange es kein General (4) ist, kann der Soldat noch befördert werden
+		// Solange es kein General (4) ist, kann der Soldat noch befÃ¶rdert werden
 		if((*it)->GetRank() < 4)
 			points+=20;
 	}
@@ -1006,33 +1029,33 @@ unsigned nobMilitary::CalcCoinsPoints()
 
 bool nobMilitary::WantCoins()
 {
-	// Wenn die Goldzufuhr gestoppt wurde oder Münzvorrat voll ist, will ich gar keine Goldmünzen
+	// Wenn die Goldzufuhr gestoppt wurde oder MÃ¼nzvorrat voll ist, will ich gar keine GoldmÃ¼nzen
 	return (!disable_coins && coins + ordered_coins.size() != GOLD_COUNT[nation][size] && !new_built);
 }
 
 void nobMilitary::SearchCoins()
 {
-	// Brauche ich überhaupt Goldmünzen bzw. hab ich vielleicht schon ein Event angemeldet?
+	// Brauche ich Ã¼berhaupt GoldmÃ¼nzen bzw. hab ich vielleicht schon ein Event angemeldet?
 	if(WantCoins() && !goldorder_event)
 	{
-		// Lagerhaus mit Goldmünzen suchen
+		// Lagerhaus mit GoldmÃ¼nzen suchen
 		FW::Param_Ware p = {GD_COINS,1};
 		if(nobBaseWarehouse * wh = gwg->GetPlayer(player)->FindWarehouse(this,FW::Condition_Ware,0,false,&p,false))
 		{
-			// Wenns eins gibt, dort eine Goldmünze bestellen
+			// Wenns eins gibt, dort eine GoldmÃ¼nze bestellen
 			Ware * ware = wh->OrderWare(GD_COINS,this);
 
 			if(!ware)
 			{
-				// Ware dürfte nicht 0 werden, da ja ein Lagerhaus MIT GOLDMÜNZEN bereits gesucht wird
+				// Ware dÃ¼rfte nicht 0 werden, da ja ein Lagerhaus MIT GOLDMÃœNZEN bereits gesucht wird
 				LOG.lprintf("nobMilitary::SearchCoins: WARNING: ware = 0. Bug alarm!\n");
 				return;
 			}
 
-			// Goldmünze zu den Bestellungen hinzufügen
+			// GoldmÃ¼nze zu den Bestellungen hinzufÃ¼gen
 			ordered_coins.push_back(ware);
 
-			// Nach einer Weile nochmal nach evtl neuen Goldmünzen gucken
+			// Nach einer Weile nochmal nach evtl neuen GoldmÃ¼nzen gucken
 			goldorder_event = em->AddEvent(this,200+RANDOM.Rand(__FILE__,__LINE__,obj_id,400),1);
 		}
 	}
@@ -1040,22 +1063,22 @@ void nobMilitary::SearchCoins()
 
 void nobMilitary::PrepareUpgrading()
 {
-	// Goldmünzen da?
+	// GoldmÃ¼nzen da?
 	if(!coins)
 		return;
 
-	// Gibts auch noch kein Beförderungsevent?
+	// Gibts auch noch kein BefÃ¶rderungsevent?
 	if(upgrade_event)
 		return;
 
-	// Noch Soldaten, die befördert werden können?
+	// Noch Soldaten, die befÃ¶rdert werden kÃ¶nnen?
 	bool soldiers_available = false;
 
 	for(list<nofPassiveSoldier*>::iterator it = troops.begin();it.valid();++it)
 	{
 		if((*it)->GetRank() < 4)
 		{
-			// es wurde ein Soldat gefunden, der befördert werden kann
+			// es wurde ein Soldat gefunden, der befÃ¶rdert werden kann
 			soldiers_available = true;
 			break;
 		}
@@ -1064,7 +1087,7 @@ void nobMilitary::PrepareUpgrading()
 	if(!soldiers_available)
 		return;
 
-	// Alles da --> Beförderungsevent anmelden
+	// Alles da --> BefÃ¶rderungsevent anmelden
 	upgrade_event = em->AddEvent(this,UPGRADE_TIME+RANDOM.Rand(__FILE__,__LINE__,obj_id,UPGRADE_TIME_RANDOM),2);
 }
 
@@ -1092,7 +1115,7 @@ void nobMilitary::HitOfCatapultStone()
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  Darf das Militärgebäude abgerissen werden (Abriss-Verbot berücksichtigen)?
+ *  Darf das MilitÃ¤rgebÃ¤ude abgerissen werden (Abriss-Verbot berÃ¼cksichtigen)?
  *
  *  @author OLiver
  */
@@ -1104,13 +1127,13 @@ bool nobMilitary::IsDemolitionAllowed() const
 		break;
 	case 1: // under attack
 		{
-			// Prüfen, ob das Gebäude angegriffen wird
+			// PrÃ¼fen, ob das GebÃ¤ude angegriffen wird
 			if(aggressors.size())
 				return false;
 		} break;
 	case 2: // near frontiers
 		{
-			// Prüfen, ob es in Grenznähe steht
+			// PrÃ¼fen, ob es in GrenznÃ¤he steht
 			if(frontier_distance == 2)
 				return false;
 		} break;
@@ -1122,6 +1145,7 @@ bool nobMilitary::IsDemolitionAllowed() const
 void nobMilitary::UnlinkAggressor(nofAttacker *soldier)
 {
 	aggressors.erase(soldier);
+	far_away_capturers.remove(soldier);
 
 	if (aggressors.size() == 0)
 		RegulateTroops();

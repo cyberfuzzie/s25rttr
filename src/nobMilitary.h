@@ -1,4 +1,4 @@
-// $Id: nobMilitary.h 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: nobMilitary.h 6733 2010-09-13 20:41:11Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -21,6 +21,7 @@
 #define NOB_MILITARYBUILDING_H_
 
 #include "nobBaseMilitary.h"
+#include <list>
 
 class nofPassiveSoldier;
 class nofActiveSoldier;
@@ -51,6 +52,9 @@ class nobMilitary : public nobBaseMilitary
 	bool capturing;
 	/// Anzahl der Soldaten, die das Militärgebäude gerade noch einnehmen
 	unsigned capturing_soldiers;
+	/// List of soldiers who are on the way to capture the military building
+	/// but who are still quite far away (didn't stand around the building)
+	std::list<nofAttacker*> far_away_capturers;
 	/// Gold-Bestell-Event
 	EventManager::EventPointer goldorder_event;
 	/// Beförderung-Event

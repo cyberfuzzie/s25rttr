@@ -579,13 +579,13 @@ void nofAttacker::MissAttackingWalk()
 		return;
 	}
 
-	// Is it still a hostile destination?
+	/*// Is it still a hostile destination?
 	// (Could be captured in the meantime)
 	if(!players->getElement(player)->IsPlayerAttackable(attacked_goal->GetPlayer()))
 	{
 		ReturnHomeMissionAttacking();
 		return;
-	}
+	}*/
 
 
 	// Eine Position rund um das Militärgebäude suchen
@@ -638,6 +638,14 @@ void nofAttacker::ReachedDestination()
 	if(x == attacked_goal->GetX() + (attacked_goal->GetY()&1)  &&
 		y == attacked_goal->GetY()+1)
 	{
+		// Building already captured? Continue capturing
+		if(attacked_goal->GetPlayer() == player)
+		{
+			state = STATE_ATTACKING_CAPTURINGNEXT;
+			CapturingWalking();
+			return;
+		}
+		
 		// Post schicken "Wir werden angegriffen" TODO evtl. unschön, da jeder Attacker das dann aufruft
 		if(attacked_goal->GetPlayer() == GameClient::inst().GetPlayerID())
 			GAMECLIENT.SendPostMessage(
@@ -1125,4 +1133,20 @@ void nofAttacker::FreeFightEnded()
 {
 	// Continue with normal walking towards our goal
 	state = STATE_ATTACKING_WALKINGTOGOAL;
+}
+
+/// Try to start capturing although he is still far away from the destination
+/// Returns true if successful
+bool nofAttacker::TryToStartFarAwayCapturing(nobMilitary * dest)
+{
+	// Are we already walking to the destination?
+	if(state == STATE_ATTACKING_WALKINGTOGOAL || state == STATE_MEETENEMY || state == STATE_WAITINGFORFIGHT 
+		|| state == STATE_FIGHTING)
+	{
+		// Not too far away?
+		if(gwg->CalcDistance(x,y,dest->GetX(),dest->GetY()) < MAX_FAR_AWAY_CAPTURING_DISTANCE)
+			return true;
+	}
+	
+	return false;
 }

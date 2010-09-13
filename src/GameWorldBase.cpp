@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 6727 2010-09-12 20:33:56Z OLiver $
+// $Id: GameWorldBase.cpp 6733 2010-09-13 20:41:11Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1377,9 +1377,11 @@ void GameWorldBase::GetHarborPointsAroundMilitaryBuilding(const MapCoord x, cons
 {
 	assert(harbor_points);
 	
+
 	// Nach Hafenpunkten in der Nähe des angegriffenen Gebäudes suchen
 	// Alle unsere Häfen durchgehen
-	for(unsigned i = 0;i<harbor_pos.size();++i)
+	for(unsigned i = 1;i<harbor_pos.size();++i)
+
 	{
 		MapCoord harbor_x = harbor_pos[i].x, harbor_y = harbor_pos[i].y;
 		

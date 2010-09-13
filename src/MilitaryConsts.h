@@ -1,4 +1,4 @@
-// $Id: MilitaryConsts.h 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: MilitaryConsts.h 6733 2010-09-13 20:41:11Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -20,26 +20,26 @@
 #ifndef MILITARY_CONSTS_H_
 #define MILITARY_CONSTS_H_
 
-/// Gr√∂√üe der Milit‰rquadrate (in Knotenpunkten), in die die Welt eingeteilt wurde f¸r Milit‰rgeb‰ude
+/// Gr√É¬∂√É¬üe der Milit√§rquadrate (in Knotenpunkten), in die die Welt eingeteilt wurde f√ºr Milit√§rgeb√§ude
 const unsigned short MILITARY_SQUARE_SIZE = 20;
 
-/// Maximale Entfernungen f¸r "nahe Milit‰rgeb‰udedistanz" und "mittlere Milit‰rgeb‰udedistanz"
+/// Maximale Entfernungen f√ºr "nahe Milit√§rgeb√§udedistanz" und "mittlere Milit√§rgeb√§udedistanz"
 const unsigned MAX_MILITARY_DISTANCE_NEAR = 18;
 const unsigned MAX_MILITARY_DISTANCE_MIDDLE = 26;
 
-/// Basisangriffsreichweite (Angriff mit allen Soldaten m√∂glich)
+/// Basisangriffsreichweite (Angriff mit allen Soldaten m√É¬∂glich)
 const unsigned BASE_ATTACKING_DISTANCE = 21;
 
-/// Erweiterte Reichweite, f¸r die jeweils ein Soldat von der Angriffsarmee abgezogen wird
+/// Erweiterte Reichweite, f√ºr die jeweils ein Soldat von der Angriffsarmee abgezogen wird
 const unsigned EXTENDED_ATTACKING_DISTANCE = 1;
 
-/// Maximale L‰nge f¸r den Laufweg beim Angriff
+/// Maximale L√§nge f√ºr den Laufweg beim Angriff
 const unsigned MAX_ATTACKING_RUN_DISTANCE = 70;
 
 /// Distanz zwischen zwei Gegnern, sodass diese aufeinander zugehen
 const unsigned MEET_FOR_FIGHT_DISTANCE = 5;
 
-/// Besatzung in den einzelnen Milit‰rgeb‰uden und nach Nation
+/// Besatzung in den einzelnen Milit√§rgeb√§uden und nach Nation
 const int TROOPS_COUNT[4][4] =
 {
 	{2,3,6,9},
@@ -48,7 +48,7 @@ const int TROOPS_COUNT[4][4] =
 	{2,3,6,9}
 };
 
-/// Gold in den einzelnen Milit‰rgeb‰uden und nach Nation
+/// Gold in den einzelnen Milit√§rgeb√§uden und nach Nation
 const unsigned short GOLD_COUNT[4][4] =
 {
 	{1,2,4,6},
@@ -57,16 +57,16 @@ const unsigned short GOLD_COUNT[4][4] =
 	{1,2,4,6}
 };
 
-/// Radien der Milit‰rgeb‰ude ( die letzten beiden sind HQ und Hafen!)
+/// Radien der Milit√§rgeb√§ude ( die letzten beiden sind HQ und Hafen!)
 const unsigned MILITARY_RADIUS[6] =
 { 8,9,10,11,9,4 };
 
-// Radius f¸r einzelne Hafen(baustellen)
+// Radius f√ºr einzelne Hafen(baustellen)
 const unsigned HARBOR_ALONE_RADIUS = 8;
 
-/// Fahnenpositionen bei den Milit‰rgeb‰uden
+/// Fahnenpositionen bei den Milit√§rgeb√§uden
 
-// Besatzungsflaggen (4 V√∂lker x 4 Gr√∂√üen x 2 X+Y) - ab 3162
+// Besatzungsflaggen (4 V√É¬∂lker x 4 Gr√É¬∂√É¬üen x 2 X+Y) - ab 3162
 const signed char TROOPS_FLAGS[4][4][2] =
 {
 	{{24,-41},{19,-41},{31,-88},{35,-67}},
@@ -75,10 +75,10 @@ const signed char TROOPS_FLAGS[4][4][2] =
 	{{-5,-50},{-5,-51},{-9,-74},{-12,-58}}
 };
 
-/// Anzahl an Milit‰reinstellungen
+/// Anzahl an Milit√§reinstellungen
 const unsigned MILITARY_SETTINGS_COUNT = 8;
 
-/// Skalierung der einzelnen Milit‰reinstellungen (maximale Werte)
+/// Skalierung der einzelnen Milit√§reinstellungen (maximale Werte)
 const unsigned MILITARY_SETTINGS_SCALE[MILITARY_SETTINGS_COUNT] = 
 {
 	10,
@@ -91,13 +91,13 @@ const unsigned MILITARY_SETTINGS_SCALE[MILITARY_SETTINGS_COUNT] =
 	8
 };
 
-// Besatzungsflaggen f¸r die HQs
+// Besatzungsflaggen f√ºr die HQs
 const signed char TROOPS_FLAGS_HQ[4][2] =
 {
 	{-12,-102},{-19,-94},{-18,-112},{20,-54},
 };
 
-/// Grenzflaggen (4 V√∂lker x 4 Gr√∂√üen x 2 X+Y) - ab 3162 
+/// Grenzflaggen (4 V√É¬∂lker x 4 Gr√É¬∂√É¬üen x 2 X+Y) - ab 3162 
 const signed char BORDER_FLAGS[4][4][2] =
 {
 	{{-6,-36},{7,-48},{-18,-28},{-47,-64}},
@@ -116,11 +116,14 @@ const unsigned char HITPOINTS[4][5] =
 	{3,4,5,6,7}
 };
 
-/// Sichtweite der Milit‰rgeb‰ude (relativ); wird auf die normale Grenzweite draufaddiert
+/// Max distance for an attacker to reach a building and join in capturing
+const unsigned MAX_FAR_AWAY_CAPTURING_DISTANCE = 15;
+
+/// Sichtweite der Milit√§rgeb√§ude (relativ); wird auf die normale Grenzweite draufaddiert
 const unsigned VISUALRANGE_MILITARY = 3;
-/// Sichtweite von Sp‰ht¸rmen (absolut)
+/// Sichtweite von Sp√§ht√ºrmen (absolut)
 const unsigned VISUALRANGE_LOOKOUTTOWER = 20;
-/// Sichtweite von Sp‰hern
+/// Sichtweite von Sp√§hern
 const unsigned VISUALRANGE_SCOUT = 3;
 /// Sichtweite von Soldaten
 const unsigned VISUALRANGE_SOLDIER = 2;
@@ -129,15 +132,15 @@ const unsigned VISUALRANGE_SHIP = 2;
 /// Sichtweite von Erkundungs-Schiffen
 const unsigned VISUALRANGE_EXPLORATION_SHIP = 12;
 
-/// Bef√∂rderungszeit von Soldaten ( =UPGRADE_TIME + rand(UPGRADE_TIME_RANDOM) )
+/// Bef√É¬∂rderungszeit von Soldaten ( =UPGRADE_TIME + rand(UPGRADE_TIME_RANDOM) )
 const unsigned UPGRADE_TIME = 100;
 const unsigned UPGRADE_TIME_RANDOM = 300;
-/// Genesungszeit von Soldaten in H‰usern, Zeit, die gebraucht wird um sich um einen Hitpoint zu erholen
+/// Genesungszeit von Soldaten in H√§usern, Zeit, die gebraucht wird um sich um einen Hitpoint zu erholen
 // ( =CONVALESCE_TIME + rand(CONVALESCE_TIME_RANDOM) )
 const unsigned CONVALESCE_TIME = 500;
 const unsigned CONVALESCE_TIME_RANDOM = 500;
 
-/// Maximale Entfernung des Milit‰rgeb‰udes von dem Hafen bei Seeangriffen
+/// Maximale Entfernung des Milit√§rgeb√§udes von dem Hafen bei Seeangriffen
 const unsigned SEAATTACK_DISTANCE = 18;
 
 

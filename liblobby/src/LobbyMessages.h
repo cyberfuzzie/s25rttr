@@ -1,4 +1,4 @@
-// $Id: LobbyMessages.h 6727 2010-09-12 20:33:56Z OLiver $
+// $Id: LobbyMessages.h 6729 2010-09-13 07:37:31Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -184,7 +184,7 @@ public:
 		if(rev[0] != 0xFF || rev[3] != 0xFF)
 			revision = 0;
 		else
-			revision = htonl(*((unsigned int*)(&rev[0])));
+			revision = htonl(*((unsigned int*)rev));
 
 		if(revision == LOBBYPROTOCOL_VERSION)
 		{

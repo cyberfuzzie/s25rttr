@@ -1,4 +1,4 @@
-// $Id: nofBuildingWorker.cpp 6718 2010-09-09 21:39:46Z OLiver $
+// $Id: nofBuildingWorker.cpp 6729 2010-09-13 07:37:31Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -513,3 +513,4 @@ void nofBuildingWorker::DrawReturnStates(const int x, const int y)
 	else
 		DrawWalking(x,y);
 }
+

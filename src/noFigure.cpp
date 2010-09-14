@@ -387,16 +387,15 @@ void noFigure::WalkToGoal()
 			else
 			{
 				// Zeug nullen
-				cur_rs = 0;
+				cur_rs = NULL;
 				rs_dir = 0;
 				rs_pos = 0;
+				goal = NULL;
 			
 
 				// abgeleiteter Klasse sagen, dass das Ziel erreicht wurde
 				fs = FS_JOB;
 				GoalReached();
-				
-				goal = 0;
 			}
 
 		}

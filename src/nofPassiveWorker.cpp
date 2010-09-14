@@ -1,4 +1,4 @@
-// $Id: nofPassiveWorker.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: nofPassiveWorker.cpp 6735 2010-09-14 10:29:15Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -53,7 +53,9 @@ void nofPassiveWorker::GoalReached()
 {
 	// Mich hier einquartieren
 	gwg->RemoveFigure(this,x,y);
-	static_cast<nobBaseWarehouse*>(goal)->AddFigure(this);
+	nobBaseWarehouse * wh = gwg->GetSpecObj<nobBaseWarehouse>(x,y);
+	assert(wh);
+	wh->AddFigure(this);
 	
 }
 

@@ -322,7 +322,6 @@
       <File Name="../src/noDisappearingEnvObject.h"/>
       <File Name="../src/noRoadNode.cpp"/>
       <File Name="../src/nobBaseMilitary.cpp"/>
-      <File Name="../src/nofFarmhand.cpp"/>
       <File Name="../src/noFlag.cpp"/>
       <File Name="../src/nofWoodcutter.h"/>
       <File Name="../src/nobMilitary.cpp"/>
@@ -497,6 +496,7 @@
         <File Name="../src/AddonRefundOnEmergency.h"/>
         <File Name="../src/AddonCharburner.h"/>
         <File Name="../src/const_addons.h"/>
+        <File Name="../src/nofFarmhand.cpp"/>
       </VirtualDirectory>
       <File Name="../src/GameReplay.cpp"/>
       <File Name="../src/GameReplay.h"/>

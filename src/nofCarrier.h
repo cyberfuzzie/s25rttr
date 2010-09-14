@@ -1,4 +1,4 @@
-// $Id: nofCarrier.h 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: nofCarrier.h 6737 2010-09-14 14:17:33Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -34,48 +34,52 @@ enum CarrierState
 	CARRS_GOTOMIDDLEOFROAD, // zur Mitte seines Weges gehen
 	CARRS_FETCHWARE, // Ware holen
 	CARRS_CARRYWARE, // Ware zur Flagge tragen
-	CARRS_CARRYWARETOBUILDING, // Ware zum Geb‰ude schaffen
-	CARRS_LEAVEBUILDING, // kommt aus Geb‰ude wieder raus (bzw kommt von Baustelle zur¸ck) zum Weg
+	CARRS_CARRYWARETOBUILDING, // Ware zum Geb√§ude schaffen
+	CARRS_LEAVEBUILDING, // kommt aus Geb√§ude wieder raus (bzw kommt von Baustelle zur√ºck) zum Weg
 	CARRS_WAITFORWARESPACE, // wartet vor der Flagge auf einen freien Platz
-	CARRS_GOBACKFROMFLAG // geht von der Flagge zur¸ck, weil kein Platz mehr frei war
+	CARRS_GOBACKFROMFLAG, // geht von der Flagge zur√ºck, weil kein Platz mehr frei war
+	CARRS_BOATCARRIER_WANDERONWATER // Rumirren der Bootstr√§ger auf dem Wasser, d.h. Paddeln zum 
+									// n√§chsten Ufer, nachdem der Wasserweg zerst√∂rt wurde
 
 
 };
 
-// Stellt einen Tr‰cer da
+// Stellt einen Tr√§cer da
 class nofCarrier : public noFigure
 {
 public:
 
-	/// Tr‰ger-"Typ"
+	/// Tr√§ger-"Typ"
 	enum CarrierType
 	{
-		CT_NORMAL, // Normaler Tr‰ger
+		CT_NORMAL, // Normaler Tr√§ger
 		CT_DONKEY, // Esel
-		CT_BOAT // Tr‰ger mit Boot
+		CT_BOAT // Tr√§ger mit Boot
 	};
 
 private:
 
 	CarrierType ct;
-	/// Was der Tr‰ger gerade so treibt
+	/// Was der Tr√§ger gerade so treibt
 	CarrierState state;
 	/// Ist er dick?
 	bool fat;
 	// Weg, auf dem er arbeitet
 	RoadSegment * workplace;
-	/// Ware, die er gerade tr‰gt (0 = nichts)
+	/// Ware, die er gerade tr√§gt (0 = nichts)
 	Ware * carried_ware;
-	/// Rechne-Produktivit‰t-aus-Event
+	/// Rechne-Produktivit√§t-aus-Event
 	EventManager::EventPointer productivity_ev;
-	// Letzte errechnete Produktivit‰t
+	// Letzte errechnete Produktivit√§t
 	unsigned productivity;
 	/// Wieviel GF von einer bestimmten Anzahl in diesem Event-Zeitraum gearbeitet wurde
 	unsigned worked_gf;
 	/// Zu welchem GF das letzte Mal das Arbeiten angefangen wurde
 	unsigned since_working_gf;
-	/// Bestimmt GF der n‰chsten Tr‰geranimation
+	/// Bestimmt GF der n√§chsten Tr√§geranimation
 	unsigned next_animation;
+	/// For boat carriers: path to the shore
+	std::vector<unsigned char> * shore_path;
 
 private:
 
@@ -84,21 +88,24 @@ private:
 	void AbrogateWorkplace();
 	void HandleDerivedEvent(const unsigned int id);
 
-	/// Nach dem Tragen der Ware, guckt der Tr‰ger an beiden Flagge, obs Waren gibt, holt/tr‰gt diese ggf oder geht ansonsten wieder in die Mitte
+	/// Nach dem Tragen der Ware, guckt der Tr√§ger an beiden Flagge, obs Waren gibt, holt/tr√§gt diese ggf oder geht ansonsten wieder in die Mitte
 	void LookForWares();
-	/// Nimmt eine Ware auf an der aktuellen Flagge und dreht sich um, um sie zu tragen (fetch_dir ist die Richtung der Waren, die der Tr‰ger aufnehmen will)
+	/// Nimmt eine Ware auf an der aktuellen Flagge und dreht sich um, um sie zu tragen (fetch_dir ist die Richtung der Waren, die der Tr√§ger aufnehmen will)
 	void FetchWare(const bool swap_wares);
 
-	/// Pr¸ft, ob die getragene Ware dann von dem Weg zum Geb‰ude will
+	/// Pr√ºft, ob die getragene Ware dann von dem Weg zum Geb√§ude will
 	bool WantInBuilding();
 
-	/// F¸r Produktivit‰tsmessungen: f‰ngt an zu arbeiten
+	/// F√ºr Produktivit√§tsmessungen: f√§ngt an zu arbeiten
 	void StartWorking();
-	/// F¸r Produktivit‰tsmessungen: hˆrt auf zu arbeiten
+	/// F√ºr Produktivit√§tsmessungen: h√∂rt auf zu arbeiten
 	void StopWorking();
 
 	/// Bestimmt neuen Animationszeitpunkt
 	void SetNewAnimationMoment();
+	
+	/// Boat carrier paddles to the coast after his road was destroyed
+	void WanderOnWater();
 	
 public:
 
@@ -111,44 +118,44 @@ public:
 	protected:	void Serialize_nofCarrier(SerializedGameData * sgd) const;
 	public:		void Serialize(SerializedGameData *sgd) const { Serialize_nofCarrier(sgd); }
 
-		/// Aufr‰ummethoden
+		/// Aufr√§ummethoden
 protected:	void Destroy_nofCarrier();
 public:		void Destroy() { Destroy_nofCarrier(); }
 
 	GO_Type GetGOT() const { return GOT_NOF_CARRIER; }
 
-	/// Gibt Tr‰ger-Typ zur¸ck
+	/// Gibt Tr√§ger-Typ zur√ºck
 	CarrierType GetCarrierType() const { return ct; }
-	/// Was macht der Tr‰ger gerade?
+	/// Was macht der Tr√§ger gerade?
 	CarrierState GetCarrierState() const { return state; }
-	/// Gibt Tr‰ger-Produktivit‰t in % zur¸ck
+	/// Gibt Tr√§ger-Produktivit√§t in % zur√ºck
 	unsigned GetProductivity() const { return productivity; }
 
 	void Draw(int x, int y);
 
-	/// Wird aufgerufen, wenn der Weg des Tr‰gers abgerissen wurde
+	/// Wird aufgerufen, wenn der Weg des Tr√§gers abgerissen wurde
 	void LostWork();
 
-	/// Wird aufgerufen, wenn der Arbeitsplatz des Tr‰gers durch eine Flagge geteilt wurde
-	/// der Tr‰ger sucht sich damit einen der beiden als neuen Arbeitsplatz, geht zur Mitte und ruft einen neuen Tr‰ger
-	/// f¸r das 2. Wegst¸ck
+	/// Wird aufgerufen, wenn der Arbeitsplatz des Tr√§gers durch eine Flagge geteilt wurde
+	/// der Tr√§ger sucht sich damit einen der beiden als neuen Arbeitsplatz, geht zur Mitte und ruft einen neuen Tr√§ger
+	/// f√ºr das 2. Wegst√ºck
 	void RoadSplitted(RoadSegment * rs1, RoadSegment * rs2);
 
-	/// Sagt dem Tr‰ger Bescheid, dass es an einer Flagge noch eine Ware zu transportieren gibt
+	/// Sagt dem Tr√§ger Bescheid, dass es an einer Flagge noch eine Ware zu transportieren gibt
 	bool AddWareJob(const noRoadNode * rn);
-	/// Das Gegnteil von AddWareJob: wenn eine Ware nicht mehr transportiert werden will, sagt sie dem Tr‰ger Bescheid,
-	/// damit er nicht unnˆtig dort hinl‰uft zur Flagge
+	/// Das Gegnteil von AddWareJob: wenn eine Ware nicht mehr transportiert werden will, sagt sie dem Tr√§ger Bescheid,
+	/// damit er nicht unn√∂tig dort hinl√§uft zur Flagge
 	void RemoveWareJob();
 
-	/// Benachrichtigt den Tr‰ger, wenn an einer auf seinem Weg an einer Flagge wieder ein freier Platz ist
-	/// gibt zur¸ck, ob der Tr‰ger diesen freien Platz auch nutzen wird
+	/// Benachrichtigt den Tr√§ger, wenn an einer auf seinem Weg an einer Flagge wieder ein freier Platz ist
+	/// gibt zur√ºck, ob der Tr√§ger diesen freien Platz auch nutzen wird
 	bool SpaceAtFlag(const bool flag);
 
-	/// Gibt erste Flagge des Arbeitsweges zur¸ck, falls solch einer existiert
+	/// Gibt erste Flagge des Arbeitsweges zur√ºck, falls solch einer existiert
 	noRoadNode * GetFirstFlag() const;
 	noRoadNode * GetSecondFlag() const;
 	
-	/// Wird aufgerufen, wenn die Straﬂe unter der Figur geteilt wurde (f¸r abgeleitete Klassen)
+	/// Wird aufgerufen, wenn die Stra√üe unter der Figur geteilt wurde (f√ºr abgeleitete Klassen)
 	void CorrectSplitData_Derived();
 
 

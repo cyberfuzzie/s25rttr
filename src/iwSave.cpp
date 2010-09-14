@@ -1,4 +1,4 @@
-// $Id: iwSave.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: iwSave.cpp 6738 2010-09-14 19:02:43Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -67,7 +67,7 @@ iwSaveLoad::iwSaveLoad(const unsigned short add_height, const std::string& windo
 	AddTable(0, 20, 30, 560, 300, TC_GREEN2, NormalFont, 5, _("Filename"), 270, ctrlTable::SRT_STRING, _("Map"), 250, ctrlTable::SRT_STRING, _("Time"), 250, ctrlTable::SRT_DATE, _("Start GF"), 320, ctrlTable::SRT_NUMBER,  "", 0, ctrlTable::SRT_STRING);
 
 
-	// Tabelle ausf¸llen beim Start
+	// Tabelle ausf√ºllen beim Start
 	RefreshTable();
 }
 
@@ -101,7 +101,7 @@ void iwSaveLoad::Msg_ButtonClick(const unsigned int ctrl_id)
  */
 void iwSaveLoad::Msg_TableSelectItem(const unsigned int ctrl_id, const unsigned short selection)
 {
-	// Dateiname ins Edit schreiben, wenn wir entsprechende Eintr‰ge ausw‰hlen
+	// Dateiname ins Edit schreiben, wenn wir entsprechende Eintr√§ge ausw√§hlen
 	GetCtrl<ctrlEdit>(1)->SetText
 		(GetCtrl<ctrlTable>(0)->GetItemText(selection,0));
 }
@@ -134,7 +134,7 @@ void iwSaveLoad::FillSaveTable(const std::string& filename, void *param)
 
 	Savegame save;
 
-	// Datei ˆffnen
+	// Datei √∂ffnen
 	if(!save.Load(filename,false,false))
 		return;
 
@@ -161,7 +161,7 @@ void iwSaveLoad::FillSaveTable(const std::string& filename, void *param)
 	char start_gf[32];
 	sprintf(start_gf,"%u",save.start_gf);
 
-	// Und das Zeug zur Tabelle hinzuf¸gen
+	// Und das Zeug zur Tabelle hinzuf√ºgen
 	static_cast<ctrlTable*>(param)->AddRow(0, extracted_filename.c_str(), save.map_name.c_str(), datestring, start_gf, filename.c_str());
 }
 
@@ -203,7 +203,7 @@ iwSave::iwSave() : iwSaveLoad(40,_("Save game!"))
 	AddText(3,20,350,_("Auto-Save every:"),0xFFFFFF00,0,NormalFont);
 	ctrlComboBox * combo = AddComboBox(4,270,345,130,22,TC_GREEN2,NormalFont,100);
 
-	/// Combobox f¸llen
+	/// Combobox f√ºllen
 	combo->AddString(_("Disabled")); // deaktiviert
 
 	// Die Intervalle
@@ -214,7 +214,7 @@ iwSave::iwSave() : iwSaveLoad(40,_("Save game!"))
 		combo->AddString(str);
 	}
 
-	// Richtigen Eintrag ausw‰hlen
+	// Richtigen Eintrag ausw√§hlen
 	bool found = false;
 	for(unsigned i = 0;i<AUTO_SAVE_INTERVALS_COUNT;++i)
 	{
@@ -226,7 +226,7 @@ iwSave::iwSave() : iwSaveLoad(40,_("Save game!"))
 		}
 	}
 
-	// Ung¸ltig oder 0 --> Deaktiviert ausw‰hlen
+	// Ung√ºltig oder 0 --> Deaktiviert ausw√§hlen
 	if(!found)
 		combo->SetSelection(0);
 }
@@ -247,7 +247,6 @@ void iwSave::Msg_ComboSelectItem(const unsigned int ctrl_id, const unsigned shor
 		// ansonsten jeweilige GF-Zahl eintragen
 		SETTINGS.interface.autosave_interval = AUTO_SAVE_INTERVALS[selection-1];
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
@@ -279,7 +278,7 @@ void iwLoad::SaveLoad(void)
 			// Lobby zeigen, wenn wenn das nich ging und man im Lobby-Modus ist
 			WindowManager::inst().Switch(new dskLobby);
 		else
-			// Ansonsten schlieﬂen
+			// Ansonsten schlie√üen
 			Close();
 	}
 	else
@@ -289,4 +288,13 @@ void iwLoad::SaveLoad(void)
 	}
 	
 }
+
+
+/// Handle double click on the table
+void iwLoad::Msg_TableChooseItem(const unsigned ctrl_id, const unsigned short selection)
+{
+	SaveLoad();
+}
+
+
 

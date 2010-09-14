@@ -1,4 +1,4 @@
-// $Id: Window.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: Window.cpp 6738 2010-09-14 19:02:43Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -75,7 +75,7 @@ Window::Window(unsigned short x,
  */
 Window::~Window(void)
 {
-	// Steuerelemente aufräumen
+	// Steuerelemente aufrÃ¤umen
 	for(std::map<unsigned int,Window*>::iterator it = idmap.begin();it != idmap.end();++it)
 		delete it->second;
 }
@@ -166,12 +166,12 @@ unsigned short Window::GetY(bool absolute) const
 bool Window::RelayKeyboardMessage(bool (Window::*msg)(const KeyEvent&),const KeyEvent& ke)
 {
 	// Abgeleitete Klassen fragen, ob das Weiterleiten von Nachrichten erlaubt ist
-	// (IngameFenster könnten ja z.B. minimiert sein)
+	// (IngameFenster kÃ¶nnten ja z.B. minimiert sein)
 	if(!IsMessageRelayAllowed())
 		return false;
 
 	// Alle Controls durchgehen
-	// Falls das Fenster dann plötzlich nich mehr aktiv ist (z.b. neues Fenster geöffnet, sofort abbrechen!)
+	// Falls das Fenster dann plÃ¶tzlich nich mehr aktiv ist (z.b. neues Fenster geÃ¶ffnet, sofort abbrechen!)
 	for(std::map<unsigned int,Window*>::iterator it = idmap.begin(); it != idmap.end() && active; ++it)
 	{
 		if(it->second->visible && it->second->active)
@@ -185,15 +185,16 @@ bool Window::RelayKeyboardMessage(bool (Window::*msg)(const KeyEvent&),const Key
 bool Window::RelayMouseMessage(bool (Window::*msg)(const MouseCoords&),const MouseCoords& mc)
 {
 	// Abgeleitete Klassen fragen, ob das Weiterleiten von Mausnachrichten erlaubt ist
-	// (IngameFenster könnten ja z.B. minimiert sein)
+	// (IngameFenster kÃ¶nnten ja z.B. minimiert sein)
 	if(!IsMessageRelayAllowed())
 		return false;
 
 	bool processed = false;
 
 	// Alle Controls durchgehen
-	// Falls das Fenster dann plötzlich nich mehr aktiv ist (z.b. neues Fenster geöffnet, sofort abbrechen!)
-	for(std::map<unsigned int,Window*>::iterator it = idmap.begin(); it != idmap.end() && active; ++it)
+	// Falls das Fenster dann plÃ¶tzlich nich mehr aktiv ist (z.b. neues Fenster geÃ¶ffnet, sofort abbrechen!)
+	// Use reverse iterator because the topmost (=last elements) should receive the messages first!
+	for(std::map<unsigned int,Window*>::reverse_iterator it = idmap.rbegin(); it != idmap.rend() && active; ++it)
 	{
 		if(locked_areas.size())
 			if(TestWindowInRegion(it->second, mc))
@@ -208,7 +209,7 @@ bool Window::RelayMouseMessage(bool (Window::*msg)(const MouseCoords&),const Mou
 			}
 	}
 
-	/*// Nur vorläufig
+	/*// Nur vorlÃ¤ufig
 	if(processed && msg == &Window::Msg_LeftDown)
 	{
 		for(std::map<unsigned int,Window*>::iterator it = idmap.begin(); it != idmap.end() && active; ++it)
@@ -298,7 +299,7 @@ bool Window::IsMessageRelayAllowed() const
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  fügt ein BuildingIcon hinzu.
+ *  fÃ¼gt ein BuildingIcon hinzu.
  *
  *  @author OLiver
  */
@@ -321,24 +322,24 @@ ctrlBuildingIcon *Window::AddBuildingIcon(unsigned int id,
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  fügt einen ButtonCtrl hinzu.
+ *  fÃ¼gt einen ButtonCtrl hinzu.
  *
  *  @param[in] x      X-Koordinate des Steuerelements
  *  @param[in] y      Y-Koordinate des Steuerelements
  *  @param[in] width  Breite des Steuerelements
- *  @param[in] height Höhe des Steuerelements
+ *  @param[in] height HÃ¶he des Steuerelements
  *  @param[in] tc     Farbe des Steuerelements
- *  @param[in] type   Typ des Steuerelements (@p false für Text, @p true für Bild)
- *  @param[in] text   Text des Buttons (nur für @p type gleich @p false)
- *  @param[in] font   Schrift des Buttons (nur für @p type gleich @p false)
- *  @param[in] image  Bild des Buttons (nur für @p type gleich @p true)
+ *  @param[in] type   Typ des Steuerelements (@p false fÃ¼r Text, @p true fÃ¼r Bild)
+ *  @param[in] text   Text des Buttons (nur fÃ¼r @p type gleich @p false)
+ *  @param[in] font   Schrift des Buttons (nur fÃ¼r @p type gleich @p false)
+ *  @param[in] image  Bild des Buttons (nur fÃ¼r @p type gleich @p true)
  *  @param[in] border Soll der Button einen Rahmen haben?
  *
  *  @author OLiver
  */
 
 
-/// fügt einen Text-ButtonCtrl hinzu.
+/// fÃ¼gt einen Text-ButtonCtrl hinzu.
 ctrlTextButton *Window::AddTextButton(unsigned int id, unsigned short x, unsigned short y,unsigned short width, unsigned short height, const TextureColor tc,const std::string& text,  glArchivItem_Font *font, const std::string& tooltip)
 {
 	if(scale)
@@ -352,7 +353,7 @@ ctrlTextButton *Window::AddTextButton(unsigned int id, unsigned short x, unsigne
 	return AddCtrl(id, new ctrlTextButton(this, id, x, y, width, height, tc, text,font,tooltip));
 }
 
-/// fügt einen Color-ButtonCtrl hinzu.
+/// fÃ¼gt einen Color-ButtonCtrl hinzu.
 ctrlColorButton *Window::AddColorButton(unsigned int id, unsigned short x, unsigned short y,unsigned short width, unsigned short height, const TextureColor tc, const unsigned int fillColor, const std::string& tooltip)
 {
 	if(scale)
@@ -367,7 +368,7 @@ ctrlColorButton *Window::AddColorButton(unsigned int id, unsigned short x, unsig
 }
 
 
-/// fügt einen Image-ButtonCtrl hinzu.
+/// fÃ¼gt einen Image-ButtonCtrl hinzu.
 ctrlImageButton *Window::AddImageButton(unsigned int id, unsigned short x, unsigned short y,unsigned short width, unsigned short height, const TextureColor tc,glArchivItem_Bitmap * const image,  const std::string& tooltip)
 {
 	if(scale)
@@ -384,7 +385,7 @@ ctrlImageButton *Window::AddImageButton(unsigned int id, unsigned short x, unsig
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  fügt ein ChatCtrl hinzu.
+ *  fÃ¼gt ein ChatCtrl hinzu.
  *
  *  @author Devil
  */
@@ -409,7 +410,7 @@ ctrlChat *Window::AddChatCtrl(unsigned int id,
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  fügt eine Checkbox hinzu.
+ *  fÃ¼gt eine Checkbox hinzu.
  *
  *  @author OLiver
  */
@@ -436,7 +437,7 @@ ctrlCheck *Window::AddCheckBox(unsigned int id,
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  fügt eine Combobox hinzu.
+ *  fÃ¼gt eine Combobox hinzu.
  *
  *  @author OLiver
  */
@@ -463,7 +464,7 @@ ctrlComboBox *Window::AddComboBox(unsigned int id,
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  fügt ein vertieftes TextCtrl hinzu.
+ *  fÃ¼gt ein vertieftes TextCtrl hinzu.
  *
  *  @author OLiver
  */
@@ -515,7 +516,7 @@ ctrlColorDeepening *Window::AddColorDeepening(unsigned int id,
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  fügt ein EditCtrl hinzu.
+ *  fÃ¼gt ein EditCtrl hinzu.
  *
  *  @author OLiver
  */
@@ -544,7 +545,7 @@ ctrlEdit *Window::AddEdit(unsigned int id,
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  fügt eine Gruppe hinzu.
+ *  fÃ¼gt eine Gruppe hinzu.
  *
  *  @author FloSoft
  */
@@ -555,7 +556,7 @@ ctrlGroup *Window::AddGroup(unsigned int id, bool scale)
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  fügt ein ImageCtrl hinzu.
+ *  fÃ¼gt ein ImageCtrl hinzu.
  *
  *  @author OLiver
  */
@@ -575,7 +576,7 @@ ctrlImage *Window::AddImage(unsigned int id,
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  fügt ein ListCtrl hinzu.
+ *  fÃ¼gt ein ListCtrl hinzu.
  *
  *  @author OLiver
  */
@@ -600,7 +601,7 @@ ctrlList *Window::AddList(unsigned int id,
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  fügt ein mehrzeiliges TextCtrl hinzu.
+ *  fÃ¼gt ein mehrzeiliges TextCtrl hinzu.
  *
  *  @author Devil
  */
@@ -626,7 +627,7 @@ ctrlMultiline *Window::AddMultiline(unsigned int id,
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  fügt ein OptionenGruppe hinzu.
+ *  fÃ¼gt ein OptionenGruppe hinzu.
  *
  *  @param[in] id          ID des Steuerelements
  *  @param[in] select_type Typ der Auswahl
@@ -644,7 +645,7 @@ ctrlOptionGroup *Window::AddOptionGroup(unsigned int id,
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  fügt ein MultiSelectGruppe hinzu.
+ *  fÃ¼gt ein MultiSelectGruppe hinzu.
  *
  *  @param[in] id          ID des Steuerelements
  *  @param[in] select_type Typ der Auswahl
@@ -662,7 +663,7 @@ ctrlMultiSelectGroup *Window::AddMultiSelectGroup(unsigned int id,
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  fügt eine prozentuale ProgressBar hinzu.
+ *  fÃ¼gt eine prozentuale ProgressBar hinzu.
  *
  *  @author OLiver
  */
@@ -689,7 +690,7 @@ ctrlPercent *Window::AddPercent(unsigned int id,
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  fügt eine ProgressBar hinzu.
+ *  fÃ¼gt eine ProgressBar hinzu.
  *
  *  @author OLiver
  */
@@ -722,7 +723,7 @@ ctrlProgress *Window::AddProgress(unsigned int id,
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  fügt eine Scrollbar hinzu.
+ *  fÃ¼gt eine Scrollbar hinzu.
  *
  *  @author OLiver
  */
@@ -749,7 +750,7 @@ ctrlScrollBar *Window::AddScrollBar(unsigned int id,
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  fügt ein TabCtrl hinzu.
+ *  fÃ¼gt ein TabCtrl hinzu.
  *
  *  @author OLiver
  */
@@ -770,7 +771,7 @@ ctrlTab *Window::AddTabCtrl(unsigned int id,
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  fügt eine Tabelle hinzu.
+ *  fÃ¼gt eine Tabelle hinzu.
  *  ... sollte eine Menge von const char*, int und SortType sein
  *
  *  @author OLiver
@@ -806,7 +807,7 @@ ctrlTable *Window::AddTable(unsigned int id,
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  fügt einen Timer hinzu.
+ *  fÃ¼gt einen Timer hinzu.
  *
  *  @author FloSoft
  */
@@ -817,7 +818,7 @@ ctrlTimer *Window::AddTimer(unsigned int id, unsigned int timeout)
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  fügt ein TextCtrl hinzu.
+ *  fÃ¼gt ein TextCtrl hinzu.
  *
  *  @param[in] x      X-Koordinate des Steuerelements
  *  @param[in] y      Y-Koordinate des Steuerelements
@@ -853,7 +854,7 @@ ctrlText *Window::AddText(unsigned int id,
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  fügt ein vertieftes variables TextCtrl hinzu.
+ *  fÃ¼gt ein vertieftes variables TextCtrl hinzu.
  *
  *  @author FloSoft
  */
@@ -890,7 +891,7 @@ ctrlVarDeepening *Window::AddVarDeepening(unsigned int id,
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  fügt ein variables TextCtrl hinzu.
+ *  fÃ¼gt ein variables TextCtrl hinzu.
  *
  *  @param[in] x          X-Koordinate des Steuerelements
  *  @param[in] y          Y-Koordinate des Steuerelements
@@ -974,7 +975,7 @@ void Window::Draw3D(const unsigned short x,
 
 	if(type <= 1)
 	{
-		// Äußerer Rahmen
+		// Ã„uÃŸerer Rahmen
 		LOADER.GetImageN("io", 12 + tc)->Draw(x, y, width, 2,      0, 0, width, 2);
 		LOADER.GetImageN("io", 12 + tc)->Draw(x, y, 2,     height, 0, 0, 2,     height);
 
@@ -1155,13 +1156,13 @@ void Window::DrawControls(void)
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  prüft ob Mauskoordinaten in einer gesperrten Region liegt.
+ *  prÃ¼ft ob Mauskoordinaten in einer gesperrten Region liegt.
  *
  *  @param[in] window das Fenster, welches die Region sperrt.
  *  @param[in] mc     Mauskoordinaten.
  *
  *  @return @p true falls Mausposition innerhalb der gesperrten Region,
- *          @p false falls außerhalb
+ *          @p false falls auÃŸerhalb
  *
  *  @author OLiver
  */

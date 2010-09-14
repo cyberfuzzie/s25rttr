@@ -1,4 +1,4 @@
-// $Id: noCharburnerPile.cpp 6721 2010-09-10 09:33:56Z OLiver $
+// $Id: noCharburnerPile.cpp 6739 2010-09-14 20:23:35Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -58,11 +58,11 @@ noCharburnerPile::~noCharburnerPile()
 	
 }
 
-void noCharburnerPile::Destroy_noGrainfield()
+void noCharburnerPile::Destroy_noCharburnerPile()
 {
 	em->RemoveEvent(event);
 
-	// Bauplätze drumrum neu berechnen
+	// BauplÃ¤tze drumrum neu berechnen
 	gwg->RecalcBQAroundPoint(x,y);
 
 	Destroy_noCoordBase();
@@ -73,11 +73,15 @@ void noCharburnerPile::Serialize_noCharburnerPile(SerializedGameData * sgd) cons
 	Serialize_noCoordBase(sgd);
 
 	sgd->PushUnsignedChar(static_cast<unsigned char>(state));
+	sgd->PushUnsignedShort(step);
+	sgd->PushUnsignedShort(sub_step);
 	sgd->PushObject(event,true);
 }
 
 noCharburnerPile::noCharburnerPile(SerializedGameData * sgd, const unsigned obj_id) : noCoordBase(sgd,obj_id),
 state(State(sgd->PopUnsignedChar())),
+step(sgd->PopUnsignedShort()),
+sub_step(sgd->PopUnsignedShort()),
 event(sgd->PopObject<EventManager::Event>(GOT_EVENT))
 {
 }
@@ -111,6 +115,16 @@ void noCharburnerPile::Draw( int x,	int y)
 		{
 			LOADER.GetImageN("charburner_bobs",27+GameClient::inst().
 				GetGlobalAnimation(2,10,1,obj_id+this->x*10+this->y*10))->Draw(x,y);
+				
+			// Dann Qualm zeichnen 
+			LOADER.GetMapImageN(692+1*8+GAMECLIENT.GetGlobalAnimation(8,5,2,(this->x+this->y)*100))
+					->Draw(x+21,y-21,0,0,0,0,0,0,0x99EEEEEE);
+			LOADER.GetMapImageN(692+2*8+GAMECLIENT.GetGlobalAnimation(8,5,2,(this->x+this->y)*100))
+					->Draw(x-2,y-16,0,0,0,0,0,0,0x99EEEEEE);
+			LOADER.GetMapImageN(692+1*8+GAMECLIENT.GetGlobalAnimation(8,5,2,(this->x+this->y)*100))
+					->Draw(x-25,y-21,0,0,0,0,0,0,0x99EEEEEE);
+			LOADER.GetMapImageN(692+3*8+GAMECLIENT.GetGlobalAnimation(8,5,2,(this->x+this->y)*100))
+					->Draw(x-2,y-45,0,0,0,0,0,0,0x99EEEEEE);
 		} return;
 	case STATE_REMOVECOVER:
 		{

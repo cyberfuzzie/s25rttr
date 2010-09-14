@@ -1,4 +1,4 @@
-// $Id: noCharburnerPile.h 6718 2010-09-09 21:39:46Z OLiver $
+// $Id: noCharburnerPile.h 6739 2010-09-14 20:23:35Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -56,9 +56,9 @@ public:
 
 	~noCharburnerPile();
 
-	/// Aufr‰ummethoden
-protected:	void Destroy_noGrainfield();
-public:		void Destroy() { Destroy_noGrainfield(); }
+	/// Aufr√§ummethoden
+protected:	void Destroy_noCharburnerPile();
+public:		void Destroy() { Destroy_noCharburnerPile(); }
 
 	/// Serialisierungsfunktionen
 	protected:	void Serialize_noCharburnerPile(SerializedGameData * sgd) const;

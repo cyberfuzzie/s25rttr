@@ -1,4 +1,4 @@
-// $Id: nofBuildingWorker.cpp 6729 2010-09-13 07:37:31Z FloSoft $
+// $Id: nofBuildingWorker.cpp 6739 2010-09-14 20:23:35Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -223,7 +223,9 @@ void nofBuildingWorker::TryToWork()
 	// (bei Bergwerken müssen zusätzlich noch Rohstoffvorkommen vorhanden sein!)
 	// (bei Brunnen muss ebenfalls auf Wasser geprüft werden!)
 	// Spähturm-Erkunder arbeiten nie!
-	else if(workplace->WaresAvailable() && 
+	// Charburner doesn't need wares for harvesting!
+	// -> Wares are considered when calling GetPointQuality!
+	else if( (workplace->WaresAvailable() || job == JOB_CHARBURNER) && 
 		   (job != JOB_MINER || GetResources(workplace->GetBuildingType()-BLD_GRANITEMINE)) && 
 		   (job != JOB_HELPER || GetResources(4)) &&
 		   job != JOB_SCOUT)

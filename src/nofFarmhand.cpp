@@ -1,4 +1,4 @@
-// $Id: nofFarmhand.cpp 6730 2010-09-13 08:12:35Z FloSoft $
+// $Id: nofFarmhand.cpp 6739 2010-09-14 20:23:35Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -77,14 +77,14 @@ void nofFarmhand::HandleDerivedEvent(const unsigned int id)
 	{
 	case STATE_WORK:
 		{
-			// fertig mit Arbeiten --> dann müssen die "Folgen des Arbeitens" ausgeführt werden
+			// fertig mit Arbeiten --> dann mÃ¼ssen die "Folgen des Arbeitens" ausgefÃ¼hrt werden
 			WorkFinished();
 			// Objekt wieder freigeben
 			gwg->GetNode(x,y).reserved = false;;
 			// Wieder nach Hause gehen
 			StartWalkingHome();
 
-			// Evtl. Sounds löschen
+			// Evtl. Sounds lÃ¶schen
 			if(was_sounding)
 			{
 				SoundManager::inst().WorkingFinished(this);
@@ -100,13 +100,15 @@ void nofFarmhand::HandleDerivedEvent(const unsigned int id)
 			{ 6,7,6,0,8,2,2 };
 
 			
-			// Anzahl der Radien, wo wir gültige Punkte gefunden haben
+			// Anzahl der Radien, wo wir gÃ¼ltige Punkte gefunden haben
 			unsigned radius_count = 0;
 
 			// Available points: 1st class and 2st class
 			list< Point<MapCoord> > available_points[2];
+			
+			unsigned max_radius = (job == JOB_CHARBURNER) ? 3 : RADIUS[job-JOB_WOODCUTTER];
 
-			for(MapCoord tx=gwg->GetXA(x,y,0), r=1;r<=RADIUS[job-JOB_WOODCUTTER];tx=gwg->GetXA(tx,y,0),++r)
+			for(MapCoord tx=gwg->GetXA(x,y,0), r=1;r<=max_radius;tx=gwg->GetXA(tx,y,0),++r)
 			{
 				// Wurde ein Punkt in diesem Radius gefunden?
 				bool found_in_radius = false;
@@ -125,7 +127,7 @@ void nofFarmhand::HandleDerivedEvent(const unsigned int id)
 				}
 
 
-				// Nur die zwei nächsten Radien erst einmal nehmen
+				// Nur die zwei nÃ¤chsten Radien erst einmal nehmen
 				if(found_in_radius)
 				{
 					if( ++radius_count == 2)
@@ -152,7 +154,7 @@ void nofFarmhand::HandleDerivedEvent(const unsigned int id)
 				// Wir arbeiten jetzt
 				workplace->is_working = true;
 
-				// Punkt für uns reservieren
+				// Punkt fÃ¼r uns reservieren
 				gwg->GetNode(dest_x,dest_y).reserved = true;;
 
 				// Anfangen zu laufen (erstmal aus dem Haus raus!)
@@ -175,14 +177,14 @@ void nofFarmhand::HandleDerivedEvent(const unsigned int id)
 							GameClient::inst().SendPostMessage(
 							  new ImagePostMsgWithLocation(_("No more stones in range"), PMC_GENERAL, x, y, workplace->GetBuildingType(), workplace->GetNation()));
 							OutOfRessourcesMsgSent = true;
-							// Produktivitätsanzeige auf 0 setzen
+							// ProduktivitÃ¤tsanzeige auf 0 setzen
 							workplace->SetProductivityToZero();
 							break;
 						case JOB_FISHER:
 							GameClient::inst().SendPostMessage(
 							  new ImagePostMsgWithLocation(_("No more fishes in range"), PMC_GENERAL, x, y, workplace->GetBuildingType(), workplace->GetNation()));
 							OutOfRessourcesMsgSent = true;
-							// Produktivitätsanzeige auf 0 setzen
+							// ProduktivitÃ¤tsanzeige auf 0 setzen
 							workplace->SetProductivityToZero();
 							break;
 						default:
@@ -204,7 +206,7 @@ void nofFarmhand::HandleDerivedEvent(const unsigned int id)
 						break;
 				}
 
-				// Weiter warten, vielleicht gibts ja später wieder mal was
+				// Weiter warten, vielleicht gibts ja spÃ¤ter wieder mal was
 				current_ev = em->AddEvent(this,JOB_CONSTS[job].wait1_length,1);
 
 				StartNotWorking();
@@ -218,10 +220,10 @@ void nofFarmhand::HandleDerivedEvent(const unsigned int id)
 
 bool nofFarmhand::IsPointAvailable(const unsigned short x, const unsigned short y)
 {
-	// Gibts an diesen Punkt überhaupt die nötigen Vorraussetzungen für den Beruf?
+	// Gibts an diesen Punkt Ã¼berhaupt die nÃ¶tigen Vorraussetzungen fÃ¼r den Beruf?
 	if(GetPointQuality(x,y) != PQ_NOTPOSSIBLE)
 	{
-		// Gucken, ob ein Weg hinführt
+		// Gucken, ob ein Weg hinfÃ¼hrt
 		if(gwg->FindHumanPath(this->x,this->y,x,y,20) != 0xFF)
 			return 1;
 		else
@@ -246,12 +248,12 @@ void nofFarmhand::WalkToWorkpoint()
 	{
 		// Punkt freigeben
 		gwg->GetNode(dest_x,dest_y).reserved = false;
-		// Kein Weg führt mehr zum Ziel oder Punkt ist nich mehr in Ordnung --> wieder nach Hause gehen
+		// Kein Weg fÃ¼hrt mehr zum Ziel oder Punkt ist nich mehr in Ordnung --> wieder nach Hause gehen
 		StartWalkingHome();
 	}
 	else
 	{
-		// Alles ok, wir können hinlaufen
+		// Alles ok, wir kÃ¶nnen hinlaufen
 		StartWalking(dir);
 	}
 }
@@ -259,7 +261,7 @@ void nofFarmhand::WalkToWorkpoint()
 void nofFarmhand::StartWalkingHome()
 {
 	state = STATE_WALKINGHOME;
-	// Fahne vor dem Gebäude anpeilen
+	// Fahne vor dem GebÃ¤ude anpeilen
 	dest_x = gwg->GetXA(workplace->GetX(), workplace->GetY(), 4);
 	dest_y = gwg->GetYA(workplace->GetX(), workplace->GetY(), 4);
 
@@ -272,13 +274,13 @@ void nofFarmhand::WalkHome()
 	// Sind wir zu Hause angekommen? (genauer an der Flagge !!)
 	if(x == dest_x && y == dest_y)
 	{
-		// Weiteres übernimmt nofBuildingWorker
+		// Weiteres Ã¼bernimmt nofBuildingWorker
 		WorkingReady();
 	}
-	// Weg suchen und ob wir überhaupt noch nach Hause kommen
+	// Weg suchen und ob wir Ã¼berhaupt noch nach Hause kommen
 	else if((dir = gwg->FindHumanPath(x,y,dest_x,dest_y,40)) == 0xFF)
 	{
-		// Kein Weg führt mehr nach Hause--> Rumirren
+		// Kein Weg fÃ¼hrt mehr nach Hause--> Rumirren
 		StartWandering();
 		Wander();
 		// Haus Bescheid sagen
@@ -287,7 +289,7 @@ void nofFarmhand::WalkHome()
 	}
 	else
 	{
-		// Alles ok, wir können hinlaufen
+		// Alles ok, wir kÃ¶nnen hinlaufen
 		StartWalking(dir);
 	}
 }

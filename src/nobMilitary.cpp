@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 6733 2010-09-13 20:41:11Z OLiver $
+// $Id: nobMilitary.cpp 6736 2010-09-14 11:32:49Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -162,7 +162,7 @@ upgrade_event(sgd->PopObject<EventManager::Event>(GOT_EVENT))
 	sgd->PopObjectList(ordered_troops,GOT_NOF_PASSIVESOLDIER);
 	sgd->PopObjectList(ordered_coins,GOT_WARE);
 	sgd->PopObjectList(troops,GOT_NOF_PASSIVESOLDIER);
-	//sgd->PopObjectList(far_away_capturers,GOT_NOF_ATTACKER);
+	sgd->PopObjectList(far_away_capturers,GOT_NOF_ATTACKER);
 
 	// ins Militärquadrat einfügen
 	gwg->GetMilitarySquare(x,y).push_back(this);

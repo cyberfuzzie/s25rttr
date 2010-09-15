@@ -1,4 +1,4 @@
-// $Id: nofCarrier.cpp 6737 2010-09-14 14:17:33Z OLiver $
+// $Id: nofCarrier.cpp 6741 2010-09-15 19:12:50Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -757,11 +757,11 @@ void nofCarrier::LostWork()
 							if(gwg->FindShipPath(tmp_pos.x,tmp_pos.y,tx2,ty2,shore_path,NULL))
 							{
 								// Ok let's paddle to the coast
-								state = CARRS_BOATCARRIER_WANDERONWATER;
 								rs_pos = 0;
 								cur_rs = NULL;
 								if(state == CARRS_WAITFORWARE || state == CARRS_WAITFORWARESPACE)
 									WanderOnWater();
+								state = CARRS_BOATCARRIER_WANDERONWATER;
 								return;
 							}
 						}

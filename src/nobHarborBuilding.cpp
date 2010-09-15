@@ -1,4 +1,4 @@
-// $Id: nobHarborBuilding.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: nobHarborBuilding.cpp 6742 2010-09-15 19:25:13Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -369,6 +369,10 @@ void nobHarborBuilding::StartExpedition()
 
 	// Ggf. Waren bestellen, die noch fehlen
 	OrderExpeditionWares();
+	
+	// Ggf. ist jetzt alles benötigte schon da
+	// Dann Schiff rufen
+	CheckExpeditionReady();
 
 }
 

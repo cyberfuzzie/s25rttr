@@ -1,4 +1,4 @@
-// $Id: nobBaseWarehouse.h 6727 2010-09-12 20:33:56Z OLiver $
+// $Id: nobBaseWarehouse.h 6744 2010-09-16 19:58:43Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -160,7 +160,7 @@ public: void Serialize(SerializedGameData *sgd) const { Serialize_nobBaseWarehou
 	/// Bestellt einen Träger
 	void OrderCarrier(noRoadNode* const goal, RoadSegment * workplace);
 	/// Bestellt irgendeinen Beruf (ggf. stellt er ihn noch mit einem Werkzeug her)
-	void OrderJob(const Job job, noRoadNode* const goal, const bool allow_recruiting);
+	bool OrderJob(const Job job, noRoadNode* const goal, const bool allow_recruiting);
 	/// Bestellt einen Esel
 	nofCarrier * OrderDonkey(RoadSegment * road,noRoadNode * const goal_flag);
 	

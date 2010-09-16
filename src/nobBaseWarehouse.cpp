@@ -1,4 +1,4 @@
-// $Id: nobBaseWarehouse.cpp 6727 2010-09-12 20:33:56Z OLiver $
+// $Id: nobBaseWarehouse.cpp 6744 2010-09-16 19:58:43Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -200,7 +200,7 @@ void nobBaseWarehouse::OrderCarrier(noRoadNode* const goal, RoadSegment * workpl
 	TryStopRecruiting();
 }
 
-void nobBaseWarehouse::OrderJob(const Job job, noRoadNode* const goal, const bool allow_recruiting)
+bool nobBaseWarehouse::OrderJob(const Job job, noRoadNode* const goal, const bool allow_recruiting)
 {
 	// Job überhaupt hier vorhanden
 	if(!real_goods.people[job])
@@ -210,7 +210,7 @@ void nobBaseWarehouse::OrderJob(const Job job, noRoadNode* const goal, const boo
 		if(!(real_goods.people[JOB_HELPER] && tool_available) || !allow_recruiting)
 		{
 			// nein --> dann tschüss
-			return;
+			return false;
 		}
 	}
 
@@ -253,6 +253,8 @@ void nobBaseWarehouse::OrderJob(const Job job, noRoadNode* const goal, const boo
 
 	// Evtl. kein Gehilfe mehr da, sodass das Rekrutieren gestoppt werden muss
 	TryStopRecruiting();
+	
+	return true;
 }
 
 nofCarrier * nobBaseWarehouse::OrderDonkey(RoadSegment * road,noRoadNode * const goal_flag)
@@ -536,9 +538,10 @@ void nobBaseWarehouse::HandleBaseEvent(const unsigned int id)
 	// Einlagerevent
 	case 4:
 		{
-			// Merken, ob hier was passiert ist und es noch Waren/Figuren gab,
-			// die eingeliefert werden sollen
-			bool store = false;
+			// Storing wares done?
+			bool storing_done = false;
+			// Is storing still wanted?
+			bool storing_wanted = false;
 
 			// Untersuchen, welche Waren und Figuren eingelagert werden sollen
 			for(unsigned i = 0;i<WARE_TYPES_COUNT;++i)
@@ -546,7 +549,7 @@ void nobBaseWarehouse::HandleBaseEvent(const unsigned int id)
 				// Soll Ware eingeliefert werden?
 				if(inventory_settings_real.wares[i] & 8)
 				{
-					store = true;
+					storing_wanted = true;
 
 					// Lagerhaus suchen, das diese Ware enthält
 					nobBaseWarehouse * wh = players->getElement(player)
@@ -557,31 +560,43 @@ void nobBaseWarehouse::HandleBaseEvent(const unsigned int id)
 						// Dann bestellen
 						Ware * ware = wh->OrderWare(GoodType(i),this);
 						if(ware)
+						{
 							dependent_wares.push_back(ware);
+							storing_done = true;
+							break;
+						}
 					}
 				}
 			}
 
-			// Menschen "bestellen"
-			for(unsigned i = 0;i<JOB_TYPES_COUNT;++i)
+			// Menschen "bestellen" wenn noch keine Ware bestellt wurde
+			if(!storing_done)
 			{
-				// Soll dieser Typ von Mensch bestellt werden?
-				if(inventory_settings_real.figures[i] & 8)
+				for(unsigned i = 0;i<JOB_TYPES_COUNT;++i)
 				{
-					store = true;
+					// Soll dieser Typ von Mensch bestellt werden?
+					if(inventory_settings_real.figures[i] & 8)
+					{
+						storing_wanted = false;
 
-					// Lagerhaus suchen, das diesen Job enthält
-					nobBaseWarehouse * wh = players->getElement(player)
-						->FindWarehouse(this,FW::Condition_StoreAndDontWantFigure,NULL,false,(void*)&i,false);
-					// Gefunden?
-					if(wh)
-						// Dann bestellen
-						wh->OrderJob(Job(i),this,false);
+						// Lagerhaus suchen, das diesen Job enthält
+						nobBaseWarehouse * wh = players->getElement(player)
+							->FindWarehouse(this,FW::Condition_StoreAndDontWantFigure,NULL,false,(void*)&i,false);
+						// Gefunden?
+						if(wh)
+						{
+							// Dann bestellen
+							if(wh->OrderJob(Job(i),this,false))
+								break;
+						}
+					}
 				}
 			}
 
-			// Gibt es noch weitere? Dann schön weiter Events anmelden
-			store_event = em->AddEvent(this,STORE_INTERVAL,4);
+			// Storing still wanted?
+			// Then continue ordering new stuff
+			if(storing_wanted)
+				store_event = em->AddEvent(this,STORE_INTERVAL,4);
 
 
 		} break;

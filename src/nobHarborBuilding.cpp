@@ -1,4 +1,4 @@
-// $Id: nobHarborBuilding.cpp 6742 2010-09-15 19:25:13Z OLiver $
+// $Id: nobHarborBuilding.cpp 6745 2010-09-16 20:56:38Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -872,6 +872,9 @@ bool nobHarborBuilding::UseWareAtOnce(Ware * ware, noBaseBuilding* const goal)
 	ware->RecalcRoute();
 	if(ware->GetNextDir() == SHIP_DIR)
 	{
+		// Reduce ware count because wares don't go through the house leaving process
+		// And therefore the visual count reducement
+		goods.goods[ware->type]--;
 		// Dann fügen wir die mal bei uns hinzu
 		AddWareForShip(ware);
 
@@ -890,6 +893,9 @@ bool nobHarborBuilding::UseFigureAtOnce(noFigure * fig, noRoadNode* const goal)
 	Point<MapCoord> next_harbor;
 	if(gwg->FindHumanPathOnRoads(this,goal,NULL,&next_harbor) == SHIP_DIR)
 	{
+		// Reduce figure count because figues don't go through the house leaving process
+		// And therefore the visual count reducement
+		goods.people[fig->GetJobType()]--;
 		// Dann fügen wir die mal bei uns hinzu
 		AddFigureForShip(fig,next_harbor);
 		return true;

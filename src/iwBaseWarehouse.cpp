@@ -1,4 +1,4 @@
-// $Id: iwBaseWarehouse.cpp 6698 2010-09-01 10:34:08Z OLiver $
+// $Id: iwBaseWarehouse.cpp 6748 2010-09-18 09:11:15Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -77,7 +77,7 @@ iwBaseWarehouse::iwBaseWarehouse(GameWorldViewer * const gwv,const char *const t
 	ctrlImage * image;
 	for(unsigned char category = 0;category<2;++category)
 	{
-		unsigned count = (category == 0)?35:30;
+		unsigned count = (category == 0)?35:32;
 		for(unsigned i = 0;i<count;++i)
 		{
 			// Einlagern verbieten-Bild (de)aktivieren

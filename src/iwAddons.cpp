@@ -1,4 +1,4 @@
-// $Id: iwAddons.cpp 6458 2010-05-31 11:38:51Z FloSoft $
+// $Id: iwAddons.cpp 6748 2010-09-18 09:11:15Z OLiver $
 //
 // Copyright (c) 2005-2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -110,7 +110,7 @@ void iwAddons::Msg_ButtonClick(const unsigned int ctrl_id)
 					continue;
 
 				bool failed = false;
-				status = addon->getGuiStatus(this, 10 + 20*i, failed);
+				status = addon->getGuiStatus(this, 10 + 20*(ADDONMANAGER.getCount()-i-1), failed);
 				if(!failed)
 					ADDONMANAGER.setSelection(addon->getId(), status);
 			}
@@ -149,7 +149,7 @@ void iwAddons::Msg_ButtonClick(const unsigned int ctrl_id)
 				if(!addon)
 					continue;
 
-				addon->setGuiStatus(this, 10 + 20*i, addon->getDefaultStatus());
+				addon->setGuiStatus(this, 10 + 20*(ADDONMANAGER.getCount()-i-1), addon->getDefaultStatus());
 			}
 		} break;
 	}
@@ -163,7 +163,7 @@ void iwAddons::UpdateView(const unsigned short selection)
 	unsigned short inthiscategory = 0;
 	for(unsigned int i = 0; i < ADDONMANAGER.getCount(); ++i)
 	{
-		unsigned int id = 10 + 20*i;
+		unsigned int id = 10 + 20*(ADDONMANAGER.getCount()-i-1);
 		unsigned int status;
 		const Addon *addon = ADDONMANAGER.getAddon(i, status);
 

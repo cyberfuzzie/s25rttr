@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ -z "$BUILDDIR" ] ; then
 	export BUILDDIR=../build

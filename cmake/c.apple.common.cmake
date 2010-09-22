@@ -1,10 +1,10 @@
 ################################################################################
-### $Id: c.apple.common.cmake 6396 2010-05-03 20:39:21Z FloSoft $
+### $Id: c.apple.common.cmake 6753 2010-09-22 20:59:36Z FloSoft $
 ################################################################################
 
 # specify the cross compiler
-SET(CMAKE_C_COMPILER   i686-apple-darwin10-gcc)
-SET(CMAKE_CXX_COMPILER i686-apple-darwin10-g++)
+SET_CCACHE(CMAKE_C_COMPILER i686-apple-darwin10-gcc)
+SET_CCACHE(CMAKE_CXX_COMPILER i686-apple-darwin10-g++)
 SET(CMAKE_RANLIB i686-apple-darwin10-ranlib CACHE STRING "" FORCE)
 SET(CMAKE_LIPO i686-apple-darwin10-lipo CACHE STRING "" FORCE)
 

@@ -1,3 +1,118 @@
+s25rttr (20100919-6749) hardy; urgency=low
+
+  * New upstream snapshot
+  * Empty log message
+
+ -- Return To The Roots Team <sf-team@siedler25.org>  Sun, 19 Sep 2010 00:00:00 +0200
+
+s25rttr (20100918-6748) hardy; urgency=low
+
+  * Durchdrücken bei den Addons behoben,
+    Köhler-Auslager/Einlagericons in den Lagerhäusern richtig
+    angezeigt
+
+ -- OLiver Siebert <oliver@siedler25.org>  Sat, 18 Sep 2010 09:11:00 +0200
+
+s25rttr (20100917-6746) hardy; urgency=low
+
+  * New upstream snapshot
+  * Empty log message
+
+ -- Return To The Roots Team <sf-team@siedler25.org>  Fri, 17 Sep 2010 00:00:00 +0200
+
+s25rttr (20100916-6745) hardy; urgency=low
+
+  * Zuviel-Waren-Hafengebäude-Bug behoben
+
+ -- OLiver Siebert <oliver@siedler25.org>  Thu, 16 Sep 2010 20:56:00 +0200
+
+s25rttr (20100916-6744) hardy; urgency=low
+
+  * New upstream snapshot
+  * Einige Fehler korrigiert beim Einlagern
+
+ -- OLiver Siebert <oliver@siedler25.org>  Thu, 16 Sep 2010 19:58:00 +0200
+
+s25rttr (20100915-6742) hardy; urgency=low
+
+  * New upstream snapshot
+  * Expeditions-Start Bug behoben, Versionshack raus
+
+ -- OLiver Siebert <oliver@siedler25.org>  Wed, 15 Sep 2010 19:25:00 +0200
+
+s25rttr (20100915-6741) hardy; urgency=low
+
+  * New upstream snapshot
+  * Bootsträger-Bug behoben
+
+ -- OLiver Siebert <oliver@siedler25.org>  Wed, 15 Sep 2010 19:12:00 +0200
+
+s25rttr (20100914-6739) hardy; urgency=low
+
+  * New upstream snapshot
+  * Köhlerhaufen zum Qualmen gebracht und noch einige Köhler-Bugs
+    behoben
+
+ -- OLiver Siebert <oliver@siedler25.org>  Tue, 14 Sep 2010 20:23:00 +0200
+
+s25rttr (20100914-6738) hardy; urgency=low
+
+  * Fix 3. #625784
+
+ -- OLiver Siebert <oliver@siedler25.org>  Tue, 14 Sep 2010 19:02:00 +0200
+
+s25rttr (20100914-6737) hardy; urgency=low
+
+  * Bootsfahrer rudern nun zurück, wenn ihre Straße abgerissen wird
+    (#397039)
+
+ -- OLiver Siebert <oliver@siedler25.org>  Tue, 14 Sep 2010 14:17:00 +0200
+
+s25rttr (20100914-6736) hardy; urgency=low
+
+  * Militärgebäude speicher test bug von gestern behoben
+
+ -- OLiver Siebert <oliver@siedler25.org>  Tue, 14 Sep 2010 11:32:00 +0200
+
+s25rttr (20100914-6735) hardy; urgency=low
+
+  * Speicher-Späher Bug behoben (#625297 #608976 und weitere..)
+
+ -- OLiver Siebert <oliver@siedler25.org>  Tue, 14 Sep 2010 10:29:00 +0200
+
+s25rttr (20100914-6734) hardy; urgency=low
+
+  * New upstream snapshot
+  * Empty log message
+
+ -- Return To The Roots Team <sf-team@siedler25.org>  Tue, 14 Sep 2010 00:00:00 +0200
+
+s25rttr (20100913-6733) hardy; urgency=low
+
+  * Angreifer gehen auch noch in das Militärgebäude wenn noch länger
+    Distanzen zwischen ihnen liegen (#626860)
+
+ -- OLiver Siebert <oliver@siedler25.org>  Mon, 13 Sep 2010 20:41:00 +0200
+
+s25rttr (20100913-6732) hardy; urgency=low
+
+  * neue bauicons
+
+ -- Florian Doersch <flosoft@siedler25.org>  Mon, 13 Sep 2010 15:48:00 +0200
+
+s25rttr (20100913-6731) hardy; urgency=low
+
+  * Nachrichten eingebaut, wenn Hafen und HQ zerstört wurden
+
+ -- OLiver Siebert <oliver@siedler25.org>  Mon, 13 Sep 2010 12:34:00 +0200
+
+s25rttr (20100913-6730) hardy; urgency=low
+
+  * New upstream snapshot
+  * real nightly fix
+
+ -- Florian Doersch <flosoft@siedler25.org>  Mon, 13 Sep 2010 08:12:00 +0200
+
 s25rttr (20100913-6729) hardy; urgency=low
 
   * New upstream snapshot

@@ -1,6 +1,6 @@
 #!/bin/bash
 ###############################################################################
-## $Id: postinstall.sh.cmake 6622 2010-07-27 20:54:32Z FloSoft $
+## $Id: postinstall.sh.cmake 6755 2010-09-23 09:54:47Z FloSoft $
 ###############################################################################
 
 # Editable Variables
@@ -132,19 +132,15 @@ if [ "$COMPILEFOR" = "apple" ] ; then
 	# app anlegen
 	mkdir -vp ${DESTDIR}s25client.app/Contents/{MacOS,Resources} || exit 1
 	
-	# frameworks kopieren (da updater nicht mit symlinks umgehen kann, nur lib kopieren
+	# frameworks kopieren
 	mkdir -vp ${DESTDIR}s25client.app/Contents/MacOS/Frameworks || exit 1
 	mkdir -vp ${DESTDIR}s25client.app/Contents/MacOS/Frameworks/{SDL,SDL_mixer}.framework || exit 1
 	cp -r /Library/Frameworks/SDL.framework ${DESTDIR}s25client.app/Contents/MacOS/Frameworks || exit 1
 	cp -r /Library/Frameworks/SDL_mixer.framework ${DESTDIR}s25client.app/Contents/MacOS/Frameworks || exit 1
 	
 	# remove headers and additional libraries from the frameworks
-	rm -rf ${DESTDIR}s25client.app/Contents/MacOS/Frameworks/SDL_mixer.framework/Versions/*/{Headers,Resources}
-	rm -rf ${DESTDIR}s25client.app/Contents/MacOS/Frameworks/SDL_mixer.framework/Versions/*/*/{Headers,Resources}
-	rm -rf ${DESTDIR}s25client.app/Contents/MacOS/Frameworks/SDL_mixer.framework/Versions/*/*/*/*/{Headers,Resources}
-	rm -rf ${DESTDIR}s25client.app/Contents/MacOS/Frameworks/SDL_mixer.framework/Versions/*/*/*/*/*/{Headers,Resources}
-	rm -rf ${DESTDIR}s25client.app/Contents/MacOS/Frameworks/SDL.framework/Versions/*/{Headers,Resources}
-	rm -rf ${DESTDIR}s25client.app/Contents/MacOS/Frameworks/SDL.framework/Versions/*/*/{Headers,Resources}
+	find ${DESTDIR}s25client.app/Contents/MacOS/Frameworks/ -name Headers -exec rm -rf {} \;
+	find ${DESTDIR}s25client.app/Contents/MacOS/Frameworks/ -name Resources -exec rm -rf {} \;
 	
 	# copy miniupnp
 	if [ -f /Developer/SDKs/MacOSX10.5.sdk/usr/lib/libminiupnpc.5.dylib ] ; then

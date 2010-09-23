@@ -54,7 +54,7 @@ fi
 # do they differ?
 NEW=1
 if [ -d $ARCH/old.s25rttr ] ; then
-	diff -qr $ARCH/old.s25rttr $ARCH/s25rttr_$VERSION
+	diff -qrN $ARCH/old.s25rttr $ARCH/s25rttr_$VERSION
 	NEW=$?
 fi
 

@@ -1,3 +1,18 @@
+s25rttr (20100923-6754) hardy; urgency=low
+
+  * New upstream snapshot
+  * Empty log message
+
+ -- Return To The Roots Team <sf-team@siedler25.org>  Thu, 23 Sep 2010 00:00:00 +0200
+
+s25rttr (20100922-6753) hardy; urgency=low
+
+  * New upstream snapshot
+  * ccache_lipo aktiviert (eigener ccache-wrapper für
+    multi-arch-builds aka apple-universal)
+
+ -- Florian Doersch <flosoft@siedler25.org>  Wed, 22 Sep 2010 20:59:00 +0200
+
 s25rttr (20100919-6749) hardy; urgency=low
 
   * New upstream snapshot

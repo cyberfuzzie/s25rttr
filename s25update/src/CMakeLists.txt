@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 6461 2010-05-31 11:46:20Z FloSoft $
+### $Id: CMakeLists.txt 6760 2010-09-27 15:28:48Z FloSoft $
 ################################################################################
 
 INCLUDE(FindCURL)
@@ -55,5 +55,7 @@ IF ( "${COMPILEFOR}" STREQUAL "windows")
 ENDIF ( "${COMPILEFOR}" STREQUAL "windows")
 
 ADD_CUSTOM_COMMAND(TARGET s25update POST_BUILD COMMAND cp -v s25update ../../RTTR/)
+
+INSTALL(TARGETS s25update RUNTIME DESTINATION ${DATADIR}/RTTR/)
 
 ################################################################################

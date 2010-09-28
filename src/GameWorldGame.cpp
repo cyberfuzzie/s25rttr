@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 6727 2010-09-12 20:33:56Z OLiver $
+// $Id: GameWorldGame.cpp 6762 2010-09-28 18:48:16Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -109,11 +109,25 @@ void GameWorldGame::SetFlag(const MapCoord x, const MapCoord y, const unsigned c
 
 void GameWorldGame::DestroyFlag(const MapCoord x, const MapCoord y)
 {
-	// Gucken, ob sich da auch eine Flagge befindet
+	// Let's see if there is a flag
 	if(GetNO(x,y)->GetType() == NOP_FLAG)
 	{
-		// Dann abreiÃen mitsamt Gebäude
+		// Get the attached building if existing
+		noBase * building = GetNO(GetXA(x,y,1),GetYA(x,y,1));
+		
+		// Is this a military building?
+		if(building->GetGOT() == GOT_NOB_MILITARY)
+		{
+			// Maybe demolition of the building is not allowed?
+			if(!static_cast<nobMilitary*>(building)->IsDemolitionAllowed())
+				// Abort the whole thing
+				return;
+		}
+		
+		
+		// Demolish, also the building
 		noFlag * flag = GetSpecObj<noFlag>(x,y);
+		
 		SetNO(NULL, x, y);
 		flag->DestroyAttachedBuilding();
 		flag->Destroy();

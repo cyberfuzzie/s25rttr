@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 6736 2010-09-14 11:32:49Z OLiver $
+// $Id: nobMilitary.cpp 6762 2010-09-28 18:48:16Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1131,7 +1131,7 @@ bool nobMilitary::IsDemolitionAllowed() const
 			if(aggressors.size())
 				return false;
 		} break;
-	case 2: // near frontiers
+	case 3: // near frontiers
 		{
 			// Prüfen, ob es in Grenznähe steht
 			if(frontier_distance == 2)

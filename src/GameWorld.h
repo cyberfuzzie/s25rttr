@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 6587 2010-07-17 13:26:53Z FloSoft $
+// $Id: GameWorld.h 6766 2010-09-29 19:51:36Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -106,6 +106,8 @@ struct MapNode
 	noBase * obj;
 	/// Figuren, Kämpfe, die sich dort befinden
 	list<noBase*> figures;
+
+	MapNode();
 	
 };
 
@@ -528,6 +530,10 @@ public:
 	void AltitudeChanged(const MapCoord x, const MapCoord y);
 	/// Sichtbarkeit wurde verändert: TerrainRenderer Bescheid sagen, damit es entsprechend verändert werden kann
 	void VisibilityChanged(const MapCoord x, const MapCoord y);
+
+	/// Get the "youngest" FOWObject of all players who share the view with the local player
+	const FOWObject * GetYoungestFOWObject(const Point<MapCoord> pos) const;
+
 
 	/// Schattierungen (vor allem FoW) neu berechnen
 	void RecalcAllColors();

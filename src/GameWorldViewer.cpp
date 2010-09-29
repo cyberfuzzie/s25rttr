@@ -1,4 +1,4 @@
-// $Id: GameWorldViewer.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: GameWorldViewer.cpp 6766 2010-09-29 19:51:36Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -135,9 +135,7 @@ void GameWorldViewer::Draw(const unsigned char player, unsigned * water, const b
 			// im Nebel die FOW-Objekte zeichnen
 			else if(visibility == VIS_FOW)
 			{
-				FOWObject *fowobj = GetNode(tx,ty).fow[GameClient::inst().GetPlayerID()].object;
-				if(fowobj)
-					fowobj->Draw(static_cast<int>(xpos),static_cast<int>(ypos));
+				GetYoungestFOWObject(Point<MapCoord>(x,y))->Draw(static_cast<int>(xpos),static_cast<int>(ypos));
 			}
 
 
@@ -698,4 +696,31 @@ void GameWorldViewer::Resize(unsigned short displayWidth, unsigned short display
 	this->displayWidth  = displayWidth;
 	this->displayHeight = displayHeight;
 	CalcFxLx();
+}
+
+
+/// Get the "youngest" FOWObject of all players who share the view with the local player
+const FOWObject * GameWorldViewer::GetYoungestFOWObject(const Point<MapCoord> pos) const
+{
+	unsigned char local_player = GameClient::inst().GetPlayerID();
+
+	FOWObject * youngest = GetNode(pos.x,pos.y).fow[local_player].object;
+
+	// Shared team view enabled?
+	if(GameClient::inst().GetGGS().team_view)
+	{
+		// Then check if team members have a better (="younger", see our economy) fow object
+		for(unsigned i = 0;i<GameClient::inst().GetPlayerCount();++i)
+		{
+			if(GameClient::inst().GetPlayer(i)->IsAlly(local_player))
+			{
+				// Younger than the youngest or no object at all?
+				if(GetNode(pos.x,pos.y).fow[i].object > youngest)
+					// Then take it
+					youngest = GetNode(pos.x,pos.y).fow[i].object;
+			}
+		}
+	}
+
+	return youngest;
 }

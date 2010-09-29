@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 6733 2010-09-13 20:41:11Z OLiver $
+// $Id: GameWorldBase.cpp 6766 2010-09-29 19:51:36Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -66,6 +66,13 @@ void GameWorldBase::Init()
 	nodes = new MapNode[map_size];
 	handled_nodes = new unsigned short[map_size];
 	military_squares = new list<nobBaseMilitary*>[ (width/MILITARY_SQUARE_SIZE+1) * (height/MILITARY_SQUARE_SIZE+1)];
+}
+
+MapNode::MapNode()
+{
+	// Create FOW dummy object
+	for(unsigned i = 0;i<GameClient::inst().GetPlayerCount();++i)
+		fow[i].object = new fowNothing;
 }
 
 void GameWorldBase::Unload()

@@ -913,6 +913,8 @@ void nofAttacker::CapturedBuildingFull()
 	case STATE_ATTACKING_WAITINGFORDEFENDER:
 	case STATE_ATTACKING_ATTACKINGFLAG:
 	case STATE_WAITINGFORFIGHT:
+	case STATE_MEETENEMY:
+	case STATE_FIGHTING:
 	case STATE_SEAATTACKING_GOTOHARBOR: // geht von seinem Heimatmilitärgebäude zum Starthafen
 	case STATE_SEAATTACKING_WAITINHARBOR: // wartet im Hafen auf das ankommende Schiff
 	case STATE_SEAATTACKING_ONSHIP: // befindet sich auf dem Schiff auf dem Weg zum Zielpunkt

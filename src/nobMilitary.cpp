@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 6762 2010-09-28 18:48:16Z OLiver $
+// $Id: nobMilitary.cpp 6764 2010-09-29 11:29:20Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -101,6 +101,10 @@ void nobMilitary::Destroy_nobMilitary()
 	// Soldaten rausschicken
 	for(list<nofPassiveSoldier*>::iterator it = troops.begin();it.valid();++it)
 		(*it)->InBuildingDestroyed();
+		
+	// Inform far-away capturers
+	for(std::list<nofAttacker*>::iterator it = far_away_capturers.begin();it!=far_away_capturers.end();++it)
+		(*it)->AttackedGoalDestroyed();
 
 	troops.clear();
 

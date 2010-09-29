@@ -282,6 +282,7 @@
       <File Name="../src/IngameWindow.h"/>
       <File Name="../src/MouseAndKeys.h"/>
       <File Name="../src/iwShip.cpp"/>
+      <File Name="../src/nofAttacker.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Spiel">
       <File Name="../src/BurnedWarehouse.cpp"/>
@@ -382,7 +383,6 @@
       <File Name="../src/noSign.cpp"/>
       <File Name="../src/nofButcher.cpp"/>
       <File Name="../src/nofMiller.cpp"/>
-      <File Name="../src/nofAttacker.cpp"/>
       <File Name="../src/nofMetalworker.h"/>
       <File Name="../src/noBuildingSite.h"/>
       <File Name="../src/noBaseBuilding.cpp"/>

@@ -1,4 +1,4 @@
-// $Id: FOWObjects.cpp 6766 2010-09-29 19:51:36Z OLiver $
+// $Id: FOWObjects.cpp 6767 2010-09-29 19:52:53Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -75,7 +75,9 @@ fowNothing::fowNothing()
 fowNothing::fowNothing(SerializedGameData * sgd) : FOWObject(sgd)
 {}
 void fowNothing::Serialize(SerializedGameData *sgd) const 
-{}
+{
+	FOWObject::Serialize(sgd);
+}
 void fowNothing::Draw(int x, int y) const
 {}
 

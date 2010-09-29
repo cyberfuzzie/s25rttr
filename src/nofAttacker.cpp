@@ -639,10 +639,12 @@ void nofAttacker::ReachedDestination()
 		y == attacked_goal->GetY()+1)
 	{
 		// Building already captured? Continue capturing
+		// This can only be a far away attacker
 		if(attacked_goal->GetPlayer() == player)
 		{
 			state = STATE_ATTACKING_CAPTURINGNEXT;
 			CapturingWalking();
+			static_cast<nobMilitary*>(attacked_goal)->FarAwayAttackerReachedGoal(this);
 			return;
 		}
 		

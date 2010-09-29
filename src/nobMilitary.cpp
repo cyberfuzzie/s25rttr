@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 6764 2010-09-29 11:29:20Z OLiver $
+// $Id: nobMilitary.cpp 6765 2010-09-29 12:30:37Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1155,3 +1155,10 @@ void nobMilitary::UnlinkAggressor(nofAttacker *soldier)
 		RegulateTroops();
 }
 
+
+/// A far-away capturer arrived at the building/flag and starts the capturing
+void nobMilitary::FarAwayAttackerReachedGoal(nofAttacker * attacker)
+{
+	far_away_capturers.remove(attacker);
+	capturing_soldiers++;
+}

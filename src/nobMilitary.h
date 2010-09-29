@@ -1,4 +1,4 @@
-// $Id: nobMilitary.h 6733 2010-09-13 20:41:11Z OLiver $
+// $Id: nobMilitary.h 6765 2010-09-29 12:30:37Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -175,6 +175,8 @@ public: void Serialize(SerializedGameData *sgd) const { Serialize_nobMilitary(sg
 	void StopCapturing() { capturing = false; }
 	/// Sagt, dass ein erobernder Soldat das Militärgebäude erreicht hat
 	void CapturingSoldierArrived() { --capturing_soldiers; } 
+	/// A far-away capturer arrived at the building/flag and starts the capturing
+	void FarAwayAttackerReachedGoal(nofAttacker * attacker);
 
 	/// Stoppt/Erlaubt Goldzufuhr (visuell)
 	void StopGoldVirtual() { disable_coins_virtual = !disable_coins_virtual; }

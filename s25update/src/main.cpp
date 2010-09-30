@@ -1,4 +1,4 @@
-// $Id: main.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: main.cpp 6769 2010-09-30 13:30:45Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -271,6 +271,13 @@ int main(int argc, char *argv[])
 				path = argv[++i];
 		}
 	}
+
+#ifdef _WIN32
+	int lastp = path.find_last_of("/\\");
+	std::string last = path.substr(lastp+1);
+	if(lastp != std::string::npos && last == "update")
+		path = path.substr(0, lastp);
+#endif
 
 	if(chdir(path.c_str()) < 0)
 		std::cerr << "Warning: Failed to set working directory: " << strerror(errno) << std::endl;

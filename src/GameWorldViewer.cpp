@@ -1,4 +1,4 @@
-// $Id: GameWorldViewer.cpp 6766 2010-09-29 19:51:36Z OLiver $
+// $Id: GameWorldViewer.cpp 6770 2010-09-30 19:55:15Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -714,10 +714,14 @@ const FOWObject * GameWorldViewer::GetYoungestFOWObject(const Point<MapCoord> po
 		{
 			if(GameClient::inst().GetPlayer(i)->IsAlly(local_player))
 			{
-				// Younger than the youngest or no object at all?
-				if(GetNode(pos.x,pos.y).fow[i].object > youngest)
-					// Then take it
-					youngest = GetNode(pos.x,pos.y).fow[i].object;
+				// Has the player FOW at this point at all?
+				if(GetNode(pos.y,pos.y).fow[i].visibility == VIS_FOW)
+				{
+					// Younger than the youngest or no object at all?
+					if(GetNode(pos.x,pos.y).fow[i].object > youngest)
+						// Then take it
+						youngest = GetNode(pos.x,pos.y).fow[i].object;
+				}
 			}
 		}
 	}

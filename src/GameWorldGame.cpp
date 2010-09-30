@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 6762 2010-09-28 18:48:16Z OLiver $
+// $Id: GameWorldGame.cpp 6770 2010-09-30 19:55:15Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1596,13 +1596,11 @@ const unsigned char moving_dir, Point<MapCoord> * enemy_territory)
 
 void GameWorldGame::SaveFOWNode(const MapCoord x, const MapCoord y, const unsigned player)
 {
-	// FOW-Objekt erzeugen, falls hier ein richtiges Objekt existiert
-	noBase * obj = GetNode(x,y).obj;
-	if(obj)
-	{
-		delete GetNode(x,y).fow[player].object;
-		GetNode(x,y).fow[player].object = obj->CreateFOWObject();
-	}
+	// FOW-Objekt erzeugen
+	noBase * obj = GetNO(x,y);
+	delete GetNode(x,y).fow[player].object;
+	GetNode(x,y).fow[player].object = obj->CreateFOWObject();
+
 
 	// Wege speichern, aber nur richtige, keine, die gerade gebaut werden
 	for(unsigned i = 0;i<3;++i)

@@ -1,4 +1,4 @@
-// $Id: SerializedGameData.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: SerializedGameData.cpp 6770 2010-09-30 19:55:15Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -175,6 +175,7 @@ FOWObject * SerializedGameData::Create_FOWObject(const FOW_Type fowtype)
 	switch(fowtype)
 	{
 	default: return 0;
+	case FOW_NOTHING: return new fowNothing(this);
 	case FOW_BUILDING: return new fowBuilding(this);
 	case FOW_BUILDINGSITE: return new fowBuildingSite(this);
 	case FOW_FLAG: return new fowFlag(this);
@@ -283,12 +284,7 @@ void SerializedGameData::PushObject(const GameObject * go,const bool known)
 void SerializedGameData::PushFOWObject(const FOWObject * fowobj)
 {
 	// Gibts das Objekt gar nich?
-	if(!fowobj)
-	{
-		// Null draufschreiben
-		PushUnsignedChar(0);
-		return;
-	}
+	assert(fowobj);
 
 	// Objekt-Typ
 	PushUnsignedChar(static_cast<unsigned char>(fowobj->GetType()));
@@ -301,10 +297,6 @@ FOWObject * SerializedGameData::PopFOWObject()
 {
 	// Typ auslesen
 	FOW_Type type = FOW_Type(PopUnsignedChar());
-
-	// Kein Objekt?
-	if(type == FOW_NOTHING)
-		return NULL;
 
 	// entsprechendes Objekt erzeugen
 	return Create_FOWObject(type);

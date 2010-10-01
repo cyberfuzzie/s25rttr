@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 6765 2010-09-29 12:30:37Z OLiver $
+// $Id: nobMilitary.cpp 6773 2010-10-01 08:06:14Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1162,3 +1162,5 @@ void nobMilitary::FarAwayAttackerReachedGoal(nofAttacker * attacker)
 	far_away_capturers.remove(attacker);
 	capturing_soldiers++;
 }
+
+

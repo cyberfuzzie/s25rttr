@@ -1,4 +1,4 @@
-// $Id: GameWorldViewer.cpp 6770 2010-09-30 19:55:15Z OLiver $
+// $Id: GameWorldViewer.cpp 6772 2010-10-01 08:03:30Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -728,3 +728,5 @@ const FOWObject * GameWorldViewer::GetYoungestFOWObject(const Point<MapCoord> po
 
 	return youngest;
 }
+
+

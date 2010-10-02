@@ -1,4 +1,4 @@
-// $Id: nofActiveSoldier.cpp 6775 2010-10-02 08:25:11Z OLiver $
+// $Id: nofActiveSoldier.cpp 6778 2010-10-02 12:38:28Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -426,7 +426,7 @@ void nofActiveSoldier::MeetEnemy(nofActiveSoldier * other, const Point<MapCoord>
 bool nofActiveSoldier::GetFightSpotNear(nofActiveSoldier * other, Point<MapCoord> * fight_spot)
 {
 	// Calc middle between the two soldiers and use this as origin spot for the search of more fight spots
-	Point<MapCoord> middle( (x + other->GetX()) / 2, (y + other->GetY()) / 2 );
+	Point<MapCoord> middle( (x + gwg->GetXA(other->GetX(),other->GetY(),other->GetDir())) / 2, (y + gwg->GetYA(other->GetX(),other->GetY(),other->GetDir())) / 2 );
 
 	// Did we cross the borders ? ( horizontally)
 	if(SafeDiff(middle.x,x) > MEET_FOR_FIGHT_DISTANCE)
@@ -456,8 +456,8 @@ bool nofActiveSoldier::GetFightSpotNear(nofActiveSoldier * other, Point<MapCoord
 
 	// Test Middle point first
 	if(gwg->ValidPointForFighting(middle.x,middle.y,NULL)
-		&& gwg->FindHumanPath(x,y,middle.x,middle.y,MEET_FOR_FIGHT_DISTANCE*2,true,NULL) != 0xff
-		&& gwg->FindHumanPath(other->GetX(),other->GetY(),middle.x,middle.y,MEET_FOR_FIGHT_DISTANCE*2,true,NULL) != 0xff)
+		&& (GetPos() == middle || gwg->FindHumanPath(x,y,middle.x,middle.y,MEET_FOR_FIGHT_DISTANCE*2,false,NULL) != 0xff)
+		&& (other->GetPos() == middle || gwg->FindHumanPath(other->GetX(),other->GetY(),middle.x,middle.y,MEET_FOR_FIGHT_DISTANCE*2,false,NULL) != 0xff))
 	{
 		// Great, then let's take this one
 		*fight_spot = middle;

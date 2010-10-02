@@ -1,4 +1,4 @@
-// $Id: const_addons.h 6699 2010-09-01 17:12:06Z jh $
+// $Id: const_addons.h 6775 2010-10-02 08:25:11Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -28,6 +28,7 @@
 // 002 Divan
 // 003 jh
 // 004 Kaffeepause (https://launchpad.net/~haw)
+// 005 CS2001
 //
 
 // Do not forget to add your Addon to AddonManager::reset!
@@ -56,7 +57,9 @@ enum AddonId
 	ADDON_DEFENDER_BEHAVIOR			= 0x00300000,
 	ADDON_AI_DEBUG_WINDOW			= 0x00300001,
 
-	ADDON_NO_COINS_DEFAULT			= 0x00400000
+	ADDON_NO_COINS_DEFAULT			= 0x00400000,
+
+	ADDON_ADJUST_MILITARY_STRENGTH	= 0x00500000
 };
 
 enum AddonGroup

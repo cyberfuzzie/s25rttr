@@ -2022,6 +2022,10 @@
 					Name="Addons"
 					>
 					<File
+						RelativePath="..\..\src\AddonAdjustMilitaryStrength.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\AddonChangeGoldDeposits.h"
 						>
 					</File>

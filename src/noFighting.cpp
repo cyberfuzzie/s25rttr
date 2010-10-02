@@ -1,4 +1,4 @@
-// $Id: noFighting.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: noFighting.cpp 6775 2010-10-02 08:25:11Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -32,6 +32,7 @@
 #include "nobBaseMilitary.h"
 #include "SoundManager.h"
 #include "SerializedGameData.h"
+#include "AddonManager.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -574,13 +575,27 @@ void noFighting::StartAttack()
 	// "Auswürfeln", ob der Angreifer (also der, der gerade den Angriff vollzieht) trifft oder ob sich der andere
 	// erfolgreich verteidigt
 
-	unsigned char results[2];
-
-	for(unsigned i = 0;i<2;++i)
-		results[i] = RANDOM.Rand(__FILE__,__LINE__,obj_id,soldiers[i]->GetRank()+3);
+	unsigned char results[2];	
+	for(unsigned i = 0;i<2;++i){
+		switch (ADDONMANAGER.getSelection(ADDON_ADJUST_MILITARY_STRENGTH))
+		{
+		case 0: // Maximale Stärke
+			{
+				results[i] = RANDOM.Rand(__FILE__,__LINE__,obj_id,soldiers[i]->GetRank() + 3);
+			} break;
+		case 1: // Mittlere Stärke
+			{
+				results[i] = RANDOM.Rand(__FILE__,__LINE__,obj_id,soldiers[i]->GetRank() + 8);
+			} break;
+		case 2: // Minimale Stärke
+			{
+				results[i] = RANDOM.Rand(__FILE__,__LINE__,obj_id,10);
+			} break;
+		}		
+	}
 
 	if((turn == 0 && results[0] > results[1])
-	|| (turn == 1 && results[1] > results[0]))
+		|| (turn == 1 && results[1] > results[0]))
 		// Der Angreifer hat diesen Zug gewonnen
 		defending_animation = 3;
 	else

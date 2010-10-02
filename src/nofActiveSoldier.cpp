@@ -1,4 +1,4 @@
-// $Id: nofActiveSoldier.cpp 6682 2010-08-18 08:32:03Z OLiver $
+// $Id: nofActiveSoldier.cpp 6775 2010-10-02 08:25:11Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -352,10 +352,10 @@ void nofActiveSoldier::MeetingEnemy()
 		{
 			// Start fighting
 			gwg->AddFigure(new noFighting(enemy, this), x, y);
+
+			enemy->FightingStarted();
+			FightingStarted();
 			
-			state = STATE_FIGHTING;
-			enemy->state = STATE_FIGHTING;
-			enemy = NULL;
 			return;
 		}
 		else
@@ -373,6 +373,7 @@ void nofActiveSoldier::MeetingEnemy()
 			// Spot is still ok, let's wait for the enemy
 			else
 			{
+				enemy = NULL;
 				state = STATE_WAITINGFORFIGHT;
 				return;
 			}
@@ -494,4 +495,12 @@ bool nofActiveSoldier::GetFightSpotNear(nofActiveSoldier * other, Point<MapCoord
 	// No point found
 	return false;
 
+}
+
+
+/// Informs a waiting soldier about the start of a fight
+void nofActiveSoldier::FightingStarted()
+{
+	state = STATE_FIGHTING;
+	enemy = NULL;
 }

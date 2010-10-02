@@ -1,4 +1,4 @@
-// $Id: nofActiveSoldier.h 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: nofActiveSoldier.h 6775 2010-10-02 08:25:11Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -148,6 +148,8 @@ public:
 
 	/// Determines if this soldier is ready for a spontaneous  fight
 	bool IsReadyForFight() const;
+	/// Informs a waiting soldier about the start of a fight
+	void FightingStarted();
 
 
 	/// Gets the current state

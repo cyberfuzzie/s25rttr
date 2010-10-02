@@ -1,4 +1,4 @@
-// $Id: noFighting.cpp 6775 2010-10-02 08:25:11Z OLiver $
+// $Id: noFighting.cpp 6776 2010-10-02 09:27:35Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -581,11 +581,11 @@ void noFighting::StartAttack()
 		{
 		case 0: // Maximale Stärke
 			{
-				results[i] = RANDOM.Rand(__FILE__,__LINE__,obj_id,soldiers[i]->GetRank() + 3);
+				results[i] = RANDOM.Rand(__FILE__,__LINE__,obj_id,soldiers[i]->GetRank() + 6);
 			} break;
 		case 1: // Mittlere Stärke
 			{
-				results[i] = RANDOM.Rand(__FILE__,__LINE__,obj_id,soldiers[i]->GetRank() + 8);
+				results[i] = RANDOM.Rand(__FILE__,__LINE__,obj_id,soldiers[i]->GetRank() + 10);
 			} break;
 		case 2: // Minimale Stärke
 			{

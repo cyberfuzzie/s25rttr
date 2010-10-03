@@ -1,4 +1,4 @@
-// $Id: nofBuildingWorker.cpp 6739 2010-09-14 20:23:35Z OLiver $
+// $Id: nofBuildingWorker.cpp 6780 2010-10-03 20:19:31Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -400,9 +400,9 @@ bool nofBuildingWorker::GetResources(unsigned char type)
 	{
 		if(GameClient::inst().GetPlayerID() == this->player)
 		{
-			std::string error = "This mine is exhausted";
+			std::string error = _("This mine is exhausted");
 			if(workplace->GetBuildingType() == BLD_WELL)
-				error = "This well is dried out";
+				error = _("This well is dried out");
 
 			GameClient::inst().SendPostMessage(
 				new ImagePostMsgWithLocation(_(error), PMC_GENERAL, x, y, 

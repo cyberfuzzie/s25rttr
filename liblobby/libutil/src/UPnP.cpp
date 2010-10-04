@@ -1,4 +1,4 @@
-// $Id: UPnP.cpp 6600 2010-07-19 13:52:33Z FloSoft $
+// $Id: UPnP.cpp 6784 2010-10-04 09:32:22Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -32,7 +32,39 @@
 
 		#include <ole2.h>
 		#include <natupnp.h>
-		#include <atlconv.h>
+		//#include <atlconv.h>
+
+		inline BSTR A2WBSTR(LPCSTR lp, int nLen = -1)
+		{
+			if (lp == NULL || nLen == 0)
+				return NULL;
+			BSTR str = NULL;
+
+			int nConvertedLen = MultiByteToWideChar(CP_THREAD_ACP, 0, lp, nLen, NULL, 0);
+
+			int nAllocLen = nConvertedLen;
+			if (nLen == -1)
+				nAllocLen -= 1;  // Don't allocate terminating '\0'
+			str = ::SysAllocStringLen(NULL, nAllocLen);
+
+			if (str != NULL)
+			{
+				int nResult;
+				nResult = MultiByteToWideChar(CP_THREAD_ACP, 0, lp, nLen, str, nConvertedLen);
+				if(nResult != nConvertedLen)
+				{
+					SysFreeString(str);
+					return NULL;
+				}
+
+			}
+			return str;
+		}
+
+		inline BSTR A2BSTR(LPCSTR lp)
+		{
+			return A2WBSTR(lp);
+		}
 	#endif
 	
 	#ifndef _WIN32_WINNT

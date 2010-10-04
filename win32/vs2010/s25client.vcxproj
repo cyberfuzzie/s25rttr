@@ -43,13 +43,10 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)..\..\;$(SolutionDir)..\..\libutil\src;$(SolutionDir)..\..\mygettext\src;$(SolutionDir)..\..\liblobby\src;$(SolutionDir)..\..\libsiedler2\src;$(SolutionDir)..\..\libendian\src;$(IncludePath)</IncludePath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.;$(LibraryPath)</LibraryPath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <PreBuildEvent>
-      <Command>"$(OutDir)prebuild-mutex.exe" "prebuild" "$(SolutionName)" "$(SolutionDir)..\.." "$(OutDir)"</Command>
+      <Command>"$(OutDir)prebuild-mutex.exe" "prebuild" "$(SolutionName)" "$(ProjectDir)..\.." "$(OutDir)"</Command>
     </PreBuildEvent>
     <ClCompile>
       <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
@@ -65,7 +62,7 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <DisableSpecificWarnings>4996;4355;4250;4512;6385;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..;$(ProjectDir)..\..\libutil\src;$(ProjectDir)..\..\mygettext\src;$(ProjectDir)..\..\liblobby\src;$(ProjectDir)..\..\libsiedler2\src;$(ProjectDir)..\..\libendian\src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalOptions>/fixed:no %(AdditionalOptions)</AdditionalOptions>
@@ -78,12 +75,12 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>"$(OutDir)prebuild-mutex.exe" "postbuild" "$(SolutionName)" "$(SolutionDir)..\.." "$(OutDir)"</Command>
+      <Command>"$(OutDir)prebuild-mutex.exe" "postbuild" "$(SolutionName)" "$(ProjectDir)..\.." "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <PreBuildEvent>
-      <Command>"$(OutDir)prebuild-mutex.exe" "prebuild" "$(SolutionName)" "$(SolutionDir)..\.." "$(OutDir)"</Command>
+      <Command>"$(OutDir)prebuild-mutex.exe" "prebuild" "$(SolutionName)" "$(ProjectDir)..\.." "$(OutDir)"</Command>
     </PreBuildEvent>
     <ClCompile>
       <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
@@ -108,7 +105,7 @@
       <DebugInformationFormat>
       </DebugInformationFormat>
       <DisableSpecificWarnings>4996;4355;4250;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..;$(ProjectDir)..\..\libutil\src;$(ProjectDir)..\..\mygettext\src;$(ProjectDir)..\..\liblobby\src;$(ProjectDir)..\..\libsiedler2\src;$(ProjectDir)..\..\libendian\src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>opengl32.lib;libbz2.lib;shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -122,7 +119,7 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>"$(OutDir)prebuild-mutex.exe" "postbuild" "$(SolutionName)" "$(SolutionDir)..\.." "$(OutDir)"</Command>
+      <Command>"$(OutDir)prebuild-mutex.exe" "postbuild" "$(SolutionName)" "$(ProjectDir)..\.." "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

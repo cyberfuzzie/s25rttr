@@ -46,8 +46,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>"$(OutDir)prebuild-mutex.exe" "prebuild" "$(SolutionName)" "$(ProjectDir)..\..\.." "$(OutDir)"</Command>
     </PreBuildEvent>
     <ClCompile>
       <Optimization>Disabled</Optimization>
@@ -70,12 +69,12 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>"$(OutDir)prebuild-mutex.exe" "postbuild" "$(SolutionName)" "$(SolutionDir)..\.." "$(OutDir)"</Command>
+      <Command>"$(OutDir)prebuild-mutex.exe" "postbuild" "$(SolutionName)" "$(ProjectDir)..\..\.." "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <PreBuildEvent>
-      <Command>"$(OutDir)prebuild-mutex.exe" "prebuild" "$(SolutionName)" "$(SolutionDir)..\.." "$(OutDir)"</Command>
+      <Command>"$(OutDir)prebuild-mutex.exe" "prebuild" "$(SolutionName)" "$(ProjectDir)..\..\.." "$(OutDir)"</Command>
     </PreBuildEvent>
     <ClCompile>
       <Optimization>Full</Optimization>
@@ -100,7 +99,7 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>"$(OutDir)prebuild-mutex.exe" "prebuild" "$(SolutionName)" "$(SolutionDir)..\.." "$(OutDir)"</Command>
+      <Command>"$(OutDir)prebuild-mutex.exe" "prebuild" "$(SolutionName)" "$(ProjectDir)..\..\.." "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

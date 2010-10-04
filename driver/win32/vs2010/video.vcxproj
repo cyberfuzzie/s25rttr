@@ -44,7 +44,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <PreBuildEvent>
-      <Command>"$(OutDir)prebuild-mutex.exe" "prebuild" "$(SolutionName)" "$(SolutionDir)..\.." "$(OutDir)"</Command>
+      <Command>"$(OutDir)prebuild-mutex.exe" "prebuild" "$(SolutionName)" "$(ProjectDir)..\..\.." "$(OutDir)"</Command>
     </PreBuildEvent>
     <ClCompile>
       <Optimization>Disabled</Optimization>
@@ -57,15 +57,15 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <DisableSpecificWarnings>4996;4512;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..</AdditionalIncludeDirectories>
     </ClCompile>
     <PostBuildEvent>
-      <Command>"$(OutDir)prebuild-mutex.exe" "postbuild" "$(SolutionName)" "$(SolutionDir)..\.." "$(OutDir)"</Command>
+      <Command>"$(OutDir)prebuild-mutex.exe" "postbuild" "$(SolutionName)" "$(ProjectDir)..\..\.." "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <PreBuildEvent>
-      <Command>"$(OutDir)prebuild-mutex.exe" "prebuild" "$(SolutionName)" "$(SolutionDir)..\.." "$(OutDir)"</Command>
+      <Command>"$(OutDir)prebuild-mutex.exe" "prebuild" "$(SolutionName)" "$(ProjectDir)..\..\.." "$(OutDir)"</Command>
     </PreBuildEvent>
     <ClCompile>
       <Optimization>Full</Optimization>
@@ -77,10 +77,10 @@
       <TreatWarningAsError>true</TreatWarningAsError>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..</AdditionalIncludeDirectories>
     </ClCompile>
     <PostBuildEvent>
-      <Command>"$(OutDir)prebuild-mutex.exe" "postbuild" "$(SolutionName)" "$(SolutionDir)..\.." "$(OutDir)"</Command>
+      <Command>"$(OutDir)prebuild-mutex.exe" "postbuild" "$(SolutionName)" "$(ProjectDir)..\..\.." "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

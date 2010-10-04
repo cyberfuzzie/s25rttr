@@ -1,4 +1,4 @@
-// $Id: nofActiveSoldier.cpp 6778 2010-10-02 12:38:28Z OLiver $
+// $Id: nofActiveSoldier.cpp 6782 2010-10-04 06:36:20Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -504,3 +504,8 @@ void nofActiveSoldier::FightingStarted()
 	state = STATE_FIGHTING;
 	enemy = NULL;
 }
+
+///////////////////////////////////////////////////////////////////////////////
+// EOF
+///////////////////////////////////////////////////////////////////////////////
+

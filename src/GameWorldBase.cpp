@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 6766 2010-09-29 19:51:36Z OLiver $
+// $Id: GameWorldBase.cpp 6790 2010-10-08 21:02:26Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -70,9 +70,7 @@ void GameWorldBase::Init()
 
 MapNode::MapNode()
 {
-	// Create FOW dummy object
-	for(unsigned i = 0;i<GameClient::inst().GetPlayerCount();++i)
-		fow[i].object = new fowNothing;
+
 }
 
 void GameWorldBase::Unload()

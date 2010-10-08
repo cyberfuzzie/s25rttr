@@ -1,4 +1,4 @@
-// $Id: GameWorld.h 6766 2010-09-29 19:51:36Z OLiver $
+// $Id: GameWorld.h 6790 2010-10-08 21:02:26Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -85,6 +85,8 @@ struct MapNode
 	/// Visuelle Sachen für alle Spieler, die in Zusammenhang mit dem FoW stehen
 	struct
 	{
+		/// Zeit (GF-Zeitpunkt), zu der, der Punkt zuletzt aktualisiert wurde
+		unsigned last_update_time;
 		/// Sichtbarkeit des Punktes
 		Visibility visibility;
 		/// FOW-Objekt
@@ -533,6 +535,10 @@ public:
 
 	/// Get the "youngest" FOWObject of all players who share the view with the local player
 	const FOWObject * GetYoungestFOWObject(const Point<MapCoord> pos) const;
+	
+	/// Gets the youngest fow node of all visible objects of all players who are connected
+	/// with the local player via team view
+	unsigned char GetYoungestFOWNodePlayer(const Point<MapCoord> pos) const;
 
 
 	/// Schattierungen (vor allem FoW) neu berechnen

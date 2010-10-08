@@ -1,4 +1,4 @@
-// $Id: noBase.cpp 6766 2010-09-29 19:51:36Z OLiver $
+// $Id: noBase.cpp 6790 2010-10-08 21:02:26Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -37,7 +37,7 @@ void noBase::Serialize_noBase(SerializedGameData * sgd) const
 
 FOWObject * noBase::CreateFOWObject() const
 {
-	return new fowNothing;
+	return NULL;
 }
 
 noBase::BlockingManner noBase::GetBM() const
@@ -45,7 +45,7 @@ noBase::BlockingManner noBase::GetBM() const
 	return BM_NOTBLOCKING;
 }
 
-/// Gibt zurück, ob sich das angegebene Objekt zwischen zwei Punkten bewegt
+/// Gibt zurÃ¼ck, ob sich das angegebene Objekt zwischen zwei Punkten bewegt
 bool noBase::IsMoving() const
 {
 	return false;

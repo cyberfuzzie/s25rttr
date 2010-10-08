@@ -1,4 +1,4 @@
-// $Id: GameWorldViewer.cpp 6772 2010-10-01 08:03:30Z FloSoft $
+// $Id: GameWorldViewer.cpp 6790 2010-10-08 21:02:26Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -135,7 +135,9 @@ void GameWorldViewer::Draw(const unsigned char player, unsigned * water, const b
 			// im Nebel die FOW-Objekte zeichnen
 			else if(visibility == VIS_FOW)
 			{
-				GetYoungestFOWObject(Point<MapCoord>(x,y))->Draw(static_cast<int>(xpos),static_cast<int>(ypos));
+				const FOWObject * fowobj = GetYoungestFOWObject(Point<MapCoord>(tx,ty));
+				if(fowobj)
+					fowobj->Draw(static_cast<int>(xpos),static_cast<int>(ypos));
 			}
 
 
@@ -434,7 +436,7 @@ void GameWorldViewer::DrawBoundaryStone(const int x, const int y, const MapCoord
 
 	bool fow = !(vis == VIS_VISIBLE);
 
-	unsigned char viewing_player = GameClient::inst().GetPlayerID();
+	unsigned char viewing_player = GetYoungestFOWNodePlayer(Point<MapCoord>(tx,ty));
 	unsigned char owner = fow ? GetNode(tx,ty).fow[viewing_player].boundary_stones[0] : GetNode(tx,ty).boundary_stones[0];
 	if(owner)
 	{
@@ -642,7 +644,7 @@ unsigned char GameWorldViewer::GetVisibleRoad(const MapCoord x, const MapCoord y
 		return GetPointRoad(x,y,dir,true);
 	else if(visibility == VIS_FOW)
 		// entsprechende FoW-StraÃe liefern
-		return GetPointFOWRoad(x,y,dir,GameClient::inst().GetPlayerID());
+		return GetPointFOWRoad(x,y,dir,GetYoungestFOWNodePlayer(Point<MapCoord>(x,y)));
 	else
 		// Unsichtbar -> keine StraÃe zeichnen
 		return 0;
@@ -702,9 +704,17 @@ void GameWorldViewer::Resize(unsigned short displayWidth, unsigned short display
 /// Get the "youngest" FOWObject of all players who share the view with the local player
 const FOWObject * GameWorldViewer::GetYoungestFOWObject(const Point<MapCoord> pos) const
 {
-	unsigned char local_player = GameClient::inst().GetPlayerID();
+	return GetNode(pos.x,pos.y).fow[GetYoungestFOWNodePlayer(pos)].object;
+}
 
-	FOWObject * youngest = GetNode(pos.x,pos.y).fow[local_player].object;
+
+/// Gets the youngest fow node of all visible objects of all players who are connected
+/// with the local player via team view
+unsigned char GameWorldViewer::GetYoungestFOWNodePlayer(const Point<MapCoord> pos) const
+{
+	unsigned char local_player = GameClient::inst().GetPlayerID();
+	unsigned char youngest_player = local_player;
+	unsigned youngest_time = GetNode(pos.x,pos.y).fow[local_player].last_update_time;
 
 	// Shared team view enabled?
 	if(GameClient::inst().GetGGS().team_view)
@@ -715,18 +725,22 @@ const FOWObject * GameWorldViewer::GetYoungestFOWObject(const Point<MapCoord> po
 			if(GameClient::inst().GetPlayer(i)->IsAlly(local_player))
 			{
 				// Has the player FOW at this point at all?
-				if(GetNode(pos.y,pos.y).fow[i].visibility == VIS_FOW)
+				if(GetNode(pos.x,pos.y).fow[i].visibility == VIS_FOW)
 				{
 					// Younger than the youngest or no object at all?
-					if(GetNode(pos.x,pos.y).fow[i].object > youngest)
+					if(GetNode(pos.x,pos.y).fow[i].last_update_time > youngest_time)
+					{
 						// Then take it
-						youngest = GetNode(pos.x,pos.y).fow[i].object;
+						youngest_time = GetNode(pos.x,pos.y).fow[i].last_update_time;
+						// And remember its owner
+						youngest_player = i;
+					}
 				}
 			}
 		}
 	}
 
-	return youngest;
+	return youngest_player;
 }
 
 

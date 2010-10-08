@@ -1,4 +1,4 @@
-// $Id: FOWObjects.h 6766 2010-09-29 19:51:36Z OLiver $
+// $Id: FOWObjects.h 6790 2010-10-08 21:02:26Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -47,25 +47,15 @@ unsigned CalcPlayerFOWDrawColor(const unsigned color);
 /// was ein bestimmter Spieler gesehen hat
 class FOWObject
 {
-	/// "Age" i.e. gf at the creation time of this object
-	/// Higher -> younger
-	unsigned age;
 public:
-
-	FOWObject();
-	FOWObject(SerializedGameData *sgd);
 
 	virtual ~FOWObject();
 	/// An x,y zeichnen.
 	virtual void Draw(int x, int y) const = 0;
 	/// Serialisierungsfunktion.
-	virtual void Serialize(SerializedGameData *sgd) const;
+	virtual void Serialize(SerializedGameData *sgd) const = 0;
 	/// Gibt Typ zurück
 	virtual FOW_Type GetType() const = 0;
-
-	/// Age comperator
-	bool operator<(const FOWObject& fowobj) const
-	{ return (age < fowobj.age); }
 };
 
 /// Platzhalter-Objekt, falls dort kein Objekt existiert

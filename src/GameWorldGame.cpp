@@ -1,4 +1,4 @@
-// $Id: GameWorldGame.cpp 6770 2010-09-30 19:55:15Z OLiver $
+// $Id: GameWorldGame.cpp 6790 2010-10-08 21:02:26Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1596,6 +1596,8 @@ const unsigned char moving_dir, Point<MapCoord> * enemy_territory)
 
 void GameWorldGame::SaveFOWNode(const MapCoord x, const MapCoord y, const unsigned player)
 {
+	GetNode(x,y).fow[player].last_update_time = GameClient::inst().GetGFNumber();
+	
 	// FOW-Objekt erzeugen
 	noBase * obj = GetNO(x,y);
 	delete GetNode(x,y).fow[player].object;

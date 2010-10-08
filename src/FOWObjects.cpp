@@ -1,4 +1,4 @@
-// $Id: FOWObjects.cpp 6767 2010-09-29 19:52:53Z OLiver $
+// $Id: FOWObjects.cpp 6790 2010-10-08 21:02:26Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -43,27 +43,8 @@ unsigned CalcPlayerFOWDrawColor(const unsigned color)
 	return MakeColor(0xFF,red,green,blue);
 }
 
-
-FOWObject::FOWObject() :
-// Set age to the current game time
-age(GameClient::inst().GetGFNumber())
-{
-}
-
-FOWObject::FOWObject(SerializedGameData *sgd) :
-age(sgd->PopUnsignedInt())
-{
-}
-
-
 FOWObject::~FOWObject()
 {
-}
-
-/// Serialisierungsfunktion.
-void FOWObject::Serialize(SerializedGameData *sgd) const
-{
-	sgd->PushUnsignedInt(age);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -72,12 +53,10 @@ void FOWObject::Serialize(SerializedGameData *sgd) const
 
 fowNothing::fowNothing()
 {}
-fowNothing::fowNothing(SerializedGameData * sgd) : FOWObject(sgd)
+fowNothing::fowNothing(SerializedGameData * sgd)
 {}
 void fowNothing::Serialize(SerializedGameData *sgd) const 
-{
-	FOWObject::Serialize(sgd);
-}
+{}
 void fowNothing::Draw(int x, int y) const
 {}
 
@@ -85,19 +64,16 @@ void fowNothing::Draw(int x, int y) const
 // fowBuilding
 
 
-fowBuilding::fowBuilding(const BuildingType type, const Nation nation) 
-: type(type), nation(nation)
+fowBuilding::fowBuilding(const BuildingType type, const Nation nation) : type(type), nation(nation)
 {}
 
-fowBuilding::fowBuilding(SerializedGameData * sgd) : FOWObject(sgd), 
+fowBuilding::fowBuilding(SerializedGameData * sgd) :
 type(BuildingType(sgd->PopUnsignedChar())),
 nation(Nation(sgd->PopUnsignedChar()))
 {}
 
 void fowBuilding::Serialize(SerializedGameData *sgd) const 
 {
-	FOWObject::Serialize(sgd);
-
 	sgd->PushUnsignedChar(static_cast<unsigned char>(type));
 	sgd->PushUnsignedChar(static_cast<unsigned char>(nation));
 }
@@ -118,7 +94,7 @@ fowBuildingSite::fowBuildingSite(const bool planing, const BuildingType type, co
 : planing(planing), type(type), nation(nation), build_progress(build_progress)
 {}
 
-fowBuildingSite::fowBuildingSite(SerializedGameData * sgd) : FOWObject(sgd), 
+fowBuildingSite::fowBuildingSite(SerializedGameData * sgd) :
 planing(sgd->PopBool()),
 type(BuildingType(sgd->PopUnsignedChar())),
 nation(Nation(sgd->PopUnsignedChar())),
@@ -127,8 +103,6 @@ build_progress(sgd->PopUnsignedChar())
 
 void fowBuildingSite::Serialize(SerializedGameData *sgd) const 
 {
-	FOWObject::Serialize(sgd);
-
 	sgd->PushBool(planing);
 	sgd->PushUnsignedChar(static_cast<unsigned char>(type));
 	sgd->PushUnsignedChar(static_cast<unsigned char>(nation));
@@ -237,15 +211,13 @@ void fowBuildingSite::Draw(int x, int y) const
 fowFlag::fowFlag(const unsigned char player, const FlagType flag_type) : player(player), flag_type(flag_type)
 {}
 
-fowFlag::fowFlag(SerializedGameData * sgd) :  FOWObject(sgd), 
+fowFlag::fowFlag(SerializedGameData * sgd) :
 player(sgd->PopUnsignedChar()),
 flag_type(FlagType(sgd->PopUnsignedChar()))
 {}
 
 void fowFlag::Serialize(SerializedGameData *sgd) const 
 {
-	FOWObject::Serialize(sgd);
-
 	sgd->PushUnsignedChar(player);
 	sgd->PushUnsignedChar(static_cast<unsigned char>(flag_type));
 }
@@ -264,15 +236,13 @@ void fowFlag::Draw(int x, int y) const
 fowTree::fowTree(const unsigned char type, const unsigned char size) : type(type), size(size)
 {}
 
-fowTree::fowTree(SerializedGameData * sgd) : FOWObject(sgd), 
+fowTree::fowTree(SerializedGameData * sgd) :
 type(sgd->PopUnsignedChar()),
 size(sgd->PopUnsignedChar())
 {}
 
 void fowTree::Serialize(SerializedGameData *sgd) const 
 {
-	FOWObject::Serialize(sgd);
-
 	sgd->PushUnsignedChar(type);
 	sgd->PushUnsignedChar(size);
 }
@@ -298,15 +268,13 @@ void fowTree::Draw(int x, int y) const
 fowGranite::fowGranite(const GraniteType type, const unsigned char state) : type(type), state(state)
 {}
 
-fowGranite::fowGranite(SerializedGameData * sgd) : FOWObject(sgd), 
+fowGranite::fowGranite(SerializedGameData * sgd) :
 type(GraniteType(sgd->PopUnsignedChar())),
 state(sgd->PopUnsignedChar())
 {}
 
 void fowGranite::Serialize(SerializedGameData *sgd) const 
 {
-	FOWObject::Serialize(sgd);
-
 	sgd->PushUnsignedChar(static_cast<unsigned char>(type));
 	sgd->PushUnsignedChar(state);
 }

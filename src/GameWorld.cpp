@@ -1,4 +1,4 @@
-// $Id: GameWorld.cpp 6790 2010-10-08 21:02:26Z OLiver $
+// $Id: GameWorld.cpp 6791 2010-10-08 21:09:55Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -596,6 +596,8 @@ void GameWorld::Deserialize(SerializedGameData *sgd)
 			}
 			else
 			{
+				nodes[i].fow[z].last_update_time = 0;
+				nodes[i].fow[z].object = NULL;
 				for(unsigned r = 0;r<3;++r)
 					nodes[i].fow[z].roads[r] = 0;
 				nodes[i].fow[z].owner = 0;

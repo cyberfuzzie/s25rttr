@@ -1,4 +1,4 @@
-// $Id: nofFarmhand.cpp 6739 2010-09-14 20:23:35Z OLiver $
+// $Id: nofFarmhand.cpp 6798 2010-10-14 20:17:55Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -80,7 +80,7 @@ void nofFarmhand::HandleDerivedEvent(const unsigned int id)
 			// fertig mit Arbeiten --> dann müssen die "Folgen des Arbeitens" ausgeführt werden
 			WorkFinished();
 			// Objekt wieder freigeben
-			gwg->GetNode(x,y).reserved = false;;
+			gwg->GetNode(x,y).reserved = false;
 			// Wieder nach Hause gehen
 			StartWalkingHome();
 
@@ -98,6 +98,11 @@ void nofFarmhand::HandleDerivedEvent(const unsigned int id)
 			// Die Arbeitsradien der Berufe wie in JobConst.h (ab JOB_WOODCUTTER!)
 			const unsigned char RADIUS[7] =
 			{ 6,7,6,0,8,2,2 };
+			
+			// Additional radius delta r which is used when a point in radius r was found
+			// I.e. looks till radius r + delta r
+			const unsigned ADD_RADIUS_WHEN_FOUND[7] =
+			{ 1, 1, 1, 1, 0, 1, 1};
 
 			
 			// Anzahl der Radien, wo wir gültige Punkte gefunden haben
@@ -127,10 +132,10 @@ void nofFarmhand::HandleDerivedEvent(const unsigned int id)
 				}
 
 
-				// Nur die zwei nächsten Radien erst einmal nehmen
+				// Nur die zwei ADD_RADIUS_WHEN_FOUND Radien erst einmal nehmen
 				if(found_in_radius)
 				{
-					if( ++radius_count == 2)
+					if( radius_count++ == ADD_RADIUS_WHEN_FOUND[job-JOB_WOODCUTTER])
 						break;
 				}
 			}

@@ -1,4 +1,4 @@
-// $Id: nobBaseWarehouse.cpp 6744 2010-09-16 19:58:43Z OLiver $
+// $Id: nobBaseWarehouse.cpp 6798 2010-10-14 20:17:55Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -538,6 +538,8 @@ void nobBaseWarehouse::HandleBaseEvent(const unsigned int id)
 	// Einlagerevent
 	case 4:
 		{
+			store_event = NULL;
+			
 			// Storing wares done?
 			bool storing_done = false;
 			// Is storing still wanted?

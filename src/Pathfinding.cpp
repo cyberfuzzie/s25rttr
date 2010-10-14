@@ -1,4 +1,4 @@
-// $Id: Pathfinding.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: Pathfinding.cpp 6798 2010-10-14 20:17:55Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -537,9 +537,6 @@ bool IsPointOK_HumanPath(const GameWorldBase& gwb, const MapCoord x, const MapCo
 	// Feld passierbar?
 	noBase::BlockingManner bm = gwb.GetNO(x,y)->GetBM();
 	if(bm != noBase::BM_NOTBLOCKING && bm != noBase::BM_TREE && bm != noBase::BM_FLAG)
-		return false;
-
-	if(gwb.GetNode(x,y).reserved)
 		return false;
 
 	return true;

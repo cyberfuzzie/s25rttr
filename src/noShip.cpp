@@ -1,4 +1,4 @@
-// $Id: noShip.cpp 6725 2010-09-11 11:57:54Z OLiver $
+// $Id: noShip.cpp 6800 2010-10-15 21:29:36Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -441,7 +441,8 @@ void noShip::Driven()
 	if(enemy_territory_discovered.x != 0xffff)
 	{
 		// Send message if necessary
-		if(players->getElement(player)->ShipDiscoveredHostileTerritory(enemy_territory_discovered))
+		if(players->getElement(player)->ShipDiscoveredHostileTerritory
+			(enemy_territory_discovered) && player == GameClient::inst().GetPlayerID())
 			GameClient::inst().SendPostMessage(new PostMsgWithLocation(_("A ship disovered an enemy territory"), PMC_MILITARY, enemy_territory_discovered.x, enemy_territory_discovered.y));
 
 	}

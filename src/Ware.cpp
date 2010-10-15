@@ -1,4 +1,4 @@
-// $Id: Ware.cpp 6589 2010-07-18 10:45:59Z jh $
+// $Id: Ware.cpp 6800 2010-10-15 21:29:36Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -130,6 +130,8 @@ void Ware::RecalcRoute()
 		assert(location->GetGOT() == GOT_NOB_HARBORBUILDING);
 		
 		static_cast<nobHarborBuilding*>(location)->WareDontWantToTravelByShip(this);
+
+		state = STATE_WAITINWAREHOUSE;
 	}
 
 	//// Es wurde ein gültiger Weg gefunden! Dann muss aber noch dem nächsten Träger Bescheid gesagt werden

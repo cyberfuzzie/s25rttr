@@ -1,4 +1,4 @@
-// $Id: main.h 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: main.h 6800 2010-10-15 21:29:36Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -119,7 +119,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // Eigene Header
-#include <build_paths.h>
+#include "../build_paths.h"
 #include "libutil.h"
 #include "mygettext.h"
 #include "liblobby.h"

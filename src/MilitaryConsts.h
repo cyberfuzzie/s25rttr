@@ -1,4 +1,4 @@
-// $Id: MilitaryConsts.h 6733 2010-09-13 20:41:11Z OLiver $
+// $Id: MilitaryConsts.h 6802 2010-10-16 10:16:54Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -141,7 +141,7 @@ const unsigned CONVALESCE_TIME = 500;
 const unsigned CONVALESCE_TIME_RANDOM = 500;
 
 /// Maximale Entfernung des Militärgebäudes von dem Hafen bei Seeangriffen
-const unsigned SEAATTACK_DISTANCE = 18;
+const unsigned SEAATTACK_DISTANCE = 15;
 
 
 

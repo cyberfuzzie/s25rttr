@@ -1,4 +1,4 @@
-// $Id: DriverWrapper.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: DriverWrapper.cpp 6806 2010-10-18 13:35:17Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -159,6 +159,7 @@ void DriverWrapper::LoadDriverList(const DriverType dt, list<DriverItem>& driver
 #	endif // !__APPLE__
 #endif // !_WIN32
 
+	LOG.lprintf("searching for drivers in %s\n", path.c_str());
 	ListDir(path, false, 0, 0, &driver_files);
 
 	/// Welcher Treiber letzendliche genommen wird

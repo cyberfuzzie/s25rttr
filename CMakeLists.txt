@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 6656 2010-08-04 10:53:46Z FloSoft $
+### $Id: CMakeLists.txt 6806 2010-10-18 13:35:17Z FloSoft $
 ################################################################################
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6.0)
@@ -92,9 +92,10 @@ ENDIF ("${COMPILEFOR}" STREQUAL "linux")
 
 # avoid lhs-path bug in windows
 IF ("${COMPILEFOR}" STREQUAL "windows")
-	SET(BINDIR ".")
-	SET(DATADIR ".")
-	SET(LIBDIR ".")
+	SET(BINDIR "." CACHE STRING "" FORCE)
+	SET(DATADIR "." CACHE STRING "" FORCE)
+	SET(LIBDIR "." CACHE STRING "" FORCE)
+	SET(DRIVERDIR "./driver" CACHE STRING "" FORCE)
 	ADD_DEFINITIONS(-D_WIN32_WINNT=0x0501)
 	ADD_DEFINITIONS(-D__CYGWIN__)
 ENDIF ("${COMPILEFOR}" STREQUAL "windows")

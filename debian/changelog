@@ -1,3 +1,219 @@
+s25rttr (20101016-6803) hardy; urgency=low
+
+  * New upstream snapshot
+  * fixed builderror - fix your compiler settings that it finds
+    build_paths.h ...
+
+ -- Florian Doersch <flosoft@siedler25.org>  Sat, 16 Oct 2010 16:18:00 +0200
+
+s25rttr (20101016-6802) hardy; urgency=low
+
+  * Fixed #661510
+
+ -- OLiver Siebert <oliver@siedler25.org>  Sat, 16 Oct 2010 10:16:00 +0200
+
+s25rttr (20101016-6801) hardy; urgency=low
+
+  * New upstream snapshot
+  * Empty log message
+
+ -- Return To The Roots Team <sf-team@siedler25.org>  Sat, 16 Oct 2010 00:00:00 +0200
+
+s25rttr (20101015-6800) hardy; urgency=low
+
+  * Fixed #661185, #660866, #661189
+
+ -- OLiver Siebert <oliver@siedler25.org>  Fri, 15 Oct 2010 21:29:00 +0200
+
+s25rttr (20101015-6799) hardy; urgency=low
+
+  * New upstream snapshot
+  * Empty log message
+
+ -- Return To The Roots Team <sf-team@siedler25.org>  Fri, 15 Oct 2010 00:00:00 +0200
+
+s25rttr (20101014-6798) hardy; urgency=low
+
+  * Fixed #654282. #654282, #659222
+
+ -- OLiver Siebert <oliver@siedler25.org>  Thu, 14 Oct 2010 20:17:00 +0200
+
+s25rttr (20101009-6792) hardy; urgency=low
+
+  * New upstream snapshot
+  * Empty log message
+
+ -- Return To The Roots Team <sf-team@siedler25.org>  Sat, 09 Oct 2010 00:00:00 +0200
+
+s25rttr (20101008-6791) hardy; urgency=low
+
+  * noch ein kleiner Bugfix
+
+ -- OLiver Siebert <oliver@siedler25.org>  Fri, 08 Oct 2010 21:09:00 +0200
+
+s25rttr (20101008-6790) hardy; urgency=low
+
+  * FOW-Zeitmerke-System etwas umgebaut und dabei einige Bugs behoben
+
+ -- OLiver Siebert <oliver@siedler25.org>  Fri, 08 Oct 2010 21:02:00 +0200
+
+s25rttr (20101005-6786) hardy; urgency=low
+
+  * New upstream snapshot
+  * Empty log message
+
+ -- Return To The Roots Team <sf-team@siedler25.org>  Tue, 05 Oct 2010 00:00:00 +0200
+
+s25rttr (20101004-6785) hardy; urgency=low
+
+  * possible macos updater fix
+
+ -- Florian Doersch <flosoft@siedler25.org>  Mon, 04 Oct 2010 19:45:00 +0200
+
+s25rttr (20101004-6783) hardy; urgency=low
+
+  * vs2010 pfade korrigiert (vereinheitlicht ...)
+
+ -- Florian Doersch <flosoft@siedler25.org>  Mon, 04 Oct 2010 08:43:00 +0200
+
+s25rttr (20101004-6782) hardy; urgency=low
+
+  * New upstream snapshot
+  * newline ergänzt
+
+ -- Florian Doersch <flosoft@siedler25.org>  Mon, 04 Oct 2010 06:36:00 +0200
+
+s25rttr (20101004-6781) hardy; urgency=low
+
+  * New upstream snapshot
+  * Empty log message
+
+ -- Return To The Roots Team <sf-team@siedler25.org>  Mon, 04 Oct 2010 00:00:00 +0200
+
+s25rttr (20101003-6780) hardy; urgency=low
+
+  * Translation fix
+
+ -- OLiver Siebert <oliver@siedler25.org>  Sun, 03 Oct 2010 20:19:00 +0200
+
+s25rttr (20101003-6779) hardy; urgency=low
+
+  * New upstream snapshot
+  * Empty log message
+
+ -- Return To The Roots Team <sf-team@siedler25.org>  Sun, 03 Oct 2010 00:00:00 +0200
+
+s25rttr (20101002-6778) hardy; urgency=low
+
+  * Finden von Kampfplätzen verbessert ( Bug #653489 )
+
+ -- OLiver Siebert <oliver@siedler25.org>  Sat, 02 Oct 2010 12:38:00 +0200
+
+s25rttr (20101002-6777) hardy; urgency=low
+
+  * noch was vergessen
+
+ -- OLiver Siebert <oliver@siedler25.org>  Sat, 02 Oct 2010 09:28:00 +0200
+
+s25rttr (20101002-6776) hardy; urgency=low
+
+  * Große Ränge noch etwas schwächer gemacht
+
+ -- OLiver Siebert <oliver@siedler25.org>  Sat, 02 Oct 2010 09:27:00 +0200
+
+s25rttr (20101002-6775) hardy; urgency=low
+
+  * Fixed save bug and implemented Patch #653050
+
+ -- OLiver Siebert <oliver@siedler25.org>  Sat, 02 Oct 2010 08:25:00 +0200
+
+s25rttr (20101001-6773) hardy; urgency=low
+
+  * New upstream snapshot
+  * newline ergänzt
+
+ -- Florian Doersch <flosoft@siedler25.org>  Fri, 01 Oct 2010 08:06:00 +0200
+
+s25rttr (20101001-6772) hardy; urgency=low
+
+  * added newline
+
+ -- Florian Doersch <flosoft@siedler25.org>  Fri, 01 Oct 2010 08:03:00 +0200
+
+s25rttr (20101001-6771) hardy; urgency=low
+
+  * New upstream snapshot
+  * Empty log message
+
+ -- Return To The Roots Team <sf-team@siedler25.org>  Fri, 01 Oct 2010 00:00:00 +0200
+
+s25rttr (20100930-6770) hardy; urgency=low
+
+  * fow-Bugs behoben
+
+ -- OLiver Siebert <oliver@siedler25.org>  Thu, 30 Sep 2010 19:55:00 +0200
+
+s25rttr (20100930-6769) hardy; urgency=low
+
+  * contrib überarbeitet (volles contrib-archive für msvc2010
+    hinzugefügt)
+    updater für windows gefixt
+    rttr.bat gefixt (für kaputte updater - bringt nur leider nix)
+    vs2010 projekte entsprechend korrigiert
+
+ -- Florian Doersch <flosoft@siedler25.org>  Thu, 30 Sep 2010 13:30:00 +0200
+
+s25rttr (20100930-6768) hardy; urgency=low
+
+  * New upstream snapshot
+  * Empty log message
+
+ -- Return To The Roots Team <sf-team@siedler25.org>  Thu, 30 Sep 2010 00:00:00 +0200
+
+s25rttr (20100929-6767) hardy; urgency=low
+
+  * Little fix
+
+ -- OLiver Siebert <oliver@siedler25.org>  Wed, 29 Sep 2010 19:52:00 +0200
+
+s25rttr (20100929-6766) hardy; urgency=low
+
+  * Fixed #643064
+
+ -- OLiver Siebert <oliver@siedler25.org>  Wed, 29 Sep 2010 19:51:00 +0200
+
+s25rttr (20100929-6765) hardy; urgency=low
+
+  * Fixed #650690
+
+ -- OLiver Siebert <oliver@siedler25.org>  Wed, 29 Sep 2010 12:30:00 +0200
+
+s25rttr (20100929-6764) hardy; urgency=low
+
+  * fixed #643066 - schwerer Angreiferbug
+
+ -- OLiver Siebert <oliver@siedler25.org>  Wed, 29 Sep 2010 11:29:00 +0200
+
+s25rttr (20100929-6763) hardy; urgency=low
+
+  * New upstream snapshot
+  * Empty log message
+
+ -- Return To The Roots Team <sf-team@siedler25.org>  Wed, 29 Sep 2010 00:00:00 +0200
+
+s25rttr (20100928-6762) hardy; urgency=low
+
+  * #643095 fixed
+
+ -- OLiver Siebert <oliver@siedler25.org>  Tue, 28 Sep 2010 18:48:00 +0200
+
+s25rttr (20100923-6755) hardy; urgency=low
+
+  * New upstream snapshot
+  * bugfix apple-nightly-script
+
+ -- Florian Doersch <flosoft@siedler25.org>  Thu, 23 Sep 2010 09:54:00 +0200
+
 s25rttr (20100923-6754) hardy; urgency=low
 
   * New upstream snapshot

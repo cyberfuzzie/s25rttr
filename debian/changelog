@@ -1,3 +1,12 @@
+s25rttr (20101018-6806) hardy; urgency=low
+
+  * New upstream snapshot
+  * driver-path-bugfix for win
+    cleanup.sh aktualisiert
+    changelog aktualisiert
+
+ -- Florian Doersch <flosoft@siedler25.org>  Mon, 18 Oct 2010 13:35:00 +0200
+
 s25rttr (20101016-6803) hardy; urgency=low
 
   * New upstream snapshot

@@ -1,6 +1,6 @@
 #!/bin/bash
 ###############################################################################
-## $Id: cmake.sh 6622 2010-07-27 20:54:32Z FloSoft $
+## $Id: cmake.sh 6807 2010-10-18 14:12:04Z FloSoft $
 ###############################################################################
 
 # Editable Variables
@@ -262,7 +262,7 @@ else
 fi
 
 mecho --blue "Running \"cmake -G '$GENERATOR' -DCMAKE_INSTALL_PREFIX= ${PARAMS} '${SRCDIR}'\""
-$CMAKE_COMMAND -G "$GENERATOR" $PARAMS "${SRCDIR}"
+$CMAKE_COMMAND -G "$GENERATOR" -DCMAKE_INSTALL_PREFIX= $PARAMS "${SRCDIR}"
 
 if [ $? != 0 ] ; then
 	mecho --red "An error occured - please check above!"

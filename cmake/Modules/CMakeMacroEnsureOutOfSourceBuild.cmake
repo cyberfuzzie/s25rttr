@@ -1,5 +1,5 @@
 #################################################################################
-### $Id: CMakeMacroEnsureOutOfSourceBuild.cmake 6125 2010-03-07 18:20:41Z FloSoft $
+### $Id: CMakeMacroEnsureOutOfSourceBuild.cmake 6807 2010-10-18 14:12:04Z FloSoft $
 #################################################################################
 
 MACRO (ENSURE_OUT_OF_SOURCE_BUILD error)

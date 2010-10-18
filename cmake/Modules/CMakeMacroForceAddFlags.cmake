@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeMacroForceAddFlags.cmake 6129 2010-03-07 19:10:49Z FloSoft $
+### $Id: CMakeMacroForceAddFlags.cmake 6807 2010-10-18 14:12:04Z FloSoft $
 ################################################################################
 
 MACRO(FORCE_ADD_FLAGS parameter)

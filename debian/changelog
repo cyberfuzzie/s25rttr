@@ -1,3 +1,16 @@
+s25rttr (20101018-6809) hardy; urgency=low
+
+  * New upstream snapshot
+  * install prefix fix for win ...
+
+ -- Florian Doersch <flosoft@siedler25.org>  Mon, 18 Oct 2010 14:20:00 +0200
+
+s25rttr (20101018-6807) hardy; urgency=low
+
+  * subversion property update
+
+ -- Florian Doersch <flosoft@siedler25.org>  Mon, 18 Oct 2010 14:12:00 +0200
+
 s25rttr (20101018-6806) hardy; urgency=low
 
   * New upstream snapshot

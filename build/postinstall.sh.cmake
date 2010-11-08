@@ -1,6 +1,6 @@
 #!/bin/bash
 ###############################################################################
-## $Id: postinstall.sh.cmake 6807 2010-10-18 14:12:04Z FloSoft $
+## $Id: postinstall.sh.cmake 6832 2010-11-08 16:32:25Z FloSoft $
 ###############################################################################
 
 # Editable Variables
@@ -33,6 +33,7 @@ mecho()
 ###############################################################################
 
 COMPILEFOR=@COMPILEFOR@
+COMPILEARCH=@COMPILEARCH@
 PREFIX=@PREFIX@
 BINDIR=@BINDIR@
 DATADIR=@DATADIR@
@@ -58,6 +59,10 @@ while test $# != 0 ; do
 	-compilefor | --compilefor)
 		$ac_shift
 		COMPILEFOR=$ac_optarg
+	;;
+	-compilearch | --compilearch)
+		$ac_shift
+		COMPILEARCH=$ac_optarg
 	;;
 	-prefix | --prefix)
 		$ac_shift
@@ -86,6 +91,10 @@ done
 
 if [ -z "${COMPILEFOR}" ] ; then
 	COMPILEFOR=$(uname -s | tr '[:upper:]' '[:lower:]')
+fi
+
+if [ -z "${COMPILEARCH}" ] ;then
+	COMPILEARCH=$(uname -m)
 fi
 
 if [ -z "${PREFIX}" ] ; then
@@ -179,6 +188,29 @@ elif [ "$COMPILEFOR" = "windows" ] ; then
 	cp -v /usr/i586-mingw32msvc/bin/libvorbisfile-3.dll ${DESTDIR} || exit 1
 	cp -v /usr/i586-mingw32msvc/bin/libcurl-4.dll ${DESTDIR}RTTR || exit 1
 	cp -v /usr/i586-mingw32msvc/bin/zlib1.dll ${DESTDIR}RTTR || exit 1
+elif [ "$COMPILEFOR" = "linux" ] ; then
+	miniupnpc=/usr/lib/libminiupnpc.so
+	case "$COMPILEARCH" in
+		i686|*86)
+			if [ ! "$(uname -m | sed s/i686/i386/g)" = "$COMPILEARCH" ] ; then
+				miniupnpc=/usr/i686-pc-linux-gnu/lib/libminiupnpc.so
+			fi
+		;;
+		x86_64|*64)
+            if [ ! "$(uname -m)" = "$COMPILEARCH" ] ; then
+                miniupnpc=/usr/x86_64-pc-linux-gnu/lib/libminiupnpc.so
+            fi
+		;;
+	esac
+
+	if [ -f $miniupnpc ] ; then
+		mkdir -p ${DESTDIR}${PREFIX}/lib/ || exit 1
+		cp -rv $miniupnpc* ${DESTDIR}${PREFIX}/lib/ || exit 1
+	else
+		echo "libminiupnpc.so not found at $miniupnpc"
+		echo "will not bundle it in your installation"
+		echo "install it from http://packages.siedler25.org by yourself"
+	fi
 fi
 
 exit 0

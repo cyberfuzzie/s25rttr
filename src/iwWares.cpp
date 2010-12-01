@@ -1,4 +1,4 @@
-// $Id: iwWares.cpp 6721 2010-09-10 09:33:56Z OLiver $
+// $Id: iwWares.cpp 6862 2010-12-01 17:21:00Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -138,7 +138,7 @@ iwWares::iwWares(unsigned int id, unsigned short x , unsigned short y,
 			if(INVENTORY_IDS[1][ware_id] != JOB_CHARBURNER)
 				image = LOADER.GetMapImageN(2300 + INVENTORY_IDS[1][ware_id]);
 			else
-				image = LOADER.GetImageN("charburner",50);
+				image = LOADER.GetImageN("charburner",51);
 
 			figures->AddImage(300+INVENTORY_IDS[1][ware_id], (four ? 40 : 26)+x*28, 34+y*42, image);
 		}

@@ -1,4 +1,4 @@
-// $Id: iwBuilding.cpp 6721 2010-09-10 09:33:56Z OLiver $
+// $Id: iwBuilding.cpp 6862 2010-12-01 17:21:00Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -70,7 +70,7 @@ iwBuilding::iwBuilding(GameWorldViewer * const gwv,dskGameInterface *const gi,no
 	if(building->GetBuildingType() != BLD_CHARBURNER)
 		image = LOADER.GetMapImageN(2300 + USUAL_BUILDING_CONSTS[building->GetBuildingType()-10].job);
 	else
-		image = LOADER.GetImageN("charburner",50);
+		image = LOADER.GetImageN("charburner",51);
 	AddImage(1, 28, 39, image);
 
 

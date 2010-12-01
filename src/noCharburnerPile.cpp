@@ -1,4 +1,4 @@
-// $Id: noCharburnerPile.cpp 6739 2010-09-14 20:23:35Z OLiver $
+// $Id: noCharburnerPile.cpp 6862 2010-12-01 17:21:00Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -118,13 +118,13 @@ void noCharburnerPile::Draw( int x,	int y)
 				
 			// Dann Qualm zeichnen 
 			LOADER.GetMapImageN(692+1*8+GAMECLIENT.GetGlobalAnimation(8,5,2,(this->x+this->y)*100))
-					->Draw(x+21,y-21,0,0,0,0,0,0,0x99EEEEEE);
+					->Draw(x+21,y-11,0,0,0,0,0,0,0x99EEEEEE);
 			LOADER.GetMapImageN(692+2*8+GAMECLIENT.GetGlobalAnimation(8,5,2,(this->x+this->y)*100))
-					->Draw(x-2,y-16,0,0,0,0,0,0,0x99EEEEEE);
+					->Draw(x-2,y-06,0,0,0,0,0,0,0x99EEEEEE);
 			LOADER.GetMapImageN(692+1*8+GAMECLIENT.GetGlobalAnimation(8,5,2,(this->x+this->y)*100))
-					->Draw(x-25,y-21,0,0,0,0,0,0,0x99EEEEEE);
+					->Draw(x-25,y-11,0,0,0,0,0,0,0x99EEEEEE);
 			LOADER.GetMapImageN(692+3*8+GAMECLIENT.GetGlobalAnimation(8,5,2,(this->x+this->y)*100))
-					->Draw(x-2,y-45,0,0,0,0,0,0,0x99EEEEEE);
+					->Draw(x-2,y-35,0,0,0,0,0,0,0x99EEEEEE);
 		} return;
 	case STATE_REMOVECOVER:
 		{

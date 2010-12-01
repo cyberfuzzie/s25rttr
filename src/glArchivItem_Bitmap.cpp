@@ -1,4 +1,4 @@
-// $Id: glArchivItem_Bitmap.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: glArchivItem_Bitmap.cpp 6863 2010-12-01 17:37:20Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -89,7 +89,7 @@ glArchivItem_Bitmap::~glArchivItem_Bitmap(void)
  *
  *  @author FloSoft
  */
-/*void glArchivItem_Bitmap::Draw(short dst_x, short dst_y, short dst_w, short dst_h, short src_x, short src_y, short src_w, short src_h, unsigned int color)
+void glArchivItem_Bitmap::Draw(short dst_x, short dst_y, short dst_w, short dst_h, short src_x, short src_y, short src_w, short src_h, const unsigned int color, const unsigned int unused)
 {
 	if(texture == 0)
 		GenerateTexture();
@@ -110,13 +110,61 @@ glArchivItem_Bitmap::~glArchivItem_Bitmap(void)
 	glColor4ub( GetRed(color), GetGreen(color), GetBlue(color), GetAlpha(color));
 	glBindTexture(GL_TEXTURE_2D, texture);
 
+	assert(getBobType() != libsiedler2::BOBTYPE_BITMAP_PLAYER);
+
+	union sl {
+		unsigned short s[4];
+		unsigned long long l;
+	};
+
+	sl dst;
+	dst.s[0] = 0; //dst_x;
+	dst.s[1] = 0; //dst_y;
+	dst.s[2] = dst_w;
+	dst.s[3] = dst_h;
+
+	sl src;
+	src.s[0] = src_x;
+	src.s[1] = src_y;
+	src.s[2] = src_w;
+	src.s[3] = src_h;
+		
+	calllistmapmap::const_iterator mapmap = calllists.find(dst.l);
+	if(mapmap != calllists.end())
+	{
+		calllistmap::const_iterator map = mapmap->second.find(src.l);
+		if(map != mapmap->second.end() && glIsList(map->second))
+		{
+			glTranslatef((float)dst_x, (float)dst_y, 0);
+			glCallList(map->second);
+			glTranslatef((float)-dst_x, (float)-dst_y, 0);
+			return;
+		}
+	}
+
+	unsigned int list = glGenLists(1);
+
+	/*std::cout << "generate  " << list << " for " 
+		<< dst_x << "," << dst_y << "," << dst_w << "x" << dst_h << " and "
+		<< src_x << "," << src_y << "," << src_w << "x" << src_h 
+		<< std::endl;*/
+
+	glNewList(list, GL_COMPILE);
 	glBegin(GL_QUADS);
-	DrawVertex( (float)(dst_x-nx),         (float)(dst_y-ny),         (float)src_x,         (float)src_y);
-	DrawVertex( (float)(dst_x-nx),         (float)(dst_y-ny + dst_h), (float)src_x,         (float)(src_y+src_h));
-	DrawVertex( (float)(dst_x-nx + dst_w), (float)(dst_y-ny + dst_h), (float)(src_x+src_w), (float)(src_y+src_h));
-	DrawVertex( (float)(dst_x-nx + dst_w), (float)(dst_y-ny),         (float)(src_x+src_w), (float)src_y);
+	DrawVertex( (float)(-nx),         (float)(-ny),         (float)src_x,         (float)src_y);
+	DrawVertex( (float)(-nx),         (float)(-ny + dst_h), (float)src_x,         (float)(src_y+src_h));
+	DrawVertex( (float)(-nx + dst_w), (float)(-ny + dst_h), (float)(src_x+src_w), (float)(src_y+src_h));
+	DrawVertex( (float)(-nx + dst_w), (float)(-ny),         (float)(src_x+src_w), (float)src_y);
 	glEnd();
-}*/
+	glEndList();
+
+	// should be faster
+	glTranslatef((float)dst_x, (float)dst_y, 0);
+	glCallList(list);
+	glTranslatef((float)-dst_x, (float)-dst_y, 0);
+
+	calllists[dst.l][src.l] = list;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 /** 

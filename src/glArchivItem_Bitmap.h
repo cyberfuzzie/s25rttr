@@ -1,4 +1,4 @@
-// $Id: glArchivItem_Bitmap.h 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: glArchivItem_Bitmap.h 6863 2010-12-01 17:37:20Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -36,36 +36,7 @@ public:
 	virtual ~glArchivItem_Bitmap(void);
 
 	/// Erzeugt und zeichnet die Textur.
-	virtual void Draw(short dst_x, short dst_y, short dst_w = 0, short dst_h = 0, short src_x = 0, short src_y = 0, short src_w = 0, short src_h = 0, const unsigned int color = COLOR_WHITE, const unsigned int unused = COLOR_WHITE)
-	{
-		if(texture == 0)
-			GenerateTexture();
-		if(texture == 0)
-			return;
-
-		if(src_w == 0)
-			src_w = width;
-		if(src_h == 0)
-			src_h = height;
-		if(dst_w == 0)
-			dst_w = src_w;
-		if(dst_h == 0)
-			dst_h = src_h;
-
-		glEnable(GL_TEXTURE_2D);
-
-		glColor4ub( GetRed(color), GetGreen(color), GetBlue(color), GetAlpha(color));
-		glBindTexture(GL_TEXTURE_2D, texture);
-
-		assert(getBobType() != libsiedler2::BOBTYPE_BITMAP_PLAYER);
-
-		glBegin(GL_QUADS);
-		DrawVertex( (float)(dst_x-nx),         (float)(dst_y-ny),         (float)src_x,         (float)src_y);
-		DrawVertex( (float)(dst_x-nx),         (float)(dst_y-ny + dst_h), (float)src_x,         (float)(src_y+src_h));
-		DrawVertex( (float)(dst_x-nx + dst_w), (float)(dst_y-ny + dst_h), (float)(src_x+src_w), (float)(src_y+src_h));
-		DrawVertex( (float)(dst_x-nx + dst_w), (float)(dst_y-ny),         (float)(src_x+src_w), (float)src_y);
-		glEnd();
-	}
+	virtual void Draw(short dst_x, short dst_y, short dst_w = 0, short dst_h = 0, short src_x = 0, short src_y = 0, short src_w = 0, short src_h = 0, const unsigned int color = COLOR_WHITE, const unsigned int unused = COLOR_WHITE);
 
 	/// liefert das GL-Textur-Handle.
 	unsigned int GetTexture();
@@ -86,6 +57,11 @@ protected:
 protected:
 	unsigned int texture; ///< Das GL-Textur-Handle
 	unsigned int filter;  ///< Der aktuell gewählte Texturfilter
+
+	typedef std::map<unsigned long long, unsigned int> calllistmap;
+	typedef std::map<unsigned long long, calllistmap> calllistmapmap;
+
+	calllistmapmap calllists;
 };
 
 #endif // !GLARCHIVITEM_BITMAP_INCLUDED

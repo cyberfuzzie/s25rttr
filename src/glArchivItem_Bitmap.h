@@ -1,4 +1,4 @@
-// $Id: glArchivItem_Bitmap.h 6863 2010-12-01 17:37:20Z FloSoft $
+// $Id: glArchivItem_Bitmap.h 6865 2010-12-02 11:11:05Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -58,8 +58,8 @@ protected:
 	unsigned int texture; ///< Das GL-Textur-Handle
 	unsigned int filter;  ///< Der aktuell gewählte Texturfilter
 
-	typedef std::map<unsigned long long, unsigned int> calllistmap;
-	typedef std::map<unsigned long long, calllistmap> calllistmapmap;
+	typedef std::map<uint64_t, unsigned int> calllistmap;
+	typedef std::map<uint64_t, calllistmap> calllistmapmap;
 
 	calllistmapmap calllists;
 };

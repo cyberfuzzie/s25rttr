@@ -1,4 +1,4 @@
-// $Id: main.h 6803 2010-10-16 16:18:25Z FloSoft $
+// $Id: main.h 6865 2010-12-02 11:11:05Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -186,5 +186,9 @@ struct Point
 const char *GetWindowTitle();
 const char *GetWindowVersion();
 const char *GetWindowRevision();
+
+#ifdef _MSC_VER
+typedef unsigned long long uint64_t;
+#endif
 
 #endif // MAIN_H_INCLUDED

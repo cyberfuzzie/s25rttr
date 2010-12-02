@@ -1,4 +1,4 @@
-// $Id: glArchivItem_Bitmap.cpp 6863 2010-12-01 17:37:20Z FloSoft $
+// $Id: glArchivItem_Bitmap.cpp 6865 2010-12-02 11:11:05Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -114,7 +114,7 @@ void glArchivItem_Bitmap::Draw(short dst_x, short dst_y, short dst_w, short dst_
 
 	union sl {
 		unsigned short s[4];
-		unsigned long long l;
+		uint64_t l;
 	};
 
 	sl dst;

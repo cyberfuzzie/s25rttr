@@ -1,3 +1,10 @@
+s25rttr (20101202-6865) hardy; urgency=low
+
+  * New upstream snapshot
+  * fixed compiler bug with unsigned long long ...
+
+ -- Florian Doersch <flosoft@siedler25.org>  Thu, 02 Dec 2010 11:11:00 +0100
+
 s25rttr (20101202-6864) hardy; urgency=low
 
   * New upstream snapshot

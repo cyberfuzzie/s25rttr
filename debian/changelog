@@ -1,3 +1,22 @@
+s25rttr (20101203-6868) hardy; urgency=low
+
+  * New upstream snapshot
+  * Empty log message
+
+ -- Return To The Roots Team <sf-team@siedler25.org>  Fri, 03 Dec 2010 00:00:00 +0100
+
+s25rttr (20101202-6867) hardy; urgency=low
+
+  * updated charburner lst files (Bug #675151)
+
+ -- Florian Doersch <flosoft@siedler25.org>  Thu, 02 Dec 2010 19:00:00 +0100
+
+s25rttr (20101202-6866) hardy; urgency=low
+
+  * Automatic debian/changelog update
+
+ -- Florian Doersch <flosoft@siedler25.org>  Thu, 02 Dec 2010 11:46:00 +0100
+
 s25rttr (20101202-6865) hardy; urgency=low
 
   * New upstream snapshot

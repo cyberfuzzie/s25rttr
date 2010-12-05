@@ -1,4 +1,4 @@
-// $Id: AIPlayerJH.h 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: AIPlayerJH.h 6874 2010-12-05 12:41:01Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -58,6 +58,9 @@ public:
 
 	int GetResMapValue(MapCoord x, MapCoord y, AIJH::Resource res);
 	AIInterface *GetInterface() { return aii; }
+
+	/// Test whether the player should resign or not
+	bool TestDefeat();
 protected:
 	struct Coords
 	{
@@ -71,8 +74,7 @@ protected:
 	void SendAIEvent(AIEvent::Base *ev);
 
 
-	/// Test whether the player should resign or not
-	bool TestDefeat();
+
 
 	/// resigned yes/no
 	bool defeated;

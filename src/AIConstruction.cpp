@@ -1,4 +1,4 @@
-// $Id: AIConstruction.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: AIConstruction.cpp 6874 2010-12-05 12:41:01Z jh $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -23,6 +23,7 @@
 #include "MapGeometry.h"
 #include <iostream>
 #include "nobHQ.h"
+#include "AIPlayerJH.h"
 
 // from Pathfinding.cpp
 bool IsPointOK_RoadPath(const GameWorldBase& gwb, const MapCoord x, const MapCoord y, const unsigned char dir, const void *param);
@@ -34,7 +35,10 @@ AIConstruction::AIConstruction(AIInterface *aii, AIPlayerJH *aijh)
 	buildingsWanted.resize(BUILDING_TYPES_COUNT);
 	RefreshBuildingCount();
 	InitBuildingsWanted();
-	AddStoreHouse(aii->GetHeadquarter()->GetX(), aii->GetHeadquarter()->GetY());
+	if (!aijh->TestDefeat())
+	{
+		AddStoreHouse(aii->GetHeadquarter()->GetX(), aii->GetHeadquarter()->GetY());
+	}
 }
 
 AIConstruction::~AIConstruction(void)

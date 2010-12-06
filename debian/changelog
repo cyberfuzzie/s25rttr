@@ -1,3 +1,22 @@
+s25rttr (20101206-6875) hardy; urgency=low
+
+  * New upstream snapshot
+  * Empty log message
+
+ -- Return To The Roots Team <sf-team@siedler25.org>  Mon, 06 Dec 2010 00:00:00 +0100
+
+s25rttr (20101205-6874) hardy; urgency=low
+
+  * KIs ohne HQ crashen nicht mehr das Spiel (fixes Bug #674835)
+
+ -- Jan-Henrik Kluth <sf-team@siedler25.org>  Sun, 05 Dec 2010 12:41:00 +0100
+
+s25rttr (20101205-6873) hardy; urgency=low
+
+  * Automatic debian/changelog update
+
+ -- Florian Doersch <flosoft@siedler25.org>  Sun, 05 Dec 2010 00:19:00 +0100
+
 s25rttr (20101205-6872) hardy; urgency=low
 
   * New upstream snapshot

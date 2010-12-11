@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 6790 2010-10-08 21:02:26Z OLiver $
+// $Id: GameWorldBase.cpp 6887 2010-12-11 11:44:19Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -534,8 +534,8 @@ void GameWorldBase::LookForMilitaryBuildings(std::list<nobBaseMilitary*>& buildi
 	for(int cy = first_y;cy<=last_y;++cy)
 	{
 		MapCoord ty;
-		if(cy < 0) ty = cy + height/MILITARY_SQUARE_SIZE+1;
-		else if(cy >= height/MILITARY_SQUARE_SIZE+1) ty = cy - height/MILITARY_SQUARE_SIZE - 1;
+		if(cy < 0) ty = (cy + 2*(height/MILITARY_SQUARE_SIZE+1)) % (height/MILITARY_SQUARE_SIZE + 1);
+		else if(cy >= height/MILITARY_SQUARE_SIZE+1) ty = cy % (height/MILITARY_SQUARE_SIZE + 1);
 		else ty = cy;
 		for(int cx = first_x;cx<=last_x;++cx)
 		{

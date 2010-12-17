@@ -1,3 +1,16 @@
+s25rttr (20101217-6898) hardy; urgency=low
+
+  * New upstream snapshot
+  * Empty log message
+
+ -- Return To The Roots Team <sf-team@siedler25.org>  Fri, 17 Dec 2010 00:00:00 +0100
+
+s25rttr (20101216-6897) hardy; urgency=low
+
+  * Automatic debian/changelog update
+
+ -- Florian Doersch <flosoft@siedler25.org>  Thu, 16 Dec 2010 00:19:00 +0100
+
 s25rttr (20101216-6896) hardy; urgency=low
 
   * New upstream snapshot

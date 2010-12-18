@@ -1,4 +1,4 @@
-// $Id: main.h 6865 2010-12-02 11:11:05Z FloSoft $
+// $Id: main.h 6902 2010-12-18 17:19:09Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -26,6 +26,10 @@
 
 #define _CRTDBG_MAP_ALLOC
 #define _WINSOCKAPI_
+
+#ifdef _MSC_VER
+typedef unsigned long long uint64_t;
+#endif
 
 #ifdef _WIN32
 	#include <windows.h>
@@ -187,8 +191,6 @@ const char *GetWindowTitle();
 const char *GetWindowVersion();
 const char *GetWindowRevision();
 
-#ifdef _MSC_VER
-typedef unsigned long long uint64_t;
-#endif
+
 
 #endif // MAIN_H_INCLUDED

@@ -192,7 +192,10 @@ void nofAggressiveDefender::MissionAggressiveDefendingLookForNewAggressor()
 		->FindAggressor(this)))
 	{
 		// zum Angreifer gehen und mit ihm kämpfen
-		MissAggressiveDefendingWalk();
+		if(state == STATE_MEETENEMY)
+			MeetingEnemy();
+		else
+			MissAggressiveDefendingWalk();
 	}
 	else
 	{

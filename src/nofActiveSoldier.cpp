@@ -1,4 +1,4 @@
-// $Id: nofActiveSoldier.cpp 6782 2010-10-04 06:36:20Z FloSoft $
+// $Id: nofActiveSoldier.cpp 6902 2010-12-18 17:19:09Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -373,7 +373,7 @@ void nofActiveSoldier::MeetingEnemy()
 			// Spot is still ok, let's wait for the enemy
 			else
 			{
-				enemy = NULL;
+				//enemy = NULL;
 				state = STATE_WAITINGFORFIGHT;
 				return;
 			}

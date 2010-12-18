@@ -549,7 +549,6 @@ void noFigure::GoHome(noRoadNode *goal)
 				|| gwg->GetNO(x,y)->GetGOT() == GOT_NOB_HARBORBUILDING);
 
 			gwg->GetSpecObj<nobBaseWarehouse>(x,y)->CancelFigure(this);
-			em->AddToKillList(this);
 			return;
 		}
 		else
@@ -1168,3 +1167,21 @@ void noFigure::ShipJourneyEnded()
 	on_ship = false;
 }
 
+/// Examines the route (maybe harbor, road destroyed?) before start shipping
+Point<MapCoord> noFigure::ExamineRouteBeforeShipping()
+{
+	Point<MapCoord> next_harbor;
+	// Calc new route
+	dir = gwg->FindHumanPathOnRoads(gwg->GetSpecObj<noRoadNode>(x,y),goal,NULL,&next_harbor);
+
+
+	if(dir == 0xff)
+		Abrogate();
+
+	// Going by ship?
+	if(dir == SHIP_DIR)
+		// All ok, return next harbor (could be another one!)
+		return next_harbor;
+	else
+		return Point<MapCoord>(0,0);	
+}

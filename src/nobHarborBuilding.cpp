@@ -1,4 +1,4 @@
-// $Id: nobHarborBuilding.cpp 6745 2010-09-16 20:56:38Z OLiver $
+// $Id: nobHarborBuilding.cpp 6903 2010-12-18 21:41:50Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -623,7 +623,7 @@ void nobHarborBuilding::AddWare(Ware * ware)
 }
 
 /// Eine Figur geht ins Lagerhaus
-void nobHarborBuilding::AddFigure(noFigure * figure)
+void nobHarborBuilding::AddFigure(noFigure * figure, const bool increase_visual_counts)
 {
 	// Brauchen wir einen Bauarbeiter für die Expedition?
 	if(figure->GetJobType() == JOB_BUILDER && expedition.active && !expedition.builder)
@@ -649,7 +649,7 @@ void nobHarborBuilding::AddFigure(noFigure * figure)
 	}
 	else
 		// ansonsten weiterdelegieren
-		nobBaseWarehouse::AddFigure(figure);
+		nobBaseWarehouse::AddFigure(figure,increase_visual_counts);
 }
 
 /// Gibt zurück, ob Expedition vollständig ist
@@ -984,8 +984,7 @@ void nobHarborBuilding::CancelFigure(noFigure * figure)
 	if(removed)
 	{
 		// Dann zu unserem Inventar hinzufügen und anschließend vernichten
-		++real_goods.people[figure->GetJobType()];
-		//em->AddToKillList(figure);
+		AddFigure(figure,false);
 	}
 	// An Basisklasse weiterdelegieren
 	else
@@ -1150,3 +1149,32 @@ nofDefender * nobHarborBuilding::ProvideDefender(nofAttacker * const attacker)
 	return defender;
 }
 
+/// People waiting for a ship have to examine their route if a road was destroyed
+void nobHarborBuilding::ExamineShipRouteOfPeople()
+{
+	for(std::list<FigureForShip>::iterator it = figures_for_ships.begin();
+		it!=figures_for_ships.end();)
+	{
+		it->dest = it->fig->ExamineRouteBeforeShipping();
+		unsigned char next_dir = it->fig->GetDir();
+
+		if(next_dir == 0xff)
+		{
+			// No route found!
+			// I.E. insert the worker in this harbor
+			noFigure * fig = it->fig;
+			it = figures_for_ships.erase(it);
+			AddFigure(fig,false);
+		}
+		else if(next_dir != SHIP_DIR)
+		{
+			// Figure want to continue walking to its goal but not on ship anymore
+			noFigure * fig = it->fig;
+			it = figures_for_ships.erase(it);
+			this->AddLeavingFigure(fig);
+		}
+		else
+			// Otherwise figure want to travel by ship, do nothing!
+			++it;
+	}
+}

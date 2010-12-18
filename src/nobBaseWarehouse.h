@@ -1,4 +1,4 @@
-// $Id: nobBaseWarehouse.h 6744 2010-09-16 19:58:43Z OLiver $
+// $Id: nobBaseWarehouse.h 6903 2010-12-18 21:41:50Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -181,7 +181,7 @@ public: void Serialize(SerializedGameData *sgd) const { Serialize_nobBaseWarehou
 	/// Legt eine Ware im Lagerhaus ab
 	virtual void AddWare(Ware * ware);
 	/// Eine Figur geht ins Lagerhaus
-	virtual void AddFigure(noFigure * figure);
+	virtual void AddFigure(noFigure * figure, const bool increase_visual_counts = true);
 
 	void CarryOutWare();
 	/// Eine bestellte Ware konnte doch nicht kommen

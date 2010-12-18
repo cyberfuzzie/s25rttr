@@ -1,4 +1,4 @@
-// $Id: GameClientPlayer.cpp 6727 2010-09-12 20:33:56Z OLiver $
+// $Id: GameClientPlayer.cpp 6903 2010-12-18 21:41:50Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -541,6 +541,13 @@ void GameClientPlayer::RoadDestroyed()
 		}
 
 		++it;
+	}
+
+	// Alle Häfen müssen ihre Figuren den Weg überprüfen lassen
+	for(std::list<nobHarborBuilding*>::iterator it = harbors.begin();
+		it != harbors.end();++it)
+	{
+		(*it)->ExamineShipRouteOfPeople();
 	}
 }
 

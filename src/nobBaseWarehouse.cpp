@@ -1,4 +1,4 @@
-// $Id: nobBaseWarehouse.cpp 6798 2010-10-14 20:17:55Z OLiver $
+// $Id: nobBaseWarehouse.cpp 6903 2010-12-18 21:41:50Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -767,7 +767,7 @@ void nobBaseWarehouse::CheckJobsForNewFigure(const Job job)
 	CheckOuthousing(1,job);
 }
 
-void nobBaseWarehouse::AddFigure(noFigure * figure)
+void nobBaseWarehouse::AddFigure(noFigure * figure, const bool increase_visual_counts)
 {
 	// Warenhausarbeiter werden nicht gezählt!
 	if(!figure->MemberOfWarehouse())
@@ -776,15 +776,15 @@ void nobBaseWarehouse::AddFigure(noFigure * figure)
 		if(figure->GetJobType() == JOB_BOATCARRIER)
 		{
 			// Träger hinzufügen einzeln
-			++goods.people[JOB_HELPER];
+			if(increase_visual_counts) ++goods.people[JOB_HELPER];
 			++real_goods.people[JOB_HELPER];
 			// Boot hinzufügen einzeln
-			++goods.goods[GD_BOAT];
+			if(increase_visual_counts) ++goods.goods[GD_BOAT];
 			++real_goods.goods[GD_BOAT];
 		}
 		else
 		{
-			++goods.people[figure->GetJobType()];
+			if(increase_visual_counts) ++goods.people[figure->GetJobType()];
 			++real_goods.people[figure->GetJobType()];
 		}
 	}
@@ -825,16 +825,7 @@ void nobBaseWarehouse::CancelFigure(noFigure * figure)
 {
 	// Figure aus den Waiting-Wares entfernen
 	leave_house.erase(figure);
-	// Anzahl davon wieder hochsetzen
-	if(figure->GetJobType() == JOB_BOATCARRIER)
-	{
-		// Träger hinzufügen einzeln
-		++real_goods.people[JOB_HELPER];
-		// Boot hinzufügen einzeln
-		++real_goods.goods[GD_BOAT];
-	}
-	else
-		++real_goods.people[figure->GetJobType()];
+	AddFigure(figure,false);
 }
 
 void nobBaseWarehouse::TakeWare(Ware * ware)

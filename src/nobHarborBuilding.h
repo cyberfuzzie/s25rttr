@@ -1,4 +1,4 @@
-// $Id: nobHarborBuilding.h 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: nobHarborBuilding.h 6903 2010-12-18 21:41:50Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -122,7 +122,7 @@ public:
 	/// Legt eine Ware im Lagerhaus ab
 	void AddWare(Ware * ware);
 	/// Eine Figur geht ins Lagerhaus
-	void AddFigure(noFigure * figure);
+	void AddFigure(noFigure * figure,const bool increase_visual_counts);
 	/// Berechnet Wichtigkeit einer neuen Ware für den Hafen (Waren werden für Expeditionen 
 	/// benötigt!)
 	unsigned CalcDistributionPoints(const GoodType type);
@@ -198,6 +198,11 @@ public:
 											
 	/// Fügt einen Schiffs-Angreifer zum Hafen hinzu
 	void AddSeaAttacker(nofAttacker * attacker);
+
+	/// People waiting for a ship have to examine their route if a road was destroyed
+	void ExamineShipRouteOfPeople();
+
+
 };
 
 

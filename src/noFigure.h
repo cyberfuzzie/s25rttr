@@ -1,4 +1,4 @@
-// $Id: noFigure.h 6706 2010-09-03 09:35:55Z OLiver $
+// $Id: noFigure.h 6903 2010-12-18 21:41:50Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -211,6 +211,10 @@ public:		void Destroy() { Destroy_noFigure(); }
 		else if(fs == FS_GOHOME || fs == FS_GOTOGOAL) return true;
 		else return false;
 	}
+
+	/// Examines the route (maybe harbor, road destroyed?) before start shipping
+	/// Returns (maybe new) destination harbor ((0,0) if he doesn't go by ship)
+	Point<MapCoord> ExamineRouteBeforeShipping();
 
 };
 

@@ -1,4 +1,4 @@
-// $Id: MilitaryConsts.h 6802 2010-10-16 10:16:54Z OLiver $
+// $Id: MilitaryConsts.h 6909 2010-12-20 15:11:34Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -34,7 +34,7 @@ const unsigned BASE_ATTACKING_DISTANCE = 21;
 const unsigned EXTENDED_ATTACKING_DISTANCE = 1;
 
 /// Maximale Länge für den Laufweg beim Angriff
-const unsigned MAX_ATTACKING_RUN_DISTANCE = 70;
+const unsigned MAX_ATTACKING_RUN_DISTANCE = 40;
 
 /// Distanz zwischen zwei Gegnern, sodass diese aufeinander zugehen
 const unsigned MEET_FOR_FIGHT_DISTANCE = 5;

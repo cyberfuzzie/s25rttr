@@ -1,4 +1,4 @@
-// $Id: iwAction.h 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: iwAction.h 6909 2010-12-20 15:11:34Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -70,6 +70,8 @@ private:
 	/// Dasselbe für Schiffsangriffe
 	unsigned selected_soldiers_count_sea;
 	unsigned int available_soldiers_count_sea;
+	/// Die einzelnen Höhen für die einzelnen Tabs im Bautab
+	unsigned short building_tab_heights[4];
 
 public:
 	iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, const Tabs& tabs, unsigned short selected_x, unsigned short selected_y, int mouse_x, int mouse_y, unsigned int params, bool military_buildings);

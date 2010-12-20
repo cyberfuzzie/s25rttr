@@ -1,4 +1,4 @@
-// $Id: noShip.cpp 6800 2010-10-15 21:29:36Z OLiver $
+// $Id: noShip.cpp 6909 2010-12-20 15:11:34Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -382,16 +382,24 @@ void noShip::HandleEvent(const unsigned int id)
 						static_cast<nobHarborBuilding*>(hb)->ReceiveGoodsFromShip(figures,wares);
 						figures.clear();
 						wares.clear();
+						// Wieder idlen und ggf. neuen Job suchen
+						StartIdling();
+						players->getElement(player)->GetJobForShip(this);
 					}
 					else
 					{
-						// todo
-						assert(false);
+						// Erstmal verloren
+						// Neuen Hafen suchen
+						if(players->getElement(player)->FindHarborForUnloading
+							(this,x,y,&goal_harbor_id,&route,NULL))
+							HandleState_ExplorationExpeditionDriving();
+						else
+							// Ansonsten als verloren markieren, damit uns später Bescheid gesagt wird
+							// wenn es einen neuen Hafen gibt
+							lost = true;
 					}
 
-					// Wieder idlen und ggf. neuen Job suchen
-					StartIdling();
-					players->getElement(player)->GetJobForShip(this);
+					
 				} break;
 			case STATE_SEAATTACK_LOADING:
 				{

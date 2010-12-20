@@ -1,4 +1,4 @@
-// $Id: iwAction.cpp 6671 2010-08-10 20:47:44Z OLiver $
+// $Id: iwAction.cpp 6909 2010-12-20 15:11:34Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -245,6 +245,8 @@ iwAction::iwAction(dskGameInterface *const gi, GameWorldViewer * const gwv, cons
 				
 				++k;
 			}
+
+			building_tab_heights[bt] = (k/5 + ((k%5 != 0) ? 1 : 0))*36 + 150;
 		}
 		
 		build_tab->SetSelection(0, true);
@@ -516,15 +518,7 @@ void iwAction::Msg_Group_TabChange(const unsigned group_id,const unsigned int ct
 	{
 		case 1: // Gebäudetabs
 		{
-			unsigned short height = 0;
-			switch(tab_id)
-			{
-			case Tabs::BT_HUT:    height = 222; break;
-			case Tabs::BT_HOUSE:  height = 258; break;
-			case Tabs::BT_CASTLE: height = 186; break;
-			case Tabs::BT_MINE:   height = 186; break;
-			}
-			SetIwHeight(height);
+			SetIwHeight(building_tab_heights[tab_id]);
 		} break;
 	}
 }

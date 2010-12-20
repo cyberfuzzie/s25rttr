@@ -1,4 +1,4 @@
-// $Id: nofFarmhand.cpp 6907 2010-12-20 12:07:01Z OLiver $
+// $Id: nofFarmhand.cpp 6910 2010-12-20 16:28:06Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -146,7 +146,7 @@ void nofFarmhand::HandleDerivedEvent(const unsigned int id)
 			if(points_found)
 			{
 				// Prefer 1st class objects and use only 2nd class objects if there are no more other objects anymore
-				Point<MapCoord> p;
+				Point<MapCoord> p(0,0);
 				for(unsigned i = 0;i<3;++i)
 				{
 					if(available_points[i].size())

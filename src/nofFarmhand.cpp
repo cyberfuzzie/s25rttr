@@ -1,4 +1,4 @@
-// $Id: nofFarmhand.cpp 6798 2010-10-14 20:17:55Z OLiver $
+// $Id: nofFarmhand.cpp 6907 2010-12-20 12:07:01Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -109,9 +109,10 @@ void nofFarmhand::HandleDerivedEvent(const unsigned int id)
 			unsigned radius_count = 0;
 
 			// Available points: 1st class and 2st class
-			list< Point<MapCoord> > available_points[2];
+			list< Point<MapCoord> > available_points[3];
 			
 			unsigned max_radius = (job == JOB_CHARBURNER) ? 3 : RADIUS[job-JOB_WOODCUTTER];
+			bool points_found = false;
 
 			for(MapCoord tx=gwg->GetXA(x,y,0), r=1;r<=max_radius;tx=gwg->GetXA(tx,y,0),++r)
 			{
@@ -127,6 +128,7 @@ void nofFarmhand::HandleDerivedEvent(const unsigned int id)
 						{
 							available_points[GetPointQuality(tx2,ty2)-PQ_CLASS1].push_back(Point<MapCoord>(tx2, ty2));
 							found_in_radius = true;
+							points_found = true;
 						}
 					}
 				}
@@ -141,14 +143,18 @@ void nofFarmhand::HandleDerivedEvent(const unsigned int id)
 			}
 
 			// Are there any objects at all?
-			if(available_points[0].size() || available_points[1].size())
+			if(points_found)
 			{
 				// Prefer 1st class objects and use only 2nd class objects if there are no more other objects anymore
 				Point<MapCoord> p;
-				if(available_points[0].size())
-					p = *available_points[0][RANDOM.Rand(__FILE__,__LINE__,obj_id,available_points[0].size())];
-				else
-					p = *available_points[1][RANDOM.Rand(__FILE__,__LINE__,obj_id,available_points[1].size())];
+				for(unsigned i = 0;i<3;++i)
+				{
+					if(available_points[i].size())
+					{
+						p = *available_points[i][RANDOM.Rand(__FILE__,__LINE__,obj_id,available_points[i].size())];
+						break;
+					}
+				}
 
 				// Als neues Ziel nehmen
 				dest_x = p.x;

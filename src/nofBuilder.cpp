@@ -1,4 +1,4 @@
-// $Id: nofBuilder.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: nofBuilder.cpp 6907 2010-12-20 12:07:01Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -181,7 +181,8 @@ void nofBuilder::HandleDerivedEvent(const unsigned int id)
 				gwg->ImportantObjectDestroyed(building_site->GetX(),building_site->GetY());
 
 				// Baustelle kommt in den Bytehimmel
-				delete building_site;
+				gwg->SetNO(NULL,building_site->GetX(),building_site->GetY());
+				delete building_site;	
 
 				// KI-Event schicken
 				GAMECLIENT.SendAIEvent(new AIEvent::Building(AIEvent::BuildingFinished, x, y, building_type), player);

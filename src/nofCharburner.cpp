@@ -1,4 +1,4 @@
-// $Id: nofCharburner.cpp 6906 2010-12-20 09:55:16Z OLiver $
+// $Id: nofCharburner.cpp 6907 2010-12-20 12:07:01Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -150,9 +150,17 @@ nofFarmhand::PointQuality nofCharburner::GetPointQuality(const unsigned short x,
 		if(state == noCharburnerPile::STATE_SMOLDERING)
 			return PQ_NOTPOSSIBLE;
 
-		// Does it need resources and I don't have them hen starting new work (state = STATE_WAITING1)?
-		if(state == noCharburnerPile::STATE_WOOD && !workplace->WaresAvailable() && this->state == STATE_WAITING1)
-			return PQ_NOTPOSSIBLE;
+		// Wood stack which stell need resources?
+		if(state == noCharburnerPile::STATE_WOOD)
+		{
+			// Does it need resources and I don't have them hen starting new work (state = STATE_WAITING1)?
+			if(!workplace->WaresAvailable() && this->state == STATE_WAITING1)
+				return PQ_NOTPOSSIBLE;
+			else
+				// Only second class, harvest all piles first before continue 
+				// to build others
+				return PQ_CLASS2;
+		}
 
 		// All ok, work on this pile
 		return PQ_CLASS1;
@@ -204,7 +212,7 @@ nofFarmhand::PointQuality nofCharburner::GetPointQuality(const unsigned short x,
 	if(good_terrains != 6)
 		return PQ_NOTPOSSIBLE;
 
-	return PQ_CLASS2;
+	return PQ_CLASS3;
 }
 
 

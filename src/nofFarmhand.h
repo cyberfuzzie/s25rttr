@@ -1,4 +1,4 @@
-// $Id: nofFarmhand.h 6718 2010-09-09 21:39:46Z OLiver $
+// $Id: nofFarmhand.h 6907 2010-12-20 12:07:01Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -35,7 +35,8 @@ protected:
 	{
 		PQ_NOTPOSSIBLE, // Work is not possible at this position
 		PQ_CLASS1, /// Work is possible, points are prefered to other points
-		PQ_CLASS2 /// Work is possible, points are only chosen if there are no other class 1's
+		PQ_CLASS2, /// Work is possible, points are prefered to other points class 2
+		PQ_CLASS3 /// Work is possible, points are only chosen if there are no other class 1/2's
 	};
 
 private:

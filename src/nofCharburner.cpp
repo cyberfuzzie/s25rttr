@@ -1,4 +1,4 @@
-// $Id: nofCharburner.cpp 6730 2010-09-13 08:12:35Z FloSoft $
+// $Id: nofCharburner.cpp 6906 2010-12-20 09:55:16Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -132,7 +132,7 @@ void nofCharburner::WorkFinished()
 			gwg->SetNO(new noCharburnerPile(x,y),x,y);
 
 			// BQ drumrum neu berechnen
-			gwg->RecalcBQAroundPoint(x,y);
+			gwg->RecalcBQAroundPointBig(x,y);
 		}
 	}
 }
@@ -174,19 +174,21 @@ nofFarmhand::PointQuality nofCharburner::GetPointQuality(const unsigned short x,
 		return PQ_NOTPOSSIBLE;
 
 
-	// darf außerdem nich auf einer Straße liegen
-	for(unsigned char i = 0;i<6;++i)
-	{
-		if(gwg->GetPointRoad(x,y,i))
-			return PQ_NOTPOSSIBLE;
-	}
+	
+	
 
 	for(unsigned char i = 0;i<6;++i)
 	{
 		// Don't set it next to buildings and other charburner piles and grain fields
 		BlockingManner bm = gwg->GetNO(gwg->GetXA(x,y,i),gwg->GetYA(x,y,i))->GetBM();
-		if(bm == BM_GRANITE || bm == BM_CASTLE || bm == BM_HOUSE || bm == BM_HUT)
+		if(bm != BM_NOTBLOCKING)
 			return PQ_NOTPOSSIBLE;
+		// darf außerdem nicht neben einer Straße liegen
+		for(unsigned char j = 0;j<6;++j)
+		{
+			if(gwg->GetPointRoad(gwg->GetXA(x,y,i),gwg->GetYA(x,y,i),j))
+				return PQ_NOTPOSSIBLE;
+		}
 	}
 
 	// Terrain untersuchen (nur auf Wiesen und Savanne und Steppe pflanzen

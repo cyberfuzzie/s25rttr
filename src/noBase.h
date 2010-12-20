@@ -1,4 +1,4 @@
-// $Id: noBase.h 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: noBase.h 6906 2010-12-20 09:55:16Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -56,7 +56,8 @@ public:
 		BM_SINGLEBLOCKING, // Blockiert nur einzelnen Punkt, hat aber sonst keinen weiteren Einfluss auf Umgebung
 		BM_GRANITE,
 		BM_TREE,
-		BM_FLAG
+		BM_FLAG,
+		BM_CHARBURNERPILE
 		};
 
 	virtual BlockingManner GetBM() const;

@@ -1,4 +1,4 @@
-// $Id: iwDistribution.h 6720 2010-09-10 08:53:20Z OLiver $
+// $Id: iwDistribution.h 6906 2010-12-20 09:55:16Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -53,6 +53,7 @@ private:
 
 	void Msg_Group_ProgressChange(const unsigned int group_id, const unsigned int ctrl_id, const unsigned short position);
 	void Msg_Timer(const unsigned int ctrl_id);
+	void Msg_ButtonClick(const unsigned ctrl_id);
 
 };
 

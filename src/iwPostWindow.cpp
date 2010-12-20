@@ -1,4 +1,4 @@
-// $Id: iwPostWindow.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: iwPostWindow.cpp 6906 2010-12-20 09:55:16Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -207,7 +207,7 @@ bool iwPostWindow::Msg_KeyDown(const KeyEvent& ke)
 		break;
 	case KT_DELETE: // Delete current message
 		{
-			Msg_ButtonClick(9);
+			Msg_ButtonClick(15);
 		} return true;
 	}
 	

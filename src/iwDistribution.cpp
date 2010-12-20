@@ -1,4 +1,4 @@
-// $Id: iwDistribution.cpp 6720 2010-09-10 08:53:20Z OLiver $
+// $Id: iwDistribution.cpp 6906 2010-12-20 09:55:16Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -235,5 +235,21 @@ void iwDistribution::UpdateSettings()
 		ctrlGroup * group = GetCtrl<ctrlTab>(0)->GetGroup(TAB_FOOD+g);
 		for(unsigned i = 0;i<GROUP_SIZES[g];++i,++vsi)
 			group->GetCtrl<ctrlProgress>(i*2+1)->SetPosition(GAMECLIENT.visual_settings.distribution[vsi]);
+	}
+}
+
+
+void iwDistribution::Msg_ButtonClick(const unsigned ctrl_id)
+{
+	switch(ctrl_id)
+	{
+	default: return;
+	// Default button
+	case 10:
+		{
+			GAMECLIENT.visual_settings.distribution = GAMECLIENT.default_settings.distribution;
+			UpdateSettings();
+			settings_changed = true;
+		} break;
 	}
 }

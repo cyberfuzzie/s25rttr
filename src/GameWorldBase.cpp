@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 6887 2010-12-11 11:44:19Z OLiver $
+// $Id: GameWorldBase.cpp 6906 2010-12-20 09:55:16Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -335,9 +335,15 @@ bool GameWorldBase::RoadAvailable(const bool boat_road,const int x, const int y,
 			 return 0;
 	}
 
-	// Schon andere Wege auf dem Punkt?
+	
+
 	for(unsigned char z = 0;z<6;++z)
 	{
+		// Roads around charburner piles are not possible
+		if(GetNO(GetXA(x,y,z),GetYA(x,y,z))->GetBM() == noBase::BM_CHARBURNERPILE)
+			return 0;
+
+		// Other roads at this point?
 		if(GetPointRoad(x,y, z, visual))
 		{
 			unsigned r;
@@ -684,6 +690,13 @@ BuildingQuality GameWorldBase::CalcBQ(const MapCoord x, const MapCoord y,const u
 	 if(GetNO(x,y)->GetBM() != noBase::BM_NOTBLOCKING)
 		return BQ_NOTHING;
 
+	// Don't build anything around charburner piles
+	for(unsigned i = 0;i<6;++i)
+	{
+		if(GetNO(GetXA(x,y,i),GetYA(x,y,i))->GetBM() == noBase::BM_CHARBURNERPILE)
+			return BQ_NOTHING;
+	}
+
 	if(val > 2 && val != BQ_MINE)
 	{
 		for(unsigned i = 0;i<6;++i)
@@ -712,7 +725,8 @@ BuildingQuality GameWorldBase::CalcBQ(const MapCoord x, const MapCoord y,const u
 	// Stein, Feuer und Getreidefeld --> rundrum Flagge
 	for(unsigned i = 0;i<6;++i)
 	{
-		if(GetNO(GetXA(x,y,i),GetYA(x,y,i))->GetBM() == noBase::BM_GRANITE)
+		const noBase * nob = GetNO(GetXA(x,y,i),GetYA(x,y,i));
+		if(nob->GetBM() == noBase::BM_GRANITE)
 		{
 			val = BQ_FLAG;
 			break;

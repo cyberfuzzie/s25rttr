@@ -1,4 +1,4 @@
-// $Id: noCharburnerPile.h 6739 2010-09-14 20:23:35Z OLiver $
+// $Id: noCharburnerPile.h 6906 2010-12-20 09:55:16Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -69,7 +69,7 @@ public:		void Destroy() { Destroy_noCharburnerPile(); }
 	void Draw(int x,int y);
 	void HandleEvent(const unsigned int id);
 
-	BlockingManner GetBM() const { return BM_GRANITE; }
+	BlockingManner GetBM() const { return BM_CHARBURNERPILE; }
 
 	/// Get the current state of the charburner pile
 	State GetState() const { return state; }

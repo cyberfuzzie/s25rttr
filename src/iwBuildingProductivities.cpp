@@ -1,4 +1,4 @@
-// $Id: iwBuildingProductivities.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: iwBuildingProductivities.cpp 6906 2010-12-20 09:55:16Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -26,7 +26,7 @@
 
 
 /// Anzahl der angezeigten Gebäude
-const unsigned BUILDINGS_COUNT = 23;
+const unsigned BUILDINGS_COUNT = 24;
 
 /// Reihenfolge der Gebäude
 const BuildingType bts[BUILDINGS_COUNT] =
@@ -54,6 +54,7 @@ const BuildingType bts[BUILDINGS_COUNT] =
 	BLD_SHIPYARD,
 	BLD_FARM,
 	BLD_DONKEYBREEDER,
+	BLD_CHARBURNER
 };
 
 
@@ -79,7 +80,9 @@ const unsigned short percent_height = 18;
 
 /// Konstruktor von @p iwBuildingProductivities.
 iwBuildingProductivities::iwBuildingProductivities()
-: IngameWindow(CGI_BUILDINGSPRODUCTIVITY, 0xFFFE, 0xFFFE, left_x+2*percent_width+2*image_percent_x+percent_image_x+right_x, top_y + (BUILDINGS_COUNT/2+BUILDINGS_COUNT%2) * (distance_y+1), _("Productivity"), LOADER.GetImageN("resource", 41)),
+: IngameWindow(CGI_BUILDINGSPRODUCTIVITY, 0xFFFE, 0xFFFE,
+			   left_x+2*percent_width+2*image_percent_x+percent_image_x+right_x,
+			   top_y + (BUILDINGS_COUNT/2+1) * (distance_y+1), _("Productivity"), LOADER.GetImageN("resource", 41)),
  percents(40,0)
 {
 	for(unsigned y = 0;y<BUILDINGS_COUNT/2+BUILDINGS_COUNT%2;++y)

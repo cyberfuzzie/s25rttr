@@ -1,4 +1,4 @@
-// $Id: iwBuildings.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: iwBuildings.cpp 6906 2010-12-20 09:55:16Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -25,8 +25,10 @@
 #include "GameConsts.h"
 #include "GameClient.h"
 
+const unsigned BUILDINGS_COUNT = 32;
+
 /// Reihenfolge der Gebäude
-const BuildingType bts[31] =
+const BuildingType bts[BUILDINGS_COUNT] =
 {
 	BLD_BARRACKS,
 	BLD_GUARDHOUSE,
@@ -58,6 +60,7 @@ const BuildingType bts[31] =
 	BLD_SHIPYARD,
 	BLD_FARM,
 	BLD_DONKEYBREEDER,
+	BLD_CHARBURNER,
 	BLD_HARBORBUILDING
 };
 
@@ -73,12 +76,12 @@ const unsigned short font_distance_y = 20;
 
 
 /// Konstruktor von @p iwMilitary.
-iwBuildings::iwBuildings() : IngameWindow(CGI_BUILDINGS, 0xFFFE, 0xFFFE, 185, 430, _("Buildings"), LOADER.GetImageN("resource", 41))
+iwBuildings::iwBuildings() : IngameWindow(CGI_BUILDINGS, 0xFFFE, 0xFFFE, 185, 480, _("Buildings"), LOADER.GetImageN("resource", 41))
 {
 	// Symbole für die einzelnen Gebäude erstellen
-	for(unsigned short y = 0;y<8;++y)
+	for(unsigned short y = 0;y<BUILDINGS_COUNT/4 + (BUILDINGS_COUNT%4 > 0 ? 1 : 0);++y)
 	{
-		for(unsigned short x = 0;x<((y==7)?3:4);++x)
+		for(unsigned short x = 0;x<((y==BUILDINGS_COUNT/4)?BUILDINGS_COUNT%4:4);++x)
 		{
 			AddImage(y*4+x,first_x+icon_distance_x*x,first_y+icon_distance_y*y,
 				LOADER.GetImageN(NATION_ICON_IDS[GameClient::inst().GetLocalPlayer()->nation],bts[y*4+x]),_(BUILDING_NAMES[bts[y*4+x]]));
@@ -99,9 +102,9 @@ void iwBuildings::Msg_PaintAfter()
 	GameClient::inst().GetLocalPlayer()->GetBuildingCount(bc);
 
 	// Anzahlen unter die Gebäude schreiben
-	for(unsigned short y = 0;y<8;++y)
+	for(unsigned short y = 0;y<BUILDINGS_COUNT/4 + (BUILDINGS_COUNT%4 > 0 ? 1 : 0);++y)
 	{
-		for(unsigned short x = 0;x<((y==7)?3:4);++x)
+		for(unsigned short x = 0;x<((y==BUILDINGS_COUNT/4)?BUILDINGS_COUNT%4:4);++x)
 		{
 			char txt[64];
 			sprintf(txt,"%u/%u",bc.building_counts[bts[y*4+x]],bc.building_site_counts[bts[y*4+x]]);

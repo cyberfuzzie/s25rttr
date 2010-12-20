@@ -1,4 +1,4 @@
-// $Id: noBaseBuilding.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: noBaseBuilding.cpp 6906 2010-12-20 09:55:16Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -207,8 +207,27 @@ short noBaseBuilding::GetDoorPointX()
 	{
 		int x1 = static_cast<int>(gwg->GetTerrainX(this->x,this->y));
 		int y1 = static_cast<int>(gwg->GetTerrainY(this->x,this->y));
-		int x2 = static_cast<int>(gwg->GetTerrainX(this->x+(this->y&1),this->y+1));
-		int y2 = static_cast<int>(gwg->GetTerrainY(this->x+(this->y&1),this->y+1));
+		int x2 = static_cast<int>(gwg->GetTerrainX(gwg->GetXA(this->x,this->y,4),gwg->GetYA(this->x,this->y,4)));
+		int y2 = static_cast<int>(gwg->GetTerrainY(gwg->GetXA(this->x,this->y,4),gwg->GetYA(this->x,this->y,4)));
+
+		// Gehen wir über einen Kartenrand (horizontale Richung?)
+		if(abs(x1-x2) >= gwg->GetWidth() * TR_W / 2)
+		{
+			if(abs(x1-int(gwg->GetWidth())*TR_W-x2) < abs(x1-x2))
+				x1 -= gwg->GetWidth()*TR_W;
+			else
+				x1 += gwg->GetWidth()*TR_W;
+		}
+		// Und dasselbe für vertikale Richtung
+		if(abs(y1-y2) >= gwg->GetHeight() * TR_H / 2)
+		{
+			if(abs(y1-int(gwg->GetHeight())*TR_H-y2) < abs(y1-y2))
+				y1 -= gwg->GetHeight()*TR_H;
+			else
+				y1 += gwg->GetHeight()*TR_H;
+		}
+
+
 
 		door_point_x = (DOOR_CONSTS[GAMECLIENT.GetPlayer(player)->nation][type]*(x1-x2))/(y1-y2);
 	}

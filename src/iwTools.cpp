@@ -1,4 +1,4 @@
-// $Id: iwTools.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: iwTools.cpp 6906 2010-12-20 09:55:16Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -98,10 +98,12 @@ void iwTools::Msg_ButtonClick(const unsigned int ctrl_id)
 {
 	switch(ctrl_id)
 	{
+	default: return;
 	case 13: // Standard
 		{
-			for(unsigned char i = 0; i < 12; ++i)
-				GetCtrl<ctrlProgress>(i)->SetPosition(GAMECLIENT.default_settings.tools_settings[i]);
+			GAMECLIENT.visual_settings.tools_settings = GAMECLIENT.default_settings.tools_settings;
+			UpdateSettings();
+			settings_changed = true;
 		} break;
 	}
 }

@@ -1,4 +1,4 @@
-// $Id: iwMilitary.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: iwMilitary.cpp 6906 2010-12-20 09:55:16Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -117,3 +117,17 @@ void iwMilitary::UpdateSettings()
 		GetCtrl<ctrlProgress>(i)->SetPosition(GAMECLIENT.visual_settings.military_settings[i]);
 }
 
+void iwMilitary::Msg_ButtonClick(const unsigned ctrl_id)
+{
+	switch(ctrl_id)
+	{
+	default: return;
+	// Default button
+	case 21:
+		{
+			GAMECLIENT.visual_settings.military_settings = GAMECLIENT.default_settings.military_settings;
+			UpdateSettings();
+			settings_changed = true;
+		} break;
+	}
+}

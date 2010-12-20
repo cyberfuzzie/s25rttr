@@ -1,4 +1,4 @@
-// $Id: noCharburnerPile.cpp 6862 2010-12-01 17:21:00Z FloSoft $
+// $Id: noCharburnerPile.cpp 6906 2010-12-20 09:55:16Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -63,7 +63,7 @@ void noCharburnerPile::Destroy_noCharburnerPile()
 	em->RemoveEvent(event);
 
 	// Bauplätze drumrum neu berechnen
-	gwg->RecalcBQAroundPoint(x,y);
+	gwg->RecalcBQAroundPointBig(x,y);
 
 	Destroy_noCoordBase();
 }

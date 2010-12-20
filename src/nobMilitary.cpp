@@ -1,4 +1,4 @@
-// $Id: nobMilitary.cpp 6802 2010-10-16 10:16:54Z OLiver $
+// $Id: nobMilitary.cpp 6908 2010-12-20 12:42:06Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -410,8 +410,10 @@ void nobMilitary::RegulateTroops()
 		{
 			for(list<nofPassiveSoldier*>::iterator it = ordered_troops.begin();diff&&ordered_troops.size();++diff,++it)
 			{
-				(*it)->NotNeeded();
+				nofPassiveSoldier * soldier = *it;
 				ordered_troops.erase(&it);
+				soldier->NotNeeded();
+				
 			}
 		}
 		// Starke zuerst zurück

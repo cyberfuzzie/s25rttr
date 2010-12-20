@@ -1,4 +1,4 @@
-// $Id: dskGameInterface.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: dskGameInterface.cpp 6908 2010-12-20 12:42:06Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -881,7 +881,7 @@ void dskGameInterface::ShowActionWindow(const iwAction::Tabs& action_tabs,int cs
 	if(action_tabs.flag)
 	{
 
-		if(gwv->GetNO(cselx-!(csely&1),csely-1)->GetGOT() == GOT_NOB_HQ)
+		if(gwv->GetNO(gwv->GetXA(cselx,csely,1),gwv->GetYA(cselx,csely,1))->GetGOT() == GOT_NOB_HQ)
 			params = iwAction::AWFT_HQ;
 		else if(gwv->GetNO(cselx, csely)->GetType() == NOP_FLAG)
 		{

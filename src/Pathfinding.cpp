@@ -1,4 +1,4 @@
-// $Id: Pathfinding.cpp 6798 2010-10-14 20:17:55Z OLiver $
+// $Id: Pathfinding.cpp 6911 2010-12-20 20:24:31Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -582,7 +582,7 @@ bool IsPointToDestOK_ShipPath(const GameWorldBase& gwb, const MapCoord x, const 
 
 /// Findet einen Weg für Figuren
 unsigned char GameWorldBase::FindHumanPath(const MapCoord x_start,const MapCoord y_start,
-			const MapCoord x_dest, const MapCoord y_dest, const unsigned max_route, const bool random_route, unsigned *length)
+			const MapCoord x_dest, const MapCoord y_dest, const unsigned max_route, const bool random_route, unsigned *length) const
 {
 	// Aus Replay lesen?
 	if(GameClient::inst().ArePathfindingResultsAvailable())

@@ -1,4 +1,4 @@
-// $Id: GameWorldBase.cpp 6906 2010-12-20 09:55:16Z OLiver $
+// $Id: GameWorldBase.cpp 6911 2010-12-20 20:24:31Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1409,7 +1409,7 @@ void GameWorldBase::GetHarborPointsAroundMilitaryBuilding(const MapCoord x, cons
 			// Wird ein Weg vom Militärgebäude zum Hafen gefunden bzw. Ziel = Hafen?
 			if(x == harbor_x && y == harbor_y)
 				harbor_points->push_back(i);
-			else if(FindFreePath(x,y,harbor_x,harbor_y,false,SEAATTACK_DISTANCE,NULL,NULL,NULL,NULL,NULL,NULL))
+			else if(FindHumanPath(x,y,harbor_x,harbor_y,SEAATTACK_DISTANCE) != 0xff)
 				harbor_points->push_back(i);
 		}
 	}

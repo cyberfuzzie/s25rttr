@@ -568,6 +568,8 @@ void noFigure::GoHome(noRoadNode *goal)
 		{
 			waiting_for_free_node = false;
 			WalkToGoal();
+			// anderen Leuten noch ggf Bescheid sagen
+			gwg->RoadNodeAvailable(this->x,this->y);
 		}
 	}
 	else

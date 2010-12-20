@@ -1,4 +1,4 @@
-// $Id: nobHQ.cpp 6582 2010-07-16 11:23:35Z FloSoft $
+// $Id: nobHQ.cpp 6911 2010-12-20 20:24:31Z OLiver $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -113,7 +113,7 @@ nobHQ::nobHQ(const unsigned short x, const unsigned short y,const unsigned char 
 		goods.people[JOB_ARMORER] = 2;
 		goods.people[JOB_BUILDER] = 5;
 		goods.people[JOB_PLANER] = 3;
-		goods.people[JOB_PRIVATE] = 25;
+		goods.people[JOB_PRIVATE] = 26;
 		goods.people[JOB_PRIVATEFIRSTCLASS] = 0;
 		goods.people[JOB_SERGEANT] = 0;
 		goods.people[JOB_OFFICER] = 0;

@@ -1,3 +1,86 @@
+s25rttr (20101222-6914) hardy; urgency=low
+
+  * New upstream snapshot
+  * Empty log message
+
+ -- Return To The Roots Team <sf-team@siedler25.org>  Wed, 22 Dec 2010 00:00:00 +0100
+
+s25rttr (20101221-6913) hardy; urgency=low
+
+  * new splash
+
+ -- Florian Doersch <flosoft@siedler25.org>  Tue, 21 Dec 2010 20:50:00 +0100
+
+s25rttr (20101221-6912) hardy; urgency=low
+
+  * New upstream snapshot
+  * Empty log message
+
+ -- Return To The Roots Team <sf-team@siedler25.org>  Tue, 21 Dec 2010 00:00:00 +0100
+
+s25rttr (20101220-6911) hardy; urgency=low
+
+  * Fixed #689941, #689631, #692678
+
+ -- OLiver Siebert <oliver@siedler25.org>  Mon, 20 Dec 2010 20:24:00 +0100
+
+s25rttr (20101220-6910) hardy; urgency=low
+
+  * sinnlose gcc-Warnung behoben
+
+ -- OLiver Siebert <oliver@siedler25.org>  Mon, 20 Dec 2010 16:28:00 +0100
+
+s25rttr (20101220-6909) hardy; urgency=low
+
+  * Fixed #92053, #685765 (Laufweg von 70 auf 40 reduziert), #678338
+
+ -- OLiver Siebert <oliver@siedler25.org>  Mon, 20 Dec 2010 15:11:00 +0100
+
+s25rttr (20101220-6908) hardy; urgency=low
+
+  * Fixed #689467, #692300
+
+ -- OLiver Siebert <oliver@siedler25.org>  Mon, 20 Dec 2010 12:42:00 +0100
+
+s25rttr (20101220-6907) hardy; urgency=low
+
+  * Fixed #689602, #655981
+
+ -- OLiver Siebert <oliver@siedler25.org>  Mon, 20 Dec 2010 12:07:00 +0100
+
+s25rttr (20101220-6906) hardy; urgency=low
+
+  * Fixed #662522, #663495 (Charburner in buildings and productivity
+    menus), #666658, #674898
+
+ -- OLiver Siebert <oliver@siedler25.org>  Mon, 20 Dec 2010 09:55:00 +0100
+
+s25rttr (20101219-6904) hardy; urgency=low
+
+  * New upstream snapshot
+  * Empty log message
+
+ -- Return To The Roots Team <sf-team@siedler25.org>  Sun, 19 Dec 2010 00:00:00 +0100
+
+s25rttr (20101218-6903) hardy; urgency=low
+
+  * Fixed #675024, einige Sachen bzgl. der Hinzufügung von Figuren
+    bei Lagerhäusern umgebaut
+
+ -- OLiver Siebert <oliver@siedler25.org>  Sat, 18 Dec 2010 21:41:00 +0100
+
+s25rttr (20101218-6902) hardy; urgency=low
+
+  * Fixed #666651 / #675313 (Soldaten-Hängenbleib-Bug)
+
+ -- OLiver Siebert <oliver@siedler25.org>  Sat, 18 Dec 2010 17:19:00 +0100
+
+s25rttr (20101218-6901) hardy; urgency=low
+
+  * Automatic debian/changelog update
+
+ -- Florian Doersch <flosoft@siedler25.org>  Sat, 18 Dec 2010 00:19:00 +0100
+
 s25rttr (20101218-6900) hardy; urgency=low
 
   * New upstream snapshot

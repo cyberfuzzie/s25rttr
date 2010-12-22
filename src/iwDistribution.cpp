@@ -1,4 +1,4 @@
-// $Id: iwDistribution.cpp 6906 2010-12-20 09:55:16Z OLiver $
+// $Id: iwDistribution.cpp 6915 2010-12-22 06:46:02Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -253,3 +253,4 @@ void iwDistribution::Msg_ButtonClick(const unsigned ctrl_id)
 		} break;
 	}
 }
+

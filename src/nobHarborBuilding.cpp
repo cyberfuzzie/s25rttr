@@ -1,4 +1,4 @@
-// $Id: nobHarborBuilding.cpp 6903 2010-12-18 21:41:50Z OLiver $
+// $Id: nobHarborBuilding.cpp 6915 2010-12-22 06:46:02Z FloSoft $
 //
 // Copyright (c) 2005 - 2010 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -1178,3 +1178,8 @@ void nobHarborBuilding::ExamineShipRouteOfPeople()
 			++it;
 	}
 }
+
+///////////////////////////////////////////////////////////////////////////////
+// EOF
+///////////////////////////////////////////////////////////////////////////////
+

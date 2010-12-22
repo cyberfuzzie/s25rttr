@@ -1,3 +1,10 @@
+s25rttr (20101222-6915) hardy; urgency=low
+
+  * New upstream snapshot
+  * no eol at eof - fix
+
+ -- Florian Doersch <flosoft@siedler25.org>  Wed, 22 Dec 2010 06:46:00 +0100
+
 s25rttr (20101222-6914) hardy; urgency=low
 
   * New upstream snapshot

@@ -1,0 +1,6 @@
+#C/C++ build artifacts
+*.a
+*.o
+
+#S2 original build resources
+/build/S2/

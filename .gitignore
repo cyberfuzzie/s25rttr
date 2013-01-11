@@ -2,5 +2,8 @@
 *.a
 *.o
 
+#vi/vim swap/tmp files:
+.*.swp
+
 #S2 original build resources
 /build/S2/

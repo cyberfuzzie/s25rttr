@@ -5,5 +5,34 @@
 #vi/vim swap/tmp files:
 .*.swp
 
-#S2 original build resources
+#S2 Gold (original) build resources
 /build/S2/
+
+#Build artifacts
+/RTTR/languages/*.mo
+/RTTR/s-c_resample
+/RTTR/s25update
+/RTTR/sound-convert
+/build/CMakeCache.txt
+/build/CMakeFiles/
+/build/Makefile
+/build/RTTR
+/build/bin
+/build/build_paths.h
+/build/build_version.h
+/build/cmake_install.cmake
+/build/driver/
+/build/libendian/
+/build/liblobby/
+/build/libsiedler2/
+/build/libutil/
+/build/mygettext/
+/build/postinstall.sh
+/build/preinstall.sh
+/build/s-c/
+/build/s25rttr
+/build/s25update/
+/build/share
+/build/src/
+/build/version/
+

@@ -27,7 +27,7 @@
 
 #ifdef _WIN32
 #	include <windows.h>
-#	define chdir SetCurrentDirectoryA
+#	define chdir !SetCurrentDirectoryA
 #else
 #	include <unistd.h>
 #endif

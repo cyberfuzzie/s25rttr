@@ -82,6 +82,9 @@ int main(int argc, char *argv[])
 	cerr << "                build  directory: \"" << binary_dir << "\"" << endl;
 
 	atexit(finish);
+    
+    ifstream git( (source_dir + ".git/HEAD").c_str() );
+	const int git_errno = errno;
 
 	ifstream bzr( (source_dir + ".bzr/branch/last-revision").c_str() );
 	const int bzr_errno = errno;
@@ -89,23 +92,24 @@ int main(int argc, char *argv[])
 	ifstream svn( (source_dir + ".svn/entries").c_str() );
 	const int svn_errno = errno;
 
-	if(!svn && !bzr)
+	if(!git && !svn && !bzr)
 	{
 		cerr << "                failed to read any of:" << endl;
+        cerr << "                .git/HEAD: " << strerror(git_errno) << endl;
 		cerr << "                .bzr/branch/last-revision: " << strerror(bzr_errno) << endl;
 		cerr << "                .svn/entries: " << strerror(svn_errno) << endl;
 
 		return 1;
 	}
 
-	int revision = 0;
-
+	int revision = 0; //numeric revision (if bzr or svn are available)
+    
 	if(bzr) // use bazaar revision if exist
 	{
 		bzr >> revision;
 		bzr.close();
 	}
-	else if(svn) // using subversion revision, if no bazaar one exists
+	else if(svn) // use subversion revision, if no bazaar one exists
 	{
 		string t;
 
@@ -116,6 +120,53 @@ int main(int argc, char *argv[])
 		svn >> revision;
 		svn.close();
 	}
+    
+    stringstream revstrb(""); //a buffer to put together the revision string
+    if (revision > 0) //if a bzr or svn revision number has been found
+        revstrb << revision; //use that for now (if .git exists, it will override this)
+    
+    if(git) //if available, use git revision (SHA)
+    {
+        string firstpart;
+        git >> firstpart;
+        if (firstpart == "ref:") {
+            string secondpart;
+            git >> secondpart;
+            ifstream sha( (source_dir + ".git/" + secondpart).c_str() );
+            const int git_errno = errno;
+            if (sha) {
+                sha >> firstpart;
+                sha.close();
+            }
+            else {
+                ifstream packrefs( (source_dir + ".git/packed-refs").c_str() );
+                const int git_errno2 = errno;
+                if (packrefs) {
+                    string l;
+                    while(getline(packrefs, l)) {
+                        stringstream ll(l);
+                        string hash, ref;
+                        ll >> hash;
+                        ll >> ref;
+                        if (ref == secondpart) {
+                            firstpart = hash;
+                            break;
+                        }
+                    }
+                    packrefs.close();
+                } else {
+                    cerr << "                .git/" << secondpart << ": " << strerror(git_errno) << endl;
+                    cerr << "                .git/packed-refs: " << strerror(git_errno2) << endl;
+                    return 1;
+                }
+            }
+        }
+        
+        revstrb << "git" << firstpart.substr(0, 8);
+        git.close();
+    }
+    
+    string revstring = revstrb.str();
 	
 	ifstream versionhforce( (binary_dir + "build_version.h.force").c_str() );
 	if(versionhforce)
@@ -151,15 +202,13 @@ int main(int argc, char *argv[])
 	while(getline(versionh, l))
 	{
 		stringstream ll(l);
-		string d, n;
-		char q;
-		int v;
+		string d, n, nv;
 
-		ll >> d; // define
-		ll >> n; // name
-		ll >> q; // "
-		ll >> v; // value
-		ll >> q; // "
+		ll >> d;  // '#define'
+		ll >> n;  // name
+        ll >> nv; // '"value"' (including the double quotes!)
+        if (nv.length() > 2) //if there is indeed a value:
+            nv = nv.substr(1, nv.length()-2); //strip the quotes
 
 		if(n == "FORCE")
 		{
@@ -174,7 +223,8 @@ int main(int argc, char *argv[])
 
 			char tv[64];
 			strftime(tv, 63, "%Y%m%d", localtime(&t) );
-			if(v >= 20000101 && v < atoi(tv))
+            string datestr(tv);
+            if (nv != tv) //if the current date has changed
 			{
 				// set new day
 				ll.clear();
@@ -189,15 +239,15 @@ int main(int argc, char *argv[])
 
 		if(n == "WINDOW_REVISION")
 		{
-			if(v < revision)
+			if(nv != revstring) //if the revision string has changed
 			{
 				// set new revision
 				ll.clear();
 				ll.str("");
-				ll << d << " " << n << " \"" << revision << "\"";
+				ll << d << " " << n << " \"" << revstring << "\"";
 				l = ll.str();
 
-				cout << "                renewing version to revision \"" << revision << "\"" << endl;
+				cout << "                renewing version to revision \"" << revstring << "\"" << endl;
 				changed = true;
 			}
 		}

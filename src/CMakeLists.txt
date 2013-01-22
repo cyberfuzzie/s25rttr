@@ -18,6 +18,11 @@ IF (NOT GETTEXT_FOUND)
 	MESSAGE(FATAL_ERROR "FATAL ERROR: gettext library not found")
 ENDIF (NOT GETTEXT_FOUND)
 
+INCLUDE(FindLua52)
+IF (NOT LUA52_FOUND)
+	MESSAGE(FATAL_ERROR "FATAL ERROR: lua 5.2 library not found")
+ENDIF (NOT LUA52_FOUND)
+
 ################################################################################
 
 INCLUDE_DIRECTORIES("../" "../liblobby/src/" "../libutil/src/" "../mygettext/src/" "../libsiedler2/src/" "../libendian/src/")
@@ -426,40 +431,8 @@ ENDIF ( "${COMPILEFOR}" STREQUAL "apple")
 # LUA
 ################################################################################
 
-SET(LUA_VERSION "52")
-
-IF ( "${COMPILEFOR}" STREQUAL "windows")
-	IF ( "${COMPILEARCH}" STREQUAL "i386" )
-		SET(LUA_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../contrib/lua/win32")
-	ELSE ( "${COMPILEARCH}" STREQUAL "i386" )
-		SET(LUA_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../contrib/lua/win64")
-	ENDIF ( "${COMPILEARCH}" STREQUAL "i386" )
-ENDIF ( "${COMPILEFOR}" STREQUAL "windows")
-
-IF ( "${COMPILEFOR}" STREQUAL "linux")
-	IF ( "${COMPILEARCH}" STREQUAL "i386" )
-		SET(LUA_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../contrib/lua/lin32")
-	ELSE ( "${COMPILEARCH}" STREQUAL "i386" )
-		SET(LUA_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../contrib/lua/lin64")
-	ENDIF ( "${COMPILEARCH}" STREQUAL "i386" )
-ENDIF ( "${COMPILEFOR}" STREQUAL "linux")
-
-IF ( "${COMPILEFOR}" STREQUAL "apple")
-	SET(LUA_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../contrib/lua/mac")
-ENDIF ( "${COMPILEFOR}" STREQUAL "apple")
-
-SET(LUA_LIB "${LUA_DIR}/liblua${LUA_VERSION}.a")
-
-MESSAGE(STATUS "Checking LUA library at ${LUA_LIB}")
-IF ( NOT EXISTS "${LUA_LIB}" )
-	SET(LUA_LIB "/usr/lib/liblua5.2.a")
-	ADD_FLAGS(CMAKE_C_FLAGS -I/usr/include/lua5.2)
-	ADD_FLAGS(CMAKE_CXX_FLAGS -I/usr/include/lua5.2)
-ENDIF ( NOT EXISTS "${LUA_LIB}" )
-MESSAGE(STATUS "Using LUA library from ${LUA_LIB}")
-
-ADD_FLAGS(CMAKE_C_FLAGS -I${LUA_DIR}/include)
-ADD_FLAGS(CMAKE_CXX_FLAGS -I${LUA_DIR}/include)
+ADD_FLAGS(CMAKE_C_FLAGS -I${LUA_INCLUDE_DIR})
+ADD_FLAGS(CMAKE_CXX_FLAGS -I${LUA_INCLUDE_DIR})
 
 ################################################################################
 
@@ -471,7 +444,7 @@ TARGET_LINK_LIBRARIES(s25client
 	mygettext
 	${BZIP2_LIBRARIES}
 	${OPENGL_gl_LIBRARY}
-	${LUA_LIB}
+	${LUA_LIBRARIES}
 )
 
 IF ( "${COMPILEFOR}" STREQUAL "apple")

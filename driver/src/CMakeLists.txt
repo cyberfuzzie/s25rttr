@@ -2,6 +2,8 @@
 ### $Id: CMakeLists.txt 7522 2011-09-08 20:57:56Z FloSoft $
 ################################################################################
 
+INCLUDE (CheckCXXCompilerFlag)
+
 IF ( NOT "${COMPILEFOR}" STREQUAL "windows" )
 	CHECK_CXX_COMPILER_FLAG("-fPIC" FPIC_FLAGS)
 	IF (FPIC_FLAGS)

@@ -153,7 +153,6 @@ int getLatestBzrRevFromGitTag(string source_dir) {
     int rev = 0;
     
     ifstream packrefs( (source_dir + ".git/packed-refs").c_str() );
-    const int git_errno = errno;
     if (packrefs) {
         string l;
         while(getline(packrefs, l)) {
@@ -181,43 +180,59 @@ int getLatestBzrRevFromGitTag(string source_dir) {
     return rev;
 }
 
-string getGitRevision(ifstream *git, string source_dir) {
+int getGitSHAFromPackedRefs(const string source_dir, const string ref, string *hash) {
+    ifstream packrefs( (source_dir + ".git/packed-refs").c_str() );
+    const int git_errno = errno;
+    if (packrefs) {
+        string l;
+        while(getline(packrefs, l)) {
+            stringstream ll(l);
+            string thisHash, thisRef;
+            ll >> thisHash;
+            ll >> thisRef;
+            if (thisRef == ref) {
+                *hash = thisHash;
+                break;
+            }
+        }
+        packrefs.close();
+        return 0;
+    }
+    return git_errno;
+}
+
+/**
+ * Get the Git revision string from an existing .git/HEAD.
+ * @param git   the (already open) input stream for the .git/HEAD file
+ * @param source_dir    the source dir
+ * @returns "git<SHA>" on success (where <SHA> are the first 8 digits of the full SHA) or "" (empty string)
+ *      on failure.
+ */
+string getGitRevision(ifstream *git, const string source_dir) {
     string firstpart;
     *git >> firstpart;
-    if (firstpart == "ref:") {
+    if (firstpart == "ref:") { //if HEAD is a sym-ref (pointing to a branch or tag)
         string secondpart;
         *git >> secondpart;
-        ifstream sha( (source_dir + ".git/" + secondpart).c_str() );
+        ifstream sha( (source_dir + ".git/" + secondpart).c_str() ); //try to get the ref's file from the "refs" folder
         const int git_errno = errno;
         if (sha) {
             sha >> firstpart;
             sha.close();
         }
         else {
-            ifstream packrefs( (source_dir + ".git/packed-refs").c_str() );
-            const int git_errno2 = errno;
-            if (packrefs) {
-                string l;
-                while(getline(packrefs, l)) {
-                    stringstream ll(l);
-                    string hash, ref;
-                    ll >> hash;
-                    ll >> ref;
-                    if (ref == secondpart) {
-                        firstpart = hash;
-                        break;
-                    }
-                }
-                packrefs.close();
-            } else {
+            const int git_errno2 = getGitSHAFromPackedRefs(source_dir, secondpart, &firstpart);
+            if (git_errno2 != 0) {
+                cerr << "                Could not resolve Git HEAD:" << endl;
                 cerr << "                .git/" << secondpart << ": " << strerror(git_errno) << endl;
                 cerr << "                .git/packed-refs: " << strerror(git_errno2) << endl;
-                return NULL;
+                return "";
             }
         }
     }
-    
-    return "git" + firstpart.substr(0, 8);
+    //at this point, first part contains the full SHA of HEAD; if the repo is in a "detached HEAD" state,
+    //  the SHA comes right from the HEAD file, otherwise the sym-ref in HEAD has been resolved
+    return "git" + firstpart.substr(0, 8); //take the first 8 digits of the SHA and return them
 }
 
 int main(int argc, char *argv[])

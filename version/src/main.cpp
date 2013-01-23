@@ -181,6 +181,45 @@ int getLatestBzrRevFromGitTag(string source_dir) {
     return rev;
 }
 
+string getGitRevision(ifstream *git, string source_dir) {
+    string firstpart;
+    *git >> firstpart;
+    if (firstpart == "ref:") {
+        string secondpart;
+        *git >> secondpart;
+        ifstream sha( (source_dir + ".git/" + secondpart).c_str() );
+        const int git_errno = errno;
+        if (sha) {
+            sha >> firstpart;
+            sha.close();
+        }
+        else {
+            ifstream packrefs( (source_dir + ".git/packed-refs").c_str() );
+            const int git_errno2 = errno;
+            if (packrefs) {
+                string l;
+                while(getline(packrefs, l)) {
+                    stringstream ll(l);
+                    string hash, ref;
+                    ll >> hash;
+                    ll >> ref;
+                    if (ref == secondpart) {
+                        firstpart = hash;
+                        break;
+                    }
+                }
+                packrefs.close();
+            } else {
+                cerr << "                .git/" << secondpart << ": " << strerror(git_errno) << endl;
+                cerr << "                .git/packed-refs: " << strerror(git_errno2) << endl;
+                return NULL;
+            }
+        }
+    }
+    
+    return "git" + firstpart.substr(0, 8);
+}
+
 int main(int argc, char *argv[])
 {
 	std::string binary_dir = getcwd();
@@ -245,45 +284,14 @@ int main(int argc, char *argv[])
     
     if(git) //if available, use git revision (SHA)
     {
+        //extract latest merged-in bzr revision from existing git tags
         if (revision <= 0 && (revision = getLatestBzrRevFromGitTag(source_dir)) > 0)
             revstrb << revision << "-";
         
-        string firstpart;
-        git >> firstpart;
-        if (firstpart == "ref:") {
-            string secondpart;
-            git >> secondpart;
-            ifstream sha( (source_dir + ".git/" + secondpart).c_str() );
-            const int git_errno = errno;
-            if (sha) {
-                sha >> firstpart;
-                sha.close();
-            }
-            else {
-                ifstream packrefs( (source_dir + ".git/packed-refs").c_str() );
-                const int git_errno2 = errno;
-                if (packrefs) {
-                    string l;
-                    while(getline(packrefs, l)) {
-                        stringstream ll(l);
-                        string hash, ref;
-                        ll >> hash;
-                        ll >> ref;
-                        if (ref == secondpart) {
-                            firstpart = hash;
-                            break;
-                        }
-                    }
-                    packrefs.close();
-                } else {
-                    cerr << "                .git/" << secondpart << ": " << strerror(git_errno) << endl;
-                    cerr << "                .git/packed-refs: " << strerror(git_errno2) << endl;
-                    return 1;
-                }
-            }
-        }
-        
-        revstrb << "git" << firstpart.substr(0, 8);
+        string gitrev = getGitRevision(&git, source_dir);
+        if (gitrev.size() <= 0)
+            return 1; //error was already printed in getGitRevision()
+        revstrb << gitrev;
         git.close();
     }
     

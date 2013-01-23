@@ -30,18 +30,24 @@
 #	define chdir !SetCurrentDirectoryA
 #else
 #	include <unistd.h>
+#   include <dirent.h>
+#   include <sys/types.h>
+#   include <sys/stat.h>
 #endif
 
 #include <cerrno>
 #include <cstdlib>
 #include <cstring>
 #include <ctime>
+#include <cctype>
 
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <string>
 #include <vector>
+#include <list>
+#include <algorithm>
 
 using namespace std;
 
@@ -58,9 +64,121 @@ std::string getcwd()
 	return std::string(curdir) + '/';
 }
 
+///////////////////////////////////////////////////////////////////////////////
+// lists the files of a directory
+// (copied from /src/ListDir.cpp and slightly modified)
+//void ListDir(const std::string& path, void (*CallBack)(const std::string& filename, void * param), void *param, StringList *liste)
+void ListDir(const std::string& path, bool directories, void (*CallBack)(const std::string& filename, void * param), void *param, std::list<std::string> *liste)
+{
+	// Pfad zum Ordner, wo die Dateien gesucht werden sollen
+	std::string rpath = path.substr(0, path.find_last_of('/') +1);
+
+	// Pfad in Kleinbuchstaben umwandeln
+	//std::string filen(path);
+	//std::transform(path.begin(), path.end(), filen.begin(), tolower);
+
+	//LOG.lprintf("%s\n", filen.c_str());
+	// Dateiendung merken
+	size_t pos = path.find_last_of('.');
+	if(pos == std::string::npos)
+		return;
+
+#ifdef _WIN32
+	HANDLE hFile;
+	WIN32_FIND_DATAA wfd;
+
+	hFile=FindFirstFileA(path.c_str(), &wfd);
+	if(hFile != INVALID_HANDLE_VALUE)
+	{
+		do
+		{
+			std::string whole_path = rpath + wfd.cFileName;
+
+			bool push = true;
+			if(!directories && ( (wfd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) == FILE_ATTRIBUTE_DIRECTORY) )
+				push = false;
+
+			if(push)
+			{
+				if(CallBack)
+					CallBack(whole_path.c_str(),param);
+				if(liste)
+   					liste->push_back(whole_path);
+			}
+		} while(FindNextFileA(hFile,&wfd));
+
+		FindClose(hFile);
+	}
+#else
+	DIR *dir_d;
+	dirent *dir = NULL;
+	if ((dir_d = opendir(rpath.c_str())) != NULL)
+	{
+		while( (dir = readdir(dir_d)) != NULL)
+		{
+			struct stat file_stat;
+			std::string whole_path = rpath + dir->d_name;
+
+			stat(whole_path.c_str(), &file_stat);
+
+			bool push = true;
+			if(!directories && S_ISDIR(file_stat.st_mode))
+				push = false;
+
+			if(push)
+			{
+
+				//LOG.lprintf("%s == %s\n", endung.c_str(), ende.c_str());
+
+				if(CallBack)
+					CallBack(whole_path, param);
+				if(liste)
+   					liste->push_back(whole_path);
+			}
+		}
+		closedir(dir_d);
+		if(liste)
+			liste->sort();
+	}
+#endif // _WIN32
+
+}
+
 void finish()
 {
 	cerr << "       version: finished" << endl;
+}
+
+int getLatestBzrRevFromGitTag(string source_dir) {
+    int rev = 0;
+    
+    ifstream packrefs( (source_dir + ".git/packed-refs").c_str() );
+    const int git_errno = errno;
+    if (packrefs) {
+        string l;
+        while(getline(packrefs, l)) {
+            stringstream ll(l);
+            string hash, ref;
+            ll >> hash;
+            ll >> ref;
+            if (ref.length() >= 16 && ref.substr(0,13) == "refs/tags/bzr") {
+                int thisrev = atoi(ref.substr(13).c_str());
+                if (thisrev > rev)
+                    rev = thisrev;
+            }
+        }
+        packrefs.close();
+    }
+    
+    std::list<string> slist;
+    ListDir(source_dir + ".git/refs/tags/", false, NULL, NULL, &slist);
+    for (std::list<string>::iterator it = slist.begin(); it != slist.end(); it++) {
+        int thisrev = atoi(it->substr(it->find_last_of('/') + 4).c_str());
+        if (thisrev > rev)
+            rev = thisrev;
+    }
+    
+    return rev;
 }
 
 int main(int argc, char *argv[])
@@ -127,6 +245,9 @@ int main(int argc, char *argv[])
     
     if(git) //if available, use git revision (SHA)
     {
+        if (revision <= 0 && (revision = getLatestBzrRevFromGitTag(source_dir)) > 0)
+            revstrb << revision << "-";
+        
         string firstpart;
         git >> firstpart;
         if (firstpart == "ref:") {

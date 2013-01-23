@@ -9,7 +9,7 @@
 SET(MINIUPNPC_DIR_SEARCH $ENV{MINIUPNPC_ROOT})
 
 FIND_PATH(MINIUPNPC_INCLUDE_DIR miniupnpc.h 
-  ${MINIUPNPC_DIR_SEARCH}/include
+  ${MINIUPNPC_DIR_SEARCH}/include/miniupnpc
   /usr/include/miniupnpc
   /usr/local/include/miniupnpc
 ) 

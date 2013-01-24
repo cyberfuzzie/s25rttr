@@ -221,6 +221,18 @@ string getGitRevision(const string& source_dir, ifstream& git) {
     return "git" + firstpart.substr(0, 8); //take the first 8 digits of the SHA and return them
 }
 
+/**
+ * Get the revision string if any of the (svn, bzr, git) repos exist. If a bzr or svn repo exists, the 
+ * revision string will be only the revision number; if a git repo exists, the revision string will be the
+ * highest merged-in bzr revision (if found), followed by a dash, the word "git" and the first 8 digits of
+ * the current git SHA, i.e. "<rev>-gitaabbccdd"
+ * @param source_dir    The source directory (contains the .svn, .bzr or .git folder)
+ * @param bzr   The ifstream to the .bzr/branch/last-revision file
+ * @param svn   The ifstream to the .svn/entries file
+ * @param git   The ifstream to the .git/HEAD file
+ * @param revstring A pointer a string into which the resulting revision string will be written
+ * @returns 0 on success or 1 if something went wrong while getting the git revision
+ */
 int getRevString(const string& source_dir, ifstream& bzr, ifstream& svn, ifstream& git, string& revstring) {
     int revision = 0; //numeric revision (if bzr or svn are available)
 
@@ -259,6 +271,96 @@ int getRevString(const string& source_dir, ifstream& bzr, ifstream& svn, ifstrea
     }
 
     revstring = revstrb.str();
+    return 0;
+}
+
+/**
+ * Process an existing build_version.h or build_version.h.in in its place. If a "#define FORCE" line exists,
+ * this function will return false ("unchanged") immediately after that line. Otherwise it will check if the
+ * date (WINDOW_VERSION) or revision string (WINDOW_REVISION) have changed, and in either case use the new
+ * value in its placed. The output lines will be placed in newversionh.
+ * @param versionh  The input build_version.h[.in] file
+ * @param newversionh  A reference to the vector into which the output lines will be added
+ * @param revstring The current revision string
+ * @returns true if the content has changed from the input, false if it hasnt or "#define FORCE" was found
+ */
+bool processBuildVersionFile(ifstream& versionh, vector<string>& newversionh, string& revstring) {
+    string l;
+    bool changed = false;
+    while (getline(versionh, l)) {
+        stringstream ll(l);
+        string d, n, nv;
+
+        ll >> d;  // '#define'
+        ll >> n;  // name
+        ll >> nv; // '"value"' (including the double quotes!)
+        if (nv.length() > 2) //if there is indeed a value:
+            nv = nv.substr(1, nv.length()-2); //strip the quotes
+
+        if (n == "FORCE") {
+            cerr << "                the define \"FORCE\" does exist in the file \"build_version.h\""<< endl;
+            cerr << "                i will not change \"build_version.h\"" << endl;
+            changed = false;
+            break;
+        }
+
+        if (n == "WINDOW_VERSION") {
+            time_t t;
+            time(&t);
+
+            char tv[64];
+            strftime(tv, 63, "%Y%m%d", localtime(&t) );
+            string datestr(tv);
+            if (nv != tv) {//if the current date has changed
+                // set new day
+                ll.clear();
+                ll.str("");
+                ll << d << " " << n << " \"" << tv << "\"";
+                l = ll.str();
+
+                cout << "                renewing version to day \"" << tv << "\"" << endl;
+                changed = true;
+            }
+        }
+
+        if (n == "WINDOW_REVISION") {
+            if(nv != revstring) { //if the revision string has changed
+                // set new revision
+                ll.clear();
+                ll.str("");
+                ll << d << " " << n << " \"" << revstring << "\"";
+                l = ll.str();
+
+                cout << "                renewing version to revision \"" << revstring << "\"" << endl;
+                changed = true;
+            }
+        }
+
+        newversionh.push_back(l);
+    }
+    
+    return changed;
+}
+
+/**
+ * Write out a new version of the build_version.h file, whose contents are given in the newversionh vector
+ * @param binary_dir    The folder into which the file should be written (an existing file will be overwritten)
+ * @param newversionh   The content lines of the new file
+ * @returns 0 on success and 1 on failure
+ */
+int writeoutBuildVersionFile(string& binary_dir, vector<string>& newversionh) {
+    ofstream versionh( (binary_dir + "build_version.h").c_str() );
+    const int versionh_errno = errno;
+
+    if (!versionh) {
+        cerr << "failed to write to build_version.h: " << strerror(versionh_errno) << endl;
+        return 1;
+    }
+
+    for(vector<string>::const_iterator l = newversionh.begin(); l != newversionh.end(); ++l)
+        versionh << *l << endl;
+
+    versionh.close();
     return 0;
 }
 
@@ -334,83 +436,13 @@ int main(int argc, char *argv[])
     }
 
     vector<string> newversionh; //line buffer for the new file contents
-
-    string l;
-    bool changed = false;
-    while(getline(versionh, l))
-    {
-        stringstream ll(l);
-        string d, n, nv;
-
-        ll >> d;  // '#define'
-        ll >> n;  // name
-        ll >> nv; // '"value"' (including the double quotes!)
-        if (nv.length() > 2) //if there is indeed a value:
-            nv = nv.substr(1, nv.length()-2); //strip the quotes
-
-        if(n == "FORCE")
-        {
-                    cerr << "                the define \"FORCE\" does exist in the file \"build_version.h\""<< endl;
-                    cerr << "                i will not change \"build_version.h\"" << endl;
-        }
-
-        if(n == "WINDOW_VERSION")
-        {
-            time_t t;
-            time(&t);
-
-            char tv[64];
-            strftime(tv, 63, "%Y%m%d", localtime(&t) );
-            string datestr(tv);
-            if (nv != tv) //if the current date has changed
-            {
-                // set new day
-                ll.clear();
-                ll.str("");
-                ll << d << " " << n << " \"" << tv << "\"";
-                l = ll.str();
-
-                cout << "                renewing version to day \"" << tv << "\"" << endl;
-                changed = true;
-            }
-        }
-
-        if(n == "WINDOW_REVISION")
-        {
-            if(nv != revstring) //if the revision string has changed
-            {
-                // set new revision
-                ll.clear();
-                ll.str("");
-                ll << d << " " << n << " \"" << revstring << "\"";
-                l = ll.str();
-
-                cout << "                renewing version to revision \"" << revstring << "\"" << endl;
-                changed = true;
-            }
-        }
-
-        newversionh.push_back(l);
-    }
+    bool changed = processBuildVersionFile(versionh, newversionh, revstring);
     versionh.close();
 
-    if(changed) // only write if changed
-    {
+    if(changed) {// only write if changed
         std::cerr << "                build_version.h has changed" << std::endl;
-
-        ofstream versionh( (binary_dir + "build_version.h").c_str() );
-        const int versionh_errno = errno;
-
-        if(!versionh)
-        {
-            cerr << "failed to write to build_version.h: " << strerror(versionh_errno) << endl;
+        if (writeoutBuildVersionFile(binary_dir, newversionh) != 0)
             return 1;
-        }
-
-        for(vector<string>::const_iterator l = newversionh.begin(); l != newversionh.end(); ++l)
-            versionh << *l << endl;
-
-        versionh.close();
     }
     else
         std::cerr << "                build_version.h is unchanged" << std::endl;

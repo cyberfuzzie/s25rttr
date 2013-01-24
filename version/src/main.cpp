@@ -51,8 +51,10 @@
 
 using namespace std;
 
-std::string getcwd()
-{
+/**
+ * Get the current working directory as a string, terminated by a forward slash.
+ */
+string getcwd() {
     char curdir[4096];
 #ifdef _WIN32
     GetCurrentDirectoryA(4096, curdir);
@@ -64,9 +66,12 @@ std::string getcwd()
     return std::string(curdir) + '/';
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// lists the files of a directory
-// (copied from /src/ListDir.cpp and heavily modified)
+/**
+ * List the files of a directory (non-recursively, exclude directories, don't sort resulting file list)
+ * (copied from /src/ListDir.cpp and heavily modified)
+ * @param path  The path of the directory to list. Must end in a path separator.
+ * @param liste A pointer to the list into which the result will be written.
+ */
 void listDir(const string& path, std::list<std::string> *liste)
 {
     if (!liste)
@@ -87,7 +92,7 @@ void listDir(const string& path, std::list<std::string> *liste)
 
         FindClose(hFile);
     }
-#else
+#else // == !_WIN32
     DIR *dir_d;
     dirent *dir = NULL;
     if ((dir_d = opendir(path.c_str())) != NULL)
@@ -105,15 +110,24 @@ void listDir(const string& path, std::list<std::string> *liste)
         }
         closedir(dir_d);
     }
-#endif // _WIN32
+#endif // !_WIN32
 
 }
 
-void finish()
-{
+/**
+ * Print a notification when exit()ing the program
+ */
+void finish() {
     cerr << "       version: finished" << endl;
 }
 
+/**
+ * Get the latest merged-in bzr revision from existing Git tags. Tags have to be named "bzr<rev>", that is,
+ * the word "bzr" followed by the revision number. This function minds tags both in .git/refs/tags and in
+ * .git/packed-refs.
+ * @param source_dir The directory which contains the .git folder
+ * @return the highest bzr revision number found on success, or 0 on failure
+ */
 int getLatestBzrRevFromGitTag(const string& source_dir) {
     int rev = 0;
 
@@ -145,6 +159,13 @@ int getLatestBzrRevFromGitTag(const string& source_dir) {
     return rev;
 }
 
+/**
+ * Resolve a given Git ref string against the .git/packed-refs file if it exists.
+ * @param source_dir    The directory which contains the .git folder.
+ * @param ref   The ref string you're looking for.
+ * @param hash  A pointer to the string into which the matching SHA will be written if it is found.
+ * @returns 0 on success, an errcode (from the ifstream constructor) on failure
+ */
 int getGitSHAFromPackedRefs(const string& source_dir, const string& ref, string *hash) {
     ifstream packrefs( (source_dir + ".git/packed-refs").c_str() );
     const int git_errno = errno;
@@ -173,12 +194,12 @@ int getGitSHAFromPackedRefs(const string& source_dir, const string& ref, string 
  * @returns "git<SHA>" on success (where <SHA> are the first 8 digits of the full SHA) or "" (empty string)
  *      on failure.
  */
-string getGitRevision(ifstream *git, const string source_dir) {
+string getGitRevision(const string& source_dir, ifstream& git) {
     string firstpart;
-    *git >> firstpart;
+    git >> firstpart;
     if (firstpart == "ref:") { //if HEAD is a sym-ref (pointing to a branch or tag)
         string secondpart;
-        *git >> secondpart;
+        git >> secondpart;
         ifstream sha( (source_dir + ".git/" + secondpart).c_str() ); //try to get the ref's file from the "refs" folder
         const int git_errno = errno;
         if (sha) {
@@ -200,45 +221,7 @@ string getGitRevision(ifstream *git, const string source_dir) {
     return "git" + firstpart.substr(0, 8); //take the first 8 digits of the SHA and return them
 }
 
-int main(int argc, char *argv[])
-{
-    std::string binary_dir = getcwd();
-
-    if(argc >= 2)
-    {
-        if(chdir(argv[1]) != 0)
-        {
-            cerr << "chdir to directory \"" << argv[1] << "\" failed!" << endl;
-            return 1;
-        }
-    }
-
-    std::string source_dir = getcwd();
-    cerr << "       version: started" << endl;
-    cerr << "                source directory: \"" << source_dir << "\"" << endl;
-    cerr << "                build  directory: \"" << binary_dir << "\"" << endl;
-
-    atexit(finish);
-
-    ifstream git( (source_dir + ".git/HEAD").c_str() );
-    const int git_errno = errno;
-
-    ifstream bzr( (source_dir + ".bzr/branch/last-revision").c_str() );
-    const int bzr_errno = errno;
-
-    ifstream svn( (source_dir + ".svn/entries").c_str() );
-    const int svn_errno = errno;
-
-    if(!git && !svn && !bzr)
-    {
-        cerr << "                failed to read any of:" << endl;
-        cerr << "                .git/HEAD: " << strerror(git_errno) << endl;
-        cerr << "                .bzr/branch/last-revision: " << strerror(bzr_errno) << endl;
-        cerr << "                .svn/entries: " << strerror(svn_errno) << endl;
-
-        return 1;
-    }
-
+int getRevString(const string& source_dir, ifstream& bzr, ifstream& svn, ifstream& git, string& revstring) {
     int revision = 0; //numeric revision (if bzr or svn are available)
 
     if(bzr) // use bazaar revision if exist
@@ -268,35 +251,81 @@ int main(int argc, char *argv[])
         if (revision <= 0 && (revision = getLatestBzrRevFromGitTag(source_dir)) > 0)
             revstrb << revision << "-";
 
-        string gitrev = getGitRevision(&git, source_dir);
+        string gitrev = getGitRevision(source_dir, git);
         if (gitrev.size() <= 0)
             return 1; //error was already printed in getGitRevision()
         revstrb << gitrev;
         git.close();
     }
 
-    string revstring = revstrb.str();
+    revstring = revstrb.str();
+    return 0;
+}
 
+int main(int argc, char *argv[])
+{
+    std::string binary_dir = getcwd();
+
+    if(argc >= 2) { //if given, change to the source directory
+        if(chdir(argv[1]) != 0) {
+            cerr << "chdir to directory \"" << argv[1] << "\" failed!" << endl;
+            return 1;
+        }
+    }
+
+    std::string source_dir = getcwd();
+    cerr << "       version: started" << endl;
+    cerr << "                source directory: \"" << source_dir << "\"" << endl;
+    cerr << "                build  directory: \"" << binary_dir << "\"" << endl;
+
+    atexit(finish); //register info output function for exit()
+
+    //check for an existing Git repo
+    ifstream git( (source_dir + ".git/HEAD").c_str() );
+    const int git_errno = errno;
+
+    //check for an existing bzr branch
+    ifstream bzr( (source_dir + ".bzr/branch/last-revision").c_str() );
+    const int bzr_errno = errno;
+
+    //check for an existing SVN meta folder
+    ifstream svn( (source_dir + ".svn/entries").c_str() );
+    const int svn_errno = errno;
+
+    if(!git && !svn && !bzr) {
+        cerr << "                failed to read any of:" << endl;
+        cerr << "                .git/HEAD: " << strerror(git_errno) << endl;
+        cerr << "                .bzr/branch/last-revision: " << strerror(bzr_errno) << endl;
+        cerr << "                .svn/entries: " << strerror(svn_errno) << endl;
+        
+        return 1;
+    }
+
+    //get the revision string for the existing repo
+    string revstring;
+    if (getRevString(source_dir, bzr, svn, git, revstring) != 0) //getRevString() will close all open ifstreams
+        return 1;
+    
+    //check if the current build_version is forced to stay in place
     ifstream versionhforce( (binary_dir + "build_version.h.force").c_str() );
-    if(versionhforce)
-    {
+    if(versionhforce) {
         cerr << "                the file \"build_version.h.force\" does exist."<< endl;
         cerr << "                i will not change \"build_version.h\"." << endl;
         versionhforce.close();
+        
         return 0;
     }
 
+    //if a build_version.h already exists, open it
     ifstream versionh( (binary_dir + "build_version.h").c_str() );
     const int versionh_errno = errno;
 
-    if(!versionh)
-    {
+    if(!versionh) { //if it doesnt exist, open the template build_version.h.in
         versionh.clear();
         versionh.open( (source_dir + "build_version.h.in").c_str() );
     }
 
-    if(!versionh)
-    {
+    if(!versionh) { //if neither file could be opened, something went wrong
         cerr << "                failed to read any of:" << endl;
         cerr << "                build_version.h:    " << strerror(versionh_errno) << endl;
         cerr << "                build_version.h.in: " << strerror(errno) << endl;
@@ -304,7 +333,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    vector<string> newversionh;
+    vector<string> newversionh; //line buffer for the new file contents
 
     string l;
     bool changed = false;

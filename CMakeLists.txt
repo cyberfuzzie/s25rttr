@@ -34,8 +34,31 @@ INCLUDE_DIRECTORIES (${CMAKE_BINARY_DIR})
 CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/build_paths.h.cmake" build_paths.h)
 
 # create necessary symlinks in build directory for executing in build dir
-ADD_CUSTOM_TARGET (populate_builddir ALL
-	COMMAND "${CMAKE_SOURCE_DIR}/populate_builddir.sh" "${CMAKE_SOURCE_DIR}")
+FOREACH (dir bin share s25rttr)
+	IF (NOT IS_DIRECTORY "${CMAKE_BINARY_DIR}/${dir}")
+		MESSAGE (STATUS "Creating symlink ${dir}")
+		EXECUTE_PROCESS (COMMAND ${CMAKE_COMMAND} -E create_symlink "." ${dir})
+	ENDIF (NOT IS_DIRECTORY "${CMAKE_BINARY_DIR}/${dir}")
+ENDFOREACH (dir bin share s25rttr)
+IF (NOT IS_DIRECTORY "${CMAKE_BINARY_DIR}/RTTR")
+	IF (IS_DIRECTORY "${CMAKE_SOURCE_DIR}/RTTR")
+		MESSAGE (STATUS "Creating symlink RTTR")
+		EXECUTE_PROCESS (COMMAND ${CMAKE_COMMAND} -E create_symlink "${CMAKE_SOURCE_DIR}/RTTR" RTTR)
+	ELSE (IS_DIRECTORY "${CMAKE_SOURCE_DIR}/RTTR")
+		MESSAGE (FATAL_ERROR " 
+ Directory RTTR is missing")
+	ENDIF (IS_DIRECTORY "${CMAKE_SOURCE_DIR}/RTTR")	
+ENDIF (NOT IS_DIRECTORY "${CMAKE_BINARY_DIR}/RTTR")
+IF (NOT IS_DIRECTORY "${CMAKE_BINARY_DIR}/S2")
+	IF (IS_DIRECTORY "${CMAKE_SOURCE_DIR}/S2")
+		MESSAGE (STATUS "Creating symlink S2")
+		EXECUTE_PROCESS (COMMAND ${CMAKE_COMMAND} -E create_symlink "${CMAKE_SOURCE_DIR}/S2" S2)
+	ELSE (IS_DIRECTORY "${CMAKE_SOURCE_DIR}/S2")
+		MESSAGE (WARNING " 
+ Directory S2 is missing
+ Direct debugging from this directory will not work")
+	ENDIF (IS_DIRECTORY "${CMAKE_SOURCE_DIR}/S2")	
+ENDIF (NOT IS_DIRECTORY "${CMAKE_BINARY_DIR}/S2")
 
 # build version program and update version header file
 ADD_SUBDIRECTORY (version)

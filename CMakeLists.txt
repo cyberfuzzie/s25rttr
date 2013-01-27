@@ -31,6 +31,10 @@ SET (LIBDIR "${DATADIR}"
 # add build directory to compiler search path
 INCLUDE_DIRECTORIES (${CMAKE_BINARY_DIR})
 
+# set flags for compiling
+ADD_DEFINITIONS (-Wall -pedantic -fno-strict-aliasing)
+
+# write paths for components to build_paths.h
 CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/build_paths.h.cmake" build_paths.h)
 
 # create necessary symlinks in build directory for executing in build dir

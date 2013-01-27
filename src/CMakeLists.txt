@@ -460,6 +460,9 @@ IF ( "${COMPILEFOR}" STREQUAL "linux")
 	TARGET_LINK_LIBRARIES(s25client dl ${TARGET_LINK_LIBRARIES} )
 ENDIF ( "${COMPILEFOR}" STREQUAL "linux")
 
+INCLUDE (CMakeMacroProcessDebugInfo)
+PROCESS_DEBUG_INFO (s25client ${BINDIR})
+
 INSTALL(TARGETS s25client RUNTIME DESTINATION ${BINDIR})
 
 ################################################################################

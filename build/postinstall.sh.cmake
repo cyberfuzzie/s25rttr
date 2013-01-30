@@ -35,9 +35,9 @@ mecho()
 COMPILEFOR=@COMPILEFOR@
 COMPILEARCH=@COMPILEARCH@
 PREFIX=@PREFIX@
-BINDIR=@BINDIR@
-DATADIR=@DATADIR@
-LIBDIR=@LIBDIR@
+BINDIR=@PREFIX@/@BINDIR@
+DATADIR=@PREFIX@/@DATADIR@
+LIBDIR=@PREFIX@/@LIBDIR@
 
 ###############################################################################
 

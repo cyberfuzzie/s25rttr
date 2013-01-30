@@ -33,6 +33,9 @@ IF (SDL_FOUND)
             
         ADD_CUSTOM_COMMAND(TARGET audioSDL POST_BUILD COMMAND ln -fvs SDL/src/${SL_PREFIX}audioSDL${CMAKE_SHARED_LIBRARY_SUFFIX} ../../audioSDL${CMAKE_SHARED_LIBRARY_SUFFIX})
 
+	INCLUDE (CMakeMacroProcessDebugInfo)
+	PROCESS_DEBUG_INFO (audioSDL ${LIBDIR}/driver/audio)
+
         INSTALL(TARGETS audioSDL 
             RUNTIME DESTINATION ${LIBDIR}/driver/audio 
             LIBRARY DESTINATION ${LIBDIR}/driver/audio

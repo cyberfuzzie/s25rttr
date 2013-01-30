@@ -58,7 +58,8 @@ IF ( "${COMPILEFOR}" STREQUAL "windows")
 	ADD_CUSTOM_COMMAND(TARGET s25update POST_BUILD COMMAND if [ -f s25update.exe ] \; then cp -v s25update.exe s25update \; fi)
 ENDIF ( "${COMPILEFOR}" STREQUAL "windows")
 
-ADD_CUSTOM_COMMAND(TARGET s25update POST_BUILD COMMAND cp -v s25update ../../RTTR/)
+INCLUDE (CMakeMacroProcessDebugInfo)
+PROCESS_DEBUG_INFO (s25update ${DATADIR}/RTTR)
 
 INSTALL(TARGETS s25update RUNTIME DESTINATION ${DATADIR}/RTTR/)
 

@@ -29,7 +29,7 @@
 
 //	set global prefix (normal /usr/local)
 //#define PREFIX "/usr/local"
-#cmakedefine PREFIX "${PREFIX}"
+#cmakedefine PREFIX "${CMAKE_INSTALL_PREFIX}"
 
 //	set binary directory (normal $(prefix)/bin)
 //#define BINDIR PREFIX"/bin"

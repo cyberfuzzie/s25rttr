@@ -24,3 +24,4 @@ The history graphs on this repo are thus quite accurate (where number of commits
 Since the core dev team of s25rttr is also somewhat active, there are bound to be upstream changes while we work on this fork. We'll add a commit for every (non-empty) bzr revision to the branch "bazaar-integration", and add a tag with the corresponding bzr rev number whenever we merge that branch into master.
 
 Please remember that we only just created this fork and are not 100% sure on this strategy yet. We're going to try to keep up the author(s) for the bzr integration commits, so the core devs are appropriately credited.
+

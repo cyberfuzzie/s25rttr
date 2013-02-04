@@ -1,6 +1,7 @@
 // $Id: main.cpp 8595 2013-01-20 19:34:54Z FloSoft $
 //
-// Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
+// Copyright (c) 2005 - 2013 Settlers Freaks (sf-team at siedler25.org)
+// Copyright (c) 2013 S25RTTR-Aux/Patrick Lehner (hai.kataker at gmx.de)
 //
 // This file is part of Return To The Roots.
 //
@@ -70,48 +71,42 @@ string getcwd() {
  * List the files of a directory (non-recursively, exclude directories, don't sort resulting file list)
  * (copied from /src/ListDir.cpp and heavily modified)
  * @param path  The path of the directory to list. Must end in a path separator.
- * @param liste A pointer to the list into which the result will be written.
+ * @param outlist  A pointer to the list into which the result will be written.
  */
-void listDir(const string& path, std::list<std::string> *liste)
-{
-    if (!liste)
+void listDir(const string& path, std::list<std::string> *outlist) {
+    if (!outlist)
         return;
 #ifdef _WIN32
     HANDLE hFile;
     WIN32_FIND_DATAA wfd;
 
     hFile=FindFirstFileA(path.c_str(), &wfd);
-    if(hFile != INVALID_HANDLE_VALUE)
-    {
-        do
-        {
+    if (hFile != INVALID_HANDLE_VALUE) {
+        do {
             if ((wfd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) != FILE_ATTRIBUTE_DIRECTORY) {
-                liste->push_back(wfd.cFileName);
+                outlist->push_back(wfd.cFileName);
             }
-        } while(FindNextFileA(hFile,&wfd));
+        } while (FindNextFileA(hFile,&wfd));
 
         FindClose(hFile);
     }
 #else // == !_WIN32
     DIR *dir_d;
     dirent *dir = NULL;
-    if ((dir_d = opendir(path.c_str())) != NULL)
-    {
-        while( (dir = readdir(dir_d)) != NULL)
-        {
+    if ((dir_d = opendir(path.c_str())) != NULL) {
+        while ( (dir = readdir(dir_d)) != NULL) {
             struct stat file_stat;
             std::string whole_path = path + dir->d_name;
 
             stat(whole_path.c_str(), &file_stat);
 
-            if(!S_ISDIR(file_stat.st_mode)) {
-                liste->push_back(dir->d_name);
+            if (!S_ISDIR(file_stat.st_mode)) {
+                outlist->push_back(dir->d_name);
             }
         }
         closedir(dir_d);
     }
 #endif // !_WIN32
-
 }
 
 /**
@@ -131,10 +126,12 @@ void finish() {
 int getLatestBzrRevFromGitTag(const string& source_dir) {
     int rev = 0;
 
-    ifstream packrefs( (source_dir + ".git/packed-refs").c_str() );
+    ifstream packrefs( (source_dir + ".git/packed-refs").c_str() ); //try to open the packed refs file
+    //if the packed refs file exists (and could be opened), walk over its contents and extract the "bzr<rev>"
+    //  tag with the highest revision number, saving it into rev
     if (packrefs) {
         string l;
-        while(getline(packrefs, l)) {
+        while (getline(packrefs, l)) {
             stringstream ll(l);
             string hash, ref;
             ll >> hash;
@@ -148,14 +145,20 @@ int getLatestBzrRevFromGitTag(const string& source_dir) {
         packrefs.close();
     }
 
+    //walk over existing tags in the actual refs/tags folder; if take the max of these revision numbers
+    //  against the previously found max (if any)
     std::list<string> slist;
     listDir(source_dir + ".git/refs/tags/", &slist);
     for (std::list<string>::iterator it = slist.begin(); it != slist.end(); it++) {
-        int thisrev = atoi(it->substr(3).c_str());
-        if (thisrev > rev)
-            rev = thisrev;
+        if (it->substr(0,3) == "bzr") {
+            int thisrev = atoi(it->substr(3).c_str());
+            if (thisrev > rev)
+                rev = thisrev;
+        }
     }
 
+    //rev now contains the highest revision number that has been merged into the git repo and marked with
+    //  an appropriately formatted tag
     return rev;
 }
 
@@ -169,22 +172,22 @@ int getLatestBzrRevFromGitTag(const string& source_dir) {
 int getGitSHAFromPackedRefs(const string& source_dir, const string& ref, string *hash) {
     ifstream packrefs( (source_dir + ".git/packed-refs").c_str() );
     const int git_errno = errno;
-    if (packrefs) {
+    if (packrefs) { //if opening the packrefs file was successful
         string l;
-        while(getline(packrefs, l)) {
+        while (getline(packrefs, l)) { //walk over the file contents line by line
             stringstream ll(l);
             string thisHash, thisRef;
             ll >> thisHash;
             ll >> thisRef;
-            if (thisRef == ref) {
-                *hash = thisHash;
-                break;
+            if (thisRef == ref) { //if this line is the desired ref
+                *hash = thisHash; //save the according hash
+                break; //and stop
             }
         }
         packrefs.close();
         return 0;
     }
-    return git_errno;
+    return git_errno; //in case of error, return the error code we got
 }
 
 /**
@@ -196,18 +199,18 @@ int getGitSHAFromPackedRefs(const string& source_dir, const string& ref, string 
  */
 string getGitRevision(const string& source_dir, ifstream& git) {
     string firstpart;
-    git >> firstpart;
+    git >> firstpart; //this is either "ref:" (sym-ref) or a hash (full ref)
     if (firstpart == "ref:") { //if HEAD is a sym-ref (pointing to a branch or tag)
         string secondpart;
-        git >> secondpart;
-        ifstream sha( (source_dir + ".git/" + secondpart).c_str() ); //try to get the ref's file from the "refs" folder
+        git >> secondpart; //in case of sym-ref, this is the ref name)
+        ifstream sha( (source_dir + ".git/" + secondpart).c_str() ); //try to get the ref's file from the .git/refs/ folder
         const int git_errno = errno;
-        if (sha) {
-            sha >> firstpart;
+        if (sha) { //if the ref is in the .git/refs/ folder
+            sha >> firstpart; //this is the sha for this reference
             sha.close();
         }
-        else {
-            const int git_errno2 = getGitSHAFromPackedRefs(source_dir, secondpart, &firstpart);
+        else { //the ref was not found in the .git/refs/ folder
+            const int git_errno2 = getGitSHAFromPackedRefs(source_dir, secondpart, &firstpart); //try to get it from pack-refs
             if (git_errno2 != 0) {
                 cerr << "                Could not resolve Git HEAD:" << endl;
                 cerr << "                .git/" << secondpart << ": " << strerror(git_errno) << endl;
@@ -236,13 +239,11 @@ string getGitRevision(const string& source_dir, ifstream& git) {
 int getRevString(const string& source_dir, ifstream& bzr, ifstream& svn, ifstream& git, string& revstring) {
     int revision = 0; //numeric revision (if bzr or svn are available)
 
-    if(bzr) // use bazaar revision if exist
-    {
+    if (bzr) { // use bazaar revision if exist
         bzr >> revision;
         bzr.close();
     }
-    else if(svn) // use subversion revision, if no bazaar one exists
-    {
+    else if (svn) { // use subversion revision, if no bazaar one exists
         string t;
 
         getline(svn, t); // entry count
@@ -257,8 +258,7 @@ int getRevString(const string& source_dir, ifstream& bzr, ifstream& svn, ifstrea
     if (revision > 0) //if a bzr or svn revision number has been found
         revstrb << revision; //use that for now (if .git exists, it will override this)
 
-    if(git) //if available, use git revision (SHA)
-    {
+    if (git) { //if available, use git revision (SHA)
         //extract latest merged-in bzr revision from existing git tags
         if (revision <= 0 && (revision = getLatestBzrRevFromGitTag(source_dir)) > 0)
             revstrb << revision << "-";
@@ -291,27 +291,27 @@ bool processBuildVersionFile(ifstream& versionh, vector<string>& newversionh, st
         stringstream ll(l);
         string d, n, nv;
 
-        ll >> d;  // '#define'
-        ll >> n;  // name
+        ll >> d;  // '#define', will be discarded
+        ll >> n;  // name, the name of this defined constant
         ll >> nv; // '"value"' (including the double quotes!)
         if (nv.length() > 2) //if there is indeed a value:
             nv = nv.substr(1, nv.length()-2); //strip the quotes
 
-        if (n == "FORCE") {
+        if (n == "FORCE") { //if there is a "FORCE" define present (which might be used instead of build_version.h.force)
             cerr << "                the define \"FORCE\" does exist in the file \"build_version.h\""<< endl;
-            cerr << "                i will not change \"build_version.h\"" << endl;
-            changed = false;
-            break;
+            cerr << "                will not change \"build_version.h\"" << endl;
+            changed = false; //pretend the file has not changed
+            break; //and stop processing here
         }
 
         if (n == "WINDOW_VERSION") {
             time_t t;
-            time(&t);
+            time(&t); //get the current system datetime
 
-            char tv[64];
-            strftime(tv, 63, "%Y%m%d", localtime(&t) );
-            string datestr(tv);
-            if (nv != tv) {//if the current date has changed
+            char tv[64]; //date string buffer
+            strftime(tv, 63, "%Y%m%d", localtime(&t) ); //use old C function to format date
+            string datestr(tv); //put the result in a string for easier comparison
+            if (nv != tv) { //if the current date has changed
                 // set new day
                 ll.clear();
                 ll.str("");
@@ -357,19 +357,18 @@ int writeoutBuildVersionFile(string& binary_dir, vector<string>& newversionh) {
         return 1;
     }
 
-    for(vector<string>::const_iterator l = newversionh.begin(); l != newversionh.end(); ++l)
+    for (vector<string>::const_iterator l = newversionh.begin(); l != newversionh.end(); ++l)
         versionh << *l << endl;
 
     versionh.close();
     return 0;
 }
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     std::string binary_dir = getcwd();
 
-    if(argc >= 2) { //if given, change to the source directory
-        if(chdir(argv[1]) != 0) {
+    if (argc >= 2) { //if given, change to the source directory
+        if (chdir(argv[1]) != 0) {
             cerr << "chdir to directory \"" << argv[1] << "\" failed!" << endl;
             return 1;
         }
@@ -394,7 +393,7 @@ int main(int argc, char *argv[])
     ifstream svn( (source_dir + ".svn/entries").c_str() );
     const int svn_errno = errno;
 
-    if(!git && !svn && !bzr) {
+    if (!git && !svn && !bzr) {
         cerr << "                failed to read any of:" << endl;
         cerr << "                .git/HEAD: " << strerror(git_errno) << endl;
         cerr << "                .bzr/branch/last-revision: " << strerror(bzr_errno) << endl;
@@ -410,7 +409,7 @@ int main(int argc, char *argv[])
     
     //check if the current build_version is forced to stay in place
     ifstream versionhforce( (binary_dir + "build_version.h.force").c_str() );
-    if(versionhforce) {
+    if (versionhforce) {
         cerr << "                the file \"build_version.h.force\" does exist."<< endl;
         cerr << "                i will not change \"build_version.h\"." << endl;
         versionhforce.close();
@@ -422,12 +421,12 @@ int main(int argc, char *argv[])
     ifstream versionh( (binary_dir + "build_version.h").c_str() );
     const int versionh_errno = errno;
 
-    if(!versionh) { //if it doesnt exist, open the template build_version.h.in
+    if (!versionh) { //if it doesnt exist, open the template build_version.h.in
         versionh.clear();
         versionh.open( (source_dir + "build_version.h.in").c_str() );
     }
 
-    if(!versionh) { //if neither file could be opened, something went wrong
+    if (!versionh) { //if neither file could be opened, something went wrong
         cerr << "                failed to read any of:" << endl;
         cerr << "                build_version.h:    " << strerror(versionh_errno) << endl;
         cerr << "                build_version.h.in: " << strerror(errno) << endl;
@@ -439,7 +438,7 @@ int main(int argc, char *argv[])
     bool changed = processBuildVersionFile(versionh, newversionh, revstring);
     versionh.close();
 
-    if(changed) {// only write if changed
+    if (changed) {// only write if changed
         std::cerr << "                build_version.h has changed" << std::endl;
         if (writeoutBuildVersionFile(binary_dir, newversionh) != 0)
             return 1;

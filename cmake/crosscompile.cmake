@@ -49,13 +49,13 @@ ENDIF(NOT "${HOST_GCC_RESULT}" STREQUAL "0")
 
 EXECUTE_PROCESS(
 	COMMAND "${CMAKE_C_COMPILER}" "-dumpmachine"
-	RESULT_VARIABLE USED_GCC_RESULT
-	ERROR_VARIABLE USED_GCC_ERROR
-	OUTPUT_VARIABLE USED_GCC_OUTPUT
+	RESULT_VARIABLE USED_CC_RESULT
+	ERROR_VARIABLE USED_CC_ERROR
+	OUTPUT_VARIABLE USED_CC_OUTPUT
 )
-IF(NOT "${USED_GCC_RESULT}" STREQUAL "0")
-  MESSAGE(FATAL_ERROR "ERROR: ${CMAKE_C_COMPILER} -dumpmachine failed... Result:'${USED_GCC_RESULT}' Error:'${USED_GCC_ERROR}' Output:'${USED_GCC_OUTPUT}'")
-ENDIF(NOT "${USED_GCC_RESULT}" STREQUAL "0")
+IF(NOT "${USED_CC_RESULT}" STREQUAL "0")
+  MESSAGE(FATAL_ERROR "ERROR: ${CMAKE_C_COMPILER} -dumpmachine failed... Result:'${USED_CC_RESULT}' Error:'${USED_CC_ERROR}' Output:'${USED_CC_OUTPUT}'")
+ENDIF(NOT "${USED_CC_RESULT}" STREQUAL "0")
 
 #################################################################################
 
@@ -63,63 +63,70 @@ ENDIF(NOT "${USED_GCC_RESULT}" STREQUAL "0")
 
 EXECUTE_PROCESS(
 	COMMAND "${CMAKE_CXX_COMPILER}" "-dumpmachine"
-	RESULT_VARIABLE USED_GPP_RESULT
-	ERROR_VARIABLE USED_GPP_ERROR
-	OUTPUT_VARIABLE USED_GPP_OUTPUT
+	RESULT_VARIABLE USED_CXX_RESULT
+	ERROR_VARIABLE USED_CXX_ERROR
+	OUTPUT_VARIABLE USED_CXX_OUTPUT
 )
-IF(NOT "${USED_GPP_RESULT}" STREQUAL "0")
-	MESSAGE(FATAL_ERROR "ERROR: ${CMAKE_CXX_COMPILER} -dumpmachine failed... Result:'${USED_GPP_RESULT}' Error:'${USED_GPP_ERROR}' Output:'${USED_GPP_OUTPUT}'")
-ENDIF(NOT "${USED_GPP_RESULT}" STREQUAL "0")
+IF(NOT "${USED_CXX_RESULT}" STREQUAL "0")
+	MESSAGE(FATAL_ERROR "ERROR: ${CMAKE_CXX_COMPILER} -dumpmachine failed... Result:'${USED_CXX_RESULT}' Error:'${USED_CXX_ERROR}' Output:'${USED_CXX_OUTPUT}'")
+ENDIF(NOT "${USED_CXX_RESULT}" STREQUAL "0")
 
 #################################################################################
 
 # check if target compiler triplets match
 
-IF(NOT "${USED_GCC_OUTPUT}" STREQUAL "${USED_GPP_OUTPUT}")
-	MESSAGE(FATAL_ERROR "ERROR: Your C and C++ Compiler do not match: ${USED_GCC_OUTPUT} != $USED_GPP_OUTPUT}!")
-ENDIF(NOT "${USED_GCC_OUTPUT}" STREQUAL "${USED_GPP_OUTPUT}")
+IF(NOT "${USED_CC_OUTPUT}" STREQUAL "${USED_CXX_OUTPUT}")
+	MESSAGE(FATAL_ERROR "ERROR: Your C and C++ Compiler do not match: ${USED_CC_OUTPUT} != ${USED_CXX_OUTPUT}!")
+ENDIF(NOT "${USED_CC_OUTPUT}" STREQUAL "${USED_CXX_OUTPUT}")
 
 #################################################################################
 
 # strip newlines from var
-STRING(REPLACE "\n" "" USED_GCC_OUTPUT ${USED_GCC_OUTPUT})
+STRING(REPLACE "\n" "" USED_CC_OUTPUT ${USED_CC_OUTPUT})
 STRING(REPLACE "\n" "" HOST_GCC_OUTPUT ${HOST_GCC_OUTPUT})
 
 #################################################################################
 
 # do we crosscompile? if so, set a flag
+STRING(REGEX MATCH "^[^-]*" USED_CC_ARCH ${USED_CC_OUTPUT})
+STRING(REGEX MATCH "^[^-]*" HOST_GCC_ARCH ${HOST_GCC_OUTPUT})
+STRING(REGEX MATCH "[^-]*-[^-]*$" USED_CC_OS ${USED_CC_OUTPUT})
+STRING(REGEX MATCH "[^-]*-[^-]*$" HOST_GCC_OS ${HOST_GCC_OUTPUT})
 
-IF (NOT "${HOST_GCC_OUTPUT}" STREQUAL "${USED_GCC_OUTPUT}")
+IF (NOT "${HOST_GCC_ARCH}" STREQUAL "${USED_CC_ARCH}"
+	OR NOT "${HOST_GCC_OS}" STREQUAL "${USED_CC_OS}")
 	SET(CROSSCOMPILE "1")
 	SET(CROSS "c.")
 	MESSAGE(STATUS "Configuring for cross-compiling to ${USED_GCC_OUTPUT}")
-ELSE (NOT "${HOST_GCC_OUTPUT}" STREQUAL "${USED_GCC_OUTPUT}")
+ELSE (NOT "${HOST_GCC_ARCH}" STREQUAL "${USED_CC_ARCH}"
+	OR NOT "${HOST_GCC_OS}" STREQUAL "${USED_CC_OS}")
 	SET(CROSSCOMPILE "0")
 	SET(CROSS "")
-ENDIF (NOT "${HOST_GCC_OUTPUT}" STREQUAL "${USED_GCC_OUTPUT}")
+ENDIF (NOT "${HOST_GCC_ARCH}" STREQUAL "${USED_CC_ARCH}"
+	OR NOT "${HOST_GCC_OS}" STREQUAL "${USED_CC_OS}")
 
 #################################################################################
 
 # Linux spezifische Parameter
-IF ( "${USED_GCC_OUTPUT}" MATCHES "linux" )
+IF ( "${USED_CC_OUTPUT}" MATCHES "linux" )
 	
 	SET(COMPILEFOR "linux")
 	
-	IF ( "${USED_GCC_OUTPUT}" MATCHES "x86_64" )
+	IF ( "${USED_CC_OUTPUT}" MATCHES "x86_64" )
 		SET(COMPILEARCH "x86_64")
-	ELSE ( "${USED_GCC_OUTPUT}" MATCHES "x86_64" )
+	ELSE ( "${USED_CC_OUTPUT}" MATCHES "x86_64" )
 		SET(COMPILEARCH "i386")
-	ENDIF ( "${USED_GCC_OUTPUT}" MATCHES "x86_64" )
-ENDIF ( "${USED_GCC_OUTPUT}" MATCHES "linux" )
+	ENDIF ( "${USED_CC_OUTPUT}" MATCHES "x86_64" )
+ENDIF ( "${USED_CC_OUTPUT}" MATCHES "linux" )
 
 #################################################################################
 
 # Apple spezifische Parameter
-IF ( "${USED_GCC_OUTPUT}" MATCHES "apple" )
+IF ( "${USED_CC_OUTPUT}" MATCHES "apple" )
 	SET(COMPILEFOR "apple")
 
 	# find lipo
-	FIND_PROGRAM(LIPO NAMES ${USED_GCC_OUTPUT}-lipo lipo)
+	FIND_PROGRAM(LIPO NAMES ${USED_CC_OUTPUT}-lipo lipo)
 	SET(CMAKE_LIPO "${LIPO}" CACHE PATH "" FORCE)
 
 	MESSAGE(STATUS "Checking ${CMAKE_PREFIX_PATH}/usr/lib/libSystem.B.dylib for possible architectures")
@@ -153,20 +160,20 @@ IF ( "${USED_GCC_OUTPUT}" MATCHES "apple" )
 	ENDIF("${COMPILEARCH}" STREQUAL "" OR "${COMPILEARCH}" STREQUAL "universal")
 
 	MESSAGE(STATUS "Possible architectures:${COMPILEARCHS}")	
-ENDIF ( "${USED_GCC_OUTPUT}" MATCHES "apple" )
+ENDIF ( "${USED_CC_OUTPUT}" MATCHES "apple" )
 
 #################################################################################
 
 # Cygwin/Mingw spezifische Parameter
-IF ( "${USED_GCC_OUTPUT}" MATCHES "mingw" OR "${USED_GCC_OUTPUT}" MATCHES "cygwin" )
+IF ( "${USED_CC_OUTPUT}" MATCHES "mingw" OR "${USED_CC_OUTPUT}" MATCHES "cygwin" )
 	SET(COMPILEFOR "windows")
 
-    IF ( "${USED_GCC_OUTPUT}" MATCHES "x86_64" )
+    IF ( "${USED_CC_OUTPUT}" MATCHES "x86_64" )
         SET(COMPILEARCH "x86_64")
-    ELSE ( "${USED_GCC_OUTPUT}" MATCHES "x86_64" )
+    ELSE ( "${USED_CC_OUTPUT}" MATCHES "x86_64" )
         SET(COMPILEARCH "i386")
-    ENDIF ( "${USED_GCC_OUTPUT}" MATCHES "x86_64" )
-ENDIF ( "${USED_GCC_OUTPUT}" MATCHES "mingw" OR "${USED_GCC_OUTPUT}" MATCHES "cygwin" )
+    ENDIF ( "${USED_CC_OUTPUT}" MATCHES "x86_64" )
+ENDIF ( "${USED_CC_OUTPUT}" MATCHES "mingw" OR "${USED_CC_OUTPUT}" MATCHES "cygwin" )
 
 #################################################################################
 

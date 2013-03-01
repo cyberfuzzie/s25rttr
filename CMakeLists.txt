@@ -8,6 +8,8 @@ INCLUDE(CMakeMacroSetCCache)
 INCLUDE(CMakeMacroAddFlags)
 INCLUDE(CMakeMacroForceAddFlags)
 
+SET(CMAKE_CONFIGURATION_TYPES Debug Release RelWithDebInfo MinSizeRelease Profiling)
+
 SET (COMPILEFOR_PLATFORM "linux.local"
 	CACHE STRING "Target platform")
 
@@ -34,6 +36,7 @@ SET (INSTALL_S2 "FALSE"
 INCLUDE_DIRECTORIES (${CMAKE_BINARY_DIR})
 
 # set flags for compiling
+# TODO: move this to the system-specific cmake include
 ADD_DEFINITIONS (-Wall -pedantic -fno-strict-aliasing)
 
 # write paths for components to build_paths.h

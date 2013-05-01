@@ -170,10 +170,10 @@ ENDIF ( "${USED_GCC_OUTPUT}" MATCHES "mingw" OR "${USED_GCC_OUTPUT}" MATCHES "cy
 
 #################################################################################
 
-SET(CROSSCOMPILE "${CROSSCOMPILE}" CACHE INT "Are we cross compiling?")
-SET(COMPILEFOR "${COMPILEFOR}" CACHE STRING "Target Platform")
-SET(COMPILEARCH "${COMPILEARCH}" CACHE STRING "Target Architecture")
-SET(COMPILEARCHS "${COMPILEARCHS}" CACHE STRING "Target Architectures")
+SET(CROSSCOMPILE "${CROSSCOMPILE}" CACHE INTERNAL "Are we cross compiling?")
+SET(COMPILEFOR "${COMPILEFOR}" CACHE INTERNAL "Target Platform")
+SET(COMPILEARCH "${COMPILEARCH}" CACHE INTERNAL "Target Architecture")
+SET(COMPILEARCHS "${COMPILEARCHS}" CACHE INTERNAL "Target Architectures")
 
 #################################################################################
 

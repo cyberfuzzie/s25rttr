@@ -8,31 +8,44 @@
 
 SET(MINIUPNPC_DIR_SEARCH $ENV{MINIUPNPC_ROOT})
 
-FIND_PATH(MINIUPNPC_INCLUDE_DIR miniupnpc.h 
-  ${MINIUPNPC_DIR_SEARCH}/include/miniupnpc
-  /usr/include/miniupnpc
-  /usr/local/include/miniupnpc
-) 
- 
+# do not use any standard paths without re-rooting
+FIND_PATH(MINIUPNPC_INCLUDE_DIR NAMES miniupnpc/miniupnpc.h
+  PATHS ${MINIUPNPC_DIR_SEARCH}/include
+  NO_DEFAULT_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_SYSTEM_ENVIRONMENT_PATH
+  NO_CMAKE_FIND_ROOT_PATH
+)
+# if not found, use re-rooted standard paths
+FIND_PATH(MINIUPNPC_INCLUDE_DIR NAMES miniupnpc/miniupnpc.h
+  ONLY_CMAKE_FIND_ROOT_PATH
+)
+
+# do not use any standard paths without re-rooting
+FIND_LIBRARY(MINIUPNPC_LIBRARY NAMES miniupnpc
+  PATHS ${MINIUPNPC_DIR_SEARCH}/lib
+  NO_DEFAULT_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_SYSTEM_ENVIRONMENT_PATH
+  NO_CMAKE_FIND_ROOT_PATH
+)
+# if not found, use re-rooted standard paths
 FIND_LIBRARY(MINIUPNPC_LIBRARY NAMES miniupnpc
   PATHS 
-  ${MINIUPNPC_DIR_SEARCH}/lib
   /usr/${LIB_DESTINATION}
-  /usr/local/${LIB_DESTINATION}) 
+  /usr/local/${LIB_DESTINATION}
+  ONLY_CMAKE_FIND_ROOT_PATH
+)
  
 IF(MINIUPNPC_INCLUDE_DIR AND MINIUPNPC_LIBRARY) 
    SET(Miniupnpc_FOUND TRUE) 
 ENDIF(MINIUPNPC_INCLUDE_DIR AND MINIUPNPC_LIBRARY) 
  
-IF(Miniupnpc_FOUND) 
-  IF(NOT Miniupnpc_FIND_QUIETLY) 
-    MESSAGE(STATUS "Found Miniupnpc: ${MINIUPNPC_LIBRARY}") 
-  ENDIF(NOT Miniupnpc_FIND_QUIETLY) 
-ELSE(Miniupnpc_FOUND) 
-  IF(Miniupnpc_FIND_REQUIRED) 
-    MESSAGE(FATAL_ERROR "Could not find Miniupnpc") 
-  ENDIF(Miniupnpc_FIND_REQUIRED) 
-ENDIF(Miniupnpc_FOUND) 
+#IF(Miniupnpc_FOUND) 
+#  IF(NOT Miniupnpc_FIND_QUIETLY) 
+#    MESSAGE(STATUS "Found Miniupnpc: ${MINIUPNPC_LIBRARY}") 
+#  ENDIF(NOT Miniupnpc_FIND_QUIETLY) 
+#ELSE(Miniupnpc_FOUND) 
+#  IF(Miniupnpc_FIND_REQUIRED) 
+#    MESSAGE(FATAL_ERROR "Could not find Miniupnpc") 
+#  ENDIF(Miniupnpc_FIND_REQUIRED) 
+#ENDIF(Miniupnpc_FOUND) 
 
 MARK_AS_ADVANCED(
   MINIUPNPC_INCLUDE_DIR

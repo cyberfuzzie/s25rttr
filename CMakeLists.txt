@@ -15,6 +15,8 @@ INCLUDE (cmake/crosscompile.cmake)
 
 PROJECT (s25client)
 
+INCLUDE (cmake/crosscompile-libraries.cmake)
+
 ENSURE_OUT_OF_SOURCE_BUILD("${PROJECT_NAME} requires an out of source build. Please go to the build directory and run cmake there.")
 
 # Build lobby client

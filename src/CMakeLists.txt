@@ -438,7 +438,7 @@ IF ( "${COMPILEFOR}" STREQUAL "apple")
 ENDIF ( "${COMPILEFOR}" STREQUAL "apple")
 
 IF ( "${COMPILEFOR}" STREQUAL "windows")
-	TARGET_LINK_LIBRARIES(s25client ole32 ws2_32 shlwapi bz2 bfd iberty imagehlp ${TARGET_LINK_LIBRARIES} )
+	TARGET_LINK_LIBRARIES(s25client ole32 ws2_32 shlwapi imagehlp ${TARGET_LINK_LIBRARIES} )
 ENDIF ( "${COMPILEFOR}" STREQUAL "windows")
 
 IF ( "${COMPILEFOR}" STREQUAL "linux")

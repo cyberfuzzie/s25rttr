@@ -2,7 +2,7 @@
 ### $Id: CMakeLists.txt 8500 2012-11-11 19:54:45Z marcus $
 ################################################################################
 
-INCLUDE(FindBZip2)
+INCLUDE(FindOrBuildBZip2)
 IF (NOT BZIP2_FOUND)
 	MESSAGE(FATAL_ERROR "FATAL ERROR: BZip2 library not found")
 ENDIF (NOT BZIP2_FOUND)
@@ -18,7 +18,7 @@ IF (NOT GETTEXT_FOUND)
 	MESSAGE(FATAL_ERROR "FATAL ERROR: gettext library not found")
 ENDIF (NOT GETTEXT_FOUND)
 
-INCLUDE(FindLua52)
+INCLUDE(FindOrBuildLua52)
 IF (NOT LUA52_FOUND)
 	MESSAGE(FATAL_ERROR "FATAL ERROR: lua 5.2 library not found")
 ENDIF (NOT LUA52_FOUND)
@@ -26,6 +26,8 @@ ENDIF (NOT LUA52_FOUND)
 ################################################################################
 
 INCLUDE_DIRECTORIES("../" "../liblobby/src/" "../libutil/src/" "../mygettext/src/" "../libsiedler2/src/" "../libendian/src/")
+INCLUDE_DIRECTORIES ("${BZIP2_INCLUDE_DIR}")
+INCLUDE_DIRECTORIES ("${LUA_INCLUDE_DIR}")
 LINK_DIRECTORIES("../libsiedler2/src" "../mygettext/src" "../libutil/src" "../liblobby/src" "../libendian/src")
 
 ################################################################################
@@ -431,8 +433,6 @@ ENDIF ( "${COMPILEFOR}" STREQUAL "apple")
 # LUA
 ################################################################################
 
-ADD_FLAGS(CMAKE_C_FLAGS -I${LUA_INCLUDE_DIR})
-ADD_FLAGS(CMAKE_CXX_FLAGS -I${LUA_INCLUDE_DIR})
 
 ################################################################################
 
@@ -446,6 +446,8 @@ TARGET_LINK_LIBRARIES(s25client
 	${OPENGL_gl_LIBRARY}
 	${LUA_LIBRARIES}
 )
+
+ADD_DEPENDENCIES (s25client BuildContrib)
 
 IF ( "${COMPILEFOR}" STREQUAL "apple")
 	TARGET_LINK_LIBRARIES(s25client ${SDL_LIBRARY} SDLmain)

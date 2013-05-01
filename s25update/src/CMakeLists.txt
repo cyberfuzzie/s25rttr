@@ -2,16 +2,18 @@
 ### $Id: CMakeLists.txt 7005 2011-01-27 22:01:07Z FloSoft $
 ################################################################################
 
-INCLUDE(FindCURL)
+INCLUDE(FindOrBuildCURL)
 IF (NOT CURL_FOUND)
 	MESSAGE(FATAL_ERROR "Curl not found")
 ENDIF (NOT CURL_FOUND)
+INCLUDE_DIRECTORIES ("${CURL_INCLUDE_DIR}")
 
-INCLUDE(FindBZip2)
+INCLUDE(FindOrBuildBZip2)
 IF (NOT BZIP2_FOUND)
 	MESSAGE(FATAL_ERROR "BZip2 not found")
 ENDIF (NOT BZIP2_FOUND)
 ADD_DEFINITIONS(${BZIP2_DEFINITIONS})
+INCLUDE_DIRECTORIES ("${BZIP2_INCLUDE_DIR}")
 
 # bzip linkerbug-fix
 SET(SOURCES_BZIP "")
@@ -48,6 +50,7 @@ IF ( "${COMPILEFOR}" STREQUAL "windows" )
 ENDIF ( "${COMPILEFOR}" STREQUAL "windows" )
 
 ADD_EXECUTABLE(s25update ${s25update_SRCS} ${SOURCES_BZIP})
+ADD_DEPENDENCIES (s25update BuildContrib)
 
 ADD_DEFINITIONS("-DTARGET=\"${COMPILEFOR}\"")
 ADD_DEFINITIONS("-DARCH=\"${COMPILEARCH}\"")

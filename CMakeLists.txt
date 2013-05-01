@@ -32,6 +32,9 @@ SET (LIBDIR "${DATADIR}"
 SET (INSTALL_S2 "FALSE"
 	CACHE BOOL "Copy contents of S2 directory")
 
+SET (BUILD_CONTRIB "FALSE"
+	CACHE BOOL "Automatically download and build contrib libs")
+
 # add build directory to compiler search path
 INCLUDE_DIRECTORIES (${CMAKE_BINARY_DIR})
 
@@ -94,6 +97,9 @@ ELSE (IS_DIRECTORY "${CMAKE_SOURCE_DIR}/S2" AND INSTALL_S2)
 	FILE (WRITE "${CMAKE_BINARY_DIR}/S2/put your S2-Installation in here")
 	INSTALL (FILES "${CMAKE_BINARY_DIR}/S2/put your S2-Installation in here" DESTINATION ${DATADIR}/S2)
 ENDIF (IS_DIRECTORY "${CMAKE_SOURCE_DIR}/S2" AND INSTALL_S2)
+
+# create a top level target for syncronization of building contrib libs
+ADD_CUSTOM_TARGET (BuildContrib)
 
 ADD_SUBDIRECTORY(driver)
 ADD_SUBDIRECTORY(libendian)

@@ -27,6 +27,8 @@ SET (BINDIR "bin"
 	CACHE PATH "Directory for binaries")
 SET (DATADIR "share/s25rttr"
 	CACHE PATH "Data directory")
+SET (GAMEDIR "${DATADIR}/S2"
+        CACHE PATH "S2 data directory")
 SET (LIBDIR "${DATADIR}"
 	CACHE PATH "Directory for libraries")
 SET (INSTALL_S2 "FALSE"

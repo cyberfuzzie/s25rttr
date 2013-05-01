@@ -19,20 +19,6 @@ INCLUDE_DIRECTORIES ("${BZIP2_INCLUDE_DIR}")
 
 SET(s25update_SRCS main.cpp md5.cpp md5sum.cpp)
 
-IF ( "${COMPILEFOR}" STREQUAL "windows" )
-	ADD_DEFINITIONS("-DAFX_TARG_DEU")
-	ADD_DEFINITIONS("-D_WIN32_WCE")
-
-	IF ( "${COMPILEARCH}" STREQUAL "i386" )
-		FIND_PROGRAM(WINDRES NAMES windres i686-pc-mingw32-windres i686-mingw32-windres i586-mingw32msvc-windres DOC "path to mingw's windres executable")
-	ELSE ( "${COMPILEARCH}" STREQUAL "i386" )
-		FIND_PROGRAM(WINDRES NAMES windres x86_64-pc-mingw32-windres x86_64-mingw32-windres amd64-mingw32msvc-windres DOC "path to mingw's windres executable")
-	ENDIF ( "${COMPILEARCH}" STREQUAL "i386" )
-	ADD_CUSTOM_COMMAND(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/s25update.res.o COMMAND ${WINDRES} -I${CMAKE_CURRENT_SOURCE_DIR}/../win32/ -i${CMAKE_CURRENT_SOURCE_DIR}/../win32/s25update.rc -o ${CMAKE_CURRENT_BINARY_DIR}/s25update.res.o)
-
-	SET(s25update_SRCS ${s25update_SRCS} s25update.res.o)
-ENDIF ( "${COMPILEFOR}" STREQUAL "windows" )
-
 ADD_EXECUTABLE(s25update ${s25update_SRCS})
 
 ADD_DEPENDENCIES (s25update BuildContrib)

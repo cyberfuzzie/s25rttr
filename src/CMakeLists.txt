@@ -366,22 +366,6 @@ GETTEXT_CREATE_TRANSLATIONS(../RTTR/languages/rttr.pot ALL
 
 ################################################################################
 
-# bzip linkerbug-fix
-SET(SOURCES_BZIP "")
-IF ( "${COMPILEFOR}" STREQUAL "windows" )
-	IF( IS_DIRECTORY "${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3" )
-		SET(SOURCES_BZIP
-			${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/blocksort.c
-			${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/huffman.c
-			${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/crctable.c
-			${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/randtable.c
-			${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/compress.c
-			${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/decompress.c
-			${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/bzlib.c
-		)
-	ENDIF( IS_DIRECTORY "${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3" )
-ENDIF ( "${COMPILEFOR}" STREQUAL "windows" )
-
 INCLUDE(AddFileDependencies)
 ADD_FILE_DEPENDENCIES(../build_version.cpp ${CMAKE_BINARY_DIR}/build_version.h)
 
@@ -390,7 +374,6 @@ SET(s25client_SRCS
 	${SOURCES_CONTROLS}
 	${SOURCES_DESKTOPS}
 	${SOURCES_GL}
-	${SOURCES_BZIP}
 	${SOURCES_INGAMEWINDOWS}
 	${SOURCES_OTHER}
 	${SOURCES_AI}

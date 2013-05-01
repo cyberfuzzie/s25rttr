@@ -15,22 +15,6 @@ ENDIF (NOT BZIP2_FOUND)
 ADD_DEFINITIONS(${BZIP2_DEFINITIONS})
 INCLUDE_DIRECTORIES ("${BZIP2_INCLUDE_DIR}")
 
-# bzip linkerbug-fix
-SET(SOURCES_BZIP "")
-IF ( "${COMPILEFOR}" STREQUAL "windows" )
-	IF( IS_DIRECTORY "${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3" )
-		SET(SOURCES_BZIP 
-			${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/blocksort.c
-		    ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/huffman.c 
-		    ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/crctable.c
-		    ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/randtable.c 
-		    ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/compress.c
-		    ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/decompress.c 
-		    ${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3/bzlib.c
-		   )
-	ENDIF( IS_DIRECTORY "${CMAKE_SOURCE_DIR}/contrib/bzip2-1.0.3" )
-ENDIF ( "${COMPILEFOR}" STREQUAL "windows" )
-
 ################################################################################
 
 SET(s25update_SRCS main.cpp md5.cpp md5sum.cpp)
@@ -49,7 +33,8 @@ IF ( "${COMPILEFOR}" STREQUAL "windows" )
 	SET(s25update_SRCS ${s25update_SRCS} s25update.res.o)
 ENDIF ( "${COMPILEFOR}" STREQUAL "windows" )
 
-ADD_EXECUTABLE(s25update ${s25update_SRCS} ${SOURCES_BZIP})
+ADD_EXECUTABLE(s25update ${s25update_SRCS})
+
 ADD_DEPENDENCIES (s25update BuildContrib)
 
 ADD_DEFINITIONS("-DTARGET=\"${COMPILEFOR}\"")
